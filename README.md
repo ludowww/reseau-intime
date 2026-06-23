@@ -14,6 +14,7 @@ La promesse du jeu :
 Titre officiel : Réseau Intime
 Moteur : Godot 4.6.2
 Structure : tronc commun + route dominante + route secondaire + menace + mode relationnel
+Cadre : explicite progressif, non moralisateur, conséquences fortes, placeholders d’abord
 ```
 
 ## Piliers
@@ -46,6 +47,7 @@ docs/
     DECISION_001_ENGINE.md
     DECISION_002_CORE_STRUCTURE.md
     DECISION_003_GAME_TITLE.md
+    DECISION_004_FOUNDATIONAL_BOUNDARIES.md
 ```
 
 ## Règle de conception
@@ -60,6 +62,10 @@ Le jeu ne doit pas devenir six histoires séparées. Il doit garder un tronc com
 6. Ludo doit choisir entre secret, vérité, ouverture, contrôle ou fuite.
 7. Le réseau relationnel se recompose en fin de partie.
 
+## Cadre adulte
+
+Le niveau est explicite progressif, pouvant aller jusqu’au porno assumé dans les routes avancées. Le jeu ne moralise pas, mais il ne banalise jamais : tout choix intime doit créer une trace, une conséquence ou une tension.
+
 ## Statut
 
-Préproduction narrative et technique. Les décisions de titre, moteur et structure centrale sont validées.
+Préproduction narrative et technique. Les décisions de titre, moteur, structure centrale et cadre créatif sont validées.
