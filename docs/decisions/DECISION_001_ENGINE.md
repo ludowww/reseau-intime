@@ -2,11 +2,11 @@
 
 ## Statut
 
-Proposé / à valider.
+Validé.
 
 ## Décision
 
-Utiliser **Godot 4.x** comme moteur principal pour le prototype.
+Utiliser **Godot 4.6.2** comme moteur principal pour le prototype et la production initiale.
 
 ## Raisons
 
@@ -15,6 +15,15 @@ Utiliser **Godot 4.x** comme moteur principal pour le prototype.
 - Le projet peut commencer sur PC avec un smartphone simulé, puis envisager Android plus tard.
 - GDScript est suffisant pour le prototype.
 - Les données narratives peuvent être chargées depuis des fichiers JSON.
+- Verrouiller une version précise de Godot évite les écarts de rendu, de comportement UI ou d’API entre machines.
+
+## Version cible
+
+```text
+Godot 4.6.2
+```
+
+Cette version doit être utilisée pour le prototype, sauf décision explicite ultérieure.
 
 ## Alternatives étudiées
 
@@ -34,10 +43,14 @@ Très bon pour une application mobile, mais moins adapté à une structure de je
 
 La première architecture technique doit être pensée autour de :
 
-- scènes Godot ;
+- scènes Godot 4.6.2 ;
 - UI smartphone ;
 - gestionnaire de conversations ;
 - gestionnaire de notifications ;
 - gestionnaire de galerie ;
 - système de variables ;
 - sauvegarde JSON ou Resource.
+
+## Règle
+
+Toute contribution technique doit être pensée et testée pour **Godot 4.6.2**.
