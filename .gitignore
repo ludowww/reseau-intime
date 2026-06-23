@@ -1,0 +1,26 @@
+# Godot
+.import/
+.godot/
+export.cfg
+export_presets.cfg
+*.translation
+
+# Mono / C# if ever used
+.mono/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Builds
+builds/
+exports/
+
+# Temporary
+*.tmp
+*.bak
+*.log
