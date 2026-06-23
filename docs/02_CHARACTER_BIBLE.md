@@ -14,9 +14,24 @@ Personnage joueur.
 
 En couple avec Marie. Il aime encore sa compagne, mais il se sent moins désiré, moins regardé, moins vivant dans la relation.
 
+### Statut joueur
+
+Ludo est un personnage écrit, mais orientable par les choix. Il n’est pas un avatar neutre.
+
+Le joueur peut l’orienter vers la vérité, le mensonge, la réparation, la fuite, l’ouverture, la jalousie ou le contrôle, mais Ludo garde des failles et une cohérence émotionnelle.
+
 ### Faille
 
 Ludo a tendance à éviter les confrontations. Il garde les choses pour lui, teste les limites, laisse les ambiguïtés se développer et se rassure en se disant que rien n’est encore vraiment arrivé.
+
+Failles de base :
+
+- besoin d’être désiré ;
+- tendance à éviter les confrontations ;
+- difficulté à dire clairement ce qu’il veut ;
+- tentation du secret ;
+- peur de perdre sa place ;
+- attirance pour les zones ambiguës.
 
 ### Question centrale
 
@@ -69,7 +84,9 @@ Contenus de couple, reconquête, jalousie, photos adressées à Ludo, contenus o
 
 L’interdit domestique et familial.
 
-Mathilde est la cousine de Marie, mais leur relation est presque sororale. Elle est souvent invitée chez Marie, passe du temps dans la maison et peut parfois y dormir. Elle est séduisante, aime séduire, et sent le regard de Ludo.
+Mathilde est par défaut la cousine par alliance de Marie, mais leur relation reste presque sororale. Elle est souvent invitée chez Marie, passe du temps dans la maison et peut parfois y dormir. Elle est séduisante, aime séduire, et sent le regard de Ludo.
+
+Une option cachée ou avancée pourra permettre de définir Mathilde comme vraie cousine dans la fiction. Dans tous les cas, l’enjeu reste le même : Mathilde représente une limite familiale, domestique et affective.
 
 ### Désir apparent
 
@@ -277,7 +294,7 @@ Stories, réactions, photos de groupe, messages à Marie, contenus NTR ou de jal
 
 ### Marie / Mathilde
 
-Lien presque sororal. La trahison avec Mathilde est plus grave qu’une tromperie classique.
+Lien presque sororal. La trahison avec Mathilde est plus grave qu’une tromperie classique, même si Mathilde est définie comme cousine par alliance dans le réglage par défaut.
 
 ### Ludo / Sandra
 
