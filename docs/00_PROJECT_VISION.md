@@ -1,16 +1,8 @@
 # 00 — Vision projet
 
-## Titre de travail
+## Titre officiel
 
 **Réseau Intime**
-
-Autres titres possibles :
-
-- Entre les lignes
-- Vu à 23:47
-- Messages supprimés
-- Mode silencieux
-- Confidences dangereuses
 
 ## Genre
 
@@ -53,6 +45,24 @@ Selon les choix :
 Toutes les routes doivent raconter une même histoire de base :
 
 > Un couple en routine se retrouve entouré de désirs qui se réveillent. Les mêmes événements se produisent, mais leur sens change selon les choix du joueur.
+
+## Structure validée
+
+Le jeu repose sur la structure suivante :
+
+```text
+Tronc commun + route dominante + route secondaire + menace + mode relationnel
+```
+
+Cette structure est validée et sert de base pour toute écriture ou implémentation.
+
+## Moteur validé
+
+Le projet part sur :
+
+```text
+Godot 4.6.2
+```
 
 ## Piliers de design
 
