@@ -1,8 +1,8 @@
 # 07 — Architecture technique
 
-## Recommandation moteur
+## Moteur validé
 
-Moteur recommandé : **Godot 4.x**.
+Moteur : **Godot 4.6.2**.
 
 Raisons :
 
@@ -11,7 +11,8 @@ Raisons :
 - contrôle total des notifications, transitions et applications fictives ;
 - export PC puis mobile possible ;
 - GDScript suffisant pour un prototype ;
-- intégration facile de fichiers JSON.
+- intégration facile de fichiers JSON ;
+- version verrouillée pour éviter les écarts de comportement entre environnements.
 
 Alternative : Ren’Py pour un visual novel plus classique. Moins recommandé ici car l’interface smartphone et les multiples applications demandent une UI plus libre.
 
@@ -25,6 +26,7 @@ Phase 3 : éventuel export desktop/mobile selon besoins.
 
 ```text
 game/
+  project.godot
   scenes/
     Main.tscn
     smartphone/
@@ -215,3 +217,7 @@ Le premier prototype doit prouver :
 - Les contenus visuels doivent être liés à des scènes, jamais ajoutés seuls.
 - Les scènes communes doivent être écrites avant les variations longues.
 - Le jeu ne doit pas tenter de simuler librement tous les personnages tout le temps.
+
+## Règle environnement
+
+Toute contribution technique doit être compatible avec **Godot 4.6.2**.
