@@ -8,6 +8,18 @@ Règle centrale :
 
 > Un contenu intime n’est jamais seulement une récompense. C’est aussi une preuve, un risque ou un outil de pouvoir.
 
+## Niveau adulte validé
+
+Le niveau est **explicite progressif**, pouvant aller jusqu’au porno assumé dans les routes avancées.
+
+Règles :
+
+- pas de contenu explicite sans montée préalable ;
+- pas de contenu explicite sans contexte narratif ;
+- pas de contenu explicite sans trace, conséquence ou tension ;
+- les mini-vidéos explicites sont réservées aux routes avancées ;
+- les routes adultes doivent rester cohérentes avec les limites, désirs et réactions des personnages.
+
 ## Paliers de contenu
 
 ```text
@@ -68,6 +80,8 @@ Risque : si Marie donne de l’intimité pendant que Ludo collectionne les secre
 Contenu interdit dans la maison : vêtements de Marie, chambre d’amis, canapé, messages nocturnes.
 
 Risque : même un contenu peu explicite peut être très grave parce qu’il vient du territoire de Marie.
+
+Spécificité : Mathilde est par défaut cousine par alliance de Marie pour faciliter le cadrage public, mais une option cachée pourra permettre de la définir comme vraie cousine dans la fiction. Dans tous les cas, le poids de l’interdit familial, domestique et affectif doit rester central.
 
 ### Sandra
 
@@ -155,6 +169,42 @@ photo_mathilde_tier2_placeholder.png
 video_pauline_tier4_placeholder.mp4
 story_marie_nico_tier1_placeholder.png
 ```
+
+Les placeholders doivent permettre de tester :
+
+- réception d’une image ;
+- réception d’une vidéo ;
+- ouverture / conservation / suppression ;
+- statut de preuve ;
+- galerie ;
+- conséquences différées.
+
+## Direction visuelle future
+
+Les images et vidéos définitives seront générées plus tard.
+
+Direction cible :
+
+```text
+Style anime adulte à définir
+Images générées par IA
+Vidéos générées par IA si pipeline viable
+```
+
+Le style exact n’est pas encore verrouillé. Il devra être défini dans un document séparé avant production d’assets définitifs.
+
+## Repo public / privé
+
+Le dépôt est actuellement public.
+
+Règle recommandée :
+
+```text
+Repo public : documentation, code, placeholders neutres.
+Assets adultes définitifs : dépôt privé ou stockage séparé.
+```
+
+Si la production d’assets adultes commence, il est préférable de basculer le repo en privé ou de séparer les assets dans un dépôt/stockage privé.
 
 ## Limites de production
 
