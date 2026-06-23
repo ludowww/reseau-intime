@@ -8,6 +8,14 @@ La promesse du jeu :
 
 > Toutes les routes racontent la même histoire : un couple en routine entouré de désirs qui se réveillent. Ce qui change, c’est la façon dont Ludo gère cette vérité : mentir, avouer, partager, contrôler, subir ou partir.
 
+## Décisions validées
+
+```text
+Titre officiel : Réseau Intime
+Moteur : Godot 4.6.2
+Structure : tronc commun + route dominante + route secondaire + menace + mode relationnel
+```
+
 ## Piliers
 
 - Interface de smartphone immersive.
@@ -34,6 +42,10 @@ docs/
   08_DATA_FORMATS.md
   09_WRITING_GUIDELINES.md
   10_VERTICAL_SLICE_SCOPE.md
+  decisions/
+    DECISION_001_ENGINE.md
+    DECISION_002_CORE_STRUCTURE.md
+    DECISION_003_GAME_TITLE.md
 ```
 
 ## Règle de conception
@@ -50,4 +62,4 @@ Le jeu ne doit pas devenir six histoires séparées. Il doit garder un tronc com
 
 ## Statut
 
-Préproduction narrative et technique.
+Préproduction narrative et technique. Les décisions de titre, moteur et structure centrale sont validées.
