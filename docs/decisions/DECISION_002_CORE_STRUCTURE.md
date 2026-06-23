@@ -2,7 +2,7 @@
 
 ## Statut
 
-Proposé / à valider.
+Validé.
 
 ## Décision
 
@@ -87,3 +87,12 @@ Règle générale de la dynamique :
 ## Règle de design
 
 > Les personnages décident du désir. Le mode relationnel décide des règles.
+
+## Conséquence
+
+Toute écriture ou implémentation doit préserver ce modèle. Une nouvelle scène doit indiquer :
+
+- à quel point elle appartient au tronc commun ;
+- quelle route elle nourrit ;
+- quelle menace elle active ou apaise ;
+- quel mode relationnel elle favorise.
