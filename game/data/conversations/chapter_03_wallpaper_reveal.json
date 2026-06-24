@@ -1,0 +1,198 @@
+{
+  "id": "chapter_03_wallpaper_reveal",
+  "chapter": 3,
+  "day": 3,
+  "title": "Jour 3 — Le jeu du fond d’écran",
+  "app": "system",
+  "segments": [
+    {
+      "conversation_segment_id": "c03_wallpaper_game",
+      "moment_label": "fond d’écran",
+      "time_label": "22:38",
+      "transition_text": "Un jeu idiot de Pauline peut rendre public quelque chose que Ludo pensait privé.",
+      "availability_state": "Pauline lance un jeu social. Marie, Mathilde et Nico sont présents. Le téléphone est visible.",
+      "function": "Tester la mécanique du fond d’écran comme preuve sociale conditionnelle, sans explosion complète de route.",
+      "trigger_conditions": [
+        "scene_reveals_wallpaper = true"
+      ],
+      "messages": [
+        {
+          "id": "msg_c03_wallpaper_001",
+          "sender": "pauline",
+          "thread_id": "thread_group_party",
+          "time_label": "22:38",
+          "text": "Ok, jeu idiot : tout le monde montre son fond d’écran."
+        },
+        {
+          "id": "msg_c03_wallpaper_002",
+          "sender": "nico",
+          "thread_id": "thread_group_party",
+          "time_label": "22:38",
+          "text": "Je sens que ça va juger fort."
+        },
+        {
+          "id": "msg_c03_wallpaper_003",
+          "sender": "marie",
+          "thread_id": "thread_group_party",
+          "time_label": "22:39",
+          "text": "Pourquoi pas."
+        },
+        {
+          "id": "msg_c03_wallpaper_004",
+          "sender": "mathilde",
+          "thread_id": "thread_group_party",
+          "time_label": "22:39",
+          "text": "Je n’aime pas le sourire de Pauline."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_wallpaper_show",
+          "text": "Montrer le téléphone",
+          "tone": "show",
+          "sets_flags": ["showed_wallpaper_party_day3"],
+          "wallpaper_resolution": {
+            "if_tags_include": {
+              "neutral": {
+                "effects": {},
+                "reaction_messages": [
+                  {
+                    "id": "msg_c03_wallpaper_neutral_001",
+                    "sender": "pauline",
+                    "text": "Neutre. Presque suspect tellement c’est sage."
+                  }
+                ]
+              },
+              "marie": {
+                "effects": {
+                  "marie.trust": 1
+                },
+                "reaction_messages": [
+                  {
+                    "id": "msg_c03_wallpaper_marie_001",
+                    "sender": "marie",
+                    "text": "Oh. D’accord, c’est mignon."
+                  },
+                  {
+                    "id": "msg_c03_wallpaper_marie_002",
+                    "sender": "pauline",
+                    "text": "Ludo marque des points. Je suis presque déçue."
+                  }
+                ]
+              },
+              "mathilde": {
+                "effects": {
+                  "marie.lucidity": 2,
+                  "mathilde.loyalty": -1,
+                  "social_pressure": 1
+                },
+                "reaction_messages": [
+                  {
+                    "id": "msg_c03_wallpaper_mathilde_001",
+                    "sender": "marie",
+                    "text": "C’est Mathilde ?"
+                  },
+                  {
+                    "id": "msg_c03_wallpaper_mathilde_002",
+                    "sender": "mathilde",
+                    "text": "Attends, quoi ?"
+                  },
+                  {
+                    "id": "msg_c03_wallpaper_mathilde_003",
+                    "sender": "pauline",
+                    "text": "Ah."
+                  }
+                ],
+                "sets_flags": ["wallpaper_mathilde_revealed_party_day3"]
+              },
+              "sandra": {
+                "effects": {
+                  "marie.lucidity": 2,
+                  "sandra.exposure": 2,
+                  "social_pressure": 1
+                },
+                "reaction_messages": [
+                  {
+                    "id": "msg_c03_wallpaper_sandra_001",
+                    "sender": "marie",
+                    "text": "C’est Sandra ?"
+                  },
+                  {
+                    "id": "msg_c03_wallpaper_sandra_002",
+                    "sender": "pauline",
+                    "text": "Je croyais que c’était juste ta meilleure amie."
+                  }
+                ],
+                "sets_flags": ["wallpaper_sandra_revealed_party_day3"]
+              },
+              "pauline": {
+                "effects": {
+                  "pauline.control": 2,
+                  "social_pressure": 1
+                },
+                "reaction_messages": [
+                  {
+                    "id": "msg_c03_wallpaper_pauline_001",
+                    "sender": "pauline",
+                    "text": "Alors ça, je ne l’avais pas prévu. Ou peut-être que si."
+                  }
+                ],
+                "sets_flags": ["wallpaper_pauline_revealed_party_day3"]
+              }
+            }
+          }
+        },
+        {
+          "id": "choice_c03_wallpaper_hide",
+          "text": "Verrouiller vite le téléphone",
+          "tone": "hide",
+          "effects": {
+            "marie.lucidity": 1,
+            "pauline.control": 1
+          },
+          "sets_flags": ["hid_wallpaper_party_day3"],
+          "next_messages": [
+            {
+              "id": "msg_c03_wallpaper_hide_001",
+              "sender": "pauline",
+              "time_label": "22:40",
+              "text": "Ah. Beaucoup plus intéressant qu’un fond d’écran, ça."
+            },
+            {
+              "id": "msg_c03_wallpaper_hide_002",
+              "sender": "marie",
+              "time_label": "22:40",
+              "text": "Pourquoi tu l’as verrouillé comme ça ?"
+            }
+          ]
+        },
+        {
+          "id": "choice_c03_wallpaper_joke",
+          "text": "Faire une blague pour esquiver",
+          "tone": "dodge_humor",
+          "effects": {
+            "social_pressure": 1
+          },
+          "sets_flags": ["dodged_wallpaper_with_joke_party_day3"],
+          "next_messages": [
+            {
+              "id": "msg_c03_wallpaper_joke_001",
+              "sender": "mathilde",
+              "time_label": "22:40",
+              "text": "Déviation suspecte."
+            },
+            {
+              "id": "msg_c03_wallpaper_joke_002",
+              "sender": "pauline",
+              "time_label": "22:40",
+              "text": "Je confirme. Mais je laisse vivre. Pour l’instant."
+            }
+          ]
+        }
+      ],
+      "routes_nourished": ["marie", "mathilde", "pauline", "sandra", "social_pressure"],
+      "required_events_delivered": ["wallpaper_can_be_social_proof"]
+    }
+  ],
+  "debug_notes": "Scène conditionnelle. Elle doit créer un malaise ou un signal, jamais une explosion définitive au Jour 3."
+}
