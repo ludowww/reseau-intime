@@ -1,0 +1,117 @@
+{
+  "id": "chapter_01_marie",
+  "chapter": 1,
+  "day": 1,
+  "title": "Jour 1 — Routine avec Marie",
+  "app": "messages",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "marie"
+    ],
+    "display_name": "Marie"
+  },
+  "beats": [
+    {
+      "id": "beat_01_marie_bread",
+      "pattern": "conversation_simple",
+      "function": "Installer la routine du couple et la tendresse fatiguée.",
+      "trigger": {
+        "type": "notification",
+        "title": "Marie",
+        "body": "Tu rentres vers quelle heure ?"
+      },
+      "messages": [
+        {
+          "id": "msg_marie_001",
+          "sender": "marie",
+          "time_label": "18:12",
+          "text": "Tu rentres vers quelle heure ?"
+        },
+        {
+          "id": "msg_marie_002",
+          "sender": "marie",
+          "time_label": "18:13",
+          "text": "Et tu peux prendre du pain ?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_marie_001_soft",
+          "text": "Pas trop tard. Je passe prendre ce qu’il faut.",
+          "tone": "tender_practical",
+          "effects": {
+            "marie.trust": 1,
+            "marie_attention_score": 1
+          },
+          "sets_flags": [
+            "answered_marie_softly_day1"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_marie_003_soft",
+              "sender": "marie",
+              "time_label": "18:14",
+              "text": "Merci ❤️"
+            },
+            {
+              "id": "msg_marie_004_soft",
+              "sender": "marie",
+              "time_label": "18:14",
+              "text": "Je te garde un peu de patience pour ce soir alors."
+            }
+          ]
+        },
+        {
+          "id": "choice_marie_001_neutral",
+          "text": "Je vais essayer. Tu veux autre chose ?",
+          "tone": "neutral_practical",
+          "effects": {},
+          "sets_flags": [
+            "answered_marie_practical_day1"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_marie_003_neutral",
+              "sender": "marie",
+              "time_label": "18:14",
+              "text": "Non, ça ira. Merci."
+            }
+          ]
+        },
+        {
+          "id": "choice_marie_001_pique",
+          "text": "Tu me parles vraiment que pour le pain maintenant ?",
+          "tone": "piquant",
+          "effects": {
+            "marie.lucidity": 1
+          },
+          "sets_flags": [
+            "poked_marie_about_routine_day1"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_marie_003_pique",
+              "sender": "marie",
+              "time_label": "18:15",
+              "text": "C’est toi qui rentres tard tous les soirs, monsieur dramatique."
+            },
+            {
+              "id": "msg_marie_004_pique",
+              "sender": "marie",
+              "time_label": "18:15",
+              "text": "Mais ok. Message reçu."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "routes_nourished": [
+    "marie",
+    "exclusif_reparation"
+  ],
+  "debug_notes": "Première scène volontairement simple. Aucun choix critique, seulement ton du couple."
+}
