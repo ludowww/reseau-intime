@@ -109,7 +109,7 @@
         },
         {
           "id": "closer_nico_jealousy",
-          "conditions": ["first_proof_nico_marie_story_day4 OR checked_nico_after_party_story_day4 OR rewached_nico_marie_story_day4 OR rewatched_nico_marie_story_day4"],
+          "conditions": ["first_proof_nico_marie_story_day4 OR checked_nico_after_party_story_day4 OR rewatched_nico_marie_story_day4"],
           "thread_id": "social_feed_party",
           "messages": [
             {

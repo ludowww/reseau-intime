@@ -46,6 +46,10 @@ KNOWN_VARIABLES = {
     "nico_surveillance_score",
 }
 
+KNOWN_CONDITION_TOKENS = {
+    "scene_reveals_wallpaper",
+}
+
 ID_KEYS = {
     "id",
     "conversation_segment_id",
@@ -93,6 +97,15 @@ def walk(value: Any, path: str = "") -> Iterable[tuple[str, Any]]:
             yield from walk(child, child_path)
 
 
+def is_reusable_thread_definition(node_path: str, node: dict[str, Any], key: str) -> bool:
+    """Thread ids identify persistent phone threads reused across chapters."""
+    if key != "id":
+        return False
+    if not isinstance(node.get("participants"), list):
+        return False
+    return node_path == "thread" or node_path.endswith(".thread")
+
+
 def collect_ids(data: dict[Path, Any]) -> tuple[dict[str, list[str]], dict[str, list[str]]]:
     ids: dict[str, list[str]] = defaultdict(list)
     content_ids: dict[str, list[str]] = defaultdict(list)
@@ -103,7 +116,7 @@ def collect_ids(data: dict[Path, Any]) -> tuple[dict[str, list[str]], dict[str, 
             if isinstance(node, dict):
                 for key in ID_KEYS:
                     value = node.get(key)
-                    if isinstance(value, str) and value:
+                    if isinstance(value, str) and value and not is_reusable_thread_definition(node_path, node, key):
                         ids[value].append(f"{rel}:{node_path or '$'}:{key}")
                 if node.get("type") in {"photo", "profile_photo", "wallpaper", "group_photo", "story", "capture"}:
                     value = node.get("id")
@@ -249,7 +262,7 @@ def main() -> int:
         print("OK: variable references valid")
 
     created_flags, referenced_tokens = collect_flags(data)
-    known_condition_tokens = set(KNOWN_VARIABLES) | set(created_flags)
+    known_condition_tokens = set(KNOWN_VARIABLES) | set(KNOWN_CONDITION_TOKENS) | set(created_flags)
     unresolved = {
         token: locs
         for token, locs in referenced_tokens.items()

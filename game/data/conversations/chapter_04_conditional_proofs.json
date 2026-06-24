@@ -131,7 +131,7 @@
         {
           "id": "proof_mathilde_warning_photo",
           "priority": 7,
-          "conditions": ["opened_mathilde_first_party_day3 OR answered_mathilde_pressure_private_day3 OR mathilde_aftershock_warning_day3 OR wallpaper_mathilde_revealed_party_day3"],
+          "conditions": ["opened_mathilde_first_party_day3 OR mathilde_aftershock_warning_day3 OR wallpaper_mathilde_revealed_party_day3"],
           "thread_id": "thread_mathilde_private",
           "messages": [
             {
