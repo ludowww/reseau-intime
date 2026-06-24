@@ -7,20 +7,15 @@
   "thread": {
     "id": "thread_group_friends",
     "type": "group",
-    "participants": [
-      "ludo",
-      "marie",
-      "mathilde",
-      "pauline",
-      "nico"
-    ],
-    "display_name": "Groupe amis"
+    "participants": ["ludo", "marie", "mathilde", "pauline", "nico"],
+    "display_name": "Groupe amis",
+    "profile_content_id": "photo_group_last_party_placeholder"
   },
   "beats": [
     {
       "id": "beat_01_group_party_announce",
-      "pattern": "conversation_groupe_simple",
-      "function": "Annoncer la soirée chez Pauline et amorcer Pauline, Nico et Mathilde en public.",
+      "pattern": "conversation_groupe_moyenne_ancrage_social",
+      "function": "Annoncer la soirée chez Pauline, montrer la dynamique sociale, donner une première image de groupe et amorcer Pauline, Nico et Mathilde en public.",
       "trigger": {
         "type": "notification",
         "title": "Groupe amis",
@@ -35,21 +30,59 @@
         },
         {
           "id": "msg_group_002",
+          "sender": "pauline",
+          "time_label": "20:41",
+          "text": "Je préviens : ceux qui disent 'peut-être' sont considérés comme faibles."
+        },
+        {
+          "id": "msg_group_003",
           "sender": "nico",
           "time_label": "20:43",
           "text": "Si Marie vient, je viens."
         },
         {
-          "id": "msg_group_003",
+          "id": "msg_group_004",
           "sender": "marie",
           "time_label": "20:44",
           "text": "Subtil."
         },
         {
-          "id": "msg_group_004",
+          "id": "msg_group_005",
           "sender": "mathilde",
           "time_label": "20:45",
           "text": "Je sens que ça va être une grande soirée."
+        },
+        {
+          "id": "msg_group_006",
+          "sender": "pauline",
+          "time_label": "20:45",
+          "text": "J’ai retrouvé une photo de la dernière fois, pour rappeler à tout le monde qu’on sait être dignes."
+        },
+        {
+          "id": "msg_group_007_photo",
+          "sender": "pauline",
+          "time_label": "20:46",
+          "text": "Photo envoyée.",
+          "content_id": "photo_group_last_party_placeholder",
+          "content_behavior": "inline_preview"
+        },
+        {
+          "id": "msg_group_008",
+          "sender": "mathilde",
+          "time_label": "20:46",
+          "text": "Je demande un droit de veto sur toutes les photos où Nico se croit charismatique."
+        },
+        {
+          "id": "msg_group_009",
+          "sender": "nico",
+          "time_label": "20:47",
+          "text": "La jalousie est un hommage, Mathilde."
+        },
+        {
+          "id": "msg_group_010",
+          "sender": "marie",
+          "time_label": "20:47",
+          "text": "Je regrette déjà d’avoir accepté."
         }
       ],
       "choices": [
@@ -61,21 +94,25 @@
           "effects": {
             "social_pressure": 1
           },
-          "sets_flags": [
-            "answered_group_with_humor_day1"
-          ],
+          "sets_flags": ["answered_group_with_humor_day1"],
           "next_messages": [
             {
-              "id": "msg_group_005_humor_nico",
+              "id": "msg_group_011_humor_nico",
               "sender": "nico",
-              "time_label": "20:46",
+              "time_label": "20:48",
               "text": "Tu vas avoir du boulot."
             },
             {
-              "id": "msg_group_006_humor_pauline",
+              "id": "msg_group_012_humor_pauline",
               "sender": "pauline",
-              "time_label": "20:46",
+              "time_label": "20:48",
               "text": "Parfait, j’adore quand les gens viennent avec une mission 😇"
+            },
+            {
+              "id": "msg_group_013_humor_marie",
+              "sender": "marie",
+              "time_label": "20:49",
+              "text": "Mission secondaire : rentrer avec moi avant que tu prétendes être trop fatigué."
             }
           ]
         },
@@ -86,15 +123,19 @@
           "effects": {
             "pauline_risk_score": 1
           },
-          "sets_flags": [
-            "liked_pauline_party_invite_day1"
-          ],
+          "sets_flags": ["liked_pauline_party_invite_day1"],
           "next_messages": [
             {
-              "id": "msg_group_005_like_pauline",
+              "id": "msg_group_011_like_pauline",
               "sender": "pauline",
-              "time_label": "20:47",
+              "time_label": "20:48",
               "text": "Je prends ça pour un oui discret."
+            },
+            {
+              "id": "msg_group_012_like_mathilde",
+              "sender": "mathilde",
+              "time_label": "20:49",
+              "text": "Ludo qui like au lieu de parler. Très lui."
             }
           ]
         },
@@ -103,26 +144,52 @@
           "text": "Ne pas répondre",
           "tone": "silent",
           "effects": {},
-          "sets_flags": [
-            "ignored_group_party_invite_day1"
-          ],
+          "sets_flags": ["ignored_group_party_invite_day1"],
           "next_messages": [
             {
-              "id": "msg_group_005_silent_mathilde",
+              "id": "msg_group_011_silent_mathilde",
               "sender": "mathilde",
               "time_label": "20:48",
               "text": "Ludo a déjà disparu, c’est prometteur."
+            },
+            {
+              "id": "msg_group_012_silent_pauline",
+              "sender": "pauline",
+              "time_label": "20:49",
+              "text": "Les silencieux sont souvent les plus intéressants. Ou les plus lâches. On verra samedi."
             }
           ]
+        }
+      ],
+      "automatic_followup": [
+        {
+          "id": "msg_group_014_common",
+          "sender": "pauline",
+          "time_label": "20:53",
+          "text": "Bref. Samedi. Pas d’excuse."
+        },
+        {
+          "id": "msg_group_015_common",
+          "sender": "nico",
+          "time_label": "20:54",
+          "text": "Marie, je te garde une place dans l’équipe playlist."
+        },
+        {
+          "id": "msg_group_016_common",
+          "sender": "marie",
+          "time_label": "20:55",
+          "text": "Je vais surtout garder une place pour mon verre."
+        },
+        {
+          "id": "msg_group_017_common",
+          "sender": "mathilde",
+          "time_label": "20:55",
+          "text": "Et moi je garde une place sur votre canapé si ça finit trop tard. Comme d’habitude."
         }
       ]
     }
   ],
-  "routes_nourished": [
-    "pauline",
-    "nico_marie",
-    "mathilde",
-    "social_pressure"
-  ],
-  "debug_notes": "Groupe volontairement léger. Les conséquences sont faibles : annonce du pivot Pauline et premiers signaux Nico/Mathilde."
+  "routes_nourished": ["pauline", "nico_marie", "mathilde", "social_pressure"],
+  "unlocks_content": ["profile_pauline_placeholder", "profile_nico_placeholder", "profile_mathilde_placeholder", "photo_group_last_party_placeholder"],
+  "debug_notes": "Conversation allongée pour ancrer le groupe, afficher une première photo sociale et préparer samedi sans conséquence forte."
 }
