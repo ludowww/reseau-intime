@@ -49,6 +49,23 @@ visual_content/
   chapter_04_proofs.json
 ```
 
+## Validation
+
+Depuis la racine du dépôt :
+
+```bash
+python tools/validate_game_data.py
+```
+
+Le validateur vérifie notamment :
+
+- JSON valide ;
+- IDs dupliqués ;
+- références `res://data/...` ;
+- références `content_id` ;
+- variables inconnues dans les `effects` ;
+- flags utilisés en condition mais jamais créés.
+
 ## Règles
 
 - Les personnages définissent l’identité narrative et la voix.
