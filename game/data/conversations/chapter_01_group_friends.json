@@ -1,0 +1,128 @@
+{
+  "id": "chapter_01_group_friends",
+  "chapter": 1,
+  "day": 1,
+  "title": "Jour 1 — Groupe amis : annonce de la soirée",
+  "app": "messages",
+  "thread": {
+    "id": "thread_group_friends",
+    "type": "group",
+    "participants": [
+      "ludo",
+      "marie",
+      "mathilde",
+      "pauline",
+      "nico"
+    ],
+    "display_name": "Groupe amis"
+  },
+  "beats": [
+    {
+      "id": "beat_01_group_party_announce",
+      "pattern": "conversation_groupe_simple",
+      "function": "Annoncer la soirée chez Pauline et amorcer Pauline, Nico et Mathilde en public.",
+      "trigger": {
+        "type": "notification",
+        "title": "Groupe amis",
+        "body": "Pauline : Samedi chez nous, vous venez ? 😇"
+      },
+      "messages": [
+        {
+          "id": "msg_group_001",
+          "sender": "pauline",
+          "time_label": "20:41",
+          "text": "Samedi chez nous, vous venez ? 😇"
+        },
+        {
+          "id": "msg_group_002",
+          "sender": "nico",
+          "time_label": "20:43",
+          "text": "Si Marie vient, je viens."
+        },
+        {
+          "id": "msg_group_003",
+          "sender": "marie",
+          "time_label": "20:44",
+          "text": "Subtil."
+        },
+        {
+          "id": "msg_group_004",
+          "sender": "mathilde",
+          "time_label": "20:45",
+          "text": "Je sens que ça va être une grande soirée."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_group_001_humor",
+          "text": "Répondre publiquement avec humour",
+          "tone": "public_humor",
+          "outgoing_text": "Je viens uniquement pour surveiller la playlist et les gens pas subtils.",
+          "effects": {
+            "social_pressure": 1
+          },
+          "sets_flags": [
+            "answered_group_with_humor_day1"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_group_005_humor_nico",
+              "sender": "nico",
+              "time_label": "20:46",
+              "text": "Tu vas avoir du boulot."
+            },
+            {
+              "id": "msg_group_006_humor_pauline",
+              "sender": "pauline",
+              "time_label": "20:46",
+              "text": "Parfait, j’adore quand les gens viennent avec une mission 😇"
+            }
+          ]
+        },
+        {
+          "id": "choice_group_001_like",
+          "text": "Liker seulement le message de Pauline",
+          "tone": "passive_social",
+          "effects": {
+            "pauline_risk_score": 1
+          },
+          "sets_flags": [
+            "liked_pauline_party_invite_day1"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_group_005_like_pauline",
+              "sender": "pauline",
+              "time_label": "20:47",
+              "text": "Je prends ça pour un oui discret."
+            }
+          ]
+        },
+        {
+          "id": "choice_group_001_silent",
+          "text": "Ne pas répondre",
+          "tone": "silent",
+          "effects": {},
+          "sets_flags": [
+            "ignored_group_party_invite_day1"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_group_005_silent_mathilde",
+              "sender": "mathilde",
+              "time_label": "20:48",
+              "text": "Ludo a déjà disparu, c’est prometteur."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "routes_nourished": [
+    "pauline",
+    "nico_marie",
+    "mathilde",
+    "social_pressure"
+  ],
+  "debug_notes": "Groupe volontairement léger. Les conséquences sont faibles : annonce du pivot Pauline et premiers signaux Nico/Mathilde."
+}
