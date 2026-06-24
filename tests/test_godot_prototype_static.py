@@ -76,10 +76,9 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         self.assertIn("AUTOWRAP_WORD_SMART", script)
         self.assertIn("disabled = true", script)
         self.assertIn("_append_ludo_reply", script)
-        self.assertIn("Ludo : %s", script)
         self.assertNotIn("Choix appliqué :", script)
-        self.assertIn("_format_message_line", script)
-        self.assertIn("[%s] %s : %s", script)
+        self.assertIn("_format_message_text", script)
+        self.assertIn("_render_chat_bubble", script)
 
     def test_conversation_view_distinguishes_guided_replies_from_narrative_choices(self):
         script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
@@ -87,8 +86,26 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         self.assertIn("choices.size() == 1", script)
         self.assertIn("Réponse", script)
         self.assertIn("_guided_reply", script)
-        self.assertIn("Ludo : %s", script)
         self.assertIn("Choix disponibles", script)
+        self.assertIn("choice_area", script)
+
+    def test_conversation_view_uses_mobile_chat_bubbles_and_header(self):
+        script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
+        for expected in [
+            "_build_chat_shell",
+            "_add_chat_header",
+            "avatar_placeholder",
+            "message_thread",
+            "choice_area",
+            "_is_ludo_sender",
+            "ALIGNMENT_BEGIN",
+            "ALIGNMENT_END",
+            "StyleBoxFlat",
+            "corner_radius_top_left",
+            "Color(0.05, 0.06, 0.09)",
+            "_add_placeholder_card",
+        ]:
+            self.assertIn(expected, script)
 
     def test_guided_replies_spec_is_present(self):
         spec = ROOT / "docs" / "27_GUIDED_REPLIES_IMPLEMENTATION_SPEC.md"

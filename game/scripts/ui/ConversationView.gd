@@ -3,11 +3,21 @@ extends VBoxContainer
 signal choice_selected(choice: Dictionary)
 signal segment_changed(day_value, conversation_id: String, segment_id: String)
 
+const BACKGROUND_COLOR := Color(0.05, 0.06, 0.09)
+const HEADER_COLOR := Color(0.09, 0.10, 0.14)
+const INCOMING_BUBBLE_COLOR := Color(0.16, 0.16, 0.21)
+const LUDO_BUBBLE_COLOR := Color(0.20, 0.29, 0.38)
+const CHOICE_COLOR := Color(0.13, 0.15, 0.20)
+const PLACEHOLDER_COLOR := Color(0.12, 0.10, 0.15)
+
 var choice_buttons: Array[Button] = []
 var choice_was_applied := false
 var current_conversation: Dictionary = {}
 var current_segment_index := 0
 var continue_button: Button
+var message_thread: VBoxContainer
+var choice_area: VBoxContainer
+var chat_shell: VBoxContainer
 
 func show_conversation(conversation: Dictionary) -> void:
 	_clear()
@@ -16,22 +26,88 @@ func show_conversation(conversation: Dictionary) -> void:
 	continue_button = null
 	custom_minimum_size = Vector2(600, 0)
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	_add_label(current_conversation.get("title", current_conversation.get("id", "Conversation")), 20)
-	_add_conversation_meta(current_conversation)
+	_build_chat_shell()
+	_add_chat_header(current_conversation)
 	_render_current_segment()
+
+func _build_chat_shell() -> void:
+	var background := PanelContainer.new()
+	background.add_theme_stylebox_override("panel", _panel_style(BACKGROUND_COLOR, 18))
+	background.custom_minimum_size = Vector2(600, 680)
+	background.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	background.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	add_child(background)
+
+	chat_shell = VBoxContainer.new()
+	chat_shell.add_theme_constant_override("separation", 10)
+	chat_shell.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	chat_shell.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	background.add_child(chat_shell)
+
+	message_thread = VBoxContainer.new()
+	message_thread.add_theme_constant_override("separation", 8)
+	message_thread.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	message_thread.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	chat_shell.add_child(message_thread)
+
+	choice_area = VBoxContainer.new()
+	choice_area.add_theme_constant_override("separation", 8)
+	choice_area.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	chat_shell.add_child(choice_area)
+
+func _add_chat_header(conversation: Dictionary) -> void:
+	var header_panel := PanelContainer.new()
+	header_panel.add_theme_stylebox_override("panel", _panel_style(HEADER_COLOR, 16))
+	header_panel.custom_minimum_size = Vector2(0, 68)
+	header_panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	chat_shell.add_child(header_panel)
+	chat_shell.move_child(header_panel, 0)
+
+	var header := HBoxContainer.new()
+	header.add_theme_constant_override("separation", 10)
+	header_panel.add_child(header)
+
+	var avatar_card := PanelContainer.new()
+	avatar_card.custom_minimum_size = Vector2(48, 48)
+	avatar_card.add_theme_stylebox_override("panel", _panel_style(Color(0.24, 0.20, 0.30), 24))
+	header.add_child(avatar_card)
+	var avatar_placeholder := Label.new()
+	avatar_placeholder.text = _avatar_initial(conversation)
+	avatar_placeholder.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	avatar_placeholder.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	avatar_placeholder.add_theme_font_size_override("font_size", 18)
+	avatar_card.add_child(avatar_placeholder)
+
+	var title_box := VBoxContainer.new()
+	title_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	header.add_child(title_box)
+
+	var name := Label.new()
+	name.text = _conversation_name(conversation)
+	name.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	name.add_theme_font_size_override("font_size", 18)
+	title_box.add_child(name)
+
+	var status := Label.new()
+	status.text = _conversation_status(conversation)
+	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	status.add_theme_font_size_override("font_size", 12)
+	status.add_theme_color_override("font_color", Color(0.72, 0.75, 0.82))
+	title_box.add_child(status)
 
 func _render_current_segment() -> void:
 	choice_buttons.clear()
 	choice_was_applied = false
+	_clear_node(choice_area)
 	var data := _current_segment_data()
 	for item in _flatten_content(data):
 		_render_item(item)
 	var choices := _collect_choices(data)
 	if choices.is_empty():
-		_add_label("Aucun choix direct dans cette conversation.")
+		_add_choice_hint("Aucun choix direct dans cette conversation.")
 	else:
 		var is_guided_reply := choices.size() == 1
-		_add_label("Réponse" if is_guided_reply else "Choix disponibles", 16)
+		_add_choice_heading("Réponse" if is_guided_reply else "Choix disponibles")
 		for choice in choices:
 			if is_guided_reply:
 				choice["_guided_reply"] = true
@@ -40,9 +116,12 @@ func _render_current_segment() -> void:
 			button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			button.custom_minimum_size = Vector2(0, 48)
 			button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			button.add_theme_stylebox_override("normal", _panel_style(CHOICE_COLOR, 18))
+			button.add_theme_stylebox_override("hover", _panel_style(Color(0.18, 0.21, 0.28), 18))
+			button.add_theme_stylebox_override("pressed", _panel_style(Color(0.20, 0.29, 0.38), 18))
 			button.pressed.connect(func(): _select_choice(choice, button))
 			choice_buttons.append(button)
-			add_child(button)
+			choice_area.add_child(button)
 
 func append_choice_result(choice: Dictionary) -> void:
 	_append_ludo_reply(choice)
@@ -58,8 +137,10 @@ func _show_continue_button() -> void:
 	continue_button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	continue_button.custom_minimum_size = Vector2(0, 48)
 	continue_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	continue_button.add_theme_stylebox_override("normal", _panel_style(Color(0.18, 0.22, 0.28), 18))
+	continue_button.add_theme_stylebox_override("hover", _panel_style(Color(0.22, 0.28, 0.36), 18))
 	continue_button.pressed.connect(_show_next_segment)
-	add_child(continue_button)
+	choice_area.add_child(continue_button)
 
 func _show_next_segment() -> void:
 	if not _has_next_segment():
@@ -67,7 +148,7 @@ func _show_next_segment() -> void:
 	if continue_button:
 		continue_button.disabled = true
 	current_segment_index += 1
-	_add_label("—", 12)
+	_add_timeline_separator()
 	segment_changed.emit(current_conversation.get("day", current_conversation.get("chapter", null)), _parent_conversation_id(), _segment_id_for_current_index())
 	_render_current_segment()
 
@@ -91,7 +172,7 @@ func _segment_id_for_current_index() -> String:
 	return "%s__segment_%d" % [_parent_conversation_id(), current_segment_index + 1]
 
 func _append_ludo_reply(choice: Dictionary) -> void:
-	_add_label("Ludo : %s" % choice.get("text", choice.get("id", "")), 16)
+	_render_chat_bubble({"sender": "ludo", "text": choice.get("text", choice.get("id", ""))})
 
 func _is_guided_reply(choice: Dictionary) -> bool:
 	return bool(choice.get("_guided_reply", false))
@@ -149,52 +230,166 @@ func _render_item(item) -> void:
 	if item.has("text") or item.has("body") or item.has("content_id") or item.has("reaction"):
 		_render_message(item)
 	elif not item.has("messages") and not item.has("social_items"):
-		_add_label("[debug item] %s" % str(item.get("id", item.keys())), 11)
+		_add_system_note("[debug item] %s" % str(item.get("id", item.keys())))
 
 func _render_message(message: Dictionary) -> void:
-	var line := _format_message_line(message)
-	if line != "":
-		_add_label(line)
+	var text := _format_message_text(message)
+	if text != "":
+		_render_chat_bubble(message)
 	if message.has("content_id"):
-		_add_placeholder(str(message["content_id"]))
+		_add_placeholder_card(str(message["content_id"]), _is_ludo_sender(message))
 
-func _format_message_line(message: Dictionary) -> String:
-	var sender := str(message.get("sender", message.get("author", message.get("title", "system"))))
+func _render_chat_bubble(message: Dictionary) -> void:
+	var is_ludo := _is_ludo_sender(message)
+	var row := HBoxContainer.new()
+	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.alignment = BoxContainer.ALIGNMENT_END if is_ludo else BoxContainer.ALIGNMENT_BEGIN
+	message_thread.add_child(row)
+
+	var bubble := PanelContainer.new()
+	bubble.custom_minimum_size = Vector2(180, 0)
+	bubble.size_flags_horizontal = Control.SIZE_SHRINK_END if is_ludo else Control.SIZE_SHRINK_BEGIN
+	bubble.add_theme_stylebox_override("panel", _bubble_style(LUDO_BUBBLE_COLOR if is_ludo else INCOMING_BUBBLE_COLOR, is_ludo))
+	row.add_child(bubble)
+
+	var text_box := VBoxContainer.new()
+	text_box.add_theme_constant_override("separation", 4)
+	bubble.add_child(text_box)
+
+	var sender := str(message.get("sender", message.get("author", "")))
+	if sender != "" and not is_ludo:
+		var sender_label := Label.new()
+		sender_label.text = sender.capitalize()
+		sender_label.add_theme_font_size_override("font_size", 11)
+		sender_label.add_theme_color_override("font_color", Color(0.77, 0.72, 0.90))
+		text_box.add_child(sender_label)
+
+	var label := Label.new()
+	label.text = _format_message_text(message)
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.custom_minimum_size = Vector2(160, 0)
+	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	label.add_theme_font_size_override("font_size", 15)
+	text_box.add_child(label)
+
+func _format_message_text(message: Dictionary) -> String:
 	var text := str(message.get("text", message.get("body", message.get("reaction", ""))))
 	if text == "":
 		return ""
 	if message.has("time_label"):
-		return "[%s] %s : %s" % [message["time_label"], sender, text]
-	return "%s : %s" % [sender, text]
+		return "[%s] %s" % [message["time_label"], text]
+	return text
 
-func _add_placeholder(content_id: String) -> void:
+func _is_ludo_sender(message: Dictionary) -> bool:
+	var sender := str(message.get("sender", message.get("author", ""))).to_lower()
+	return sender == "ludo" or sender == "player" or sender == "joueur"
+
+func _add_placeholder_card(content_id: String, is_ludo := false) -> void:
 	var item := DataLoader.get_visual_content(content_id)
 	var tags := ", ".join(item.get("tags", [])) if not item.is_empty() else "unknown"
 	var risk := str(item.get("risk_level", "?")) if not item.is_empty() else "?"
-	_add_label("[Image placeholder]\nID: %s\nTags: %s\nRisk: %s" % [content_id, tags, risk], 12)
+	var row := HBoxContainer.new()
+	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.alignment = BoxContainer.ALIGNMENT_END if is_ludo else BoxContainer.ALIGNMENT_BEGIN
+	message_thread.add_child(row)
+
+	var card := PanelContainer.new()
+	card.custom_minimum_size = Vector2(300, 120)
+	card.add_theme_stylebox_override("panel", _bubble_style(PLACEHOLDER_COLOR, is_ludo))
+	row.add_child(card)
+
+	var body := VBoxContainer.new()
+	body.add_theme_constant_override("separation", 6)
+	card.add_child(body)
+	_add_label_to(body, "[Image placeholder]", 14)
+	_add_label_to(body, "ID : %s" % content_id, 12)
+	_add_label_to(body, "Tags : %s" % tags, 12)
+	_add_label_to(body, "Risque : %s" % risk, 12)
 	GameState.add_unlocked_content(content_id)
 
-func _add_conversation_meta(data: Dictionary) -> void:
-	var meta: Array[String] = []
-	if str(data.get("moment_label", "")) != "":
-		meta.append(str(data.get("moment_label")))
-	if str(data.get("time_label", "")) != "":
-		meta.append(str(data.get("time_label")))
-	if not meta.is_empty():
-		_add_label(" — ".join(meta), 12)
-	if str(data.get("transition_text", "")) != "":
-		_add_label(str(data.get("transition_text")), 12)
-	if str(data.get("availability_state", "")) != "":
-		_add_label("État : %s" % data.get("availability_state"), 12)
+func _add_choice_heading(text: String) -> void:
+	var label := Label.new()
+	label.text = text
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.add_theme_font_size_override("font_size", 16)
+	label.add_theme_color_override("font_color", Color(0.86, 0.88, 0.94))
+	choice_area.add_child(label)
 
-func _add_label(text: String, size: int = 14) -> void:
+func _add_choice_hint(text: String) -> void:
+	var label := Label.new()
+	label.text = text
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.add_theme_font_size_override("font_size", 12)
+	label.add_theme_color_override("font_color", Color(0.65, 0.67, 0.72))
+	choice_area.add_child(label)
+
+func _add_system_note(text: String) -> void:
+	var label := Label.new()
+	label.text = text
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.add_theme_font_size_override("font_size", 11)
+	label.add_theme_color_override("font_color", Color(0.62, 0.64, 0.70))
+	message_thread.add_child(label)
+
+func _add_timeline_separator() -> void:
+	_add_system_note("—")
+
+func _conversation_name(conversation: Dictionary) -> String:
+	var thread = conversation.get("thread", {})
+	if typeof(thread) == TYPE_DICTIONARY and str(thread.get("display_name", "")) != "":
+		return str(thread.get("display_name"))
+	return str(conversation.get("title", conversation.get("id", "Conversation")))
+
+func _conversation_status(conversation: Dictionary) -> String:
+	var parts: Array[String] = []
+	if str(conversation.get("moment_label", "")) != "":
+		parts.append(str(conversation.get("moment_label")))
+	if str(conversation.get("time_label", "")) != "":
+		parts.append(str(conversation.get("time_label")))
+	if parts.is_empty():
+		parts.append("En ligne")
+	return " / ".join(parts)
+
+func _avatar_initial(conversation: Dictionary) -> String:
+	var name := _conversation_name(conversation)
+	if name == "":
+		return "?"
+	return name.substr(0, 1).to_upper()
+
+func _panel_style(color: Color, radius: int) -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = color
+	style.corner_radius_top_left = radius
+	style.corner_radius_top_right = radius
+	style.corner_radius_bottom_left = radius
+	style.corner_radius_bottom_right = radius
+	style.content_margin_left = 12
+	style.content_margin_right = 12
+	style.content_margin_top = 10
+	style.content_margin_bottom = 10
+	return style
+
+func _bubble_style(color: Color, is_ludo: bool) -> StyleBoxFlat:
+	var style := _panel_style(color, 18)
+	if is_ludo:
+		style.corner_radius_bottom_right = 6
+	else:
+		style.corner_radius_bottom_left = 6
+	return style
+
+func _add_label_to(parent: Node, text: String, size: int = 14) -> void:
 	var label := Label.new()
 	label.text = text
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	label.add_theme_font_size_override("font_size", size)
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	add_child(label)
+	parent.add_child(label)
 
 func _clear() -> void:
 	for child in get_children():
+		child.queue_free()
+
+func _clear_node(parent: Node) -> void:
+	for child in parent.get_children():
 		child.queue_free()
