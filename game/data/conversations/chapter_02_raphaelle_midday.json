@@ -1,0 +1,155 @@
+{
+  "id": "chapter_02_raphaelle_midday",
+  "chapter": 2,
+  "day": 2,
+  "title": "Jour 2 — Midi avec Raphaëlle",
+  "app": "messages",
+  "thread": {
+    "id": "thread_raphaelle_private",
+    "type": "private",
+    "participants": ["ludo", "raphaelle"],
+    "display_name": "Raphaëlle",
+    "profile_content_id": "profile_raphaelle_placeholder"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c02_raphaelle_lunch_badge",
+      "moment_label": "midi",
+      "time_label": "12:27",
+      "transition_text": "Pause déjeuner. Raphaëlle écrit entre deux réunions, pas comme quelqu’un qui attendait une réponse toute la matinée.",
+      "availability_state": "Raphaëlle est au travail, disponible brièvement avant une réunion.",
+      "function": "Clarifier Raphaëlle comme collègue attentive, pas simple flirt, et installer son rythme professionnel.",
+      "messages": [
+        {
+          "id": "msg_c02_raphaelle_001",
+          "sender": "raphaelle",
+          "time_label": "12:27",
+          "text": "Badge récupéré."
+        },
+        {
+          "id": "msg_c02_raphaelle_002",
+          "sender": "raphaelle",
+          "time_label": "12:27",
+          "text": "Je l’ai posé dans mon tiroir, donc tu es officiellement dépendant de mon sens de l’organisation."
+        },
+        {
+          "id": "msg_c02_raphaelle_003",
+          "sender": "raphaelle",
+          "time_label": "12:28",
+          "text": "Ce qui est plutôt bon pour toi, honnêtement."
+        },
+        {
+          "id": "msg_c02_raphaelle_004",
+          "sender": "raphaelle",
+          "time_label": "12:29",
+          "text": "Tu as mangé quelque chose ou tu fais encore semblant que le café compte ?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_raphaelle_001_honest",
+          "text": "Je fais semblant que le café compte. Et je sais que c’est mauvais signe.",
+          "tone": "honest_tired",
+          "effects": {
+            "raphaelle.attachment": 2,
+            "truth_tendency": 1
+          },
+          "sets_flags": ["trusted_raphaelle_with_tiredness_day2"],
+          "next_messages": [
+            {
+              "id": "msg_c02_raphaelle_005_honest",
+              "sender": "raphaelle",
+              "time_label": "12:30",
+              "text": "Au moins tu le sais."
+            },
+            {
+              "id": "msg_c02_raphaelle_006_honest",
+              "sender": "raphaelle",
+              "time_label": "12:30",
+              "text": "Tu as cette tête quand tu tiens debout par habitude."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_raphaelle_001_flirt",
+          "text": "Ça dépend. Tu proposes un café ou un vrai repas ?",
+          "tone": "light_flirt",
+          "effects": {
+            "raphaelle.attachment": 1,
+            "raphaelle_clarity_score": 1
+          },
+          "sets_flags": ["asked_raphaelle_lunch_day2"],
+          "next_messages": [
+            {
+              "id": "msg_c02_raphaelle_005_flirt",
+              "sender": "raphaelle",
+              "time_label": "12:30",
+              "text": "Je propose surtout que tu arrêtes de faire comme si ton corps était optionnel."
+            },
+            {
+              "id": "msg_c02_raphaelle_006_flirt",
+              "sender": "raphaelle",
+              "time_label": "12:31",
+              "text": "Mais un sandwich avec témoin adulte, ça peut se négocier."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_raphaelle_001_dodge",
+          "text": "Je gère. Merci pour le badge.",
+          "tone": "polite_distance",
+          "effects": {
+            "raphaelle.clarity": 1
+          },
+          "sets_flags": ["dodged_raphaelle_care_day2"],
+          "next_messages": [
+            {
+              "id": "msg_c02_raphaelle_005_dodge",
+              "sender": "raphaelle",
+              "time_label": "12:30",
+              "text": "D’accord."
+            },
+            {
+              "id": "msg_c02_raphaelle_006_dodge",
+              "sender": "raphaelle",
+              "time_label": "12:31",
+              "text": "Je ne force pas. Je remarque, c’est tout."
+            }
+          ]
+        }
+      ],
+      "automatic_followup": [
+        {
+          "id": "msg_c02_raphaelle_007_common",
+          "sender": "raphaelle",
+          "time_label": "12:34",
+          "text": "Réunion dans deux minutes. Si je disparais, ce n’est pas dramatique. C’est PowerPoint."
+        },
+        {
+          "id": "msg_c02_raphaelle_008_common",
+          "sender": "raphaelle",
+          "time_label": "12:35",
+          "text": "Et Ludo ?"
+        },
+        {
+          "id": "msg_c02_raphaelle_009_common",
+          "sender": "raphaelle",
+          "time_label": "12:35",
+          "text": "Je suis sérieuse : fais attention à toi."
+        }
+      ],
+      "interruption_rules": [
+        {
+          "type": "availability_gap",
+          "after_message_id": "msg_c02_raphaelle_009_common",
+          "duration_label": "réunion",
+          "resume_possible": false,
+          "note": "Raphaëlle ne répond plus immédiatement : elle a sa propre journée."
+        }
+      ],
+      "routes_nourished": ["raphaelle", "clarity_seed"],
+      "required_reveals_delivered": ["raphaelle_is_coworker_attentive_clear"]
+    }
+  ],
+  "debug_notes": "Raphaëlle doit être claire, attentionnée et ancrée dans le travail. Elle ne doit pas fonctionner comme Sandra : elle a une limite et un agenda."
+}
