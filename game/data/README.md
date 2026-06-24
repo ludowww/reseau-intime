@@ -30,6 +30,13 @@ conversations/
   chapter_02_mathilde_home.json
   chapter_02_sandra_evening.json
   chapter_02_group_pauline_night.json
+  chapter_03_index.json
+  chapter_03_pre_party_threads.json
+  chapter_03_party_group_arrival.json
+  chapter_03_crossed_notifications.json
+  chapter_03_party_pressure.json
+  chapter_03_wallpaper_reveal.json
+  chapter_03_party_aftershock.json
 
 visual_content/
   placeholders.json
@@ -45,10 +52,11 @@ visual_content/
 - Les conversations peuvent être longues si elles installent la familiarité, mais elles ne doivent pas multiplier les choix visibles.
 - Les premières images de profil doivent ancrer rapidement le casting.
 - À partir du Jour 2, les conversations peuvent être segmentées par moment de journée avec `moment_label`, `transition_text`, `availability_state`, `interruption_rules` et `conversation_segment_id`.
+- À partir du Jour 3, les données peuvent inclure des choix de priorité, des branches conditionnelles et des aftershocks selon les flags.
 
 ## Scope actuel
 
-Le contenu couvre les Jours 1 et 2 du vertical slice.
+Le contenu couvre les Jours 1, 2 et 3 du vertical slice.
 
 ### Jour 1
 
@@ -68,4 +76,13 @@ Le contenu couvre les Jours 1 et 2 du vertical slice.
 - soir avec Sandra : message interrompu par son partenaire, reprise intime, message supprimé ;
 - nuit dans le groupe : Pauline prépare la soirée, Nico vise Marie publiquement, Pauline peut envoyer un privé conditionnel.
 
-Aucune route dominante ne doit être verrouillée aux Jours 1 ou 2. Ces chapitres servent à installer les voix, le téléphone, les images mentales du casting, les liens exacts entre personnages, les habitudes de conversation, les interruptions et les premiers signaux faibles.
+### Jour 3
+
+- avant soirée : Marie prépare le départ, Raphaëlle existe comme contraste hors soirée ;
+- arrivée chez Pauline : groupe actif, Pauline hôte, Nico vise Marie, Mathilde observe ;
+- notifications croisées : le joueur choisit quoi ouvrir en premier ;
+- milieu de soirée : pression sociale, Pauline observe, Mathilde prévient, Nico reste près de Marie ;
+- fond d’écran : révélation conditionnelle pouvant transformer un choix privé en preuve sociale ;
+- fin de soirée : aftershock conditionnel selon la route probable ou la menace active.
+
+Aucune route finale ne doit être verrouillée aux Jours 1, 2 ou 3. Au Jour 3, une route dominante probable peut commencer à émerger dans le debug, mais le récit reste encore récupérable.
