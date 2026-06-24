@@ -1,0 +1,135 @@
+{
+  "id": "chapter_01_raphaelle",
+  "chapter": 1,
+  "day": 1,
+  "title": "Jour 1 — Raphaëlle au travail",
+  "app": "messages",
+  "thread": {
+    "id": "thread_raphaelle_private",
+    "type": "private",
+    "participants": ["ludo", "raphaelle"],
+    "display_name": "Raphaëlle",
+    "profile_content_id": "profile_raphaelle_placeholder"
+  },
+  "beats": [
+    {
+      "id": "beat_01_raphaelle_badge",
+      "pattern": "conversation_courte_familiarite_travail",
+      "function": "Introduire Raphaëlle dès le Jour 1 comme présence attentive et différente, sans ambiguïté forte.",
+      "trigger": {
+        "type": "notification",
+        "title": "Raphaëlle",
+        "body": "Tu as oublié ton badge sur mon bureau."
+      },
+      "messages": [
+        {
+          "id": "msg_raphaelle_001",
+          "sender": "raphaelle",
+          "time_label": "19:04",
+          "text": "Tu as oublié ton badge sur mon bureau."
+        },
+        {
+          "id": "msg_raphaelle_002",
+          "sender": "raphaelle",
+          "time_label": "19:04",
+          "text": "J’hésite entre distraction, fatigue, ou stratégie très élaborée pour me revoir demain matin."
+        },
+        {
+          "id": "msg_raphaelle_003",
+          "sender": "raphaelle",
+          "time_label": "19:05",
+          "text": "Je te le garde, ne panique pas."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_raphaelle_001_grateful",
+          "text": "Merci. Je suis vraiment à côté de mes pompes aujourd’hui.",
+          "tone": "honest_tired",
+          "effects": {
+            "raphaelle.attachment": 1,
+            "truth_tendency": 1
+          },
+          "sets_flags": ["admitted_tired_to_raphaelle_day1"],
+          "next_messages": [
+            {
+              "id": "msg_raphaelle_004_grateful",
+              "sender": "raphaelle",
+              "time_label": "19:06",
+              "text": "J’avais remarqué."
+            },
+            {
+              "id": "msg_raphaelle_005_grateful",
+              "sender": "raphaelle",
+              "time_label": "19:06",
+              "text": "Tu n’es pas obligé de tout porter avec une tête de type qui va bien."
+            }
+          ]
+        },
+        {
+          "id": "choice_raphaelle_001_joke",
+          "text": "Stratégie très élaborée, évidemment.",
+          "tone": "light_flirt",
+          "effects": {
+            "raphaelle.attachment": 1
+          },
+          "sets_flags": ["light_flirt_raphaelle_day1"],
+          "next_messages": [
+            {
+              "id": "msg_raphaelle_004_joke",
+              "sender": "raphaelle",
+              "time_label": "19:06",
+              "text": "Je note que tu assumes au moins les mauvaises stratégies."
+            },
+            {
+              "id": "msg_raphaelle_005_joke",
+              "sender": "raphaelle",
+              "time_label": "19:07",
+              "text": "Je te le rendrai contre un café. Noir, si je me souviens bien."
+            }
+          ]
+        },
+        {
+          "id": "choice_raphaelle_001_dodge",
+          "text": "Je passerai le récupérer demain. Merci.",
+          "tone": "polite_distance",
+          "effects": {
+            "raphaelle.clarity": 1
+          },
+          "sets_flags": ["kept_distance_raphaelle_day1"],
+          "next_messages": [
+            {
+              "id": "msg_raphaelle_004_dodge",
+              "sender": "raphaelle",
+              "time_label": "19:06",
+              "text": "Pas de souci."
+            },
+            {
+              "id": "msg_raphaelle_005_dodge",
+              "sender": "raphaelle",
+              "time_label": "19:07",
+              "text": "Repose-toi un peu si tu peux. Tu avais l’air loin aujourd’hui."
+            }
+          ]
+        }
+      ],
+      "automatic_followup": [
+        {
+          "id": "msg_raphaelle_006_common",
+          "sender": "raphaelle",
+          "time_label": "19:10",
+          "text": "Et je dis ça sans ironie."
+        },
+        {
+          "id": "msg_raphaelle_007_common",
+          "sender": "raphaelle",
+          "time_label": "19:10",
+          "text": "Bonne soirée, Ludo."
+        }
+      ]
+    }
+  ],
+  "routes_nourished": ["raphaelle", "clarity_seed"],
+  "unlocks_content": ["profile_raphaelle_placeholder"],
+  "debug_notes": "Raphaëlle apparaît dès le Jour 1 pour que le joueur la visualise et sente sa fonction : attention, clarté, calme."
+}
