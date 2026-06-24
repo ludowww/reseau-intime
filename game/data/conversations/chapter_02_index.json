@@ -1,0 +1,71 @@
+{
+  "id": "chapter_02_index",
+  "chapter": 2,
+  "day": 2,
+  "title": "Jour 2 — Liens révélés et premières orientations",
+  "description": "Deuxième journée : clarifier qui est chaque personnage, montrer leurs rythmes de vie, découper les conversations en moments et commencer à orienter les préférences du joueur sans verrouiller de route.",
+  "design_goal": "À la fin du Jour 2, le joueur doit comprendre les liens essentiels : Mathilde est la cousine par alliance de Marie par défaut, Sandra est une meilleure amie ambiguë en couple fragile, Raphaëlle est la collègue attentive, Pauline prépare la soirée, Nico regarde Marie.",
+  "moment_flow": [
+    {
+      "moment_label": "matin",
+      "time_label": "08:12",
+      "transition_text": "Le lendemain matin. Le téléphone vibre avant même que Ludo ait fini son café.",
+      "conversation_ids": ["chapter_02_marie_morning"]
+    },
+    {
+      "moment_label": "midi",
+      "time_label": "12:27",
+      "transition_text": "Pause déjeuner. Les messages du matin sont encore là, certains lus, d’autres non.",
+      "conversation_ids": ["chapter_02_raphaelle_midday"]
+    },
+    {
+      "moment_label": "après-midi",
+      "time_label": "15:42",
+      "transition_text": "L’après-midi traîne. Une story de Marie attire l’attention du téléphone.",
+      "conversation_ids": ["chapter_02_social_marie_nico"]
+    },
+    {
+      "moment_label": "début de soirée",
+      "time_label": "18:43",
+      "transition_text": "Retour à l’appartement. Le téléphone redevient dangereux quand il est posé sur la table du salon.",
+      "conversation_ids": ["chapter_02_mathilde_home"]
+    },
+    {
+      "moment_label": "soir",
+      "time_label": "21:36",
+      "transition_text": "La soirée retombe. Certains messages n’arrivent qu’une fois les autres occupés ailleurs.",
+      "conversation_ids": ["chapter_02_sandra_evening"]
+    },
+    {
+      "moment_label": "nuit",
+      "time_label": "23:18",
+      "transition_text": "Trop tard pour une conversation normale. Assez tard pour que Pauline relance le groupe.",
+      "conversation_ids": ["chapter_02_group_pauline_night"]
+    }
+  ],
+  "conversation_files": [
+    "res://data/conversations/chapter_02_marie_morning.json",
+    "res://data/conversations/chapter_02_raphaelle_midday.json",
+    "res://data/conversations/chapter_02_social_marie_nico.json",
+    "res://data/conversations/chapter_02_mathilde_home.json",
+    "res://data/conversations/chapter_02_sandra_evening.json",
+    "res://data/conversations/chapter_02_group_pauline_night.json"
+  ],
+  "required_reveals": [
+    "Marie et Ludo sont en couple, mais la routine pèse.",
+    "Mathilde est la cousine par alliance de Marie par défaut, presque sœur et habituée du foyer.",
+    "Sandra est une meilleure amie ambiguë, en couple fragile, émotionnellement dangereuse.",
+    "Raphaëlle est la collègue attentive, claire, douce mais pas naïve.",
+    "Pauline est la meilleure amie de Marie et prépare une soirée pivot.",
+    "Nico est un ami de Ludo dont le regard sur Marie n’est pas neutre."
+  ],
+  "routes_available": ["marie", "mathilde", "sandra", "raphaelle", "pauline", "nico_marie"],
+  "routes_locked_to_seed_only": ["libertinage", "ntr", "harem_secret", "trio_marie_mathilde"],
+  "debug_expected_outcomes": [
+    "No dominant route should be locked in chapter 2.",
+    "At least one player preference should start to emerge through choices and passive signals.",
+    "Mathilde identity must be clear by the end of the day.",
+    "Nico / Marie jealousy can start but remains light.",
+    "Sandra attachment or exposure can start increasing depending on tone."
+  ]
+}
