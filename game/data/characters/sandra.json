@@ -1,0 +1,34 @@
+{
+  "id": "sandra",
+  "display_name": "Sandra",
+  "role": "Meilleure amie ambiguë de Ludo",
+  "relationship_to_ludo": "best_friend_ambiguous",
+  "relationship_to_marie": "outside_partner_circle",
+  "narrative_function": "Ambiguïté émotionnelle, confidente dangereuse, obsession possible, attachement fragile et peur de l’exposition.",
+  "desire_apparent": "Se confier, être comprise, trouver un espace sûr.",
+  "desire_deep": "Être désirée et unique sans forcément devoir bouleverser sa vie.",
+  "fear": "Être exposée, devoir choisir, perdre le contrôle de ce qu’elle ressent.",
+  "red_line": "Être forcée à clarifier trop vite ou traitée comme une victoire.",
+  "voice_profile": {
+    "rhythm": "court à moyen, hésitant, intime",
+    "emoji_use": "très rare, 🙂 ou 😅 pour masquer le trouble",
+    "flirt_style": "suggère, laisse une porte ouverte et une sortie",
+    "retreat_style": "supprime, minimise, fuit si exposée",
+    "avoid": [
+      "être trop directe trop tôt",
+      "envoyer beaucoup de contenu facilement",
+      "assumer sans peur dès le début"
+    ]
+  },
+  "default_variables": {
+    "attachment": 25,
+    "exposure": 5
+  },
+  "tags": [
+    "emotional_affair",
+    "best_friend",
+    "ambiguous",
+    "fragile",
+    "secret"
+  ]
+}
