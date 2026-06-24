@@ -1,0 +1,34 @@
+{
+  "id": "nico",
+  "display_name": "Nico",
+  "role": "Ami de Ludo qui fantasme sur Marie",
+  "relationship_to_ludo": "friend_rival",
+  "relationship_to_marie": "desires_marie",
+  "narrative_function": "Rival miroir, jalousie, NTR amorcé, désir extérieur envers Marie et révélateur de l’hypocrisie possible de Ludo.",
+  "desire_apparent": "Flirter, complimenter, être proche de Marie.",
+  "desire_deep": "Occuper la place que Ludo laisse vide.",
+  "fear": "Être vu seulement comme le pote lourd ou le méchant rival.",
+  "red_line": "Être réduit à un antagoniste simple sans miroir psychologique.",
+  "voice_profile": {
+    "rhythm": "court, ton de pote, piquant",
+    "emoji_use": "🔥 sur réseau social, 😏 en provocation",
+    "flirt_style": "complimente Marie en surface, pique Ludo indirectement",
+    "mirror_style": "renvoie Ludo à ce qu’il fait lui-même ailleurs",
+    "avoid": [
+      "pur méchant caricatural",
+      "trop noble sans désir",
+      "vulgaire trop vite"
+    ]
+  },
+  "default_variables": {
+    "desire_for_marie": 60,
+    "place_near_marie": 20
+  },
+  "tags": [
+    "friend",
+    "rival",
+    "ntr_seed",
+    "jealousy",
+    "mirror"
+  ]
+}
