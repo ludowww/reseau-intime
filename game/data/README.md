@@ -37,9 +37,16 @@ conversations/
   chapter_03_party_pressure.json
   chapter_03_wallpaper_reveal.json
   chapter_03_party_aftershock.json
+  chapter_04_index.json
+  chapter_04_marie_morning_reaction.json
+  chapter_04_conditional_proofs.json
+  chapter_04_raphaelle_lunch_contrast.json
+  chapter_04_social_after_party.json
+  chapter_04_route_pressure_and_debug.json
 
 visual_content/
   placeholders.json
+  chapter_04_proofs.json
 ```
 
 ## Règles
@@ -53,10 +60,11 @@ visual_content/
 - Les premières images de profil doivent ancrer rapidement le casting.
 - À partir du Jour 2, les conversations peuvent être segmentées par moment de journée avec `moment_label`, `transition_text`, `availability_state`, `interruption_rules` et `conversation_segment_id`.
 - À partir du Jour 3, les données peuvent inclure des choix de priorité, des branches conditionnelles et des aftershocks selon les flags.
+- À partir du Jour 4, les données peuvent inclure des preuves conditionnelles et un calcul debug de route probable.
 
 ## Scope actuel
 
-Le contenu couvre les Jours 1, 2 et 3 du vertical slice.
+Le contenu couvre les Jours 1, 2, 3 et 4 du vertical slice.
 
 ### Jour 1
 
@@ -85,4 +93,12 @@ Le contenu couvre les Jours 1, 2 et 3 du vertical slice.
 - fond d’écran : révélation conditionnelle pouvant transformer un choix privé en preuve sociale ;
 - fin de soirée : aftershock conditionnel selon la route probable ou la menace active.
 
-Aucune route finale ne doit être verrouillée aux Jours 1, 2 ou 3. Au Jour 3, une route dominante probable peut commencer à émerger dans le debug, mais le récit reste encore récupérable.
+### Jour 4
+
+- matin : Marie réagit à la distance ou au téléphone après la soirée ;
+- fin de matinée : première preuve conditionnelle selon les flags du Jour 3 ;
+- midi : Raphaëlle agit comme contraste lucide extérieur ;
+- après-midi : le réseau social garde une mémoire publique de la soirée ;
+- soir : dernier crochet conditionnel et calcul debug de route probable.
+
+Aucune route finale ne doit être verrouillée aux Jours 1, 2, 3 ou 4. Au Jour 4, une route dominante probable et une menace active doivent pouvoir émerger dans le debug, mais le récit reste encore récupérable.
