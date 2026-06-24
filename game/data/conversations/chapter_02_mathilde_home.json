@@ -1,0 +1,253 @@
+{
+  "id": "chapter_02_mathilde_home",
+  "chapter": 2,
+  "day": 2,
+  "title": "Jour 2 — Mathilde à la maison",
+  "app": "messages",
+  "thread": {
+    "id": "thread_mathilde_private",
+    "type": "private",
+    "participants": ["ludo", "mathilde"],
+    "display_name": "Mathilde",
+    "profile_content_id": "profile_mathilde_placeholder"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c02_mathilde_arrival",
+      "moment_label": "début de soirée",
+      "time_label": "18:43",
+      "transition_text": "Retour à l’appartement. Marie est dans la cuisine. Mathilde écrit depuis le palier, comme si elle faisait déjà partie des lieux.",
+      "availability_state": "Mathilde est en route vers l’appartement, puis chez Marie et Ludo. Marie peut interrompre à tout moment.",
+      "function": "Faire passer Mathilde de personne évoquée à présence active, confirmer le lien familial et installer l’interdit domestique sans bascule explicite.",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_001",
+          "sender": "mathilde",
+          "time_label": "18:43",
+          "text": "Je suis en bas."
+        },
+        {
+          "id": "msg_c02_mathilde_002",
+          "sender": "mathilde",
+          "time_label": "18:43",
+          "text": "Marie répond pas, évidemment. Elle me dit de passer puis elle disparaît."
+        },
+        {
+          "id": "msg_c02_mathilde_003",
+          "sender": "mathilde",
+          "time_label": "18:44",
+          "text": "Tu peux ouvrir ou je dois officiellement dormir sur le paillasson de ma cousine ?"
+        },
+        {
+          "id": "msg_c02_mathilde_004",
+          "sender": "mathilde",
+          "time_label": "18:44",
+          "text": "Cousine par alliance, avant que tu fasses ton juriste."
+        },
+        {
+          "id": "msg_c02_mathilde_005",
+          "sender": "mathilde",
+          "time_label": "18:45",
+          "text": "Mais bon, elle m’a supportée assez longtemps pour que ça compte."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_001_open_soft",
+          "text": "J’arrive. Ne dramatise pas, tu as déjà presque une chambre ici.",
+          "tone": "familiar_tease",
+          "effects": {
+            "mathilde.desire": 1,
+            "mathilde_attention_score": 1
+          },
+          "sets_flags": ["opened_for_mathilde_warm_day2"],
+          "next_messages": [
+            {
+              "id": "msg_c02_mathilde_006_soft",
+              "sender": "mathilde",
+              "time_label": "18:46",
+              "text": "Presque ?"
+            },
+            {
+              "id": "msg_c02_mathilde_007_soft",
+              "sender": "mathilde",
+              "time_label": "18:46",
+              "text": "Je note que tu refuses encore de reconnaître mon statut officiel."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_mathilde_001_ambiguous",
+          "text": "Si Marie n’est pas là, je peux te faire entrer discrètement.",
+          "tone": "ambiguous",
+          "effects": {
+            "mathilde.desire": 2,
+            "lie_score": 1,
+            "mathilde_attention_score": 1
+          },
+          "sets_flags": ["made_ambiguous_home_joke_mathilde_day2"],
+          "next_messages": [
+            {
+              "id": "msg_c02_mathilde_006_ambiguous",
+              "sender": "mathilde",
+              "time_label": "18:46",
+              "text": "Dis pas ça comme ça."
+            },
+            {
+              "id": "msg_c02_mathilde_007_ambiguous",
+              "sender": "mathilde",
+              "time_label": "18:46",
+              "text": "On dirait le début d’un message que je devrais supprimer."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_mathilde_001_boundaries",
+          "text": "Je préviens Marie et je t’ouvre.",
+          "tone": "boundary_safe",
+          "effects": {
+            "mathilde.loyalty": 1,
+            "truth_tendency": 1
+          },
+          "sets_flags": ["kept_mathilde_boundary_day2"],
+          "next_messages": [
+            {
+              "id": "msg_c02_mathilde_006_boundary",
+              "sender": "mathilde",
+              "time_label": "18:46",
+              "text": "Sage."
+            },
+            {
+              "id": "msg_c02_mathilde_007_boundary",
+              "sender": "mathilde",
+              "time_label": "18:47",
+              "text": "Un peu décevant, mais sage."
+            }
+          ]
+        }
+      ],
+      "automatic_followup": [
+        {
+          "id": "msg_c02_mathilde_008_common",
+          "sender": "mathilde",
+          "time_label": "18:52",
+          "text": "Je suis montée. Marie m’a déjà donné un sac à plier."
+        },
+        {
+          "id": "msg_c02_mathilde_009_common",
+          "sender": "mathilde",
+          "time_label": "18:52",
+          "text": "Je viens pour un chargeur, je repars avec un stage domestique."
+        },
+        {
+          "id": "msg_c02_mathilde_010_common",
+          "sender": "mathilde",
+          "time_label": "18:53",
+          "text": "Elle dit que je suis de la famille donc je dois aider. Tu confirmes ce scandale ?"
+        }
+      ],
+      "interruption_rules": [
+        {
+          "type": "person_enters_room",
+          "character": "marie",
+          "after_message_id": "msg_c02_mathilde_010_common",
+          "effect": "Mathilde cesse d’écrire en privé pendant quelques minutes.",
+          "sets_flags": ["marie_interrupted_mathilde_private_day2"]
+        }
+      ],
+      "routes_nourished": ["mathilde", "marie", "secret_affair_seed"],
+      "unlocks_content": ["profile_mathilde_placeholder", "photo_mathilde_home_tier1_placeholder"],
+      "required_reveals_delivered": ["mathilde_identity_family_by_marriage", "mathilde_loyalty_to_marie"]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_after_interruption",
+      "moment_label": "soirée",
+      "time_label": "19:34",
+      "transition_text": "Plus tard. Marie parle avec Pauline dans le salon. Mathilde reprend la conversation comme si rien n’était dangereux.",
+      "availability_state": "Mathilde est dans l’appartement, physiquement proche mais socialement sous le regard de Marie.",
+      "function": "Créer une reprise après interruption et une première image domestique non explicite.",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_011",
+          "sender": "mathilde",
+          "time_label": "19:34",
+          "text": "Photo envoyée."
+        },
+        {
+          "id": "msg_c02_mathilde_012",
+          "sender": "mathilde",
+          "time_label": "19:34",
+          "text": "Preuve que j’aide vraiment. Contrairement à certaines personnes qui se cachent derrière leur téléphone.",
+          "content_id": "photo_mathilde_home_tier1_placeholder",
+          "content_behavior": "inline_preview"
+        },
+        {
+          "id": "msg_c02_mathilde_013",
+          "sender": "mathilde",
+          "time_label": "19:35",
+          "text": "Ne montre pas ça à Marie, elle va me donner plus de travail."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_002_favorite",
+          "text": "Mettre la photo en favori",
+          "tone": "passive_preference",
+          "effects": {
+            "mathilde_attention_score": 1
+          },
+          "sets_flags": ["favorited_mathilde_home_photo_day2"],
+          "next_messages": [
+            {
+              "id": "msg_c02_mathilde_014_favorite",
+              "sender": "system",
+              "time_label": "19:35",
+              "text": "Photo ajoutée aux favoris."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_mathilde_002_tease",
+          "text": "Répondre : 'Tu travailles mieux quand tu fais semblant de râler.'",
+          "tone": "tease",
+          "effects": {
+            "mathilde.desire": 1
+          },
+          "sets_flags": ["teased_mathilde_work_photo_day2"],
+          "next_messages": [
+            {
+              "id": "msg_c02_mathilde_014_tease",
+              "sender": "mathilde",
+              "time_label": "19:36",
+              "text": "Tu me connais mal. Je râle très sincèrement."
+            },
+            {
+              "id": "msg_c02_mathilde_015_tease",
+              "sender": "mathilde",
+              "time_label": "19:36",
+              "text": "Mais continue de croire que tu sais me lire, c’est mignon."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_mathilde_002_ignore",
+          "text": "Ne pas répondre tout de suite",
+          "tone": "wait",
+          "effects": {},
+          "sets_flags": ["left_mathilde_photo_unanswered_day2"],
+          "next_messages": [
+            {
+              "id": "msg_c02_mathilde_014_ignore",
+              "sender": "mathilde",
+              "time_label": "19:39",
+              "text": "Ok, monsieur mystérieux."
+            }
+          ]
+        }
+      ],
+      "routes_nourished": ["mathilde", "passive_attention"],
+      "required_reveals_delivered": ["mathilde_first_non_explicit_visual_content"]
+    }
+  ],
+  "debug_notes": "Mathilde révèle clairement son lien à Marie, puis devient présence active dans l’appartement. Le risque vient du contexte domestique, pas d’un contenu explicite."
+}
