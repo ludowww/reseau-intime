@@ -147,6 +147,38 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         self.assertIn("func _on_segment_changed", script)
         self.assertIn("GameState.set_context(day_value", script)
 
+    def test_conversation_view_polishes_post_choice_typing_flow(self):
+        script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
+        for expected in [
+            "_clear_node(choice_area)",
+            "_play_followup_sequence",
+            "_show_typing_indicator",
+            "_typing_delay_for_message",
+            "0.35 + char_count * 0.018",
+            "clamp(delay, 0.45, 2.4)",
+            "await get_tree().create_timer",
+            "écrit...",
+        ]:
+            self.assertIn(expected, script)
+        self.assertNotIn("✓ %s", script)
+
+    def test_conversation_view_has_character_bubble_palette(self):
+        script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
+        for expected in [
+            "CHARACTER_BUBBLE_COLORS",
+            '"ludo"',
+            '"marie"',
+            '"mathilde"',
+            '"sandra"',
+            '"raphaelle"',
+            '"raphaëlle"',
+            '"pauline"',
+            '"nico"',
+            '"groupe amis"',
+            "_bubble_color_for_sender",
+        ]:
+            self.assertIn(expected, script)
+
     def test_debug_panel_has_readable_compact_sections(self):
         script = (GAME / "scripts" / "ui" / "DebugPanel.gd").read_text(encoding="utf-8")
         self.assertIn("custom_minimum_size", script)

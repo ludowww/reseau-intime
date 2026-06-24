@@ -9,6 +9,17 @@ const INCOMING_BUBBLE_COLOR := Color(0.16, 0.16, 0.21)
 const LUDO_BUBBLE_COLOR := Color(0.20, 0.29, 0.38)
 const CHOICE_COLOR := Color(0.13, 0.15, 0.20)
 const PLACEHOLDER_COLOR := Color(0.12, 0.10, 0.15)
+const CHARACTER_BUBBLE_COLORS := {
+	"ludo": Color(0.20, 0.29, 0.38),
+	"marie": Color(0.42, 0.25, 0.36),
+	"mathilde": Color(0.34, 0.18, 0.31),
+	"sandra": Color(0.22, 0.22, 0.34),
+	"raphaelle": Color(0.20, 0.38, 0.42),
+	"raphaëlle": Color(0.20, 0.38, 0.42),
+	"pauline": Color(0.42, 0.12, 0.22),
+	"nico": Color(0.32, 0.36, 0.20),
+	"groupe amis": Color(0.30, 0.25, 0.18),
+}
 
 var choice_buttons: Array[Button] = []
 var choice_was_applied := false
@@ -125,11 +136,15 @@ func _render_current_segment() -> void:
 
 func append_choice_result(choice: Dictionary) -> void:
 	_append_ludo_reply(choice)
-	for key in ["next_messages", "next_items", "automatic_followup"]:
-		for entry in choice.get(key, []):
-			_render_item(entry)
+	_clear_node(choice_area)
+	await _play_followup_sequence(choice)
 	if _has_next_segment():
 		_show_continue_button()
+
+func _play_followup_sequence(choice: Dictionary) -> void:
+	for key in ["next_messages", "next_items", "automatic_followup"]:
+		for entry in choice.get(key, []):
+			await _render_item_with_typing(entry)
 
 func _show_continue_button() -> void:
 	continue_button = Button.new()
@@ -183,8 +198,48 @@ func _select_choice(choice: Dictionary, selected_button: Button) -> void:
 	choice_was_applied = true
 	for button in choice_buttons:
 		button.disabled = true
-	selected_button.text = "✓ %s" % selected_button.text
+	_clear_node(choice_area)
 	choice_selected.emit(choice)
+
+func _render_item_with_typing(item) -> void:
+	if typeof(item) != TYPE_DICTIONARY:
+		return
+	if item.has("messages"):
+		for message in item.get("messages", []):
+			await _render_message_with_typing(message)
+	if item.has("social_items"):
+		for social_item in item.get("social_items", []):
+			await _render_item_with_typing(social_item)
+	if item.has("incoming_notifications"):
+		for notification in item.get("incoming_notifications", []):
+			await _render_item_with_typing(notification)
+	if item.has("automatic_followup"):
+		for followup in item.get("automatic_followup", []):
+			await _render_item_with_typing(followup)
+	if item.has("text") or item.has("body") or item.has("content_id") or item.has("reaction"):
+		await _render_message_with_typing(item)
+	elif not item.has("messages") and not item.has("social_items"):
+		_add_system_note("[debug item] %s" % str(item.get("id", item.keys())))
+
+func _render_message_with_typing(message: Dictionary) -> void:
+	if not _is_ludo_sender(message):
+		var typing_indicator := _show_typing_indicator(message)
+		await get_tree().create_timer(_typing_delay_for_message(message)).timeout
+		if is_instance_valid(typing_indicator):
+			typing_indicator.queue_free()
+	_render_message(message)
+
+func _show_typing_indicator(message: Dictionary) -> Node:
+	var typing_message := message.duplicate(true)
+	typing_message["text"] = "%s écrit..." % _sender_display_name(message)
+	if _sender_display_name(message) == "":
+		typing_message["text"] = "écrit..."
+	return _render_chat_bubble(typing_message)
+
+func _typing_delay_for_message(message: Dictionary) -> float:
+	var char_count := _format_message_text(message).length()
+	var delay := 0.35 + char_count * 0.018
+	return clamp(delay, 0.45, 2.4)
 
 func _flatten_content(conversation: Dictionary) -> Array:
 	var items: Array = []
@@ -239,7 +294,7 @@ func _render_message(message: Dictionary) -> void:
 	if message.has("content_id"):
 		_add_placeholder_card(str(message["content_id"]), _is_ludo_sender(message))
 
-func _render_chat_bubble(message: Dictionary) -> void:
+func _render_chat_bubble(message: Dictionary) -> Node:
 	var is_ludo := _is_ludo_sender(message)
 	var row := HBoxContainer.new()
 	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -249,7 +304,7 @@ func _render_chat_bubble(message: Dictionary) -> void:
 	var bubble := PanelContainer.new()
 	bubble.custom_minimum_size = Vector2(180, 0)
 	bubble.size_flags_horizontal = Control.SIZE_SHRINK_END if is_ludo else Control.SIZE_SHRINK_BEGIN
-	bubble.add_theme_stylebox_override("panel", _bubble_style(LUDO_BUBBLE_COLOR if is_ludo else INCOMING_BUBBLE_COLOR, is_ludo))
+	bubble.add_theme_stylebox_override("panel", _bubble_style(_bubble_color_for_sender(message), is_ludo))
 	row.add_child(bubble)
 
 	var text_box := VBoxContainer.new()
@@ -271,6 +326,7 @@ func _render_chat_bubble(message: Dictionary) -> void:
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	label.add_theme_font_size_override("font_size", 15)
 	text_box.add_child(label)
+	return row
 
 func _format_message_text(message: Dictionary) -> String:
 	var text := str(message.get("text", message.get("body", message.get("reaction", ""))))
@@ -283,6 +339,19 @@ func _format_message_text(message: Dictionary) -> String:
 func _is_ludo_sender(message: Dictionary) -> bool:
 	var sender := str(message.get("sender", message.get("author", ""))).to_lower()
 	return sender == "ludo" or sender == "player" or sender == "joueur"
+
+func _bubble_color_for_sender(message: Dictionary) -> Color:
+	var sender := _sender_display_name(message).to_lower()
+	if sender == "":
+		sender = _conversation_name(current_conversation).to_lower()
+	if CHARACTER_BUBBLE_COLORS.has(sender):
+		return CHARACTER_BUBBLE_COLORS[sender]
+	if sender.contains("groupe") or sender.contains("amis"):
+		return CHARACTER_BUBBLE_COLORS["groupe amis"]
+	return LUDO_BUBBLE_COLOR if _is_ludo_sender(message) else INCOMING_BUBBLE_COLOR
+
+func _sender_display_name(message: Dictionary) -> String:
+	return str(message.get("sender", message.get("author", "")))
 
 func _add_placeholder_card(content_id: String, is_ludo := false) -> void:
 	var item := DataLoader.get_visual_content(content_id)
