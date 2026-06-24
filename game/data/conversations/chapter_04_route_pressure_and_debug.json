@@ -1,0 +1,179 @@
+{
+  "id": "chapter_04_route_pressure_and_debug",
+  "chapter": 4,
+  "day": 4,
+  "title": "Jour 4 — Pression de route probable",
+  "app": "messages",
+  "segments": [
+    {
+      "conversation_segment_id": "c04_evening_route_pressure",
+      "moment_label": "soir",
+      "time_label": "21:24",
+      "transition_text": "La journée finit avec une impression claire : quelque chose a commencé.",
+      "availability_state": "Les personnages reviennent selon ce qui a été nourri. Le debug peut calculer une route probable, mais le joueur ne voit qu’un dernier message.",
+      "function": "Afficher un dernier crochet conditionnel et préparer le calcul de route probable du vertical slice.",
+      "conditional_closers": [
+        {
+          "id": "closer_marie_truth",
+          "conditions": ["admitted_distance_to_marie_day4 OR put_phone_down_for_marie_party_day3 OR chose_marie_during_crossed_notifications_day3"],
+          "thread_id": "thread_marie_private",
+          "messages": [
+            {
+              "id": "msg_c04_close_marie_001",
+              "sender": "marie",
+              "time_label": "21:24",
+              "text": "Je ne te demande pas d’être parfait."
+            },
+            {
+              "id": "msg_c04_close_marie_002",
+              "sender": "marie",
+              "time_label": "21:25",
+              "text": "Je te demande juste d’être là quand tu es avec moi."
+            }
+          ],
+          "effects": {
+            "marie.trust": 1
+          },
+          "sets_flags": ["day4_closer_marie_truth"]
+        },
+        {
+          "id": "closer_pauline_control",
+          "conditions": ["first_proof_pauline_capture_day4 OR asked_pauline_what_she_wants_day4 OR commented_pauline_party_post_day4"],
+          "thread_id": "thread_pauline_private",
+          "messages": [
+            {
+              "id": "msg_c04_close_pauline_001",
+              "sender": "pauline",
+              "time_label": "21:27",
+              "text": "Tu m’as donné plus que tu ne crois."
+            },
+            {
+              "id": "msg_c04_close_pauline_002",
+              "sender": "pauline",
+              "time_label": "21:27",
+              "text": "Et le plus drôle, c’est que tu ne sais pas encore quoi."
+            }
+          ],
+          "effects": {
+            "pauline.control": 1
+          },
+          "sets_flags": ["day4_closer_pauline_control"]
+        },
+        {
+          "id": "closer_sandra_reasonable",
+          "conditions": ["first_proof_sandra_deleted_thread_day4 OR kept_sandra_conversation_day4 OR held_sandra_space_day2"],
+          "thread_id": "thread_sandra_private",
+          "messages": [
+            {
+              "id": "msg_c04_close_sandra_001",
+              "sender": "sandra",
+              "time_label": "21:31",
+              "text": "J’ai failli t’écrire encore."
+            },
+            {
+              "id": "msg_c04_close_sandra_002",
+              "sender": "sandra",
+              "time_label": "21:31",
+              "text": "Je me suis dit que c’était exactement pour ça que je ne devais pas le faire."
+            }
+          ],
+          "effects": {
+            "sandra.attachment": 1,
+            "sandra.exposure": 1
+          },
+          "sets_flags": ["day4_closer_sandra_reasonable"]
+        },
+        {
+          "id": "closer_mathilde_guilt",
+          "conditions": ["first_proof_mathilde_warning_photo_day4 OR favorited_mathilde_after_party_photo_day4 OR mathilde_aftershock_warning_day3"],
+          "thread_id": "thread_mathilde_private",
+          "messages": [
+            {
+              "id": "msg_c04_close_mathilde_001",
+              "sender": "mathilde",
+              "time_label": "21:33",
+              "text": "On aurait dû arrêter hier."
+            },
+            {
+              "id": "msg_c04_close_mathilde_002",
+              "sender": "mathilde",
+              "time_label": "21:34",
+              "text": "Et le pire, c’est que je ne sais pas si je parle des messages ou des regards."
+            }
+          ],
+          "effects": {
+            "mathilde.desire": 1,
+            "mathilde.loyalty": 1
+          },
+          "sets_flags": ["day4_closer_mathilde_guilt"]
+        },
+        {
+          "id": "closer_nico_jealousy",
+          "conditions": ["first_proof_nico_marie_story_day4 OR checked_nico_after_party_story_day4 OR rewached_nico_marie_story_day4 OR rewatched_nico_marie_story_day4"],
+          "thread_id": "social_feed_party",
+          "messages": [
+            {
+              "id": "msg_c04_close_nico_001",
+              "sender": "system",
+              "time_label": "21:36",
+              "text": "Nico a réagi à nouveau à une photo de Marie."
+            },
+            {
+              "id": "msg_c04_close_nico_002",
+              "sender": "nico",
+              "time_label": "21:36",
+              "text": "On garde la même équipe la prochaine fois ?"
+            }
+          ],
+          "effects": {
+            "ludo_jealousy": 1,
+            "nico.place_near_marie": 1
+          },
+          "sets_flags": ["day4_closer_nico_jealousy"]
+        }
+      ],
+      "default_closer": {
+        "thread_id": "thread_marie_private",
+        "messages": [
+          {
+            "id": "msg_c04_close_default_001",
+            "sender": "marie",
+            "time_label": "21:38",
+            "text": "On se regarde un truc ce soir ?"
+          },
+          {
+            "id": "msg_c04_close_default_002",
+            "sender": "marie",
+            "time_label": "21:39",
+            "text": "Sans téléphone toutes les deux minutes, si possible."
+          }
+        ],
+        "effects": {
+          "marie.lucidity": 1
+        }
+      },
+      "debug_route_probe": {
+        "show_in_debug_only": true,
+        "calculate": [
+          "probable_dominant_route",
+          "probable_secondary_route",
+          "active_threat",
+          "relationship_mode_seed",
+          "strongest_flags",
+          "strongest_passive_signal"
+        ],
+        "route_hints": {
+          "marie": ["marie.trust", "truth_tendency", "marie_attention_score"],
+          "mathilde": ["mathilde.desire", "mathilde_attention_score", "first_proof_mathilde_warning_photo_day4"],
+          "sandra": ["sandra.attachment", "sandra_priority_score", "first_proof_sandra_deleted_thread_day4"],
+          "pauline": ["pauline.control", "pauline_risk_score", "first_proof_pauline_capture_day4"],
+          "nico_marie": ["ludo_jealousy", "nico_surveillance_score", "first_proof_nico_marie_story_day4"]
+        },
+        "note": "Le joueur ne voit pas les noms de route en jeu normal. Il ne voit qu’un dernier message cohérent avec ses priorités."
+      },
+      "routes_nourished": ["marie", "mathilde", "sandra", "pauline", "nico_marie", "raphaelle_contrast"],
+      "required_events_delivered": ["day4_route_pressure", "debug_route_probability"]
+    }
+  ],
+  "debug_notes": "Fin de Jour 4 : route probable lisible en debug, mais pas verrouillée. Le contenu doit donner envie de continuer vers le prochain bloc."
+}
