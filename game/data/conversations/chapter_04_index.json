@@ -1,0 +1,65 @@
+{
+  "id": "chapter_04_index",
+  "chapter": 4,
+  "day": 4,
+  "title": "Jour 4 — Lendemain et première preuve",
+  "description": "Le lendemain de la soirée : les aftershocks deviennent des traces concrètes. Une route probable commence à émerger sans verrouillage final.",
+  "design_goal": "Transformer la tension du Jour 3 en conséquence lisible : Marie remarque, une preuve peut apparaître, les personnages réagissent selon leur dynamique.",
+  "moment_flow": [
+    {
+      "moment_label": "matin",
+      "time_label": "09:18",
+      "transition_text": "Le lendemain matin. Le téléphone a gardé plus de choses que Ludo ne l’aurait voulu.",
+      "conversation_ids": ["chapter_04_marie_morning_reaction"]
+    },
+    {
+      "moment_label": "fin de matinée",
+      "time_label": "11:42",
+      "transition_text": "Les messages de la soirée remontent par fragments. Une trace devient difficile à ignorer.",
+      "conversation_ids": ["chapter_04_conditional_proofs"]
+    },
+    {
+      "moment_label": "midi",
+      "time_label": "12:36",
+      "transition_text": "Au travail, Raphaëlle voit surtout ce que Ludo essaie de cacher aux autres.",
+      "conversation_ids": ["chapter_04_raphaelle_lunch_contrast"]
+    },
+    {
+      "moment_label": "après-midi",
+      "time_label": "16:08",
+      "transition_text": "Le réseau social ajoute sa propre version de la soirée.",
+      "conversation_ids": ["chapter_04_social_after_party"]
+    },
+    {
+      "moment_label": "soir",
+      "time_label": "21:24",
+      "transition_text": "La journée finit avec une impression claire : quelque chose a commencé.",
+      "conversation_ids": ["chapter_04_route_pressure_and_debug"]
+    }
+  ],
+  "conversation_files": [
+    "res://data/conversations/chapter_04_marie_morning_reaction.json",
+    "res://data/conversations/chapter_04_conditional_proofs.json",
+    "res://data/conversations/chapter_04_raphaelle_lunch_contrast.json",
+    "res://data/conversations/chapter_04_social_after_party.json",
+    "res://data/conversations/chapter_04_route_pressure_and_debug.json"
+  ],
+  "proof_content_files": [
+    "res://data/visual_content/chapter_04_proofs.json"
+  ],
+  "required_events": [
+    "Marie reacts to phone distance or party behavior.",
+    "At least one conditional proof or trace can appear.",
+    "Raphaelle acts as outside clarity, not party drama.",
+    "Social media can reinforce Nico / Marie or Pauline pressure.",
+    "Debug can identify a probable dominant route and active threat."
+  ],
+  "routes_can_become_probable": ["marie", "mathilde", "sandra", "pauline", "nico_marie"],
+  "routes_not_final_locked": ["libertinage", "ntr", "harem_secret", "trio_marie_mathilde"],
+  "debug_expected_outcomes": [
+    "One probable route should be readable in debug by end of day 4.",
+    "At least one active threat should be readable.",
+    "No final route should be locked.",
+    "The player should understand that the phone has memory."
+  ]
+}
