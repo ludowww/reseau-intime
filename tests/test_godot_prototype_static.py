@@ -1,3 +1,4 @@
+import json
 import unittest
 from pathlib import Path
 
@@ -69,12 +70,14 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         self.assertIn("Vector2(260, 0)", script)
         self.assertIn("SIZE_EXPAND_FILL", script)
 
-    def test_conversation_view_wraps_choices_and_marks_choice_applied(self):
+    def test_conversation_view_wraps_choices_and_renders_ludo_reply(self):
         script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
         self.assertIn("choice_buttons", script)
         self.assertIn("AUTOWRAP_WORD_SMART", script)
         self.assertIn("disabled = true", script)
-        self.assertIn("Choix appliqué", script)
+        self.assertIn("_append_ludo_reply", script)
+        self.assertIn("Ludo : %s", script)
+        self.assertNotIn("Choix appliqué :", script)
         self.assertIn("_format_message_line", script)
         self.assertIn("[%s] %s : %s", script)
 
@@ -85,7 +88,6 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         self.assertIn("Réponse", script)
         self.assertIn("_guided_reply", script)
         self.assertIn("Ludo : %s", script)
-        self.assertIn("Choix appliqué", script)
         self.assertIn("Choix disponibles", script)
 
     def test_guided_replies_spec_is_present(self):
@@ -94,6 +96,18 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         text = spec.read_text(encoding="utf-8")
         self.assertIn("Si un segment contient exactement 1 choix", text)
         self.assertIn("Ludo : [texte du choix]", text)
+
+    def test_day1_sandra_and_marie_have_guided_reply_segments(self):
+        for relative in [
+            "data/conversations/chapter_01_sandra.json",
+            "data/conversations/chapter_01_marie.json",
+        ]:
+            data = json.loads((GAME / relative).read_text(encoding="utf-8"))
+            segments = data.get("segments", [])
+            self.assertGreaterEqual(len(segments), 2, relative)
+            choice_counts = [len(segment.get("choices", [])) for segment in segments]
+            self.assertIn(1, choice_counts, relative)
+            self.assertTrue(any(count > 1 for count in choice_counts), relative)
 
     def test_debug_panel_has_readable_compact_sections(self):
         script = (GAME / "scripts" / "ui" / "DebugPanel.gd").read_text(encoding="utf-8")

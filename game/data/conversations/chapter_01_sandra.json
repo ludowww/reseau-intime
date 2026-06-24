@@ -7,15 +7,18 @@
   "thread": {
     "id": "thread_sandra_private",
     "type": "private",
-    "participants": ["ludo", "sandra"],
+    "participants": [
+      "ludo",
+      "sandra"
+    ],
     "display_name": "Sandra",
     "profile_content_id": "profile_sandra_placeholder"
   },
-  "beats": [
+  "segments": [
     {
-      "id": "beat_01_sandra_survive",
-      "pattern": "conversation_moyenne_familiarite_intime",
-      "function": "Installer la complicité déjà ancienne entre Sandra et Ludo, sans bascule explicite ni contenu visuel intime.",
+      "id": "segment_sandra_day1_ping",
+      "pattern": "guided_reply_pacing",
+      "function": "Ouvrir la complicité par un premier tour de parole court avant les vrais choix de ton.",
       "trigger": {
         "type": "notification",
         "title": "Sandra",
@@ -33,117 +36,157 @@
           "sender": "sandra",
           "time_label": "18:18",
           "text": "J’ai pensé à toi tout à l’heure."
-        },
+        }
+      ],
+      "choices": [
         {
-          "id": "msg_sandra_003",
+          "id": "choice_sandra_guided_001_survive",
+          "text": "À peine. Pourquoi ?",
+          "tone": "guided_reply",
+          "effects": {
+            "sandra.attachment": 1
+          },
+          "sets_flags": [
+            "guided_replied_sandra_survive_day1"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_003_guided",
+              "sender": "sandra",
+              "time_label": "18:19",
+              "text": "Rien."
+            },
+            {
+              "id": "msg_sandra_004_guided",
+              "sender": "sandra",
+              "time_label": "18:19",
+              "text": "Enfin si."
+            },
+            {
+              "id": "msg_sandra_005_guided",
+              "sender": "sandra",
+              "time_label": "18:20",
+              "text": "Tu as cette façon de dire que ça va quand ça ne va pas."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_tone_choice",
+      "pattern": "conversation_moyenne_familiarite_intime",
+      "function": "Installer la complicité déjà ancienne entre Sandra et Ludo, avec un vrai choix de ton mais sans bascule explicite.",
+      "messages": [
+        {
+          "id": "msg_sandra_006",
           "sender": "sandra",
-          "time_label": "18:19",
+          "time_label": "18:21",
           "text": "Enfin pas comme ça."
         },
         {
-          "id": "msg_sandra_004",
+          "id": "msg_sandra_007",
           "sender": "sandra",
-          "time_label": "18:19",
+          "time_label": "18:21",
           "text": "Je t’ai entendu dire cette phrase nulle dans ma tête : 'ça va, je gère'."
         }
       ],
       "choices": [
         {
           "id": "choice_sandra_001_light",
-          "text": "À peine. Mais je fais semblant avec beaucoup de talent.",
+          "text": "Je fais semblant avec beaucoup de talent.",
           "tone": "light",
           "effects": {
             "sandra.attachment": 1
           },
-          "sets_flags": ["answered_sandra_light_day1"],
+          "sets_flags": [
+            "answered_sandra_light_day1"
+          ],
           "next_messages": [
             {
-              "id": "msg_sandra_005_light",
+              "id": "msg_sandra_008_light",
               "sender": "sandra",
-              "time_label": "18:20",
+              "time_label": "18:22",
               "text": "Ça te va bien, faire semblant."
             },
             {
-              "id": "msg_sandra_006_light",
+              "id": "msg_sandra_009_light",
               "sender": "sandra",
-              "time_label": "18:20",
+              "time_label": "18:22",
               "text": "Enfin... je crois."
             },
             {
-              "id": "msg_sandra_007_light",
+              "id": "msg_sandra_010_light",
               "sender": "sandra",
-              "time_label": "18:21",
+              "time_label": "18:23",
               "text": "Tu fais le malin, mais je sais quand tu réponds trop vite pour ne pas réfléchir."
             }
           ]
         },
         {
           "id": "choice_sandra_001_neutral",
-          "text": "Ça va. Et toi ?",
+          "text": "Tu me connais trop bien.",
           "tone": "neutral",
           "effects": {},
-          "sets_flags": ["answered_sandra_neutral_day1"],
+          "sets_flags": [
+            "answered_sandra_neutral_day1"
+          ],
           "next_messages": [
             {
-              "id": "msg_sandra_005_neutral",
+              "id": "msg_sandra_008_neutral",
               "sender": "sandra",
-              "time_label": "18:20",
-              "text": "On va dire que oui 🙂"
+              "time_label": "18:22",
+              "text": "Un peu, oui."
             },
             {
-              "id": "msg_sandra_006_neutral",
+              "id": "msg_sandra_009_neutral",
               "sender": "sandra",
-              "time_label": "18:21",
-              "text": "Je ne sais pas si c’est une vraie réponse, mais elle fera l’affaire."
+              "time_label": "18:23",
+              "text": "Assez pour savoir quand tu esquives en souriant."
             }
           ]
         },
         {
           "id": "choice_sandra_001_vulnerable",
-          "text": "Si je réponds honnêtement, tu vas t’inquiéter.",
+          "text": "Ça va vraiment. Je crois.",
           "tone": "vulnerable",
           "effects": {
             "sandra.attachment": 2,
             "truth_tendency": 1
           },
-          "sets_flags": ["shared_small_vulnerability_with_sandra_day1"],
+          "sets_flags": [
+            "shared_small_vulnerability_with_sandra_day1"
+          ],
           "next_messages": [
             {
-              "id": "msg_sandra_005_vulnerable",
+              "id": "msg_sandra_008_vulnerable",
               "sender": "sandra",
-              "time_label": "18:20",
-              "text": "Peut-être."
+              "time_label": "18:22",
+              "text": "Le 'je crois' fait tout le travail dans ta phrase."
             },
             {
-              "id": "msg_sandra_006_vulnerable",
+              "id": "msg_sandra_009_vulnerable",
               "sender": "sandra",
-              "time_label": "18:20",
-              "text": "Mais tu peux me répondre quand même."
-            },
-            {
-              "id": "msg_sandra_007_vulnerable",
-              "sender": "sandra",
-              "time_label": "18:21",
-              "text": "Je préfère m’inquiéter pour une vraie phrase que faire semblant de croire tes 'ça va'."
+              "time_label": "18:23",
+              "text": "Mais je prends. C’est déjà plus vrai que ton automatique 'ça va'."
             }
           ]
         }
       ],
       "automatic_followup": [
         {
-          "id": "msg_sandra_008_common",
+          "id": "msg_sandra_011_common",
           "sender": "sandra",
           "time_label": "18:26",
           "text": "Chez moi c’est un peu lourd aussi en ce moment."
         },
         {
-          "id": "msg_sandra_009_common",
+          "id": "msg_sandra_012_common",
           "sender": "sandra",
           "time_label": "18:27",
           "text": "Je ne vais pas te faire le roman ce soir."
         },
         {
-          "id": "msg_sandra_010_common",
+          "id": "msg_sandra_013_common",
           "sender": "sandra",
           "time_label": "18:27",
           "text": "Mais je crois que j’avais juste envie de parler à quelqu’un qui me connaît vraiment."
@@ -161,7 +204,12 @@
       ]
     }
   ],
-  "routes_nourished": ["sandra", "secret_affair_emotional_seed"],
-  "unlocks_content": ["profile_sandra_placeholder"],
-  "debug_notes": "Conversation allongée pour montrer que Sandra connaît déjà Ludo. Elle reste ambiguë, fragile, et sans image intime au Jour 1."
+  "routes_nourished": [
+    "sandra",
+    "secret_affair_emotional_seed"
+  ],
+  "unlocks_content": [
+    "profile_sandra_placeholder"
+  ],
+  "debug_notes": "Conversation découpée en réponse guidée puis vrai choix de ton pour réduire l’effet monologue sans modifier les grandes routes."
 }

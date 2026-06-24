@@ -34,13 +34,13 @@ func show_conversation(conversation: Dictionary) -> void:
 			add_child(button)
 
 func append_choice_result(choice: Dictionary) -> void:
-	if _is_guided_reply(choice):
-		_add_label("Ludo : %s" % choice.get("text", choice.get("id", "")), 16)
-	else:
-		_add_label("Choix appliqué : %s" % choice.get("text", choice.get("id", "")), 16)
+	_append_ludo_reply(choice)
 	for key in ["next_messages", "next_items", "automatic_followup"]:
 		for entry in choice.get(key, []):
 			_render_item(entry)
+
+func _append_ludo_reply(choice: Dictionary) -> void:
+	_add_label("Ludo : %s" % choice.get("text", choice.get("id", "")), 16)
 
 func _is_guided_reply(choice: Dictionary) -> bool:
 	return bool(choice.get("_guided_reply", false))
