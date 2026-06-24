@@ -4,6 +4,8 @@
 
 Référence visuelle et ergonomique pour les prochaines passes UI/UX de Réseau Intime.
 
+Cette note est une **base forte d’orientation UI**, pas une simple inspiration vague.
+
 ## Source de référence
 
 Cette note se base sur les captures fournies par Ludovic montrant plusieurs écrans de NTR Sim :
@@ -15,9 +17,41 @@ Cette note se base sur les captures fournies par Ludovic montrant plusieurs écr
 - conversation avec choix guidés ;
 - notification en haut de conversation ;
 - conversation de groupe ;
-- transition temporelle plein écran.
+- transition temporelle plein écran ;
+- indicateur de saisie avec bulle à trois points.
 
-Objectif : s’inspirer de la lisibilité, du rythme et de l’ergonomie, sans copier directement l’habillage exact, les icônes, les couleurs ou les assets.
+Objectif : reprendre très directement la logique d’habillage mobile, la palette sombre, la lisibilité, le placement des bulles, le rythme de conversation et les codes d’icônes génériques, tout en évitant d’importer directement des assets protégés du jeu de référence.
+
+## Position sur la copie / reprise
+
+On peut reprendre de très près :
+
+```text
+écran vertical type smartphone
+barre de statut sombre
+grille d’apps simple
+icônes génériques lisibles
+palette sombre
+header contact
+bulles gauche/droite
+fonds de conversation sombres avec motif discret
+réponses en bas
+notifications en surimpression
+transition heure/jour plein écran
+bulle “écrit...” à trois points
+```
+
+À ne pas importer tel quel :
+
+```text
+assets personnages exacts
+captures exactes
+icônes propriétaires si elles existent comme fichiers du jeu
+noms / personnages / textes du jeu de référence
+layout pixel-perfect si cela donne une copie reconnaissable
+```
+
+Règle pratique : on copie le **langage UI mobile** et le confort d’usage, pas les fichiers ni l’identité artistique propriétaire.
 
 ## Ce qu’il faut retenir
 
@@ -50,7 +84,7 @@ rythme de journée
 
 ## Écran verrouillé / reprise
 
-Éléments observés :
+Éléments à reprendre :
 
 ```text
 fond sombre minimal
@@ -58,7 +92,7 @@ grande heure centrée
 jour ou date sous l’heure
 consigne discrète : taper pour continuer
 barre de statut en haut
-icônes système très simples
+icônes système simples
 ```
 
 Usage possible dans Réseau Intime :
@@ -69,7 +103,7 @@ Usage possible dans Réseau Intime :
 - réveil après soirée ;
 - passage nuit / matin.
 
-À adapter :
+Exemples :
 
 ```text
 08:12 — Le lendemain matin
@@ -79,7 +113,7 @@ Usage possible dans Réseau Intime :
 
 ## Écran d’accueil smartphone
 
-Éléments observés :
+Éléments à reprendre :
 
 ```text
 grille d’apps large et espacée
@@ -89,9 +123,7 @@ barre de statut persistante
 boutons de navigation bas simples
 ```
 
-Application à Réseau Intime :
-
-Apps prioritaires :
+Apps prioritaires Réseau Intime :
 
 ```text
 Messages
@@ -102,11 +134,11 @@ Archives / Preuves
 Paramètres
 ```
 
-Règle : l’accueil doit être très lisible, pas surchargé. L’utilisateur doit comprendre où aller sans tutoriel lourd.
+Règle : l’accueil doit être très lisible, pas surchargé. Le joueur doit comprendre où aller sans tutoriel lourd.
 
 ## Liste de discussions
 
-Éléments observés :
+Éléments à reprendre :
 
 ```text
 header avec retour + titre Discussions
@@ -118,8 +150,6 @@ point vert en ligne
 badge/point de notification si non lu
 beaucoup d’espace vide assumé
 ```
-
-Application à Réseau Intime :
 
 Chaque conversation devrait afficher :
 
@@ -142,7 +172,7 @@ Groupe amis — Pauline : Samedi chez nous.
 
 ## Conversation privée
 
-Éléments observés :
+Éléments à reprendre :
 
 ```text
 header fixe avec retour, avatar, nom, statut ou lieu
@@ -154,8 +184,6 @@ couleur de bulle liée au contact
 réponses guidées en bas sous forme de bouton large
 images grandes intégrées au fil
 ```
-
-Application à Réseau Intime :
 
 Conversation privée cible :
 
@@ -181,6 +209,8 @@ texte court ou moyen
 largeur maximale pour éviter les lignes trop longues
 marge verticale entre bulles
 groupe de messages du même auteur possible
+couleur entrante liée au personnage
+couleur sortante constante pour Ludo
 ```
 
 Dans les groupes, afficher le nom du personnage au-dessus ou dans la bulle.
@@ -195,9 +225,101 @@ Ludo
 Tu peux me parler.
 ```
 
+## Couleur par personnage
+
+Chaque personnage important doit avoir une couleur de bulle reconnaissable. Le but est que le joueur identifie immédiatement la voix sociale ou intime d’une conversation.
+
+Palette de départ, à ajuster visuellement :
+
+```text
+Ludo : bleu gris / ardoise
+Marie : rose doux / mauve chaud
+Mathilde : prune / beige rosé
+Sandra : violet gris / bleu nuit intime
+Raphaëlle : bleu clair / vert calme
+Pauline : magenta sombre / rouge contrôlé
+Nico : vert olive / orange social
+Groupe amis : mélange social, avec couleur par intervenant
+```
+
+La couleur ne doit pas être agressive : elle sert à la lecture, pas à transformer l’interface en arcade.
+
+## Rythme de messagerie et enchaînement
+
+Décision validée : après une réponse de Ludo, il ne doit pas rester un bouton sélectionné / annulable dans la zone basse.
+
+Règle :
+
+```text
+clic réponse ou choix
+→ la zone de réponse disparaît ou se désactive proprement
+→ bulle Ludo affichée à droite
+→ indicateur “écrit...” du contact apparaît
+→ messages suivants s’affichent un par un
+→ si segment suivant : bouton Continuer seulement quand les messages courants sont terminés
+→ si nouveau choix : choix disponibles seulement après les messages courants
+```
+
+Le bouton d’annulation après une réponse n’a pas de valeur dans ce prototype. Une réponse envoyée est envoyée.
+
+## Indicateur “écrit...”
+
+À ajouter dans le fil comme une vraie bulle de messagerie :
+
+```text
+bulle gauche
+couleur du personnage
+contenu : trois points animés ou trois pastilles statiques au début
+```
+
+Dans un groupe, l’indicateur doit pouvoir afficher le nom du personnage qui écrit :
+
+```text
+Valerie écrit...
+Sandra écrit...
+Pauline écrit...
+```
+
+Effet minimal acceptable en prototype :
+
+```text
+une bulle avec “...”
+affichée pendant un court délai
+puis remplacée par le message
+```
+
+Effet idéal plus tard : trois points animés.
+
+## Temps d’écriture
+
+Chaque message reçu doit avoir un temps d’écriture avant affichage.
+
+Le temps dépend de la longueur du message :
+
+```text
+message très court : délai court
+message moyen : délai moyen
+message long : délai plus long
+```
+
+Formule indicative pour prototype :
+
+```text
+delay = clamp(0.35 + character_count * 0.018, 0.45, 2.4)
+```
+
+Contraintes :
+
+```text
+ne pas ralentir lourdement le debug
+prévoir une manière simple d’accélérer plus tard
+pas de hasard bloquant dans les tests
+pas d’impact sur les routes ou effets
+```
+
 ## Images et contenus visuels
 
-Éléments observés :
+Éléments à reprendre :
 
 ```text
 image grande dans le fil
@@ -205,8 +327,6 @@ bordure colorée selon interlocuteur ou contexte
 image avant / au milieu des messages
 réactions verbales après l’image
 ```
-
-Application à Réseau Intime :
 
 Pour les placeholders :
 
@@ -223,7 +343,7 @@ Important : une image ne doit pas être un simple lien technique. Elle doit exis
 
 ## Réponses guidées
 
-Éléments observés :
+Éléments à reprendre :
 
 ```text
 bouton large en bas
@@ -233,14 +353,13 @@ sert à faire avancer la parole
 ne ressemble pas à un menu de choix lourd
 ```
 
-Application à Réseau Intime :
-
 Si une seule réponse :
 
 ```text
 Réponse guidée en bas
 clic → Ludo envoie la phrase
-puis messages suivants
+zone basse nettoyée
+messages suivants enchaînés avec typing
 ```
 
 Si plusieurs réponses :
@@ -248,6 +367,7 @@ Si plusieurs réponses :
 ```text
 choix narratif visible
 les options peuvent porter des conséquences
+après choix : zone basse nettoyée
 ```
 
 Règle validée :
@@ -259,15 +379,13 @@ Le choix multiple oriente l’histoire.
 
 ## Transitions temporelles
 
-Éléments observés :
+Éléments à reprendre :
 
 ```text
 overlay sombre
 jour + heure au centre
 conversation en arrière-plan assombrie
 ```
-
-Application à Réseau Intime :
 
 Utiliser pour :
 
@@ -287,18 +405,16 @@ Le lendemain — 09:18
 
 ## Notifications
 
-Éléments observés :
+Éléments à reprendre :
 
 ```text
 bannière en haut
 avatar
 nom du contact
-texte court : New message
+texte court : nouveau message
 instruction discrète : appuyer pour ouvrir
 conversation en arrière-plan
 ```
-
-Application à Réseau Intime :
 
 Utiliser pour :
 
@@ -313,7 +429,7 @@ fond d’écran révélé
 
 ## Conversations de groupe
 
-Éléments observés :
+Éléments à reprendre :
 
 ```text
 header de groupe avec nom collectif
@@ -322,8 +438,6 @@ nom du participant affiché
 messages courts
 indicateur typing avec trois points
 ```
-
-Application à Réseau Intime :
 
 Le groupe doit avoir une couleur sociale différente des messages privés.
 
@@ -344,85 +458,44 @@ Le groupe sert surtout à :
 - Mathilde qui observe ;
 - traces visibles.
 
-## Ce qu’il ne faut pas copier directement
-
-Ne pas copier :
-
-```text
-icônes exactes
-palette exacte
-assets personnages
-motifs de fond exacts
-layout pixel-perfect
-noms / structures propres à NTR Sim
-```
-
-À reprendre uniquement :
-
-```text
-principes de lisibilité
-rythme de chat
-hiérarchie visuelle
-confort mobile
-placement des réponses
-simplicité de navigation
-```
-
 ## Direction visuelle Réseau Intime
 
-Réseau Intime doit être plus :
+Réseau Intime doit être :
 
 ```text
 adulte
 intime
 élégant
 ambigu
-moins cartoon
-moins jeu mobile générique
+lisible
+sombre
+mobile-first dans la sensation
 ```
 
-Palette possible :
-
-```text
-fond : bleu nuit / graphite
-bulles Ludo : bleu gris sobre
-Marie : rose doux / chaud
-Mathilde : prune ou beige rosé
-Sandra : violet doux / gris intime
-Raphaëlle : bleu clair / vert calme
-Pauline : rouge sombre / magenta contrôlé
-Nico : vert olive / orange social
-```
-
-Ces couleurs sont indicatives, à tester plus tard.
+Il peut assumer une forte proximité avec la base smartphone sombre de NTR Sim, puis évoluer par touches vers son identité propre.
 
 ## Prochaine passe UI recommandée
 
-Milestone : `godot-chat-bubbles-ui-prototype`
+Milestone : `godot-chat-typing-flow-polish`
 
 Scope :
 
 ```text
-Créer un rendu chat vertical plus proche d’une messagerie.
-Afficher bulles entrantes / sortantes.
-Mettre Ludo à droite.
-Mettre interlocuteur à gauche.
-Ajouter header conversation avec avatar / nom / statut.
-Afficher réponses guidées en bas.
-Afficher choix narratifs en bas, empilés.
-Garder debug caché par défaut.
-Ne pas créer de galerie complète.
-Ne pas ajouter de nouveaux contenus narratifs.
+Supprimer l’état de bouton sélectionné/annulable après réponse.
+Nettoyer la zone basse après envoi.
+Ajouter un enchaînement automatique des messages reçus.
+Afficher une bulle “écrit...” avant chaque message reçu.
+Calculer le délai selon la longueur du message.
+Ajouter couleurs de bulles par personnage.
+Conserver Continuer entre segments.
+Ne pas modifier les JSON narratifs.
+Ne pas modifier les routes.
 ```
 
 Fichiers probablement concernés :
 
 ```text
-game/scenes/smartphone/ConversationView.tscn
-game/scenes/smartphone/PhonePrototype.tscn
 game/scripts/ui/ConversationView.gd
-game/scripts/ui/PhonePrototype.gd
-game/scripts/ui/DebugPanel.gd
 tests/test_godot_prototype_static.py
 ```
 
@@ -437,11 +510,17 @@ Header : Sandra — En ligne / statut
 Sandra à gauche : Hey, tu survis à ta journée ?
 Sandra à gauche : J’ai pensé à toi tout à l’heure.
 Réponse en bas : À peine. Pourquoi ?
+Clic réponse.
 Ludo à droite : À peine. Pourquoi ?
+Zone basse disparaît.
+Bulle Sandra écrit... à gauche.
 Sandra à gauche : Rien.
+Bulle Sandra écrit... à gauche.
 Sandra à gauche : Enfin si.
-Continuer
-Segment suivant : choix narratif multiple
+Bulle Sandra écrit... à gauche.
+Sandra à gauche : Tu as cette façon de dire que ça va quand ça ne va pas.
+Bouton Continuer apparaît.
+Segment suivant : choix narratif multiple.
 ```
 
 ## Règle finale
