@@ -109,6 +109,27 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             self.assertIn(1, choice_counts, relative)
             self.assertTrue(any(count > 1 for count in choice_counts), relative)
 
+    def test_segmented_conversations_stay_grouped_in_moment_lists(self):
+        loader = (GAME / "scripts" / "core" / "DataLoader.gd").read_text(encoding="utf-8")
+        self.assertIn("get_segmented_conversation_entry", loader)
+        self.assertIn("_segment_count", loader)
+        self.assertNotIn("return _flatten_segments(source)", loader)
+        self.assertNotIn("return _flatten_segments(conversations_by_day.get(str(day_value), []))", loader)
+
+    def test_conversation_view_has_continue_flow_for_next_segment(self):
+        script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
+        self.assertIn("signal segment_changed", script)
+        self.assertIn("_show_next_segment", script)
+        self.assertIn("Continuer", script)
+        self.assertIn("current_segment_index", script)
+        self.assertIn("_segment_id_for_current_index", script)
+
+    def test_phone_updates_debug_context_when_segment_continues(self):
+        script = (GAME / "scripts" / "ui" / "PhonePrototype.gd").read_text(encoding="utf-8")
+        self.assertIn("segment_changed.connect(_on_segment_changed)", script)
+        self.assertIn("func _on_segment_changed", script)
+        self.assertIn("GameState.set_context(day_value", script)
+
     def test_debug_panel_has_readable_compact_sections(self):
         script = (GAME / "scripts" / "ui" / "DebugPanel.gd").read_text(encoding="utf-8")
         self.assertIn("custom_minimum_size", script)

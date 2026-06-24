@@ -58,6 +58,7 @@ func _load_index_conversations(index: Dictionary) -> void:
 		if convo.is_empty():
 			continue
 		convo["_source_path"] = str(file_path)
+		convo["day"] = index.get("day", index.get("chapter", ""))
 		convo["_index_title"] = index.get("title", "")
 		var convo_id := str(convo.get("id", file_path))
 		conversations_by_id[convo_id] = convo
@@ -79,7 +80,7 @@ func get_day_labels() -> Array[String]:
 	return labels
 
 func get_conversations_for_day(day_value) -> Array:
-	return _flatten_segments(conversations_by_day.get(str(day_value), []))
+	return _group_segmented_conversations(conversations_by_day.get(str(day_value), []))
 
 func get_index_for_day(day_value) -> Dictionary:
 	for index in chapter_indexes:
@@ -101,23 +102,26 @@ func get_conversations_for_moment(day_value, moment: Dictionary) -> Array:
 			source.append(conversation)
 	if source.is_empty():
 		return get_conversations_for_day(day_value)
-	return _flatten_segments(source)
+	return _group_segmented_conversations(source)
 
-func _flatten_segments(conversations: Array) -> Array:
+func _group_segmented_conversations(conversations: Array) -> Array:
 	var entries: Array = []
 	for conversation in conversations:
-		var segments: Array = conversation.get("segments", [])
-		if segments.is_empty():
-			entries.append(conversation)
-			continue
-		for index in range(segments.size()):
-			var segment: Dictionary = segments[index].duplicate(true)
-			segment["id"] = "%s__segment_%d" % [conversation.get("id", "conversation"), index + 1]
-			segment["title"] = conversation.get("title", conversation.get("id", "Conversation"))
-			segment["_parent_conversation_id"] = conversation.get("id", "")
-			segment["_source_path"] = conversation.get("_source_path", "")
-			entries.append(segment)
+		entries.append(get_segmented_conversation_entry(conversation))
 	return entries
+
+func get_segmented_conversation_entry(conversation: Dictionary) -> Dictionary:
+	var entry: Dictionary = conversation.duplicate(true)
+	var segments: Array = entry.get("segments", [])
+	entry["_segment_count"] = segments.size()
+	if segments.size() > 0:
+		entry["_current_segment_index"] = 0
+		entry["_parent_conversation_id"] = entry.get("id", "")
+		entry["_current_segment_id"] = _segment_id(entry, 0)
+	return entry
+
+func _segment_id(conversation: Dictionary, index: int) -> String:
+	return "%s__segment_%d" % [conversation.get("id", "conversation"), index + 1]
 
 func get_visual_content(content_id: String) -> Dictionary:
 	return visual_content_by_id.get(content_id, {})

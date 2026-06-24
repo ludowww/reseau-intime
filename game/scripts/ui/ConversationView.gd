@@ -1,21 +1,32 @@
 extends VBoxContainer
 
 signal choice_selected(choice: Dictionary)
+signal segment_changed(day_value, conversation_id: String, segment_id: String)
 
 var choice_buttons: Array[Button] = []
 var choice_was_applied := false
+var current_conversation: Dictionary = {}
+var current_segment_index := 0
+var continue_button: Button
 
 func show_conversation(conversation: Dictionary) -> void:
 	_clear()
-	choice_buttons.clear()
-	choice_was_applied = false
+	current_conversation = conversation.duplicate(true)
+	current_segment_index = int(current_conversation.get("_current_segment_index", 0))
+	continue_button = null
 	custom_minimum_size = Vector2(600, 0)
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	_add_label(conversation.get("title", conversation.get("id", "Conversation")), 20)
-	_add_conversation_meta(conversation)
-	for item in _flatten_content(conversation):
+	_add_label(current_conversation.get("title", current_conversation.get("id", "Conversation")), 20)
+	_add_conversation_meta(current_conversation)
+	_render_current_segment()
+
+func _render_current_segment() -> void:
+	choice_buttons.clear()
+	choice_was_applied = false
+	var data := _current_segment_data()
+	for item in _flatten_content(data):
 		_render_item(item)
-	var choices := _collect_choices(conversation)
+	var choices := _collect_choices(data)
 	if choices.is_empty():
 		_add_label("Aucun choix direct dans cette conversation.")
 	else:
@@ -38,6 +49,46 @@ func append_choice_result(choice: Dictionary) -> void:
 	for key in ["next_messages", "next_items", "automatic_followup"]:
 		for entry in choice.get(key, []):
 			_render_item(entry)
+	if _has_next_segment():
+		_show_continue_button()
+
+func _show_continue_button() -> void:
+	continue_button = Button.new()
+	continue_button.text = "Continuer"
+	continue_button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	continue_button.custom_minimum_size = Vector2(0, 48)
+	continue_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	continue_button.pressed.connect(_show_next_segment)
+	add_child(continue_button)
+
+func _show_next_segment() -> void:
+	if not _has_next_segment():
+		return
+	if continue_button:
+		continue_button.disabled = true
+	current_segment_index += 1
+	_add_label("—", 12)
+	segment_changed.emit(current_conversation.get("day", current_conversation.get("chapter", null)), _parent_conversation_id(), _segment_id_for_current_index())
+	_render_current_segment()
+
+func _current_segment_data() -> Dictionary:
+	var segments: Array = current_conversation.get("segments", [])
+	if segments.is_empty():
+		return current_conversation
+	var index = clamp(current_segment_index, 0, segments.size() - 1)
+	var segment: Dictionary = segments[index].duplicate(true)
+	segment["title"] = current_conversation.get("title", current_conversation.get("id", "Conversation"))
+	return segment
+
+func _has_next_segment() -> bool:
+	var segments: Array = current_conversation.get("segments", [])
+	return current_segment_index + 1 < segments.size()
+
+func _parent_conversation_id() -> String:
+	return str(current_conversation.get("_parent_conversation_id", current_conversation.get("id", "")))
+
+func _segment_id_for_current_index() -> String:
+	return "%s__segment_%d" % [_parent_conversation_id(), current_segment_index + 1]
 
 func _append_ludo_reply(choice: Dictionary) -> void:
 	_add_label("Ludo : %s" % choice.get("text", choice.get("id", "")), 16)

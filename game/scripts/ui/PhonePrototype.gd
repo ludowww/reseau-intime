@@ -43,6 +43,7 @@ func _build_layout() -> void:
 	conversation_view.custom_minimum_size = Vector2(600, 0)
 	conversation_view.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	conversation_view.choice_selected.connect(_on_choice_selected)
+	conversation_view.segment_changed.connect(_on_segment_changed)
 	scroll.add_child(conversation_view)
 
 	debug_scroll = ScrollContainer.new()
@@ -91,8 +92,14 @@ func _render_conversation_buttons(day_value, conversations: Array) -> void:
 		button.pressed.connect(func(): _open_conversation(day_value, conversation))
 
 func _open_conversation(day_value, conversation: Dictionary) -> void:
-	GameState.set_context(day_value, str(conversation.get("_parent_conversation_id", conversation.get("id", ""))), str(conversation.get("id", "")))
+	var conversation_id := str(conversation.get("_parent_conversation_id", conversation.get("id", "")))
+	var segment_id := str(conversation.get("_current_segment_id", conversation.get("id", "")))
+	GameState.set_context(day_value, conversation_id, segment_id)
 	conversation_view.show_conversation(conversation)
+	debug_panel.refresh()
+
+func _on_segment_changed(day_value, conversation_id: String, segment_id: String) -> void:
+	GameState.set_context(day_value, conversation_id, segment_id)
 	debug_panel.refresh()
 
 func _on_choice_selected(choice: Dictionary) -> void:
