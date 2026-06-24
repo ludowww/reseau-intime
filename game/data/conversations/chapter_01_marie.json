@@ -7,17 +7,15 @@
   "thread": {
     "id": "thread_marie_private",
     "type": "private",
-    "participants": [
-      "ludo",
-      "marie"
-    ],
-    "display_name": "Marie"
+    "participants": ["ludo", "marie"],
+    "display_name": "Marie",
+    "profile_content_id": "profile_marie_placeholder"
   },
   "beats": [
     {
       "id": "beat_01_marie_bread",
-      "pattern": "conversation_simple",
-      "function": "Installer la routine du couple et la tendresse fatiguée.",
+      "pattern": "conversation_moyenne_familiarite",
+      "function": "Installer la routine du couple, la familiarité domestique, Mathilde comme présence habituelle et une tension douce sur l’attention de Ludo.",
       "trigger": {
         "type": "notification",
         "title": "Marie",
@@ -35,6 +33,18 @@
           "sender": "marie",
           "time_label": "18:13",
           "text": "Et tu peux prendre du pain ?"
+        },
+        {
+          "id": "msg_marie_003",
+          "sender": "marie",
+          "time_label": "18:13",
+          "text": "Je sais, message glamour."
+        },
+        {
+          "id": "msg_marie_004",
+          "sender": "marie",
+          "time_label": "18:14",
+          "text": "Mais si je ne te le dis pas tu reviens encore avec des céréales et un air fier."
         }
       ],
       "choices": [
@@ -46,21 +56,31 @@
             "marie.trust": 1,
             "marie_attention_score": 1
           },
-          "sets_flags": [
-            "answered_marie_softly_day1"
-          ],
+          "sets_flags": ["answered_marie_softly_day1"],
           "next_messages": [
             {
-              "id": "msg_marie_003_soft",
+              "id": "msg_marie_005_soft",
               "sender": "marie",
-              "time_label": "18:14",
+              "time_label": "18:15",
               "text": "Merci ❤️"
             },
             {
-              "id": "msg_marie_004_soft",
+              "id": "msg_marie_006_soft",
               "sender": "marie",
-              "time_label": "18:14",
+              "time_label": "18:15",
               "text": "Je te garde un peu de patience pour ce soir alors."
+            },
+            {
+              "id": "msg_marie_007_soft",
+              "sender": "marie",
+              "time_label": "18:16",
+              "text": "Mathilde passe peut-être récupérer son chargeur aussi. Elle l’a encore oublié ici."
+            },
+            {
+              "id": "msg_marie_008_soft",
+              "sender": "marie",
+              "time_label": "18:16",
+              "text": "Notre appart devient officiellement son annexe."
             }
           ]
         },
@@ -69,15 +89,25 @@
           "text": "Je vais essayer. Tu veux autre chose ?",
           "tone": "neutral_practical",
           "effects": {},
-          "sets_flags": [
-            "answered_marie_practical_day1"
-          ],
+          "sets_flags": ["answered_marie_practical_day1"],
           "next_messages": [
             {
-              "id": "msg_marie_003_neutral",
+              "id": "msg_marie_005_neutral",
               "sender": "marie",
-              "time_label": "18:14",
+              "time_label": "18:15",
               "text": "Non, ça ira. Merci."
+            },
+            {
+              "id": "msg_marie_006_neutral",
+              "sender": "marie",
+              "time_label": "18:16",
+              "text": "Enfin si : rentrer vraiment. Pas juste poser ton corps sur le canapé avec ton téléphone."
+            },
+            {
+              "id": "msg_marie_007_neutral",
+              "sender": "marie",
+              "time_label": "18:16",
+              "text": "Je taquine. À moitié."
             }
           ]
         },
@@ -88,30 +118,52 @@
           "effects": {
             "marie.lucidity": 1
           },
-          "sets_flags": [
-            "poked_marie_about_routine_day1"
-          ],
+          "sets_flags": ["poked_marie_about_routine_day1"],
           "next_messages": [
             {
-              "id": "msg_marie_003_pique",
+              "id": "msg_marie_005_pique",
               "sender": "marie",
               "time_label": "18:15",
               "text": "C’est toi qui rentres tard tous les soirs, monsieur dramatique."
             },
             {
-              "id": "msg_marie_004_pique",
+              "id": "msg_marie_006_pique",
               "sender": "marie",
               "time_label": "18:15",
               "text": "Mais ok. Message reçu."
+            },
+            {
+              "id": "msg_marie_007_pique",
+              "sender": "marie",
+              "time_label": "18:16",
+              "text": "On se parle moins, je sais."
+            },
+            {
+              "id": "msg_marie_008_pique",
+              "sender": "marie",
+              "time_label": "18:17",
+              "text": "Je ne sais pas si c’est le boulot, la fatigue, ou nous."
             }
           ]
+        }
+      ],
+      "automatic_followup": [
+        {
+          "id": "msg_marie_009_common",
+          "sender": "marie",
+          "time_label": "18:21",
+          "text": "Au fait Pauline a relancé pour samedi."
+        },
+        {
+          "id": "msg_marie_010_common",
+          "sender": "marie",
+          "time_label": "18:22",
+          "text": "Ça peut nous faire du bien de voir du monde. Même si je sais que tu vas dire que tu es fatigué."
         }
       ]
     }
   ],
-  "routes_nourished": [
-    "marie",
-    "exclusif_reparation"
-  ],
-  "debug_notes": "Première scène volontairement simple. Aucun choix critique, seulement ton du couple."
+  "routes_nourished": ["marie", "exclusif_reparation", "mathilde_seed", "pauline_seed"],
+  "unlocks_content": ["profile_marie_placeholder", "profile_mathilde_placeholder", "profile_pauline_placeholder"],
+  "debug_notes": "Conversation plus longue pour installer la routine, la familiarité du couple, Mathilde comme présence domestique et la soirée de Pauline. Peu de choix visibles malgré plus de messages."
 }
