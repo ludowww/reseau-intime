@@ -1,0 +1,34 @@
+{
+  "id": "marie",
+  "display_name": "Marie",
+  "role": "Copine de Ludo",
+  "relationship_to_ludo": "partner",
+  "relationship_to_marie": "self",
+  "narrative_function": "Ancrage du couple, amour installé, routine, confiance, jalousie, réparation ou reprise de pouvoir.",
+  "desire_apparent": "Retrouver une relation stable et sincère.",
+  "desire_deep": "Être regardée, choisie et désirée, pas seulement aimée par habitude.",
+  "fear": "Être remplacée sans qu’on ait eu le courage de lui dire la vérité.",
+  "red_line": "Être humiliée ou exclue de sa propre relation.",
+  "voice_profile": {
+    "rhythm": "court dans la routine, plus long dans les confrontations",
+    "emoji_use": "tendre au départ, rare quand elle doute",
+    "flirt_style": "mémoire du couple, jalousie, reconquête",
+    "doubt_style": "observe avant d’accuser",
+    "avoid": [
+      "naïve trop longtemps",
+      "tout accepter sans blessure",
+      "uniquement punitive"
+    ]
+  },
+  "default_variables": {
+    "trust": 60,
+    "lucidity": 15
+  },
+  "tags": [
+    "partner",
+    "couple",
+    "trust",
+    "jealousy",
+    "repair"
+  ]
+}
