@@ -1,0 +1,71 @@
+{
+  "id": "chapter_04_proof_placeholders",
+  "version": 1,
+  "notes": "Preuves neutres ou suggestives non explicites pour tester les conséquences du Jour 4.",
+  "items": [
+    {
+      "id": "capture_pauline_ludo_party_placeholder",
+      "character": "pauline",
+      "tier": 2,
+      "type": "capture",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/capture_pauline_ludo_party_placeholder.png",
+      "context": "Capture ou trace montrant que Ludo a ouvert/répondu à Pauline pendant la soirée.",
+      "tags": ["pauline", "capture", "proof", "party", "control"],
+      "is_proof": true,
+      "risk_level": 4,
+      "can_delete": true,
+      "can_capture": false,
+      "can_set_as_wallpaper": false,
+      "can_be_discovered_by": ["marie", "pauline"]
+    },
+    {
+      "id": "story_nico_marie_after_party_placeholder",
+      "character": "nico",
+      "tier": 1,
+      "type": "story",
+      "source_app": "social",
+      "asset_path": "res://assets/placeholders/story_nico_marie_after_party_placeholder.png",
+      "context": "Story où Marie rit près de Nico après la soirée, utilisée pour amorcer la jalousie / NTR subi.",
+      "tags": ["nico", "marie", "story", "jealousy", "ntr_seed"],
+      "is_proof": false,
+      "risk_level": 3,
+      "can_delete": false,
+      "can_capture": true,
+      "can_set_as_wallpaper": false,
+      "can_be_discovered_by": ["marie", "nico"]
+    },
+    {
+      "id": "photo_mathilde_after_party_warning_placeholder",
+      "character": "mathilde",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/photo_mathilde_after_party_warning_placeholder.png",
+      "context": "Photo non explicite de Mathilde après la soirée, associée à un message de recul ou de culpabilité.",
+      "tags": ["mathilde", "after_party", "warning", "guilt", "forbidden"],
+      "is_proof": true,
+      "risk_level": 3,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": ["marie", "mathilde"]
+    },
+    {
+      "id": "photo_marie_party_smile_placeholder",
+      "character": "marie",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "social",
+      "asset_path": "res://assets/placeholders/photo_marie_party_smile_placeholder.png",
+      "context": "Photo de Marie pendant la soirée, souriante, pouvant rassurer ou devenir source de jalousie selon le contexte.",
+      "tags": ["marie", "party", "smile", "social"],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": false,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": ["marie"]
+    }
+  ]
+}
