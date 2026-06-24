@@ -54,7 +54,7 @@ visual_content/
 Depuis la racine du dépôt :
 
 ```bash
-python tools/validate_game_data.py
+python3 tools/validate_game_data.py
 ```
 
 Le validateur vérifie notamment :

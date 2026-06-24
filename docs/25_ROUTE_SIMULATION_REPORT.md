@@ -11,7 +11,7 @@ Le simulateur `tools/simulate_route_paths.py` couvre les six parcours demandés 
 ## Commande
 
 ```bash
-python tools/simulate_route_paths.py
+python3 tools/simulate_route_paths.py
 ```
 
 ## Résultat synthétique

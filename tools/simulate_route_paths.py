@@ -5,14 +5,13 @@ This is a product/debug probe, not a full game engine. Paths are manually
 curated from the current vertical-slice route matrix and initial state.
 Run from repository root:
 
-    python tools/simulate_route_paths.py
+    python3 tools/simulate_route_paths.py
 """
 
 from __future__ import annotations
 
 import copy
 import json
-import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any

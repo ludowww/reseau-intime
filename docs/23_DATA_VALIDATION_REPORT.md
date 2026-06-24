@@ -17,7 +17,7 @@ docs/23_DATA_VALIDATION_REPORT.md
 Depuis la racine du dépôt :
 
 ```bash
-python tools/validate_game_data.py
+python3 tools/validate_game_data.py
 ```
 
 ## Ce qui est couvert
