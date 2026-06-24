@@ -1,0 +1,121 @@
+{
+  "id": "chapter_01_sandra",
+  "chapter": 1,
+  "day": 1,
+  "title": "Jour 1 — Premier message de Sandra",
+  "app": "messages",
+  "thread": {
+    "id": "thread_sandra_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "sandra"
+    ],
+    "display_name": "Sandra"
+  },
+  "beats": [
+    {
+      "id": "beat_01_sandra_survive",
+      "pattern": "conversation_simple_intime_legere",
+      "function": "Installer la complicité Sandra/Ludo sans bascule explicite.",
+      "trigger": {
+        "type": "notification",
+        "title": "Sandra",
+        "body": "Hey, tu survis à ta journée ?"
+      },
+      "messages": [
+        {
+          "id": "msg_sandra_001",
+          "sender": "sandra",
+          "time_label": "18:18",
+          "text": "Hey, tu survis à ta journée ?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_sandra_001_light",
+          "text": "À peine. Mais je fais semblant avec beaucoup de talent.",
+          "tone": "light",
+          "effects": {
+            "sandra.attachment": 1
+          },
+          "sets_flags": [
+            "answered_sandra_light_day1"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_002_light",
+              "sender": "sandra",
+              "time_label": "18:19",
+              "text": "Ça te va bien, faire semblant."
+            },
+            {
+              "id": "msg_sandra_003_light",
+              "sender": "sandra",
+              "time_label": "18:19",
+              "text": "Enfin... je crois."
+            }
+          ]
+        },
+        {
+          "id": "choice_sandra_001_neutral",
+          "text": "Ça va. Et toi ?",
+          "tone": "neutral",
+          "effects": {},
+          "sets_flags": [
+            "answered_sandra_neutral_day1"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_002_neutral",
+              "sender": "sandra",
+              "time_label": "18:19",
+              "text": "On va dire que oui 🙂"
+            }
+          ]
+        },
+        {
+          "id": "choice_sandra_001_vulnerable",
+          "text": "Si je réponds honnêtement, tu vas t’inquiéter.",
+          "tone": "vulnerable",
+          "effects": {
+            "sandra.attachment": 2,
+            "truth_tendency": 1
+          },
+          "sets_flags": [
+            "shared_small_vulnerability_with_sandra_day1"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_002_vulnerable",
+              "sender": "sandra",
+              "time_label": "18:20",
+              "text": "Peut-être."
+            },
+            {
+              "id": "msg_sandra_003_vulnerable",
+              "sender": "sandra",
+              "time_label": "18:20",
+              "text": "Mais tu peux me répondre quand même."
+            }
+          ]
+        }
+      ],
+      "passive_signal_rules": [
+        {
+          "if_opened_before": "thread_marie_private",
+          "effects": {
+            "sandra_priority_score": 1,
+            "marie_neglect_score": 1
+          },
+          "note": "Seulement si une notification Marie est encore en attente."
+        }
+      ]
+    }
+  ],
+  "routes_nourished": [
+    "sandra",
+    "secret_affair_emotional_seed"
+  ],
+  "debug_notes": "Sandra doit rester douce et ambiguë. Aucun contenu visuel au Jour 1."
+}
