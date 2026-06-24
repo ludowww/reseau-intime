@@ -1,0 +1,36 @@
+{
+  "id": "chapter_01_index",
+  "chapter": 1,
+  "day": 1,
+  "title": "Jour 1 — Routine",
+  "description": "Première journée : routine avec Marie, complicité légère avec Sandra, annonce de la soirée chez Pauline.",
+  "default_order": [
+    "chapter_01_marie",
+    "chapter_01_sandra",
+    "chapter_01_group_friends"
+  ],
+  "conversation_files": [
+    "res://data/conversations/chapter_01_marie.json",
+    "res://data/conversations/chapter_01_sandra.json",
+    "res://data/conversations/chapter_01_group_friends.json"
+  ],
+  "routes_available": [
+    "marie",
+    "sandra",
+    "pauline",
+    "nico_marie",
+    "mathilde"
+  ],
+  "routes_locked_to_seed_only": [
+    "libertinage",
+    "ntr",
+    "harem_secret",
+    "trio_marie_mathilde"
+  ],
+  "debug_expected_outcomes": [
+    "Marie trust can move slightly.",
+    "Sandra attachment can start increasing.",
+    "Pauline/Nico/Mathilde are only seeded through group messages.",
+    "No dominant route should be locked in chapter 1."
+  ]
+}
