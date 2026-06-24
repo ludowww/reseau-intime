@@ -6,6 +6,21 @@ Le jeu se joue à travers un smartphone fictif. Le joueur ne consulte pas un men
 
 Objectif : immersion maximale.
 
+## Scope audio / voix
+
+Le prototype et le scope initial n’incluent pas de vocaux ou d’appels simulés avec voix.
+
+Sont exclus du scope initial :
+
+```text
+messages vocaux avec audio
+appels vocaux simulés
+doublage des personnages
+système de son narratif lié aux voix
+```
+
+Les appels manqués peuvent éventuellement exister sous forme de notification textuelle, mais aucune voix ne doit être produite ou gérée.
+
 ## Écran principal
 
 L’écran principal représente l’accueil du téléphone de Ludo.
@@ -20,7 +35,15 @@ Contacts
 Notes
 Archives
 Paramètres
-Appels / vocaux
+```
+
+Éléments système importants :
+
+```text
+Fond d’écran
+Notifications
+Badge d’applications
+Mode discret / confidentialité visuelle
 ```
 
 ## Application Messages
@@ -36,7 +59,6 @@ Fonctions :
 - messages supprimés ;
 - photos ;
 - vidéos ;
-- vocaux ;
 - indicateur « en train d’écrire » ;
 - horodatage narratif ;
 - statut lu / non lu.
@@ -89,6 +111,7 @@ Captures
 Preuves
 Archives
 Favoris
+Fonds d’écran
 ```
 
 Chaque contenu doit afficher :
@@ -97,7 +120,70 @@ Chaque contenu doit afficher :
 - date ou chapitre ;
 - contexte ;
 - niveau de risque ;
-- statut : conservé, supprimé, capturé, découvert.
+- statut : conservé, supprimé, capturé, découvert ;
+- statut fond d’écran si applicable.
+
+Actions possibles :
+
+- ouvrir ;
+- conserver ;
+- supprimer ;
+- capturer ;
+- archiver ;
+- définir comme fond d’écran ;
+- retirer comme fond d’écran ;
+- montrer à quelqu’un si la scène le permet.
+
+## Fond d’écran
+
+Le joueur peut définir une image reçue comme fond d’écran du téléphone.
+
+Ce choix est expressif tant que le téléphone reste privé, mais peut devenir une preuve si le téléphone est montré.
+
+Types de fonds possibles :
+
+```text
+neutre
+Marie tendre
+Marie provocante
+Mathilde ambiguë
+Sandra intime
+Raphaëlle douce
+Pauline provocante
+Marie + Nico
+```
+
+### Révélation du fond d’écran
+
+Certaines scènes peuvent demander au joueur de montrer son téléphone ou son fond d’écran.
+
+Exemple :
+
+```text
+Pauline : Montre ton fond d’écran, on va voir qui est le plus cringe 😇
+Nico : Ah oui, vas-y Ludo.
+Marie : Pourquoi pas.
+```
+
+Si le fond d’écran est compromettant, les personnages réagissent selon leurs liens avec l’image.
+
+Exemple avec Mathilde :
+
+```text
+Marie : C’est Mathilde ?
+Mathilde : Attends, quoi ?
+Pauline : Ah.
+Nico : Joli choix.
+```
+
+### Conséquences possibles
+
+- Marie rassurée si le fond est une photo tendre d’elle.
+- Marie soupçonneuse si le fond est une autre femme.
+- Mathilde gênée ou excitée si elle découvre qu’elle est le fond d’écran.
+- Pauline peut utiliser le fond comme preuve sociale.
+- Nico peut provoquer Ludo.
+- Le groupe peut rendre public un secret jusque-là privé.
 
 ## Notifications
 
@@ -113,9 +199,9 @@ Vidéo reçue
 Story
 Réaction
 Message supprimé
-Appel manqué
-Vocal reçu
+Appel manqué textuel éventuel
 Alerte galerie
+Alerte fond d’écran
 ```
 
 Le joueur peut parfois choisir quelle notification ouvrir en premier. Ce choix peut modifier l’histoire.
@@ -153,7 +239,8 @@ Application utile pour :
 - messages supprimés ;
 - captures cachées ;
 - contenus verrouillés ;
-- preuves conservées.
+- preuves conservées ;
+- anciens fonds d’écran si cela sert une route.
 
 Les archives peuvent devenir importantes dans les routes enquête, Pauline, Sandra ou harem chaos.
 
@@ -163,10 +250,12 @@ Fonctions possibles :
 
 - sauvegarder ;
 - charger ;
-- régler sonneries / vibration ;
-- voir statistiques de partie si le jeu l’autorise ;
+- régler vibration / sons d’interface simples ;
+- voir statistiques de partie en debug uniquement ;
 - accessibilité ;
-- mode discret pour masquer contenus visuels dans les menus.
+- mode discret pour masquer contenus visuels dans les menus ;
+- confidentialité des notifications ;
+- fond d’écran actif.
 
 ## Rythme d’une séquence type
 
@@ -177,7 +266,7 @@ Fonctions possibles :
 4. Choix de réponse.
 5. Effets variables.
 6. Éventuel contenu visuel.
-7. Choix sur le contenu : conserver, supprimer, répondre, montrer, cacher.
+7. Choix sur le contenu : conserver, supprimer, répondre, montrer, cacher, mettre en fond d’écran.
 8. Conséquence immédiate ou différée.
 ```
 
@@ -189,6 +278,7 @@ Le joueur doit toujours comprendre :
 - dans quelle application ;
 - si la conversation est privée ou publique ;
 - si un contenu est risqué ;
-- si une réponse est anodine, ambiguë ou dangereuse.
+- si une réponse est anodine, ambiguë ou dangereuse ;
+- si un contenu est actuellement utilisé comme fond d’écran.
 
 Mais le jeu ne doit pas tout expliciter de façon mécanique. Une part de doute doit rester.
