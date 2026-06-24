@@ -1,0 +1,72 @@
+{
+  "id": "visual_content_placeholders",
+  "version": 1,
+  "notes": "Assets neutres pour tester la galerie, le fond d’écran et les réactions sans contenu adulte définitif.",
+  "items": [
+    {
+      "id": "wallpaper_default_neutral",
+      "character": null,
+      "tier": 0,
+      "type": "wallpaper",
+      "source_app": "system",
+      "asset_path": "res://assets/placeholders/wallpaper_default_neutral.png",
+      "context": "Fond d’écran neutre par défaut au début de la partie.",
+      "tags": [
+        "neutral"
+      ],
+      "is_proof": false,
+      "risk_level": 0,
+      "can_delete": false,
+      "can_capture": false,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": []
+    },
+    {
+      "id": "photo_marie_tender_tier1_placeholder",
+      "character": "marie",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/photo_marie_tender_tier1_placeholder.png",
+      "context": "Photo tendre de Marie, utilisable plus tard comme fond d’écran rassurant.",
+      "tags": [
+        "marie",
+        "tender",
+        "couple"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": [
+        "marie"
+      ]
+    },
+    {
+      "id": "photo_mathilde_home_tier1_placeholder",
+      "character": "mathilde",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/photo_mathilde_home_tier1_placeholder.png",
+      "context": "Photo ambiguë de Mathilde liée à sa présence chez Marie. Sert à tester favoris/fond d’écran plus tard.",
+      "tags": [
+        "mathilde",
+        "home",
+        "ambiguous",
+        "forbidden"
+      ],
+      "is_proof": true,
+      "risk_level": 3,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": [
+        "marie",
+        "pauline",
+        "mathilde"
+      ]
+    }
+  ]
+}
