@@ -1,0 +1,183 @@
+{
+  "id": "chapter_03_pre_party_threads",
+  "chapter": 3,
+  "day": 3,
+  "title": "Jour 3 — Avant de partir",
+  "app": "messages",
+  "segments": [
+    {
+      "conversation_segment_id": "c03_marie_before_party",
+      "moment_label": "avant soirée",
+      "time_label": "18:58",
+      "thread": {
+        "id": "thread_marie_private",
+        "type": "private",
+        "participants": ["ludo", "marie"],
+        "display_name": "Marie",
+        "profile_content_id": "profile_marie_placeholder"
+      },
+      "transition_text": "Avant de partir. Marie écrit depuis la chambre, à quelques mètres seulement.",
+      "availability_state": "Marie se prépare. Elle est présente physiquement, mais passe par message comme un jeu de couple.",
+      "function": "Installer le départ, la complicité du couple et la fragilité de la soirée qui arrive.",
+      "messages": [
+        {
+          "id": "msg_c03_marie_001",
+          "sender": "marie",
+          "time_label": "18:58",
+          "text": "Tu es prêt ?"
+        },
+        {
+          "id": "msg_c03_marie_002",
+          "sender": "marie",
+          "time_label": "18:58",
+          "text": "Question piège : je sais que non."
+        },
+        {
+          "id": "msg_c03_marie_003",
+          "sender": "marie",
+          "time_label": "18:59",
+          "text": "Pauline m’a déjà envoyé trois messages pour savoir si on partait."
+        },
+        {
+          "id": "msg_c03_marie_004",
+          "sender": "marie",
+          "time_label": "18:59",
+          "text": "Je crois qu’elle a décidé que cette soirée était un événement diplomatique."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_marie_001_warm",
+          "text": "Je suis prêt. Enfin presque. Tu es belle ?",
+          "tone": "couple_flirt",
+          "effects": {
+            "marie.trust": 1,
+            "marie_attention_score": 1
+          },
+          "sets_flags": ["flirted_with_marie_before_party_day3"],
+          "next_messages": [
+            {
+              "id": "msg_c03_marie_005_warm",
+              "sender": "marie",
+              "time_label": "19:00",
+              "text": "Je vois que monsieur essaie de gagner du temps intelligemment."
+            },
+            {
+              "id": "msg_c03_marie_006_warm",
+              "sender": "marie",
+              "time_label": "19:00",
+              "text": "Mais oui. Et tu devrais venir vérifier avant que je change d’avis."
+            }
+          ]
+        },
+        {
+          "id": "choice_c03_marie_001_distracted",
+          "text": "Deux minutes, je réponds à un truc.",
+          "tone": "distracted_phone",
+          "effects": {
+            "marie.lucidity": 1,
+            "marie_neglect_score": 1
+          },
+          "sets_flags": ["phone_before_party_over_marie_day3"],
+          "next_messages": [
+            {
+              "id": "msg_c03_marie_005_distracted",
+              "sender": "marie",
+              "time_label": "19:00",
+              "text": "Évidemment."
+            },
+            {
+              "id": "msg_c03_marie_006_distracted",
+              "sender": "marie",
+              "time_label": "19:01",
+              "text": "Deux minutes de téléphone, donc quinze minutes dans la vraie vie."
+            }
+          ]
+        }
+      ],
+      "routes_nourished": ["marie", "marie_phone_distance"],
+      "required_events_delivered": ["marie_present_before_party"]
+    },
+    {
+      "conversation_segment_id": "c03_raphaelle_contrast",
+      "moment_label": "avant soirée",
+      "time_label": "19:12",
+      "thread": {
+        "id": "thread_raphaelle_private",
+        "type": "private",
+        "participants": ["ludo", "raphaelle"],
+        "display_name": "Raphaëlle",
+        "profile_content_id": "profile_raphaelle_placeholder"
+      },
+      "transition_text": "Un message bref arrive pendant que Ludo s’apprête à sortir.",
+      "availability_state": "Raphaëlle n’est pas dans la soirée. Elle écrit depuis son monde à elle.",
+      "function": "Faire exister Raphaëlle comme contraste calme et rappeler qu’elle n’est pas dans le même jeu social.",
+      "messages": [
+        {
+          "id": "msg_c03_raphaelle_001",
+          "sender": "raphaelle",
+          "time_label": "19:12",
+          "text": "J’ai survécu à la réunion. À peine."
+        },
+        {
+          "id": "msg_c03_raphaelle_002",
+          "sender": "raphaelle",
+          "time_label": "19:13",
+          "text": "Bonne soirée, si c’est bien ce soir votre fameuse soirée."
+        },
+        {
+          "id": "msg_c03_raphaelle_003",
+          "sender": "raphaelle",
+          "time_label": "19:13",
+          "text": "Et essaie de ne pas faire semblant d’aller bien toute la nuit. C’est fatigant, même par procuration."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_raphaelle_001_honest",
+          "text": "Je vais essayer. Merci de l’avoir remarqué.",
+          "tone": "honest_grateful",
+          "effects": {
+            "raphaelle.attachment": 1,
+            "truth_tendency": 1
+          },
+          "sets_flags": ["kept_raphaelle_contrast_day3"],
+          "next_messages": [
+            {
+              "id": "msg_c03_raphaelle_004_honest",
+              "sender": "raphaelle",
+              "time_label": "19:14",
+              "text": "Bonne réponse."
+            },
+            {
+              "id": "msg_c03_raphaelle_005_honest",
+              "sender": "raphaelle",
+              "time_label": "19:14",
+              "text": "Maintenant file, avant que je devienne officiellement la collègue qui donne des conseils de vie."
+            }
+          ]
+        },
+        {
+          "id": "choice_c03_raphaelle_001_light",
+          "text": "Promis, je ferai semblant avec modération.",
+          "tone": "light",
+          "effects": {
+            "raphaelle.attachment": 1
+          },
+          "sets_flags": ["joked_with_raphaelle_before_party_day3"],
+          "next_messages": [
+            {
+              "id": "msg_c03_raphaelle_004_light",
+              "sender": "raphaelle",
+              "time_label": "19:14",
+              "text": "Je ne suis pas sûre que ce soit une vraie promesse, mais je prends."
+            }
+          ]
+        }
+      ],
+      "routes_nourished": ["raphaelle_contrast"],
+      "required_events_delivered": ["raphaelle_absent_but_present_as_contrast"]
+    }
+  ],
+  "debug_notes": "Pré-soirée : Marie est physiquement proche, Raphaëlle est le contraste hors soirée. Peu de choix visibles."
+}
