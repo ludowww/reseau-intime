@@ -1,0 +1,144 @@
+{
+  "id": "chapter_03_party_pressure",
+  "chapter": 3,
+  "day": 3,
+  "title": "Jour 3 — Pression de milieu de soirée",
+  "app": "messages",
+  "segments": [
+    {
+      "conversation_segment_id": "c03_party_pressure_social",
+      "moment_label": "milieu de soirée",
+      "time_label": "22:03",
+      "transition_text": "Pauline circule, Nico reste trop près de Marie, Mathilde voit trop de choses. Le téléphone n’est plus discret.",
+      "availability_state": "Tout le monde est dans le même appartement. Les messages privés deviennent plus risqués parce que les regards circulent.",
+      "function": "Faire monter la pression sans explosion : Pauline teste, Mathilde prévient, Nico prend de la place, Marie remarque.",
+      "events": [
+        {
+          "id": "live_c03_pressure_001",
+          "type": "live_context",
+          "text": "Pauline passe près de Ludo avec son verre et regarde son écran une seconde trop longtemps."
+        },
+        {
+          "id": "live_c03_pressure_002",
+          "type": "live_context",
+          "text": "Nico fait rire Marie à propos d’une vieille chanson. Marie rit vraiment."
+        },
+        {
+          "id": "live_c03_pressure_003",
+          "type": "live_context",
+          "text": "Mathilde croise le regard de Ludo, puis regarde son téléphone."
+        }
+      ],
+      "messages": [
+        {
+          "id": "msg_c03_pauline_pressure_001",
+          "thread_id": "thread_pauline_private",
+          "sender": "pauline",
+          "time_label": "22:04",
+          "text": "Tu lis vite quand tu veux."
+        },
+        {
+          "id": "msg_c03_mathilde_pressure_001",
+          "thread_id": "thread_mathilde_private",
+          "sender": "mathilde",
+          "time_label": "22:05",
+          "text": "Marie a remarqué que tu regardais ton tel."
+        },
+        {
+          "id": "msg_c03_group_pressure_001",
+          "thread_id": "thread_group_party",
+          "sender": "nico",
+          "time_label": "22:06",
+          "text": "Marie, je maintiens : tu devrais gérer la musique de toutes nos soirées."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_pressure_public_marie",
+          "text": "Répondre publiquement pour rejoindre Marie",
+          "tone": "couple_public_rejoin",
+          "outgoing_text": "Je confirme. Mais je garde le droit de critiquer deux choix sur trois.",
+          "effects": {
+            "marie.trust": 1,
+            "marie_attention_score": 1
+          },
+          "sets_flags": ["rejoined_marie_publicly_party_day3"],
+          "next_messages": [
+            {
+              "id": "msg_c03_pressure_public_marie_reply",
+              "sender": "marie",
+              "thread_id": "thread_group_party",
+              "time_label": "22:07",
+              "text": "Deux sur trois ? Tu es généreux ce soir."
+            }
+          ]
+        },
+        {
+          "id": "choice_c03_pressure_answer_pauline",
+          "text": "Répondre à Pauline en privé",
+          "tone": "private_risk",
+          "outgoing_text": "Tu regardes beaucoup mon écran pour quelqu’un qui dit de ne pas réagir.",
+          "effects": {
+            "pauline.interest": 1,
+            "pauline.control": 1,
+            "pauline_risk_score": 1,
+            "lie_score": 1
+          },
+          "sets_flags": ["answered_pauline_pressure_private_day3"],
+          "next_messages": [
+            {
+              "id": "msg_c03_pauline_pressure_002",
+              "sender": "pauline",
+              "thread_id": "thread_pauline_private",
+              "time_label": "22:07",
+              "text": "Je regarde surtout ce que les gens cachent mal."
+            }
+          ]
+        },
+        {
+          "id": "choice_c03_pressure_answer_mathilde",
+          "text": "Répondre à Mathilde en privé",
+          "tone": "private_warning",
+          "outgoing_text": "Tu t’inquiètes pour moi ou pour elle ?",
+          "effects": {
+            "mathilde.desire": 1,
+            "mathilde.loyalty": 1,
+            "mathilde_attention_score": 1
+          },
+          "sets_flags": ["asked_mathilde_who_she_protects_day3"],
+          "next_messages": [
+            {
+              "id": "msg_c03_mathilde_pressure_002",
+              "sender": "mathilde",
+              "thread_id": "thread_mathilde_private",
+              "time_label": "22:07",
+              "text": "Les deux, idiot. C’est bien le problème."
+            }
+          ]
+        },
+        {
+          "id": "choice_c03_pressure_watch_nico",
+          "text": "Ne pas écrire, surveiller Nico et Marie",
+          "tone": "silent_jealousy",
+          "effects": {
+            "ludo_jealousy": 2,
+            "nico_surveillance_score": 1,
+            "marie_neglect_score": 1
+          },
+          "sets_flags": ["watched_nico_marie_instead_of_replying_day3"],
+          "next_messages": [
+            {
+              "id": "inner_c03_pressure_watch",
+              "sender": "system",
+              "time_label": "22:08",
+              "text": "Ludo ne répond pas. Il regarde Marie rire à côté de Nico."
+            }
+          ]
+        }
+      ],
+      "routes_nourished": ["marie", "pauline", "mathilde", "nico_marie"],
+      "required_events_delivered": ["party_pressure_rises", "marie_notices_phone", "nico_near_marie", "pauline_observes_ludo"]
+    }
+  ],
+  "debug_notes": "Milieu de soirée : une seule scène doit pouvoir alimenter plusieurs routes selon la priorité, mais rester lisible."
+}
