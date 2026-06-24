@@ -1,0 +1,338 @@
+{
+  "id": "chapter_03_crossed_notifications",
+  "chapter": 3,
+  "day": 3,
+  "title": "Jour 3 — Notifications croisées",
+  "app": "notifications",
+  "segments": [
+    {
+      "conversation_segment_id": "c03_crossed_notifications_priority",
+      "moment_label": "premier croisement",
+      "time_label": "21:12",
+      "transition_text": "La soirée se lance. Trois notifications arrivent presque ensemble, pendant que Marie parle avec Pauline à deux mètres de Ludo.",
+      "availability_state": "Pauline est dans la pièce, Mathilde aussi. Sandra est absente de la soirée. Nico est près de Marie.",
+      "function": "Forcer un choix de priorité lisible sans verrouiller définitivement une route.",
+      "incoming_notifications": [
+        {
+          "id": "notif_c03_sandra_001",
+          "source_app": "messages",
+          "thread_id": "thread_sandra_private",
+          "sender": "sandra",
+          "time_label": "21:12",
+          "text": "Je sais que tu es à ta soirée. Je ne devrais pas écrire."
+        },
+        {
+          "id": "notif_c03_pauline_001",
+          "source_app": "messages",
+          "thread_id": "thread_pauline_private",
+          "sender": "pauline",
+          "time_label": "21:12",
+          "text": "Ne réagis pas."
+        },
+        {
+          "id": "notif_c03_mathilde_001",
+          "source_app": "messages",
+          "thread_id": "thread_mathilde_private",
+          "sender": "mathilde",
+          "time_label": "21:13",
+          "text": "Tu vas ouvrir ça alors que Marie est juste là ?"
+        },
+        {
+          "id": "notif_c03_social_001",
+          "source_app": "social",
+          "thread_id": "social_feed_party",
+          "sender": "system",
+          "time_label": "21:13",
+          "text": "Nico a identifié Marie dans une story."
+        }
+      ],
+      "priority_choices": [
+        {
+          "id": "choice_c03_priority_sandra",
+          "text": "Ouvrir Sandra",
+          "effects": {
+            "sandra_priority_score": 2,
+            "sandra.attachment": 1,
+            "marie_neglect_score": 1
+          },
+          "sets_flags": ["opened_sandra_first_party_day3"],
+          "opens_branch": "branch_sandra_remote"
+        },
+        {
+          "id": "choice_c03_priority_pauline",
+          "text": "Ouvrir Pauline",
+          "effects": {
+            "pauline_risk_score": 2,
+            "pauline.interest": 1,
+            "pauline.control": 1
+          },
+          "sets_flags": ["opened_pauline_first_party_day3"],
+          "opens_branch": "branch_pauline_private_test"
+        },
+        {
+          "id": "choice_c03_priority_mathilde",
+          "text": "Répondre à Mathilde",
+          "effects": {
+            "mathilde_attention_score": 2,
+            "mathilde.desire": 1,
+            "marie.lucidity": 1
+          },
+          "sets_flags": ["opened_mathilde_first_party_day3"],
+          "opens_branch": "branch_mathilde_observes"
+        },
+        {
+          "id": "choice_c03_priority_social",
+          "text": "Regarder la story de Nico et Marie",
+          "effects": {
+            "ludo_jealousy": 2,
+            "nico_surveillance_score": 1
+          },
+          "sets_flags": ["opened_nico_marie_story_first_party_day3"],
+          "opens_branch": "branch_nico_marie_story"
+        },
+        {
+          "id": "choice_c03_priority_marie",
+          "text": "Poser le téléphone et revenir vers Marie",
+          "effects": {
+            "marie.trust": 2,
+            "truth_tendency": 1
+          },
+          "sets_flags": ["put_phone_down_for_marie_party_day3"],
+          "opens_branch": "branch_marie_present"
+        }
+      ],
+      "branches": {
+        "branch_sandra_remote": {
+          "thread": "thread_sandra_private",
+          "messages": [
+            {
+              "id": "msg_c03_sandra_remote_001",
+              "sender": "sandra",
+              "time_label": "21:14",
+              "text": "Désolée. Mauvais timing."
+            },
+            {
+              "id": "msg_c03_sandra_remote_002",
+              "sender": "sandra",
+              "time_label": "21:14",
+              "text": "Je voulais juste... non, laisse tomber."
+            }
+          ],
+          "choices": [
+            {
+              "id": "choice_c03_sandra_remote_answer",
+              "text": "Tu peux me parler. Même là.",
+              "effects": {
+                "sandra.attachment": 2,
+                "lie_score": 1
+              },
+              "sets_flags": ["answered_sandra_during_party_day3"],
+              "next_messages": [
+                {
+                  "id": "msg_c03_sandra_remote_003_answer",
+                  "sender": "sandra",
+                  "time_label": "21:15",
+                  "text": "C’est précisément ce qui me fait peur."
+                }
+              ]
+            },
+            {
+              "id": "choice_c03_sandra_remote_later",
+              "text": "Je suis avec Marie. Je te réponds après.",
+              "effects": {
+                "truth_tendency": 1,
+                "sandra.exposure": 1
+              },
+              "sets_flags": ["delayed_sandra_for_marie_party_day3"],
+              "next_messages": [
+                {
+                  "id": "msg_c03_sandra_remote_003_later",
+                  "sender": "sandra",
+                  "time_label": "21:15",
+                  "text": "Oui. Bien sûr. Pardon."
+                }
+              ]
+            }
+          ]
+        },
+        "branch_pauline_private_test": {
+          "thread": "thread_pauline_private",
+          "messages": [
+            {
+              "id": "msg_c03_pauline_private_001",
+              "sender": "pauline",
+              "time_label": "21:14",
+              "text": "Ne réagis pas."
+            },
+            {
+              "id": "msg_c03_pauline_private_002",
+              "sender": "pauline",
+              "time_label": "21:14",
+              "text": "Je voulais voir si tu allais ouvrir alors que je suis littéralement en face de toi."
+            }
+          ],
+          "choices": [
+            {
+              "id": "choice_c03_pauline_ask",
+              "text": "Tu joues à quoi ?",
+              "effects": {
+                "pauline.interest": 1,
+                "pauline.control": 1
+              },
+              "sets_flags": ["asked_pauline_game_party_day3"],
+              "next_messages": [
+                {
+                  "id": "msg_c03_pauline_private_003_ask",
+                  "sender": "pauline",
+                  "time_label": "21:15",
+                  "text": "À savoir combien de temps tu mets avant de faire une erreur."
+                }
+              ]
+            },
+            {
+              "id": "choice_c03_pauline_minimize",
+              "text": "J’ai ouvert par réflexe.",
+              "effects": {
+                "lie_score": 1,
+                "pauline.control": 1
+              },
+              "sets_flags": ["minimized_opening_pauline_party_day3"],
+              "next_messages": [
+                {
+                  "id": "msg_c03_pauline_private_003_minimize",
+                  "sender": "pauline",
+                  "time_label": "21:15",
+                  "text": "Les réflexes disent souvent la vérité."
+                }
+              ]
+            }
+          ]
+        },
+        "branch_mathilde_observes": {
+          "thread": "thread_mathilde_private",
+          "messages": [
+            {
+              "id": "msg_c03_mathilde_observe_001",
+              "sender": "mathilde",
+              "time_label": "21:14",
+              "text": "Je te vois."
+            },
+            {
+              "id": "msg_c03_mathilde_observe_002",
+              "sender": "mathilde",
+              "time_label": "21:14",
+              "text": "Et Marie aussi peut te voir, au cas où tu l’aurais oublié."
+            }
+          ],
+          "choices": [
+            {
+              "id": "choice_c03_mathilde_tease",
+              "text": "Tu surveilles mon téléphone maintenant ?",
+              "effects": {
+                "mathilde.desire": 1,
+                "mathilde_attention_score": 1
+              },
+              "sets_flags": ["teased_mathilde_observing_phone_day3"],
+              "next_messages": [
+                {
+                  "id": "msg_c03_mathilde_observe_003_tease",
+                  "sender": "mathilde",
+                  "time_label": "21:15",
+                  "text": "Non. Je surveille les catastrophes familiales potentielles. Nuance."
+                }
+              ]
+            },
+            {
+              "id": "choice_c03_mathilde_safe",
+              "text": "Tu as raison. Je range.",
+              "effects": {
+                "truth_tendency": 1,
+                "mathilde.loyalty": 1
+              },
+              "sets_flags": ["put_phone_away_after_mathilde_warning_day3"],
+              "next_messages": [
+                {
+                  "id": "msg_c03_mathilde_observe_003_safe",
+                  "sender": "mathilde",
+                  "time_label": "21:15",
+                  "text": "Sage. Presque suspect."
+                }
+              ]
+            }
+          ]
+        },
+        "branch_nico_marie_story": {
+          "thread": "social_feed_party",
+          "items": [
+            {
+              "id": "story_c03_nico_marie_001",
+              "type": "story",
+              "author": "nico",
+              "time_label": "21:14",
+              "text": "La seule personne capable de sauver cette playlist.",
+              "tagged": ["marie"],
+              "content_id": "photo_group_last_party_placeholder"
+            },
+            {
+              "id": "reaction_c03_marie_001",
+              "type": "reaction",
+              "author": "marie",
+              "target_id": "story_c03_nico_marie_001",
+              "reaction": "😂"
+            }
+          ],
+          "choices": [
+            {
+              "id": "choice_c03_story_watch",
+              "text": "Continuer à regarder",
+              "effects": {
+                "ludo_jealousy": 1,
+                "nico.place_near_marie": 1
+              },
+              "sets_flags": ["watched_nico_marie_story_party_day3"]
+            },
+            {
+              "id": "choice_c03_story_reply_marie",
+              "text": "Répondre à Marie en privé",
+              "effects": {
+                "marie.trust": 1,
+                "ludo_jealousy": 1
+              },
+              "sets_flags": ["replied_marie_after_nico_story_day3"]
+            }
+          ]
+        },
+        "branch_marie_present": {
+          "thread": "live_context",
+          "messages": [
+            {
+              "id": "msg_c03_marie_present_001",
+              "sender": "marie",
+              "time_label": "21:14",
+              "text": "Tu as posé ton téléphone ?"
+            },
+            {
+              "id": "msg_c03_marie_present_002",
+              "sender": "marie",
+              "time_label": "21:14",
+              "text": "Je vais finir par prendre ça comme un compliment."
+            }
+          ],
+          "choices": [
+            {
+              "id": "choice_c03_marie_present_soft",
+              "text": "C’en est un.",
+              "effects": {
+                "marie.trust": 2
+              },
+              "sets_flags": ["chose_marie_during_crossed_notifications_day3"]
+            }
+          ]
+        }
+      },
+      "routes_nourished": ["marie", "mathilde", "sandra", "pauline", "nico_marie"],
+      "required_events_delivered": ["crossed_notifications_priority_choice", "player_priority_emerges"]
+    }
+  ],
+  "debug_notes": "Cœur du pivot : le choix n’est pas seulement la réponse, mais la priorité d’ouverture. Aucune route finale n’est verrouillée ici, mais le debug doit montrer une tendance probable."
+}
