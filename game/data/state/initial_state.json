@@ -1,0 +1,64 @@
+{
+  "chapter": 1,
+  "day": 1,
+  "time_label": "soir",
+  "dominant_route": null,
+  "secondary_route": null,
+  "threat": null,
+  "relationship_mode": null,
+  "global": {
+    "marie_trust": 60,
+    "lie_score": 0,
+    "truth_tendency": 30,
+    "ludo_jealousy": 10,
+    "social_pressure": 10
+  },
+  "characters": {
+    "marie": {
+      "trust": 60,
+      "lucidity": 15
+    },
+    "mathilde": {
+      "desire": 20,
+      "loyalty": 75
+    },
+    "sandra": {
+      "attachment": 25,
+      "exposure": 5
+    },
+    "raphaelle": {
+      "attachment": 15,
+      "clarity": 50
+    },
+    "pauline": {
+      "interest": 25,
+      "control": 30
+    },
+    "nico": {
+      "desire_for_marie": 60,
+      "place_near_marie": 20
+    }
+  },
+  "passive_signals": {
+    "marie_attention_score": 0,
+    "marie_neglect_score": 0,
+    "mathilde_attention_score": 0,
+    "sandra_priority_score": 0,
+    "raphaelle_clarity_score": 0,
+    "pauline_risk_score": 0,
+    "nico_surveillance_score": 0
+  },
+  "phone": {
+    "current_wallpaper_content_id": "wallpaper_default_neutral",
+    "wallpaper_tags": [
+      "neutral"
+    ],
+    "wallpaper_risk_level": 0,
+    "wallpaper_known_by": []
+  },
+  "flags": [],
+  "seen_messages": [],
+  "unlocked_content": [
+    "wallpaper_default_neutral"
+  ]
+}
