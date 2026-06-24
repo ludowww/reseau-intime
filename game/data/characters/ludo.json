@@ -1,0 +1,27 @@
+{
+  "id": "ludo",
+  "display_name": "Ludo",
+  "role": "Personnage joueur",
+  "relationship_to_ludo": "self",
+  "relationship_to_marie": "partner",
+  "narrative_function": "Homme en couple, écrit mais orientable par les choix, partagé entre vérité, désir, fuite et besoin d’être choisi.",
+  "voice_profile": {
+    "rhythm": "court à moyen, prudent, parfois ironique",
+    "emoji_use": "rare",
+    "flirt_style": "détour, test, ambiguïté",
+    "lie_style": "minimise et désamorce",
+    "avoid": [
+      "trop dominateur trop tôt",
+      "trop clair sans choix joueur",
+      "pur collectionneur froid"
+    ]
+  },
+  "default_variables": {},
+  "tags": [
+    "player",
+    "avoidant",
+    "desire",
+    "secret",
+    "written_character"
+  ]
+}
