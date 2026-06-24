@@ -1,0 +1,157 @@
+{
+  "id": "chapter_03_party_group_arrival",
+  "chapter": 3,
+  "day": 3,
+  "title": "Jour 3 — Arrivée chez Pauline",
+  "app": "messages",
+  "thread": {
+    "id": "thread_group_party",
+    "type": "group",
+    "participants": ["ludo", "marie", "mathilde", "pauline", "nico"],
+    "display_name": "Soirée chez Pauline",
+    "profile_content_id": "photo_group_last_party_placeholder"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c03_party_arrival_group",
+      "moment_label": "arrivée",
+      "time_label": "20:34",
+      "transition_text": "Chez Pauline. Le groupe écrit alors que tout le monde est presque dans la même pièce.",
+      "availability_state": "Pauline accueille, Marie est près de Ludo, Nico se rapproche du groupe, Mathilde observe.",
+      "function": "Installer le lieu social, Pauline hôte, Nico proche de Marie et Mathilde comme observatrice du couple.",
+      "messages": [
+        {
+          "id": "msg_c03_group_001",
+          "sender": "pauline",
+          "time_label": "20:34",
+          "text": "Les premiers arrivés gagnent le droit de juger les retardataires."
+        },
+        {
+          "id": "msg_c03_group_002",
+          "sender": "mathilde",
+          "time_label": "20:35",
+          "text": "Je suis arrivée avec Marie, donc je suis protégée diplomatiquement."
+        },
+        {
+          "id": "msg_c03_group_003",
+          "sender": "marie",
+          "time_label": "20:35",
+          "text": "Elle s’est imposée dans ma voiture comme dans mon appart."
+        },
+        {
+          "id": "msg_c03_group_004",
+          "sender": "nico",
+          "time_label": "20:36",
+          "text": "Marie a déjà sauvé l’ambiance en arrivant."
+        },
+        {
+          "id": "msg_c03_group_005",
+          "sender": "pauline",
+          "time_label": "20:36",
+          "text": "Nico, j’avais demandé subtilité."
+        },
+        {
+          "id": "msg_c03_group_006",
+          "sender": "nico",
+          "time_label": "20:37",
+          "text": "Je suis d’une délicatesse rare."
+        },
+        {
+          "id": "msg_c03_group_007",
+          "sender": "mathilde",
+          "time_label": "20:37",
+          "text": "Rare, oui."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_group_001_reply_marie",
+          "text": "Répondre en visant Marie",
+          "tone": "couple_public",
+          "outgoing_text": "Marie sauve souvent les ambiances. J’essaie juste de suivre.",
+          "effects": {
+            "marie.trust": 1,
+            "marie_attention_score": 1
+          },
+          "sets_flags": ["publicly_valued_marie_party_day3"],
+          "next_messages": [
+            {
+              "id": "msg_c03_group_008_marie",
+              "sender": "marie",
+              "time_label": "20:38",
+              "text": "Bien rattrapé."
+            },
+            {
+              "id": "msg_c03_group_009_pauline",
+              "sender": "pauline",
+              "time_label": "20:38",
+              "text": "Joli. Je note que Ludo sait parler en public quand il veut."
+            }
+          ]
+        },
+        {
+          "id": "choice_c03_group_001_reply_nico",
+          "text": "Répondre à Nico",
+          "tone": "light_jealousy",
+          "outgoing_text": "Doucement, Nico. Tu vas user tes compliments avant le premier verre.",
+          "effects": {
+            "ludo_jealousy": 1,
+            "nico_surveillance_score": 1,
+            "social_pressure": 1
+          },
+          "sets_flags": ["teased_nico_about_marie_party_day3"],
+          "next_messages": [
+            {
+              "id": "msg_c03_group_008_nico",
+              "sender": "nico",
+              "time_label": "20:38",
+              "text": "Je gère mon stock, t’inquiète."
+            },
+            {
+              "id": "msg_c03_group_009_marie",
+              "sender": "marie",
+              "time_label": "20:39",
+              "text": "Vous commencez déjà ?"
+            }
+          ]
+        },
+        {
+          "id": "choice_c03_group_001_silent",
+          "text": "Ne pas répondre, lire seulement",
+          "tone": "silent_observe",
+          "effects": {
+            "marie_neglect_score": 1
+          },
+          "sets_flags": ["silent_group_arrival_party_day3"],
+          "next_messages": [
+            {
+              "id": "msg_c03_group_008_silent",
+              "sender": "mathilde",
+              "time_label": "20:39",
+              "text": "Ludo lit tout mais ne dit rien. Très soirée réussie."
+            }
+          ]
+        }
+      ],
+      "automatic_followup": [
+        {
+          "id": "msg_c03_group_010_common",
+          "sender": "pauline",
+          "time_label": "20:42",
+          "text": "Photo de départ avant que tout le monde prétende ne pas être photogénique."
+        },
+        {
+          "id": "msg_c03_group_011_photo",
+          "sender": "pauline",
+          "time_label": "20:43",
+          "text": "Photo envoyée.",
+          "content_id": "photo_group_last_party_placeholder",
+          "content_behavior": "inline_preview"
+        }
+      ],
+      "routes_nourished": ["marie", "nico_marie", "pauline", "mathilde_seed"],
+      "required_events_delivered": ["pauline_hosts", "nico_public_interest_marie", "mathilde_observes_social_context"]
+    }
+  ],
+  "debug_notes": "Arrivée chez Pauline : groupe actif, premières piques sociales, aucun piège encore."
+}
