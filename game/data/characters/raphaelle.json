@@ -1,0 +1,34 @@
+{
+  "id": "raphaelle",
+  "display_name": "Raphaëlle",
+  "role": "Collègue attentionnée de Ludo",
+  "relationship_to_ludo": "coworker_attentive",
+  "relationship_to_marie": "outside_partner_circle",
+  "narrative_function": "Clarté, alternative réelle, attention douce, refus du mensonge et du rôle de pansement.",
+  "desire_apparent": "Aider Ludo, être présente, lui offrir un espace calme.",
+  "desire_deep": "Être choisie clairement, pas utilisée comme refuge temporaire.",
+  "fear": "Devenir la fille du travail à qui Ludo raconte tout avant de rentrer mentir à Marie.",
+  "red_line": "Le flou prolongé, les demi-vérités, le rôle de roue de secours.",
+  "voice_profile": {
+    "rhythm": "court à moyen, posé, structuré",
+    "emoji_use": "rare, chaleureux, parfois ☕",
+    "flirt_style": "direct mais sain, sans manipulation",
+    "boundary_style": "limite claire, pas de sermon",
+    "avoid": [
+      "jouer au piège comme Pauline",
+      "accepter longtemps d’être cachée",
+      "être moralisatrice"
+    ]
+  },
+  "default_variables": {
+    "attachment": 15,
+    "clarity": 50
+  },
+  "tags": [
+    "coworker",
+    "clarity",
+    "alternative",
+    "honesty",
+    "boundary"
+  ]
+}
