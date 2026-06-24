@@ -20,6 +20,10 @@ Thumbs.db
 builds/
 exports/
 
+# Python
+__pycache__/
+*.pyc
+
 # Temporary
 *.tmp
 *.bak

@@ -62,7 +62,26 @@ func _render_days() -> void:
 func _render_conversations(day_value) -> void:
 	_clear(conversation_list)
 	_add_label(conversation_list, "Jour %s" % day_value, 18)
-	for conversation in DataLoader.get_conversations_for_day(day_value):
+	var moments := DataLoader.get_moments_for_day(day_value)
+	if moments.is_empty():
+		_render_conversation_buttons(day_value, DataLoader.get_conversations_for_day(day_value))
+		return
+	for moment in moments:
+		var button := Button.new()
+		button.text = "%s — %s" % [moment.get("moment_label", "moment"), moment.get("time_label", "")]
+		button.tooltip_text = str(moment.get("transition_text", ""))
+		button.pressed.connect(func(): _render_moment_conversations(day_value, moment))
+		conversation_list.add_child(button)
+
+func _render_moment_conversations(day_value, moment: Dictionary) -> void:
+	_clear(conversation_list)
+	_add_label(conversation_list, "%s — %s" % [moment.get("moment_label", "moment"), moment.get("time_label", "")], 18)
+	if moment.has("transition_text"):
+		_add_label(conversation_list, str(moment["transition_text"]), 12)
+	_render_conversation_buttons(day_value, DataLoader.get_conversations_for_moment(day_value, moment))
+
+func _render_conversation_buttons(day_value, conversations: Array) -> void:
+	for conversation in conversations:
 		var button := Button.new()
 		button.text = _conversation_label(conversation)
 		button.pressed.connect(func(): _open_conversation(day_value, conversation))

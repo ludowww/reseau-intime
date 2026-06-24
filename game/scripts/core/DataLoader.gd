@@ -79,20 +79,7 @@ func get_day_labels() -> Array[String]:
 	return labels
 
 func get_conversations_for_day(day_value) -> Array:
-	var entries: Array = []
-	for conversation in conversations_by_day.get(str(day_value), []):
-		var segments: Array = conversation.get("segments", [])
-		if segments.is_empty():
-			entries.append(conversation)
-			continue
-		for index in range(segments.size()):
-			var segment: Dictionary = segments[index].duplicate(true)
-			segment["id"] = "%s__segment_%d" % [conversation.get("id", "conversation"), index + 1]
-			segment["title"] = conversation.get("title", conversation.get("id", "Conversation"))
-			segment["_parent_conversation_id"] = conversation.get("id", "")
-			segment["_source_path"] = conversation.get("_source_path", "")
-func get_conversations_for_day(day_value) -> Array:
-	return conversations_by_day.get(str(day_value), [])
+	return _flatten_segments(conversations_by_day.get(str(day_value), []))
 
 func get_index_for_day(day_value) -> Dictionary:
 	for index in chapter_indexes:
@@ -104,17 +91,33 @@ func get_moments_for_day(day_value) -> Array:
 	return get_index_for_day(day_value).get("moment_flow", [])
 
 func get_conversations_for_moment(day_value, moment: Dictionary) -> Array:
-	var result: Array = []
+	var source: Array = []
 	for conversation_id in moment.get("conversation_ids", []):
 		if conversations_by_id.has(str(conversation_id)):
 			var conversation: Dictionary = conversations_by_id[str(conversation_id)].duplicate(true)
 			conversation["moment_label"] = moment.get("moment_label", conversation.get("moment_label", ""))
 			conversation["time_label"] = moment.get("time_label", conversation.get("time_label", ""))
 			conversation["transition_text"] = moment.get("transition_text", conversation.get("transition_text", ""))
-			result.append(conversation)
-	if result.is_empty():
+			source.append(conversation)
+	if source.is_empty():
 		return get_conversations_for_day(day_value)
-	return result
+	return _flatten_segments(source)
+
+func _flatten_segments(conversations: Array) -> Array:
+	var entries: Array = []
+	for conversation in conversations:
+		var segments: Array = conversation.get("segments", [])
+		if segments.is_empty():
+			entries.append(conversation)
+			continue
+		for index in range(segments.size()):
+			var segment: Dictionary = segments[index].duplicate(true)
+			segment["id"] = "%s__segment_%d" % [conversation.get("id", "conversation"), index + 1]
+			segment["title"] = conversation.get("title", conversation.get("id", "Conversation"))
+			segment["_parent_conversation_id"] = conversation.get("id", "")
+			segment["_source_path"] = conversation.get("_source_path", "")
+			entries.append(segment)
+	return entries
 
 func get_visual_content(content_id: String) -> Dictionary:
 	return visual_content_by_id.get(content_id, {})
