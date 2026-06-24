@@ -19,6 +19,10 @@ Il doit créer une tension entre :
 - ce qu’il supprime ;
 - ce qui pourra être découvert plus tard.
 
+## Scope voix / audio
+
+Les patterns de scènes n’utilisent pas de vocaux ou d’appels avec voix dans le scope initial. Les tensions doivent être portées par texte, images, vidéos, stories, notifications, captures, fonds d’écran et silences.
+
 ## Règle centrale
 
 > Une scène smartphone doit créer une tension entre notification, priorité, réponse, trace et conséquence différée.
@@ -199,7 +203,7 @@ Notification contenu
 Message d’accompagnement
 Ouverture ou ignorance
 Affichage du contenu
-Choix : répondre, conserver, supprimer, capturer, demander plus
+Choix : répondre, conserver, supprimer, capturer, demander plus, mettre en fond d’écran
 Effet immédiat
 Risque différé
 ```
@@ -400,6 +404,75 @@ Marie comprend l’incohérence.
 
 Élevé si mal préparé. Le joueur doit pouvoir comprendre la conséquence en relisant l’histoire.
 
+## Pattern 11 — Fond d’écran compromettant
+
+### Usage
+
+Transformer une image privée en preuve sociale.
+
+Ce pattern exploite une action apparemment expressive : définir une photo reçue comme fond d’écran.
+
+### Structure
+
+```text
+Le joueur reçoit une photo
+Choix : définir comme fond d’écran
+Plusieurs scènes sans conséquence directe
+Scène sociale ou groupe
+Un personnage demande à voir le téléphone / fond d’écran
+Révélation du fond actif
+Réactions selon l’image
+Conséquence immédiate ou différée
+```
+
+### Choix recommandés
+
+Au moment de la révélation :
+
+```text
+Montrer sans réfléchir
+Masquer le téléphone
+Changer de sujet
+Assumer
+Mentir
+```
+
+### Risque
+
+Variable selon le fond d’écran.
+
+```text
+Fond neutre                → risque faible
+Marie tendre               → peut rassurer
+Marie provocante           → peut gêner ou réveiller le couple
+Mathilde ambiguë           → soupçon familial / domestique
+Sandra intime              → infidélité émotionnelle visible
+Raphaëlle douce            → soupçon de relation de travail
+Pauline provocante         → preuve sociale / piège
+Marie + Nico               → jalousie ou NTR
+```
+
+### Exemple
+
+```text
+Pauline : Montre ton fond d’écran, on va voir qui est le plus cringe 😇
+Nico : Ah oui, vas-y Ludo.
+Marie : Pourquoi pas.
+```
+
+Si fond Mathilde :
+
+```text
+Marie : C’est Mathilde ?
+Mathilde : Attends, quoi ?
+Pauline : Ah.
+Nico : Joli choix.
+```
+
+### Règle
+
+Le fond d’écran ne doit pas être vérifié partout. Il doit être utilisé dans des scènes prévues pour que la conséquence soit forte, lisible et non arbitraire.
+
 ## Règles de rythme
 
 1. Alterner scènes calmes et scènes à tension.
@@ -410,3 +483,5 @@ Marie comprend l’incohérence.
 6. Une preuve doit avoir été préparée avant d’exploser.
 7. Une conséquence différée doit sembler logique, pas arbitraire.
 8. Une scène commune doit pouvoir changer de sens selon la route dominante.
+9. Un contenu mis en fond d’écran devient un risque seulement s’il est révélé dans une scène prévue.
+10. Les scènes ne doivent pas dépendre de voix ou d’appels audio dans le scope initial.
