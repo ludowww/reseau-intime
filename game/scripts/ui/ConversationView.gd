@@ -19,8 +19,11 @@ func show_conversation(conversation: Dictionary) -> void:
 	if choices.is_empty():
 		_add_label("Aucun choix direct dans cette conversation.")
 	else:
-		_add_label("Choix disponibles", 16)
+		var is_guided_reply := choices.size() == 1
+		_add_label("Réponse" if is_guided_reply else "Choix disponibles", 16)
 		for choice in choices:
+			if is_guided_reply:
+				choice["_guided_reply"] = true
 			var button := Button.new()
 			button.text = str(choice.get("text", choice.get("id", "Choix")))
 			button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -31,10 +34,16 @@ func show_conversation(conversation: Dictionary) -> void:
 			add_child(button)
 
 func append_choice_result(choice: Dictionary) -> void:
-	_add_label("Choix appliqué : %s" % choice.get("text", choice.get("id", "")), 16)
+	if _is_guided_reply(choice):
+		_add_label("Ludo : %s" % choice.get("text", choice.get("id", "")), 16)
+	else:
+		_add_label("Choix appliqué : %s" % choice.get("text", choice.get("id", "")), 16)
 	for key in ["next_messages", "next_items", "automatic_followup"]:
 		for entry in choice.get(key, []):
 			_render_item(entry)
+
+func _is_guided_reply(choice: Dictionary) -> bool:
+	return bool(choice.get("_guided_reply", false))
 
 func _select_choice(choice: Dictionary, selected_button: Button) -> void:
 	if choice_was_applied:

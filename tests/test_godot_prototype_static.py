@@ -78,6 +78,23 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         self.assertIn("_format_message_line", script)
         self.assertIn("[%s] %s : %s", script)
 
+    def test_conversation_view_distinguishes_guided_replies_from_narrative_choices(self):
+        script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
+        self.assertIn("_is_guided_reply", script)
+        self.assertIn("choices.size() == 1", script)
+        self.assertIn("Réponse", script)
+        self.assertIn("_guided_reply", script)
+        self.assertIn("Ludo : %s", script)
+        self.assertIn("Choix appliqué", script)
+        self.assertIn("Choix disponibles", script)
+
+    def test_guided_replies_spec_is_present(self):
+        spec = ROOT / "docs" / "27_GUIDED_REPLIES_IMPLEMENTATION_SPEC.md"
+        self.assertTrue(spec.exists())
+        text = spec.read_text(encoding="utf-8")
+        self.assertIn("Si un segment contient exactement 1 choix", text)
+        self.assertIn("Ludo : [texte du choix]", text)
+
     def test_debug_panel_has_readable_compact_sections(self):
         script = (GAME / "scripts" / "ui" / "DebugPanel.gd").read_text(encoding="utf-8")
         self.assertIn("custom_minimum_size", script)
