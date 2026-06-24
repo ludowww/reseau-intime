@@ -2,21 +2,34 @@
   "id": "chapter_01_index",
   "chapter": 1,
   "day": 1,
-  "title": "Jour 1 — Routine",
-  "description": "Première journée : routine avec Marie, complicité légère avec Sandra, annonce de la soirée chez Pauline.",
+  "title": "Jour 1 — Routine et premiers fils",
+  "description": "Première journée : routine avec Marie, complicité légère avec Sandra, présence calme de Raphaëlle, annonce de la soirée chez Pauline et première image du groupe.",
+  "design_goal": "À la fin du Jour 1, le joueur doit savoir avec qui il a parlé, visualiser les personnages principaux, comprendre les habitudes de conversation et avoir envie de continuer.",
   "default_order": [
     "chapter_01_marie",
     "chapter_01_sandra",
+    "chapter_01_raphaelle",
     "chapter_01_group_friends"
   ],
   "conversation_files": [
     "res://data/conversations/chapter_01_marie.json",
     "res://data/conversations/chapter_01_sandra.json",
+    "res://data/conversations/chapter_01_raphaelle.json",
     "res://data/conversations/chapter_01_group_friends.json"
+  ],
+  "initial_visual_anchors": [
+    "profile_marie_placeholder",
+    "profile_sandra_placeholder",
+    "profile_raphaelle_placeholder",
+    "profile_mathilde_placeholder",
+    "profile_pauline_placeholder",
+    "profile_nico_placeholder",
+    "photo_group_last_party_placeholder"
   ],
   "routes_available": [
     "marie",
     "sandra",
+    "raphaelle",
     "pauline",
     "nico_marie",
     "mathilde"
@@ -27,10 +40,20 @@
     "harem_secret",
     "trio_marie_mathilde"
   ],
+  "end_of_day_player_knowledge": [
+    "Marie et Ludo sont ensemble, mais la routine pèse.",
+    "Sandra connaît déjà Ludo et sait repérer ses faux 'ça va'.",
+    "Raphaëlle existe au travail comme présence attentive et claire.",
+    "Pauline prépare une soirée et aime contrôler le ton du groupe.",
+    "Nico regarde déjà Marie avec un intérêt visible.",
+    "Mathilde est familière du foyer et du groupe, presque installée chez Marie et Ludo.",
+    "Les premières photos permettent de visualiser rapidement le casting."
+  ],
   "debug_expected_outcomes": [
-    "Marie trust can move slightly.",
+    "Marie trust/lucidity can move slightly.",
     "Sandra attachment can start increasing.",
-    "Pauline/Nico/Mathilde are only seeded through group messages.",
+    "Raphaelle attachment or clarity can start increasing.",
+    "Pauline/Nico/Mathilde are seeded through group messages and visual anchors.",
     "No dominant route should be locked in chapter 1."
   ]
 }
