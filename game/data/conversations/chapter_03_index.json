@@ -1,0 +1,72 @@
+{
+  "id": "chapter_03_index",
+  "chapter": 3,
+  "day": 3,
+  "title": "Jour 3 — Soirée chez Pauline",
+  "description": "Premier vrai pivot : la soirée fait se croiser les tensions installées aux Jours 1 et 2. Le joueur doit choisir ses priorités sans encore verrouiller définitivement une route.",
+  "design_goal": "Faire passer le jeu de conversations parallèles à réseau vivant : groupe actif, messages privés, interruptions, jalousie, piège social, première trace.",
+  "moment_flow": [
+    {
+      "moment_label": "avant soirée",
+      "time_label": "18:58",
+      "transition_text": "Avant de partir. Le téléphone est déjà plus actif que Ludo ne le voudrait.",
+      "conversation_ids": ["chapter_03_pre_party_threads"]
+    },
+    {
+      "moment_label": "arrivée",
+      "time_label": "20:34",
+      "transition_text": "Chez Pauline. Le groupe écrit alors que tout le monde est presque dans la même pièce.",
+      "conversation_ids": ["chapter_03_party_group_arrival"]
+    },
+    {
+      "moment_label": "premier croisement",
+      "time_label": "21:12",
+      "transition_text": "La soirée se lance. Trois notifications arrivent presque ensemble.",
+      "conversation_ids": ["chapter_03_crossed_notifications"]
+    },
+    {
+      "moment_label": "milieu de soirée",
+      "time_label": "22:03",
+      "transition_text": "Pauline circule, Nico reste près de Marie, Mathilde voit trop de choses.",
+      "conversation_ids": ["chapter_03_party_pressure"]
+    },
+    {
+      "moment_label": "fond d’écran",
+      "time_label": "22:38",
+      "transition_text": "Un jeu idiot de Pauline peut rendre public quelque chose que Ludo pensait privé.",
+      "conversation_ids": ["chapter_03_wallpaper_reveal"]
+    },
+    {
+      "moment_label": "fin de soirée",
+      "time_label": "23:54",
+      "transition_text": "La soirée se termine sans explosion, mais plus personne ne peut prétendre que rien n’a bougé.",
+      "conversation_ids": ["chapter_03_party_aftershock"]
+    }
+  ],
+  "conversation_files": [
+    "res://data/conversations/chapter_03_pre_party_threads.json",
+    "res://data/conversations/chapter_03_party_group_arrival.json",
+    "res://data/conversations/chapter_03_crossed_notifications.json",
+    "res://data/conversations/chapter_03_party_pressure.json",
+    "res://data/conversations/chapter_03_wallpaper_reveal.json",
+    "res://data/conversations/chapter_03_party_aftershock.json"
+  ],
+  "routes_available": ["marie", "mathilde", "sandra", "pauline", "nico_marie", "raphaelle_contrast"],
+  "routes_can_become_probable": ["mathilde", "sandra", "pauline", "nico_marie", "marie"],
+  "routes_not_final_locked": ["libertinage", "ntr", "harem_secret", "trio_marie_mathilde"],
+  "required_events": [
+    "Pauline hosts and controls the social frame.",
+    "Nico publicly shows interest in Marie.",
+    "Mathilde observes Ludo in a social context.",
+    "Sandra writes from outside the party.",
+    "Marie notices at least one phone-related absence.",
+    "The player must choose what to open first during crossed notifications.",
+    "A first trace can be created: photo, favorite, capture, deleted message, or public comment."
+  ],
+  "debug_expected_outcomes": [
+    "A probable dominant route may start emerging, but no final route is locked.",
+    "The active threat should be readable: Marie, Pauline proof, Sandra exposure, Nico, or Mathilde guilt.",
+    "At least one passive signal should matter in flavor or debug.",
+    "The player should feel that pretending nothing happened is no longer possible."
+  ]
+}
