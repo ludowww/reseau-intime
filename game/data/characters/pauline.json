@@ -1,0 +1,37 @@
+{
+  "id": "pauline",
+  "display_name": "Pauline",
+  "role": "Meilleure amie de Marie",
+  "relationship_to_ludo": "social_circle_temptation",
+  "relationship_to_marie": "best_friend",
+  "narrative_function": "Piège social, femme sage en apparence, infidèle cachée, manipulation, preuves et possible initiatrice libertine.",
+  "desire_apparent": "Tester Ludo, jouer, provoquer, ouvrir une brèche.",
+  "desire_deep": "Prouver qu’elle contrôle mieux les règles du désir que les autres.",
+  "fear": "Être démasquée sans avoir gardé le pouvoir.",
+  "red_line": "Perdre totalement son agence ; le renversement doit rester une dynamique consentie.",
+  "voice_profile": {
+    "rhythm": "très court, net, contrôlé",
+    "emoji_use": "😇 pour fausse innocence, 😏 pour contrôle",
+    "flirt_style": "piège, provocation, pousse Ludo à écrire trop clairement",
+    "power_style": "utilise les traces et les captures",
+    "avoid": [
+      "romantique trop tôt",
+      "perdre toute agence",
+      "parler avec la vulnérabilité de Sandra"
+    ]
+  },
+  "default_variables": {
+    "interest": 25,
+    "control": 30
+  },
+  "tags": [
+    "best_friend_marie",
+    "trap",
+    "proof",
+    "libertine_seed",
+    "social_pressure"
+  ],
+  "known_secrets_at_start": [
+    "pauline_cheats_on_partner"
+  ]
+}
