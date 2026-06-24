@@ -7,17 +7,15 @@
   "thread": {
     "id": "thread_sandra_private",
     "type": "private",
-    "participants": [
-      "ludo",
-      "sandra"
-    ],
-    "display_name": "Sandra"
+    "participants": ["ludo", "sandra"],
+    "display_name": "Sandra",
+    "profile_content_id": "profile_sandra_placeholder"
   },
   "beats": [
     {
       "id": "beat_01_sandra_survive",
-      "pattern": "conversation_simple_intime_legere",
-      "function": "Installer la complicité Sandra/Ludo sans bascule explicite.",
+      "pattern": "conversation_moyenne_familiarite_intime",
+      "function": "Installer la complicité déjà ancienne entre Sandra et Ludo, sans bascule explicite ni contenu visuel intime.",
       "trigger": {
         "type": "notification",
         "title": "Sandra",
@@ -29,6 +27,24 @@
           "sender": "sandra",
           "time_label": "18:18",
           "text": "Hey, tu survis à ta journée ?"
+        },
+        {
+          "id": "msg_sandra_002",
+          "sender": "sandra",
+          "time_label": "18:18",
+          "text": "J’ai pensé à toi tout à l’heure."
+        },
+        {
+          "id": "msg_sandra_003",
+          "sender": "sandra",
+          "time_label": "18:19",
+          "text": "Enfin pas comme ça."
+        },
+        {
+          "id": "msg_sandra_004",
+          "sender": "sandra",
+          "time_label": "18:19",
+          "text": "Je t’ai entendu dire cette phrase nulle dans ma tête : 'ça va, je gère'."
         }
       ],
       "choices": [
@@ -39,21 +55,25 @@
           "effects": {
             "sandra.attachment": 1
           },
-          "sets_flags": [
-            "answered_sandra_light_day1"
-          ],
+          "sets_flags": ["answered_sandra_light_day1"],
           "next_messages": [
             {
-              "id": "msg_sandra_002_light",
+              "id": "msg_sandra_005_light",
               "sender": "sandra",
-              "time_label": "18:19",
+              "time_label": "18:20",
               "text": "Ça te va bien, faire semblant."
             },
             {
-              "id": "msg_sandra_003_light",
+              "id": "msg_sandra_006_light",
               "sender": "sandra",
-              "time_label": "18:19",
+              "time_label": "18:20",
               "text": "Enfin... je crois."
+            },
+            {
+              "id": "msg_sandra_007_light",
+              "sender": "sandra",
+              "time_label": "18:21",
+              "text": "Tu fais le malin, mais je sais quand tu réponds trop vite pour ne pas réfléchir."
             }
           ]
         },
@@ -62,15 +82,19 @@
           "text": "Ça va. Et toi ?",
           "tone": "neutral",
           "effects": {},
-          "sets_flags": [
-            "answered_sandra_neutral_day1"
-          ],
+          "sets_flags": ["answered_sandra_neutral_day1"],
           "next_messages": [
             {
-              "id": "msg_sandra_002_neutral",
+              "id": "msg_sandra_005_neutral",
               "sender": "sandra",
-              "time_label": "18:19",
+              "time_label": "18:20",
               "text": "On va dire que oui 🙂"
+            },
+            {
+              "id": "msg_sandra_006_neutral",
+              "sender": "sandra",
+              "time_label": "18:21",
+              "text": "Je ne sais pas si c’est une vraie réponse, mais elle fera l’affaire."
             }
           ]
         },
@@ -82,23 +106,47 @@
             "sandra.attachment": 2,
             "truth_tendency": 1
           },
-          "sets_flags": [
-            "shared_small_vulnerability_with_sandra_day1"
-          ],
+          "sets_flags": ["shared_small_vulnerability_with_sandra_day1"],
           "next_messages": [
             {
-              "id": "msg_sandra_002_vulnerable",
+              "id": "msg_sandra_005_vulnerable",
               "sender": "sandra",
               "time_label": "18:20",
               "text": "Peut-être."
             },
             {
-              "id": "msg_sandra_003_vulnerable",
+              "id": "msg_sandra_006_vulnerable",
               "sender": "sandra",
               "time_label": "18:20",
               "text": "Mais tu peux me répondre quand même."
+            },
+            {
+              "id": "msg_sandra_007_vulnerable",
+              "sender": "sandra",
+              "time_label": "18:21",
+              "text": "Je préfère m’inquiéter pour une vraie phrase que faire semblant de croire tes 'ça va'."
             }
           ]
+        }
+      ],
+      "automatic_followup": [
+        {
+          "id": "msg_sandra_008_common",
+          "sender": "sandra",
+          "time_label": "18:26",
+          "text": "Chez moi c’est un peu lourd aussi en ce moment."
+        },
+        {
+          "id": "msg_sandra_009_common",
+          "sender": "sandra",
+          "time_label": "18:27",
+          "text": "Je ne vais pas te faire le roman ce soir."
+        },
+        {
+          "id": "msg_sandra_010_common",
+          "sender": "sandra",
+          "time_label": "18:27",
+          "text": "Mais je crois que j’avais juste envie de parler à quelqu’un qui me connaît vraiment."
         }
       ],
       "passive_signal_rules": [
@@ -113,9 +161,7 @@
       ]
     }
   ],
-  "routes_nourished": [
-    "sandra",
-    "secret_affair_emotional_seed"
-  ],
-  "debug_notes": "Sandra doit rester douce et ambiguë. Aucun contenu visuel au Jour 1."
+  "routes_nourished": ["sandra", "secret_affair_emotional_seed"],
+  "unlocks_content": ["profile_sandra_placeholder"],
+  "debug_notes": "Conversation allongée pour montrer que Sandra connaît déjà Ludo. Elle reste ambiguë, fragile, et sans image intime au Jour 1."
 }
