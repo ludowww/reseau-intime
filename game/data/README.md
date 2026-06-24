@@ -21,6 +21,7 @@ conversations/
   chapter_01_index.json
   chapter_01_marie.json
   chapter_01_sandra.json
+  chapter_01_raphaelle.json
   chapter_01_group_friends.json
 
 visual_content/
@@ -34,13 +35,18 @@ visual_content/
 - Les conversations sont organisées par chapitre et par thread.
 - Les effets de choix utilisent les noms de variables définis dans la documentation.
 - Les placeholders visuels restent neutres tant que le pipeline d’assets adultes n’est pas défini.
+- Les conversations peuvent être longues si elles installent la familiarité, mais elles ne doivent pas multiplier les choix visibles.
+- Les premières images de profil doivent ancrer rapidement le casting.
 
 ## Scope actuel
 
 Le contenu couvre seulement le Jour 1 du vertical slice :
 
 - routine avec Marie ;
-- premier message léger de Sandra ;
-- annonce de la soirée chez Pauline dans le groupe amis.
+- premier message de Sandra, plus long pour installer leur familiarité ;
+- premier échange avec Raphaëlle au travail ;
+- annonce de la soirée chez Pauline dans le groupe amis ;
+- première image de groupe ;
+- photos de profil initiales des personnages principaux.
 
-Aucune route dominante ne doit être verrouillée au Jour 1. Ce chapitre sert à installer les voix, le téléphone et les premiers signaux faibles.
+Aucune route dominante ne doit être verrouillée au Jour 1. Ce chapitre sert à installer les voix, le téléphone, les images mentales du casting, les habitudes de conversation et les premiers signaux faibles.
