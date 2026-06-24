@@ -60,6 +60,31 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         ]:
             self.assertIn(expected, script)
 
+    def test_phone_layout_targets_1280_width_and_integer_day_labels(self):
+        script = (GAME / "scripts" / "ui" / "PhonePrototype.gd").read_text(encoding="utf-8")
+        self.assertIn("_format_day_label", script)
+        self.assertIn("int(day_value)", script)
+        self.assertIn("Vector2(160, 0)", script)
+        self.assertIn("Vector2(220, 0)", script)
+        self.assertIn("Vector2(260, 0)", script)
+        self.assertIn("SIZE_EXPAND_FILL", script)
+
+    def test_conversation_view_wraps_choices_and_marks_choice_applied(self):
+        script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
+        self.assertIn("choice_buttons", script)
+        self.assertIn("AUTOWRAP_WORD_SMART", script)
+        self.assertIn("disabled = true", script)
+        self.assertIn("Choix appliqué", script)
+        self.assertIn("_format_message_line", script)
+        self.assertIn("[%s] %s : %s", script)
+
+    def test_debug_panel_has_readable_compact_sections(self):
+        script = (GAME / "scripts" / "ui" / "DebugPanel.gd").read_text(encoding="utf-8")
+        self.assertIn("custom_minimum_size", script)
+        self.assertIn("Résumé", script)
+        self.assertIn("_add_json_section", script)
+        self.assertIn("visible = false", script)
+
 
 if __name__ == "__main__":
     unittest.main()
