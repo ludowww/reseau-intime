@@ -1,0 +1,142 @@
+{
+  "id": "chapter_02_social_marie_nico",
+  "chapter": 2,
+  "day": 2,
+  "title": "Jour 2 — Story de Marie et réaction de Nico",
+  "app": "social",
+  "thread": {
+    "id": "social_feed_day2_afternoon",
+    "type": "social_feed",
+    "participants": ["ludo", "marie", "nico", "mathilde", "pauline"],
+    "display_name": "Réseau social"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c02_social_marie_nico_story",
+      "moment_label": "après-midi",
+      "time_label": "15:42",
+      "transition_text": "L’après-midi traîne. Une story de Marie remonte dans le fil, puis Nico apparaît dans les réactions.",
+      "availability_state": "Marie est sortie avec Mathilde. Nico est actif sur le réseau. Ludo n’est pas dans la scène, seulement devant son téléphone.",
+      "function": "Introduire la jalousie sans confrontation et montrer que Marie existe socialement hors du couple.",
+      "social_items": [
+        {
+          "id": "story_marie_001",
+          "type": "story",
+          "author": "marie",
+          "time_label": "15:31",
+          "text": "Pause imprévue avec Mathilde. Elle avait évidemment 'juste cinq minutes'.",
+          "content_id": "photo_group_last_party_placeholder",
+          "tags": ["marie", "mathilde", "social", "day2"]
+        },
+        {
+          "id": "reaction_nico_001",
+          "type": "reaction",
+          "author": "nico",
+          "target_id": "story_marie_001",
+          "time_label": "15:39",
+          "reaction": "🔥",
+          "public_visibility": "visible_to_ludo"
+        },
+        {
+          "id": "comment_mathilde_001",
+          "type": "comment",
+          "author": "mathilde",
+          "target_id": "story_marie_001",
+          "time_label": "15:40",
+          "text": "C’est faux, j’avais dit dix minutes."
+        },
+        {
+          "id": "comment_pauline_001",
+          "type": "comment",
+          "author": "pauline",
+          "target_id": "story_marie_001",
+          "time_label": "15:41",
+          "text": "Vous vous entraînez pour samedi sans moi ? Décevant."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_social_001_open_story",
+          "text": "Regarder la story et les réactions",
+          "tone": "curious_surveillance",
+          "effects": {
+            "ludo_jealousy": 1,
+            "nico_surveillance_score": 1
+          },
+          "sets_flags": ["checked_marie_nico_story_day2"],
+          "next_items": [
+            {
+              "id": "private_thought_social_001",
+              "type": "inner_note",
+              "text": "Nico réagit vite quand c’est Marie. Trop vite pour que ce soit complètement anodin."
+            },
+            {
+              "id": "visible_profile_nico_001",
+              "type": "profile_hint",
+              "content_id": "profile_nico_placeholder",
+              "text": "Nico — ami de Ludo. Très présent dans le groupe. Trop attentif à Marie."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_social_001_reply_marie",
+          "text": "Répondre à Marie plutôt que surveiller Nico",
+          "tone": "couple_present",
+          "outgoing_text": "Tu avais l’air de survivre à Mathilde, ça mérite respect.",
+          "effects": {
+            "marie.trust": 1,
+            "marie_attention_score": 1
+          },
+          "sets_flags": ["replied_to_marie_story_day2"],
+          "next_items": [
+            {
+              "id": "reply_marie_social_001",
+              "type": "private_reply",
+              "sender": "marie",
+              "time_label": "15:44",
+              "text": "Je mérite une médaille. Elle voulait 'juste passer'."
+            },
+            {
+              "id": "reply_marie_social_002",
+              "type": "private_reply",
+              "sender": "marie",
+              "time_label": "15:45",
+              "text": "Tu verras ce soir, elle va encore prétendre qu’elle ne reste pas longtemps."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_social_001_ignore",
+          "text": "Ignorer la story",
+          "tone": "ignore",
+          "effects": {},
+          "sets_flags": ["ignored_marie_story_day2"],
+          "next_items": [
+            {
+              "id": "private_thought_social_002",
+              "type": "inner_note",
+              "text": "La story reste là. Les réactions aussi. Ludo choisit de ne pas regarder pour l’instant."
+            }
+          ]
+        }
+      ],
+      "automatic_followup": [
+        {
+          "id": "social_follow_001",
+          "type": "feed_update",
+          "time_label": "15:48",
+          "text": "Nico a aimé le commentaire de Marie."
+        },
+        {
+          "id": "social_follow_002",
+          "type": "feed_update",
+          "time_label": "15:49",
+          "text": "Mathilde a publié : 'On rentre avant que Marie m’adopte officiellement.'"
+        }
+      ],
+      "routes_nourished": ["nico_marie", "marie", "mathilde_seed", "pauline_seed"],
+      "required_reveals_delivered": ["nico_interested_in_marie", "marie_has_social_life_without_ludo"]
+    }
+  ],
+  "debug_notes": "Scène sociale sans conversation privée obligatoire. Elle doit introduire la surveillance Nico / Marie et montrer que Marie a une vie sociale hors de Ludo."
+}
