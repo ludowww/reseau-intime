@@ -1,0 +1,205 @@
+{
+  "id": "chapter_02_group_pauline_night",
+  "chapter": 2,
+  "day": 2,
+  "title": "Jour 2 — Pauline relance la soirée",
+  "app": "messages",
+  "thread": {
+    "id": "thread_group_friends",
+    "type": "group",
+    "participants": ["ludo", "marie", "mathilde", "pauline", "nico"],
+    "display_name": "Groupe amis",
+    "profile_content_id": "photo_group_last_party_placeholder"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c02_group_pauline_night_tease",
+      "moment_label": "nuit",
+      "time_label": "23:18",
+      "transition_text": "Trop tard pour une conversation normale. Pauline rallume le groupe comme si la soirée de samedi avait déjà commencé.",
+      "availability_state": "Pauline est active. Marie répond peu. Mathilde traîne encore dans la conversation. Nico guette les occasions.",
+      "function": "Préparer le pivot du Jour 3, montrer Pauline comme organisatrice qui contrôle le jeu social et renforcer Nico/Marie en public.",
+      "messages": [
+        {
+          "id": "msg_c02_group_001",
+          "sender": "pauline",
+          "time_label": "23:18",
+          "text": "Point organisation : samedi, personne ne fait son fantôme."
+        },
+        {
+          "id": "msg_c02_group_002",
+          "sender": "pauline",
+          "time_label": "23:18",
+          "text": "Je nomme officiellement Ludo responsable de ne pas dire 'je suis fatigué' avant minuit."
+        },
+        {
+          "id": "msg_c02_group_003",
+          "sender": "mathilde",
+          "time_label": "23:19",
+          "text": "C’est ambitieux."
+        },
+        {
+          "id": "msg_c02_group_004",
+          "sender": "marie",
+          "time_label": "23:19",
+          "text": "Très ambitieux."
+        },
+        {
+          "id": "msg_c02_group_005",
+          "sender": "nico",
+          "time_label": "23:20",
+          "text": "Si Marie gère la playlist, je survivrai à tout."
+        },
+        {
+          "id": "msg_c02_group_006",
+          "sender": "pauline",
+          "time_label": "23:20",
+          "text": "Nico, essaie d’être subtil au moins une fois dans ta vie."
+        },
+        {
+          "id": "msg_c02_group_007",
+          "sender": "nico",
+          "time_label": "23:21",
+          "text": "Je suis subtil. Je préviens juste mes priorités."
+        },
+        {
+          "id": "msg_c02_group_008",
+          "sender": "mathilde",
+          "time_label": "23:21",
+          "text": "Je vais venir uniquement pour regarder ce désastre social en direct."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_group_001_playful",
+          "text": "Répondre dans le groupe avec humour",
+          "tone": "public_humor",
+          "outgoing_text": "Je refuse cette réputation. Je peux être fatigué très discrètement.",
+          "effects": {
+            "social_pressure": 1
+          },
+          "sets_flags": ["answered_group_night_humor_day2"],
+          "next_messages": [
+            {
+              "id": "msg_c02_group_009_playful_pauline",
+              "sender": "pauline",
+              "time_label": "23:22",
+              "text": "Voilà. Quand tu veux tu peux être amusant."
+            },
+            {
+              "id": "msg_c02_group_010_playful_mathilde",
+              "sender": "mathilde",
+              "time_label": "23:22",
+              "text": "Ne l’encourage pas trop. On vit avec les conséquences après."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_group_001_like_pauline",
+          "text": "Liker seulement le message de Pauline",
+          "tone": "passive_social",
+          "effects": {
+            "pauline_risk_score": 1
+          },
+          "sets_flags": ["liked_pauline_night_prompt_day2"],
+          "next_messages": [
+            {
+              "id": "msg_c02_group_009_like_pauline",
+              "sender": "pauline",
+              "time_label": "23:22",
+              "text": "Ludo valide en silence. Comme souvent."
+            },
+            {
+              "id": "msg_c02_group_010_like_marie",
+              "sender": "marie",
+              "time_label": "23:23",
+              "text": "Il est très fort pour ça."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_group_001_defend_marie",
+          "text": "Répondre à Nico à propos de Marie",
+          "tone": "protective_light",
+          "outgoing_text": "Doucement avec les priorités, Nico.",
+          "effects": {
+            "ludo_jealousy": 1,
+            "nico_surveillance_score": 1,
+            "marie.lucidity": 1
+          },
+          "sets_flags": ["answered_nico_about_marie_day2"],
+          "next_messages": [
+            {
+              "id": "msg_c02_group_009_defend_nico",
+              "sender": "nico",
+              "time_label": "23:22",
+              "text": "Je dis juste qu’elle sauve les soirées. C’est un compliment."
+            },
+            {
+              "id": "msg_c02_group_010_defend_marie",
+              "sender": "marie",
+              "time_label": "23:23",
+              "text": "Vous êtes pénibles tous les deux."
+            },
+            {
+              "id": "msg_c02_group_011_defend_pauline",
+              "sender": "pauline",
+              "time_label": "23:23",
+              "text": "Oh. Intéressant."
+            }
+          ]
+        }
+      ],
+      "automatic_followup": [
+        {
+          "id": "msg_c02_group_012_common",
+          "sender": "pauline",
+          "time_label": "23:28",
+          "text": "Bref. Samedi, 20h30."
+        },
+        {
+          "id": "msg_c02_group_013_common",
+          "sender": "pauline",
+          "time_label": "23:28",
+          "text": "Et habillez-vous comme si quelqu’un pouvait prendre des photos. Parce que quelqu’un prendra des photos."
+        },
+        {
+          "id": "msg_c02_group_014_common",
+          "sender": "mathilde",
+          "time_label": "23:29",
+          "text": "Menace officielle enregistrée."
+        },
+        {
+          "id": "msg_c02_group_015_common",
+          "sender": "marie",
+          "time_label": "23:30",
+          "text": "Bonne nuit les enfants."
+        },
+        {
+          "id": "msg_c02_group_016_common",
+          "sender": "pauline",
+          "time_label": "23:31",
+          "text": "Elle dit ça comme si elle n’allait pas être la première à rire samedi."
+        }
+      ],
+      "private_aftershock": [
+        {
+          "id": "msg_c02_pauline_private_hint_001",
+          "thread_id": "thread_pauline_private",
+          "sender": "pauline",
+          "time_label": "23:34",
+          "text": "Tu réponds moins que les autres, mais tu lis tout. C’est noté.",
+          "conditions": ["liked_pauline_night_prompt_day2 OR answered_group_night_humor_day2"],
+          "effects": {
+            "pauline.interest": 1,
+            "pauline.control": 1
+          },
+          "sets_flags": ["pauline_noted_ludo_reads_day2"]
+        }
+      ],
+      "routes_nourished": ["pauline", "social_pressure", "nico_marie", "mathilde_seed"],
+      "required_reveals_delivered": ["pauline_controls_social_game", "pauline_prepares_party_pivot", "nico_public_interest_marie"]
+    }
+  ],
+  "debug_notes": "Fin du Jour 2 : Pauline prépare explicitement la soirée, Nico continue de viser Marie publiquement, et Pauline peut envoyer un petit privé conditionnel."
+}
