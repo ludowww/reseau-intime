@@ -1,0 +1,134 @@
+{
+  "id": "chapter_04_raphaelle_lunch_contrast",
+  "chapter": 4,
+  "day": 4,
+  "title": "Jour 4 — Raphaëlle voit la fatigue",
+  "app": "messages",
+  "thread": {
+    "id": "thread_raphaelle_private",
+    "type": "private",
+    "participants": ["ludo", "raphaelle"],
+    "display_name": "Raphaëlle",
+    "profile_content_id": "profile_raphaelle_placeholder"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c04_raphaelle_lunch_contrast",
+      "moment_label": "midi",
+      "time_label": "12:36",
+      "transition_text": "Au travail, Raphaëlle voit surtout ce que Ludo essaie de cacher aux autres.",
+      "availability_state": "Raphaëlle est disponible pendant une pause courte, puis retourne travailler.",
+      "function": "Offrir un contraste clair avec le chaos de la soirée : elle ne sait pas tout, mais elle voit l’état de Ludo.",
+      "messages": [
+        {
+          "id": "msg_c04_raphaelle_001",
+          "sender": "raphaelle",
+          "time_label": "12:36",
+          "text": "Tu as une tête de lendemain de mauvaise idée."
+        },
+        {
+          "id": "msg_c04_raphaelle_002",
+          "sender": "raphaelle",
+          "time_label": "12:36",
+          "text": "Je précise : ce n’est pas un diagnostic médical. Juste une observation de collègue qui a des yeux."
+        },
+        {
+          "id": "msg_c04_raphaelle_003",
+          "sender": "raphaelle",
+          "time_label": "12:37",
+          "text": "La soirée était si terrible que ça ?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c04_raphaelle_001_honest",
+          "text": "Elle a remué plus de choses que prévu.",
+          "tone": "honest_partial",
+          "effects": {
+            "raphaelle.attachment": 2,
+            "truth_tendency": 1
+          },
+          "sets_flags": ["admitted_party_stirred_things_to_raphaelle_day4"],
+          "next_messages": [
+            {
+              "id": "msg_c04_raphaelle_004_honest",
+              "sender": "raphaelle",
+              "time_label": "12:38",
+              "text": "Ça se voit."
+            },
+            {
+              "id": "msg_c04_raphaelle_005_honest",
+              "sender": "raphaelle",
+              "time_label": "12:38",
+              "text": "Je ne vais pas te demander quoi. Pas ici, pas comme ça."
+            }
+          ]
+        },
+        {
+          "id": "choice_c04_raphaelle_001_dodge",
+          "text": "Juste fatigué. Pauline sait organiser des soirées trop longues.",
+          "tone": "dodge",
+          "effects": {
+            "raphaelle.clarity": 1
+          },
+          "sets_flags": ["dodged_raphaelle_party_question_day4"],
+          "next_messages": [
+            {
+              "id": "msg_c04_raphaelle_004_dodge",
+              "sender": "raphaelle",
+              "time_label": "12:38",
+              "text": "Possible."
+            },
+            {
+              "id": "msg_c04_raphaelle_005_dodge",
+              "sender": "raphaelle",
+              "time_label": "12:38",
+              "text": "Mais tu as surtout la tête de quelqu’un qui trie ce qu’il peut dire."
+            }
+          ]
+        },
+        {
+          "id": "choice_c04_raphaelle_001_flirt",
+          "text": "Tu surveilles beaucoup mon état pour une collègue.",
+          "tone": "light_flirt",
+          "effects": {
+            "raphaelle.attachment": 1,
+            "raphaelle.clarity": 1
+          },
+          "sets_flags": ["flirted_with_raphaelle_after_party_day4"],
+          "next_messages": [
+            {
+              "id": "msg_c04_raphaelle_004_flirt",
+              "sender": "raphaelle",
+              "time_label": "12:38",
+              "text": "Je surveille surtout les gens qui répondent à côté quand on leur pose une question simple."
+            },
+            {
+              "id": "msg_c04_raphaelle_005_flirt",
+              "sender": "raphaelle",
+              "time_label": "12:39",
+              "text": "Et je suis une collègue très professionnelle, merci."
+            }
+          ]
+        }
+      ],
+      "automatic_followup": [
+        {
+          "id": "msg_c04_raphaelle_006_common",
+          "sender": "raphaelle",
+          "time_label": "12:42",
+          "text": "Je dois y retourner."
+        },
+        {
+          "id": "msg_c04_raphaelle_007_common",
+          "sender": "raphaelle",
+          "time_label": "12:42",
+          "text": "Mais Ludo : si tu as quelque chose à clarifier quelque part, fais-le avant que quelqu’un le fasse à ta place."
+        }
+      ],
+      "routes_nourished": ["raphaelle", "truth_tendency", "clarity_contrast"],
+      "required_events_delivered": ["raphaelle_outside_clarity_day4"]
+    }
+  ],
+  "debug_notes": "Raphaëlle ne doit pas connaître les détails de la soirée ; elle sert de miroir clair et extérieur."
+}
