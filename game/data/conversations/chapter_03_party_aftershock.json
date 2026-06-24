@@ -1,0 +1,172 @@
+{
+  "id": "chapter_03_party_aftershock",
+  "chapter": 3,
+  "day": 3,
+  "title": "Jour 3 — Après-coup de soirée",
+  "app": "messages",
+  "segments": [
+    {
+      "conversation_segment_id": "c03_party_aftershock_end",
+      "moment_label": "fin de soirée",
+      "time_label": "23:54",
+      "transition_text": "La soirée se termine sans explosion, mais plus personne ne peut prétendre que rien n’a bougé.",
+      "availability_state": "Tout le monde se disperse. Les messages privés recommencent à prendre plus de place que la pièce elle-même.",
+      "function": "Terminer le pivot avec un crochet narratif adapté aux priorités du joueur.",
+      "conditional_aftershocks": [
+        {
+          "id": "aftershock_marie_phone",
+          "conditions": ["marie_neglect_score >= 2 OR phone_before_party_over_marie_day3 OR hid_wallpaper_party_day3"],
+          "thread_id": "thread_marie_private",
+          "messages": [
+            {
+              "id": "msg_c03_after_marie_001",
+              "sender": "marie",
+              "time_label": "23:54",
+              "text": "Tu étais bizarre ce soir."
+            },
+            {
+              "id": "msg_c03_after_marie_002",
+              "sender": "marie",
+              "time_label": "23:55",
+              "text": "Je ne sais pas si c’est la soirée ou ton téléphone."
+            }
+          ],
+          "effects": {
+            "marie.lucidity": 1
+          },
+          "sets_flags": ["marie_aftershock_phone_day3"]
+        },
+        {
+          "id": "aftershock_sandra_deleted",
+          "conditions": ["opened_sandra_first_party_day3 OR answered_sandra_during_party_day3"],
+          "thread_id": "thread_sandra_private",
+          "messages": [
+            {
+              "id": "msg_c03_after_sandra_001",
+              "sender": "sandra",
+              "time_label": "23:56",
+              "text": "Je n’aurais pas dû t’écrire pendant ta soirée."
+            },
+            {
+              "id": "msg_c03_after_sandra_002",
+              "sender": "sandra",
+              "time_label": "23:57",
+              "text": "Message supprimé.",
+              "deleted_message_hint": "Mais j’ai aimé que tu répondes quand même."
+            }
+          ],
+          "effects": {
+            "sandra.exposure": 1,
+            "sandra.attachment": 1
+          },
+          "sets_flags": ["sandra_deleted_after_party_day3"]
+        },
+        {
+          "id": "aftershock_pauline_proof",
+          "conditions": ["opened_pauline_first_party_day3 OR answered_pauline_pressure_private_day3 OR hid_wallpaper_party_day3"],
+          "thread_id": "thread_pauline_private",
+          "messages": [
+            {
+              "id": "msg_c03_after_pauline_001",
+              "sender": "pauline",
+              "time_label": "23:58",
+              "text": "Tu crois vraiment que personne n’a vu ?"
+            },
+            {
+              "id": "msg_c03_after_pauline_002",
+              "sender": "pauline",
+              "time_label": "23:58",
+              "text": "Je ne dis pas que c’est grave. Je dis que c’est visible."
+            }
+          ],
+          "effects": {
+            "pauline.control": 1,
+            "pauline_risk_score": 1
+          },
+          "sets_flags": ["pauline_aftershock_visible_day3"]
+        },
+        {
+          "id": "aftershock_mathilde_warning",
+          "conditions": ["opened_mathilde_first_party_day3 OR answered_mathilde_pressure_private_day3 OR wallpaper_mathilde_revealed_party_day3"],
+          "thread_id": "thread_mathilde_private",
+          "messages": [
+            {
+              "id": "msg_c03_after_mathilde_001",
+              "sender": "mathilde",
+              "time_label": "23:57",
+              "text": "On devrait peut-être éviter de se regarder comme ça."
+            },
+            {
+              "id": "msg_c03_after_mathilde_002",
+              "sender": "mathilde",
+              "time_label": "23:58",
+              "text": "Surtout quand elle est dans la même pièce."
+            }
+          ],
+          "effects": {
+            "mathilde.loyalty": 1,
+            "mathilde.desire": 1
+          },
+          "sets_flags": ["mathilde_aftershock_warning_day3"]
+        },
+        {
+          "id": "aftershock_nico_story",
+          "conditions": ["opened_nico_marie_story_first_party_day3 OR watched_nico_marie_story_party_day3 OR watched_nico_marie_instead_of_replying_day3"],
+          "thread_id": "social_feed_party",
+          "messages": [
+            {
+              "id": "msg_c03_after_nico_001",
+              "sender": "system",
+              "time_label": "23:59",
+              "text": "Nico a publié une photo où Marie rit à côté de lui."
+            },
+            {
+              "id": "msg_c03_after_nico_002",
+              "sender": "nico",
+              "time_label": "23:59",
+              "text": "Soirée sauvée par la bonne équipe."
+            }
+          ],
+          "effects": {
+            "ludo_jealousy": 1,
+            "nico.place_near_marie": 1
+          },
+          "sets_flags": ["nico_aftershock_story_day3"]
+        }
+      ],
+      "default_aftershock": {
+        "thread_id": "thread_marie_private",
+        "messages": [
+          {
+            "id": "msg_c03_after_default_001",
+            "sender": "marie",
+            "time_label": "23:56",
+            "text": "On est rentrés. C’est déjà une victoire."
+          },
+          {
+            "id": "msg_c03_after_default_002",
+            "sender": "marie",
+            "time_label": "23:57",
+            "text": "Mais Pauline était intense ce soir. Même pour Pauline."
+          }
+        ],
+        "effects": {}
+      },
+      "debug_summary": {
+        "show": [
+          "probable_dominant_route",
+          "probable_secondary_route",
+          "active_threat",
+          "relationship_mode_seed",
+          "strongest_flags",
+          "strongest_passive_signal"
+        ],
+        "expected_modes": ["SECRET_AFFAIR seed", "EXCLUSIF_REPARATION seed", "NTR_SUBI seed", "CHAOS seed"],
+        "note": "Debug only. The player should not see route labels in normal play."
+      },
+      "routes_nourished": ["marie", "mathilde", "sandra", "pauline", "nico_marie"],
+      "required_events_delivered": ["party_aftershock", "first_route_tendency_visible_in_debug"]
+    }
+  ],
+  "debug_notes": "Fin de Jour 3 : au moins un crochet narratif doit apparaître selon les priorités du joueur. La route devient probable, pas verrouillée."
+}
