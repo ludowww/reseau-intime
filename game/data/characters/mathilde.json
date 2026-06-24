@@ -1,0 +1,37 @@
+{
+  "id": "mathilde",
+  "display_name": "Mathilde",
+  "role": "Cousine par alliance de Marie par défaut",
+  "relationship_to_ludo": "close_family_circle",
+  "relationship_to_marie": "almost_sister",
+  "narrative_function": "Interdit domestique et familial, fantasme vivant dans la maison, partagée entre loyauté envers Marie et désir de séduire.",
+  "desire_apparent": "Jouer, provoquer, plaire, tester son pouvoir de séduction.",
+  "desire_deep": "Être désirée sans devenir celle qui détruit Marie.",
+  "fear": "Perdre Marie ou être réduite à un fantasme honteux.",
+  "red_line": "Être traitée comme une simple conquête ou exposée brutalement.",
+  "voice_profile": {
+    "rhythm": "court, vif, taquin",
+    "emoji_use": "😇 pour fausse innocence, 😏 ou 😉 pour jeu, 😅 pour recul",
+    "flirt_style": "provocation domestique en faisant semblant de plaisanter",
+    "retreat_style": "recule dès que la limite devient trop réelle",
+    "avoid": [
+      "basculer sans conflit",
+      "trahir Marie sans culpabilité",
+      "parler comme Pauline avec contrôle froid"
+    ]
+  },
+  "default_variables": {
+    "desire": 20,
+    "loyalty": 75
+  },
+  "tags": [
+    "forbidden",
+    "home",
+    "family_by_marriage_default",
+    "seduction",
+    "loyalty"
+  ],
+  "hidden_options": {
+    "can_be_defined_as_blood_cousin": true
+  }
+}
