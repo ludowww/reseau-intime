@@ -278,10 +278,37 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             '"history"',
             '"waiting_choices"',
             '"choice_was_applied"',
+            '"message_index"',
+            '"followup_index"',
+            '"segment_id"',
+            '"sequence_in_progress"',
+            '"sequence_complete"',
+            "_resume_incomplete_sequence",
+            "_flatten_render_queue",
         ]:
             self.assertIn(expected, script)
         self.assertGreaterEqual(script.count("_is_render_current(conversation_id, token)"), 5)
         self.assertIn("current_render_token += 1", script)
+
+    def test_conversation_view_resume_keeps_logic_state_separate_from_render_token(self):
+        script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
+        self.assertIn("active_state[\"message_index\"] = index", script)
+        self.assertIn("active_state[\"message_index\"] = index + 1", script)
+        self.assertIn("active_state[\"followup_index\"] = index", script)
+        self.assertIn("active_state[\"followup_index\"] = index + 1", script)
+        self.assertIn("return", script[script.index("func _is_render_current"):script.index("func _record_history_entry")])
+        self.assertIn("_restore_state_to_view(active_state)", script)
+        self.assertIn("_resume_incomplete_sequence(conversation_id, token)", script)
+        self.assertNotIn("active_state.clear()", script[script.index("func show_conversation"):script.index("func _build_chat_shell")])
+
+    def test_conversation_view_restores_waiting_choices_without_replay_or_duplicates(self):
+        script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
+        self.assertIn("if bool(state.get(\"waiting_choices\", false))", script)
+        self.assertIn("_show_choices_for_segment(state.get(\"choice_data\", {}), bool(state.get(\"show_empty_hint\", true)), false)", script)
+        self.assertIn("rendered_message_keys", script)
+        self.assertIn("_message_history_key", script)
+        self.assertIn("if _history_contains_message(message):", script)
+        self.assertIn("return", script[script.index("if _history_contains_message(message):"):script.index("func _show_typing_indicator")])
 
     def test_phone_reset_clears_conversation_ui_state(self):
         script = (GAME / "scripts" / "ui" / "PhonePrototype.gd").read_text(encoding="utf-8")

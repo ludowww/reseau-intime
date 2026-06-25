@@ -53,16 +53,7 @@ func show_conversation(conversation: Dictionary) -> void:
 	var conversation_id := _conversation_key(conversation)
 	active_conversation_id = conversation_id
 	if not conversation_states.has(conversation_id):
-		conversation_states[conversation_id] = {
-			"conversation": conversation.duplicate(true),
-			"history": [],
-			"current_segment_index": int(conversation.get("_current_segment_index", 0)),
-			"choice_was_applied": false,
-			"waiting_choices": false,
-			"choice_data": {},
-			"show_empty_hint": true,
-			"initialized": false,
-		}
+		conversation_states[conversation_id] = _new_conversation_state(conversation)
 	active_state = conversation_states[conversation_id]
 	current_conversation = active_state["conversation"]
 	current_segment_index = int(active_state.get("current_segment_index", 0))
@@ -76,9 +67,37 @@ func show_conversation(conversation: Dictionary) -> void:
 		active_state["initialized"] = false
 	if bool(active_state.get("initialized", false)):
 		_restore_state_to_view(active_state)
+		if bool(active_state.get("waiting_choices", false)) or bool(active_state.get("sequence_complete", false)):
+			return
+		if bool(active_state.get("sequence_in_progress", false)):
+			_resume_incomplete_sequence(conversation_id, token)
+			return
 		return
 	active_state["initialized"] = true
 	_render_current_segment(conversation_id, token)
+
+func _new_conversation_state(conversation: Dictionary) -> Dictionary:
+	var segment_index := int(conversation.get("_current_segment_index", 0))
+	return {
+		"conversation": conversation.duplicate(true),
+		"history": [],
+		"rendered_message_keys": {},
+		"current_segment_index": segment_index,
+		"segment_index": segment_index,
+		"segment_id": str(conversation.get("_current_segment_id", "%s__segment_%d" % [_conversation_key(conversation), segment_index + 1])),
+		"message_index": 0,
+		"followup_index": 0,
+		"pending_followup_choice": {},
+		"ludo_reply_recorded": false,
+		"choice_was_applied": false,
+		"waiting_choices": false,
+		"choice_data": {},
+		"show_empty_hint": true,
+		"sequence_in_progress": false,
+		"sequence_complete": false,
+		"render_phase": "segment",
+		"initialized": false,
+	}
 
 func _build_chat_shell() -> void:
 	var background := PanelContainer.new()
@@ -155,12 +174,19 @@ func _render_current_segment(conversation_id: String, token: int) -> void:
 	choice_buttons.clear()
 	choice_was_applied = false
 	active_state["choice_was_applied"] = false
+	active_state["waiting_choices"] = false
+	active_state["sequence_complete"] = false
+	active_state["sequence_in_progress"] = true
+	active_state["render_phase"] = "segment"
+	active_state["message_index"] = int(active_state.get("message_index", 0))
 	_clear_node(choice_area)
 	var data := _current_segment_data()
 	await _render_segment_messages_with_typing(data, conversation_id, token)
 	if not _is_render_current(conversation_id, token):
 		return
-	_show_choices_for_segment(data)
+	active_state["sequence_in_progress"] = false
+	if not _show_choices_for_segment(data):
+		active_state["sequence_complete"] = true
 
 func _show_choices_for_segment(data: Dictionary, show_empty_hint := true, persist_state := true) -> bool:
 	choice_buttons.clear()
@@ -201,42 +227,127 @@ func _show_choices_for_segment(data: Dictionary, show_empty_hint := true, persis
 func append_choice_result(choice: Dictionary) -> void:
 	var conversation_id := active_conversation_id
 	var token := current_render_token
-	_append_ludo_reply(choice)
+	active_state["pending_followup_choice"] = choice.duplicate(true)
+	active_state["render_phase"] = "followup"
+	active_state["sequence_in_progress"] = true
+	active_state["sequence_complete"] = false
+	if not bool(active_state.get("ludo_reply_recorded", false)):
+		_append_ludo_reply(choice)
+		active_state["ludo_reply_recorded"] = true
 	active_state["waiting_choices"] = false
 	_clear_node(choice_area)
 	await _play_followup_sequence(choice, conversation_id, token)
 	if not _is_render_current(conversation_id, token):
 		return
+	active_state["followup_index"] = 0
+	active_state["pending_followup_choice"] = {}
+	active_state["ludo_reply_recorded"] = false
 	await _auto_advance_segments_until_choice(conversation_id, token)
 
 func _play_followup_sequence(choice: Dictionary, conversation_id: String, token: int) -> void:
-	for key in ["next_messages", "next_items", "automatic_followup"]:
-		for entry in choice.get(key, []):
-			if not _is_render_current(conversation_id, token):
-				return
-			await _render_item_with_typing(entry, conversation_id, token)
+	var queue := _flatten_choice_followup_queue(choice)
+	var start_index := int(active_state.get("followup_index", 0))
+	for index in range(start_index, queue.size()):
+		if not _is_render_current(conversation_id, token):
+			return
+		active_state["followup_index"] = index
+		await _render_message_with_typing(queue[index], conversation_id, token)
+		if not _is_render_current(conversation_id, token):
+			return
+		active_state["followup_index"] = index + 1
 
 func _auto_advance_segments_until_choice(conversation_id: String, token: int) -> void:
+	active_state["render_phase"] = "auto"
 	while _has_next_segment():
 		if not _is_render_current(conversation_id, token):
 			return
 		current_segment_index += 1
 		active_state["current_segment_index"] = current_segment_index
+		active_state["segment_index"] = current_segment_index
+		active_state["segment_id"] = _segment_id_for_current_index()
+		active_state["message_index"] = 0
+		active_state["sequence_in_progress"] = true
 		segment_changed.emit(current_conversation.get("day", current_conversation.get("chapter", null)), _parent_conversation_id(), _segment_id_for_current_index())
 		var data := _current_segment_data()
 		await _render_segment_messages_with_typing(data, conversation_id, token)
 		if not _is_render_current(conversation_id, token):
 			return
+		active_state["sequence_in_progress"] = false
 		var has_more_segments := _has_next_segment()
 		if _show_choices_for_segment(data, not has_more_segments):
 			return
+	active_state["sequence_in_progress"] = false
+	active_state["sequence_complete"] = true
 
 func _render_segment_messages_with_typing(data: Dictionary, conversation_id: String, token: int) -> void:
 	_clear_node(choice_area)
-	for item in _flatten_content(data):
+	var queue := _flatten_render_queue(data)
+	var start_index := int(active_state.get("message_index", 0))
+	for index in range(start_index, queue.size()):
 		if not _is_render_current(conversation_id, token):
 			return
-		await _render_item_with_typing(item, conversation_id, token)
+		active_state["message_index"] = index
+		await _render_message_with_typing(queue[index], conversation_id, token)
+		if not _is_render_current(conversation_id, token):
+			return
+		active_state["message_index"] = index + 1
+
+func _resume_incomplete_sequence(conversation_id: String, token: int) -> void:
+	var phase := str(active_state.get("render_phase", "segment"))
+	if phase == "followup":
+		var choice: Dictionary = active_state.get("pending_followup_choice", {})
+		await _play_followup_sequence(choice, conversation_id, token)
+		if not _is_render_current(conversation_id, token):
+			return
+		active_state["followup_index"] = 0
+		active_state["pending_followup_choice"] = {}
+		active_state["ludo_reply_recorded"] = false
+		await _auto_advance_segments_until_choice(conversation_id, token)
+		return
+	var data := _current_segment_data()
+	await _render_segment_messages_with_typing(data, conversation_id, token)
+	if not _is_render_current(conversation_id, token):
+		return
+	active_state["sequence_in_progress"] = false
+	if _show_choices_for_segment(data, not _has_next_segment()):
+		return
+	if phase == "auto":
+		await _auto_advance_segments_until_choice(conversation_id, token)
+	else:
+		active_state["sequence_complete"] = true
+
+func _flatten_choice_followup_queue(choice: Dictionary) -> Array:
+	var queue: Array = []
+	for key in ["next_messages", "next_items", "automatic_followup"]:
+		for entry in choice.get(key, []):
+			_flatten_render_entry(entry, queue)
+	return queue
+
+func _flatten_render_queue(conversation: Dictionary) -> Array:
+	var queue: Array = []
+	for item in _flatten_content(conversation):
+		_flatten_render_entry(item, queue)
+	return queue
+
+func _flatten_render_entry(item, queue: Array) -> void:
+	if typeof(item) != TYPE_DICTIONARY:
+		return
+	if item.has("messages"):
+		for message in item.get("messages", []):
+			_flatten_render_entry(message, queue)
+	if item.has("social_items"):
+		for social_item in item.get("social_items", []):
+			_flatten_render_entry(social_item, queue)
+	if item.has("incoming_notifications"):
+		for notification in item.get("incoming_notifications", []):
+			_flatten_render_entry(notification, queue)
+	if item.has("automatic_followup"):
+		for followup in item.get("automatic_followup", []):
+			_flatten_render_entry(followup, queue)
+	if item.has("text") or item.has("body") or item.has("content_id") or item.has("reaction"):
+		queue.append(item)
+	elif not item.has("messages") and not item.has("social_items"):
+		queue.append({"text": "[debug item] %s" % str(item.get("id", item.keys())), "_system_note": true})
 
 func _current_segment_data() -> Dictionary:
 	var segments: Array = current_conversation.get("segments", [])
@@ -299,6 +410,11 @@ func _render_item_with_typing(item, conversation_id: String, token: int) -> void
 
 func _render_message_with_typing(message: Dictionary, conversation_id: String, token: int) -> void:
 	if not _is_render_current(conversation_id, token):
+		return
+	if _history_contains_message(message):
+		return
+	if bool(message.get("_system_note", false)):
+		_add_system_note(_format_message_text(message))
 		return
 	if not _is_ludo_sender(message):
 		var typing_indicator := _show_typing_indicator(message)
@@ -518,9 +634,28 @@ func _is_render_current(conversation_id: String, token: int) -> bool:
 func _record_history_entry(entry: Dictionary) -> void:
 	if restoring_state or active_state.is_empty():
 		return
+	if str(entry.get("type", "")) == "message":
+		var message: Dictionary = entry.get("message", {})
+		var key := _message_history_key(message)
+		var rendered_message_keys: Dictionary = active_state.get("rendered_message_keys", {})
+		if rendered_message_keys.has(key):
+			return
+		rendered_message_keys[key] = true
+		active_state["rendered_message_keys"] = rendered_message_keys
 	var history: Array = active_state.get("history", [])
 	history.append(entry.duplicate(true))
 	active_state["history"] = history
+
+func _history_contains_message(message: Dictionary) -> bool:
+	var rendered_message_keys: Dictionary = active_state.get("rendered_message_keys", {})
+	return rendered_message_keys.has(_message_history_key(message))
+
+func _message_history_key(message: Dictionary) -> String:
+	var parts: Array[String] = []
+	for key in ["id", "sender", "author", "time_label", "text", "body", "reaction", "content_id"]:
+		if message.has(key):
+			parts.append("%s=%s" % [key, str(message.get(key))])
+	return "|".join(parts)
 
 func _restore_state_to_view(state: Dictionary) -> void:
 	restoring_state = true
