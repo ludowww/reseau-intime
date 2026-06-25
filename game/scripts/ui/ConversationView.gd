@@ -30,16 +30,55 @@ var message_scroll: ScrollContainer
 var message_thread: VBoxContainer
 var choice_area: VBoxContainer
 var chat_shell: VBoxContainer
+var conversation_states: Dictionary = {}
+var active_conversation_id := ""
+var current_render_token := 0
+var active_state: Dictionary = {}
+var restoring_state := false
+
+func reset_ui_state() -> void:
+	current_render_token += 1
+	conversation_states.clear()
+	active_conversation_id = ""
+	active_state = {}
+	current_conversation = {}
+	current_segment_index = 0
+	choice_buttons.clear()
+	choice_was_applied = false
+	_clear()
 
 func show_conversation(conversation: Dictionary) -> void:
+	current_render_token += 1
+	var token := current_render_token
+	var conversation_id := _conversation_key(conversation)
+	active_conversation_id = conversation_id
+	if not conversation_states.has(conversation_id):
+		conversation_states[conversation_id] = {
+			"conversation": conversation.duplicate(true),
+			"history": [],
+			"current_segment_index": int(conversation.get("_current_segment_index", 0)),
+			"choice_was_applied": false,
+			"waiting_choices": false,
+			"choice_data": {},
+			"show_empty_hint": true,
+			"initialized": false,
+		}
+	active_state = conversation_states[conversation_id]
+	current_conversation = active_state["conversation"]
+	current_segment_index = int(active_state.get("current_segment_index", 0))
+	choice_was_applied = bool(active_state.get("choice_was_applied", false))
 	_clear()
-	current_conversation = conversation.duplicate(true)
-	current_segment_index = int(current_conversation.get("_current_segment_index", 0))
 	custom_minimum_size = Vector2(600, 0)
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_build_chat_shell()
 	_add_chat_header(current_conversation)
-	_render_current_segment()
+	if bool(active_state.get("initialized", false)) and active_state.get("history", []).is_empty() and not bool(active_state.get("waiting_choices", false)) and not bool(active_state.get("choice_was_applied", false)):
+		active_state["initialized"] = false
+	if bool(active_state.get("initialized", false)):
+		_restore_state_to_view(active_state)
+		return
+	active_state["initialized"] = true
+	_render_current_segment(conversation_id, token)
 
 func _build_chat_shell() -> void:
 	var background := PanelContainer.new()
@@ -112,23 +151,34 @@ func _add_chat_header(conversation: Dictionary) -> void:
 	status.add_theme_color_override("font_color", Color(0.72, 0.75, 0.82))
 	title_box.add_child(status)
 
-func _render_current_segment() -> void:
+func _render_current_segment(conversation_id: String, token: int) -> void:
 	choice_buttons.clear()
 	choice_was_applied = false
+	active_state["choice_was_applied"] = false
 	_clear_node(choice_area)
 	var data := _current_segment_data()
-	await _render_segment_messages_with_typing(data)
+	await _render_segment_messages_with_typing(data, conversation_id, token)
+	if not _is_render_current(conversation_id, token):
+		return
 	_show_choices_for_segment(data)
 
-func _show_choices_for_segment(data: Dictionary, show_empty_hint := true) -> bool:
+func _show_choices_for_segment(data: Dictionary, show_empty_hint := true, persist_state := true) -> bool:
 	choice_buttons.clear()
-	choice_was_applied = false
+	if persist_state:
+		choice_was_applied = false
+		active_state["choice_was_applied"] = false
 	_clear_node(choice_area)
 	var choices := _collect_choices(data)
 	if choices.is_empty():
 		if show_empty_hint:
 			_add_choice_hint("Aucun choix direct dans cette conversation.")
+		if persist_state:
+			active_state["waiting_choices"] = false
 		return false
+	if persist_state:
+		active_state["waiting_choices"] = true
+		active_state["choice_data"] = data.duplicate(true)
+		active_state["show_empty_hint"] = show_empty_hint
 	var is_guided_reply := choices.size() == 1
 	_add_choice_heading("Réponse" if is_guided_reply else "Choix disponibles")
 	for choice in choices:
@@ -149,30 +199,44 @@ func _show_choices_for_segment(data: Dictionary, show_empty_hint := true) -> boo
 	return true
 
 func append_choice_result(choice: Dictionary) -> void:
+	var conversation_id := active_conversation_id
+	var token := current_render_token
 	_append_ludo_reply(choice)
+	active_state["waiting_choices"] = false
 	_clear_node(choice_area)
-	await _play_followup_sequence(choice)
-	await _auto_advance_segments_until_choice()
+	await _play_followup_sequence(choice, conversation_id, token)
+	if not _is_render_current(conversation_id, token):
+		return
+	await _auto_advance_segments_until_choice(conversation_id, token)
 
-func _play_followup_sequence(choice: Dictionary) -> void:
+func _play_followup_sequence(choice: Dictionary, conversation_id: String, token: int) -> void:
 	for key in ["next_messages", "next_items", "automatic_followup"]:
 		for entry in choice.get(key, []):
-			await _render_item_with_typing(entry)
+			if not _is_render_current(conversation_id, token):
+				return
+			await _render_item_with_typing(entry, conversation_id, token)
 
-func _auto_advance_segments_until_choice() -> void:
+func _auto_advance_segments_until_choice(conversation_id: String, token: int) -> void:
 	while _has_next_segment():
+		if not _is_render_current(conversation_id, token):
+			return
 		current_segment_index += 1
+		active_state["current_segment_index"] = current_segment_index
 		segment_changed.emit(current_conversation.get("day", current_conversation.get("chapter", null)), _parent_conversation_id(), _segment_id_for_current_index())
 		var data := _current_segment_data()
-		await _render_segment_messages_with_typing(data)
+		await _render_segment_messages_with_typing(data, conversation_id, token)
+		if not _is_render_current(conversation_id, token):
+			return
 		var has_more_segments := _has_next_segment()
 		if _show_choices_for_segment(data, not has_more_segments):
 			return
 
-func _render_segment_messages_with_typing(data: Dictionary) -> void:
+func _render_segment_messages_with_typing(data: Dictionary, conversation_id: String, token: int) -> void:
 	_clear_node(choice_area)
 	for item in _flatten_content(data):
-		await _render_item_with_typing(item)
+		if not _is_render_current(conversation_id, token):
+			return
+		await _render_item_with_typing(item, conversation_id, token)
 
 func _current_segment_data() -> Dictionary:
 	var segments: Array = current_conversation.get("segments", [])
@@ -203,37 +267,46 @@ func _select_choice(choice: Dictionary, selected_button: Button) -> void:
 	if choice_was_applied:
 		return
 	choice_was_applied = true
+	active_state["choice_was_applied"] = true
+	active_state["waiting_choices"] = false
 	for button in choice_buttons:
 		button.disabled = true
 	_clear_node(choice_area)
 	choice_selected.emit(choice)
 
-func _render_item_with_typing(item) -> void:
+func _render_item_with_typing(item, conversation_id: String, token: int) -> void:
 	if typeof(item) != TYPE_DICTIONARY:
 		return
 	if item.has("messages"):
 		for message in item.get("messages", []):
-			await _render_message_with_typing(message)
+			if not _is_render_current(conversation_id, token):
+				return
+			await _render_message_with_typing(message, conversation_id, token)
 	if item.has("social_items"):
 		for social_item in item.get("social_items", []):
-			await _render_item_with_typing(social_item)
+			await _render_item_with_typing(social_item, conversation_id, token)
 	if item.has("incoming_notifications"):
 		for notification in item.get("incoming_notifications", []):
-			await _render_item_with_typing(notification)
+			await _render_item_with_typing(notification, conversation_id, token)
 	if item.has("automatic_followup"):
 		for followup in item.get("automatic_followup", []):
-			await _render_item_with_typing(followup)
+			await _render_item_with_typing(followup, conversation_id, token)
 	if item.has("text") or item.has("body") or item.has("content_id") or item.has("reaction"):
-		await _render_message_with_typing(item)
+		await _render_message_with_typing(item, conversation_id, token)
 	elif not item.has("messages") and not item.has("social_items"):
-		_add_system_note("[debug item] %s" % str(item.get("id", item.keys())))
+		if _is_render_current(conversation_id, token):
+			_add_system_note("[debug item] %s" % str(item.get("id", item.keys())))
 
-func _render_message_with_typing(message: Dictionary) -> void:
+func _render_message_with_typing(message: Dictionary, conversation_id: String, token: int) -> void:
+	if not _is_render_current(conversation_id, token):
+		return
 	if not _is_ludo_sender(message):
 		var typing_indicator := _show_typing_indicator(message)
-		await _animate_typing_indicator(typing_indicator, _typing_delay_for_message(message))
+		await _animate_typing_indicator(typing_indicator, _typing_delay_for_message(message), conversation_id, token)
 		if is_instance_valid(typing_indicator):
 			typing_indicator.queue_free()
+		if not _is_render_current(conversation_id, token):
+			return
 	_render_message(message)
 
 func _show_typing_indicator(message: Dictionary) -> Node:
@@ -242,13 +315,15 @@ func _show_typing_indicator(message: Dictionary) -> Node:
 	typing_message.erase("author")
 	typing_message.erase("time_label")
 	typing_message["text"] = "..."
-	return _render_chat_bubble(typing_message)
+	return _render_chat_bubble(typing_message, false)
 
-func _animate_typing_indicator(typing_indicator: Node, delay: float) -> void:
+func _animate_typing_indicator(typing_indicator: Node, delay: float, conversation_id: String, token: int) -> void:
 	var states := [".", "..", "..."]
 	var elapsed := 0.0
 	var index := 0
 	while elapsed < delay and is_instance_valid(typing_indicator):
+		if not _is_render_current(conversation_id, token):
+			return
 		_set_typing_indicator_text(typing_indicator, states[index % states.size()])
 		var step = min(0.22, delay - elapsed)
 		await get_tree().create_timer(step).timeout
@@ -311,14 +386,16 @@ func _render_item(item) -> void:
 	elif not item.has("messages") and not item.has("social_items"):
 		_add_system_note("[debug item] %s" % str(item.get("id", item.keys())))
 
-func _render_message(message: Dictionary) -> void:
+func _render_message(message: Dictionary, record_history := true) -> void:
 	var text := _format_message_text(message)
 	if text != "":
-		_render_chat_bubble(message)
+		_render_chat_bubble(message, record_history)
 	if message.has("content_id"):
-		_add_placeholder_card(str(message["content_id"]), _is_ludo_sender(message))
+		_add_placeholder_card(str(message["content_id"]), _is_ludo_sender(message), record_history)
 
-func _render_chat_bubble(message: Dictionary) -> Node:
+func _render_chat_bubble(message: Dictionary, record_history := true) -> Node:
+	if record_history:
+		_record_history_entry({"type": "message", "message": message.duplicate(true)})
 	var is_ludo := _is_ludo_sender(message)
 	var row := HBoxContainer.new()
 	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -378,7 +455,9 @@ func _bubble_color_for_sender(message: Dictionary) -> Color:
 func _sender_display_name(message: Dictionary) -> String:
 	return str(message.get("sender", message.get("author", "")))
 
-func _add_placeholder_card(content_id: String, is_ludo := false) -> void:
+func _add_placeholder_card(content_id: String, is_ludo := false, record_history := true) -> void:
+	if record_history:
+		_record_history_entry({"type": "placeholder", "content_id": content_id, "is_ludo": is_ludo})
 	var item := DataLoader.get_visual_content(content_id)
 	var tags := ", ".join(item.get("tags", [])) if not item.is_empty() else "unknown"
 	var risk := str(item.get("risk_level", "?")) if not item.is_empty() else "?"
@@ -418,7 +497,9 @@ func _add_choice_hint(text: String) -> void:
 	label.add_theme_color_override("font_color", Color(0.65, 0.67, 0.72))
 	choice_area.add_child(label)
 
-func _add_system_note(text: String) -> void:
+func _add_system_note(text: String, record_history := true) -> void:
+	if record_history:
+		_record_history_entry({"type": "system", "text": text})
 	var label := Label.new()
 	label.text = text
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -427,6 +508,38 @@ func _add_system_note(text: String) -> void:
 	label.add_theme_color_override("font_color", Color(0.62, 0.64, 0.70))
 	message_thread.add_child(label)
 	_scroll_to_bottom.call_deferred()
+
+func _conversation_key(conversation: Dictionary) -> String:
+	return str(conversation.get("_parent_conversation_id", conversation.get("id", "")))
+
+func _is_render_current(conversation_id: String, token: int) -> bool:
+	return conversation_id == active_conversation_id and token == current_render_token
+
+func _record_history_entry(entry: Dictionary) -> void:
+	if restoring_state or active_state.is_empty():
+		return
+	var history: Array = active_state.get("history", [])
+	history.append(entry.duplicate(true))
+	active_state["history"] = history
+
+func _restore_state_to_view(state: Dictionary) -> void:
+	restoring_state = true
+	for entry in state.get("history", []):
+		if typeof(entry) != TYPE_DICTIONARY:
+			continue
+		match str(entry.get("type", "")):
+			"message":
+				_render_message(entry.get("message", {}), false)
+			"placeholder":
+				_add_placeholder_card(str(entry.get("content_id", "")), bool(entry.get("is_ludo", false)), false)
+			"system":
+				_add_system_note(str(entry.get("text", "")), false)
+	restoring_state = false
+	choice_was_applied = bool(state.get("choice_was_applied", false))
+	if bool(state.get("waiting_choices", false)) and not choice_was_applied:
+		_show_choices_for_segment(state.get("choice_data", {}), bool(state.get("show_empty_hint", true)), false)
+	else:
+		_clear_node(choice_area)
 
 func _conversation_name(conversation: Dictionary) -> String:
 	var thread = conversation.get("thread", {})

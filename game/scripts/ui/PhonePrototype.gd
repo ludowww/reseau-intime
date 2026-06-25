@@ -136,7 +136,7 @@ func _add_home_navigation(parent: Node) -> void:
 	var debug_button := _add_button(nav, "Debug")
 	debug_button.pressed.connect(func(): _toggle_debug(debug_button))
 	var reset_button := _add_button(nav, "Reset")
-	reset_button.pressed.connect(func(): GameState.reset_state(); pending_conversation_ids.clear(); _hide_notification(); _render_conversations(current_day_value); debug_panel.refresh())
+	reset_button.pressed.connect(func(): GameState.reset_state(); conversation_view.reset_ui_state(); pending_conversation_ids.clear(); _hide_notification(); _render_conversations(current_day_value); debug_panel.refresh())
 
 func _add_notification_banner(parent: Node) -> void:
 	notification_banner = PanelContainer.new()

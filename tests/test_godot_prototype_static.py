@@ -264,6 +264,30 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         ]:
             self.assertIn(expected, script)
 
+    def test_conversation_view_isolates_state_and_guards_async_renders(self):
+        script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
+        for expected in [
+            "conversation_states",
+            "active_conversation_id",
+            "current_render_token",
+            "_is_render_current",
+            "_conversation_key",
+            "_restore_state_to_view",
+            "_record_history_entry",
+            "reset_ui_state",
+            '"history"',
+            '"waiting_choices"',
+            '"choice_was_applied"',
+        ]:
+            self.assertIn(expected, script)
+        self.assertGreaterEqual(script.count("_is_render_current(conversation_id, token)"), 5)
+        self.assertIn("current_render_token += 1", script)
+
+    def test_phone_reset_clears_conversation_ui_state(self):
+        script = (GAME / "scripts" / "ui" / "PhonePrototype.gd").read_text(encoding="utf-8")
+        self.assertIn("conversation_view.reset_ui_state()", script)
+        self.assertIn("pending_conversation_ids.clear()", script)
+
     def test_debug_panel_has_readable_compact_sections(self):
         script = (GAME / "scripts" / "ui" / "DebugPanel.gd").read_text(encoding="utf-8")
         self.assertIn("custom_minimum_size", script)
