@@ -160,11 +160,36 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             "clamp(delay, 0.45, 2.4)",
             "await get_tree().create_timer",
             'typing_message["text"] = "..."',
+            "_animate_typing_indicator",
+            '[".", "..", "..."]',
             "_show_choices_for_segment",
         ]:
             self.assertIn(expected, script)
         self.assertNotIn("✓ %s", script)
         self.assertNotIn("écrit...", script)
+        self.assertNotIn('typing_message["time_label"]', script)
+
+    def test_conversation_view_has_fixed_header_scroll_thread_and_fixed_choice_area(self):
+        script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
+        for expected in [
+            "header_panel",
+            "message_scroll",
+            "message_thread",
+            "choice_area",
+            "follow_focus = true",
+            "ScrollContainer",
+            "scroll_vertical",
+            "_scroll_to_bottom",
+        ]:
+            self.assertIn(expected, script)
+        self.assertLess(script.index("header_panel"), script.index("message_scroll"))
+        self.assertLess(script.index("message_scroll"), script.index("choice_area"))
+
+    def test_conversation_view_has_no_visible_segment_separator(self):
+        script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
+        self.assertNotIn("_add_timeline_separator", script)
+        self.assertNotIn('"—"', script)
+        self.assertNotIn('"-"', script)
 
     def test_conversation_view_has_character_bubble_palette(self):
         script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")

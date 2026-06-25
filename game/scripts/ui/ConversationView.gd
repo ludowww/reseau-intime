@@ -25,6 +25,8 @@ var choice_buttons: Array[Button] = []
 var choice_was_applied := false
 var current_conversation: Dictionary = {}
 var current_segment_index := 0
+var header_panel: PanelContainer
+var message_scroll: ScrollContainer
 var message_thread: VBoxContainer
 var choice_area: VBoxContainer
 var chat_shell: VBoxContainer
@@ -53,11 +55,17 @@ func _build_chat_shell() -> void:
 	chat_shell.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	background.add_child(chat_shell)
 
+	message_scroll = ScrollContainer.new()
+	message_scroll.follow_focus = true
+	message_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	message_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	chat_shell.add_child(message_scroll)
+
 	message_thread = VBoxContainer.new()
 	message_thread.add_theme_constant_override("separation", 8)
 	message_thread.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	message_thread.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	chat_shell.add_child(message_thread)
+	message_scroll.add_child(message_thread)
 
 	choice_area = VBoxContainer.new()
 	choice_area.add_theme_constant_override("separation", 8)
@@ -65,7 +73,7 @@ func _build_chat_shell() -> void:
 	chat_shell.add_child(choice_area)
 
 func _add_chat_header(conversation: Dictionary) -> void:
-	var header_panel := PanelContainer.new()
+	header_panel = PanelContainer.new()
 	header_panel.add_theme_stylebox_override("panel", _panel_style(HEADER_COLOR, 16))
 	header_panel.custom_minimum_size = Vector2(0, 68)
 	header_panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -109,8 +117,7 @@ func _render_current_segment() -> void:
 	choice_was_applied = false
 	_clear_node(choice_area)
 	var data := _current_segment_data()
-	for item in _flatten_content(data):
-		_render_item(item)
+	await _render_segment_messages_with_typing(data)
 	_show_choices_for_segment(data)
 
 func _show_choices_for_segment(data: Dictionary, show_empty_hint := true) -> bool:
@@ -138,6 +145,7 @@ func _show_choices_for_segment(data: Dictionary, show_empty_hint := true) -> boo
 		button.pressed.connect(func(): _select_choice(choice, button))
 		choice_buttons.append(button)
 		choice_area.add_child(button)
+	_scroll_to_bottom.call_deferred()
 	return true
 
 func append_choice_result(choice: Dictionary) -> void:
@@ -154,7 +162,6 @@ func _play_followup_sequence(choice: Dictionary) -> void:
 func _auto_advance_segments_until_choice() -> void:
 	while _has_next_segment():
 		current_segment_index += 1
-		_add_timeline_separator()
 		segment_changed.emit(current_conversation.get("day", current_conversation.get("chapter", null)), _parent_conversation_id(), _segment_id_for_current_index())
 		var data := _current_segment_data()
 		await _render_segment_messages_with_typing(data)
@@ -224,15 +231,34 @@ func _render_item_with_typing(item) -> void:
 func _render_message_with_typing(message: Dictionary) -> void:
 	if not _is_ludo_sender(message):
 		var typing_indicator := _show_typing_indicator(message)
-		await get_tree().create_timer(_typing_delay_for_message(message)).timeout
+		await _animate_typing_indicator(typing_indicator, _typing_delay_for_message(message))
 		if is_instance_valid(typing_indicator):
 			typing_indicator.queue_free()
 	_render_message(message)
 
 func _show_typing_indicator(message: Dictionary) -> Node:
 	var typing_message := message.duplicate(true)
+	typing_message.erase("sender")
+	typing_message.erase("author")
+	typing_message.erase("time_label")
 	typing_message["text"] = "..."
 	return _render_chat_bubble(typing_message)
+
+func _animate_typing_indicator(typing_indicator: Node, delay: float) -> void:
+	var states := [".", "..", "..."]
+	var elapsed := 0.0
+	var index := 0
+	while elapsed < delay and is_instance_valid(typing_indicator):
+		_set_typing_indicator_text(typing_indicator, states[index % states.size()])
+		var step = min(0.22, delay - elapsed)
+		await get_tree().create_timer(step).timeout
+		elapsed += step
+		index += 1
+
+func _set_typing_indicator_text(typing_indicator: Node, text: String) -> void:
+	var labels := typing_indicator.find_children("", "Label", true, false)
+	if not labels.is_empty():
+		(labels.back() as Label).text = text
 
 func _typing_delay_for_message(message: Dictionary) -> float:
 	var char_count := _format_message_text(message).length()
@@ -324,6 +350,7 @@ func _render_chat_bubble(message: Dictionary) -> Node:
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	label.add_theme_font_size_override("font_size", 15)
 	text_box.add_child(label)
+	_scroll_to_bottom.call_deferred()
 	return row
 
 func _format_message_text(message: Dictionary) -> String:
@@ -373,6 +400,7 @@ func _add_placeholder_card(content_id: String, is_ludo := false) -> void:
 	_add_label_to(body, "Tags : %s" % tags, 12)
 	_add_label_to(body, "Risque : %s" % risk, 12)
 	GameState.add_unlocked_content(content_id)
+	_scroll_to_bottom.call_deferred()
 
 func _add_choice_heading(text: String) -> void:
 	var label := Label.new()
@@ -398,9 +426,7 @@ func _add_system_note(text: String) -> void:
 	label.add_theme_font_size_override("font_size", 11)
 	label.add_theme_color_override("font_color", Color(0.62, 0.64, 0.70))
 	message_thread.add_child(label)
-
-func _add_timeline_separator() -> void:
-	_add_system_note("—")
+	_scroll_to_bottom.call_deferred()
 
 func _conversation_name(conversation: Dictionary) -> String:
 	var thread = conversation.get("thread", {})
@@ -460,3 +486,9 @@ func _clear() -> void:
 func _clear_node(parent: Node) -> void:
 	for child in parent.get_children():
 		child.queue_free()
+
+func _scroll_to_bottom() -> void:
+	if message_scroll == null:
+		return
+	await get_tree().process_frame
+	message_scroll.scroll_vertical = int(message_scroll.get_v_scroll_bar().max_value)
