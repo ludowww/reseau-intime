@@ -103,6 +103,29 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             self.assertIn(expected, script)
         self.assertNotIn("_render_conversation_buttons(day_value, _flatten", script)
 
+    def test_conversation_list_is_contacts_only_not_moment_menu(self):
+        script = (GAME / "scripts" / "ui" / "PhonePrototype.gd").read_text(encoding="utf-8")
+        self.assertIn("_collect_contact_conversations_for_day", script)
+        self.assertIn("_moment_metadata_by_conversation_id", script)
+        self.assertIn("_add_day_moment_hint", script)
+        self.assertNotIn("func _add_moment_card", script)
+        self.assertNotIn("_render_moment_conversations", script)
+        self.assertNotIn("moment_label", script[script.index("func _render_conversations"):script.index("func _render_conversation_buttons")])
+
+    def test_phone_has_pending_badges_and_simple_notifications(self):
+        script = (GAME / "scripts" / "ui" / "PhonePrototype.gd").read_text(encoding="utf-8")
+        for expected in [
+            "pending_conversation_ids",
+            "notification_banner",
+            "_mark_other_conversations_pending",
+            "_clear_pending_for_conversation",
+            "_show_notification",
+            "Nouveau message",
+            "En attente",
+            "pending",
+        ]:
+            self.assertIn(expected, script)
+
     def test_conversation_view_wraps_choices_and_renders_ludo_reply(self):
         script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
         self.assertIn("choice_buttons", script)

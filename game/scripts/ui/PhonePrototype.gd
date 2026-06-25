@@ -6,7 +6,9 @@ const PHONE_FRAME_COLOR := Color(0.015, 0.016, 0.022)
 const PHONE_PANEL_COLOR := Color(0.075, 0.082, 0.12)
 const CARD_COLOR := Color(0.095, 0.105, 0.15)
 const CARD_HOVER_COLOR := Color(0.13, 0.145, 0.20)
+const PENDING_CARD_COLOR := Color(0.12, 0.13, 0.19)
 const ACCENT_COLOR := Color(0.35, 0.48, 0.70)
+const PENDING_COLOR := Color(0.54, 0.72, 0.95)
 const MUTED_TEXT_COLOR := Color(0.66, 0.69, 0.76)
 
 var day_list: VBoxContainer
@@ -15,7 +17,10 @@ var conversation_cards: VBoxContainer
 var conversation_view: VBoxContainer
 var debug_panel: VBoxContainer
 var debug_scroll: ScrollContainer
+var notification_banner: PanelContainer
+var notification_label: Label
 var current_day_value = null
+var pending_conversation_ids: Dictionary = {}
 
 func _ready() -> void:
 	if DataLoader.chapter_indexes.is_empty():
@@ -85,6 +90,7 @@ func _build_phone_shell(root: Node) -> void:
 
 	_add_status_bar(screen_column)
 	_add_home_navigation(screen_column)
+	_add_notification_banner(screen_column)
 
 	day_list = VBoxContainer.new()
 	day_list.custom_minimum_size = Vector2(160, 0)
@@ -130,7 +136,20 @@ func _add_home_navigation(parent: Node) -> void:
 	var debug_button := _add_button(nav, "Debug")
 	debug_button.pressed.connect(func(): _toggle_debug(debug_button))
 	var reset_button := _add_button(nav, "Reset")
-	reset_button.pressed.connect(func(): GameState.reset_state(); debug_panel.refresh())
+	reset_button.pressed.connect(func(): GameState.reset_state(); pending_conversation_ids.clear(); _hide_notification(); _render_conversations(current_day_value); debug_panel.refresh())
+
+func _add_notification_banner(parent: Node) -> void:
+	notification_banner = PanelContainer.new()
+	notification_banner.visible = false
+	notification_banner.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	notification_banner.add_theme_stylebox_override("panel", _panel_style(Color(0.10, 0.14, 0.20), 16))
+	parent.add_child(notification_banner)
+	notification_label = Label.new()
+	notification_label.text = ""
+	notification_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	notification_label.add_theme_font_size_override("font_size", 12)
+	notification_label.add_theme_color_override("font_color", Color(0.86, 0.91, 1.0))
+	notification_banner.add_child(notification_label)
 
 func _render_days() -> void:
 	_clear(day_list)
@@ -151,47 +170,81 @@ func _focus_messages() -> void:
 		_render_conversations(current_day_value)
 
 func _render_conversations(day_value) -> void:
+	if day_value == null:
+		return
 	current_day_value = day_value
 	_clear(conversation_list)
 	_add_label(conversation_list, "%s — Discussions" % _format_day_label(day_value), 18)
-	var moments := DataLoader.get_moments_for_day(day_value)
-	if moments.is_empty():
-		_render_conversation_buttons(day_value, DataLoader.get_conversations_for_day(day_value))
-		return
-	for moment in moments:
-		_add_moment_card(day_value, moment)
-
-func _render_moment_conversations(day_value, moment: Dictionary) -> void:
-	_clear(conversation_list)
-	_add_label(conversation_list, "%s\n%s" % [moment.get("moment_label", "moment"), moment.get("time_label", "")], 18)
-	if moment.has("transition_text"):
-		_add_muted_label(conversation_list, str(moment["transition_text"]), 12)
-	_render_conversation_buttons(day_value, DataLoader.get_conversations_for_moment(day_value, moment))
+	_add_day_moment_hint(day_value)
+	_render_conversation_buttons(day_value, _collect_contact_conversations_for_day(day_value))
 
 func _render_conversation_buttons(day_value, conversations: Array) -> void:
 	for conversation in conversations:
 		_add_conversation_card(day_value, conversation)
 
-func _add_moment_card(day_value, moment: Dictionary) -> void:
-	var card := _make_card()
-	conversation_cards.add_child(card)
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 10)
-	card.add_child(row)
-	_add_avatar(row, str(moment.get("moment_label", "M")).substr(0, 1).to_upper())
-	var text_box := VBoxContainer.new()
-	text_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	row.add_child(text_box)
-	_add_label(text_box, str(moment.get("moment_label", "Moment")), 15)
-	_add_muted_label(text_box, str(moment.get("transition_text", moment.get("time_label", ""))), 12)
-	_add_muted_label(row, str(moment.get("time_label", "")), 11)
-	card.gui_input.connect(func(event):
-		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-			_render_moment_conversations(day_value, moment)
-	)
+func _add_day_moment_hint(day_value) -> void:
+	var hints: Array[String] = []
+	for item in _moment_metadata_by_conversation_id(day_value).values():
+		if typeof(item) != TYPE_DICTIONARY:
+			continue
+		for label in item.get("labels", []):
+			if str(label) != "" and not hints.has(str(label)):
+				hints.append(str(label))
+		for time in item.get("times", []):
+			if str(time) != "" and not hints.has(str(time)):
+				hints.append(str(time))
+	if hints.is_empty():
+		_add_muted_label(conversation_list, "Contacts disponibles", 12)
+	else:
+		_add_muted_label(conversation_list, "Repères du jour : %s" % " · ".join(hints.slice(0, 4)), 12)
+
+func _collect_contact_conversations_for_day(day_value) -> Array:
+	var metadata := _moment_metadata_by_conversation_id(day_value)
+	var by_id: Dictionary = {}
+	for conversation in DataLoader.get_conversations_for_day(day_value):
+		if typeof(conversation) != TYPE_DICTIONARY:
+			continue
+		var conversation_id := _conversation_id(conversation)
+		var entry: Dictionary = conversation.duplicate(true)
+		if metadata.has(conversation_id):
+			entry["_moment_metadata"] = metadata[conversation_id]
+		by_id[conversation_id] = entry
+	for moment in DataLoader.get_moments_for_day(day_value):
+		for conversation in DataLoader.get_conversations_for_moment(day_value, moment):
+			if typeof(conversation) != TYPE_DICTIONARY:
+				continue
+			var conversation_id := _conversation_id(conversation)
+			if not by_id.has(conversation_id):
+				var entry: Dictionary = conversation.duplicate(true)
+				if metadata.has(conversation_id):
+					entry["_moment_metadata"] = metadata[conversation_id]
+				by_id[conversation_id] = entry
+	var contacts: Array = []
+	for entry in by_id.values():
+		contacts.append(entry)
+	return contacts
+
+func _moment_metadata_by_conversation_id(day_value) -> Dictionary:
+	var metadata: Dictionary = {}
+	for item in DataLoader.get_conversations_for_day(day_value):
+		if typeof(item) == TYPE_DICTIONARY:
+			var base_id := _conversation_id(item)
+			if not metadata.has(base_id):
+				metadata[base_id] = {"labels": [], "times": [], "transitions": []}
+	for moment in DataLoader.get_moments_for_day(day_value):
+		for conversation_id in moment.get("conversation_ids", []):
+			var key := str(conversation_id)
+			if not metadata.has(key):
+				metadata[key] = {"labels": [], "times": [], "transitions": []}
+			var bucket: Dictionary = metadata[key]
+			_add_unique(bucket["labels"], str(moment.get("moment_label", "")))
+			_add_unique(bucket["times"], str(moment.get("time_label", "")))
+			_add_unique(bucket["transitions"], str(moment.get("transition_text", "")))
+	return metadata
 
 func _add_conversation_card(day_value, conversation: Dictionary) -> void:
-	var card := _make_card()
+	var is_pending := _is_conversation_pending(conversation)
+	var card := _make_card(is_pending)
 	conversation_cards.add_child(card)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 10)
@@ -207,7 +260,7 @@ func _add_conversation_card(day_value, conversation: Dictionary) -> void:
 	_add_muted_label(text_box, _conversation_subtitle(conversation), 12)
 
 	var status_box := VBoxContainer.new()
-	status_box.custom_minimum_size = Vector2(64, 0)
+	status_box.custom_minimum_size = Vector2(72, 0)
 	row.add_child(status_box)
 	_add_muted_label(status_box, _conversation_status_text(conversation), 11)
 	if _conversation_has_activity_badge(conversation):
@@ -216,19 +269,21 @@ func _add_conversation_card(day_value, conversation: Dictionary) -> void:
 		badge.text = "•"
 		badge.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		badge.add_theme_font_size_override("font_size", 24)
-		badge.add_theme_color_override("font_color", ACCENT_COLOR)
+		badge.add_theme_color_override("font_color", PENDING_COLOR if is_pending else ACCENT_COLOR)
 		status_box.add_child(badge)
+		if is_pending:
+			_add_muted_label(status_box, "nouveau", 10)
 
 	card.gui_input.connect(func(event):
 		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 			_open_conversation(day_value, conversation)
 	)
 
-func _make_card() -> PanelContainer:
+func _make_card(pending := false) -> PanelContainer:
 	var card := PanelContainer.new()
 	card.mouse_filter = Control.MOUSE_FILTER_STOP
 	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	card.add_theme_stylebox_override("panel", _card_style(CARD_COLOR))
+	card.add_theme_stylebox_override("panel", _card_style(PENDING_CARD_COLOR if pending else CARD_COLOR, pending))
 	return card
 
 func _add_avatar(parent: Node, text: String) -> void:
@@ -245,11 +300,47 @@ func _add_avatar(parent: Node, text: String) -> void:
 	avatar.add_child(label)
 
 func _open_conversation(day_value, conversation: Dictionary) -> void:
-	var conversation_id := str(conversation.get("_parent_conversation_id", conversation.get("id", "")))
+	var conversation_id := _conversation_id(conversation)
+	_clear_pending_for_conversation(conversation_id)
+	_mark_other_conversations_pending(day_value, conversation_id)
 	var segment_id := str(conversation.get("_current_segment_id", conversation.get("id", "")))
 	GameState.set_context(day_value, conversation_id, segment_id)
 	conversation_view.show_conversation(conversation)
+	_render_conversations(day_value)
 	debug_panel.refresh()
+
+func _mark_other_conversations_pending(day_value, opened_conversation_id: String) -> void:
+	var announced := false
+	for conversation in _collect_contact_conversations_for_day(day_value):
+		var conversation_id := _conversation_id(conversation)
+		if conversation_id == opened_conversation_id:
+			continue
+		if _collect_messages(conversation).is_empty():
+			continue
+		if not bool(pending_conversation_ids.get(conversation_id, false)):
+			pending_conversation_ids[conversation_id] = true
+			if not announced:
+				_show_notification("Nouveau message — %s" % _conversation_name(conversation))
+				announced = true
+
+func _clear_pending_for_conversation(conversation_id: String) -> void:
+	if pending_conversation_ids.has(conversation_id):
+		pending_conversation_ids.erase(conversation_id)
+	if pending_conversation_ids.is_empty():
+		_hide_notification()
+
+func _show_notification(text: String) -> void:
+	if notification_banner == null or notification_label == null:
+		return
+	notification_label.text = text
+	notification_banner.visible = true
+
+func _hide_notification() -> void:
+	if notification_banner == null:
+		return
+	notification_banner.visible = false
+	if notification_label != null:
+		notification_label.text = ""
 
 func _on_segment_changed(day_value, conversation_id: String, segment_id: String) -> void:
 	GameState.set_context(day_value, conversation_id, segment_id)
@@ -269,6 +360,9 @@ func _toggle_debug(button: Button) -> void:
 func _format_day_label(day_value) -> String:
 	return "Jour %d" % int(day_value)
 
+func _conversation_id(conversation: Dictionary) -> String:
+	return str(conversation.get("_parent_conversation_id", conversation.get("id", "")))
+
 func _conversation_name(conversation: Dictionary) -> String:
 	var thread = conversation.get("thread", {})
 	if typeof(thread) == TYPE_DICTIONARY and str(thread.get("display_name", "")) != "":
@@ -279,11 +373,24 @@ func _conversation_subtitle(conversation: Dictionary) -> String:
 	var last_text := _last_message_text(conversation)
 	if last_text != "":
 		return last_text
+	var metadata = conversation.get("_moment_metadata", {})
+	if typeof(metadata) == TYPE_DICTIONARY and not metadata.get("transitions", []).is_empty():
+		return str(metadata.get("transitions", [])[0])
 	if str(conversation.get("description", "")) != "":
 		return str(conversation.get("description"))
 	return "Conversation disponible"
 
 func _conversation_status_text(conversation: Dictionary) -> String:
+	if _is_conversation_pending(conversation):
+		return "En attente"
+	var metadata = conversation.get("_moment_metadata", {})
+	if typeof(metadata) == TYPE_DICTIONARY:
+		var times: Array = metadata.get("times", [])
+		if not times.is_empty():
+			return str(times.back())
+		var labels: Array = metadata.get("labels", [])
+		if not labels.is_empty():
+			return str(labels.back())
 	if str(conversation.get("time_label", "")) != "":
 		return str(conversation.get("time_label"))
 	if str(conversation.get("moment_label", "")) != "":
@@ -291,9 +398,14 @@ func _conversation_status_text(conversation: Dictionary) -> String:
 	return "actif"
 
 func _conversation_has_activity_badge(conversation: Dictionary) -> bool:
+	if _is_conversation_pending(conversation):
+		return true
 	if bool(conversation.get("unread", false)) or bool(conversation.get("active", false)):
 		return true
 	return not _collect_choices(conversation).is_empty()
+
+func _is_conversation_pending(conversation: Dictionary) -> bool:
+	return bool(pending_conversation_ids.get(_conversation_id(conversation), false))
 
 func _last_message_text(conversation: Dictionary) -> String:
 	var messages := _collect_messages(conversation)
@@ -347,6 +459,12 @@ func _avatar_initial(conversation: Dictionary) -> String:
 		return "?"
 	return name.substr(0, 1).to_upper()
 
+func _add_unique(items: Array, value: String) -> void:
+	if value == "":
+		return
+	if not items.has(value):
+		items.append(value)
+
 func _add_label(parent: Node, text: String, size: int = 14) -> Label:
 	var label := Label.new()
 	label.text = text
@@ -374,13 +492,13 @@ func _add_button(parent: Node, text: String) -> Button:
 	parent.add_child(button)
 	return button
 
-func _card_style(color: Color) -> StyleBoxFlat:
+func _card_style(color: Color, pending := false) -> StyleBoxFlat:
 	var style := _panel_style(color, 18)
 	style.border_width_left = 1
 	style.border_width_top = 1
 	style.border_width_right = 1
 	style.border_width_bottom = 1
-	style.border_color = Color(0.18, 0.20, 0.28)
+	style.border_color = PENDING_COLOR if pending else Color(0.18, 0.20, 0.28)
 	return style
 
 func _panel_style(color: Color, radius: int) -> StyleBoxFlat:
