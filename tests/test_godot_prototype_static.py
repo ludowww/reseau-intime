@@ -66,9 +66,42 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         self.assertIn("_format_day_label", script)
         self.assertIn("int(day_value)", script)
         self.assertIn("Vector2(160, 0)", script)
-        self.assertIn("Vector2(220, 0)", script)
         self.assertIn("Vector2(260, 0)", script)
+        self.assertIn("Vector2(420, 680)", script)
         self.assertIn("SIZE_EXPAND_FILL", script)
+
+    def test_phone_home_uses_dark_smartphone_shell_and_main_navigation(self):
+        script = (GAME / "scripts" / "ui" / "PhonePrototype.gd").read_text(encoding="utf-8")
+        for expected in [
+            "PHONE_BACKGROUND_COLOR",
+            "PHONE_FRAME_COLOR",
+            "_build_phone_shell",
+            "_add_status_bar",
+            "09:41",
+            "Messages",
+            "Debug",
+            "Reset",
+            "debug_scroll.visible = false",
+            "PanelContainer",
+            "StyleBoxFlat",
+        ]:
+            self.assertIn(expected, script)
+
+    def test_conversation_list_uses_grouped_mobile_cards_with_avatar_and_badge(self):
+        script = (GAME / "scripts" / "ui" / "PhonePrototype.gd").read_text(encoding="utf-8")
+        for expected in [
+            "conversation_cards",
+            "_add_conversation_card",
+            "_conversation_subtitle",
+            "_conversation_status_text",
+            "_conversation_has_activity_badge",
+            "avatar_placeholder",
+            "badge",
+            "_card_style",
+            "_avatar_initial",
+        ]:
+            self.assertIn(expected, script)
+        self.assertNotIn("_render_conversation_buttons(day_value, _flatten", script)
 
     def test_conversation_view_wraps_choices_and_renders_ludo_reply(self):
         script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
