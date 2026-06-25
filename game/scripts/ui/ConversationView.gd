@@ -25,7 +25,6 @@ var choice_buttons: Array[Button] = []
 var choice_was_applied := false
 var current_conversation: Dictionary = {}
 var current_segment_index := 0
-var continue_button: Button
 var message_thread: VBoxContainer
 var choice_area: VBoxContainer
 var chat_shell: VBoxContainer
@@ -34,7 +33,6 @@ func show_conversation(conversation: Dictionary) -> void:
 	_clear()
 	current_conversation = conversation.duplicate(true)
 	current_segment_index = int(current_conversation.get("_current_segment_index", 0))
-	continue_button = null
 	custom_minimum_size = Vector2(600, 0)
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_build_chat_shell()
@@ -113,59 +111,61 @@ func _render_current_segment() -> void:
 	var data := _current_segment_data()
 	for item in _flatten_content(data):
 		_render_item(item)
+	_show_choices_for_segment(data)
+
+func _show_choices_for_segment(data: Dictionary, show_empty_hint := true) -> bool:
+	choice_buttons.clear()
+	choice_was_applied = false
+	_clear_node(choice_area)
 	var choices := _collect_choices(data)
 	if choices.is_empty():
-		_add_choice_hint("Aucun choix direct dans cette conversation.")
-	else:
-		var is_guided_reply := choices.size() == 1
-		_add_choice_heading("Réponse" if is_guided_reply else "Choix disponibles")
-		for choice in choices:
-			if is_guided_reply:
-				choice["_guided_reply"] = true
-			var button := Button.new()
-			button.text = str(choice.get("text", choice.get("id", "Choix")))
-			button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-			button.custom_minimum_size = Vector2(0, 48)
-			button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-			button.add_theme_stylebox_override("normal", _panel_style(CHOICE_COLOR, 18))
-			button.add_theme_stylebox_override("hover", _panel_style(Color(0.18, 0.21, 0.28), 18))
-			button.add_theme_stylebox_override("pressed", _panel_style(Color(0.20, 0.29, 0.38), 18))
-			button.pressed.connect(func(): _select_choice(choice, button))
-			choice_buttons.append(button)
-			choice_area.add_child(button)
+		if show_empty_hint:
+			_add_choice_hint("Aucun choix direct dans cette conversation.")
+		return false
+	var is_guided_reply := choices.size() == 1
+	_add_choice_heading("Réponse" if is_guided_reply else "Choix disponibles")
+	for choice in choices:
+		if is_guided_reply:
+			choice["_guided_reply"] = true
+		var button := Button.new()
+		button.text = str(choice.get("text", choice.get("id", "Choix")))
+		button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		button.custom_minimum_size = Vector2(0, 48)
+		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		button.add_theme_stylebox_override("normal", _panel_style(CHOICE_COLOR, 18))
+		button.add_theme_stylebox_override("hover", _panel_style(Color(0.18, 0.21, 0.28), 18))
+		button.add_theme_stylebox_override("pressed", _panel_style(Color(0.20, 0.29, 0.38), 18))
+		button.pressed.connect(func(): _select_choice(choice, button))
+		choice_buttons.append(button)
+		choice_area.add_child(button)
+	return true
 
 func append_choice_result(choice: Dictionary) -> void:
 	_append_ludo_reply(choice)
 	_clear_node(choice_area)
 	await _play_followup_sequence(choice)
-	if _has_next_segment():
-		_show_continue_button()
+	await _auto_advance_segments_until_choice()
 
 func _play_followup_sequence(choice: Dictionary) -> void:
 	for key in ["next_messages", "next_items", "automatic_followup"]:
 		for entry in choice.get(key, []):
 			await _render_item_with_typing(entry)
 
-func _show_continue_button() -> void:
-	continue_button = Button.new()
-	continue_button.text = "Continuer"
-	continue_button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	continue_button.custom_minimum_size = Vector2(0, 48)
-	continue_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	continue_button.add_theme_stylebox_override("normal", _panel_style(Color(0.18, 0.22, 0.28), 18))
-	continue_button.add_theme_stylebox_override("hover", _panel_style(Color(0.22, 0.28, 0.36), 18))
-	continue_button.pressed.connect(_show_next_segment)
-	choice_area.add_child(continue_button)
+func _auto_advance_segments_until_choice() -> void:
+	while _has_next_segment():
+		current_segment_index += 1
+		_add_timeline_separator()
+		segment_changed.emit(current_conversation.get("day", current_conversation.get("chapter", null)), _parent_conversation_id(), _segment_id_for_current_index())
+		var data := _current_segment_data()
+		await _render_segment_messages_with_typing(data)
+		var has_more_segments := _has_next_segment()
+		if _show_choices_for_segment(data, not has_more_segments):
+			return
 
-func _show_next_segment() -> void:
-	if not _has_next_segment():
-		return
-	if continue_button:
-		continue_button.disabled = true
-	current_segment_index += 1
-	_add_timeline_separator()
-	segment_changed.emit(current_conversation.get("day", current_conversation.get("chapter", null)), _parent_conversation_id(), _segment_id_for_current_index())
-	_render_current_segment()
+func _render_segment_messages_with_typing(data: Dictionary) -> void:
+	_clear_node(choice_area)
+	for item in _flatten_content(data):
+		await _render_item_with_typing(item)
 
 func _current_segment_data() -> Dictionary:
 	var segments: Array = current_conversation.get("segments", [])
@@ -231,9 +231,7 @@ func _render_message_with_typing(message: Dictionary) -> void:
 
 func _show_typing_indicator(message: Dictionary) -> Node:
 	var typing_message := message.duplicate(true)
-	typing_message["text"] = "%s écrit..." % _sender_display_name(message)
-	if _sender_display_name(message) == "":
-		typing_message["text"] = "écrit..."
+	typing_message["text"] = "..."
 	return _render_chat_bubble(typing_message)
 
 func _typing_delay_for_message(message: Dictionary) -> float:

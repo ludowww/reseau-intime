@@ -133,13 +133,15 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         self.assertNotIn("return _flatten_segments(source)", loader)
         self.assertNotIn("return _flatten_segments(conversations_by_day.get(str(day_value), []))", loader)
 
-    def test_conversation_view_has_continue_flow_for_next_segment(self):
+    def test_conversation_view_auto_flows_segments_without_continue_button(self):
         script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
         self.assertIn("signal segment_changed", script)
-        self.assertIn("_show_next_segment", script)
-        self.assertIn("Continuer", script)
+        self.assertIn("_auto_advance_segments_until_choice", script)
+        self.assertIn("_render_segment_messages_with_typing", script)
         self.assertIn("current_segment_index", script)
         self.assertIn("_segment_id_for_current_index", script)
+        self.assertNotIn("Continuer", script)
+        self.assertNotIn("continue_button", script)
 
     def test_phone_updates_debug_context_when_segment_continues(self):
         script = (GAME / "scripts" / "ui" / "PhonePrototype.gd").read_text(encoding="utf-8")
@@ -157,10 +159,12 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             "0.35 + char_count * 0.018",
             "clamp(delay, 0.45, 2.4)",
             "await get_tree().create_timer",
-            "écrit...",
+            'typing_message["text"] = "..."',
+            "_show_choices_for_segment",
         ]:
             self.assertIn(expected, script)
         self.assertNotIn("✓ %s", script)
+        self.assertNotIn("écrit...", script)
 
     def test_conversation_view_has_character_bubble_palette(self):
         script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
