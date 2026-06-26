@@ -4,98 +4,122 @@
 
 Le jeu doit garder un **tronc commun** quelle que soit la route empruntée. Les personnages, les scènes et les notifications changent de sens selon les choix du joueur, mais l’histoire de base reste la même.
 
+La nouvelle règle de rythme est que le réseau ne doit pas être présenté comme un annuaire. Les personnages doivent arriver par couches : présence intime, mention indirecte, message court, puis scène active quand le joueur a déjà un repère.
+
 ## Histoire de base
 
 Ludo est en couple avec Marie. Ils s’aiment encore, mais leur quotidien est devenu trop prévisible. Les messages sont plus pratiques que désirants. Ludo se sent moins regardé. Marie sent qu’il est ailleurs sans encore pouvoir le prouver.
 
-Autour du couple, plusieurs tensions s’ouvrent :
+Autour du couple, plusieurs tensions s’ouvrent progressivement :
 
 - Mathilde est souvent chez Marie et vit parfois presque dans la maison.
-- Sandra devient la confidente ambiguë de Ludo.
+- Sandra redevient une confidente ambiguë de Ludo après une distance installée.
 - Raphaëlle remarque au travail que Ludo va mal.
 - Pauline invite le groupe chez elle et révèle un visage plus trouble.
 - Nico, ami de Ludo, regarde Marie avec trop d’insistance.
 
+Ces tensions ne doivent pas toutes devenir actives dès le premier jour.
+
 ## Structure commune
 
-### Chapitre 1 — Couple installé
+### Jour 1 — Ancrage intime
 
-Objectif : montrer le couple Ludo / Marie avant la crise.
+Objectif : montrer le couple Ludo / Marie avant la crise et faire revenir Sandra avec un poids émotionnel crédible.
+
+Actifs :
+
+- Marie ;
+- Sandra.
+
+Mention indirecte :
+
+- Mathilde, via Marie.
+
+Absents du Jour 1 :
+
+- Raphaëlle ;
+- Pauline ;
+- Nico ;
+- groupe amis.
 
 Éléments :
 
 - messages pratiques de Marie ;
 - tendresse fatiguée ;
 - routine domestique ;
-- première mention de Mathilde ;
-- première apparition indirecte de Nico ;
-- Sandra écrit légèrement ;
-- Raphaëlle existe dans le cadre professionnel ;
-- Pauline annonce une soirée.
+- première mention naturelle de Mathilde ;
+- Sandra écrit à partir d’un déclencheur concret ;
+- première photo de Sandra comme trace émotionnelle, non comme récompense de route ;
+- aucune route dominante visible.
 
-### Chapitre 2 — Les regards changent
+Intention : le joueur doit comprendre Marie, sentir le poids de la routine, retenir le nom de Mathilde sans la gérer encore, et comprendre que Sandra est émotionnellement importante pour Ludo.
 
-Objectif : ouvrir les premières failles.
+### Jour 2 — Ouverture progressive du réseau
 
-Éléments :
+Objectif : élargir le monde sans saturer le joueur.
 
-- Mathilde passe à la maison ;
-- Sandra écrit plus tard et plus intimement ;
-- Raphaëlle remarque que Ludo n’est pas lui-même ;
-- Pauline semble sage mais laisse une ambiguïté ;
-- Nico complimente Marie ;
-- Marie remarque que Ludo répond différemment selon les personnes.
+Éléments possibles :
 
-### Chapitre 3 — Premiers secrets
+- Marie continue d’exister dans le quotidien ;
+- Mathilde devient plus concrète, sans forcément écrire longuement ;
+- Raphaëlle apparaît au travail comme présence attentive ;
+- Sandra peut envoyer un écho court, pas une deuxième scène pilier ;
+- Pauline peut être mentionnée ou annoncer quelque chose de manière légère ;
+- Nico peut être évoqué indirectement, sans devenir déjà une menace active.
 
-Objectif : créer les premiers canaux privés.
+Intention : le joueur commence à comprendre les espaces du jeu — maison, travail, amitié ancienne, réseau social — mais les routes restent en graine.
 
-Éléments :
+### Jour 3 — Croisement social / soirée chez Pauline
 
-- conversation privée avec Mathilde ;
-- confidence de Sandra ;
-- attention de Raphaëlle ;
-- message discret de Pauline ;
-- réaction de Nico à une story de Marie ;
-- Marie commence à soupçonner un déplacement affectif.
+Objectif : passer des conversations parallèles à un réseau vivant.
 
-### Chapitre 4 — Soirée chez Pauline
-
-Premier grand pivot commun.
-
-Présents :
+Présents ou actifs possibles :
 
 - Ludo ;
 - Marie ;
 - Mathilde ;
 - Pauline ;
 - Nico ;
-- le copain de Pauline.
-
-Sandra n’est pas présente physiquement, mais écrit au mauvais moment. Raphaëlle réapparaît le lendemain.
+- groupe amis ;
+- Sandra à distance si cela crée une tension de priorité.
 
 Pendant la soirée :
 
-- Pauline provoque Ludo ;
+- Pauline contrôle le cadre social ;
 - Nico regarde Marie ;
 - Mathilde remarque les réactions de Ludo ;
 - Marie sent qu’une tension circule ;
-- Sandra envoie un message qui attire Ludo hors de la scène présente.
+- Sandra peut écrire au mauvais moment ;
+- le joueur doit choisir quoi ouvrir, quoi ignorer, quoi laisser en attente.
 
-### Chapitre 5 — Le lendemain
+Intention : c’est ici que les premières priorités du joueur deviennent lisibles.
 
-Objectif : interpréter les choix du joueur.
+### Jour 4 — Lendemain et première preuve
 
-Le jeu commence à déterminer :
+Objectif : interpréter les premiers comportements et montrer que le téléphone garde des traces.
 
-- une route dominante ;
+Éléments possibles :
+
+- Marie réagit à une distance ou à un comportement de soirée ;
+- une preuve ou trace devient visible ;
+- Raphaëlle offre un contrepoint de clarté ;
+- une story ou un message social renforce la jalousie ;
+- la route probable commence à émerger, sans verrouillage final.
+
+## Chapitres suivants
+
+### Chapitre 5 — Lecture des priorités
+
+Objectif : commencer à déterminer :
+
+- une route dominante probable ;
 - une route secondaire ;
 - une menace principale ;
 - un mode relationnel probable.
 
 ### Chapitre 6 — Montée du désir
 
-Objectif : débloquer les premiers contenus plus intimes.
+Objectif : débloquer les premiers contenus plus intimes, toujours avec contexte et risque.
 
 Exemples :
 
@@ -106,11 +130,9 @@ Exemples :
 - story Marie / Nico ;
 - contenu de Marie si le couple se réveille.
 
-### Chapitre 7 — Première preuve
+### Chapitre 7 — Première preuve forte
 
-Objectif : montrer que les contenus sont dangereux.
-
-Une photo, capture, story, vidéo, notification ou message supprimé devient une preuve potentielle.
+Objectif : montrer qu’une photo, capture, story, vidéo, notification ou message supprimé peut devenir une preuve potentielle.
 
 ### Chapitre 8 — Choix de vérité
 
@@ -154,8 +176,8 @@ L’épilogue doit indiquer :
 ## Scènes-pivots obligatoires
 
 1. Routine avec Marie.
-2. Mathilde à la maison.
-3. Sandra écrit tard.
+2. Retour de Sandra par une trace concrète.
+3. Mathilde à la maison.
 4. Raphaëlle remarque Ludo.
 5. Nico regarde Marie.
 6. Soirée chez Pauline.
@@ -191,21 +213,21 @@ Exemples :
 Dominante : Sandra
 Secondaire : Raphaëlle
 Menace : Nico
-Mode : tromperie émotionnelle
+Mode : SECRET_AFFAIR
 ```
 
 ```text
 Dominante : Mathilde
 Secondaire : Nico
 Menace : Marie
-Mode : interdit domestique
+Mode : SECRET_AFFAIR
 ```
 
 ```text
 Dominante : Marie
 Secondaire : Pauline
 Menace : Mathilde
-Mode : libertinage négocié
+Mode : LIBERTINE_NEGOTIATED
 ```
 
 ## Vérités fixes
@@ -222,3 +244,13 @@ Ces éléments doivent rester vrais dans toutes les routes :
 8. Nico désire Marie.
 9. Les contenus visuels sont à la fois récompenses et risques.
 10. Plus Ludo ment, plus le réseau devient dangereux.
+
+## Règle de démarrage
+
+Le Jour 1 ne doit pas multiplier les informations pour prouver la richesse du réseau. Il doit créer l’envie d’ouvrir les jours suivants.
+
+```text
+Jour 1 : Marie comme présent du couple.
+Jour 1 : Sandra comme faille émotionnelle ancienne.
+Jour 1 : Mathilde comme nom dans le décor intime.
+```
