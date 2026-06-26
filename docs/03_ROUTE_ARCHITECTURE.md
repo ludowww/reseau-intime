@@ -8,6 +8,8 @@ Le jeu ne doit pas être un arbre infini. Il doit fonctionner avec :
 Tronc commun + route dominante + route secondaire + menace + mode relationnel
 ```
 
+Cette structure reste validée, mais elle ne doit pas apparaître trop tôt au joueur. Les premiers jours doivent mesurer des postures et des priorités, pas annoncer immédiatement une route.
+
 ## Routes personnages
 
 Les routes personnages répondent à la question :
@@ -21,7 +23,7 @@ Routes principales :
 - Sandra ;
 - Raphaëlle ;
 - Pauline ;
-- Nico.
+- Nico / Marie.
 
 ## Modes relationnels
 
@@ -67,6 +69,63 @@ Exemple : Mathilde peut exister dans plusieurs modes.
 - Mathilde + Nico : rivalité, jalousie ou quatuor.
 - Mathilde + harem : limite rouge très instable.
 
+## Émergence progressive des routes
+
+Les routes ne doivent pas être détectées comme des choix de menu dès le début. Elles doivent émerger à partir de comportements répétés, de priorités et de traces.
+
+```text
+Jours 1–2 : postures de Ludo.
+Jour 3 : priorités visibles.
+Jour 4 : route probable.
+Après pivot : route dominante / secondaire / menace / mode relationnel.
+```
+
+### Jours 1–2 — Postures
+
+Les choix mesurent surtout la manière dont Ludo se comporte :
+
+- présent ;
+- évitant ;
+- sincère ;
+- mécanique ;
+- curieux ;
+- prudent ;
+- fuyant ;
+- tenté ;
+- protecteur ;
+- secret.
+
+Ces choix peuvent nourrir des signaux comme `truth_tendency`, `lie_score`, `marie_attention_score`, `marie_neglect_score`, `sandra_priority_score` ou `sandra.attachment`, mais ils ne doivent pas verrouiller de route.
+
+### Jour 3 — Priorités
+
+Les choix deviennent plus structurants quand plusieurs fils existent en même temps.
+
+Exemples :
+
+- répondre à Marie ou laisser son message en attente ;
+- ouvrir Sandra pendant un moment social ;
+- répondre publiquement au groupe ou rester silencieux ;
+- regarder une photo ;
+- conserver ou supprimer une trace ;
+- minimiser ou clarifier.
+
+C’est à partir de ce type de priorité que les routes peuvent commencer à devenir lisibles.
+
+### Jour 4 — Route probable
+
+Une route probable peut émerger si plusieurs signaux convergent. Elle ne doit pas encore être une promesse définitive.
+
+Exemple :
+
+```text
+Sandra devient probable si :
+- Ludo lui donne une priorité répétée ;
+- il se montre plus sincère avec elle qu’avec Marie ;
+- il conserve ou regarde une trace liée à Sandra ;
+- il accepte l’ambiguïté sans la forcer.
+```
+
 ## Route Marie
 
 ### Question centrale
@@ -100,6 +159,13 @@ Marie
 - Reprise de pouvoir si Marie découvre trop tard.
 - NTR subi si Nico prend trop de place.
 
+### Signaux précoces
+
+- Ludo est présent dans les messages pratiques.
+- Il clarifie au lieu de minimiser.
+- Il ne transforme pas toutes les autres conversations en secrets.
+- Il laisse Marie rester au centre du quotidien.
+
 ## Route Mathilde
 
 ### Question centrale
@@ -131,6 +197,13 @@ Mathilde
 - Très difficile si Marie a confiance basse.
 - Catastrophique si Ludo a déjà menti longtemps.
 - Mathilde ne doit jamais devenir une simple conquête interchangeable.
+
+### Signaux précoces
+
+- Jour 1 : Mathilde peut être seulement mentionnée par Marie.
+- Jour 2 : sa présence domestique devient concrète.
+- Jour 3 : elle observe Ludo dans un cadre social.
+- La route ne doit pas naître d’un simple compliment, mais d’un regard répété sur une limite familiale.
 
 ## Route Sandra
 
@@ -164,6 +237,14 @@ Sandra
 - Supporte mal l’exposition.
 - Supporte mal la logique libertine trop publique.
 
+### Signaux précoces
+
+- Sandra revient par une trace concrète, pas par flirt abstrait.
+- Ludo lui montre qu’elle lui a manqué.
+- Il accepte la prudence de Sandra.
+- Il ne la force pas à clarifier trop vite.
+- La photo de Sandra est une trace émotionnelle avant d’être un contenu de route.
+
 ## Route Raphaëlle
 
 ### Question centrale
@@ -194,6 +275,12 @@ Raphaëlle
 - Refuse la tromperie prolongée.
 - Refuse le harem mensonger.
 - Refuse d’être un pansement.
+
+### Signaux précoces
+
+- Elle ne doit pas être active au Jour 1 dans le nouveau rythme.
+- Elle apparaît comme contrepoint de clarté après l’ancrage Marie/Sandra.
+- Ses choix doivent mesurer l’honnêteté de Ludo, pas seulement son intérêt pour elle.
 
 ## Route Pauline
 
@@ -226,7 +313,13 @@ Pauline
 - Le renversement de Pauline doit rester consenti dans les scènes intimes.
 - Pauline doit garder une forme d’agence narrative.
 
-## Route Nico
+### Signaux précoces
+
+- Pauline ne doit pas dominer le Jour 1.
+- Elle peut être mentionnée avant d’activer le groupe.
+- Sa force arrive quand il y a déjà des traces à exploiter.
+
+## Route Nico / Marie
 
 ### Question centrale
 
@@ -235,7 +328,7 @@ Ludo supporte-t-il que Marie soit désirée par quelqu’un d’autre ?
 ### Branches
 
 ```text
-Nico
+Nico / Marie
 ├── Pote qui fantasme sur Marie
 ├── Rival caché
 ├── Confident de Marie
@@ -257,6 +350,12 @@ Nico
 
 - Nico ne doit pas être seulement un méchant.
 - Il doit révéler l’hypocrisie de Ludo.
+
+### Signaux précoces
+
+- Nico peut être évoqué avant d’être actif.
+- Il devient dangereux quand Marie manque de regard et que Ludo regarde ailleurs.
+- Son score ne devrait pas être la route principale par défaut au démarrage.
 
 ## Macro-routes
 
@@ -381,22 +480,6 @@ Menace : Marie
 Mode : SECRET_AFFAIR
 ```
 
-```text
-Dominante : Marie
-Secondaire : Pauline
-Menace : Mathilde
-Mode : LIBERTINE_NEGOTIATED
-```
+## Règle anti-précipitation
 
-## Règle de limitation
-
-Une partie complète ne doit pas tenter de développer toutes les branches en même temps.
-
-Structure recommandée :
-
-- 1 route dominante ;
-- 1 route secondaire ;
-- 1 menace principale ;
-- 1 mode relationnel final.
-
-Le reste doit apparaître en réactions, pas en routes complètes.
+Une route ne doit pas être lisible parce qu’un personnage a écrit une fois. Elle devient lisible quand le joueur répète un comportement et accepte les conséquences associées.
