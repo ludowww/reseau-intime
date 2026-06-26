@@ -2,7 +2,7 @@
 
 ## Phase 0 — Préproduction documentaire
 
-Objectif : verrouiller la vision, le ton, les personnages, les routes et la structure avant d’écrire du contenu massif ou de coder.
+Objectif : verrouiller la vision, le ton, les personnages, les routes, le rythme initial et la structure avant d’écrire du contenu massif ou de coder.
 
 Livrables :
 
@@ -17,22 +17,24 @@ Livrables :
 - Formats de données.
 - Guide d’écriture.
 - Scope vertical slice.
+- Rythme narratif Jours 1–4.
 
 ## Phase 1 — Vertical slice papier
 
-Objectif : écrire une première portion jouable sur papier.
+Objectif : écrire une première portion jouable sur papier avec une introduction progressive du réseau.
 
 Contenu :
 
-- Chapitre 1 : routine Ludo / Marie.
-- Chapitre 2 : premières tensions.
-- Chapitre 3 : soirée chez Pauline.
-- Chapitre 4 : lendemain + première preuve.
+- Jour 1 : Marie / Sandra, Mathilde mentionnée indirectement.
+- Jour 2 : premières ouvertures réseau.
+- Jour 3 : soirée chez Pauline.
+- Jour 4 : lendemain + première preuve.
 
-Routes testées :
+Routes testées progressivement :
 
-- Mathilde interdite.
+- Marie / réparation.
 - Sandra ambiguë.
+- Mathilde interdite.
 - Pauline piège.
 - Marie / Nico jalousie.
 - Raphaëlle comme contrepoint de clarté.
@@ -59,7 +61,8 @@ Objectif : intégrer le contenu écrit dans le prototype.
 Critères :
 
 - un tronc commun jouable ;
-- une route dominante calculée ;
+- un Jour 1 lisible et non saturé ;
+- une route probable calculée progressivement ;
 - au moins trois variations de route ;
 - un premier système de contenus visuels placeholders ;
 - un écran d’épilogue réseau simplifié.
