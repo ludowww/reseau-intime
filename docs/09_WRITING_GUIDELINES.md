@@ -4,6 +4,8 @@
 
 Garantir une voix cohérente pour chaque personnage et éviter que les routes deviennent interchangeables.
 
+Le jeu se déroule dans une interface smartphone. L’écriture doit donc ressembler à une messagerie privée crédible, pas à une suite de répliques littéraires parfaitement symétriques.
+
 ## Style général
 
 Le jeu se déroule par smartphone. L’écriture doit donc respecter :
@@ -15,25 +17,91 @@ Le jeu se déroule par smartphone. L’écriture doit donc respecter :
 - emojis rares et caractérisés ;
 - notifications comme tension ;
 - messages supprimés comme événement ;
-- horaires et délais de réponse comme langage.
+- horaires et délais de réponse comme langage ;
+- détails concrets comme déclencheurs ;
+- changements de sujet quand un personnage est gêné ;
+- réponses parfois imparfaites ou à côté.
 
 ## Règle centrale
 
 > Ce qui n’est pas dit doit être aussi important que ce qui est écrit.
 
-## Voix de Ludo
+## Méthode conversation réaliste
+
+Avant d’écrire une conversation importante, remplir cette fiche :
+
+```text
+Personnage :
+Relation initiale avec Player :
+Relation avec Marie :
+Moment de journée :
+Lieu probable de chaque personne :
+Raison officielle du message :
+Raison réelle du message :
+Ce que le personnage veut obtenir :
+Ce qu’il/elle refuse d’admettre :
+Détail concret déclencheur :
+Format : pilier / courte / ping / passif / groupe
+Longueur cible :
+Ce que le joueur doit retenir :
+Ce qui doit rester ambigu :
+```
+
+### Passes d’écriture
+
+1. Écrire une version brute, presque banale, avec le prétexte concret.
+2. Ajouter le sous-texte sans le faire dire frontalement.
+3. Donner à chaque personnage sa voix propre.
+4. Couper les boucles et les répliques trop brillantes.
+5. Passer un anti-linter narratif.
+
+### Anti-linter narratif
+
+Réécrire ou supprimer quand la conversation contient trop de :
+
+- ping-pong parfaitement symétrique ;
+- phrases abstraites sur “le jeu”, “la vérité”, “les masques”, “les gens” ;
+- compliments indirects trop élégants ;
+- répliques qui pourraient appartenir à n’importe quel personnage ;
+- réponses trop parfaites ;
+- tension sans détail concret ;
+- blagues qui esquivent toujours de la même manière ;
+- messages longs qui sonnent comme un monologue de roman ;
+- choix qui annoncent directement une route.
+
+## Référence validée — Sandra Jour 1
+
+La conversation Sandra Jour 1 validée sert de référence de ton.
+
+Éléments à préserver dans les conversations de ce niveau :
+
+- déclencheur concret : photo retrouvée par Sandra ;
+- amitié ancienne avant Marie ;
+- distance installée par leurs vies de couple ;
+- Player ressent un manque sans savoir comment le dire ;
+- Sandra est touchée mais prudente ;
+- les deux sont en couple ;
+- tension très légère ;
+- humour pour respirer, pas pour tout esquiver ;
+- fin émotionnellement claire, mais contenue ;
+- mot d’ordre : “doucement”.
+
+Cette méthode doit inspirer les autres personnages, mais pas les rendre semblables à Sandra.
+
+## Voix de Ludo / Player
 
 Ludo varie selon les choix, mais ses réponses doivent rester crédibles :
 
 - évitant ;
 - tendre ;
-- ironique ;
+- ironique quand il est gêné ;
+- observateur ;
 - troublé ;
 - parfois lâche ;
 - parfois sincère ;
 - rarement frontal au début.
 
-Le joueur doit pouvoir l’orienter, mais Ludo n’est pas un avatar vide.
+Le joueur doit pouvoir l’orienter, mais Ludo n’est pas un avatar vide. Dans les données et textes bruts, utiliser `Player` quand le prénom doit rester dynamique.
 
 ## Voix de Marie
 
@@ -43,9 +111,12 @@ Style :
 
 - naturel ;
 - intime ;
+- quotidien ;
 - parfois sec quand elle doute ;
 - blessé sans être naïf ;
 - capable de reprendre le pouvoir.
+
+Marie doit souvent partir du concret : pain, courses, fatigue, horaires, téléphone, appartement, chargeur oublié par Mathilde. Le quotidien est le lieu où la distance devient visible.
 
 Exemples :
 
@@ -63,9 +134,12 @@ Style :
 
 - taquin ;
 - proche ;
+- domestique ;
 - provocant ;
 - capable de reculer ;
 - culpabilisé quand la limite devient réelle.
+
+Mathilde ne doit pas arriver comme une conquête immédiate. Elle doit d’abord exister dans le décor intime de Marie : passage à la maison, chargeur oublié, canapé, habitudes, presque-sororité.
 
 Exemples :
 
@@ -84,8 +158,12 @@ Style :
 - doux ;
 - intime ;
 - hésitant ;
+- complice ;
 - taquin par moments ;
-- fuyant quand elle se sent exposée.
+- fuyant quand elle se sent exposée ;
+- méfiante quand une phrase peut prêter à confusion.
+
+Sandra esquive souvent par un changement de sujet ou une blague quand elle est gênée, mais elle ne doit pas esquiver tout le temps. Parfois elle répond simplement, brièvement, et c’est plus fort.
 
 Exemples :
 
@@ -107,6 +185,8 @@ Style :
 - respectueux ;
 - ferme sur ses limites.
 
+Raphaëlle ne doit pas être active au Jour 1 dans le nouveau rythme. Son arrivée doit agir comme un contrepoint après l’ancrage Marie/Sandra.
+
 Exemples :
 
 ```text
@@ -126,6 +206,8 @@ Style :
 - fausse innocence ;
 - phrases courtes ;
 - capacité à retourner une situation.
+
+Pauline ne doit pas saturer le Jour 1. Elle devient plus forte quand le joueur a déjà créé des traces ou des ambiguïtés exploitables.
 
 Exemples :
 
@@ -147,6 +229,8 @@ Style :
 - parfois brutalement honnête ;
 - phrases qui semblent anodines mais piquent.
 
+Nico ne doit pas être seulement un méchant. Sa fonction est de révéler l’hypocrisie possible de Ludo et le besoin de Marie d’être regardée.
+
 Exemples :
 
 ```text
@@ -157,24 +241,70 @@ Tu me reproches de la regarder, mais toi aussi tu regardes ailleurs.
 
 ## Écriture des choix
 
-Chaque choix doit être lisible dans son intention.
+Chaque choix doit être lisible dans son intention, mais ne doit pas annoncer trop vite une route.
 
 Types de choix :
 
 ```text
 éviter
 rassurer
+être présent
+répondre mécaniquement
+minimiser
 mentir
 avouer
+faire une allusion
 flirter
 provoquer
+poser une limite
 contrôler
 montrer
 supprimer
 conserver
+ignorer
+prioriser
 ```
 
 Éviter les choix qui semblent identiques mais ont des effets très différents.
+
+## Rythme des choix de route
+
+### Jours 1–2
+
+Les choix définissent surtout une posture :
+
+- sincérité ;
+- évitement ;
+- attention à Marie ;
+- priorité donnée à Sandra ;
+- distance prudente ;
+- curiosité ;
+- mensonge léger ;
+- malaise.
+
+Ils ne doivent pas encore afficher une route dominante.
+
+### Jour 3
+
+Les choix commencent à définir des priorités :
+
+- qui ouvrir d’abord ;
+- quoi laisser en attente ;
+- quoi conserver ;
+- quoi supprimer ;
+- répondre en public ou en privé.
+
+### Jour 4
+
+Les choix commencent à rendre une route probable :
+
+- poursuivre une ambiguïté ;
+- clarifier ;
+- cacher ;
+- avouer partiellement ;
+- protéger Marie ;
+- accepter une preuve ;
+- nier une trace.
 
 ## Écriture du désir
 
@@ -186,7 +316,8 @@ Règles :
 - chaque contenu intime doit avoir un contexte ;
 - la tension vient souvent de l’attente ;
 - les conséquences doivent compter ;
-- les personnages ne doivent pas tous céder au même rythme.
+- les personnages ne doivent pas tous céder au même rythme ;
+- un contenu visuel peut être émotionnel avant d’être érotique.
 
 ## Écriture des routes adultes
 
@@ -235,3 +366,6 @@ Ce message doit résumer :
 - Faire de Sandra une conquête facile.
 - Faire de Mathilde une trahison sans poids familial.
 - Faire de Pauline une manipulatrice sans vulnérabilité.
+- Faire écrire tout le monde tous les jours.
+- Introduire trop de personnages au Jour 1.
+- Confondre première présence et route active.
