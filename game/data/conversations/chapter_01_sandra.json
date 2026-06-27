@@ -29,7 +29,7 @@
           "id": "msg_sandra_001",
           "sender": "sandra",
           "time_label": "22:57",
-          "text": "[photo envoyée : Sandra en terrasse, prise pendant un déjeuner. Elle regarde l’objectif avec un sourire un peu retenu. Ses cheveux sont légèrement déplacés par le vent. Sur la table, on devine deux verres, une assiette entamée et un coin de serviette froissée.]",
+          "text": "Photo envoyée.",
           "content_id": "profile_sandra_placeholder",
           "tags": [
             "sandra",
@@ -49,7 +49,7 @@
           "id": "msg_sandra_003",
           "sender": "sandra",
           "time_label": "22:57",
-          "text": "Je ne sais pas pourquoi il a décidé que c’était nécessaire à 22h57."
+          "text": "Je ne sais pas pourquoi il a décidé de me ressortir ça à 22h57."
         }
       ],
       "choices": [
@@ -205,7 +205,7 @@
       "choices": [
         {
           "id": "choice_from_msg_sandra_017",
-          "text": "Geste héroïque 🙂",
+          "text": "Geste héroïque 😅",
           "tone": "guided_reply",
           "source_message_id": "msg_sandra_017",
           "time_label": "23:02",
@@ -237,7 +237,7 @@
               "id": "msg_sandra_020",
               "sender": "sandra",
               "time_label": "23:03",
-              "text": "Parce que tu prends tout comme une scène."
+              "text": "Parce qu’avec toi, deux messages et ça devient une scène."
             }
           ]
         }
@@ -1957,7 +1957,7 @@
               "id": "msg_sandra_285",
               "sender": "sandra",
               "time_label": "23:36",
-              "text": "C’est le genre de phrase qui arrive avec des chaussures pleines de boue dans une pièce propre."
+              "text": "C’est exactement le genre de phrase qui me fait perdre mon calme deux secondes."
             }
           ]
         }
@@ -2079,7 +2079,7 @@
       "choices": [
         {
           "id": "choice_from_msg_sandra_297",
-          "text": "Très clair.",
+          "text": "Très clair 😅",
           "tone": "guided_reply",
           "source_message_id": "msg_sandra_297",
           "time_label": "23:40",
@@ -2294,7 +2294,7 @@
       "choices": [
         {
           "id": "choice_from_msg_sandra_317",
-          "text": "Je ne veux pas de moche.",
+          "text": "Je ne veux pas que ça devienne moche.",
           "tone": "guided_reply",
           "source_message_id": "msg_sandra_317",
           "time_label": "23:47",
@@ -2355,7 +2355,7 @@
               "id": "msg_sandra_323",
               "sender": "sandra",
               "time_label": "23:49",
-              "text": "Elle est dangereuse, mais propre."
+              "text": "Elle peut déraper, mais elle est honnête."
             }
           ]
         }
