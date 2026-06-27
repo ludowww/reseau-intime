@@ -29,6 +29,18 @@ Scènes :
 
 Objectif : comprendre le couple et installer les personnages.
 
+### Jour 2 — Fondation d’écriture verrouillée
+
+Le J2 doit contenir 3 contenus visuels placeholders recommandés :
+
+- Marie matin : photo soft domestique ;
+- Raphaëlle midi : photo soft au travail ;
+- Mathilde fin d’après-midi : photo envoyée par Marie à son arrivée dans la maison.
+
+Mathilde doit déjà avoir une courte scène directe avec Player. Elle est familière de la maison, peut rester dormir chez Marie/Player comme une habitude déjà existante, et Marie normalise cette présence.
+
+Sandra reste en écho court autour de la photo J1. Aucune nouvelle photo réelle de Sandra n’est obligatoire en J2.
+
 ### Chapitre 2 — Premières tensions
 
 Scènes :

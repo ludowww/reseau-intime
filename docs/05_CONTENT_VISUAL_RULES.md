@@ -67,6 +67,20 @@ Contenu qui change l’histoire : capture, vidéo découverte, story comprometta
 
 Fonction : bascule narrative.
 
+## Cadence visuelle à partir du J2
+
+À partir du Jour 2, chaque journée doit proposer au minimum :
+
+```text
+3 récompenses visuelles ou promesses visuelles.
+```
+
+Une récompense ou promesse visuelle peut être une photo reçue, une story, une image regrettée, une photo promise, un aperçu verrouillé ou une photo mentionnée comme existante mais pas encore accessible.
+
+Les photos doivent prioritairement montrer les femmes/personnages. Les objets, indices ou décors peuvent servir de prétexte narratif ou d’élément de contexte, mais ils ne doivent pas devenir le sujet principal au détriment du contenu visuel.
+
+Pour J2, la cible est soft / suggestive / incarnée : corps visibles, charme, cadrages flatteurs, contexte domestique ou professionnel, désirabilité claire et promesse de progression. La nudité explicite, la pornographie frontale, la sexualisation brutale et les bascules trop rapides restent à éviter.
+
 ## Règles par personnage
 
 ### Marie

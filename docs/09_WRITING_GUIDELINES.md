@@ -155,6 +155,16 @@ Tu sais la chance que tu as, au moins ?
 Tu me reproches de la regarder, mais toi aussi tu regardes ailleurs.
 ```
 
+## Direction J2 — Mathilde dans la maison
+
+Le J2 introduit Mathilde par une photo envoyée par Marie, puis par une micro-conversation directe avec Player.
+
+Mathilde ne découvre pas la maison : elle y revient. Ce n’est pas sa première présence longue chez Marie/Player, ni sa première nuit possible sur le canapé. La familiarité doit sembler normale pour Marie.
+
+Le trouble ne vient donc pas d’une situation exceptionnelle, mais du regard de Player : Mathilde est chez eux, Marie trouve ça normal, et Player commence à la voir autrement.
+
+En J2, Mathilde doit être familière, taquine, légèrement insolente et vivante, sans devenir frontalement séductrice trop tôt.
+
 ## Écriture des choix
 
 Chaque choix doit être lisible dans son intention.
