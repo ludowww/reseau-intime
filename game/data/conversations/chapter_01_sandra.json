@@ -60,13 +60,38 @@
           "effects": {},
           "sets_flags": [
             "guided_replied_sandra_photo_day1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_photo_prelude__choice_followup__guided_reply_group_001",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_photo_prelude__choice_followup__choice_group_001",
+          "text": "Je me souviens très bien de cette photo. Je me souviens surtout de ton regard juste après.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_004",
+            "msg_sandra_006",
+            "msg_sandra_008",
+            "msg_sandra_011"
           ],
           "next_messages": [
             {
-              "id": "msg_sandra_004",
+              "id": "msg_sandra_008",
               "sender": "ludo",
-              "time_label": "22:58",
-              "text": "Je me souviens très bien de cette photo."
+              "time_label": "22:59",
+              "text": "Celui qui disait “si tu montres cette photo à quelqu’un je nie tout”."
+            },
+            {
+              "id": "msg_sandra_011",
+              "sender": "ludo",
+              "time_label": "23:00",
+              "text": "Donc tu as changé."
             },
             {
               "id": "msg_sandra_005",
@@ -75,22 +100,10 @@
               "text": "J’espère, c’est toi qui l’as prise."
             },
             {
-              "id": "msg_sandra_006",
-              "sender": "ludo",
-              "time_label": "22:58",
-              "text": "Je me souviens surtout de ton regard juste après."
-            },
-            {
               "id": "msg_sandra_007",
               "sender": "sandra",
               "time_label": "22:59",
               "text": "Mon regard ?"
-            },
-            {
-              "id": "msg_sandra_008",
-              "sender": "ludo",
-              "time_label": "22:59",
-              "text": "Celui qui disait “si tu montres cette photo à quelqu’un je nie tout”."
             },
             {
               "id": "msg_sandra_009",
@@ -105,12 +118,6 @@
               "text": "Et pourtant je te l’envoie moi-même."
             },
             {
-              "id": "msg_sandra_011",
-              "sender": "ludo",
-              "time_label": "23:00",
-              "text": "Donc tu as changé."
-            },
-            {
               "id": "msg_sandra_012",
               "sender": "sandra",
               "time_label": "23:00",
@@ -121,12 +128,39 @@
               "sender": "sandra",
               "time_label": "23:01",
               "text": "Je suis fatiguée, c’est différent 😅"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_photo_prelude__choice_followup__guided_reply_group_002",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_photo_prelude__choice_followup__choice_group_002",
+          "text": "Fatiguée mais courageuse. Geste héroïque 🙂",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_014",
+            "msg_sandra_017",
+            "msg_sandra_019",
+            "msg_sandra_021"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_019",
+              "sender": "ludo",
+              "time_label": "23:03",
+              "text": "Parce que je suis insupportable ?"
             },
             {
-              "id": "msg_sandra_014",
+              "id": "msg_sandra_021",
               "sender": "ludo",
-              "time_label": "23:01",
-              "text": "Fatiguée mais courageuse."
+              "time_label": "23:03",
+              "text": "Pas tout."
             },
             {
               "id": "msg_sandra_015",
@@ -141,22 +175,10 @@
               "text": "J’ai juste cliqué sur partager."
             },
             {
-              "id": "msg_sandra_017",
-              "sender": "ludo",
-              "time_label": "23:02",
-              "text": "Geste héroïque 🙂"
-            },
-            {
               "id": "msg_sandra_018",
               "sender": "sandra",
               "time_label": "23:02",
               "text": "Voilà, c’est pour ça que je n’envoie pas souvent de photos."
-            },
-            {
-              "id": "msg_sandra_019",
-              "sender": "ludo",
-              "time_label": "23:03",
-              "text": "Parce que je suis insupportable ?"
             },
             {
               "id": "msg_sandra_020",
@@ -165,41 +187,32 @@
               "text": "Parce que tu prends tout comme une scène."
             },
             {
-              "id": "msg_sandra_021",
-              "sender": "ludo",
-              "time_label": "23:03",
-              "text": "Pas tout."
-            },
-            {
               "id": "msg_sandra_022",
               "sender": "sandra",
               "time_label": "23:04",
               "text": "Presque."
-            },
-            {
-              "id": "msg_sandra_023",
-              "sender": "ludo",
-              "time_label": "23:04",
-              "text": "Celle-là oui, peut-être."
-            },
-            {
-              "id": "msg_sandra_024",
-              "sender": "sandra",
-              "time_label": "23:04",
-              "text": "Je savais."
-            },
-            {
-              "id": "msg_sandra_025",
-              "sender": "ludo",
-              "time_label": "23:05",
-              "text": "Ça fait bizarre de la revoir."
-            },
-            {
-              "id": "msg_sandra_026",
-              "sender": "sandra",
-              "time_label": "23:05",
-              "text": "La photo ?"
-            },
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_photo_prelude__choice_followup__guided_reply_group_003",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_photo_prelude__choice_followup__choice_group_003",
+          "text": "Celle-là oui, peut-être. Ça fait bizarre de la revoir.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_023",
+            "msg_sandra_025",
+            "msg_sandra_027",
+            "msg_sandra_028"
+          ],
+          "next_messages": [
             {
               "id": "msg_sandra_027",
               "sender": "ludo",
@@ -213,6 +226,18 @@
               "text": "Enfin, pas seulement la photo."
             },
             {
+              "id": "msg_sandra_024",
+              "sender": "sandra",
+              "time_label": "23:04",
+              "text": "Je savais."
+            },
+            {
+              "id": "msg_sandra_026",
+              "sender": "sandra",
+              "time_label": "23:05",
+              "text": "La photo ?"
+            },
+            {
               "id": "msg_sandra_029",
               "sender": "sandra",
               "time_label": "23:06",
@@ -223,24 +248,45 @@
               "sender": "sandra",
               "time_label": "23:06",
               "text": "Sept semaines, apparemment."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_photo_prelude__choice_followup__guided_reply_group_004",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_photo_prelude__choice_followup__choice_group_004",
+          "text": "Ton téléphone est précis. Sept semaines, ça fait beaucoup.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_031",
+            "msg_sandra_033",
+            "msg_sandra_036",
+            "msg_sandra_038"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_036",
+              "sender": "ludo",
+              "time_label": "23:08",
+              "text": "On est mauvais à ça."
             },
             {
-              "id": "msg_sandra_031",
+              "id": "msg_sandra_038",
               "sender": "ludo",
-              "time_label": "23:07",
-              "text": "Ton téléphone est précis."
+              "time_label": "23:09",
+              "text": "Proprement, oui."
             },
             {
               "id": "msg_sandra_032",
               "sender": "sandra",
               "time_label": "23:07",
               "text": "Trop."
-            },
-            {
-              "id": "msg_sandra_033",
-              "sender": "ludo",
-              "time_label": "23:07",
-              "text": "Sept semaines, ça fait beaucoup."
             },
             {
               "id": "msg_sandra_034",
@@ -255,40 +301,49 @@
               "text": "Surtout pour deux personnes qui disent toujours “on se revoit vite”."
             },
             {
-              "id": "msg_sandra_036",
-              "sender": "ludo",
-              "time_label": "23:08",
-              "text": "On est mauvais à ça."
-            },
-            {
               "id": "msg_sandra_037",
               "sender": "sandra",
               "time_label": "23:09",
               "text": "On est très bons pour envoyer trois messages et disparaître proprement."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_photo_prelude__choice_followup__guided_reply_group_005",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_photo_prelude__choice_followup__choice_group_005",
+          "text": "Comme si c’était une compétence. Mauvaise excuse.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_039",
+            "msg_sandra_041",
+            "msg_sandra_044",
+            "msg_sandra_048"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_044",
+              "sender": "ludo",
+              "time_label": "23:11",
+              "text": "Tu vas bien ?"
             },
             {
-              "id": "msg_sandra_038",
+              "id": "msg_sandra_048",
               "sender": "ludo",
-              "time_label": "23:09",
-              "text": "Proprement, oui."
-            },
-            {
-              "id": "msg_sandra_039",
-              "sender": "ludo",
-              "time_label": "23:09",
-              "text": "Comme si c’était une compétence."
+              "time_label": "23:12",
+              "text": "Réponse très Sandra."
             },
             {
               "id": "msg_sandra_040",
               "sender": "sandra",
               "time_label": "23:10",
               "text": "Chez les adultes, ça s’appelle avoir une vie."
-            },
-            {
-              "id": "msg_sandra_041",
-              "sender": "ludo",
-              "time_label": "23:10",
-              "text": "Mauvaise excuse."
             },
             {
               "id": "msg_sandra_042",
@@ -301,12 +356,6 @@
               "sender": "sandra",
               "time_label": "23:11",
               "text": "Mais elle est pratique."
-            },
-            {
-              "id": "msg_sandra_044",
-              "sender": "ludo",
-              "time_label": "23:11",
-              "text": "Tu vas bien ?"
             },
             {
               "id": "msg_sandra_045",
@@ -327,34 +376,49 @@
               "text": "Rien d’incroyable."
             },
             {
-              "id": "msg_sandra_048",
-              "sender": "ludo",
-              "time_label": "23:12",
-              "text": "Réponse très Sandra."
-            },
-            {
               "id": "msg_sandra_049",
               "sender": "sandra",
               "time_label": "23:13",
               "text": "C’est-à-dire ?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_photo_prelude__choice_followup__guided_reply_group_006",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_photo_prelude__choice_followup__choice_group_006",
+          "text": "“Je vais bien mais ne viens pas trop vérifier.” Un peu juste ?",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_050",
+            "msg_sandra_052",
+            "msg_sandra_055",
+            "msg_sandra_057"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_055",
+              "sender": "ludo",
+              "time_label": "23:15",
+              "text": "Ça va."
             },
             {
-              "id": "msg_sandra_050",
+              "id": "msg_sandra_057",
               "sender": "ludo",
-              "time_label": "23:13",
-              "text": "“Je vais bien mais ne viens pas trop vérifier.”"
+              "time_label": "23:15",
+              "text": "Oui."
             },
             {
               "id": "msg_sandra_051",
               "sender": "sandra",
               "time_label": "23:13",
               "text": "Tu es pénible."
-            },
-            {
-              "id": "msg_sandra_052",
-              "sender": "ludo",
-              "time_label": "23:14",
-              "text": "Un peu juste ?"
             },
             {
               "id": "msg_sandra_053",
@@ -369,28 +433,43 @@
               "text": "Et toi ?"
             },
             {
-              "id": "msg_sandra_055",
-              "sender": "ludo",
-              "time_label": "23:15",
-              "text": "Ça va."
-            },
-            {
               "id": "msg_sandra_056",
               "sender": "sandra",
               "time_label": "23:15",
               "text": "Tu sais que je peux faire la même chose."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_photo_prelude__choice_followup__guided_reply_group_007",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_photo_prelude__choice_followup__choice_group_007",
+          "text": "Disons que ça va, mais je suis un peu absent de moi-même ces temps-ci. Trop ?",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_058",
+            "msg_sandra_061",
+            "msg_sandra_064",
+            "msg_sandra_067"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_064",
+              "sender": "ludo",
+              "time_label": "23:18",
+              "text": "Je peux revenir à “ça va”."
             },
             {
-              "id": "msg_sandra_057",
+              "id": "msg_sandra_067",
               "sender": "ludo",
-              "time_label": "23:15",
-              "text": "Oui."
-            },
-            {
-              "id": "msg_sandra_058",
-              "sender": "ludo",
-              "time_label": "23:16",
-              "text": "Disons que ça va, mais je suis un peu absent de moi-même ces temps-ci."
+              "time_label": "23:19",
+              "text": "Je fais les choses."
             },
             {
               "id": "msg_sandra_059",
@@ -405,12 +484,6 @@
               "text": "Ça, c’est plus précis."
             },
             {
-              "id": "msg_sandra_061",
-              "sender": "ludo",
-              "time_label": "23:17",
-              "text": "Trop ?"
-            },
-            {
               "id": "msg_sandra_062",
               "sender": "sandra",
               "time_label": "23:17",
@@ -423,12 +496,6 @@
               "text": "Juste inattendu."
             },
             {
-              "id": "msg_sandra_064",
-              "sender": "ludo",
-              "time_label": "23:18",
-              "text": "Je peux revenir à “ça va”."
-            },
-            {
               "id": "msg_sandra_065",
               "sender": "sandra",
               "time_label": "23:18",
@@ -439,24 +506,39 @@
               "sender": "sandra",
               "time_label": "23:18",
               "text": "Maintenant que tu as commencé, assume."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_photo_prelude__choice_followup__guided_reply_group_008",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_photo_prelude__choice_followup__choice_group_008",
+          "text": "Travail, courses, repas, messages, couple, tout ça. Mais parfois j’ai l’impression de les faire en mode automatique.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_068",
+            "msg_sandra_069",
+            "msg_sandra_072",
+            "msg_sandra_075"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_072",
+              "sender": "ludo",
+              "time_label": "23:20",
+              "text": "Tu as ça aussi ?"
             },
             {
-              "id": "msg_sandra_067",
+              "id": "msg_sandra_075",
               "sender": "ludo",
-              "time_label": "23:19",
-              "text": "Je fais les choses."
-            },
-            {
-              "id": "msg_sandra_068",
-              "sender": "ludo",
-              "time_label": "23:19",
-              "text": "Travail, courses, repas, messages, couple, tout ça."
-            },
-            {
-              "id": "msg_sandra_069",
-              "sender": "ludo",
-              "time_label": "23:19",
-              "text": "Mais parfois j’ai l’impression de les faire en mode automatique."
+              "time_label": "23:21",
+              "text": "Et c’est quoi, quand ce n’est pas juste de la fatigue ?"
             },
             {
               "id": "msg_sandra_070",
@@ -471,12 +553,6 @@
               "text": "Enfin je crois."
             },
             {
-              "id": "msg_sandra_072",
-              "sender": "ludo",
-              "time_label": "23:20",
-              "text": "Tu as ça aussi ?"
-            },
-            {
               "id": "msg_sandra_073",
               "sender": "sandra",
               "time_label": "23:21",
@@ -489,52 +565,37 @@
               "text": "Après je fais semblant que c’est juste de la fatigue."
             },
             {
-              "id": "msg_sandra_075",
-              "sender": "ludo",
-              "time_label": "23:21",
-              "text": "Et c’est quoi, quand ce n’est pas juste de la fatigue ?"
-            },
-            {
               "id": "msg_sandra_076",
               "sender": "sandra",
               "time_label": "23:22",
               "text": "Une question à laquelle je ne vais pas répondre un mardi soir."
-            },
-            {
-              "id": "msg_sandra_077",
-              "sender": "ludo",
-              "time_label": "23:22",
-              "text": "On est mercredi."
-            },
-            {
-              "id": "msg_sandra_078",
-              "sender": "sandra",
-              "time_label": "23:22",
-              "text": "Encore pire."
-            },
-            {
-              "id": "msg_sandra_079",
-              "sender": "ludo",
-              "time_label": "23:23",
-              "text": "D’accord."
-            },
-            {
-              "id": "msg_sandra_080",
-              "sender": "sandra",
-              "time_label": "23:23",
-              "text": "Tu vois, ça aussi ça m’avait manqué."
-            },
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_photo_prelude__choice_followup__guided_reply_group_009",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_photo_prelude__choice_followup__choice_group_009",
+          "text": "On est mercredi. D’accord.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_077",
+            "msg_sandra_079",
+            "msg_sandra_081",
+            "msg_sandra_083"
+          ],
+          "next_messages": [
             {
               "id": "msg_sandra_081",
               "sender": "ludo",
               "time_label": "23:23",
               "text": "Quoi ?"
-            },
-            {
-              "id": "msg_sandra_082",
-              "sender": "sandra",
-              "time_label": "23:24",
-              "text": "Les corrections inutiles."
             },
             {
               "id": "msg_sandra_083",
@@ -543,23 +604,49 @@
               "text": "Je suis touché."
             },
             {
+              "id": "msg_sandra_078",
+              "sender": "sandra",
+              "time_label": "23:22",
+              "text": "Encore pire."
+            },
+            {
+              "id": "msg_sandra_080",
+              "sender": "sandra",
+              "time_label": "23:23",
+              "text": "Tu vois, ça aussi ça m’avait manqué."
+            },
+            {
+              "id": "msg_sandra_082",
+              "sender": "sandra",
+              "time_label": "23:24",
+              "text": "Les corrections inutiles."
+            },
+            {
               "id": "msg_sandra_084",
               "sender": "sandra",
               "time_label": "23:24",
               "text": "Tu devrais."
-            },
-            {
-              "id": "msg_sandra_085",
-              "sender": "ludo",
-              "time_label": "23:25",
-              "text": "Moi aussi, ça m’avait manqué."
-            },
-            {
-              "id": "msg_sandra_086",
-              "sender": "sandra",
-              "time_label": "23:25",
-              "text": "Les corrections ?"
-            },
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_photo_prelude__choice_followup__guided_reply_group_010",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_photo_prelude__choice_followup__choice_group_010",
+          "text": "Moi aussi, ça m’avait manqué.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_085",
+            "msg_sandra_087",
+            "msg_sandra_088"
+          ],
+          "next_messages": [
             {
               "id": "msg_sandra_087",
               "sender": "ludo",
@@ -571,6 +658,12 @@
               "sender": "ludo",
               "time_label": "23:26",
               "text": "Toi."
+            },
+            {
+              "id": "msg_sandra_086",
+              "sender": "sandra",
+              "time_label": "23:25",
+              "text": "Les corrections ?"
             }
           ]
         }
@@ -625,8 +718,13 @@
             "answered_sandra_light_evade_day1"
           ]
         }
-      ],
-      "automatic_followup": [
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_missing_posture__automatic_followup__guided_reply_group_001",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [
         {
           "id": "msg_sandra_200",
           "sender": "sandra",
@@ -638,1374 +736,1603 @@
           "sender": "sandra",
           "time_label": "23:08",
           "text": "Tu le dis comme ça maintenant ?"
-        },
-        {
-          "id": "msg_sandra_202",
-          "sender": "ludo",
-          "time_label": "23:08",
-          "text": "Mal ?"
-        },
-        {
-          "id": "msg_sandra_203",
-          "sender": "sandra",
-          "time_label": "23:09",
-          "text": "Non."
-        },
-        {
-          "id": "msg_sandra_204",
-          "sender": "sandra",
-          "time_label": "23:09",
-          "text": "Pas mal."
-        },
-        {
-          "id": "msg_sandra_205",
-          "sender": "sandra",
-          "time_label": "23:09",
-          "text": "Juste, je ne m’attendais pas à ce que tu le poses aussi directement."
-        },
-        {
-          "id": "msg_sandra_206",
-          "sender": "ludo",
-          "time_label": "23:10",
-          "text": "Je ne voulais pas faire une blague pour l’éviter."
-        },
-        {
-          "id": "msg_sandra_207",
-          "sender": "sandra",
-          "time_label": "23:10",
-          "text": "Tu aurais pu."
-        },
-        {
-          "id": "msg_sandra_208",
-          "sender": "ludo",
-          "time_label": "23:10",
-          "text": "Oui."
-        },
-        {
-          "id": "msg_sandra_209",
-          "sender": "ludo",
-          "time_label": "23:11",
-          "text": "C’est même ce que j’aurais fait d’habitude."
-        },
-        {
-          "id": "msg_sandra_210",
-          "sender": "sandra",
-          "time_label": "23:11",
-          "text": "Je sais."
-        },
-        {
-          "id": "msg_sandra_211",
-          "sender": "sandra",
-          "time_label": "23:11",
-          "text": "C’est pour ça que j’ai buggué deux secondes."
-        },
-        {
-          "id": "msg_sandra_212",
-          "sender": "ludo",
-          "time_label": "23:12",
-          "text": "Tu as le droit de bugger."
-        },
-        {
-          "id": "msg_sandra_213",
-          "sender": "sandra",
-          "time_label": "23:12",
-          "text": "Merci, mon service informatique."
-        },
-        {
-          "id": "msg_sandra_214",
-          "sender": "ludo",
-          "time_label": "23:12",
-          "text": "À ton service."
-        },
-        {
-          "id": "msg_sandra_215",
-          "sender": "sandra",
-          "time_label": "23:13",
-          "text": "Ne prends pas trop confiance."
-        },
-        {
-          "id": "msg_sandra_216",
-          "sender": "ludo",
-          "time_label": "23:13",
-          "text": "Trop tard."
-        },
-        {
-          "id": "msg_sandra_217",
-          "sender": "sandra",
-          "time_label": "23:13",
-          "text": "Voilà."
-        },
-        {
-          "id": "msg_sandra_218",
-          "sender": "sandra",
-          "time_label": "23:14",
-          "text": "On était bien deux messages."
-        },
-        {
-          "id": "msg_sandra_219",
-          "sender": "ludo",
-          "time_label": "23:14",
-          "text": "Pardon."
-        },
-        {
-          "id": "msg_sandra_220",
-          "sender": "ludo",
-          "time_label": "23:14",
-          "text": "Je redeviens sérieux."
-        },
-        {
-          "id": "msg_sandra_221",
-          "sender": "sandra",
-          "time_label": "23:15",
-          "text": "Non, ne redeviens pas complètement sérieux."
-        },
-        {
-          "id": "msg_sandra_222",
-          "sender": "sandra",
-          "time_label": "23:15",
-          "text": "C’est suspect aussi."
-        },
-        {
-          "id": "msg_sandra_223",
-          "sender": "ludo",
-          "time_label": "23:15",
-          "text": "Difficile de trouver le bon niveau."
-        },
-        {
-          "id": "msg_sandra_224",
-          "sender": "sandra",
-          "time_label": "23:16",
-          "text": "Bienvenue dans les conversations normales."
-        },
-        {
-          "id": "msg_sandra_225",
-          "sender": "ludo",
-          "time_label": "23:16",
-          "text": "Je suis rouillé avec toi."
-        },
-        {
-          "id": "msg_sandra_226",
-          "sender": "sandra",
-          "time_label": "23:16",
-          "text": "Avec moi ?"
-        },
-        {
-          "id": "msg_sandra_227",
-          "sender": "ludo",
-          "time_label": "23:17",
-          "text": "Oui."
-        },
-        {
-          "id": "msg_sandra_228",
-          "sender": "ludo",
-          "time_label": "23:17",
-          "text": "Pas parce que c’est compliqué."
-        },
-        {
-          "id": "msg_sandra_229",
-          "sender": "ludo",
-          "time_label": "23:17",
-          "text": "Plutôt parce que ça compte."
-        },
-        {
-          "id": "msg_sandra_230",
-          "sender": "sandra",
-          "time_label": "23:18",
-          "text": "…"
-        },
-        {
-          "id": "msg_sandra_231",
-          "sender": "sandra",
-          "time_label": "23:18",
-          "text": "Tu sais faire très simple puis très compliqué en trois messages."
-        },
-        {
-          "id": "msg_sandra_232",
-          "sender": "ludo",
-          "time_label": "23:18",
-          "text": "Je m’entraîne."
-        },
-        {
-          "id": "msg_sandra_233",
-          "sender": "sandra",
-          "time_label": "23:19",
-          "text": "Mauvaise réponse."
-        },
-        {
-          "id": "msg_sandra_234",
-          "sender": "ludo",
-          "time_label": "23:19",
-          "text": "Je panique un peu."
-        },
-        {
-          "id": "msg_sandra_235",
-          "sender": "sandra",
-          "time_label": "23:19",
-          "text": "Meilleure réponse."
-        },
-        {
-          "id": "msg_sandra_236",
-          "sender": "ludo",
-          "time_label": "23:20",
-          "text": "Tu vois, c’est pour ça que tu m’as manqué."
-        },
-        {
-          "id": "msg_sandra_237",
-          "sender": "sandra",
-          "time_label": "23:20",
-          "text": "Parce que je note tes réponses ?"
-        },
-        {
-          "id": "msg_sandra_238",
-          "sender": "ludo",
-          "time_label": "23:20",
-          "text": "Parce que tu remarques quand je mens mal."
-        },
-        {
-          "id": "msg_sandra_239",
-          "sender": "sandra",
-          "time_label": "23:21",
-          "text": "Tu mens rarement vraiment."
-        },
-        {
-          "id": "msg_sandra_240",
-          "sender": "sandra",
-          "time_label": "23:21",
-          "text": "Tu contournes."
-        },
-        {
-          "id": "msg_sandra_241",
-          "sender": "ludo",
-          "time_label": "23:21",
-          "text": "C’est pire ?"
-        },
-        {
-          "id": "msg_sandra_242",
-          "sender": "sandra",
-          "time_label": "23:22",
-          "text": "C’est plus poli."
-        },
-        {
-          "id": "msg_sandra_243",
-          "sender": "sandra",
-          "time_label": "23:22",
-          "text": "Donc parfois oui, pire."
-        },
-        {
-          "id": "msg_sandra_244",
-          "sender": "ludo",
-          "time_label": "23:22",
-          "text": "Je vais essayer de moins contourner."
-        },
-        {
-          "id": "msg_sandra_245",
-          "sender": "sandra",
-          "time_label": "23:23",
-          "text": "Attention quand même."
-        },
-        {
-          "id": "msg_sandra_246",
-          "sender": "ludo",
-          "time_label": "23:23",
-          "text": "À quoi ?"
-        },
-        {
-          "id": "msg_sandra_247",
-          "sender": "sandra",
-          "time_label": "23:23",
-          "text": "À ne pas transformer “moins contourner” en “tout balancer à 23h”."
-        },
-        {
-          "id": "msg_sandra_248",
-          "sender": "ludo",
-          "time_label": "23:24",
-          "text": "Message reçu."
-        },
-        {
-          "id": "msg_sandra_249",
-          "sender": "sandra",
-          "time_label": "23:24",
-          "text": "Je dis ça gentiment."
-        },
-        {
-          "id": "msg_sandra_250",
-          "sender": "ludo",
-          "time_label": "23:24",
-          "text": "Je sais."
-        },
-        {
-          "id": "msg_sandra_251",
-          "sender": "sandra",
-          "time_label": "23:25",
-          "text": "Parce que je tiens à notre façon de se parler."
-        },
-        {
-          "id": "msg_sandra_252",
-          "sender": "ludo",
-          "time_label": "23:25",
-          "text": "Moi aussi."
-        },
-        {
-          "id": "msg_sandra_253",
-          "sender": "sandra",
-          "time_label": "23:25",
-          "text": "Et je n’ai pas envie que ça devienne bizarre."
-        },
-        {
-          "id": "msg_sandra_254",
-          "sender": "ludo",
-          "time_label": "23:26",
-          "text": "Je comprends."
-        },
-        {
-          "id": "msg_sandra_255",
-          "sender": "ludo",
-          "time_label": "23:26",
-          "text": "Je n’ai pas envie d’abîmer ça non plus."
-        },
-        {
-          "id": "msg_sandra_256",
-          "sender": "sandra",
-          "time_label": "23:26",
-          "text": "Bien."
-        },
-        {
-          "id": "msg_sandra_257",
-          "sender": "sandra",
-          "time_label": "23:27",
-          "text": "Phrase adulte."
-        },
-        {
-          "id": "msg_sandra_258",
-          "sender": "ludo",
-          "time_label": "23:27",
-          "text": "J’en ai deux ou trois en stock."
-        },
-        {
-          "id": "msg_sandra_259",
-          "sender": "sandra",
-          "time_label": "23:27",
-          "text": "Garde-les, on ne sait jamais."
-        },
-        {
-          "id": "msg_sandra_260",
-          "sender": "ludo",
-          "time_label": "23:28",
-          "text": "Tu sais, quand je dis que tu m’as manqué, je ne dis pas ça pour ouvrir une porte en grand."
-        },
-        {
-          "id": "msg_sandra_261",
-          "sender": "sandra",
-          "time_label": "23:28",
-          "text": "Je sais."
-        },
-        {
-          "id": "msg_sandra_262",
-          "sender": "sandra",
-          "time_label": "23:28",
-          "text": "Enfin je crois."
-        },
-        {
-          "id": "msg_sandra_263",
-          "sender": "ludo",
-          "time_label": "23:29",
-          "text": "Je dis surtout que je n’ai pas envie de continuer à faire comme si notre amitié était un vieux dossier bien rangé."
-        },
-        {
-          "id": "msg_sandra_264",
-          "sender": "sandra",
-          "time_label": "23:29",
-          "text": "Ça, je comprends mieux."
-        },
-        {
-          "id": "msg_sandra_265",
-          "sender": "sandra",
-          "time_label": "23:29",
-          "text": "Et ça me touche plus que je ne vais le montrer correctement."
-        },
-        {
-          "id": "msg_sandra_266",
-          "sender": "ludo",
-          "time_label": "23:30",
-          "text": "Tu viens de le montrer un peu."
-        },
-        {
-          "id": "msg_sandra_267",
-          "sender": "sandra",
-          "time_label": "23:30",
-          "text": "Oui."
-        },
-        {
-          "id": "msg_sandra_268",
-          "sender": "sandra",
-          "time_label": "23:30",
-          "text": "Ne t’habitue pas."
-        },
-        {
-          "id": "msg_sandra_269",
-          "sender": "ludo",
-          "time_label": "23:31",
-          "text": "Trop tard."
-        },
-        {
-          "id": "msg_sandra_270",
-          "sender": "sandra",
-          "time_label": "23:31",
-          "text": "Tu es insupportable 🙂"
-        },
-        {
-          "id": "msg_sandra_271",
-          "sender": "ludo",
-          "time_label": "23:31",
-          "text": "Mais tu m’as écrit."
-        },
-        {
-          "id": "msg_sandra_272",
-          "sender": "sandra",
-          "time_label": "23:32",
-          "text": "Grave erreur."
-        },
-        {
-          "id": "msg_sandra_273",
-          "sender": "ludo",
-          "time_label": "23:32",
-          "text": "Trop tard aussi."
-        },
-        {
-          "id": "msg_sandra_274",
-          "sender": "sandra",
-          "time_label": "23:32",
-          "text": "Je vais vraiment regretter cette photo."
-        },
-        {
-          "id": "msg_sandra_275",
-          "sender": "ludo",
-          "time_label": "23:33",
-          "text": "Moi pas."
-        },
-        {
-          "id": "msg_sandra_276",
-          "sender": "sandra",
-          "time_label": "23:33",
-          "text": "Évidemment."
-        },
-        {
-          "id": "msg_sandra_277",
-          "sender": "ludo",
-          "time_label": "23:33",
-          "text": "Elle est belle."
-        },
-        {
-          "id": "msg_sandra_278",
-          "sender": "sandra",
-          "time_label": "23:34",
-          "text": "La photo ?"
-        },
-        {
-          "id": "msg_sandra_279",
-          "sender": "ludo",
-          "time_label": "23:34",
-          "text": "Oui."
-        },
-        {
-          "id": "msg_sandra_280",
-          "sender": "ludo",
-          "time_label": "23:34",
-          "text": "Et toi dessus."
-        },
-        {
-          "id": "msg_sandra_281",
-          "sender": "sandra",
-          "time_label": "23:35",
-          "text": "Ah non."
-        },
-        {
-          "id": "msg_sandra_282",
-          "sender": "sandra",
-          "time_label": "23:35",
-          "text": "Là tu fais ton dangereux."
-        },
-        {
-          "id": "msg_sandra_283",
-          "sender": "ludo",
-          "time_label": "23:35",
-          "text": "Je dis juste que tu es belle dessus."
-        },
-        {
-          "id": "msg_sandra_284",
-          "sender": "sandra",
-          "time_label": "23:36",
-          "text": "Oui, justement."
-        },
-        {
-          "id": "msg_sandra_285",
-          "sender": "sandra",
-          "time_label": "23:36",
-          "text": "C’est le genre de phrase qui arrive avec des chaussures pleines de boue dans une pièce propre."
-        },
-        {
-          "id": "msg_sandra_286",
-          "sender": "ludo",
-          "time_label": "23:36",
-          "text": "Désolé."
-        },
-        {
-          "id": "msg_sandra_287",
-          "sender": "sandra",
-          "time_label": "23:37",
-          "text": "Non."
-        },
-        {
-          "id": "msg_sandra_288",
-          "sender": "sandra",
-          "time_label": "23:37",
-          "text": "Pas désolé."
-        },
-        {
-          "id": "msg_sandra_289",
-          "sender": "sandra",
-          "time_label": "23:37",
-          "text": "Juste doucement."
-        },
-        {
-          "id": "msg_sandra_290",
-          "sender": "ludo",
-          "time_label": "23:38",
-          "text": "D’accord."
-        },
-        {
-          "id": "msg_sandra_291",
-          "sender": "ludo",
-          "time_label": "23:38",
-          "text": "Doucement."
-        },
-        {
-          "id": "msg_sandra_292",
-          "sender": "sandra",
-          "time_label": "23:38",
-          "text": "Merci."
-        },
-        {
-          "id": "msg_sandra_293",
-          "sender": "sandra",
-          "time_label": "23:39",
-          "text": "Et pour information, j’ai quand même souri."
-        },
-        {
-          "id": "msg_sandra_294",
-          "sender": "ludo",
-          "time_label": "23:39",
-          "text": "Je ne sais pas quoi faire de cette information."
-        },
-        {
-          "id": "msg_sandra_295",
-          "sender": "sandra",
-          "time_label": "23:39",
-          "text": "Rien."
-        },
-        {
-          "id": "msg_sandra_296",
-          "sender": "sandra",
-          "time_label": "23:40",
-          "text": "C’est une information, pas un permis de construire."
-        },
-        {
-          "id": "msg_sandra_297",
-          "sender": "ludo",
-          "time_label": "23:40",
-          "text": "Très clair."
-        },
-        {
-          "id": "msg_sandra_298",
-          "sender": "sandra",
-          "time_label": "23:40",
-          "text": "Bien."
-        },
-        {
-          "id": "msg_sandra_299",
-          "sender": "ludo",
-          "time_label": "23:41",
-          "text": "Marie dort."
-        },
-        {
-          "id": "msg_sandra_300",
-          "sender": "sandra",
-          "time_label": "23:41",
-          "text": "Tu me le dis pourquoi ?"
-        },
-        {
-          "id": "msg_sandra_301",
-          "sender": "ludo",
-          "time_label": "23:41",
-          "text": "Parce que j’y ai pensé."
-        },
-        {
-          "id": "msg_sandra_302",
-          "sender": "ludo",
-          "time_label": "23:42",
-          "text": "Et parce que je préfère que ce soit dans la conversation plutôt que caché derrière."
-        },
-        {
-          "id": "msg_sandra_303",
-          "sender": "sandra",
-          "time_label": "23:42",
-          "text": "D’accord."
-        },
-        {
-          "id": "msg_sandra_304",
-          "sender": "sandra",
-          "time_label": "23:42",
-          "text": "Merci."
-        },
-        {
-          "id": "msg_sandra_305",
-          "sender": "ludo",
-          "time_label": "23:43",
-          "text": "Et toi ?"
-        },
-        {
-          "id": "msg_sandra_306",
-          "sender": "sandra",
-          "time_label": "23:43",
-          "text": "Il est dans le salon."
-        },
-        {
-          "id": "msg_sandra_307",
-          "sender": "sandra",
-          "time_label": "23:43",
-          "text": "Il regarde un truc avec des gens qui rénovent une maison en faisant semblant que c’est simple."
-        },
-        {
-          "id": "msg_sandra_308",
-          "sender": "ludo",
-          "time_label": "23:44",
-          "text": "Donc personne ne dort chez personne."
-        },
-        {
-          "id": "msg_sandra_309",
-          "sender": "sandra",
-          "time_label": "23:44",
-          "text": "Non."
-        },
-        {
-          "id": "msg_sandra_310",
-          "sender": "sandra",
-          "time_label": "23:44",
-          "text": "Et c’est très bien de s’en souvenir."
-        },
-        {
-          "id": "msg_sandra_311",
-          "sender": "ludo",
-          "time_label": "23:45",
-          "text": "Oui."
-        },
-        {
-          "id": "msg_sandra_312",
-          "sender": "sandra",
-          "time_label": "23:45",
-          "text": "Je ne veux pas être lourde."
-        },
-        {
-          "id": "msg_sandra_313",
-          "sender": "ludo",
-          "time_label": "23:45",
-          "text": "Tu ne l’es pas."
-        },
-        {
-          "id": "msg_sandra_314",
-          "sender": "sandra",
-          "time_label": "23:46",
-          "text": "Je sais juste que les petites ambiguïtés, au début, ça a l’air mignon."
-        },
-        {
-          "id": "msg_sandra_315",
-          "sender": "sandra",
-          "time_label": "23:46",
-          "text": "Après ça peut devenir moche."
-        },
-        {
-          "id": "msg_sandra_316",
-          "sender": "ludo",
-          "time_label": "23:46",
-          "text": "Je sais."
-        },
-        {
-          "id": "msg_sandra_317",
-          "sender": "ludo",
-          "time_label": "23:47",
-          "text": "Je ne veux pas de moche."
-        },
-        {
-          "id": "msg_sandra_318",
-          "sender": "sandra",
-          "time_label": "23:47",
-          "text": "Moi non plus."
-        },
-        {
-          "id": "msg_sandra_319",
-          "sender": "ludo",
-          "time_label": "23:47",
-          "text": "Je veux juste ne plus te laisser disparaître de mes semaines."
-        },
-        {
-          "id": "msg_sandra_320",
-          "sender": "sandra",
-          "time_label": "23:48",
-          "text": "Ça, c’est une phrase que je peux garder."
-        },
-        {
-          "id": "msg_sandra_321",
-          "sender": "ludo",
-          "time_label": "23:48",
-          "text": "Oui ?"
-        },
-        {
-          "id": "msg_sandra_322",
-          "sender": "sandra",
-          "time_label": "23:48",
-          "text": "Oui."
-        },
-        {
-          "id": "msg_sandra_323",
-          "sender": "sandra",
-          "time_label": "23:49",
-          "text": "Elle est dangereuse, mais propre."
-        },
-        {
-          "id": "msg_sandra_324",
-          "sender": "ludo",
-          "time_label": "23:49",
-          "text": "Je progresse."
-        },
-        {
-          "id": "msg_sandra_325",
-          "sender": "sandra",
-          "time_label": "23:49",
-          "text": "Ne gâche pas."
-        },
-        {
-          "id": "msg_sandra_326",
-          "sender": "ludo",
-          "time_label": "23:50",
-          "text": "Je me tais ?"
-        },
-        {
-          "id": "msg_sandra_327",
-          "sender": "sandra",
-          "time_label": "23:50",
-          "text": "Non."
-        },
-        {
-          "id": "msg_sandra_328",
-          "sender": "sandra",
-          "time_label": "23:50",
-          "text": "Mais ne fais pas le malin."
-        },
-        {
-          "id": "msg_sandra_329",
-          "sender": "ludo",
-          "time_label": "23:51",
-          "text": "D’accord."
-        },
-        {
-          "id": "msg_sandra_330",
-          "sender": "sandra",
-          "time_label": "23:51",
-          "text": "Et moi non plus, d’ailleurs."
-        },
-        {
-          "id": "msg_sandra_331",
-          "sender": "ludo",
-          "time_label": "23:51",
-          "text": "Tu fais souvent la maligne quand tu es gênée."
-        },
-        {
-          "id": "msg_sandra_332",
-          "sender": "sandra",
-          "time_label": "23:52",
-          "text": "Oui."
-        },
-        {
-          "id": "msg_sandra_333",
-          "sender": "sandra",
-          "time_label": "23:52",
-          "text": "Là par exemple j’ai très envie de parler d’aubergines."
-        },
-        {
-          "id": "msg_sandra_334",
-          "sender": "ludo",
-          "time_label": "23:52",
-          "text": "Le déjeuner."
-        },
-        {
-          "id": "msg_sandra_335",
-          "sender": "sandra",
-          "time_label": "23:53",
-          "text": "Voilà."
-        },
-        {
-          "id": "msg_sandra_336",
-          "sender": "sandra",
-          "time_label": "23:53",
-          "text": "Le fameux déjeuner où tu as prétendu que le plat n’était pas trop épicé."
-        },
-        {
-          "id": "msg_sandra_337",
-          "sender": "ludo",
-          "time_label": "23:53",
-          "text": "Il ne l’était pas."
-        },
-        {
-          "id": "msg_sandra_338",
-          "sender": "sandra",
-          "time_label": "23:54",
-          "text": "Tu transpirais de dignité."
-        },
-        {
-          "id": "msg_sandra_339",
-          "sender": "ludo",
-          "time_label": "23:54",
-          "text": "C’était une émotion culinaire."
-        },
-        {
-          "id": "msg_sandra_340",
-          "sender": "sandra",
-          "time_label": "23:54",
-          "text": "J’avais oublié cette mauvaise foi-là."
-        },
-        {
-          "id": "msg_sandra_341",
-          "sender": "ludo",
-          "time_label": "23:55",
-          "text": "Elle aussi t’avait manqué ?"
-        },
-        {
-          "id": "msg_sandra_342",
-          "sender": "sandra",
-          "time_label": "23:55",
-          "text": "Un peu."
-        },
-        {
-          "id": "msg_sandra_343",
-          "sender": "sandra",
-          "time_label": "23:55",
-          "text": "Ne fais pas une fête."
-        },
-        {
-          "id": "msg_sandra_344",
-          "sender": "ludo",
-          "time_label": "23:56",
-          "text": "Trop tard, mais discrètement."
-        },
-        {
-          "id": "msg_sandra_345",
-          "sender": "sandra",
-          "time_label": "23:56",
-          "text": "Faux discret."
-        },
-        {
-          "id": "msg_sandra_346",
-          "sender": "ludo",
-          "time_label": "23:56",
-          "text": "Toujours."
-        },
-        {
-          "id": "msg_sandra_347",
-          "sender": "sandra",
-          "time_label": "23:57",
-          "text": "On devrait y retourner."
-        },
-        {
-          "id": "msg_sandra_348",
-          "sender": "ludo",
-          "time_label": "23:57",
-          "text": "Au même endroit ?"
-        },
-        {
-          "id": "msg_sandra_349",
-          "sender": "sandra",
-          "time_label": "23:57",
-          "text": "Oui."
-        },
-        {
-          "id": "msg_sandra_350",
-          "sender": "sandra",
-          "time_label": "23:58",
-          "text": "Ou ailleurs."
-        },
-        {
-          "id": "msg_sandra_351",
-          "sender": "sandra",
-          "time_label": "23:58",
-          "text": "Enfin, si tu veux."
-        },
-        {
-          "id": "msg_sandra_352",
-          "sender": "ludo",
-          "time_label": "23:58",
-          "text": "Je veux."
-        },
-        {
-          "id": "msg_sandra_353",
-          "sender": "sandra",
-          "time_label": "23:59",
-          "text": "Réponse rapide."
-        },
-        {
-          "id": "msg_sandra_354",
-          "sender": "ludo",
-          "time_label": "23:59",
-          "text": "Oui."
-        },
-        {
-          "id": "msg_sandra_355",
-          "sender": "sandra",
-          "time_label": "23:59",
-          "text": "Tu ne veux pas faire semblant de réfléchir ?"
-        },
-        {
-          "id": "msg_sandra_356",
-          "sender": "ludo",
-          "time_label": "24:00",
-          "text": "Non."
-        },
-        {
-          "id": "msg_sandra_357",
-          "sender": "ludo",
-          "time_label": "24:00",
-          "text": "Pas sur ça."
-        },
-        {
-          "id": "msg_sandra_358",
-          "sender": "sandra",
-          "time_label": "24:00",
-          "text": "D’accord."
-        },
-        {
-          "id": "msg_sandra_359",
-          "sender": "ludo",
-          "time_label": "24:01",
-          "text": "Ça me ferait vraiment plaisir de te revoir."
-        },
-        {
-          "id": "msg_sandra_360",
-          "sender": "sandra",
-          "time_label": "24:01",
-          "text": "Je vois."
-        },
-        {
-          "id": "msg_sandra_361",
-          "sender": "ludo",
-          "time_label": "24:01",
-          "text": "Trop visible ?"
-        },
-        {
-          "id": "msg_sandra_362",
-          "sender": "sandra",
-          "time_label": "24:02",
-          "text": "Un peu."
-        },
-        {
-          "id": "msg_sandra_363",
-          "sender": "sandra",
-          "time_label": "24:02",
-          "text": "Mais pas désagréable."
-        },
-        {
-          "id": "msg_sandra_364",
-          "sender": "ludo",
-          "time_label": "24:02",
-          "text": "Je prends."
-        },
-        {
-          "id": "msg_sandra_365",
-          "sender": "sandra",
-          "time_label": "24:03",
-          "text": "Évidemment que tu prends."
-        },
-        {
-          "id": "msg_sandra_366",
-          "sender": "ludo",
-          "time_label": "24:03",
-          "text": "J’ai hâte, en fait."
-        },
-        {
-          "id": "msg_sandra_367",
-          "sender": "sandra",
-          "time_label": "24:03",
-          "text": "Là tu prends beaucoup."
-        },
-        {
-          "id": "msg_sandra_368",
-          "sender": "ludo",
-          "time_label": "24:04",
-          "text": "Oui."
-        },
-        {
-          "id": "msg_sandra_369",
-          "sender": "ludo",
-          "time_label": "24:04",
-          "text": "Je sais."
-        },
-        {
-          "id": "msg_sandra_370",
-          "sender": "ludo",
-          "time_label": "24:04",
-          "text": "Mais je préfère te le dire simplement."
-        },
-        {
-          "id": "msg_sandra_371",
-          "sender": "sandra",
-          "time_label": "24:05",
-          "text": "C’est simple."
-        },
-        {
-          "id": "msg_sandra_372",
-          "sender": "sandra",
-          "time_label": "24:05",
-          "text": "Ça me fait bizarre, mais c’est simple."
-        },
-        {
-          "id": "msg_sandra_373",
-          "sender": "ludo",
-          "time_label": "24:05",
-          "text": "Bizarre mauvais ?"
-        },
-        {
-          "id": "msg_sandra_374",
-          "sender": "sandra",
-          "time_label": "24:06",
-          "text": "Non."
-        },
-        {
-          "id": "msg_sandra_375",
-          "sender": "sandra",
-          "time_label": "24:06",
-          "text": "Bizarre “je vais changer de sujet si tu continues”."
-        },
-        {
-          "id": "msg_sandra_376",
-          "sender": "ludo",
-          "time_label": "24:06",
-          "text": "Alors je ne continue pas."
-        },
-        {
-          "id": "msg_sandra_377",
-          "sender": "sandra",
-          "time_label": "24:07",
-          "text": "Sage."
-        },
-        {
-          "id": "msg_sandra_378",
-          "sender": "ludo",
-          "time_label": "24:07",
-          "text": "Jeudi prochain ?"
-        },
-        {
-          "id": "msg_sandra_379",
-          "sender": "sandra",
-          "time_label": "24:07",
-          "text": "Midi ?"
-        },
-        {
-          "id": "msg_sandra_380",
-          "sender": "ludo",
-          "time_label": "24:08",
-          "text": "Oui."
-        },
-        {
-          "id": "msg_sandra_381",
-          "sender": "sandra",
-          "time_label": "24:08",
-          "text": "Je peux peut-être."
-        },
-        {
-          "id": "msg_sandra_382",
-          "sender": "sandra",
-          "time_label": "24:08",
-          "text": "Je vérifie demain."
-        },
-        {
-          "id": "msg_sandra_383",
-          "sender": "ludo",
-          "time_label": "24:09",
-          "text": "D’accord."
-        },
-        {
-          "id": "msg_sandra_384",
-          "sender": "sandra",
-          "time_label": "24:09",
-          "text": "Ne bloque pas ton agenda comme si j’étais une opération chirurgicale."
-        },
-        {
-          "id": "msg_sandra_385",
-          "sender": "ludo",
-          "time_label": "24:09",
-          "text": "Trop tard, ma Sandra chérie."
-        },
-        {
-          "id": "msg_sandra_386",
-          "sender": "sandra",
-          "time_label": "24:10",
-          "text": "Ah."
-        },
-        {
-          "id": "msg_sandra_387",
-          "sender": "sandra",
-          "time_label": "24:10",
-          "text": "Les grands moyens."
-        },
-        {
-          "id": "msg_sandra_388",
-          "sender": "ludo",
-          "time_label": "24:10",
-          "text": "Tu m’as tendu la perche."
-        },
-        {
-          "id": "msg_sandra_389",
-          "sender": "sandra",
-          "time_label": "24:11",
-          "text": "Non."
-        },
-        {
-          "id": "msg_sandra_390",
-          "sender": "sandra",
-          "time_label": "24:11",
-          "text": "Tu as vu une brindille et tu as construit un pont."
-        },
-        {
-          "id": "msg_sandra_391",
-          "sender": "ludo",
-          "time_label": "24:11",
-          "text": "Possible."
-        },
-        {
-          "id": "msg_sandra_392",
-          "sender": "sandra",
-          "time_label": "24:12",
-          "text": "Mon Player adoré, il va falloir respirer."
-        },
-        {
-          "id": "msg_sandra_393",
-          "sender": "ludo",
-          "time_label": "24:12",
-          "text": "Je respire."
-        },
-        {
-          "id": "msg_sandra_394",
-          "sender": "sandra",
-          "time_label": "24:12",
-          "text": "Mal."
-        },
-        {
-          "id": "msg_sandra_395",
-          "sender": "ludo",
-          "time_label": "24:13",
-          "text": "Mais joyeusement."
-        },
-        {
-          "id": "msg_sandra_396",
-          "sender": "sandra",
-          "time_label": "24:13",
-          "text": "Ça, je veux bien le croire."
-        },
-        {
-          "id": "msg_sandra_397",
-          "sender": "ludo",
-          "time_label": "24:13",
-          "text": "Tu peux."
-        },
-        {
-          "id": "msg_sandra_398",
-          "sender": "sandra",
-          "time_label": "24:14",
-          "text": "Bon."
-        },
-        {
-          "id": "msg_sandra_399",
-          "sender": "sandra",
-          "time_label": "24:14",
-          "text": "Jeudi, peut-être."
-        },
-        {
-          "id": "msg_sandra_400",
-          "sender": "sandra",
-          "time_label": "24:14",
-          "text": "Et sinon un autre midi."
-        },
-        {
-          "id": "msg_sandra_401",
-          "sender": "ludo",
-          "time_label": "24:15",
-          "text": "Ça marche."
-        },
-        {
-          "id": "msg_sandra_402",
-          "sender": "ludo",
-          "time_label": "24:15",
-          "text": "Mais je suis content qu’on le dise vraiment."
-        },
-        {
-          "id": "msg_sandra_403",
-          "sender": "sandra",
-          "time_label": "24:15",
-          "text": "Moi aussi."
-        },
-        {
-          "id": "msg_sandra_404",
-          "sender": "sandra",
-          "time_label": "24:16",
-          "text": "Même si je vais prétendre demain que c’était juste une histoire de photo."
-        },
-        {
-          "id": "msg_sandra_405",
-          "sender": "ludo",
-          "time_label": "24:16",
-          "text": "Je te laisserai cette version."
-        },
-        {
-          "id": "msg_sandra_406",
-          "sender": "sandra",
-          "time_label": "24:16",
-          "text": "Merci."
-        },
-        {
-          "id": "msg_sandra_407",
-          "sender": "ludo",
-          "time_label": "24:17",
-          "text": "Mais moi je garderai la vraie."
-        },
-        {
-          "id": "msg_sandra_408",
-          "sender": "sandra",
-          "time_label": "24:17",
-          "text": "Laquelle ?"
-        },
-        {
-          "id": "msg_sandra_409",
-          "sender": "ludo",
-          "time_label": "24:17",
-          "text": "Que tu m’as écrit."
-        },
-        {
-          "id": "msg_sandra_410",
-          "sender": "ludo",
-          "time_label": "24:18",
-          "text": "Que j’étais heureux de te lire."
-        },
-        {
-          "id": "msg_sandra_411",
-          "sender": "ludo",
-          "time_label": "24:18",
-          "text": "Et que j’ai envie de te revoir."
-        },
-        {
-          "id": "msg_sandra_412",
-          "sender": "sandra",
-          "time_label": "24:18",
-          "text": "…"
-        },
-        {
-          "id": "msg_sandra_413",
-          "sender": "sandra",
-          "time_label": "24:19",
-          "text": "D’accord."
-        },
-        {
-          "id": "msg_sandra_414",
-          "sender": "sandra",
-          "time_label": "24:19",
-          "text": "Garde-la."
-        },
-        {
-          "id": "msg_sandra_415",
-          "sender": "sandra",
-          "time_label": "24:19",
-          "text": "Mais pas trop fort."
-        },
-        {
-          "id": "msg_sandra_416",
-          "sender": "ludo",
-          "time_label": "24:20",
-          "text": "Promis."
-        },
-        {
-          "id": "msg_sandra_417",
-          "sender": "sandra",
-          "time_label": "24:20",
-          "text": "Je vais dormir."
-        },
-        {
-          "id": "msg_sandra_418",
-          "sender": "ludo",
-          "time_label": "24:20",
-          "text": "Oui."
-        },
-        {
-          "id": "msg_sandra_419",
-          "sender": "ludo",
-          "time_label": "24:21",
-          "text": "Bonne nuit Sandra."
-        },
-        {
-          "id": "msg_sandra_420",
-          "sender": "sandra",
-          "time_label": "24:21",
-          "text": "Bonne nuit."
-        },
-        {
-          "id": "msg_sandra_421",
-          "sender": "sandra",
-          "time_label": "24:21",
-          "text": "Et arrête de regarder la photo."
-        },
-        {
-          "id": "msg_sandra_422",
-          "sender": "ludo",
-          "time_label": "24:22",
-          "text": "Je ne la regarde plus."
-        },
-        {
-          "id": "msg_sandra_423",
-          "sender": "sandra",
-          "time_label": "24:22",
-          "text": "Mensonge."
-        },
-        {
-          "id": "msg_sandra_424",
-          "sender": "ludo",
-          "time_label": "24:22",
-          "text": "Oui."
-        },
-        {
-          "id": "msg_sandra_425",
-          "sender": "sandra",
-          "time_label": "24:23",
-          "text": "Au moins tu progresses."
-        },
-        {
-          "id": "msg_sandra_426",
-          "sender": "ludo",
-          "time_label": "24:23",
-          "text": "Bonne nuit."
-        },
-        {
-          "id": "msg_sandra_427",
-          "sender": "sandra",
-          "time_label": "24:23",
-          "text": "Bonne nuit, Player."
-        },
-        {
-          "id": "msg_sandra_428",
-          "sender": "sandra",
-          "time_label": "24:24",
-          "text": "Et doucement."
-        },
-        {
-          "id": "msg_sandra_429",
-          "sender": "ludo",
-          "time_label": "24:24",
-          "text": "Doucement."
+        }
+      ],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_missing_posture__automatic_followup__choice_group_001",
+          "text": "Mal ? Je ne voulais pas faire une blague pour l’éviter.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_202",
+            "msg_sandra_206",
+            "msg_sandra_208",
+            "msg_sandra_209"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_208",
+              "sender": "ludo",
+              "time_label": "23:10",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_sandra_209",
+              "sender": "ludo",
+              "time_label": "23:11",
+              "text": "C’est même ce que j’aurais fait d’habitude."
+            },
+            {
+              "id": "msg_sandra_203",
+              "sender": "sandra",
+              "time_label": "23:09",
+              "text": "Non."
+            },
+            {
+              "id": "msg_sandra_204",
+              "sender": "sandra",
+              "time_label": "23:09",
+              "text": "Pas mal."
+            },
+            {
+              "id": "msg_sandra_205",
+              "sender": "sandra",
+              "time_label": "23:09",
+              "text": "Juste, je ne m’attendais pas à ce que tu le poses aussi directement."
+            },
+            {
+              "id": "msg_sandra_207",
+              "sender": "sandra",
+              "time_label": "23:10",
+              "text": "Tu aurais pu."
+            },
+            {
+              "id": "msg_sandra_210",
+              "sender": "sandra",
+              "time_label": "23:11",
+              "text": "Je sais."
+            },
+            {
+              "id": "msg_sandra_211",
+              "sender": "sandra",
+              "time_label": "23:11",
+              "text": "C’est pour ça que j’ai buggué deux secondes."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_missing_posture__automatic_followup__guided_reply_group_002",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_missing_posture__automatic_followup__choice_group_002",
+          "text": "Tu as le droit de bugger. À ton service.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_212",
+            "msg_sandra_214",
+            "msg_sandra_216",
+            "msg_sandra_219"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_216",
+              "sender": "ludo",
+              "time_label": "23:13",
+              "text": "Trop tard."
+            },
+            {
+              "id": "msg_sandra_219",
+              "sender": "ludo",
+              "time_label": "23:14",
+              "text": "Pardon."
+            },
+            {
+              "id": "msg_sandra_213",
+              "sender": "sandra",
+              "time_label": "23:12",
+              "text": "Merci, mon service informatique."
+            },
+            {
+              "id": "msg_sandra_215",
+              "sender": "sandra",
+              "time_label": "23:13",
+              "text": "Ne prends pas trop confiance."
+            },
+            {
+              "id": "msg_sandra_217",
+              "sender": "sandra",
+              "time_label": "23:13",
+              "text": "Voilà."
+            },
+            {
+              "id": "msg_sandra_218",
+              "sender": "sandra",
+              "time_label": "23:14",
+              "text": "On était bien deux messages."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_missing_posture__automatic_followup__guided_reply_group_003",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_missing_posture__automatic_followup__choice_group_003",
+          "text": "Je redeviens sérieux. Difficile de trouver le bon niveau.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_220",
+            "msg_sandra_223",
+            "msg_sandra_225",
+            "msg_sandra_227"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_225",
+              "sender": "ludo",
+              "time_label": "23:16",
+              "text": "Je suis rouillé avec toi."
+            },
+            {
+              "id": "msg_sandra_227",
+              "sender": "ludo",
+              "time_label": "23:17",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_sandra_221",
+              "sender": "sandra",
+              "time_label": "23:15",
+              "text": "Non, ne redeviens pas complètement sérieux."
+            },
+            {
+              "id": "msg_sandra_222",
+              "sender": "sandra",
+              "time_label": "23:15",
+              "text": "C’est suspect aussi."
+            },
+            {
+              "id": "msg_sandra_224",
+              "sender": "sandra",
+              "time_label": "23:16",
+              "text": "Bienvenue dans les conversations normales."
+            },
+            {
+              "id": "msg_sandra_226",
+              "sender": "sandra",
+              "time_label": "23:16",
+              "text": "Avec moi ?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_missing_posture__automatic_followup__guided_reply_group_004",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_missing_posture__automatic_followup__choice_group_004",
+          "text": "Pas parce que c’est compliqué. Plutôt parce que ça compte.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_228",
+            "msg_sandra_229",
+            "msg_sandra_232",
+            "msg_sandra_234"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_232",
+              "sender": "ludo",
+              "time_label": "23:18",
+              "text": "Je m’entraîne."
+            },
+            {
+              "id": "msg_sandra_234",
+              "sender": "ludo",
+              "time_label": "23:19",
+              "text": "Je panique un peu."
+            },
+            {
+              "id": "msg_sandra_230",
+              "sender": "sandra",
+              "time_label": "23:18",
+              "text": "…"
+            },
+            {
+              "id": "msg_sandra_231",
+              "sender": "sandra",
+              "time_label": "23:18",
+              "text": "Tu sais faire très simple puis très compliqué en trois messages."
+            },
+            {
+              "id": "msg_sandra_233",
+              "sender": "sandra",
+              "time_label": "23:19",
+              "text": "Mauvaise réponse."
+            },
+            {
+              "id": "msg_sandra_235",
+              "sender": "sandra",
+              "time_label": "23:19",
+              "text": "Meilleure réponse."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_missing_posture__automatic_followup__guided_reply_group_005",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_missing_posture__automatic_followup__choice_group_005",
+          "text": "Tu vois, c’est pour ça que tu m’as manqué. Parce que tu remarques quand je mens mal.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_236",
+            "msg_sandra_238",
+            "msg_sandra_241",
+            "msg_sandra_244"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_241",
+              "sender": "ludo",
+              "time_label": "23:21",
+              "text": "C’est pire ?"
+            },
+            {
+              "id": "msg_sandra_244",
+              "sender": "ludo",
+              "time_label": "23:22",
+              "text": "Je vais essayer de moins contourner."
+            },
+            {
+              "id": "msg_sandra_237",
+              "sender": "sandra",
+              "time_label": "23:20",
+              "text": "Parce que je note tes réponses ?"
+            },
+            {
+              "id": "msg_sandra_239",
+              "sender": "sandra",
+              "time_label": "23:21",
+              "text": "Tu mens rarement vraiment."
+            },
+            {
+              "id": "msg_sandra_240",
+              "sender": "sandra",
+              "time_label": "23:21",
+              "text": "Tu contournes."
+            },
+            {
+              "id": "msg_sandra_242",
+              "sender": "sandra",
+              "time_label": "23:22",
+              "text": "C’est plus poli."
+            },
+            {
+              "id": "msg_sandra_243",
+              "sender": "sandra",
+              "time_label": "23:22",
+              "text": "Donc parfois oui, pire."
+            },
+            {
+              "id": "msg_sandra_245",
+              "sender": "sandra",
+              "time_label": "23:23",
+              "text": "Attention quand même."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_missing_posture__automatic_followup__guided_reply_group_006",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_missing_posture__automatic_followup__choice_group_006",
+          "text": "À quoi ? Message reçu.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_246",
+            "msg_sandra_248",
+            "msg_sandra_250",
+            "msg_sandra_252"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_250",
+              "sender": "ludo",
+              "time_label": "23:24",
+              "text": "Je sais."
+            },
+            {
+              "id": "msg_sandra_252",
+              "sender": "ludo",
+              "time_label": "23:25",
+              "text": "Moi aussi."
+            },
+            {
+              "id": "msg_sandra_247",
+              "sender": "sandra",
+              "time_label": "23:23",
+              "text": "À ne pas transformer “moins contourner” en “tout balancer à 23h”."
+            },
+            {
+              "id": "msg_sandra_249",
+              "sender": "sandra",
+              "time_label": "23:24",
+              "text": "Je dis ça gentiment."
+            },
+            {
+              "id": "msg_sandra_251",
+              "sender": "sandra",
+              "time_label": "23:25",
+              "text": "Parce que je tiens à notre façon de se parler."
+            },
+            {
+              "id": "msg_sandra_253",
+              "sender": "sandra",
+              "time_label": "23:25",
+              "text": "Et je n’ai pas envie que ça devienne bizarre."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_missing_posture__automatic_followup__guided_reply_group_007",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_missing_posture__automatic_followup__choice_group_007",
+          "text": "Je comprends. Je n’ai pas envie d’abîmer ça non plus.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_254",
+            "msg_sandra_255",
+            "msg_sandra_258",
+            "msg_sandra_260"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_258",
+              "sender": "ludo",
+              "time_label": "23:27",
+              "text": "J’en ai deux ou trois en stock."
+            },
+            {
+              "id": "msg_sandra_260",
+              "sender": "ludo",
+              "time_label": "23:28",
+              "text": "Tu sais, quand je dis que tu m’as manqué, je ne dis pas ça pour ouvrir une porte en grand."
+            },
+            {
+              "id": "msg_sandra_256",
+              "sender": "sandra",
+              "time_label": "23:26",
+              "text": "Bien."
+            },
+            {
+              "id": "msg_sandra_257",
+              "sender": "sandra",
+              "time_label": "23:27",
+              "text": "Phrase adulte."
+            },
+            {
+              "id": "msg_sandra_259",
+              "sender": "sandra",
+              "time_label": "23:27",
+              "text": "Garde-les, on ne sait jamais."
+            },
+            {
+              "id": "msg_sandra_261",
+              "sender": "sandra",
+              "time_label": "23:28",
+              "text": "Je sais."
+            },
+            {
+              "id": "msg_sandra_262",
+              "sender": "sandra",
+              "time_label": "23:28",
+              "text": "Enfin je crois."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_missing_posture__automatic_followup__guided_reply_group_008",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_missing_posture__automatic_followup__choice_group_008",
+          "text": "Je dis surtout que je n’ai pas envie de continuer à faire comme si notre amitié était un vieux dossier bien rangé. Tu viens de le montrer un peu.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_263",
+            "msg_sandra_266",
+            "msg_sandra_269",
+            "msg_sandra_271"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_269",
+              "sender": "ludo",
+              "time_label": "23:31",
+              "text": "Trop tard."
+            },
+            {
+              "id": "msg_sandra_271",
+              "sender": "ludo",
+              "time_label": "23:31",
+              "text": "Mais tu m’as écrit."
+            },
+            {
+              "id": "msg_sandra_264",
+              "sender": "sandra",
+              "time_label": "23:29",
+              "text": "Ça, je comprends mieux."
+            },
+            {
+              "id": "msg_sandra_265",
+              "sender": "sandra",
+              "time_label": "23:29",
+              "text": "Et ça me touche plus que je ne vais le montrer correctement."
+            },
+            {
+              "id": "msg_sandra_267",
+              "sender": "sandra",
+              "time_label": "23:30",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_sandra_268",
+              "sender": "sandra",
+              "time_label": "23:30",
+              "text": "Ne t’habitue pas."
+            },
+            {
+              "id": "msg_sandra_270",
+              "sender": "sandra",
+              "time_label": "23:31",
+              "text": "Tu es insupportable 🙂"
+            },
+            {
+              "id": "msg_sandra_272",
+              "sender": "sandra",
+              "time_label": "23:32",
+              "text": "Grave erreur."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_missing_posture__automatic_followup__guided_reply_group_009",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_missing_posture__automatic_followup__choice_group_009",
+          "text": "Trop tard aussi. Moi pas.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_273",
+            "msg_sandra_275",
+            "msg_sandra_277",
+            "msg_sandra_279"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_277",
+              "sender": "ludo",
+              "time_label": "23:33",
+              "text": "Elle est belle."
+            },
+            {
+              "id": "msg_sandra_279",
+              "sender": "ludo",
+              "time_label": "23:34",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_sandra_274",
+              "sender": "sandra",
+              "time_label": "23:32",
+              "text": "Je vais vraiment regretter cette photo."
+            },
+            {
+              "id": "msg_sandra_276",
+              "sender": "sandra",
+              "time_label": "23:33",
+              "text": "Évidemment."
+            },
+            {
+              "id": "msg_sandra_278",
+              "sender": "sandra",
+              "time_label": "23:34",
+              "text": "La photo ?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_missing_posture__automatic_followup__guided_reply_group_010",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_missing_posture__automatic_followup__choice_group_010",
+          "text": "Et toi dessus. Je dis juste que tu es belle dessus.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_280",
+            "msg_sandra_283",
+            "msg_sandra_286",
+            "msg_sandra_290"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_286",
+              "sender": "ludo",
+              "time_label": "23:36",
+              "text": "Désolé."
+            },
+            {
+              "id": "msg_sandra_290",
+              "sender": "ludo",
+              "time_label": "23:38",
+              "text": "D’accord."
+            },
+            {
+              "id": "msg_sandra_281",
+              "sender": "sandra",
+              "time_label": "23:35",
+              "text": "Ah non."
+            },
+            {
+              "id": "msg_sandra_282",
+              "sender": "sandra",
+              "time_label": "23:35",
+              "text": "Là tu fais ton dangereux."
+            },
+            {
+              "id": "msg_sandra_284",
+              "sender": "sandra",
+              "time_label": "23:36",
+              "text": "Oui, justement."
+            },
+            {
+              "id": "msg_sandra_285",
+              "sender": "sandra",
+              "time_label": "23:36",
+              "text": "C’est le genre de phrase qui arrive avec des chaussures pleines de boue dans une pièce propre."
+            },
+            {
+              "id": "msg_sandra_287",
+              "sender": "sandra",
+              "time_label": "23:37",
+              "text": "Non."
+            },
+            {
+              "id": "msg_sandra_288",
+              "sender": "sandra",
+              "time_label": "23:37",
+              "text": "Pas désolé."
+            },
+            {
+              "id": "msg_sandra_289",
+              "sender": "sandra",
+              "time_label": "23:37",
+              "text": "Juste doucement."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_missing_posture__automatic_followup__guided_reply_group_011",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_missing_posture__automatic_followup__choice_group_011",
+          "text": "Doucement. Je ne sais pas quoi faire de cette information.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_291",
+            "msg_sandra_294",
+            "msg_sandra_297",
+            "msg_sandra_299"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_297",
+              "sender": "ludo",
+              "time_label": "23:40",
+              "text": "Très clair."
+            },
+            {
+              "id": "msg_sandra_299",
+              "sender": "ludo",
+              "time_label": "23:41",
+              "text": "Marie dort."
+            },
+            {
+              "id": "msg_sandra_292",
+              "sender": "sandra",
+              "time_label": "23:38",
+              "text": "Merci."
+            },
+            {
+              "id": "msg_sandra_293",
+              "sender": "sandra",
+              "time_label": "23:39",
+              "text": "Et pour information, j’ai quand même souri."
+            },
+            {
+              "id": "msg_sandra_295",
+              "sender": "sandra",
+              "time_label": "23:39",
+              "text": "Rien."
+            },
+            {
+              "id": "msg_sandra_296",
+              "sender": "sandra",
+              "time_label": "23:40",
+              "text": "C’est une information, pas un permis de construire."
+            },
+            {
+              "id": "msg_sandra_298",
+              "sender": "sandra",
+              "time_label": "23:40",
+              "text": "Bien."
+            },
+            {
+              "id": "msg_sandra_300",
+              "sender": "sandra",
+              "time_label": "23:41",
+              "text": "Tu me le dis pourquoi ?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_missing_posture__automatic_followup__guided_reply_group_012",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_missing_posture__automatic_followup__choice_group_012",
+          "text": "Parce que j’y ai pensé. Et parce que je préfère que ce soit dans la conversation plutôt que caché derrière.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_301",
+            "msg_sandra_302",
+            "msg_sandra_305",
+            "msg_sandra_308"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_305",
+              "sender": "ludo",
+              "time_label": "23:43",
+              "text": "Et toi ?"
+            },
+            {
+              "id": "msg_sandra_308",
+              "sender": "ludo",
+              "time_label": "23:44",
+              "text": "Donc personne ne dort chez personne."
+            },
+            {
+              "id": "msg_sandra_303",
+              "sender": "sandra",
+              "time_label": "23:42",
+              "text": "D’accord."
+            },
+            {
+              "id": "msg_sandra_304",
+              "sender": "sandra",
+              "time_label": "23:42",
+              "text": "Merci."
+            },
+            {
+              "id": "msg_sandra_306",
+              "sender": "sandra",
+              "time_label": "23:43",
+              "text": "Il est dans le salon."
+            },
+            {
+              "id": "msg_sandra_307",
+              "sender": "sandra",
+              "time_label": "23:43",
+              "text": "Il regarde un truc avec des gens qui rénovent une maison en faisant semblant que c’est simple."
+            },
+            {
+              "id": "msg_sandra_309",
+              "sender": "sandra",
+              "time_label": "23:44",
+              "text": "Non."
+            },
+            {
+              "id": "msg_sandra_310",
+              "sender": "sandra",
+              "time_label": "23:44",
+              "text": "Et c’est très bien de s’en souvenir."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_missing_posture__automatic_followup__guided_reply_group_013",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_missing_posture__automatic_followup__choice_group_013",
+          "text": "Oui. Tu ne l’es pas.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_311",
+            "msg_sandra_313",
+            "msg_sandra_316",
+            "msg_sandra_317"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_316",
+              "sender": "ludo",
+              "time_label": "23:46",
+              "text": "Je sais."
+            },
+            {
+              "id": "msg_sandra_317",
+              "sender": "ludo",
+              "time_label": "23:47",
+              "text": "Je ne veux pas de moche."
+            },
+            {
+              "id": "msg_sandra_312",
+              "sender": "sandra",
+              "time_label": "23:45",
+              "text": "Je ne veux pas être lourde."
+            },
+            {
+              "id": "msg_sandra_314",
+              "sender": "sandra",
+              "time_label": "23:46",
+              "text": "Je sais juste que les petites ambiguïtés, au début, ça a l’air mignon."
+            },
+            {
+              "id": "msg_sandra_315",
+              "sender": "sandra",
+              "time_label": "23:46",
+              "text": "Après ça peut devenir moche."
+            },
+            {
+              "id": "msg_sandra_318",
+              "sender": "sandra",
+              "time_label": "23:47",
+              "text": "Moi non plus."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_missing_posture__automatic_followup__guided_reply_group_014",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_missing_posture__automatic_followup__choice_group_014",
+          "text": "Je veux juste ne plus te laisser disparaître de mes semaines. Oui ?",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_319",
+            "msg_sandra_321",
+            "msg_sandra_324",
+            "msg_sandra_326"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_324",
+              "sender": "ludo",
+              "time_label": "23:49",
+              "text": "Je progresse."
+            },
+            {
+              "id": "msg_sandra_326",
+              "sender": "ludo",
+              "time_label": "23:50",
+              "text": "Je me tais ?"
+            },
+            {
+              "id": "msg_sandra_320",
+              "sender": "sandra",
+              "time_label": "23:48",
+              "text": "Ça, c’est une phrase que je peux garder."
+            },
+            {
+              "id": "msg_sandra_322",
+              "sender": "sandra",
+              "time_label": "23:48",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_sandra_323",
+              "sender": "sandra",
+              "time_label": "23:49",
+              "text": "Elle est dangereuse, mais propre."
+            },
+            {
+              "id": "msg_sandra_325",
+              "sender": "sandra",
+              "time_label": "23:49",
+              "text": "Ne gâche pas."
+            },
+            {
+              "id": "msg_sandra_327",
+              "sender": "sandra",
+              "time_label": "23:50",
+              "text": "Non."
+            },
+            {
+              "id": "msg_sandra_328",
+              "sender": "sandra",
+              "time_label": "23:50",
+              "text": "Mais ne fais pas le malin."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_missing_posture__automatic_followup__guided_reply_group_015",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_missing_posture__automatic_followup__choice_group_015",
+          "text": "D’accord. Tu fais souvent la maligne quand tu es gênée.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_329",
+            "msg_sandra_331",
+            "msg_sandra_334",
+            "msg_sandra_337"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_334",
+              "sender": "ludo",
+              "time_label": "23:52",
+              "text": "Le déjeuner."
+            },
+            {
+              "id": "msg_sandra_337",
+              "sender": "ludo",
+              "time_label": "23:53",
+              "text": "Il ne l’était pas."
+            },
+            {
+              "id": "msg_sandra_330",
+              "sender": "sandra",
+              "time_label": "23:51",
+              "text": "Et moi non plus, d’ailleurs."
+            },
+            {
+              "id": "msg_sandra_332",
+              "sender": "sandra",
+              "time_label": "23:52",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_sandra_333",
+              "sender": "sandra",
+              "time_label": "23:52",
+              "text": "Là par exemple j’ai très envie de parler d’aubergines."
+            },
+            {
+              "id": "msg_sandra_335",
+              "sender": "sandra",
+              "time_label": "23:53",
+              "text": "Voilà."
+            },
+            {
+              "id": "msg_sandra_336",
+              "sender": "sandra",
+              "time_label": "23:53",
+              "text": "Le fameux déjeuner où tu as prétendu que le plat n’était pas trop épicé."
+            },
+            {
+              "id": "msg_sandra_338",
+              "sender": "sandra",
+              "time_label": "23:54",
+              "text": "Tu transpirais de dignité."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_missing_posture__automatic_followup__guided_reply_group_016",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_missing_posture__automatic_followup__choice_group_016",
+          "text": "C’était une émotion culinaire. Elle aussi t’avait manqué ?",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_339",
+            "msg_sandra_341",
+            "msg_sandra_344",
+            "msg_sandra_346"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_344",
+              "sender": "ludo",
+              "time_label": "23:56",
+              "text": "Trop tard, mais discrètement."
+            },
+            {
+              "id": "msg_sandra_346",
+              "sender": "ludo",
+              "time_label": "23:56",
+              "text": "Toujours."
+            },
+            {
+              "id": "msg_sandra_340",
+              "sender": "sandra",
+              "time_label": "23:54",
+              "text": "J’avais oublié cette mauvaise foi-là."
+            },
+            {
+              "id": "msg_sandra_342",
+              "sender": "sandra",
+              "time_label": "23:55",
+              "text": "Un peu."
+            },
+            {
+              "id": "msg_sandra_343",
+              "sender": "sandra",
+              "time_label": "23:55",
+              "text": "Ne fais pas une fête."
+            },
+            {
+              "id": "msg_sandra_345",
+              "sender": "sandra",
+              "time_label": "23:56",
+              "text": "Faux discret."
+            },
+            {
+              "id": "msg_sandra_347",
+              "sender": "sandra",
+              "time_label": "23:57",
+              "text": "On devrait y retourner."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_missing_posture__automatic_followup__guided_reply_group_017",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_missing_posture__automatic_followup__choice_group_017",
+          "text": "Au même endroit ? Je veux.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_348",
+            "msg_sandra_352",
+            "msg_sandra_354",
+            "msg_sandra_356"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_354",
+              "sender": "ludo",
+              "time_label": "23:59",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_sandra_356",
+              "sender": "ludo",
+              "time_label": "24:00",
+              "text": "Non."
+            },
+            {
+              "id": "msg_sandra_349",
+              "sender": "sandra",
+              "time_label": "23:57",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_sandra_350",
+              "sender": "sandra",
+              "time_label": "23:58",
+              "text": "Ou ailleurs."
+            },
+            {
+              "id": "msg_sandra_351",
+              "sender": "sandra",
+              "time_label": "23:58",
+              "text": "Enfin, si tu veux."
+            },
+            {
+              "id": "msg_sandra_353",
+              "sender": "sandra",
+              "time_label": "23:59",
+              "text": "Réponse rapide."
+            },
+            {
+              "id": "msg_sandra_355",
+              "sender": "sandra",
+              "time_label": "23:59",
+              "text": "Tu ne veux pas faire semblant de réfléchir ?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_missing_posture__automatic_followup__guided_reply_group_018",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_missing_posture__automatic_followup__choice_group_018",
+          "text": "Pas sur ça. Ça me ferait vraiment plaisir de te revoir.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_357",
+            "msg_sandra_359",
+            "msg_sandra_361",
+            "msg_sandra_364"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_361",
+              "sender": "ludo",
+              "time_label": "24:01",
+              "text": "Trop visible ?"
+            },
+            {
+              "id": "msg_sandra_364",
+              "sender": "ludo",
+              "time_label": "24:02",
+              "text": "Je prends."
+            },
+            {
+              "id": "msg_sandra_358",
+              "sender": "sandra",
+              "time_label": "24:00",
+              "text": "D’accord."
+            },
+            {
+              "id": "msg_sandra_360",
+              "sender": "sandra",
+              "time_label": "24:01",
+              "text": "Je vois."
+            },
+            {
+              "id": "msg_sandra_362",
+              "sender": "sandra",
+              "time_label": "24:02",
+              "text": "Un peu."
+            },
+            {
+              "id": "msg_sandra_363",
+              "sender": "sandra",
+              "time_label": "24:02",
+              "text": "Mais pas désagréable."
+            },
+            {
+              "id": "msg_sandra_365",
+              "sender": "sandra",
+              "time_label": "24:03",
+              "text": "Évidemment que tu prends."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_missing_posture__automatic_followup__guided_reply_group_019",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_missing_posture__automatic_followup__choice_group_019",
+          "text": "J’ai hâte, en fait. Oui.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_366",
+            "msg_sandra_368",
+            "msg_sandra_369",
+            "msg_sandra_370"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_369",
+              "sender": "ludo",
+              "time_label": "24:04",
+              "text": "Je sais."
+            },
+            {
+              "id": "msg_sandra_370",
+              "sender": "ludo",
+              "time_label": "24:04",
+              "text": "Mais je préfère te le dire simplement."
+            },
+            {
+              "id": "msg_sandra_367",
+              "sender": "sandra",
+              "time_label": "24:03",
+              "text": "Là tu prends beaucoup."
+            },
+            {
+              "id": "msg_sandra_371",
+              "sender": "sandra",
+              "time_label": "24:05",
+              "text": "C’est simple."
+            },
+            {
+              "id": "msg_sandra_372",
+              "sender": "sandra",
+              "time_label": "24:05",
+              "text": "Ça me fait bizarre, mais c’est simple."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_missing_posture__automatic_followup__guided_reply_group_020",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_missing_posture__automatic_followup__choice_group_020",
+          "text": "Bizarre mauvais ? Alors je ne continue pas.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_373",
+            "msg_sandra_376",
+            "msg_sandra_378",
+            "msg_sandra_380"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_378",
+              "sender": "ludo",
+              "time_label": "24:07",
+              "text": "Jeudi prochain ?"
+            },
+            {
+              "id": "msg_sandra_380",
+              "sender": "ludo",
+              "time_label": "24:08",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_sandra_374",
+              "sender": "sandra",
+              "time_label": "24:06",
+              "text": "Non."
+            },
+            {
+              "id": "msg_sandra_375",
+              "sender": "sandra",
+              "time_label": "24:06",
+              "text": "Bizarre “je vais changer de sujet si tu continues”."
+            },
+            {
+              "id": "msg_sandra_377",
+              "sender": "sandra",
+              "time_label": "24:07",
+              "text": "Sage."
+            },
+            {
+              "id": "msg_sandra_379",
+              "sender": "sandra",
+              "time_label": "24:07",
+              "text": "Midi ?"
+            },
+            {
+              "id": "msg_sandra_381",
+              "sender": "sandra",
+              "time_label": "24:08",
+              "text": "Je peux peut-être."
+            },
+            {
+              "id": "msg_sandra_382",
+              "sender": "sandra",
+              "time_label": "24:08",
+              "text": "Je vérifie demain."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_missing_posture__automatic_followup__guided_reply_group_021",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_missing_posture__automatic_followup__choice_group_021",
+          "text": "D’accord. Trop tard, ma Sandra chérie.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_383",
+            "msg_sandra_385",
+            "msg_sandra_388",
+            "msg_sandra_391"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_388",
+              "sender": "ludo",
+              "time_label": "24:10",
+              "text": "Tu m’as tendu la perche."
+            },
+            {
+              "id": "msg_sandra_391",
+              "sender": "ludo",
+              "time_label": "24:11",
+              "text": "Possible."
+            },
+            {
+              "id": "msg_sandra_384",
+              "sender": "sandra",
+              "time_label": "24:09",
+              "text": "Ne bloque pas ton agenda comme si j’étais une opération chirurgicale."
+            },
+            {
+              "id": "msg_sandra_386",
+              "sender": "sandra",
+              "time_label": "24:10",
+              "text": "Ah."
+            },
+            {
+              "id": "msg_sandra_387",
+              "sender": "sandra",
+              "time_label": "24:10",
+              "text": "Les grands moyens."
+            },
+            {
+              "id": "msg_sandra_389",
+              "sender": "sandra",
+              "time_label": "24:11",
+              "text": "Non."
+            },
+            {
+              "id": "msg_sandra_390",
+              "sender": "sandra",
+              "time_label": "24:11",
+              "text": "Tu as vu une brindille et tu as construit un pont."
+            },
+            {
+              "id": "msg_sandra_392",
+              "sender": "sandra",
+              "time_label": "24:12",
+              "text": "Mon Player adoré, il va falloir respirer."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_missing_posture__automatic_followup__guided_reply_group_022",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_missing_posture__automatic_followup__choice_group_022",
+          "text": "Je respire. Mais joyeusement.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_393",
+            "msg_sandra_395",
+            "msg_sandra_397",
+            "msg_sandra_401"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_397",
+              "sender": "ludo",
+              "time_label": "24:13",
+              "text": "Tu peux."
+            },
+            {
+              "id": "msg_sandra_401",
+              "sender": "ludo",
+              "time_label": "24:15",
+              "text": "Ça marche."
+            },
+            {
+              "id": "msg_sandra_394",
+              "sender": "sandra",
+              "time_label": "24:12",
+              "text": "Mal."
+            },
+            {
+              "id": "msg_sandra_396",
+              "sender": "sandra",
+              "time_label": "24:13",
+              "text": "Ça, je veux bien le croire."
+            },
+            {
+              "id": "msg_sandra_398",
+              "sender": "sandra",
+              "time_label": "24:14",
+              "text": "Bon."
+            },
+            {
+              "id": "msg_sandra_399",
+              "sender": "sandra",
+              "time_label": "24:14",
+              "text": "Jeudi, peut-être."
+            },
+            {
+              "id": "msg_sandra_400",
+              "sender": "sandra",
+              "time_label": "24:14",
+              "text": "Et sinon un autre midi."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_missing_posture__automatic_followup__guided_reply_group_023",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_missing_posture__automatic_followup__choice_group_023",
+          "text": "Mais je suis content qu’on le dise vraiment. Je te laisserai cette version.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_402",
+            "msg_sandra_405",
+            "msg_sandra_407",
+            "msg_sandra_409"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_407",
+              "sender": "ludo",
+              "time_label": "24:17",
+              "text": "Mais moi je garderai la vraie."
+            },
+            {
+              "id": "msg_sandra_409",
+              "sender": "ludo",
+              "time_label": "24:17",
+              "text": "Que tu m’as écrit."
+            },
+            {
+              "id": "msg_sandra_403",
+              "sender": "sandra",
+              "time_label": "24:15",
+              "text": "Moi aussi."
+            },
+            {
+              "id": "msg_sandra_404",
+              "sender": "sandra",
+              "time_label": "24:16",
+              "text": "Même si je vais prétendre demain que c’était juste une histoire de photo."
+            },
+            {
+              "id": "msg_sandra_406",
+              "sender": "sandra",
+              "time_label": "24:16",
+              "text": "Merci."
+            },
+            {
+              "id": "msg_sandra_408",
+              "sender": "sandra",
+              "time_label": "24:17",
+              "text": "Laquelle ?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_missing_posture__automatic_followup__guided_reply_group_024",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_missing_posture__automatic_followup__choice_group_024",
+          "text": "Que j’étais heureux de te lire. Et que j’ai envie de te revoir.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_410",
+            "msg_sandra_411",
+            "msg_sandra_416",
+            "msg_sandra_418"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_416",
+              "sender": "ludo",
+              "time_label": "24:20",
+              "text": "Promis."
+            },
+            {
+              "id": "msg_sandra_418",
+              "sender": "ludo",
+              "time_label": "24:20",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_sandra_412",
+              "sender": "sandra",
+              "time_label": "24:18",
+              "text": "…"
+            },
+            {
+              "id": "msg_sandra_413",
+              "sender": "sandra",
+              "time_label": "24:19",
+              "text": "D’accord."
+            },
+            {
+              "id": "msg_sandra_414",
+              "sender": "sandra",
+              "time_label": "24:19",
+              "text": "Garde-la."
+            },
+            {
+              "id": "msg_sandra_415",
+              "sender": "sandra",
+              "time_label": "24:19",
+              "text": "Mais pas trop fort."
+            },
+            {
+              "id": "msg_sandra_417",
+              "sender": "sandra",
+              "time_label": "24:20",
+              "text": "Je vais dormir."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_missing_posture__automatic_followup__guided_reply_group_025",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_missing_posture__automatic_followup__choice_group_025",
+          "text": "Bonne nuit Sandra. Je ne la regarde plus.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_419",
+            "msg_sandra_422",
+            "msg_sandra_424",
+            "msg_sandra_426"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sandra_424",
+              "sender": "ludo",
+              "time_label": "24:22",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_sandra_426",
+              "sender": "ludo",
+              "time_label": "24:23",
+              "text": "Bonne nuit."
+            },
+            {
+              "id": "msg_sandra_420",
+              "sender": "sandra",
+              "time_label": "24:21",
+              "text": "Bonne nuit."
+            },
+            {
+              "id": "msg_sandra_421",
+              "sender": "sandra",
+              "time_label": "24:21",
+              "text": "Et arrête de regarder la photo."
+            },
+            {
+              "id": "msg_sandra_423",
+              "sender": "sandra",
+              "time_label": "24:22",
+              "text": "Mensonge."
+            },
+            {
+              "id": "msg_sandra_425",
+              "sender": "sandra",
+              "time_label": "24:23",
+              "text": "Au moins tu progresses."
+            },
+            {
+              "id": "msg_sandra_427",
+              "sender": "sandra",
+              "time_label": "24:23",
+              "text": "Bonne nuit, Player."
+            },
+            {
+              "id": "msg_sandra_428",
+              "sender": "sandra",
+              "time_label": "24:24",
+              "text": "Et doucement."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sandra_day1_missing_posture__automatic_followup__guided_reply_group_026",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_sandra_day1_missing_posture__automatic_followup__choice_group_026",
+          "text": "Doucement.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_sandra_429"
+          ]
         }
       ]
     }

@@ -210,6 +210,62 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             self.assertIn(1, choice_counts, relative)
             self.assertTrue(any(count > 1 for count in choice_counts), relative)
 
+    def test_day1_player_lines_require_prior_choice_action(self):
+        for relative in [
+            "data/conversations/chapter_01_sandra.json",
+            "data/conversations/chapter_01_marie.json",
+        ]:
+            data = json.loads((GAME / relative).read_text(encoding="utf-8"))
+            offenders = []
+
+            def walk(value, path):
+                if isinstance(value, dict):
+                    sender = str(value.get("sender", "")).lower()
+                    container = next((part for part in reversed(path) if part in {"messages", "next_messages", "automatic_followup", "next_items"}), "")
+                    is_under_choice = "choices" in path or "priority_choices" in path
+                    if sender in {"ludo", "player", "joueur"} and container and not is_under_choice:
+                        offenders.append("%s:%s:%s" % (container, value.get("id", "?"), value.get("text", "")[:40]))
+                    for key, child in value.items():
+                        walk(child, path + [key])
+                elif isinstance(value, list):
+                    for child in value:
+                        walk(child, path)
+
+            walk(data, [])
+            self.assertEqual(offenders, [], relative)
+
+    def test_day1_guided_reply_density_stays_playable(self):
+        targets = {
+            "data/conversations/chapter_01_marie.json": 20,
+            "data/conversations/chapter_01_sandra.json": 45,
+        }
+        for relative, maximum in targets.items():
+            data = json.loads((GAME / relative).read_text(encoding="utf-8"))
+            action_points = sum(1 for segment in data.get("segments", []) if segment.get("choices") or segment.get("priority_choices"))
+            self.assertLessEqual(action_points, maximum, relative)
+
+    def test_day1_guided_replies_limit_player_burst_after_click(self):
+        for relative in [
+            "data/conversations/chapter_01_sandra.json",
+            "data/conversations/chapter_01_marie.json",
+        ]:
+            data = json.loads((GAME / relative).read_text(encoding="utf-8"))
+            offenders = []
+            for segment in data.get("segments", []):
+                for choice in segment.get("choices", []) + segment.get("priority_choices", []):
+                    extra_player_bubbles = [message for message in choice.get("next_messages", []) if str(message.get("sender", "")).lower() in {"ludo", "player", "joueur"}]
+                    if 1 + len(extra_player_bubbles) > 3:
+                        offenders.append(choice.get("id", "?"))
+            self.assertEqual(offenders, [], relative)
+
+    def test_conversation_view_keeps_player_bubbles_post_choice_only(self):
+        script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
+        append_block = script[script.index("func _append_ludo_reply"):script.index("func _is_guided_reply")]
+        self.assertIn('"sender": "ludo"', append_block)
+        auto_block = script[script.index("func _auto_advance_segments_until_choice"):script.index("func _render_segment_messages_with_typing")]
+        self.assertIn("_show_choices_for_segment(data", auto_block)
+        self.assertNotIn("_append_ludo_reply", auto_block)
+
     def test_day1_progressive_content_keeps_only_marie_and_sandra_active(self):
         index = json.loads((GAME / "data/conversations/chapter_01_index.json").read_text(encoding="utf-8"))
         self.assertEqual(index.get("default_order"), ["chapter_01_marie", "chapter_01_sandra"])

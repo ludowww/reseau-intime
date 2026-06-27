@@ -59,24 +59,45 @@
               "sender": "marie",
               "time_label": "18:13",
               "text": "Je maintiens notre couple à coups de listes de courses 😅"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_marie_day1_bread_prelude__choice_followup__guided_reply_group_001",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_marie_day1_bread_prelude__choice_followup__choice_group_001",
+          "text": "C’est une stratégie solide. Je peux passer en prendre.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_marie_005",
+            "msg_marie_007",
+            "msg_marie_010",
+            "msg_marie_012"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_marie_010",
+              "sender": "ludo",
+              "time_label": "18:15",
+              "text": "Celle qui t’a traumatisée ?"
             },
             {
-              "id": "msg_marie_005",
+              "id": "msg_marie_012",
               "sender": "ludo",
-              "time_label": "18:13",
-              "text": "C’est une stratégie solide."
+              "time_label": "18:16",
+              "text": "Je vais éviter la baguette contentieuse."
             },
             {
               "id": "msg_marie_006",
               "sender": "marie",
               "time_label": "18:14",
               "text": "Elle a fait ses preuves."
-            },
-            {
-              "id": "msg_marie_007",
-              "sender": "ludo",
-              "time_label": "18:14",
-              "text": "Je peux passer en prendre."
             },
             {
               "id": "msg_marie_008",
@@ -91,22 +112,10 @@
               "text": "Pas celle de la boulangerie du coin, par pitié."
             },
             {
-              "id": "msg_marie_010",
-              "sender": "ludo",
-              "time_label": "18:15",
-              "text": "Celle qui t’a traumatisée ?"
-            },
-            {
               "id": "msg_marie_011",
               "sender": "marie",
               "time_label": "18:15",
               "text": "Elle avait une texture de plainte administrative."
-            },
-            {
-              "id": "msg_marie_012",
-              "sender": "ludo",
-              "time_label": "18:16",
-              "text": "Je vais éviter la baguette contentieuse."
             },
             {
               "id": "msg_marie_013",
@@ -119,12 +128,39 @@
               "sender": "marie",
               "time_label": "18:16",
               "text": "Tu vois, quand tu veux, tu es fiable."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_marie_day1_bread_prelude__choice_followup__guided_reply_group_002",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_marie_day1_bread_prelude__choice_followup__choice_group_002",
+          "text": "Sur le pain au moins. Je rentre vers 19h15.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_marie_015",
+            "msg_marie_017",
+            "msg_marie_019",
+            "msg_marie_022"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_marie_019",
+              "sender": "ludo",
+              "time_label": "18:18",
+              "text": "Vrai 19h15."
             },
             {
-              "id": "msg_marie_015",
+              "id": "msg_marie_022",
               "sender": "ludo",
-              "time_label": "18:17",
-              "text": "Sur le pain au moins."
+              "time_label": "18:19",
+              "text": "Tu es dure."
             },
             {
               "id": "msg_marie_016",
@@ -133,22 +169,10 @@
               "text": "Ne minimise pas, c’est une base."
             },
             {
-              "id": "msg_marie_017",
-              "sender": "ludo",
-              "time_label": "18:17",
-              "text": "Je rentre vers 19h15."
-            },
-            {
               "id": "msg_marie_018",
               "sender": "marie",
               "time_label": "18:18",
               "text": "Vrai 19h15 ou 19h15 avec ton “j’arrive” qui veut dire “je pars dans vingt minutes” ?"
-            },
-            {
-              "id": "msg_marie_019",
-              "sender": "ludo",
-              "time_label": "18:18",
-              "text": "Vrai 19h15."
             },
             {
               "id": "msg_marie_020",
@@ -163,22 +187,43 @@
               "text": "Je vais essayer de croire à ce petit miracle 🙂"
             },
             {
-              "id": "msg_marie_022",
-              "sender": "ludo",
-              "time_label": "18:19",
-              "text": "Tu es dure."
-            },
-            {
               "id": "msg_marie_023",
               "sender": "marie",
               "time_label": "18:19",
               "text": "Je suis expérimentée."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_marie_day1_bread_prelude__choice_followup__guided_reply_group_003",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_marie_day1_bread_prelude__choice_followup__choice_group_003",
+          "text": "Touché. Un peu mérité.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_marie_024",
+            "msg_marie_027",
+            "msg_marie_029",
+            "msg_marie_032"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_marie_029",
+              "sender": "ludo",
+              "time_label": "18:21",
+              "text": "Dans ma tête ?"
             },
             {
-              "id": "msg_marie_024",
+              "id": "msg_marie_032",
               "sender": "ludo",
-              "time_label": "18:20",
-              "text": "Touché."
+              "time_label": "18:22",
+              "text": "Je suis fatigué."
             },
             {
               "id": "msg_marie_025",
@@ -193,22 +238,10 @@
               "text": "Enfin si, un peu."
             },
             {
-              "id": "msg_marie_027",
-              "sender": "ludo",
-              "time_label": "18:21",
-              "text": "Un peu mérité."
-            },
-            {
               "id": "msg_marie_028",
               "sender": "marie",
               "time_label": "18:21",
               "text": "Tu as été beaucoup dans ta tête cette semaine."
-            },
-            {
-              "id": "msg_marie_029",
-              "sender": "ludo",
-              "time_label": "18:21",
-              "text": "Dans ma tête ?"
             },
             {
               "id": "msg_marie_030",
@@ -221,12 +254,6 @@
               "sender": "marie",
               "time_label": "18:22",
               "text": "Là physiquement, mais pas toujours avec moi."
-            },
-            {
-              "id": "msg_marie_032",
-              "sender": "ludo",
-              "time_label": "18:22",
-              "text": "Je suis fatigué."
             },
             {
               "id": "msg_marie_033",
@@ -245,12 +272,39 @@
               "sender": "marie",
               "time_label": "18:23",
               "text": "C’est devenu notre activité de couple 😅"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_marie_day1_bread_prelude__choice_followup__guided_reply_group_004",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_marie_day1_bread_prelude__choice_followup__choice_group_004",
+          "text": "On devrait trouver plus glamour. C’est faux.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_marie_036",
+            "msg_marie_039",
+            "msg_marie_041",
+            "msg_marie_043"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_marie_041",
+              "sender": "ludo",
+              "time_label": "18:25",
+              "text": "C’était une question de scénario."
             },
             {
-              "id": "msg_marie_036",
+              "id": "msg_marie_043",
               "sender": "ludo",
-              "time_label": "18:24",
-              "text": "On devrait trouver plus glamour."
+              "time_label": "18:26",
+              "text": "D’accord."
             },
             {
               "id": "msg_marie_037",
@@ -265,41 +319,33 @@
               "text": "Mais tu t’endors avant que le résumé soit fini."
             },
             {
-              "id": "msg_marie_039",
-              "sender": "ludo",
-              "time_label": "18:25",
-              "text": "C’est faux."
-            },
-            {
               "id": "msg_marie_040",
               "sender": "marie",
               "time_label": "18:25",
               "text": "Tu as demandé trois fois qui était le frère."
             },
             {
-              "id": "msg_marie_041",
-              "sender": "ludo",
-              "time_label": "18:25",
-              "text": "C’était une question de scénario."
-            },
-            {
               "id": "msg_marie_042",
               "sender": "marie",
               "time_label": "18:26",
               "text": "C’était un micro-sommeil avec sous-titres."
-            },
-            {
-              "id": "msg_marie_043",
-              "sender": "ludo",
-              "time_label": "18:26",
-              "text": "D’accord."
-            },
-            {
-              "id": "msg_marie_044",
-              "sender": "ludo",
-              "time_label": "18:26",
-              "text": "Je plaide coupable."
             }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_marie_day1_bread_prelude__choice_followup__guided_reply_group_005",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_marie_day1_bread_prelude__choice_followup__choice_group_005",
+          "text": "Je plaide coupable.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_marie_044"
           ]
         }
       ]
@@ -359,547 +405,631 @@
             "answered_marie_avoidant_day1"
           ]
         }
-      ],
-      "automatic_followup": [
+      ]
+    },
+    {
+      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_group_001",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [
         {
           "id": "msg_marie_200",
           "sender": "marie",
           "time_label": "18:25",
           "text": "Là, c’est mieux."
-        },
-        {
-          "id": "msg_marie_201",
-          "sender": "ludo",
-          "time_label": "18:25",
-          "text": "Parce que j’ai trouvé le sous-titre ?"
-        },
-        {
-          "id": "msg_marie_202",
-          "sender": "marie",
-          "time_label": "18:25",
-          "text": "Exactement."
-        },
-        {
-          "id": "msg_marie_203",
-          "sender": "marie",
-          "time_label": "18:26",
-          "text": "Et sans que je l’écrive en majuscules."
-        },
-        {
-          "id": "msg_marie_204",
-          "sender": "ludo",
-          "time_label": "18:26",
-          "text": "Je progresse."
-        },
-        {
-          "id": "msg_marie_205",
-          "sender": "marie",
-          "time_label": "18:26",
-          "text": "Doucement."
-        },
-        {
-          "id": "msg_marie_206",
-          "sender": "marie",
-          "time_label": "18:27",
-          "text": "Il reste l’épreuve de la boulangerie."
-        },
-        {
-          "id": "msg_marie_207",
-          "sender": "ludo",
-          "time_label": "18:27",
-          "text": "Je vais être à la hauteur."
-        },
-        {
-          "id": "msg_marie_208",
-          "sender": "marie",
-          "time_label": "18:27",
-          "text": "On verra."
-        },
-        {
-          "id": "msg_marie_209",
-          "sender": "marie",
-          "time_label": "18:28",
-          "text": "Au fait, Mathilde passe peut-être demain."
-        },
-        {
-          "id": "msg_marie_210",
-          "sender": "ludo",
-          "time_label": "18:28",
-          "text": "Ah ?"
-        },
-        {
-          "id": "msg_marie_211",
-          "sender": "marie",
-          "time_label": "18:28",
-          "text": "Elle a encore oublié son chargeur ici."
-        },
-        {
-          "id": "msg_marie_212",
-          "sender": "marie",
-          "time_label": "18:29",
-          "text": "Enfin “son” chargeur."
-        },
-        {
-          "id": "msg_marie_213",
-          "sender": "marie",
-          "time_label": "18:29",
-          "text": "À ce stade, il habite chez nous."
-        },
-        {
-          "id": "msg_marie_214",
-          "sender": "ludo",
-          "time_label": "18:29",
-          "text": "Elle les sème exprès."
-        },
-        {
-          "id": "msg_marie_215",
-          "sender": "marie",
-          "time_label": "18:30",
-          "text": "Je commence à le croire."
-        },
-        {
-          "id": "msg_marie_216",
-          "sender": "marie",
-          "time_label": "18:30",
-          "text": "Ce matin elle m’a écrit “je crois que j’ai oublié un truc chez toi”."
-        },
-        {
-          "id": "msg_marie_217",
-          "sender": "marie",
-          "time_label": "18:30",
-          "text": "Comme si c’était une surprise annuelle."
-        },
-        {
-          "id": "msg_marie_218",
-          "sender": "ludo",
-          "time_label": "18:31",
-          "text": "Tu lui as répondu quoi ?"
-        },
-        {
-          "id": "msg_marie_219",
-          "sender": "marie",
-          "time_label": "18:31",
-          "text": "“Étonnant.”"
-        },
-        {
-          "id": "msg_marie_220",
-          "sender": "ludo",
-          "time_label": "18:31",
-          "text": "Froide."
-        },
-        {
-          "id": "msg_marie_221",
-          "sender": "marie",
-          "time_label": "18:32",
-          "text": "Familiale."
-        },
-        {
-          "id": "msg_marie_222",
-          "sender": "ludo",
-          "time_label": "18:32",
-          "text": "Elle passe donc ?"
-        },
-        {
-          "id": "msg_marie_223",
-          "sender": "marie",
-          "time_label": "18:32",
-          "text": "Peut-être."
-        },
-        {
-          "id": "msg_marie_224",
-          "sender": "marie",
-          "time_label": "18:33",
-          "text": "Elle dit qu’elle ne veut pas déranger."
-        },
-        {
-          "id": "msg_marie_225",
-          "sender": "marie",
-          "time_label": "18:33",
-          "text": "Donc elle va arriver pour cinq minutes et rester boire un café."
-        },
-        {
-          "id": "msg_marie_226",
-          "sender": "ludo",
-          "time_label": "18:33",
-          "text": "Tu dis ça comme si ça t’agaçait."
-        },
-        {
-          "id": "msg_marie_227",
-          "sender": "marie",
-          "time_label": "18:34",
-          "text": "Ça m’agace deux minutes."
-        },
-        {
-          "id": "msg_marie_228",
-          "sender": "marie",
-          "time_label": "18:34",
-          "text": "Après je suis contente."
-        },
-        {
-          "id": "msg_marie_229",
-          "sender": "marie",
-          "time_label": "18:34",
-          "text": "C’est Mathilde."
-        },
-        {
-          "id": "msg_marie_230",
-          "sender": "ludo",
-          "time_label": "18:35",
-          "text": "Oui, je vois."
-        },
-        {
-          "id": "msg_marie_231",
-          "sender": "marie",
-          "time_label": "18:35",
-          "text": "Elle prend de la place sans demander."
-        },
-        {
-          "id": "msg_marie_232",
-          "sender": "marie",
-          "time_label": "18:35",
-          "text": "Mais quand elle n’est pas là, ça fait bizarre aussi."
-        },
-        {
-          "id": "msg_marie_233",
-          "sender": "ludo",
-          "time_label": "18:36",
-          "text": "C’est assez juste."
-        },
-        {
-          "id": "msg_marie_234",
-          "sender": "marie",
-          "time_label": "18:36",
-          "text": "Ne lui répète jamais ça."
-        },
-        {
-          "id": "msg_marie_235",
-          "sender": "ludo",
-          "time_label": "18:36",
-          "text": "Je protégerai ton autorité."
-        },
-        {
-          "id": "msg_marie_236",
-          "sender": "marie",
-          "time_label": "18:37",
-          "text": "Merci."
-        },
-        {
-          "id": "msg_marie_237",
-          "sender": "marie",
-          "time_label": "18:37",
-          "text": "Il ne m’en reste déjà pas beaucoup."
-        },
-        {
-          "id": "msg_marie_238",
-          "sender": "ludo",
-          "time_label": "18:37",
-          "text": "Tu as l’autorité sur les plaids."
-        },
-        {
-          "id": "msg_marie_239",
-          "sender": "marie",
-          "time_label": "18:38",
-          "text": "Et sur la cuisson du pain."
-        },
-        {
-          "id": "msg_marie_240",
-          "sender": "ludo",
-          "time_label": "18:38",
-          "text": "Ton empire est intact."
-        },
-        {
-          "id": "msg_marie_241",
-          "sender": "marie",
-          "time_label": "18:38",
-          "text": "Respecte-le 🙄"
-        },
-        {
-          "id": "msg_marie_242",
-          "sender": "ludo",
-          "time_label": "18:39",
-          "text": "Toujours."
-        },
-        {
-          "id": "msg_marie_243",
-          "sender": "marie",
-          "time_label": "18:39",
-          "text": "Tu vois, là j’aime bien."
-        },
-        {
-          "id": "msg_marie_244",
-          "sender": "ludo",
-          "time_label": "18:39",
-          "text": "Quoi ?"
-        },
-        {
-          "id": "msg_marie_245",
-          "sender": "marie",
-          "time_label": "18:40",
-          "text": "Quand tu réponds comme si tu étais vraiment dans la conversation."
-        },
-        {
-          "id": "msg_marie_246",
-          "sender": "ludo",
-          "time_label": "18:40",
-          "text": "Je suis dans la conversation."
-        },
-        {
-          "id": "msg_marie_247",
-          "sender": "marie",
-          "time_label": "18:40",
-          "text": "Là, oui."
-        },
-        {
-          "id": "msg_marie_248",
-          "sender": "ludo",
-          "time_label": "18:41",
-          "text": "Je suis désolé si j’ai été absent ces derniers jours."
-        },
-        {
-          "id": "msg_marie_249",
-          "sender": "marie",
-          "time_label": "18:41",
-          "text": "Je ne te demande pas de faire un discours."
-        },
-        {
-          "id": "msg_marie_250",
-          "sender": "ludo",
-          "time_label": "18:41",
-          "text": "Je sais."
-        },
-        {
-          "id": "msg_marie_251",
-          "sender": "ludo",
-          "time_label": "18:42",
-          "text": "Mais je peux au moins le dire."
-        },
-        {
-          "id": "msg_marie_252",
-          "sender": "marie",
-          "time_label": "18:42",
-          "text": "Oui."
-        },
-        {
-          "id": "msg_marie_253",
-          "sender": "marie",
-          "time_label": "18:42",
-          "text": "Tu peux."
-        },
-        {
-          "id": "msg_marie_254",
-          "sender": "marie",
-          "time_label": "18:43",
-          "text": "Et moi je peux faire semblant que ça ne me touche pas."
-        },
-        {
-          "id": "msg_marie_255",
-          "sender": "ludo",
-          "time_label": "18:43",
-          "text": "Tu fais bien semblant ?"
-        },
-        {
-          "id": "msg_marie_256",
-          "sender": "marie",
-          "time_label": "18:43",
-          "text": "Pas tellement."
-        },
-        {
-          "id": "msg_marie_257",
-          "sender": "ludo",
-          "time_label": "18:44",
-          "text": "J’aime bien quand tu fais mal semblant."
-        },
-        {
-          "id": "msg_marie_258",
-          "sender": "marie",
-          "time_label": "18:44",
-          "text": "Attention."
-        },
-        {
-          "id": "msg_marie_259",
-          "sender": "marie",
-          "time_label": "18:44",
-          "text": "Tu vas devenir charmant, on n’a pas prévu ça au planning."
-        },
-        {
-          "id": "msg_marie_260",
-          "sender": "ludo",
-          "time_label": "18:45",
-          "text": "Je vais doser."
-        },
-        {
-          "id": "msg_marie_261",
-          "sender": "marie",
-          "time_label": "18:45",
-          "text": "Bonne idée."
-        },
-        {
-          "id": "msg_marie_262",
-          "sender": "marie",
-          "time_label": "18:45",
-          "text": "Prends aussi du beurre si tu passes devant."
-        },
-        {
-          "id": "msg_marie_263",
-          "sender": "ludo",
-          "time_label": "18:46",
-          "text": "Pain, beurre, téléphone posé."
-        },
-        {
-          "id": "msg_marie_264",
-          "sender": "marie",
-          "time_label": "18:46",
-          "text": "Et présence humaine."
-        },
-        {
-          "id": "msg_marie_265",
-          "sender": "ludo",
-          "time_label": "18:46",
-          "text": "Présence humaine."
-        },
-        {
-          "id": "msg_marie_266",
-          "sender": "marie",
-          "time_label": "18:47",
-          "text": "Mieux."
-        },
-        {
-          "id": "msg_marie_267",
-          "sender": "ludo",
-          "time_label": "18:47",
-          "text": "Je pars dans dix minutes."
-        },
-        {
-          "id": "msg_marie_268",
-          "sender": "marie",
-          "time_label": "18:47",
-          "text": "D’accord."
-        },
-        {
-          "id": "msg_marie_269",
-          "sender": "marie",
-          "time_label": "18:48",
-          "text": "Fais attention sur la route."
-        },
-        {
-          "id": "msg_marie_270",
-          "sender": "ludo",
-          "time_label": "18:48",
-          "text": "Oui."
-        },
-        {
-          "id": "msg_marie_271",
-          "sender": "marie",
-          "time_label": "18:48",
-          "text": "Et ne réponds pas en marchant."
-        },
-        {
-          "id": "msg_marie_272",
-          "sender": "ludo",
-          "time_label": "18:49",
-          "text": "Je suis arrêté."
-        },
-        {
-          "id": "msg_marie_273",
-          "sender": "marie",
-          "time_label": "18:49",
-          "text": "Mouais."
-        },
-        {
-          "id": "msg_marie_274",
-          "sender": "marie",
-          "time_label": "18:49",
-          "text": "Rentre entier, avec du pain."
-        },
-        {
-          "id": "msg_marie_275",
-          "sender": "ludo",
-          "time_label": "18:50",
-          "text": "Dans cet ordre ?"
-        },
-        {
-          "id": "msg_marie_276",
-          "sender": "marie",
-          "time_label": "18:50",
-          "text": "Oui."
-        },
-        {
-          "id": "msg_marie_277",
-          "sender": "marie",
-          "time_label": "18:50",
-          "text": "Mais le pain compte quand même."
-        },
-        {
-          "id": "msg_marie_278",
-          "sender": "ludo",
-          "time_label": "18:51",
-          "text": "Message reçu."
-        },
-        {
-          "id": "msg_marie_279",
-          "sender": "marie",
-          "time_label": "18:51",
-          "text": "À tout à l’heure."
-        },
-        {
-          "id": "msg_marie_280",
-          "sender": "ludo",
-          "time_label": "18:51",
-          "text": "À tout à l’heure."
-        },
-        {
-          "id": "msg_marie_281",
-          "sender": "marie",
-          "time_label": "18:52",
-          "text": "Player ?"
-        },
-        {
-          "id": "msg_marie_282",
-          "sender": "ludo",
-          "time_label": "18:52",
-          "text": "Oui ?"
-        },
-        {
-          "id": "msg_marie_283",
-          "sender": "marie",
-          "time_label": "18:52",
-          "text": "Merci de faire l’effort."
-        },
-        {
-          "id": "msg_marie_284",
-          "sender": "ludo",
-          "time_label": "18:53",
-          "text": "Ce n’est pas un effort de rentrer vers toi."
-        },
-        {
-          "id": "msg_marie_285",
-          "sender": "marie",
-          "time_label": "18:53",
-          "text": "…"
-        },
-        {
-          "id": "msg_marie_286",
-          "sender": "marie",
-          "time_label": "18:53",
-          "text": "Bon."
-        },
-        {
-          "id": "msg_marie_287",
-          "sender": "marie",
-          "time_label": "18:54",
-          "text": "Prends le beurre, sinon je vais devenir sentimentale pour rien."
-        },
-        {
-          "id": "msg_marie_288",
-          "sender": "ludo",
-          "time_label": "18:54",
-          "text": "Je prends le beurre."
-        },
-        {
-          "id": "msg_marie_289",
-          "sender": "marie",
-          "time_label": "18:54",
-          "text": "Sage décision 🙂"
+        }
+      ],
+      "choices": [
+        {
+          "id": "segment_marie_day1_posture_presence__automatic_followup__choice_group_001",
+          "text": "Parce que j’ai trouvé le sous-titre ? Je progresse.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_marie_201",
+            "msg_marie_204",
+            "msg_marie_207",
+            "msg_marie_210"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_marie_207",
+              "sender": "ludo",
+              "time_label": "18:27",
+              "text": "Je vais être à la hauteur."
+            },
+            {
+              "id": "msg_marie_210",
+              "sender": "ludo",
+              "time_label": "18:28",
+              "text": "Ah ?"
+            },
+            {
+              "id": "msg_marie_202",
+              "sender": "marie",
+              "time_label": "18:25",
+              "text": "Exactement."
+            },
+            {
+              "id": "msg_marie_203",
+              "sender": "marie",
+              "time_label": "18:26",
+              "text": "Et sans que je l’écrive en majuscules."
+            },
+            {
+              "id": "msg_marie_205",
+              "sender": "marie",
+              "time_label": "18:26",
+              "text": "Doucement."
+            },
+            {
+              "id": "msg_marie_206",
+              "sender": "marie",
+              "time_label": "18:27",
+              "text": "Il reste l’épreuve de la boulangerie."
+            },
+            {
+              "id": "msg_marie_208",
+              "sender": "marie",
+              "time_label": "18:27",
+              "text": "On verra."
+            },
+            {
+              "id": "msg_marie_209",
+              "sender": "marie",
+              "time_label": "18:28",
+              "text": "Au fait, Mathilde passe peut-être demain."
+            },
+            {
+              "id": "msg_marie_211",
+              "sender": "marie",
+              "time_label": "18:28",
+              "text": "Elle a encore oublié son chargeur ici."
+            },
+            {
+              "id": "msg_marie_212",
+              "sender": "marie",
+              "time_label": "18:29",
+              "text": "Enfin “son” chargeur."
+            },
+            {
+              "id": "msg_marie_213",
+              "sender": "marie",
+              "time_label": "18:29",
+              "text": "À ce stade, il habite chez nous."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_group_002",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_marie_day1_posture_presence__automatic_followup__choice_group_002",
+          "text": "Elle les sème exprès. Tu lui as répondu quoi ?",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_marie_214",
+            "msg_marie_218",
+            "msg_marie_220",
+            "msg_marie_222"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_marie_220",
+              "sender": "ludo",
+              "time_label": "18:31",
+              "text": "Froide."
+            },
+            {
+              "id": "msg_marie_222",
+              "sender": "ludo",
+              "time_label": "18:32",
+              "text": "Elle passe donc ?"
+            },
+            {
+              "id": "msg_marie_215",
+              "sender": "marie",
+              "time_label": "18:30",
+              "text": "Je commence à le croire."
+            },
+            {
+              "id": "msg_marie_216",
+              "sender": "marie",
+              "time_label": "18:30",
+              "text": "Ce matin elle m’a écrit “je crois que j’ai oublié un truc chez toi”."
+            },
+            {
+              "id": "msg_marie_217",
+              "sender": "marie",
+              "time_label": "18:30",
+              "text": "Comme si c’était une surprise annuelle."
+            },
+            {
+              "id": "msg_marie_219",
+              "sender": "marie",
+              "time_label": "18:31",
+              "text": "“Étonnant.”"
+            },
+            {
+              "id": "msg_marie_221",
+              "sender": "marie",
+              "time_label": "18:32",
+              "text": "Familiale."
+            },
+            {
+              "id": "msg_marie_223",
+              "sender": "marie",
+              "time_label": "18:32",
+              "text": "Peut-être."
+            },
+            {
+              "id": "msg_marie_224",
+              "sender": "marie",
+              "time_label": "18:33",
+              "text": "Elle dit qu’elle ne veut pas déranger."
+            },
+            {
+              "id": "msg_marie_225",
+              "sender": "marie",
+              "time_label": "18:33",
+              "text": "Donc elle va arriver pour cinq minutes et rester boire un café."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_group_003",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_marie_day1_posture_presence__automatic_followup__choice_group_003",
+          "text": "Tu dis ça comme si ça t’agaçait. Oui, je vois.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_marie_226",
+            "msg_marie_230",
+            "msg_marie_233",
+            "msg_marie_235"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_marie_233",
+              "sender": "ludo",
+              "time_label": "18:36",
+              "text": "C’est assez juste."
+            },
+            {
+              "id": "msg_marie_235",
+              "sender": "ludo",
+              "time_label": "18:36",
+              "text": "Je protégerai ton autorité."
+            },
+            {
+              "id": "msg_marie_227",
+              "sender": "marie",
+              "time_label": "18:34",
+              "text": "Ça m’agace deux minutes."
+            },
+            {
+              "id": "msg_marie_228",
+              "sender": "marie",
+              "time_label": "18:34",
+              "text": "Après je suis contente."
+            },
+            {
+              "id": "msg_marie_229",
+              "sender": "marie",
+              "time_label": "18:34",
+              "text": "C’est Mathilde."
+            },
+            {
+              "id": "msg_marie_231",
+              "sender": "marie",
+              "time_label": "18:35",
+              "text": "Elle prend de la place sans demander."
+            },
+            {
+              "id": "msg_marie_232",
+              "sender": "marie",
+              "time_label": "18:35",
+              "text": "Mais quand elle n’est pas là, ça fait bizarre aussi."
+            },
+            {
+              "id": "msg_marie_234",
+              "sender": "marie",
+              "time_label": "18:36",
+              "text": "Ne lui répète jamais ça."
+            },
+            {
+              "id": "msg_marie_236",
+              "sender": "marie",
+              "time_label": "18:37",
+              "text": "Merci."
+            },
+            {
+              "id": "msg_marie_237",
+              "sender": "marie",
+              "time_label": "18:37",
+              "text": "Il ne m’en reste déjà pas beaucoup."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_group_004",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_marie_day1_posture_presence__automatic_followup__choice_group_004",
+          "text": "Tu as l’autorité sur les plaids. Ton empire est intact.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_marie_238",
+            "msg_marie_240",
+            "msg_marie_242",
+            "msg_marie_244"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_marie_242",
+              "sender": "ludo",
+              "time_label": "18:39",
+              "text": "Toujours."
+            },
+            {
+              "id": "msg_marie_244",
+              "sender": "ludo",
+              "time_label": "18:39",
+              "text": "Quoi ?"
+            },
+            {
+              "id": "msg_marie_239",
+              "sender": "marie",
+              "time_label": "18:38",
+              "text": "Et sur la cuisson du pain."
+            },
+            {
+              "id": "msg_marie_241",
+              "sender": "marie",
+              "time_label": "18:38",
+              "text": "Respecte-le 🙄"
+            },
+            {
+              "id": "msg_marie_243",
+              "sender": "marie",
+              "time_label": "18:39",
+              "text": "Tu vois, là j’aime bien."
+            },
+            {
+              "id": "msg_marie_245",
+              "sender": "marie",
+              "time_label": "18:40",
+              "text": "Quand tu réponds comme si tu étais vraiment dans la conversation."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_group_005",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_marie_day1_posture_presence__automatic_followup__choice_group_005",
+          "text": "Je suis dans la conversation. Je suis désolé si j’ai été absent ces derniers jours.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_marie_246",
+            "msg_marie_248",
+            "msg_marie_250",
+            "msg_marie_251"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_marie_250",
+              "sender": "ludo",
+              "time_label": "18:41",
+              "text": "Je sais."
+            },
+            {
+              "id": "msg_marie_251",
+              "sender": "ludo",
+              "time_label": "18:42",
+              "text": "Mais je peux au moins le dire."
+            },
+            {
+              "id": "msg_marie_247",
+              "sender": "marie",
+              "time_label": "18:40",
+              "text": "Là, oui."
+            },
+            {
+              "id": "msg_marie_249",
+              "sender": "marie",
+              "time_label": "18:41",
+              "text": "Je ne te demande pas de faire un discours."
+            },
+            {
+              "id": "msg_marie_252",
+              "sender": "marie",
+              "time_label": "18:42",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_marie_253",
+              "sender": "marie",
+              "time_label": "18:42",
+              "text": "Tu peux."
+            },
+            {
+              "id": "msg_marie_254",
+              "sender": "marie",
+              "time_label": "18:43",
+              "text": "Et moi je peux faire semblant que ça ne me touche pas."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_group_006",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_marie_day1_posture_presence__automatic_followup__choice_group_006",
+          "text": "Tu fais bien semblant ? J’aime bien quand tu fais mal semblant.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_marie_255",
+            "msg_marie_257",
+            "msg_marie_260",
+            "msg_marie_263"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_marie_260",
+              "sender": "ludo",
+              "time_label": "18:45",
+              "text": "Je vais doser."
+            },
+            {
+              "id": "msg_marie_263",
+              "sender": "ludo",
+              "time_label": "18:46",
+              "text": "Pain, beurre, téléphone posé."
+            },
+            {
+              "id": "msg_marie_256",
+              "sender": "marie",
+              "time_label": "18:43",
+              "text": "Pas tellement."
+            },
+            {
+              "id": "msg_marie_258",
+              "sender": "marie",
+              "time_label": "18:44",
+              "text": "Attention."
+            },
+            {
+              "id": "msg_marie_259",
+              "sender": "marie",
+              "time_label": "18:44",
+              "text": "Tu vas devenir charmant, on n’a pas prévu ça au planning."
+            },
+            {
+              "id": "msg_marie_261",
+              "sender": "marie",
+              "time_label": "18:45",
+              "text": "Bonne idée."
+            },
+            {
+              "id": "msg_marie_262",
+              "sender": "marie",
+              "time_label": "18:45",
+              "text": "Prends aussi du beurre si tu passes devant."
+            },
+            {
+              "id": "msg_marie_264",
+              "sender": "marie",
+              "time_label": "18:46",
+              "text": "Et présence humaine."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_group_007",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_marie_day1_posture_presence__automatic_followup__choice_group_007",
+          "text": "Présence humaine. Je pars dans dix minutes.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_marie_265",
+            "msg_marie_267",
+            "msg_marie_270",
+            "msg_marie_272"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_marie_270",
+              "sender": "ludo",
+              "time_label": "18:48",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_marie_272",
+              "sender": "ludo",
+              "time_label": "18:49",
+              "text": "Je suis arrêté."
+            },
+            {
+              "id": "msg_marie_266",
+              "sender": "marie",
+              "time_label": "18:47",
+              "text": "Mieux."
+            },
+            {
+              "id": "msg_marie_268",
+              "sender": "marie",
+              "time_label": "18:47",
+              "text": "D’accord."
+            },
+            {
+              "id": "msg_marie_269",
+              "sender": "marie",
+              "time_label": "18:48",
+              "text": "Fais attention sur la route."
+            },
+            {
+              "id": "msg_marie_271",
+              "sender": "marie",
+              "time_label": "18:48",
+              "text": "Et ne réponds pas en marchant."
+            },
+            {
+              "id": "msg_marie_273",
+              "sender": "marie",
+              "time_label": "18:49",
+              "text": "Mouais."
+            },
+            {
+              "id": "msg_marie_274",
+              "sender": "marie",
+              "time_label": "18:49",
+              "text": "Rentre entier, avec du pain."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_group_008",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_marie_day1_posture_presence__automatic_followup__choice_group_008",
+          "text": "Dans cet ordre ? Message reçu.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_marie_275",
+            "msg_marie_278",
+            "msg_marie_280",
+            "msg_marie_282"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_marie_280",
+              "sender": "ludo",
+              "time_label": "18:51",
+              "text": "À tout à l’heure."
+            },
+            {
+              "id": "msg_marie_282",
+              "sender": "ludo",
+              "time_label": "18:52",
+              "text": "Oui ?"
+            },
+            {
+              "id": "msg_marie_276",
+              "sender": "marie",
+              "time_label": "18:50",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_marie_277",
+              "sender": "marie",
+              "time_label": "18:50",
+              "text": "Mais le pain compte quand même."
+            },
+            {
+              "id": "msg_marie_279",
+              "sender": "marie",
+              "time_label": "18:51",
+              "text": "À tout à l’heure."
+            },
+            {
+              "id": "msg_marie_281",
+              "sender": "marie",
+              "time_label": "18:52",
+              "text": "Player ?"
+            },
+            {
+              "id": "msg_marie_283",
+              "sender": "marie",
+              "time_label": "18:52",
+              "text": "Merci de faire l’effort."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_group_009",
+      "pattern": "guided_reply_grouped_player_turns",
+      "function": "Regrouper plusieurs micro-réactions Ludo en une action joueur lisible.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "segment_marie_day1_posture_presence__automatic_followup__choice_group_009",
+          "text": "Ce n’est pas un effort de rentrer vers toi.",
+          "tone": "guided_reply",
+          "source_message_ids": [
+            "msg_marie_284",
+            "msg_marie_288"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_marie_288",
+              "sender": "ludo",
+              "time_label": "18:54",
+              "text": "Je prends le beurre."
+            },
+            {
+              "id": "msg_marie_285",
+              "sender": "marie",
+              "time_label": "18:53",
+              "text": "…"
+            },
+            {
+              "id": "msg_marie_286",
+              "sender": "marie",
+              "time_label": "18:53",
+              "text": "Bon."
+            },
+            {
+              "id": "msg_marie_287",
+              "sender": "marie",
+              "time_label": "18:54",
+              "text": "Prends le beurre, sinon je vais devenir sentimentale pour rien."
+            },
+            {
+              "id": "msg_marie_289",
+              "sender": "marie",
+              "time_label": "18:54",
+              "text": "Sage décision 🙂"
+            }
+          ]
         }
       ]
     }
