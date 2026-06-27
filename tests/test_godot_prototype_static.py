@@ -182,6 +182,47 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             self.assertIn(1, choice_counts, relative)
             self.assertTrue(any(count > 1 for count in choice_counts), relative)
 
+    def test_day1_progressive_content_keeps_only_marie_and_sandra_active(self):
+        index = json.loads((GAME / "data/conversations/chapter_01_index.json").read_text(encoding="utf-8"))
+        self.assertEqual(index.get("default_order"), ["chapter_01_marie", "chapter_01_sandra"])
+        self.assertEqual(index.get("conversation_files"), [
+            "res://data/conversations/chapter_01_marie.json",
+            "res://data/conversations/chapter_01_sandra.json",
+        ])
+        serialized_index = json.dumps(index, ensure_ascii=False).lower()
+        for forbidden in ["rapha", "pauline", "nico", "groupe", "photo_group_last_party_placeholder"]:
+            self.assertNotIn(forbidden, serialized_index)
+        self.assertIn("Mathilde", "\n".join(index.get("end_of_day_player_knowledge", [])))
+
+        initial_state = json.loads((GAME / "data/state/initial_state.json").read_text(encoding="utf-8"))
+        unlocked_content = initial_state.get("unlocked_content", [])
+        self.assertNotIn("profile_raphaelle_placeholder", unlocked_content)
+        self.assertNotIn("profile_pauline_placeholder", unlocked_content)
+        self.assertNotIn("profile_nico_placeholder", unlocked_content)
+        self.assertNotIn("photo_group_last_party_placeholder", unlocked_content)
+
+    def test_day1_marie_and_sandra_content_matches_progressive_scope(self):
+        marie = json.loads((GAME / "data/conversations/chapter_01_marie.json").read_text(encoding="utf-8"))
+        sandra = json.loads((GAME / "data/conversations/chapter_01_sandra.json").read_text(encoding="utf-8"))
+        marie_text = json.dumps(marie, ensure_ascii=False).lower()
+        sandra_text = json.dumps(sandra, ensure_ascii=False).lower()
+
+        self.assertIn("chargeur", marie_text)
+        self.assertIn("téléphone", marie_text)
+        self.assertIn("pain", marie_text)
+        self.assertIn("mathilde", marie_text)
+        self.assertNotIn("pauline", marie_text)
+        self.assertNotIn("nico", marie_text)
+        self.assertNotIn("rapha", marie_text)
+
+        self.assertIn("déjeuner", sandra_text)
+        self.assertIn("photo", sandra_text)
+        self.assertIn("doucement", sandra_text)
+        self.assertIn("profile_sandra_placeholder", sandra.get("unlocks_content", []))
+        self.assertNotIn("pauline", sandra_text)
+        self.assertNotIn("nico", sandra_text)
+        self.assertNotIn("rapha", sandra_text)
+
     def test_segmented_conversations_stay_grouped_in_moment_lists(self):
         loader = (GAME / "scripts" / "core" / "DataLoader.gd").read_text(encoding="utf-8")
         self.assertIn("get_segmented_conversation_entry", loader)

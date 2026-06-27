@@ -2,37 +2,25 @@
   "id": "chapter_01_index",
   "chapter": 1,
   "day": 1,
-  "title": "Jour 1 — Routine et premiers fils",
-  "description": "Première journée : routine avec Marie, complicité légère avec Sandra, présence calme de Raphaëlle, annonce de la soirée chez Pauline et première image du groupe.",
-  "design_goal": "À la fin du Jour 1, le joueur doit savoir avec qui il a parlé, visualiser les personnages principaux, comprendre les habitudes de conversation et avoir envie de continuer.",
+  "title": "Jour 1 — Routine et ancienne amitié",
+  "description": "Première journée recentrée sur Marie et Sandra : routine domestique, téléphone comme distance, Mathilde seulement mentionnée indirectement, et reprise prudente d’une ancienne amitié.",
+  "design_goal": "Installer un tronc commun progressif sans casting actif ni routes verrouillées : Marie pose le couple et la fatigue du quotidien, Sandra ouvre un manque ancien avec douceur et prudence.",
   "default_order": [
     "chapter_01_marie",
-    "chapter_01_sandra",
-    "chapter_01_raphaelle",
-    "chapter_01_group_friends"
+    "chapter_01_sandra"
   ],
   "conversation_files": [
     "res://data/conversations/chapter_01_marie.json",
-    "res://data/conversations/chapter_01_sandra.json",
-    "res://data/conversations/chapter_01_raphaelle.json",
-    "res://data/conversations/chapter_01_group_friends.json"
+    "res://data/conversations/chapter_01_sandra.json"
   ],
   "initial_visual_anchors": [
     "profile_marie_placeholder",
-    "profile_sandra_placeholder",
-    "profile_raphaelle_placeholder",
-    "profile_mathilde_placeholder",
-    "profile_pauline_placeholder",
-    "profile_nico_placeholder",
-    "photo_group_last_party_placeholder"
+    "profile_sandra_placeholder"
   ],
   "routes_available": [
     "marie",
     "sandra",
-    "raphaelle",
-    "pauline",
-    "nico_marie",
-    "mathilde"
+    "mathilde_seed"
   ],
   "routes_locked_to_seed_only": [
     "libertinage",
@@ -41,19 +29,18 @@
     "trio_marie_mathilde"
   ],
   "end_of_day_player_knowledge": [
-    "Marie et Ludo sont ensemble, mais la routine pèse.",
-    "Sandra connaît déjà Ludo et sait repérer ses faux 'ça va'.",
-    "Raphaëlle existe au travail comme présence attentive et claire.",
-    "Pauline prépare une soirée et aime contrôler le ton du groupe.",
-    "Nico regarde déjà Marie avec un intérêt visible.",
-    "Mathilde est familière du foyer et du groupe, presque installée chez Marie et Ludo.",
-    "Les premières photos permettent de visualiser rapidement le casting."
+    "Marie et Ludo sont ensemble, encore tendres, mais fatigués par la routine.",
+    "Le téléphone de Ludo crée déjà une petite distance dans le couple.",
+    "Mathilde existe dans le quotidien seulement par son chargeur oublié et son passage probable.",
+    "Sandra connaît Ludo d’avant Marie ; leur amitié s’est éloignée sans disparaître.",
+    "Sandra et Ludo sont chacun en couple, donc la reprise de lien reste prudente.",
+    "Aucune route n’est verrouillée au Jour 1 : seulement des postures et signaux légers."
   ],
   "debug_expected_outcomes": [
-    "Marie trust/lucidity can move slightly.",
-    "Sandra attachment can start increasing.",
-    "Raphaelle attachment or clarity can start increasing.",
-    "Pauline/Nico/Mathilde are seeded through group messages and visual anchors.",
-    "No dominant route should be locked in chapter 1."
+    "Only Marie and Sandra conversations are active on day 1.",
+    "Marie trust/lucidity can move slightly through posture choices.",
+    "Sandra attachment can move lightly without route lock.",
+    "Mathilde is only indirectly seeded through Marie.",
+    "No group/photo/casting-wide unlock should happen in chapter 1."
   ]
 }
