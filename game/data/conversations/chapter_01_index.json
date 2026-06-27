@@ -42,5 +42,24 @@
     "Sandra attachment can move lightly without route lock.",
     "Mathilde is only indirectly seeded through Marie.",
     "No group/photo/casting-wide unlock should happen in chapter 1."
-  ]
+  ],
+  "conversation_availability": {
+    "initial_conversation_ids": [
+      "chapter_01_marie"
+    ],
+    "locked_conversation_ids": [
+      "chapter_01_sandra"
+    ],
+    "unlocks": {
+      "chapter_01_sandra": {
+        "after_conversation_completed": "chapter_01_marie",
+        "time_label": "22:57",
+        "pending": true,
+        "notification": {
+          "title": "Sandra",
+          "body": "Mon téléphone vient de me ressortir ça."
+        }
+      }
+    }
+  }
 }

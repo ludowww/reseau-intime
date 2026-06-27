@@ -185,7 +185,7 @@
               "id": "msg_sandra_015",
               "sender": "sandra",
               "time_label": "23:01",
-              "text": "N’exagère pas."
+              "text": "N’exagère pas 😅"
             },
             {
               "id": "msg_sandra_016",
@@ -573,7 +573,7 @@
               "id": "msg_sandra_051",
               "sender": "sandra",
               "time_label": "23:13",
-              "text": "Tu es pénible."
+              "text": "Tu es pénible 🙂"
             }
           ]
         }
@@ -861,7 +861,7 @@
               "id": "msg_sandra_078",
               "sender": "sandra",
               "time_label": "23:22",
-              "text": "Encore pire."
+              "text": "Encore pire 😅"
             }
           ]
         }
@@ -1209,7 +1209,7 @@
       "choices": [
         {
           "id": "choice_from_msg_sandra_216",
-          "text": "Trop tard.",
+          "text": "Trop tard 😅",
           "tone": "guided_reply",
           "source_message_id": "msg_sandra_216",
           "time_label": "23:13",
@@ -1659,7 +1659,7 @@
               "id": "msg_sandra_257",
               "sender": "sandra",
               "time_label": "23:27",
-              "text": "Phrase adulte."
+              "text": "Phrase adulte 🙂"
             }
           ]
         }
@@ -1783,7 +1783,7 @@
       "choices": [
         {
           "id": "choice_from_msg_sandra_269",
-          "text": "Trop tard.",
+          "text": "Trop tard 😅",
           "tone": "guided_reply",
           "source_message_id": "msg_sandra_269",
           "time_label": "23:31",
@@ -1838,7 +1838,7 @@
               "id": "msg_sandra_274",
               "sender": "sandra",
               "time_label": "23:32",
-              "text": "Je vais vraiment regretter cette photo."
+              "text": "Je vais vraiment regretter cette photo 🙂"
             }
           ]
         }
@@ -2563,7 +2563,7 @@
               "id": "msg_sandra_343",
               "sender": "sandra",
               "time_label": "23:55",
-              "text": "Ne fais pas une fête."
+              "text": "Ne fais pas une fête 😅"
             }
           ]
         }

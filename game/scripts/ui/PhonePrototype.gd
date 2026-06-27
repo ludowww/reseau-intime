@@ -21,6 +21,9 @@ var notification_banner: PanelContainer
 var notification_label: Label
 var current_day_value = null
 var pending_conversation_ids: Dictionary = {}
+var unlocked_conversation_ids_by_day: Dictionary = {}
+var notification_target_conversation_id := ""
+var notification_target_day_value = null
 
 func _ready() -> void:
 	if DataLoader.chapter_indexes.is_empty():
@@ -53,6 +56,7 @@ func _build_layout() -> void:
 	conversation_view.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	conversation_view.choice_selected.connect(_on_choice_selected)
 	conversation_view.segment_changed.connect(_on_segment_changed)
+	conversation_view.conversation_completed.connect(_on_conversation_completed)
 	root.add_child(conversation_view)
 
 	debug_scroll = ScrollContainer.new()
@@ -136,13 +140,18 @@ func _add_home_navigation(parent: Node) -> void:
 	var debug_button := _add_button(nav, "Debug")
 	debug_button.pressed.connect(func(): _toggle_debug(debug_button))
 	var reset_button := _add_button(nav, "Reset")
-	reset_button.pressed.connect(func(): GameState.reset_state(); conversation_view.reset_ui_state(); pending_conversation_ids.clear(); _hide_notification(); _render_conversations(current_day_value); debug_panel.refresh())
+	reset_button.pressed.connect(func(): GameState.reset_state(); conversation_view.reset_ui_state(); pending_conversation_ids.clear(); unlocked_conversation_ids_by_day.clear(); _hide_notification(); _render_conversations(current_day_value); debug_panel.refresh())
 
 func _add_notification_banner(parent: Node) -> void:
 	notification_banner = PanelContainer.new()
 	notification_banner.visible = false
+	notification_banner.mouse_filter = Control.MOUSE_FILTER_STOP
 	notification_banner.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	notification_banner.add_theme_stylebox_override("panel", _panel_style(Color(0.10, 0.14, 0.20), 16))
+	notification_banner.gui_input.connect(func(event):
+		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+			_open_notification_target()
+	)
 	parent.add_child(notification_banner)
 	notification_label = Label.new()
 	notification_label.text = ""
@@ -221,7 +230,8 @@ func _collect_contact_conversations_for_day(day_value) -> Array:
 				by_id[conversation_id] = entry
 	var contacts: Array = []
 	for entry in by_id.values():
-		contacts.append(entry)
+		if _is_conversation_available(day_value, entry):
+			contacts.append(entry)
 	return contacts
 
 func _moment_metadata_by_conversation_id(day_value) -> Dictionary:
@@ -301,6 +311,8 @@ func _add_avatar(parent: Node, text: String) -> void:
 
 func _open_conversation(day_value, conversation: Dictionary) -> void:
 	var conversation_id := _conversation_id(conversation)
+	if not _is_conversation_available(day_value, conversation):
+		return
 	_clear_pending_for_conversation(conversation_id)
 	_mark_other_conversations_pending(day_value, conversation_id)
 	var segment_id := str(conversation.get("_current_segment_id", conversation.get("id", "")))
@@ -315,12 +327,12 @@ func _mark_other_conversations_pending(day_value, opened_conversation_id: String
 		var conversation_id := _conversation_id(conversation)
 		if conversation_id == opened_conversation_id:
 			continue
-		if _collect_messages(conversation).is_empty():
+		if _collect_messages(conversation).is_empty() or not _is_conversation_available(day_value, conversation):
 			continue
 		if not bool(pending_conversation_ids.get(conversation_id, false)):
 			pending_conversation_ids[conversation_id] = true
 			if not announced:
-				_show_notification("Nouveau message — %s" % _conversation_name(conversation))
+				_show_conversation_notification(day_value, conversation_id, "Nouveau message", "Nouveau message — %s" % _conversation_name(conversation))
 				announced = true
 
 func _clear_pending_for_conversation(conversation_id: String) -> void:
@@ -328,6 +340,77 @@ func _clear_pending_for_conversation(conversation_id: String) -> void:
 		pending_conversation_ids.erase(conversation_id)
 	if pending_conversation_ids.is_empty():
 		_hide_notification()
+
+func _on_conversation_completed(day_value, conversation_id: String) -> void:
+	_unlock_conversations_after_completion(day_value, conversation_id)
+	debug_panel.refresh()
+
+func _unlock_conversations_after_completion(day_value, completed_conversation_id: String) -> void:
+	var availability := _conversation_availability_for_day(day_value)
+	var unlocks: Dictionary = availability.get("unlocks", {})
+	for target_id in unlocks.keys():
+		var rule: Dictionary = unlocks[target_id]
+		if str(rule.get("after_conversation_completed", "")) != completed_conversation_id:
+			continue
+		if _unlock_conversation(day_value, str(target_id)):
+			pending_conversation_ids[str(target_id)] = true
+			var notification: Dictionary = rule.get("notification", {})
+			_show_conversation_notification(day_value, str(target_id), str(notification.get("title", target_id)), str(notification.get("body", "Nouveau message de %s" % target_id)))
+	if current_day_value != null and str(current_day_value) == str(day_value):
+		_render_conversations(day_value)
+
+func _unlock_conversation(day_value, conversation_id: String) -> bool:
+	var day_key := str(day_value)
+	if not unlocked_conversation_ids_by_day.has(day_key):
+		unlocked_conversation_ids_by_day[day_key] = {}
+	var day_unlocks: Dictionary = unlocked_conversation_ids_by_day[day_key]
+	if bool(day_unlocks.get(conversation_id, false)):
+		return false
+	day_unlocks[conversation_id] = true
+	unlocked_conversation_ids_by_day[day_key] = day_unlocks
+	return true
+
+func _available_conversation_ids_for_day(day_value) -> Array:
+	var availability := _conversation_availability_for_day(day_value)
+	var initial_ids: Array = availability.get("initial_conversation_ids", [])
+	if initial_ids.is_empty():
+		return []
+	var ids: Array = []
+	for conversation_id in initial_ids:
+		_add_unique(ids, str(conversation_id))
+	var day_unlocks: Dictionary = unlocked_conversation_ids_by_day.get(str(day_value), {})
+	for conversation_id in day_unlocks.keys():
+		if bool(day_unlocks[conversation_id]):
+			_add_unique(ids, str(conversation_id))
+	return ids
+
+func _is_conversation_available(day_value, conversation: Dictionary) -> bool:
+	var availability := _conversation_availability_for_day(day_value)
+	if availability.is_empty():
+		return true
+	var conversation_id := _conversation_id(conversation)
+	return _available_conversation_ids_for_day(day_value).has(conversation_id)
+
+func _conversation_availability_for_day(day_value) -> Dictionary:
+	return DataLoader.get_index_for_day(day_value).get("conversation_availability", {})
+
+func _show_conversation_notification(day_value, conversation_id: String, title: String, body: String) -> void:
+	notification_target_day_value = day_value
+	notification_target_conversation_id = conversation_id
+	_show_notification("%s — %s" % [title, body])
+	var expected_target := notification_target_conversation_id
+	await get_tree().create_timer(4.0).timeout
+	if notification_target_conversation_id == expected_target:
+		_hide_notification()
+
+func _open_notification_target() -> void:
+	if notification_target_conversation_id == "" or notification_target_day_value == null:
+		return
+	for conversation in _collect_contact_conversations_for_day(notification_target_day_value):
+		if _conversation_id(conversation) == notification_target_conversation_id:
+			_open_conversation(notification_target_day_value, conversation)
+			_hide_notification()
+			return
 
 func _show_notification(text: String) -> void:
 	if notification_banner == null or notification_label == null:
@@ -339,6 +422,8 @@ func _hide_notification() -> void:
 	if notification_banner == null:
 		return
 	notification_banner.visible = false
+	notification_target_conversation_id = ""
+	notification_target_day_value = null
 	if notification_label != null:
 		notification_label.text = ""
 

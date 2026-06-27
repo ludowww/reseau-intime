@@ -126,6 +126,45 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         ]:
             self.assertIn(expected, script)
 
+    def test_day1_time_gate_metadata_keeps_sandra_locked_until_marie_progress(self):
+        index = json.loads((GAME / "data/conversations/chapter_01_index.json").read_text(encoding="utf-8"))
+        gate = index.get("conversation_availability", {})
+        self.assertEqual(gate.get("initial_conversation_ids"), ["chapter_01_marie"])
+        self.assertIn("chapter_01_sandra", gate.get("locked_conversation_ids", []))
+        sandra_unlock = gate.get("unlocks", {}).get("chapter_01_sandra", {})
+        self.assertEqual(sandra_unlock.get("after_conversation_completed"), "chapter_01_marie")
+        self.assertEqual(sandra_unlock.get("time_label"), "22:57")
+        self.assertEqual(sandra_unlock.get("notification", {}).get("title"), "Sandra")
+        self.assertIn("Mon téléphone vient de me ressortir ça.", sandra_unlock.get("notification", {}).get("body", ""))
+
+    def test_phone_applies_day1_time_gates_and_clickable_conversation_notifications(self):
+        script = (GAME / "scripts" / "ui" / "PhonePrototype.gd").read_text(encoding="utf-8")
+        for expected in [
+            "unlocked_conversation_ids_by_day",
+            "notification_target_conversation_id",
+            "_available_conversation_ids_for_day",
+            "_is_conversation_available",
+            "_unlock_conversation",
+            "_unlock_conversations_after_completion",
+            "_show_conversation_notification",
+            "_open_notification_target",
+            "conversation_completed.connect(_on_conversation_completed)",
+            "after_conversation_completed",
+            "locked_conversation_ids",
+            "initial_conversation_ids",
+            "create_timer(4.0)",
+        ]:
+            self.assertIn(expected, script)
+        self.assertIn("card.gui_input.connect", script)
+        self.assertIn("notification_banner.gui_input.connect", script)
+
+    def test_conversation_view_emits_completion_for_time_gated_unlocks(self):
+        script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
+        self.assertIn("signal conversation_completed(day_value, conversation_id: String)", script)
+        self.assertIn("conversation_completed.emit", script)
+        self.assertIn("_emit_conversation_completed_once", script)
+        self.assertIn('"completion_emitted"', script)
+
     def test_conversation_view_wraps_choices_and_renders_ludo_reply(self):
         script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
         self.assertIn("choice_buttons", script)
@@ -300,20 +339,24 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         self.assertNotIn("nico", sandra_text)
         self.assertNotIn("rapha", sandra_text)
 
-    def test_day1_emojis_stay_sparse_and_characterized(self):
+    def test_day1_emojis_stay_natural_and_avoid_forbidden_symbols(self):
         marie = json.loads((GAME / "data/conversations/chapter_01_marie.json").read_text(encoding="utf-8"))
         sandra = json.loads((GAME / "data/conversations/chapter_01_sandra.json").read_text(encoding="utf-8"))
         marie_text = json.dumps(marie, ensure_ascii=False)
         sandra_text = json.dumps(sandra, ensure_ascii=False)
-        marie_count = sum(marie_text.count(emoji) for emoji in ["😅", "🙄", "🙂"])
-        sandra_count = sum(sandra_text.count(emoji) for emoji in ["😅", "🙂"])
-        self.assertGreaterEqual(marie_count, 3)
-        self.assertLessEqual(marie_count, 6)
-        self.assertGreaterEqual(sandra_count, 2)
-        self.assertLessEqual(sandra_count, 4)
-        for forbidden in ["❤️", "❤", "😍", "😘", "🍆", "💦", "🥵"]:
+        allowed = ["😅", "🙄", "🙂", "😂", "🫠"]
+        marie_count = sum(marie_text.count(emoji) for emoji in allowed)
+        sandra_count = sum(sandra_text.count(emoji) for emoji in allowed)
+        self.assertGreaterEqual(marie_count, 10)
+        self.assertLessEqual(marie_count, 14)
+        self.assertGreaterEqual(sandra_count, 8)
+        self.assertLessEqual(sandra_count, 12)
+        self.assertLessEqual(marie_text.count("🫠") + sandra_text.count("🫠"), 1)
+        for forbidden in ["❤️", "❤", "😍", "😘", "😏", "🍆", "💦", "🥵", "🍑", "🌶️"]:
             self.assertNotIn(forbidden, marie_text)
             self.assertNotIn(forbidden, sandra_text)
+        self.assertIn('"text": "Doucement."', marie_text)
+        self.assertNotIn('"text": "Doucement. 🙂"', marie_text)
 
     def test_segmented_conversations_stay_grouped_in_moment_lists(self):
         loader = (GAME / "scripts" / "core" / "DataLoader.gd").read_text(encoding="utf-8")

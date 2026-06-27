@@ -2,6 +2,7 @@ extends VBoxContainer
 
 signal choice_selected(choice: Dictionary)
 signal segment_changed(day_value, conversation_id: String, segment_id: String)
+signal conversation_completed(day_value, conversation_id: String)
 
 const BACKGROUND_COLOR := Color(0.05, 0.06, 0.09)
 const HEADER_COLOR := Color(0.09, 0.10, 0.14)
@@ -98,6 +99,7 @@ func _new_conversation_state(conversation: Dictionary) -> Dictionary:
 		"show_empty_hint": true,
 		"sequence_in_progress": false,
 		"sequence_complete": false,
+		"completion_emitted": false,
 		"render_phase": "segment",
 		"initialized": false,
 	}
@@ -191,6 +193,7 @@ func _render_current_segment(conversation_id: String, token: int) -> void:
 	active_state["sequence_in_progress"] = false
 	if not _show_choices_for_segment(data):
 		active_state["sequence_complete"] = true
+		_emit_conversation_completed_once()
 
 func _show_choices_for_segment(data: Dictionary, show_empty_hint := true, persist_state := true) -> bool:
 	choice_buttons.clear()
@@ -282,6 +285,7 @@ func _auto_advance_segments_until_choice(conversation_id: String, token: int) ->
 			return
 	active_state["sequence_in_progress"] = false
 	active_state["sequence_complete"] = true
+	_emit_conversation_completed_once()
 
 func _render_segment_messages_with_typing(data: Dictionary, conversation_id: String, token: int) -> void:
 	_clear_node(choice_area)
@@ -319,6 +323,13 @@ func _resume_incomplete_sequence(conversation_id: String, token: int) -> void:
 		await _auto_advance_segments_until_choice(conversation_id, token)
 	else:
 		active_state["sequence_complete"] = true
+		_emit_conversation_completed_once()
+
+func _emit_conversation_completed_once() -> void:
+	if bool(active_state.get("completion_emitted", false)):
+		return
+	active_state["completion_emitted"] = true
+	conversation_completed.emit(current_conversation.get("day", current_conversation.get("chapter", null)), _parent_conversation_id())
 
 func _flatten_choice_followup_queue(choice: Dictionary) -> Array:
 	var queue: Array = []
