@@ -345,6 +345,10 @@ func _flatten_render_entry(item, queue: Array) -> void:
 	if item.has("incoming_notifications"):
 		for notification in item.get("incoming_notifications", []):
 			_flatten_render_entry(notification, queue)
+	if _has_direct_choices(item):
+		if item.has("text") or item.has("body") or item.has("content_id") or item.has("reaction"):
+			queue.append(item)
+		return
 	if item.has("automatic_followup"):
 		for followup in item.get("automatic_followup", []):
 			_flatten_render_entry(followup, queue)
@@ -352,6 +356,9 @@ func _flatten_render_entry(item, queue: Array) -> void:
 		queue.append(item)
 	elif not item.has("messages") and not item.has("social_items"):
 		queue.append({"text": "[debug item] %s" % str(item.get("id", item.keys())), "_system_note": true})
+
+func _has_direct_choices(item: Dictionary) -> bool:
+	return not item.get("choices", []).is_empty() or not item.get("priority_choices", []).is_empty()
 
 func _current_segment_data() -> Dictionary:
 	var segments: Array = current_conversation.get("segments", [])

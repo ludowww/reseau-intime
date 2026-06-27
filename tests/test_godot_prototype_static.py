@@ -280,8 +280,28 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         self.assertIn("_render_segment_messages_with_typing", script)
         self.assertIn("current_segment_index", script)
         self.assertIn("_segment_id_for_current_index", script)
+        auto_block = script[script.index("func _auto_advance_segments_until_choice"):script.index("func _render_segment_messages_with_typing")]
+        self.assertIn("_show_choices_for_segment(data", auto_block)
+        self.assertNotIn("choices.size() > 1", auto_block)
+        self.assertNotIn("choices.size() == 1", auto_block)
         self.assertNotIn("Continuer", script)
         self.assertNotIn("continue_button", script)
+
+    def test_conversation_view_does_not_render_choice_followups_before_click(self):
+        script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
+        flatten_block = script[script.index("func _flatten_render_entry"):script.index("func _current_segment_data")]
+        self.assertIn("_has_direct_choices(item)", flatten_block)
+        self.assertLess(flatten_block.index("_has_direct_choices(item)"), flatten_block.index('item.has("automatic_followup")'))
+        self.assertIn("return", flatten_block[flatten_block.index("_has_direct_choices(item)"):flatten_block.index('item.has("automatic_followup")')])
+
+    def test_conversation_view_guided_replies_remain_clickable_buttons_globally(self):
+        script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
+        choices_block = script[script.index("func _show_choices_for_segment"):script.index("func append_choice_result")]
+        self.assertIn("choices.size() == 1", choices_block)
+        self.assertIn("Button.new()", choices_block)
+        self.assertIn("button.pressed.connect", choices_block)
+        self.assertNotIn("choice_selected.emit(choice)", choices_block)
+        self.assertNotIn("append_choice_result(choice)", choices_block)
 
     def test_phone_updates_debug_context_when_segment_continues(self):
         script = (GAME / "scripts" / "ui" / "PhonePrototype.gd").read_text(encoding="utf-8")
