@@ -210,7 +210,7 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             self.assertIn(1, choice_counts, relative)
             self.assertTrue(any(count > 1 for count in choice_counts), relative)
 
-    def test_day1_player_lines_require_prior_choice_action(self):
+    def test_day1_player_lines_are_choices_not_auto_messages(self):
         for relative in [
             "data/conversations/chapter_01_sandra.json",
             "data/conversations/chapter_01_marie.json",
@@ -221,10 +221,8 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             def walk(value, path):
                 if isinstance(value, dict):
                     sender = str(value.get("sender", "")).lower()
-                    container = next((part for part in reversed(path) if part in {"messages", "next_messages", "automatic_followup", "next_items"}), "")
-                    is_under_choice = "choices" in path or "priority_choices" in path
-                    if sender in {"ludo", "player", "joueur"} and container and not is_under_choice:
-                        offenders.append("%s:%s:%s" % (container, value.get("id", "?"), value.get("text", "")[:40]))
+                    if sender in {"ludo", "player", "joueur"}:
+                        offenders.append("%s:%s" % ("/".join(path), value.get("id", "?")))
                     for key, child in value.items():
                         walk(child, path + [key])
                 elif isinstance(value, list):
@@ -234,28 +232,23 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             walk(data, [])
             self.assertEqual(offenders, [], relative)
 
-    def test_day1_guided_reply_density_stays_playable(self):
-        targets = {
-            "data/conversations/chapter_01_marie.json": 20,
-            "data/conversations/chapter_01_sandra.json": 45,
-        }
-        for relative, maximum in targets.items():
-            data = json.loads((GAME / relative).read_text(encoding="utf-8"))
-            action_points = sum(1 for segment in data.get("segments", []) if segment.get("choices") or segment.get("priority_choices"))
-            self.assertLessEqual(action_points, maximum, relative)
-
-    def test_day1_guided_replies_limit_player_burst_after_click(self):
+    def test_day1_one_choice_produces_exactly_one_player_bubble(self):
         for relative in [
             "data/conversations/chapter_01_sandra.json",
             "data/conversations/chapter_01_marie.json",
         ]:
             data = json.loads((GAME / relative).read_text(encoding="utf-8"))
             offenders = []
+            action_points = 0
             for segment in data.get("segments", []):
                 for choice in segment.get("choices", []) + segment.get("priority_choices", []):
+                    action_points += 1
+                    if str(choice.get("text", "")).strip() == "":
+                        offenders.append("empty:%s" % choice.get("id", "?"))
                     extra_player_bubbles = [message for message in choice.get("next_messages", []) if str(message.get("sender", "")).lower() in {"ludo", "player", "joueur"}]
-                    if 1 + len(extra_player_bubbles) > 3:
-                        offenders.append(choice.get("id", "?"))
+                    if extra_player_bubbles:
+                        offenders.append("extra:%s" % choice.get("id", "?"))
+            self.assertGreater(action_points, 20, relative)
             self.assertEqual(offenders, [], relative)
 
     def test_conversation_view_keeps_player_bubbles_post_choice_only(self):
