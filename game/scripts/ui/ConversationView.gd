@@ -9,6 +9,9 @@ const INCOMING_BUBBLE_COLOR := Color(0.16, 0.16, 0.21)
 const LUDO_BUBBLE_COLOR := Color(0.20, 0.29, 0.38)
 const CHOICE_COLOR := Color(0.13, 0.15, 0.20)
 const PLACEHOLDER_COLOR := Color(0.12, 0.10, 0.15)
+const BUBBLE_MIN_WIDTH := 180
+const BUBBLE_MAX_WIDTH := 520
+const BUBBLE_CHAR_WIDTH := 7.2
 const CHARACTER_BUBBLE_COLORS := {
 	"ludo": Color(0.20, 0.29, 0.38),
 	"marie": Color(0.42, 0.25, 0.36),
@@ -121,6 +124,7 @@ func _build_chat_shell() -> void:
 
 	message_thread = VBoxContainer.new()
 	message_thread.add_theme_constant_override("separation", 8)
+	message_thread.custom_minimum_size = Vector2(BUBBLE_MAX_WIDTH + 48, 0)
 	message_thread.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	message_thread.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	message_scroll.add_child(message_thread)
@@ -518,8 +522,9 @@ func _render_chat_bubble(message: Dictionary, record_history := true) -> Node:
 	row.alignment = BoxContainer.ALIGNMENT_END if is_ludo else BoxContainer.ALIGNMENT_BEGIN
 	message_thread.add_child(row)
 
+	var text_width := _bubble_text_width(message)
 	var bubble := PanelContainer.new()
-	bubble.custom_minimum_size = Vector2(180, 0)
+	bubble.custom_minimum_size = Vector2(text_width, 0)
 	bubble.size_flags_horizontal = Control.SIZE_SHRINK_END if is_ludo else Control.SIZE_SHRINK_BEGIN
 	bubble.add_theme_stylebox_override("panel", _bubble_style(_bubble_color_for_sender(message), is_ludo))
 	row.add_child(bubble)
@@ -529,17 +534,35 @@ func _render_chat_bubble(message: Dictionary, record_history := true) -> Node:
 	bubble.add_child(text_box)
 
 	var sender := str(message.get("sender", message.get("author", "")))
+	var time_text := _message_time_text(message)
+	if (sender != "" and not is_ludo) or time_text != "":
+		var meta_row := HBoxContainer.new()
+		meta_row.add_theme_constant_override("separation", 8)
+		meta_row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		text_box.add_child(meta_row)
 	if sender != "" and not is_ludo:
 		var sender_label := Label.new()
 		sender_label.text = sender.capitalize()
+		sender_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		sender_label.add_theme_font_size_override("font_size", 11)
 		sender_label.add_theme_color_override("font_color", Color(0.77, 0.72, 0.90))
-		text_box.add_child(sender_label)
+		(text_box.get_child(text_box.get_child_count() - 1) as HBoxContainer).add_child(sender_label)
+	elif time_text != "":
+		var spacer := Control.new()
+		spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		(text_box.get_child(text_box.get_child_count() - 1) as HBoxContainer).add_child(spacer)
+	if time_text != "":
+		var time_label := Label.new()
+		time_label.text = time_text
+		time_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		time_label.add_theme_font_size_override("font_size", 10)
+		time_label.add_theme_color_override("font_color", Color(0.67, 0.70, 0.78))
+		(text_box.get_child(text_box.get_child_count() - 1) as HBoxContainer).add_child(time_label)
 
 	var label := Label.new()
 	label.text = _format_message_text(message)
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	label.custom_minimum_size = Vector2(160, 0)
+	label.custom_minimum_size = Vector2(text_width, 0)
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	label.add_theme_font_size_override("font_size", 15)
 	text_box.add_child(label)
@@ -550,9 +573,15 @@ func _format_message_text(message: Dictionary) -> String:
 	var text := str(message.get("text", message.get("body", message.get("reaction", ""))))
 	if text == "":
 		return ""
-	if message.has("time_label"):
-		return "[%s] %s" % [message["time_label"], text]
 	return text
+
+func _message_time_text(message: Dictionary) -> String:
+	return str(message.get("time_label", ""))
+
+func _bubble_text_width(message: Dictionary) -> int:
+	var text := _format_message_text(message)
+	var estimated := int(float(text.length()) * BUBBLE_CHAR_WIDTH) + 32
+	return int(clamp(float(estimated), float(BUBBLE_MIN_WIDTH), float(BUBBLE_MAX_WIDTH)))
 
 func _is_ludo_sender(message: Dictionary) -> bool:
 	var sender := str(message.get("sender", message.get("author", ""))).to_lower()

@@ -145,6 +145,34 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         self.assertIn("Choix disponibles", script)
         self.assertIn("choice_area", script)
 
+    def test_conversation_view_requires_click_for_single_guided_reply(self):
+        script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
+        guided_block = script[script.index("var is_guided_reply := choices.size() == 1"):script.index("func append_choice_result")]
+        self.assertIn('choice["_guided_reply"] = true', guided_block)
+        self.assertIn("Button.new()", guided_block)
+        self.assertIn("button.pressed.connect", guided_block)
+        self.assertIn("_select_choice(choice, button)", guided_block)
+        self.assertNotIn("choice_selected.emit(choice)", guided_block)
+        self.assertNotIn("append_choice_result(choice)", guided_block)
+        self.assertNotIn("_select_choice(choice", guided_block.split("button.pressed.connect", 1)[0])
+
+    def test_conversation_view_uses_wider_bubbles_and_time_metadata_outside_text(self):
+        script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
+        for expected in [
+            "BUBBLE_MAX_WIDTH",
+            "BUBBLE_MIN_WIDTH",
+            "_bubble_text_width",
+            "Vector2(BUBBLE_MAX_WIDTH",
+            "time_label",
+            "HORIZONTAL_ALIGNMENT_RIGHT",
+        ]:
+            self.assertIn(expected, script)
+        format_block = script[script.index("func _format_message_text"):script.index("func _message_time_text")]
+        self.assertNotIn('"[%s] %s"', format_block)
+        self.assertNotIn("time_label", format_block)
+        typing_block = script[script.index("func _show_typing_indicator"):script.index("func _animate_typing_indicator")]
+        self.assertIn('typing_message.erase("time_label")', typing_block)
+
     def test_conversation_view_uses_mobile_chat_bubbles_and_header(self):
         script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
         for expected in [
@@ -222,6 +250,21 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         self.assertNotIn("pauline", sandra_text)
         self.assertNotIn("nico", sandra_text)
         self.assertNotIn("rapha", sandra_text)
+
+    def test_day1_emojis_stay_sparse_and_characterized(self):
+        marie = json.loads((GAME / "data/conversations/chapter_01_marie.json").read_text(encoding="utf-8"))
+        sandra = json.loads((GAME / "data/conversations/chapter_01_sandra.json").read_text(encoding="utf-8"))
+        marie_text = json.dumps(marie, ensure_ascii=False)
+        sandra_text = json.dumps(sandra, ensure_ascii=False)
+        marie_count = sum(marie_text.count(emoji) for emoji in ["😅", "🙄", "🙂"])
+        sandra_count = sum(sandra_text.count(emoji) for emoji in ["😅", "🙂"])
+        self.assertGreaterEqual(marie_count, 3)
+        self.assertLessEqual(marie_count, 6)
+        self.assertGreaterEqual(sandra_count, 2)
+        self.assertLessEqual(sandra_count, 4)
+        for forbidden in ["❤️", "❤", "😍", "😘", "🍆", "💦", "🥵"]:
+            self.assertNotIn(forbidden, marie_text)
+            self.assertNotIn(forbidden, sandra_text)
 
     def test_segmented_conversations_stay_grouped_in_moment_lists(self):
         loader = (GAME / "scripts" / "core" / "DataLoader.gd").read_text(encoding="utf-8")
