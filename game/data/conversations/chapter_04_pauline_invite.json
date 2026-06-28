@@ -21,19 +21,25 @@
           "id": "msg_c04_pauline_invite_001",
           "sender": "pauline",
           "time_label": "17:48",
-          "text": "Coucou survivant du canapé familial 😇"
+          "text": "Coucou 🙂"
         },
         {
           "id": "msg_c04_pauline_invite_002",
           "sender": "pauline",
           "time_label": "17:48",
-          "text": "Ce soir, petite soirée tranquille."
+          "text": "Premier message direct de ma part, je sais. Moment historique."
         },
         {
           "id": "msg_c04_pauline_invite_003",
           "sender": "pauline",
           "time_label": "17:49",
-          "text": "Donc probablement pas tranquille, mais je vais dire “tranquille” pour rassurer les gens fragiles 🙂"
+          "text": "Je te rassure : ce n’est pas pour te vendre un aspirateur. C’est pire 😇"
+        },
+        {
+          "id": "msg_c04_pauline_invite_004",
+          "sender": "pauline",
+          "time_label": "17:49",
+          "text": "Ce soir, petite soirée tranquille. Donc probablement pas tranquille, mais je vais dire “tranquille” pour rassurer les gens fragiles."
         }
       ],
       "choices": [
@@ -50,25 +56,25 @@
       "time_label": "17:50",
       "messages": [
         {
-          "id": "msg_c04_pauline_invite_004",
+          "id": "msg_c04_pauline_invite_005",
           "sender": "pauline",
           "time_label": "17:50",
           "text": "Je ne vends rien."
         },
         {
-          "id": "msg_c04_pauline_invite_005",
+          "id": "msg_c04_pauline_invite_006",
           "sender": "pauline",
           "time_label": "17:50",
           "text": "J’organise les occasions pour que les gens se trahissent eux-mêmes."
         },
         {
-          "id": "msg_c04_pauline_invite_006",
+          "id": "msg_c04_pauline_invite_007",
           "sender": "pauline",
           "time_label": "17:50",
           "text": "Avec des chips. C’est plus convivial 🙃"
         },
         {
-          "id": "msg_c04_pauline_invite_006b",
+          "id": "msg_c04_pauline_invite_008",
           "sender": "pauline",
           "time_label": "17:50",
           "text": "Et moins attaquable juridiquement."
@@ -180,19 +186,19 @@
       "time_label": "17:53",
       "messages": [
         {
-          "id": "msg_c04_pauline_invite_007",
+          "id": "msg_c04_pauline_invite_009",
           "sender": "pauline",
           "time_label": "17:53",
           "text": "Je préviens : je prends des photos."
         },
         {
-          "id": "msg_c04_pauline_invite_008",
+          "id": "msg_c04_pauline_invite_010",
           "sender": "pauline",
           "time_label": "17:53",
           "text": "Les gens sont plus honnêtes quand ils oublient qu’on les regarde."
         },
         {
-          "id": "msg_c04_pauline_invite_008b",
+          "id": "msg_c04_pauline_invite_011",
           "sender": "pauline",
           "time_label": "17:53",
           "text": "Et plus drôles quand ils croient qu’ils sont discrets 😇"
@@ -212,20 +218,20 @@
       "time_label": "17:54",
       "messages": [
         {
-          "id": "msg_c04_pauline_invite_009",
+          "id": "msg_c04_pauline_invite_012",
           "sender": "pauline",
           "time_label": "17:54",
           "text": "Pas spécialement 🙂"
         },
         {
-          "id": "msg_c04_pauline_invite_010",
+          "id": "msg_c04_pauline_invite_013",
           "sender": "pauline",
           "time_label": "17:54",
           "content_id": "photo_pauline_soft_provocation_j4_placeholder",
           "text": "Photo de Pauline avant la soirée : cadrage maîtrisé, sourire tranquille, tenue simple mais clairement choisie. Elle sait exactement l’effet que produit la photo, même si elle fait semblant que non."
         },
         {
-          "id": "msg_c04_pauline_invite_011",
+          "id": "msg_c04_pauline_invite_014",
           "sender": "pauline",
           "time_label": "17:54",
           "text": "À ce soir. Essaie d’avoir l’air innocent, pour voir 😇"
@@ -233,5 +239,5 @@
       ]
     }
   ],
-  "debug_notes": "J4 démarre par Pauline : invitation sociale, photos annoncées, contrôle léger. Réponses Player uniquement via choices."
+  "debug_notes": "J4 démarre par le premier message privé de Pauline : invitation sociale, photos annoncées, contrôle léger. Réponses Player uniquement via choices."
 }
