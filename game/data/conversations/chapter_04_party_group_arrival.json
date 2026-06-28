@@ -1,0 +1,187 @@
+{
+  "id": "chapter_04_party_group_arrival",
+  "chapter": 4,
+  "day": 4,
+  "title": "Jour 4 — Groupe soirée chez Pauline",
+  "app": "messages",
+  "thread": {
+    "id": "thread_friends_group",
+    "type": "group",
+    "participants": ["ludo", "marie", "mathilde", "pauline", "nico"],
+    "display_name": "Groupe amis",
+    "profile_content_id": "photo_group_last_party_placeholder"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c04_party_group_arrival_seg_01",
+      "moment_label": "jour 4",
+      "time_label": "20:36",
+      "messages": [
+        {
+          "id": "msg_c04_party_group_001",
+          "sender": "pauline",
+          "time_label": "20:36",
+          "text": "Photo de famille."
+        },
+        {
+          "id": "msg_c04_party_group_002",
+          "sender": "pauline",
+          "time_label": "20:36",
+          "text": "Famille au sens très large, évidemment 😇"
+        },
+        {
+          "id": "msg_c04_party_group_003",
+          "sender": "pauline",
+          "time_label": "20:36",
+          "content_id": "photo_party_group_j4_placeholder",
+          "text": "Photo de groupe chez Pauline : Marie sourit au centre du cadre, Mathilde est légèrement de côté, Nico trop proche pour que ce soit vraiment neutre, Pauline a clairement choisi l’angle. Player est partiellement hors champ, téléphone à la main."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c04_party_group_01_guided",
+          "text": "Je suis où, là-dessus ?",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c04_party_group_arrival_seg_02",
+      "moment_label": "jour 4",
+      "time_label": "20:37",
+      "messages": [
+        {
+          "id": "msg_c04_party_group_004",
+          "sender": "mathilde",
+          "time_label": "20:37",
+          "text": "Derrière ton téléphone."
+        },
+        {
+          "id": "msg_c04_party_group_005",
+          "sender": "mathilde",
+          "time_label": "20:37",
+          "text": "Artistiquement, c’est cohérent 😅"
+        },
+        {
+          "id": "msg_c04_party_group_006",
+          "sender": "marie",
+          "time_label": "20:37",
+          "text": "Je confirme. Très belle présence de ton écran."
+        },
+        {
+          "id": "msg_c04_party_group_007",
+          "sender": "nico",
+          "time_label": "20:37",
+          "text": "Marie sauve la photo, heureusement."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c04_party_group_02_1",
+          "text": "Marie sauve souvent les choses, oui.",
+          "tone": "tendre",
+          "effects": {
+            "marie_trust": 1,
+            "marie_attention_score": 1
+          },
+          "sets_flags": ["photo_party_group_j4_received"],
+          "next_messages": [
+            {
+              "id": "msg_c04_party_group_02_1_01",
+              "sender": "marie",
+              "time_label": "20:38",
+              "text": "Oh."
+            },
+            {
+              "id": "msg_c04_party_group_02_1_02",
+              "sender": "marie",
+              "time_label": "20:38",
+              "text": "Ça, je garde 🙂"
+            },
+            {
+              "id": "msg_c04_party_group_02_1_03",
+              "sender": "pauline",
+              "time_label": "20:38",
+              "text": "Capture mentale effectuée."
+            }
+          ]
+        },
+        {
+          "id": "choice_c04_party_group_02_2",
+          "text": "Nico, tu commentes vite les photos de Marie.",
+          "tone": "jealous",
+          "effects": {
+            "ludo_jealousy": 2,
+            "nico.place_near_marie": 1,
+            "social_pressure": 1
+          },
+          "sets_flags": ["photo_party_group_j4_received", "nico_complimented_marie_j4"],
+          "next_messages": [
+            {
+              "id": "msg_c04_party_group_02_2_01",
+              "sender": "nico",
+              "time_label": "20:38",
+              "text": "Je commente ce qui est visible."
+            },
+            {
+              "id": "msg_c04_party_group_02_2_02",
+              "sender": "pauline",
+              "time_label": "20:38",
+              "text": "Ambiance. J’adore."
+            },
+            {
+              "id": "msg_c04_party_group_02_2_03",
+              "sender": "marie",
+              "time_label": "20:38",
+              "text": "On respire ?"
+            }
+          ]
+        },
+        {
+          "id": "choice_c04_party_group_02_3",
+          "text": "Je vais poser le téléphone deux minutes.",
+          "tone": "present",
+          "effects": {
+            "marie_trust": 1,
+            "lie_score": -1
+          },
+          "sets_flags": ["photo_party_group_j4_received"],
+          "next_messages": [
+            {
+              "id": "msg_c04_party_group_02_3_01",
+              "sender": "mathilde",
+              "time_label": "20:38",
+              "text": "Deux minutes ? Ambitieux."
+            },
+            {
+              "id": "msg_c04_party_group_02_3_02",
+              "sender": "marie",
+              "time_label": "20:38",
+              "text": "Je prends deux minutes. C’est déjà ça."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c04_party_group_arrival_seg_03",
+      "moment_label": "jour 4",
+      "time_label": "20:40",
+      "messages": [
+        {
+          "id": "msg_c04_party_group_008",
+          "sender": "pauline",
+          "time_label": "20:40",
+          "text": "J’en ferai d’autres."
+        },
+        {
+          "id": "msg_c04_party_group_009",
+          "sender": "pauline",
+          "time_label": "20:40",
+          "text": "Les premières photos mentent toujours un peu. Les suivantes moins."
+        }
+      ]
+    }
+  ],
+  "debug_notes": "J4 groupe soirée : première photo sociale obligatoire, Marie visible, Nico seed, Pauline cadre, Player téléphone. Réponses Player uniquement via choices."
+}
