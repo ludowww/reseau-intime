@@ -24,7 +24,7 @@
           "id": "msg_c03_sandra_evening_001",
           "sender": "sandra",
           "time_label": "18:27",
-          "text": "Coucou."
+          "text": "Coucou 🙂"
         },
         {
           "id": "msg_c03_sandra_evening_002",
@@ -36,7 +36,7 @@
           "id": "msg_c03_sandra_evening_003",
           "sender": "sandra",
           "time_label": "18:27",
-          "text": "C’est très convaincant, si on ignore mon téléphone posé devant moi depuis dix minutes."
+          "text": "C’est très convaincant, si on ignore mon téléphone posé devant moi depuis dix minutes 😅"
         }
       ],
       "choices": [
@@ -74,7 +74,7 @@
           "id": "msg_c03_sandra_evening_007",
           "sender": "sandra",
           "time_label": "18:28",
-          "text": "Puis j’ai fait semblant d’être raisonnable."
+          "text": "Puis j’ai fait semblant d’être raisonnable 🙂"
         }
       ],
       "choices": [
@@ -107,7 +107,7 @@
               "id": "msg_c03_sandra_evening_02_1_03",
               "sender": "sandra",
               "time_label": "18:29",
-              "text": "Mais je souris comme une idiote, donc bravo."
+              "text": "Mais je souris comme une idiote, donc bravo 😅"
             }
           ]
         },
@@ -134,7 +134,7 @@
               "id": "msg_c03_sandra_evening_02_2_02",
               "sender": "sandra",
               "time_label": "18:29",
-              "text": "Je suis déjà très occupée à prétendre que je ne les vois pas."
+              "text": "Je suis déjà très occupée à prétendre que je ne les vois pas 🫠"
             }
           ]
         },
@@ -199,7 +199,7 @@
           "id": "msg_c03_sandra_evening_011",
           "sender": "sandra",
           "time_label": "18:31",
-          "text": "Enfin. Mauvaise idée maintenant."
+          "text": "Enfin. Mauvaise idée maintenant 😅"
         }
       ],
       "choices": [
@@ -225,7 +225,7 @@
               "id": "msg_c03_sandra_evening_03_1_02",
               "sender": "sandra",
               "time_label": "18:32",
-              "text": "C’est peut-être pour ça que je te l’ai dit."
+              "text": "C’est peut-être pour ça que je te l’ai dit 🙂"
             }
           ]
         },
@@ -258,7 +258,7 @@
               "id": "msg_c03_sandra_evening_03_2_03",
               "sender": "sandra",
               "time_label": "18:32",
-              "text": "Tu vois. Progrès."
+              "text": "Tu vois. Progrès 😅"
             }
           ]
         },
@@ -284,7 +284,7 @@
               "id": "msg_c03_sandra_evening_03_3_02",
               "sender": "sandra",
               "time_label": "18:32",
-              "text": "Et on fait semblant que c’est une stratégie mature."
+              "text": "Et on fait semblant que c’est une stratégie mature 🙂"
             }
           ]
         }
@@ -311,7 +311,7 @@
           "id": "msg_c03_sandra_evening_014",
           "sender": "sandra",
           "time_label": "18:34",
-          "text": "Enfin. Si je ne trouve pas une excuse stupide d’ici là."
+          "text": "Enfin. Si je ne trouve pas une excuse stupide d’ici là 😅"
         }
       ],
       "choices": [
@@ -337,7 +337,7 @@
           "id": "msg_c03_sandra_evening_016",
           "sender": "sandra",
           "time_label": "18:35",
-          "text": "Doucement."
+          "text": "Doucement 🙂"
         }
       ]
     }
