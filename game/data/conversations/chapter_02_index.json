@@ -3,13 +3,13 @@
   "chapter": 2,
   "day": 2,
   "title": "Jour 2 — Texte V3 validé",
-  "description": "Journée à distance : Ludo reste hors de la maison; Marie et Mathilde écrivent depuis l’appartement, Raphaëlle depuis le travail, Sandra revient doucement sur la photo J1.",
-  "design_goal": "Intégrer le J2 V3 validé sans groupe actif, sans Pauline/Nico actifs, avec quatre récompenses visuelles textuelles et des réponses Ludo uniquement cliquables.",
+  "description": "Journée à distance : Player reste hors de la maison; Marie et Mathilde écrivent depuis l’appartement, Raphaëlle depuis le travail, Sandra revient doucement sur la photo J1.",
+  "design_goal": "Intégrer le J2 V3 validé sans groupe actif, sans Pauline/Nico actifs, avec quatre récompenses visuelles textuelles et des réponses Player uniquement cliquables.",
   "moment_flow": [
     {
       "moment_label": "matin",
       "time_label": "08:12",
-      "transition_text": "Ludo est déjà parti / dans les transports. Marie écrit depuis l’appartement.",
+      "transition_text": "Player est déjà parti / dans les transports. Marie écrit depuis l’appartement.",
       "conversation_ids": [
         "chapter_02_marie_morning"
       ]
@@ -24,7 +24,7 @@
     },
     {
       "moment_label": "fin d’après-midi",
-      "time_label": "17:38",
+      "time_label": "17:36",
       "transition_text": "Marie annonce que Mathilde est passée récupérer son chargeur.",
       "conversation_ids": [
         "chapter_02_marie_afternoon"
@@ -32,7 +32,7 @@
     },
     {
       "moment_label": "début de soirée",
-      "time_label": "18:12",
+      "time_label": "17:52",
       "transition_text": "Mathilde écrit directement depuis le salon.",
       "conversation_ids": [
         "chapter_02_mathilde_evening"
@@ -40,23 +40,23 @@
     },
     {
       "moment_label": "soir",
-      "time_label": "20:47",
+      "time_label": "18:38",
       "transition_text": "Sandra revient brièvement autour de la photo de la veille.",
       "conversation_ids": [
         "chapter_02_sandra_evening"
       ]
     },
     {
-      "moment_label": "fin de soirée",
-      "time_label": "21:24",
+      "moment_label": "fin de journée",
+      "time_label": "18:56",
       "transition_text": "Marie annonce que Mathilde reste dormir; ce n’est pas une première.",
       "conversation_ids": [
         "chapter_02_marie_night"
       ]
     },
     {
-      "moment_label": "fin de soirée privée",
-      "time_label": "21:43",
+      "moment_label": "fin de journée privée",
+      "time_label": "19:04",
       "transition_text": "Mathilde écrit depuis le canapé et envoie un selfie privé faussement innocent.",
       "conversation_ids": [
         "chapter_02_mathilde_night"
@@ -73,9 +73,9 @@
     "res://data/conversations/chapter_02_mathilde_night.json"
   ],
   "required_reveals": [
-    "Ludo est hors de la maison pendant toute la journée.",
+    "Player est hors de la maison pendant toute la journée.",
     "Marie et Mathilde échangent avec lui à distance.",
-    "Mathilde est habituée à dormir chez Marie/Ludo.",
+    "Mathilde est habituée à dormir chez Marie/Player.",
     "Sandra ne renvoie pas de nouvelle photo J2; elle reparle de celle de J1."
   ],
   "routes_available": [
@@ -96,5 +96,74 @@
     "No dominant route should be locked in chapter 2.",
     "No active Day 2 group conversation.",
     "Pauline and Nico remain inactive on Day 2."
-  ]
+  ],
+  "conversation_availability": {
+    "initial_conversation_ids": [
+      "chapter_02_marie_morning"
+    ],
+    "locked_conversation_ids": [
+      "chapter_02_raphaelle_midday",
+      "chapter_02_marie_afternoon",
+      "chapter_02_mathilde_evening",
+      "chapter_02_sandra_evening",
+      "chapter_02_marie_night",
+      "chapter_02_mathilde_night"
+    ],
+    "unlocks": {
+      "chapter_02_raphaelle_midday": {
+        "after_conversation_completed": "chapter_02_marie_morning",
+        "time_label": "12:27",
+        "pending": true,
+        "notification": {
+          "title": "Raphaëlle",
+          "body": "J’ai récupéré quelque chose à toi."
+        }
+      },
+      "chapter_02_marie_afternoon": {
+        "after_conversation_completed": "chapter_02_raphaelle_midday",
+        "time_label": "17:36",
+        "pending": true,
+        "notification": {
+          "title": "Marie",
+          "body": "Devine qui est venue récupérer son chargeur."
+        }
+      },
+      "chapter_02_mathilde_evening": {
+        "after_conversation_completed": "chapter_02_marie_afternoon",
+        "time_label": "17:52",
+        "pending": true,
+        "notification": {
+          "title": "Mathilde",
+          "body": "Je proteste."
+        }
+      },
+      "chapter_02_sandra_evening": {
+        "after_conversation_completed": "chapter_02_mathilde_evening",
+        "time_label": "18:38",
+        "pending": true,
+        "notification": {
+          "title": "Sandra",
+          "body": "J’ai failli supprimer la photo ce matin."
+        }
+      },
+      "chapter_02_marie_night": {
+        "after_conversation_completed": "chapter_02_sandra_evening",
+        "time_label": "18:56",
+        "pending": true,
+        "notification": {
+          "title": "Marie",
+          "body": "Bon. Elle reste dormir."
+        }
+      },
+      "chapter_02_mathilde_night": {
+        "after_conversation_completed": "chapter_02_marie_night",
+        "time_label": "19:04",
+        "pending": true,
+        "notification": {
+          "title": "Mathilde",
+          "body": "Je tiens à préciser que je ne colonise rien."
+        }
+      }
+    }
+  }
 }

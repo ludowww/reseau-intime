@@ -292,7 +292,7 @@
           "id": "msg_c02_marie_morning_027",
           "sender": "marie",
           "time_label": "08:12",
-          "text": "Sans café, je deviens une version conceptuelle de moi-même."
+          "text": "Sans café, je deviens pénible même pour moi."
         }
       ],
       "choices": [
@@ -394,7 +394,7 @@
               "id": "msg_c02_marie_morning_seg_11_choice_1_02",
               "sender": "marie",
               "time_label": "08:12",
-              "text": "Là-dedans, c’est une réunion de copropriété."
+              "text": "Là-dedans, ça râle dans tous les coins."
             },
             {
               "id": "msg_c02_marie_morning_seg_11_choice_1_03",
@@ -425,7 +425,7 @@
               "id": "msg_c02_marie_morning_seg_11_choice_2_02",
               "sender": "marie",
               "time_label": "08:12",
-              "text": "C’est officiellement le troisième habitant de l’appartement."
+              "text": "Il commence à faire partie des meubles."
             },
             {
               "id": "msg_c02_marie_morning_seg_11_choice_2_03",
@@ -474,7 +474,7 @@
               "id": "msg_c02_marie_morning_seg_11_choice_3_04",
               "sender": "marie",
               "time_label": "08:12",
-              "text": "Je suis très fragile sans café."
+              "text": "Je tiens mieux debout avec du café."
             }
           ]
         }
@@ -561,7 +561,7 @@
       "choices": [
         {
           "id": "choice_c02_marie_morning_15_guided",
-          "text": "Coup bas.",
+          "text": "Tu marques un point.",
           "tone": "guided_reply"
         }
       ]
@@ -575,13 +575,13 @@
           "id": "msg_c02_marie_morning_047",
           "sender": "marie",
           "time_label": "08:12",
-          "text": "Coup tendre."
+          "text": "Un point facile."
         },
         {
           "id": "msg_c02_marie_morning_048",
           "sender": "marie",
           "time_label": "08:12",
-          "text": "Mais bas, oui 🙂"
+          "text": "Mais je te connais 🙂"
         },
         {
           "id": "msg_c02_marie_morning_049",
@@ -650,5 +650,5 @@
       ]
     }
   ],
-  "debug_notes": "Marie à la maison, Ludo déjà parti / dans les transports. Texte J2 V3 intégré; réponses Ludo uniquement via choices."
+  "debug_notes": "Marie à la maison, Player déjà parti / dans les transports. Texte J2 V3 intégré; réponses Player uniquement via choices."
 }

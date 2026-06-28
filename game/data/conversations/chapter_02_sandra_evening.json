@@ -18,12 +18,12 @@
     {
       "conversation_segment_id": "c02_sandra_evening_seg_01",
       "moment_label": "jour 2",
-      "time_label": "20:47",
+      "time_label": "18:38",
       "messages": [
         {
           "id": "msg_c02_sandra_evening_001",
           "sender": "sandra",
-          "time_label": "20:47",
+          "time_label": "18:38",
           "text": "J’ai failli supprimer la photo ce matin."
         }
       ],
@@ -38,18 +38,18 @@
     {
       "conversation_segment_id": "c02_sandra_evening_seg_02",
       "moment_label": "jour 2",
-      "time_label": "20:47",
+      "time_label": "18:38",
       "messages": [
         {
           "id": "msg_c02_sandra_evening_002",
           "sender": "sandra",
-          "time_label": "20:47",
+          "time_label": "18:38",
           "text": "Parce que je me suis trouvée bête de te l’avoir envoyée."
         },
         {
           "id": "msg_c02_sandra_evening_003",
           "sender": "sandra",
-          "time_label": "20:47",
+          "time_label": "18:38",
           "text": "Et puis non."
         }
       ],
@@ -62,25 +62,25 @@
             {
               "id": "msg_c02_sandra_evening_seg_02_choice_1_01",
               "sender": "sandra",
-              "time_label": "20:47",
+              "time_label": "18:38",
               "text": "Je sais."
             },
             {
               "id": "msg_c02_sandra_evening_seg_02_choice_1_02",
               "sender": "sandra",
-              "time_label": "20:47",
+              "time_label": "18:38",
               "text": "C’est peut-être ça le problème."
             },
             {
               "id": "msg_c02_sandra_evening_seg_02_choice_1_03",
               "sender": "sandra",
-              "time_label": "20:47",
+              "time_label": "18:38",
               "text": "Non."
             },
             {
               "id": "msg_c02_sandra_evening_seg_02_choice_1_04",
               "sender": "sandra",
-              "time_label": "20:47",
+              "time_label": "18:38",
               "text": "Que tu comprennes trop bien pourquoi je l’ai envoyée."
             }
           ]
@@ -93,19 +93,19 @@
             {
               "id": "msg_c02_sandra_evening_seg_02_choice_2_01",
               "sender": "sandra",
-              "time_label": "20:47",
+              "time_label": "18:38",
               "text": "Tu serais catastrophique 😅"
             },
             {
               "id": "msg_c02_sandra_evening_seg_02_choice_2_02",
               "sender": "sandra",
-              "time_label": "20:47",
-              "text": "Tu as toujours eu une honnêteté très maladroite quand tu essaies de mentir doucement."
+              "time_label": "18:38",
+              "text": "Tu n’as jamais très bien su faire semblant avec moi."
             },
             {
               "id": "msg_c02_sandra_evening_seg_02_choice_2_03",
               "sender": "sandra",
-              "time_label": "20:47",
+              "time_label": "18:38",
               "text": "Prends-le comme une observation affectueuse."
             }
           ]
@@ -118,25 +118,25 @@
             {
               "id": "msg_c02_sandra_evening_seg_02_choice_3_01",
               "sender": "sandra",
-              "time_label": "20:47",
+              "time_label": "18:38",
               "text": "Oui."
             },
             {
               "id": "msg_c02_sandra_evening_seg_02_choice_3_02",
               "sender": "sandra",
-              "time_label": "20:47",
+              "time_label": "18:38",
               "text": "Bonne idée."
             },
             {
               "id": "msg_c02_sandra_evening_seg_02_choice_3_03",
               "sender": "sandra",
-              "time_label": "20:47",
+              "time_label": "18:38",
               "text": "C’est souvent quand on analyse que je panique."
             },
             {
               "id": "msg_c02_sandra_evening_seg_02_choice_3_04",
               "sender": "sandra",
-              "time_label": "20:47",
+              "time_label": "18:38",
               "text": "On essaie."
             }
           ]
@@ -146,12 +146,12 @@
     {
       "conversation_segment_id": "c02_sandra_evening_seg_03",
       "moment_label": "jour 2",
-      "time_label": "20:47",
+      "time_label": "18:38",
       "messages": [
         {
           "id": "msg_c02_sandra_evening_008",
           "sender": "sandra",
-          "time_label": "20:47",
+          "time_label": "18:38",
           "text": "Tu as passé une journée correcte ?"
         }
       ],
@@ -166,19 +166,19 @@
     {
       "conversation_segment_id": "c02_sandra_evening_seg_04",
       "moment_label": "jour 2",
-      "time_label": "20:47",
+      "time_label": "18:38",
       "messages": [
         {
           "id": "msg_c02_sandra_evening_009",
           "sender": "sandra",
-          "time_label": "20:47",
-          "text": "C’est une manière élégante de dire compliquée ?"
+          "time_label": "18:38",
+          "text": "Ça veut dire compliquée ?"
         }
       ],
       "choices": [
         {
           "id": "choice_c02_sandra_evening_04_guided",
-          "text": "C’est une manière prudente de dire remplie.",
+          "text": "Disons que je n’ai pas vraiment eu de pause.",
           "tone": "guided_reply"
         }
       ]
@@ -186,19 +186,19 @@
     {
       "conversation_segment_id": "c02_sandra_evening_seg_05",
       "moment_label": "jour 2",
-      "time_label": "20:47",
+      "time_label": "18:38",
       "messages": [
         {
           "id": "msg_c02_sandra_evening_010",
           "sender": "sandra",
-          "time_label": "20:47",
+          "time_label": "18:38",
           "text": "D’accord."
         },
         {
           "id": "msg_c02_sandra_evening_011",
           "sender": "sandra",
-          "time_label": "20:47",
-          "text": "Je vais accepter cette lâcheté syntaxique 🙂"
+          "time_label": "18:38",
+          "text": "Je vais faire semblant que c’était clair 🙂"
         }
       ],
       "choices": [
@@ -212,18 +212,18 @@
     {
       "conversation_segment_id": "c02_sandra_evening_seg_06",
       "moment_label": "jour 2",
-      "time_label": "20:47",
+      "time_label": "18:38",
       "messages": [
         {
           "id": "msg_c02_sandra_evening_012",
           "sender": "sandra",
-          "time_label": "20:47",
+          "time_label": "18:38",
           "text": "Ne t’habitue pas."
         },
         {
           "id": "msg_c02_sandra_evening_013",
           "sender": "sandra",
-          "time_label": "20:47",
+          "time_label": "18:38",
           "text": "Pour jeudi, ça tient toujours ?"
         }
       ],
@@ -238,18 +238,18 @@
     {
       "conversation_segment_id": "c02_sandra_evening_seg_07",
       "moment_label": "jour 2",
-      "time_label": "20:47",
+      "time_label": "18:38",
       "messages": [
         {
           "id": "msg_c02_sandra_evening_014",
           "sender": "sandra",
-          "time_label": "20:47",
-          "text": "Voilà."
+          "time_label": "18:38",
+          "text": "D’accord."
         },
         {
           "id": "msg_c02_sandra_evening_015",
           "sender": "sandra",
-          "time_label": "20:47",
+          "time_label": "18:38",
           "text": "C’est le genre de phrase qui me fait relire deux fois."
         }
       ],
@@ -264,24 +264,24 @@
     {
       "conversation_segment_id": "c02_sandra_evening_seg_08",
       "moment_label": "jour 2",
-      "time_label": "20:47",
+      "time_label": "18:38",
       "messages": [
         {
           "id": "msg_c02_sandra_evening_016",
           "sender": "sandra",
-          "time_label": "20:47",
+          "time_label": "18:38",
           "text": "Non."
         },
         {
           "id": "msg_c02_sandra_evening_017",
           "sender": "sandra",
-          "time_label": "20:47",
+          "time_label": "18:38",
           "text": "Laisse-la comme ça."
         },
         {
           "id": "msg_c02_sandra_evening_018",
           "sender": "sandra",
-          "time_label": "20:47",
+          "time_label": "18:38",
           "text": "Juste ne la grossis pas."
         }
       ],
@@ -296,12 +296,12 @@
     {
       "conversation_segment_id": "c02_sandra_evening_seg_09",
       "moment_label": "jour 2",
-      "time_label": "20:47",
+      "time_label": "18:38",
       "messages": [
         {
           "id": "msg_c02_sandra_evening_019",
           "sender": "sandra",
-          "time_label": "20:47",
+          "time_label": "18:38",
           "text": "Bonne nuit, Player."
         }
       ],
@@ -316,12 +316,12 @@
     {
       "conversation_segment_id": "c02_sandra_evening_seg_10",
       "moment_label": "jour 2",
-      "time_label": "20:47",
+      "time_label": "18:38",
       "messages": [
         {
           "id": "msg_c02_sandra_evening_020",
           "sender": "sandra",
-          "time_label": "20:47",
+          "time_label": "18:38",
           "text": "Et doucement."
         }
       ],
@@ -334,5 +334,5 @@
       ]
     }
   ],
-  "debug_notes": "Sandra revient brièvement autour de la photo J1. Texte J2 V3 intégré; réponses Ludo uniquement via choices."
+  "debug_notes": "Sandra revient brièvement autour de la photo J1. Texte J2 V3 intégré; réponses Player uniquement via choices."
 }

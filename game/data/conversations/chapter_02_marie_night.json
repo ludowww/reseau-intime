@@ -18,18 +18,18 @@
     {
       "conversation_segment_id": "c02_marie_night_seg_01",
       "moment_label": "jour 2",
-      "time_label": "21:24",
+      "time_label": "18:56",
       "messages": [
         {
           "id": "msg_c02_marie_night_001",
           "sender": "marie",
-          "time_label": "21:24",
+          "time_label": "18:56",
           "text": "Bon."
         },
         {
           "id": "msg_c02_marie_night_002",
           "sender": "marie",
-          "time_label": "21:24",
+          "time_label": "18:56",
           "text": "Elle reste dormir."
         }
       ],
@@ -44,25 +44,25 @@
     {
       "conversation_segment_id": "c02_marie_night_seg_02",
       "moment_label": "jour 2",
-      "time_label": "21:24",
+      "time_label": "18:56",
       "messages": [
         {
           "id": "msg_c02_marie_night_003",
           "sender": "marie",
-          "time_label": "21:24",
+          "time_label": "18:56",
           "text": "Comme ça."
         },
         {
           "id": "msg_c02_marie_night_004",
           "sender": "marie",
-          "time_label": "21:24",
+          "time_label": "18:56",
           "text": "Enfin “comme ça”."
         },
         {
           "id": "msg_c02_marie_night_005",
           "sender": "marie",
-          "time_label": "21:24",
-          "text": "Comme si elle n’avait pas déjà une relation plus stable avec notre canapé qu’avec certains adultes."
+          "time_label": "18:56",
+          "text": "Elle connaît déjà trop bien notre canapé."
         }
       ],
       "choices": [
@@ -76,18 +76,18 @@
     {
       "conversation_segment_id": "c02_marie_night_seg_03",
       "moment_label": "jour 2",
-      "time_label": "21:24",
+      "time_label": "18:56",
       "messages": [
         {
           "id": "msg_c02_marie_night_006",
           "sender": "marie",
-          "time_label": "21:24",
+          "time_label": "18:56",
           "text": "Ne l’encourage pas."
         },
         {
           "id": "msg_c02_marie_night_007",
           "sender": "marie",
-          "time_label": "21:24",
+          "time_label": "18:56",
           "text": "Elle a déjà demandé “son” plaid."
         }
       ],
@@ -102,19 +102,19 @@
     {
       "conversation_segment_id": "c02_marie_night_seg_04",
       "moment_label": "jour 2",
-      "time_label": "21:24",
+      "time_label": "18:56",
       "messages": [
         {
           "id": "msg_c02_marie_night_008",
           "sender": "marie",
-          "time_label": "21:24",
+          "time_label": "18:56",
           "text": "D’après elle, oui."
         },
         {
           "id": "msg_c02_marie_night_009",
           "sender": "marie",
-          "time_label": "21:24",
-          "text": "D’après moi, elle colonise lentement notre salon 😅"
+          "time_label": "18:56",
+          "text": "D’après moi, elle s’installe comme si elle avait toujours vécu là 😅"
         }
       ],
       "choices": [
@@ -126,26 +126,26 @@
             {
               "id": "msg_c02_marie_night_seg_04_choice_1_01",
               "sender": "marie",
-              "time_label": "21:24",
+              "time_label": "18:56",
               "text": "Non."
             },
             {
               "id": "msg_c02_marie_night_seg_04_choice_1_02",
               "sender": "marie",
-              "time_label": "21:24",
+              "time_label": "18:56",
               "text": "Ça va."
             },
             {
               "id": "msg_c02_marie_night_seg_04_choice_1_03",
               "sender": "marie",
-              "time_label": "21:24",
+              "time_label": "18:56",
               "text": "Elle est juste passée en mode canapé."
             },
             {
               "id": "msg_c02_marie_night_seg_04_choice_1_04",
               "sender": "marie",
-              "time_label": "21:24",
-              "text": "C’est une forme de stabilisation."
+              "time_label": "18:56",
+              "text": "Elle avait besoin de se poser."
             }
           ]
         },
@@ -157,19 +157,19 @@
             {
               "id": "msg_c02_marie_night_seg_04_choice_2_01",
               "sender": "marie",
-              "time_label": "21:24",
+              "time_label": "18:56",
               "text": "Les capsules."
             },
             {
               "id": "msg_c02_marie_night_seg_04_choice_2_02",
               "sender": "marie",
-              "time_label": "21:24",
-              "text": "Et peut-être un peu de dignité pour ce salon."
+              "time_label": "18:56",
+              "text": "Et peut-être un truc pour sauver ce salon."
             },
             {
               "id": "msg_c02_marie_night_seg_04_choice_2_03",
               "sender": "marie",
-              "time_label": "21:24",
+              "time_label": "18:56",
               "text": "Je m’en doutais."
             }
           ]
@@ -182,20 +182,20 @@
             {
               "id": "msg_c02_marie_night_seg_04_choice_3_01",
               "sender": "marie",
-              "time_label": "21:24",
+              "time_label": "18:56",
               "text": "Lâche."
             },
             {
               "id": "msg_c02_marie_night_seg_04_choice_3_02",
               "sender": "marie",
-              "time_label": "21:24",
+              "time_label": "18:56",
               "text": "Mais stratégique."
             },
             {
               "id": "msg_c02_marie_night_seg_04_choice_3_03",
               "sender": "marie",
-              "time_label": "21:24",
-              "text": "Je reconnais l’effort."
+              "time_label": "18:56",
+              "text": "Je t’en veux un peu moins."
             }
           ]
         }
@@ -204,12 +204,12 @@
     {
       "conversation_segment_id": "c02_marie_night_seg_05",
       "moment_label": "jour 2",
-      "time_label": "21:24",
+      "time_label": "18:56",
       "messages": [
         {
           "id": "msg_c02_marie_night_014",
           "sender": "marie",
-          "time_label": "21:24",
+          "time_label": "18:56",
           "text": "Tu rentres toujours vers 19h15 ?"
         }
       ],
@@ -224,18 +224,18 @@
     {
       "conversation_segment_id": "c02_marie_night_seg_06",
       "moment_label": "jour 2",
-      "time_label": "21:24",
+      "time_label": "18:56",
       "messages": [
         {
           "id": "msg_c02_marie_night_015",
           "sender": "marie",
-          "time_label": "21:24",
-          "text": "Je note."
+          "time_label": "18:56",
+          "text": "D’accord."
         },
         {
           "id": "msg_c02_marie_night_016",
           "sender": "marie",
-          "time_label": "21:24",
+          "time_label": "18:56",
           "text": "Sans commentaire."
         }
       ],
@@ -250,18 +250,18 @@
     {
       "conversation_segment_id": "c02_marie_night_seg_07",
       "moment_label": "jour 2",
-      "time_label": "21:24",
+      "time_label": "18:56",
       "messages": [
         {
           "id": "msg_c02_marie_night_017",
           "sender": "marie",
-          "time_label": "21:24",
+          "time_label": "18:56",
           "text": "Je sais 🙄"
         },
         {
           "id": "msg_c02_marie_night_018",
           "sender": "marie",
-          "time_label": "21:24",
+          "time_label": "18:56",
           "text": "À tout à l’heure."
         }
       ],
@@ -276,12 +276,12 @@
     {
       "conversation_segment_id": "c02_marie_night_seg_08",
       "moment_label": "jour 2",
-      "time_label": "21:24",
+      "time_label": "18:56",
       "messages": [
         {
           "id": "msg_c02_marie_night_019",
           "sender": "marie",
-          "time_label": "21:24",
+          "time_label": "18:56",
           "text": "Et n’oublie pas les capsules."
         }
       ],
@@ -296,16 +296,16 @@
     {
       "conversation_segment_id": "c02_marie_night_seg_09",
       "moment_label": "jour 2",
-      "time_label": "21:24",
+      "time_label": "18:56",
       "messages": [
         {
           "id": "msg_c02_marie_night_020",
           "sender": "marie",
-          "time_label": "21:24",
-          "text": "Capture mentale effectuée."
+          "time_label": "18:56",
+          "text": "Je garde ça en tête."
         }
       ]
     }
   ],
-  "debug_notes": "Marie est à la maison avec Mathilde, Ludo pas encore rentré. Texte J2 V3 intégré; réponses Ludo uniquement via choices."
+  "debug_notes": "Marie est à la maison avec Mathilde, Player pas encore rentré. Texte J2 V3 intégré; réponses Player uniquement via choices."
 }

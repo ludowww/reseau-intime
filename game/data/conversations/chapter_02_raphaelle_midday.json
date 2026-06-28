@@ -69,7 +69,7 @@
           "id": "msg_c02_raphaelle_midday_006",
           "sender": "raphaelle",
           "time_label": "12:27",
-          "text": "J’ai considéré que c’était un appel à l’aide discret."
+          "text": "Je l’ai gardé, tu en auras besoin cet après-midi."
         }
       ],
       "choices": [
@@ -169,7 +169,7 @@
               "id": "msg_c02_raphaelle_midday_seg_03_choice_2_02",
               "sender": "raphaelle",
               "time_label": "12:27",
-              "text": "Il avait l’air plus stable que toi."
+              "text": "Il était au moins à sa place."
             },
             {
               "id": "msg_c02_raphaelle_midday_seg_03_choice_2_03",
@@ -181,13 +181,13 @@
               "id": "msg_c02_raphaelle_midday_seg_03_choice_2_04",
               "sender": "raphaelle",
               "time_label": "12:27",
-              "text": "Je ne dis pas “très juste”."
+              "text": "Je garde le commentaire pour moi."
             },
             {
               "id": "msg_c02_raphaelle_midday_seg_03_choice_2_05",
               "sender": "raphaelle",
               "time_label": "12:27",
-              "text": "Elle me demande un effort 😌"
+              "text": "On est au travail 😌"
             }
           ]
         },
@@ -218,19 +218,19 @@
               "id": "msg_c02_raphaelle_midday_seg_03_choice_3_04",
               "sender": "raphaelle",
               "time_label": "12:27",
-              "text": "Je ne garantis pas qu’il veuille repartir."
+              "text": "Je le poserai à un endroit visible."
             },
             {
               "id": "msg_c02_raphaelle_midday_seg_03_choice_3_05",
               "sender": "raphaelle",
               "time_label": "12:27",
-              "text": "Il appartient à quelqu’un qui oublie ses affaires."
+              "text": "Essaie juste de ne pas repartir sans lui."
             },
             {
               "id": "msg_c02_raphaelle_midday_seg_03_choice_3_06",
               "sender": "raphaelle",
               "time_label": "12:27",
-              "text": "Donc il cherche peut-être une figure stable."
+              "text": "Ce serait dommage de le récupérer deux fois dans la même journée."
             }
           ]
         }
@@ -360,5 +360,5 @@
       ]
     }
   ],
-  "debug_notes": "Ludo au travail, Raphaëlle au bureau. Texte J2 V3 intégré; réponses Ludo uniquement via choices."
+  "debug_notes": "Player au travail, Raphaëlle au bureau. Texte J2 V3 intégré; réponses Player uniquement via choices."
 }
