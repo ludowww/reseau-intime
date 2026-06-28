@@ -1,0 +1,281 @@
+{
+  "id": "chapter_03_marie_morning",
+  "chapter": 3,
+  "day": 3,
+  "title": "Jour 3 — Marie matin retour maison",
+  "app": "messages",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "marie"
+    ],
+    "display_name": "Marie",
+    "profile_content_id": "profile_marie_placeholder"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c03_marie_morning_seg_01",
+      "moment_label": "jour 3",
+      "time_label": "08:12",
+      "messages": [
+        {
+          "id": "msg_c03_marie_morning_001",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "T’es rentré."
+        },
+        {
+          "id": "msg_c03_marie_morning_002",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Mais j’ai l’impression qu’il y a encore une partie de toi qui cherche le réseau."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_marie_morning_01_guided",
+          "text": "Je suis là. Je me réveille juste lentement.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c03_marie_morning_seg_02",
+      "moment_label": "jour 3",
+      "time_label": "08:13",
+      "messages": [
+        {
+          "id": "msg_c03_marie_morning_003",
+          "sender": "marie",
+          "time_label": "08:13",
+          "text": "Tu te réveilles face contre table avec ton téléphone, surtout."
+        },
+        {
+          "id": "msg_c03_marie_morning_004",
+          "sender": "marie",
+          "time_label": "08:13",
+          "text": "Je ne dis pas ça en mode enquête."
+        },
+        {
+          "id": "msg_c03_marie_morning_005",
+          "sender": "marie",
+          "time_label": "08:13",
+          "text": "Juste... t’es un peu loin ce matin."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_marie_morning_02_1",
+          "text": "Viens là. Je n’ai pas envie d’être loin de toi.",
+          "tone": "tendre",
+          "effects": {
+            "marie_trust": 1,
+            "lie_score": -1,
+            "marie_attention_score": 1
+          },
+          "sets_flags": [
+            "player_returned_home_j3"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c03_marie_morning_02_1_01",
+              "sender": "marie",
+              "time_label": "08:14",
+              "text": "Ça, je prends."
+            },
+            {
+              "id": "msg_c03_marie_morning_02_1_02",
+              "sender": "marie",
+              "time_label": "08:14",
+              "text": "Même avec ta tête de mec qui a dormi en pointillés."
+            }
+          ]
+        },
+        {
+          "id": "choice_c03_marie_morning_02_2",
+          "text": "Je suis juste fatigué. La journée d’hier était longue.",
+          "tone": "avoidant",
+          "effects": {
+            "lie_score": 1,
+            "marie.lucidity": 1,
+            "marie_neglect_score": 1
+          },
+          "sets_flags": [
+            "marie_noticed_distance_j3"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c03_marie_morning_02_2_01",
+              "sender": "marie",
+              "time_label": "08:14",
+              "text": "Je sais que tu es fatigué."
+            },
+            {
+              "id": "msg_c03_marie_morning_02_2_02",
+              "sender": "marie",
+              "time_label": "08:14",
+              "text": "Je ne sais pas si c’est tout."
+            }
+          ]
+        },
+        {
+          "id": "choice_c03_marie_morning_02_3",
+          "text": "Je crois que je suis un peu perdu en ce moment.",
+          "tone": "truthful",
+          "effects": {
+            "marie_trust": 1,
+            "truth_tendency": 1,
+            "lie_score": 1
+          },
+          "sets_flags": [
+            "truth_seed_marie_j3"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c03_marie_morning_02_3_01",
+              "sender": "marie",
+              "time_label": "08:14",
+              "text": "Merci de le dire au moins comme ça."
+            },
+            {
+              "id": "msg_c03_marie_morning_02_3_02",
+              "sender": "marie",
+              "time_label": "08:14",
+              "text": "Même si “un peu” me paraît optimiste."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c03_marie_morning_seg_03",
+      "moment_label": "jour 3",
+      "time_label": "08:16",
+      "messages": [
+        {
+          "id": "msg_c03_marie_morning_006",
+          "sender": "marie",
+          "time_label": "08:16",
+          "text": "Je vais faire du café."
+        },
+        {
+          "id": "msg_c03_marie_morning_007",
+          "sender": "marie",
+          "time_label": "08:16",
+          "text": "Et je vais faire semblant de ne pas remarquer que Mathilde a laissé son plaid comme une revendication territoriale."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_marie_morning_03_guided",
+          "text": "Elle va dire que c’est un prêt culturel.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c03_marie_morning_seg_04",
+      "moment_label": "jour 3",
+      "time_label": "08:17",
+      "messages": [
+        {
+          "id": "msg_c03_marie_morning_008",
+          "sender": "marie",
+          "time_label": "08:17",
+          "text": "Probablement."
+        },
+        {
+          "id": "msg_c03_marie_morning_009",
+          "sender": "marie",
+          "time_label": "08:17",
+          "text": "Tu veux que je t’envoie une preuve que moi aussi je peux avoir l’air présentable le matin ?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_marie_morning_04_1",
+          "text": "Oui. Et je vais la regarder vraiment.",
+          "tone": "tendre",
+          "effects": {
+            "marie_trust": 1,
+            "marie_attention_score": 1
+          },
+          "sets_flags": [
+            "photo_marie_home_j3_received"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c03_marie_morning_04_1_01",
+              "sender": "marie",
+              "time_label": "08:18",
+              "text": "Photo envoyée."
+            },
+            {
+              "id": "msg_c03_marie_morning_04_1_02",
+              "sender": "marie",
+              "time_label": "08:18",
+              "content_id": "marie_j3_home_tender_placeholder",
+              "text": "Marie dans la cuisine, lumière douce du matin, cheveux un peu attachés, tenue simple. Elle ne pose pas vraiment, mais elle sait qu’elle est jolie et attend ton regard."
+            },
+            {
+              "id": "msg_c03_marie_morning_04_1_03",
+              "sender": "marie",
+              "time_label": "08:18",
+              "text": "Voilà. Tu peux revenir dans la pièce maintenant."
+            }
+          ]
+        },
+        {
+          "id": "choice_c03_marie_morning_04_2",
+          "text": "Je préfère te voir en vrai, là, maintenant.",
+          "tone": "tendre",
+          "effects": {
+            "marie_trust": 2,
+            "marie_attention_score": 1,
+            "lie_score": -1
+          },
+          "next_messages": [
+            {
+              "id": "msg_c03_marie_morning_04_2_01",
+              "sender": "marie",
+              "time_label": "08:18",
+              "text": "Bonne réponse."
+            },
+            {
+              "id": "msg_c03_marie_morning_04_2_02",
+              "sender": "marie",
+              "time_label": "08:18",
+              "text": "Je garde quand même l’idée de la photo pour quand tu redeviens insupportable."
+            }
+          ]
+        },
+        {
+          "id": "choice_c03_marie_morning_04_3",
+          "text": "Tu n’as pas besoin de preuve.",
+          "tone": "neutral",
+          "effects": {
+            "marie_trust": 0,
+            "marie.lucidity": 1
+          },
+          "next_messages": [
+            {
+              "id": "msg_c03_marie_morning_04_3_01",
+              "sender": "marie",
+              "time_label": "08:18",
+              "text": "Je sais."
+            },
+            {
+              "id": "msg_c03_marie_morning_04_3_02",
+              "sender": "marie",
+              "time_label": "08:18",
+              "text": "Mais parfois j’aimerais que tu aies encore envie d’en demander une."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_notes": "J3 ouvre sur Marie après le retour physique de Player. Marie reste ancrage et désir; réponses Player uniquement via choices."
+}
