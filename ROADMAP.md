@@ -9,17 +9,19 @@
 - Le téléphone affiche une discussion visible par personnage/groupe ; plusieurs épisodes internes peuvent alimenter le même fil.
 - J3-J5 disposent d’un cadrage produit validé pour désir, tensions, contenus visuels, preuves, Pauline et convergence des routes.
 - J3 dispose d’une fondation d’écriture exploitable : retour maison, Mathilde canapé, Raphaëlle clarté, Sandra jeudi, Marie clôture.
+- J4 dispose d’une fondation d’écriture exploitable : soirée sociale, Pauline observatrice, Nico miroir, Mathilde témoin, Sandra au mauvais moment, convergence.
 
 ## Priorité immédiate
 
 1. Écrire / intégrer J3 en data-first à partir de `docs/J3_WRITING_FOUNDATION.md`.
-2. Garder J3 centré sur le retour physique de Player après J2.
-3. Donner une conséquence jouable à Mathilde au réveil / nuit chez Marie et Player.
-4. Maintenir Marie comme ancrage et désir, pas obstacle.
-5. Préserver Sandra rare et émotionnelle, sans nouvelle grosse photo trop rapide.
-6. Utiliser Raphaëlle comme clarté calme, pas romance immédiate.
-7. Préparer J4/J5 comme montée : soirée sociale, regards croisés, convergence de notifications, première preuve faible.
-8. Polish galerie/photos placeholders si nécessaire avant d’élargir le casting.
+2. Préparer J4 en data-first à partir de `docs/J4_WRITING_FOUNDATION.md` après validation de J3.
+3. Garder J3 centré sur le retour physique de Player après J2.
+4. Donner une conséquence jouable à Mathilde au réveil / nuit chez Marie et Player.
+5. Maintenir Marie comme ancrage et désir, pas obstacle.
+6. Préserver Sandra rare et émotionnelle, sans nouvelle grosse photo trop rapide.
+7. Utiliser Raphaëlle comme clarté calme, pas romance immédiate.
+8. Préparer J5 comme montée : lendemain, première preuve faible, premières provocations conscientes.
+9. Polish galerie/photos placeholders si nécessaire avant d’élargir le casting.
 
 ## Direction J3-J5
 
@@ -44,6 +46,7 @@ Références :
 
 - `docs/J3_J5_Desire_Tension_Visual_Routes_Spec.md`
 - `docs/J3_WRITING_FOUNDATION.md`
+- `docs/J4_WRITING_FOUNDATION.md`
 - `docs/decisions/DECISION_007_J3_J5_DESIRE_TENSION_VISUAL_ROUTES.md`
 
 ## MVP vertical slice
