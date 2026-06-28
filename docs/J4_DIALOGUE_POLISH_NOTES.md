@@ -59,6 +59,8 @@ Usage : fausse innocence, contrôle, provocation, observation, plaisir de cadrer
 
 Pauline ne doit pas seulement être “méchante” ou omnisciente. Elle teste, regarde, provoque, garde des traces, mais elle reste sociale et joueuse.
 
+Important : J4 est son premier vrai contact privé avec Player. Elle peut être déjà socialement à l’aise parce qu’elle connaît Marie et le groupe, mais son ouverture privée doit le reconnaître explicitement. Elle ne doit pas parler comme si elle avait déjà une intimité installée avec Player.
+
 ### Marie
 
 Emojis privilégiés :
@@ -123,6 +125,7 @@ Ne pas faire :
 
 - un groupe où tout le monde parle pareil ;
 - une Pauline omnisciente dès J4 ;
+- une Pauline qui parle comme si elle avait déjà une intimité privée ancienne avec Player ;
 - une Marie uniquement jalouse ;
 - une Mathilde uniquement séductrice ;
 - une Sandra trop disponible pendant la soirée ;
