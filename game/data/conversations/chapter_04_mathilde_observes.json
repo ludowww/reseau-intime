@@ -27,13 +27,19 @@
           "id": "msg_c04_mathilde_observes_002",
           "sender": "mathilde",
           "time_label": "21:24",
-          "text": "T’as une tête intéressante."
+          "text": "Il est objectivement meilleur que le vôtre."
         },
         {
           "id": "msg_c04_mathilde_observes_003",
           "sender": "mathilde",
           "time_label": "21:24",
-          "text": "Genre : mec qui essaie de regarder Marie, Nico, son téléphone et son verre en même temps."
+          "text": "Mais toi, tu as une tête plus intéressante que le canapé."
+        },
+        {
+          "id": "msg_c04_mathilde_observes_004",
+          "sender": "mathilde",
+          "time_label": "21:24",
+          "text": "Genre : mec qui essaie de regarder Marie, Nico, son téléphone et son verre en même temps 😅"
         }
       ],
       "choices": [
@@ -50,22 +56,28 @@
       "time_label": "21:25",
       "messages": [
         {
-          "id": "msg_c04_mathilde_observes_004",
+          "id": "msg_c04_mathilde_observes_005",
           "sender": "mathilde",
           "time_label": "21:25",
           "text": "Exactement."
         },
         {
-          "id": "msg_c04_mathilde_observes_005",
+          "id": "msg_c04_mathilde_observes_006",
           "sender": "mathilde",
           "time_label": "21:25",
           "text": "Et tu n’es pas très discret quand tu fais semblant de ne pas être jaloux."
         },
         {
-          "id": "msg_c04_mathilde_observes_006",
+          "id": "msg_c04_mathilde_observes_007",
           "sender": "mathilde",
           "time_label": "21:25",
           "text": "Je dis ça pour t’aider, évidemment 😇"
+        },
+        {
+          "id": "msg_c04_mathilde_observes_008",
+          "sender": "mathilde",
+          "time_label": "21:25",
+          "text": "Service public. Canapé confortable. Observation gratuite."
         }
       ],
       "choices": [
@@ -91,6 +103,12 @@
               "sender": "mathilde",
               "time_label": "21:26",
               "text": "Officieusement, ton visage a déjà publié un communiqué."
+            },
+            {
+              "id": "msg_c04_mathilde_observes_02_1_03",
+              "sender": "mathilde",
+              "time_label": "21:26",
+              "text": "Avec communiqué de presse et logo moche 🙃"
             }
           ]
         },
@@ -115,7 +133,13 @@
               "id": "msg_c04_mathilde_observes_02_2_02",
               "sender": "mathilde",
               "time_label": "21:26",
-              "text": "Et ne réponds pas trop bien. Marie est à trois mètres 🫠"
+              "text": "Et répondre avec ce ton-là, aussi."
+            },
+            {
+              "id": "msg_c04_mathilde_observes_02_2_03",
+              "sender": "mathilde",
+              "time_label": "21:26",
+              "text": "Marie est à trois mètres, donc je vais redevenir une personne correcte 🫠"
             }
           ]
         },
@@ -146,7 +170,7 @@
               "id": "msg_c04_mathilde_observes_02_3_03",
               "sender": "mathilde",
               "time_label": "21:26",
-              "text": "Ne t’habitue pas trop, ça va te donner une réputation."
+              "text": "Ne t’habitue pas trop, ça va te donner une réputation 🙂"
             }
           ]
         }
@@ -158,22 +182,28 @@
       "time_label": "21:28",
       "messages": [
         {
-          "id": "msg_c04_mathilde_observes_007",
+          "id": "msg_c04_mathilde_observes_009",
           "sender": "mathilde",
           "time_label": "21:28",
           "text": "Au fait."
         },
         {
-          "id": "msg_c04_mathilde_observes_008",
+          "id": "msg_c04_mathilde_observes_010",
           "sender": "mathilde",
           "time_label": "21:28",
           "text": "La photo de ce matin."
         },
         {
-          "id": "msg_c04_mathilde_observes_009",
+          "id": "msg_c04_mathilde_observes_011",
           "sender": "mathilde",
           "time_label": "21:28",
           "text": "Ne la laisse pas traîner si Pauline prend ton téléphone pour “choisir la musique” 🙄"
+        },
+        {
+          "id": "msg_c04_mathilde_observes_012",
+          "sender": "mathilde",
+          "time_label": "21:28",
+          "text": "Elle a une façon très personnelle de choisir la musique. Avec les yeux partout."
         }
       ]
     }
