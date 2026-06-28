@@ -44,6 +44,7 @@ docs/
   09_WRITING_GUIDELINES.md
   10_VERTICAL_SLICE_SCOPE.md
   J2_WRITING_FOUNDATION.md
+  J3_J5_Desire_Tension_Visual_Routes_Spec.md
   story_state/
     GLOBAL_STORY_STATE.md
     J1_SUMMARY.md
@@ -76,4 +77,4 @@ Le niveau est explicite progressif, pouvant aller jusqu’au porno assumé dans 
 
 ## Statut
 
-Prototype data-first en cours : J1/J2 intégrés avec placeholders, documentation en alignement continu.
+Prototype data-first en cours : J1/J2 intégrés avec placeholders, documentation en alignement continu. J3-J5 sont cadrés côté désir, tensions, contenus visuels, routes et preuves avant écriture détaillée.
