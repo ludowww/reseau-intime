@@ -1,0 +1,170 @@
+{
+  "id": "chapter_04_marie_pre_party",
+  "chapter": 4,
+  "day": 4,
+  "title": "Jour 4 — Marie avant la soirée",
+  "app": "messages",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": ["ludo", "marie"],
+    "display_name": "Marie",
+    "profile_content_id": "profile_marie_placeholder"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c04_marie_pre_party_seg_01",
+      "moment_label": "jour 4",
+      "time_label": "19:12",
+      "messages": [
+        {
+          "id": "msg_c04_marie_pre_party_001",
+          "sender": "marie",
+          "time_label": "19:12",
+          "text": "Coucou depuis l’entrée 🙂"
+        },
+        {
+          "id": "msg_c04_marie_pre_party_002",
+          "sender": "marie",
+          "time_label": "19:12",
+          "text": "Je mets ça ou c’est trop pour la “petite soirée tranquille” de Pauline ?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c04_marie_pre_party_01_guided",
+          "text": "Montre-moi.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c04_marie_pre_party_seg_02",
+      "moment_label": "jour 4",
+      "time_label": "19:13",
+      "messages": [
+        {
+          "id": "msg_c04_marie_pre_party_003",
+          "sender": "marie",
+          "time_label": "19:13",
+          "text": "Photo envoyée."
+        },
+        {
+          "id": "msg_c04_marie_pre_party_004",
+          "sender": "marie",
+          "time_label": "19:13",
+          "content_id": "photo_marie_evening_j4_placeholder",
+          "text": "Marie avant la soirée, tenue simple mais plus apprêtée que d’habitude. Elle ne force pas la pose, mais elle attend clairement que Player la regarde avant que les autres donnent leur avis."
+        },
+        {
+          "id": "msg_c04_marie_pre_party_005",
+          "sender": "marie",
+          "time_label": "19:13",
+          "text": "Réponse interdite : “comme tu veux”."
+        },
+        {
+          "id": "msg_c04_marie_pre_party_006",
+          "sender": "marie",
+          "time_label": "19:13",
+          "text": "Je te connais trop bien 🙄"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c04_marie_pre_party_02_1",
+          "text": "Tu es très belle. Et je le dis sans esquiver.",
+          "tone": "tendre",
+          "effects": {
+            "marie_trust": 1,
+            "marie_attention_score": 1,
+            "lie_score": -1
+          },
+          "sets_flags": ["photo_marie_evening_j4_received"],
+          "next_messages": [
+            {
+              "id": "msg_c04_marie_pre_party_02_1_01",
+              "sender": "marie",
+              "time_label": "19:14",
+              "text": "Bien."
+            },
+            {
+              "id": "msg_c04_marie_pre_party_02_1_02",
+              "sender": "marie",
+              "time_label": "19:14",
+              "text": "Je note l’effort sur “sans esquiver” 🙂"
+            }
+          ]
+        },
+        {
+          "id": "choice_c04_marie_pre_party_02_2",
+          "text": "Je préfère te le dire en vrai dans deux minutes.",
+          "tone": "tendre",
+          "effects": {
+            "marie_trust": 2,
+            "marie_attention_score": 1
+          },
+          "sets_flags": ["photo_marie_evening_j4_received"],
+          "next_messages": [
+            {
+              "id": "msg_c04_marie_pre_party_02_2_01",
+              "sender": "marie",
+              "time_label": "19:14",
+              "text": "Bonne réponse."
+            },
+            {
+              "id": "msg_c04_marie_pre_party_02_2_02",
+              "sender": "marie",
+              "time_label": "19:14",
+              "text": "Je vais attendre deux minutes, alors. Pas trois 😅"
+            }
+          ]
+        },
+        {
+          "id": "choice_c04_marie_pre_party_02_3",
+          "text": "C’est peut-être un peu trop si Nico est là.",
+          "tone": "jealous",
+          "effects": {
+            "ludo_jealousy": 1,
+            "nico.place_near_marie": 1,
+            "marie.lucidity": 1
+          },
+          "sets_flags": ["photo_marie_evening_j4_received"],
+          "next_messages": [
+            {
+              "id": "msg_c04_marie_pre_party_02_3_01",
+              "sender": "marie",
+              "time_label": "19:14",
+              "text": "Ah. Nico."
+            },
+            {
+              "id": "msg_c04_marie_pre_party_02_3_02",
+              "sender": "marie",
+              "time_label": "19:14",
+              "text": "Tu me regardes, ou tu anticipes déjà qui pourrait le faire ?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c04_marie_pre_party_seg_03",
+      "moment_label": "jour 4",
+      "time_label": "19:16",
+      "messages": [
+        {
+          "id": "msg_c04_marie_pre_party_007",
+          "sender": "marie",
+          "time_label": "19:16",
+          "text": "Allez. On y va."
+        },
+        {
+          "id": "msg_c04_marie_pre_party_008",
+          "sender": "marie",
+          "time_label": "19:16",
+          "text": "Essaie juste de venir avec moi, pas avec tout ton écran."
+        }
+      ]
+    }
+  ],
+  "debug_notes": "J4 Marie pré-soirée : Marie redevient visible comme femme désirée avant le regard des autres. Réponses Player uniquement via choices."
+}
