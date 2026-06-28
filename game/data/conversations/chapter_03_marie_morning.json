@@ -24,19 +24,25 @@
           "id": "msg_c03_marie_morning_001",
           "sender": "marie",
           "time_label": "08:12",
-          "text": "T’es rentré."
+          "text": "Coucou de la cuisine ☕"
         },
         {
           "id": "msg_c03_marie_morning_002",
           "sender": "marie",
           "time_label": "08:12",
-          "text": "Mais j’ai l’impression qu’il y a encore une partie de toi qui cherche le réseau."
+          "text": "Tu es rentré, oui."
+        },
+        {
+          "id": "msg_c03_marie_morning_003",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Mais ton regard, lui, je ne sais pas encore dans quelle pièce il est."
         }
       ],
       "choices": [
         {
           "id": "choice_c03_marie_morning_01_guided",
-          "text": "Je suis là. Je me réveille juste lentement.",
+          "text": "Je suis là. Je démarre juste lentement.",
           "tone": "guided_reply"
         }
       ]
@@ -47,22 +53,28 @@
       "time_label": "08:13",
       "messages": [
         {
-          "id": "msg_c03_marie_morning_003",
-          "sender": "marie",
-          "time_label": "08:13",
-          "text": "Tu te réveilles face contre table avec ton téléphone, surtout."
-        },
-        {
           "id": "msg_c03_marie_morning_004",
           "sender": "marie",
           "time_label": "08:13",
-          "text": "Je ne dis pas ça en mode enquête."
+          "text": "Très lentement."
         },
         {
           "id": "msg_c03_marie_morning_005",
           "sender": "marie",
           "time_label": "08:13",
-          "text": "Juste... t’es un peu loin ce matin."
+          "text": "Tu as regardé ton téléphone avant même de voir que j’avais changé de tasse."
+        },
+        {
+          "id": "msg_c03_marie_morning_006",
+          "sender": "marie",
+          "time_label": "08:13",
+          "text": "Je ne lance pas une enquête. Pas encore 🙄"
+        },
+        {
+          "id": "msg_c03_marie_morning_007",
+          "sender": "marie",
+          "time_label": "08:13",
+          "text": "Mais tu es un peu loin ce matin."
         }
       ],
       "choices": [
@@ -89,7 +101,13 @@
               "id": "msg_c03_marie_morning_02_1_02",
               "sender": "marie",
               "time_label": "08:14",
-              "text": "Même avec ta tête de mec qui a dormi en pointillés."
+              "text": "Même avec ta tête de mec qui a été mis à jour pendant la nuit et redémarre mal."
+            },
+            {
+              "id": "msg_c03_marie_morning_02_1_03",
+              "sender": "marie",
+              "time_label": "08:14",
+              "text": "Approche."
             }
           ]
         },
@@ -116,7 +134,13 @@
               "id": "msg_c03_marie_morning_02_2_02",
               "sender": "marie",
               "time_label": "08:14",
-              "text": "Je ne sais pas si c’est tout."
+              "text": "Je ne suis juste pas sûre que ce soit le seul truc posé sur la table."
+            },
+            {
+              "id": "msg_c03_marie_morning_02_2_03",
+              "sender": "marie",
+              "time_label": "08:14",
+              "text": "À côté du pain. Et de ton air innocent très moyen."
             }
           ]
         },
@@ -137,13 +161,19 @@
               "id": "msg_c03_marie_morning_02_3_01",
               "sender": "marie",
               "time_label": "08:14",
-              "text": "Merci de le dire au moins comme ça."
+              "text": "Merci de le dire comme ça."
             },
             {
               "id": "msg_c03_marie_morning_02_3_02",
               "sender": "marie",
               "time_label": "08:14",
-              "text": "Même si “un peu” me paraît optimiste."
+              "text": "Même si “un peu” me paraît être ton service minimum syndical."
+            },
+            {
+              "id": "msg_c03_marie_morning_02_3_03",
+              "sender": "marie",
+              "time_label": "08:14",
+              "text": "Mais bon. C’est déjà une vraie phrase."
             }
           ]
         }
@@ -155,16 +185,22 @@
       "time_label": "08:16",
       "messages": [
         {
-          "id": "msg_c03_marie_morning_006",
+          "id": "msg_c03_marie_morning_008",
           "sender": "marie",
           "time_label": "08:16",
-          "text": "Je vais faire du café."
+          "text": "Je vais refaire du café."
         },
         {
-          "id": "msg_c03_marie_morning_007",
+          "id": "msg_c03_marie_morning_009",
           "sender": "marie",
           "time_label": "08:16",
-          "text": "Et je vais faire semblant de ne pas remarquer que Mathilde a laissé son plaid comme une revendication territoriale."
+          "text": "Et ignorer le plaid de Mathilde sur le canapé."
+        },
+        {
+          "id": "msg_c03_marie_morning_010",
+          "sender": "marie",
+          "time_label": "08:16",
+          "text": "Il a l’air plus installé que nous deux, franchement."
         }
       ],
       "choices": [
@@ -181,16 +217,22 @@
       "time_label": "08:17",
       "messages": [
         {
-          "id": "msg_c03_marie_morning_008",
+          "id": "msg_c03_marie_morning_011",
           "sender": "marie",
           "time_label": "08:17",
-          "text": "Probablement."
+          "text": "Bien sûr."
         },
         {
-          "id": "msg_c03_marie_morning_009",
+          "id": "msg_c03_marie_morning_012",
           "sender": "marie",
           "time_label": "08:17",
-          "text": "Tu veux que je t’envoie une preuve que moi aussi je peux avoir l’air présentable le matin ?"
+          "text": "Elle va même mettre des majuscules à Prêt Culturel."
+        },
+        {
+          "id": "msg_c03_marie_morning_013",
+          "sender": "marie",
+          "time_label": "08:17",
+          "text": "Bon. Tu veux une preuve que moi aussi je peux être présentable avant 9h ? 🙂"
         }
       ],
       "choices": [
@@ -217,13 +259,13 @@
               "sender": "marie",
               "time_label": "08:18",
               "content_id": "marie_j3_home_tender_placeholder",
-              "text": "Marie dans la cuisine, lumière douce du matin, cheveux un peu attachés, tenue simple. Elle ne pose pas vraiment, mais elle sait qu’elle est jolie et attend ton regard."
+              "text": "Marie dans la cuisine, lumière douce du matin, cheveux un peu attachés, tasse à la main. Elle ne pose pas vraiment, mais son sourire dit clairement qu’elle attend que tu la regardes."
             },
             {
               "id": "msg_c03_marie_morning_04_1_03",
               "sender": "marie",
               "time_label": "08:18",
-              "text": "Voilà. Tu peux revenir dans la pièce maintenant."
+              "text": "Voilà. Maintenant tu reviens dans la cuisine, monsieur le fantôme."
             }
           ]
         },
@@ -247,7 +289,13 @@
               "id": "msg_c03_marie_morning_04_2_02",
               "sender": "marie",
               "time_label": "08:18",
-              "text": "Je garde quand même l’idée de la photo pour quand tu redeviens insupportable."
+              "text": "Je garde quand même l’idée de la photo."
+            },
+            {
+              "id": "msg_c03_marie_morning_04_2_03",
+              "sender": "marie",
+              "time_label": "08:18",
+              "text": "Pour quand tu redeviens insupportable."
             }
           ]
         },
