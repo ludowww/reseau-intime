@@ -9,6 +9,7 @@ const CHAPTER_INDEX_PATHS := [
 ]
 const VISUAL_CONTENT_PATHS := [
 	"res://data/visual_content/placeholders.json",
+	"res://data/visual_content/chapter_03_placeholders.json",
 	"res://data/visual_content/chapter_04_proofs.json",
 ]
 
