@@ -29,9 +29,51 @@ Les formats doivent rester lisibles par l’auteur et faciles à valider par des
   "id": "thread_mathilde_private",
   "app": "messages",
   "type": "private",
-  "participants": ["ludo", "mathilde"],
+  "participants": ["player", "mathilde"],
   "title": "Mathilde",
   "unlocked_from_chapter": 2
+}
+```
+
+`player` est l’identifiant générique du protagoniste côté données. Le nom visible final doit venir du prénom choisi par le joueur ; les anciens identifiants internes historiques ne doivent pas forcer un affichage `Player`.
+
+## Thread visible et épisodes internes
+
+Une ligne dans l’application Messages correspond à un fil visible par personnage ou groupe. Plusieurs épisodes internes peuvent alimenter ce même fil.
+
+```json
+{
+  "id": "chapter_02_marie_afternoon",
+  "thread_id": "thread_marie_private",
+  "title": "Marie",
+  "_episode_ids": [
+    "chapter_02_marie_morning",
+    "chapter_02_marie_afternoon",
+    "chapter_02_marie_evening"
+  ]
+}
+```
+
+Règles :
+
+- `thread_id` identifie le fil visible stable.
+- les IDs d’épisodes restent utiles pour le gating, la chronologie et les métadonnées internes ;
+- `_episode_ids` / `_source_conversation_id` peuvent être produits par le loader pour garder la trace des épisodes fusionnés ;
+- `conversation_availability` pilote le déblocage des épisodes internes ;
+- `pending` / `unread` vient d’un vrai unlock d’épisode ou de l’état initial d’un jour ;
+- ouvrir une discussion ne doit pas rendre les autres fils `unread`.
+
+```json
+{
+  "conversation_availability": {
+    "initial_conversation_ids": ["chapter_02_marie_morning"],
+    "unlocks": {
+      "chapter_02_marie_morning": {
+        "target": "chapter_02_raphaelle_work",
+        "pending": true
+      }
+    }
+  }
 }
 ```
 
@@ -127,7 +169,7 @@ confessional
   "source_app": "messages",
   "thread_id": "thread_mathilde_private",
   "asset_path": "res://assets/placeholders/photo_mathilde_tier2_placeholder.png",
-  "context": "Mathilde dort chez Marie et écrit à Ludo depuis le salon.",
+  "context": "Mathilde dort chez Marie et écrit à Player depuis le salon.",
   "is_proof": true,
   "risk_level": 4,
   "unlock_conditions": {

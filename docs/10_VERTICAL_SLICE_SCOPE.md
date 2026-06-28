@@ -47,7 +47,7 @@ Scènes :
 
 - Mathilde à la maison ;
 - Sandra se confie ;
-- Raphaëlle remarque Ludo ;
+- Raphaëlle remarque Player ;
 - Nico complimente Marie ;
 - Pauline semble sage mais prépare la soirée.
 
@@ -59,11 +59,11 @@ Scène pivot.
 
 Événements :
 
-- Pauline provoque Ludo par message ;
+- Pauline provoque Player par message ;
 - Nico regarde Marie ;
-- Mathilde remarque Ludo ;
+- Mathilde remarque Player ;
 - Sandra écrit à distance ;
-- Marie sent que Ludo est ailleurs.
+- Marie sent que Player est ailleurs.
 
 Objectif : créer une tension multi-notifications.
 
@@ -103,13 +103,13 @@ Objectif : montrer que les contenus deviennent des risques.
 
 - Réaction à story.
 - Compliment de Nico.
-- Jalousie Ludo.
+- Jalousie Player.
 
 ### 5. Raphaëlle contrepoint
 
 - Attention au travail.
 - Question de clarté.
-- Refus du flou si Ludo est trop mensonger.
+- Refus du flou si Player est trop mensonger.
 
 ## Fonctionnalités techniques minimales
 

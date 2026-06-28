@@ -6,10 +6,10 @@ Préparer et cadrer le Jour 3 comme premier vrai pivot du vertical slice.
 
 Le Jour 3 doit faire se croiser les tensions installées aux Jours 1 et 2 :
 
-- Marie et Ludo dans le même espace social ;
+- Marie et Player dans le même espace social ;
 - Pauline qui contrôle l’ambiance ;
 - Nico qui vise Marie publiquement ;
-- Mathilde physiquement proche de Ludo et de Marie ;
+- Mathilde physiquement proche de Player et de Marie ;
 - Sandra qui écrit à distance ;
 - Raphaëlle absente de la soirée mais présente comme contraste mental ou message bref ;
 - le téléphone comme objet dangereux.
@@ -24,7 +24,7 @@ Le Jour 3 doit faire se croiser les tensions installées aux Jours 1 et 2 :
 1. Avant soirée — préparation / tenue / tension légère
 2. Arrivée — groupe actif, Pauline hôte, Nico regarde Marie
 3. Premier croisement — notifications simultanées
-4. Pauline teste Ludo — photo ou message privé
+4. Pauline teste Player — photo ou message privé
 5. Mathilde observe — proximité domestique devenue sociale
 6. Sandra écrit à distance — intime au mauvais moment
 7. Nico / Marie — jalousie publique
@@ -39,9 +39,9 @@ Le Jour 3 doit faire se croiser les tensions installées aux Jours 1 et 2 :
 ```text
 Pauline peut devenir une menace.
 Nico peut prendre une place auprès de Marie.
-Mathilde n’est plus seulement une présence domestique : elle observe Ludo dans le social.
+Mathilde n’est plus seulement une présence domestique : elle observe Player dans le social.
 Sandra peut écrire au pire moment.
-Marie commence à remarquer le rapport de Ludo à son téléphone.
+Marie commence à remarquer le rapport de Player à son téléphone.
 Le joueur a choisi une priorité, même s’il n’a pas encore verrouillé une route.
 ```
 
@@ -86,7 +86,7 @@ Message privé de Pauline
 Message privé de Mathilde
 Message ou notification de Sandra à distance
 Réaction ou commentaire de Nico sur Marie
-Marie qui remarque au moins une absence de Ludo
+Marie qui remarque au moins une absence de Player
 Possibilité de choisir quoi ouvrir en premier
 Possibilité de révélation du fond d’écran si condition active
 Première trace légère : photo, capture, favori, message supprimé ou commentaire public

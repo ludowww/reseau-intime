@@ -28,7 +28,7 @@ Cette structure permet :
 
 Toutes les parties doivent contenir :
 
-1. Routine Ludo / Marie.
+1. Routine Player / Marie.
 2. Mathilde présente dans la maison.
 3. Sandra comme confidente ambiguë.
 4. Raphaëlle comme attention claire.

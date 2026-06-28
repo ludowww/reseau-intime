@@ -8,7 +8,7 @@ Cette note est une **base forte d’orientation UI**, pas une simple inspiration
 
 ## Source de référence
 
-Cette note se base sur les captures fournies par Ludovic montrant plusieurs écrans de NTR Sim :
+Cette note se base sur les captures fournies par Playervic montrant plusieurs écrans de NTR Sim :
 
 - écran verrouillé / heure ;
 - écran d’accueil smartphone ;
@@ -196,7 +196,7 @@ Choix narratif : plusieurs boutons bas empilés
 Debug : caché par défaut
 ```
 
-Règle clé : Ludo doit être visiblement présent dans la conversation. Ses réponses ne doivent pas ressembler à des labels techniques.
+Règle clé : Player doit être visiblement présent dans la conversation. Ses réponses ne doivent pas ressembler à des labels techniques.
 
 ## Bulles de messages
 
@@ -210,7 +210,7 @@ largeur maximale pour éviter les lignes trop longues
 marge verticale entre bulles
 groupe de messages du même auteur possible
 couleur entrante liée au personnage
-couleur sortante constante pour Ludo
+couleur sortante constante pour Player
 ```
 
 Dans les groupes, afficher le nom du personnage au-dessus ou dans la bulle.
@@ -221,7 +221,7 @@ Exemple :
 Sandra
 Je ne devrais pas écrire.
 
-Ludo
+Player
 Tu peux me parler.
 ```
 
@@ -232,7 +232,7 @@ Chaque personnage important doit avoir une couleur de bulle reconnaissable. Le b
 Palette de départ, à ajuster visuellement :
 
 ```text
-Ludo : bleu gris / ardoise
+Player : bleu gris / ardoise
 Marie : rose doux / mauve chaud
 Mathilde : prune / beige rosé
 Sandra : violet gris / bleu nuit intime
@@ -246,14 +246,14 @@ La couleur ne doit pas être agressive : elle sert à la lecture, pas à transfo
 
 ## Rythme de messagerie et enchaînement
 
-Décision validée : après une réponse de Ludo, il ne doit pas rester un bouton sélectionné / annulable dans la zone basse.
+Décision validée : après une réponse de Player, il ne doit pas rester un bouton sélectionné / annulable dans la zone basse.
 
 Règle :
 
 ```text
 clic réponse ou choix
 → la zone de réponse disparaît ou se désactive proprement
-→ bulle Ludo affichée à droite
+→ bulle Player affichée à droite
 → indicateur “écrit...” du contact apparaît
 → messages suivants s’affichent un par un
 → si segment suivant : bouton Continuer seulement quand les messages courants sont terminés
@@ -357,7 +357,7 @@ Si une seule réponse :
 
 ```text
 Réponse guidée en bas
-clic → Ludo envoie la phrase
+clic → Player envoie la phrase
 zone basse nettoyée
 messages suivants enchaînés avec typing
 ```
@@ -511,7 +511,7 @@ Sandra à gauche : Hey, tu survis à ta journée ?
 Sandra à gauche : J’ai pensé à toi tout à l’heure.
 Réponse en bas : À peine. Pourquoi ?
 Clic réponse.
-Ludo à droite : À peine. Pourquoi ?
+Player à droite : À peine. Pourquoi ?
 Zone basse disparaît.
 Bulle Sandra écrit... à gauche.
 Sandra à gauche : Rien.

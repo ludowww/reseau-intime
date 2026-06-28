@@ -87,7 +87,7 @@ Pour J2, la cible est soft / suggestive / incarnée : corps visibles, charme, ca
 
 Contenu de couple, reconquête, jalousie, NTR ou ouverture négociée.
 
-Risque : si Marie donne de l’intimité pendant que Ludo collectionne les secrets, elle vit cela comme une humiliation.
+Risque : si Marie donne de l’intimité pendant que Player collectionne les secrets, elle vit cela comme une humiliation.
 
 ### Mathilde
 
@@ -101,13 +101,13 @@ Spécificité : Mathilde est par défaut cousine par alliance de Marie pour faci
 
 Contenu rare, fragile, émotionnel, parfois supprimé ou regretté.
 
-Risque : Sandra fuit si Ludo traite le contenu comme une preuve de conquête ou l’expose.
+Risque : Sandra fuit si Player traite le contenu comme une preuve de conquête ou l’expose.
 
 ### Raphaëlle
 
 Contenu doux, sincère, conditionné à la clarté.
 
-Risque : elle coupe si Ludo veut recevoir sans assumer.
+Risque : elle coupe si Player veut recevoir sans assumer.
 
 ### Pauline
 
@@ -119,7 +119,7 @@ Risque : Pauline peut garder des captures ou utiliser les contenus comme levier.
 
 Contenu indirect autour de Marie : stories, réactions, photos de groupe, messages privés, preuves NTR.
 
-Risque : augmente la jalousie de Ludo et la place de Nico auprès de Marie.
+Risque : augmente la jalousie de Player et la place de Nico auprès de Marie.
 
 ## Propriétés obligatoires d’un contenu
 

@@ -93,7 +93,7 @@ Les conversations peuvent être interrompues par :
 
 ## Vie sociale des personnages
 
-Les personnages ne doivent pas sembler attendre Ludo en permanence.
+Les personnages ne doivent pas sembler attendre Player en permanence.
 
 Chaque personnage doit pouvoir :
 
@@ -104,7 +104,7 @@ avoir déjà parlé à quelqu’un d’autre
 être avec son partenaire
 être au travail
 être chez Marie / Pauline / ailleurs
-publier une story sans écrire directement à Ludo
+publier une story sans écrire directement à Player
 être dans un groupe mais pas en privé
 voir un message et ne pas répondre
 ```
@@ -116,12 +116,12 @@ voir un message et ne pas répondre
 En particulier :
 
 ```text
-Marie = copine de Ludo
+Marie = copine de Player
 Mathilde = cousine par alliance de Marie par défaut, presque sœur, familière du foyer
-Sandra = meilleure amie ambiguë de Ludo, en couple fragile
-Raphaëlle = collègue attentive de Ludo
+Sandra = meilleure amie ambiguë de Player, en couple fragile
+Raphaëlle = collègue attentive de Player
 Pauline = meilleure amie de Marie, hôte de la soirée, image sage mais jeu trouble
-Nico = ami de Ludo, intéressé par Marie
+Nico = ami de Player, intéressé par Marie
 ```
 
 Certaines nuances peuvent rester mystérieuses, mais les relations de base ne doivent plus être floues après le Jour 2.

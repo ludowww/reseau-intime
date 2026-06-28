@@ -34,7 +34,7 @@ Une réponse guidée de rythme est une réponse unique proposée au joueur.
 
 Elle sert à :
 
-- faire sentir que Ludo répond ;
+- faire sentir que Player répond ;
 - relancer naturellement la conversation ;
 - contrôler le pacing ;
 - éviter un écran rempli uniquement de messages reçus ;
@@ -141,7 +141,7 @@ Je suis là.
 Après clic :
 
 ```text
-Ludo : Je suis là.
+Player : Je suis là.
 Sandra : Je sais. C’est bien ça le problème.
 ```
 

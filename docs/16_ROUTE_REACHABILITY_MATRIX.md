@@ -86,7 +86,7 @@ Trio Marie / Mathilde
 
 ### Fonction
 
-Tester si Ludo peut revenir vers Marie au lieu de nourrir les secrets.
+Tester si Player peut revenir vers Marie au lieu de nourrir les secrets.
 
 ### Chemin principal
 
@@ -117,7 +117,7 @@ menace = secrets contenus
 
 ### Chemin alternatif
 
-Ludo a déjà nourri une ambiguïté, mais choisit de dire une vérité partielle avant que Marie découvre seule.
+Player a déjà nourri une ambiguïté, mais choisit de dire une vérité partielle avant que Marie découvre seule.
 
 Résultat : Marie est blessée mais la route reste sauvable.
 
@@ -181,11 +181,11 @@ Mathilde est nourrie par des signaux passifs : favoris, fond d’écran, ouvertu
 
 ### Échec / fermeture
 
-- Ludo est trop direct trop tôt ;
+- Player est trop direct trop tôt ;
 - Mathilde.loyalty reste très haute ;
 - Marie est humiliée trop vite ;
-- Ludo traite Mathilde comme une simple conquête ;
-- Ludo avoue à Marie et choisit clairement une limite.
+- Player traite Mathilde comme une simple conquête ;
+- Player avoue à Marie et choisit clairement une limite.
 
 Résultat : Mathilde recule ou devient tension contenue.
 
@@ -234,14 +234,14 @@ menace = exposition ou Marie
 
 ### Chemin alternatif
 
-Ludo se retire calmement. Si Sandra.attachment est assez haut, elle revient par peur de perdre le lien.
+Player se retire calmement. Si Sandra.attachment est assez haut, elle revient par peur de perdre le lien.
 
 ### Échec / fermeture
 
-- Ludo demande trop vite : « tu veux quoi avec moi ? » ;
+- Player demande trop vite : « tu veux quoi avec moi ? » ;
 - Sandra.exposure trop haut ;
-- Ludo compare Sandra à Marie ;
-- Ludo traite une photo de Sandra comme une preuve de conquête ;
+- Player compare Sandra à Marie ;
+- Player traite une photo de Sandra comme une preuve de conquête ;
 - Sandra découvre qu’elle est une femme parmi d’autres dans un harem secret.
 
 Résultat : Sandra fuit ou devient froide.
@@ -284,17 +284,17 @@ Résultat attendu :
 ```text
 dominante = Raphaëlle possible
 mode = POLY_HONEST ou rupture propre future
-menace = flou de Ludo
+menace = flou de Player
 ```
 
 ### Chemin alternatif
 
-Ludo a menti au début, mais reconnaît le problème et accepte la clarté. Raphaëlle reste prudente mais la route n’est pas fermée.
+Player a menti au début, mais reconnaît le problème et accepte la clarté. Raphaëlle reste prudente mais la route n’est pas fermée.
 
 ### Échec / fermeture
 
-- Ludo veut la garder comme secret ;
-- Ludo cherche seulement un pansement ;
+- Player veut la garder comme secret ;
+- Player cherche seulement un pansement ;
 - lie_score trop haut sans aveu ;
 - harem secret actif ;
 - Raphaëlle découvre qu’elle est une option parmi d’autres.
@@ -346,14 +346,14 @@ menace = preuve
 
 ### Chemin alternatif : Pauline renversée
 
-Ludo comprend qu’elle cherche une preuve et refuse d’écrire trop vite. Si Pauline.interest reste haut mais Pauline.control baisse, une route de renversement devient possible plus tard.
+Player comprend qu’elle cherche une preuve et refuse d’écrire trop vite. Si Pauline.interest reste haut mais Pauline.control baisse, une route de renversement devient possible plus tard.
 
 ### Échec / fermeture
 
-- Ludo ignore Pauline plusieurs fois ;
-- Ludo montre tout à Marie trop tôt ;
+- Player ignore Pauline plusieurs fois ;
+- Player montre tout à Marie trop tôt ;
 - Pauline perd tout contrôle sans consentement narratif ;
-- Ludo refuse le jeu et coupe proprement.
+- Player refuse le jeu et coupe proprement.
 
 Résultat : Pauline reste menace secondaire ou se retire.
 
@@ -361,7 +361,7 @@ Résultat : Pauline reste menace secondaire ou se retire.
 
 ### Fonction
 
-Tester la jalousie de Ludo et la possibilité que Marie soit désirée ailleurs.
+Tester la jalousie de Player et la possibilité que Marie soit désirée ailleurs.
 
 ### Chemin principal : NTR subi amorcé
 
@@ -402,13 +402,13 @@ menace = Nico
 
 ### Chemin alternatif : NTR consenti amorcé
 
-Ludo exprime sa jalousie sans accuser, Marie avoue aimer être regardée, et le couple peut transformer cette tension en discussion d’ouverture future.
+Player exprime sa jalousie sans accuser, Marie avoue aimer être regardée, et le couple peut transformer cette tension en discussion d’ouverture future.
 
 ### Échec / fermeture
 
-- Ludo revient sincèrement vers Marie ;
+- Player revient sincèrement vers Marie ;
 - Nico est confronté tôt ;
-- Marie se sent de nouveau désirée par Ludo ;
+- Marie se sent de nouveau désirée par Player ;
 - ludo_jealousy reste bas.
 
 Résultat : Nico reste rival latent mais non central.
@@ -455,7 +455,7 @@ mode = LIBERTINE_NEGOTIATED possible plus tard
 
 ### Fonction
 
-Tester si Ludo tente de tout garder.
+Tester si Player tente de tout garder.
 
 ### Chemin principal
 
@@ -487,7 +487,7 @@ menace = Pauline / Marie / Sandra fuite / Raphaëlle coupe
 
 ### Échec / fermeture
 
-- Ludo avoue ;
+- Player avoue ;
 - Raphaëlle coupe ;
 - Sandra fuit ;
 - Pauline expose ;

@@ -6,7 +6,7 @@ Validé.
 
 ## Décision
 
-Ce document verrouille les règles de base concernant le niveau adulte, Mathilde, la posture morale, Ludo, les assets, les plateformes, la progression et la lisibilité des choix.
+Ce document verrouille les règles de base concernant le niveau adulte, Mathilde, la posture morale, Player, les assets, les plateformes, la progression et la lisibilité des choix.
 
 ## 1. Niveau explicite
 
@@ -56,9 +56,9 @@ Conséquences :
 - Les personnages réagissent selon leur psychologie, leurs limites et les secrets découverts.
 - Les contenus visuels sont des récompenses mais aussi des objets narratifs.
 
-## 4. Ludo
+## 4. Player
 
-Ludo est un personnage écrit, mais orientable par les choix.
+Player désigne un personnage écrit, mais orientable par les choix.
 
 Il n’est pas un avatar neutre.
 
@@ -73,7 +73,7 @@ Failles de base :
 
 Règle :
 
-> Le joueur guide Ludo, mais Ludo garde une personnalité, des failles et une cohérence émotionnelle.
+> Le joueur guide Player, mais Player garde une personnalité, des failles et une cohérence émotionnelle.
 
 ## 5. Assets visuels
 
@@ -165,7 +165,7 @@ Règle :
 Niveau : explicite progressif jusqu’au porno assumé.
 Mathilde : cousine par alliance par défaut, vraie cousine possible via option cachée.
 Posture morale : non moralisateur, conséquences fortes.
-Ludo : personnage écrit mais orientable.
+Player : personnage écrit mais orientable.
 Assets : placeholders longtemps, IA anime adulte plus tard.
 Plateforme : PC d’abord, Android ensuite.
 Temps : journées / chapitres simulés.

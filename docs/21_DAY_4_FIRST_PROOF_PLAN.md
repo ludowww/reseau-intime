@@ -37,7 +37,7 @@ Pauline : capture ou phrase qui montre qu’elle a vu quelque chose
 Sandra : message supprimé / regret / trace émotionnelle
 Mathilde : photo domestique ou avertissement après la soirée
 Nico : story où Marie est visible avec lui
-Marie : contradiction entre ce que Ludo dit et ce qu’elle a vu
+Marie : contradiction entre ce que Player dit et ce qu’elle a vu
 Fond d’écran : malaise ou soupçon si révélé / caché au Jour 3
 ```
 

@@ -4,7 +4,7 @@
 
 Chaque personnage doit représenter une forme différente de désir, de risque ou de vérité. Il ne doit pas y avoir six conquêtes interchangeables.
 
-## Ludo
+## Player
 
 ### Rôle
 
@@ -16,13 +16,13 @@ En couple avec Marie. Il aime encore sa compagne, mais il se sent moins désiré
 
 ### Statut joueur
 
-Ludo est un personnage écrit, mais orientable par les choix. Il n’est pas un avatar neutre.
+Player désigne le personnage joueur écrit mais orientable par les choix. Il n’est pas un avatar neutre.
 
-Le joueur peut l’orienter vers la vérité, le mensonge, la réparation, la fuite, l’ouverture, la jalousie ou le contrôle, mais Ludo garde des failles et une cohérence émotionnelle.
+Le joueur peut l’orienter vers la vérité, le mensonge, la réparation, la fuite, l’ouverture, la jalousie ou le contrôle, mais Player garde des failles et une cohérence émotionnelle.
 
 ### Faille
 
-Ludo a tendance à éviter les confrontations. Il garde les choses pour lui, teste les limites, laisse les ambiguïtés se développer et se rassure en se disant que rien n’est encore vraiment arrivé.
+Player a tendance à éviter les confrontations. Il garde les choses pour lui, teste les limites, laisse les ambiguïtés se développer et se rassure en se disant que rien n’est encore vraiment arrivé.
 
 Failles de base :
 
@@ -35,17 +35,17 @@ Failles de base :
 
 ### Question centrale
 
-> Est-ce que Ludo cherche vraiment une autre relation, ou cherche-t-il la preuve qu’il compte encore ?
+> Est-ce que Player cherche vraiment une autre relation, ou cherche-t-il la preuve qu’il compte encore ?
 
 ## Marie
 
 ### Rôle narratif
 
-Le couple officiel, l’ancrage émotionnel et la personne que Ludo risque de perdre.
+Le couple officiel, l’ancrage émotionnel et la personne que Player risque de perdre.
 
 ### Désir apparent
 
-Retrouver une relation stable et sincère avec Ludo.
+Retrouver une relation stable et sincère avec Player.
 
 ### Désir profond
 
@@ -72,7 +72,7 @@ Retrouver une relation stable et sincère avec Ludo.
 
 ### Type de contenu visuel
 
-Contenus de couple, reconquête, jalousie, photos adressées à Ludo, contenus où elle est désirée par Nico, contenus de relation ouverte si la route le permet.
+Contenus de couple, reconquête, jalousie, photos adressées à Player, contenus où elle est désirée par Nico, contenus de relation ouverte si la route le permet.
 
 ### Phrase-thème
 
@@ -84,7 +84,7 @@ Contenus de couple, reconquête, jalousie, photos adressées à Ludo, contenus o
 
 L’interdit domestique et familial.
 
-Mathilde est par défaut la cousine par alliance de Marie, mais leur relation reste presque sororale. Elle est souvent invitée chez Marie, passe du temps dans la maison et peut parfois y dormir. Elle est séduisante, aime séduire, et sent le regard de Ludo.
+Mathilde est par défaut la cousine par alliance de Marie, mais leur relation reste presque sororale. Elle est souvent invitée chez Marie, passe du temps dans la maison et peut parfois y dormir. Elle est séduisante, aime séduire, et sent le regard de Player.
 
 Une option cachée ou avancée pourra permettre de définir Mathilde comme vraie cousine dans la fiction. Dans tous les cas, l’enjeu reste le même : Mathilde représente une limite familiale, domestique et affective.
 
@@ -111,7 +111,7 @@ Perdre Marie ou être réduite à un fantasme honteux.
 - Catastrophe familiale.
 - Recul par loyauté.
 - Trio accepté par Marie.
-- Quatuor avec Marie, Ludo et Nico.
+- Quatuor avec Marie, Player et Nico.
 - Triangle trouble avec Nico.
 
 ### Type de contenu visuel
@@ -128,7 +128,7 @@ Contenus domestiques, photos envoyées depuis la maison, vêtements de Marie, ca
 
 L’ambiguïté émotionnelle, la meilleure amie qui devient une obsession.
 
-Sandra est discrète, sensible, parfois taquine et coquine, mais difficile à saisir. Elle est en couple, mais sa relation ne va pas toujours bien. Elle devient la confidente de Ludo.
+Sandra est discrète, sensible, parfois taquine et coquine, mais difficile à saisir. Elle est en couple, mais sa relation ne va pas toujours bien. Elle devient la confidente de Player.
 
 ### Désir apparent
 
@@ -144,7 +144,7 @@ Se confier, être comprise, trouver un espace sûr.
 
 ### Limite rouge
 
-Ludo la force à clarifier trop vite, la compare à Marie ou la traite comme une victoire.
+Player la force à clarifier trop vite, la compare à Marie ou la traite comme une victoire.
 
 ### Routes associées
 
@@ -170,11 +170,11 @@ Rare, fragile, émotionnel, parfois supprimé ou regretté. Chaque contenu de Sa
 
 La clarté, la collègue attentionnée, l’alternative crédible.
 
-Raphaëlle travaille avec Ludo. Elle remarque quand il va mal, prend soin de lui, mais refuse d’être un secret ou un pansement.
+Raphaëlle travaille avec Player. Elle remarque quand il va mal, prend soin de lui, mais refuse d’être un secret ou un pansement.
 
 ### Désir apparent
 
-Aider Ludo, être présente, lui offrir un espace calme.
+Aider Player, être présente, lui offrir un espace calme.
 
 ### Désir profond
 
@@ -182,7 +182,7 @@ Aider Ludo, être présente, lui offrir un espace calme.
 
 ### Peur
 
-Devenir la fille du travail à qui Ludo raconte tout avant de rentrer mentir à Marie.
+Devenir la fille du travail à qui Player raconte tout avant de rentrer mentir à Marie.
 
 ### Limite rouge
 
@@ -215,7 +215,7 @@ Pauline est la meilleure amie de Marie. Elle est en couple, donne une image rais
 
 ### Désir apparent
 
-Tester Ludo, jouer, provoquer, ouvrir une brèche.
+Tester Player, jouer, provoquer, ouvrir une brèche.
 
 ### Désir profond
 
@@ -235,7 +235,7 @@ Perdre totalement son agence. Le renversement de Pauline doit rester une dynamiq
 - Piège et preuves.
 - Test pour Marie.
 - Initiatrice libertine.
-- Pauline renversée par Ludo.
+- Pauline renversée par Player.
 - Pauline expose tout.
 - Pauline complice ou menace.
 
@@ -253,7 +253,7 @@ Provocant, stratégique, potentiellement compromettant. Les contenus de Pauline 
 
 Le rival miroir.
 
-Nico est un ami de Ludo. Il fantasme sur Marie et représente ce que Ludo refuse de subir : voir sa compagne désirée par un autre homme proche.
+Nico est un ami de Player. Il fantasme sur Marie et représente ce que Player refuse de subir : voir sa compagne désirée par un autre homme proche.
 
 ### Désir apparent
 
@@ -261,7 +261,7 @@ Flirter, complimenter, être proche de Marie.
 
 ### Désir profond
 
-Occuper la place que Ludo laisse vide.
+Occuper la place que Player laisse vide.
 
 ### Peur
 
@@ -269,7 +269,7 @@ Occuper la place que Ludo laisse vide.
 
 ### Limite rouge
 
-Être réduit à un antagoniste simple. Nico doit révéler l’hypocrisie possible de Ludo.
+Être réduit à un antagoniste simple. Nico doit révéler l’hypocrisie possible de Player.
 
 ### Routes associées
 
@@ -279,7 +279,7 @@ Occuper la place que Ludo laisse vide.
 - NTR consenti.
 - Symétrie dans une relation ouverte.
 - Nico + Mathilde.
-- Quatuor avec Marie, Ludo et Mathilde.
+- Quatuor avec Marie, Player et Mathilde.
 - Confrontation masculine.
 
 ### Type de contenu visuel
@@ -296,22 +296,22 @@ Stories, réactions, photos de groupe, messages à Marie, contenus NTR ou de jal
 
 Lien presque sororal. La trahison avec Mathilde est plus grave qu’une tromperie classique, même si Mathilde est définie comme cousine par alliance dans le réglage par défaut.
 
-### Ludo / Sandra
+### Player / Sandra
 
 Intimité émotionnelle. Même sans acte physique, Marie peut vivre ce lien comme une infidélité profonde.
 
-### Ludo / Raphaëlle
+### Player / Raphaëlle
 
-Alternative claire. Raphaëlle force Ludo à choisir ou à avouer.
+Alternative claire. Raphaëlle force Player à choisir ou à avouer.
 
 ### Marie / Nico
 
-Jalousie, NTR, symétrie. Plus Ludo néglige Marie, plus Nico prend de la place.
+Jalousie, NTR, symétrie. Plus Player néglige Marie, plus Nico prend de la place.
 
-### Ludo / Pauline
+### Player / Pauline
 
 Jeu de preuve, manipulation, renversement possible.
 
 ### Mathilde / Nico
 
-Triangle de jalousie et de désir. Peut mener à une route trouble avec Ludo, Mathilde et Nico, ou à un quatuor si Marie accepte l’ouverture.
+Triangle de jalousie et de désir. Peut mener à une route trouble avec Player, Mathilde et Nico, ou à un quatuor si Marie accepte l’ouverture.

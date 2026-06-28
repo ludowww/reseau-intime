@@ -59,7 +59,7 @@ Faible. Peut être purement relationnel ou tonal.
 
 ```text
 Marie : Tu rentres vers quelle heure ?
-Ludo : Pas trop tard.
+Player : Pas trop tard.
 Marie : Tu dis ça à chaque fois.
 ```
 
@@ -68,7 +68,7 @@ Marie : Tu dis ça à chaque fois.
 ### Usage
 
 - Sandra se confie.
-- Raphaëlle prend soin de Ludo.
+- Raphaëlle prend soin de Player.
 - Mathilde écrit tard.
 - Marie tente une reconquête ou exprime un doute.
 
@@ -103,7 +103,7 @@ Sandra : Je me sens seule même quand je ne suis pas seule.
 ### Usage
 
 - Soirée chez Pauline.
-- Ludo est avec Marie, mais Sandra écrit.
+- Player est avec Marie, mais Sandra écrit.
 - Pauline provoque pendant que Mathilde observe.
 - Nico réagit à une story de Marie pendant une autre conversation.
 
@@ -242,9 +242,9 @@ Mathilde : Tu ne montres pas ça à Marie, hein ?
 
 - Sandra fuit après une question trop directe.
 - Marie répond froidement.
-- Raphaëlle coupe si Ludo reste flou.
+- Raphaëlle coupe si Player reste flou.
 - Mathilde laisse un message en vu.
-- Pauline attend que Ludo s’expose.
+- Pauline attend que Player s’expose.
 
 ### Structure
 
@@ -263,7 +263,7 @@ Moyen. Le silence peut déclencher une route ou une fuite.
 ### Exemple
 
 ```text
-Ludo : Tu veux quoi avec moi, vraiment ?
+Player : Tu veux quoi avec moi, vraiment ?
 Sandra a lu.
 ...
 Sandra est hors ligne.
@@ -312,7 +312,7 @@ Mathilde en privé : J’ai vu ton téléphone.
 - Raphaëlle demande de la clarté.
 - Sandra fuit ou avoue.
 - Pauline révèle une preuve.
-- Nico confronte Ludo.
+- Nico confronte Player.
 - Mathilde culpabilise.
 
 ### Structure
@@ -396,7 +396,7 @@ Conséquence cohérente
 
 ### Exemple
 
-Ludo dit à Marie qu’il ne connaît pas bien Pauline.
+Player dit à Marie qu’il ne connaît pas bien Pauline.
 Plus tard, Pauline révèle une conversation privée.
 Marie comprend l’incohérence.
 
@@ -456,7 +456,7 @@ Marie + Nico               → jalousie ou NTR
 
 ```text
 Pauline : Montre ton fond d’écran, on va voir qui est le plus cringe 😇
-Nico : Ah oui, vas-y Ludo.
+Nico : Ah oui, vas-y Player.
 Marie : Pourquoi pas.
 ```
 

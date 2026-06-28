@@ -121,7 +121,7 @@ Effets possibles :
 
 ### Ordre d’ouverture des conversations
 
-Le jeu peut suivre qui Ludo ouvre en premier lors de messages croisés.
+Le jeu peut suivre qui Player ouvre en premier lors de messages croisés.
 
 Exemples :
 
@@ -144,13 +144,13 @@ Le joueur peut revenir plusieurs fois sur une image ou une conversation.
 Effets possibles :
 
 - renforcer un score d’obsession ;
-- déclencher un commentaire intérieur de Ludo ;
+- déclencher un commentaire intérieur de Player ;
 - influencer une route si combiné avec d’autres signaux.
 
 Exemple :
 
 ```text
-Ludo regarde à nouveau la photo de Sandra.
+Player regarde à nouveau la photo de Sandra.
 Pensée : Il aurait dû la supprimer.
 ```
 
@@ -163,7 +163,7 @@ Effets possibles :
 - Marie se sent négligée ;
 - Sandra se ferme ;
 - Pauline perd ou gagne du contrôle ;
-- Raphaëlle comprend que Ludo évite ;
+- Raphaëlle comprend que Player évite ;
 - Nico prend de la place.
 
 ## Signaux passifs à éviter
@@ -176,7 +176,7 @@ Ne pas suivre trop d’actions inutiles.
 - micro-optimisation de lecture ;
 - trop de statistiques invisibles ;
 - punition liée à une seule action anodine ;
-- système qui donne l’impression d’espionner le joueur plutôt que Ludo.
+- système qui donne l’impression d’espionner le joueur plutôt que Player.
 
 ## Scores d’attention possibles
 

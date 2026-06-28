@@ -91,13 +91,13 @@ Il sert à créer :
 
 ## Exemple
 
-Ludo reçoit une photo ambiguë de Mathilde et la met en fond d’écran.
+Player reçoit une photo ambiguë de Mathilde et la met en fond d’écran.
 
 Plus tard, pendant une conversation de groupe :
 
 ```text
 Pauline : Montre ton fond d’écran, on va voir qui est le plus cringe 😇
-Nico : Ah oui, vas-y Ludo.
+Nico : Ah oui, vas-y Player.
 Marie : Pourquoi pas.
 ```
 
@@ -121,7 +121,7 @@ Mathilde ambiguë         → soupçon familial / domestique
 Sandra intime            → infidélité émotionnelle visible
 Raphaëlle douce          → soupçon de relation de travail
 Pauline provocante       → Pauline peut s’en servir comme preuve
-Marie + Nico             → jalousie de Ludo ou dynamique NTR
+Marie + Nico             → jalousie de Player ou dynamique NTR
 Fond neutre              → aucune conséquence forte
 ```
 

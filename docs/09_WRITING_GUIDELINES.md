@@ -21,9 +21,9 @@ Le jeu se déroule par smartphone. L’écriture doit donc respecter :
 
 > Ce qui n’est pas dit doit être aussi important que ce qui est écrit.
 
-## Voix de Ludo
+## Voix de Player
 
-Ludo varie selon les choix, mais ses réponses doivent rester crédibles :
+Player varie selon les choix, mais ses réponses doivent rester crédibles :
 
 - évitant ;
 - tendre ;
@@ -33,11 +33,11 @@ Ludo varie selon les choix, mais ses réponses doivent rester crédibles :
 - parfois sincère ;
 - rarement frontal au début.
 
-Le joueur doit pouvoir l’orienter, mais Ludo n’est pas un avatar vide.
+Le joueur doit pouvoir l’orienter, mais Player n’est pas un avatar vide.
 
 ## Voix de Marie
 
-Marie connaît Ludo. Elle n’a pas besoin de grandes phrases pour sentir qu’il ment.
+Marie connaît Player. Elle n’a pas besoin de grandes phrases pour sentir qu’il ment.
 
 Style :
 
@@ -229,7 +229,7 @@ Chaque fin doit se conclure par un dernier message fort.
 
 Ce message doit résumer :
 
-- ce que Ludo a choisi ;
+- ce que Player a choisi ;
 - ce qu’il a perdu ;
 - ce que le personnage a compris ;
 - la tonalité de la fin.

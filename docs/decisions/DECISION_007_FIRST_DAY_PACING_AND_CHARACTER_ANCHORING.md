@@ -34,8 +34,8 @@ scènes de tension plus resserrées
 
 Les conversations longues sont nécessaires pour :
 
-- installer le couple Ludo / Marie ;
-- montrer que Sandra connaît déjà Ludo ;
+- installer le couple Player / Marie ;
+- montrer que Sandra connaît déjà Player ;
 - faire sentir que Mathilde est familière du foyer ;
 - introduire Pauline, Nico et les sous-entendus sociaux ;
 - ancrer Raphaëlle comme présence calme et différente.
@@ -85,8 +85,8 @@ La galerie peut contenir rapidement :
 À la fin de la première journée, le joueur doit avoir compris :
 
 ```text
-Marie et Ludo sont ensemble, mais la routine pèse.
-Sandra a déjà une complicité avec Ludo.
+Marie et Player sont ensemble, mais la routine pèse.
+Sandra a déjà une complicité avec Player.
 Pauline prépare une soirée qui aura un rôle important.
 Nico regarde Marie avec un intérêt déjà visible.
 Mathilde fait partie du quotidien du couple.

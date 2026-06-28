@@ -2,7 +2,7 @@
 
 ## Principe
 
-Une fin n’est pas seulement « Ludo finit avec X ». Une fin est un **état final du réseau relationnel**.
+Une fin n’est pas seulement « Player finit avec X ». Une fin est un **état final du réseau relationnel**.
 
 Chaque fin doit préciser :
 
@@ -10,8 +10,8 @@ Chaque fin doit préciser :
 - route dominante ;
 - route secondaire ;
 - menace principale ;
-- état Ludo / Marie ;
-- état Ludo / personnage dominant ;
+- état Player / Marie ;
+- état Player / personnage dominant ;
 - état Marie / autres personnages ;
 - secrets révélés ;
 - secrets restants ;
@@ -34,15 +34,15 @@ Chaque fin doit préciser :
 
 ### 1. Marie réparée — « On se choisit encore »
 
-Mode : EXCLUSIF_REPARATION  
-Dominante : Marie  
+Mode : EXCLUSIF_REPARATION
+Dominante : Marie
 Menace : secrets contenus avant explosion
 
-Ludo a été tenté mais a choisi de parler à Marie avant l’irréparable. Marie est blessée, mais le couple peut se reconstruire.
+Player a été tenté mais a choisi de parler à Marie avant l’irréparable. Marie est blessée, mais le couple peut se reconstruire.
 
 États :
 
-- Ludo / Marie : couple sauvé, plus lucide.
+- Player / Marie : couple sauvé, plus lucide.
 - Mathilde : tension contenue ou distance temporaire.
 - Sandra : lien réduit ou coupé.
 - Raphaëlle : respect distant.
@@ -57,18 +57,18 @@ Dernier message possible :
 
 ### 2. Marie perdue — « Tu étais déjà ailleurs »
 
-Mode : SECRET_AFFAIR ou CHAOS_EXPLOSION  
-Dominante : variable  
+Mode : SECRET_AFFAIR ou CHAOS_EXPLOSION
+Dominante : variable
 Menace : mensonge élevé
 
-Ludo a trop caché, trop minimisé ou trop tardé. Marie part parce qu’elle ne se reconnaît plus dans la relation.
+Player a trop caché, trop minimisé ou trop tardé. Marie part parce qu’elle ne se reconnaît plus dans la relation.
 
 États :
 
-- Ludo / Marie : rupture.
+- Player / Marie : rupture.
 - Personnage dominant : dépend de la route, pas forcément relation viable.
 - Nico : peut devenir refuge de Marie.
-- Raphaëlle : refuse d’être un pansement si Ludo vient trop tard.
+- Raphaëlle : refuse d’être un pansement si Player vient trop tard.
 
 Contenus : preuves, captures, messages de rupture.
 
@@ -78,16 +78,16 @@ Dernier message possible :
 
 ### 3. Sandra choisit enfin — « Je ne veux plus me cacher »
 
-Mode : SECRET_AFFAIR transformé en vérité, ou POLY_HONEST rare  
-Dominante : Sandra  
+Mode : SECRET_AFFAIR transformé en vérité, ou POLY_HONEST rare
+Dominante : Sandra
 Menace : exposition
 
-Sandra assume enfin ce qu’elle ressent, mais seulement si Ludo ne l’a pas forcée, possédée ou exposée trop vite.
+Sandra assume enfin ce qu’elle ressent, mais seulement si Player ne l’a pas forcée, possédée ou exposée trop vite.
 
 États :
 
-- Ludo / Sandra : relation centrale, intense, fragile.
-- Ludo / Marie : rupture douloureuse ou séparation assumée.
+- Player / Sandra : relation centrale, intense, fragile.
+- Player / Marie : rupture douloureuse ou séparation assumée.
 - Raphaëlle : s’éloigne.
 - Nico : peut se rapprocher de Marie après rupture.
 
@@ -99,17 +99,17 @@ Dernier message possible :
 
 ### 4. Sandra fantôme — « Elle ne voulait pas te perdre, pas te choisir »
 
-Mode : SECRET_AFFAIR  
-Dominante : Sandra  
+Mode : SECRET_AFFAIR
+Dominante : Sandra
 Menace : exposition trop haute
 
-Ludo a mis Sandra au centre, mais elle recule au moment de clarifier.
+Player a mis Sandra au centre, mais elle recule au moment de clarifier.
 
 États :
 
-- Ludo / Sandra : lien brisé ou refroidi.
-- Ludo / Marie : très abîmé.
-- Raphaëlle : peut révéler le schéma de Ludo.
+- Player / Sandra : lien brisé ou refroidi.
+- Player / Marie : très abîmé.
+- Raphaëlle : peut révéler le schéma de Player.
 - Nico : augmente si Marie s’est sentie seule.
 
 Contenus : galerie Sandra incomplète, contenus supprimés ou regrettés.
@@ -120,16 +120,16 @@ Dernier message possible :
 
 ### 5. Mathilde catastrophe — « Pas elle »
 
-Mode : SECRET_AFFAIR  
-Dominante : Mathilde  
+Mode : SECRET_AFFAIR
+Dominante : Mathilde
 Menace : Marie
 
-Ludo et Mathilde franchissent la limite en secret. Marie découvre ou comprend.
+Player et Mathilde franchissent la limite en secret. Marie découvre ou comprend.
 
 États :
 
-- Ludo / Mathilde : intimité forte mais coupable.
-- Ludo / Marie : rupture explosive.
+- Player / Mathilde : intimité forte mais coupable.
+- Player / Marie : rupture explosive.
 - Marie / Mathilde : lien presque détruit.
 - Pauline : peut exploiter le chaos.
 - Nico : peut devenir refuge de Marie.
@@ -142,17 +142,17 @@ Dernier message possible :
 
 ### 6. Mathilde contenue — « On aurait pu »
 
-Mode : EXCLUSIF_REPARATION ou vérité partielle  
-Dominante : Mathilde  
+Mode : EXCLUSIF_REPARATION ou vérité partielle
+Dominante : Mathilde
 Menace : loyauté
 
-Ludo et Mathilde se désirent, mais reculent avant la vraie trahison.
+Player et Mathilde se désirent, mais reculent avant la vraie trahison.
 
 États :
 
-- Ludo / Mathilde : tension non consommée.
+- Player / Mathilde : tension non consommée.
 - Marie / Mathilde : lien fragilisé mais sauvable.
-- Ludo / Marie : couple réparable si vérité.
+- Player / Marie : couple réparable si vérité.
 
 Contenus : photos ambiguës, galerie limite non franchie.
 
@@ -162,16 +162,16 @@ Dernier message possible :
 
 ### 7. La limite de Marie — Trio fragile
 
-Mode : LIBERTINE_NEGOTIATED ou ouverture interdite  
-Dominante : Marie / Mathilde  
+Mode : LIBERTINE_NEGOTIATED ou ouverture interdite
+Dominante : Marie / Mathilde
 Menace : remplacement de Marie
 
 Marie découvre ou comprend la tension avec Mathilde et choisit de l’intégrer plutôt que la subir.
 
 États :
 
-- Ludo / Marie : couple transformé.
-- Ludo / Mathilde : intimité encadrée.
+- Player / Marie : couple transformé.
+- Player / Mathilde : intimité encadrée.
 - Marie / Mathilde : lien fragile, redéfini.
 - Nico : souvent écarté.
 - Pauline : menace extérieure possible.
@@ -182,17 +182,17 @@ Dernier message possible :
 
 > Marie : Si elle entre dans notre histoire, ce ne sera plus derrière mon dos.
 
-### 8. Quatuor fragile — Marie / Ludo / Mathilde / Nico
+### 8. Quatuor fragile — Marie / Player / Mathilde / Nico
 
-Mode : LIBERTINE_NEGOTIATED ou NTR_CONSENTED  
-Dominante : Marie / Mathilde / Nico  
-Menace : jalousie de Ludo
+Mode : LIBERTINE_NEGOTIATED ou NTR_CONSENTED
+Dominante : Marie / Mathilde / Nico
+Menace : jalousie de Player
 
-Marie accepte Mathilde, mais demande une symétrie avec Nico. Ludo obtient une ouverture, mais doit accepter que Marie ait aussi un pouvoir.
+Marie accepte Mathilde, mais demande une symétrie avec Nico. Player obtient une ouverture, mais doit accepter que Marie ait aussi un pouvoir.
 
 États :
 
-- Ludo / Marie : couple central mais transformé.
+- Player / Marie : couple central mais transformé.
 - Mathilde : partenaire de jeu fragile.
 - Nico : rival / complice accepté.
 - Pauline : peut vouloir s’insérer ou manipuler.
@@ -204,15 +204,15 @@ Dernier message possible :
 
 ### 9. Pauline piège — « Tu m’as donné la preuve »
 
-Mode : SECRET_AFFAIR ou CHAOS_EXPLOSION  
-Dominante : Pauline  
+Mode : SECRET_AFFAIR ou CHAOS_EXPLOSION
+Dominante : Pauline
 Menace : preuves
 
-Ludo a mordu aux provocations de Pauline. Elle garde des captures ou contenus compromettants.
+Player a mordu aux provocations de Pauline. Elle garde des captures ou contenus compromettants.
 
 États :
 
-- Ludo / Pauline : relation de pouvoir.
+- Player / Pauline : relation de pouvoir.
 - Marie / Pauline : amitié abîmée.
 - Pauline / son copain : couple menacé.
 - Raphaëlle : coupe si elle découvre.
@@ -224,15 +224,15 @@ Dernier message possible :
 
 ### 10. Pauline renversée — « La joueuse prise à son jeu »
 
-Mode : SECRET_AFFAIR, LIBERTINE_NEGOTIATED ou HAREM_ASSUMED  
-Dominante : Pauline  
+Mode : SECRET_AFFAIR, LIBERTINE_NEGOTIATED ou HAREM_ASSUMED
+Dominante : Pauline
 Menace : perte de contrôle
 
-Ludo comprend le jeu de Pauline et le retourne. Pauline accepte de perdre le contrôle dans une dynamique consentie.
+Player comprend le jeu de Pauline et le retourne. Pauline accepte de perdre le contrôle dans une dynamique consentie.
 
 États :
 
-- Ludo / Pauline : intimité niveau 5, rapport de pouvoir inversé.
+- Player / Pauline : intimité niveau 5, rapport de pouvoir inversé.
 - Marie : sait ou ignore selon variante.
 - Pauline : reste dangereuse, mais vulnérable.
 
@@ -242,16 +242,16 @@ Dernier message possible :
 
 ### 11. Raphaëlle nouveau départ — « Pas dans un mensonge »
 
-Mode : POLY_HONEST ou rupture propre  
-Dominante : Raphaëlle  
-Menace : flou de Ludo
+Mode : POLY_HONEST ou rupture propre
+Dominante : Raphaëlle
+Menace : flou de Player
 
-Ludo quitte le chaos ou clarifie sa situation. Raphaëlle accepte seulement si elle n’est pas un secret.
+Player quitte le chaos ou clarifie sa situation. Raphaëlle accepte seulement si elle n’est pas un secret.
 
 États :
 
-- Ludo / Raphaëlle : relation claire possible.
-- Ludo / Marie : rupture propre ou poly fragile.
+- Player / Raphaëlle : relation claire possible.
+- Player / Marie : rupture propre ou poly fragile.
 - Sandra : peut revenir trop tard.
 - Pauline : perd son emprise.
 - Nico / Marie : possible épilogue.
@@ -262,18 +262,18 @@ Dernier message possible :
 
 ### 12. NTR subi — « Il a pris ta place »
 
-Mode : NTR_SUBI  
-Dominante : Nico / Marie  
-Menace : négligence de Ludo
+Mode : NTR_SUBI
+Dominante : Nico / Marie
+Menace : négligence de Player
 
-Ludo a poursuivi ailleurs. Nico a pris la place émotionnelle auprès de Marie.
+Player a poursuivi ailleurs. Nico a pris la place émotionnelle auprès de Marie.
 
 États :
 
 - Marie / Nico : intimité forte.
-- Ludo / Marie : détruit ou suspendu.
-- Ludo / Nico : amitié brisée.
-- Raphaëlle : refuse de consoler Ludo s’il se victimise.
+- Player / Marie : détruit ou suspendu.
+- Player / Nico : amitié brisée.
+- Raphaëlle : refuse de consoler Player s’il se victimise.
 
 Dernier message possible :
 
@@ -281,15 +281,15 @@ Dernier message possible :
 
 ### 13. NTR consenti — « Regarde-moi autrement »
 
-Mode : NTR_CONSENTED  
-Dominante : Marie / Nico  
-Menace : consentement fragile de Ludo
+Mode : NTR_CONSENTED
+Dominante : Marie / Nico
+Menace : consentement fragile de Player
 
-Marie et Ludo transforment la jalousie en jeu contrôlé avec Nico.
+Marie et Player transforment la jalousie en jeu contrôlé avec Nico.
 
 États :
 
-- Ludo / Marie : couple maintenu, transformé.
+- Player / Marie : couple maintenu, transformé.
 - Marie / Nico : rivalité ou intimité encadrée.
 - Pauline : peut être complice.
 - Sandra/Mathilde : souvent coupées ou incompatibles.
@@ -300,11 +300,11 @@ Dernier message possible :
 
 ### 14. Harem chaos — « Trop de conversations ouvertes »
 
-Mode : HAREM_SECRET ou CHAOS_EXPLOSION  
-Dominante : multiple  
+Mode : HAREM_SECRET ou CHAOS_EXPLOSION
+Dominante : multiple
 Menace : preuves croisées
 
-Ludo tente de tout garder. Les personnages découvrent assez de choses pour que le réseau s’effondre.
+Player tente de tout garder. Les personnages découvrent assez de choses pour que le réseau s’effondre.
 
 États :
 
@@ -321,11 +321,11 @@ Dernier message possible :
 
 ### 15. Harem assumé — « Tout dire ou tout perdre »
 
-Mode : HAREM_ASSUMED  
-Dominante : Marie + autres selon compatibilité  
+Mode : HAREM_ASSUMED
+Dominante : Marie + autres selon compatibilité
 Menace : places incompatibles
 
-Ludo tente une dynamique assumée. Tout le monde ne peut pas rester.
+Player tente une dynamique assumée. Tout le monde ne peut pas rester.
 
 États possibles :
 
@@ -342,11 +342,11 @@ Dernier message possible :
 
 ### 16. Solitude lucide — « Je me choisis »
 
-Mode : rupture / vérité personnelle  
-Dominante : Ludo  
+Mode : rupture / vérité personnelle
+Dominante : Player
 Menace : répétition des schémas
 
-Ludo comprend qu’il cherchait moins une femme qu’une réparation. Il coupe les dynamiques ambiguës.
+Player comprend qu’il cherchait moins une femme qu’une réparation. Il coupe les dynamiques ambiguës.
 
 États :
 

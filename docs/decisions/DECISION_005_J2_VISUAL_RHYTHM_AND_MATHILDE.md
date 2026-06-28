@@ -33,7 +33,7 @@ Une récompense visuelle peut être :
 * un aperçu verrouillé ;
 * une photo mentionnée comme existante mais pas encore accessible.
 
-Pour J2, on vise 3 vraies photos.
+Règle générale : à partir du J2, viser au minimum 3 récompenses ou promesses visuelles. J2 final validé contient 4 contenus visuels.
 
 ## Formule de conception
 
@@ -69,6 +69,8 @@ Autorisé :
 * personnages qui basculent trop vite dans la disponibilité sexuelle.
 
 ## Récompenses visuelles J2 validées
+
+La documentation `docs/story_state/J2_SUMMARY.md` reflète l’état final intégré : Marie matin, Raphaëlle badge/travail, Mathilde arrivée via Marie, Mathilde selfie canapé. Le motif domestique côté Marie passe par les capsules de café / traces de routine.
 
 ### 1. Marie — matin
 
@@ -140,6 +142,16 @@ Ce qui est nouveau, c’est le regard de Player :
 ```text
 Player commence à voir Mathilde autrement.
 ```
+
+### 4. Mathilde — selfie canapé
+
+Selfie canapé envoyé depuis la maison, après installation de Mathilde dans l’espace domestique.
+
+Fonction :
+
+* rendre sa présence concrète et visible ;
+* créer une trace douce mais risquée ;
+* préparer le retour physique de Player en J3.
 
 ## Fonction de Mathilde en J2
 

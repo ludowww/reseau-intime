@@ -12,7 +12,7 @@ Tronc commun + route dominante + route secondaire + menace + mode relationnel
 
 Les routes personnages répondent à la question :
 
-> Qui devient central dans le désir, le manque ou la jalousie de Ludo ?
+> Qui devient central dans le désir, le manque ou la jalousie de Player ?
 
 Routes principales :
 
@@ -62,7 +62,7 @@ Côté écriture, ils correspondent à :
 Exemple : Mathilde peut exister dans plusieurs modes.
 
 - Mathilde + tromperie : liaison interdite dans la maison.
-- Mathilde + vérité : Ludo avoue son trouble à Marie.
+- Mathilde + vérité : Player avoue son trouble à Marie.
 - Mathilde + trio : Marie accepte d’entrer dans la tension.
 - Mathilde + Nico : rivalité, jalousie ou quatuor.
 - Mathilde + harem : limite rouge très instable.
@@ -129,14 +129,14 @@ Mathilde
 ### Incompatibilités / limites
 
 - Très difficile si Marie a confiance basse.
-- Catastrophique si Ludo a déjà menti longtemps.
+- Catastrophique si Player a déjà menti longtemps.
 - Mathilde ne doit jamais devenir une simple conquête interchangeable.
 
 ## Route Sandra
 
 ### Question centrale
 
-Est-ce que Sandra choisit Ludo ou entretient l’ambiguïté ?
+Est-ce que Sandra choisit Player ou entretient l’ambiguïté ?
 
 ### Branches
 
@@ -168,7 +168,7 @@ Sandra
 
 ### Question centrale
 
-Est-ce que Ludo accepte la clarté ou préfère le chaos ?
+Est-ce que Player accepte la clarté ou préfère le chaos ?
 
 ### Branches
 
@@ -180,7 +180,7 @@ Raphaëlle
 ├── Refus du secret
 ├── Nouveau départ
 ├── Polyamour honnête
-└── Elle coupe si Ludo ment trop
+└── Elle coupe si Player ment trop
 ```
 
 ### Compatibilités
@@ -210,7 +210,7 @@ Pauline
 ├── Test pour Marie
 ├── Agit seule
 ├── Initiatrice libertine
-├── Pauline renversée par Ludo
+├── Pauline renversée par Player
 └── Pauline expose tout
 ```
 
@@ -230,7 +230,7 @@ Pauline
 
 ### Question centrale
 
-Ludo supporte-t-il que Marie soit désirée par quelqu’un d’autre ?
+Player supporte-t-il que Marie soit désirée par quelqu’un d’autre ?
 
 ### Branches
 
@@ -250,19 +250,19 @@ Nico
 
 - Central en NTR.
 - Compatible avec libertinage.
-- Compatible avec quatuor Marie / Ludo / Mathilde / Nico.
-- Compatible comme menace dans les routes où Ludo néglige Marie.
+- Compatible avec quatuor Marie / Player / Mathilde / Nico.
+- Compatible comme menace dans les routes où Player néglige Marie.
 
 ### Incompatibilités / limites
 
 - Nico ne doit pas être seulement un méchant.
-- Il doit révéler l’hypocrisie de Ludo.
+- Il doit révéler l’hypocrisie de Player.
 
 ## Macro-routes
 
 ### Exclusif / réparation
 
-Ludo choisit de sauver le couple.
+Player choisit de sauver le couple.
 
 Effets :
 
@@ -274,7 +274,7 @@ Effets :
 
 ### Tromperie secrète
 
-Ludo cache une ou plusieurs relations.
+Player cache une ou plusieurs relations.
 
 Effets :
 
@@ -286,7 +286,7 @@ Effets :
 
 ### Libertinage négocié
 
-Ludo et Marie parlent de désir et posent des règles.
+Player et Marie parlent de désir et posent des règles.
 
 Effets :
 
@@ -309,28 +309,28 @@ Effets :
 
 ### NTR subi
 
-Marie se rapproche de Nico parce que Ludo l’a négligée ou trahie.
+Marie se rapproche de Nico parce que Player l’a négligée ou trahie.
 
 Effets :
 
-- Ludo perd sa place.
+- Player perd sa place.
 - Nico devient central.
 - Marie se sent vue ailleurs.
-- Ludo vit en miroir ce qu’il a fait subir.
+- Player vit en miroir ce qu’il a fait subir.
 
 ### NTR consenti
 
-Marie et Ludo transforment la jalousie en jeu contrôlé.
+Marie et Player transforment la jalousie en jeu contrôlé.
 
 Effets :
 
 - Marie reste centrale.
 - Nico devient rival accepté ou partenaire de tension.
-- La question est de savoir si Ludo consent vraiment ou s’il accepte par peur.
+- La question est de savoir si Player consent vraiment ou s’il accepte par peur.
 
 ### Harem mensonger
 
-Ludo tente de tout garder en secret.
+Player tente de tout garder en secret.
 
 Effets :
 
@@ -343,7 +343,7 @@ Effets :
 
 ### Harem assumé
 
-Ludo tente une dynamique relationnelle ouverte et claire.
+Player tente une dynamique relationnelle ouverte et claire.
 
 Effets :
 

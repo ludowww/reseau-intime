@@ -6,7 +6,7 @@ Définir le contexte fixe de l’histoire avant le début du jeu, afin que toute
 
 Ce document répond à la question :
 
-> Dans quel état sont Ludo, Marie et leur entourage au moment où le joueur prend le téléphone ?
+> Dans quel état sont Player, Marie et leur entourage au moment où le joueur prend le téléphone ?
 
 ## Principe
 
@@ -14,19 +14,19 @@ Toutes les routes doivent partager un contexte commun. Les choix du joueur peuve
 
 ## Situation de départ
 
-### Ludo et Marie
+### Player et Marie
 
-- Ludo et Marie sont ensemble depuis plusieurs années.
+- Player et Marie sont ensemble depuis plusieurs années.
 - Ils vivent ensemble.
 - Leur relation est stable, tendre, mais la routine a affaibli le désir.
 - Ils ne sont pas dans une rupture ouverte au début.
-- Marie aime encore Ludo.
-- Ludo aime encore Marie, mais il se sent moins désiré, moins regardé, moins vivant.
+- Marie aime encore Player.
+- Player aime encore Marie, mais il se sent moins désiré, moins regardé, moins vivant.
 - Le couple fonctionne encore, mais davantage comme une équipe du quotidien que comme un couple vibrant.
 
 ### Maison / appartement
 
-Le foyer de Ludo et Marie est un lieu central.
+Le foyer de Player et Marie est un lieu central.
 
 Il représente :
 
@@ -41,26 +41,26 @@ Il représente :
 - Mathilde est par défaut cousine par alliance de Marie.
 - Une option cachée pourra la définir comme vraie cousine dans la fiction.
 - Elle est presque une sœur pour Marie.
-- Elle passe souvent chez Marie et Ludo.
+- Elle passe souvent chez Marie et Player.
 - Elle peut dormir chez eux.
-- Ludo fantasme déjà secrètement sur elle au début du jeu.
-- Mathilde aime séduire et sent parfois le regard de Ludo, mais n’a pas encore franchi de limite.
+- Player fantasme déjà secrètement sur elle au début du jeu.
+- Mathilde aime séduire et sent parfois le regard de Player, mais n’a pas encore franchi de limite.
 
 ### Sandra
 
-- Sandra est la meilleure amie de Ludo.
+- Sandra est la meilleure amie de Player.
 - Elle est discrète, sensible, ambiguë.
 - Elle est en couple, mais son couple ne va pas toujours bien.
-- Elle a déjà une complicité particulière avec Ludo.
+- Elle a déjà une complicité particulière avec Player.
 - Avant le début du jeu, cette complicité est encore défendable.
 - Le jeu commence au moment où cette complicité peut devenir dangereuse.
 
 ### Raphaëlle
 
-- Raphaëlle est la collègue de Ludo.
-- Elle est attentionnée et remarque quand Ludo va mal.
+- Raphaëlle est la collègue de Player.
+- Elle est attentionnée et remarque quand Player va mal.
 - Elle n’est pas encore une relation ambiguë au début.
-- Elle est déjà sensible à l’état de Ludo.
+- Elle est déjà sensible à l’état de Player.
 - Elle peut devenir une alternative réelle, mais refuse d’être un secret.
 
 ### Pauline
@@ -74,43 +74,43 @@ Il représente :
 
 ### Nico
 
-- Nico est un ami de Ludo.
+- Nico est un ami de Player.
 - Il fantasme déjà sur Marie au début du jeu.
 - Il n’a pas encore pris une place claire auprès d’elle.
-- Il devient dangereux si Ludo néglige Marie ou s’enfonce dans ses propres secrets.
+- Il devient dangereux si Player néglige Marie ou s’enfonce dans ses propres secrets.
 
 ## Secrets déjà actifs avant le début
 
 ```text
-Ludo fantasme déjà sur Mathilde.
+Player fantasme déjà sur Mathilde.
 Pauline trompe déjà son copain.
 Nico fantasme déjà sur Marie.
-Sandra a déjà une intimité émotionnelle particulière avec Ludo.
-Raphaëlle a déjà remarqué que Ludo n’est pas totalement heureux.
-Marie sent peut-être que Ludo est moins présent, mais n’a pas encore de preuve.
+Sandra a déjà une intimité émotionnelle particulière avec Player.
+Raphaëlle a déjà remarqué que Player n’est pas totalement heureux.
+Marie sent peut-être que Player est moins présent, mais n’a pas encore de preuve.
 ```
 
 Ces secrets ne sont pas tous connus du joueur immédiatement. Ils peuvent être révélés progressivement selon les routes.
 
 ## Lieux importants
 
-### Appartement de Ludo et Marie
+### Appartement de Player et Marie
 
 Lieu de routine, de couple et d’interdit domestique.
 
-Personnages liés : Marie, Mathilde, Ludo.
+Personnages liés : Marie, Mathilde, Player.
 
-### Bureau / travail de Ludo
+### Bureau / travail de Player
 
 Lieu de respiration et d’attention extérieure.
 
-Personnages liés : Raphaëlle, Ludo.
+Personnages liés : Raphaëlle, Player.
 
 ### Chez Pauline
 
 Lieu social, pivot et théâtre des regards croisés.
 
-Personnages liés : Pauline, Marie, Ludo, Mathilde, Nico, copain de Pauline.
+Personnages liés : Pauline, Marie, Player, Mathilde, Nico, copain de Pauline.
 
 ### Smartphone
 
@@ -122,13 +122,13 @@ Toutes les relations passent par lui : messages, stories, photos, vidéos, preuv
 
 ### Avant Jour 1
 
-- Ludo et Marie sont déjà installés dans la routine.
+- Player et Marie sont déjà installés dans la routine.
 - Mathilde passe souvent chez eux.
-- Ludo fantasme déjà sur Mathilde.
-- Sandra et Ludo ont déjà une complicité intime mais encore défendable.
+- Player fantasme déjà sur Mathilde.
+- Sandra et Player ont déjà une complicité intime mais encore défendable.
 - Pauline trompe déjà son copain.
 - Nico fantasme déjà sur Marie.
-- Raphaëlle a remarqué que Ludo est souvent ailleurs au travail.
+- Raphaëlle a remarqué que Player est souvent ailleurs au travail.
 
 ### Jour 1 — Routine
 
@@ -155,11 +155,11 @@ Objectifs :
 
 Événements possibles :
 
-- Mathilde passe chez Ludo et Marie.
+- Mathilde passe chez Player et Marie.
 - Sandra se confie un peu plus.
-- Raphaëlle remarque que Ludo va mal.
+- Raphaëlle remarque que Player va mal.
 - Nico complimente Marie.
-- Marie sent que Ludo répond différemment selon les personnes.
+- Marie sent que Player répond différemment selon les personnes.
 
 ### Jour 3 — Soirée chez Pauline
 
@@ -171,9 +171,9 @@ Objectifs :
 
 Événements possibles :
 
-- Pauline provoque Ludo discrètement.
+- Pauline provoque Player discrètement.
 - Nico regarde ou complimente Marie.
-- Mathilde remarque que Ludo regarde son téléphone.
+- Mathilde remarque que Player regarde son téléphone.
 - Sandra écrit à distance.
 - Marie sent que quelque chose circule.
 
@@ -194,7 +194,7 @@ Objectifs :
 
 ## Ce qui est fixe dans toutes les routes
 
-1. Ludo et Marie sont en couple au début.
+1. Player et Marie sont en couple au début.
 2. Le couple n’est pas mort, mais le désir est fatigué.
 3. Mathilde représente l’interdit domestique.
 4. Sandra représente l’ambiguïté émotionnelle.

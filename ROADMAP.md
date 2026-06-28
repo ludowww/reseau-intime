@@ -1,84 +1,41 @@
 # Roadmap
 
-## Phase 0 — Préproduction documentaire
+## État actuel
 
-Objectif : verrouiller la vision, le ton, les personnages, les routes et la structure avant d’écrire du contenu massif ou de coder.
+- J1 et J2 ne sont plus seulement « papier » : ils sont intégrés dans le prototype data-first.
+- J1 verrouillé : Marie puis Sandra. Mathilde existe seulement indirectement ; Raphaëlle, Pauline, Nico et les groupes ne sont pas actifs.
+- J2 verrouillé : Marie, Raphaëlle, Mathilde, Sandra. Pauline/Nico restent futurs, pas actifs J1/J2.
+- J2 contient 4 placeholders visuels : Marie matin, Raphaëlle badge/travail, Mathilde arrivée via Marie, Mathilde selfie canapé.
+- Le téléphone affiche une discussion visible par personnage/groupe ; plusieurs épisodes internes peuvent alimenter le même fil.
 
-Livrables :
+## Priorité immédiate
 
-- Vision projet.
-- Bible narrative.
-- Bible personnages.
-- Architecture des routes.
-- Matrice des fins.
-- Règles des contenus visuels.
-- UX smartphone.
-- Architecture technique.
-- Formats de données.
-- Guide d’écriture.
-- Scope vertical slice.
+1. J3 : retour physique de Player après J2.
+2. Mathilde au réveil / conséquence de la nuit chez Marie et Player.
+3. Continuité narrative des traces reçues pendant l’absence physique de Player.
+4. Polish galerie/photos placeholders si nécessaire avant d’élargir le casting.
 
-## Phase 1 — Vertical slice papier
+## MVP vertical slice
 
-Objectif : écrire une première portion jouable sur papier.
+Objectif : 20–30 minutes jouables, data-first, PC d’abord.
 
-Contenu :
+Contenu visé :
 
-- Chapitre 1 : routine Ludo / Marie.
-- Chapitre 2 : premières tensions.
-- Chapitre 3 : soirée chez Pauline.
-- Chapitre 4 : lendemain + première preuve.
+- Chapitres 1–4.
+- Tronc commun + pression de routes.
+- Smartphone : Messages, notifications, choix guidés, galerie placeholders, debug/prototype.
+- Personnages actifs progressivement, sans traiter Pauline/Nico comme déjà joués en J1/J2.
 
-Routes testées :
+## Plus tard
 
-- Mathilde interdite.
-- Sandra ambiguë.
-- Pauline piège.
-- Marie / Nico jalousie.
-- Raphaëlle comme contrepoint de clarté.
+- Soirée pivot chez Pauline.
+- Mise en jeu de Nico comme rival/miroir quand le support narratif existe.
+- Routes majeures : Marie, Mathilde, Sandra, Raphaëlle, Pauline, Nico.
+- Modes transversaux : réparation, secret, ouverture, polyamour/libertinage, NTR, chaos.
 
-## Phase 2 — Prototype technique
+## À éviter maintenant
 
-Objectif : prouver l’interface smartphone.
-
-Fonctions minimales :
-
-- écran principal smartphone ;
-- application Messages ;
-- notifications ;
-- choix de réponse ;
-- variables simples ;
-- galerie placeholder ;
-- sauvegarde / chargement ;
-- première preuve conservée ou supprimée.
-
-## Phase 3 — Vertical slice jouable
-
-Objectif : intégrer le contenu écrit dans le prototype.
-
-Critères :
-
-- un tronc commun jouable ;
-- une route dominante calculée ;
-- au moins trois variations de route ;
-- un premier système de contenus visuels placeholders ;
-- un écran d’épilogue réseau simplifié.
-
-## Phase 4 — Extension routes
-
-Objectif : développer les routes majeures.
-
-Priorités :
-
-1. Marie / Nico / jalousie.
-2. Mathilde / interdit domestique.
-3. Sandra / ambiguïté émotionnelle.
-4. Pauline / piège et renversement.
-5. Raphaëlle / clarté et nouveau départ.
-6. Modes transversaux : libertinage, polyamour, harem.
-
-## Phase 5 — Production contenu visuel
-
-Objectif : remplacer les placeholders par des assets définitifs ou semi-définitifs.
-
-Règle : aucun contenu visuel ne doit être ajouté sans contexte narratif, conditions de déblocage et risque associé.
+- Ajouter Pauline ou Nico comme fils actifs rétroactivement dans J1/J2.
+- Multiplier les groupes avant la soirée pivot.
+- Intégrer des assets visuels définitifs/adultes sans validation explicite.
+- Figer le nom visible du protagoniste sur un ancien prénom historique : utiliser Player / le prénom choisi par le joueur.

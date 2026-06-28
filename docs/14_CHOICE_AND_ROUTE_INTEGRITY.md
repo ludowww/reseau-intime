@@ -57,7 +57,7 @@ Règle :
 
 ### 2. Choix de ton
 
-Choix qui orientent la manière dont Ludo répond, sans changer immédiatement la route.
+Choix qui orientent la manière dont Player répond, sans changer immédiatement la route.
 
 Exemples :
 
@@ -118,7 +118,7 @@ Effets :
 
 ### 5. Choix de vérité
 
-Choix majeurs où Ludo doit assumer, mentir, ouvrir ou contrôler.
+Choix majeurs où Player doit assumer, mentir, ouvrir ou contrôler.
 
 Exemples :
 
@@ -160,7 +160,7 @@ La réaction arrive tout de suite.
 Exemple :
 
 ```text
-Ludo flirte avec Mathilde.
+Player flirte avec Mathilde.
 Mathilde répond avec une provocation.
 mathilde.desire +2
 ```
@@ -172,7 +172,7 @@ La réaction arrive plus tard.
 Exemple :
 
 ```text
-Ludo ment à Marie sur Pauline.
+Player ment à Marie sur Pauline.
 Plus tard, Pauline révèle qu’ils se sont parlé en privé.
 Marie remarque l’incohérence.
 ```
@@ -222,7 +222,7 @@ Choix unique : “flirter” → route Mathilde verrouillée.
 Meilleur :
 
 ```text
-Ludo répond vite à Mathilde.
+Player répond vite à Mathilde.
 Il accepte une blague ambiguë.
 Il garde un message secret.
 Il ne recule pas quand elle teste.
@@ -304,16 +304,16 @@ Exemple : route Sandra.
 
 ```text
 Chemin principal : patience + attachement + exposition faible.
-Chemin alternatif : Ludo se retire, Sandra revient par peur de le perdre.
-Échec : Ludo exige trop vite, exposition haute, Sandra fuit.
+Chemin alternatif : Player se retire, Sandra revient par peur de le perdre.
+Échec : Player exige trop vite, exposition haute, Sandra fuit.
 ```
 
 Exemple : route Raphaëlle.
 
 ```text
 Chemin principal : vérité + clarté + rupture propre ou poly honnête.
-Chemin alternatif : Ludo avoue tard mais accepte de réparer.
-Échec : Ludo veut la garder comme secret, Raphaëlle coupe.
+Chemin alternatif : Player avoue tard mais accepte de réparer.
+Échec : Player veut la garder comme secret, Raphaëlle coupe.
 ```
 
 ## Tests d’atteignabilité
@@ -339,13 +339,13 @@ Chaque route importante doit avoir au moins un script de test narratif ou une ch
 
 Toutes les routes doivent préserver les vérités fixes :
 
-1. Ludo et Marie sont en couple au départ.
+1. Player et Marie sont en couple au départ.
 2. Le couple n’est pas mort, mais le désir est fatigué.
 3. Mathilde reste liée à Marie.
 4. Sandra reste fragile face à l’exposition.
 5. Raphaëlle refuse le mensonge prolongé.
 6. Pauline comprend le pouvoir des preuves.
-7. Nico renvoie Ludo à sa jalousie et son hypocrisie.
+7. Nico renvoie Player à sa jalousie et son hypocrisie.
 8. Un contenu intime crée toujours une trace ou une tension.
 9. Une route adulte n’efface jamais la psychologie des personnages.
 10. Une fin doit être un état de réseau, pas seulement une récompense.

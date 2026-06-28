@@ -49,9 +49,9 @@ laisser Sandra en vu
 Les signaux passifs servent à détecter :
 
 - les préférences du joueur ;
-- les obsessions de Ludo ;
-- les personnages que Ludo privilégie ;
-- les contradictions entre ce que Ludo dit et ce qu’il fait ;
+- les obsessions de Player ;
+- les personnages que Player privilégie ;
+- les contradictions entre ce que Player dit et ce qu’il fait ;
 - les tensions qui peuvent ressortir plus tard.
 
 ## Règle anti-punition cachée
@@ -175,4 +175,4 @@ Le jeu peut utiliser les comportements invisibles du joueur pour enrichir les ro
 - visibles en debug ;
 - cohérents avec les scènes et les personnages.
 
-> Les choix visibles orientent l’histoire. Les signaux passifs révèlent les habitudes de Ludo.
+> Les choix visibles orientent l’histoire. Les signaux passifs révèlent les habitudes de Player.

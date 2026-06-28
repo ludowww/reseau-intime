@@ -51,31 +51,31 @@ social_pressure   = 10
 
 Mesure la confiance relationnelle globale de Marie.
 
-Augmente si : Ludo est présent, sincère, tendre.
+Augmente si : Player est présent, sincère, tendre.
 
-Baisse si : Ludo ment, ignore Marie, est surpris dans une ambiguïté.
+Baisse si : Player ment, ignore Marie, est surpris dans une ambiguïté.
 
 ### lie_score
 
 Mesure l’accumulation de secrets et de mensonges.
 
-Augmente si : Ludo cache, conserve une preuve risquée, ment sur une interaction.
+Augmente si : Player cache, conserve une preuve risquée, ment sur une interaction.
 
 Baisse rarement. Peut baisser par aveu, suppression sincère ou choix de vérité.
 
 ### truth_tendency
 
-Mesure la tendance de Ludo à assumer.
+Mesure la tendance de Player à assumer.
 
-Augmente si : Ludo avoue, clarifie, pose une limite honnête.
+Augmente si : Player avoue, clarifie, pose une limite honnête.
 
-Baisse si : Ludo esquive ou multiplie les demi-vérités.
+Baisse si : Player esquive ou multiplie les demi-vérités.
 
 ### ludo_jealousy
 
-Mesure la jalousie active de Ludo, surtout envers Nico / Marie.
+Mesure la jalousie active de Player, surtout envers Nico / Marie.
 
-Augmente si : Ludo vérifie Nico, voit Marie désirée, surveille une story.
+Augmente si : Player vérifie Nico, voit Marie désirée, surveille une story.
 
 ### social_pressure
 
@@ -101,13 +101,13 @@ nico.place_near_marie       = 20
 
 ### marie.lucidity
 
-Ce que Marie comprend des décalages de Ludo.
+Ce que Marie comprend des décalages de Player.
 
 Attention : lucidité haute ne signifie pas forcément confiance basse. Marie peut comprendre et choisir de parler, ou comprendre et se fermer.
 
 ### mathilde.desire
 
-Tension et attirance de Mathilde envers Ludo.
+Tension et attirance de Mathilde envers Player.
 
 ### mathilde.loyalty
 
@@ -117,7 +117,7 @@ Si `desire` et `loyalty` sont hauts ensemble, Mathilde devient instable : attir�
 
 ### sandra.attachment
 
-Attachement émotionnel de Sandra envers Ludo.
+Attachement émotionnel de Sandra envers Player.
 
 ### sandra.exposure
 
@@ -129,7 +129,7 @@ Si `attachment` haut et `exposure` haut : Sandra panique.
 
 ### raphaelle.attachment
 
-Attachement de Raphaëlle envers Ludo.
+Attachement de Raphaëlle envers Player.
 
 ### raphaelle.clarity
 
@@ -139,7 +139,7 @@ Ce score commence haut : Raphaëlle n’est pas naturellement compatible avec le
 
 ### pauline.interest
 
-Intérêt de Pauline pour le jeu avec Ludo.
+Intérêt de Pauline pour le jeu avec Player.
 
 ### pauline.control
 
@@ -277,7 +277,7 @@ raphaelle.clarity >= 50
 Menaces possibles :
 
 ```text
-Flou de Ludo
+Flou de Player
 Sandra obsession
 Marie blessée
 ```
@@ -407,7 +407,7 @@ ludo_jealousy >= 30
 truth_tendency >= 50
 marie_trust >= 45
 Marie exprime qu’elle aime être désirée
-Ludo ne répond pas par contrôle pur
+Player ne répond pas par contrôle pur
 ```
 
 ### HAREM_SECRET
@@ -469,7 +469,7 @@ ou contenu Pauline conservé / capturé
 
 ```text
 sandra.exposure >= 45
-ou Ludo demande une clarification trop tôt
+ou Player demande une clarification trop tôt
 ou Sandra découvre harem secret
 ```
 
@@ -478,7 +478,7 @@ ou Sandra découvre harem secret
 ```text
 raphaelle.clarity >= 60
 et lie_score >= 35
-et Ludo refuse d’avouer
+et Player refuse d’avouer
 ```
 
 ### Nico prend la place

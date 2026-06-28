@@ -21,12 +21,12 @@ Le Jour 2 doit :
 ## Révélations obligatoires avant fin Jour 2
 
 ```text
-Marie est la copine de Ludo, et leur routine pèse.
+Marie est la copine de Player, et leur routine pèse.
 Mathilde est la cousine par alliance de Marie par défaut, presque sœur, très présente chez eux.
-Sandra est la meilleure amie ambiguë de Ludo, en couple mais émotionnellement fragile.
-Raphaëlle est la collègue attentive de Ludo, claire, douce mais pas naïve.
+Sandra est la meilleure amie ambiguë de Player, en couple mais émotionnellement fragile.
+Raphaëlle est la collègue attentive de Player, claire, douce mais pas naïve.
 Pauline est la meilleure amie de Marie, hôte de la soirée, avec une image sage et un jeu plus trouble.
-Nico est un ami de Ludo, intéressé par Marie, pas encore menace ouverte mais déjà visible.
+Nico est un ami de Player, intéressé par Marie, pas encore menace ouverte mais déjà visible.
 ```
 
 ## Structure recommandée du Jour 2
@@ -46,7 +46,7 @@ Contenu :
 
 - Marie parle de la journée ;
 - elle mentionne que Mathilde doit passer ou qu’elle a encore oublié quelque chose ;
-- Ludo peut répondre présent, distrait ou piquant ;
+- Player peut répondre présent, distrait ou piquant ;
 - Mathilde est contextualisée clairement comme cousine par alliance / presque sœur.
 
 Révélation à livrer :
@@ -57,7 +57,7 @@ Mathilde = cousine par alliance de Marie par défaut, présence familière du fo
 
 ### Moment 2 — Midi : travail / Raphaëlle
 
-Fonction : montrer que Ludo a aussi une vie hors du couple.
+Fonction : montrer que Player a aussi une vie hors du couple.
 
 Conversation :
 
@@ -92,13 +92,13 @@ Contenu :
 
 - Marie publie ou est taguée dans une story ;
 - Nico réagit ou commente ;
-- Ludo peut regarder, ignorer ou répondre à Marie ;
+- Player peut regarder, ignorer ou répondre à Marie ;
 - le jeu peut enregistrer un signal passif de surveillance.
 
 Révélation à livrer :
 
 ```text
-Nico = ami de Ludo, mais son regard sur Marie n’est pas neutre.
+Nico = ami de Player, mais son regard sur Marie n’est pas neutre.
 ```
 
 ### Moment 4 — Début de soirée : Mathilde à la maison
@@ -115,10 +115,10 @@ Marie privé possible en parallèle
 Contenu :
 
 - Mathilde écrit depuis le foyer ou à propos du foyer ;
-- elle taquine Ludo ;
+- elle taquine Player ;
 - elle mentionne Marie naturellement ;
 - elle peut envoyer une première image non explicite ou visible en galerie ;
-- elle recule si Ludo pousse trop.
+- elle recule si Player pousse trop.
 
 Révélation à livrer :
 
@@ -141,13 +141,13 @@ Contenu :
 - Sandra répond tard ;
 - elle n’était pas disponible plus tôt ;
 - elle parle de son couple sans tout dire ;
-- elle donne à Ludo l’impression qu’il compte ;
+- elle donne à Player l’impression qu’il compte ;
 - elle peut interrompre ou supprimer un message.
 
 Révélation à livrer :
 
 ```text
-Sandra est en couple, mais son lien avec Ludo devient dangereux parce qu’il semble plus intime que prévu.
+Sandra est en couple, mais son lien avec Player devient dangereux parce qu’il semble plus intime que prévu.
 ```
 
 ### Moment 6 — Nuit : groupe / Pauline prépare la soirée
@@ -165,7 +165,7 @@ Contenu :
 
 - Pauline rappelle la soirée ;
 - elle teste le groupe ;
-- elle peut provoquer Ludo sans encore l’isoler vraiment ;
+- elle peut provoquer Player sans encore l’isoler vraiment ;
 - le groupe montre déjà que chacun a une place sociale.
 
 Révélation à livrer :
@@ -231,9 +231,9 @@ Exemples de ruptures :
 Sandra écrit, puis disparaît parce que son partenaire rentre.
 Raphaëlle répond plus tard parce qu’elle est en réunion.
 Mathilde interrompt la conversation parce que Marie arrive.
-Marie laisse un message en vu pendant que Ludo répond ailleurs.
+Marie laisse un message en vu pendant que Player répond ailleurs.
 Pauline poste dans le groupe pendant une conversation privée.
-Nico réagit à une story au moment où Ludo parle avec Marie.
+Nico réagit à une story au moment où Player parle avec Marie.
 ```
 
 Ces ruptures doivent donner l’impression que le monde continue hors du joueur.
@@ -244,7 +244,7 @@ Ces ruptures doivent donner l’impression que le monde continue hors du joueur.
 
 ```text
 08:12 — Le lendemain matin
-Le téléphone vibre avant même que Ludo ait fini son café.
+Le téléphone vibre avant même que Player ait fini son café.
 ```
 
 ### Transition midi

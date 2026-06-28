@@ -23,7 +23,7 @@ Les appels manqués peuvent éventuellement exister sous forme de notification t
 
 ## Écran principal
 
-L’écran principal représente l’accueil du téléphone de Ludo.
+L’écran principal représente l’accueil du téléphone du personnage joueur.
 
 Applications proposées :
 
@@ -75,6 +75,18 @@ Nico
 Groupe soirée
 Groupe amis
 ```
+
+## Modèle de fils Messages
+
+Une ligne Messages = un fil visible par personnage ou groupe. Les épisodes internes d’une journée reprennent dans le même fil visible.
+
+Exemple J2 :
+
+- le menu Messages affiche Marie, Raphaëlle, Mathilde, Sandra ;
+- il n’affiche pas Marie matin / Marie après-midi / Marie nuit ;
+- Marie redevient `unread` / `pending` uniquement quand un nouvel épisode Marie est vraiment débloqué ;
+- ouvrir une discussion ne doit pas rendre les autres fils `unread` ;
+- pas d’unread fantôme quand on ouvre une autre discussion.
 
 ## Réseau social
 
@@ -161,7 +173,7 @@ Exemple :
 
 ```text
 Pauline : Montre ton fond d’écran, on va voir qui est le plus cringe 😇
-Nico : Ah oui, vas-y Ludo.
+Nico : Ah oui, vas-y Player.
 Marie : Pourquoi pas.
 ```
 
@@ -182,7 +194,7 @@ Nico : Joli choix.
 - Marie soupçonneuse si le fond est une autre femme.
 - Mathilde gênée ou excitée si elle découvre qu’elle est le fond d’écran.
 - Pauline peut utiliser le fond comme preuve sociale.
-- Nico peut provoquer Ludo.
+- Nico peut provoquer Player.
 - Le groupe peut rendre public un secret jusque-là privé.
 
 ## Notifications
@@ -224,7 +236,7 @@ Regarder la story nourrit la jalousie.
 
 Application optionnelle pour :
 
-- journal de Ludo ;
+- journal de Player ;
 - indices ;
 - souvenirs ;
 - pensées après choix importants ;

@@ -42,11 +42,11 @@ Le niveau adulte est explicite progressif. Les personnages ne vont pas tous au m
 - Marie peut redevenir désirante, jalouse ou dominante selon la route.
 - Nico déclenche surtout de la jalousie autour de Marie.
 
-## Ludo
+## Player
 
 ### Fonction de voix
 
-Ludo est le personnage joueur, mais pas un avatar vide. Il peut être orienté par les choix, tout en gardant ses failles : évitement, besoin d’être désiré, peur de perdre sa place, attirance pour les zones ambiguës.
+Player désigne le personnage joueur, mais pas un avatar vide. Il peut être orienté par les choix, tout en gardant ses failles : évitement, besoin d’être désiré, peur de perdre sa place, attirance pour les zones ambiguës.
 
 ### Longueur moyenne
 
@@ -69,7 +69,7 @@ Ludo est le personnage joueur, mais pas un avatar vide. Il peut être orienté p
 
 ### Manière de flirter
 
-Ludo flirte souvent par détour.
+Player flirte souvent par détour.
 
 Il préfère :
 
@@ -90,7 +90,7 @@ Ces formulations directes doivent être réservées aux routes avancées ou aux 
 
 ### Manière de mentir
 
-Ludo minimise.
+Player minimise.
 
 ```text
 C’est rien.
@@ -120,7 +120,7 @@ J’ai eu peur de te le dire parce que je savais que ça voulait déjà dire que
 
 ### Fonction de voix
 
-Marie est l’ancrage du couple. Elle connaît Ludo. Elle sent les écarts avant d’avoir les preuves. Elle peut être tendre, blessée, lucide, jalouse ou puissante selon la route.
+Marie est l’ancrage du couple. Elle connaît Player. Elle sent les écarts avant d’avoir les preuves. Elle peut être tendre, blessée, lucide, jalouse ou puissante selon la route.
 
 ### Longueur moyenne
 
@@ -184,21 +184,21 @@ Maintenant, c’est moi qui pose les limites.
 ### Rapport aux contenus visuels
 
 - Dans la réparation : contenus tendres et désirants.
-- Dans la jalousie : contenus plus provocants, parfois destinés à réveiller Ludo.
+- Dans la jalousie : contenus plus provocants, parfois destinés à réveiller Player.
 - Dans le NTR ou libertinage : contenus liés au pouvoir, au regard extérieur et à la symétrie.
 
 ### Hors personnage
 
 - Être naïve trop longtemps.
 - Tout accepter sans blessure.
-- Ne jamais remarquer les changements de Ludo.
+- Ne jamais remarquer les changements de Player.
 - Devenir uniquement punitive sans nuance.
 
 ## Mathilde
 
 ### Fonction de voix
 
-Mathilde est l’interdit domestique. Elle aime séduire, tester son pouvoir et sentir le regard de Ludo, mais elle reste liée à Marie par une loyauté forte.
+Mathilde est l’interdit domestique. Elle aime séduire, tester son pouvoir et sentir le regard de Player, mais elle reste liée à Marie par une loyauté forte.
 
 ### Longueur moyenne
 
@@ -261,7 +261,7 @@ Mathilde envoie ou provoque des contenus liés à la maison : canapé, chambre d
 
 ### Fonction de voix
 
-Sandra est l’ambiguïté émotionnelle. Elle suggère plus qu’elle n’affirme. Elle donne à Ludo l’impression d’être unique, puis se retire si elle se sent exposée.
+Sandra est l’ambiguïté émotionnelle. Elle suggère plus qu’elle n’affirme. Elle donne à Player l’impression d’être unique, puis se retire si elle se sent exposée.
 
 ### Longueur moyenne
 
@@ -335,7 +335,7 @@ Sandra donne rarement. Ses contenus sont précieux, fragiles, parfois supprimés
 
 ### Fonction de voix
 
-Raphaëlle est la clarté. Elle est douce et attentionnée, mais elle n’est pas naïve. Elle peut désirer Ludo, mais refuse d’être un secret ou un pansement.
+Raphaëlle est la clarté. Elle est douce et attentionnée, mais elle n’est pas naïve. Elle peut désirer Player, mais refuse d’être un secret ou un pansement.
 
 ### Longueur moyenne
 
@@ -383,7 +383,7 @@ Je peux accepter une situation compliquée. Pas un mensonge.
 
 ### Rapport aux contenus visuels
 
-Raphaëlle peut envoyer des contenus doux, personnels ou intimes, mais seulement si Ludo a été clair. Elle refuse la logique de collection.
+Raphaëlle peut envoyer des contenus doux, personnels ou intimes, mais seulement si Player a été clair. Elle refuse la logique de collection.
 
 ### Hors personnage
 
@@ -428,7 +428,7 @@ Dis-le clairement.
 
 ### Manière de piéger
 
-Pauline pousse Ludo à formuler ce qu’il voudrait garder flou.
+Pauline pousse Player à formuler ce qu’il voudrait garder flou.
 
 ```text
 Tu peux faire mieux que ça.
@@ -438,7 +438,7 @@ C’est fou comme les hommes deviennent prudents quand il reste une trace.
 
 ### Manière d’être renversée
 
-Quand Ludo lit son jeu, Pauline ne devient pas faible. Elle est surprise, troublée, excitée par la perte de contrôle choisie.
+Quand Player lit son jeu, Pauline ne devient pas faible. Elle est surprise, troublée, excitée par la perte de contrôle choisie.
 
 ```text
 Je déteste que tu aies compris ça.
@@ -461,7 +461,7 @@ Pauline utilise les contenus comme provocation, preuve ou levier. Une photo de P
 
 ### Fonction de voix
 
-Nico est le rival miroir. Il désire Marie et force Ludo à vivre ce qu’il provoque ailleurs. Il ne doit pas être un simple méchant.
+Nico est le rival miroir. Il désire Marie et force Player à vivre ce qu’il provoque ailleurs. Il ne doit pas être un simple méchant.
 
 ### Longueur moyenne
 
@@ -489,7 +489,7 @@ Tu as de la chance, tu le sais au moins ?
 Elle a ri deux fois plus avec moi qu’avec toi, je dis ça comme ça.
 ```
 
-### Manière de provoquer Ludo
+### Manière de provoquer Player
 
 ```text
 Tu fais encore attention à elle ?
@@ -506,7 +506,7 @@ Tu veux être libre, mais tu n’aimes pas quand elle l’est aussi.
 
 ### Rapport aux contenus visuels
 
-Nico déclenche surtout des contenus autour de Marie : stories, réactions, photos de groupe, messages privés, preuves ou provocations NTR. Le contenu Nico doit toujours parler de la place de Ludo auprès de Marie.
+Nico déclenche surtout des contenus autour de Marie : stories, réactions, photos de groupe, messages privés, preuves ou provocations NTR. Le contenu Nico doit toujours parler de la place de Player auprès de Marie.
 
 ### Hors personnage
 
@@ -519,7 +519,7 @@ Nico déclenche surtout des contenus autour de Marie : stories, réactions, phot
 
 | Personnage | Rythme | Emojis | Flirt | Recul | Danger principal |
 |---|---|---|---|---|---|
-| Ludo | prudent, orientable | rares | détour, test | évitement | mensonge |
+| Player | prudent, orientable | rares | détour, test | évitement | mensonge |
 | Marie | naturel, intime | tendres puis rares | mémoire du couple, jalousie | froideur | lucidité |
 | Mathilde | vif, taquin | 😇 😏 😅 | provocation domestique | loyauté Marie | interdit familial |
 | Sandra | doux, hésitant | très rares | suggestion, ambiguïté | fuite | exposition |
@@ -532,7 +532,7 @@ Nico déclenche surtout des contenus autour de Marie : stories, réactions, phot
 ### Niveau 0 — Social
 
 ```text
-Marie : Tu peux prendre du pain en rentrant ?
+Marie : Tu peux prendre des capsules en rentrant ?
 Mathilde : Je passe chez vous ce soir, Marie t’a prévenu ?
 Sandra : Hey, tu vas bien ?
 Raphaëlle : Réunion à 14h, courage.
@@ -579,7 +579,7 @@ Nico : Elle me parle parce que tu n’écoutes plus.
 Marie : Si on change les règles, je veux être celle qui les pose avec toi.
 Mathilde : Je ne sais pas comment je vais la regarder demain.
 Sandra : J’ai eu peur de ce que je ressentais. Pas de toi.
-Raphaëlle : Je peux t’aimer, Ludo. Mais pas dans un mensonge.
+Raphaëlle : Je peux t’aimer, Player. Mais pas dans un mensonge.
 Pauline : Je voulais te faire tomber. Je n’avais pas prévu d’aimer tomber avec toi.
 Nico : Tu voulais ouvrir la porte. Ne te plains pas que Marie en ait trouvé une aussi.
 ```
@@ -591,8 +591,8 @@ Nico : Tu voulais ouvrir la porte. Ne te plains pas que Marie en ait trouvé une
 3. Sandra doit toujours garder une part de fuite ou de fragilité.
 4. Raphaëlle doit toujours demander une forme de clarté.
 5. Pauline doit toujours savoir qu’une trace donne du pouvoir.
-6. Nico doit toujours renvoyer Ludo à son hypocrisie possible.
-7. Ludo ne doit jamais devenir un pur manipulateur froid sans que le jeu le reconnaisse.
+6. Nico doit toujours renvoyer Player à son hypocrisie possible.
+7. Player ne doit jamais devenir un pur manipulateur froid sans que le jeu le reconnaisse.
 8. Les contenus visuels doivent respecter la voix du personnage qui les envoie.
 9. Une route adulte ne doit pas effacer la psychologie du personnage.
 10. Les dialogues doivent rester écrits pour smartphone : rythme, notifications, silences, interruptions.

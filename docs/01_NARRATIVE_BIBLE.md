@@ -6,32 +6,30 @@ Le jeu doit garder un **tronc commun** quelle que soit la route empruntée. Les 
 
 ## Histoire de base
 
-Ludo est en couple avec Marie. Ils s’aiment encore, mais leur quotidien est devenu trop prévisible. Les messages sont plus pratiques que désirants. Ludo se sent moins regardé. Marie sent qu’il est ailleurs sans encore pouvoir le prouver.
+Player est le nom générique temporaire du personnage joueur, en couple avec Marie. À terme, le prénom affiché sera choisi par le joueur. Le couple s’aime encore, mais le quotidien est devenu trop prévisible : les messages sont plus pratiques que désirants, Player se sent moins regardé, et Marie sent qu’il est ailleurs sans encore pouvoir le prouver.
 
 Autour du couple, plusieurs tensions s’ouvrent :
 
 - Mathilde est souvent chez Marie et vit parfois presque dans la maison.
-- Sandra devient la confidente ambiguë de Ludo.
-- Raphaëlle remarque au travail que Ludo va mal.
-- Pauline invite le groupe chez elle et révèle un visage plus trouble.
-- Nico, ami de Ludo, regarde Marie avec trop d’insistance.
+- Sandra devient une confidente ambiguë du personnage joueur.
+- Raphaëlle remarque au travail que Player va mal.
+- Pauline reste une future pression sociale à activer plus tard.
+- Nico reste un futur rival/miroir autour de Marie, pas encore actif J1/J2.
 
 ## Structure commune
 
 ### Chapitre 1 — Couple installé
 
-Objectif : montrer le couple Ludo / Marie avant la crise.
+Objectif : montrer le couple Player / Marie avant la crise.
 
 Éléments :
 
 - messages pratiques de Marie ;
 - tendresse fatiguée ;
 - routine domestique ;
-- première mention de Mathilde ;
-- première apparition indirecte de Nico ;
-- Sandra écrit légèrement ;
-- Raphaëlle existe dans le cadre professionnel ;
-- Pauline annonce une soirée.
+- Mathilde seulement évoquée indirectement ;
+- Sandra écrit après Marie ;
+- pas de Raphaëlle, Pauline, Nico ou groupe actif.
 
 ### Chapitre 2 — Les regards changent
 
@@ -39,12 +37,12 @@ Objectif : ouvrir les premières failles.
 
 Éléments :
 
-- Mathilde passe à la maison ;
-- Sandra écrit plus tard et plus intimement ;
-- Raphaëlle remarque que Ludo n’est pas lui-même ;
-- Pauline semble sage mais laisse une ambiguïté ;
-- Nico complimente Marie ;
-- Marie remarque que Ludo répond différemment selon les personnes.
+- Marie prolonge le quotidien domestique ;
+- Raphaëlle apparaît au travail ;
+- Mathilde arrive via Marie puis écrit directement ;
+- Sandra revient brièvement avec prudence ;
+- J2 contient Marie, Raphaëlle, Mathilde, Sandra seulement ;
+- pas de Pauline/Nico actifs et pas de groupe actif.
 
 ### Chapitre 3 — Premiers secrets
 
@@ -65,7 +63,7 @@ Premier grand pivot commun.
 
 Présents :
 
-- Ludo ;
+- Player ;
 - Marie ;
 - Mathilde ;
 - Pauline ;
@@ -76,11 +74,11 @@ Sandra n’est pas présente physiquement, mais écrit au mauvais moment. Rapha�
 
 Pendant la soirée :
 
-- Pauline provoque Ludo ;
+- Pauline provoque Player ;
 - Nico regarde Marie ;
-- Mathilde remarque les réactions de Ludo ;
+- Mathilde remarque les réactions de Player ;
 - Marie sent qu’une tension circule ;
-- Sandra envoie un message qui attire Ludo hors de la scène présente.
+- Sandra envoie un message qui attire Player hors de la scène présente.
 
 ### Chapitre 5 — Le lendemain
 
@@ -114,7 +112,7 @@ Une photo, capture, story, vidéo, notification ou message supprimé devient une
 
 ### Chapitre 8 — Choix de vérité
 
-Ludo doit choisir une posture :
+Le personnage joueur doit choisir une posture :
 
 - cacher ;
 - avouer partiellement ;
@@ -134,7 +132,7 @@ Exemples :
 - Sandra choisit ou fuit ;
 - Mathilde bascule ou recule ;
 - Marie accepte, refuse ou reprend le pouvoir ;
-- Pauline est renversée ou piège Ludo ;
+- Pauline est renversée ou piège Player ;
 - Raphaëlle devient vraie alternative ou coupe ;
 - Nico devient rival, complice ou remplaçant.
 
@@ -156,7 +154,7 @@ L’épilogue doit indiquer :
 1. Routine avec Marie.
 2. Mathilde à la maison.
 3. Sandra écrit tard.
-4. Raphaëlle remarque Ludo.
+4. Raphaëlle remarque Player.
 5. Nico regarde Marie.
 6. Soirée chez Pauline.
 7. Première preuve.
@@ -172,8 +170,8 @@ Exemple : la soirée chez Pauline.
 
 - Route Pauline : c’est un piège.
 - Route Nico : c’est le début du rapprochement avec Marie.
-- Route Mathilde : Mathilde comprend que Ludo la désire.
-- Route Sandra : Ludo répond à Sandra au lieu d’être présent.
+- Route Mathilde : Mathilde comprend que Player la désire.
+- Route Sandra : Player répond à Sandra au lieu d’être présent.
 - Route Marie : Marie comprend qu’elle n’est plus au centre.
 - Route libertine : Pauline ouvre une discussion sur les désirs.
 
@@ -212,13 +210,17 @@ Mode : libertinage négocié
 
 Ces éléments doivent rester vrais dans toutes les routes :
 
-1. Ludo et Marie sont en couple au début.
+1. Player et Marie sont en couple au début.
 2. La routine a affaibli le désir.
-3. Ludo aime encore Marie, même s’il désire ailleurs.
+3. Le personnage joueur aime encore Marie, même s’il désire ailleurs.
 4. Mathilde est une limite familiale et domestique.
 5. Sandra est émotionnellement importante.
 6. Raphaëlle demande de la clarté.
 7. Pauline sait jouer avec les preuves et les apparences.
 8. Nico désire Marie.
 9. Les contenus visuels sont à la fois récompenses et risques.
-10. Plus Ludo ment, plus le réseau devient dangereux.
+10. Plus Player ment, plus le réseau devient dangereux.
+
+## Note nom du protagoniste
+
+`Player` est le placeholder documentaire et data-friendly du protagoniste. Le nom visible final devra venir du prénom choisi par le joueur. Les anciens exemples internes qui utilisent `Player` peuvent subsister temporairement s’ils ne figent pas un texte visible définitif.

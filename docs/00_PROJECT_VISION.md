@@ -19,9 +19,9 @@ Le jeu mélange :
 
 ## Pitch
 
-Ludo est en couple avec Marie. Leur relation est stable, tendre, mais la routine a affaibli le désir. Autour d’eux, plusieurs personnes réveillent des failles différentes : Mathilde, la cousine presque sœur de Marie ; Sandra, la meilleure amie ambiguë de Ludo ; Raphaëlle, la collègue attentionnée ; Pauline, la meilleure amie de Marie qui cache un jeu plus trouble ; Nico, l’ami de Ludo qui fantasme sur Marie.
+Player est en couple avec Marie. Leur relation est stable, tendre, mais la routine a affaibli le désir. Autour d’eux, plusieurs personnes réveillent des failles différentes : Mathilde, la cousine presque sœur de Marie ; Sandra, la meilleure amie ambiguë du personnage joueur ; Raphaëlle, la collègue attentionnée ; Pauline, la meilleure amie de Marie qui cache un jeu plus trouble ; Nico, l’ami du personnage joueur qui fantasme sur Marie.
 
-Le joueur reçoit des messages, des notifications, des photos, des vidéos, des stories et des preuves. Chaque choix peut rapprocher Ludo d’un personnage, dégrader une autre relation, créer un secret ou déclencher une révélation.
+Le joueur reçoit des messages, des notifications, des photos, des vidéos, des stories et des preuves. Chaque choix peut rapprocher Player d’un personnage, dégrader une autre relation, créer un secret ou déclencher une révélation.
 
 ## Promesse joueur
 
@@ -38,7 +38,7 @@ Selon les choix :
 
 ## Thème central
 
-> Le désir n’est pas seulement ce que Ludo ressent. C’est ce qu’il choisit d’en faire : le cacher, l’avouer, le partager, le contrôler, le subir ou le perdre.
+> Le désir n’est pas seulement ce que Player ressent. C’est ce qu’il choisit d’en faire : le cacher, l’avouer, le partager, le contrôler, le subir ou le perdre.
 
 ## Règle d’unité
 

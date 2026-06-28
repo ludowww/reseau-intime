@@ -110,7 +110,7 @@ Messages clés :
 
 ```text
 Marie : Tu rentres vers quelle heure ?
-Marie : Et tu peux prendre du pain ?
+Marie : Et tu peux prendre des capsules ?
 ```
 
 Choix visibles :
@@ -118,7 +118,7 @@ Choix visibles :
 ```text
 - Pas trop tard.
 - Je peux passer prendre ce qu’il faut.
-- Tu me parles vraiment que pour le pain maintenant ?
+- Tu me parles vraiment que pour les capsules maintenant ?
 ```
 
 Effets :
@@ -337,7 +337,7 @@ Messages clés :
 ```text
 Pauline : Les premiers arrivés ont droit au meilleur verre 😇
 Nico : Marie, je compte sur toi pour sauver la playlist.
-Mathilde : Ludo va encore faire semblant de ne pas danser.
+Mathilde : Player va encore faire semblant de ne pas danser.
 Marie : Il fait beaucoup de choses semblant en ce moment.
 ```
 
@@ -499,7 +499,7 @@ Déclencheur :
 
 ```text
 Pauline : Montrez vos fonds d’écran, je veux juger 😇
-Nico : Ah oui, vas-y Ludo.
+Nico : Ah oui, vas-y Player.
 Marie : Pourquoi pas.
 ```
 
@@ -536,7 +536,7 @@ Déclencheurs possibles :
 
 - Marie a été ignorée ;
 - fond d’écran suspect ;
-- Ludo a répondu à Mathilde/Sandra/Pauline ;
+- Player a répondu à Mathilde/Sandra/Pauline ;
 - Nico a pris de la place.
 
 Messages variants :
