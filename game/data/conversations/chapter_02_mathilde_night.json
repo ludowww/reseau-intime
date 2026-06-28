@@ -1,0 +1,434 @@
+{
+  "id": "chapter_02_mathilde_night",
+  "chapter": 2,
+  "day": 2,
+  "title": "Jour 2 — Mathilde depuis le canapé",
+  "app": "messages",
+  "thread": {
+    "id": "thread_mathilde_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "mathilde"
+    ],
+    "display_name": "Mathilde",
+    "profile_content_id": "profile_mathilde_placeholder"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c02_mathilde_night_seg_01",
+      "moment_label": "jour 2",
+      "time_label": "21:43",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_night_001",
+          "sender": "mathilde",
+          "time_label": "21:43",
+          "text": "Je tiens à préciser que je ne colonise rien."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_night_01_guided",
+          "text": "Tu as récupéré le plaid ?",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_night_seg_02",
+      "moment_label": "jour 2",
+      "time_label": "21:43",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_night_002",
+          "sender": "mathilde",
+          "time_label": "21:43",
+          "text": "C’est un prêt culturel."
+        },
+        {
+          "id": "msg_c02_mathilde_night_003",
+          "sender": "mathilde",
+          "time_label": "21:43",
+          "text": "Pas une annexion."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_night_02_guided",
+          "text": "La nuance est importante.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_night_seg_03",
+      "moment_label": "jour 2",
+      "time_label": "21:43",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_night_004",
+          "sender": "mathilde",
+          "time_label": "21:43",
+          "text": "Très."
+        },
+        {
+          "id": "msg_c02_mathilde_night_005",
+          "sender": "mathilde",
+          "time_label": "21:43",
+          "text": "Merci de suivre 😄"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_night_03_guided",
+          "text": "Marie dit que tu restes dormir.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_night_seg_04",
+      "moment_label": "jour 2",
+      "time_label": "21:43",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_night_006",
+          "sender": "mathilde",
+          "time_label": "21:43",
+          "text": "Marie dramatise."
+        },
+        {
+          "id": "msg_c02_mathilde_night_007",
+          "sender": "mathilde",
+          "time_label": "21:43",
+          "text": "Je reste juste jusqu’à demain matin."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_night_04_guided",
+          "text": "Donc dormir.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_night_seg_05",
+      "moment_label": "jour 2",
+      "time_label": "21:43",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_night_008",
+          "sender": "mathilde",
+          "time_label": "21:43",
+          "text": "Techniquement."
+        },
+        {
+          "id": "msg_c02_mathilde_night_009",
+          "sender": "mathilde",
+          "time_label": "21:43",
+          "text": "Mais “dormir” fait tout de suite sérieux."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_night_05_guided",
+          "text": "Tu préfères quoi ?",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_night_seg_06",
+      "moment_label": "jour 2",
+      "time_label": "21:43",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_night_010",
+          "sender": "mathilde",
+          "time_label": "21:43",
+          "text": "“Respecter l’appel du canapé.”"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_night_06_guided",
+          "text": "C’est plus digne.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_night_seg_07",
+      "moment_label": "jour 2",
+      "time_label": "21:43",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_night_011",
+          "sender": "mathilde",
+          "time_label": "21:43",
+          "text": "Je trouve aussi."
+        },
+        {
+          "id": "msg_c02_mathilde_night_012",
+          "sender": "mathilde",
+          "time_label": "21:43",
+          "text": "Attends."
+        },
+        {
+          "id": "msg_c02_mathilde_night_013",
+          "sender": "mathilde",
+          "time_label": "21:43",
+          "text": "Je fournis une preuve de ma dignité."
+        },
+        {
+          "id": "msg_c02_mathilde_night_014",
+          "sender": "mathilde",
+          "time_label": "21:43",
+          "text": "Photo envoyée."
+        },
+        {
+          "id": "msg_c02_mathilde_night_015",
+          "sender": "mathilde",
+          "time_label": "21:43",
+          "content_id": "mathilde_j2_couch_innocent_selfie_placeholder",
+          "text": "Selfie de Mathilde depuis le canapé, plaid remonté sur elle, tête faussement innocente, sourire en coin. On devine le salon de Marie derrière elle. Elle ne pose pas ouvertement de manière sexy, mais le cadrage est flatteur et elle sait très bien l’effet que ça peut produire."
+        },
+        {
+          "id": "msg_c02_mathilde_night_016",
+          "sender": "mathilde",
+          "time_label": "21:43",
+          "text": "Regarde cette personne parfaitement raisonnable."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_night_07_1",
+          "text": "Très raisonnable, évidemment.",
+          "tone": "tendre",
+          "next_messages": [
+            {
+              "id": "msg_c02_mathilde_night_seg_07_choice_1_01",
+              "sender": "mathilde",
+              "time_label": "21:43",
+              "text": "Merci."
+            },
+            {
+              "id": "msg_c02_mathilde_night_seg_07_choice_1_02",
+              "sender": "mathilde",
+              "time_label": "21:43",
+              "text": "Enfin un jugement honnête."
+            },
+            {
+              "id": "msg_c02_mathilde_night_seg_07_choice_1_03",
+              "sender": "mathilde",
+              "time_label": "21:43",
+              "text": "Marie a levé les yeux au ciel."
+            },
+            {
+              "id": "msg_c02_mathilde_night_seg_07_choice_1_04",
+              "sender": "mathilde",
+              "time_label": "21:43",
+              "text": "Je pense que ça confirme que j’ai raison 🙃"
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_mathilde_night_07_2",
+          "text": "Tu as surtout l’air de quelqu’un qui a gagné le canapé.",
+          "tone": "taquin",
+          "next_messages": [
+            {
+              "id": "msg_c02_mathilde_night_seg_07_choice_2_01",
+              "sender": "mathilde",
+              "time_label": "21:43",
+              "text": "Gagné est un mot fort."
+            },
+            {
+              "id": "msg_c02_mathilde_night_seg_07_choice_2_02",
+              "sender": "mathilde",
+              "time_label": "21:43",
+              "text": "Je dirais mérité."
+            },
+            {
+              "id": "msg_c02_mathilde_night_seg_07_choice_2_03",
+              "sender": "mathilde",
+              "time_label": "21:43",
+              "text": "Par présence."
+            },
+            {
+              "id": "msg_c02_mathilde_night_seg_07_choice_2_04",
+              "sender": "mathilde",
+              "time_label": "21:43",
+              "text": "Et par charme administratif."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_mathilde_night_07_3",
+          "text": "Je vais éviter de commenter sans avocat.",
+          "tone": "prudent",
+          "next_messages": [
+            {
+              "id": "msg_c02_mathilde_night_seg_07_choice_3_01",
+              "sender": "mathilde",
+              "time_label": "21:43",
+              "text": "Lâche."
+            },
+            {
+              "id": "msg_c02_mathilde_night_seg_07_choice_3_02",
+              "sender": "mathilde",
+              "time_label": "21:43",
+              "text": "Mais cohérent."
+            },
+            {
+              "id": "msg_c02_mathilde_night_seg_07_choice_3_03",
+              "sender": "mathilde",
+              "time_label": "21:43",
+              "text": "Je respecte la constance 😄"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_night_seg_08",
+      "moment_label": "jour 2",
+      "time_label": "21:43",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_night_021",
+          "sender": "mathilde",
+          "time_label": "21:43",
+          "text": "Tu rentres bientôt ?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_night_08_guided",
+          "text": "Oui. Je suis sur le retour.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_night_seg_09",
+      "moment_label": "jour 2",
+      "time_label": "21:43",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_night_022",
+          "sender": "mathilde",
+          "time_label": "21:43",
+          "text": "Bien."
+        },
+        {
+          "id": "msg_c02_mathilde_night_023",
+          "sender": "mathilde",
+          "time_label": "21:43",
+          "text": "Ramène les capsules."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_night_09_guided",
+          "text": "Marie t’a enrôlée ?",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_night_seg_10",
+      "moment_label": "jour 2",
+      "time_label": "21:43",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_night_024",
+          "sender": "mathilde",
+          "time_label": "21:43",
+          "text": "Non."
+        },
+        {
+          "id": "msg_c02_mathilde_night_025",
+          "sender": "mathilde",
+          "time_label": "21:43",
+          "text": "Je défends l’intérêt général."
+        },
+        {
+          "id": "msg_c02_mathilde_night_026",
+          "sender": "mathilde",
+          "time_label": "21:43",
+          "text": "Et demain matin, je serai probablement concernée ☕"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_night_10_guided",
+          "text": "Je vois que la situation est grave.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_night_seg_11",
+      "moment_label": "jour 2",
+      "time_label": "21:43",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_night_027",
+          "sender": "mathilde",
+          "time_label": "21:43",
+          "text": "Très grave."
+        },
+        {
+          "id": "msg_c02_mathilde_night_028",
+          "sender": "mathilde",
+          "time_label": "21:43",
+          "text": "Et ramène aussi du respect pour mon plaid."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_night_11_guided",
+          "text": "Ton plaid ?",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_night_seg_12",
+      "moment_label": "jour 2",
+      "time_label": "21:43",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_night_029",
+          "sender": "mathilde",
+          "time_label": "21:43",
+          "text": "Tu comprends vite 🙂"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_night_12_guided",
+          "text": "À tout à l’heure, Mathilde.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_night_seg_13",
+      "moment_label": "jour 2",
+      "time_label": "21:43",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_night_030",
+          "sender": "mathilde",
+          "time_label": "21:43",
+          "text": "À tout à l’heure, simple civil."
+        }
+      ]
+    }
+  ],
+  "debug_notes": "Mathilde écrit en privé depuis le canapé avant le retour de Ludo. Texte J2 V3 intégré; réponses Ludo uniquement via choices."
+}

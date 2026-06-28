@@ -1,0 +1,355 @@
+{
+  "id": "chapter_02_marie_afternoon",
+  "chapter": 2,
+  "day": 2,
+  "title": "Jour 2 — Marie annonce Mathilde",
+  "app": "messages",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "marie"
+    ],
+    "display_name": "Marie",
+    "profile_content_id": "profile_marie_placeholder"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c02_marie_afternoon_seg_01",
+      "moment_label": "jour 2",
+      "time_label": "17:38",
+      "messages": [
+        {
+          "id": "msg_c02_marie_afternoon_001",
+          "sender": "marie",
+          "time_label": "17:38",
+          "text": "Devine qui est venue récupérer son chargeur."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_afternoon_01_guided",
+          "text": "Mathilde.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_afternoon_seg_02",
+      "moment_label": "jour 2",
+      "time_label": "17:38",
+      "messages": [
+        {
+          "id": "msg_c02_marie_afternoon_002",
+          "sender": "marie",
+          "time_label": "17:38",
+          "text": "Tu n’as même pas essayé de faire semblant."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_afternoon_02_guided",
+          "text": "Le suspense était limité.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_afternoon_seg_03",
+      "moment_label": "jour 2",
+      "time_label": "17:38",
+      "messages": [
+        {
+          "id": "msg_c02_marie_afternoon_003",
+          "sender": "marie",
+          "time_label": "17:38",
+          "text": "Très."
+        },
+        {
+          "id": "msg_c02_marie_afternoon_004",
+          "sender": "marie",
+          "time_label": "17:38",
+          "text": "Photo envoyée."
+        },
+        {
+          "id": "msg_c02_marie_afternoon_005",
+          "sender": "marie",
+          "time_label": "17:38",
+          "content_id": "mathilde_j2_arrival_marie_placeholder",
+          "text": "Mathilde dans l’entrée de l’appartement, veste encore sur l’épaule, chargeur à la main, sourire un peu insolent vers l’objectif. Elle a l’air chez elle sans vraiment l’être. Marie a visiblement pris la photo sur le vif."
+        },
+        {
+          "id": "msg_c02_marie_afternoon_006",
+          "sender": "marie",
+          "time_label": "17:38",
+          "text": "Elle dit qu’elle passe cinq minutes."
+        },
+        {
+          "id": "msg_c02_marie_afternoon_007",
+          "sender": "marie",
+          "time_label": "17:38",
+          "text": "Donc elle est probablement là jusqu’à la nuit des temps."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_afternoon_03_guided",
+          "text": "Elle a posé son sac ?",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_afternoon_seg_04",
+      "moment_label": "jour 2",
+      "time_label": "17:38",
+      "messages": [
+        {
+          "id": "msg_c02_marie_afternoon_008",
+          "sender": "marie",
+          "time_label": "17:38",
+          "text": "Oui."
+        },
+        {
+          "id": "msg_c02_marie_afternoon_009",
+          "sender": "marie",
+          "time_label": "17:38",
+          "text": "Comme si elle payait une part du loyer 😅"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_afternoon_04_1",
+          "text": "Elle a toujours eu un sens très personnel des cinq minutes.",
+          "tone": "tendre",
+          "next_messages": [
+            {
+              "id": "msg_c02_marie_afternoon_seg_04_choice_1_01",
+              "sender": "marie",
+              "time_label": "17:38",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_c02_marie_afternoon_seg_04_choice_1_02",
+              "sender": "marie",
+              "time_label": "17:38",
+              "text": "Chez elle, c’est une unité émotionnelle."
+            },
+            {
+              "id": "msg_c02_marie_afternoon_seg_04_choice_1_03",
+              "sender": "marie",
+              "time_label": "17:38",
+              "text": "Pas une mesure de temps."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_marie_afternoon_04_2",
+          "text": "Elle reste un peu ?",
+          "tone": "taquin",
+          "next_messages": [
+            {
+              "id": "msg_c02_marie_afternoon_seg_04_choice_2_01",
+              "sender": "marie",
+              "time_label": "17:38",
+              "text": "Elle dit non."
+            },
+            {
+              "id": "msg_c02_marie_afternoon_seg_04_choice_2_02",
+              "sender": "marie",
+              "time_label": "17:38",
+              "text": "Donc oui."
+            },
+            {
+              "id": "msg_c02_marie_afternoon_seg_04_choice_2_03",
+              "sender": "marie",
+              "time_label": "17:38",
+              "text": "Elle vient de demander si on avait encore le café qu’elle aime."
+            },
+            {
+              "id": "msg_c02_marie_afternoon_seg_04_choice_2_04",
+              "sender": "marie",
+              "time_label": "17:38",
+              "text": "C’est presque une déclaration de résidence."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_marie_afternoon_04_3",
+          "text": "Tu veux que je vous laisse entre vous ?",
+          "tone": "prudent",
+          "next_messages": [
+            {
+              "id": "msg_c02_marie_afternoon_seg_04_choice_3_01",
+              "sender": "marie",
+              "time_label": "17:38",
+              "text": "Pourquoi ?"
+            },
+            {
+              "id": "msg_c02_marie_afternoon_seg_04_choice_3_02",
+              "sender": "marie",
+              "time_label": "17:38",
+              "text": "Tu fais partie du décor aussi."
+            },
+            {
+              "id": "msg_c02_marie_afternoon_seg_04_choice_3_03",
+              "sender": "marie",
+              "time_label": "17:38",
+              "text": "Même quand tu n’es pas là."
+            },
+            {
+              "id": "msg_c02_marie_afternoon_seg_04_choice_3_04",
+              "sender": "marie",
+              "time_label": "17:38",
+              "text": "Et elle a déjà commencé à commenter ton absence."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_afternoon_seg_05",
+      "moment_label": "jour 2",
+      "time_label": "17:38",
+      "messages": [],
+      "choices": [
+        {
+          "id": "choice_c02_marie_afternoon_05_guided",
+          "text": "Elle a dit quoi ?",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_afternoon_seg_06",
+      "moment_label": "jour 2",
+      "time_label": "17:38",
+      "messages": [
+        {
+          "id": "msg_c02_marie_afternoon_014",
+          "sender": "marie",
+          "time_label": "17:38",
+          "text": "Que tu avais une façon très personnelle de ne pas être là."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_afternoon_06_guided",
+          "text": "C’est violent.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_afternoon_seg_07",
+      "moment_label": "jour 2",
+      "time_label": "17:38",
+      "messages": [
+        {
+          "id": "msg_c02_marie_afternoon_015",
+          "sender": "marie",
+          "time_label": "17:38",
+          "text": "Non."
+        },
+        {
+          "id": "msg_c02_marie_afternoon_016",
+          "sender": "marie",
+          "time_label": "17:38",
+          "text": "Elle l’a dit avec un sourire."
+        },
+        {
+          "id": "msg_c02_marie_afternoon_017",
+          "sender": "marie",
+          "time_label": "17:38",
+          "text": "Ce qui chez Mathilde veut dire que c’est pire 🙄"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_afternoon_07_guided",
+          "text": "Je dois m’inquiéter ?",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_afternoon_seg_08",
+      "moment_label": "jour 2",
+      "time_label": "17:38",
+      "messages": [
+        {
+          "id": "msg_c02_marie_afternoon_018",
+          "sender": "marie",
+          "time_label": "17:38",
+          "text": "Pas encore."
+        },
+        {
+          "id": "msg_c02_marie_afternoon_019",
+          "sender": "marie",
+          "time_label": "17:38",
+          "text": "Elle est surtout en train de défendre son droit à rester assise."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_afternoon_08_guided",
+          "text": "Défense solide ?",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_afternoon_seg_09",
+      "moment_label": "jour 2",
+      "time_label": "17:38",
+      "messages": [
+        {
+          "id": "msg_c02_marie_afternoon_020",
+          "sender": "marie",
+          "time_label": "17:38",
+          "text": "Elle dit que je lui ai proposé un café."
+        },
+        {
+          "id": "msg_c02_marie_afternoon_021",
+          "sender": "marie",
+          "time_label": "17:38",
+          "text": "Ce qui est vrai."
+        },
+        {
+          "id": "msg_c02_marie_afternoon_022",
+          "sender": "marie",
+          "time_label": "17:38",
+          "text": "Mais elle transforme ça en titre de propriété."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_afternoon_09_guided",
+          "text": "Classique.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_afternoon_seg_10",
+      "moment_label": "jour 2",
+      "time_label": "17:38",
+      "messages": [
+        {
+          "id": "msg_c02_marie_afternoon_023",
+          "sender": "marie",
+          "time_label": "17:38",
+          "text": "Je lui montre."
+        },
+        {
+          "id": "msg_c02_marie_afternoon_024",
+          "sender": "marie",
+          "time_label": "17:38",
+          "text": "Attends."
+        }
+      ]
+    }
+  ],
+  "debug_notes": "Marie écrit depuis l’appartement, Mathilde vient d’arriver. Texte J2 V3 intégré; réponses Ludo uniquement via choices."
+}

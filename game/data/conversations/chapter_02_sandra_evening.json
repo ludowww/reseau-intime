@@ -2,260 +2,337 @@
   "id": "chapter_02_sandra_evening",
   "chapter": 2,
   "day": 2,
-  "title": "Jour 2 — Sandra revient le soir",
+  "title": "Jour 2 — Soir avec Sandra",
   "app": "messages",
   "thread": {
     "id": "thread_sandra_private",
     "type": "private",
-    "participants": ["ludo", "sandra"],
+    "participants": [
+      "ludo",
+      "sandra"
+    ],
     "display_name": "Sandra",
     "profile_content_id": "profile_sandra_placeholder"
   },
   "segments": [
     {
-      "conversation_segment_id": "c02_sandra_early_ping",
-      "moment_label": "après-midi",
-      "time_label": "16:18",
-      "transition_text": "Sandra écrit au milieu de l’après-midi, puis disparaît presque aussitôt.",
-      "availability_state": "Sandra est occupée et ne peut pas vraiment parler.",
-      "function": "Créer l’attente et montrer que Sandra n’est pas disponible sur commande.",
+      "conversation_segment_id": "c02_sandra_evening_seg_01",
+      "moment_label": "jour 2",
+      "time_label": "20:47",
       "messages": [
         {
-          "id": "msg_c02_sandra_001",
+          "id": "msg_c02_sandra_evening_001",
           "sender": "sandra",
-          "time_label": "16:18",
-          "text": "Je repensais à ton message d’hier."
-        },
-        {
-          "id": "msg_c02_sandra_002",
-          "sender": "sandra",
-          "time_label": "16:18",
-          "text": "Enfin non."
-        },
-        {
-          "id": "msg_c02_sandra_003",
-          "sender": "sandra",
-          "time_label": "16:19",
-          "text": "Si. Bref. Mauvais moment."
+          "time_label": "20:47",
+          "text": "J’ai failli supprimer la photo ce matin."
         }
       ],
       "choices": [
         {
-          "id": "choice_c02_sandra_001_soft",
-          "text": "Tu peux revenir quand tu veux.",
-          "tone": "soft_open",
-          "effects": {
-            "sandra.attachment": 1
-          },
-          "sets_flags": ["left_door_open_for_sandra_day2"],
-          "next_messages": [
-            {
-              "id": "msg_c02_sandra_004_soft",
-              "sender": "sandra",
-              "time_label": "16:20",
-              "text": "C’est peut-être ça le problème."
-            }
-          ]
-        },
-        {
-          "id": "choice_c02_sandra_001_direct",
-          "text": "Qu’est-ce qui se passe ?",
-          "tone": "direct_concern",
-          "effects": {
-            "sandra.attachment": 1,
-            "sandra.exposure": 1
-          },
-          "sets_flags": ["asked_sandra_direct_day2"],
-          "next_messages": [
-            {
-              "id": "msg_c02_sandra_004_direct",
-              "sender": "sandra",
-              "time_label": "16:20",
-              "text": "Je ne peux pas là."
-            }
-          ]
-        },
-        {
-          "id": "choice_c02_sandra_001_joke",
-          "text": "Tu viens de faire une conversation entière toute seule.",
-          "tone": "light_tease",
-          "effects": {
-            "sandra.attachment": 1
-          },
-          "sets_flags": ["teased_sandra_about_panic_day2"],
-          "next_messages": [
-            {
-              "id": "msg_c02_sandra_004_joke",
-              "sender": "sandra",
-              "time_label": "16:20",
-              "text": "Oui. Très brillante, en plus."
-            }
-          ]
+          "id": "choice_c02_sandra_evening_01_guided",
+          "text": "Pourquoi ?",
+          "tone": "guided_reply"
         }
-      ],
-      "automatic_followup": [
-        {
-          "id": "msg_c02_sandra_005_common",
-          "sender": "sandra",
-          "time_label": "16:21",
-          "text": "Il vient de rentrer. Je te réponds plus tard."
-        }
-      ],
-      "interruption_rules": [
-        {
-          "type": "partner_arrives",
-          "character": "sandra_partner",
-          "after_message_id": "msg_c02_sandra_005_common",
-          "effect": "Sandra devient indisponible jusqu’au soir.",
-          "sets_flags": ["sandra_partner_interrupted_day2"]
-        }
-      ],
-      "routes_nourished": ["sandra", "waiting"],
-      "required_reveals_delivered": ["sandra_has_partner"]
+      ]
     },
     {
-      "conversation_segment_id": "c02_sandra_late_confession",
-      "moment_label": "soir",
-      "time_label": "21:36",
-      "transition_text": "Plus tard. Sandra revient comme si la conversation n’avait jamais vraiment quitté l’écran.",
-      "availability_state": "Sandra est seule quelques minutes, mais pas tranquille.",
-      "function": "Installer la dangerosité émotionnelle : elle est en couple, mais Ludo est celui à qui elle écrit quand ça va mal.",
+      "conversation_segment_id": "c02_sandra_evening_seg_02",
+      "moment_label": "jour 2",
+      "time_label": "20:47",
       "messages": [
         {
-          "id": "msg_c02_sandra_006",
+          "id": "msg_c02_sandra_evening_002",
           "sender": "sandra",
-          "time_label": "21:36",
-          "text": "Désolée pour tout à l’heure."
+          "time_label": "20:47",
+          "text": "Parce que je me suis trouvée bête de te l’avoir envoyée."
         },
         {
-          "id": "msg_c02_sandra_007",
+          "id": "msg_c02_sandra_evening_003",
           "sender": "sandra",
-          "time_label": "21:36",
-          "text": "Je déteste écrire un truc puis disparaître."
-        },
-        {
-          "id": "msg_c02_sandra_008",
-          "sender": "sandra",
-          "time_label": "21:37",
-          "text": "Mais avec lui, en ce moment, tout devient compliqué pour rien."
-        },
-        {
-          "id": "msg_c02_sandra_009",
-          "sender": "sandra",
-          "time_label": "21:38",
-          "text": "Enfin non, pas pour rien. Je suis injuste."
-        },
-        {
-          "id": "msg_c02_sandra_010",
-          "sender": "sandra",
-          "time_label": "21:39",
-          "text": "Tu vois ? Même par message je me corrige avant qu’on me réponde."
+          "time_label": "20:47",
+          "text": "Et puis non."
         }
       ],
       "choices": [
         {
-          "id": "choice_c02_sandra_002_listen",
-          "text": "Tu n’as pas besoin d’être parfaitement juste avec moi.",
-          "tone": "intimate_listen",
-          "effects": {
-            "sandra.attachment": 3,
-            "sandra_priority_score": 1
-          },
-          "sets_flags": ["held_sandra_space_day2"],
+          "id": "choice_c02_sandra_evening_02_1",
+          "text": "Je ne l’ai pas prise comme une erreur.",
+          "tone": "tendre",
           "next_messages": [
             {
-              "id": "msg_c02_sandra_011_listen",
+              "id": "msg_c02_sandra_evening_seg_02_choice_1_01",
               "sender": "sandra",
-              "time_label": "21:40",
-              "text": "C’est exactement le genre de phrase qui me donne envie de continuer à t’écrire."
-            },
-            {
-              "id": "msg_c02_sandra_012_listen",
-              "sender": "sandra",
-              "time_label": "21:40",
-              "text": "Et c’est peut-être dangereux."
-            }
-          ]
-        },
-        {
-          "id": "choice_c02_sandra_002_boundary",
-          "text": "Je peux t’écouter, mais je ne veux pas compliquer les choses.",
-          "tone": "careful_boundary",
-          "effects": {
-            "sandra.attachment": 1,
-            "truth_tendency": 1
-          },
-          "sets_flags": ["kept_boundary_with_sandra_day2"],
-          "next_messages": [
-            {
-              "id": "msg_c02_sandra_011_boundary",
-              "sender": "sandra",
-              "time_label": "21:40",
+              "time_label": "20:47",
               "text": "Je sais."
             },
             {
-              "id": "msg_c02_sandra_012_boundary",
+              "id": "msg_c02_sandra_evening_seg_02_choice_1_02",
               "sender": "sandra",
-              "time_label": "21:41",
-              "text": "C’est aussi pour ça que je t’écris. Tu ne forces pas."
-            }
-          ]
-        },
-        {
-          "id": "choice_c02_sandra_002_probe",
-          "text": "Tu es heureuse avec lui ?",
-          "tone": "too_direct",
-          "effects": {
-            "sandra.attachment": 1,
-            "sandra.exposure": 2
-          },
-          "sets_flags": ["asked_sandra_about_partner_happiness_day2"],
-          "next_messages": [
-            {
-              "id": "msg_c02_sandra_011_probe",
-              "sender": "sandra",
-              "time_label": "21:40",
-              "text": "Tu vas vite."
+              "time_label": "20:47",
+              "text": "C’est peut-être ça le problème."
             },
             {
-              "id": "msg_c02_sandra_012_probe",
+              "id": "msg_c02_sandra_evening_seg_02_choice_1_03",
               "sender": "sandra",
-              "time_label": "21:41",
-              "text": "Je ne sais pas répondre à ça sans me détester un peu."
+              "time_label": "20:47",
+              "text": "Non."
+            },
+            {
+              "id": "msg_c02_sandra_evening_seg_02_choice_1_04",
+              "sender": "sandra",
+              "time_label": "20:47",
+              "text": "Que tu comprennes trop bien pourquoi je l’ai envoyée."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_sandra_evening_02_2",
+          "text": "Je peux faire semblant de ne pas y tenir, mais je serais mauvais.",
+          "tone": "taquin",
+          "next_messages": [
+            {
+              "id": "msg_c02_sandra_evening_seg_02_choice_2_01",
+              "sender": "sandra",
+              "time_label": "20:47",
+              "text": "Tu serais catastrophique 😅"
+            },
+            {
+              "id": "msg_c02_sandra_evening_seg_02_choice_2_02",
+              "sender": "sandra",
+              "time_label": "20:47",
+              "text": "Tu as toujours eu une honnêteté très maladroite quand tu essaies de mentir doucement."
+            },
+            {
+              "id": "msg_c02_sandra_evening_seg_02_choice_2_03",
+              "sender": "sandra",
+              "time_label": "20:47",
+              "text": "Prends-le comme une observation affectueuse."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_sandra_evening_02_3",
+          "text": "On peut ne pas trop l’analyser ce soir.",
+          "tone": "prudent",
+          "next_messages": [
+            {
+              "id": "msg_c02_sandra_evening_seg_02_choice_3_01",
+              "sender": "sandra",
+              "time_label": "20:47",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_c02_sandra_evening_seg_02_choice_3_02",
+              "sender": "sandra",
+              "time_label": "20:47",
+              "text": "Bonne idée."
+            },
+            {
+              "id": "msg_c02_sandra_evening_seg_02_choice_3_03",
+              "sender": "sandra",
+              "time_label": "20:47",
+              "text": "C’est souvent quand on analyse que je panique."
+            },
+            {
+              "id": "msg_c02_sandra_evening_seg_02_choice_3_04",
+              "sender": "sandra",
+              "time_label": "20:47",
+              "text": "On essaie."
             }
           ]
         }
-      ],
-      "automatic_followup": [
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_sandra_evening_seg_03",
+      "moment_label": "jour 2",
+      "time_label": "20:47",
+      "messages": [
         {
-          "id": "msg_c02_sandra_013_common",
+          "id": "msg_c02_sandra_evening_008",
           "sender": "sandra",
-          "time_label": "21:45",
-          "text": "Je ne voulais pas te mettre au milieu de ça."
-        },
-        {
-          "id": "msg_c02_sandra_014_common",
-          "sender": "sandra",
-          "time_label": "21:45",
-          "text": "Mais parfois j’ai l’impression que tu comprends plus vite que les gens qui devraient me connaître."
-        },
-        {
-          "id": "msg_c02_sandra_015_deleted",
-          "sender": "sandra",
-          "time_label": "21:46",
-          "text": "Message supprimé.",
-          "deleted_message_hint": "Je crois que tu me manques même quand tu es là."
-        },
-        {
-          "id": "msg_c02_sandra_016_common",
-          "sender": "sandra",
-          "time_label": "21:47",
-          "text": "Oublie. Je n’aurais pas dû."
+          "time_label": "20:47",
+          "text": "Tu as passé une journée correcte ?"
         }
       ],
-      "routes_nourished": ["sandra", "secret_affair_emotional_seed"],
-      "required_reveals_delivered": ["sandra_emotional_danger", "sandra_deleted_message_pattern"]
+      "choices": [
+        {
+          "id": "choice_c02_sandra_evening_03_guided",
+          "text": "Remplie.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_sandra_evening_seg_04",
+      "moment_label": "jour 2",
+      "time_label": "20:47",
+      "messages": [
+        {
+          "id": "msg_c02_sandra_evening_009",
+          "sender": "sandra",
+          "time_label": "20:47",
+          "text": "C’est une manière élégante de dire compliquée ?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_sandra_evening_04_guided",
+          "text": "C’est une manière prudente de dire remplie.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_sandra_evening_seg_05",
+      "moment_label": "jour 2",
+      "time_label": "20:47",
+      "messages": [
+        {
+          "id": "msg_c02_sandra_evening_010",
+          "sender": "sandra",
+          "time_label": "20:47",
+          "text": "D’accord."
+        },
+        {
+          "id": "msg_c02_sandra_evening_011",
+          "sender": "sandra",
+          "time_label": "20:47",
+          "text": "Je vais accepter cette lâcheté syntaxique 🙂"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_sandra_evening_05_guided",
+          "text": "Merci pour ta clémence.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_sandra_evening_seg_06",
+      "moment_label": "jour 2",
+      "time_label": "20:47",
+      "messages": [
+        {
+          "id": "msg_c02_sandra_evening_012",
+          "sender": "sandra",
+          "time_label": "20:47",
+          "text": "Ne t’habitue pas."
+        },
+        {
+          "id": "msg_c02_sandra_evening_013",
+          "sender": "sandra",
+          "time_label": "20:47",
+          "text": "Pour jeudi, ça tient toujours ?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_sandra_evening_06_guided",
+          "text": "Oui. Et j’ai envie que ça tienne.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_sandra_evening_seg_07",
+      "moment_label": "jour 2",
+      "time_label": "20:47",
+      "messages": [
+        {
+          "id": "msg_c02_sandra_evening_014",
+          "sender": "sandra",
+          "time_label": "20:47",
+          "text": "Voilà."
+        },
+        {
+          "id": "msg_c02_sandra_evening_015",
+          "sender": "sandra",
+          "time_label": "20:47",
+          "text": "C’est le genre de phrase qui me fait relire deux fois."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_sandra_evening_07_guided",
+          "text": "Je peux la reformuler moins dangereusement.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_sandra_evening_seg_08",
+      "moment_label": "jour 2",
+      "time_label": "20:47",
+      "messages": [
+        {
+          "id": "msg_c02_sandra_evening_016",
+          "sender": "sandra",
+          "time_label": "20:47",
+          "text": "Non."
+        },
+        {
+          "id": "msg_c02_sandra_evening_017",
+          "sender": "sandra",
+          "time_label": "20:47",
+          "text": "Laisse-la comme ça."
+        },
+        {
+          "id": "msg_c02_sandra_evening_018",
+          "sender": "sandra",
+          "time_label": "20:47",
+          "text": "Juste ne la grossis pas."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_sandra_evening_08_guided",
+          "text": "D’accord.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_sandra_evening_seg_09",
+      "moment_label": "jour 2",
+      "time_label": "20:47",
+      "messages": [
+        {
+          "id": "msg_c02_sandra_evening_019",
+          "sender": "sandra",
+          "time_label": "20:47",
+          "text": "Bonne nuit, Player."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_sandra_evening_09_guided",
+          "text": "Bonne nuit, Sandra.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_sandra_evening_seg_10",
+      "moment_label": "jour 2",
+      "time_label": "20:47",
+      "messages": [
+        {
+          "id": "msg_c02_sandra_evening_020",
+          "sender": "sandra",
+          "time_label": "20:47",
+          "text": "Et doucement."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_sandra_evening_10_guided",
+          "text": "Doucement.",
+          "tone": "guided_reply"
+        }
+      ]
     }
   ],
-  "debug_notes": "Sandra est découpée : ping interrompu par son partenaire, puis vraie reprise le soir. La scène doit créer attente, intimité et danger émotionnel sans contenu visuel."
+  "debug_notes": "Sandra revient brièvement autour de la photo J1. Texte J2 V3 intégré; réponses Ludo uniquement via choices."
 }

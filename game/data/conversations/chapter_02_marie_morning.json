@@ -7,220 +7,648 @@
   "thread": {
     "id": "thread_marie_private",
     "type": "private",
-    "participants": ["ludo", "marie"],
+    "participants": [
+      "ludo",
+      "marie"
+    ],
     "display_name": "Marie",
     "profile_content_id": "profile_marie_placeholder"
   },
   "segments": [
     {
-      "conversation_segment_id": "c02_marie_morning_kitchen",
-      "moment_label": "matin",
+      "conversation_segment_id": "c02_marie_morning_seg_01",
+      "moment_label": "jour 2",
       "time_label": "08:12",
-      "transition_text": "Le lendemain matin. Marie écrit pendant que Ludo est encore à moitié réveillé.",
-      "availability_state": "Marie prépare sa journée et répond vite.",
-      "function": "Réinstaller le couple, mentionner Mathilde clairement et montrer que Marie sent déjà le décalage de Ludo.",
       "messages": [
         {
-          "id": "msg_c02_marie_001",
+          "id": "msg_c02_marie_morning_001",
           "sender": "marie",
           "time_label": "08:12",
-          "text": "Tu as encore laissé ton mug sur le meuble d’entrée."
-        },
-        {
-          "id": "msg_c02_marie_002",
-          "sender": "marie",
-          "time_label": "08:12",
-          "text": "Je ne juge pas. Je constate une performance."
-        },
-        {
-          "id": "msg_c02_marie_003",
-          "sender": "marie",
-          "time_label": "08:13",
-          "text": "Mathilde passe ce soir. Elle a oublié son chargeur hier, évidemment."
-        },
-        {
-          "id": "msg_c02_marie_004",
-          "sender": "marie",
-          "time_label": "08:13",
-          "text": "Je te le redis parce que tu fais toujours semblant d’être surpris quand ma cousine débarque chez nous."
-        },
-        {
-          "id": "msg_c02_marie_005",
-          "sender": "marie",
-          "time_label": "08:14",
-          "text": "Enfin cousine par alliance, mais tu vois. À ce stade elle connaît mieux nos placards que toi."
+          "text": "Tu as gagné un point hier soir."
         }
       ],
       "choices": [
         {
-          "id": "choice_c02_marie_001_present",
-          "text": "J’ai noté. Je serai sociable avec notre colocataire non officielle.",
-          "tone": "present_warm",
-          "effects": {
-            "marie.trust": 1,
-            "marie_attention_score": 1
-          },
-          "sets_flags": ["acknowledged_mathilde_as_family_day2"],
-          "next_messages": [
-            {
-              "id": "msg_c02_marie_006_present",
-              "sender": "marie",
-              "time_label": "08:15",
-              "text": "Merci. Et oui, elle mérite presque un double des clés."
-            },
-            {
-              "id": "msg_c02_marie_007_present",
-              "sender": "marie",
-              "time_label": "08:15",
-              "text": "Presque. Je tiens à garder quelques illusions de vie privée."
-            }
-          ]
-        },
-        {
-          "id": "choice_c02_marie_001_tease",
-          "text": "Tu dis ça comme si ça te dérangeait qu’elle soit toujours là.",
-          "tone": "teasing_probe",
-          "effects": {
-            "marie.lucidity": 1,
-            "mathilde_attention_score": 1
-          },
-          "sets_flags": ["teased_marie_about_mathilde_day2"],
-          "next_messages": [
-            {
-              "id": "msg_c02_marie_006_tease",
-              "sender": "marie",
-              "time_label": "08:15",
-              "text": "Non. C’est Mathilde."
-            },
-            {
-              "id": "msg_c02_marie_007_tease",
-              "sender": "marie",
-              "time_label": "08:16",
-              "text": "Elle peut m’agacer et me manquer dans la même phrase. C’est son superpouvoir."
-            }
-          ]
-        },
-        {
-          "id": "choice_c02_marie_001_distracted",
-          "text": "Désolé, j’ai lu trop vite. Elle passe vers quelle heure ?",
-          "tone": "distracted",
-          "effects": {
-            "marie.lucidity": 1
-          },
-          "sets_flags": ["missed_marie_detail_day2"],
-          "next_messages": [
-            {
-              "id": "msg_c02_marie_006_distracted",
-              "sender": "marie",
-              "time_label": "08:15",
-              "text": "Tu vois. C’est exactement pour ça que je répète."
-            },
-            {
-              "id": "msg_c02_marie_007_distracted",
-              "sender": "marie",
-              "time_label": "08:16",
-              "text": "Vers 18h30. Si ton téléphone accepte de te laisser lire cette info."
-            }
-          ]
+          "id": "choice_c02_marie_morning_01_guided",
+          "text": "Un seul ?",
+          "tone": "guided_reply"
         }
-      ],
-      "automatic_followup": [
-        {
-          "id": "msg_c02_marie_008_common",
-          "sender": "marie",
-          "time_label": "08:20",
-          "text": "Et samedi, Pauline confirme que c’est chez elle."
-        },
-        {
-          "id": "msg_c02_marie_009_common",
-          "sender": "marie",
-          "time_label": "08:20",
-          "text": "Elle fait genre c’est une petite soirée simple."
-        },
-        {
-          "id": "msg_c02_marie_010_common",
-          "sender": "marie",
-          "time_label": "08:21",
-          "text": "Donc évidemment ça ne sera pas simple."
-        }
-      ],
-      "routes_nourished": ["marie", "mathilde_seed", "pauline_seed"],
-      "required_reveals_delivered": ["mathilde_identity_family_by_marriage"]
+      ]
     },
     {
-      "conversation_segment_id": "c02_marie_night_check",
-      "moment_label": "nuit",
-      "time_label": "22:58",
-      "transition_text": "Plus tard. Marie revient par un message court, comme si elle vérifiait que Ludo est encore là.",
-      "availability_state": "Marie est au calme, mais moins joueuse que le matin.",
-      "function": "Montrer que Marie remarque les absences sans lancer une confrontation.",
+      "conversation_segment_id": "c02_marie_morning_seg_02",
+      "moment_label": "jour 2",
+      "time_label": "08:12",
       "messages": [
         {
-          "id": "msg_c02_marie_011",
+          "id": "msg_c02_marie_morning_002",
           "sender": "marie",
-          "time_label": "22:58",
-          "text": "Tu étais beaucoup sur ton téléphone ce soir."
+          "time_label": "08:12",
+          "text": "Un point honnête."
         },
         {
-          "id": "msg_c02_marie_012",
+          "id": "msg_c02_marie_morning_003",
           "sender": "marie",
-          "time_label": "22:59",
-          "text": "Je ne dis pas ça pour faire une scène."
+          "time_label": "08:12",
+          "text": "Tu as posé ton téléphone plus de dix minutes."
         },
         {
-          "id": "msg_c02_marie_013",
+          "id": "msg_c02_marie_morning_004",
           "sender": "marie",
-          "time_label": "23:00",
-          "text": "Juste... je le remarque."
+          "time_label": "08:12",
+          "text": "Je n’ai pas applaudi, mais j’ai noté l’effort 😅"
         }
       ],
       "choices": [
         {
-          "id": "choice_c02_marie_002_reassure",
-          "text": "Je suis désolé. Je vais faire attention.",
-          "tone": "reassure",
-          "effects": {
-            "marie.trust": 1,
-            "truth_tendency": 1
-          },
-          "sets_flags": ["reassured_marie_about_phone_day2"],
+          "id": "choice_c02_marie_morning_02_guided",
+          "text": "Je progresse.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_morning_seg_03",
+      "moment_label": "jour 2",
+      "time_label": "08:12",
+      "messages": [
+        {
+          "id": "msg_c02_marie_morning_005",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Doucement."
+        },
+        {
+          "id": "msg_c02_marie_morning_006",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Mais oui 🙂"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_morning_03_guided",
+          "text": "Je prends le “oui”.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_morning_seg_04",
+      "moment_label": "jour 2",
+      "time_label": "08:12",
+      "messages": [
+        {
+          "id": "msg_c02_marie_morning_007",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Prends-le."
+        },
+        {
+          "id": "msg_c02_marie_morning_008",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Il est encore chaud."
+        },
+        {
+          "id": "msg_c02_marie_morning_009",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Contrairement à mon café."
+        },
+        {
+          "id": "msg_c02_marie_morning_010",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Que j’ai oublié sur la table."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_morning_04_guided",
+          "text": "Grande matinée.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_morning_seg_05",
+      "moment_label": "jour 2",
+      "time_label": "08:12",
+      "messages": [
+        {
+          "id": "msg_c02_marie_morning_011",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Immense 🙄"
+        },
+        {
+          "id": "msg_c02_marie_morning_012",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Et j’ai retrouvé le chargeur de Mathilde."
+        },
+        {
+          "id": "msg_c02_marie_morning_013",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Enfin “retrouvé”."
+        },
+        {
+          "id": "msg_c02_marie_morning_014",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Il était exactement là où elle l’a laissé."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_morning_05_guided",
+          "text": "À ce stade il habite chez nous.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_morning_seg_06",
+      "moment_label": "jour 2",
+      "time_label": "08:12",
+      "messages": [
+        {
+          "id": "msg_c02_marie_morning_015",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Oui."
+        },
+        {
+          "id": "msg_c02_marie_morning_016",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Il est discret."
+        },
+        {
+          "id": "msg_c02_marie_morning_017",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Mais il attire Mathilde plus efficacement que nous."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_morning_06_guided",
+          "text": "Tu dis ça comme si tu n’aimais pas quand elle passe.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_morning_seg_07",
+      "moment_label": "jour 2",
+      "time_label": "08:12",
+      "messages": [
+        {
+          "id": "msg_c02_marie_morning_018",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "J’aime bien."
+        },
+        {
+          "id": "msg_c02_marie_morning_019",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Mais je garde le droit de râler."
+        },
+        {
+          "id": "msg_c02_marie_morning_020",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "C’est une base saine du couple 😅"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_morning_07_guided",
+          "text": "Je n’ai pas signé cette clause.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_morning_seg_08",
+      "moment_label": "jour 2",
+      "time_label": "08:12",
+      "messages": [
+        {
+          "id": "msg_c02_marie_morning_021",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Tu as signé en laissant une brosse à dents ici."
+        },
+        {
+          "id": "msg_c02_marie_morning_022",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Trop tard."
+        },
+        {
+          "id": "msg_c02_marie_morning_023",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "D’ailleurs."
+        },
+        {
+          "id": "msg_c02_marie_morning_024",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Il n’y a presque plus de capsules de café."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_morning_08_guided",
+          "text": "Voilà la vraie raison du message.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_morning_seg_09",
+      "moment_label": "jour 2",
+      "time_label": "08:12",
+      "messages": [
+        {
+          "id": "msg_c02_marie_morning_025",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Pas la seule."
+        },
+        {
+          "id": "msg_c02_marie_morning_026",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Mais une raison importante."
+        },
+        {
+          "id": "msg_c02_marie_morning_027",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Sans café, je deviens une version conceptuelle de moi-même."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_morning_09_guided",
+          "text": "Je peux en prendre en rentrant.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_morning_seg_10",
+      "moment_label": "jour 2",
+      "time_label": "08:12",
+      "messages": [
+        {
+          "id": "msg_c02_marie_morning_028",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "J’aime cet homme utile."
+        },
+        {
+          "id": "msg_c02_marie_morning_029",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Il apparaît parfois."
+        },
+        {
+          "id": "msg_c02_marie_morning_030",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Il achète des capsules."
+        },
+        {
+          "id": "msg_c02_marie_morning_031",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Il répond presque avec tout son cerveau."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_morning_10_guided",
+          "text": "Presque tout, c’est déjà bien.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_morning_seg_11",
+      "moment_label": "jour 2",
+      "time_label": "08:12",
+      "messages": [
+        {
+          "id": "msg_c02_marie_morning_032",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Ce matin, je prends 🙂"
+        },
+        {
+          "id": "msg_c02_marie_morning_033",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Photo envoyée."
+        },
+        {
+          "id": "msg_c02_marie_morning_034",
+          "sender": "marie",
+          "time_label": "08:12",
+          "content_id": "marie_j2_morning_soft_placeholder",
+          "text": "Marie dans l’appartement, en tenue d’intérieur simple mais flatteuse, cheveux attachés, lumière du matin. Elle tient son téléphone légèrement de côté. Le salon apparaît derrière elle. Le chargeur de Mathilde est visible sur un meuble derrière elle."
+        },
+        {
+          "id": "msg_c02_marie_morning_035",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Preuve officielle que ce matin existe."
+        },
+        {
+          "id": "msg_c02_marie_morning_036",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Et que je suis déjà debout."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_morning_11_1",
+          "text": "Tu es jolie même quand tu négocies avec le matin.",
+          "tone": "tendre",
           "next_messages": [
             {
-              "id": "msg_c02_marie_014_reassure",
+              "id": "msg_c02_marie_morning_seg_11_choice_1_01",
               "sender": "marie",
-              "time_label": "23:01",
-              "text": "Merci. C’est tout ce que je voulais entendre ce soir."
+              "time_label": "08:12",
+              "text": "Tu dis ça parce que tu n’entends pas mon cerveau."
+            },
+            {
+              "id": "msg_c02_marie_morning_seg_11_choice_1_02",
+              "sender": "marie",
+              "time_label": "08:12",
+              "text": "Là-dedans, c’est une réunion de copropriété."
+            },
+            {
+              "id": "msg_c02_marie_morning_seg_11_choice_1_03",
+              "sender": "marie",
+              "time_label": "08:12",
+              "text": "Évidemment que tu maintiens."
+            },
+            {
+              "id": "msg_c02_marie_morning_seg_11_choice_1_04",
+              "sender": "marie",
+              "time_label": "08:12",
+              "text": "Tu as ce côté inconscient qui m’a eue au début 😅"
             }
           ]
         },
         {
-          "id": "choice_c02_marie_002_minimize",
-          "text": "C’était juste des messages pour samedi.",
-          "tone": "minimize",
-          "effects": {
-            "lie_score": 1,
-            "marie.lucidity": 1
-          },
-          "sets_flags": ["minimized_phone_use_day2"],
+          "id": "choice_c02_marie_morning_11_2",
+          "text": "Je note surtout que le chargeur est encore là.",
+          "tone": "taquin",
           "next_messages": [
             {
-              "id": "msg_c02_marie_014_minimize",
+              "id": "msg_c02_marie_morning_seg_11_choice_2_01",
               "sender": "marie",
-              "time_label": "23:01",
-              "text": "Peut-être."
+              "time_label": "08:12",
+              "text": "Oui."
             },
             {
-              "id": "msg_c02_marie_015_minimize",
+              "id": "msg_c02_marie_morning_seg_11_choice_2_02",
               "sender": "marie",
-              "time_label": "23:01",
-              "text": "Bonne nuit, Ludo."
+              "time_label": "08:12",
+              "text": "C’est officiellement le troisième habitant de l’appartement."
+            },
+            {
+              "id": "msg_c02_marie_morning_seg_11_choice_2_03",
+              "sender": "marie",
+              "time_label": "08:12",
+              "text": "Il est discret, mais il attire Mathilde une fois par semaine."
+            },
+            {
+              "id": "msg_c02_marie_morning_seg_11_choice_2_04",
+              "sender": "marie",
+              "time_label": "08:12",
+              "text": "Exactement."
+            },
+            {
+              "id": "msg_c02_marie_morning_seg_11_choice_2_05",
+              "sender": "marie",
+              "time_label": "08:12",
+              "text": "Un petit totem de désordre."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_marie_morning_11_3",
+          "text": "Je prends les capsules en rentrant.",
+          "tone": "prudent",
+          "next_messages": [
+            {
+              "id": "msg_c02_marie_morning_seg_11_choice_3_01",
+              "sender": "marie",
+              "time_label": "08:12",
+              "text": "Merci."
+            },
+            {
+              "id": "msg_c02_marie_morning_seg_11_choice_3_02",
+              "sender": "marie",
+              "time_label": "08:12",
+              "text": "Tu viens peut-être de sauver mon humanité."
+            },
+            {
+              "id": "msg_c02_marie_morning_seg_11_choice_3_03",
+              "sender": "marie",
+              "time_label": "08:12",
+              "text": "J’espère."
+            },
+            {
+              "id": "msg_c02_marie_morning_seg_11_choice_3_04",
+              "sender": "marie",
+              "time_label": "08:12",
+              "text": "Je suis très fragile sans café."
             }
           ]
         }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_morning_seg_12",
+      "moment_label": "jour 2",
+      "time_label": "08:12",
+      "messages": [
+        {
+          "id": "msg_c02_marie_morning_042",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Tu rentres vers quelle heure ce soir ?"
+        }
       ],
-      "routes_nourished": ["marie", "truth_or_lie_seed"],
-      "required_reveals_delivered": ["marie_notices_phone_distance"]
+      "choices": [
+        {
+          "id": "choice_c02_marie_morning_12_guided",
+          "text": "Vrai 19h15, pas 19h15 qui veut dire “je pars dans vingt minutes”.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_morning_seg_13",
+      "moment_label": "jour 2",
+      "time_label": "08:12",
+      "messages": [
+        {
+          "id": "msg_c02_marie_morning_043",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Je veux une preuve écrite."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_morning_13_guided",
+          "text": "Ce message fera foi.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_morning_seg_14",
+      "moment_label": "jour 2",
+      "time_label": "08:12",
+      "messages": [
+        {
+          "id": "msg_c02_marie_morning_044",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Je le capture mentalement."
+        },
+        {
+          "id": "msg_c02_marie_morning_045",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Et je le ressortirai si tu arrives avec ton air de “j’ai pas vu l’heure”."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_morning_14_guided",
+          "text": "Je connais cet air ?",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_morning_seg_15",
+      "moment_label": "jour 2",
+      "time_label": "08:12",
+      "messages": [
+        {
+          "id": "msg_c02_marie_morning_046",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Tu l’as breveté."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_morning_15_guided",
+          "text": "Coup bas.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_morning_seg_16",
+      "moment_label": "jour 2",
+      "time_label": "08:12",
+      "messages": [
+        {
+          "id": "msg_c02_marie_morning_047",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Coup tendre."
+        },
+        {
+          "id": "msg_c02_marie_morning_048",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Mais bas, oui 🙂"
+        },
+        {
+          "id": "msg_c02_marie_morning_049",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Allez."
+        },
+        {
+          "id": "msg_c02_marie_morning_050",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Je file sous la douche."
+        },
+        {
+          "id": "msg_c02_marie_morning_051",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Pose ton téléphone deux fois aujourd’hui."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_morning_16_guided",
+          "text": "Deux fois ?",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_morning_seg_17",
+      "moment_label": "jour 2",
+      "time_label": "08:12",
+      "messages": [
+        {
+          "id": "msg_c02_marie_morning_052",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Oui."
+        },
+        {
+          "id": "msg_c02_marie_morning_053",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "On ne répare pas une époque avec un seul miracle."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_morning_17_guided",
+          "text": "Je vais viser deux miracles raisonnables.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_morning_seg_18",
+      "moment_label": "jour 2",
+      "time_label": "08:12",
+      "messages": [
+        {
+          "id": "msg_c02_marie_morning_054",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "C’est tout ce que je demande."
+        }
+      ]
     }
   ],
-  "debug_notes": "Marie porte les repères : couple, routine, Mathilde cousine par alliance, soirée Pauline, puis premier signal que le téléphone crée une distance."
+  "debug_notes": "Marie à la maison, Ludo déjà parti / dans les transports. Texte J2 V3 intégré; réponses Ludo uniquement via choices."
 }

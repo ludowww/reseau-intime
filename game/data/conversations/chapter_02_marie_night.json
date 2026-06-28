@@ -1,0 +1,311 @@
+{
+  "id": "chapter_02_marie_night",
+  "chapter": 2,
+  "day": 2,
+  "title": "Jour 2 — Marie annonce que Mathilde reste dormir",
+  "app": "messages",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "marie"
+    ],
+    "display_name": "Marie",
+    "profile_content_id": "profile_marie_placeholder"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c02_marie_night_seg_01",
+      "moment_label": "jour 2",
+      "time_label": "21:24",
+      "messages": [
+        {
+          "id": "msg_c02_marie_night_001",
+          "sender": "marie",
+          "time_label": "21:24",
+          "text": "Bon."
+        },
+        {
+          "id": "msg_c02_marie_night_002",
+          "sender": "marie",
+          "time_label": "21:24",
+          "text": "Elle reste dormir."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_night_01_guided",
+          "text": "Comme ça ?",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_night_seg_02",
+      "moment_label": "jour 2",
+      "time_label": "21:24",
+      "messages": [
+        {
+          "id": "msg_c02_marie_night_003",
+          "sender": "marie",
+          "time_label": "21:24",
+          "text": "Comme ça."
+        },
+        {
+          "id": "msg_c02_marie_night_004",
+          "sender": "marie",
+          "time_label": "21:24",
+          "text": "Enfin “comme ça”."
+        },
+        {
+          "id": "msg_c02_marie_night_005",
+          "sender": "marie",
+          "time_label": "21:24",
+          "text": "Comme si elle n’avait pas déjà une relation plus stable avec notre canapé qu’avec certains adultes."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_night_02_guided",
+          "text": "Le canapé a toujours été fiable.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_night_seg_03",
+      "moment_label": "jour 2",
+      "time_label": "21:24",
+      "messages": [
+        {
+          "id": "msg_c02_marie_night_006",
+          "sender": "marie",
+          "time_label": "21:24",
+          "text": "Ne l’encourage pas."
+        },
+        {
+          "id": "msg_c02_marie_night_007",
+          "sender": "marie",
+          "time_label": "21:24",
+          "text": "Elle a déjà demandé “son” plaid."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_night_03_guided",
+          "text": "Elle a un plaid attitré maintenant ?",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_night_seg_04",
+      "moment_label": "jour 2",
+      "time_label": "21:24",
+      "messages": [
+        {
+          "id": "msg_c02_marie_night_008",
+          "sender": "marie",
+          "time_label": "21:24",
+          "text": "D’après elle, oui."
+        },
+        {
+          "id": "msg_c02_marie_night_009",
+          "sender": "marie",
+          "time_label": "21:24",
+          "text": "D’après moi, elle colonise lentement notre salon 😅"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_night_04_1",
+          "text": "Tu veux que je rentre plus tôt ?",
+          "tone": "tendre",
+          "next_messages": [
+            {
+              "id": "msg_c02_marie_night_seg_04_choice_1_01",
+              "sender": "marie",
+              "time_label": "21:24",
+              "text": "Non."
+            },
+            {
+              "id": "msg_c02_marie_night_seg_04_choice_1_02",
+              "sender": "marie",
+              "time_label": "21:24",
+              "text": "Ça va."
+            },
+            {
+              "id": "msg_c02_marie_night_seg_04_choice_1_03",
+              "sender": "marie",
+              "time_label": "21:24",
+              "text": "Elle est juste passée en mode canapé."
+            },
+            {
+              "id": "msg_c02_marie_night_seg_04_choice_1_04",
+              "sender": "marie",
+              "time_label": "21:24",
+              "text": "C’est une forme de stabilisation."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_marie_night_04_2",
+          "text": "Je peux ramener quelque chose ?",
+          "tone": "taquin",
+          "next_messages": [
+            {
+              "id": "msg_c02_marie_night_seg_04_choice_2_01",
+              "sender": "marie",
+              "time_label": "21:24",
+              "text": "Les capsules."
+            },
+            {
+              "id": "msg_c02_marie_night_seg_04_choice_2_02",
+              "sender": "marie",
+              "time_label": "21:24",
+              "text": "Et peut-être un peu de dignité pour ce salon."
+            },
+            {
+              "id": "msg_c02_marie_night_seg_04_choice_2_03",
+              "sender": "marie",
+              "time_label": "21:24",
+              "text": "Je m’en doutais."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_marie_night_04_3",
+          "text": "Je vais rester neutre dans l’affaire du plaid.",
+          "tone": "prudent",
+          "next_messages": [
+            {
+              "id": "msg_c02_marie_night_seg_04_choice_3_01",
+              "sender": "marie",
+              "time_label": "21:24",
+              "text": "Lâche."
+            },
+            {
+              "id": "msg_c02_marie_night_seg_04_choice_3_02",
+              "sender": "marie",
+              "time_label": "21:24",
+              "text": "Mais stratégique."
+            },
+            {
+              "id": "msg_c02_marie_night_seg_04_choice_3_03",
+              "sender": "marie",
+              "time_label": "21:24",
+              "text": "Je reconnais l’effort."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_night_seg_05",
+      "moment_label": "jour 2",
+      "time_label": "21:24",
+      "messages": [
+        {
+          "id": "msg_c02_marie_night_014",
+          "sender": "marie",
+          "time_label": "21:24",
+          "text": "Tu rentres toujours vers 19h15 ?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_night_05_guided",
+          "text": "Je risque d’être plus proche de 20h.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_night_seg_06",
+      "moment_label": "jour 2",
+      "time_label": "21:24",
+      "messages": [
+        {
+          "id": "msg_c02_marie_night_015",
+          "sender": "marie",
+          "time_label": "21:24",
+          "text": "Je note."
+        },
+        {
+          "id": "msg_c02_marie_night_016",
+          "sender": "marie",
+          "time_label": "21:24",
+          "text": "Sans commentaire."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_night_06_guided",
+          "text": "Le “sans commentaire” commente beaucoup.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_night_seg_07",
+      "moment_label": "jour 2",
+      "time_label": "21:24",
+      "messages": [
+        {
+          "id": "msg_c02_marie_night_017",
+          "sender": "marie",
+          "time_label": "21:24",
+          "text": "Je sais 🙄"
+        },
+        {
+          "id": "msg_c02_marie_night_018",
+          "sender": "marie",
+          "time_label": "21:24",
+          "text": "À tout à l’heure."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_night_07_guided",
+          "text": "À tout à l’heure.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_night_seg_08",
+      "moment_label": "jour 2",
+      "time_label": "21:24",
+      "messages": [
+        {
+          "id": "msg_c02_marie_night_019",
+          "sender": "marie",
+          "time_label": "21:24",
+          "text": "Et n’oublie pas les capsules."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_marie_night_08_guided",
+          "text": "Je n’oublie pas.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_marie_night_seg_09",
+      "moment_label": "jour 2",
+      "time_label": "21:24",
+      "messages": [
+        {
+          "id": "msg_c02_marie_night_020",
+          "sender": "marie",
+          "time_label": "21:24",
+          "text": "Capture mentale effectuée."
+        }
+      ]
+    }
+  ],
+  "debug_notes": "Marie est à la maison avec Mathilde, Ludo pas encore rentré. Texte J2 V3 intégré; réponses Ludo uniquement via choices."
+}

@@ -11,7 +11,9 @@
       "source_app": "system",
       "asset_path": "res://assets/placeholders/wallpaper_default_neutral.png",
       "context": "Fond d’écran neutre par défaut au début de la partie.",
-      "tags": ["neutral"],
+      "tags": [
+        "neutral"
+      ],
       "is_proof": false,
       "risk_level": 0,
       "can_delete": false,
@@ -27,13 +29,20 @@
       "source_app": "contacts",
       "asset_path": "res://assets/placeholders/profile_marie_placeholder.png",
       "context": "Photo de profil de Marie, visible très tôt pour ancrer le couple.",
-      "tags": ["marie", "profile", "partner", "tender"],
+      "tags": [
+        "marie",
+        "profile",
+        "partner",
+        "tender"
+      ],
       "is_proof": false,
       "risk_level": 0,
       "can_delete": false,
       "can_capture": true,
       "can_set_as_wallpaper": true,
-      "can_be_discovered_by": ["marie"]
+      "can_be_discovered_by": [
+        "marie"
+      ]
     },
     {
       "id": "profile_mathilde_placeholder",
@@ -43,13 +52,21 @@
       "source_app": "contacts",
       "asset_path": "res://assets/placeholders/profile_mathilde_placeholder.png",
       "context": "Photo de profil de Mathilde, visible dans le groupe amis et les contacts.",
-      "tags": ["mathilde", "profile", "home_circle", "familiar"],
+      "tags": [
+        "mathilde",
+        "profile",
+        "home_circle",
+        "familiar"
+      ],
       "is_proof": false,
       "risk_level": 1,
       "can_delete": false,
       "can_capture": true,
       "can_set_as_wallpaper": true,
-      "can_be_discovered_by": ["marie", "mathilde"]
+      "can_be_discovered_by": [
+        "marie",
+        "mathilde"
+      ]
     },
     {
       "id": "profile_sandra_placeholder",
@@ -59,13 +76,21 @@
       "source_app": "contacts",
       "asset_path": "res://assets/placeholders/profile_sandra_placeholder.png",
       "context": "Photo de profil de Sandra, visible dès son premier message.",
-      "tags": ["sandra", "profile", "best_friend", "soft"],
+      "tags": [
+        "sandra",
+        "profile",
+        "best_friend",
+        "soft"
+      ],
       "is_proof": false,
       "risk_level": 1,
       "can_delete": false,
       "can_capture": true,
       "can_set_as_wallpaper": true,
-      "can_be_discovered_by": ["sandra", "marie"]
+      "can_be_discovered_by": [
+        "sandra",
+        "marie"
+      ]
     },
     {
       "id": "profile_raphaelle_placeholder",
@@ -75,13 +100,20 @@
       "source_app": "contacts",
       "asset_path": "res://assets/placeholders/profile_raphaelle_placeholder.png",
       "context": "Photo de profil de Raphaëlle, visible dans le contexte travail.",
-      "tags": ["raphaelle", "profile", "work", "clear"],
+      "tags": [
+        "raphaelle",
+        "profile",
+        "work",
+        "clear"
+      ],
       "is_proof": false,
       "risk_level": 1,
       "can_delete": false,
       "can_capture": true,
       "can_set_as_wallpaper": true,
-      "can_be_discovered_by": ["raphaelle"]
+      "can_be_discovered_by": [
+        "raphaelle"
+      ]
     },
     {
       "id": "profile_pauline_placeholder",
@@ -91,13 +123,21 @@
       "source_app": "contacts",
       "asset_path": "res://assets/placeholders/profile_pauline_placeholder.png",
       "context": "Photo de profil de Pauline, visible dans le groupe amis et liée à la soirée.",
-      "tags": ["pauline", "profile", "party", "social"],
+      "tags": [
+        "pauline",
+        "profile",
+        "party",
+        "social"
+      ],
       "is_proof": false,
       "risk_level": 1,
       "can_delete": false,
       "can_capture": true,
       "can_set_as_wallpaper": true,
-      "can_be_discovered_by": ["pauline", "marie"]
+      "can_be_discovered_by": [
+        "pauline",
+        "marie"
+      ]
     },
     {
       "id": "profile_nico_placeholder",
@@ -107,13 +147,20 @@
       "source_app": "contacts",
       "asset_path": "res://assets/placeholders/profile_nico_placeholder.png",
       "context": "Photo de profil de Nico, visible dans le groupe amis et les réactions sociales.",
-      "tags": ["nico", "profile", "friend", "rival_seed"],
+      "tags": [
+        "nico",
+        "profile",
+        "friend",
+        "rival_seed"
+      ],
       "is_proof": false,
       "risk_level": 1,
       "can_delete": false,
       "can_capture": true,
       "can_set_as_wallpaper": false,
-      "can_be_discovered_by": ["nico"]
+      "can_be_discovered_by": [
+        "nico"
+      ]
     },
     {
       "id": "photo_marie_tender_tier1_placeholder",
@@ -123,13 +170,19 @@
       "source_app": "messages",
       "asset_path": "res://assets/placeholders/photo_marie_tender_tier1_placeholder.png",
       "context": "Photo tendre de Marie, utilisable plus tard comme fond d’écran rassurant.",
-      "tags": ["marie", "tender", "couple"],
+      "tags": [
+        "marie",
+        "tender",
+        "couple"
+      ],
       "is_proof": false,
       "risk_level": 1,
       "can_delete": true,
       "can_capture": true,
       "can_set_as_wallpaper": true,
-      "can_be_discovered_by": ["marie"]
+      "can_be_discovered_by": [
+        "marie"
+      ]
     },
     {
       "id": "photo_mathilde_home_tier1_placeholder",
@@ -139,13 +192,22 @@
       "source_app": "messages",
       "asset_path": "res://assets/placeholders/photo_mathilde_home_tier1_placeholder.png",
       "context": "Photo ambiguë de Mathilde liée à sa présence chez Marie. Sert à tester favoris/fond d’écran plus tard.",
-      "tags": ["mathilde", "home", "ambiguous", "forbidden"],
+      "tags": [
+        "mathilde",
+        "home",
+        "ambiguous",
+        "forbidden"
+      ],
       "is_proof": true,
       "risk_level": 3,
       "can_delete": true,
       "can_capture": true,
       "can_set_as_wallpaper": true,
-      "can_be_discovered_by": ["marie", "pauline", "mathilde"]
+      "can_be_discovered_by": [
+        "marie",
+        "pauline",
+        "mathilde"
+      ]
     },
     {
       "id": "photo_group_last_party_placeholder",
@@ -155,13 +217,125 @@
       "source_app": "social",
       "asset_path": "res://assets/placeholders/photo_group_last_party_placeholder.png",
       "context": "Photo de groupe d’une soirée précédente, utilisée pour montrer Pauline, Nico, Marie et Mathilde ensemble.",
-      "tags": ["group", "party", "marie", "mathilde", "pauline", "nico", "social_seed"],
+      "tags": [
+        "group",
+        "party",
+        "marie",
+        "mathilde",
+        "pauline",
+        "nico",
+        "social_seed"
+      ],
       "is_proof": false,
       "risk_level": 1,
       "can_delete": false,
       "can_capture": true,
       "can_set_as_wallpaper": false,
-      "can_be_discovered_by": ["marie", "mathilde", "pauline", "nico"]
+      "can_be_discovered_by": [
+        "marie",
+        "mathilde",
+        "pauline",
+        "nico"
+      ]
+    },
+    {
+      "id": "marie_j2_morning_soft_placeholder",
+      "character": "marie",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/marie_j2_morning_soft_placeholder.png",
+      "context": "Marie dans l’appartement, en tenue d’intérieur simple mais flatteuse, cheveux attachés, lumière du matin. Elle tient son téléphone légèrement de côté. Le salon apparaît derrière elle. Le chargeur de Mathilde est visible sur un meuble derrière elle.",
+      "tags": [
+        "marie",
+        "day2",
+        "morning",
+        "domestic",
+        "soft"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": [
+        "marie"
+      ]
+    },
+    {
+      "id": "raphaelle_j2_work_badge_placeholder",
+      "character": "raphaelle",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/raphaelle_j2_work_badge_placeholder.png",
+      "context": "Raphaëlle à son bureau, chemisier simple, cheveux légèrement attachés, badge de Player entre deux doigts. Un café est posé près du clavier. Elle sourit discrètement, sans poser ouvertement.",
+      "tags": [
+        "raphaelle",
+        "day2",
+        "work",
+        "badge",
+        "soft"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": [
+        "raphaelle"
+      ]
+    },
+    {
+      "id": "mathilde_j2_arrival_marie_placeholder",
+      "character": "mathilde",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/mathilde_j2_arrival_marie_placeholder.png",
+      "context": "Mathilde dans l’entrée de l’appartement, veste encore sur l’épaule, chargeur à la main, sourire un peu insolent vers l’objectif. Elle a l’air chez elle sans vraiment l’être. Marie a visiblement pris la photo sur le vif.",
+      "tags": [
+        "mathilde",
+        "day2",
+        "home",
+        "arrival",
+        "marie_photo"
+      ],
+      "is_proof": true,
+      "risk_level": 2,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": [
+        "marie",
+        "mathilde"
+      ]
+    },
+    {
+      "id": "mathilde_j2_couch_innocent_selfie_placeholder",
+      "character": "mathilde",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/mathilde_j2_couch_innocent_selfie_placeholder.png",
+      "context": "Selfie de Mathilde depuis le canapé, plaid remonté sur elle, tête faussement innocente, sourire en coin. On devine le salon de Marie derrière elle. Elle ne pose pas ouvertement de manière sexy, mais le cadrage est flatteur et elle sait très bien l’effet que ça peut produire.",
+      "tags": [
+        "mathilde",
+        "day2",
+        "couch",
+        "selfie",
+        "private",
+        "soft"
+      ],
+      "is_proof": true,
+      "risk_level": 2,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": [
+        "marie",
+        "mathilde"
+      ]
     }
   ]
 }

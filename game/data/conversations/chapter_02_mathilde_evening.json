@@ -1,0 +1,468 @@
+{
+  "id": "chapter_02_mathilde_evening",
+  "chapter": 2,
+  "day": 2,
+  "title": "Jour 2 — Mathilde écrit directement",
+  "app": "messages",
+  "thread": {
+    "id": "thread_mathilde_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "mathilde"
+    ],
+    "display_name": "Mathilde",
+    "profile_content_id": "profile_mathilde_placeholder"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c02_mathilde_evening_seg_01",
+      "moment_label": "jour 2",
+      "time_label": "18:12",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_evening_001",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "Je proteste."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_evening_01_guided",
+          "text": "Contre quoi ?",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_evening_seg_02",
+      "moment_label": "jour 2",
+      "time_label": "18:12",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_evening_002",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "Contre la version de Marie."
+        },
+        {
+          "id": "msg_c02_mathilde_evening_003",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "J’étais en train de partir."
+        },
+        {
+          "id": "msg_c02_mathilde_evening_004",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "Puis elle a sorti du café."
+        },
+        {
+          "id": "msg_c02_mathilde_evening_005",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "Donc techniquement, je suis victime des circonstances 😄"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_evening_02_1",
+          "text": "Le café peut annuler un départ, oui.",
+          "tone": "tendre",
+          "next_messages": [
+            {
+              "id": "msg_c02_mathilde_evening_seg_02_choice_1_01",
+              "sender": "mathilde",
+              "time_label": "18:12",
+              "text": "Merci."
+            },
+            {
+              "id": "msg_c02_mathilde_evening_seg_02_choice_1_02",
+              "sender": "mathilde",
+              "time_label": "18:12",
+              "text": "Enfin quelqu’un de vaguement objectif dans cette maison."
+            },
+            {
+              "id": "msg_c02_mathilde_evening_seg_02_choice_1_03",
+              "sender": "mathilde",
+              "time_label": "18:12",
+              "text": "Je reste prudente."
+            },
+            {
+              "id": "msg_c02_mathilde_evening_seg_02_choice_1_04",
+              "sender": "mathilde",
+              "time_label": "18:12",
+              "text": "Tu vis avec Marie."
+            },
+            {
+              "id": "msg_c02_mathilde_evening_seg_02_choice_1_05",
+              "sender": "mathilde",
+              "time_label": "18:12",
+              "text": "Tu es potentiellement infiltré."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_mathilde_evening_02_2",
+          "text": "Je vais laisser Marie gérer le tribunal.",
+          "tone": "taquin",
+          "next_messages": [
+            {
+              "id": "msg_c02_mathilde_evening_seg_02_choice_2_01",
+              "sender": "mathilde",
+              "time_label": "18:12",
+              "text": "Lâche."
+            },
+            {
+              "id": "msg_c02_mathilde_evening_seg_02_choice_2_02",
+              "sender": "mathilde",
+              "time_label": "18:12",
+              "text": "Poli, mais lâche."
+            },
+            {
+              "id": "msg_c02_mathilde_evening_seg_02_choice_2_03",
+              "sender": "mathilde",
+              "time_label": "18:12",
+              "text": "C’est le mot que les lâches utilisent quand ils ont repassé leur chemise."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_mathilde_evening_02_3",
+          "text": "Et tu repars vraiment cette fois ?",
+          "tone": "prudent",
+          "next_messages": [
+            {
+              "id": "msg_c02_mathilde_evening_seg_02_choice_3_01",
+              "sender": "mathilde",
+              "time_label": "18:12",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_c02_mathilde_evening_seg_02_choice_3_02",
+              "sender": "mathilde",
+              "time_label": "18:12",
+              "text": "Enfin."
+            },
+            {
+              "id": "msg_c02_mathilde_evening_seg_02_choice_3_03",
+              "sender": "mathilde",
+              "time_label": "18:12",
+              "text": "C’est l’intention générale."
+            },
+            {
+              "id": "msg_c02_mathilde_evening_seg_02_choice_3_04",
+              "sender": "mathilde",
+              "time_label": "18:12",
+              "text": "Exactement."
+            },
+            {
+              "id": "msg_c02_mathilde_evening_seg_02_choice_3_05",
+              "sender": "mathilde",
+              "time_label": "18:12",
+              "text": "Tu suis bien 🙂"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_evening_seg_03",
+      "moment_label": "jour 2",
+      "time_label": "18:12",
+      "messages": [],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_evening_03_guided",
+          "text": "Tu as au moins récupéré ton chargeur ?",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_evening_seg_04",
+      "moment_label": "jour 2",
+      "time_label": "18:12",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_evening_011",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "Oui."
+        },
+        {
+          "id": "msg_c02_mathilde_evening_012",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "Il est dans ma main."
+        },
+        {
+          "id": "msg_c02_mathilde_evening_013",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "Ce qui ne garantit pas qu’il reparte avec moi 🙃"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_evening_04_guided",
+          "text": "On y croit.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_evening_seg_05",
+      "moment_label": "jour 2",
+      "time_label": "18:12",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_evening_014",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "Très peu."
+        },
+        {
+          "id": "msg_c02_mathilde_evening_015",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "Mais j’apprécie l’effort."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_evening_05_guided",
+          "text": "Tu es souvent accusée d’occupation illégale de canapé ?",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_evening_seg_06",
+      "moment_label": "jour 2",
+      "time_label": "18:12",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_evening_016",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "Accusée, oui."
+        },
+        {
+          "id": "msg_c02_mathilde_evening_017",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "Condamnée, jamais."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_evening_06_guided",
+          "text": "Faute de preuves ?",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_evening_seg_07",
+      "moment_label": "jour 2",
+      "time_label": "18:12",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_evening_018",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "Faute de volonté politique."
+        },
+        {
+          "id": "msg_c02_mathilde_evening_019",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "Marie menace."
+        },
+        {
+          "id": "msg_c02_mathilde_evening_020",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "Puis elle me donne un plaid."
+        },
+        {
+          "id": "msg_c02_mathilde_evening_021",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "C’est une faiblesse institutionnelle 😌"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_evening_07_guided",
+          "text": "Tu exploites clairement le système.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_evening_seg_08",
+      "moment_label": "jour 2",
+      "time_label": "18:12",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_evening_022",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "Je m’adapte à un environnement favorable."
+        },
+        {
+          "id": "msg_c02_mathilde_evening_023",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "C’est très différent."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_evening_08_guided",
+          "text": "Je vois.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_evening_seg_09",
+      "moment_label": "jour 2",
+      "time_label": "18:12",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_evening_024",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "Non, tu vois que je suis encore là."
+        },
+        {
+          "id": "msg_c02_mathilde_evening_025",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "Nuance."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_evening_09_guided",
+          "text": "🙂",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_evening_seg_10",
+      "moment_label": "jour 2",
+      "time_label": "18:12",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_evening_026",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "Réponse prudente."
+        },
+        {
+          "id": "msg_c02_mathilde_evening_027",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "Mais recevable."
+        },
+        {
+          "id": "msg_c02_mathilde_evening_028",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "Marie dit que tu fais souvent ça."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_evening_10_guided",
+          "text": "Quoi ?",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_evening_seg_11",
+      "moment_label": "jour 2",
+      "time_label": "18:12",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_evening_029",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "Répondre juste assez pour ne pas être accusé de ne pas répondre."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_evening_11_guided",
+          "text": "C’est injuste mais précis.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_evening_seg_12",
+      "moment_label": "jour 2",
+      "time_label": "18:12",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_evening_030",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "Merci."
+        },
+        {
+          "id": "msg_c02_mathilde_evening_031",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "J’aime bien les phrases injustes mais précises."
+        },
+        {
+          "id": "msg_c02_mathilde_evening_032",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "Ça gagne du temps 😄"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_evening_12_guided",
+          "text": "Je vais garder ça en tête.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_evening_seg_13",
+      "moment_label": "jour 2",
+      "time_label": "18:12",
+      "messages": [
+        {
+          "id": "msg_c02_mathilde_evening_033",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "Fais ça."
+        },
+        {
+          "id": "msg_c02_mathilde_evening_034",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "Mais pas trop visiblement."
+        },
+        {
+          "id": "msg_c02_mathilde_evening_035",
+          "sender": "mathilde",
+          "time_label": "18:12",
+          "text": "Marie lit parfois les visages mieux que les messages."
+        }
+      ]
+    }
+  ],
+  "debug_notes": "Mathilde est chez Marie, Ludo pas encore rentré. Texte J2 V3 intégré; réponses Ludo uniquement via choices."
+}
