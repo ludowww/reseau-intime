@@ -1,0 +1,58 @@
+{
+  "id": "visual_content_chapter_03_placeholders",
+  "version": 1,
+  "notes": "Placeholders neutres pour J3 : retour maison, preuve domestique Mathilde, rappel désir Marie. Assets définitifs à produire plus tard.",
+  "items": [
+    {
+      "id": "mathilde_j3_morning_couch_placeholder",
+      "character": "mathilde",
+      "tier": 2,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/mathilde_j3_morning_couch_placeholder.png",
+      "context": "Mathilde au réveil sur le canapé de Marie et Player, plaid autour d’elle, cheveux un peu défaits, tasse à moitié pleine près d’elle. Elle sourit comme si la situation était normale, mais le cadrage rend la scène plus intime qu’elle ne devrait l’être.",
+      "tags": [
+        "mathilde",
+        "day3",
+        "couch",
+        "home",
+        "ambiguous",
+        "proof_seed"
+      ],
+      "is_proof": true,
+      "risk_level": 3,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": [
+        "marie",
+        "mathilde",
+        "pauline"
+      ]
+    },
+    {
+      "id": "marie_j3_home_tender_placeholder",
+      "character": "marie",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/marie_j3_home_tender_placeholder.png",
+      "context": "Marie dans la cuisine ou le salon, lumière douce du matin, tenue simple mais flatteuse, un détail de maison visible. L’image est tendre, intime, et rappelle que le couple possède encore une sensualité réelle.",
+      "tags": [
+        "marie",
+        "day3",
+        "home",
+        "tender",
+        "couple"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": [
+        "marie"
+      ]
+    }
+  ]
+}
