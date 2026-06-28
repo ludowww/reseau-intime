@@ -1,0 +1,201 @@
+{
+  "id": "chapter_03_raphaelle_midday",
+  "chapter": 3,
+  "day": 3,
+  "title": "Jour 3 — Raphaëlle midi clarté",
+  "app": "messages",
+  "thread": {
+    "id": "thread_raphaelle_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "raphaelle"
+    ],
+    "display_name": "Raphaëlle",
+    "profile_content_id": "profile_raphaelle_placeholder"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c03_raphaelle_midday_seg_01",
+      "moment_label": "jour 3",
+      "time_label": "12:41",
+      "messages": [
+        {
+          "id": "msg_c03_raphaelle_midday_001",
+          "sender": "raphaelle",
+          "time_label": "12:41",
+          "text": "Tu avais l’air fatigué ce matin."
+        },
+        {
+          "id": "msg_c03_raphaelle_midday_002",
+          "sender": "raphaelle",
+          "time_label": "12:41",
+          "text": "Pas juste sommeil."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_raphaelle_midday_01_guided",
+          "text": "Ça se voit tant que ça ?",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c03_raphaelle_midday_seg_02",
+      "moment_label": "jour 3",
+      "time_label": "12:42",
+      "messages": [
+        {
+          "id": "msg_c03_raphaelle_midday_003",
+          "sender": "raphaelle",
+          "time_label": "12:42",
+          "text": "Disons que tu as relu trois fois le même mail sans le voir."
+        },
+        {
+          "id": "msg_c03_raphaelle_midday_004",
+          "sender": "raphaelle",
+          "time_label": "12:42",
+          "text": "Je ne demande pas où tu étais dans ta tête."
+        },
+        {
+          "id": "msg_c03_raphaelle_midday_005",
+          "sender": "raphaelle",
+          "time_label": "12:42",
+          "text": "Juste si tu sais y revenir quand il faut."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_raphaelle_midday_02_1",
+          "text": "Je vais bien. C’est juste une matinée bizarre.",
+          "tone": "avoidant",
+          "effects": {
+            "lie_score": 1,
+            "raphaelle.clarity": -1
+          },
+          "next_messages": [
+            {
+              "id": "msg_c03_raphaelle_midday_02_1_01",
+              "sender": "raphaelle",
+              "time_label": "12:43",
+              "text": "D’accord."
+            },
+            {
+              "id": "msg_c03_raphaelle_midday_02_1_02",
+              "sender": "raphaelle",
+              "time_label": "12:43",
+              "text": "Je note que “bizarre” travaille beaucoup pour toi aujourd’hui."
+            }
+          ]
+        },
+        {
+          "id": "choice_c03_raphaelle_midday_02_2",
+          "text": "Je suis un peu perdu, oui.",
+          "tone": "truthful",
+          "effects": {
+            "raphaelle.clarity": 1,
+            "truth_tendency": 1
+          },
+          "sets_flags": [
+            "raphaelle_noticed_fatigue_j3"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c03_raphaelle_midday_02_2_01",
+              "sender": "raphaelle",
+              "time_label": "12:43",
+              "text": "Ça, je peux l’entendre."
+            },
+            {
+              "id": "msg_c03_raphaelle_midday_02_2_02",
+              "sender": "raphaelle",
+              "time_label": "12:43",
+              "text": "C’est déjà plus clair que faire semblant."
+            }
+          ]
+        },
+        {
+          "id": "choice_c03_raphaelle_midday_02_3",
+          "text": "Je crois que j’avais besoin que quelqu’un le remarque.",
+          "tone": "confessional",
+          "effects": {
+            "raphaelle.attachment": 1,
+            "raphaelle.clarity": 1,
+            "lie_score": 1
+          },
+          "sets_flags": [
+            "raphaelle_noticed_fatigue_j3",
+            "raphaelle_boundary_seed_j3"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c03_raphaelle_midday_02_3_01",
+              "sender": "raphaelle",
+              "time_label": "12:43",
+              "text": "Je peux remarquer."
+            },
+            {
+              "id": "msg_c03_raphaelle_midday_02_3_02",
+              "sender": "raphaelle",
+              "time_label": "12:43",
+              "text": "Mais je ne veux pas devenir l’endroit où tu ranges ce que tu refuses de dire ailleurs."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c03_raphaelle_midday_seg_03",
+      "moment_label": "jour 3",
+      "time_label": "12:45",
+      "messages": [
+        {
+          "id": "msg_c03_raphaelle_midday_006",
+          "sender": "raphaelle",
+          "time_label": "12:45",
+          "text": "Je peux te couvrir sur le dossier jusqu’à 14h."
+        },
+        {
+          "id": "msg_c03_raphaelle_midday_007",
+          "sender": "raphaelle",
+          "time_label": "12:45",
+          "text": "Pas sur le reste."
+        },
+        {
+          "id": "msg_c03_raphaelle_midday_008",
+          "sender": "raphaelle",
+          "time_label": "12:45",
+          "text": "Le reste, il faudra le regarder un jour."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_raphaelle_midday_03_guided",
+          "text": "Je sais. Merci pour le dossier.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c03_raphaelle_midday_seg_04",
+      "moment_label": "jour 3",
+      "time_label": "12:46",
+      "messages": [
+        {
+          "id": "msg_c03_raphaelle_midday_009",
+          "sender": "raphaelle",
+          "time_label": "12:46",
+          "text": "De rien."
+        },
+        {
+          "id": "msg_c03_raphaelle_midday_010",
+          "sender": "raphaelle",
+          "time_label": "12:46",
+          "text": "Et bois de l’eau. Tu as vraiment une tête de lendemain qui n’assume pas son nom."
+        }
+      ]
+    }
+  ],
+  "debug_notes": "J3 Raphaëlle pose la clarté et refuse le rôle de refuge secret. Pas de photo obligatoire. Réponses Player uniquement via choices."
+}
