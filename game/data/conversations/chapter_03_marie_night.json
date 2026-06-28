@@ -30,7 +30,7 @@
           "id": "msg_c03_marie_night_002",
           "sender": "marie",
           "time_label": "23:02",
-          "text": "Je veux dire, je sais que tu es dans le salon."
+          "text": "Je veux dire, je sais que tu es dans le salon 🙂"
         },
         {
           "id": "msg_c03_marie_night_003",
@@ -74,7 +74,7 @@
           "id": "msg_c03_marie_night_007",
           "sender": "marie",
           "time_label": "23:03",
-          "text": "Et pas juste sur son téléphone."
+          "text": "Et pas juste sur son téléphone 🙄"
         }
       ],
       "choices": [
@@ -137,7 +137,7 @@
               "id": "msg_c03_marie_night_02_2_03",
               "sender": "marie",
               "time_label": "23:04",
-              "text": "Donc lentement."
+              "text": "Donc lentement 😅"
             }
           ]
         },
@@ -169,7 +169,7 @@
               "id": "msg_c03_marie_night_02_3_03",
               "sender": "marie",
               "time_label": "23:04",
-              "text": "Et ce soir, j’ai besoin de clair. Même petit."
+              "text": "Et ce soir, j’ai besoin de clair. Même petit 🙂"
             }
           ]
         }
@@ -196,7 +196,7 @@
           "id": "msg_c03_marie_night_010",
           "sender": "marie",
           "time_label": "23:06",
-          "text": "Sans écran entre nous, si possible."
+          "text": "Sans écran entre nous, si possible 🙂"
         }
       ],
       "choices": [
