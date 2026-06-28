@@ -2,71 +2,134 @@
   "id": "chapter_03_index",
   "chapter": 3,
   "day": 3,
-  "title": "Jour 3 — Soirée chez Pauline",
-  "description": "Premier vrai pivot : la soirée fait se croiser les tensions installées aux Jours 1 et 2. Le joueur doit choisir ses priorités sans encore verrouiller définitivement une route.",
-  "design_goal": "Faire passer le jeu de conversations parallèles à réseau vivant : groupe actif, messages privés, interruptions, jalousie, piège social, première trace.",
+  "title": "Jour 3 — Retour maison",
+  "description": "Player revient physiquement dans la maison après J2. Marie sent une distance, Mathilde rend la nuit visible, Raphaëlle pose une clarté calme, Sandra maintient jeudi, puis Marie referme la journée sur une demande de présence.",
+  "design_goal": "Intégrer un J3 data-first court et dense : retour physique, premier désir domestique visible, photo Mathilde comme trace sensible, Marie comme ancrage et désir, sans activer Pauline/Nico comme conversations lourdes.",
   "moment_flow": [
     {
-      "moment_label": "avant soirée",
-      "time_label": "18:58",
-      "transition_text": "Avant de partir. Le téléphone est déjà plus actif que Ludo ne le voudrait.",
-      "conversation_ids": ["chapter_03_pre_party_threads"]
+      "moment_label": "matin",
+      "time_label": "08:12",
+      "transition_text": "Player est revenu dans la maison. Marie écrit depuis la cuisine, à quelques mètres de lui.",
+      "conversation_ids": [
+        "chapter_03_marie_morning"
+      ]
     },
     {
-      "moment_label": "arrivée",
-      "time_label": "20:34",
-      "transition_text": "Chez Pauline. Le groupe écrit alors que tout le monde est presque dans la même pièce.",
-      "conversation_ids": ["chapter_03_party_group_arrival"]
+      "moment_label": "fin de matinée",
+      "time_label": "09:34",
+      "transition_text": "Mathilde écrit depuis le canapé ou juste après être partie. La nuit chez Marie et Player laisse une trace.",
+      "conversation_ids": [
+        "chapter_03_mathilde_morning"
+      ]
     },
     {
-      "moment_label": "premier croisement",
-      "time_label": "21:12",
-      "transition_text": "La soirée se lance. Trois notifications arrivent presque ensemble.",
-      "conversation_ids": ["chapter_03_crossed_notifications"]
+      "moment_label": "midi",
+      "time_label": "12:41",
+      "transition_text": "Pause travail. Raphaëlle remarque que Player n’a pas seulement l’air fatigué.",
+      "conversation_ids": [
+        "chapter_03_raphaelle_midday"
+      ]
     },
     {
-      "moment_label": "milieu de soirée",
-      "time_label": "22:03",
-      "transition_text": "Pauline circule, Nico reste près de Marie, Mathilde voit trop de choses.",
-      "conversation_ids": ["chapter_03_party_pressure"]
+      "moment_label": "soir",
+      "time_label": "18:27",
+      "transition_text": "Sandra revient doucement autour de jeudi, de la photo J1 et de ce qu’elle n’ose pas envoyer.",
+      "conversation_ids": [
+        "chapter_03_sandra_evening"
+      ]
     },
     {
-      "moment_label": "fond d’écran",
-      "time_label": "22:38",
-      "transition_text": "Un jeu idiot de Pauline peut rendre public quelque chose que Ludo pensait privé.",
-      "conversation_ids": ["chapter_03_wallpaper_reveal"]
-    },
-    {
-      "moment_label": "fin de soirée",
-      "time_label": "23:54",
-      "transition_text": "La soirée se termine sans explosion, mais plus personne ne peut prétendre que rien n’a bougé.",
-      "conversation_ids": ["chapter_03_party_aftershock"]
+      "moment_label": "nuit",
+      "time_label": "23:02",
+      "transition_text": "La journée se referme sur Marie. Elle ne sait pas tout, mais elle sent que Player est ailleurs par endroits.",
+      "conversation_ids": [
+        "chapter_03_marie_night"
+      ]
     }
   ],
   "conversation_files": [
-    "res://data/conversations/chapter_03_pre_party_threads.json",
-    "res://data/conversations/chapter_03_party_group_arrival.json",
-    "res://data/conversations/chapter_03_crossed_notifications.json",
-    "res://data/conversations/chapter_03_party_pressure.json",
-    "res://data/conversations/chapter_03_wallpaper_reveal.json",
-    "res://data/conversations/chapter_03_party_aftershock.json"
+    "res://data/conversations/chapter_03_marie_morning.json",
+    "res://data/conversations/chapter_03_mathilde_morning.json",
+    "res://data/conversations/chapter_03_raphaelle_midday.json",
+    "res://data/conversations/chapter_03_sandra_evening.json",
+    "res://data/conversations/chapter_03_marie_night.json"
   ],
-  "routes_available": ["marie", "mathilde", "sandra", "pauline", "nico_marie", "raphaelle_contrast"],
-  "routes_can_become_probable": ["mathilde", "sandra", "pauline", "nico_marie", "marie"],
-  "routes_not_final_locked": ["libertinage", "ntr", "harem_secret", "trio_marie_mathilde"],
-  "required_events": [
-    "Pauline hosts and controls the social frame.",
-    "Nico publicly shows interest in Marie.",
-    "Mathilde observes Ludo in a social context.",
-    "Sandra writes from outside the party.",
-    "Marie notices at least one phone-related absence.",
-    "The player must choose what to open first during crossed notifications.",
-    "A first trace can be created: photo, favorite, capture, deleted message, or public comment."
+  "required_reveals": [
+    "Player est physiquement revenu après la fin de J2.",
+    "Mathilde a bien dormi chez Marie et Player, comme une familiarité déjà installée.",
+    "La photo Mathilde J3 devient la première preuve domestique consciente.",
+    "Marie reste une route de désir et d’ancrage, pas seulement une personne à qui mentir.",
+    "Sandra reste rare et émotionnelle : pas de nouvelle grosse photo réelle J3.",
+    "Raphaëlle agit comme clarté calme, pas comme romance immédiate."
+  ],
+  "routes_available": [
+    "marie",
+    "mathilde",
+    "sandra",
+    "raphaelle"
+  ],
+  "routes_locked_to_seed_only": [
+    "pauline",
+    "nico_marie",
+    "libertinage",
+    "ntr",
+    "harem_secret",
+    "trio_marie_mathilde"
   ],
   "debug_expected_outcomes": [
-    "A probable dominant route may start emerging, but no final route is locked.",
-    "The active threat should be readable: Marie, Pauline proof, Sandra exposure, Nico, or Mathilde guilt.",
-    "At least one passive signal should matter in flavor or debug.",
-    "The player should feel that pretending nothing happened is no longer possible."
-  ]
+    "No dominant route should be locked in chapter 3.",
+    "Pauline and Nico remain inactive as heavy conversations on Day 3.",
+    "The player should feel that Player starts hiding what messages make him feel, not only messages themselves.",
+    "Mathilde J3 visual content should be cataloged and referenced.",
+    "Marie closes the day."
+  ],
+  "conversation_availability": {
+    "initial_conversation_ids": [
+      "chapter_03_marie_morning"
+    ],
+    "locked_conversation_ids": [
+      "chapter_03_mathilde_morning",
+      "chapter_03_raphaelle_midday",
+      "chapter_03_sandra_evening",
+      "chapter_03_marie_night"
+    ],
+    "unlocks": {
+      "chapter_03_mathilde_morning": {
+        "after_conversation_completed": "chapter_03_marie_morning",
+        "time_label": "09:34",
+        "pending": true,
+        "notification": {
+          "title": "Mathilde",
+          "body": "Votre canapé demande réparation."
+        }
+      },
+      "chapter_03_raphaelle_midday": {
+        "after_conversation_completed": "chapter_03_mathilde_morning",
+        "time_label": "12:41",
+        "pending": true,
+        "notification": {
+          "title": "Raphaëlle",
+          "body": "Tu avais l’air ailleurs ce matin."
+        }
+      },
+      "chapter_03_sandra_evening": {
+        "after_conversation_completed": "chapter_03_raphaelle_midday",
+        "time_label": "18:27",
+        "pending": true,
+        "notification": {
+          "title": "Sandra",
+          "body": "Je fais semblant de ne pas penser à jeudi."
+        }
+      },
+      "chapter_03_marie_night": {
+        "after_conversation_completed": "chapter_03_sandra_evening",
+        "time_label": "23:02",
+        "pending": true,
+        "notification": {
+          "title": "Marie",
+          "body": "Tu viens vraiment te poser ?"
+        }
+      }
+    }
+  }
 }
