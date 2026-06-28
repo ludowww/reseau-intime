@@ -34,6 +34,12 @@
           "sender": "sandra",
           "time_label": "22:11",
           "text": "Je ne sais pas pourquoi j’ai pensé à toi maintenant 😅"
+        },
+        {
+          "id": "msg_c04_sandra_bad_timing_004",
+          "sender": "sandra",
+          "time_label": "22:11",
+          "text": "Enfin si. Je sais un peu. C’est pire."
         }
       ],
       "choices": [
@@ -50,16 +56,22 @@
       "time_label": "22:12",
       "messages": [
         {
-          "id": "msg_c04_sandra_bad_timing_004",
+          "id": "msg_c04_sandra_bad_timing_005",
           "sender": "sandra",
           "time_label": "22:12",
           "text": "Deux minutes volées à une soirée, c’est très flatteur et très nul."
         },
         {
-          "id": "msg_c04_sandra_bad_timing_005",
+          "id": "msg_c04_sandra_bad_timing_006",
           "sender": "sandra",
           "time_label": "22:12",
           "text": "Je ne sais pas encore de quel côté je le range 🙂"
+        },
+        {
+          "id": "msg_c04_sandra_bad_timing_007",
+          "sender": "sandra",
+          "time_label": "22:12",
+          "text": "Je vais faire semblant que c’est le côté raisonnable."
         }
       ],
       "choices": [
@@ -85,6 +97,12 @@
               "sender": "sandra",
               "time_label": "22:13",
               "text": "Tu vois pourquoi je parle de mauvais moment ?"
+            },
+            {
+              "id": "msg_c04_sandra_bad_timing_02_1_03",
+              "sender": "sandra",
+              "time_label": "22:13",
+              "text": "Je souris. C’est agaçant."
             }
           ]
         },
@@ -110,6 +128,12 @@
               "sender": "sandra",
               "time_label": "22:13",
               "text": "Ça ne rend pas la place plus simple, mais au moins elle est nommée."
+            },
+            {
+              "id": "msg_c04_sandra_bad_timing_02_2_03",
+              "sender": "sandra",
+              "time_label": "22:13",
+              "text": "C’est déjà beaucoup, pour moi 🙂"
             }
           ]
         },
@@ -134,7 +158,13 @@
               "id": "msg_c04_sandra_bad_timing_02_3_02",
               "sender": "sandra",
               "time_label": "22:13",
-              "text": "Plus tard, c’est une place aussi. Pas la plus confortable, mais une place."
+              "text": "Plus tard, c’est une place aussi."
+            },
+            {
+              "id": "msg_c04_sandra_bad_timing_02_3_03",
+              "sender": "sandra",
+              "time_label": "22:13",
+              "text": "Pas la plus confortable, mais une place 😅"
             }
           ]
         }
@@ -146,22 +176,28 @@
       "time_label": "22:15",
       "messages": [
         {
-          "id": "msg_c04_sandra_bad_timing_006",
+          "id": "msg_c04_sandra_bad_timing_008",
           "sender": "sandra",
           "time_label": "22:15",
           "text": "Je vais te laisser retourner à ta soirée."
         },
         {
-          "id": "msg_c04_sandra_bad_timing_007",
+          "id": "msg_c04_sandra_bad_timing_009",
           "sender": "sandra",
           "time_label": "22:15",
           "text": "Et moi je vais faire semblant de ne pas attendre ton “plus tard”."
         },
         {
-          "id": "msg_c04_sandra_bad_timing_008",
+          "id": "msg_c04_sandra_bad_timing_010",
           "sender": "sandra",
           "time_label": "22:15",
           "text": "Très crédible, évidemment 😅"
+        },
+        {
+          "id": "msg_c04_sandra_bad_timing_011",
+          "sender": "sandra",
+          "time_label": "22:15",
+          "text": "Doucement. Même ce soir."
         }
       ]
     }
