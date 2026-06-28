@@ -1,0 +1,182 @@
+{
+  "id": "chapter_04_mathilde_observes",
+  "chapter": 4,
+  "day": 4,
+  "title": "Jour 4 — Mathilde observe Player",
+  "app": "messages",
+  "thread": {
+    "id": "thread_mathilde_private",
+    "type": "private",
+    "participants": ["ludo", "mathilde"],
+    "display_name": "Mathilde",
+    "profile_content_id": "profile_mathilde_placeholder"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c04_mathilde_observes_seg_01",
+      "moment_label": "jour 4",
+      "time_label": "21:24",
+      "messages": [
+        {
+          "id": "msg_c04_mathilde_observes_001",
+          "sender": "mathilde",
+          "time_label": "21:24",
+          "text": "Coucou depuis le canapé non traumatique de Pauline 😇"
+        },
+        {
+          "id": "msg_c04_mathilde_observes_002",
+          "sender": "mathilde",
+          "time_label": "21:24",
+          "text": "T’as une tête intéressante."
+        },
+        {
+          "id": "msg_c04_mathilde_observes_003",
+          "sender": "mathilde",
+          "time_label": "21:24",
+          "text": "Genre : mec qui essaie de regarder Marie, Nico, son téléphone et son verre en même temps."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c04_mathilde_observes_01_guided",
+          "text": "Ça fait beaucoup d’angles morts.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c04_mathilde_observes_seg_02",
+      "moment_label": "jour 4",
+      "time_label": "21:25",
+      "messages": [
+        {
+          "id": "msg_c04_mathilde_observes_004",
+          "sender": "mathilde",
+          "time_label": "21:25",
+          "text": "Exactement."
+        },
+        {
+          "id": "msg_c04_mathilde_observes_005",
+          "sender": "mathilde",
+          "time_label": "21:25",
+          "text": "Et tu n’es pas très discret quand tu fais semblant de ne pas être jaloux."
+        },
+        {
+          "id": "msg_c04_mathilde_observes_006",
+          "sender": "mathilde",
+          "time_label": "21:25",
+          "text": "Je dis ça pour t’aider, évidemment 😇"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c04_mathilde_observes_02_1",
+          "text": "Je ne suis pas jaloux. Enfin pas officiellement.",
+          "tone": "avoidant",
+          "effects": {
+            "ludo_jealousy": 1,
+            "mathilde.desire": 1,
+            "lie_score": 1
+          },
+          "sets_flags": ["mathilde_noticed_player_j4"],
+          "next_messages": [
+            {
+              "id": "msg_c04_mathilde_observes_02_1_01",
+              "sender": "mathilde",
+              "time_label": "21:26",
+              "text": "Officiellement, non."
+            },
+            {
+              "id": "msg_c04_mathilde_observes_02_1_02",
+              "sender": "mathilde",
+              "time_label": "21:26",
+              "text": "Officieusement, ton visage a déjà publié un communiqué."
+            }
+          ]
+        },
+        {
+          "id": "choice_c04_mathilde_observes_02_2",
+          "text": "Tu m’observes beaucoup, ce soir.",
+          "tone": "ambiguous",
+          "effects": {
+            "mathilde.desire": 2,
+            "mathilde.loyalty": -1,
+            "lie_score": 1
+          },
+          "sets_flags": ["mathilde_noticed_player_j4"],
+          "next_messages": [
+            {
+              "id": "msg_c04_mathilde_observes_02_2_01",
+              "sender": "mathilde",
+              "time_label": "21:26",
+              "text": "Erreur stratégique de ta part : être observable."
+            },
+            {
+              "id": "msg_c04_mathilde_observes_02_2_02",
+              "sender": "mathilde",
+              "time_label": "21:26",
+              "text": "Et ne réponds pas trop bien. Marie est à trois mètres 🫠"
+            }
+          ]
+        },
+        {
+          "id": "choice_c04_mathilde_observes_02_3",
+          "text": "Je devrais surtout revenir vers Marie.",
+          "tone": "prudent",
+          "effects": {
+            "mathilde.loyalty": 1,
+            "marie_trust": 1,
+            "lie_score": -1
+          },
+          "sets_flags": ["mathilde_noticed_player_j4"],
+          "next_messages": [
+            {
+              "id": "msg_c04_mathilde_observes_02_3_01",
+              "sender": "mathilde",
+              "time_label": "21:26",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_c04_mathilde_observes_02_3_02",
+              "sender": "mathilde",
+              "time_label": "21:26",
+              "text": "C’est probablement la phrase intelligente de la soirée."
+            },
+            {
+              "id": "msg_c04_mathilde_observes_02_3_03",
+              "sender": "mathilde",
+              "time_label": "21:26",
+              "text": "Ne t’habitue pas trop, ça va te donner une réputation."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c04_mathilde_observes_seg_03",
+      "moment_label": "jour 4",
+      "time_label": "21:28",
+      "messages": [
+        {
+          "id": "msg_c04_mathilde_observes_007",
+          "sender": "mathilde",
+          "time_label": "21:28",
+          "text": "Au fait."
+        },
+        {
+          "id": "msg_c04_mathilde_observes_008",
+          "sender": "mathilde",
+          "time_label": "21:28",
+          "text": "La photo de ce matin."
+        },
+        {
+          "id": "msg_c04_mathilde_observes_009",
+          "sender": "mathilde",
+          "time_label": "21:28",
+          "text": "Ne la laisse pas traîner si Pauline prend ton téléphone pour “choisir la musique” 🙄"
+        }
+      ]
+    }
+  ],
+  "debug_notes": "J4 Mathilde observe Player en soirée : témoin du trouble, rappel photo J3, Marie en sous-texte. Réponses Player uniquement via choices."
+}
