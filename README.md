@@ -44,6 +44,7 @@ docs/
   09_WRITING_GUIDELINES.md
   10_VERTICAL_SLICE_SCOPE.md
   J2_WRITING_FOUNDATION.md
+  J3_DATA_FIRST_IMPLEMENTATION_BRIEF.md
   J3_J5_Desire_Tension_Visual_Routes_Spec.md
   J3_WRITING_FOUNDATION.md
   J4_WRITING_FOUNDATION.md
@@ -81,4 +82,4 @@ Le niveau est adulte progressif. Le jeu ne moralise pas, mais il ne banalise jam
 
 ## Statut
 
-Prototype data-first en cours : J1/J2 intégrés avec placeholders, documentation en alignement continu. J3-J5 sont cadrés côté désir, tensions, contenus visuels, routes et preuves avant écriture détaillée ; J3, J4 et J5 disposent maintenant de fondations d’écriture exploitables.
+Prototype data-first en cours : J1/J2 intégrés avec placeholders, documentation en alignement continu. J3-J5 sont cadrés côté désir, tensions, contenus visuels, routes et preuves avant écriture détaillée ; J3 dispose maintenant d’un brief d’intégration data-first.
