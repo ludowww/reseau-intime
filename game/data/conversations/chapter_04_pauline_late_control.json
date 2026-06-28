@@ -1,0 +1,183 @@
+{
+  "id": "chapter_04_pauline_late_control",
+  "chapter": 4,
+  "day": 4,
+  "title": "Jour 4 — Pauline a vu quelque chose",
+  "app": "messages",
+  "thread": {
+    "id": "thread_pauline_private",
+    "type": "private",
+    "participants": ["ludo", "pauline"],
+    "display_name": "Pauline",
+    "profile_content_id": "profile_pauline_placeholder"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c04_pauline_late_control_seg_01",
+      "moment_label": "jour 4",
+      "time_label": "23:06",
+      "messages": [
+        {
+          "id": "msg_c04_pauline_late_001",
+          "sender": "pauline",
+          "time_label": "23:06",
+          "text": "Tu devrais faire attention aux photos."
+        },
+        {
+          "id": "msg_c04_pauline_late_002",
+          "sender": "pauline",
+          "time_label": "23:06",
+          "text": "Et aux reflets."
+        },
+        {
+          "id": "msg_c04_pauline_late_003",
+          "sender": "pauline",
+          "time_label": "23:06",
+          "text": "Et à ta tête quand ton téléphone s’allume 😇"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c04_pauline_late_01_guided",
+          "text": "Tu as vu quoi exactement ?",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c04_pauline_late_control_seg_02",
+      "moment_label": "jour 4",
+      "time_label": "23:07",
+      "messages": [
+        {
+          "id": "msg_c04_pauline_late_004",
+          "sender": "pauline",
+          "time_label": "23:07",
+          "text": "Exactement ?"
+        },
+        {
+          "id": "msg_c04_pauline_late_005",
+          "sender": "pauline",
+          "time_label": "23:07",
+          "text": "Joli mot de personne inquiète."
+        },
+        {
+          "id": "msg_c04_pauline_late_006",
+          "sender": "pauline",
+          "time_label": "23:07",
+          "content_id": "capture_player_phone_party_j4_placeholder",
+          "text": "Capture de soirée : Player regarde son téléphone alors que Marie est dans le cadre, Pauline hors champ a visiblement choisi le moment. Rien n’est explicitement compromettant, mais le timing raconte déjà trop."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c04_pauline_late_02_1",
+          "text": "Ce n’est pas ce que tu crois.",
+          "tone": "deny",
+          "effects": {
+            "pauline.interest": 2,
+            "pauline.control": 1,
+            "lie_score": 1
+          },
+          "sets_flags": ["pauline_saw_notification_j4", "pauline_possible_capture_j4"],
+          "next_messages": [
+            {
+              "id": "msg_c04_pauline_late_02_1_01",
+              "sender": "pauline",
+              "time_label": "23:08",
+              "text": "Je n’ai pas dit ce que je croyais."
+            },
+            {
+              "id": "msg_c04_pauline_late_02_1_02",
+              "sender": "pauline",
+              "time_label": "23:08",
+              "text": "C’est toi qui viens de le faire. Merci 🙂"
+            }
+          ]
+        },
+        {
+          "id": "choice_c04_pauline_late_02_2",
+          "text": "Tu gardes toujours les photos comme ça ?",
+          "tone": "counter",
+          "effects": {
+            "pauline.interest": 2,
+            "pauline.control": -1,
+            "pauline_risk_score": 1
+          },
+          "sets_flags": ["pauline_saw_notification_j4", "pauline_possible_capture_j4", "pauline_own_secret_seed_j4"],
+          "next_messages": [
+            {
+              "id": "msg_c04_pauline_late_02_2_01",
+              "sender": "pauline",
+              "time_label": "23:08",
+              "text": "Toujours ? Non."
+            },
+            {
+              "id": "msg_c04_pauline_late_02_2_02",
+              "sender": "pauline",
+              "time_label": "23:08",
+              "text": "Seulement quand elles peuvent resservir."
+            },
+            {
+              "id": "msg_c04_pauline_late_02_2_03",
+              "sender": "pauline",
+              "time_label": "23:08",
+              "text": "Et attention : les gens qui rangent bien leurs preuves ont rarement les mains propres."
+            }
+          ]
+        },
+        {
+          "id": "choice_c04_pauline_late_02_3",
+          "text": "Supprime-la, Pauline.",
+          "tone": "control",
+          "effects": {
+            "pauline.control": 2,
+            "pauline.interest": 1,
+            "social_pressure": 1
+          },
+          "sets_flags": ["pauline_saw_notification_j4", "pauline_possible_capture_j4"],
+          "next_messages": [
+            {
+              "id": "msg_c04_pauline_late_02_3_01",
+              "sender": "pauline",
+              "time_label": "23:08",
+              "text": "Tu donnes des ordres quand tu as peur ?"
+            },
+            {
+              "id": "msg_c04_pauline_late_02_3_02",
+              "sender": "pauline",
+              "time_label": "23:08",
+              "text": "C’est une information intéressante."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c04_pauline_late_control_seg_03",
+      "moment_label": "jour 4",
+      "time_label": "23:10",
+      "messages": [
+        {
+          "id": "msg_c04_pauline_late_007",
+          "sender": "pauline",
+          "time_label": "23:10",
+          "text": "Je t’ai envoyé la gentille."
+        },
+        {
+          "id": "msg_c04_pauline_late_008",
+          "sender": "pauline",
+          "time_label": "23:10",
+          "text": "Les photos deviennent vraiment intéressantes quand les gens pensent que la soirée est finie."
+        },
+        {
+          "id": "msg_c04_pauline_late_009",
+          "sender": "pauline",
+          "time_label": "23:10",
+          "text": "Bonne nuit, Player. Enfin... essaie 😇"
+        }
+      ]
+    }
+  ],
+  "debug_notes": "J4 Pauline fin de soirée : elle a vu/capturé une trace, sans révélation totale. Prépare J5 redistribution des photos. Réponses Player uniquement via choices."
+}
