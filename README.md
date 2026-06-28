@@ -14,7 +14,7 @@ La promesse du jeu :
 Titre officiel : Réseau Intime
 Moteur : Godot 4.6.2
 Structure : tronc commun + route dominante + route secondaire + menace + mode relationnel
-Cadre : explicite progressif, non moralisateur, conséquences fortes, placeholders d’abord
+Cadre : adulte progressif, non moralisateur, conséquences fortes, placeholders d’abord
 ```
 
 ## Piliers
@@ -46,6 +46,7 @@ docs/
   J2_WRITING_FOUNDATION.md
   J3_J5_Desire_Tension_Visual_Routes_Spec.md
   J3_WRITING_FOUNDATION.md
+  J4_WRITING_FOUNDATION.md
   story_state/
     GLOBAL_STORY_STATE.md
     J1_SUMMARY.md
@@ -75,8 +76,8 @@ Le jeu ne doit pas devenir six histoires séparées. Il doit garder un tronc com
 
 ## Cadre adulte
 
-Le niveau est explicite progressif, pouvant aller jusqu’au porno assumé dans les routes avancées. Le jeu ne moralise pas, mais il ne banalise jamais : tout choix intime doit créer une trace, une conséquence ou une tension.
+Le niveau est adulte progressif. Le jeu ne moralise pas, mais il ne banalise jamais : tout choix intime doit créer une trace, une conséquence ou une tension.
 
 ## Statut
 
-Prototype data-first en cours : J1/J2 intégrés avec placeholders, documentation en alignement continu. J3-J5 sont cadrés côté désir, tensions, contenus visuels, routes et preuves avant écriture détaillée ; J3 dispose maintenant d’une fondation d’écriture exploitable.
+Prototype data-first en cours : J1/J2 intégrés avec placeholders, documentation en alignement continu. J3-J5 sont cadrés côté désir, tensions, contenus visuels, routes et preuves avant écriture détaillée ; J3 et J4 disposent maintenant de fondations d’écriture exploitables.
