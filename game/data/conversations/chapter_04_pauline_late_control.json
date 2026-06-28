@@ -34,6 +34,12 @@
           "sender": "pauline",
           "time_label": "23:06",
           "text": "Et à ta tête quand ton téléphone s’allume 😇"
+        },
+        {
+          "id": "msg_c04_pauline_late_003b",
+          "sender": "pauline",
+          "time_label": "23:06",
+          "text": "Surtout ta tête, en fait. Très pédagogique."
         }
       ],
       "choices": [
@@ -67,6 +73,18 @@
           "time_label": "23:07",
           "content_id": "capture_player_phone_party_j4_placeholder",
           "text": "Capture de soirée : Player regarde son téléphone alors que Marie est dans le cadre, Pauline hors champ a visiblement choisi le moment. Rien n’est explicitement compromettant, mais le timing raconte déjà trop."
+        },
+        {
+          "id": "msg_c04_pauline_late_006b",
+          "sender": "pauline",
+          "time_label": "23:07",
+          "text": "Je te rassure : j’en ai une pire."
+        },
+        {
+          "id": "msg_c04_pauline_late_006c",
+          "sender": "pauline",
+          "time_label": "23:07",
+          "text": "Mais je suis délicate ce soir 🙂"
         }
       ],
       "choices": [
@@ -92,6 +110,12 @@
               "sender": "pauline",
               "time_label": "23:08",
               "text": "C’est toi qui viens de le faire. Merci 🙂"
+            },
+            {
+              "id": "msg_c04_pauline_late_02_1_03",
+              "sender": "pauline",
+              "time_label": "23:08",
+              "text": "Toujours laisser les gens compléter les blancs. Ils travaillent mieux que moi."
             }
           ]
         },
@@ -123,6 +147,12 @@
               "sender": "pauline",
               "time_label": "23:08",
               "text": "Et attention : les gens qui rangent bien leurs preuves ont rarement les mains propres."
+            },
+            {
+              "id": "msg_c04_pauline_late_02_2_04",
+              "sender": "pauline",
+              "time_label": "23:08",
+              "text": "Je dis ça avec tendresse, évidemment 😇"
             }
           ]
         },
@@ -148,6 +178,12 @@
               "sender": "pauline",
               "time_label": "23:08",
               "text": "C’est une information intéressante."
+            },
+            {
+              "id": "msg_c04_pauline_late_02_3_03",
+              "sender": "pauline",
+              "time_label": "23:08",
+              "text": "Pas très efficace, mais intéressante."
             }
           ]
         }
@@ -175,6 +211,12 @@
           "sender": "pauline",
           "time_label": "23:10",
           "text": "Bonne nuit, Player. Enfin... essaie 😇"
+        },
+        {
+          "id": "msg_c04_pauline_late_010",
+          "sender": "pauline",
+          "time_label": "23:10",
+          "text": "Et verrouille ton téléphone. Conseil d’amie. Ou presque."
         }
       ]
     }
