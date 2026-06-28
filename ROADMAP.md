@@ -7,20 +7,23 @@
 - J2 verrouillé : Marie, Raphaëlle, Mathilde, Sandra. Pauline/Nico restent futurs, pas actifs J1/J2.
 - J2 contient 4 placeholders visuels : Marie matin, Raphaëlle badge/travail, Mathilde arrivée via Marie, Mathilde selfie canapé.
 - Le téléphone affiche une discussion visible par personnage/groupe ; plusieurs épisodes internes peuvent alimenter le même fil.
-- J3-J5 disposent maintenant d’un cadrage produit pour désir, tensions, contenus visuels, preuves, Pauline et convergence des routes.
+- J3-J5 disposent d’un cadrage produit validé pour désir, tensions, contenus visuels, preuves, Pauline et convergence des routes.
+- J3 dispose d’une fondation d’écriture exploitable : retour maison, Mathilde canapé, Raphaëlle clarté, Sandra jeudi, Marie clôture.
 
 ## Priorité immédiate
 
-1. J3 : retour physique de Player après J2.
-2. Mathilde au réveil / conséquence de la nuit chez Marie et Player.
-3. Continuité narrative des traces reçues pendant l’absence physique de Player.
-4. Densifier les dialogues avec désir perceptible, sous-texte, mensonges, omissions et tonalités évolutives selon les routes.
-5. Préparer J4/J5 comme montée : soirée sociale, regards croisés, convergence de notifications, première preuve faible.
-6. Polish galerie/photos placeholders si nécessaire avant d’élargir le casting.
+1. Écrire / intégrer J3 en data-first à partir de `docs/J3_WRITING_FOUNDATION.md`.
+2. Garder J3 centré sur le retour physique de Player après J2.
+3. Donner une conséquence jouable à Mathilde au réveil / nuit chez Marie et Player.
+4. Maintenir Marie comme ancrage et désir, pas obstacle.
+5. Préserver Sandra rare et émotionnelle, sans nouvelle grosse photo trop rapide.
+6. Utiliser Raphaëlle comme clarté calme, pas romance immédiate.
+7. Préparer J4/J5 comme montée : soirée sociale, regards croisés, convergence de notifications, première preuve faible.
+8. Polish galerie/photos placeholders si nécessaire avant d’élargir le casting.
 
 ## Direction J3-J5
 
-La trajectoire recommandée est :
+La trajectoire validée est :
 
 ```text
 J3 — Retour maison / premiers secrets conscients / premier désir domestique visible
@@ -37,7 +40,11 @@ Principes :
 - Un moment de convergence doit donner l’impression que plusieurs possibilités s’ouvrent presque en même temps.
 - Pauline doit être renforcée comme miroir dangereux : elle menace les secrets de Player, mais sa propre tromperie envers son copain peut aussi laisser des preuves.
 
-Référence : `docs/J3_J5_Desire_Tension_Visual_Routes_Spec.md`.
+Références :
+
+- `docs/J3_J5_Desire_Tension_Visual_Routes_Spec.md`
+- `docs/J3_WRITING_FOUNDATION.md`
+- `docs/decisions/DECISION_007_J3_J5_DESIRE_TENSION_VISUAL_ROUTES.md`
 
 ## MVP vertical slice
 
