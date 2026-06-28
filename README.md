@@ -45,6 +45,7 @@ docs/
   10_VERTICAL_SLICE_SCOPE.md
   J2_WRITING_FOUNDATION.md
   J3_J5_Desire_Tension_Visual_Routes_Spec.md
+  J3_WRITING_FOUNDATION.md
   story_state/
     GLOBAL_STORY_STATE.md
     J1_SUMMARY.md
@@ -57,6 +58,7 @@ docs/
     DECISION_004_FOUNDATIONAL_BOUNDARIES.md
     DECISION_005_J2_VISUAL_RHYTHM_AND_MATHILDE.md
     DECISION_006_PLAYER_NAME_AND_THREAD_MODEL.md
+    DECISION_007_J3_J5_DESIRE_TENSION_VISUAL_ROUTES.md
 ```
 
 ## Règle de conception
@@ -77,4 +79,4 @@ Le niveau est explicite progressif, pouvant aller jusqu’au porno assumé dans 
 
 ## Statut
 
-Prototype data-first en cours : J1/J2 intégrés avec placeholders, documentation en alignement continu. J3-J5 sont cadrés côté désir, tensions, contenus visuels, routes et preuves avant écriture détaillée.
+Prototype data-first en cours : J1/J2 intégrés avec placeholders, documentation en alignement continu. J3-J5 sont cadrés côté désir, tensions, contenus visuels, routes et preuves avant écriture détaillée ; J3 dispose maintenant d’une fondation d’écriture exploitable.
