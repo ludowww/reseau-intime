@@ -33,7 +33,7 @@
           "id": "msg_c04_pauline_invite_003",
           "sender": "pauline",
           "time_label": "17:49",
-          "text": "Donc probablement pas tranquille, mais on dira que oui."
+          "text": "Donc probablement pas tranquille, mais je vais dire “tranquille” pour rassurer les gens fragiles 🙂"
         }
       ],
       "choices": [
@@ -66,6 +66,12 @@
           "sender": "pauline",
           "time_label": "17:50",
           "text": "Avec des chips. C’est plus convivial 🙃"
+        },
+        {
+          "id": "msg_c04_pauline_invite_006b",
+          "sender": "pauline",
+          "time_label": "17:50",
+          "text": "Et moins attaquable juridiquement."
         }
       ],
       "choices": [
@@ -90,6 +96,12 @@
               "sender": "pauline",
               "time_label": "17:51",
               "text": "Les hommes et leur pudeur alimentaire 😅"
+            },
+            {
+              "id": "msg_c04_pauline_invite_02_1_03",
+              "sender": "pauline",
+              "time_label": "17:51",
+              "text": "Je note quand même que tu as répondu vite. Pour les chips, bien sûr."
             }
           ]
         },
@@ -121,6 +133,12 @@
               "sender": "pauline",
               "time_label": "17:51",
               "text": "Je note quand même l’ordre de tes inquiétudes 🙂"
+            },
+            {
+              "id": "msg_c04_pauline_invite_02_2_04",
+              "sender": "pauline",
+              "time_label": "17:52",
+              "text": "Très instructif, ton silence après “Nico”."
             }
           ]
         },
@@ -145,6 +163,12 @@
               "sender": "pauline",
               "time_label": "17:51",
               "text": "J’adore quand les gens annoncent leur stratégie avant la partie 🙄"
+            },
+            {
+              "id": "msg_c04_pauline_invite_02_3_03",
+              "sender": "pauline",
+              "time_label": "17:52",
+              "text": "Ça m’évite de chercher où appuyer."
             }
           ]
         }
@@ -166,6 +190,12 @@
           "sender": "pauline",
           "time_label": "17:53",
           "text": "Les gens sont plus honnêtes quand ils oublient qu’on les regarde."
+        },
+        {
+          "id": "msg_c04_pauline_invite_008b",
+          "sender": "pauline",
+          "time_label": "17:53",
+          "text": "Et plus drôles quand ils croient qu’ils sont discrets 😇"
         }
       ],
       "choices": [
@@ -198,7 +228,7 @@
           "id": "msg_c04_pauline_invite_011",
           "sender": "pauline",
           "time_label": "17:54",
-          "text": "À ce soir. Essaie d’avoir l’air innocent, pour voir."
+          "text": "À ce soir. Essaie d’avoir l’air innocent, pour voir 😇"
         }
       ]
     }
