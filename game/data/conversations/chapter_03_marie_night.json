@@ -24,19 +24,25 @@
           "id": "msg_c03_marie_night_001",
           "sender": "marie",
           "time_label": "23:02",
-          "text": "T’as été gentil aujourd’hui."
+          "text": "T’es où ?"
         },
         {
           "id": "msg_c03_marie_night_002",
           "sender": "marie",
           "time_label": "23:02",
-          "text": "Mais pas complètement là."
+          "text": "Je veux dire, je sais que tu es dans le salon."
+        },
+        {
+          "id": "msg_c03_marie_night_003",
+          "sender": "marie",
+          "time_label": "23:02",
+          "text": "Mais tu vois ce que je veux dire."
         }
       ],
       "choices": [
         {
           "id": "choice_c03_marie_night_01_guided",
-          "text": "Je sais.",
+          "text": "Oui. Je vois.",
           "tone": "guided_reply"
         }
       ]
@@ -47,22 +53,28 @@
       "time_label": "23:03",
       "messages": [
         {
-          "id": "msg_c03_marie_night_003",
-          "sender": "marie",
-          "time_label": "23:03",
-          "text": "Je ne sais pas si tu es fatigué ou si tu me caches ta fatigue."
-        },
-        {
           "id": "msg_c03_marie_night_004",
           "sender": "marie",
           "time_label": "23:03",
-          "text": "C’est une phrase bizarre."
+          "text": "T’as été gentil aujourd’hui."
         },
         {
           "id": "msg_c03_marie_night_005",
           "sender": "marie",
           "time_label": "23:03",
-          "text": "Mais c’est l’impression que j’ai."
+          "text": "Le café, le plaid, le “je suis là”."
+        },
+        {
+          "id": "msg_c03_marie_night_006",
+          "sender": "marie",
+          "time_label": "23:03",
+          "text": "Mais parfois j’avais l’impression de parler à quelqu’un qui gardait une autre fenêtre ouverte."
+        },
+        {
+          "id": "msg_c03_marie_night_007",
+          "sender": "marie",
+          "time_label": "23:03",
+          "text": "Et pas juste sur son téléphone."
         }
       ],
       "choices": [
@@ -86,7 +98,13 @@
               "id": "msg_c03_marie_night_02_1_02",
               "sender": "marie",
               "time_label": "23:04",
-              "text": "Pas avec une moitié de toi qui vérifie encore l’écran."
+              "text": "Pas en mode présence minimum."
+            },
+            {
+              "id": "msg_c03_marie_night_02_1_03",
+              "sender": "marie",
+              "time_label": "23:04",
+              "text": "Je suis très mauvaise cliente pour les versions démo 🙄"
             }
           ]
         },
@@ -114,6 +132,12 @@
               "sender": "marie",
               "time_label": "23:04",
               "text": "Je vais essayer de te croire au même rythme que tu me réponds."
+            },
+            {
+              "id": "msg_c03_marie_night_02_2_03",
+              "sender": "marie",
+              "time_label": "23:04",
+              "text": "Donc lentement."
             }
           ]
         },
@@ -140,6 +164,12 @@
               "sender": "marie",
               "time_label": "23:04",
               "text": "Mais c’est déjà plus clair que tes détours."
+            },
+            {
+              "id": "msg_c03_marie_night_02_3_03",
+              "sender": "marie",
+              "time_label": "23:04",
+              "text": "Et ce soir, j’ai besoin de clair. Même petit."
             }
           ]
         }
@@ -151,22 +181,22 @@
       "time_label": "23:06",
       "messages": [
         {
-          "id": "msg_c03_marie_night_006",
+          "id": "msg_c03_marie_night_008",
           "sender": "marie",
           "time_label": "23:06",
-          "text": "Je ne te demande pas de tout comprendre ce soir."
+          "text": "Je ne te demande pas de tout expliquer maintenant."
         },
         {
-          "id": "msg_c03_marie_night_007",
+          "id": "msg_c03_marie_night_009",
           "sender": "marie",
           "time_label": "23:06",
           "text": "Juste de rester un peu avec moi."
         },
         {
-          "id": "msg_c03_marie_night_008",
+          "id": "msg_c03_marie_night_010",
           "sender": "marie",
           "time_label": "23:06",
-          "text": "Même si c’est juste ce soir."
+          "text": "Sans écran entre nous, si possible."
         }
       ],
       "choices": [
@@ -183,13 +213,19 @@
       "time_label": "23:07",
       "messages": [
         {
-          "id": "msg_c03_marie_night_009",
+          "id": "msg_c03_marie_night_011",
           "sender": "marie",
           "time_label": "23:07",
           "text": "Alors pose le téléphone."
         },
         {
-          "id": "msg_c03_marie_night_010",
+          "id": "msg_c03_marie_night_012",
+          "sender": "marie",
+          "time_label": "23:07",
+          "text": "Viens."
+        },
+        {
+          "id": "msg_c03_marie_night_013",
           "sender": "marie",
           "time_label": "23:07",
           "text": "On verra demain pour le reste."
