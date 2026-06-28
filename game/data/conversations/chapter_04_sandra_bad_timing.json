@@ -1,0 +1,170 @@
+{
+  "id": "chapter_04_sandra_bad_timing",
+  "chapter": 4,
+  "day": 4,
+  "title": "Jour 4 — Sandra au mauvais moment",
+  "app": "messages",
+  "thread": {
+    "id": "thread_sandra_private",
+    "type": "private",
+    "participants": ["ludo", "sandra"],
+    "display_name": "Sandra",
+    "profile_content_id": "profile_sandra_placeholder"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c04_sandra_bad_timing_seg_01",
+      "moment_label": "jour 4",
+      "time_label": "22:11",
+      "messages": [
+        {
+          "id": "msg_c04_sandra_bad_timing_001",
+          "sender": "sandra",
+          "time_label": "22:11",
+          "text": "Mauvais moment ?"
+        },
+        {
+          "id": "msg_c04_sandra_bad_timing_002",
+          "sender": "sandra",
+          "time_label": "22:11",
+          "text": "Pardon. Je sais que tu es probablement avec du monde."
+        },
+        {
+          "id": "msg_c04_sandra_bad_timing_003",
+          "sender": "sandra",
+          "time_label": "22:11",
+          "text": "Je ne sais pas pourquoi j’ai pensé à toi maintenant 😅"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c04_sandra_bad_timing_01_guided",
+          "text": "Je peux répondre deux minutes.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c04_sandra_bad_timing_seg_02",
+      "moment_label": "jour 4",
+      "time_label": "22:12",
+      "messages": [
+        {
+          "id": "msg_c04_sandra_bad_timing_004",
+          "sender": "sandra",
+          "time_label": "22:12",
+          "text": "Deux minutes volées à une soirée, c’est très flatteur et très nul."
+        },
+        {
+          "id": "msg_c04_sandra_bad_timing_005",
+          "sender": "sandra",
+          "time_label": "22:12",
+          "text": "Je ne sais pas encore de quel côté je le range 🙂"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c04_sandra_bad_timing_02_1",
+          "text": "Je suis content que tu m’aies écrit.",
+          "tone": "tendre",
+          "effects": {
+            "sandra.attachment": 2,
+            "sandra_priority_score": 1,
+            "lie_score": 1
+          },
+          "sets_flags": ["sandra_bad_timing_j4", "sandra_message_opened_during_party_j4"],
+          "next_messages": [
+            {
+              "id": "msg_c04_sandra_bad_timing_02_1_01",
+              "sender": "sandra",
+              "time_label": "22:13",
+              "text": "Voilà."
+            },
+            {
+              "id": "msg_c04_sandra_bad_timing_02_1_02",
+              "sender": "sandra",
+              "time_label": "22:13",
+              "text": "Tu vois pourquoi je parle de mauvais moment ?"
+            }
+          ]
+        },
+        {
+          "id": "choice_c04_sandra_bad_timing_02_2",
+          "text": "Je suis en soirée, mais je voulais te lire quand même.",
+          "tone": "honest",
+          "effects": {
+            "sandra.attachment": 1,
+            "sandra.exposure": 1,
+            "truth_tendency": 1
+          },
+          "sets_flags": ["sandra_bad_timing_j4", "sandra_message_opened_during_party_j4"],
+          "next_messages": [
+            {
+              "id": "msg_c04_sandra_bad_timing_02_2_01",
+              "sender": "sandra",
+              "time_label": "22:13",
+              "text": "Merci de le dire."
+            },
+            {
+              "id": "msg_c04_sandra_bad_timing_02_2_02",
+              "sender": "sandra",
+              "time_label": "22:13",
+              "text": "Ça ne rend pas la place plus simple, mais au moins elle est nommée."
+            }
+          ]
+        },
+        {
+          "id": "choice_c04_sandra_bad_timing_02_3",
+          "text": "Je te répondrai mieux plus tard, promis.",
+          "tone": "prudent",
+          "effects": {
+            "sandra.attachment": 0,
+            "sandra.exposure": -1,
+            "lie_score": 0
+          },
+          "sets_flags": ["sandra_bad_timing_j4", "sandra_message_ignored_j4"],
+          "next_messages": [
+            {
+              "id": "msg_c04_sandra_bad_timing_02_3_01",
+              "sender": "sandra",
+              "time_label": "22:13",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_c04_sandra_bad_timing_02_3_02",
+              "sender": "sandra",
+              "time_label": "22:13",
+              "text": "Plus tard, c’est une place aussi. Pas la plus confortable, mais une place."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c04_sandra_bad_timing_seg_03",
+      "moment_label": "jour 4",
+      "time_label": "22:15",
+      "messages": [
+        {
+          "id": "msg_c04_sandra_bad_timing_006",
+          "sender": "sandra",
+          "time_label": "22:15",
+          "text": "Je vais te laisser retourner à ta soirée."
+        },
+        {
+          "id": "msg_c04_sandra_bad_timing_007",
+          "sender": "sandra",
+          "time_label": "22:15",
+          "text": "Et moi je vais faire semblant de ne pas attendre ton “plus tard”."
+        },
+        {
+          "id": "msg_c04_sandra_bad_timing_008",
+          "sender": "sandra",
+          "time_label": "22:15",
+          "text": "Très crédible, évidemment 😅"
+        }
+      ]
+    }
+  ],
+  "debug_notes": "J4 Sandra intervient au mauvais moment : absence physique, priorité émotionnelle, pas de nouvelle photo réelle. Réponses Player uniquement via choices."
+}
