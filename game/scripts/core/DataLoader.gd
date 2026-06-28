@@ -105,22 +105,75 @@ func get_conversations_for_moment(day_value, moment: Dictionary) -> Array:
 	return _group_segmented_conversations(source)
 
 func _group_segmented_conversations(conversations: Array) -> Array:
-	var entries: Array = []
+	return _group_conversations_by_thread(conversations)
+
+func _group_conversations_by_thread(conversations: Array) -> Array:
+	var grouped: Dictionary = {}
+	var ordered_keys: Array[String] = []
 	for conversation in conversations:
-		entries.append(get_segmented_conversation_entry(conversation))
+		if typeof(conversation) != TYPE_DICTIONARY:
+			continue
+		var key := _thread_key(conversation)
+		if not grouped.has(key):
+			grouped[key] = get_segmented_conversation_entry(conversation)
+			ordered_keys.append(key)
+		else:
+			_merge_episode_into_thread(grouped[key], conversation)
+	var entries: Array = []
+	for key in ordered_keys:
+		entries.append(grouped[key])
 	return entries
 
 func get_segmented_conversation_entry(conversation: Dictionary) -> Dictionary:
 	var entry: Dictionary = conversation.duplicate(true)
-	var segments: Array = entry.get("segments", [])
+	var conversation_id := str(entry.get("id", ""))
+	var thread_id := _thread_key(entry)
+	var segments: Array = []
+	for segment in entry.get("segments", []):
+		if typeof(segment) == TYPE_DICTIONARY:
+			var segment_copy: Dictionary = segment.duplicate(true)
+			segment_copy["_source_conversation_id"] = conversation_id
+			segments.append(segment_copy)
+	entry["segments"] = segments
+	entry["_episode_ids"] = [conversation_id]
+	entry["thread_id"] = thread_id
 	entry["_segment_count"] = segments.size()
-	if segments.size() > 0:
-		entry["_current_segment_index"] = 0
-		entry["_parent_conversation_id"] = entry.get("id", "")
-		entry["_current_segment_id"] = _segment_id(entry, 0)
+	entry["_parent_conversation_id"] = thread_id
+	entry["id"] = thread_id
+	entry["_current_segment_index"] = 0
+	entry["_current_segment_id"] = _segment_id(entry, 0)
 	return entry
 
+func _merge_episode_into_thread(thread_entry: Dictionary, conversation: Dictionary) -> void:
+	var conversation_id := str(conversation.get("id", ""))
+	var episode_ids: Array = thread_entry.get("_episode_ids", [])
+	if not episode_ids.has(conversation_id):
+		episode_ids.append(conversation_id)
+	thread_entry["_episode_ids"] = episode_ids
+	var segments: Array = thread_entry.get("segments", [])
+	for segment in conversation.get("segments", []):
+		if typeof(segment) == TYPE_DICTIONARY:
+			var segment_copy: Dictionary = segment.duplicate(true)
+			segment_copy["_source_conversation_id"] = conversation_id
+			segments.append(segment_copy)
+	thread_entry["segments"] = segments
+	thread_entry["_segment_count"] = segments.size()
+	thread_entry["_current_segment_id"] = _segment_id(thread_entry, int(thread_entry.get("_current_segment_index", 0)))
+
+func _thread_key(conversation: Dictionary) -> String:
+	if str(conversation.get("thread_id", "")) != "":
+		return str(conversation.get("thread_id"))
+	var thread = conversation.get("thread", {})
+	if typeof(thread) == TYPE_DICTIONARY and str(thread.get("id", "")) != "":
+		return str(thread.get("id"))
+	return str(conversation.get("id", "conversation"))
+
 func _segment_id(conversation: Dictionary, index: int) -> String:
+	var segments: Array = conversation.get("segments", [])
+	if index >= 0 and index < segments.size() and typeof(segments[index]) == TYPE_DICTIONARY:
+		var source_id := str(segments[index].get("_source_conversation_id", ""))
+		if source_id != "":
+			return "%s__segment_%d" % [source_id, index + 1]
 	return "%s__segment_%d" % [conversation.get("id", "conversation"), index + 1]
 
 func get_visual_content(content_id: String) -> Dictionary:

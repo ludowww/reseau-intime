@@ -21,7 +21,10 @@ var notification_banner: PanelContainer
 var notification_label: Label
 var current_day_value = null
 var pending_conversation_ids: Dictionary = {}
+var pending_thread_ids: Dictionary = {}
 var unlocked_conversation_ids_by_day: Dictionary = {}
+var unlocked_thread_ids_by_day: Dictionary = {}
+var initialized_pending_days: Dictionary = {}
 var notification_target_conversation_id := ""
 var notification_target_day_value = null
 
@@ -140,7 +143,7 @@ func _add_home_navigation(parent: Node) -> void:
 	var debug_button := _add_button(nav, "Debug")
 	debug_button.pressed.connect(func(): _toggle_debug(debug_button))
 	var reset_button := _add_button(nav, "Reset")
-	reset_button.pressed.connect(func(): GameState.reset_state(); conversation_view.reset_ui_state(); pending_conversation_ids.clear(); unlocked_conversation_ids_by_day.clear(); _hide_notification(); _render_conversations(current_day_value); debug_panel.refresh())
+	reset_button.pressed.connect(func(): GameState.reset_state(); conversation_view.reset_ui_state(); pending_conversation_ids.clear(); pending_thread_ids.clear(); unlocked_conversation_ids_by_day.clear(); unlocked_thread_ids_by_day.clear(); initialized_pending_days.clear(); _hide_notification(); _render_conversations(current_day_value); debug_panel.refresh())
 
 func _add_notification_banner(parent: Node) -> void:
 	notification_banner = PanelContainer.new()
@@ -182,6 +185,7 @@ func _render_conversations(day_value) -> void:
 	if day_value == null:
 		return
 	current_day_value = day_value
+	_initialize_initial_pending_for_day(day_value)
 	_clear(conversation_list)
 	_add_label(conversation_list, "%s — Discussions" % _format_day_label(day_value), 18)
 	_add_day_moment_hint(day_value)
@@ -213,8 +217,10 @@ func _collect_contact_conversations_for_day(day_value) -> Array:
 	for conversation in DataLoader.get_conversations_for_day(day_value):
 		if typeof(conversation) != TYPE_DICTIONARY:
 			continue
-		var conversation_id := _conversation_id(conversation)
-		var entry: Dictionary = conversation.duplicate(true)
+		if not _is_conversation_available(day_value, conversation):
+			continue
+		var entry := _filter_conversation_to_available_episodes(day_value, conversation)
+		var conversation_id := _conversation_id(entry)
 		if metadata.has(conversation_id):
 			entry["_moment_metadata"] = metadata[conversation_id]
 		by_id[conversation_id] = entry
@@ -222,16 +228,17 @@ func _collect_contact_conversations_for_day(day_value) -> Array:
 		for conversation in DataLoader.get_conversations_for_moment(day_value, moment):
 			if typeof(conversation) != TYPE_DICTIONARY:
 				continue
-			var conversation_id := _conversation_id(conversation)
+			if not _is_conversation_available(day_value, conversation):
+				continue
+			var entry := _filter_conversation_to_available_episodes(day_value, conversation)
+			var conversation_id := _conversation_id(entry)
 			if not by_id.has(conversation_id):
-				var entry: Dictionary = conversation.duplicate(true)
 				if metadata.has(conversation_id):
 					entry["_moment_metadata"] = metadata[conversation_id]
 				by_id[conversation_id] = entry
 	var contacts: Array = []
 	for entry in by_id.values():
-		if _is_conversation_available(day_value, entry):
-			contacts.append(entry)
+		contacts.append(entry)
 	return contacts
 
 func _moment_metadata_by_conversation_id(day_value) -> Dictionary:
@@ -243,7 +250,7 @@ func _moment_metadata_by_conversation_id(day_value) -> Dictionary:
 				metadata[base_id] = {"labels": [], "times": [], "transitions": []}
 	for moment in DataLoader.get_moments_for_day(day_value):
 		for conversation_id in moment.get("conversation_ids", []):
-			var key := str(conversation_id)
+			var key := _thread_id_for_conversation_id(day_value, str(conversation_id))
 			if not metadata.has(key):
 				metadata[key] = {"labels": [], "times": [], "transitions": []}
 			var bucket: Dictionary = metadata[key]
@@ -314,31 +321,18 @@ func _open_conversation(day_value, conversation: Dictionary) -> void:
 	if not _is_conversation_available(day_value, conversation):
 		return
 	_clear_pending_for_conversation(conversation_id)
-	_mark_other_conversations_pending(day_value, conversation_id)
 	var segment_id := str(conversation.get("_current_segment_id", conversation.get("id", "")))
 	GameState.set_context(day_value, conversation_id, segment_id)
 	conversation_view.show_conversation(conversation)
 	_render_conversations(day_value)
 	debug_panel.refresh()
 
-func _mark_other_conversations_pending(day_value, opened_conversation_id: String) -> void:
-	var announced := false
-	for conversation in _collect_contact_conversations_for_day(day_value):
-		var conversation_id := _conversation_id(conversation)
-		if conversation_id == opened_conversation_id:
-			continue
-		if _collect_messages(conversation).is_empty() or not _is_conversation_available(day_value, conversation):
-			continue
-		if not bool(pending_conversation_ids.get(conversation_id, false)):
-			pending_conversation_ids[conversation_id] = true
-			if not announced:
-				_show_conversation_notification(day_value, conversation_id, "Nouveau message", "Nouveau message — %s" % _conversation_name(conversation))
-				announced = true
-
 func _clear_pending_for_conversation(conversation_id: String) -> void:
+	if pending_thread_ids.has(conversation_id):
+		pending_thread_ids.erase(conversation_id)
 	if pending_conversation_ids.has(conversation_id):
 		pending_conversation_ids.erase(conversation_id)
-	if pending_conversation_ids.is_empty():
+	if pending_thread_ids.is_empty():
 		_hide_notification()
 
 func _on_conversation_completed(day_value, conversation_id: String) -> void:
@@ -353,9 +347,11 @@ func _unlock_conversations_after_completion(day_value, completed_conversation_id
 		if str(rule.get("after_conversation_completed", "")) != completed_conversation_id:
 			continue
 		if _unlock_conversation(day_value, str(target_id)):
-			pending_conversation_ids[str(target_id)] = true
+			var thread_id := _thread_id_for_conversation_id(day_value, str(target_id))
+			pending_thread_ids[thread_id] = true
+			pending_conversation_ids[thread_id] = true
 			var notification: Dictionary = rule.get("notification", {})
-			_show_conversation_notification(day_value, str(target_id), str(notification.get("title", target_id)), str(notification.get("body", "Nouveau message de %s" % target_id)))
+			_show_conversation_notification(day_value, thread_id, str(notification.get("title", target_id)), str(notification.get("body", "Nouveau message de %s" % target_id)))
 	if current_day_value != null and str(current_day_value) == str(day_value):
 		_render_conversations(day_value)
 
@@ -363,11 +359,16 @@ func _unlock_conversation(day_value, conversation_id: String) -> bool:
 	var day_key := str(day_value)
 	if not unlocked_conversation_ids_by_day.has(day_key):
 		unlocked_conversation_ids_by_day[day_key] = {}
+	if not unlocked_thread_ids_by_day.has(day_key):
+		unlocked_thread_ids_by_day[day_key] = {}
 	var day_unlocks: Dictionary = unlocked_conversation_ids_by_day[day_key]
 	if bool(day_unlocks.get(conversation_id, false)):
 		return false
 	day_unlocks[conversation_id] = true
 	unlocked_conversation_ids_by_day[day_key] = day_unlocks
+	var thread_unlocks: Dictionary = unlocked_thread_ids_by_day[day_key]
+	thread_unlocks[_thread_id_for_conversation_id(day_value, conversation_id)] = true
+	unlocked_thread_ids_by_day[day_key] = thread_unlocks
 	return true
 
 func _available_conversation_ids_for_day(day_value) -> Array:
@@ -384,15 +385,74 @@ func _available_conversation_ids_for_day(day_value) -> Array:
 			_add_unique(ids, str(conversation_id))
 	return ids
 
+func _initialize_initial_pending_for_day(day_value) -> void:
+	var day_key := str(day_value)
+	if bool(initialized_pending_days.get(day_key, false)):
+		return
+	initialized_pending_days[day_key] = true
+	for conversation_id in _conversation_availability_for_day(day_value).get("initial_conversation_ids", []):
+		var thread_id := _thread_id_for_conversation_id(day_value, str(conversation_id))
+		pending_thread_ids[thread_id] = true
+		pending_conversation_ids[thread_id] = true
+
 func _is_conversation_available(day_value, conversation: Dictionary) -> bool:
 	var availability := _conversation_availability_for_day(day_value)
 	if availability.is_empty():
 		return true
-	var conversation_id := _conversation_id(conversation)
-	return _available_conversation_ids_for_day(day_value).has(conversation_id)
+	for episode_id in _conversation_episode_ids(conversation):
+		if _is_episode_available(day_value, episode_id):
+			return true
+	return false
 
 func _conversation_availability_for_day(day_value) -> Dictionary:
 	return DataLoader.get_index_for_day(day_value).get("conversation_availability", {})
+
+func _conversation_episode_ids(conversation: Dictionary) -> Array:
+	var ids: Array = []
+	for episode_id in conversation.get("_episode_ids", []):
+		_add_unique(ids, str(episode_id))
+	if ids.is_empty():
+		_add_unique(ids, str(conversation.get("id", conversation.get("_parent_conversation_id", ""))))
+	return ids
+
+func _is_episode_available(day_value, episode_id: String) -> bool:
+	return _available_conversation_ids_for_day(day_value).has(episode_id)
+
+func _first_available_episode_id(day_value, conversation: Dictionary) -> String:
+	for episode_id in _conversation_episode_ids(conversation):
+		if _is_episode_available(day_value, episode_id):
+			return episode_id
+	return ""
+
+func _filter_conversation_to_available_episodes(day_value, conversation: Dictionary) -> Dictionary:
+	var entry: Dictionary = conversation.duplicate(true)
+	var available_episode_ids: Array = []
+	for episode_id in _conversation_episode_ids(conversation):
+		if _is_episode_available(day_value, episode_id):
+			available_episode_ids.append(episode_id)
+	if available_episode_ids.is_empty():
+		return entry
+	var filtered_segments: Array = []
+	for segment in entry.get("segments", []):
+		if typeof(segment) != TYPE_DICTIONARY:
+			continue
+		if available_episode_ids.has(str(segment.get("_source_conversation_id", ""))):
+			filtered_segments.append(segment)
+	entry["segments"] = filtered_segments
+	entry["_episode_ids"] = available_episode_ids
+	entry["_segment_count"] = filtered_segments.size()
+	entry["_current_segment_index"] = 0
+	if not filtered_segments.is_empty():
+		entry["_current_segment_id"] = "%s__segment_1" % str(filtered_segments[0].get("_source_conversation_id", _conversation_id(entry)))
+	return entry
+
+func _thread_id_for_conversation_id(day_value, conversation_id: String) -> String:
+	for conversation in DataLoader.get_conversations_for_day(day_value):
+		if typeof(conversation) != TYPE_DICTIONARY:
+			continue
+		if _conversation_episode_ids(conversation).has(conversation_id):
+			return _conversation_id(conversation)
+	return conversation_id
 
 func _show_conversation_notification(day_value, conversation_id: String, title: String, body: String) -> void:
 	notification_target_day_value = day_value
@@ -490,7 +550,7 @@ func _conversation_has_activity_badge(conversation: Dictionary) -> bool:
 	return not _collect_choices(conversation).is_empty()
 
 func _is_conversation_pending(conversation: Dictionary) -> bool:
-	return bool(pending_conversation_ids.get(_conversation_id(conversation), false))
+	return bool(pending_thread_ids.get(_conversation_id(conversation), false))
 
 func _last_message_text(conversation: Dictionary) -> String:
 	var messages := _collect_messages(conversation)

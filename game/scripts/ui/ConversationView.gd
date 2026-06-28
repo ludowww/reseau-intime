@@ -59,6 +59,7 @@ func show_conversation(conversation: Dictionary) -> void:
 	if not conversation_states.has(conversation_id):
 		conversation_states[conversation_id] = _new_conversation_state(conversation)
 	active_state = conversation_states[conversation_id]
+	_merge_updated_conversation(conversation)
 	current_conversation = active_state["conversation"]
 	current_segment_index = int(active_state.get("current_segment_index", 0))
 	choice_was_applied = bool(active_state.get("choice_was_applied", false))
@@ -71,7 +72,13 @@ func show_conversation(conversation: Dictionary) -> void:
 		active_state["initialized"] = false
 	if bool(active_state.get("initialized", false)):
 		_restore_state_to_view(active_state)
-		if bool(active_state.get("waiting_choices", false)) or bool(active_state.get("sequence_complete", false)):
+		if bool(active_state.get("waiting_choices", false)):
+			return
+		if bool(active_state.get("sequence_complete", false)) and _has_next_segment():
+			active_state["sequence_complete"] = false
+			_auto_advance_segments_until_choice(conversation_id, token)
+			return
+		if bool(active_state.get("sequence_complete", false)):
 			return
 		if bool(active_state.get("sequence_in_progress", false)):
 			_resume_incomplete_sequence(conversation_id, token)
@@ -100,9 +107,20 @@ func _new_conversation_state(conversation: Dictionary) -> Dictionary:
 		"sequence_in_progress": false,
 		"sequence_complete": false,
 		"completion_emitted": false,
+		"completion_emitted_ids": {},
 		"render_phase": "segment",
 		"initialized": false,
 	}
+
+func _merge_updated_conversation(conversation: Dictionary) -> void:
+	var stored: Dictionary = active_state.get("conversation", {})
+	var updated: Dictionary = conversation.duplicate(true)
+	var stored_segments: Array = stored.get("segments", [])
+	var updated_segments: Array = updated.get("segments", [])
+	if updated_segments.size() >= stored_segments.size():
+		active_state["conversation"] = updated
+	else:
+		active_state["conversation"] = stored
 
 func _build_chat_shell() -> void:
 	var background := PanelContainer.new()
@@ -326,10 +344,21 @@ func _resume_incomplete_sequence(conversation_id: String, token: int) -> void:
 		_emit_conversation_completed_once()
 
 func _emit_conversation_completed_once() -> void:
-	if bool(active_state.get("completion_emitted", false)):
+	var completion_id := _completion_id_for_current_segment()
+	var emitted_ids: Dictionary = active_state.get("completion_emitted_ids", {})
+	if bool(emitted_ids.get(completion_id, false)):
 		return
+	emitted_ids[completion_id] = true
+	active_state["completion_emitted_ids"] = emitted_ids
 	active_state["completion_emitted"] = true
-	conversation_completed.emit(current_conversation.get("day", current_conversation.get("chapter", null)), _parent_conversation_id())
+	conversation_completed.emit(current_conversation.get("day", current_conversation.get("chapter", null)), completion_id)
+
+func _completion_id_for_current_segment() -> String:
+	var data := _current_segment_data()
+	var source_id := str(data.get("_source_conversation_id", ""))
+	if source_id != "":
+		return source_id
+	return _parent_conversation_id()
 
 func _flatten_choice_followup_queue(choice: Dictionary) -> Array:
 	var queue: Array = []

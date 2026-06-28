@@ -117,7 +117,7 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         for expected in [
             "pending_conversation_ids",
             "notification_banner",
-            "_mark_other_conversations_pending",
+            "_unlock_conversations_after_completion",
             "_clear_pending_for_conversation",
             "_show_notification",
             "Nouveau message",
@@ -510,6 +510,111 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         script = (GAME / "scripts" / "ui" / "PhonePrototype.gd").read_text(encoding="utf-8")
         self.assertIn("conversation_view.reset_ui_state()", script)
         self.assertIn("pending_conversation_ids.clear()", script)
+        self.assertIn("pending_thread_ids.clear()", script)
+        self.assertIn("unlocked_conversation_ids_by_day.clear()", script)
+        self.assertIn("unlocked_thread_ids_by_day.clear()", script)
+    def test_day2_thread_metadata_groups_multiple_episodes_per_visible_contact(self):
+        index = json.loads((GAME / "data/conversations/chapter_02_index.json").read_text(encoding="utf-8"))
+        expected_flow = [
+            ("08:12", "chapter_02_marie_morning", "thread_marie_private"),
+            ("12:27", "chapter_02_raphaelle_midday", "thread_raphaelle_private"),
+            ("17:36", "chapter_02_marie_afternoon", "thread_marie_private"),
+            ("17:52", "chapter_02_mathilde_evening", "thread_mathilde_private"),
+            ("18:38", "chapter_02_sandra_evening", "thread_sandra_private"),
+            ("18:56", "chapter_02_marie_night", "thread_marie_private"),
+            ("19:04", "chapter_02_mathilde_night", "thread_mathilde_private"),
+        ]
+        actual_flow = []
+        for moment in index.get("moment_flow", []):
+            self.assertEqual(len(moment.get("conversation_ids", [])), 1)
+            conversation_id = moment["conversation_ids"][0]
+            data = json.loads((GAME / "data/conversations" / f"{conversation_id}.json").read_text(encoding="utf-8"))
+            actual_flow.append((moment.get("time_label"), conversation_id, data.get("thread", {}).get("id")))
+        self.assertEqual(actual_flow, expected_flow)
+        marie = [item for item in actual_flow if item[2] == "thread_marie_private"]
+        mathilde = [item for item in actual_flow if item[2] == "thread_mathilde_private"]
+        self.assertEqual(len(marie), 3)
+        self.assertEqual(len(mathilde), 2)
+
+    def test_loader_groups_day2_episodes_by_thread_not_by_episode_title(self):
+        loader = (GAME / "scripts" / "core" / "DataLoader.gd").read_text(encoding="utf-8")
+        for expected in [
+            "_thread_key",
+            "_group_conversations_by_thread",
+            "_episode_ids",
+            "_source_conversation_id",
+            "thread_id",
+        ]:
+            self.assertIn(expected, loader)
+        grouping_entry = loader[loader.index("func _group_segmented_conversations"):loader.index("func _group_conversations_by_thread")]
+        self.assertNotIn("entries.append(get_segmented_conversation_entry(conversation))", grouping_entry)
+
+    def test_phone_availability_and_pending_use_episode_ids_inside_visible_threads(self):
+        script = (GAME / "scripts" / "ui" / "PhonePrototype.gd").read_text(encoding="utf-8")
+        for expected in [
+            "_conversation_episode_ids",
+            "_first_available_episode_id",
+            "_is_episode_available",
+            "_thread_id_for_conversation_id",
+            "pending_thread_ids",
+            "unlocked_thread_ids_by_day",
+        ]:
+            self.assertIn(expected, script)
+        self.assertIn("_conversation_episode_ids(conversation)", script)
+        self.assertIn("_thread_id_for_conversation_id(day_value, str(target_id))", script)
+
+    def test_conversation_view_resumes_newly_unlocked_episode_in_existing_thread(self):
+        script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
+        for expected in [
+            "_merge_updated_conversation",
+            "_has_next_segment()",
+            "_completion_id_for_current_segment",
+            '"_source_conversation_id"',
+            "conversation_completed.emit",
+        ]:
+            self.assertIn(expected, script)
+        restore_block = script[script.index('if bool(active_state.get("initialized", false)):'):script.index('active_state["initialized"] = true')]
+        self.assertIn("_auto_advance_segments_until_choice(conversation_id, token)", restore_block)
+        self.assertIn("sequence_complete", restore_block)
+
+
+
+    def test_pending_threads_are_only_set_by_real_unlocks_not_by_opening_threads(self):
+        script = (GAME / "scripts" / "ui" / "PhonePrototype.gd").read_text(encoding="utf-8")
+        open_block = script[script.index("func _open_conversation"):script.index("func _on_conversation_completed")]
+        self.assertNotIn("_mark_other_conversations_pending", open_block)
+        self.assertNotIn("pending_thread_ids[", open_block)
+        self.assertIn("_clear_pending_for_conversation(conversation_id)", open_block)
+
+        unlock_block = script[script.index("func _unlock_conversations_after_completion"):script.index("\nfunc _unlock_conversation(day_value")]
+        self.assertIn("pending_thread_ids[thread_id] = true", unlock_block)
+        self.assertIn("pending_conversation_ids[thread_id] = true", unlock_block)
+        self.assertIn("_thread_id_for_conversation_id(day_value, str(target_id))", unlock_block)
+
+    def test_pending_contract_covers_day1_day2_unlock_sequence_and_reset(self):
+        script = (GAME / "scripts" / "ui" / "PhonePrototype.gd").read_text(encoding="utf-8")
+        self.assertIn("pending_thread_ids.clear()", script)
+        self.assertIn("unlocked_thread_ids_by_day.clear()", script)
+        self.assertIn("initialized_pending_days.clear()", script)
+        self.assertIn("_initialize_initial_pending_for_day(day_value)", script)
+        self.assertIn("pending_thread_ids[thread_id] = true", script)
+        self.assertIn("_clear_pending_for_conversation(conversation_id)", script)
+        self.assertIn("func _is_conversation_pending", script)
+        self.assertIn("pending_thread_ids.get(_conversation_id(conversation)", script)
+
+        day1 = json.loads((GAME / "data/conversations/chapter_01_index.json").read_text(encoding="utf-8"))
+        day1_unlocks = day1.get("conversation_availability", {}).get("unlocks", {})
+        self.assertEqual(day1_unlocks.get("chapter_01_sandra", {}).get("after_conversation_completed"), "chapter_01_marie")
+
+        day2 = json.loads((GAME / "data/conversations/chapter_02_index.json").read_text(encoding="utf-8"))
+        unlocks = day2.get("conversation_availability", {}).get("unlocks", {})
+        self.assertEqual(unlocks.get("chapter_02_raphaelle_midday", {}).get("after_conversation_completed"), "chapter_02_marie_morning")
+        self.assertEqual(unlocks.get("chapter_02_marie_afternoon", {}).get("after_conversation_completed"), "chapter_02_raphaelle_midday")
+        self.assertEqual(unlocks.get("chapter_02_mathilde_evening", {}).get("after_conversation_completed"), "chapter_02_marie_afternoon")
+        self.assertEqual(unlocks.get("chapter_02_sandra_evening", {}).get("after_conversation_completed"), "chapter_02_mathilde_evening")
+        self.assertEqual(unlocks.get("chapter_02_marie_night", {}).get("after_conversation_completed"), "chapter_02_sandra_evening")
+        self.assertEqual(unlocks.get("chapter_02_mathilde_night", {}).get("after_conversation_completed"), "chapter_02_marie_night")
+
 
     def test_debug_panel_has_readable_compact_sections(self):
         script = (GAME / "scripts" / "ui" / "DebugPanel.gd").read_text(encoding="utf-8")
