@@ -27,7 +27,7 @@
           "id": "msg_c04_pauline_invite_002",
           "sender": "pauline",
           "time_label": "17:48",
-          "text": "Premier message direct de ma part, je sais. Moment historique."
+          "text": "On ne s’écrit presque jamais en privé, je sais. Moment historique."
         },
         {
           "id": "msg_c04_pauline_invite_003",
@@ -239,5 +239,5 @@
       ]
     }
   ],
-  "debug_notes": "J4 démarre par le premier message privé de Pauline : invitation sociale, photos annoncées, contrôle léger. Réponses Player uniquement via choices."
+  "debug_notes": "J4 démarre par un message privé rare de Pauline : invitation sociale, photos annoncées, contrôle léger. Réponses Player uniquement via choices."
 }
