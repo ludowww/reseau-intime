@@ -24,13 +24,19 @@
           "id": "msg_c03_sandra_evening_001",
           "sender": "sandra",
           "time_label": "18:27",
-          "text": "Je fais semblant de ne pas penser à jeudi."
+          "text": "Coucou."
         },
         {
           "id": "msg_c03_sandra_evening_002",
           "sender": "sandra",
           "time_label": "18:27",
-          "text": "C’est très convaincant, dans ma tête."
+          "text": "Je fais semblant de ne pas penser à jeudi."
+        },
+        {
+          "id": "msg_c03_sandra_evening_003",
+          "sender": "sandra",
+          "time_label": "18:27",
+          "text": "C’est très convaincant, si on ignore mon téléphone posé devant moi depuis dix minutes."
         }
       ],
       "choices": [
@@ -47,22 +53,28 @@
       "time_label": "18:28",
       "messages": [
         {
-          "id": "msg_c03_sandra_evening_003",
+          "id": "msg_c03_sandra_evening_004",
           "sender": "sandra",
           "time_label": "18:28",
           "text": "Merci."
         },
         {
-          "id": "msg_c03_sandra_evening_004",
-          "sender": "sandra",
-          "time_label": "18:28",
-          "text": "Je savais que mon talent de comédienne finirait par être reconnu."
-        },
-        {
           "id": "msg_c03_sandra_evening_005",
           "sender": "sandra",
           "time_label": "18:28",
+          "text": "Je savais que mon talent de comédienne finirait par être reconnu 😅"
+        },
+        {
+          "id": "msg_c03_sandra_evening_006",
+          "sender": "sandra",
+          "time_label": "18:28",
           "text": "J’ai failli t’écrire plus tôt."
+        },
+        {
+          "id": "msg_c03_sandra_evening_007",
+          "sender": "sandra",
+          "time_label": "18:28",
+          "text": "Puis j’ai fait semblant d’être raisonnable."
         }
       ],
       "choices": [
@@ -83,13 +95,19 @@
               "id": "msg_c03_sandra_evening_02_1_01",
               "sender": "sandra",
               "time_label": "18:29",
-              "text": "C’est exactement le genre de réponse qui m’aide très peu."
+              "text": "Voilà."
             },
             {
               "id": "msg_c03_sandra_evening_02_1_02",
               "sender": "sandra",
               "time_label": "18:29",
-              "text": "Mais je souris bêtement, donc bravo."
+              "text": "C’est exactement le genre de réponse qui ne m’aide pas du tout."
+            },
+            {
+              "id": "msg_c03_sandra_evening_02_1_03",
+              "sender": "sandra",
+              "time_label": "18:29",
+              "text": "Mais je souris comme une idiote, donc bravo."
             }
           ]
         },
@@ -116,7 +134,7 @@
               "id": "msg_c03_sandra_evening_02_2_02",
               "sender": "sandra",
               "time_label": "18:29",
-              "text": "Je fais déjà assez semblant de ne pas les voir."
+              "text": "Je suis déjà très occupée à prétendre que je ne les vois pas."
             }
           ]
         },
@@ -142,7 +160,13 @@
               "id": "msg_c03_sandra_evening_02_3_02",
               "sender": "sandra",
               "time_label": "18:29",
-              "text": "C’est probablement la version adulte de nous deux."
+              "text": "Respirer, c’est bien."
+            },
+            {
+              "id": "msg_c03_sandra_evening_02_3_03",
+              "sender": "sandra",
+              "time_label": "18:29",
+              "text": "Je vais essayer de faire ça sans regarder l’heure toutes les vingt minutes 🙂"
             }
           ]
         }
@@ -154,22 +178,28 @@
       "time_label": "18:31",
       "messages": [
         {
-          "id": "msg_c03_sandra_evening_006",
+          "id": "msg_c03_sandra_evening_008",
           "sender": "sandra",
           "time_label": "18:31",
           "text": "J’avais quelque chose à t’envoyer."
         },
         {
-          "id": "msg_c03_sandra_evening_007",
+          "id": "msg_c03_sandra_evening_009",
+          "sender": "sandra",
+          "time_label": "18:31",
+          "text": "Puis j’ai reposé le téléphone comme une adulte parfaitement stable."
+        },
+        {
+          "id": "msg_c03_sandra_evening_010",
           "sender": "sandra",
           "time_label": "18:31",
           "text": "Mauvaise idée."
         },
         {
-          "id": "msg_c03_sandra_evening_008",
+          "id": "msg_c03_sandra_evening_011",
           "sender": "sandra",
           "time_label": "18:31",
-          "text": "On va dire que je fais des progrès."
+          "text": "Enfin. Mauvaise idée maintenant."
         }
       ],
       "choices": [
@@ -223,6 +253,12 @@
               "sender": "sandra",
               "time_label": "18:32",
               "text": "C’est bien pour ça que je vais arrêter la phrase ici."
+            },
+            {
+              "id": "msg_c03_sandra_evening_03_2_03",
+              "sender": "sandra",
+              "time_label": "18:32",
+              "text": "Tu vois. Progrès."
             }
           ]
         },
@@ -260,19 +296,19 @@
       "time_label": "18:34",
       "messages": [
         {
-          "id": "msg_c03_sandra_evening_009",
+          "id": "msg_c03_sandra_evening_012",
           "sender": "sandra",
           "time_label": "18:34",
           "text": "Je vais te laisser."
         },
         {
-          "id": "msg_c03_sandra_evening_010",
+          "id": "msg_c03_sandra_evening_013",
           "sender": "sandra",
           "time_label": "18:34",
           "text": "On verra jeudi."
         },
         {
-          "id": "msg_c03_sandra_evening_011",
+          "id": "msg_c03_sandra_evening_014",
           "sender": "sandra",
           "time_label": "18:34",
           "text": "Enfin. Si je ne trouve pas une excuse stupide d’ici là."
@@ -292,13 +328,13 @@
       "time_label": "18:35",
       "messages": [
         {
-          "id": "msg_c03_sandra_evening_012",
+          "id": "msg_c03_sandra_evening_015",
           "sender": "sandra",
           "time_label": "18:35",
           "text": "Je vais essayer d’être courageuse."
         },
         {
-          "id": "msg_c03_sandra_evening_013",
+          "id": "msg_c03_sandra_evening_016",
           "sender": "sandra",
           "time_label": "18:35",
           "text": "Doucement."
