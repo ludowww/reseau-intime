@@ -1,0 +1,207 @@
+{
+  "id": "chapter_04_pauline_invite",
+  "chapter": 4,
+  "day": 4,
+  "title": "Jour 4 — Pauline relance la soirée",
+  "app": "messages",
+  "thread": {
+    "id": "thread_pauline_private",
+    "type": "private",
+    "participants": ["ludo", "pauline"],
+    "display_name": "Pauline",
+    "profile_content_id": "profile_pauline_placeholder"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c04_pauline_invite_seg_01",
+      "moment_label": "jour 4",
+      "time_label": "17:48",
+      "messages": [
+        {
+          "id": "msg_c04_pauline_invite_001",
+          "sender": "pauline",
+          "time_label": "17:48",
+          "text": "Coucou survivant du canapé familial 😇"
+        },
+        {
+          "id": "msg_c04_pauline_invite_002",
+          "sender": "pauline",
+          "time_label": "17:48",
+          "text": "Ce soir, petite soirée tranquille."
+        },
+        {
+          "id": "msg_c04_pauline_invite_003",
+          "sender": "pauline",
+          "time_label": "17:49",
+          "text": "Donc probablement pas tranquille, mais on dira que oui."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c04_pauline_invite_01_guided",
+          "text": "Tu vends toujours les choses comme ça ?",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c04_pauline_invite_seg_02",
+      "moment_label": "jour 4",
+      "time_label": "17:50",
+      "messages": [
+        {
+          "id": "msg_c04_pauline_invite_004",
+          "sender": "pauline",
+          "time_label": "17:50",
+          "text": "Je ne vends rien."
+        },
+        {
+          "id": "msg_c04_pauline_invite_005",
+          "sender": "pauline",
+          "time_label": "17:50",
+          "text": "J’organise les occasions pour que les gens se trahissent eux-mêmes."
+        },
+        {
+          "id": "msg_c04_pauline_invite_006",
+          "sender": "pauline",
+          "time_label": "17:50",
+          "text": "Avec des chips. C’est plus convivial 🙃"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c04_pauline_invite_02_1",
+          "text": "Je viens. Pour les chips, évidemment.",
+          "tone": "playful",
+          "effects": {
+            "pauline.interest": 1,
+            "social_pressure": 1
+          },
+          "sets_flags": ["party_invite_j4"],
+          "next_messages": [
+            {
+              "id": "msg_c04_pauline_invite_02_1_01",
+              "sender": "pauline",
+              "time_label": "17:51",
+              "text": "Évidemment."
+            },
+            {
+              "id": "msg_c04_pauline_invite_02_1_02",
+              "sender": "pauline",
+              "time_label": "17:51",
+              "text": "Les hommes et leur pudeur alimentaire 😅"
+            }
+          ]
+        },
+        {
+          "id": "choice_c04_pauline_invite_02_2",
+          "text": "Qui vient exactement ?",
+          "tone": "curious",
+          "effects": {
+            "pauline.interest": 1,
+            "nico.place_near_marie": 1,
+            "social_pressure": 1
+          },
+          "sets_flags": ["party_invite_j4"],
+          "next_messages": [
+            {
+              "id": "msg_c04_pauline_invite_02_2_01",
+              "sender": "pauline",
+              "time_label": "17:51",
+              "text": "Ah."
+            },
+            {
+              "id": "msg_c04_pauline_invite_02_2_02",
+              "sender": "pauline",
+              "time_label": "17:51",
+              "text": "Question innocente, bien sûr. Marie, Mathilde, Nico, deux-trois autres."
+            },
+            {
+              "id": "msg_c04_pauline_invite_02_2_03",
+              "sender": "pauline",
+              "time_label": "17:51",
+              "text": "Je note quand même l’ordre de tes inquiétudes 🙂"
+            }
+          ]
+        },
+        {
+          "id": "choice_c04_pauline_invite_02_3",
+          "text": "Je vais rester près de Marie, ce soir.",
+          "tone": "protective",
+          "effects": {
+            "marie_trust": 1,
+            "pauline.interest": 1
+          },
+          "sets_flags": ["party_invite_j4"],
+          "next_messages": [
+            {
+              "id": "msg_c04_pauline_invite_02_3_01",
+              "sender": "pauline",
+              "time_label": "17:51",
+              "text": "Très noble."
+            },
+            {
+              "id": "msg_c04_pauline_invite_02_3_02",
+              "sender": "pauline",
+              "time_label": "17:51",
+              "text": "J’adore quand les gens annoncent leur stratégie avant la partie 🙄"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c04_pauline_invite_seg_03",
+      "moment_label": "jour 4",
+      "time_label": "17:53",
+      "messages": [
+        {
+          "id": "msg_c04_pauline_invite_007",
+          "sender": "pauline",
+          "time_label": "17:53",
+          "text": "Je préviens : je prends des photos."
+        },
+        {
+          "id": "msg_c04_pauline_invite_008",
+          "sender": "pauline",
+          "time_label": "17:53",
+          "text": "Les gens sont plus honnêtes quand ils oublient qu’on les regarde."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c04_pauline_invite_03_guided",
+          "text": "C’est censé me rassurer ?",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c04_pauline_invite_seg_04",
+      "moment_label": "jour 4",
+      "time_label": "17:54",
+      "messages": [
+        {
+          "id": "msg_c04_pauline_invite_009",
+          "sender": "pauline",
+          "time_label": "17:54",
+          "text": "Pas spécialement 🙂"
+        },
+        {
+          "id": "msg_c04_pauline_invite_010",
+          "sender": "pauline",
+          "time_label": "17:54",
+          "content_id": "photo_pauline_soft_provocation_j4_placeholder",
+          "text": "Photo de Pauline avant la soirée : cadrage maîtrisé, sourire tranquille, tenue simple mais clairement choisie. Elle sait exactement l’effet que produit la photo, même si elle fait semblant que non."
+        },
+        {
+          "id": "msg_c04_pauline_invite_011",
+          "sender": "pauline",
+          "time_label": "17:54",
+          "text": "À ce soir. Essaie d’avoir l’air innocent, pour voir."
+        }
+      ]
+    }
+  ],
+  "debug_notes": "J4 démarre par Pauline : invitation sociale, photos annoncées, contrôle léger. Réponses Player uniquement via choices."
+}
