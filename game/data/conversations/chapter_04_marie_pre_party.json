@@ -27,7 +27,13 @@
           "id": "msg_c04_marie_pre_party_002",
           "sender": "marie",
           "time_label": "19:12",
-          "text": "Je mets ça ou c’est trop pour la “petite soirée tranquille” de Pauline ?"
+          "text": "Je suis prête. Enfin je crois."
+        },
+        {
+          "id": "msg_c04_marie_pre_party_002b",
+          "sender": "marie",
+          "time_label": "19:12",
+          "text": "Je mets ça ou c’est trop pour la “petite soirée tranquille” de Pauline ? 😅"
         }
       ],
       "choices": [
@@ -92,6 +98,12 @@
               "sender": "marie",
               "time_label": "19:14",
               "text": "Je note l’effort sur “sans esquiver” 🙂"
+            },
+            {
+              "id": "msg_c04_marie_pre_party_02_1_03",
+              "sender": "marie",
+              "time_label": "19:14",
+              "text": "Et je note aussi que tu as regardé la photo avant de répondre. C’est mieux."
             }
           ]
         },
@@ -116,6 +128,12 @@
               "sender": "marie",
               "time_label": "19:14",
               "text": "Je vais attendre deux minutes, alors. Pas trois 😅"
+            },
+            {
+              "id": "msg_c04_marie_pre_party_02_2_03",
+              "sender": "marie",
+              "time_label": "19:14",
+              "text": "Et si tu dis “pas mal”, je repars me changer."
             }
           ]
         },
@@ -141,6 +159,12 @@
               "sender": "marie",
               "time_label": "19:14",
               "text": "Tu me regardes, ou tu anticipes déjà qui pourrait le faire ?"
+            },
+            {
+              "id": "msg_c04_marie_pre_party_02_3_03",
+              "sender": "marie",
+              "time_label": "19:14",
+              "text": "Parce que ce n’est pas exactement le même compliment 🙄"
             }
           ]
         }
@@ -161,7 +185,13 @@
           "id": "msg_c04_marie_pre_party_008",
           "sender": "marie",
           "time_label": "19:16",
-          "text": "Essaie juste de venir avec moi, pas avec tout ton écran."
+          "text": "Essaie juste de venir avec moi, pas avec tout ton écran 🙂"
+        },
+        {
+          "id": "msg_c04_marie_pre_party_009",
+          "sender": "marie",
+          "time_label": "19:16",
+          "text": "Je te préviens : ce soir, je vais te réclamer en public. Un peu."
         }
       ]
     }
