@@ -11,10 +11,11 @@
 - J3 dispose d’une fondation d’écriture exploitable : retour maison, Mathilde canapé, Raphaëlle clarté, Sandra jeudi, Marie clôture.
 - J4 dispose d’une fondation d’écriture exploitable : soirée sociale, Pauline observatrice, Nico miroir, Mathilde témoin, Sandra au mauvais moment, convergence.
 - J5 dispose d’une fondation d’écriture exploitable : lendemain de soirée, redistribution de photos, première preuve faible, photos conditionnelles, Pauline et images hors champ.
+- J3 dispose maintenant d’un brief d’intégration data-first qui précise les fichiers probables, conversations, contenus visuels, variables, flags et validations.
 
 ## Priorité immédiate
 
-1. Écrire / intégrer J3 en data-first à partir de `docs/J3_WRITING_FOUNDATION.md`.
+1. Écrire / intégrer J3 en data-first à partir de `docs/J3_DATA_FIRST_IMPLEMENTATION_BRIEF.md` et `docs/J3_WRITING_FOUNDATION.md`.
 2. Préparer J4 en data-first à partir de `docs/J4_WRITING_FOUNDATION.md` après validation de J3.
 3. Préparer J5 en data-first à partir de `docs/J5_WRITING_FOUNDATION.md` après validation de J4.
 4. Garder J3 centré sur le retour physique de Player après J2.
@@ -47,6 +48,7 @@ Principes :
 
 Références :
 
+- `docs/J3_DATA_FIRST_IMPLEMENTATION_BRIEF.md`
 - `docs/J3_J5_Desire_Tension_Visual_Routes_Spec.md`
 - `docs/J3_WRITING_FOUNDATION.md`
 - `docs/J4_WRITING_FOUNDATION.md`
