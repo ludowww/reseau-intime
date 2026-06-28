@@ -27,7 +27,7 @@
           "id": "msg_c04_party_group_002",
           "sender": "pauline",
           "time_label": "20:36",
-          "text": "Famille au sens très large, évidemment 😇"
+          "text": "Famille au sens très large, très discutable, très Pauline 😇"
         },
         {
           "id": "msg_c04_party_group_003",
@@ -35,6 +35,12 @@
           "time_label": "20:36",
           "content_id": "photo_party_group_j4_placeholder",
           "text": "Photo de groupe chez Pauline : Marie sourit au centre du cadre, Mathilde est légèrement de côté, Nico trop proche pour que ce soit vraiment neutre, Pauline a clairement choisi l’angle. Player est partiellement hors champ, téléphone à la main."
+        },
+        {
+          "id": "msg_c04_party_group_003b",
+          "sender": "mathilde",
+          "time_label": "20:36",
+          "text": "Je confirme : cette photo est une enquête judiciaire avec guirlande lumineuse."
         }
       ],
       "choices": [
@@ -66,13 +72,19 @@
           "id": "msg_c04_party_group_006",
           "sender": "marie",
           "time_label": "20:37",
-          "text": "Je confirme. Très belle présence de ton écran."
+          "text": "Je confirme. Très belle présence de ton écran 🙄"
         },
         {
           "id": "msg_c04_party_group_007",
           "sender": "nico",
           "time_label": "20:37",
           "text": "Marie sauve la photo, heureusement."
+        },
+        {
+          "id": "msg_c04_party_group_007b",
+          "sender": "pauline",
+          "time_label": "20:37",
+          "text": "Et voilà. Premier compliment exploitable. Merci Nico 🙂"
         }
       ],
       "choices": [
@@ -100,6 +112,12 @@
             },
             {
               "id": "msg_c04_party_group_02_1_03",
+              "sender": "mathilde",
+              "time_label": "20:38",
+              "text": "Alerte phrase mignonne. Rare, mais détectée."
+            },
+            {
+              "id": "msg_c04_party_group_02_1_04",
               "sender": "pauline",
               "time_label": "20:38",
               "text": "Capture mentale effectuée."
@@ -127,13 +145,19 @@
               "id": "msg_c04_party_group_02_2_02",
               "sender": "pauline",
               "time_label": "20:38",
-              "text": "Ambiance. J’adore."
+              "text": "Ambiance. J’adore 😇"
             },
             {
               "id": "msg_c04_party_group_02_2_03",
               "sender": "marie",
               "time_label": "20:38",
               "text": "On respire ?"
+            },
+            {
+              "id": "msg_c04_party_group_02_2_04",
+              "sender": "mathilde",
+              "time_label": "20:38",
+              "text": "Je propose une grande respiration collective. Ou un saladier de chips."
             }
           ]
         },
@@ -157,7 +181,13 @@
               "id": "msg_c04_party_group_02_3_02",
               "sender": "marie",
               "time_label": "20:38",
-              "text": "Je prends deux minutes. C’est déjà ça."
+              "text": "Je prends deux minutes. C’est déjà ça 🙂"
+            },
+            {
+              "id": "msg_c04_party_group_02_3_03",
+              "sender": "pauline",
+              "time_label": "20:38",
+              "text": "Je lance le chronomètre. Pour la science."
             }
           ]
         }
@@ -179,6 +209,18 @@
           "sender": "pauline",
           "time_label": "20:40",
           "text": "Les premières photos mentent toujours un peu. Les suivantes moins."
+        },
+        {
+          "id": "msg_c04_party_group_010",
+          "sender": "nico",
+          "time_label": "20:40",
+          "text": "Phrase pas inquiétante du tout."
+        },
+        {
+          "id": "msg_c04_party_group_011",
+          "sender": "pauline",
+          "time_label": "20:40",
+          "text": "Merci, j’ai travaillé l’effet 😇"
         }
       ]
     }
