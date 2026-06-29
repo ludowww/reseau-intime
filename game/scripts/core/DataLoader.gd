@@ -7,6 +7,7 @@ const CHAPTER_INDEX_PATHS := [
 	"res://data/conversations/chapter_03_index.json",
 	"res://data/conversations/chapter_04_index.json",
 	"res://data/conversations/chapter_05_index.json",
+	"res://data/conversations/chapter_06_index.json",
 ]
 const VISUAL_CONTENT_PATHS := [
 	"res://data/visual_content/placeholders.json",
