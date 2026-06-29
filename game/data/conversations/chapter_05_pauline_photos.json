@@ -18,8 +18,8 @@
       "conversation_segment_id": "c05_pauline_photos_01",
       "moment_label": "milieu de matinée",
       "time_label": "10:06",
-      "transition_text": "Pauline trie ce qu’elle montre et ce qu’elle garde. Une photo circule, puis une autre.",
-      "availability_state": "Pauline est piquante, joueur, et parfaitement au courant de ce qu’elle cadre.",
+      "transition_text": "Pauline trie ce qu’elle montre et ce qu’elle garde. Une photo circule, puis une autre reste hors champ.",
+      "availability_state": "Pauline est piquante, joueuse, et parfaitement au courant de ce qu’elle cadre.",
       "function": "Faire de Pauline la redistributrice des images sans révéler tout ce qu’elle possède.",
       "messages": [
         {
@@ -31,14 +31,14 @@
         {
           "id": "msg_c05_pauline_002",
           "sender": "pauline",
-          "time_label": "10:07",
-          "text": "Enfin, une partie du tri."
+          "time_label": "10:06",
+          "text": "Enfin, une partie du tri. Il ne faut pas brusquer les archives 😇"
         },
         {
           "id": "msg_c05_pauline_003",
           "sender": "pauline",
           "time_label": "10:07",
-          "text": "Tiens. Celle-ci, tu peux l’ouvrir maintenant.",
+          "text": "Celle-ci est officiellement inoffensive. Donc évidemment, elle ne l’est pas complètement.",
           "content_id": "photo_party_after_j5_placeholder",
           "content_behavior": "inline_preview"
         },
@@ -46,9 +46,7 @@
           "id": "msg_c05_pauline_004",
           "sender": "pauline",
           "time_label": "10:08",
-          "text": "Et celle-là, je la garde un peu pour plus tard.",
-          "content_id": "photo_pauline_soft_provocation_j5_placeholder",
-          "content_behavior": "inline_preview"
+          "text": "Le jeu, c’est de trouver le détail avant de prétendre que tu ne l’as pas vu 🙂"
         }
       ],
       "choices": [
@@ -62,6 +60,20 @@
           "sets_flags": [
             "photo_party_after_j5_received",
             "proof_social_j5"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c05_pauline_fast_001",
+              "sender": "pauline",
+              "time_label": "10:09",
+              "text": "Regard rapide. Très innocent. Très crédible."
+            },
+            {
+              "id": "msg_c05_pauline_fast_002",
+              "sender": "pauline",
+              "time_label": "10:09",
+              "text": "Je te mets 6/10 en mensonge visuel 🙃"
+            }
           ]
         },
         {
@@ -77,6 +89,20 @@
             "photo_party_after_j5_received",
             "proof_social_j5",
             "party_photo_detail_seen_j5"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c05_pauline_zoom_001",
+              "sender": "pauline",
+              "time_label": "10:09",
+              "text": "Voilà."
+            },
+            {
+              "id": "msg_c05_pauline_zoom_002",
+              "sender": "pauline",
+              "time_label": "10:09",
+              "text": "C’est toujours là que les gens deviennent intéressants : quand ils zooment en faisant semblant de respirer normalement 😇"
+            }
           ]
         },
         {
@@ -92,6 +118,28 @@
             "proof_social_j5",
             "pauline_kept_more_photos_j5",
             "j5_more_images_exist"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c05_pauline_more_001",
+              "sender": "pauline",
+              "time_label": "10:09",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_c05_pauline_more_002",
+              "sender": "pauline",
+              "time_label": "10:10",
+              "text": "Mais je ne vais pas tout envoyer le même jour. Ça ferait vulgaire 😅"
+            },
+            {
+              "id": "msg_c05_pauline_more_003",
+              "sender": "pauline",
+              "time_label": "10:10",
+              "text": "Celle-là, par exemple, je pourrais presque la garder pour moi.",
+              "content_id": "photo_pauline_soft_provocation_j5_placeholder",
+              "content_behavior": "inline_preview"
+            }
           ]
         },
         {
@@ -105,6 +153,20 @@
           "sets_flags": [
             "photo_party_after_j5_received",
             "proof_social_j5"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c05_pauline_humor_001",
+              "sender": "pauline",
+              "time_label": "10:09",
+              "text": "Humour défensif détecté."
+            },
+            {
+              "id": "msg_c05_pauline_humor_002",
+              "sender": "pauline",
+              "time_label": "10:09",
+              "text": "Je respecte. C’est une stratégie très commune chez les gens pris sur une photo 🙂"
+            }
           ]
         }
       ]
