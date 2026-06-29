@@ -26,13 +26,31 @@
           "id": "msg_c05_raphaelle_001",
           "sender": "raphaelle",
           "time_label": "19:14",
-          "text": "Je peux t’écouter."
+          "text": "Tu as l’air fatigué."
         },
         {
           "id": "msg_c05_raphaelle_002",
           "sender": "raphaelle",
+          "time_label": "19:14",
+          "text": "Pas juste physiquement."
+        },
+        {
+          "id": "msg_c05_raphaelle_003",
+          "sender": "raphaelle",
+          "time_label": "19:15",
+          "text": "Je peux t’écouter."
+        },
+        {
+          "id": "msg_c05_raphaelle_004",
+          "sender": "raphaelle",
           "time_label": "19:15",
           "text": "Mais pas si tu viens chercher ici le courage que tu refuses d’avoir chez toi."
+        },
+        {
+          "id": "msg_c05_raphaelle_005",
+          "sender": "raphaelle",
+          "time_label": "19:16",
+          "text": "Je préfère être un endroit clair qu’un endroit pratique 🙂"
         }
       ],
       "choices": [
@@ -46,6 +64,20 @@
           },
           "sets_flags": [
             "raphaelle_boundary_j5"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c05_raphaelle_clear_001",
+              "sender": "raphaelle",
+              "time_label": "19:17",
+              "text": "C’est déjà mieux que de le maquiller."
+            },
+            {
+              "id": "msg_c05_raphaelle_clear_002",
+              "sender": "raphaelle",
+              "time_label": "19:17",
+              "text": "Après, reconnaître le flou ne suffit pas. Il faudra choisir ce que tu fais avec."
+            }
           ]
         },
         {
@@ -59,6 +91,20 @@
           },
           "sets_flags": [
             "raphaelle_boundary_j5"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c05_raphaelle_refuge_001",
+              "sender": "raphaelle",
+              "time_label": "19:17",
+              "text": "Je comprends l’envie."
+            },
+            {
+              "id": "msg_c05_raphaelle_refuge_002",
+              "sender": "raphaelle",
+              "time_label": "19:17",
+              "text": "Mais un refuge, ça ne doit pas devenir une cachette. Pas pour moi. Pas pour toi non plus."
+            }
           ]
         },
         {
@@ -71,6 +117,20 @@
           },
           "sets_flags": [
             "raphaelle_boundary_j5"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c05_raphaelle_lie_001",
+              "sender": "raphaelle",
+              "time_label": "19:17",
+              "text": "Je vais faire semblant de ne pas entendre la partie la moins honnête."
+            },
+            {
+              "id": "msg_c05_raphaelle_lie_002",
+              "sender": "raphaelle",
+              "time_label": "19:18",
+              "text": "Une fois. Pas deux."
+            }
           ]
         },
         {
@@ -84,6 +144,20 @@
           "sets_flags": [
             "raphaelle_boundary_j5",
             "truth_seed_marie_j5"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c05_raphaelle_marie_001",
+              "sender": "raphaelle",
+              "time_label": "19:17",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_c05_raphaelle_marie_002",
+              "sender": "raphaelle",
+              "time_label": "19:17",
+              "text": "Ce n’est pas forcément la conversation la plus agréable. Mais c’est probablement la plus propre."
+            }
           ]
         }
       ]
