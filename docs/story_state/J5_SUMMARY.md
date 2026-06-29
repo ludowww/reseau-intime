@@ -150,22 +150,24 @@ Risque installé : si Player promet trop, la route Sandra gagne en intensité ma
 
 ### Raphaëlle
 
-Raphaëlle sert de contrepoint clair après le chaos social.
+Raphaëlle n’est plus seulement une voix morale extérieure. Elle prolonge son fil J2-J3 : badge, dossier, fatigue remarquée, capacité à voir quand Player est présent physiquement mais dispersé intérieurement.
 
-Elle remarque que Player est fatigué, pas seulement physiquement. Elle peut écouter, mais refuse de devenir une cachette.
+En J5, elle revient par un détail concret de travail : les notes de Player sur le dossier Camille. Elle ne connaît pas la soirée et ne prétend pas la commenter. Elle voit plutôt ses effets indirects : distraction, flou, besoin de déposer quelque chose ailleurs.
 
 État J5 :
 
 ```text
-clarté
-limite adulte
+continuité travail / dossier
+clarté adulte
+observation concrète de Player
+limite nette
 refus du refuge flou
 attirance conditionnée à la vérité
 ```
 
-Elle ne doit pas devenir romantique trop vite. Sa force est d’être un endroit clair, pas pratique.
+Elle ne doit pas devenir romantique trop vite. Sa force est d’être une présence réelle, pas une cachette pratique. Elle peut tenir une porte ouverte, mais refuse de fermer les volets.
 
-Risque installé : Player peut chercher chez elle le courage ou le refuge qu’il refuse d’avoir avec Marie, mais Raphaëlle pose une limite nette.
+Risque installé : Player peut chercher chez elle le courage ou le refuge qu’il refuse d’avoir avec Marie, mais Raphaëlle pose une limite nette sans être déconnectée du quotidien.
 
 ## Contenus visuels J5
 
@@ -195,6 +197,7 @@ photo_mathilde_after_party_j5_received
 sandra_later_acknowledged_j5
 sandra_almost_sent_photo_j5
 raphaelle_boundary_j5
+raphaelle_saw_work_slip_j5
 pauline_cheating_proof_seed_j5
 j5_more_images_exist
 ```
@@ -207,7 +210,7 @@ j5_more_images_exist
 - Nico existe comme miroir social autour de Marie.
 - Mathilde transforme la photo domestique en question morale.
 - Sandra transforme le mauvais timing en blessure douce.
-- Raphaëlle pose une limite claire au rôle de refuge.
+- Raphaëlle n’est plus seulement un contrepoint abstrait : elle devient une présence concrète qui voit les effets du flou dans le quotidien.
 - Les photos deviennent des objets narratifs actifs.
 ```
 
