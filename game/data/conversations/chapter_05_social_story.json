@@ -1,0 +1,101 @@
+{
+  "id": "chapter_05_social_story",
+  "chapter": 5,
+  "day": 5,
+  "title": "Jour 5 — Story Nico / Marie",
+  "app": "social",
+  "thread": {
+    "id": "social_feed_after_party",
+    "type": "social_feed",
+    "participants": [
+      "ludo",
+      "marie",
+      "mathilde",
+      "pauline",
+      "nico"
+    ],
+    "display_name": "Réseau social"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c05_social_story_01",
+      "moment_label": "réseau social",
+      "time_label": "11:18",
+      "transition_text": "Nico revient par la story. Il ne menace pas frontalement : il montre juste que Marie était visible pour d’autres.",
+      "availability_state": "Le réseau social sert de mémoire publique au lendemain de la soirée.",
+      "function": "Faire revenir Nico comme miroir social et déplacer la jalousie sans le caricaturer.",
+      "social_items": [
+        {
+          "id": "story_c05_nico_001",
+          "type": "story",
+          "author": "nico",
+          "time_label": "11:18",
+          "text": "Hier c’était mieux en vrai que sur la photo.",
+          "content_id": "story_marie_nico_j5_placeholder",
+          "tagged": [
+            "marie"
+          ]
+        },
+        {
+          "id": "comment_c05_pauline_001",
+          "type": "comment",
+          "author": "pauline",
+          "time_label": "11:19",
+          "target_id": "story_c05_nico_001",
+          "text": "Certaines choses regardent bien la caméra."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c05_social_open",
+          "text": "Ouvrir la story de Nico.",
+          "tone": "watch",
+          "effects": {
+            "ludo_jealousy": 1,
+            "nico_surveillance_score": 1
+          },
+          "sets_flags": [
+            "story_marie_nico_j5_seen",
+            "nico_reacted_to_marie_story_j5"
+          ]
+        },
+        {
+          "id": "choice_c05_social_react",
+          "text": "Réagir sans en faire une affaire.",
+          "tone": "controlled",
+          "effects": {
+            "social_pressure": 1,
+            "lie_score": 1
+          },
+          "sets_flags": [
+            "story_marie_nico_j5_seen"
+          ]
+        },
+        {
+          "id": "choice_c05_social_recenter",
+          "text": "Revenir vers Marie au lieu d’accuser Nico.",
+          "tone": "couple_return",
+          "effects": {
+            "marie.trust": 1,
+            "ludo_jealousy": -1
+          },
+          "sets_flags": [
+            "story_marie_nico_j5_seen",
+            "truth_seed_marie_j5"
+          ]
+        },
+        {
+          "id": "choice_c05_social_ignore",
+          "text": "Refermer le réseau social.",
+          "tone": "avoid_social_memory",
+          "effects": {},
+          "sets_flags": [
+            "story_marie_nico_j5_seen",
+            "ignored_social_story_j5"
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_notes": "Nico revient via la story comme miroir social du lendemain."
+}

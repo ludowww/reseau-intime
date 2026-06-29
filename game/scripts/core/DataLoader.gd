@@ -6,11 +6,13 @@ const CHAPTER_INDEX_PATHS := [
 	"res://data/conversations/chapter_02_index.json",
 	"res://data/conversations/chapter_03_index.json",
 	"res://data/conversations/chapter_04_index.json",
+	"res://data/conversations/chapter_05_index.json",
 ]
 const VISUAL_CONTENT_PATHS := [
 	"res://data/visual_content/placeholders.json",
 	"res://data/visual_content/chapter_03_placeholders.json",
 	"res://data/visual_content/chapter_04_proofs.json",
+	"res://data/visual_content/chapter_05_proofs.json",
 ]
 
 var initial_state: Dictionary = {}

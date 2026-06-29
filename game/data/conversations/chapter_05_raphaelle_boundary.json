@@ -1,0 +1,93 @@
+{
+  "id": "chapter_05_raphaelle_boundary",
+  "chapter": 5,
+  "day": 5,
+  "title": "Jour 5 — Raphaëlle pose la limite",
+  "app": "messages",
+  "thread": {
+    "id": "thread_raphaelle_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "raphaelle"
+    ],
+    "display_name": "Raphaëlle"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c05_raphaelle_boundary_01",
+      "moment_label": "soir",
+      "time_label": "19:14",
+      "transition_text": "Raphaëlle remet du calme là où le jour a laissé du flou.",
+      "availability_state": "Elle écoute, mais refuse d’être une cachette.",
+      "function": "Faire apparaître Raphaëlle comme contrepoint adulte et clair après le chaos social.",
+      "messages": [
+        {
+          "id": "msg_c05_raphaelle_001",
+          "sender": "raphaelle",
+          "time_label": "19:14",
+          "text": "Je peux t’écouter."
+        },
+        {
+          "id": "msg_c05_raphaelle_002",
+          "sender": "raphaelle",
+          "time_label": "19:15",
+          "text": "Mais pas si tu viens chercher ici le courage que tu refuses d’avoir chez toi."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c05_raphaelle_clear",
+          "text": "Reconnaître le flou.",
+          "tone": "clear",
+          "effects": {
+            "raphaelle.clarity": 2,
+            "lie_score": -1
+          },
+          "sets_flags": [
+            "raphaelle_boundary_j5"
+          ]
+        },
+        {
+          "id": "choice_c05_raphaelle_refuge",
+          "text": "Chercher un refuge.",
+          "tone": "vulnerable",
+          "effects": {
+            "raphaelle.attachment": 1,
+            "raphaelle_clarity_score": 2,
+            "lie_score": 1
+          },
+          "sets_flags": [
+            "raphaelle_boundary_j5"
+          ]
+        },
+        {
+          "id": "choice_c05_raphaelle_lie",
+          "text": "Mentir encore.",
+          "tone": "avoidant",
+          "effects": {
+            "raphaelle.clarity": -1,
+            "lie_score": 1
+          },
+          "sets_flags": [
+            "raphaelle_boundary_j5"
+          ]
+        },
+        {
+          "id": "choice_c05_raphaelle_marie",
+          "text": "Dire qu’il doit parler à Marie.",
+          "tone": "truth_return",
+          "effects": {
+            "marie.trust": 1,
+            "raphaelle.clarity": 1
+          },
+          "sets_flags": [
+            "raphaelle_boundary_j5",
+            "truth_seed_marie_j5"
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_notes": "Raphaëlle pose une limite calme et adulte."
+}

@@ -1,0 +1,114 @@
+{
+  "id": "chapter_05_pauline_photos",
+  "chapter": 5,
+  "day": 5,
+  "title": "Jour 5 — Pauline redistribue les photos",
+  "app": "messages",
+  "thread": {
+    "id": "thread_pauline_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "pauline"
+    ],
+    "display_name": "Pauline"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c05_pauline_photos_01",
+      "moment_label": "milieu de matinée",
+      "time_label": "10:06",
+      "transition_text": "Pauline trie ce qu’elle montre et ce qu’elle garde. Une photo circule, puis une autre.",
+      "availability_state": "Pauline est piquante, joueur, et parfaitement au courant de ce qu’elle cadre.",
+      "function": "Faire de Pauline la redistributrice des images sans révéler tout ce qu’elle possède.",
+      "messages": [
+        {
+          "id": "msg_c05_pauline_001",
+          "sender": "pauline",
+          "time_label": "10:06",
+          "text": "J’ai fait le tri."
+        },
+        {
+          "id": "msg_c05_pauline_002",
+          "sender": "pauline",
+          "time_label": "10:07",
+          "text": "Enfin, une partie du tri."
+        },
+        {
+          "id": "msg_c05_pauline_003",
+          "sender": "pauline",
+          "time_label": "10:07",
+          "text": "Tiens. Celle-ci, tu peux l’ouvrir maintenant.",
+          "content_id": "photo_party_after_j5_placeholder",
+          "content_behavior": "inline_preview"
+        },
+        {
+          "id": "msg_c05_pauline_004",
+          "sender": "pauline",
+          "time_label": "10:08",
+          "text": "Et celle-là, je la garde un peu pour plus tard.",
+          "content_id": "photo_pauline_soft_provocation_j5_placeholder",
+          "content_behavior": "inline_preview"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c05_pauline_fast",
+          "text": "Regarder vite.",
+          "tone": "curious",
+          "effects": {
+            "pauline.interest": 1
+          },
+          "sets_flags": [
+            "photo_party_after_j5_received",
+            "proof_social_j5"
+          ]
+        },
+        {
+          "id": "choice_c05_pauline_zoom",
+          "text": "Zoomer pour chercher le détail.",
+          "tone": "investigate",
+          "effects": {
+            "social_pressure": 1,
+            "pauline.interest": 1,
+            "ludo_jealousy": 1
+          },
+          "sets_flags": [
+            "photo_party_after_j5_received",
+            "proof_social_j5",
+            "party_photo_detail_seen_j5"
+          ]
+        },
+        {
+          "id": "choice_c05_pauline_more",
+          "text": "Demander si elle en a gardé d’autres.",
+          "tone": "probe",
+          "effects": {
+            "pauline.control": 1,
+            "pauline.interest": 1
+          },
+          "sets_flags": [
+            "photo_party_after_j5_received",
+            "proof_social_j5",
+            "pauline_kept_more_photos_j5",
+            "j5_more_images_exist"
+          ]
+        },
+        {
+          "id": "choice_c05_pauline_humor",
+          "text": "Répondre avec humour.",
+          "tone": "mask_interest",
+          "effects": {
+            "lie_score": 1,
+            "pauline.interest": 1
+          },
+          "sets_flags": [
+            "photo_party_after_j5_received",
+            "proof_social_j5"
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_notes": "Pauline distribue les photos sans révéler tout ce qu’elle garde."
+}

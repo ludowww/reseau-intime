@@ -1,0 +1,106 @@
+{
+  "id": "chapter_05_mathilde_followup",
+  "chapter": 5,
+  "day": 5,
+  "title": "Jour 5 — Mathilde relance la trace",
+  "app": "messages",
+  "thread": {
+    "id": "thread_mathilde_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "mathilde"
+    ],
+    "display_name": "Mathilde"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c05_mathilde_followup_01",
+      "moment_label": "après-midi",
+      "time_label": "14:22",
+      "transition_text": "La photo J3/J4 revient comme un secret actif. Mathilde veut savoir si elle a encore une place dans la galerie mentale de Player.",
+      "availability_state": "Mathilde reste taquine, plus prudente que la veille, et attentive à la limite de Marie.",
+      "function": "Faire revenir la question de la photo gardée ou supprimée sans rendre Mathilde frontale.",
+      "messages": [
+        {
+          "id": "msg_c05_mathilde_001",
+          "sender": "mathilde",
+          "time_label": "14:22",
+          "text": "J’ai repensé à la photo de l’autre jour."
+        },
+        {
+          "id": "msg_c05_mathilde_002",
+          "sender": "mathilde",
+          "time_label": "14:23",
+          "text": "Tu l’as gardée, toi ?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c05_mathilde_deleted",
+          "text": "Dire qu’elle a disparu.",
+          "tone": "careful",
+          "effects": {
+            "mathilde.loyalty": 1,
+            "mathilde.desire": -1
+          },
+          "sets_flags": [
+            "mathilde_photo_deleted_claim_j5",
+            "mathilde_photo_question_j5"
+          ]
+        },
+        {
+          "id": "choice_c05_mathilde_kept",
+          "text": "Avouer qu’elle est encore là.",
+          "tone": "confessional",
+          "effects": {
+            "mathilde.desire": 2,
+            "mathilde.loyalty": -1,
+            "lie_score": 1
+          },
+          "sets_flags": [
+            "mathilde_photo_kept_admitted_j5",
+            "mathilde_photo_question_j5"
+          ]
+        },
+        {
+          "id": "choice_c05_mathilde_limit",
+          "text": "Poser une limite sans la repousser.",
+          "tone": "boundary",
+          "effects": {
+            "mathilde.loyalty": 1,
+            "marie.trust": 1
+          },
+          "sets_flags": [
+            "mathilde_photo_question_j5"
+          ]
+        },
+        {
+          "id": "choice_c05_mathilde_send",
+          "text": "Lui demander si elle a encore quelque chose à montrer.",
+          "tone": "soft_probe",
+          "effects": {
+            "mathilde.desire": 1,
+            "mathilde.loyalty": -1,
+            "lie_score": 1
+          },
+          "sets_flags": [
+            "mathilde_photo_question_j5",
+            "photo_mathilde_after_party_j5_received"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c05_mathilde_003",
+              "sender": "mathilde",
+              "time_label": "14:24",
+              "text": "J’ai retrouvé ça. Je devrais sans doute pas te l’envoyer.",
+              "content_id": "photo_mathilde_after_party_j5_placeholder",
+              "content_behavior": "inline_preview"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_notes": "Mathilde relance la trace gardée ou supprimée sans devenir frontale."
+}

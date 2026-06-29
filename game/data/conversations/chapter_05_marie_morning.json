@@ -1,0 +1,107 @@
+{
+  "id": "chapter_05_marie_morning",
+  "chapter": 5,
+  "day": 5,
+  "title": "Jour 5 — Marie au réveil",
+  "app": "messages",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "marie"
+    ],
+    "display_name": "Marie"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c05_marie_morning_01",
+      "moment_label": "matin",
+      "time_label": "08:12",
+      "transition_text": "Marie revient sur la soirée sans la réduire à un reproche. Le téléphone, lui, n’a pas quitté la pièce dans sa tête.",
+      "availability_state": "Marie est fatiguée mais lucide. Elle veut savoir si Player était vraiment là ou déjà ailleurs.",
+      "function": "Faire revenir Marie sur la soirée et sur l’absence de Player sans verrouiller la route.",
+      "trigger": {
+        "type": "notification",
+        "title": "Marie",
+        "body": "Tu étais avec moi hier ?"
+      },
+      "messages": [
+        {
+          "id": "msg_c05_marie_001",
+          "sender": "marie",
+          "time_label": "08:12",
+          "text": "Tu t’es réveillé avec la soirée dans la tête, ou c’est moi ?"
+        },
+        {
+          "id": "msg_c05_marie_002",
+          "sender": "marie",
+          "time_label": "08:13",
+          "text": "J’ai l’impression que tu étais là sans être là."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c05_marie_truth",
+          "text": "Reconnaître que j’étais ailleurs.",
+          "tone": "truth_seed",
+          "effects": {
+            "marie.trust": 1,
+            "lie_score": -1
+          },
+          "sets_flags": [
+            "truth_seed_marie_j5"
+          ]
+        },
+        {
+          "id": "choice_c05_marie_minimize",
+          "text": "Dire que c’était juste la fatigue.",
+          "tone": "minimize",
+          "effects": {
+            "lie_score": 1,
+            "marie_attention_score": 1
+          },
+          "sets_flags": [
+            "marie_morning_minimized_j5"
+          ]
+        },
+        {
+          "id": "choice_c05_marie_return",
+          "text": "Revenir vers elle.",
+          "tone": "reconnect",
+          "effects": {
+            "marie.trust": 1,
+            "marie_attention_score": 1
+          },
+          "sets_flags": [
+            "photo_marie_after_party_j5_received"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c05_marie_003",
+              "sender": "marie",
+              "time_label": "08:14",
+              "text": "J’ai aussi gardé ça pour ce matin.",
+              "content_id": "photo_marie_after_party_j5_placeholder",
+              "content_behavior": "inline_preview"
+            }
+          ]
+        },
+        {
+          "id": "choice_c05_marie_jealous_nico",
+          "text": "Être jaloux de Nico.",
+          "tone": "jealous",
+          "effects": {
+            "ludo_jealousy": 2,
+            "nico_surveillance_score": 1,
+            "marie_attention_score": 1
+          },
+          "sets_flags": [
+            "marie_jealous_of_nico_j5"
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_notes": "Marie au réveil : fatiguée, lucide, sans confrontation totale."
+}

@@ -1,0 +1,99 @@
+{
+  "id": "chapter_05_sandra_later",
+  "chapter": 5,
+  "day": 5,
+  "title": "Jour 5 — Sandra plus tard",
+  "app": "messages",
+  "thread": {
+    "id": "thread_sandra_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "sandra"
+    ],
+    "display_name": "Sandra"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c05_sandra_later_01",
+      "moment_label": "fin d’après-midi",
+      "time_label": "17:05",
+      "transition_text": "Sandra comprend qu’elle arrive dans une vie déjà occupée. Elle ne force pas la place.",
+      "availability_state": "Le ton reste doux, retenu et un peu blessé.",
+      "function": "Faire ressentir le coût émotionnel du mauvais timing sans rendre Sandra disponible à l’excès.",
+      "messages": [
+        {
+          "id": "msg_c05_sandra_001",
+          "sender": "sandra",
+          "time_label": "17:05",
+          "text": "J’avais commencé un message."
+        },
+        {
+          "id": "msg_c05_sandra_002",
+          "sender": "sandra",
+          "time_label": "17:06",
+          "text": "Puis je me suis dit qu’il valait mieux attendre plus tard."
+        },
+        {
+          "id": "msg_c05_sandra_003",
+          "sender": "sandra",
+          "time_label": "17:06",
+          "text": "J’avais une photo à t’envoyer. Je l’ai supprimée avant d’appuyer."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c05_sandra_rassure",
+          "text": "La rassurer sans forcer.",
+          "tone": "gentle",
+          "effects": {
+            "sandra.attachment": 1,
+            "sandra.exposure": -1
+          },
+          "sets_flags": [
+            "sandra_later_acknowledged_j5",
+            "sandra_almost_sent_photo_j5"
+          ]
+        },
+        {
+          "id": "choice_c05_sandra_tell_count",
+          "text": "Lui dire qu’elle compte.",
+          "tone": "open",
+          "effects": {
+            "sandra.attachment": 2,
+            "sandra_priority_score": 1
+          },
+          "sets_flags": [
+            "sandra_later_acknowledged_j5",
+            "sandra_almost_sent_photo_j5"
+          ]
+        },
+        {
+          "id": "choice_c05_sandra_admit_bad_timing",
+          "text": "Reconnaître que le timing était mauvais.",
+          "tone": "honest",
+          "effects": {
+            "lie_score": 1,
+            "sandra.exposure": 1
+          },
+          "sets_flags": [
+            "sandra_later_acknowledged_j5",
+            "sandra_almost_sent_photo_j5"
+          ]
+        },
+        {
+          "id": "choice_c05_sandra_wait",
+          "text": "Lui dire qu’il vaut mieux parler plus tard.",
+          "tone": "delayed",
+          "effects": {
+            "sandra.attachment": 1
+          },
+          "sets_flags": [
+            "sandra_later_acknowledged_j5"
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_notes": "Sandra reste douce et retenue ; la photo peut rester textuelle/supprimée."
+}

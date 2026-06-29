@@ -1,0 +1,107 @@
+{
+  "id": "chapter_05_pauline_last_photo",
+  "chapter": 5,
+  "day": 5,
+  "title": "Jour 5 — Pauline laisse une dernière photo",
+  "app": "messages",
+  "thread": {
+    "id": "thread_pauline_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "pauline"
+    ],
+    "display_name": "Pauline"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c05_pauline_last_photo_01",
+      "moment_label": "fin de soirée",
+      "time_label": "21:07",
+      "transition_text": "Pauline laisse entendre qu’il reste encore des images hors champ.",
+      "availability_state": "La scène reste courte : un crochet pour J6+, pas une deuxième grande scène Pauline.",
+      "function": "Semez qu’il existe encore des photos et que Pauline en garde peut-être une preuve pour elle.",
+      "messages": [
+        {
+          "id": "msg_c05_pauline_last_001",
+          "sender": "pauline",
+          "time_label": "21:07",
+          "text": "J’ai gardé une dernière photo."
+        },
+        {
+          "id": "msg_c05_pauline_last_002",
+          "sender": "pauline",
+          "time_label": "21:08",
+          "text": "Enfin... pas la plus gentille."
+        },
+        {
+          "id": "msg_c05_pauline_last_003",
+          "sender": "pauline",
+          "time_label": "21:08",
+          "text": "Tu sais déjà que j’en garde toujours une de trop.",
+          "content_id": "pauline_cheating_proof_seed_j5_placeholder",
+          "content_behavior": "inline_preview"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c05_pauline_last_ignore",
+          "text": "Ne pas relever.",
+          "tone": "cool",
+          "effects": {
+            "pauline.control": 1,
+            "pauline_risk_score": 1
+          },
+          "sets_flags": [
+            "pauline_kept_more_photos_j5",
+            "pauline_cheating_proof_seed_j5",
+            "j5_more_images_exist"
+          ]
+        },
+        {
+          "id": "choice_c05_pauline_last_hint",
+          "text": "Laisser entendre qu’on a compris.",
+          "tone": "measured",
+          "effects": {
+            "pauline.interest": 2,
+            "pauline.control": -1
+          },
+          "sets_flags": [
+            "pauline_kept_more_photos_j5",
+            "pauline_cheating_proof_seed_j5",
+            "j5_more_images_exist"
+          ]
+        },
+        {
+          "id": "choice_c05_pauline_last_ask",
+          "text": "Demander si c’est tout.",
+          "tone": "probe",
+          "effects": {
+            "pauline_risk_score": 1,
+            "lie_score": 1
+          },
+          "sets_flags": [
+            "pauline_kept_more_photos_j5",
+            "pauline_cheating_proof_seed_j5",
+            "j5_more_images_exist"
+          ]
+        },
+        {
+          "id": "choice_c05_pauline_last_shift",
+          "text": "Changer de sujet sans lui donner la main.",
+          "tone": "deflect",
+          "effects": {
+            "pauline.control": 1,
+            "lie_score": 1
+          },
+          "sets_flags": [
+            "pauline_kept_more_photos_j5",
+            "pauline_cheating_proof_seed_j5",
+            "j5_more_images_exist"
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_notes": "Pauline seme un crochet J6+ ; scène courte."
+}

@@ -1,0 +1,171 @@
+{
+  "id": "chapter_05_index",
+  "chapter": 5,
+  "day": 5,
+  "title": "Jour 5 — Lendemain, photos et premières preuves faibles",
+  "description": "Le lendemain de J4 : les photos et les stories reviennent, les détails changent de sens, les routes restent ouvertes mais rien n’est encore consommé.",
+  "design_goal": "Faire sentir que la soirée est finie mais que les images continuent de circuler, sans verrouiller les routes.",
+  "moment_flow": [
+    {
+      "moment_label": "matin",
+      "time_label": "08:12",
+      "transition_text": "Marie revient sur la soirée avant même que les photos aient fini de parler.",
+      "conversation_ids": [
+        "chapter_05_marie_morning"
+      ]
+    },
+    {
+      "moment_label": "milieu de matinée",
+      "time_label": "10:06",
+      "transition_text": "Pauline trie les images, en envoie une partie et en garde d’autres pour plus tard.",
+      "conversation_ids": [
+        "chapter_05_pauline_photos"
+      ]
+    },
+    {
+      "moment_label": "réseau social",
+      "time_label": "11:18",
+      "transition_text": "Nico remet Marie en circulation sur la story. Le regard social reprend la place du bruit de la soirée.",
+      "conversation_ids": [
+        "chapter_05_social_story"
+      ]
+    },
+    {
+      "moment_label": "après-midi",
+      "time_label": "14:22",
+      "transition_text": "Mathilde relance la photo gardée ou supprimée. Le secret reste petit, mais il est vivant.",
+      "conversation_ids": [
+        "chapter_05_mathilde_followup"
+      ]
+    },
+    {
+      "moment_label": "fin d’après-midi",
+      "time_label": "17:05",
+      "transition_text": "Sandra comprend qu’elle arrive après le mauvais timing, pas après une vraie place.",
+      "conversation_ids": [
+        "chapter_05_sandra_later"
+      ]
+    },
+    {
+      "moment_label": "soir",
+      "time_label": "19:14",
+      "transition_text": "Raphaëlle remet de la clarté là où le reste du jour a laissé du flou.",
+      "conversation_ids": [
+        "chapter_05_raphaelle_boundary"
+      ]
+    },
+    {
+      "moment_label": "fin de soirée",
+      "time_label": "21:07",
+      "transition_text": "Pauline laisse entendre qu’il reste encore des images qu’elle n’a pas montré.",
+      "conversation_ids": [
+        "chapter_05_pauline_last_photo"
+      ]
+    }
+  ],
+  "conversation_files": [
+    "res://data/conversations/chapter_05_marie_morning.json",
+    "res://data/conversations/chapter_05_pauline_photos.json",
+    "res://data/conversations/chapter_05_social_story.json",
+    "res://data/conversations/chapter_05_mathilde_followup.json",
+    "res://data/conversations/chapter_05_sandra_later.json",
+    "res://data/conversations/chapter_05_raphaelle_boundary.json",
+    "res://data/conversations/chapter_05_pauline_last_photo.json"
+  ],
+  "proof_content_files": [
+    "res://data/visual_content/chapter_05_proofs.json"
+  ],
+  "required_reveals": [
+    "La soirée J4 est finie mais ses photos continuent de parler.",
+    "Pauline redistribue une partie des images et en garde d’autres.",
+    "Nico revient comme miroir social autour de Marie.",
+    "Mathilde relance la question de la trace gardée ou supprimée.",
+    "Sandra donne le sentiment d’arriver trop tard ou de ne pas avoir de place officielle.",
+    "Raphaëlle refuse d’être une cachette.",
+    "Pauline laisse filtrer qu’elle a aussi des preuves hors champ."
+  ],
+  "routes_available": [
+    "marie",
+    "pauline",
+    "nico_marie",
+    "mathilde",
+    "sandra",
+    "raphaelle"
+  ],
+  "routes_locked_to_seed_only": [],
+  "debug_expected_outcomes": [
+    "J5 apparaît après J4 sans nouveau système UI ni refactor du loader.",
+    "Les routes restent ouvertes ; aucune bascule finale n’est consommée.",
+    "Les photos de J5 changent de sens quand on les regarde mieux.",
+    "Aucun ancien contenu legacy ne s’active par erreur."
+  ],
+  "conversation_availability": {
+    "initial_conversation_ids": [
+      "chapter_05_marie_morning"
+    ],
+    "locked_conversation_ids": [
+      "chapter_05_pauline_photos",
+      "chapter_05_social_story",
+      "chapter_05_mathilde_followup",
+      "chapter_05_sandra_later",
+      "chapter_05_raphaelle_boundary",
+      "chapter_05_pauline_last_photo"
+    ],
+    "unlocks": {
+      "chapter_05_pauline_photos": {
+        "after_conversation_completed": "chapter_05_marie_morning",
+        "time_label": "10:06",
+        "pending": true,
+        "notification": {
+          "title": "Pauline",
+          "body": "J’ai fait le tri. Enfin, une partie."
+        }
+      },
+      "chapter_05_social_story": {
+        "after_conversation_completed": "chapter_05_pauline_photos",
+        "time_label": "11:18",
+        "pending": true,
+        "notification": {
+          "title": "Réseau social",
+          "body": "Nico a posté une story."
+        }
+      },
+      "chapter_05_mathilde_followup": {
+        "after_conversation_completed": "chapter_05_social_story",
+        "time_label": "14:22",
+        "pending": true,
+        "notification": {
+          "title": "Mathilde",
+          "body": "Tu as gardé la photo ?"
+        }
+      },
+      "chapter_05_sandra_later": {
+        "after_conversation_completed": "chapter_05_mathilde_followup",
+        "time_label": "17:05",
+        "pending": true,
+        "notification": {
+          "title": "Sandra",
+          "body": "Je te parle plus tard."
+        }
+      },
+      "chapter_05_raphaelle_boundary": {
+        "after_conversation_completed": "chapter_05_sandra_later",
+        "time_label": "19:14",
+        "pending": true,
+        "notification": {
+          "title": "Raphaëlle",
+          "body": "Je peux t’écouter, mais pas te cacher."
+        }
+      },
+      "chapter_05_pauline_last_photo": {
+        "after_conversation_completed": "chapter_05_raphaelle_boundary",
+        "time_label": "21:07",
+        "pending": true,
+        "notification": {
+          "title": "Pauline",
+          "body": "Il reste une image."
+        }
+      }
+    }
+  }
+}

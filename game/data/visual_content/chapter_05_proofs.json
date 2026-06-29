@@ -1,0 +1,163 @@
+{
+  "id": "chapter_05_proof_placeholders",
+  "version": 1,
+  "notes": "Placeholders neutres pour J5 : lendemain de soirée, redistribution des photos, story Nico/Marie, traces faibles et preuve Pauline hors champ.",
+  "items": [
+    {
+      "id": "photo_party_after_j5_placeholder",
+      "character": "pauline",
+      "tier": 2,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/photo_party_after_j5_placeholder.png",
+      "context": "Photo ou mini-lot de soirée envoyée par Pauline le lendemain. Elle paraît d’abord légère et drôle : canapé, verres, rires, lumière chaude. En regardant mieux, on remarque un détail plus inquiet selon la route : Player absorbé par son téléphone, Nico trop près de Marie, ou Pauline en train de cadrer quelque chose qu’elle ne dit pas.",
+      "tags": [
+        "pauline",
+        "party",
+        "after_party",
+        "photo",
+        "proof",
+        "weak_evidence"
+      ],
+      "is_proof": true,
+      "risk_level": 4,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": false,
+      "can_be_discovered_by": [
+        "marie",
+        "pauline",
+        "mathilde",
+        "nico"
+      ]
+    },
+    {
+      "id": "story_marie_nico_j5_placeholder",
+      "character": "nico",
+      "tier": 2,
+      "type": "story",
+      "source_app": "social",
+      "asset_path": "res://assets/placeholders/story_marie_nico_j5_placeholder.png",
+      "context": "Story ou photo où Marie reste visible à côté de Nico après la soirée. Rien n’est explicitement déplacé, mais le cadrage fait comprendre que Player n’était pas le seul à la regarder.",
+      "tags": [
+        "nico",
+        "marie",
+        "story",
+        "social",
+        "jealousy",
+        "mirror"
+      ],
+      "is_proof": false,
+      "risk_level": 3,
+      "can_delete": false,
+      "can_capture": true,
+      "can_set_as_wallpaper": false,
+      "can_be_discovered_by": [
+        "marie",
+        "nico",
+        "pauline"
+      ]
+    },
+    {
+      "id": "photo_mathilde_after_party_j5_placeholder",
+      "character": "mathilde",
+      "tier": 2,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/photo_mathilde_after_party_j5_placeholder.png",
+      "context": "Mathilde après la soirée, encore un peu froissée ou décoiffée, avec un cadrage plus assumé mais toujours défendable. L’image hésite entre provocation et regret.",
+      "tags": [
+        "mathilde",
+        "after_party",
+        "photo",
+        "teasing",
+        "forbidden",
+        "proof_seed"
+      ],
+      "is_proof": true,
+      "risk_level": 3,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": [
+        "marie",
+        "mathilde"
+      ]
+    },
+    {
+      "id": "photo_marie_after_party_j5_placeholder",
+      "character": "marie",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/photo_marie_after_party_j5_placeholder.png",
+      "context": "Marie au lendemain de la soirée, lumière du matin, fatigue visible mais présence forte. L’image est douce, intime et rappelle que le couple garde une sensualité réelle.",
+      "tags": [
+        "marie",
+        "after_party",
+        "morning",
+        "tender",
+        "couple"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": [
+        "marie"
+      ]
+    },
+    {
+      "id": "photo_pauline_soft_provocation_j5_placeholder",
+      "character": "pauline",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/photo_pauline_soft_provocation_j5_placeholder.png",
+      "context": "Pauline en pose de soirée contrôlée, sourire piquant et cadrage volontairement maîtrisé. L’image reste défendable, mais elle est adressée comme un test.",
+      "tags": [
+        "pauline",
+        "provocation",
+        "control",
+        "party",
+        "soft"
+      ],
+      "is_proof": false,
+      "risk_level": 2,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": false,
+      "can_be_discovered_by": [
+        "pauline",
+        "marie"
+      ]
+    },
+    {
+      "id": "pauline_cheating_proof_seed_j5_placeholder",
+      "character": "pauline",
+      "tier": 2,
+      "type": "capture",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/pauline_cheating_proof_seed_j5_placeholder.png",
+      "context": "Trace ambiguë de Pauline : un coin d’image, un message tronqué, ou un cadre qui laisse penser qu’elle cache elle aussi quelque chose. Ce n’est pas encore une révélation, juste un levier pour J6+.",
+      "tags": [
+        "pauline",
+        "secret",
+        "seed",
+        "proof",
+        "offscreen"
+      ],
+      "is_proof": true,
+      "risk_level": 4,
+      "can_delete": true,
+      "can_capture": false,
+      "can_set_as_wallpaper": false,
+      "can_be_discovered_by": [
+        "pauline",
+        "marie",
+        "nico"
+      ]
+    }
+  ]
+}
