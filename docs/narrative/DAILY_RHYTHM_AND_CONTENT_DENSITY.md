@@ -4,7 +4,7 @@
 
 Document transversal de cadrage.
 
-Objectif : définir la densité quotidienne cible pour éviter deux risques opposés :
+Objectif : définir une densité quotidienne souple pour éviter deux risques opposés :
 
 ```text
 trop peu de matière → jeu vide, galerie pauvre, relations froides ;
@@ -28,36 +28,65 @@ Une journée doit sembler vivante,
 mais elle doit rester lisible.
 ```
 
-Le jeu peut proposer plusieurs conversations et plusieurs photos par jour, mais chaque journée doit garder un pivot principal clair.
+Le volume de conversations n’est pas une règle stricte.
+
+Il dépend d’abord du besoin narratif.
+
+Une journée peut avoir plus ou moins de conversations selon :
+
+```text
+- le pivot du jour ;
+- les conséquences à montrer ;
+- les personnages actifs ;
+- les silences utiles ;
+- le besoin de respiration ;
+- la quantité de photos ou contenus visuels à faire vivre.
+```
 
 ## Nombre de conversations par jour
 
-Cible :
+Repère souple :
 
 ```text
-jusqu’à 4 ou 5 conversations par jour.
+une journée peut aller d’une journée très légère à une journée très dense.
 ```
 
-Ce volume est accepté comme plafond courant pour les journées riches.
-
-Mais toutes les journées ne doivent pas forcément atteindre ce maximum.
-
-Recommandation :
+Les valeurs suivantes sont des repères de production, pas des contraintes :
 
 ```text
+journée très légère : 1 conversation forte ou 1 conversation + notifications ;
 journée légère : 2 conversations ;
 journée normale : 3 conversations ;
 journée riche : 4 conversations ;
-journée très chargée : 5 conversations maximum.
+journée très chargée : 5 conversations ou plus si le récit le justifie.
+```
+
+Règle importante :
+
+```text
+Le nombre de conversations doit servir le scénario, pas l’inverse.
+```
+
+Il est acceptable d’avoir :
+
+```text
+- une journée courte si le silence est une conséquence ;
+- une journée dense si un événement social, une soirée ou une crise l’exige ;
+- une journée avec beaucoup de micro-échanges si cela donne une impression de vie ;
+- une journée avec peu d’échanges mais des photos fortes.
 ```
 
 ## Nombre de photos par jour
 
-Cible :
+Cible de production :
 
 ```text
-3 photos par jour minimum.
+3 photos par jour minimum, sauf choix narratif contraire.
 ```
+
+Cette cible sert à alimenter la galerie et à maintenir le côté vivant du jeu.
+
+Mais elle reste un garde-fou de production, pas une règle mathématique.
 
 Ces photos peuvent avoir des poids différents.
 
@@ -71,7 +100,7 @@ Répartition recommandée :
 - 1 photo à conséquence, preuve, défi ou récompense.
 ```
 
-Selon le jour, les trois photos peuvent venir de personnages différents ou d’une même route très active.
+Selon le jour, les photos peuvent venir de personnages différents ou d’une même route très active.
 
 Important :
 
@@ -131,8 +160,10 @@ Nico absent mais présent dans une photo sociale de Marie.
 Pour garder la lisibilité :
 
 ```text
-une journée = 1 pivot principal + 1 pivot secondaire maximum.
+une journée doit idéalement avoir un pivot principal clair.
 ```
+
+Elle peut aussi avoir un pivot secondaire si le rythme le justifie.
 
 Le reste peut être :
 
@@ -142,18 +173,25 @@ Le reste peut être :
 - photo légère ;
 - respiration ;
 - conséquence faible ;
-- silence signifiant.
+- silence signifiant ;
+- micro-échange vivant ;
+- notification ;
+- blague ou taquinerie.
 ```
 
 Si trois routes font toutes un pivot fort le même jour, la journée risque de devenir illisible.
 
+Mais une journée sociale ou de crise peut être plus dense, à condition que l’état final reste clair.
+
 ## Structure type d’une journée normale
+
+Exemple souple :
 
 ```text
 Conversation 1 — pivot principal.
 Conversation 2 — réaction ou contraste.
 Conversation 3 — texture / photo / préparation future.
-Photos — 3 minimum, hiérarchisées.
+Photos — environ 3, hiérarchisées.
 ```
 
 Exemple :
@@ -168,13 +206,15 @@ Photos : photo sociale J4/J5, selfie Pauline, photo légère ou souvenir Sandra/
 
 ## Structure type d’une journée riche
 
+Exemple souple :
+
 ```text
 Conversation 1 — pivot principal.
 Conversation 2 — pivot secondaire.
 Conversation 3 — conséquence d’une route.
 Conversation 4 — respiration ou contraste.
-Conversation 5 — notification / mini scène / cliff léger.
-Photos — 3 à 5, mais une seule photo pivot.
+Conversation 5+ — notifications / mini scènes / cliff léger si nécessaire.
+Photos — 3 à 5 ou plus selon scène sociale, mais une seule photo pivot si possible.
 ```
 
 ## Règles de respiration
@@ -197,27 +237,27 @@ But : laisser le joueur assimiler.
 
 ## Évolution de la densité J1-J10
 
-Proposition :
+Proposition indicative, non stricte :
 
 ```text
-J1 : 2 conversations, 3 photos possibles, centrage Marie/Sandra.
-J2 : 2-3 conversations, restaurant Sandra, photo commune.
-J3 : 3 conversations, Mathilde domestique, Marie présente.
-J4 : 4-5 conversations, soirée Pauline, photos sociales.
-J5 : 3-4 conversations, Marie + Pauline pivots.
-J6 : 3-4 conversations, acte Player + Mathilde/Marie.
-J7 : 3 conversations, conséquence ciblée selon choix.
-J8 : 3-4 conversations, Marie/Nico ou Raphaëlle selon route.
-J9 : 4 conversations, Mathilde nuit ou Pauline prix du silence.
-J10 : 3-4 conversations, règle du couple.
+J1 : plutôt léger, centrage Marie/Sandra.
+J2 : léger à normal, restaurant Sandra, photo commune.
+J3 : normal, Mathilde domestique, Marie présente.
+J4 : riche ou très riche, soirée Pauline, photos sociales.
+J5 : normal à riche, Marie + Pauline pivots.
+J6 : normal à riche, acte Player + Mathilde/Marie.
+J7 : variable selon conséquence du choix Player.
+J8 : variable, Marie/Nico ou Raphaëlle selon route.
+J9 : riche si Mathilde nuit ou Pauline prix du silence.
+J10 : normal à riche, règle du couple.
 ```
 
-## Photos minimum par jour — garde-fou
+## Photos minimum par jour — garde-fou souple
 
 Règle cible :
 
 ```text
-3 photos minimum par jour.
+3 photos par jour minimum, sauf si le récit justifie autre chose.
 ```
 
 Exceptions possibles :
@@ -226,7 +266,9 @@ Exceptions possibles :
 - journée volontairement sèche pour effet narratif ;
 - journée de silence / conséquence ;
 - contrainte technique temporaire ;
-- choix de mise en scène validé explicitement.
+- choix de mise en scène validé explicitement ;
+- journée centrée sur une seule photo très forte ;
+- journée très dialoguée où les photos auraient un effet artificiel.
 ```
 
 Si une journée a moins de 3 photos, le plan doit expliquer pourquoi.
@@ -236,7 +278,7 @@ Si une journée a moins de 3 photos, le plan doit expliquer pourquoi.
 Un personnage peut disparaître temporairement si :
 
 ```text
-- Player l’a blessé ;
+- Player l’a blessée ;
 - elle pose une limite ;
 - elle teste Player par silence ;
 - une autre route prend trop de place ;
@@ -251,9 +293,9 @@ Une absence ne doit pas être seulement un oubli de production.
 À éviter :
 
 ```text
-- 5 conversations qui ont chacune un pivot lourd ;
+- trop de conversations qui ont chacune un pivot lourd ;
 - toutes les filles envoient une photo significative le même jour ;
-- Marie, Sandra, Mathilde, Pauline, Raphaëlle avancent toutes en même temps ;
+- Marie, Sandra, Mathilde, Pauline, Raphaëlle avancent toutes fortement en même temps ;
 - la journée devient un catalogue de routes ;
 - le joueur ne sait plus quelle conséquence retenir.
 ```
@@ -262,7 +304,8 @@ Une absence ne doit pas être seulement un oubli de production.
 
 ```text
 - un pivot principal clair ;
-- trois photos minimum ;
+- une densité adaptée au besoin narratif ;
+- des photos régulières ;
 - des personnages absents possibles ;
 - un contraste émotionnel ;
 - une route qui monte ;
@@ -275,8 +318,8 @@ Une absence ne doit pas être seulement un oubli de production.
 ### J5 cible
 
 ```text
-3-4 conversations.
-3 photos minimum.
+Densité : normale à riche selon besoins.
+Photos : environ 3, sauf choix contraire.
 Pivot principal : Marie comprend que le couple vacille.
 Pivot secondaire : Pauline comprend et provoque.
 Sandra ou Raphaëlle peuvent être absentes si elles ne changent rien.
@@ -285,8 +328,8 @@ Sandra ou Raphaëlle peuvent être absentes si elles ne changent rien.
 ### J6 cible
 
 ```text
-3-4 conversations.
-3 photos minimum.
+Densité : normale à riche selon besoins.
+Photos : environ 3, sauf choix contraire.
 Pivot principal : acte concret Player.
 Pivot secondaire : réaction Marie ou Mathilde.
 Pauline ou Sandra seulement si elles transforment la conséquence.
@@ -296,5 +339,5 @@ Pauline ou Sandra seulement si elles transforment la conséquence.
 
 ```text
 Une journée doit nourrir le joueur en conversations, photos et vie.
-Mais elle ne doit pas faire avancer toutes les routes au même rythme.
+Mais le nombre exact de conversations doit toujours rester au service du récit.
 ```
