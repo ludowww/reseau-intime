@@ -20,27 +20,33 @@
       "time_label": "21:07",
       "transition_text": "Pauline laisse entendre qu’il reste encore des images hors champ.",
       "availability_state": "La scène reste courte : un crochet pour J6+, pas une deuxième grande scène Pauline.",
-      "function": "Semez qu’il existe encore des photos et que Pauline en garde peut-être une preuve pour elle.",
+      "function": "Semer qu’il existe encore des photos et que Pauline en garde peut-être une preuve pour elle.",
       "messages": [
         {
           "id": "msg_c05_pauline_last_001",
           "sender": "pauline",
           "time_label": "21:07",
-          "text": "J’ai gardé une dernière photo."
+          "text": "Je t’avais dit que les photos deviennent intéressantes après la soirée."
         },
         {
           "id": "msg_c05_pauline_last_002",
           "sender": "pauline",
           "time_label": "21:08",
-          "text": "Enfin... pas la plus gentille."
+          "text": "J’en ai encore une. Pas la plus gentille 😇"
         },
         {
           "id": "msg_c05_pauline_last_003",
           "sender": "pauline",
           "time_label": "21:08",
-          "text": "Tu sais déjà que j’en garde toujours une de trop.",
+          "text": "Et pas forcément celle que tu crois.",
           "content_id": "pauline_cheating_proof_seed_j5_placeholder",
           "content_behavior": "inline_preview"
+        },
+        {
+          "id": "msg_c05_pauline_last_004",
+          "sender": "pauline",
+          "time_label": "21:09",
+          "text": "Disons que tu n’es pas le seul à mal choisir ses angles."
         }
       ],
       "choices": [
@@ -56,6 +62,20 @@
             "pauline_kept_more_photos_j5",
             "pauline_cheating_proof_seed_j5",
             "j5_more_images_exist"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c05_pauline_last_ignore_001",
+              "sender": "pauline",
+              "time_label": "21:10",
+              "text": "Très bien. On fait semblant de rien."
+            },
+            {
+              "id": "msg_c05_pauline_last_ignore_002",
+              "sender": "pauline",
+              "time_label": "21:10",
+              "text": "C’est souvent comme ça que les meilleures preuves survivent 🙂"
+            }
           ]
         },
         {
@@ -70,6 +90,20 @@
             "pauline_kept_more_photos_j5",
             "pauline_cheating_proof_seed_j5",
             "j5_more_images_exist"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c05_pauline_last_hint_001",
+              "sender": "pauline",
+              "time_label": "21:10",
+              "text": "Ah."
+            },
+            {
+              "id": "msg_c05_pauline_last_hint_002",
+              "sender": "pauline",
+              "time_label": "21:10",
+              "text": "Tu vois, quand tu arrêtes de jouer l’innocent, tu deviens presque fréquentable 🙃"
+            }
           ]
         },
         {
@@ -84,6 +118,20 @@
             "pauline_kept_more_photos_j5",
             "pauline_cheating_proof_seed_j5",
             "j5_more_images_exist"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c05_pauline_last_ask_001",
+              "sender": "pauline",
+              "time_label": "21:10",
+              "text": "Non."
+            },
+            {
+              "id": "msg_c05_pauline_last_ask_002",
+              "sender": "pauline",
+              "time_label": "21:10",
+              "text": "Mais c’est une très mauvaise question à poser à quelqu’un comme moi 😅"
+            }
           ]
         },
         {
@@ -98,6 +146,20 @@
             "pauline_kept_more_photos_j5",
             "pauline_cheating_proof_seed_j5",
             "j5_more_images_exist"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c05_pauline_last_shift_001",
+              "sender": "pauline",
+              "time_label": "21:10",
+              "text": "Déviation propre."
+            },
+            {
+              "id": "msg_c05_pauline_last_shift_002",
+              "sender": "pauline",
+              "time_label": "21:10",
+              "text": "Pas suffisante, mais propre. Bonne nuit, Player 😇"
+            }
           ]
         }
       ]
