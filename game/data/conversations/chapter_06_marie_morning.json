@@ -1,0 +1,208 @@
+{
+  "id": "chapter_06_marie_morning",
+  "chapter": 6,
+  "day": 6,
+  "title": "Jour 6 — Marie regarde si tu reviens",
+  "app": "messages",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "marie"
+    ],
+    "display_name": "Marie"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c06_marie_morning_01",
+      "moment_label": "matin",
+      "time_label": "08:27",
+      "transition_text": "Marie ne reprend pas l’enquête. Elle regarde si Player pose enfin le téléphone assez longtemps pour revenir vers elle.",
+      "availability_state": "Marie est tendre, lucide, encore un peu froissée. Elle veut une preuve d’attention plus qu’une explication.",
+      "function": "Transformer le malaise J5 en comportement concret : revenir vers Marie ou continuer à surveiller les traces.",
+      "trigger": {
+        "type": "notification",
+        "title": "Marie",
+        "body": "Tu fais quoi de ton téléphone, ce matin ?"
+      },
+      "messages": [
+        {
+          "id": "msg_c06_marie_001",
+          "sender": "marie",
+          "time_label": "08:27",
+          "text": "Question sérieuse, donc je vais la poser avec un ton faussement léger."
+        },
+        {
+          "id": "msg_c06_marie_002",
+          "sender": "marie",
+          "time_label": "08:27",
+          "text": "Tu fais quoi de ton téléphone, ce matin ? 🙂"
+        },
+        {
+          "id": "msg_c06_marie_003",
+          "sender": "marie",
+          "time_label": "08:28",
+          "text": "Pas au sens technique. Je sais que tu sais le poser sur une table."
+        },
+        {
+          "id": "msg_c06_marie_004",
+          "sender": "marie",
+          "time_label": "08:28",
+          "text": "Je parle de cette manière que tu as de rester un peu accroché à l’écran, même quand tu es devant moi."
+        },
+        {
+          "id": "msg_c06_marie_005",
+          "sender": "marie",
+          "time_label": "08:29",
+          "text": "J’ai revu la photo d’hier matin. Celle où je te demandais de revenir.",
+          "content_id": "photo_marie_after_party_j5_placeholder",
+          "content_behavior": "inline_preview"
+        },
+        {
+          "id": "msg_c06_marie_006",
+          "sender": "marie",
+          "time_label": "08:29",
+          "text": "Je ne veux pas qu’elle devienne une jolie preuve que tu n’as pas comprise."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c06_marie_put_phone_down",
+          "text": "Poser le téléphone et revenir vers elle.",
+          "tone": "reconnect",
+          "effects": {
+            "marie.trust": 2,
+            "marie_attention_score": 1,
+            "lie_score": -1
+          },
+          "sets_flags": [
+            "j6_phone_put_down_for_marie",
+            "j6_marie_photo_consequence_acknowledged"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c06_marie_phone_down_001",
+              "sender": "marie",
+              "time_label": "08:30",
+              "text": "Voilà."
+            },
+            {
+              "id": "msg_c06_marie_phone_down_002",
+              "sender": "marie",
+              "time_label": "08:30",
+              "text": "Ça a l’air de rien, mais là je te crois plus que dans trois phrases très bien construites."
+            },
+            {
+              "id": "msg_c06_marie_phone_down_003",
+              "sender": "marie",
+              "time_label": "08:31",
+              "text": "Garde ça. Pas la photo. Le geste."
+            }
+          ]
+        },
+        {
+          "id": "choice_c06_marie_minimize_again",
+          "text": "Dire qu’elle se fait des idées.",
+          "tone": "minimize",
+          "effects": {
+            "marie_neglect_score": 2,
+            "lie_score": 1,
+            "marie.lucidity": 1
+          },
+          "sets_flags": [
+            "j6_marie_minimized_phone_absence"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c06_marie_minimize_001",
+              "sender": "marie",
+              "time_label": "08:30",
+              "text": "D’accord."
+            },
+            {
+              "id": "msg_c06_marie_minimize_002",
+              "sender": "marie",
+              "time_label": "08:30",
+              "text": "Je vais ranger mes idées avec les autres choses qui gênent un peu au petit-déjeuner."
+            },
+            {
+              "id": "msg_c06_marie_minimize_003",
+              "sender": "marie",
+              "time_label": "08:31",
+              "text": "Mais je ne suis pas sûre que ce soit moi qui les fabrique toutes seule 🙄"
+            }
+          ]
+        },
+        {
+          "id": "choice_c06_marie_nico_deflect",
+          "text": "Parler de Nico au lieu de parler d’elle.",
+          "tone": "jealous_deflection",
+          "effects": {
+            "ludo_jealousy": 2,
+            "nico_surveillance_score": 1,
+            "marie.lucidity": 1
+          },
+          "sets_flags": [
+            "j6_nico_pressure_seen",
+            "j6_marie_deflected_to_nico"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c06_marie_nico_001",
+              "sender": "marie",
+              "time_label": "08:30",
+              "text": "Tu vois."
+            },
+            {
+              "id": "msg_c06_marie_nico_002",
+              "sender": "marie",
+              "time_label": "08:30",
+              "text": "Je te parle de moi, et tu me réponds avec quelqu’un qui me regardait."
+            },
+            {
+              "id": "msg_c06_marie_nico_003",
+              "sender": "marie",
+              "time_label": "08:31",
+              "text": "Je ne sais pas si c’est de l’amour ou de la surveillance. Mais ce n’est pas la même chose."
+            }
+          ]
+        },
+        {
+          "id": "choice_c06_marie_admit_photos_worked",
+          "text": "Reconnaître que les photos l’ont travaillé.",
+          "tone": "honest",
+          "effects": {
+            "truth_tendency": 1,
+            "marie.trust": 1,
+            "lie_score": -1
+          },
+          "sets_flags": [
+            "j6_marie_photo_consequence_acknowledged"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c06_marie_photos_001",
+              "sender": "marie",
+              "time_label": "08:30",
+              "text": "Merci."
+            },
+            {
+              "id": "msg_c06_marie_photos_002",
+              "sender": "marie",
+              "time_label": "08:30",
+              "text": "Je préfère que tu dises qu’une image t’a remué plutôt que de faire semblant d’être au-dessus."
+            },
+            {
+              "id": "msg_c06_marie_photos_003",
+              "sender": "marie",
+              "time_label": "08:31",
+              "text": "Mais maintenant, je veux voir ce que ça change quand tu lèves les yeux."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_notes": "J6 Marie transforme le malaise des photos J5 en preuve d’attention concrète. Pas de confrontation totale."
+}
