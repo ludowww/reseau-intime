@@ -31,13 +31,31 @@
           "id": "msg_c05_marie_001",
           "sender": "marie",
           "time_label": "08:12",
-          "text": "Tu t’es réveillé avec la soirée dans la tête, ou c’est moi ?"
+          "text": "Je crois que j’ai encore la soirée dans les cheveux 😅"
         },
         {
           "id": "msg_c05_marie_002",
           "sender": "marie",
           "time_label": "08:13",
-          "text": "J’ai l’impression que tu étais là sans être là."
+          "text": "Et un peu dans la tête."
+        },
+        {
+          "id": "msg_c05_marie_003",
+          "sender": "marie",
+          "time_label": "08:13",
+          "text": "Hier, j’ai eu l’impression que tu étais là... mais pas toujours avec moi."
+        },
+        {
+          "id": "msg_c05_marie_004",
+          "sender": "marie",
+          "time_label": "08:14",
+          "text": "Je ne te fais pas un procès au réveil, promis. Mauvaise ambiance pour le café 🙂"
+        },
+        {
+          "id": "msg_c05_marie_005",
+          "sender": "marie",
+          "time_label": "08:14",
+          "text": "Mais j’avais envie que tu me regardes un peu plus. Moi. Pas ton écran."
         }
       ],
       "choices": [
@@ -51,6 +69,20 @@
           },
           "sets_flags": [
             "truth_seed_marie_j5"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c05_marie_truth_001",
+              "sender": "marie",
+              "time_label": "08:15",
+              "text": "Merci de ne pas me servir une excuse trop propre."
+            },
+            {
+              "id": "msg_c05_marie_truth_002",
+              "sender": "marie",
+              "time_label": "08:15",
+              "text": "Ça pique un peu, mais au moins je sais où je mets les pieds."
+            }
           ]
         },
         {
@@ -59,10 +91,24 @@
           "tone": "minimize",
           "effects": {
             "lie_score": 1,
-            "marie_attention_score": 1
+            "marie_neglect_score": 1
           },
           "sets_flags": [
             "marie_morning_minimized_j5"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c05_marie_minimize_001",
+              "sender": "marie",
+              "time_label": "08:15",
+              "text": "‘Juste la fatigue’."
+            },
+            {
+              "id": "msg_c05_marie_minimize_002",
+              "sender": "marie",
+              "time_label": "08:15",
+              "text": "C’est fou comme le mot ‘juste’ travaille beaucoup chez toi, parfois 🙄"
+            }
           ]
         },
         {
@@ -78,12 +124,24 @@
           ],
           "next_messages": [
             {
-              "id": "msg_c05_marie_003",
+              "id": "msg_c05_marie_return_001",
               "sender": "marie",
-              "time_label": "08:14",
+              "time_label": "08:15",
+              "text": "Alors regarde-moi maintenant."
+            },
+            {
+              "id": "msg_c05_marie_return_002",
+              "sender": "marie",
+              "time_label": "08:16",
               "text": "J’ai aussi gardé ça pour ce matin.",
               "content_id": "photo_marie_after_party_j5_placeholder",
               "content_behavior": "inline_preview"
+            },
+            {
+              "id": "msg_c05_marie_return_003",
+              "sender": "marie",
+              "time_label": "08:16",
+              "text": "Pas pour te piéger. Juste pour voir si tu reviens vraiment 🙂"
             }
           ]
         },
@@ -94,14 +152,28 @@
           "effects": {
             "ludo_jealousy": 2,
             "nico_surveillance_score": 1,
-            "marie_attention_score": 1
+            "marie.lucidity": 1
           },
           "sets_flags": [
             "marie_jealous_of_nico_j5"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c05_marie_jealous_001",
+              "sender": "marie",
+              "time_label": "08:15",
+              "text": "Ah. Donc tu étais là pour surveiller qui me regardait."
+            },
+            {
+              "id": "msg_c05_marie_jealous_002",
+              "sender": "marie",
+              "time_label": "08:15",
+              "text": "Pas forcément pour me regarder, moi. C’est... intéressant 😅"
+            }
           ]
         }
       ]
     }
   ],
-  "debug_notes": "Marie au réveil : fatiguée, lucide, sans confrontation totale."
+  "debug_notes": "Marie au réveil : fatiguée, lucide, désirable, sans confrontation totale."
 }
