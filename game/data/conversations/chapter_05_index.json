@@ -57,7 +57,7 @@
     {
       "moment_label": "fin de soirée",
       "time_label": "21:07",
-      "transition_text": "Pauline laisse entendre qu’il reste encore des images qu’elle n’a pas montré.",
+      "transition_text": "Pauline laisse entendre qu’il reste encore des images qu’elle n’a pas montrées.",
       "conversation_ids": [
         "chapter_05_pauline_last_photo"
       ]
@@ -145,7 +145,7 @@
         "pending": true,
         "notification": {
           "title": "Sandra",
-          "body": "Je te parle plus tard."
+          "body": "J’ai attendu plus tard."
         }
       },
       "chapter_05_raphaelle_boundary": {
@@ -154,7 +154,7 @@
         "pending": true,
         "notification": {
           "title": "Raphaëlle",
-          "body": "Je peux t’écouter, mais pas te cacher."
+          "body": "Je peux t’écouter. Pas te cacher."
         }
       },
       "chapter_05_pauline_last_photo": {
