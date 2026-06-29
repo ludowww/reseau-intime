@@ -37,12 +37,28 @@
           ]
         },
         {
+          "id": "comment_c05_marie_001",
+          "type": "comment",
+          "author": "marie",
+          "time_label": "11:19",
+          "target_id": "story_c05_nico_001",
+          "text": "Je ne sais pas si c’est un compliment ou une preuve que les photos de Pauline sont dangereuses 😅"
+        },
+        {
           "id": "comment_c05_pauline_001",
           "type": "comment",
           "author": "pauline",
           "time_label": "11:19",
           "target_id": "story_c05_nico_001",
-          "text": "Certaines choses regardent bien la caméra."
+          "text": "Les deux, évidemment 😇"
+        },
+        {
+          "id": "comment_c05_nico_001",
+          "type": "comment",
+          "author": "nico",
+          "time_label": "11:20",
+          "target_id": "story_c05_nico_001",
+          "text": "Je plaide non coupable."
         }
       ],
       "choices": [
