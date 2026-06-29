@@ -1,0 +1,174 @@
+{
+  "schema_note": "Authoring-only knowledge map. Not loaded by game runtime. Keep keys validator-safe: no id, no effects, no content_id.",
+  "current_story_anchor": "v0.5-j5-after-party-proofs",
+  "global_known_state": [
+    "J3 a ramené Player physiquement à la maison sans résoudre son absence intérieure.",
+    "J4 a exposé les tensions en soirée sociale chez Pauline.",
+    "J5 a redistribué les photos, stories et preuves faibles du lendemain.",
+    "Aucune route n’est verrouillée ou consommée."
+  ],
+  "characters": {
+    "marie": {
+      "current_stage_hint": "stage_2_complicite",
+      "current_risk_hint": "medium",
+      "recent_beats": [
+        "Marie a senti que Player était là sans être toujours avec elle.",
+        "Elle a été visible en public pendant J4.",
+        "Nico peut activer la jalousie de Player mais Marie ne doit pas être réduite à cela."
+      ],
+      "knows": [
+        "Player était dispersé pendant la soirée.",
+        "Player regarde parfois son téléphone au lieu d’être avec elle.",
+        "Nico a été présent socialement autour d’elle."
+      ],
+      "suspects": [
+        "Player cache ou minimise certaines choses.",
+        "Certaines photos peuvent avoir changé le sens de la soirée."
+      ],
+      "does_not_know": [
+        "le détail exact des messages Sandra J4/J5",
+        "ce que Pauline garde vraiment",
+        "la portée réelle de la photo Mathilde gardée ou supprimée"
+      ],
+      "scene_prompts": [
+        "Que fait Player après avoir été vu comme absent ?",
+        "Marie veut-elle être rassurée ou regardée ?"
+      ]
+    },
+    "sandra": {
+      "current_stage_hint": "stage_2_complicite",
+      "current_risk_hint": "medium",
+      "recent_beats": [
+        "Sandra a écrit au mauvais moment pendant J4.",
+        "J5 transforme le plus tard en blessure douce.",
+        "Elle a supprimé une photo avant de l’envoyer."
+      ],
+      "knows": [
+        "Player était en soirée J4.",
+        "Player ne pouvait pas lui donner une place claire à ce moment-là.",
+        "le plus tard peut être une esquive autant qu’une promesse."
+      ],
+      "suspects": [
+        "Elle risque d’être un message caché.",
+        "Player tient à elle mais ne sait pas quoi faire de cette place."
+      ],
+      "does_not_know": [
+        "les photos envoyées par Pauline",
+        "la story Nico/Marie",
+        "la photo Mathilde ou les détails de la soirée"
+      ],
+      "scene_prompts": [
+        "Le plus tard devient-il une promesse ou une blessure répétée ?",
+        "Sandra avance-t-elle par manque ou par recul protecteur ?"
+      ]
+    },
+    "mathilde": {
+      "current_stage_hint": "stage_2_complicite",
+      "current_risk_hint": "high",
+      "recent_beats": [
+        "Mathilde est liée à la photo canapé J3.",
+        "J4 l’a placée comme témoin du trouble social de Player.",
+        "J5 a relancé la question : photo gardée ou supprimée ?"
+      ],
+      "knows": [
+        "sa photo existe ou a existé comme trace risquée.",
+        "Marie est le vrai sous-texte de sa relation avec Player.",
+        "Pauline pourrait voir trop de choses si elle tombe sur un téléphone."
+      ],
+      "suspects": [
+        "Player a peut-être gardé l’image.",
+        "le jeu peut devenir moins innocent si la trace reste."
+      ],
+      "does_not_know": [
+        "le détail du message Sandra J5",
+        "ce que Pauline garde vraiment",
+        "les choix exacts de Player dans chaque autre route"
+      ],
+      "scene_prompts": [
+        "La trace devient-elle dette, jeu, danger ou limite ?",
+        "Mathilde garde-t-elle la loyauté envers Marie dans sa manière de provoquer ?"
+      ]
+    },
+    "pauline": {
+      "current_stage_hint": "stage_2_complicite",
+      "current_risk_hint": "high",
+      "recent_beats": [
+        "Pauline a activé un canal privé rare avec Player en J4.",
+        "Elle a pris, trié et redistribué des photos.",
+        "J5 a semé qu’elle a aussi peut-être une preuve contre elle-même."
+      ],
+      "knows": [
+        "Player était observable pendant la soirée.",
+        "les photos peuvent changer de sens le lendemain.",
+        "certaines images valent plus quand elles sont gardées."
+      ],
+      "suspects": [
+        "Player réagit aux preuves faibles.",
+        "Player peut être manipulé par ce qu’il croit avoir vu."
+      ],
+      "does_not_know": [
+        "toute la profondeur du lien Sandra",
+        "les choix intimes exacts entre Player et Marie",
+        "tout ce que Mathilde ou Raphaëlle pensent vraiment"
+      ],
+      "scene_prompts": [
+        "Que garde Pauline vraiment ?",
+        "Est-elle seulement dangereuse, ou aussi exposée ?"
+      ]
+    },
+    "raphaelle": {
+      "current_stage_hint": "stage_1_familiarite",
+      "current_risk_hint": "medium",
+      "recent_beats": [
+        "J2 : badge récupéré, attention professionnelle concrète.",
+        "J3 : fatigue remarquée, dossier pris en charge, limite du refuge flou.",
+        "J5 : notes incohérentes dans le dossier Camille, dispersion de Player visible au travail."
+      ],
+      "knows": [
+        "Player se disperse au travail.",
+        "Player peut être présent physiquement mais ailleurs intérieurement.",
+        "Player cherche parfois un endroit pour déposer son flou."
+      ],
+      "suspects": [
+        "Player transporte quelque chose qui dépasse le travail.",
+        "Player cherche peut-être une cachette plus qu’une clarté."
+      ],
+      "does_not_know": [
+        "les détails de la soirée J4",
+        "les photos de Pauline",
+        "le message Sandra au mauvais moment",
+        "la photo Mathilde gardée ou supprimée"
+      ],
+      "scene_prompts": [
+        "Player cherche-t-il vraiment la clarté ou seulement un refuge ?",
+        "Raphaëlle peut-elle devenir plus présente sans devenir une cachette ?"
+      ]
+    },
+    "nico": {
+      "current_stage_hint": "stage_1_familiarite",
+      "current_risk_hint": "medium",
+      "recent_beats": [
+        "J4 : Nico regarde ou complimente Marie dans un cadre social défendable.",
+        "J5 : Nico revient via story autour de Marie.",
+        "Son rôle est de révéler la jalousie et l’absence de Player, pas de devenir un méchant."
+      ],
+      "knows": [
+        "Marie était visible en soirée.",
+        "le groupe partage des stories et commentaires sociaux."
+      ],
+      "suspects": [
+        "Player peut réagir à sa présence auprès de Marie."
+      ],
+      "does_not_know": [
+        "les secrets privés de Player",
+        "les messages Sandra",
+        "la photo Mathilde",
+        "les preuves gardées par Pauline"
+      ],
+      "scene_prompts": [
+        "Player agit-il par amour de Marie ou par surveillance de Nico ?",
+        "Nico peut-il rester socialement défendable ?"
+      ]
+    }
+  }
+}
