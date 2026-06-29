@@ -26,13 +26,25 @@
           "id": "msg_c05_mathilde_001",
           "sender": "mathilde",
           "time_label": "14:22",
-          "text": "J’ai repensé à la photo de l’autre jour."
+          "text": "Question technique."
         },
         {
           "id": "msg_c05_mathilde_002",
           "sender": "mathilde",
+          "time_label": "14:22",
+          "text": "La photo du canapé. Ou de moi contre le canapé. Selon le niveau de mauvaise foi 😅"
+        },
+        {
+          "id": "msg_c05_mathilde_003",
+          "sender": "mathilde",
           "time_label": "14:23",
-          "text": "Tu l’as gardée, toi ?"
+          "text": "Tu l’as supprimée ?"
+        },
+        {
+          "id": "msg_c05_mathilde_004",
+          "sender": "mathilde",
+          "time_label": "14:23",
+          "text": "Je demande pour une amie. Qui s’appelle probablement Marie dans ta tête, donc fais attention à ta réponse 🙃"
         }
       ],
       "choices": [
@@ -47,6 +59,20 @@
           "sets_flags": [
             "mathilde_photo_deleted_claim_j5",
             "mathilde_photo_question_j5"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c05_mathilde_deleted_001",
+              "sender": "mathilde",
+              "time_label": "14:24",
+              "text": "Bien."
+            },
+            {
+              "id": "msg_c05_mathilde_deleted_002",
+              "sender": "mathilde",
+              "time_label": "14:24",
+              "text": "Je vais faire semblant de ne pas me demander si tu dis ça parce que c’est vrai ou parce que c’est sage."
+            }
           ]
         },
         {
@@ -61,6 +87,26 @@
           "sets_flags": [
             "mathilde_photo_kept_admitted_j5",
             "mathilde_photo_question_j5"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c05_mathilde_kept_001",
+              "sender": "mathilde",
+              "time_label": "14:24",
+              "text": "Ah."
+            },
+            {
+              "id": "msg_c05_mathilde_kept_002",
+              "sender": "mathilde",
+              "time_label": "14:24",
+              "text": "Réponse dangereuse, mais au moins elle a le mérite d’être honnête. Enfin... presque honnête 😇"
+            },
+            {
+              "id": "msg_c05_mathilde_kept_003",
+              "sender": "mathilde",
+              "time_label": "14:25",
+              "text": "Ne la laisse pas traîner. Vraiment."
+            }
           ]
         },
         {
@@ -73,6 +119,20 @@
           },
           "sets_flags": [
             "mathilde_photo_question_j5"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c05_mathilde_limit_001",
+              "sender": "mathilde",
+              "time_label": "14:24",
+              "text": "C’est probablement la meilleure réponse."
+            },
+            {
+              "id": "msg_c05_mathilde_limit_002",
+              "sender": "mathilde",
+              "time_label": "14:24",
+              "text": "Énervant, du coup. Mais meilleure."
+            }
           ]
         },
         {
@@ -90,12 +150,30 @@
           ],
           "next_messages": [
             {
-              "id": "msg_c05_mathilde_003",
+              "id": "msg_c05_mathilde_send_001",
               "sender": "mathilde",
               "time_label": "14:24",
+              "text": "Tu poses ça comme une question neutre ?"
+            },
+            {
+              "id": "msg_c05_mathilde_send_002",
+              "sender": "mathilde",
+              "time_label": "14:24",
+              "text": "Très mauvais théâtre."
+            },
+            {
+              "id": "msg_c05_mathilde_send_003",
+              "sender": "mathilde",
+              "time_label": "14:25",
               "text": "J’ai retrouvé ça. Je devrais sans doute pas te l’envoyer.",
               "content_id": "photo_mathilde_after_party_j5_placeholder",
               "content_behavior": "inline_preview"
+            },
+            {
+              "id": "msg_c05_mathilde_send_004",
+              "sender": "mathilde",
+              "time_label": "14:25",
+              "text": "Et tu devrais sans doute pas avoir envie de l’ouvrir. Donc évidemment, problème 🫠"
             }
           ]
         }
