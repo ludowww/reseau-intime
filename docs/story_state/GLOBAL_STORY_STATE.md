@@ -20,7 +20,7 @@ Le risque ne vient pas encore d’une crise ouverte. Il vient de petites omissio
 
 - Marie : active J1-J5 ; ancrage couple / maison ; visible en public J4 ; lucide et piquée J5 sans confrontation totale.
 - Sandra : active J1-J5 ; ancienne amie, tension émotionnelle douce, jeudi maintenu, mauvais timing J4, “plus tard” et photo supprimée J5.
-- Raphaëlle : active J2-J5 ; travail, badge, clarté calme, limite posée ; revient J5 comme contrepoint adulte au chaos social.
+- Raphaëlle : active J2-J5 ; travail, badge, dossier, clarté calme ; voit concrètement la dispersion de Player et refuse de devenir une cachette.
 - Mathilde : mention indirecte J1, active J2-J5 ; familiarité maison, photo canapé, témoin du trouble J4, relance de la trace gardée/supprimée J5.
 - Pauline : active J4-J5 ; hôte sociale, observatrice, gardienne et redistributrice de photos, possible secret personnel semé J5.
 - Nico : actif indirectement J4-J5 ; miroir social autour de Marie, jalousie défendable, pas antagoniste caricatural.
@@ -29,7 +29,7 @@ Le risque ne vient pas encore d’une crise ouverte. Il vient de petites omissio
 
 - Marie : route centrale de couple, encore stable mais exposée par l’absence intérieure de Player, la peur d’être moins regardée, le regard de Nico et les photos qui reviennent.
 - Sandra : route émotionnelle nostalgique, prudente, relancée par une photo J1, maintenue par jeudi, renforcée par le mauvais timing J4 et la photo supprimée J5.
-- Raphaëlle : route refuge / clarté, amorcée J2, précisée J3, et consolidée J5 par son refus de devenir une cachette.
+- Raphaëlle : route clarté / refuge refusé, amorcée J2 par le badge et le travail, précisée J3 par sa capacité à voir les esquives, et consolidée J5 par un ancrage concret dans le dossier Camille.
 - Mathilde : route domestique interdite, amorcée par une familiarité de maison, rendue active par la photo canapé J3, socialisée J4, puis retransformée J5 en question morale : garder ou supprimer la trace.
 - Pauline : route sociale / contrôle / preuves, démarrée J4 par un canal privé rare et les photos, puis renforcée J5 par la redistribution des images et un indice sur ses propres secrets.
 - Nico / Marie : pas une route Player ; pression miroir autour de Marie, utile pour jalousie, reconquête ou mauvaise focalisation de Player.
@@ -67,11 +67,12 @@ Chaque contenu doit rester plus qu’une récompense : il sert de trace, de rapp
 - Marie qui relaie Mathilde : la tension est d’abord normalisée par le couple lui-même.
 - Jeudi avec Sandra : promesse ouverte qui peut entrer en conflit avec le couple ou d’autres routes.
 - Trace Sandra J3 non envoyée : frustration et promesse plutôt que récompense directe.
-- Raphaëlle J3/J5 : risque différent, non visuel, lié à la clarté et au refus du flou.
+- Raphaëlle J3/J5 : risque différent, non visuel, lié à la clarté, au travail et au refus du flou.
 - J4 : première exposition sociale des tensions, avec Pauline comme observatrice et Nico comme miroir du regard sur Marie.
 - J4/J5 : les photos de soirée deviennent des preuves faibles parce qu’elles circulent hors du moment où elles ont été prises.
 - J5 : Pauline possède et retient des images ; elle peut aussi avoir ses propres preuves hors champ.
 - J5 : Sandra supprime une photo avant envoi ; l’absence de l’image devient une trace émotionnelle.
+- J5 : Raphaëlle repère la dispersion de Player dans un détail concret de travail, sans connaître la soirée.
 
 ## Éléments résolus par J5
 
@@ -81,7 +82,7 @@ Chaque contenu doit rester plus qu’une récompense : il sert de trace, de rapp
 - Marie reste désirée et centrale, pas seulement jalouse.
 - Mathilde reste liée au risque de trace domestique, avec Marie présente en sous-texte.
 - Sandra reste rare et retenue, blessée par le “plus tard” plutôt que disponible.
-- Raphaëlle pose une limite claire : écouter oui, cacher non.
+- Raphaëlle est renforcée comme présence concrète du quotidien : elle voit le flou dans le travail, pas depuis l’extérieur abstrait de l’histoire.
 - Les photos deviennent un système narratif actif : elles reviennent, changent de sens, rapprochent ou menacent.
 
 ## Éléments à résoudre ensuite
@@ -92,7 +93,7 @@ Chaque contenu doit rester plus qu’une récompense : il sert de trace, de rapp
 - Clarifier ce que Pauline cache vraiment, mais sans tout révéler trop tôt.
 - Faire évoluer Mathilde en gardant son rapport à Marie, à la loyauté et à la trace.
 - Faire avancer Sandra sans la transformer en disponibilité permanente.
-- Utiliser Raphaëlle comme exigence de clarté, pas comme échappatoire romantique simple.
+- Utiliser Raphaëlle comme exigence de clarté concrète, pas comme échappatoire romantique simple ni voix morale hors sol.
 - Continuer à employer Nico comme miroir social, pas comme rival caricatural.
 
 ## Contraintes pour les jours suivants
@@ -102,14 +103,14 @@ Chaque contenu doit rester plus qu’une récompense : il sert de trace, de rapp
 - Respecter J3-J5 : Player est revenu physiquement, exposé socialement, puis rattrapé par les traces.
 - Conserver une discussion par personnage côté téléphone, même si plusieurs épisodes existent.
 - Continuer à traiter les contenus visuels comme traces à conséquences.
-- Différencier les voix : Marie affective / lucide, Sandra prudente / nostalgique, Raphaëlle claire / adulte, Mathilde vive / coupable, Pauline joueuse / contrôlante, Nico simple / social.
+- Différencier les voix : Marie affective / lucide, Sandra prudente / nostalgique, Raphaëlle claire / adulte / concrète, Mathilde vive / coupable, Pauline joueuse / contrôlante, Nico simple / social.
 - Préserver une densité d’emojis caractérisée par voix, sans uniformiser les scènes.
 
 ## Risques de dérive narrative
 
 - Redondance des photos si elles ne produisent aucune mémoire ou conséquence.
 - Sandra trop directe trop tôt.
-- Raphaëlle trop intime ou trop refuge.
+- Raphaëlle trop intime, trop refuge, ou trop extérieure au récit concret.
 - Mathilde trop avancée alors que sa tension vient encore de la normalité domestique et de la loyauté envers Marie.
 - Marie réduite à la jalousie au lieu de rester le cœur du couple.
 - Pauline omnisciente ou trop dominante trop vite.
