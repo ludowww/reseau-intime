@@ -1,0 +1,202 @@
+{
+  "id": "chapter_06_mathilde_trace",
+  "chapter": 6,
+  "day": 6,
+  "title": "Jour 6 — Mathilde nomme la trace",
+  "app": "messages",
+  "thread": {
+    "id": "thread_mathilde_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "mathilde"
+    ],
+    "display_name": "Mathilde"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c06_mathilde_trace_01",
+      "moment_label": "après-midi",
+      "time_label": "14:36",
+      "transition_text": "Mathilde ne relance pas seulement la photo. Elle veut savoir quel nom Player donne à ce qu’il garde, efface ou cache.",
+      "availability_state": "Mathilde reste vive et taquine, avec Marie en sous-texte constant.",
+      "function": "Transformer la trace en choix de limite plutôt qu’en simple provocation.",
+      "messages": [
+        {
+          "id": "msg_c06_mathilde_001",
+          "sender": "mathilde",
+          "time_label": "14:36",
+          "text": "J’ai réfléchi."
+        },
+        {
+          "id": "msg_c06_mathilde_002",
+          "sender": "mathilde",
+          "time_label": "14:36",
+          "text": "Oui, ça arrive. Moment historique, merci de respecter 🙃"
+        },
+        {
+          "id": "msg_c06_mathilde_003",
+          "sender": "mathilde",
+          "time_label": "14:37",
+          "text": "Hier je t’ai demandé si la photo était encore là."
+        },
+        {
+          "id": "msg_c06_mathilde_004",
+          "sender": "mathilde",
+          "time_label": "14:37",
+          "text": "Mais la vraie question, c’est peut-être pas “elle existe ?”."
+        },
+        {
+          "id": "msg_c06_mathilde_005",
+          "sender": "mathilde",
+          "time_label": "14:38",
+          "text": "C’est : qu’est-ce que tu fais avec un truc que tu ne peux pas vraiment montrer à Marie ?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c06_mathilde_delete_now",
+          "text": "Dire qu’il faut la supprimer vraiment.",
+          "tone": "boundary",
+          "effects": {
+            "mathilde.loyalty": 2,
+            "mathilde.desire": -1,
+            "marie.trust": 1
+          },
+          "sets_flags": [
+            "j6_mathilde_boundary_set",
+            "j6_mathilde_trace_named"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c06_mathilde_delete_001",
+              "sender": "mathilde",
+              "time_label": "14:39",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_c06_mathilde_delete_002",
+              "sender": "mathilde",
+              "time_label": "14:39",
+              "text": "C’est moins drôle, évidemment."
+            },
+            {
+              "id": "msg_c06_mathilde_delete_003",
+              "sender": "mathilde",
+              "time_label": "14:40",
+              "text": "Mais c’est probablement la première réponse qui ne transforme pas Marie en angle mort."
+            }
+          ]
+        },
+        {
+          "id": "choice_c06_mathilde_keep_as_memory",
+          "text": "Dire que c’est seulement un souvenir.",
+          "tone": "minimize",
+          "effects": {
+            "mathilde.desire": 1,
+            "lie_score": 1,
+            "mathilde.loyalty": -1
+          },
+          "sets_flags": [
+            "j6_mathilde_trace_named",
+            "j6_mathilde_memory_excuse"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c06_mathilde_memory_001",
+              "sender": "mathilde",
+              "time_label": "14:39",
+              "text": "“Seulement un souvenir”."
+            },
+            {
+              "id": "msg_c06_mathilde_memory_002",
+              "sender": "mathilde",
+              "time_label": "14:39",
+              "text": "J’adore les phrases qui mettent “seulement” devant un problème pour voir s’il rétrécit."
+            },
+            {
+              "id": "msg_c06_mathilde_memory_003",
+              "sender": "mathilde",
+              "time_label": "14:40",
+              "text": "Spoiler : il ne rétrécit pas beaucoup 😅"
+            }
+          ]
+        },
+        {
+          "id": "choice_c06_mathilde_admit_danger",
+          "text": "Reconnaître que c’est dangereux.",
+          "tone": "honest",
+          "effects": {
+            "truth_tendency": 1,
+            "mathilde.desire": 1,
+            "mathilde.loyalty": 1
+          },
+          "sets_flags": [
+            "j6_mathilde_trace_named"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c06_mathilde_danger_001",
+              "sender": "mathilde",
+              "time_label": "14:39",
+              "text": "Voilà."
+            },
+            {
+              "id": "msg_c06_mathilde_danger_002",
+              "sender": "mathilde",
+              "time_label": "14:39",
+              "text": "Ça ne règle rien, mais ça enlève le petit parfum de mauvaise foi."
+            },
+            {
+              "id": "msg_c06_mathilde_danger_003",
+              "sender": "mathilde",
+              "time_label": "14:40",
+              "text": "Et honnêtement, c’est déjà une amélioration dans cette maison."
+            }
+          ]
+        },
+        {
+          "id": "choice_c06_mathilde_play",
+          "text": "Répondre comme si c’était encore un jeu.",
+          "tone": "playful_risk",
+          "effects": {
+            "mathilde.desire": 2,
+            "mathilde.loyalty": -1,
+            "lie_score": 1
+          },
+          "sets_flags": [
+            "j6_mathilde_trace_named",
+            "j6_mathilde_played_with_trace"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c06_mathilde_play_001",
+              "sender": "mathilde",
+              "time_label": "14:39",
+              "text": "Tu sais que c’est précisément la mauvaise réponse ?"
+            },
+            {
+              "id": "msg_c06_mathilde_play_002",
+              "sender": "mathilde",
+              "time_label": "14:39",
+              "text": "Enfin. Mauvaise moralement."
+            },
+            {
+              "id": "msg_c06_mathilde_play_003",
+              "sender": "mathilde",
+              "time_label": "14:40",
+              "text": "Narrativement, je reconnais un certain sens du rythme 😇"
+            },
+            {
+              "id": "msg_c06_mathilde_play_004",
+              "sender": "mathilde",
+              "time_label": "14:40",
+              "text": "Mais fais attention. Un jeu que Marie ne connaît pas, ça change vite de nom."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_notes": "J6 Mathilde nomme la trace sans devenir frontale ; Marie reste en sous-texte."
+}
