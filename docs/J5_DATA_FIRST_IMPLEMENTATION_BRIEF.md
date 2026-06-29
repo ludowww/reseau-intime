@@ -84,11 +84,30 @@ nico_complimented_marie_j4
 
 Ne pas supposer que tous les flags existent pour toutes les routes. Si une condition n’est pas fiable ou pas déjà créée, préférer une variation textuelle non conditionnelle plutôt qu’une nouvelle logique complexe.
 
+## État technique actuel avant runtime J5
+
+Au moment de ce brief :
+
+```text
+aucun fichier chapter_05_* runtime n’existe encore ;
+DataLoader.gd charge les index J1-J4 seulement ;
+DataLoader.gd charge les visual_content génériques, J3 et J4 seulement.
+```
+
+Donc l’intégration runtime J5 devra ajouter explicitement :
+
+```text
+res://data/conversations/chapter_05_index.json
+res://data/visual_content/chapter_05_proofs.json
+```
+
+aux listes de `DataLoader.gd`, en gardant le changement strictement limité à l’ajout de ces deux paths.
+
 ## Scope recommandé pour le patch J5
 
 J5 data-first doit rester court et testable.
 
-Créer ou remplacer :
+Créer :
 
 ```text
 game/data/conversations/chapter_05_index.json
@@ -102,13 +121,17 @@ game/data/conversations/chapter_05_pauline_last_photo.json
 game/data/visual_content/chapter_05_proofs.json
 ```
 
-Ajouter `chapter_05_index.json` dans `DataLoader.gd` seulement si le loader ne charge pas déjà J5.
+Modifier uniquement si nécessaire au chargement J5 :
 
-Ajouter `chapter_05_proofs.json` dans les paths de visual content seulement si nécessaire.
+```text
+game/scripts/core/DataLoader.gd
+```
 
 Ne pas modifier J1/J2/J3/J4 runtime.
 
 Ne pas intégrer J6.
+
+Si le runtime semble trop dense en test manuel, `chapter_05_pauline_last_photo` peut rester très court : deux ou trois messages suffisent à semer que d’autres images existent. Ne pas supprimer sa fonction, mais éviter d’en faire une deuxième grande scène Pauline.
 
 ## Structure J5 recommandée
 
@@ -319,6 +342,8 @@ chapter_05_pauline_last_photo
 Fonction : conclure J5 en laissant entendre que d’autres images existent, y compris contre Pauline.
 
 Pauline a aussi des choses à cacher. J5 peut le semer, pas l’exploser.
+
+Cette scène doit rester courte dans le premier runtime : elle sert de crochet J6+, pas de deuxième grande scène Pauline.
 
 Trace possible :
 
