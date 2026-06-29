@@ -1,0 +1,175 @@
+{
+  "schema_note": "Authoring-only data. Not loaded by game runtime. Avoids runtime-sensitive keys such as id, effects, content_id and res paths.",
+  "stage_scale": {
+    "stage_0_distance": "relation sociale ou fonctionnelle, peu d’intimité",
+    "stage_1_familiarite": "confort léger, humour prudent, début de sous-texte",
+    "stage_2_complicite": "messages plus naturels, références partagées, confiance partielle",
+    "stage_3_intimite_naissante": "le personnage ose plus, mais protège encore ses limites",
+    "stage_4_tension_assumee": "désir ou attachement plus net, risque visible",
+    "stage_5_lien_secret": "forte charge émotionnelle ou compromettante, à réserver plus tard"
+  },
+  "risk_scale": {
+    "low": "discussion défendable",
+    "medium": "sous-texte visible, malaise ou désir perceptible",
+    "high": "trace compromettante, photo, mensonge ou risque relationnel clair",
+    "critical": "preuve forte ou conséquence irréversible, à éviter trop tôt"
+  },
+  "characters": {
+    "marie": {
+      "display_name": "Marie",
+      "base_voice": ["affective", "lucide", "domestique", "douceur piquée", "désir d’être regardée"],
+      "stable_rules": [
+        "Reste le cœur du couple.",
+        "Ne pas la réduire à une jalousie ou une contrainte.",
+        "Elle veut être regardée, pas seulement rassurée.",
+        "La tendresse doit souvent précéder ou accompagner le reproche."
+      ],
+      "can_evolve_toward": ["franchise sur le manque", "désir de reconquête", "fatigue face aux demi-vérités"],
+      "too_early_or_forbidden": ["confrontation totale sans preuve", "accusation omnisciente", "jalousie pure sans tendresse"],
+      "emoji_allowed": ["🙂", "🙄", "😅"],
+      "emoji_max_default": 4,
+      "abstract_warning_words": ["présence", "absence", "vérité", "choisir", "fuir"],
+      "good_anchor_words": ["café", "maison", "écran", "regarder", "fatigue", "matin"],
+      "stage_variants": {
+        "stage_1_familiarite": "couple quotidien, petites piques tendres",
+        "stage_2_complicite": "plus de franchise sur le manque et le besoin d’attention",
+        "stage_3_intimite_naissante": "reconquête, désir visible, demande d’être regardée"
+      },
+      "risk_variants": {
+        "low": "elle adoucit les reproches",
+        "medium": "elle formule l’absence de Player",
+        "high": "elle commence à relier les traces entre elles sans tout accuser"
+      }
+    },
+    "sandra": {
+      "display_name": "Sandra",
+      "base_voice": ["douce", "retenue", "prudente", "autodérision légère", "peur de déranger"],
+      "stable_rules": [
+        "Ne force pas la place.",
+        "Garde une sortie.",
+        "Peut être blessée sans accuser frontalement.",
+        "Le désir passe souvent par ce qu’elle ne montre pas."
+      ],
+      "can_evolve_toward": ["franchise sur l’attente", "trouble assumé", "recul protecteur"],
+      "too_early_or_forbidden": ["demande de place officielle", "nouvelle grosse photo trop tôt", "culpabilisation frontale"],
+      "emoji_allowed": ["🙂", "😅"],
+      "emoji_max_default": 3,
+      "abstract_warning_words": ["place", "attendre", "compter", "cacher", "promesse"],
+      "good_anchor_words": ["photo", "plus tard", "supprimée", "message", "jeudi"],
+      "stage_variants": {
+        "stage_1_familiarite": "reconnexion prudente, ancien lien",
+        "stage_2_complicite": "attente fragile, humour pour masquer le manque",
+        "stage_3_intimite_naissante": "plus personnelle mais toujours avec retenue"
+      },
+      "risk_variants": {
+        "low": "elle reste légère et prudente",
+        "medium": "elle admet que le délai ou l’absence touche",
+        "high": "elle recule ou supprime plutôt que d’envoyer frontalement"
+      }
+    },
+    "mathilde": {
+      "display_name": "Mathilde",
+      "base_voice": ["taquine", "rapide", "vive", "gêne masquée", "loyauté fragile envers Marie"],
+      "stable_rules": [
+        "Joue avec la limite.",
+        "Marie doit rester dans le sous-texte.",
+        "Ne doit pas devenir prédatrice.",
+        "Le quotidien rendu risqué est plus fort que la provocation directe."
+      ],
+      "can_evolve_toward": ["provocation conditionnelle", "recul si limite posée", "culpabilité plus nette"],
+      "too_early_or_forbidden": ["demande explicitement sexuelle", "oubli de Marie", "route déjà assumée"],
+      "emoji_allowed": ["😅", "🙃", "😇", "🫠", "🙂", "🙄"],
+      "emoji_max_default": 6,
+      "abstract_warning_words": ["limite", "loyauté", "danger", "trace"],
+      "good_anchor_words": ["canapé", "photo", "Marie", "mauvaise foi", "maison"],
+      "stage_variants": {
+        "stage_1_familiarite": "taquinerie domestique",
+        "stage_2_complicite": "trace et gêne partagée",
+        "stage_3_intimite_naissante": "plus de trouble, mais Marie revient plus fort"
+      },
+      "risk_variants": {
+        "low": "plaisanterie défendable",
+        "medium": "photo ou souvenir à double sens",
+        "high": "question explicite sur garder/supprimer une trace"
+      }
+    },
+    "pauline": {
+      "display_name": "Pauline",
+      "base_voice": ["fausse innocence", "contrôle", "photos", "provocation sociale", "plaisir du cadrage"],
+      "stable_rules": [
+        "Sait parce qu’elle regarde ou possède une trace.",
+        "Teste plus qu’elle n’explique.",
+        "Privé récent avec Player, relation sociale via Marie/le groupe.",
+        "Ne doit pas être omnisciente."
+      ],
+      "can_evolve_toward": ["complicité privée", "danger dans les photos", "faille autour de son propre secret"],
+      "too_early_or_forbidden": ["tout savoir sans source", "révéler toute sa tromperie trop tôt", "surpuissance"],
+      "emoji_allowed": ["😇", "🙂", "🙄", "🙃", "😅"],
+      "emoji_max_default": 7,
+      "abstract_warning_words": ["preuve", "contrôle", "secret", "innocent"],
+      "good_anchor_words": ["photo", "tri", "zoom", "cadrage", "détail", "archives"],
+      "stage_variants": {
+        "stage_1_familiarite": "privé rare, test social",
+        "stage_2_complicite": "jeu de photos et sous-entendus",
+        "stage_3_intimite_naissante": "elle montre une faille sans perdre le contrôle"
+      },
+      "risk_variants": {
+        "low": "taquinerie sociale",
+        "medium": "photo ambiguë ou détail à trouver",
+        "high": "preuve faible, menace voilée, image gardée"
+      }
+    },
+    "raphaelle": {
+      "display_name": "Raphaëlle",
+      "base_voice": ["clarté concrète", "sobriété", "travail", "limite nette", "chaleur contenue"],
+      "stable_rules": [
+        "Observe par le concret : badge, dossier, agenda, notes, café, fatigue.",
+        "Ne parle pas comme une thérapeute.",
+        "Ne connaît pas ce qu’elle n’a pas vu.",
+        "Peut écouter, mais pas cacher."
+      ],
+      "can_evolve_toward": ["plus de chaleur", "inquiétude personnelle", "franchise si Player choisit la clarté"],
+      "too_early_or_forbidden": ["cachette romantique", "commenter une photo inconnue", "moraliser hors sol", "jalousie"],
+      "emoji_allowed": ["🙂", "😅"],
+      "emoji_max_default": 2,
+      "abstract_warning_words": ["vérité", "courage", "fuir", "clarté", "refuge", "cachette"],
+      "good_anchor_words": ["badge", "dossier", "agenda", "notes", "café", "fatigue", "travail", "Camille"],
+      "stage_variants": {
+        "stage_1_familiarite": "clarté professionnelle avec chaleur légère",
+        "stage_2_complicite": "elle remarque plus personnellement, mais garde le concret",
+        "stage_3_intimite_naissante": "plus de chaleur possible, limite toujours nette"
+      },
+      "risk_variants": {
+        "low": "observation de travail",
+        "medium": "elle voit que Player transporte quelque chose",
+        "high": "elle refuse clairement le rôle de cachette"
+      }
+    },
+    "nico": {
+      "display_name": "Nico",
+      "base_voice": ["simple", "social", "direct", "peu introspectif", "miroir autour de Marie"],
+      "stable_rules": [
+        "Pas une route Player.",
+        "Ne pas devenir méchant plat.",
+        "Pique par banalité ou compliment défendable.",
+        "Reste socialement plausible."
+      ],
+      "can_evolve_toward": ["plus de présence sociale", "plus de familiarité avec Marie", "plus de jalousie côté Player"],
+      "too_early_or_forbidden": ["menace explicite", "rival caricatural", "discours de séduction frontal"],
+      "emoji_allowed": [],
+      "emoji_max_default": 1,
+      "abstract_warning_words": ["rival", "menace", "désir"],
+      "good_anchor_words": ["story", "photo", "Marie", "groupe", "soirée"],
+      "stage_variants": {
+        "stage_1_familiarite": "commentaire social simple",
+        "stage_2_complicite": "familiarité avec Marie plus visible",
+        "stage_3_intimite_naissante": "non applicable comme route Player"
+      },
+      "risk_variants": {
+        "low": "commentaire défendable",
+        "medium": "regard ou story qui déclenche Player",
+        "high": "pression sociale sans intention explicitement hostile"
+      }
+    }
+  }
+}
