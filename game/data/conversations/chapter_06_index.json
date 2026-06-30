@@ -84,7 +84,7 @@
     "unlocks": {
       "chapter_06_marie_position": {
         "after_conversation_completed": "chapter_06_mathilde_trace_choice",
-        "time_label": "09:05",
+        "time_label": "15:08",
         "pending": true,
         "notification": {
           "title": "Marie",
