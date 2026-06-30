@@ -1,0 +1,242 @@
+{
+  "id": "chapter_07_marie_senses_difference",
+  "chapter": 7,
+  "day": 7,
+  "title": "Jour 7 — Marie sent une différence",
+  "app": "messages",
+  "design_goal": "Faire sentir que Marie perçoit une différence sans téléphone, sans grand concept et sans pousser Player à se justifier.",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "marie"
+    ],
+    "display_name": "Marie"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c07_marie_senses_difference_01",
+      "moment_label": "milieu de matinée",
+      "time_label": "10:42",
+      "transition_text": "Marie ne parle ni de téléphone ni de règle. Elle sent juste que Player revient d’une pièce où l’air était trop chaud.",
+      "availability_state": "Marie est calme, lucide, un peu inquiète ; elle mesure surtout la manière dont Player est là.",
+      "function": "Montrer que Marie perçoit un changement sans demander un grand aveu.",
+      "messages": [
+        {
+          "id": "msg_c07_marie_001",
+          "sender": "marie",
+          "time_label": "10:42",
+          "text": "Tu es bizarre."
+        },
+        {
+          "id": "msg_c07_marie_002",
+          "sender": "ludo",
+          "time_label": "10:42",
+          "text": "Bonjour à toi aussi."
+        },
+        {
+          "id": "msg_c07_marie_003",
+          "sender": "marie",
+          "time_label": "10:43",
+          "text": "Bonjour 😅 Mais bizarre quand même."
+        },
+        {
+          "id": "msg_c07_marie_004",
+          "sender": "ludo",
+          "time_label": "10:43",
+          "text": "Bizarre comment ?"
+        },
+        {
+          "id": "msg_c07_marie_005",
+          "sender": "marie",
+          "time_label": "10:44",
+          "text": "Pas coupable. Pas absent. Juste… comme si tu revenais d’une pièce où il faisait trop chaud."
+        },
+        {
+          "id": "msg_c07_marie_006",
+          "sender": "marie",
+          "time_label": "10:45",
+          "text": "Hier je cherchais ce que tu cachais. Aujourd’hui je regarde comment tu es là."
+        },
+        {
+          "id": "msg_c07_marie_007",
+          "sender": "ludo",
+          "time_label": "10:45",
+          "text": "Et je suis là comment ?"
+        },
+        {
+          "id": "msg_c07_marie_008",
+          "sender": "marie",
+          "time_label": "10:45",
+          "text": "Comme quelqu’un qui essaie d’avoir l’air normal. Et qui y arrive moyen."
+        },
+        {
+          "id": "msg_c07_marie_009",
+          "sender": "marie",
+          "time_label": "10:46",
+          "text": "Moi aussi je peux envoyer une preuve de normalité."
+        },
+        {
+          "id": "msg_c07_marie_010",
+          "sender": "marie",
+          "time_label": "10:46",
+          "text": "Photo simple. Sans pose de séduction.",
+          "content_id": "j7_marie_kitchen_still",
+          "content_behavior": "inline_preview"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c07_marie_honest",
+          "text": "J’ai eu un moment bizarre. Je ne sais pas encore quoi en faire. Mais je ne veux pas te mentir en disant que tout est normal.",
+          "tone": "truth",
+          "effects": {
+            "marie.trust": 2,
+            "truth_tendency": 1,
+            "lie_score": -1
+          },
+          "sets_flags": [
+            "j7_marie_honest"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_player_c07_marie_honest_001",
+              "sender": "ludo",
+              "time_label": "10:42",
+              "text": "J’ai eu un moment bizarre. Je ne sais pas encore quoi en faire. Mais je ne veux pas te mentir en disant que tout est normal."
+            },
+            {
+              "id": "msg_c07_marie_honest_001",
+              "sender": "marie",
+              "time_label": "10:47",
+              "text": "C’est déjà plus utile que ‘rien à signaler’."
+            },
+            {
+              "id": "msg_c07_marie_honest_002",
+              "sender": "marie",
+              "time_label": "10:47",
+              "text": "Je préfère ça. Même si ça me rend un peu nerveuse."
+            }
+          ]
+        },
+        {
+          "id": "choice_c07_marie_return",
+          "text": "Je suis là. Pas parfaitement. Mais j’ai envie de revenir vers toi.",
+          "tone": "reconnect",
+          "effects": {
+            "marie.trust": 2,
+            "marie_attention_score": 1
+          },
+          "sets_flags": [
+            "j7_marie_return"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_player_c07_marie_return_001",
+              "sender": "ludo",
+              "time_label": "10:42",
+              "text": "Je suis là. Pas parfaitement. Mais j’ai envie de revenir vers toi."
+            },
+            {
+              "id": "msg_c07_marie_return_001",
+              "sender": "marie",
+              "time_label": "10:47",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_c07_marie_return_002",
+              "sender": "marie",
+              "time_label": "10:47",
+              "text": "Ça, je le sens."
+            }
+          ]
+        },
+        {
+          "id": "choice_c07_marie_minimise",
+          "text": "Tu lis trop de choses. Je suis juste fatigué.",
+          "tone": "minimize",
+          "effects": {
+            "lie_score": 1,
+            "marie.lucidity": 1
+          },
+          "sets_flags": [
+            "j7_marie_minimized"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_player_c07_marie_minimize_001",
+              "sender": "ludo",
+              "time_label": "10:42",
+              "text": "Tu lis trop de choses. Je suis juste fatigué."
+            },
+            {
+              "id": "msg_c07_marie_minimize_001",
+              "sender": "marie",
+              "time_label": "10:47",
+              "text": "Je peux entendre ça."
+            },
+            {
+              "id": "msg_c07_marie_minimize_002",
+              "sender": "marie",
+              "time_label": "10:47",
+              "text": "Je peux surtout entendre que tu ne me donnes pas grand-chose."
+            }
+          ]
+        },
+        {
+          "id": "choice_c07_marie_nico",
+          "text": "Et toi ? Tu étais différente avec Nico aussi.",
+          "tone": "jealous",
+          "effects": {
+            "ludo_jealousy": 1,
+            "nico_surveillance_score": 1,
+            "marie.lucidity": 1
+          },
+          "sets_flags": [
+            "j7_marie_nico_refocus"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_player_c07_marie_nico_001",
+              "sender": "ludo",
+              "time_label": "10:42",
+              "text": "Et toi ? Tu étais différente avec Nico aussi."
+            },
+            {
+              "id": "msg_c07_marie_nico_001",
+              "sender": "marie",
+              "time_label": "10:47",
+              "text": "Nico m’a renvoyé une photo de groupe."
+            },
+            {
+              "id": "msg_player_c07_marie_nico_002",
+              "sender": "ludo",
+              "time_label": "10:47",
+              "text": "Nico ?"
+            },
+            {
+              "id": "msg_c07_marie_nico_003",
+              "sender": "marie",
+              "time_label": "10:48",
+              "text": "Oui. Rien de grave. Je te le dis avant que ça devienne un truc que tu imagines seul."
+            },
+            {
+              "id": "msg_player_c07_marie_nico_004",
+              "sender": "ludo",
+              "time_label": "10:48",
+              "text": "Merci."
+            },
+            {
+              "id": "msg_c07_marie_nico_005",
+              "sender": "marie",
+              "time_label": "10:48",
+              "text": "Garde ce merci. Il peut encore servir."
+            }
+          ]
+        }
+      ],
+      "debug_notes": "Marie reste lucide sans téléphone ni grand concept. Nico n’est qu’une ombre légère ; la photo de groupe reste secondaire."
+    }
+  ]
+}

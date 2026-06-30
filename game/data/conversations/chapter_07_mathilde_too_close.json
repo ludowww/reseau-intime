@@ -1,0 +1,393 @@
+{
+  "id": "chapter_07_mathilde_too_close",
+  "chapter": 7,
+  "day": 7,
+  "title": "Jour 7 — La pièce trop petite",
+  "app": "messages",
+  "thread": {
+    "id": "thread_mathilde_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "mathilde"
+    ],
+    "display_name": "Mathilde"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c07_mathilde_too_close_01",
+      "moment_label": "matin",
+      "time_label": "09:08",
+      "transition_text": "Mathilde remet la main sur un pull gris et sur un couloir un peu trop étroit pour que tout reste purement théorique.",
+      "availability_state": "Mathilde est taquine, gênée, corporelle ; elle fait comme si elle cherchait un objet banal alors qu’elle sent le trouble très concrètement.",
+      "function": "Installer une proximité domestique trop nette sans exiger de position explicite de Player.",
+      "messages": [
+        {
+          "id": "msg_c07_mathilde_001",
+          "sender": "mathilde",
+          "time_label": "09:08",
+          "text": "Mission du jour. Très importante. Presque héroïque 😇"
+        },
+        {
+          "id": "msg_c07_mathilde_002",
+          "sender": "ludo",
+          "time_label": "09:08",
+          "text": "Je dois avoir peur ?"
+        },
+        {
+          "id": "msg_c07_mathilde_003",
+          "sender": "mathilde",
+          "time_label": "09:09",
+          "text": "Un peu. Mais de façon raisonnable 🙃"
+        },
+        {
+          "id": "msg_c07_mathilde_004",
+          "sender": "ludo",
+          "time_label": "09:09",
+          "text": "Vas-y."
+        },
+        {
+          "id": "msg_c07_mathilde_005",
+          "sender": "mathilde",
+          "time_label": "09:10",
+          "text": "J’ai oublié mon pull gris chez vous. Celui qui a l’air nul mais qui est en fait parfait."
+        },
+        {
+          "id": "msg_c07_mathilde_006",
+          "sender": "mathilde",
+          "time_label": "09:10",
+          "text": "Le passage est petit."
+        },
+        {
+          "id": "msg_c07_mathilde_007",
+          "sender": "ludo",
+          "time_label": "09:10",
+          "text": "Je recule ?"
+        },
+        {
+          "id": "msg_c07_mathilde_008",
+          "sender": "mathilde",
+          "time_label": "09:10",
+          "text": "Non. Enfin si. Attends. Ne bouge plus."
+        },
+        {
+          "id": "msg_c07_mathilde_009",
+          "sender": "mathilde",
+          "time_label": "09:11",
+          "text": "Ok."
+        },
+        {
+          "id": "msg_c07_mathilde_010",
+          "sender": "ludo",
+          "time_label": "09:11",
+          "text": "Ça va ?"
+        },
+        {
+          "id": "msg_c07_mathilde_011",
+          "sender": "mathilde",
+          "time_label": "09:11",
+          "text": "Oui. Non. Enfin oui. C’est juste beaucoup de couloir pour si peu de couloir 😑"
+        },
+        {
+          "id": "msg_c07_mathilde_012",
+          "sender": "ludo",
+          "time_label": "09:12",
+          "text": "Mathilde."
+        },
+        {
+          "id": "msg_c07_mathilde_013",
+          "sender": "mathilde",
+          "time_label": "09:12",
+          "text": "Non. Pas ton “Mathilde” sérieux là."
+        },
+        {
+          "id": "msg_c07_mathilde_014",
+          "sender": "ludo",
+          "time_label": "09:12",
+          "text": "Je ne voulais pas—"
+        },
+        {
+          "id": "msg_c07_mathilde_015",
+          "sender": "mathilde",
+          "time_label": "09:12",
+          "text": "Je sais. C’est ça le problème."
+        },
+        {
+          "id": "msg_c07_mathilde_016",
+          "sender": "mathilde",
+          "time_label": "09:13",
+          "text": "J’étais venue chercher un pull. Un pull. Un objet ridicule avec des manches. Et maintenant on dirait que le couloir a une opinion sur ma vie 🙃"
+        },
+        {
+          "id": "msg_c07_mathilde_017",
+          "sender": "mathilde",
+          "time_label": "09:13",
+          "text": "Preuve de normalité.",
+          "content_id": "j7_mathilde_doorway_after",
+          "content_behavior": "inline_preview"
+        },
+        {
+          "id": "msg_c07_mathilde_018",
+          "sender": "ludo",
+          "time_label": "09:13",
+          "text": "Tu appelles ça normal ?"
+        },
+        {
+          "id": "msg_c07_mathilde_019",
+          "sender": "mathilde",
+          "time_label": "09:14",
+          "text": "Oui. Couloir. Pull. Air innocent. Mensonge très correct."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c07_mathilde_reculer",
+          "text": "Je vais reculer. Pas parce que ça ne me fait rien. Justement parce que ça me fait trop quelque chose.",
+          "tone": "restrained",
+          "effects": {
+            "mathilde.loyalty": 1,
+            "marie.trust": 1,
+            "truth_tendency": 1
+          },
+          "sets_flags": [
+            "j7_mathilde_choice_reculer"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_player_c07_mathilde_reculer_001",
+              "sender": "ludo",
+              "time_label": "09:08",
+              "text": "Je vais reculer. Pas parce que ça ne me fait rien. Justement parce que ça me fait trop quelque chose."
+            },
+            {
+              "id": "msg_c07_mathilde_reculer_001",
+              "sender": "mathilde",
+              "time_label": "09:15",
+              "text": "Bon."
+            },
+            {
+              "id": "msg_c07_mathilde_reculer_002",
+              "sender": "mathilde",
+              "time_label": "09:15",
+              "text": "Ça m’énerve un peu. Donc c’est probablement bien."
+            }
+          ]
+        },
+        {
+          "id": "choice_c07_mathilde_dire_desir",
+          "text": "Je ne vais pas te mentir. Quand tu étais là, tout près, j’ai eu envie de ne pas reculer. Je ne te demande rien. Mais je ne veux pas faire comme si c’était juste un couloir trop petit.",
+          "tone": "honest_desire",
+          "effects": {
+            "mathilde.desire": 1,
+            "lie_score": 1,
+            "marie.lucidity": 1
+          },
+          "sets_flags": [
+            "j7_mathilde_choice_desir"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_player_c07_mathilde_desir_001",
+              "sender": "ludo",
+              "time_label": "09:08",
+              "text": "Je ne vais pas te mentir. Quand tu étais là, tout près, j’ai eu envie de ne pas reculer. Je ne te demande rien. Mais je ne veux pas faire comme si c’était juste un couloir trop petit."
+            },
+            {
+              "id": "msg_c07_mathilde_desir_001",
+              "sender": "mathilde",
+              "time_label": "09:15",
+              "text": "Ça, au moins, c’est franchement compliqué."
+            },
+            {
+              "id": "msg_c07_mathilde_desir_002",
+              "sender": "mathilde",
+              "time_label": "09:15",
+              "text": "Et je déteste un peu que ça me plaise qu’on ne l’appelle pas autrement."
+            }
+          ]
+        },
+        {
+          "id": "choice_c07_mathilde_provoquer",
+          "text": "Tu dis que tu voulais juste passer. Mais tu n’as pas reculé tout de suite non plus.",
+          "tone": "provocative_physical",
+          "effects": {
+            "lie_score": 1,
+            "mathilde.desire": 2,
+            "marie.lucidity": 1
+          },
+          "sets_flags": [
+            "j7_mathilde_choice_provoquer"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_player_c07_mathilde_provoquer_001",
+              "sender": "ludo",
+              "time_label": "09:08",
+              "text": "Tu dis que tu voulais juste passer. Mais tu n’as pas reculé tout de suite non plus."
+            },
+            {
+              "id": "msg_c07_mathilde_provoquer_001",
+              "sender": "mathilde",
+              "time_label": "09:15",
+              "text": "Ah oui ?"
+            },
+            {
+              "id": "msg_c07_mathilde_provoquer_002",
+              "sender": "mathilde",
+              "time_label": "09:15",
+              "text": "Tu veux vraiment faire le malin dans un couloir qui a déjà gagné ? 🙃"
+            }
+          ]
+        },
+        {
+          "id": "choice_c07_mathilde_minimiser",
+          "text": "Je crois qu’on est juste gênés parce que le passage était petit. Il ne faut pas en faire plus que ça.",
+          "tone": "denial",
+          "effects": {
+            "mathilde.loyalty": -1,
+            "lie_score": 1,
+            "marie.lucidity": 1
+          },
+          "sets_flags": [
+            "j7_mathilde_choice_minimiser"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_player_c07_mathilde_minimiser_001",
+              "sender": "ludo",
+              "time_label": "09:08",
+              "text": "Je crois qu’on est juste gênés parce que le passage était petit. Il ne faut pas en faire plus que ça."
+            },
+            {
+              "id": "msg_c07_mathilde_minimiser_001",
+              "sender": "mathilde",
+              "time_label": "09:15",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_c07_mathilde_minimiser_002",
+              "sender": "mathilde",
+              "time_label": "09:16",
+              "text": "C’est toujours plus simple quand on décide que le corps a mal compris."
+            }
+          ]
+        }
+      ],
+      "conditional_aftershocks": [
+        {
+          "id": "aftershock_mathilde_restrained",
+          "conditions": [
+            "j6_player_posture_restrained"
+          ],
+          "thread_id": "thread_mathilde_private",
+          "messages": [
+            {
+              "id": "msg_c07_mathilde_after_restrained_001",
+              "sender": "mathilde",
+              "time_label": "09:17",
+              "text": "Le pire, c’est que tu avais été plutôt bien hier. Si tu avais été nul, j’aurais pu te ranger dans “problème simple”. Là c’est agaçant. Parce que tu fais attention. Et même quand tu fais attention… quand tu es trop près… ça ne devient pas rien."
+            }
+          ],
+          "effects": {
+            "mathilde.loyalty": 1,
+            "mathilde.desire": 1
+          }
+        },
+        {
+          "id": "aftershock_mathilde_kept",
+          "conditions": [
+            "mathilde_trace_kept OR j6_hiding_risk_with_marie"
+          ],
+          "thread_id": "thread_mathilde_private",
+          "messages": [
+            {
+              "id": "msg_c07_mathilde_after_kept_001",
+              "sender": "mathilde",
+              "time_label": "09:17",
+              "text": "Si tu as gardé quelque chose d’hier… ne réponds pas tout de suite. Parce que j’ai envie de savoir. Et pas envie. Et j’aimerais beaucoup que mes deux versions arrêtent de se battre dans ma tête 😑 Avant c’était une photo. Là c’était toi. Et moi. Et beaucoup trop peu d’air entre les deux."
+            }
+          ],
+          "effects": {
+            "mathilde.desire": 1,
+            "lie_score": 1
+          }
+        },
+        {
+          "id": "aftershock_mathilde_lied",
+          "conditions": [
+            "mathilde_trace_lied_about OR broken_trust_seed_j6"
+          ],
+          "thread_id": "thread_mathilde_private",
+          "messages": [
+            {
+              "id": "msg_c07_mathilde_after_lied_001",
+              "sender": "mathilde",
+              "time_label": "09:17",
+              "text": "Si tu m’as menti hier… je ne veux pas vérifier maintenant. Parce que là, si tu mens, je vais me sentir idiote. Et je déteste me sentir idiote quand j’ai encore le cœur au mauvais endroit. Alors ne le fais pas. Pas avec moi. Pas comme ça."
+            }
+          ],
+          "effects": {
+            "mathilde.loyalty": -1,
+            "lie_score": 1
+          }
+        },
+        {
+          "id": "aftershock_mathilde_marie",
+          "conditions": [
+            "j6_mathilde_loyalty_conflict"
+          ],
+          "thread_id": "thread_mathilde_private",
+          "messages": [
+            {
+              "id": "msg_c07_mathilde_after_marie_001",
+              "sender": "mathilde",
+              "time_label": "09:17",
+              "text": "Tu vois ce qui m’énerve ? Marie. Elle n’est pas là. Et elle est là quand même. J’étais venue chercher un pull gris. Et maintenant je suis là à me demander si je dois m’excuser auprès de ma cousine ou auprès du pull 😑 Je n’ai rien fait. Mais j’ai senti que je pouvais. Et c’est déjà beaucoup trop."
+            }
+          ],
+          "effects": {
+            "mathilde.loyalty": 1,
+            "marie.trust": 1
+          }
+        }
+      ],
+      "default_aftershock": {
+        "thread_id": "thread_mathilde_private",
+        "messages": [
+          {
+            "id": "msg_c07_mathilde_after_default_001",
+            "sender": "mathilde",
+            "time_label": "09:17",
+            "text": "Bon. Je mets le pull."
+          },
+          {
+            "id": "msg_c07_mathilde_after_default_002",
+            "sender": "ludo",
+            "time_label": "09:17",
+            "text": "C’était le but."
+          },
+          {
+            "id": "msg_c07_mathilde_after_default_003",
+            "sender": "mathilde",
+            "time_label": "09:18",
+            "text": "Oui. Et aussi avoir l’air normale. Deux objectifs. Un seul réussi, probablement 😇"
+          },
+          {
+            "id": "msg_c07_mathilde_after_default_004",
+            "sender": "ludo",
+            "time_label": "09:18",
+            "text": "Le pull ?"
+          },
+          {
+            "id": "msg_c07_mathilde_after_default_005",
+            "sender": "mathilde",
+            "time_label": "09:18",
+            "text": "Le pull. Évidemment. Bonne fin d’après-midi Player. Et évite le couloir. Zone à risque. Signalisation officielle 👀"
+          }
+        ],
+        "effects": {}
+      }
+    }
+  ],
+  "debug_notes": "J7 Mathilde garde la scène domestique trop proche, mais n’appelle pas de position explicite. Les aftershocks branchent les variantes J6 sans renommer Marie."
+}

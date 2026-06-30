@@ -1,0 +1,176 @@
+{
+  "id": "chapter_07_pauline_less_theoretical",
+  "chapter": 7,
+  "day": 7,
+  "title": "Jour 7 — Pauline moins théorique",
+  "app": "messages",
+  "design_goal": "Finir la journée sur une observation courte, piquante et contrôlée sans prétendre savoir ce que Player n’a pas montré.",
+  "thread": {
+    "id": "thread_pauline_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "pauline"
+    ],
+    "display_name": "Pauline"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c07_pauline_less_theoretical_01",
+      "moment_label": "soir",
+      "time_label": "20:14",
+      "transition_text": "Pauline est brève, piquante, et assez contrôlée pour ne pas prétendre savoir ce qu’elle n’a pas vu.",
+      "availability_state": "Pauline reste non omnisciente ; elle observe le changement de Player sans le surinterpréter.",
+      "function": "Finir la journée sur une observation courte qui pique sans tout dévoiler.",
+      "messages": [
+        {
+          "id": "msg_c07_pauline_001",
+          "sender": "pauline",
+          "time_label": "20:14",
+          "text": "Tu as l’air moins théorique aujourd’hui. 👀"
+        },
+        {
+          "id": "msg_c07_pauline_002",
+          "sender": "ludo",
+          "time_label": "20:14",
+          "text": "Bonjour Pauline."
+        },
+        {
+          "id": "msg_c07_pauline_003",
+          "sender": "pauline",
+          "time_label": "20:14",
+          "text": "Bonjour 😇"
+        },
+        {
+          "id": "msg_c07_pauline_004",
+          "sender": "pauline",
+          "time_label": "20:15",
+          "text": "D’habitude, tu écris comme quelqu’un qui croit encore pouvoir tout ranger dans des petites cases."
+        },
+        {
+          "id": "msg_c07_pauline_005",
+          "sender": "ludo",
+          "time_label": "20:15",
+          "text": "Et aujourd’hui ?"
+        },
+        {
+          "id": "msg_c07_pauline_006",
+          "sender": "pauline",
+          "time_label": "20:15",
+          "text": "Aujourd’hui, on dirait que la boîte est tombée."
+        },
+        {
+          "id": "msg_c07_pauline_007",
+          "sender": "ludo",
+          "time_label": "20:16",
+          "text": "Tu ne sais pas tout."
+        },
+        {
+          "id": "msg_c07_pauline_008",
+          "sender": "pauline",
+          "time_label": "20:16",
+          "text": "Heureusement. Les gens qui savent tout sont insupportables. Moi, je préfère savoir juste assez 👀"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c07_pauline_cut",
+          "text": "Je ne vais pas commenter ça avec toi.",
+          "tone": "boundary",
+          "effects": {
+            "pauline.control": -1,
+            "truth_tendency": 1
+          },
+          "sets_flags": [
+            "j7_pauline_cut"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_player_c07_pauline_cut_001",
+              "sender": "ludo",
+              "time_label": "20:14",
+              "text": "Je ne vais pas commenter ça avec toi."
+            },
+            {
+              "id": "msg_c07_pauline_cut_001",
+              "sender": "pauline",
+              "time_label": "20:16",
+              "text": "Sage."
+            },
+            {
+              "id": "msg_c07_pauline_cut_002",
+              "sender": "pauline",
+              "time_label": "20:16",
+              "text": "Je vais quand même regarder ta tête quand tu essaieras de faire l’indifférent 😇"
+            }
+          ]
+        },
+        {
+          "id": "choice_c07_pauline_observe",
+          "text": "Et tu crois voir quoi exactement ?",
+          "tone": "probe",
+          "effects": {
+            "pauline.interest": 1,
+            "pauline.control": 1
+          },
+          "sets_flags": [
+            "j7_pauline_probe"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_player_c07_pauline_observe_001",
+              "sender": "ludo",
+              "time_label": "20:14",
+              "text": "Et tu crois voir quoi exactement ?"
+            },
+            {
+              "id": "msg_c07_pauline_observe_001",
+              "sender": "pauline",
+              "time_label": "20:16",
+              "text": "Assez pour savoir que ça te travaille."
+            },
+            {
+              "id": "msg_c07_pauline_observe_002",
+              "sender": "pauline",
+              "time_label": "20:16",
+              "text": "Pas assez pour te faire un procès. Pas encore 🙃"
+            }
+          ]
+        },
+        {
+          "id": "choice_c07_pauline_provoke",
+          "text": "Tu aimes bien me voir perdre le contrôle.",
+          "tone": "provocative",
+          "effects": {
+            "pauline_risk_score": 1,
+            "pauline.control": 1
+          },
+          "sets_flags": [
+            "j7_pauline_provoked"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_player_c07_pauline_provoke_001",
+              "sender": "ludo",
+              "time_label": "20:14",
+              "text": "Tu aimes bien me voir perdre le contrôle."
+            },
+            {
+              "id": "msg_c07_pauline_provoke_001",
+              "sender": "pauline",
+              "time_label": "20:16",
+              "text": "J’aime surtout voir quand ça commence."
+            },
+            {
+              "id": "msg_c07_pauline_provoke_002",
+              "sender": "pauline",
+              "time_label": "20:16",
+              "text": "Après, on compare les dégâts 👀"
+            }
+          ]
+        }
+      ],
+      "debug_notes": "Pauline reste courte, piquante, contrôlée et non omnisciente."
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "id": "chapter_07_proof_placeholders",
+  "version": 1,
+  "notes": "J7 ajoute trois placeholders : l’encadrement de porte Mathilde, la cuisine calme de Marie et la lampe basse de Sandra.",
+  "items": [
+    {
+      "id": "j7_mathilde_doorway_after",
+      "character": "mathilde",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/j7_mathilde_doorway_after.png",
+      "context": "Mathilde dans l’encadrement d’une porte après une scène de proximité ; pull récupéré ; sourire de défense ; regard fuyant ; tenue normale, pas explicite mais pas neutre.",
+      "tags": [
+        "mathilde",
+        "doorway",
+        "pull",
+        "defensive",
+        "domestic"
+      ],
+      "is_proof": false,
+      "risk_level": 2,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": [
+        "mathilde",
+        "marie"
+      ]
+    },
+    {
+      "id": "j7_marie_kitchen_still",
+      "character": "marie",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/j7_marie_kitchen_still.png",
+      "context": "Marie dans la cuisine ; photo simple ; présence calme ; pas une pose de séduction.",
+      "tags": [
+        "marie",
+        "kitchen",
+        "still",
+        "calm",
+        "daily"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": [
+        "marie"
+      ]
+    },
+    {
+      "id": "j7_sandra_lamp_soft",
+      "character": "sandra",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/j7_sandra_lamp_soft.png",
+      "context": "Sandra chez elle ; lumière basse ; coin de canapé, tasse et lampe ; photo douce, non spectaculaire.",
+      "tags": [
+        "sandra",
+        "lamp",
+        "soft",
+        "sofa",
+        "calm"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": [
+        "sandra",
+        "marie"
+      ]
+    }
+  ]
+}

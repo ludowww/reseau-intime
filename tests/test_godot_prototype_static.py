@@ -42,8 +42,10 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             "res://data/conversations/chapter_02_index.json",
             "res://data/conversations/chapter_03_index.json",
             "res://data/conversations/chapter_04_index.json",
+            "res://data/conversations/chapter_07_index.json",
             "res://data/visual_content/placeholders.json",
             "res://data/visual_content/chapter_04_proofs.json",
+            "res://data/visual_content/chapter_07_proofs.json",
         ]:
             self.assertIn(required, loader)
 
@@ -548,6 +550,23 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             self.assertIn(expected, loader)
         grouping_entry = loader[loader.index("func _group_segmented_conversations"):loader.index("func _group_conversations_by_thread")]
         self.assertNotIn("entries.append(get_segmented_conversation_entry(conversation))", grouping_entry)
+
+    def test_day7_index_keeps_one_visible_thread_per_character_and_ma_cousine_correction(self):
+        index = json.loads((GAME / "data/conversations/chapter_07_index.json").read_text(encoding="utf-8"))
+        availability = index.get("conversation_availability", {})
+        self.assertEqual(availability.get("initial_conversation_ids"), ["chapter_07_mathilde_too_close"])
+        unlocks = availability.get("unlocks", {})
+        self.assertEqual(unlocks.get("chapter_07_marie_senses_difference", {}).get("after_conversation_completed"), "chapter_07_mathilde_too_close")
+        self.assertEqual(unlocks.get("chapter_07_sandra_lamp_soft", {}).get("after_conversation_completed"), "chapter_07_marie_senses_difference")
+        self.assertEqual(unlocks.get("chapter_07_pauline_less_theoretical", {}).get("after_conversation_completed"), "chapter_07_sandra_lamp_soft")
+        self.assertEqual(index.get("routes_available"), ["marie", "mathilde", "sandra", "pauline"])
+        self.assertEqual(index.get("routes_locked_to_seed_only"), ["nico_marie"])
+
+        mathilde = json.loads((GAME / "data/conversations/chapter_07_mathilde_too_close.json").read_text(encoding="utf-8"))
+        self.assertEqual(mathilde.get("thread", {}).get("id"), "thread_mathilde_private")
+        self.assertEqual(mathilde.get("segments", [])[0].get("messages", [])[0].get("text"), "Mission du jour. Très importante. Presque héroïque 😇")
+        self.assertIn("ma cousine", json.dumps(mathilde, ensure_ascii=False))
+        self.assertNotIn("meilleure amie", json.dumps(mathilde, ensure_ascii=False))
 
     def test_phone_availability_and_pending_use_episode_ids_inside_visible_threads(self):
         script = (GAME / "scripts" / "ui" / "PhonePrototype.gd").read_text(encoding="utf-8")

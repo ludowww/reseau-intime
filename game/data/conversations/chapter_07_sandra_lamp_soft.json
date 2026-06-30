@@ -1,0 +1,172 @@
+{
+  "id": "chapter_07_sandra_lamp_soft",
+  "chapter": 7,
+  "day": 7,
+  "title": "Jour 7 — Sandra sous lampe basse",
+  "app": "messages",
+  "design_goal": "Installer une douceur de fin d’après-midi sans escalade et sans repousser la confidence à plus tard.",
+  "thread": {
+    "id": "thread_sandra_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "sandra"
+    ],
+    "display_name": "Sandra"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c07_sandra_lamp_soft_01",
+      "moment_label": "après-midi",
+      "time_label": "15:31",
+      "transition_text": "Sandra reste douce. Elle n’accélère pas, mais elle ne laisse plus la discussion flotter.",
+      "availability_state": "Sandra est retenue, embarrassée juste ce qu’il faut ; elle veut une confidence courte, pas une escalade.",
+      "function": "Faire tenir une douceur de fin d’après-midi sans repousser tout à plus tard.",
+      "messages": [
+        {
+          "id": "msg_c07_sandra_001",
+          "sender": "sandra",
+          "time_label": "15:31",
+          "text": "J’ai une question pas trop dramatique."
+        },
+        {
+          "id": "msg_c07_sandra_002",
+          "sender": "ludo",
+          "time_label": "15:31",
+          "text": "Ça existe ?"
+        },
+        {
+          "id": "msg_c07_sandra_003",
+          "sender": "sandra",
+          "time_label": "15:32",
+          "text": "Rarement. Mais j’essaie d’être une adulte variée 😅"
+        },
+        {
+          "id": "msg_c07_sandra_004",
+          "sender": "sandra",
+          "time_label": "15:32",
+          "text": "Quand on se dit des trucs un peu vrais… on est obligés de faire les courageux après ?"
+        },
+        {
+          "id": "msg_c07_sandra_005",
+          "sender": "ludo",
+          "time_label": "15:32",
+          "text": "Je ne crois pas."
+        },
+        {
+          "id": "msg_c07_sandra_006",
+          "sender": "sandra",
+          "time_label": "15:33",
+          "text": "Tant mieux. Je ne suis pas dispo pour être courageuse à plein temps 🙂"
+        },
+        {
+          "id": "msg_c07_sandra_007",
+          "sender": "sandra",
+          "time_label": "15:33",
+          "text": "Photo calme. Pas spectaculaire. Pas juridique. Juste moi avec une lampe qui menace de mourir.",
+          "content_id": "j7_sandra_lamp_soft",
+          "content_behavior": "inline_preview"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c07_sandra_douce",
+          "text": "Elle me plaît parce qu’elle ne force rien. J’aime bien te voir comme ça.",
+          "tone": "soft",
+          "effects": {
+            "sandra.attachment": 1,
+            "truth_tendency": 1
+          },
+          "sets_flags": [
+            "j7_sandra_soft_received"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_player_c07_sandra_douce_001",
+              "sender": "ludo",
+              "time_label": "15:31",
+              "text": "Elle me plaît parce qu’elle ne force rien. J’aime bien te voir comme ça."
+            },
+            {
+              "id": "msg_c07_sandra_douce_001",
+              "sender": "sandra",
+              "time_label": "15:34",
+              "text": "Ça me rassure un peu."
+            },
+            {
+              "id": "msg_c07_sandra_douce_002",
+              "sender": "sandra",
+              "time_label": "15:34",
+              "text": "Et ça me fait aussi un peu rougir, ce qui est très peu pratique 😅"
+            }
+          ]
+        },
+        {
+          "id": "choice_c07_sandra_flirt_soft",
+          "text": "Même calme, tu arrives à me rester dans la tête.",
+          "tone": "gentle_flirt",
+          "effects": {
+            "sandra.attachment": 2,
+            "sandra_priority_score": 1
+          },
+          "sets_flags": [
+            "j7_sandra_soft_flirt"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_player_c07_sandra_flirt_001",
+              "sender": "ludo",
+              "time_label": "15:31",
+              "text": "Même calme, tu arrives à me rester dans la tête."
+            },
+            {
+              "id": "msg_c07_sandra_flirt_001",
+              "sender": "sandra",
+              "time_label": "15:34",
+              "text": "Je vais prendre ça comme un compliment prudent."
+            },
+            {
+              "id": "msg_c07_sandra_flirt_002",
+              "sender": "sandra",
+              "time_label": "15:34",
+              "text": "Ce qui est probablement le genre de compliment que je préfère ici."
+            }
+          ]
+        },
+        {
+          "id": "choice_c07_sandra_sage",
+          "text": "Je crois qu’il vaut mieux qu’on garde ça très sage.",
+          "tone": "restrained",
+          "effects": {
+            "truth_tendency": 1,
+            "lie_score": -1
+          },
+          "sets_flags": [
+            "j7_sandra_sage"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_player_c07_sandra_sage_001",
+              "sender": "ludo",
+              "time_label": "15:31",
+              "text": "Je crois qu’il vaut mieux qu’on garde ça très sage."
+            },
+            {
+              "id": "msg_c07_sandra_sage_001",
+              "sender": "sandra",
+              "time_label": "15:34",
+              "text": "D’accord."
+            },
+            {
+              "id": "msg_c07_sandra_sage_002",
+              "sender": "sandra",
+              "time_label": "15:34",
+              "text": "Je vais faire semblant que ça ne me déçoit pas trop. Très mal, sans doute."
+            }
+          ]
+        }
+      ],
+      "debug_notes": "Sandra reste douce et retenue ; aucune escalade, pas de 'plus tard' dominant."
+    }
+  ]
+}

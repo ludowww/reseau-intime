@@ -1,0 +1,115 @@
+{
+  "id": "chapter_07_index",
+  "chapter": 7,
+  "day": 7,
+  "title": "Jour 7 — La pièce trop petite",
+  "description": "Le geste de J6 n’a pas calmé le trouble : il l’a rendu plus concret. Mathilde ouvre la journée dans un passage trop étroit, Marie sent Player différent, Sandra reste douce et Pauline observe sans omniscience.",
+  "design_goal": "Installer une scène domestique trop proche sans demander de position explicite, puis dérouler quatre threads visibles avec une progression calme et piquante.",
+  "moment_flow": [
+    {
+      "moment_label": "matin",
+      "time_label": "09:08",
+      "transition_text": "Mathilde retrouve Player dans un passage trop étroit pour faire semblant que la veille n’a rien laissé.",
+      "conversation_ids": [
+        "chapter_07_mathilde_too_close"
+      ]
+    },
+    {
+      "moment_label": "milieu de matinée",
+      "time_label": "10:42",
+      "transition_text": "Marie regarde comment Player est là, pas seulement ce qu’il dit.",
+      "conversation_ids": [
+        "chapter_07_marie_senses_difference"
+      ]
+    },
+    {
+      "moment_label": "après-midi",
+      "time_label": "15:31",
+      "transition_text": "Sandra garde la douceur, mais elle cesse de laisser le temps faire le travail à sa place.",
+      "conversation_ids": [
+        "chapter_07_sandra_lamp_soft"
+      ]
+    },
+    {
+      "moment_label": "soir",
+      "time_label": "20:14",
+      "transition_text": "Pauline reste courte, piquante, et manifestement attentive à ce que Player essaie de ne pas montrer.",
+      "conversation_ids": [
+        "chapter_07_pauline_less_theoretical"
+      ]
+    }
+  ],
+  "conversation_files": [
+    "res://data/conversations/chapter_07_mathilde_too_close.json",
+    "res://data/conversations/chapter_07_marie_senses_difference.json",
+    "res://data/conversations/chapter_07_sandra_lamp_soft.json",
+    "res://data/conversations/chapter_07_pauline_less_theoretical.json"
+  ],
+  "proof_content_files": [
+    "res://data/visual_content/chapter_07_proofs.json"
+  ],
+  "required_reveals": [
+    "Mathilde vit une proximité domestique trop concrète, sans demande explicite de positionnement.",
+    "Marie sent que Player est différent et ne parle ni du téléphone ni d’un grand concept.",
+    "Sandra reste douce, retenue et sans escalade.",
+    "Pauline observe sans omniscience et garde un ton contrôlé.",
+    "Nico reste une ombre légère via Marie.",
+    "La correction 'ma cousine' est respectée.",
+    "Raphaëlle n’est pas ajoutée en J7."
+  ],
+  "routes_available": [
+    "marie",
+    "mathilde",
+    "sandra",
+    "pauline"
+  ],
+  "routes_locked_to_seed_only": [
+    "nico_marie"
+  ],
+  "debug_expected_outcomes": [
+    "J7 s’enchaîne depuis J6 sans refactor runtime.",
+    "Mathilde ne demande pas de position explicite trop tôt.",
+    "Marie, Sandra et Pauline restent cohérentes avec leurs tons respectifs.",
+    "Le contenu visuel J7 reste en placeholders neutres.",
+    "Aucun pivot Raphaëlle n’apparaît dans la journée."
+  ],
+  "conversation_availability": {
+    "initial_conversation_ids": [
+      "chapter_07_mathilde_too_close"
+    ],
+    "locked_conversation_ids": [
+      "chapter_07_marie_senses_difference",
+      "chapter_07_sandra_lamp_soft",
+      "chapter_07_pauline_less_theoretical"
+    ],
+    "unlocks": {
+      "chapter_07_marie_senses_difference": {
+        "after_conversation_completed": "chapter_07_mathilde_too_close",
+        "time_label": "10:42",
+        "pending": true,
+        "notification": {
+          "title": "Marie",
+          "body": "Tu es bizarre."
+        }
+      },
+      "chapter_07_sandra_lamp_soft": {
+        "after_conversation_completed": "chapter_07_marie_senses_difference",
+        "time_label": "15:31",
+        "pending": true,
+        "notification": {
+          "title": "Sandra",
+          "body": "Question pas trop dramatique."
+        }
+      },
+      "chapter_07_pauline_less_theoretical": {
+        "after_conversation_completed": "chapter_07_sandra_lamp_soft",
+        "time_label": "20:14",
+        "pending": true,
+        "notification": {
+          "title": "Pauline",
+          "body": "Tu as l’air moins théorique aujourd’hui."
+        }
+      }
+    }
+  }
+}
