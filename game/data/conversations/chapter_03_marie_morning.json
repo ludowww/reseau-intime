@@ -43,7 +43,15 @@
         {
           "id": "choice_c03_marie_morning_01_guided",
           "text": "Je suis là. Je démarre juste lentement.",
-          "tone": "guided_reply"
+          "tone": "guided_reply",
+          "next_messages": [
+            {
+              "id": "choice_c03_marie_morning_01_guided_player_001",
+              "sender": "ludo",
+              "time_label": "08:12",
+              "text": "Je suis là. Je démarre juste lentement."
+            }
+          ]
         }
       ]
     },
@@ -91,6 +99,12 @@
             "player_returned_home_j3"
           ],
           "next_messages": [
+            {
+              "id": "choice_c03_marie_morning_02_1_player_001",
+              "sender": "ludo",
+              "time_label": "08:14",
+              "text": "Viens là. Je n’ai pas envie d’être loin de toi."
+            },
             {
               "id": "msg_c03_marie_morning_02_1_01",
               "sender": "marie",
@@ -248,6 +262,12 @@
             "photo_marie_home_j3_received"
           ],
           "next_messages": [
+            {
+              "id": "choice_c03_marie_morning_04_1_player_001",
+              "sender": "ludo",
+              "time_label": "08:18",
+              "text": "Oui. Et je vais la regarder vraiment."
+            },
             {
               "id": "msg_c03_marie_morning_04_1_01",
               "sender": "marie",

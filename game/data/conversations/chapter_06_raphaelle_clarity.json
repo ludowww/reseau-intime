@@ -75,6 +75,12 @@
           ],
           "next_messages": [
             {
+              "id": "choice_c06_raphaelle_choose_clarity_player_001",
+              "sender": "ludo",
+              "time_label": "19:35",
+              "text": "Choisir la clarté."
+            },
+            {
               "id": "msg_c06_raphaelle_clarity_001",
               "sender": "raphaelle",
               "time_label": "19:35",
@@ -107,6 +113,12 @@
             "j6_raphaelle_refuge_refused"
           ],
           "next_messages": [
+            {
+              "id": "choice_c06_raphaelle_seek_refuge_player_001",
+              "sender": "ludo",
+              "time_label": "19:35",
+              "text": "Chercher un refuge."
+            },
             {
               "id": "msg_c06_raphaelle_refuge_001",
               "sender": "raphaelle",
@@ -173,6 +185,12 @@
             "j6_truth_return_to_marie"
           ],
           "next_messages": [
+            {
+              "id": "choice_c06_raphaelle_marie_player_001",
+              "sender": "ludo",
+              "time_label": "19:35",
+              "text": "Je dois d’abord régler ça avec Marie."
+            },
             {
               "id": "msg_c06_raphaelle_marie_001",
               "sender": "raphaelle",
