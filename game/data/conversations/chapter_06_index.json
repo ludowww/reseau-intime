@@ -2,128 +2,111 @@
   "id": "chapter_06_index",
   "chapter": 6,
   "day": 6,
-  "title": "Jour 6 — Les photos ont des conséquences",
-  "description": "Le lendemain des premières preuves faibles : les images ne révèlent pas tout, mais elles changent déjà la façon dont Player agit, esquive ou revient.",
-  "design_goal": "Faire sentir les conséquences concrètes de J5 sans avalanche de nouvelles photos, sans preuve définitive et sans route verrouillée.",
+  "title": "Jour 6 — Le choix de la trace",
+  "description": "Après J5, Player doit décider quoi faire d’une trace, Marie sent sa position, Pauline teste le prix du silence et Sandra réclame une vraie honnêteté.",
+  "design_goal": "Faire sentir un acte concret de Player, sans surcharge ni Raphaëlle, avec quatre photos plus utiles que spectaculaires.",
   "moment_flow": [
     {
-      "moment_label": "matin",
-      "time_label": "08:27",
-      "transition_text": "Marie ne demande pas une explication complète. Elle regarde si Player revient vraiment vers elle.",
+      "moment_label": "après-midi",
+      "time_label": "14:36",
+      "transition_text": "Mathilde force une décision sur la trace : garder, supprimer, mentir ou assumer.",
       "conversation_ids": [
-        "chapter_06_marie_morning"
-      ]
-    },
-    {
-      "moment_label": "milieu de matinée",
-      "time_label": "10:41",
-      "transition_text": "Pauline n’envoie pas une nouvelle preuve. Elle rappelle surtout que ce qui est gardé continue d’exister.",
-      "conversation_ids": [
-        "chapter_06_pauline_kept_photos"
+        "chapter_06_mathilde_trace_choice"
       ]
     },
     {
       "moment_label": "après-midi",
-      "time_label": "14:36",
-      "transition_text": "Mathilde transforme la trace en question de limite : garder, effacer, ou faire semblant que ce n’est qu’un jeu.",
+      "time_label": "15:08",
+      "transition_text": "Marie sent que Player a pris une position et demande si elle est dedans.",
       "conversation_ids": [
-        "chapter_06_mathilde_trace"
+        "chapter_06_marie_position"
       ]
     },
     {
       "moment_label": "fin d’après-midi",
       "time_label": "17:18",
-      "transition_text": "Sandra revient sans réclamer de place. Le “plus tard” commence à devenir une habitude qu’elle refuse d’habiter.",
+      "transition_text": "Pauline mesure le prix du silence et garde le contrôle sans tout révéler.",
       "conversation_ids": [
-        "chapter_06_sandra_later_echo"
+        "chapter_06_pauline_silence_price"
       ]
     },
     {
       "moment_label": "soir",
-      "time_label": "19:32",
-      "transition_text": "Raphaëlle garde le fil du concret. Elle voit si Player cherche la clarté ou seulement un endroit pratique.",
+      "time_label": "21:04",
+      "transition_text": "Sandra réclame une chose honnête contre une photo du soir plus douce.",
       "conversation_ids": [
-        "chapter_06_raphaelle_clarity"
+        "chapter_06_sandra_one_truth"
       ]
     }
   ],
   "conversation_files": [
+    "res://data/conversations/chapter_06_mathilde_trace.json",
     "res://data/conversations/chapter_06_marie_morning.json",
     "res://data/conversations/chapter_06_pauline_kept_photos.json",
-    "res://data/conversations/chapter_06_mathilde_trace.json",
-    "res://data/conversations/chapter_06_sandra_later_echo.json",
-    "res://data/conversations/chapter_06_raphaelle_clarity.json"
+    "res://data/conversations/chapter_06_sandra_later_echo.json"
   ],
-  "proof_content_files": [],
+  "proof_content_files": [
+    "res://data/visual_content/chapter_06_proofs.json"
+  ],
   "required_reveals": [
-    "Les photos J5 ne sont pas de nouvelles révélations finales, mais des choses qui modifient déjà les comportements.",
-    "Marie vérifie si Player revient vers elle ou surveille encore son téléphone.",
-    "Pauline rappelle que garder une image change le rapport de force, sans tout révéler.",
-    "Mathilde force doucement Player à nommer ce qu’il fait de la trace.",
-    "Sandra refuse de devenir un “plus tard” permanent.",
-    "Raphaëlle reste concrète et refuse le refuge pratique."
+    "Mathilde force Player à nommer ce qu’il fait de la trace.",
+    "Marie sent qu’une position a été prise sans parler du téléphone.",
+    "Pauline teste le prix du silence et reste dangereuse.",
+    "Sandra avance vers le vrai jeu confidence/photo.",
+    "Raphaëlle est absente pour éviter la surcharge."
   ],
   "routes_available": [
     "marie",
-    "pauline",
     "mathilde",
-    "sandra",
-    "raphaelle"
+    "pauline",
+    "sandra"
   ],
   "routes_locked_to_seed_only": [
     "nico_marie"
   ],
   "debug_expected_outcomes": [
-    "J6 apparaît après J5 sans nouveau système UI.",
-    "J6 réutilise les preuves faibles existantes au lieu d’ajouter une avalanche de visuels.",
-    "Aucune route n’est verrouillée ou consommée.",
-    "Raphaëlle ne connaît pas les photos de Pauline et reste ancrée dans le travail."
+    "J6 apparaît après J5 sans refactor runtime ni nouveau système UI.",
+    "Player fait un acte concret sur une trace.",
+    "Marie ne parle pas du téléphone.",
+    "Pauline reste secondaire mais dangereuse.",
+    "Sandra n’est plus un simple plus tard.",
+    "Raphaëlle ne surcharge pas la journée."
   ],
   "conversation_availability": {
     "initial_conversation_ids": [
-      "chapter_06_marie_morning"
+      "chapter_06_mathilde_trace_choice"
     ],
     "locked_conversation_ids": [
-      "chapter_06_pauline_kept_photos",
-      "chapter_06_mathilde_trace",
-      "chapter_06_sandra_later_echo",
-      "chapter_06_raphaelle_clarity"
+      "chapter_06_marie_position",
+      "chapter_06_pauline_silence_price",
+      "chapter_06_sandra_one_truth"
     ],
     "unlocks": {
-      "chapter_06_pauline_kept_photos": {
-        "after_conversation_completed": "chapter_06_marie_morning",
-        "time_label": "10:41",
+      "chapter_06_marie_position": {
+        "after_conversation_completed": "chapter_06_mathilde_trace_choice",
+        "time_label": "15:08",
         "pending": true,
         "notification": {
-          "title": "Pauline",
-          "body": "Je n’ai rien envoyé. C’est justement le problème."
+          "title": "Marie",
+          "body": "J’ai racheté du pain."
         }
       },
-      "chapter_06_mathilde_trace": {
-        "after_conversation_completed": "chapter_06_pauline_kept_photos",
-        "time_label": "14:36",
-        "pending": true,
-        "notification": {
-          "title": "Mathilde",
-          "body": "On peut parler d’un détail ?"
-        }
-      },
-      "chapter_06_sandra_later_echo": {
-        "after_conversation_completed": "chapter_06_mathilde_trace",
+      "chapter_06_pauline_silence_price": {
+        "after_conversation_completed": "chapter_06_marie_position",
         "time_label": "17:18",
         "pending": true,
         "notification": {
-          "title": "Sandra",
-          "body": "Je ne veux pas devenir un plus tard permanent."
+          "title": "Pauline",
+          "body": "De quoi vaut ton silence ?"
         }
       },
-      "chapter_06_raphaelle_clarity": {
-        "after_conversation_completed": "chapter_06_sandra_later_echo",
-        "time_label": "19:32",
+      "chapter_06_sandra_one_truth": {
+        "after_conversation_completed": "chapter_06_pauline_silence_price",
+        "time_label": "21:04",
         "pending": true,
         "notification": {
-          "title": "Raphaëlle",
-          "body": "J’ai vu ton agenda."
+          "title": "Sandra",
+          "body": "Je viens réclamer ma chose honnête."
         }
       }
     }

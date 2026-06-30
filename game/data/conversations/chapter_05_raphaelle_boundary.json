@@ -1,8 +1,8 @@
 {
-  "id": "chapter_05_raphaelle_boundary",
+  "id": "chapter_05_raphaelle_work_breath",
   "chapter": 5,
   "day": 5,
-  "title": "Jour 5 — Raphaëlle pose la limite",
+  "title": "Jour 5 — Respiration bureau",
   "app": "messages",
   "thread": {
     "id": "thread_raphaelle_private",
@@ -16,199 +16,160 @@
   },
   "segments": [
     {
-      "conversation_segment_id": "c05_raphaelle_boundary_01",
-      "moment_label": "soir",
-      "time_label": "19:14",
-      "transition_text": "Raphaëlle revient par le fil travail déjà installé : badge, dossier, fatigue observée. Elle ne connaît pas la soirée, mais voit que Player transporte quelque chose.",
-      "availability_state": "Elle écoute, mais refuse d’être une cachette.",
-      "function": "Faire apparaître Raphaëlle comme une présence réelle et continue, pas comme une voix morale extérieure au récit.",
+      "conversation_segment_id": "c05_raphaelle_work_breath_01",
+      "moment_label": "après-midi",
+      "time_label": "17:54",
+      "transition_text": "Raphaëlle fait une respiration de bureau : rien de refuge, rien d’ornemental, juste du travail et une petite fatigue honnête.",
+      "availability_state": "Elle garde la clarté sans devenir cachette.",
+      "function": "Offrir une micro-respiration concrète, sans répétition du refus de cachette.",
       "messages": [
         {
           "id": "msg_c05_raphaelle_001",
           "sender": "raphaelle",
-          "time_label": "19:14",
-          "text": "J’ai relu tes notes sur le dossier Camille."
+          "time_label": "17:54",
+          "text": "Je viens de survivre à une réunion où quelqu’un a dit “synergie” quatre fois."
         },
         {
           "id": "msg_c05_raphaelle_002",
           "sender": "raphaelle",
-          "time_label": "19:14",
-          "text": "Tu as écrit trois fois “à vérifier” sur une page déjà vérifiée."
+          "time_label": "17:55",
+          "text": "Je pense que juridiquement, j’ai le droit de rentrer chez moi 😅"
         },
         {
           "id": "msg_c05_raphaelle_003",
           "sender": "raphaelle",
-          "time_label": "19:15",
-          "text": "C’est rarement le dossier, quand tu fais ça."
+          "time_label": "17:55",
+          "text": "Toujours le dossier bleu demain ?"
         },
         {
           "id": "msg_c05_raphaelle_004",
           "sender": "raphaelle",
-          "time_label": "19:15",
-          "text": "Et tu as encore cette fatigue qui ne ressemble pas seulement à du manque de sommeil."
+          "time_label": "17:55",
+          "text": "Oui."
         },
         {
           "id": "msg_c05_raphaelle_005",
           "sender": "raphaelle",
-          "time_label": "19:16",
-          "text": "Je ne sais pas ce qui s’est passé hier soir. Et je n’ai pas besoin de le savoir pour voir que tu portes quelque chose."
+          "time_label": "17:56",
+          "text": "Pas le rouge."
         },
         {
           "id": "msg_c05_raphaelle_006",
           "sender": "raphaelle",
-          "time_label": "19:16",
-          "text": "Je peux t’écouter."
+          "time_label": "17:56",
+          "text": "Le rouge ment."
         },
         {
           "id": "msg_c05_raphaelle_007",
           "sender": "raphaelle",
-          "time_label": "19:17",
-          "text": "Mais pas si tu viens chercher ici le courage que tu refuses d’avoir chez toi."
+          "time_label": "17:57",
+          "text": "Et dors un peu."
         },
         {
           "id": "msg_c05_raphaelle_008",
           "sender": "raphaelle",
-          "time_label": "19:17",
-          "text": "Je préfère être un endroit clair qu’un endroit pratique 🙂"
+          "time_label": "17:57",
+          "text": "..."
+        },
+        {
+          "id": "msg_c05_raphaelle_009",
+          "sender": "raphaelle",
+          "time_label": "17:58",
+          "text": "Mais tu réponds comme quelqu’un qui a trois conversations dans la tête 🙂"
+        },
+        {
+          "id": "msg_c05_raphaelle_010",
+          "sender": "raphaelle",
+          "time_label": "17:58",
+          "text": "..."
+        },
+        {
+          "id": "msg_c05_raphaelle_011",
+          "sender": "raphaelle",
+          "time_label": "17:58",
+          "text": "Je suis polie."
         }
       ],
       "choices": [
         {
-          "id": "choice_c05_raphaelle_clear",
-          "text": "Reconnaître le flou.",
-          "tone": "clear",
+          "id": "choice_c05_raphaelle_breath",
+          "text": "Dire qu’il va essayer de rentrer chez lui tôt.",
+          "tone": "calm",
           "effects": {
-            "raphaelle.clarity": 2,
-            "lie_score": -1
-          },
-          "sets_flags": [
-            "raphaelle_boundary_j5",
-            "raphaelle_saw_work_slip_j5"
-          ],
-          "next_messages": [
-            {
-              "id": "msg_c05_raphaelle_clear_001",
-              "sender": "raphaelle",
-              "time_label": "19:18",
-              "text": "C’est déjà mieux que de le maquiller."
-            },
-            {
-              "id": "msg_c05_raphaelle_clear_002",
-              "sender": "raphaelle",
-              "time_label": "19:18",
-              "text": "Après, reconnaître le flou ne suffit pas. Il faudra choisir ce que tu fais avec."
-            },
-            {
-              "id": "msg_c05_raphaelle_clear_003",
-              "sender": "raphaelle",
-              "time_label": "19:19",
-              "text": "Et pas seulement entre deux messages ou deux dossiers."
-            }
-          ]
-        },
-        {
-          "id": "choice_c05_raphaelle_refuge",
-          "text": "Chercher un refuge.",
-          "tone": "vulnerable",
-          "effects": {
-            "raphaelle.attachment": 1,
-            "raphaelle_clarity_score": 2,
-            "lie_score": 1
-          },
-          "sets_flags": [
-            "raphaelle_boundary_j5",
-            "raphaelle_saw_work_slip_j5"
-          ],
-          "next_messages": [
-            {
-              "id": "msg_c05_raphaelle_refuge_001",
-              "sender": "raphaelle",
-              "time_label": "19:18",
-              "text": "Je comprends l’envie. Vraiment."
-            },
-            {
-              "id": "msg_c05_raphaelle_refuge_002",
-              "sender": "raphaelle",
-              "time_label": "19:18",
-              "text": "Mais un refuge, ça ne doit pas devenir une cachette. Pas pour moi. Pas pour toi non plus."
-            },
-            {
-              "id": "msg_c05_raphaelle_refuge_003",
-              "sender": "raphaelle",
-              "time_label": "19:19",
-              "text": "Je peux tenir une porte ouverte. Je ne vais pas fermer les volets."
-            }
-          ]
-        },
-        {
-          "id": "choice_c05_raphaelle_lie",
-          "text": "Mentir encore.",
-          "tone": "avoidant",
-          "effects": {
-            "raphaelle.clarity": -1,
-            "lie_score": 1
-          },
-          "sets_flags": [
-            "raphaelle_boundary_j5",
-            "raphaelle_saw_work_slip_j5"
-          ],
-          "next_messages": [
-            {
-              "id": "msg_c05_raphaelle_lie_001",
-              "sender": "raphaelle",
-              "time_label": "19:18",
-              "text": "D’accord."
-            },
-            {
-              "id": "msg_c05_raphaelle_lie_002",
-              "sender": "raphaelle",
-              "time_label": "19:18",
-              "text": "Je vais faire semblant de ne pas entendre la partie la moins honnête."
-            },
-            {
-              "id": "msg_c05_raphaelle_lie_003",
-              "sender": "raphaelle",
-              "time_label": "19:19",
-              "text": "Une fois. Pas deux."
-            }
-          ]
-        },
-        {
-          "id": "choice_c05_raphaelle_marie",
-          "text": "Dire qu’il doit parler à Marie.",
-          "tone": "truth_return",
-          "effects": {
-            "marie.trust": 1,
+            "raphaelle_clarity_score": 1,
             "raphaelle.clarity": 1
           },
           "sets_flags": [
-            "raphaelle_boundary_j5",
-            "truth_seed_marie_j5",
-            "raphaelle_saw_work_slip_j5"
+            "j5_raphaelle_breath_work_active"
           ],
           "next_messages": [
             {
-              "id": "msg_c05_raphaelle_marie_001",
-              "sender": "raphaelle",
-              "time_label": "19:18",
-              "text": "Oui."
+              "id": "msg_player_c05_raphaelle_breath_001",
+              "sender": "ludo",
+              "time_label": "17:54",
+              "text": "Dire qu’il va essayer de rentrer chez lui tôt."
             },
             {
-              "id": "msg_c05_raphaelle_marie_002",
+              "id": "msg_c05_raphaelle_breath_001",
               "sender": "raphaelle",
-              "time_label": "19:18",
-              "text": "Ce n’est pas forcément la conversation la plus agréable. Mais c’est probablement la plus propre."
+              "time_label": "17:59",
+              "text": "Bien. Un adulte, donc."
+            }
+          ]
+        },
+        {
+          "id": "choice_c05_raphaelle_work",
+          "text": "Répondre qu’il a trois conversations dans la tête.",
+          "tone": "honest",
+          "effects": {
+            "truth_tendency": 1,
+            "raphaelle.clarity": 1
+          },
+          "sets_flags": [
+            "j5_raphaelle_breath_work_active"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_player_c05_raphaelle_work_001",
+              "sender": "ludo",
+              "time_label": "17:54",
+              "text": "Répondre qu’il a trois conversations dans la tête."
             },
             {
-              "id": "msg_c05_raphaelle_marie_003",
+              "id": "msg_c05_raphaelle_work_001",
               "sender": "raphaelle",
-              "time_label": "19:19",
-              "text": "Et je pense que tu sais déjà ça. C’est rarement le savoir qui manque."
+              "time_label": "17:59",
+              "text": "Je m’en doutais. Et je préfère ça à une phrase trop lisse."
+            }
+          ]
+        },
+        {
+          "id": "choice_c05_raphaelle_dodge",
+          "text": "Dodge the subject, mais en français.",
+          "tone": "avoidant",
+          "effects": {
+            "lie_score": 1
+          },
+          "sets_flags": [
+            "j5_raphaelle_breath_work_active"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_player_c05_raphaelle_dodge_001",
+              "sender": "ludo",
+              "time_label": "17:54",
+              "text": "Dodge the subject, mais en français."
+            },
+            {
+              "id": "msg_c05_raphaelle_dodge_001",
+              "sender": "raphaelle",
+              "time_label": "17:59",
+              "text": "Je vais considérer ça comme une réponse de bureau, donc tolérable."
             }
           ]
         }
       ]
     }
   ],
-  "debug_notes": "J5 Raphaëlle renforce le fil badge/dossier/fatigue des J2-J3. Elle n’est pas dans la soirée mais voit les effets de dispersion de Player."
+  "debug_notes": "Raphaëlle reste concrète et respirable : bureau, dossier, fatigue, pas de cachette."
 }

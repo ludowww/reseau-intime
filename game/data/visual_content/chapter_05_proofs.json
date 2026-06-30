@@ -1,7 +1,7 @@
 {
   "id": "chapter_05_proof_placeholders",
-  "version": 1,
-  "notes": "Placeholders neutres pour J5 : lendemain de soirée, redistribution des photos, story Nico/Marie, traces faibles et preuve Pauline hors champ.",
+  "version": 2,
+  "notes": "J5 ajoute trois placeholders narratifs : Nico/Marie, selfie de Pauline, photo restaurant de Sandra. Les anciens placeholders restent pour compatibilité des fichiers non réécrits.",
   "items": [
     {
       "id": "photo_party_after_j5_placeholder",
@@ -10,7 +10,7 @@
       "type": "photo",
       "source_app": "messages",
       "asset_path": "res://assets/placeholders/photo_party_after_j5_placeholder.png",
-      "context": "Photo ou mini-lot de soirée envoyée par Pauline le lendemain. Elle paraît d’abord légère et drôle : canapé, verres, rires, lumière chaude. En regardant mieux, on remarque un détail plus inquiet selon la route : Player absorbé par son téléphone, Nico trop près de Marie, ou Pauline en train de cadrer quelque chose qu’elle ne dit pas.",
+      "context": "Ancien placeholder de tri Pauline conservé pour compatibilité.",
       "tags": [
         "pauline",
         "party",
@@ -38,7 +38,7 @@
       "type": "story",
       "source_app": "social",
       "asset_path": "res://assets/placeholders/story_marie_nico_j5_placeholder.png",
-      "context": "Story ou photo où Marie reste visible à côté de Nico après la soirée. Rien n’est explicitement déplacé, mais le cadrage fait comprendre que Player n’était pas le seul à la regarder.",
+      "context": "Ancienne story Nico/Marie conservée pour compatibilité des fichiers non réécrits.",
       "tags": [
         "nico",
         "marie",
@@ -65,7 +65,7 @@
       "type": "photo",
       "source_app": "messages",
       "asset_path": "res://assets/placeholders/photo_mathilde_after_party_j5_placeholder.png",
-      "context": "Mathilde après la soirée, encore un peu froissée ou décoiffée, avec un cadrage plus assumé mais toujours défendable. L’image hésite entre provocation et regret.",
+      "context": "Ancien placeholder Mathilde conservé pour compatibilité.",
       "tags": [
         "mathilde",
         "after_party",
@@ -91,7 +91,7 @@
       "type": "photo",
       "source_app": "messages",
       "asset_path": "res://assets/placeholders/photo_marie_after_party_j5_placeholder.png",
-      "context": "Marie au lendemain de la soirée, lumière du matin, fatigue visible mais présence forte. L’image est douce, intime et rappelle que le couple garde une sensualité réelle.",
+      "context": "Ancien placeholder Marie du lendemain conservé pour compatibilité.",
       "tags": [
         "marie",
         "after_party",
@@ -115,7 +115,7 @@
       "type": "photo",
       "source_app": "messages",
       "asset_path": "res://assets/placeholders/photo_pauline_soft_provocation_j5_placeholder.png",
-      "context": "Pauline en pose de soirée contrôlée, sourire piquant et cadrage volontairement maîtrisé. L’image reste défendable, mais elle est adressée comme un test.",
+      "context": "Ancien placeholder Pauline de provocation conservé pour compatibilité.",
       "tags": [
         "pauline",
         "provocation",
@@ -140,7 +140,7 @@
       "type": "capture",
       "source_app": "messages",
       "asset_path": "res://assets/placeholders/pauline_cheating_proof_seed_j5_placeholder.png",
-      "context": "Trace ambiguë de Pauline : un coin d’image, un message tronqué, ou un cadre qui laisse penser qu’elle cache elle aussi quelque chose. Ce n’est pas encore une révélation, juste un levier pour J6+.",
+      "context": "Ancienne trace Pauline conservée pour compatibilité.",
       "tags": [
         "pauline",
         "secret",
@@ -157,6 +157,83 @@
         "pauline",
         "marie",
         "nico"
+      ]
+    },
+    {
+      "id": "j5_marie_party_nico_frame",
+      "character": "marie",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/j5_marie_party_nico_frame.png",
+      "context": "Photo sociale ; Marie rit avec Nico ; proximité défendable mais visible ; seed jalousie / miroir.",
+      "tags": [
+        "marie",
+        "nico",
+        "party",
+        "social",
+        "mirror",
+        "jealousy"
+      ],
+      "is_proof": false,
+      "risk_level": 2,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": false,
+      "can_be_discovered_by": [
+        "marie",
+        "pauline",
+        "nico"
+      ]
+    },
+    {
+      "id": "j5_pauline_street_selfie",
+      "character": "pauline",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/j5_pauline_street_selfie.png",
+      "context": "Selfie Pauline dehors ; manteau sage ; risque public contrôlé ; pas d’exposition de tiers.",
+      "tags": [
+        "pauline",
+        "street",
+        "selfie",
+        "public",
+        "control"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": false,
+      "can_be_discovered_by": [
+        "pauline",
+        "marie"
+      ]
+    },
+    {
+      "id": "j5_sandra_restaurant_soft_crop",
+      "character": "sandra",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/j5_sandra_restaurant_soft_crop.png",
+      "context": "Photo douce / souvenir restaurant ; confiance ; début du jeu confidence/photo.",
+      "tags": [
+        "sandra",
+        "restaurant",
+        "soft",
+        "trust",
+        "memory"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": [
+        "sandra",
+        "marie"
       ]
     }
   ]

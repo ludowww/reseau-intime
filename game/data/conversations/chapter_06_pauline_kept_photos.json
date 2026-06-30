@@ -1,8 +1,8 @@
 {
-  "id": "chapter_06_pauline_kept_photos",
+  "id": "chapter_06_pauline_silence_price",
   "chapter": 6,
   "day": 6,
-  "title": "Jour 6 — Pauline garde encore",
+  "title": "Jour 6 — Le prix du silence",
   "app": "messages",
   "thread": {
     "id": "thread_pauline_private",
@@ -15,185 +15,151 @@
   },
   "segments": [
     {
-      "conversation_segment_id": "c06_pauline_kept_photos_01",
-      "moment_label": "milieu de matinée",
-      "time_label": "10:41",
-      "transition_text": "Pauline ne donne pas une nouvelle avalanche d’images. Elle rappelle que garder une photo peut peser plus fort que l’envoyer.",
-      "availability_state": "Pauline est joueuse, contrôlante, mais pas omnisciente : elle parle seulement de ce qu’elle a cadré ou gardé.",
-      "function": "Faire sentir le rapport de force des images gardées sans révéler la preuve Pauline.",
+      "conversation_segment_id": "c06_pauline_silence_price_01",
+      "moment_label": "fin d’après-midi",
+      "time_label": "17:18",
+      "transition_text": "Pauline ne relance pas une nouvelle preuve. Elle demande ce que vaut le silence de Player.",
+      "availability_state": "Pauline reste secondaire mais dangereuse : elle mesure, elle teste, elle attend une réponse utile.",
+      "function": "Faire du silence une valeur et non une simple absence.",
       "messages": [
         {
           "id": "msg_c06_pauline_001",
           "sender": "pauline",
-          "time_label": "10:41",
-          "text": "Je n’ai rien envoyé ce matin."
+          "time_label": "17:18",
+          "text": "Petit point météo."
         },
         {
           "id": "msg_c06_pauline_002",
           "sender": "pauline",
-          "time_label": "10:41",
-          "text": "Tu as remarqué ?"
+          "time_label": "17:18",
+          "text": "Il pleut."
         },
         {
           "id": "msg_c06_pauline_003",
           "sender": "pauline",
-          "time_label": "10:42",
-          "text": "C’est fascinant, les photos qu’on ne reçoit pas. Elles prennent beaucoup de place pour quelque chose qui n’est pas là 😇"
+          "time_label": "17:19",
+          "text": "Les gens courent."
         },
         {
           "id": "msg_c06_pauline_004",
           "sender": "pauline",
-          "time_label": "10:42",
-          "text": "J’ai rouvert le tri. La photo d’hier a un détail qui devient meilleur quand on sait que tu l’as vue.",
-          "content_id": "photo_party_after_j5_placeholder",
+          "time_label": "17:19",
+          "text": "Moi je garde une dignité moyenne sous un abribus 😇",
+          "content_id": "j6_pauline_bus_stop_followup",
           "content_behavior": "inline_preview"
         },
         {
           "id": "msg_c06_pauline_005",
           "sender": "pauline",
-          "time_label": "10:43",
-          "text": "Mais je garde le reste. Pour des raisons artistiques, évidemment."
+          "time_label": "17:20",
+          "text": "Je suis surtout curieuse."
+        },
+        {
+          "id": "msg_c06_pauline_006",
+          "sender": "pauline",
+          "time_label": "17:20",
+          "text": "De savoir ce que tu crois que mon silence vaut."
         }
       ],
       "choices": [
         {
-          "id": "choice_c06_pauline_ask_kept",
-          "text": "Demander ce qu’elle garde vraiment.",
-          "tone": "probe",
-          "effects": {
-            "pauline.control": 1,
-            "pauline.interest": 1,
-            "social_pressure": 1
-          },
-          "sets_flags": [
-            "j6_pauline_kept_photo_pressure"
-          ],
-          "next_messages": [
-            {
-              "id": "msg_c06_pauline_kept_001",
-              "sender": "pauline",
-              "time_label": "10:44",
-              "text": "La bonne question."
-            },
-            {
-              "id": "msg_c06_pauline_kept_002",
-              "sender": "pauline",
-              "time_label": "10:44",
-              "text": "Pas encore la bonne heure."
-            },
-            {
-              "id": "msg_c06_pauline_kept_003",
-              "sender": "pauline",
-              "time_label": "10:45",
-              "text": "Tu vois, tu progresses : tu comprends qu’une image gardée est parfois plus bruyante qu’une image envoyée 🙂"
-            }
-          ]
-        },
-        {
-          "id": "choice_c06_pauline_ignore",
-          "text": "Faire comme si ça ne l’intéressait pas.",
-          "tone": "mask_interest",
-          "effects": {
-            "lie_score": 1,
-            "pauline.interest": 1
-          },
-          "sets_flags": [
-            "j6_pauline_interest_denied"
-          ],
-          "next_messages": [
-            {
-              "id": "msg_c06_pauline_ignore_001",
-              "sender": "pauline",
-              "time_label": "10:44",
-              "text": "Bien sûr."
-            },
-            {
-              "id": "msg_c06_pauline_ignore_002",
-              "sender": "pauline",
-              "time_label": "10:44",
-              "text": "Tu es le premier homme de l’histoire à ne pas être intéressé par une photo qu’on refuse de lui montrer."
-            },
-            {
-              "id": "msg_c06_pauline_ignore_003",
-              "sender": "pauline",
-              "time_label": "10:45",
-              "text": "C’est presque émouvant 😇"
-            }
-          ]
-        },
-        {
-          "id": "choice_c06_pauline_turn_back",
-          "text": "Lui demander si elle aussi apparaît sur une photo.",
-          "tone": "counter_probe",
-          "effects": {
-            "pauline.control": -1,
-            "pauline.interest": 1,
-            "truth_tendency": 1
-          },
-          "sets_flags": [
-            "j6_pauline_secret_pressure"
-          ],
-          "next_messages": [
-            {
-              "id": "msg_c06_pauline_turn_001",
-              "sender": "pauline",
-              "time_label": "10:44",
-              "text": "Oh."
-            },
-            {
-              "id": "msg_c06_pauline_turn_002",
-              "sender": "pauline",
-              "time_label": "10:44",
-              "text": "Regarde-moi ce petit réflexe de survie."
-            },
-            {
-              "id": "msg_c06_pauline_turn_003",
-              "sender": "pauline",
-              "time_label": "10:45",
-              "text": "Je vais répondre avec beaucoup de précision : peut-être."
-            },
-            {
-              "id": "msg_c06_pauline_turn_004",
-              "sender": "pauline",
-              "time_label": "10:45",
-              "text": "Et tu vas détester à quel point cette réponse suffit."
-            }
-          ]
-        },
-        {
-          "id": "choice_c06_pauline_boundaries",
-          "text": "Dire qu’elle joue avec des choses réelles.",
+          "id": "choice_c06_pauline_refuse",
+          "text": "Je ne vais pas mettre un prix sur ton silence. Si tu veux parler, parle. Si tu veux te taire, tais-toi.",
           "tone": "boundary",
           "effects": {
             "pauline.control": -1,
             "truth_tendency": 1
           },
           "sets_flags": [
-            "j6_pauline_boundary_named"
+            "j6_pauline_silence_pricing_refused"
           ],
           "next_messages": [
             {
-              "id": "msg_c06_pauline_boundary_001",
-              "sender": "pauline",
-              "time_label": "10:44",
-              "text": "Oui."
+              "id": "msg_player_c06_pauline_refuse_001",
+              "sender": "ludo",
+              "time_label": "17:18",
+              "text": "Je ne vais pas mettre un prix sur ton silence. Si tu veux parler, parle. Si tu veux te taire, tais-toi."
             },
             {
-              "id": "msg_c06_pauline_boundary_002",
+              "id": "msg_c06_pauline_refuse_001",
               "sender": "pauline",
-              "time_label": "10:44",
-              "text": "C’est pour ça que c’est plus intéressant qu’un jeu."
+              "time_label": "17:21",
+              "text": "C’est presque bien dit."
             },
             {
-              "id": "msg_c06_pauline_boundary_003",
+              "id": "msg_c06_pauline_refuse_002",
               "sender": "pauline",
-              "time_label": "10:45",
-              "text": "Et plus dangereux. Je te l’accorde."
+              "time_label": "17:21",
+              "text": "Et c’est précisément pour ça que je te relance."
+            }
+          ]
+        },
+        {
+          "id": "choice_c06_pauline_defy",
+          "text": "Je crois que tu veux surtout voir si je vais paniquer. Et je n’ai pas envie de te donner ça gratuitement.",
+          "tone": "challenge",
+          "effects": {
+            "pauline.control": 1,
+            "lie_score": 1
+          },
+          "sets_flags": [
+            "j6_pauline_silence_pricing_tested"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_player_c06_pauline_defy_001",
+              "sender": "ludo",
+              "time_label": "17:18",
+              "text": "Je crois que tu veux surtout voir si je vais paniquer. Et je n’ai pas envie de te donner ça gratuitement."
+            },
+            {
+              "id": "msg_c06_pauline_defy_001",
+              "sender": "pauline",
+              "time_label": "17:21",
+              "text": "Ah, donc tu sais jouer aussi."
+            },
+            {
+              "id": "msg_c06_pauline_defy_002",
+              "sender": "pauline",
+              "time_label": "17:21",
+              "text": "Je commence à être déçue que tu ne paniques pas plus."
+            }
+          ]
+        },
+        {
+          "id": "choice_c06_pauline_probe",
+          "text": "Tu parles beaucoup de ton silence. Mais j’ai l’impression que tu as surtout peur de celui des autres.",
+          "tone": "probe",
+          "effects": {
+            "pauline.interest": 1,
+            "pauline.control": -1
+          },
+          "sets_flags": [
+            "j6_pauline_hidden_fear_seed"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_player_c06_pauline_probe_001",
+              "sender": "ludo",
+              "time_label": "17:18",
+              "text": "Tu parles beaucoup de ton silence. Mais j’ai l’impression que tu as surtout peur de celui des autres."
+            },
+            {
+              "id": "msg_c06_pauline_probe_001",
+              "sender": "pauline",
+              "time_label": "17:21",
+              "text": "Ouh."
+            },
+            {
+              "id": "msg_c06_pauline_probe_002",
+              "sender": "pauline",
+              "time_label": "17:22",
+              "text": "Ça, c’est un vrai coup de scalpel."
             }
           ]
         }
       ]
     }
   ],
-  "debug_notes": "J6 Pauline met la pression par ce qu’elle garde, sans révéler toute la preuve et sans omniscience."
+  "debug_notes": "Pauline reste secondaire mais dangereuse ; le silence devient un enjeu, pas un vide."
 }

@@ -1,8 +1,8 @@
 {
-  "id": "chapter_05_sandra_later",
+  "id": "chapter_05_sandra_first_truth_game",
   "chapter": 5,
   "day": 5,
-  "title": "Jour 5 — Sandra plus tard",
+  "title": "Jour 5 — Le jeu de la première vérité",
   "app": "messages",
   "thread": {
     "id": "thread_sandra_private",
@@ -15,155 +15,193 @@
   },
   "segments": [
     {
-      "conversation_segment_id": "c05_sandra_later_01",
-      "moment_label": "fin d’après-midi",
-      "time_label": "17:05",
-      "transition_text": "Sandra comprend qu’elle arrive dans une vie déjà occupée. Elle ne force pas la place.",
-      "availability_state": "Le ton reste doux, retenu et un peu blessé.",
-      "function": "Faire ressentir le coût émotionnel du mauvais timing sans rendre Sandra disponible à l’excès.",
+      "conversation_segment_id": "c05_sandra_first_truth_game_01",
+      "moment_label": "soir",
+      "time_label": "20:18",
+      "transition_text": "Sandra repart d’une photo du restaurant et propose un jeu de confidence qui ne repousse pas à plus tard.",
+      "availability_state": "Sandra est douce, volontaire, et elle ne veut pas devenir un rendez-vous suspendu.",
+      "function": "Préparer la suite par un échange de confiance et de photo, sans attente passive.",
       "messages": [
         {
           "id": "msg_c05_sandra_001",
           "sender": "sandra",
-          "time_label": "17:05",
-          "text": "J’avais commencé un message ce matin."
+          "time_label": "20:18",
+          "text": "J’ai retrouvé la photo du restaurant."
         },
         {
           "id": "msg_c05_sandra_002",
           "sender": "sandra",
-          "time_label": "17:06",
-          "text": "Puis je me suis dit que j’allais attendre le fameux “plus tard”."
+          "time_label": "20:18",
+          "text": "Enfin “retrouvé”."
         },
         {
           "id": "msg_c05_sandra_003",
           "sender": "sandra",
-          "time_label": "17:06",
-          "text": "C’est pratique, “plus tard”. Ça ne demande rien à personne 🙂"
+          "time_label": "20:19",
+          "text": "Elle était dans mes favoris."
         },
         {
           "id": "msg_c05_sandra_004",
           "sender": "sandra",
-          "time_label": "17:07",
-          "text": "J’avais même une photo à t’envoyer. Mauvaise idée. Je l’ai supprimée avant d’appuyer."
+          "time_label": "20:19",
+          "text": "Ce qui est une information que je n’étais pas obligée de te donner 😅"
         },
         {
           "id": "msg_c05_sandra_005",
           "sender": "sandra",
-          "time_label": "17:07",
-          "text": "Je crois que je n’aime pas devenir un message que tu caches dans une soirée 😅"
+          "time_label": "20:20",
+          "text": "Tu es belle dessus."
+        },
+        {
+          "id": "msg_c05_sandra_006",
+          "sender": "sandra",
+          "time_label": "20:20",
+          "text": "Dire des choses qui restent dans la tête."
+        },
+        {
+          "id": "msg_c05_sandra_007",
+          "sender": "sandra",
+          "time_label": "20:20",
+          "text": "Très mauvais comportement 🙂"
+        },
+        {
+          "id": "msg_c05_sandra_008",
+          "sender": "sandra",
+          "time_label": "20:21",
+          "text": "Je vais devoir déposer une plainte intérieure."
+        },
+        {
+          "id": "msg_c05_sandra_009",
+          "sender": "sandra",
+          "time_label": "20:21",
+          "text": "La prochaine fois qu’on se parle vraiment, tu me dis une chose honnête."
+        },
+        {
+          "id": "msg_c05_sandra_010",
+          "sender": "sandra",
+          "time_label": "20:22",
+          "text": "Pas forcément grave."
+        },
+        {
+          "id": "msg_c05_sandra_011",
+          "sender": "sandra",
+          "time_label": "20:22",
+          "text": "Pas forcément dramatique."
+        },
+        {
+          "id": "msg_c05_sandra_012",
+          "sender": "sandra",
+          "time_label": "20:22",
+          "text": "Juste honnête."
+        },
+        {
+          "id": "msg_c05_sandra_013",
+          "sender": "sandra",
+          "time_label": "20:23",
+          "text": "..."
+        },
+        {
+          "id": "msg_c05_sandra_014",
+          "sender": "sandra",
+          "time_label": "20:23",
+          "text": "Moi, j’oserai peut-être t’envoyer une photo un peu moins “restaurant entre adultes responsables”."
+        },
+        {
+          "id": "msg_c05_sandra_015",
+          "sender": "sandra",
+          "time_label": "20:23",
+          "text": "Peut-être."
+        },
+        {
+          "id": "msg_c05_sandra_016",
+          "sender": "sandra",
+          "time_label": "20:24",
+          "text": "Je mets deux fois peut-être pour des raisons juridiques 😅",
+          "content_id": "j5_sandra_restaurant_soft_crop",
+          "content_behavior": "inline_preview"
         }
       ],
       "choices": [
         {
-          "id": "choice_c05_sandra_rassure",
-          "text": "La rassurer sans forcer.",
-          "tone": "gentle",
+          "id": "choice_c05_sandra_soft",
+          "text": "J’aime bien quand tu fais semblant d’être prudente alors que tu viens d’inventer un jeu dangereux.",
+          "tone": "soft",
           "effects": {
             "sandra.attachment": 1,
-            "sandra.exposure": -1
+            "sandra_priority_score": 1
           },
           "sets_flags": [
-            "sandra_later_acknowledged_j5",
-            "sandra_almost_sent_photo_j5"
+            "j5_sandra_truth_game_seed"
           ],
           "next_messages": [
             {
-              "id": "msg_c05_sandra_rassure_001",
-              "sender": "sandra",
-              "time_label": "17:08",
-              "text": "Merci."
+              "id": "msg_player_c05_sandra_soft_001",
+              "sender": "ludo",
+              "time_label": "20:18",
+              "text": "J’aime bien quand tu fais semblant d’être prudente alors que tu viens d’inventer un jeu dangereux."
             },
             {
-              "id": "msg_c05_sandra_rassure_002",
+              "id": "msg_c05_sandra_soft_001",
               "sender": "sandra",
-              "time_label": "17:08",
-              "text": "J’aime bien quand tu ne tires pas sur un fil juste parce qu’il dépasse."
+              "time_label": "20:24",
+              "text": "C’est très mal me connaître. Donc un peu bien quand même."
             }
           ]
         },
         {
-          "id": "choice_c05_sandra_tell_count",
-          "text": "Lui dire qu’elle compte.",
-          "tone": "open",
+          "id": "choice_c05_sandra_direct",
+          "text": "Si tu m’envoies une photo moins responsable, je risque de répondre moins raisonnablement.",
+          "tone": "direct",
           "effects": {
             "sandra.attachment": 2,
-            "sandra_priority_score": 1,
-            "lie_score": 1
+            "truth_tendency": 1
           },
           "sets_flags": [
-            "sandra_later_acknowledged_j5",
-            "sandra_almost_sent_photo_j5"
+            "j5_sandra_truth_game_seed"
           ],
           "next_messages": [
             {
-              "id": "msg_c05_sandra_count_001",
-              "sender": "sandra",
-              "time_label": "17:08",
-              "text": "Je vais croire la moitié."
+              "id": "msg_player_c05_sandra_direct_001",
+              "sender": "ludo",
+              "time_label": "20:18",
+              "text": "Si tu m’envoies une photo moins responsable, je risque de répondre moins raisonnablement."
             },
             {
-              "id": "msg_c05_sandra_count_002",
+              "id": "msg_c05_sandra_direct_001",
               "sender": "sandra",
-              "time_label": "17:08",
-              "text": "Pas parce que je doute de toi. Enfin si, un peu. Mais surtout parce que l’autre moitié ferait trop de bruit."
+              "time_label": "20:24",
+              "text": "Voilà. Là, on parle vraiment."
             }
           ]
         },
         {
-          "id": "choice_c05_sandra_admit_bad_timing",
-          "text": "Reconnaître que le timing était mauvais.",
-          "tone": "honest",
-          "effects": {
-            "truth_tendency": 1,
-            "sandra.exposure": 1
-          },
-          "sets_flags": [
-            "sandra_later_acknowledged_j5",
-            "sandra_almost_sent_photo_j5"
-          ],
-          "next_messages": [
-            {
-              "id": "msg_c05_sandra_timing_001",
-              "sender": "sandra",
-              "time_label": "17:08",
-              "text": "Oui."
-            },
-            {
-              "id": "msg_c05_sandra_timing_002",
-              "sender": "sandra",
-              "time_label": "17:08",
-              "text": "Et c’est peut-être justement pour ça que ça m’a touchée. C’est idiot, je sais."
-            }
-          ]
-        },
-        {
-          "id": "choice_c05_sandra_wait",
-          "text": "Lui dire qu’il vaut mieux parler plus tard.",
-          "tone": "delayed",
+          "id": "choice_c05_sandra_prudent",
+          "text": "J’ai envie de jouer. Mais je ne veux pas te donner l’impression que je t’appelle seulement quand ma vie devient floue.",
+          "tone": "prudent",
           "effects": {
             "sandra.attachment": 1,
-            "sandra.exposure": -1
+            "truth_tendency": 1
           },
           "sets_flags": [
-            "sandra_later_acknowledged_j5"
+            "j5_sandra_truth_game_seed"
           ],
           "next_messages": [
             {
-              "id": "msg_c05_sandra_wait_001",
-              "sender": "sandra",
-              "time_label": "17:08",
-              "text": "D’accord."
+              "id": "msg_player_c05_sandra_prudent_001",
+              "sender": "ludo",
+              "time_label": "20:18",
+              "text": "J’ai envie de jouer. Mais je ne veux pas te donner l’impression que je t’appelle seulement quand ma vie devient floue."
             },
             {
-              "id": "msg_c05_sandra_wait_002",
+              "id": "msg_c05_sandra_prudent_001",
               "sender": "sandra",
-              "time_label": "17:08",
-              "text": "Je vais essayer de ne pas trop m’habituer à ce mot-là. “Plus tard”."
+              "time_label": "20:24",
+              "text": "Merci. C’est exactement le genre d’honnêteté que j’espérais."
             }
           ]
         }
       ]
     }
   ],
-  "debug_notes": "Sandra reste douce et retenue ; la photo peut rester textuelle/supprimée."
+  "debug_notes": "Sandra prépare le jeu confidence/photo sans remettre tout au plus tard."
 }
