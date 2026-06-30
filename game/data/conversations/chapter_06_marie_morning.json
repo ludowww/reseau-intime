@@ -16,8 +16,8 @@
   "segments": [
     {
       "conversation_segment_id": "c06_marie_position_01",
-      "moment_label": "matin",
-      "time_label": "09:05",
+      "moment_label": "après-midi",
+      "time_label": "15:08",
       "transition_text": "Marie ne parle pas du téléphone. Elle sent seulement que Player a pris une position, quelque part entre les messages et les silences.",
       "availability_state": "Marie est calme en surface, mais attentive à la manière dont on choisit sans elle.",
       "function": "Montrer que Marie perçoit les micro-choix de Player sans le pousser à se justifier sur son appareil.",
@@ -25,73 +25,73 @@
         {
           "id": "msg_c06_marie_001",
           "sender": "marie",
-          "time_label": "09:05",
+          "time_label": "15:08",
           "text": "J’ai racheté du pain."
         },
         {
           "id": "msg_c06_marie_002",
           "sender": "marie",
-          "time_label": "09:05",
+          "time_label": "15:08",
           "text": "Oui."
         },
         {
           "id": "msg_c06_marie_003",
           "sender": "marie",
-          "time_label": "09:06",
+          "time_label": "15:09",
           "text": "Moi. Héroïne domestique sous-estimée 🙄"
         },
         {
           "id": "msg_c06_marie_004",
           "sender": "marie",
-          "time_label": "09:06",
+          "time_label": "15:09",
           "text": "Depuis hier, j’ai l’impression que tu fais des micro-choix."
         },
         {
           "id": "msg_c06_marie_005",
           "sender": "marie",
-          "time_label": "09:07",
+          "time_label": "15:10",
           "text": "Des petits trucs."
         },
         {
           "id": "msg_c06_marie_006",
           "sender": "marie",
-          "time_label": "09:07",
+          "time_label": "15:10",
           "text": "Des phrases que tu gardes."
         },
         {
           "id": "msg_c06_marie_007",
           "sender": "marie",
-          "time_label": "09:08",
+          "time_label": "15:11",
           "text": "Des silences que tu choisis."
         },
         {
           "id": "msg_c06_marie_008",
           "sender": "marie",
-          "time_label": "09:08",
+          "time_label": "15:11",
           "text": "Des réponses qui arrivent trop tard ou trop vite."
         },
         {
           "id": "msg_c06_marie_009",
           "sender": "marie",
-          "time_label": "09:08",
+          "time_label": "15:11",
           "text": "Et je ne sais pas si je suis dedans."
         },
         {
           "id": "msg_c06_marie_010",
           "sender": "marie",
-          "time_label": "09:09",
+          "time_label": "15:12",
           "text": "..."
         },
         {
           "id": "msg_c06_marie_011",
           "sender": "marie",
-          "time_label": "09:09",
+          "time_label": "15:12",
           "text": "Est-ce que tu es en train de choisir quelque chose sans moi ?"
         },
         {
           "id": "msg_c06_marie_012",
           "sender": "marie",
-          "time_label": "09:10",
+          "time_label": "15:13",
           "text": "Je garde aussi la photo d’hier près de la fenêtre. Pas comme un piège. Comme une manière de voir si tu reviens vraiment.",
           "content_id": "j6_marie_window_soft",
           "content_behavior": "inline_preview"
@@ -115,19 +115,19 @@
             {
               "id": "msg_player_c06_marie_limit_001",
               "sender": "ludo",
-              "time_label": "09:05",
+              "time_label": "15:08",
               "text": "Aujourd’hui, j’ai eu une occasion de garder quelque chose. Je l’ai supprimé. Parce que je ne voulais pas te transformer en angle mort."
             },
             {
               "id": "msg_c06_marie_limit_001",
               "sender": "marie",
-              "time_label": "09:11",
+              "time_label": "15:14",
               "text": "Merci."
             },
             {
               "id": "msg_c06_marie_limit_002",
               "sender": "marie",
-              "time_label": "09:11",
+              "time_label": "15:14",
               "text": "Ça ne règle pas tout. Mais ça me met à l’intérieur de ce que tu fais."
             }
           ]
@@ -147,19 +147,19 @@
             {
               "id": "msg_player_c06_marie_vague_001",
               "sender": "ludo",
-              "time_label": "09:05",
+              "time_label": "15:08",
               "text": "Je ne suis pas en train de choisir quelque chose sans toi. J’essaie juste de comprendre."
             },
             {
               "id": "msg_c06_marie_vague_001",
               "sender": "marie",
-              "time_label": "09:11",
+              "time_label": "15:14",
               "text": "Je peux entendre ‘j’essaie de comprendre’."
             },
             {
               "id": "msg_c06_marie_vague_002",
               "sender": "marie",
-              "time_label": "09:11",
+              "time_label": "15:14",
               "text": "Je peux moins entendre la partie où tu me laisses dehors."
             }
           ]
@@ -182,19 +182,19 @@
             {
               "id": "msg_player_c06_marie_frame_001",
               "sender": "ludo",
-              "time_label": "09:05",
+              "time_label": "15:08",
               "text": "Je crois que si je continue à décider seul de ce qui est grave ou pas, je vais te perdre. Alors oui. Il faut qu’on parle d’un cadre."
             },
             {
               "id": "msg_c06_marie_frame_001",
               "sender": "marie",
-              "time_label": "09:11",
+              "time_label": "15:14",
               "text": "Enfin une phrase qui avance."
             },
             {
               "id": "msg_c06_marie_frame_002",
               "sender": "marie",
-              "time_label": "09:11",
+              "time_label": "15:14",
               "text": "On va peut-être finir par parler pour de vrai au lieu de juste se croiser dans la cuisine."
             }
           ]
@@ -215,19 +215,19 @@
             {
               "id": "msg_player_c06_marie_nico_001",
               "sender": "ludo",
-              "time_label": "09:05",
+              "time_label": "15:08",
               "text": "La photo avec Nico m’a fait quelque chose. Et je n’aime pas que ça me fasse quelque chose."
             },
             {
               "id": "msg_c06_marie_nico_001",
               "sender": "marie",
-              "time_label": "09:11",
+              "time_label": "15:14",
               "text": "Je vois."
             },
             {
               "id": "msg_c06_marie_nico_002",
               "sender": "marie",
-              "time_label": "09:12",
+              "time_label": "15:15",
               "text": "Ce que tu dis me plaît moins que ta façon de le dire honnêtement."
             }
           ]

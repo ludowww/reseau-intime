@@ -15,8 +15,8 @@
       ]
     },
     {
-      "moment_label": "matin",
-      "time_label": "09:05",
+      "moment_label": "après-midi",
+      "time_label": "15:08",
       "transition_text": "Marie sent que Player a pris une position et demande si elle est dedans.",
       "conversation_ids": [
         "chapter_06_marie_position"
