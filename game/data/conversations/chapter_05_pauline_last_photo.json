@@ -52,7 +52,7 @@
       "choices": [
         {
           "id": "choice_c05_pauline_last_ignore",
-          "text": "Ne pas relever.",
+          "text": "Je vais faire comme si je n’avais pas vu l’appât.",
           "tone": "cool",
           "effects": {
             "pauline.control": 1,
@@ -68,7 +68,7 @@
               "id": "choice_c05_pauline_last_ignore_player_001",
               "sender": "ludo",
               "time_label": "21:10",
-              "text": "Ne pas relever."
+              "text": "Je vais faire comme si je n’avais pas vu l’appât."
             },
             {
               "id": "msg_c05_pauline_last_ignore_001",
