@@ -1,8 +1,8 @@
 {
-  "id": "chapter_05_mathilde_followup",
+  "id": "chapter_05_mathilde_kitchen_trial",
   "chapter": 5,
   "day": 5,
-  "title": "Jour 5 — Mathilde relance la trace",
+  "title": "Jour 5 — Le tribunal domestique",
   "app": "messages",
   "thread": {
     "id": "thread_mathilde_private",
@@ -15,170 +15,176 @@
   },
   "segments": [
     {
-      "conversation_segment_id": "c05_mathilde_followup_01",
-      "moment_label": "après-midi",
-      "time_label": "14:22",
-      "transition_text": "La photo J3/J4 revient comme un secret actif. Mathilde veut savoir si elle a encore une place dans la galerie mentale de Player.",
-      "availability_state": "Mathilde reste taquine, plus prudente que la veille, et attentive à la limite de Marie.",
-      "function": "Faire revenir la question de la photo gardée ou supprimée sans rendre Mathilde frontale.",
+      "conversation_segment_id": "c05_mathilde_kitchen_trial_01",
+      "moment_label": "milieu de matinée",
+      "time_label": "10:06",
+      "transition_text": "Mathilde lance un mini-tribunal domestique pour une tasse non rincée. Rien d’intime, mais la maison parle fort.",
+      "availability_state": "Mathilde est vive, moqueuse, très présente dans l’espace domestique.",
+      "function": "Installer une micro-présence vivante sans trace ni photo intime.",
       "messages": [
         {
           "id": "msg_c05_mathilde_001",
           "sender": "mathilde",
-          "time_label": "14:22",
-          "text": "Question technique."
+          "time_label": "10:06",
+          "text": "Question importante."
         },
         {
           "id": "msg_c05_mathilde_002",
           "sender": "mathilde",
-          "time_label": "14:22",
-          "text": "La photo du canapé. Ou de moi contre le canapé. Selon le niveau de mauvaise foi 😅"
+          "time_label": "10:06",
+          "text": "Très importante."
         },
         {
           "id": "msg_c05_mathilde_003",
           "sender": "mathilde",
-          "time_label": "14:23",
-          "text": "Tu l’as supprimée ?"
+          "time_label": "10:06",
+          "text": "Niveau tribunal domestique."
         },
         {
           "id": "msg_c05_mathilde_004",
           "sender": "mathilde",
-          "time_label": "14:23",
-          "text": "Je demande pour une amie. Qui s’appelle probablement Marie dans ta tête, donc fais attention à ta réponse 🙃"
+          "time_label": "10:07",
+          "text": "Si quelqu’un met une tasse dans l’évier SANS la rincer, c’est :"
+        },
+        {
+          "id": "msg_c05_mathilde_005",
+          "sender": "mathilde",
+          "time_label": "10:07",
+          "text": "A. un oubli"
+        },
+        {
+          "id": "msg_c05_mathilde_006",
+          "sender": "mathilde",
+          "time_label": "10:07",
+          "text": "B. une déclaration de guerre"
+        },
+        {
+          "id": "msg_c05_mathilde_007",
+          "sender": "mathilde",
+          "time_label": "10:07",
+          "text": "C. typiquement toi 🙃👀"
+        },
+        {
+          "id": "msg_c05_mathilde_008",
+          "sender": "mathilde",
+          "time_label": "10:08",
+          "text": "J’ai une tasse."
+        },
+        {
+          "id": "msg_c05_mathilde_009",
+          "sender": "mathilde",
+          "time_label": "10:08",
+          "text": "Un évier."
+        },
+        {
+          "id": "msg_c05_mathilde_010",
+          "sender": "mathilde",
+          "time_label": "10:08",
+          "text": "Et ton aura."
+        },
+        {
+          "id": "msg_c05_mathilde_011",
+          "sender": "mathilde",
+          "time_label": "10:09",
+          "text": "Ton aura très forte de personne qui pense que “je le ferai après” est une méthode de rangement 🙃👀"
+        },
+        {
+          "id": "msg_c05_mathilde_012",
+          "sender": "mathilde",
+          "time_label": "10:10",
+          "text": "La maison sait."
+        },
+        {
+          "id": "msg_c05_mathilde_013",
+          "sender": "mathilde",
+          "time_label": "10:10",
+          "text": "Les murs ont des oreilles."
+        },
+        {
+          "id": "msg_c05_mathilde_014",
+          "sender": "mathilde",
+          "time_label": "10:11",
+          "text": "Et moi j’ai une mémoire excellente quand il y a du chocolat en jeu 🙃"
         }
       ],
       "choices": [
         {
-          "id": "choice_c05_mathilde_deleted",
-          "text": "Dire qu’elle a disparu.",
-          "tone": "careful",
+          "id": "choice_c05_mathilde_joke_back",
+          "text": "Répondre avec la même mauvaise foi.",
+          "tone": "playful",
           "effects": {
-            "mathilde.loyalty": 1,
-            "mathilde.desire": -1
+            "mathilde_attention_score": 1
           },
           "sets_flags": [
-            "mathilde_photo_deleted_claim_j5",
-            "mathilde_photo_question_j5"
+            "j5_mathilde_domestic_presence_active"
           ],
           "next_messages": [
             {
-              "id": "msg_c05_mathilde_deleted_001",
-              "sender": "mathilde",
-              "time_label": "14:24",
-              "text": "Bien."
+              "id": "msg_player_c05_mathilde_joke_back_001",
+              "sender": "ludo",
+              "time_label": "10:06",
+              "text": "Répondre avec la même mauvaise foi."
             },
             {
-              "id": "msg_c05_mathilde_deleted_002",
+              "id": "msg_c05_mathilde_joke_001",
               "sender": "mathilde",
-              "time_label": "14:24",
-              "text": "Je vais faire semblant de ne pas me demander si tu dis ça parce que c’est vrai ou parce que c’est sage."
+              "time_label": "10:12",
+              "text": "Je note : défense technique insuffisante, mais effort comique appréciable."
             }
           ]
         },
         {
-          "id": "choice_c05_mathilde_kept",
-          "text": "Avouer qu’elle est encore là.",
-          "tone": "confessional",
+          "id": "choice_c05_mathilde_admit",
+          "text": "Admettre qu’il y avait bien une tasse.",
+          "tone": "honest",
           "effects": {
-            "mathilde.desire": 2,
-            "mathilde.loyalty": -1,
+            "mathilde.loyalty": 1
+          },
+          "sets_flags": [
+            "j5_mathilde_domestic_presence_active"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_player_c05_mathilde_admit_001",
+              "sender": "ludo",
+              "time_label": "10:06",
+              "text": "Admettre qu’il y avait bien une tasse."
+            },
+            {
+              "id": "msg_c05_mathilde_admit_001",
+              "sender": "mathilde",
+              "time_label": "10:12",
+              "text": "Voilà. La vérité dans sa forme la plus ménagère."
+            }
+          ]
+        },
+        {
+          "id": "choice_c05_mathilde_evade",
+          "text": "Éviter le sujet.",
+          "tone": "avoidant",
+          "effects": {
             "lie_score": 1
           },
           "sets_flags": [
-            "mathilde_photo_kept_admitted_j5",
-            "mathilde_photo_question_j5"
+            "j5_mathilde_domestic_presence_active"
           ],
           "next_messages": [
             {
-              "id": "msg_c05_mathilde_kept_001",
-              "sender": "mathilde",
-              "time_label": "14:24",
-              "text": "Ah."
+              "id": "msg_player_c05_mathilde_evade_001",
+              "sender": "ludo",
+              "time_label": "10:06",
+              "text": "Éviter le sujet."
             },
             {
-              "id": "msg_c05_mathilde_kept_002",
+              "id": "msg_c05_mathilde_evade_001",
               "sender": "mathilde",
-              "time_label": "14:24",
-              "text": "Réponse dangereuse, mais au moins elle a le mérite d’être honnête. Enfin... presque honnête 😇"
-            },
-            {
-              "id": "msg_c05_mathilde_kept_003",
-              "sender": "mathilde",
-              "time_label": "14:25",
-              "text": "Ne la laisse pas traîner. Vraiment."
-            }
-          ]
-        },
-        {
-          "id": "choice_c05_mathilde_limit",
-          "text": "Poser une limite sans la repousser.",
-          "tone": "boundary",
-          "effects": {
-            "mathilde.loyalty": 1,
-            "marie.trust": 1
-          },
-          "sets_flags": [
-            "mathilde_photo_question_j5"
-          ],
-          "next_messages": [
-            {
-              "id": "msg_c05_mathilde_limit_001",
-              "sender": "mathilde",
-              "time_label": "14:24",
-              "text": "C’est probablement la meilleure réponse."
-            },
-            {
-              "id": "msg_c05_mathilde_limit_002",
-              "sender": "mathilde",
-              "time_label": "14:24",
-              "text": "Énervant, du coup. Mais meilleure."
-            }
-          ]
-        },
-        {
-          "id": "choice_c05_mathilde_send",
-          "text": "Lui demander si elle a encore quelque chose à montrer.",
-          "tone": "soft_probe",
-          "effects": {
-            "mathilde.desire": 1,
-            "mathilde.loyalty": -1,
-            "lie_score": 1
-          },
-          "sets_flags": [
-            "mathilde_photo_question_j5",
-            "photo_mathilde_after_party_j5_received"
-          ],
-          "next_messages": [
-            {
-              "id": "msg_c05_mathilde_send_001",
-              "sender": "mathilde",
-              "time_label": "14:24",
-              "text": "Tu poses ça comme une question neutre ?"
-            },
-            {
-              "id": "msg_c05_mathilde_send_002",
-              "sender": "mathilde",
-              "time_label": "14:24",
-              "text": "Très mauvais théâtre."
-            },
-            {
-              "id": "msg_c05_mathilde_send_003",
-              "sender": "mathilde",
-              "time_label": "14:25",
-              "text": "J’ai retrouvé ça. Je devrais sans doute pas te l’envoyer.",
-              "content_id": "photo_mathilde_after_party_j5_placeholder",
-              "content_behavior": "inline_preview"
-            },
-            {
-              "id": "msg_c05_mathilde_send_004",
-              "sender": "mathilde",
-              "time_label": "14:25",
-              "text": "Et tu devrais sans doute pas avoir envie de l’ouvrir. Donc évidemment, problème 🫠"
+              "time_label": "10:12",
+              "text": "C’est exactement le genre de réponse qui confirme tout ce que j’accusais déjà."
             }
           ]
         }
       ]
     }
   ],
-  "debug_notes": "Mathilde relance la trace gardée ou supprimée sans devenir frontale."
+  "debug_notes": "Mathilde reste une micro-présence domestique, drôle, sans photo intime ni trace."
 }

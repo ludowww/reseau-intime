@@ -1,8 +1,8 @@
 {
-  "id": "chapter_05_marie_morning",
+  "id": "chapter_05_marie_couple_vacille",
   "chapter": 5,
   "day": 5,
-  "title": "Jour 5 — Marie au réveil",
+  "title": "Jour 5 — Le couple vacille",
   "app": "messages",
   "thread": {
     "id": "thread_marie_private",
@@ -15,165 +15,242 @@
   },
   "segments": [
     {
-      "conversation_segment_id": "c05_marie_morning_01",
+      "conversation_segment_id": "c05_marie_couple_vacille_01",
       "moment_label": "matin",
       "time_label": "08:12",
-      "transition_text": "Marie revient sur la soirée sans la réduire à un reproche. Le téléphone, lui, n’a pas quitté la pièce dans sa tête.",
-      "availability_state": "Marie est fatiguée mais lucide. Elle veut savoir si Player était vraiment là ou déjà ailleurs.",
-      "function": "Faire revenir Marie sur la soirée et sur l’absence de Player sans verrouiller la route.",
-      "trigger": {
-        "type": "notification",
-        "title": "Marie",
-        "body": "Tu étais avec moi hier ?"
-      },
+      "transition_text": "Marie commence par le pain froid et le café refroidi, puis elle ramène Nico dans le cadre et le couple dans une zone moins confortable.",
+      "availability_state": "Marie est lucide, un peu sèche, et trop présente pour qu’on puisse faire semblant que rien ne bouge.",
+      "function": "Faire sentir que le couple vacille et que Marie ne veut plus rester la dernière à comprendre.",
       "messages": [
         {
           "id": "msg_c05_marie_001",
           "sender": "marie",
           "time_label": "08:12",
-          "text": "Je crois que j’ai encore la soirée dans les cheveux 😅"
+          "text": "Tu as fini le pain 🙄"
         },
         {
           "id": "msg_c05_marie_002",
           "sender": "marie",
           "time_label": "08:13",
-          "text": "Et un peu dans la tête."
+          "text": "Je formule ça comme une accusation."
         },
         {
           "id": "msg_c05_marie_003",
           "sender": "marie",
           "time_label": "08:13",
-          "text": "Hier, j’ai eu l’impression que tu étais là... mais pas toujours avec moi."
+          "text": "Mais c’est surtout une information."
         },
         {
           "id": "msg_c05_marie_004",
           "sender": "marie",
           "time_label": "08:14",
-          "text": "Je ne te fais pas un procès au réveil, promis. Mauvaise ambiance pour le café 🙂"
+          "text": "Enfin."
         },
         {
           "id": "msg_c05_marie_005",
           "sender": "marie",
           "time_label": "08:14",
-          "text": "Mais j’avais envie que tu me regardes un peu plus. Moi. Pas ton écran."
+          "text": "Une information hostile 😅"
+        },
+        {
+          "id": "msg_c05_marie_006",
+          "sender": "marie",
+          "time_label": "08:15",
+          "text": "J’ai fait un café."
+        },
+        {
+          "id": "msg_c05_marie_007",
+          "sender": "marie",
+          "time_label": "08:15",
+          "text": "Puis j’ai scrollé."
+        },
+        {
+          "id": "msg_c05_marie_008",
+          "sender": "marie",
+          "time_label": "08:16",
+          "text": "Puis mon café a perdu tout espoir."
+        },
+        {
+          "id": "msg_c05_marie_009",
+          "sender": "marie",
+          "time_label": "08:16",
+          "text": "Très moi ce matin 😅"
+        },
+        {
+          "id": "msg_c05_marie_010",
+          "sender": "marie",
+          "time_label": "08:17",
+          "text": "Je ne crois pas que tu sois juste fatigué."
+        },
+        {
+          "id": "msg_c05_marie_011",
+          "sender": "marie",
+          "time_label": "08:17",
+          "text": "Je ne crois pas que tu sois juste distrait."
+        },
+        {
+          "id": "msg_c05_marie_012",
+          "sender": "marie",
+          "time_label": "08:18",
+          "text": "Je crois que quelque chose bouge entre nous."
+        },
+        {
+          "id": "msg_c05_marie_013",
+          "sender": "marie",
+          "time_label": "08:18",
+          "text": "Et je n’ai pas envie d’être la dernière à le comprendre dans mon propre couple."
+        },
+        {
+          "id": "msg_c05_marie_014",
+          "sender": "marie",
+          "time_label": "08:19",
+          "text": "Il y a aussi une photo de Nico dans le lot. Un petit rire défendable. Mais visible.",
+          "content_id": "j5_marie_party_nico_frame",
+          "content_behavior": "inline_preview"
         }
       ],
       "choices": [
         {
-          "id": "choice_c05_marie_truth",
-          "text": "Reconnaître que j’étais ailleurs.",
+          "id": "choice_c05_marie_truth_partial",
+          "text": "Je crois que j’ai aimé être regardé ailleurs. Et je déteste que ce soit vrai.",
           "tone": "truth_seed",
           "effects": {
             "marie.trust": 1,
-            "lie_score": -1
+            "marie.lucidity": 1,
+            "truth_tendency": 1,
+            "marie_attention_score": 1
           },
           "sets_flags": [
-            "truth_seed_marie_j5"
+            "j5_couple_state_truth_discussion_seed",
+            "j5_marie_agency_up"
           ],
           "next_messages": [
             {
+              "id": "msg_player_c05_marie_truth_partial_001",
+              "sender": "ludo",
+              "time_label": "08:12",
+              "text": "Je crois que j’ai aimé être regardé ailleurs. Et je déteste que ce soit vrai."
+            },
+            {
               "id": "msg_c05_marie_truth_001",
               "sender": "marie",
-              "time_label": "08:15",
-              "text": "Merci de ne pas me servir une excuse trop propre."
+              "time_label": "08:20",
+              "text": "Merci de ne pas me servir une phrase trop propre."
             },
             {
               "id": "msg_c05_marie_truth_002",
               "sender": "marie",
-              "time_label": "08:15",
-              "text": "Ça pique un peu, mais au moins je sais où je mets les pieds."
+              "time_label": "08:20",
+              "text": "Ça pique, mais au moins je ne suis pas dehors de ce que tu ressens."
             }
           ]
         },
         {
           "id": "choice_c05_marie_minimize",
-          "text": "Dire que c’était juste la fatigue.",
+          "text": "Je crois que tu mets beaucoup de poids sur une photo. Hier, c’était juste une soirée.",
           "tone": "minimize",
           "effects": {
             "lie_score": 1,
-            "marie_neglect_score": 1
+            "marie_neglect_score": 1,
+            "nico_surveillance_score": 1
           },
           "sets_flags": [
-            "marie_morning_minimized_j5"
+            "j5_couple_state_suspicious",
+            "j5_nico_mirror_seed"
           ],
           "next_messages": [
             {
+              "id": "msg_player_c05_marie_minimize_001",
+              "sender": "ludo",
+              "time_label": "08:12",
+              "text": "Je crois que tu mets beaucoup de poids sur une photo. Hier, c’était juste une soirée."
+            },
+            {
               "id": "msg_c05_marie_minimize_001",
               "sender": "marie",
-              "time_label": "08:15",
-              "text": "‘Juste la fatigue’."
+              "time_label": "08:20",
+              "text": "‘Juste une soirée’."
             },
             {
               "id": "msg_c05_marie_minimize_002",
               "sender": "marie",
-              "time_label": "08:15",
-              "text": "C’est fou comme le mot ‘juste’ travaille beaucoup chez toi, parfois 🙄"
+              "time_label": "08:20",
+              "text": "Je vais noter cette phrase. Elle a l’air très pratique pour ne rien regarder."
             }
           ]
         },
         {
-          "id": "choice_c05_marie_return",
-          "text": "Revenir vers elle.",
-          "tone": "reconnect",
+          "id": "choice_c05_marie_flou",
+          "text": "Je ne sais pas encore ce que je veux. Mais je sais que je ne veux pas te laisser en dehors de ce que je ressens.",
+          "tone": "partial_truth",
           "effects": {
+            "truth_tendency": 1,
             "marie.trust": 1,
             "marie_attention_score": 1
           },
           "sets_flags": [
-            "photo_marie_after_party_j5_received"
+            "j5_couple_state_truth_discussion_seed",
+            "j5_player_posture_partial_truth"
           ],
           "next_messages": [
             {
-              "id": "msg_c05_marie_return_001",
-              "sender": "marie",
-              "time_label": "08:15",
-              "text": "Alors regarde-moi maintenant."
+              "id": "msg_player_c05_marie_flou_001",
+              "sender": "ludo",
+              "time_label": "08:12",
+              "text": "Je ne sais pas encore ce que je veux. Mais je sais que je ne veux pas te laisser en dehors de ce que je ressens."
             },
             {
-              "id": "msg_c05_marie_return_002",
+              "id": "msg_c05_marie_flou_001",
               "sender": "marie",
-              "time_label": "08:16",
-              "text": "J’ai aussi gardé ça pour ce matin.",
-              "content_id": "photo_marie_after_party_j5_placeholder",
-              "content_behavior": "inline_preview"
+              "time_label": "08:20",
+              "text": "Ça, au moins, c’est pas une fuite déguisée."
             },
             {
-              "id": "msg_c05_marie_return_003",
+              "id": "msg_c05_marie_flou_002",
               "sender": "marie",
-              "time_label": "08:16",
-              "text": "Pas pour te piéger. Juste pour voir si tu reviens vraiment 🙂"
+              "time_label": "08:20",
+              "text": "Je préfère encore le flou honnête au mensonge bien repassé."
             }
           ]
         },
         {
-          "id": "choice_c05_marie_jealous_nico",
-          "text": "Être jaloux de Nico.",
-          "tone": "jealous",
+          "id": "choice_c05_marie_cadre",
+          "text": "Et si le problème, ce n’était pas seulement ce que je regarde ? Et si c’était qu’on n’a jamais parlé de ce qu’on autorise ou pas ?",
+          "tone": "open_discussion",
           "effects": {
-            "ludo_jealousy": 2,
-            "nico_surveillance_score": 1,
-            "marie.lucidity": 1
+            "truth_tendency": 1,
+            "marie.trust": 1,
+            "ludo_jealousy": 1,
+            "social_pressure": 1
           },
           "sets_flags": [
-            "marie_jealous_of_nico_j5"
+            "j5_couple_state_open_discussion_seed",
+            "j5_marie_agency_up",
+            "j5_jealousy_risk_up"
           ],
           "next_messages": [
             {
-              "id": "msg_c05_marie_jealous_001",
-              "sender": "marie",
-              "time_label": "08:15",
-              "text": "Ah. Donc tu étais là pour surveiller qui me regardait."
+              "id": "msg_player_c05_marie_cadre_001",
+              "sender": "ludo",
+              "time_label": "08:12",
+              "text": "Et si le problème, ce n’était pas seulement ce que je regarde ? Et si c’était qu’on n’a jamais parlé de ce qu’on autorise ou pas ?"
             },
             {
-              "id": "msg_c05_marie_jealous_002",
+              "id": "msg_c05_marie_cadre_001",
               "sender": "marie",
-              "time_label": "08:15",
-              "text": "Pas forcément pour me regarder, moi. C’est... intéressant 😅"
+              "time_label": "08:20",
+              "text": "Là, tu viens d’ouvrir une vraie porte."
+            },
+            {
+              "id": "msg_c05_marie_cadre_002",
+              "sender": "marie",
+              "time_label": "08:21",
+              "text": "Et je ne vais pas faire semblant de ne pas avoir entendu le mot ‘autorise’."
             }
           ]
         }
       ]
     }
   ],
-  "debug_notes": "Marie au réveil : fatiguée, lucide, désirable, sans confrontation totale."
+  "debug_notes": "J5 Marie rend le couple actif : vacillement, vérité partielle ou ouverture. Nico reste un miroir social visible."
 }

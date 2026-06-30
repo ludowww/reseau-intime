@@ -1,0 +1,106 @@
+{
+  "id": "chapter_06_proof_placeholders",
+  "version": 1,
+  "notes": "J6 ajoute quatre placeholders : salle de bain / miroir Mathilde, fenêtre Marie, abribus Pauline, photo du soir Sandra.",
+  "items": [
+    {
+      "id": "j6_mathilde_sink_mirror_tease",
+      "character": "mathilde",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/j6_mathilde_sink_mirror_tease.png",
+      "context": "Photo domestique semi-innocente ; miroir / salle de bain / détail troublant ; contrôle repris par Mathilde.",
+      "tags": [
+        "mathilde",
+        "sink",
+        "mirror",
+        "domestic",
+        "tease"
+      ],
+      "is_proof": false,
+      "risk_level": 2,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": [
+        "mathilde",
+        "marie"
+      ]
+    },
+    {
+      "id": "j6_marie_window_soft",
+      "character": "marie",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/j6_marie_window_soft.png",
+      "context": "Photo quotidienne Marie près d’une fenêtre ; distance ou reconquête calme.",
+      "tags": [
+        "marie",
+        "window",
+        "soft",
+        "daily",
+        "couple"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": [
+        "marie"
+      ]
+    },
+    {
+      "id": "j6_pauline_bus_stop_followup",
+      "character": "pauline",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/j6_pauline_bus_stop_followup.png",
+      "context": "Selfie / détail Pauline sous abribus ou rue ; rappel contrôle / silence.",
+      "tags": [
+        "pauline",
+        "bus_stop",
+        "selfie",
+        "control",
+        "silence"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": false,
+      "can_be_discovered_by": [
+        "pauline",
+        "marie"
+      ]
+    },
+    {
+      "id": "j6_sandra_evening_soft",
+      "character": "sandra",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/j6_sandra_evening_soft.png",
+      "context": "Photo douce du soir ; plus intime que restaurant mais encore soft.",
+      "tags": [
+        "sandra",
+        "evening",
+        "soft",
+        "trust",
+        "photo"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": [
+        "sandra",
+        "marie"
+      ]
+    }
+  ]
+}
