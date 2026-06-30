@@ -45,6 +45,8 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             "res://data/conversations/chapter_07_index.json",
             "res://data/visual_content/placeholders.json",
             "res://data/visual_content/chapter_04_proofs.json",
+            "res://data/visual_content/chapter_05_proofs.json",
+            "res://data/visual_content/chapter_06_proofs.json",
             "res://data/visual_content/chapter_07_proofs.json",
         ]:
             self.assertIn(required, loader)
