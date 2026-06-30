@@ -110,7 +110,7 @@
       "choices": [
         {
           "id": "choice_c05_mathilde_joke_back",
-          "text": "Répondre avec la même mauvaise foi.",
+          "text": "Je vais répondre avec la même mauvaise foi.",
           "tone": "playful",
           "effects": {
             "mathilde_attention_score": 1
@@ -123,7 +123,7 @@
               "id": "msg_player_c05_mathilde_joke_back_001",
               "sender": "ludo",
               "time_label": "10:06",
-              "text": "Répondre avec la même mauvaise foi."
+              "text": "Je vais répondre avec la même mauvaise foi."
             },
             {
               "id": "msg_c05_mathilde_joke_001",

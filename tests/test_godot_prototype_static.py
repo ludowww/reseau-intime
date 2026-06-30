@@ -84,6 +84,7 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             "09:41",
             "Messages",
             "Debug",
+            "Speed x1",
             "Reset",
             "debug_scroll.visible = false",
             "PanelContainer",
@@ -127,8 +128,22 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             "Nouveau message",
             "En attente",
             "pending",
+            "Speed x1",
+            "_debug_speed_label",
+            "_cycle_debug_speed",
+            "_set_debug_speed_index",
         ]:
             self.assertIn(expected, script)
+
+    def test_authoring_helpers_include_choice_text_check_and_presence_diagnostics(self):
+        choice_script = (ROOT / "tools" / "player_choice_text_check.py").read_text(encoding="utf-8")
+        presence_script = (ROOT / "tools" / "player_presence_check.py").read_text(encoding="utf-8")
+        self.assertIn("choice_issues", choice_script)
+        self.assertIn("mais en français", choice_script)
+        self.assertIn("player_choice_text_check.py", choice_script)
+        self.assertIn("non_player_messages", presence_script)
+        self.assertIn("player_message_ratio", presence_script)
+        self.assertIn("longest_player_absence_streak", presence_script)
 
     def test_day1_time_gate_metadata_keeps_sandra_locked_until_marie_progress(self):
         index = json.loads((GAME / "data/conversations/chapter_01_index.json").read_text(encoding="utf-8"))
@@ -175,6 +190,11 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         self.assertIn("AUTOWRAP_WORD_SMART", script)
         self.assertIn("disabled = true", script)
         self.assertIn("_append_ludo_reply", script)
+        self.assertIn("_should_skip_repeated_choice_reply", script)
+        self.assertIn("_choice_reply_text", script)
+        self.assertIn("strip_edges()", script)
+        self.assertIn("debug_speed_multiplier", script)
+        self.assertIn("set_debug_speed_multiplier", script)
         self.assertNotIn("Choix appliqué :", script)
         self.assertIn("_format_message_text", script)
         self.assertIn("_render_chat_bubble", script)
@@ -413,7 +433,7 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             "_show_typing_indicator",
             "_typing_delay_for_message",
             "0.35 + char_count * 0.018",
-            "clamp(delay, 0.45, 2.4)",
+            "clamp(delay / max(debug_speed_multiplier, 1.0), 0.08, 2.4)",
             "await get_tree().create_timer",
             'typing_message["text"] = "..."',
             "_animate_typing_indicator",

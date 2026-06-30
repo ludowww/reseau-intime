@@ -50,7 +50,9 @@
           "id": "choice_c03_wallpaper_show",
           "text": "Montrer le téléphone",
           "tone": "show",
-          "sets_flags": ["showed_wallpaper_party_day3"],
+          "sets_flags": [
+            "showed_wallpaper_party_day3"
+          ],
           "wallpaper_resolution": {
             "if_tags_include": {
               "neutral": {
@@ -103,7 +105,9 @@
                     "text": "Ah."
                   }
                 ],
-                "sets_flags": ["wallpaper_mathilde_revealed_party_day3"]
+                "sets_flags": [
+                  "wallpaper_mathilde_revealed_party_day3"
+                ]
               },
               "sandra": {
                 "effects": {
@@ -123,7 +127,9 @@
                     "text": "Je croyais que c’était juste ta meilleure amie."
                   }
                 ],
-                "sets_flags": ["wallpaper_sandra_revealed_party_day3"]
+                "sets_flags": [
+                  "wallpaper_sandra_revealed_party_day3"
+                ]
               },
               "pauline": {
                 "effects": {
@@ -137,7 +143,9 @@
                     "text": "Alors ça, je ne l’avais pas prévu. Ou peut-être que si."
                   }
                 ],
-                "sets_flags": ["wallpaper_pauline_revealed_party_day3"]
+                "sets_flags": [
+                  "wallpaper_pauline_revealed_party_day3"
+                ]
               }
             }
           }
@@ -150,7 +158,9 @@
             "marie.lucidity": 1,
             "pauline.control": 1
           },
-          "sets_flags": ["hid_wallpaper_party_day3"],
+          "sets_flags": [
+            "hid_wallpaper_party_day3"
+          ],
           "next_messages": [
             {
               "id": "msg_c03_wallpaper_hide_001",
@@ -168,12 +178,14 @@
         },
         {
           "id": "choice_c03_wallpaper_joke",
-          "text": "Faire une blague pour esquiver",
+          "text": "Je vais faire une blague pour esquiver la question.",
           "tone": "dodge_humor",
           "effects": {
             "social_pressure": 1
           },
-          "sets_flags": ["dodged_wallpaper_with_joke_party_day3"],
+          "sets_flags": [
+            "dodged_wallpaper_with_joke_party_day3"
+          ],
           "next_messages": [
             {
               "id": "msg_c03_wallpaper_joke_001",
@@ -190,8 +202,16 @@
           ]
         }
       ],
-      "routes_nourished": ["marie", "mathilde", "pauline", "sandra", "social_pressure"],
-      "required_events_delivered": ["wallpaper_can_be_social_proof"]
+      "routes_nourished": [
+        "marie",
+        "mathilde",
+        "pauline",
+        "sandra",
+        "social_pressure"
+      ],
+      "required_events_delivered": [
+        "wallpaper_can_be_social_proof"
+      ]
     }
   ],
   "debug_notes": "Scène conditionnelle. Elle doit créer un malaise ou un signal, jamais une explosion définitive au Jour 3."

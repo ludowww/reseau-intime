@@ -57,6 +57,21 @@ def has_player_reply(choice: dict[str, object], player: str) -> bool:
     return False
 
 
+def message_presence_stats(messages: list[dict[str, object]], player: str) -> tuple[int, int]:
+    non_player_messages = 0
+    longest_non_player_streak = 0
+    current_streak = 0
+    for node in messages:
+        if sender_of(node) == player and text_of(node).strip():
+            longest_non_player_streak = max(longest_non_player_streak, current_streak)
+            current_streak = 0
+        else:
+            non_player_messages += 1
+            current_streak += 1
+    longest_non_player_streak = max(longest_non_player_streak, current_streak)
+    return non_player_messages, longest_non_player_streak
+
+
 def report_file(path: Path, player: str, min_ratio: float) -> int:
     try:
         data = load_json(path)
@@ -67,16 +82,21 @@ def report_file(path: Path, player: str, min_ratio: float) -> int:
     messages = iter_message_nodes(data)
     choices = iter_choices(data)
     player_messages = [node for node in messages if sender_of(node) == player and text_of(node).strip()]
+    non_player_messages, longest_non_player_streak = message_presence_stats(messages, player)
     choices_with_next = [choice for choice in choices if next_messages(choice)]
     choices_with_player = [choice for choice in choices if has_player_reply(choice, player)]
     strong_choices = [choice for choice in choices if choice_looks_strong(choice_label(choice))]
     strong_without_player = [choice for choice in strong_choices if not has_player_reply(choice, player)]
 
     ratio = (len(choices_with_player) / len(choices)) if choices else 1.0
+    player_message_ratio = (len(player_messages) / len(messages)) if messages else 0.0
 
     print(f"\n# {relative_path(path)}")
     print(f"messages: {len(messages)}")
+    print(f"non_player_messages: {non_player_messages}")
     print(f"player_messages: {len(player_messages)}")
+    print(f"player_message_ratio: {player_message_ratio:.2f}")
+    print(f"longest_player_absence_streak: {longest_non_player_streak}")
     print(f"choices: {len(choices)}")
     print(f"choices_with_next_messages: {len(choices_with_next)}/{len(choices)}")
     print(f"choices_with_player_reply: {len(choices_with_player)}/{len(choices)}")
@@ -92,6 +112,8 @@ def report_file(path: Path, player: str, min_ratio: float) -> int:
         warnings.append(
             f"low Player reply ratio after choices: {len(choices_with_player)}/{len(choices)} < {min_ratio:.2f}"
         )
+    if longest_non_player_streak >= 5:
+        warnings.append(f"Player absent for {longest_non_player_streak} consecutive messages")
     if strong_without_player:
         labels = "; ".join(choice_label(choice) for choice in strong_without_player[:5])
         warnings.append("strong choice(s) without visible Player reply: " + labels)
