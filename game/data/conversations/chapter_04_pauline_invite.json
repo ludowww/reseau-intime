@@ -7,7 +7,10 @@
   "thread": {
     "id": "thread_pauline_private",
     "type": "private",
-    "participants": ["ludo", "pauline"],
+    "participants": [
+      "ludo",
+      "pauline"
+    ],
     "display_name": "Pauline",
     "profile_content_id": "profile_pauline_placeholder"
   },
@@ -46,7 +49,15 @@
         {
           "id": "choice_c04_pauline_invite_01_guided",
           "text": "Tu vends toujours les choses comme ça ?",
-          "tone": "guided_reply"
+          "tone": "guided_reply",
+          "next_messages": [
+            {
+              "id": "choice_c04_pauline_invite_01_guided_player_001",
+              "sender": "ludo",
+              "time_label": "17:48",
+              "text": "Tu vends toujours les choses comme ça ?"
+            }
+          ]
         }
       ]
     },
@@ -89,7 +100,9 @@
             "pauline.interest": 1,
             "social_pressure": 1
           },
-          "sets_flags": ["party_invite_j4"],
+          "sets_flags": [
+            "party_invite_j4"
+          ],
           "next_messages": [
             {
               "id": "msg_c04_pauline_invite_02_1_01",
@@ -120,8 +133,16 @@
             "nico.place_near_marie": 1,
             "social_pressure": 1
           },
-          "sets_flags": ["party_invite_j4"],
+          "sets_flags": [
+            "party_invite_j4"
+          ],
           "next_messages": [
+            {
+              "id": "choice_c04_pauline_invite_02_2_player_001",
+              "sender": "ludo",
+              "time_label": "17:51",
+              "text": "Qui vient exactement ?"
+            },
             {
               "id": "msg_c04_pauline_invite_02_2_01",
               "sender": "pauline",
@@ -156,7 +177,9 @@
             "marie_trust": 1,
             "pauline.interest": 1
           },
-          "sets_flags": ["party_invite_j4"],
+          "sets_flags": [
+            "party_invite_j4"
+          ],
           "next_messages": [
             {
               "id": "msg_c04_pauline_invite_02_3_01",
@@ -208,7 +231,15 @@
         {
           "id": "choice_c04_pauline_invite_03_guided",
           "text": "C’est censé me rassurer ?",
-          "tone": "guided_reply"
+          "tone": "guided_reply",
+          "next_messages": [
+            {
+              "id": "choice_c04_pauline_invite_03_guided_player_001",
+              "sender": "ludo",
+              "time_label": "17:53",
+              "text": "C’est censé me rassurer ?"
+            }
+          ]
         }
       ]
     },
