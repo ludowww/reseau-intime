@@ -39,6 +39,7 @@ var active_conversation_id := ""
 var current_render_token := 0
 var active_state: Dictionary = {}
 var restoring_state := false
+var debug_speed_multiplier := 1.0
 
 func reset_ui_state() -> void:
 	current_render_token += 1
@@ -50,6 +51,9 @@ func reset_ui_state() -> void:
 	choice_buttons.clear()
 	choice_was_applied = false
 	_clear()
+
+func set_debug_speed_multiplier(multiplier: float) -> void:
+	debug_speed_multiplier = max(multiplier, 1.0)
 
 func show_conversation(conversation: Dictionary) -> void:
 	current_render_token += 1
@@ -365,7 +369,24 @@ func _flatten_choice_followup_queue(choice: Dictionary) -> Array:
 	for key in ["next_messages", "next_items", "automatic_followup"]:
 		for entry in choice.get(key, []):
 			_flatten_render_entry(entry, queue)
+	if _should_skip_repeated_choice_reply(choice, queue):
+		queue.remove_at(0)
 	return queue
+
+func _should_skip_repeated_choice_reply(choice: Dictionary, queue: Array) -> bool:
+	if queue.is_empty():
+		return false
+	var first_variant: Variant = queue[0]
+	if typeof(first_variant) != TYPE_DICTIONARY:
+		return false
+	var first: Dictionary = first_variant as Dictionary
+	var sender := str(first.get("sender", first.get("author", ""))).strip_edges().to_lower()
+	if sender != "ludo":
+		return false
+	return _format_message_text(first).strip_edges() == _choice_reply_text(choice)
+
+func _choice_reply_text(choice: Dictionary) -> String:
+	return str(choice.get("text", choice.get("id", ""))).strip_edges()
 
 func _flatten_render_queue(conversation: Dictionary) -> Array:
 	var queue: Array = []
@@ -505,7 +526,7 @@ func _set_typing_indicator_text(typing_indicator: Node, text: String) -> void:
 func _typing_delay_for_message(message: Dictionary) -> float:
 	var char_count := _format_message_text(message).length()
 	var delay := 0.35 + char_count * 0.018
-	return clamp(delay, 0.45, 2.4)
+	return clamp(delay / max(debug_speed_multiplier, 1.0), 0.08, 2.4)
 
 func _flatten_content(conversation: Dictionary) -> Array:
 	var items: Array = []

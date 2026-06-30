@@ -108,7 +108,7 @@
         },
         {
           "id": "choice_c05_pauline_last_ask",
-          "text": "Demander si c’est tout.",
+          "text": "C’est tout ?",
           "tone": "probe",
           "effects": {
             "pauline_risk_score": 1,

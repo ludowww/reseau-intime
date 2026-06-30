@@ -27,6 +27,10 @@ var unlocked_thread_ids_by_day: Dictionary = {}
 var initialized_pending_days: Dictionary = {}
 var notification_target_conversation_id := ""
 var notification_target_day_value = null
+var debug_speed_button: Button
+var debug_speed_index := 0
+var debug_speed_levels := [1.0, 3.0, 8.0]
+var debug_speed_labels := ["Speed x1", "Speed x3", "Speed x8"]
 
 func _ready() -> void:
 	if DataLoader.chapter_indexes.is_empty():
@@ -142,8 +146,10 @@ func _add_home_navigation(parent: Node) -> void:
 	messages_button.pressed.connect(func(): _focus_messages())
 	var debug_button := _add_button(nav, "Debug")
 	debug_button.pressed.connect(func(): _toggle_debug(debug_button))
+	debug_speed_button = _add_button(nav, _debug_speed_label())
+	debug_speed_button.pressed.connect(func(): _cycle_debug_speed())
 	var reset_button := _add_button(nav, "Reset")
-	reset_button.pressed.connect(func(): GameState.reset_state(); conversation_view.reset_ui_state(); pending_conversation_ids.clear(); pending_thread_ids.clear(); unlocked_conversation_ids_by_day.clear(); unlocked_thread_ids_by_day.clear(); initialized_pending_days.clear(); _hide_notification(); _render_conversations(current_day_value); debug_panel.refresh())
+	reset_button.pressed.connect(func(): GameState.reset_state(); conversation_view.reset_ui_state(); pending_conversation_ids.clear(); pending_thread_ids.clear(); unlocked_conversation_ids_by_day.clear(); unlocked_thread_ids_by_day.clear(); initialized_pending_days.clear(); _hide_notification(); _set_debug_speed_index(0); _render_conversations(current_day_value); debug_panel.refresh())
 
 func _add_notification_banner(parent: Node) -> void:
 	notification_banner = PanelContainer.new()
@@ -501,6 +507,19 @@ func _toggle_debug(button: Button) -> void:
 	button.text = "Debug ✓" if debug_scroll.visible else "Debug"
 	if debug_scroll.visible:
 		debug_panel.refresh()
+
+func _debug_speed_label() -> String:
+	return debug_speed_labels[debug_speed_index]
+
+func _cycle_debug_speed() -> void:
+	_set_debug_speed_index((debug_speed_index + 1) % debug_speed_levels.size())
+
+func _set_debug_speed_index(index: int) -> void:
+	debug_speed_index = clamp(index, 0, debug_speed_levels.size() - 1)
+	if is_instance_valid(debug_speed_button):
+		debug_speed_button.text = _debug_speed_label()
+	if is_instance_valid(conversation_view):
+		conversation_view.set_debug_speed_multiplier(debug_speed_levels[debug_speed_index])
 
 func _format_day_label(day_value) -> String:
 	return "Jour %d" % int(day_value)

@@ -93,7 +93,7 @@
       "choices": [
         {
           "id": "choice_c05_raphaelle_breath",
-          "text": "Dire qu’il va essayer de rentrer chez lui tôt.",
+          "text": "Je vais essayer de rentrer tôt.",
           "tone": "calm",
           "effects": {
             "raphaelle_clarity_score": 1,
@@ -107,7 +107,7 @@
               "id": "msg_player_c05_raphaelle_breath_001",
               "sender": "ludo",
               "time_label": "17:54",
-              "text": "Dire qu’il va essayer de rentrer chez lui tôt."
+              "text": "Je vais essayer de rentrer tôt."
             },
             {
               "id": "msg_c05_raphaelle_breath_001",
@@ -119,7 +119,7 @@
         },
         {
           "id": "choice_c05_raphaelle_work",
-          "text": "Répondre qu’il a trois conversations dans la tête.",
+          "text": "Oui… j’ai un peu trois conversations dans la tête.",
           "tone": "honest",
           "effects": {
             "truth_tendency": 1,
@@ -133,7 +133,7 @@
               "id": "msg_player_c05_raphaelle_work_001",
               "sender": "ludo",
               "time_label": "17:54",
-              "text": "Répondre qu’il a trois conversations dans la tête."
+              "text": "Oui… j’ai un peu trois conversations dans la tête."
             },
             {
               "id": "msg_c05_raphaelle_work_001",
@@ -145,7 +145,7 @@
         },
         {
           "id": "choice_c05_raphaelle_dodge",
-          "text": "Dodge the subject, mais en français.",
+          "text": "Je vais faire semblant de répondre normalement, mais très mal.",
           "tone": "avoidant",
           "effects": {
             "lie_score": 1
@@ -158,7 +158,7 @@
               "id": "msg_player_c05_raphaelle_dodge_001",
               "sender": "ludo",
               "time_label": "17:54",
-              "text": "Dodge the subject, mais en français."
+              "text": "Je vais faire semblant de répondre normalement, mais très mal."
             },
             {
               "id": "msg_c05_raphaelle_dodge_001",

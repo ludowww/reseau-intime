@@ -161,7 +161,7 @@
         },
         {
           "id": "choice_c06_raphaelle_marie",
-          "text": "Dire qu’il doit d’abord régler ça avec Marie.",
+          "text": "Je dois d’abord régler ça avec Marie.",
           "tone": "truth_return",
           "effects": {
             "marie.trust": 1,

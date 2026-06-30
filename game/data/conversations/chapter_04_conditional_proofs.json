@@ -16,7 +16,9 @@
         {
           "id": "proof_pauline_capture",
           "priority": 10,
-          "conditions": ["opened_pauline_first_party_day3 OR answered_pauline_pressure_private_day3 OR pauline_aftershock_visible_day3"],
+          "conditions": [
+            "opened_pauline_first_party_day3 OR answered_pauline_pressure_private_day3 OR pauline_aftershock_visible_day3"
+          ],
           "thread_id": "thread_pauline_private",
           "messages": [
             {
@@ -48,7 +50,9 @@
                 "lie_score": 1,
                 "pauline.control": 1
               },
-              "sets_flags": ["minimized_pauline_capture_day4"]
+              "sets_flags": [
+                "minimized_pauline_capture_day4"
+              ]
             },
             {
               "id": "choice_c04_pauline_proof_ask",
@@ -57,7 +61,9 @@
                 "pauline.interest": 1,
                 "pauline.control": 1
               },
-              "sets_flags": ["asked_pauline_what_she_wants_day4"]
+              "sets_flags": [
+                "asked_pauline_what_she_wants_day4"
+              ]
             },
             {
               "id": "choice_c04_pauline_proof_delete",
@@ -66,7 +72,9 @@
                 "lie_score": 1,
                 "pauline_risk_score": 1
               },
-              "sets_flags": ["deleted_pauline_capture_day4"]
+              "sets_flags": [
+                "deleted_pauline_capture_day4"
+              ]
             }
           ],
           "effects": {
@@ -74,13 +82,19 @@
             "pauline_risk_score": 2,
             "social_pressure": 1
           },
-          "unlocks_content": ["capture_pauline_ludo_party_placeholder"],
-          "sets_flags": ["first_proof_pauline_capture_day4"]
+          "unlocks_content": [
+            "capture_pauline_ludo_party_placeholder"
+          ],
+          "sets_flags": [
+            "first_proof_pauline_capture_day4"
+          ]
         },
         {
           "id": "proof_sandra_deleted_regret",
           "priority": 8,
-          "conditions": ["opened_sandra_first_party_day3 OR answered_sandra_during_party_day3 OR sandra_deleted_after_party_day3"],
+          "conditions": [
+            "opened_sandra_first_party_day3 OR answered_sandra_during_party_day3 OR sandra_deleted_after_party_day3"
+          ],
           "thread_id": "thread_sandra_private",
           "messages": [
             {
@@ -110,7 +124,9 @@
                 "sandra.attachment": 2,
                 "lie_score": 1
               },
-              "sets_flags": ["kept_sandra_conversation_day4"]
+              "sets_flags": [
+                "kept_sandra_conversation_day4"
+              ]
             },
             {
               "id": "choice_c04_sandra_reasonable",
@@ -119,19 +135,25 @@
                 "truth_tendency": 1,
                 "sandra.exposure": 1
               },
-              "sets_flags": ["agreed_sandra_reasonable_day4"]
+              "sets_flags": [
+                "agreed_sandra_reasonable_day4"
+              ]
             }
           ],
           "effects": {
             "sandra.exposure": 1,
             "sandra.attachment": 1
           },
-          "sets_flags": ["first_proof_sandra_deleted_thread_day4"]
+          "sets_flags": [
+            "first_proof_sandra_deleted_thread_day4"
+          ]
         },
         {
           "id": "proof_mathilde_warning_photo",
           "priority": 7,
-          "conditions": ["opened_mathilde_first_party_day3 OR mathilde_aftershock_warning_day3 OR wallpaper_mathilde_revealed_party_day3"],
+          "conditions": [
+            "opened_mathilde_first_party_day3 OR mathilde_aftershock_warning_day3 OR wallpaper_mathilde_revealed_party_day3"
+          ],
           "thread_id": "thread_mathilde_private",
           "messages": [
             {
@@ -163,7 +185,9 @@
                 "truth_tendency": 1,
                 "mathilde.loyalty": 1
               },
-              "sets_flags": ["deleted_mathilde_after_party_photo_day4"]
+              "sets_flags": [
+                "deleted_mathilde_after_party_photo_day4"
+              ]
             },
             {
               "id": "choice_c04_mathilde_favorite",
@@ -172,7 +196,9 @@
                 "mathilde_attention_score": 2,
                 "lie_score": 1
               },
-              "sets_flags": ["favorited_mathilde_after_party_photo_day4"]
+              "sets_flags": [
+                "favorited_mathilde_after_party_photo_day4"
+              ]
             },
             {
               "id": "choice_c04_mathilde_reassure",
@@ -181,20 +207,28 @@
                 "mathilde.loyalty": 1,
                 "truth_tendency": 1
               },
-              "sets_flags": ["reassured_mathilde_safety_day4"]
+              "sets_flags": [
+                "reassured_mathilde_safety_day4"
+              ]
             }
           ],
           "effects": {
             "mathilde.desire": 1,
             "mathilde.loyalty": 1
           },
-          "unlocks_content": ["photo_mathilde_after_party_warning_placeholder"],
-          "sets_flags": ["first_proof_mathilde_warning_photo_day4"]
+          "unlocks_content": [
+            "photo_mathilde_after_party_warning_placeholder"
+          ],
+          "sets_flags": [
+            "first_proof_mathilde_warning_photo_day4"
+          ]
         },
         {
           "id": "proof_nico_marie_story",
           "priority": 6,
-          "conditions": ["opened_nico_marie_story_first_party_day3 OR watched_nico_marie_story_party_day3 OR nico_aftershock_story_day3"],
+          "conditions": [
+            "opened_nico_marie_story_first_party_day3 OR watched_nico_marie_story_party_day3 OR nico_aftershock_story_day3"
+          ],
           "thread_id": "social_feed_party",
           "messages": [
             {
@@ -220,30 +254,40 @@
                 "ludo_jealousy": 2,
                 "nico_surveillance_score": 1
               },
-              "sets_flags": ["rewatched_nico_marie_story_day4"]
+              "sets_flags": [
+                "rewatched_nico_marie_story_day4"
+              ]
             },
             {
               "id": "choice_c04_nico_ask_marie",
-              "text": "Demander à Marie ce que c’était",
+              "text": "Marie, c’était quoi, ça ?",
               "effects": {
                 "ludo_jealousy": 1,
                 "marie.lucidity": 1
               },
-              "sets_flags": ["asked_marie_about_nico_story_day4"]
+              "sets_flags": [
+                "asked_marie_about_nico_story_day4"
+              ]
             },
             {
               "id": "choice_c04_nico_ignore",
               "text": "Ignorer la story",
               "effects": {},
-              "sets_flags": ["ignored_nico_marie_story_day4"]
+              "sets_flags": [
+                "ignored_nico_marie_story_day4"
+              ]
             }
           ],
           "effects": {
             "nico.place_near_marie": 1,
             "ludo_jealousy": 1
           },
-          "unlocks_content": ["story_nico_marie_after_party_placeholder"],
-          "sets_flags": ["first_proof_nico_marie_story_day4"]
+          "unlocks_content": [
+            "story_nico_marie_after_party_placeholder"
+          ],
+          "sets_flags": [
+            "first_proof_nico_marie_story_day4"
+          ]
         }
       ],
       "default_proof": {
@@ -266,10 +310,19 @@
         "effects": {
           "social_pressure": 1
         },
-        "sets_flags": ["first_proof_default_party_photos_day4"]
+        "sets_flags": [
+          "first_proof_default_party_photos_day4"
+        ]
       },
-      "routes_nourished": ["pauline", "sandra", "mathilde", "nico_marie"],
-      "required_events_delivered": ["first_conditional_proof_or_trace"]
+      "routes_nourished": [
+        "pauline",
+        "sandra",
+        "mathilde",
+        "nico_marie"
+      ],
+      "required_events_delivered": [
+        "first_conditional_proof_or_trace"
+      ]
     }
   ],
   "debug_notes": "Ce fichier choisit une première trace selon les priorités de la soirée. La trace ne ferme pas une route, elle crée une menace lisible."
