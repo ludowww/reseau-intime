@@ -15,6 +15,53 @@ V0.25 accepted the Day 1 structure and recommended joint polish, now completed i
 Day 1 runtime order remains Marie → Sandra.
 The next step should not jump directly to cross-route pressure.
 
+## Existing canonical sources for faster Day 2 work
+
+Day 2 planning should not rely only on narrative_tool drafts. The repository already contains broader canonical sources that should be treated as required context for future Day 2 integration branches:
+
+- `docs/story_state/J2_SUMMARY.md` — macro Day 2 chronology, active characters, visual contents, open risks.
+- `docs/story_state/GLOBAL_STORY_STATE.md` — global route state, visual traces, current route embryos, long-term risks.
+- `docs/story_state/CHARACTER_CONTINUITY_MATRIX.md` — per-character day-by-day continuity and future preparation.
+- `docs/dialogue_tool/01_Project_Bible.md` — project-level narrative principles.
+- `docs/dialogue_tool/02_SMS_Writing_Rules.md` — SMS style constraints.
+- `docs/dialogue_tool/characters/*.md` — character voices and boundaries.
+- `docs/dialogue_tool/relationships/*.md` — relationship-specific proximity and tension.
+- `docs/dialogue_tool/06_Routes_And_States.md` — route/state principles.
+- `docs/dialogue_tool/07_Scene_Generation_Template.md` — scene generation format.
+- `docs/dialogue_tool/09_Dialogue_Review_Checklist.md` — human review criteria.
+- `docs/dialogue_tool/10_Automated_Checks.md` — expected validation/checking workflow.
+- `docs/narrative/` — broader narrative design documents; list and read relevant files before Day 2 integration.
+- `game/narrative_routes/routes_schema.json` — runtime route/state schema constraints.
+- `game/narrative_memory/day_01.json` and `game/narrative_memory/day_02.json` — runtime memory already considered canonical.
+- `docs/writing/dialogue_authoring_tools.md` — practical authoring guidance for dialogue production.
+- `docs/writing/characters/VOICE_PROFILES.md` — consolidated voice profiles for character-specific writing.
+
+### docs/narrative files observed
+
+- `docs/narrative/SCENARIO_SPINE_J1_J10.md` — backbone day-by-day scenario spine.
+- `docs/narrative/CHARACTER_ARCS_J1_J10.md` — cross-character progression and repetition guards.
+- `docs/narrative/ROUTE_STATE_MODEL.md` — route/state grammar and coupling axes.
+- `docs/narrative/ROUTE_COMPATIBILITY_MATRIX.md` — compatibility, fragility, and blockage rules.
+- `docs/narrative/PROOF_AND_SECRET_MAP.md` — proof types, functions, and escalation rules.
+- `docs/narrative/DAILY_RHYTHM_AND_CONTENT_DENSITY.md` — daily pacing and density guidance.
+- `docs/narrative/MARIE_ARC_J1_J10.md` — Marie’s active arc and limits.
+- `docs/narrative/SANDRA_ARC_J1_J10.md` — Sandra’s slow-burn arc and guardrails.
+- `docs/narrative/MATHILDE_ARC_J1_J10.md` — Mathilde’s arc and domestic tension.
+- `docs/narrative/RAPHAELLE_ARC_J1_J10.md` — Raphaëlle’s clarity/refuge role.
+- `docs/narrative/PAULINE_ARC_J1_J10.md` — Pauline’s control/proof pressure.
+- `docs/narrative/PLAYER_ARC_J1_J10.md` — Player posture and response trajectory.
+- `docs/narrative/NICO_AND_EXTERNAL_PARTNERS.md` — external pressure and rival/mirror threads.
+- `docs/narrative/DIALOGUE_CONTENT_TEXTURE_RULES.md` — dialogue texture and anti-repetition guidance.
+- `docs/narrative/PLAYER_RESPONSE_RULES.md` — Player response visibility and choice handling.
+- `docs/narrative/CONSENT_AND_RISK_RULES.md` — consent, risk, and escalation boundaries.
+- `docs/narrative/ANTI_LOOP_RULES.md` — anti-loop protections for recurring motifs.
+- `docs/narrative/ADULT_CONTENT_PROGRESSION_AND_ENDINGS.md` — progression and ending constraints.
+- `docs/narrative/J1_J10_REVISED_SCENARIO_PLAN.md` — revised scenario direction across J1-J10.
+- `docs/narrative/J5_J6_REWRITE_PLAN.md` — later-day rewrite constraints and pivots.
+- `docs/narrative/NARRATIVE_VALIDATION_TOOLS_V2.md` — narrative QA tools and warnings.
+
+Future Day 2 integration prompts should use these sources to avoid re-deciding already documented continuity.
+
 ## Runtime Day 2 context observed
 
 - Existing Day 2 index file observed: `game/data/conversations/chapter_02_index.json`.
@@ -156,5 +203,6 @@ godot --headless --path game --resolution 1280x720 --quit
 ## Next step
 
 V0.28 should be a scoped runtime integration branch for the recommended first Day 2 candidate only, if Ludovic validates this plan.
+V0.28 should use the story_state, dialogue_tool, docs/writing, docs/narrative, narrative_memory, and route schema documents as required context before touching runtime data.
 
 Proposed future branch name: `work/runtime-integration-day-02-marie-callback-v0-28`.
