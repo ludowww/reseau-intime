@@ -1,0 +1,89 @@
+{
+  "scene_id": "day_02_cross_route_pressure",
+  "day": 2,
+  "type": "cross_route_pressure_contract",
+  "status": "contract_only_no_draft",
+  "routes_involved": [
+    "sandra",
+    "marie"
+  ],
+  "source_rules": "route_interaction_rules",
+  "purpose": "Define a future Day 2 pressure pattern where Player’s attention and tone can be affected by both Sandra and Marie without forcing confrontation, confession, or jealousy.",
+  "memory_inputs": {
+    "sandra": [
+      "day_01_sandra_photo_trigger",
+      "day_02_sandra_callback"
+    ],
+    "marie": [
+      "day_01_marie_couple_anchor",
+      "day_01_marie_domestic_tenderness",
+      "player_chose_presence_with_marie",
+      "marie_day1_evening_opening",
+      "day_02_marie_callback"
+    ]
+  },
+  "state_initial": {
+    "sandra_route": {
+      "returning_complicity_active": true,
+      "ambiguity_level": 1,
+      "pressure_form": "deniable_recontact"
+    },
+    "marie_route": {
+      "official_couple_anchor": true,
+      "domestic_continuity_active": true,
+      "presence_quality_watch": true
+    },
+    "player": {
+      "divided_attention_possible": true,
+      "must_remain_coherent": true,
+      "forced_confession": false
+    }
+  },
+  "allowed_pressure": [
+    "Player answers Marie a little late after a Sandra exchange.",
+    "Marie notices tone or delay but does not name Sandra.",
+    "Player remembers a Sandra detail and then overcorrects with Marie.",
+    "Marie asks for presence through a domestic joke.",
+    "Sandra reopens contact softly while Player is expected elsewhere.",
+    "Player can choose to repair presence with Marie or keep ambiguity with Sandra."
+  ],
+  "forbidden_pressure": [
+    "Marie accuses Player of Sandra without setup.",
+    "Sandra insults or dismisses Marie.",
+    "Player gives authorial moral explanations instead of SMS choices.",
+    "The scene forces a confession.",
+    "The scene turns Day 2 into a crisis.",
+    "The scene erases Marie’s warmth or Sandra’s hesitation."
+  ],
+  "beats_possible": [
+    "soft_sandra_recontact",
+    "marie_domestic_check",
+    "player_delay_or_tone_shift",
+    "player_micro_repair",
+    "deniable_inner_pressure",
+    "choice_between_presence_and_ambiguity",
+    "quiet_aftertaste"
+  ],
+  "choice_design_rules": [
+    "Choices must be SMS, not moral labels.",
+    "Choices should express tone: present, evasive, playful, careful, or repair-oriented.",
+    "Choices should not say 'choose Marie route' or 'choose Sandra route'.",
+    "A choice can preserve ambiguity without making Player cruel.",
+    "A choice can repair presence without ending Sandra’s route."
+  ],
+  "success_criteria": [
+    "Both routes remain emotionally valid.",
+    "Marie is not reduced to suspicion.",
+    "Sandra is not reduced to temptation.",
+    "Player remains coherent.",
+    "Pressure is readable through timing, attention, and tone.",
+    "No forced confrontation occurs Day 2.",
+    "The contract can guide future drafts."
+  ],
+  "not_for_current_implementation": [
+    "Do not create a full cross-route draft in V0.11.",
+    "Do not integrate this into game data yet.",
+    "Do not add runtime state.",
+    "Do not create branching route locks yet."
+  ]
+}

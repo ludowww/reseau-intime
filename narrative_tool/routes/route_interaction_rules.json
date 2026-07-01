@@ -1,0 +1,128 @@
+{
+  "version": "0.11",
+  "scope": "sandra_marie_route_interaction",
+  "purpose": "Define how Sandra and Marie routes can influence each other without turning Marie into automatic suspicion, Sandra into replacement, or Player into an incoherent protagonist.",
+  "core_principles": [
+    "Marie remains a living official relationship, not a guilt mechanic.",
+    "Sandra remains a returning complicity, not a replacement for Marie.",
+    "Player can feel divided without becoming cynical or manipulative by default.",
+    "Cross-route pressure should appear first through presence, timing, tone, and attention.",
+    "Suspicion must be earned progressively, not triggered automatically.",
+    "The player's choices should shape whether tension is softened, hidden, displaced, or amplified."
+  ],
+  "route_roles": {
+    "marie": {
+      "symbolic_role": "present_official_intimacy",
+      "emotional_material": [
+        "daily presence",
+        "shared routines",
+        "domestic tenderness",
+        "being chosen again",
+        "attention quality"
+      ],
+      "must_remain": [
+        "alive",
+        "desirable",
+        "specific",
+        "not reduced to guilt"
+      ]
+    },
+    "sandra": {
+      "symbolic_role": "returning_ambiguous_complicity",
+      "emotional_material": [
+        "past friendship",
+        "distance returning",
+        "deniable trouble",
+        "missing someone",
+        "being seen differently"
+      ],
+      "must_remain": [
+        "hesitant",
+        "active",
+        "specific",
+        "not reduced to temptation"
+      ]
+    }
+  },
+  "interaction_axes": {
+    "presence": {
+      "description": "How available Player feels in each route.",
+      "early_signal": "shorter, more delayed, or more automatic replies."
+    },
+    "attention": {
+      "description": "What Player remembers, notices, or fails to notice.",
+      "early_signal": "he remembers Sandra details while missing Marie’s ordinary cues, or the reverse."
+    },
+    "tone": {
+      "description": "How alive, playful, careful, or absent Player sounds.",
+      "early_signal": "Marie can feel a change before she knows why."
+    },
+    "timing": {
+      "description": "When Player answers, pauses, switches conversations, or reopens contact.",
+      "early_signal": "soft pressure without explicit accusation."
+    },
+    "self_image": {
+      "description": "Which version of himself Player feels with each woman.",
+      "early_signal": "Sandra recalls a lighter or more curious Player; Marie anchors present-life Player."
+    }
+  },
+  "allowed_cross_route_effects": [
+    "Marie notices Player is a bit elsewhere without naming Sandra.",
+    "Player carries a softer or more alive tone from one route into another.",
+    "Sandra’s return makes Player more aware of what he misses or has neglected.",
+    "Marie’s presence can make Sandra’s ambiguity feel more dangerous.",
+    "A good Marie interaction can make Player more careful with Sandra.",
+    "A strong Sandra callback can make Player more attentive or more avoidant with Marie.",
+    "Cross-route pressure can appear through delays, tone changes, remembered details, or micro-repairs."
+  ],
+  "forbidden_cross_route_effects": [
+    "Marie directly suspects Sandra without prior escalation.",
+    "Sandra directly attacks or belittles Marie.",
+    "Player automatically lies or manipulates as the default route behavior.",
+    "Marie becomes only an obstacle or punishment.",
+    "Sandra becomes only forbidden reward.",
+    "A route erases the memory or emotional value of the other route.",
+    "Cross-route pressure becomes melodrama too early."
+  ],
+  "player_consistency_rules": [
+    "Player should remain discreet, observant, slightly ironic when embarrassed.",
+    "Player can be evasive, but not automatically cruel.",
+    "Player can minimize his trouble before understanding it.",
+    "Player should have recognizable habits across routes.",
+    "Player’s presence or absence must be readable through SMS behavior.",
+    "Choices must be actual SMS, not authorial moral labels."
+  ],
+  "marie_detection_rules": [
+    "Marie detects quality of presence before facts.",
+    "Marie can notice when Player is \"a little far away\".",
+    "Marie should first respond through domestic humor, small checks, or soft requests for presence.",
+    "Marie should not name Sandra unless prior route escalation justifies it.",
+    "Marie’s pain should emerge from the present couple, not from abstract jealousy."
+  ],
+  "sandra_pressure_rules": [
+    "Sandra creates pressure by returning, not by demanding.",
+    "Sandra can test whether Player also felt the distance.",
+    "Sandra can become more active without becoming forceful.",
+    "Sandra should preserve deniability early.",
+    "Sandra’s route can make Player feel more alive, but should not erase Marie’s value."
+  ],
+  "day_1_to_day_2_limits": {
+    "max_cross_route_intensity": 2,
+    "marie_may_notice_distance": true,
+    "marie_may_name_sandra": false,
+    "sandra_may_reference_marie_directly": false,
+    "player_may_feel_divided": true,
+    "player_must_not_be_forced_into_confession": true,
+    "preferred_pressure_forms": [
+      "delay",
+      "tone shift",
+      "remembered detail",
+      "domestic check",
+      "soft recontact",
+      "micro-repair"
+    ]
+  },
+  "future_use": {
+    "note": "Future scene contracts can reference these rules when a scene involves route pressure, message switching, delayed replies, or emotional bleed between Sandra and Marie."
+  }
+}
