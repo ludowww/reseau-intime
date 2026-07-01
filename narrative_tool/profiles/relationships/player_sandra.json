@@ -1,0 +1,50 @@
+{
+  "id": "player_sandra",
+  "characters": ["player", "sandra"],
+  "relationship_type": "old_friendship_with_new_ambiguity",
+  "history": {
+    "known_since": "before_player_met_marie",
+    "current_distance": "friendship drifted because both have couple lives",
+    "last_significant_event": "lunch several weeks before Day 1"
+  },
+  "baseline_dynamic": {
+    "trust": 0.55,
+    "familiarity": 0.65,
+    "distance": 0.45,
+    "attraction": 0.25,
+    "awkwardness": 0.35,
+    "risk": 0.5,
+    "playfulness": 0.7
+  },
+  "asymmetry": {
+    "player": {
+      "wants_reconnection_more_consciously": true,
+      "awkward_when_sincere": true,
+      "tests_through_half_jokes": true
+    },
+    "sandra": {
+      "notices_subtext_faster": true,
+      "protects_with_humor": true,
+      "controls_escalation": true
+    }
+  },
+  "safe_zones": [
+    "souvenirs partagés",
+    "teasing léger",
+    "détails banals",
+    "sincérité à demi-mot"
+  ],
+  "danger_zones": [
+    "nommer l'attirance trop tôt",
+    "oublier les couples existants",
+    "forcer une confession",
+    "transformer la photo en récompense immédiate"
+  ],
+  "shared_references": [
+    {
+      "id": "last_lunch",
+      "label": "le dernier déjeuner",
+      "tone": "warm_slightly_unfinished"
+    }
+  ]
+}
