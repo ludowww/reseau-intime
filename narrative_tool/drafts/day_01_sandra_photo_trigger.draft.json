@@ -1,0 +1,110 @@
+{
+  "scene_id": "day_01_sandra_photo_trigger",
+  "day": 1,
+  "conversation_id": "sandra",
+  "route": "sandra",
+  "participants": ["Player", "Sandra"],
+  "declared_max_desire_intensity": 3,
+  "route_phase": "reconnection",
+  "route_fantasy_elements": [
+    "photo_pretext",
+    "shared_memory",
+    "playful_ambiguity",
+    "sandra_deflection",
+    "future_opening",
+    "memory_out"
+  ],
+  "desire_signals": [
+    "photo_pretext",
+    "shared_memory",
+    "playful_ambiguity",
+    "reciprocal_attention",
+    "sandra_deflection"
+  ],
+  "messages": [
+    {"id":"m001","speaker":"Sandra","type":"text","text":"j'ai retrouvé un truc"},
+    {"id":"m002","speaker":"Sandra","type":"text","text":"et je sais pas si je dois t'accuser ou te remercier"},
+    {"id":"m003","speaker":"Player","type":"text","text":"ça commence bien"},
+    {"id":"m004","speaker":"Player","type":"text","text":"je prends un avocat ou un café ?"},
+    {"id":"m005","speaker":"Sandra","type":"text","text":"un avocat"},
+    {"id":"m006","speaker":"Sandra","type":"text","text":"le café était déjà hors de prix la dernière fois"},
+    {"id":"m007","speaker":"Sandra","type":"media","media":{"kind":"photo","asset_id":"placeholder_sandra_lunch_photo_01","caption":"preuve numéro 1"}},
+    {"id":"m008","speaker":"Player","type":"text","text":"oh non"},
+    {"id":"m009","speaker":"Player","type":"text","text":"cette tête"},
+    {"id":"m010","speaker":"Sandra","type":"text","text":"je savais que tu dirais ça"},
+    {"id":"m011","speaker":"Sandra","type":"text","text":"alors que franchement t'as l'air presque fréquentable"},
+    {"id":"m012","speaker":"Player","type":"text","text":"presque, c'est déjà au-dessus de ma moyenne"},
+    {"id":"m013","speaker":"Sandra","type":"text","text":"ne prends pas confiance"},
+    {"id":"m014","speaker":"Sandra","type":"text","text":"c'était peut-être juste la lumière"},
+    {"id":"m015","speaker":"Player","type":"text","text":"ou le fait que j'étais content d'être là"},
+    {"id":"m016","speaker":"Sandra","type":"text","text":"ah"},
+    {"id":"m017","speaker":"Sandra","type":"text","text":"on commence les phrases dangereuses avant 18h maintenant ?"},
+    {"id":"m018","speaker":"Player","type":"text","text":"je peux la reformuler en version administrative"},
+    {"id":"m019","speaker":"Player","type":"text","text":"le déjeuner présentait un taux de satisfaction anormalement élevé"},
+    {"id":"m020","speaker":"Sandra","type":"text","text":"idiot 😂"},
+    {"id":"m021","speaker":"Sandra","type":"text","text":"mais bon"},
+    {"id":"m022","speaker":"Sandra","type":"text","text":"j'avais bien aimé aussi"},
+    {"id":"m023","speaker":"Player","type":"text","text":"je pensais pas que ça me ferait autant sourire de revoir ça"},
+    {"id":"m024","speaker":"Sandra","type":"text","text":"la photo hein"},
+    {"id":"m025","speaker":"Player","type":"text","text":"bien sûr"},
+    {"id":"m026","speaker":"Player","type":"text","text":"uniquement la photo"},
+    {"id":"m027","speaker":"Sandra","type":"text","text":"mhm"},
+    {"id":"m028","speaker":"Sandra","type":"text","text":"je vais faire semblant d'y croire pour préserver l'ordre public"},
+    {"id":"m029","speaker":"Player","type":"text","text":"merci pour ton sens civique"},
+    {"id":"m030","speaker":"Sandra","type":"text","text":"de rien"},
+    {"id":"m031","speaker":"Sandra","type":"text","text":"faudra peut-être vérifier en vrai si t'as toujours cette tête"},
+    {"id":"m032","speaker":"Player","type":"text","text":"j'aimerais bien vérifier ça doucement"}
+  ],
+  "choices": [
+    {
+      "id": "choice_001",
+      "after_message": "m015",
+      "prompt": "Player choisit comment assumer la sincérité.",
+      "options": [
+        {
+          "id": "choice_001_a",
+          "text": "je pensais pas que ce déjeuner allait laisser des preuves",
+          "choice_type": "playful_probe",
+          "route_effects": {"ambiguity": 1, "comfort": 1}
+        },
+        {
+          "id": "choice_001_b",
+          "text": "j'avoue que j'y ai repensé deux ou trois fois",
+          "choice_type": "soft_disclosure",
+          "route_effects": {"ambiguity": 2, "trust": 1, "sandra_caution": 1}
+        },
+        {
+          "id": "choice_001_c",
+          "text": "supprime tout, je nie officiellement",
+          "choice_type": "protective_deflection",
+          "route_effects": {"comfort": 1, "missed_intimacy": 1}
+        }
+      ]
+    }
+  ],
+  "state_out": {
+    "player_sandra": {
+      "distance": -1,
+      "trust": 1,
+      "ambiguity": 1,
+      "desire_intensity": 3
+    }
+  },
+  "memory_out": [
+    {
+      "id": "day_01_sandra_reconnection",
+      "type": "relationship_memory",
+      "summary": "Player and Sandra reconnected warmly after distance."
+    },
+    {
+      "id": "day_01_sandra_photo_shared",
+      "type": "media_memory",
+      "summary": "Sandra shared a photo from their last lunch as an innocent but charged pretext."
+    },
+    {
+      "id": "player_admitted_lunch_mattered",
+      "type": "interpreted_memory",
+      "summary": "Sandra may remember that Player sounded more sincere than he pretended."
+    }
+  ]
+}
