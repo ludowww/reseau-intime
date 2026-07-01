@@ -1,34 +1,23 @@
 {
-  "memory_continuity_rules_id": "memory_continuity_rules",
-  "source_day": 1,
-  "target_day": 2,
-  "max_intensity": 4,
-  "required_memory_in": [
-    "day_01_sandra_reconnection",
-    "day_01_sandra_photo_shared",
-    "player_admitted_lunch_mattered",
-    "sandra_noticed_player_was_not_only_joking",
-    "sandra_returned_after_distance"
-  ],
-  "required_callbacks": [
-    "photo",
-    "recalled",
-    "repensé",
-    "garde"
-  ],
-  "forbidden_resets": [
-    "treat_sandra_as_stranger",
-    "repeat_same_photo_trigger",
-    "ignore_sandra_returned_first",
-    "ignore_player_replied_with_pleasure",
-    "exceed_max_intensity",
-    "explicit_confession_bascule"
-  ],
-  "required_draft_fields": [
-    "memory_in",
-    "messages",
-    "choices",
-    "state_out",
-    "memory_out"
-  ]
+  "version": "0.9",
+  "modes": {
+    "source_memory_coverage_check": {
+      "purpose": "Verify that a source scene creates the memory traces promised by its memory contract.",
+      "required": [
+        "matching_source_scene",
+        "memory_out_present",
+        "route_consistency",
+        "core_memory_traces_covered"
+      ]
+    },
+    "future_continuity_check": {
+      "purpose": "Verify that a later scene remembers or respects a previous memory contract.",
+      "required": [
+        "target_scene_present",
+        "route_consistency",
+        "at_least_one_callback_or_trace",
+        "no_forbidden_reset"
+      ]
+    }
+  }
 }
