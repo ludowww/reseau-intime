@@ -3,7 +3,7 @@
   "chapter": 5,
   "day": 5,
   "title": "Jour 5 — Le couple vacille",
-  "description": "Marie fait vaciller le couple, Pauline devient dangereusement compréhensive, Mathilde et Raphaëlle restent en micro-présences, Sandra ouvre le jeu confidence/photo.",
+  "description": "Marie fait vaciller le couple, Pauline devient dangereusement compréhensive, la story Nico / Marie et la dernière photo de Pauline élargissent la mémoire sociale, Mathilde et Raphaëlle restent en micro-présences, Sandra ouvre le jeu confidence/photo.",
   "design_goal": "Faire sentir que Marie est le pivot principal, Pauline le pivot secondaire, et que les réponses Player changent déjà la posture relationnelle.",
   "moment_flow": [
     {
@@ -31,6 +31,14 @@
       ]
     },
     {
+      "moment_label": "réseau social",
+      "time_label": "11:18",
+      "transition_text": "Nico revient via la story comme miroir social du lendemain, sans le transformer en antagoniste lourd.",
+      "conversation_ids": [
+        "chapter_05_social_story"
+      ]
+    },
+    {
       "moment_label": "après-midi",
       "time_label": "17:54",
       "transition_text": "Raphaëlle fait une respiration de bureau : dossier, fatigue, clarté, sans refuge.",
@@ -45,14 +53,24 @@
       "conversation_ids": [
         "chapter_05_sandra_first_truth_game"
       ]
+    },
+    {
+      "moment_label": "fin de soirée",
+      "time_label": "21:07",
+      "transition_text": "Pauline laisse entendre qu’il existe encore des images, y compris quelque chose de plus gênant pour elle.",
+      "conversation_ids": [
+        "chapter_05_pauline_last_photo"
+      ]
     }
   ],
   "conversation_files": [
     "res://data/conversations/chapter_05_marie_morning.json",
     "res://data/conversations/chapter_05_mathilde_followup.json",
     "res://data/conversations/chapter_05_pauline_photos.json",
+    "res://data/conversations/chapter_05_social_story.json",
     "res://data/conversations/chapter_05_raphaelle_boundary.json",
-    "res://data/conversations/chapter_05_sandra_later.json"
+    "res://data/conversations/chapter_05_sandra_later.json",
+    "res://data/conversations/chapter_05_pauline_last_photo.json"
   ],
   "proof_content_files": [
     "res://data/visual_content/chapter_05_proofs.json"
@@ -87,8 +105,10 @@
     "locked_conversation_ids": [
       "chapter_05_mathilde_kitchen_trial",
       "chapter_05_pauline_understands",
+      "chapter_05_social_story",
       "chapter_05_raphaelle_work_breath",
-      "chapter_05_sandra_first_truth_game"
+      "chapter_05_sandra_first_truth_game",
+      "chapter_05_pauline_last_photo"
     ],
     "unlocks": {
       "chapter_05_mathilde_kitchen_trial": {
@@ -109,8 +129,17 @@
           "body": "Les détails racontent beaucoup."
         }
       },
-      "chapter_05_raphaelle_work_breath": {
+      "chapter_05_social_story": {
         "after_conversation_completed": "chapter_05_pauline_understands",
+        "time_label": "11:18",
+        "pending": true,
+        "notification": {
+          "title": "Réseau social",
+          "body": "Hier c’était mieux en vrai que sur la photo."
+        }
+      },
+      "chapter_05_raphaelle_work_breath": {
+        "after_conversation_completed": "chapter_05_social_story",
         "time_label": "17:54",
         "pending": true,
         "notification": {
@@ -125,6 +154,15 @@
         "notification": {
           "title": "Sandra",
           "body": "La prochaine fois qu’on se parle vraiment…"
+        }
+      },
+      "chapter_05_pauline_last_photo": {
+        "after_conversation_completed": "chapter_05_sandra_first_truth_game",
+        "time_label": "21:07",
+        "pending": true,
+        "notification": {
+          "title": "Pauline",
+          "body": "Je t’avais dit que les photos deviennent intéressantes après la soirée."
         }
       }
     }
