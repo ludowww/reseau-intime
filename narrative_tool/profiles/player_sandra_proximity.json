@@ -1,1 +1,70 @@
-{}
+{
+  "relation_id": "player_sandra",
+  "initial_proximity_context": {
+    "known_since": {
+      "period": "before_player_met_marie",
+      "duration": "several_years",
+      "certainty": "established"
+    },
+    "past_relationship": {
+      "type": "old_friendship",
+      "quality": [
+        "complice",
+        "chaleureuse",
+        "teasing",
+        "pas quotidienne actuellement"
+      ],
+      "past_ambiguity": "latent_but_never_named",
+      "past_boundary": "l'amitié est restée officiellement propre"
+    },
+    "current_state": {
+      "contact_frequency": "rare",
+      "distance_reason": "leurs vies de couple ont éloigné la relation",
+      "emotional_residue": "Player ressent un manque plus fort que prévu",
+      "sandra_awareness": "Sandra sent la distance, sans encore nommer ce qu'elle réveille"
+    },
+    "shared_memories": [
+      {
+        "id": "last_lunch",
+        "description": "Un déjeuner plusieurs semaines avant le Day 1, plus chaleureux que prévu.",
+        "usable_for": [
+          "photo_trigger",
+          "teasing",
+          "soft_reconnection",
+          "first_ambiguity"
+        ],
+        "emotional_charge": 0.55,
+        "desire_charge": 0.25
+      }
+    ],
+    "social_context": {
+      "known_by_marie": true,
+      "marie_relationship_to_sandra": "Marie connaît Sandra de loin, sans grande proximité.",
+      "public_label": "ancienne amie",
+      "private_truth": "la reprise de contact peut devenir plus intime que le label public ne le suggère",
+      "social_risk": 0.35,
+      "shared_social_circle": "weak"
+    },
+    "influence_on_other_characters": [
+      {
+        "character_id": "marie",
+        "influence": "Sandra peut devenir un point de comparaison émotionnelle avec Marie.",
+        "possible_consequence": "Si Player investit davantage Sandra, la route Marie peut développer distance, intuition ou contraste."
+      }
+    ],
+    "initial_permissions": {
+      "private_jokes": true,
+      "affectionate_teasing": true,
+      "rare_nicknames": true,
+      "emotional_confidence": "light_to_medium",
+      "direct_intimacy": "forbidden_at_start",
+      "ambiguous_photo_pretext": true
+    },
+    "initial_forbidden": [
+      "traiter Sandra comme une inconnue",
+      "escalade instantanée",
+      "Sandra qui nomme le trouble trop tôt",
+      "Marie traitée comme inexistante"
+    ]
+  }
+}
