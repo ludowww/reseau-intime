@@ -1,0 +1,47 @@
+{
+  "scene_id": "day_<NN>_<character>_callback",
+  "day": 0,
+  "conversation_id": "day_<NN>_<character>_callback",
+  "type": "memory_callback",
+  "participants": [
+    "Player",
+    "<Character>"
+  ],
+  "source_memory_contract": "<character>_day_<NN-1>_memory_contract",
+  "trigger": "<how the previous memory resurfaces>",
+  "objectives": {
+    "external": "<surface reason for the conversation>",
+    "internal": "<relationship question being tested>",
+    "fantasy": "<player-facing fantasy pressure>",
+    "<character>_goal": "<what this character wants without stating it directly>"
+  },
+  "state_initial": {
+    "<memory_or_route_state>": true
+  },
+  "state_final": {
+    "<new_or_updated_state>": true
+  },
+  "beats_required": [
+    "callback_from_character",
+    "memory_reactivated",
+    "player_remembers",
+    "character_tests_without_confessing",
+    "player_choice",
+    "soft_shift_forward",
+    "future_hook"
+  ],
+  "limit_intensity": 0,
+  "target_message_count": {
+    "min": 0,
+    "max": 0
+  },
+  "player_presence_minimum": 0.35,
+  "choice_count_required": 2,
+  "choices_must_be_real_sms": true,
+  "success_criteria": [
+    "<how to know the callback worked>"
+  ],
+  "forbidden_patterns": [
+    "<what would make this a reset or repetition>"
+  ]
+}

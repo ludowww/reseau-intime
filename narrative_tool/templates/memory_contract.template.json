@@ -1,0 +1,47 @@
+{
+  "memory_contract_id": "<character>_day_<NN>_memory_contract",
+  "source_benchmark": "<optional_benchmark_id>",
+  "source_scene": "<source_scene_id>",
+  "source_day": 0,
+  "route": "<route_id>",
+  "memory_function": "Define what the next scene must remember from this scene.",
+  "facts_created": [
+    "<objective fact created by the scene>"
+  ],
+  "interpreted_memories": {
+    "player": [
+      "<what Player believes this meant>"
+    ],
+    "<character_id>": [
+      "<what the character believes this meant>"
+    ],
+    "route": [
+      "<route-level memory flag>"
+    ]
+  },
+  "emotional_traces": {
+    "<character_id>": {
+      "openness": 0.0,
+      "caution": 0.0,
+      "curiosity": 0.0,
+      "desire_intensity": 0
+    },
+    "player": {
+      "curiosity": 0.0,
+      "trust": 0.0,
+      "desire_intensity": 0
+    }
+  },
+  "route_state_after_scene": {
+    "<state_key>": "<state_value>"
+  },
+  "required_next_callbacks": [
+    "<what the next scene should remember>"
+  ],
+  "forbidden_next_resets": [
+    "<what must not be forgotten or reset>"
+  ],
+  "continuity_tests": [
+    "<human or automated continuity check>"
+  ]
+}

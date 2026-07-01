@@ -1,0 +1,67 @@
+{
+  "benchmark_id": "<character>_day_<NN>_validated",
+  "character_id": "<character_id>",
+  "day": 0,
+  "route": "<route_id>",
+  "scene_type": "<scene_type>",
+  "status": "validated_tone_reference",
+  "purpose": "Reference tone and structure for future generation.",
+  "core_identity": {
+    "summary": "<what this benchmark captures>",
+    "role_in_route": "<route function>"
+  },
+  "tone_reference": {
+    "keywords": [],
+    "style_notes": []
+  },
+  "required_dynamics": [],
+  "forbidden_patterns": [],
+  "sms_rhythm_reference": {
+    "message_length": "",
+    "exchange_pattern": "",
+    "structural_notes": []
+  },
+  "player_reference": {
+    "presence": "",
+    "behavior": []
+  },
+  "character_reference": {
+    "behavior": []
+  },
+  "choice_reference": [
+    {
+      "choice_type": "",
+      "example": ""
+    }
+  ],
+  "media_reference": {
+    "description": "",
+    "media_role": ""
+  },
+  "memory_reference": {
+    "memories_to_create": []
+  },
+  "sample_micro_sequences": [
+    {
+      "id": "",
+      "purpose": "",
+      "messages": [
+        {
+          "speaker": "Player",
+          "text": ""
+        }
+      ],
+      "why_it_works": []
+    }
+  ],
+  "quality_targets": {
+    "player_presence_min_ratio": 0.35,
+    "max_desire_intensity_day": 0,
+    "target_tension": "",
+    "target_player_feeling": []
+  },
+  "qa_expectations": {
+    "human_read": [],
+    "notes": "Benchmark de ton et de structure, pas scène canonique à intégrer telle quelle."
+  }
+}
