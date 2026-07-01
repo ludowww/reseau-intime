@@ -1,0 +1,453 @@
+{
+  "scene_id": "day_02_cross_route_pressure",
+  "conversation_id": "day_02_cross_route_pressure",
+  "day": 2,
+  "type": "cross_route_pressure_draft",
+  "status": "prototype_not_canon",
+  "routes_involved": [
+    "sandra",
+    "marie"
+  ],
+  "participants": [
+    "Player",
+    "Sandra",
+    "Marie"
+  ],
+  "source_rules": "route_interaction_rules",
+  "source_scene_contract": "day_02_cross_route_pressure",
+  "declared_max_cross_route_intensity": 2,
+  "declared_max_desire_intensity": 3,
+  "desire_intensity": 2,
+  "description": "Prototype QA de pression croisée douce entre Sandra et Marie, avec photo/souvenir en filigrane, complicité, humour/esquive, ambiguïté déniable, interdit doux et mémoire de sortie sans confrontation.",
+  "summary": "Sandra relance avec un détail complice; Player répond plus vivant; Marie ramène le quotidien du pain et du canapé; Player décroche un peu puis répare; Sandra revient en ambiguïté douce; la scène se clôt sur un aftertaste calme, sans crise.",
+  "memory_in": [
+    "day_01_sandra_photo_trigger",
+    "day_02_sandra_callback",
+    "day_01_marie_couple_anchor",
+    "day_01_marie_domestic_tenderness",
+    "player_chose_presence_with_marie",
+    "marie_day1_evening_opening",
+    "day_02_marie_day1_callback",
+    "player_confirmed_presence_with_marie_day2"
+  ],
+  "messages": [
+    {
+      "id": "m_001",
+      "sender": "Sandra",
+      "text": "j’ai repensé à ton air de l’autre jour."
+    },
+    {
+      "id": "m_002",
+      "sender": "Player",
+      "text": "je croyais avoir un air banal."
+    },
+    {
+      "id": "m_003",
+      "sender": "Sandra",
+      "text": "non. banal, c’est pas toi quand tu t’absentes à moitié."
+    },
+    {
+      "id": "m_004",
+      "sender": "Player",
+      "text": "ça sonne presque comme un compliment."
+    },
+    {
+      "id": "m_005",
+      "sender": "Sandra",
+      "text": "je dis ça sans conséquence, évidemment."
+    },
+    {
+      "id": "m_006",
+      "sender": "Player",
+      "text": "tu mens très mal."
+    },
+    {
+      "id": "m_007",
+      "sender": "Sandra",
+      "text": "je sais."
+    },
+    {
+      "id": "m_008",
+      "sender": "Player",
+      "text": "c’est peut-être pour ça que je te réponds."
+    },
+    {
+      "id": "m_009",
+      "sender": "Sandra",
+      "text": "ah, donc je t’ai déjà un peu rattrapé."
+    },
+    {
+      "id": "m_010",
+      "sender": "Player",
+      "text": "un peu, oui."
+    },
+    {
+      "id": "m_011",
+      "sender": "Sandra",
+      "text": "je te laisse toujours une sortie."
+    },
+    {
+      "id": "m_012",
+      "sender": "Player",
+      "text": "et pourtant tu reviens toujours dedans."
+    },
+    {
+      "id": "m_013",
+      "sender": "Marie",
+      "text": "j’ai acheté du pain."
+    },
+    {
+      "id": "m_014",
+      "sender": "Marie",
+      "text": "et le canapé a gardé ta place, malgré ses protestations."
+    },
+    {
+      "id": "m_015",
+      "sender": "Player",
+      "text": "j’ai vu ton message un peu tard."
+    },
+    {
+      "id": "m_016",
+      "sender": "Marie",
+      "text": "je m’en doutais."
+    },
+    {
+      "id": "m_017",
+      "sender": "Marie",
+      "text": "tu réponds en pointillés quand tu es ailleurs."
+    },
+    {
+      "id": "m_018",
+      "sender": "Player",
+      "text": "pardon. j’étais dispersé."
+    },
+    {
+      "id": "m_019",
+      "sender": "Marie",
+      "text": "pas grave. je voulais juste savoir si tu rentrais avant que le pain sèche."
+    },
+    {
+      "id": "m_020",
+      "sender": "Player",
+      "text": "je rentre, oui."
+    },
+    {
+      "id": "m_021",
+      "sender": "Marie",
+      "text": "mieux."
+    },
+    {
+      "id": "m_022",
+      "sender": "Marie",
+      "text": "j’aime quand tu réponds pour de vrai."
+    },
+    {
+      "id": "m_023",
+      "sender": "Player",
+      "text": "je peux faire mieux que des bouts de phrase."
+    },
+    {
+      "id": "m_024",
+      "sender": "Marie",
+      "text": "je sais. je te le demande sans drame."
+    },
+    {
+      "id": "m_025",
+      "sender": "Player",
+      "text": "et ça me fait du bien."
+    },
+    {
+      "id": "m_026",
+      "sender": "Marie",
+      "text": "alors viens avec ça."
+    },
+    {
+      "id": "m_027",
+      "sender": "Sandra",
+      "text": "c’est drôle, j’avais oublié ce ton-là chez toi."
+    },
+    {
+      "id": "m_028",
+      "sender": "Player",
+      "text": "tu m’as connu plus libre que ça, oui."
+    },
+    {
+      "id": "m_029",
+      "sender": "Sandra",
+      "text": "plus libre, peut-être. plus vivant, sûrement."
+    },
+    {
+      "id": "m_030",
+      "sender": "Player",
+      "text": "tu sais viser."
+    },
+    {
+      "id": "m_031",
+      "sender": "Sandra",
+      "text": "je vise doucement."
+    },
+    {
+      "id": "m_032",
+      "sender": "Player",
+      "text": "c’est ça le problème."
+    },
+    {
+      "id": "m_033",
+      "sender": "Sandra",
+      "text": "tu préfères quand c’est frontal ?"
+    },
+    {
+      "id": "m_034",
+      "sender": "Player",
+      "text": "pas ce soir."
+    },
+    {
+      "id": "m_035",
+      "sender": "Sandra",
+      "text": "bonne réponse."
+    },
+    {
+      "id": "m_036",
+      "sender": "Player",
+      "text": "je fais de mon mieux pour rester cohérent."
+    },
+    {
+      "id": "m_037",
+      "sender": "Sandra",
+      "text": "ça t’arrive rarement avec autant d’effort."
+    },
+    {
+      "id": "m_038",
+      "sender": "Player",
+      "text": "tu es dure."
+    },
+    {
+      "id": "m_039",
+      "sender": "Sandra",
+      "text": "je suis prudente."
+    },
+    {
+      "id": "m_040",
+      "sender": "Marie",
+      "text": "tu arrives ?"
+    },
+    {
+      "id": "m_041",
+      "sender": "Player",
+      "text": "oui. je monte."
+    },
+    {
+      "id": "m_042",
+      "sender": "Marie",
+      "text": "bien. j’aime quand c’est clair."
+    },
+    {
+      "id": "m_043",
+      "sender": "Player",
+      "text": "j’essaie d’être plus clair avec toi."
+    },
+    {
+      "id": "m_044",
+      "sender": "Marie",
+      "text": "ça se sent."
+    },
+    {
+      "id": "m_045",
+      "sender": "Marie",
+      "text": "et je sens aussi quand tu reviens en partie seulement."
+    },
+    {
+      "id": "m_046",
+      "sender": "Player",
+      "text": "je reviens complètement maintenant."
+    },
+    {
+      "id": "m_047",
+      "sender": "Marie",
+      "text": "voilà. ça, c’est mieux."
+    },
+    {
+      "id": "m_048",
+      "sender": "Player",
+      "text": "tu m’attends encore ?"
+    },
+    {
+      "id": "m_049",
+      "sender": "Marie",
+      "text": "toujours un peu. pas toute seule, pas de façon dramatique."
+    },
+    {
+      "id": "m_050",
+      "sender": "Sandra",
+      "text": "je te laisse la soirée, alors."
+    },
+    {
+      "id": "m_051",
+      "sender": "Player",
+      "text": "tu ne me déranges pas."
+    },
+    {
+      "id": "m_052",
+      "sender": "Sandra",
+      "text": "je ne l’ai pas pris comme ça."
+    },
+    {
+      "id": "m_053",
+      "sender": "Player",
+      "text": "je sais. c’est peut-être ça le problème."
+    },
+    {
+      "id": "m_054",
+      "sender": "Sandra",
+      "text": "ça me va si tu restes honnête sans tout dire."
+    },
+    {
+      "id": "m_055",
+      "sender": "Player",
+      "text": "je peux faire ça."
+    },
+    {
+      "id": "m_056",
+      "sender": "Sandra",
+      "text": "bien. je garde le ton léger pour la prochaine fois."
+    },
+    {
+      "id": "m_057",
+      "sender": "Player",
+      "text": "garde-le."
+    },
+    {
+      "id": "m_058",
+      "sender": "Marie",
+      "text": "tu souris à ton téléphone, là ?"
+    },
+    {
+      "id": "m_059",
+      "sender": "Player",
+      "text": "un peu."
+    },
+    {
+      "id": "m_060",
+      "sender": "Marie",
+      "text": "alors garde-moi juste assez de place pour revenir vers toi."
+    },
+    {
+      "id": "m_061",
+      "sender": "Player",
+      "text": "toujours."
+    },
+    {
+      "id": "m_062",
+      "sender": "Marie",
+      "text": "ça me suffit."
+    },
+    {
+      "id": "m_063",
+      "sender": "Player",
+      "text": "je suis là, maintenant."
+    },
+    {
+      "id": "m_064",
+      "sender": "Marie",
+      "text": "je le sens."
+    },
+    {
+      "id": "m_065",
+      "sender": "Sandra",
+      "text": "bonne soirée, Player."
+    },
+    {
+      "id": "m_066",
+      "sender": "Player",
+      "text": "bonne soirée, Sandra."
+    }
+  ],
+  "choices": [
+    {
+      "id": "choice_001",
+      "text": "pardon, j’étais dispersé. je suis là, vraiment.",
+      "choice_type": "repair_presence_with_marie",
+      "state_delta": {
+        "presence_marie": 1,
+        "cross_route_pressure": 1,
+        "player_coherence": 1
+      }
+    },
+    {
+      "id": "choice_002",
+      "text": "tu ne me déranges pas. c’est peut-être ça le problème.",
+      "choice_type": "keep_sandra_ambiguity_soft",
+      "state_delta": {
+        "ambiguity_sandra": 1,
+        "cross_route_pressure": 1,
+        "player_coherence": 1
+      }
+    },
+    {
+      "id": "choice_003",
+      "text": "je crois que je réponds un peu trop vite quand tu reviens.",
+      "choice_type": "honest_but_deniable",
+      "state_delta": {
+        "ambiguity_sandra": 1,
+        "cross_route_pressure": 1,
+        "player_coherence": 1
+      }
+    },
+    {
+      "id": "choice_004",
+      "text": "je rentre. et je te dois une vraie présence, pas trois messages.",
+      "choice_type": "domestic_grounding",
+      "state_delta": {
+        "presence_marie": 2,
+        "player_coherence": 1
+      }
+    }
+  ],
+  "state_out": {
+    "cross_route": {
+      "pressure_active": true,
+      "pressure_intensity": 2,
+      "forced_confrontation": false,
+      "marie_named_sandra": false,
+      "sandra_attacked_marie": false,
+      "player_confessed": false
+    },
+    "player": {
+      "divided_attention": true,
+      "coherence_preserved": true,
+      "default_manipulation": false
+    },
+    "marie": {
+      "presence_quality_watch": true,
+      "suspicion_level": 0,
+      "punitive_mode": false
+    },
+    "sandra": {
+      "returning_complicity_active": true,
+      "deniable_ambiguity": true,
+      "forceful_pressure": false
+    }
+  },
+  "memory_out": [
+    {
+      "id": "day_02_cross_route_pressure_active",
+      "type": "cross_route_memory",
+      "summary": "Player experienced soft cross-route pressure through timing, tone, and attention without confrontation."
+    },
+    {
+      "id": "marie_noticed_presence_shift_without_accusing",
+      "type": "relationship_memory",
+      "summary": "Marie noticed a change in Player's presence quality without naming Sandra or becoming punitive."
+    },
+    {
+      "id": "sandra_recontact_colored_player_tone",
+      "type": "relationship_memory",
+      "summary": "Sandra's soft recontact made Player sound more alive while remaining deniable."
+    },
+    {
+      "id": "player_repaired_without_confessing",
+      "type": "interpreted_memory",
+      "summary": "Player repaired a small absence with Marie without forcing a confession or ending Sandra's ambiguity."
+    }
+  ]
+}
