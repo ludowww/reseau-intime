@@ -1,0 +1,63 @@
+{
+  "scene_id": "day_01_sandra_photo_trigger",
+  "day": 1,
+  "conversation_id": "sandra",
+  "type": "pillar_conversation",
+  "participants": ["Player", "Sandra"],
+  "route": "sandra",
+  "trigger": {
+    "visible_event": "Sandra retrouve une photo liée au dernier déjeuner.",
+    "emotional_hook": "Player réalise que Sandra lui a manqué plus que prévu."
+  },
+  "scene_goal": {
+    "external": "reprendre contact après une distance",
+    "internal": "tester si la complicité existe encore",
+    "fantasy": "éveiller trouble et désir par souvenir, photo et interdit doux",
+    "route": "ouvrir une ambiguïté légère sans bascule explicite"
+  },
+  "starting_state": {
+    "player": "heureux mais maladroit, essaie de ne pas être trop évident",
+    "sandra": "chaleureuse, joueuse, prudente quand l'ambiguïté apparaît",
+    "relationship": "ancienne complicité un peu éloignée"
+  },
+  "ending_state": {
+    "player": "content de la reconnexion et impatient de revoir Sandra",
+    "sandra": "touchée mais protégée par humour",
+    "relationship": "moins distante, ambiguïté présente mais déniable"
+  },
+  "constraints": {
+    "target_messages": {"min": 150, "max": 200},
+    "v0_test_draft_messages": {"min": 20, "max": 35},
+    "player_presence_min_ratio": 0.35,
+    "choices_required": 3,
+    "choices_must_be_sms": true,
+    "max_desire_intensity": 3,
+    "forbidden": [
+      "désir sexuel explicite",
+      "déclaration amoureuse",
+      "bascule sexuelle",
+      "jalousie dramatique",
+      "oubli du contexte de couple",
+      "choix formulés comme intentions d'auteur"
+    ]
+  },
+  "required_beats": [
+    {"id": "recontact", "purpose": "Sandra écrit avec un prétexte concret."},
+    {"id": "photo_trigger", "purpose": "La photo réactive le souvenir du dernier déjeuner."},
+    {"id": "shared_memory", "purpose": "Le passé donne de la matière intime."},
+    {"id": "first_ambiguity", "purpose": "Player laisse passer une sincérité légèrement troublante."},
+    {"id": "sandra_deflects", "purpose": "Sandra remarque mais protège par humour."},
+    {"id": "player_repairs_or_deepens", "purpose": "Player peut rassurer ou pousser doucement."},
+    {"id": "future_opening", "purpose": "Finir sur l'envie de se revoir sans bascule explicite."}
+  ],
+  "memory_requirements": {
+    "must_create": [
+      "day_01_sandra_reconnection",
+      "day_01_sandra_photo_shared"
+    ],
+    "recommended": [
+      "player_admitted_lunch_mattered",
+      "sandra_noticed_player_was_not_only_joking"
+    ]
+  }
+}
