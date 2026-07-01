@@ -3,6 +3,12 @@
 ## Fonction
 Installer Marie comme ancre affective et officielle du jeu.
 
+## Rôle du benchmark JSON
+Ce fichier sert de référence éditoriale pour générer Marie Day 1. Ce n’est pas une scène canonique et il peut fonctionner sans média.
+
+## Matériau principal
+Le quotidien partagé est le matériau principal de la route Marie.
+
 ## Ce que Marie doit faire sentir
 - Je te connais dans ta vie présente.
 - Je t’attends dans le quotidien.

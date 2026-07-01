@@ -1,0 +1,301 @@
+{
+  "benchmark_id": "marie_day_01_validated",
+  "character_id": "marie",
+  "day": 1,
+  "route": "marie",
+  "scene_type": "pillar_conversation",
+  "status": "validated_tone_reference",
+  "purpose": "Reference tone and structure for Marie Day 1 style generation.",
+  "core_identity": {
+    "summary": "Marie est l’ancre officielle du jeu. Elle porte le couple installé, le quotidien partagé, la confiance, la tendresse concrète et la possibilité que le désir soit choisi à nouveau dans la routine.",
+    "role_in_route": "relation vivante, désirable et présente; elle n’est pas là pour empêcher Sandra"
+  },
+  "tone_reference": {
+    "keywords": [
+      "quotidien tendre",
+      "familier",
+      "direct",
+      "domestique",
+      "affectueux",
+      "légèrement fatigué parfois",
+      "SMS naturel",
+      "présence couple installé",
+      "pas de mystère artificiel",
+      "pas de soupçon Day 1"
+    ],
+    "style_notes": [
+      "La tension Marie passe par la présence ou l’absence.",
+      "Le banal peut devenir intime.",
+      "La tendresse peut apparaître au milieu d’un message pratique.",
+      "Marie ne doit pas surjouer la séduction.",
+      "Le ton doit rester simple, humain, et immédiatement conjugal."
+    ]
+  },
+  "required_dynamics": [
+    "Marie initie depuis le quotidien.",
+    "Le prétexte est pratique ou domestique.",
+    "Player répond vraiment, pas seulement fonctionnellement.",
+    "La familiarité du couple est perceptible.",
+    "Une tendresse simple apparaît dans le banal.",
+    "Une petite fatigue ou routine peut exister sans devenir conflit.",
+    "Marie donne envie d’être présent.",
+    "La scène finit sur une présence ou une ouverture du soir."
+  ],
+  "forbidden_patterns": [
+    "Marie passive ou décorative.",
+    "Marie uniquement culpabilité.",
+    "Marie obstacle à Sandra.",
+    "Marie soupçonneuse dès Day 1.",
+    "Marie qui parle comme Sandra.",
+    "Marie trop dramatique.",
+    "Player absent ou purement fonctionnel.",
+    "Dialogue de couple trop générique.",
+    "Sous-texte expliqué.",
+    "Séduction explicite sans contexte domestique."
+  ],
+  "sms_rhythm_reference": {
+    "message_length": "messages courts à moyens",
+    "exchange_pattern": "alternance naturelle plus stable que Sandra",
+    "structural_notes": [
+      "pas de longs monologues",
+      "petites demandes concrètes",
+      "familiarité immédiate",
+      "tendresse dans le banal",
+      "emojis rares et domestiques",
+      "moins d’esquive mystérieuse que Sandra"
+    ]
+  },
+  "player_reference": {
+    "presence": "Player répond avec présence",
+    "behavior": [
+      "il montre qu’il connaît les habitudes",
+      "il n’est pas seulement en réaction",
+      "il peut être maladroit mais tendre",
+      "il peut réparer une micro-absence",
+      "il choisit Marie par de petites réponses",
+      "ses choix sont des SMS envoyables"
+    ]
+  },
+  "marie_reference": {
+    "behavior": [
+      "elle écrit comme quelqu’un qui partage déjà la vie de Player",
+      "elle peut demander quelque chose de concret",
+      "elle peut glisser une tendresse au milieu du pratique",
+      "elle peut taquiner sans créer un mystère",
+      "elle peut sentir quand Player répond bizarrement",
+      "elle n’a pas besoin de grandes déclarations",
+      "elle cherche une présence réelle"
+    ]
+  },
+  "choice_reference": [
+    {
+      "choice_type": "domestic_playful",
+      "example": "j’ai pensé au pain, miracle domestique"
+    },
+    {
+      "choice_type": "soft_presence",
+      "example": "viens, je te garde une place sur le canapé"
+    },
+    {
+      "choice_type": "repair_micro_absence",
+      "example": "désolé, j’étais un peu ailleurs. Je suis là maintenant"
+    }
+  ],
+  "media_reference": {
+    "required": false,
+    "description": "Marie Day 1 peut fonctionner sans média. La présence et la tendresse passent d’abord par le banal. Si média il y a plus tard, il doit être lié au quotidien, à la maison, à une trace de présence, pas à une récompense visuelle."
+  },
+  "memory_reference": {
+    "memories_to_create": [
+      "day_01_marie_couple_anchor",
+      "day_01_marie_domestic_tenderness",
+      "player_chose_presence_with_marie",
+      "marie_noticed_player_presence_or_absence",
+      "marie_day1_evening_opening"
+    ]
+  },
+  "sample_micro_sequences": [
+    {
+      "id": "daily_trigger",
+      "purpose": "Marie initie depuis le quotidien.",
+      "messages": [
+        {
+          "speaker": "Marie",
+          "text": "t’as pensé au pain ou je fais semblant de te faire confiance ?"
+        },
+        {
+          "speaker": "Player",
+          "text": "j’ai pensé au pain"
+        },
+        {
+          "speaker": "Player",
+          "text": "et à deux autres trucs, mais je préfère ne pas trop me vanter"
+        },
+        {
+          "speaker": "Marie",
+          "text": "attention, je vais finir par croire que tu es fiable"
+        }
+      ],
+      "why_it_works": [
+        "prétexte domestique",
+        "familiarité de couple",
+        "humour simple",
+        "pas de mystère artificiel"
+      ]
+    },
+    {
+      "id": "domestic_teasing",
+      "purpose": "La taquinerie reste tendre et quotidienne.",
+      "messages": [
+        {
+          "speaker": "Marie",
+          "text": "tu as laissé la cuisine dans un état optimiste ce matin"
+        },
+        {
+          "speaker": "Player",
+          "text": "c’était de la stratégie d’air libre"
+        },
+        {
+          "speaker": "Marie",
+          "text": "je note que tu inventes des excuses quand tu te sens chez toi"
+        },
+        {
+          "speaker": "Player",
+          "text": "je me sens surtout observé"
+        },
+        {
+          "speaker": "Marie",
+          "text": "par moi, oui. ça compte"
+        }
+      ],
+      "why_it_works": [
+        "domestique concret",
+        "taquinerie conjugalement lisible",
+        "tendresse dans la remarque",
+        "présence relationnelle"
+      ]
+    },
+    {
+      "id": "soft_presence",
+      "purpose": "Marie cherche une présence réelle sans grand discours.",
+      "messages": [
+        {
+          "speaker": "Marie",
+          "text": "viens, je te garde une place sur le canapé"
+        },
+        {
+          "speaker": "Player",
+          "text": "j’arrive"
+        },
+        {
+          "speaker": "Player",
+          "text": "je prends la place ou le plaid ?"
+        },
+        {
+          "speaker": "Marie",
+          "text": "les deux si tu veux rester"
+        },
+        {
+          "speaker": "Marie",
+          "text": "et si tu réponds vite, je te fais même un thé"
+        }
+      ],
+      "why_it_works": [
+        "invitation concrète",
+        "tendresse simple",
+        "Player montre sa présence",
+        "ouverture calme du soir"
+      ]
+    },
+    {
+      "id": "repair_micro_absence",
+      "purpose": "Une micro-absence de Player est réparée sans drame.",
+      "messages": [
+        {
+          "speaker": "Marie",
+          "text": "tu réponds comme si ton téléphone avait plus de vie que toi"
+        },
+        {
+          "speaker": "Player",
+          "text": "désolé"
+        },
+        {
+          "speaker": "Player",
+          "text": "j’étais un peu ailleurs"
+        },
+        {
+          "speaker": "Player",
+          "text": "je suis là maintenant"
+        },
+        {
+          "speaker": "Marie",
+          "text": "bien"
+        },
+        {
+          "speaker": "Marie",
+          "text": "viens l’être sur le canapé alors"
+        }
+      ],
+      "why_it_works": [
+        "petite friction réaliste",
+        "réparation immédiate",
+        "pas de culpabilité mécanique",
+        "présence reconquise"
+      ]
+    },
+    {
+      "id": "evening_opening",
+      "purpose": "La scène finit sur une présence ou une ouverture du soir.",
+      "messages": [
+        {
+          "speaker": "Marie",
+          "text": "tu rentres à quelle heure ?"
+        },
+        {
+          "speaker": "Player",
+          "text": "bientôt"
+        },
+        {
+          "speaker": "Player",
+          "text": "je peux aussi rentrer utile si tu veux"
+        },
+        {
+          "speaker": "Marie",
+          "text": "utile, ça me plaît"
+        },
+        {
+          "speaker": "Marie",
+          "text": "mais viens surtout toi"
+        }
+      ],
+      "why_it_works": [
+        "ouverture du soir",
+        "présence désirée",
+        "petite chaleur",
+        "final sans grand effet"
+      ]
+    }
+  ],
+  "quality_targets": {
+    "player_presence_min_ratio": 0.35,
+    "max_desire_intensity_day1": 3,
+    "target_tension": "domestic_tenderness_with_light_routine_friction",
+    "target_player_feeling": [
+      "Marie me connaît vraiment",
+      "le quotidien peut redevenir désirable",
+      "je peux être attendu sans jouer un rôle",
+      "je peux encore choisir Marie activement"
+    ]
+  },
+  "qa_expectations": {
+    "human_read": [
+      "Marie est identifiable sans son nom.",
+      "Player répond comme quelqu’un en couple, pas comme un visiteur.",
+      "Le banal devient intime.",
+      "Marie n’est pas écrite comme obstacle.",
+      "La scène ne ressemble pas à Sandra.",
+      "La tendresse existe sans grande déclaration.",
+      "La présence du Player compte vraiment."
+    ]
+  }
+}
