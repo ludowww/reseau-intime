@@ -35,13 +35,13 @@
           "id": "msg_marie_002",
           "sender": "marie",
           "time_label": "18:12",
-          "text": "Et avant que tu répondes juste “bientôt”, il n’y a plus de pain. J’ai gardé la photo du panier en souvenir, juste pour te le rappeler."
+          "text": "Et avant que tu répondes “bientôt” comme d’habitude, il n’y a plus de pain. J’ai gardé la photo du panier pour te le rappeler."
         }
       ],
       "choices": [
         {
           "id": "choice_marie_guided_001_logistique",
-          "text": "Donc c’était une question logistique déguisée.",
+          "text": "Donc c’était une embuscade logistique.",
           "tone": "guided_reply",
           "effects": {},
           "sets_flags": [
@@ -58,7 +58,7 @@
               "id": "msg_marie_004",
               "sender": "marie",
               "time_label": "18:13",
-              "text": "Je maintiens notre couple à coups de listes de courses 😅"
+              "text": "Je tiens la maison à coups de listes de courses 😅"
             }
           ]
         }
@@ -341,7 +341,7 @@
               "id": "msg_marie_031",
               "sender": "marie",
               "time_label": "18:22",
-              "text": "Là physiquement, mais pas toujours avec moi."
+              "text": "Là, oui. Pas toujours vraiment avec moi."
             }
           ]
         }

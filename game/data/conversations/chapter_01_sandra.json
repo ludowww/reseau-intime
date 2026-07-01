@@ -72,7 +72,7 @@
       "choices": [
         {
           "id": "choice_from_msg_sandra_004",
-          "text": "Je me souviens très bien de cette photo.",
+          "text": "Je m’en souviens très bien.",
           "tone": "guided_reply",
           "source_message_id": "msg_sandra_004",
           "time_label": "22:58",
@@ -147,7 +147,7 @@
       "choices": [
         {
           "id": "choice_from_msg_sandra_011",
-          "text": "Donc tu as changé.",
+          "text": "Donc tu fais ça exprès.",
           "tone": "guided_reply",
           "source_message_id": "msg_sandra_011",
           "time_label": "23:00",
@@ -176,7 +176,7 @@
       "choices": [
         {
           "id": "choice_from_msg_sandra_014",
-          "text": "Fatiguée mais courageuse.",
+          "text": "Fatiguée, oui. Toujours là.",
           "tone": "guided_reply",
           "source_message_id": "msg_sandra_014",
           "time_label": "23:01",
@@ -205,7 +205,7 @@
       "choices": [
         {
           "id": "choice_from_msg_sandra_017",
-          "text": "Geste héroïque 😅",
+          "text": "Je me suis un peu surpassée 😅",
           "tone": "guided_reply",
           "source_message_id": "msg_sandra_017",
           "time_label": "23:02",
