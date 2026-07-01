@@ -1,0 +1,266 @@
+{
+  "benchmark_id": "sandra_day_01_validated",
+  "character_id": "sandra",
+  "day": 1,
+  "route": "sandra",
+  "scene_type": "pillar_conversation",
+  "status": "validated_tone_reference",
+  "purpose": "Reference tone and structure for Sandra Day 1 style generation.",
+  "core_identity": {
+    "summary": "Sandra revient après une distance. Elle veut retrouver une complicité perdue, mais ne sait pas encore jusqu’où elle veut assumer ce retour. Elle est active, douce, prudente, complice, parfois moqueuse. Elle nourrit le fantasme parce qu’elle semble choisir de revenir.",
+    "role_in_route": "premier retour actif qui teste si le lien peut reprendre sans se dire tout de suite"
+  },
+  "tone_reference": {
+    "keywords": [
+      "doux",
+      "intime",
+      "complice",
+      "naturel SMS",
+      "prudent",
+      "trouble déniable",
+      "humour défensif",
+      "nostalgie active",
+      "sous-texte",
+      "pas de séduction mécanique"
+    ],
+    "style_notes": [
+      "La tension passe par les formulations, pas par une intensité déclarée.",
+      "Le ton doit rester lisible comme un vrai échange SMS.",
+      "L’ironie légère sert de protection, pas de masque total."
+    ]
+  },
+  "required_dynamics": [
+    "Sandra initie le retour.",
+    "Le prétexte est concret.",
+    "Le prétexte n’est pas totalement innocent.",
+    "Player répond avec humour et sincérité maladroite.",
+    "Sandra teste si Player se souvient aussi.",
+    "Une photo ou un souvenir réactive la complicité.",
+    "Sandra laisse voir une brèche puis la protège.",
+    "Player montre qu’il est heureux de la retrouver.",
+    "La scène finit sur une ouverture douce."
+  ],
+  "forbidden_patterns": [
+    "Sandra passive.",
+    "Sandra immédiatement disponible.",
+    "Séduction frontale Day 1.",
+    "Sexualisation brutale.",
+    "Photo utilisée comme simple récompense.",
+    "Choix Player abstraits.",
+    "Player spectateur.",
+    "Dialogue trop monologué.",
+    "Psychologisation trop explicite.",
+    "Oubli de Marie ou des vies de couple."
+  ],
+  "sms_rhythm_reference": {
+    "message_length": "messages courts à moyens",
+    "exchange_pattern": "alternance Player/Sandra",
+    "structural_notes": [
+      "pas de longs monologues",
+      "respirations",
+      "petits doubles messages",
+      "banalité concrète après tension",
+      "ponctuation non uniforme",
+      "emojis rares et caractérisés"
+    ]
+  },
+  "player_reference": {
+    "presence": "Player est présent",
+    "behavior": [
+      "il répond vraiment",
+      "il ne commente pas seulement la scène",
+      "il montre sa joie de retrouver Sandra",
+      "il est maladroit quand sincère",
+      "il utilise l’humour comme protection",
+      "ses choix sont envoyables comme SMS"
+    ]
+  },
+  "sandra_reference": {
+    "behavior": [
+      "elle initie",
+      "elle teste",
+      "elle relance",
+      "elle se protège",
+      "elle esquive par humour",
+      "elle peut admettre à moitié que la complicité lui manquait",
+      "elle ne nomme pas frontalement le désir",
+      "elle ne devient pas trop flirteuse trop vite"
+    ]
+  },
+  "choice_reference": [
+    {
+      "choice_type": "playful_probe",
+      "example": "je pensais pas que ce déjeuner allait laisser des preuves"
+    },
+    {
+      "choice_type": "soft_disclosure",
+      "example": "j’avoue que j’y ai repensé deux ou trois fois"
+    },
+    {
+      "choice_type": "protective_deflection",
+      "example": "supprime tout, je nie officiellement"
+    }
+  ],
+  "media_reference": {
+    "description": "Un acte relationnel, pas une récompense. Sandra l’envoie sous prétexte de souvenir, mais elle sert surtout à vérifier si Player se souvient aussi et si la complicité peut revenir.",
+    "media_role": "test de mémoire, relance du lien, charge affective avant charge érotique"
+  },
+  "memory_reference": {
+    "memories_to_create": [
+      "day_01_sandra_reconnection",
+      "day_01_sandra_photo_shared",
+      "player_admitted_lunch_mattered",
+      "sandra_noticed_player_was_not_only_joking",
+      "sandra_returned_after_distance"
+    ]
+  },
+  "sample_micro_sequences": [
+    {
+      "id": "photo_pretext",
+      "purpose": "Sandra initie avec un prétexte concret.",
+      "messages": [
+        {
+          "speaker": "Sandra",
+          "text": "j’ai retrouvé un truc"
+        },
+        {
+          "speaker": "Sandra",
+          "text": "et je sais pas si je dois t’accuser ou te remercier"
+        },
+        {
+          "speaker": "Player",
+          "text": "ça commence bien"
+        },
+        {
+          "speaker": "Player",
+          "text": "je prends un avocat ou un café ?"
+        }
+      ],
+      "why_it_works": [
+        "prétexte concret",
+        "Sandra initie",
+        "Player répond avec humour",
+        "la tension n’est pas encore nommée"
+      ]
+    },
+    {
+      "id": "shared_memory",
+      "purpose": "Le souvenir réactive la complicité sans tout dévoiler.",
+      "messages": [
+        {
+          "speaker": "Sandra",
+          "text": "j’ai revu la photo du déjeuner"
+        },
+        {
+          "speaker": "Sandra",
+          "text": "et j’ai pensé à toi plus vite que prévu"
+        },
+        {
+          "speaker": "Player",
+          "text": "je vais prendre ça comme un compliment"
+        },
+        {
+          "speaker": "Player",
+          "text": "ou comme un problème, si tu préfères"
+        },
+        {
+          "speaker": "Sandra",
+          "text": "les deux me vont pour l’instant"
+        }
+      ],
+      "why_it_works": [
+        "photo reliée au passé",
+        "complicité active",
+        "Player existe vraiment",
+        "ambiguïté déniable"
+      ]
+    },
+    {
+      "id": "first_ambiguity",
+      "purpose": "Sandra laisse passer une brèche puis la referme.",
+      "messages": [
+        {
+          "speaker": "Player",
+          "text": "tu m’écris pour une photo ou pour me faire revenir ?"
+        },
+        {
+          "speaker": "Sandra",
+          "text": "tu poses toujours les questions trop tôt"
+        },
+        {
+          "speaker": "Sandra",
+          "text": "mais oui, un peu pour te faire revenir"
+        },
+        {
+          "speaker": "Player",
+          "text": "j’avoue que ça marche"
+        },
+        {
+          "speaker": "Sandra",
+          "text": "ne commence pas à te croire irrésistible"
+        }
+      ],
+      "why_it_works": [
+        "brèche sincère",
+        "esquive Sandra",
+        "Player heureux de la retrouver",
+        "pas de confession frontale"
+      ]
+    },
+    {
+      "id": "future_opening",
+      "purpose": "La scène s’ouvre sans se fermer en promesse explicite.",
+      "messages": [
+        {
+          "speaker": "Sandra",
+          "text": "bon, garde la photo"
+        },
+        {
+          "speaker": "Sandra",
+          "text": "mais tu m’en dois une aussi"
+        },
+        {
+          "speaker": "Player",
+          "text": "je peux gérer ça"
+        },
+        {
+          "speaker": "Player",
+          "text": "et je suis content que tu sois revenue"
+        },
+        {
+          "speaker": "Sandra",
+          "text": "on verra si tu le dis toujours demain"
+        }
+      ],
+      "why_it_works": [
+        "ouverture douce",
+        "pas de clôture sèche",
+        "tension progressive",
+        "envie de se revoir"
+      ]
+    }
+  ],
+  "quality_targets": {
+    "player_presence_min_ratio": 0.35,
+    "max_desire_intensity_day1": 3,
+    "target_tension": "deniable",
+    "target_player_feeling": [
+      "Sandra revient vers moi",
+      "elle se souvient aussi",
+      "je suis heureux de la retrouver",
+      "ce n’est peut-être plus seulement amical"
+    ]
+  },
+  "qa_expectations": {
+    "human_read": [
+      "Sandra est identifiable sans son nom.",
+      "Player répond comme une personne réelle.",
+      "La photo sert la relation, pas le score.",
+      "L’ambiguïté reste déniable.",
+      "La scène donne envie de répondre.",
+      "Sandra revient vraiment vers Player.",
+      "Le flirt mécanique est évité."
+    ],
+    "notes": "Benchmark de ton et de structure, pas scène canonique à intégrer telle quelle."
+  }
+}
