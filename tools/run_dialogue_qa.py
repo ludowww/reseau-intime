@@ -18,7 +18,6 @@ from validate_dialogue_json import validate as validate_dialogue
 
 ROOT = Path(__file__).resolve().parents[1]
 REPORT_DIR = ROOT / "narrative_tool" / "reports"
-SCENE_ID = "day_01_sandra_photo_trigger"
 
 
 def aggregate(result_map: dict[str, dict[str, object]]) -> dict[str, object]:
@@ -36,15 +35,12 @@ def aggregate(result_map: dict[str, dict[str, object]]) -> dict[str, object]:
     return {"status": status, "summary": summary, "warnings": warnings, "errors": errors}
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description="Run the narrative SMS QA stack.")
-    parser.add_argument("draft", help="Path to the draft JSON file")
-    args = parser.parse_args()
+def run_qa(draft_path: Path, report_dir: Path = REPORT_DIR, emit: bool = True) -> dict[str, object]:
+    draft = json.loads(draft_path.read_text(encoding="utf-8"))
+    if not isinstance(draft, dict):
+        raise ValueError(f"expected draft JSON object: {draft_path}")
 
-    draft_path = Path(args.draft)
-    if not draft_path.exists():
-        print(f"ERROR missing: {draft_path}")
-        return 1
+    scene_id = str(draft.get("scene_id") or draft_path.stem)
 
     validators = {
         "validate_dialogue_json": validate_dialogue(draft_path),
@@ -56,7 +52,7 @@ def main() -> int:
     }
     overall = aggregate(validators)
     report = {
-        "scene_id": SCENE_ID,
+        "scene_id": scene_id,
         "status": overall["status"],
         "summary": overall["summary"],
         "checks": validators,
@@ -64,13 +60,29 @@ def main() -> int:
         "errors": overall["errors"],
     }
 
-    REPORT_DIR.mkdir(parents=True, exist_ok=True)
-    report_path = REPORT_DIR / f"{SCENE_ID}.qa.json"
+    report_dir.mkdir(parents=True, exist_ok=True)
+    report_path = report_dir / f"{scene_id}.qa.json"
     report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
-    print(json.dumps(report, ensure_ascii=False, indent=2))
-    print(f"wrote: {report_path}")
-    return 0 if report["status"] != "fail" else 1
+    if emit:
+        print(json.dumps(report, ensure_ascii=False, indent=2))
+        print(f"wrote: {report_path}")
+
+    return {"report": report, "report_path": report_path, "exit_code": 0 if report["status"] != "fail" else 1}
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Run the narrative SMS QA stack.")
+    parser.add_argument("draft", help="Path to the draft JSON file")
+    args = parser.parse_args()
+
+    draft_path = Path(args.draft)
+    if not draft_path.exists():
+        print(f"ERROR missing: {draft_path}")
+        return 1
+
+    result = run_qa(draft_path)
+    return int(result["exit_code"])
 
 
 if __name__ == "__main__":
