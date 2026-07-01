@@ -1,0 +1,84 @@
+{
+  "memory_contract_id": "marie_day_01_memory_contract",
+  "source_benchmark": "marie_day_01_validated",
+  "source_scene": "day_01_marie_couple_anchor",
+  "source_day": 1,
+  "route": "marie",
+  "memory_function": "Define what Marie Day 2 or later scenes must remember from Marie Day 1.",
+  "facts_created": [
+    "Marie a installé le couple officiel.",
+    "Marie a écrit depuis le quotidien.",
+    "Player a répondu avec présence.",
+    "La tendresse est passée par le banal.",
+    "Le couple a été réaffirmé sans grande déclaration.",
+    "La scène s’est ouverte vers une présence du soir."
+  ],
+  "interpreted_memories": {
+    "player": [
+      "Marie est là dans sa vie présente.",
+      "Le quotidien avec Marie peut redevenir désirable.",
+      "Il peut choisir Marie par de petites réponses concrètes.",
+      "La présence compte plus que les grandes phrases."
+    ],
+    "marie": [
+      "Player peut encore répondre vraiment.",
+      "Player connaît leurs habitudes.",
+      "Elle peut demander une présence simple sans tout expliquer.",
+      "Elle peut sentir si Player est ailleurs ou vraiment là."
+    ],
+    "route": [
+      "official_couple_anchor_established",
+      "domestic_tenderness_active",
+      "player_presence_with_marie_confirmed"
+    ]
+  },
+  "emotional_traces": {
+    "marie": {
+      "trust": 0.75,
+      "comfort": 0.75,
+      "tenderness": 0.65,
+      "routine": 0.55,
+      "desire_intensity": 3,
+      "unspoken_friction": 0.15
+    },
+    "player": {
+      "presence": 0.65,
+      "comfort": 0.7,
+      "tenderness": 0.6,
+      "desire_intensity": 3,
+      "attention_drift": 0.15
+    }
+  },
+  "route_state_after_day_1": {
+    "player_marie": {
+      "couple_anchor": 1,
+      "presence": 1,
+      "tenderness": 1,
+      "routine_softened": true,
+      "desire_intensity": 3,
+      "unspoken_friction": 0
+    }
+  },
+  "required_future_callbacks": [
+    "Marie doit pouvoir rappeler un détail banal du Day 1.",
+    "Player doit pouvoir montrer qu’il connaît encore les habitudes du couple.",
+    "Une future scène peut tester si Player est vraiment présent ou seulement fonctionnel.",
+    "Le couple ne doit pas redevenir un décor neutre.",
+    "Marie ne doit pas devenir soudainement uniquement soupçonneuse ou punitive."
+  ],
+  "forbidden_future_resets": [
+    "Traiter Marie comme une relation abstraite.",
+    "Ignorer le quotidien partagé.",
+    "Ignorer la tendresse installée Day 1.",
+    "Transformer Marie en obstacle à Sandra.",
+    "Faire comme si Player et Marie ne partageaient pas déjà une vie.",
+    "Faire monter la suspicion sans étape intermédiaire."
+  ],
+  "continuity_tests": [
+    "Une future scène Marie réutilise au moins une routine ou un détail domestique.",
+    "Marie reste distincte de Sandra.",
+    "Player a une présence concrète.",
+    "Le couple reste vivant même si une fissure apparaît.",
+    "La mémoire Marie ne se réduit pas à la culpabilité."
+  ]
+}

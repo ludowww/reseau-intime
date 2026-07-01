@@ -16,7 +16,7 @@ from typing import Any
 
 from narrative_check_common import expand_paths, iter_choices, iter_message_nodes, load_json, next_messages, sender_of, text_of
 
-ALLOWED_SPEAKERS = {"Player", "Sandra"}
+ALLOWED_SPEAKERS = {"Player", "Sandra", "Marie"}
 
 
 def _validate_media(node: dict[str, Any], errors: list[str]) -> None:

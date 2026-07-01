@@ -1,0 +1,333 @@
+{
+  "scene_id": "day_01_marie_couple_anchor",
+  "conversation_id": "day_01_marie_couple_anchor",
+  "day": 1,
+  "route": "marie",
+  "participants": [
+    "Player",
+    "Marie"
+  ],
+  "type": "pillar_conversation",
+  "route_phase": "couple_anchor",
+  "declared_max_desire_intensity": 3,
+  "desire_intensity": 3,
+  "source_benchmark": "marie_day_01_validated",
+  "source_scene_contract": "day_01_marie_couple_anchor",
+  "description": "Marie Day 1 anchors the official couple through domestic SMS, a souvenir photo of the morning, gentle humour, and a tiny ambiguity of attention that gets repaired rather than turning into conflict.",
+  "summary": "Marie opens from an everyday detail, Player answers with real presence, their complicité survives a brief recontact with the day’s drift, and the scene closes toward the evening together.",
+  "memory_in": [],
+  "messages": [
+    {
+      "id": "m_001",
+      "author": "Marie",
+      "text": "t’as pensé au pain ou je fais semblant de te faire confiance ?",
+      "media": [
+        {
+          "type": "photo",
+          "id": "photo_marie_day1_bread_basket",
+          "uri": "fake://photo/day01/marie_bread_basket.jpg",
+          "caption": "Photo du panier à pain sur le comptoir, pour vérifier si Player sait encore rentrer à la maison."
+        }
+      ]
+    },
+    {
+      "id": "m_002",
+      "sender": "Player",
+      "text": "oui. et au café aussi, parce que je reste ambitieux."
+    },
+    {
+      "id": "m_003",
+      "author": "Marie",
+      "text": "je savais bien que tu pouvais sauver la maison un jour."
+    },
+    {
+      "id": "m_004",
+      "sender": "Player",
+      "text": "je sauve ce que je peux. le reste dépend de ton humeur."
+    },
+    {
+      "id": "m_005",
+      "author": "Marie",
+      "text": "mon humeur est très favorable aux gens qui pensent au pain."
+    },
+    {
+      "id": "m_006",
+      "sender": "Player",
+      "text": "et aux gens qui laissent une photo pour me vérifier ?"
+    },
+    {
+      "id": "m_007",
+      "author": "Marie",
+      "text": "je fais ça pour garder tes habitudes en forme."
+    },
+    {
+      "id": "m_008",
+      "sender": "Player",
+      "text": "mes habitudes tiennent surtout parce que tu les commentes."
+    },
+    {
+      "id": "m_009",
+      "author": "Marie",
+      "text": "tu vois. on a une vraie routine culturelle."
+    },
+    {
+      "id": "m_010",
+      "sender": "Player",
+      "text": "ça ressemble surtout à un foyer qui marche."
+    },
+    {
+      "id": "m_011",
+      "author": "Marie",
+      "text": "et à un foyer où quelqu’un oublie souvent la baguette."
+    },
+    {
+      "id": "m_012",
+      "sender": "Player",
+      "text": "justement, je compense par la fidélité."
+    },
+    {
+      "id": "m_013",
+      "author": "Marie",
+      "text": "je note que tu révises ton classement des priorités."
+    },
+    {
+      "id": "m_014",
+      "sender": "Player",
+      "text": "je révise surtout quand c’est toi qui corriges."
+    },
+    {
+      "id": "m_015",
+      "author": "Marie",
+      "text": "je pourrais presque croire que tu essaies."
+    },
+    {
+      "id": "m_016",
+      "sender": "Player",
+      "text": "j’essaie quand le sujet vaut le coup."
+    },
+    {
+      "id": "m_017",
+      "author": "Marie",
+      "text": "donc moi, le pain et le café, ça vaut le coup."
+    },
+    {
+      "id": "m_018",
+      "sender": "Player",
+      "text": "dans cet ordre, oui."
+    },
+    {
+      "id": "m_019",
+      "author": "Marie",
+      "text": "tu me rassures terriblement."
+    },
+    {
+      "id": "m_020",
+      "sender": "Player",
+      "text": "c’était le but."
+    },
+    {
+      "id": "m_021",
+      "author": "Marie",
+      "text": "j’ai eu une journée un peu nulle, au passage."
+    },
+    {
+      "id": "m_022",
+      "sender": "Player",
+      "text": "longue ou nulle-nulle ?"
+    },
+    {
+      "id": "m_023",
+      "author": "Marie",
+      "text": "longue. et j’ai traîné dans la cuisine sans raison."
+    },
+    {
+      "id": "m_024",
+      "sender": "Player",
+      "text": "alors viens t’asseoir une minute."
+    },
+    {
+      "id": "m_025",
+      "author": "Marie",
+      "text": "si je m’assois, tu viens vraiment ?"
+    },
+    {
+      "id": "m_026",
+      "sender": "Player",
+      "text": "oui."
+    },
+    {
+      "id": "m_027",
+      "author": "Marie",
+      "text": "tu réponds comme si ton téléphone avait plus de vie que toi."
+    },
+    {
+      "id": "m_028",
+      "sender": "Player",
+      "text": "pardon."
+    },
+    {
+      "id": "m_029",
+      "sender": "Player",
+      "text": "j’étais ailleurs deux minutes."
+    },
+    {
+      "id": "m_030",
+      "sender": "Player",
+      "text": "je suis là maintenant."
+    },
+    {
+      "id": "m_031",
+      "author": "Marie",
+      "text": "bien. parce que moi, je te vois quand tu disparais un peu."
+    },
+    {
+      "id": "m_032",
+      "sender": "Player",
+      "text": "et je te vois quand tu fais semblant que tout va très bien."
+    },
+    {
+      "id": "m_033",
+      "author": "Marie",
+      "text": "ça, c’est injuste. j’étais juste fatiguée."
+    },
+    {
+      "id": "m_034",
+      "sender": "Player",
+      "text": "fatiguée, oui. et pas toute seule."
+    },
+    {
+      "id": "m_035",
+      "author": "Marie",
+      "text": "tu me connais trop bien pour quelqu’un qui oublie le pain."
+    },
+    {
+      "id": "m_036",
+      "sender": "Player",
+      "text": "je connais surtout le bruit de ta fatigue."
+    },
+    {
+      "id": "m_037",
+      "author": "Marie",
+      "text": "voilà. c’est exactement pour ça que je t’ai écrit."
+    },
+    {
+      "id": "m_038",
+      "sender": "Player",
+      "text": "pour le pain ou pour moi ?"
+    },
+    {
+      "id": "m_039",
+      "author": "Marie",
+      "text": "pour les deux. mais je garde le meilleur pour ce soir."
+    },
+    {
+      "id": "m_040",
+      "sender": "Player",
+      "text": "je peux faire le meilleur en personne."
+    },
+    {
+      "id": "m_041",
+      "author": "Marie",
+      "text": "toi, en personne, c’est déjà mieux."
+    },
+    {
+      "id": "m_042",
+      "sender": "Player",
+      "text": "je sais. c’est pour ça que je viens."
+    },
+    {
+      "id": "m_043",
+      "author": "Marie",
+      "text": "pas juste pour répondre poliment, hein ?"
+    },
+    {
+      "id": "m_044",
+      "sender": "Player",
+      "text": "non. pour rester."
+    },
+    {
+      "id": "m_045",
+      "author": "Marie",
+      "text": "tu sais où est le canapé."
+    },
+    {
+      "id": "m_046",
+      "sender": "Player",
+      "text": "je sais aussi où est le plaid."
+    },
+    {
+      "id": "m_047",
+      "author": "Marie",
+      "text": "parfait. alors ramène ta présence et ton air sérieux."
+    },
+    {
+      "id": "m_048",
+      "sender": "Player",
+      "text": "j’arrive avec les deux."
+    }
+  ],
+  "choices": [
+    {
+      "id": "choice_001",
+      "text": "j’ai pensé au pain, miracle domestique",
+      "choice_type": "domestic_playful",
+      "state_delta": {
+        "presence": 1,
+        "tenderness": 1,
+        "routine_softened": true
+      }
+    },
+    {
+      "id": "choice_002",
+      "text": "viens, je te garde une place sur le canapé",
+      "choice_type": "soft_presence",
+      "state_delta": {
+        "presence": 1,
+        "tenderness": 1,
+        "routine_softened": true
+      }
+    },
+    {
+      "id": "choice_003",
+      "text": "désolé, j’étais un peu ailleurs. je suis là maintenant",
+      "choice_type": "repair_micro_absence",
+      "state_delta": {
+        "presence": 1,
+        "tenderness": 1,
+        "routine_softened": true
+      }
+    }
+  ],
+  "state_out": {
+    "player_marie": {
+      "couple_anchor": 1,
+      "presence": 1,
+      "tenderness": 1,
+      "routine_softened": true,
+      "desire_intensity": 3,
+      "unspoken_friction": 0
+    }
+  },
+  "memory_out": [
+    {
+      "id": "day_01_marie_couple_anchor",
+      "type": "relationship_memory",
+      "summary": "Marie and Player established the official couple anchor through everyday tenderness."
+    },
+    {
+      "id": "day_01_marie_domestic_tenderness",
+      "type": "tone_memory",
+      "summary": "Tenderness appeared through ordinary domestic details rather than dramatic declaration."
+    },
+    {
+      "id": "player_chose_presence_with_marie",
+      "type": "interpreted_memory",
+      "summary": "Player showed he could choose presence with Marie in the present."
+    },
+    {
+      "id": "marie_day1_evening_opening",
+      "type": "future_hook",
+      "summary": "The scene opened toward shared evening presence."
+    }
+  ]
+}
