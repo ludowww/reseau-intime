@@ -1,0 +1,81 @@
+{
+  "scene_id": "day_02_marie_callback",
+  "day": 2,
+  "conversation_id": "day_02_marie_callback",
+  "type": "callback_conversation",
+  "participants": [
+    "Player",
+    "Marie"
+  ],
+  "route": "marie",
+  "source_memory_contract": "marie_day_01_memory_contract",
+  "source_scene": "day_01_marie_couple_anchor",
+  "trigger": "Marie reprend contact depuis un détail du quotidien qui rappelle Day 1 : le pain, le canapé, le plaid, ou la présence promise la veille.",
+  "objectives": {
+    "external": "tester si la présence partagée Day 1 se prolonge naturellement",
+    "internal": "montrer que Marie garde les détails ordinaires comme preuves de présence",
+    "fantasy": "faire sentir que le couple officiel peut rester désirable par répétition habitée, pas par nouveauté",
+    "marie_goal": "sentir que Player est encore là aujourd’hui, pas seulement dans la scène précédente"
+  },
+  "memory_in_required": [
+    "day_01_marie_couple_anchor",
+    "day_01_marie_domestic_tenderness",
+    "player_chose_presence_with_marie",
+    "marie_day1_evening_opening"
+  ],
+  "state_initial": {
+    "couple_anchor": 1,
+    "presence": 1,
+    "tenderness": 1,
+    "routine_softened": true,
+    "continuity": 0,
+    "unspoken_friction": 0.0
+  },
+  "state_final": {
+    "player_marie": {
+      "couple_anchor": 1,
+      "presence": 2,
+      "tenderness": 2,
+      "continuity": 1,
+      "routine_softened": true,
+      "desire_intensity": 3,
+      "unspoken_friction": 0.1
+    }
+  },
+  "beats_required": [
+    "callback_banal_detail",
+    "marie_checks_presence_lightly",
+    "player_recalls_day1_detail",
+    "domestic_tenderness_reappears",
+    "small_drift_or_delay",
+    "choice_repair_or_presence",
+    "warm_day2_closure"
+  ],
+  "limit_intensity": 3,
+  "target_message_count": {
+    "min": 45,
+    "max": 70
+  },
+  "player_presence_minimum": 0.35,
+  "choice_count_required": 3,
+  "choices_must_be_real_sms": true,
+  "success_criteria": [
+    "Marie rappelle Day 1 sans réciter la mémoire",
+    "Le quotidien reste le matériau principal",
+    "Player montre une présence concrète",
+    "La scène passe la continuity check en future_continuity_check",
+    "Marie n’est pas soupçonneuse ou punitive",
+    "Le couple ne redevient pas un décor neutre",
+    "La scène reste différente de Sandra"
+  ],
+  "forbidden_patterns": [
+    "Marie soupçonne Sandra",
+    "Marie devient obstacle moral",
+    "Marie punit Player",
+    "Marie parle comme Sandra",
+    "Player répond uniquement fonctionnellement",
+    "Day 1 est répété sans variation",
+    "Conflit de couple fort",
+    "Séduction explicite sans contexte domestique"
+  ]
+}
