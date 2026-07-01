@@ -1,74 +1,93 @@
-# Narrative SMS Tool V0
+# Narrative SMS Tool
 
-Outil narratif hors runtime Godot pour générer, critiquer et valider des dialogues SMS à routes.
+## Purpose
+The Narrative SMS Tool helps design, benchmark, draft, and validate realistic SMS-style scenes for Réseau Intime.
 
-## Scope V0
+It is meant to support:
+- human SMS rhythm
+- character-specific voice
+- proximity context
+- memory continuity
+- route coherence
+- cross-route pressure
 
-Cette version est volontairement data-first et Python-only.
+## Current scope
+Current validated scope includes:
+- Sandra Day 1 → Day 2 continuity
+- Marie Day 1 → Day 2 continuity
+- Sandra ↔ Marie cross-route pressure prototype
+- Generic memory continuity checks
+- Dialogue QA runner
 
-Elle couvre une seule route benchmark :
+## Folder map
+- `benchmarks/` — tone references and editorial notes
+- `drafts/` — QA/test drafts, not canonical game data
+- `memory/` — memory contracts created by benchmark scenes
+- `profiles/` — character, desire, proximity, relationship inputs
+- `routes/` — route arcs, fantasy profiles, interaction rules
+- `scene_contracts/` — expected structure for future scenes or drafts
+- `qa_rules/` — rules used or referenced by QA tools
+- `docs/` — explanatory documentation
+- `templates/` — reusable starting points
+- `reports/` — generated QA reports; should not be committed
 
-- Day 1 — Sandra — conversation pilier — photo trigger
+## Validated routes
+### Sandra
+- Day 1 benchmark
+- Day 1 draft
+- Day 1 memory contract
+- Day 2 callback draft
+- Future continuity check validated
 
-Elle fournit :
+### Marie
+- Route foundation
+- Day 1 benchmark
+- Day 1 draft
+- Day 1 memory contract
+- Day 2 callback draft
+- Source and future continuity checks validated
 
-- des profils narratifs JSON ;
-- un contrat de scène ;
-- des règles QA ;
-- des scripts Python de validation/diagnostic ;
-- un rapport QA JSON ;
-- un petit draft de test.
+### Sandra ↔ Marie
+- Interaction rules
+- Day 2 cross-route pressure contract
+- Day 2 cross-route pressure prototype draft
 
-## Fichiers importants
-
-- `narrative_tool/project/project_intent.json`
-- `narrative_tool/project/desire_intensity_scale.json`
-- `narrative_tool/profiles/characters/player.json`
-- `narrative_tool/profiles/characters/sandra.json`
-- `narrative_tool/profiles/desire/sandra_desire_profile.json`
-- `narrative_tool/profiles/proximity/player_sandra_proximity.json`
-- `narrative_tool/profiles/relationships/player_sandra.json`
-- `narrative_tool/routes/sandra_fantasy_profile.json`
-- `narrative_tool/routes/sandra_route_arc.json`
-- `narrative_tool/scene_contracts/day_01_sandra_photo_trigger.contract.json`
-- `narrative_tool/drafts/day_01_sandra_photo_trigger.draft.json`
-- `narrative_tool/qa_rules/*.json`
-- `narrative_tool/reports/day_01_sandra_photo_trigger.qa.json`
-
-## Lancer la QA
-
-Depuis la racine du repo :
-
+## QA commands
 ```bash
 python3 tools/run_dialogue_qa.py narrative_tool/drafts/day_01_sandra_photo_trigger.draft.json
+python3 tools/run_dialogue_qa.py narrative_tool/drafts/day_02_sandra_callback.draft.json
+python3 tools/run_dialogue_qa.py narrative_tool/drafts/day_01_marie_couple_anchor.draft.json
+python3 tools/run_dialogue_qa.py narrative_tool/drafts/day_02_marie_callback.draft.json
+python3 tools/run_dialogue_qa.py narrative_tool/drafts/day_02_cross_route_pressure.draft.json
+python3 tools/check_memory_continuity.py narrative_tool/memory/sandra_day_01_memory_contract.json narrative_tool/drafts/day_02_sandra_callback.draft.json
+python3 tools/check_memory_continuity.py narrative_tool/memory/marie_day_01_memory_contract.json narrative_tool/drafts/day_01_marie_couple_anchor.draft.json
+python3 tools/check_memory_continuity.py narrative_tool/memory/marie_day_01_memory_contract.json narrative_tool/drafts/day_02_marie_callback.draft.json
 ```
 
-Le script agrège les vérifications suivantes :
+General validation:
+```bash
+python3 tools/validate_game_data.py
+python3 tools/simulate_route_paths.py
+python3 -m unittest discover -s tests -p 'test_*.py' -v
+git diff --check
+godot --headless --path game --quit
+godot --headless --path game --resolution 1280x720 --quit
+```
 
-- `tools/validate_dialogue_json.py`
-- `tools/check_player_presence.py`
-- `tools/check_dialogue_rhythm.py`
-- `tools/check_choice_sms_quality.py`
-- `tools/check_desire_intensity.py`
-- `tools/check_route_fantasy_presence.py`
+Generated reports in `narrative_tool/reports/` should not be committed unless explicitly requested.
 
-Le rapport est écrit dans :
+## Recommended workflow
+1. Define proximity and route foundations.
+2. Create benchmark tone references.
+3. Create a scene contract.
+4. Create a QA draft.
+5. Create or update a memory contract.
+6. Run dialogue QA.
+7. Run memory continuity checks.
+8. Add cross-route rules only when more than one route can influence the scene.
 
-- `narrative_tool/reports/day_01_sandra_photo_trigger.qa.json`
-
-## Ce que la V0 ne fait pas encore
-
-- pas d’intégration runtime Godot ;
-- pas d’UI ;
-- pas de scène de jeu complète ;
-- pas de remplacement des dialogues existants ;
-- pas de framework lourd ;
-- pas de génération automatique de contenu final.
-
-## Ajouter une scène plus tard
-
-1. Créer un nouveau `scene_contracts/<scene_id>.contract.json`.
-2. Créer un draft dans `drafts/`.
-3. Ajouter ou ajuster les règles QA si nécessaire.
-4. Relancer `python3 tools/run_dialogue_qa.py <draft>`.
-5. Garder la scène data-first et vérifier les messages réels, les choix envoyables et la cohérence de route.
+## See also
+- `docs/workflow_usage_guide.md`
+- `docs/README.md`
+- `docs/memory_continuity_model.md`
+- `docs/scene_contract_patterns.md`
