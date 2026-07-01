@@ -1,0 +1,44 @@
+{
+  "route_id": "sandra",
+  "arc": [
+    {
+      "phase": 1,
+      "id": "reconnection",
+      "description": "Reprendre contact, retrouver la chaleur et vérifier si la complicité existe encore.",
+      "allowed_intensity": [0, 3]
+    },
+    {
+      "phase": 2,
+      "id": "deniable_ambiguity",
+      "description": "Le trouble devient lisible mais reste défendable comme une plaisanterie.",
+      "allowed_intensity": [2, 4]
+    },
+    {
+      "phase": 3,
+      "id": "half_named_desire",
+      "description": "Le désir est reconnu à demi-mot, avec prudence et contradictions.",
+      "allowed_intensity": [3, 6]
+    },
+    {
+      "phase": 4,
+      "id": "shared_secret",
+      "description": "La relation devient un espace privé plus difficile à expliquer.",
+      "allowed_intensity": [4, 8]
+    },
+    {
+      "phase": 5,
+      "id": "shift_or_renunciation",
+      "description": "Bascule, choix de limite ou renoncement chargé.",
+      "allowed_intensity": [5, 10]
+    }
+  ],
+  "day_1_expected_phase": {
+    "primary": "reconnection",
+    "may_hint": "deniable_ambiguity",
+    "must_not_enter": [
+      "half_named_desire",
+      "shared_secret",
+      "shift_or_renunciation"
+    ]
+  }
+}
