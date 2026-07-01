@@ -1,0 +1,307 @@
+{
+  "version": "0.14",
+  "rubric_id": "human_dialogue_quality_rubric",
+  "purpose": "Provide a human editorial rubric for reviewing SMS dialogue drafts beyond technical QA pass/fail.",
+  "status": "human_review_reference",
+  "score_scale": {
+    "0": "absent_or_broken",
+    "1": "weak",
+    "2": "acceptable_but_needs_revision",
+    "3": "good",
+    "4": "excellent_reference_quality"
+  },
+  "dimensions": [
+    {
+      "id": "natural_sms_rhythm",
+      "label": "Natural SMS rhythm",
+      "question": "Does the exchange feel like private SMS rather than polished literary dialogue?",
+      "strong_signals": [
+        "short and medium messages mixed",
+        "small imperfections",
+        "interruptions or small corrections",
+        "not every line is clever",
+        "natural pauses or changes of subject"
+      ],
+      "weak_signals": [
+        "perfect symmetry",
+        "every reply has the same length",
+        "over-polished banter",
+        "characters always answer the exact subtext"
+      ],
+      "score_guidance": {
+        "0": "reads like a scripted exchange with no SMS texture",
+        "2": "mostly readable but too even or too polished",
+        "4": "feels like real private texting with convincing rhythm and friction"
+      }
+    },
+    {
+      "id": "character_specific_voice",
+      "label": "Character-specific voice",
+      "question": "Could the speaker be identified without their name?",
+      "strong_signals": [
+        "Sandra sounds like returning complicity and deniable trouble",
+        "Marie sounds like present-life intimacy and domestic tenderness",
+        "each character has specific rhythm, humor, caution, and emotional strategy"
+      ],
+      "weak_signals": [
+        "Sandra and Marie speak with the same wit",
+        "generic flirtation",
+        "generic couple talk",
+        "voice depends only on exposition"
+      ],
+      "score_guidance": {
+        "0": "voices are interchangeable",
+        "2": "some differences exist but could still be swapped",
+        "4": "each voice remains instantly recognizable without labels"
+      }
+    },
+    {
+      "id": "player_presence",
+      "label": "Player presence",
+      "question": "Is Player a believable character in the scene, not just a response machine?",
+      "strong_signals": [
+        "Player notices details",
+        "Player has habits",
+        "Player can be awkward, sincere, ironic, or evasive",
+        "Player repairs or chooses tone through SMS"
+      ],
+      "weak_signals": [
+        "Player only answers prompts",
+        "Player has no recognizable interiority",
+        "Player’s choices are author labels",
+        "Player becomes perfect or empty"
+      ],
+      "score_guidance": {
+        "0": "Player is functionally absent",
+        "2": "Player exists but feels generic or thin",
+        "4": "Player feels like a distinct person acting through text"
+      }
+    },
+    {
+      "id": "relationship_proximity",
+      "label": "Relationship proximity",
+      "question": "Does the scene show how long and how deeply the characters know each other?",
+      "strong_signals": [
+        "shared history appears through details",
+        "current closeness or distance is readable",
+        "the relationship affects what can be said",
+        "boundaries are felt without being explained"
+      ],
+      "weak_signals": [
+        "characters sound like strangers",
+        "history is summarized instead of lived",
+        "proximity context is missing"
+      ],
+      "score_guidance": {
+        "0": "no lived relationship is visible",
+        "2": "some familiarity appears but stays vague",
+        "4": "the relationship depth shapes every exchange"
+      }
+    },
+    {
+      "id": "concrete_trigger",
+      "label": "Concrete trigger",
+      "question": "Does the conversation begin from a concrete reason to text?",
+      "strong_signals": [
+        "photo",
+        "bread",
+        "sofa",
+        "old lunch",
+        "missed message",
+        "shared object",
+        "practical pretext with emotional charge"
+      ],
+      "weak_signals": [
+        "conversation begins with abstract feelings",
+        "characters text only because the scene needs to happen"
+      ],
+      "score_guidance": {
+        "0": "no believable trigger exists",
+        "2": "trigger exists but feels thin or generic",
+        "4": "a concrete trigger naturally opens the whole exchange"
+      }
+    },
+    {
+      "id": "subtext_and_denial",
+      "label": "Subtext and denial",
+      "question": "Is the emotional or erotic tension readable without being over-explained?",
+      "strong_signals": [
+        "hesitation",
+        "joke used as cover",
+        "small test",
+        "soft dodge",
+        "ambiguity remains deniable early"
+      ],
+      "weak_signals": [
+        "characters explain exactly what they feel",
+        "confession too early",
+        "subtext becomes lecture"
+      ],
+      "score_guidance": {
+        "0": "everything is explicit or flat",
+        "2": "some subtext exists but is too on-the-nose",
+        "4": "tension stays readable while remaining deniable"
+      }
+    },
+    {
+      "id": "choice_quality",
+      "label": "Choice quality",
+      "question": "Are player choices actual SMS that could be sent?",
+      "strong_signals": [
+        "choice text is natural",
+        "choice changes tone",
+        "choice can repair, dodge, tease, or clarify",
+        "choice avoids route labels"
+      ],
+      "weak_signals": [
+        "\"choose Marie\"",
+        "\"be honest\"",
+        "\"increase Sandra route\"",
+        "moral labels",
+        "system-like language"
+      ],
+      "score_guidance": {
+        "0": "choices are not sendable messages",
+        "2": "choices are usable but still feel authored",
+        "4": "each choice feels like a real SMS with a distinct tone"
+      }
+    },
+    {
+      "id": "memory_continuity_feel",
+      "label": "Memory continuity feel",
+      "question": "Does memory feel lived rather than mechanically referenced?",
+      "strong_signals": [
+        "old details return naturally",
+        "callbacks are transformed, not repeated",
+        "memory changes tone or behavior"
+      ],
+      "weak_signals": [
+        "Day 1 is recited",
+        "memory appears only in metadata",
+        "past events are ignored"
+      ],
+      "score_guidance": {
+        "0": "no sense of remembered history",
+        "2": "memory exists but feels pasted in",
+        "4": "memory lives inside the present exchange"
+      }
+    },
+    {
+      "id": "desire_context",
+      "label": "Desire context",
+      "question": "Is desire rooted in the relationship and situation?",
+      "strong_signals": [
+        "Sandra desire comes from return, distance, complicity, being seen differently",
+        "Marie desire comes from presence, routine, being chosen again",
+        "desire grows through context, not generic heat"
+      ],
+      "weak_signals": [
+        "sudden explicitness",
+        "generic sexual tension",
+        "desire disconnected from route logic"
+      ],
+      "score_guidance": {
+        "0": "desire feels unmotivated or generic",
+        "2": "desire exists but lacks grounding",
+        "4": "desire emerges naturally from the relationship context"
+      }
+    },
+    {
+      "id": "anti_ai_texture",
+      "label": "Anti-AI texture",
+      "question": "Does the scene avoid typical AI dialogue texture?",
+      "strong_signals": [
+        "asymmetry",
+        "mundane details",
+        "small unfinished thoughts",
+        "messy but readable pacing",
+        "specific private references"
+      ],
+      "weak_signals": [
+        "balanced rhetorical pairs",
+        "aphorisms",
+        "everyone sounds emotionally articulate",
+        "every beat resolves too neatly",
+        "too many clever lines in a row"
+      ],
+      "score_guidance": {
+        "0": "strong AI-like polish dominates the scene",
+        "2": "some good texture but still too clean",
+        "4": "the scene feels human, uneven, and specific"
+      }
+    },
+    {
+      "id": "route_coherence",
+      "label": "Route coherence",
+      "question": "Does the scene respect the route identity and current phase?",
+      "strong_signals": [
+        "Sandra remains returning ambiguous complicity",
+        "Marie remains official present intimacy",
+        "Day 1/Day 2 intensity limits are respected",
+        "clean withdrawal, hesitation, or repair remain possible"
+      ],
+      "weak_signals": [
+        "route jumps ahead",
+        "Marie becomes suspicion too early",
+        "Sandra becomes replacement too early",
+        "Player confesses before buildup"
+      ],
+      "score_guidance": {
+        "0": "route phase is broken",
+        "2": "mostly coherent but too eager to jump phases",
+        "4": "the scene fits the route and its current level precisely"
+      }
+    },
+    {
+      "id": "cross_route_awareness",
+      "label": "Cross-route awareness",
+      "question": "If multiple routes are active, do they color each other without caricature?",
+      "strong_signals": [
+        "pressure appears through timing, tone, attention, and micro-repair",
+        "Marie remains alive, not just guilt",
+        "Sandra remains troubling, not replacement",
+        "Player stays coherent"
+      ],
+      "weak_signals": [
+        "routes ignore each other completely",
+        "cross-route pressure becomes melodrama",
+        "Marie directly accuses too early",
+        "Sandra attacks Marie"
+      ],
+      "score_guidance": {
+        "0": "routes feel isolated or caricatured",
+        "2": "cross-route hints exist but are blunt",
+        "4": "routes subtly color each other with believable pressure"
+      }
+    }
+  ],
+  "automatic_rejection_flags": [
+    "Choices are not sendable SMS.",
+    "Player is absent or purely functional for most of the scene.",
+    "A character’s voice could be swapped with another character without changing the scene.",
+    "The scene explains its psychology instead of dramatizing it.",
+    "A Day 1/Day 2 scene forces confession, crisis, or route lock too early.",
+    "Marie is reduced to guilt or suspicion.",
+    "Sandra is reduced to forbidden temptation.",
+    "Generated reports or runtime files were modified accidentally."
+  ],
+  "review_process": {
+    "step_1": "Run technical QA first.",
+    "step_2": "Read the scene without metadata.",
+    "step_3": "Score each dimension from 0 to 4.",
+    "step_4": "Flag automatic rejection issues.",
+    "step_5": "Write 3 concrete revision notes maximum.",
+    "step_6": "Only mark as editorial reference if no rejection flag remains and most dimensions score 3 or higher."
+  },
+  "recommended_statuses": [
+    "technical_pass_only",
+    "needs_editorial_revision",
+    "editorial_pass",
+    "validated_tone_reference"
+  ],
+  "notes": [
+    "This rubric complements technical QA; it does not replace it.",
+    "Keep revision notes concrete and limited.",
+    "Prefer lived SMS texture over polished dialogue."
+  ]
+}
