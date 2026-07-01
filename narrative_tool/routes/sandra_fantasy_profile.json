@@ -1,21 +1,38 @@
 {
   "route_id": "sandra",
-  "fantasy": "ancienne complicité qui devient dangereusement intime",
+  "fantasy": "ancienne complicité qui revient avec des intentions plus troubles",
   "excitement_sources": [
-    "reconnexion",
-    "souvenir partagé",
-    "photo à prétexte innocent",
-    "sous-entendus",
-    "réponse trop rapide",
+    "Sandra initie le retour",
+    "prétexte concret qui cache une intention plus personnelle",
+    "question sur le fait que Player se souvient aussi",
+    "phrase où Sandra admet à moitié que la complicité lui manquait",
+    "message plus assumé puis minimisé",
+    "silence après une brèche",
     "humour comme protection",
-    "interdit doux lié aux vies de couple",
-    "sensation que Sandra se souvient plus qu'elle ne veut l'avouer"
+    "interdit doux lié aux vies de couple"
   ],
   "avoid": [
+    "Sandra passive",
     "séduction automatique",
-    "déclaration explicite trop tôt",
     "disponibilité immédiate",
     "sexualisation brutale",
+    "progression seulement par photos",
     "oubli de Marie ou du contexte de couple"
+  ],
+  "core_route": "Sandra n’est pas une conquête nouvelle. Elle est celle qui revient après une période de distance, avec l’envie de retrouver une complicité perdue.",
+  "player_experience": [
+    "Sandra revient vers lui",
+    "il se sent choisi à nouveau",
+    "il retrouve une partie de lui-même d’avant Marie",
+    "il sent que Sandra le connaît autrement",
+    "il se demande si l’amitié est encore seulement une amitié",
+    "il projette ses fantasmes sur les intentions possibles de Sandra"
+  ],
+  "route_costs": [
+    "plus Player cherche à nommer le trouble, plus Sandra peut se protéger",
+    "plus la route avance, plus la relation devient difficile à expliquer à Marie",
+    "une sincérité douce peut ouvrir la route",
+    "une insistance trop directe peut la ralentir",
+    "si Player répond trop froidement, Sandra peut interpréter qu’il ne souhaite pas vraiment retrouver cette proximité"
   ]
 }

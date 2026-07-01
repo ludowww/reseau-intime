@@ -32,7 +32,54 @@
   "forbidden_too_early": [
     "déclaration explicite",
     "disponibilité immédiate",
-    "sexualisation brute",
-    "abandon du contexte Marie / couple"
+    "séduction brutale",
+    "ouverture sexuelle frontale",
+    "abandon du contexte de couple",
+    "progression seulement par photos"
+  ],
+  "core_desire_pattern": "Sandra revient vers Player parce qu’une complicité ancienne lui manque. Elle ne sait pas encore si elle cherche seulement à retrouver une proximité amicale ou si elle veut tester quelque chose de plus trouble.",
+  "active_position": "Sandra initie parfois le contact, envoie le premier prétexte, relance quand le retour de Player lui plaît, puis se protège si le trouble devient trop visible.",
+  "what_attracts_her": [
+    "Player la connaît d’avant Marie",
+    "il peut retrouver le ton des anciennes bêtises",
+    "il la lit sans la forcer",
+    "il lui donne la sensation de revenir à une version d’elle-même qu’elle avait mise à distance"
+  ],
+  "what_makes_her_cautious": [
+    "elle est en couple",
+    "Player est en couple avec Marie",
+    "elle ne veut pas trop vite nommer ce qu’elle ressent",
+    "elle craint qu’une proximité retrouvée devienne difficile à expliquer"
+  ],
+  "how_she_expresses_trouble": [
+    "messages un peu trop rapides",
+    "hésitation suivie d’un demi-aveu",
+    "retour au souvenir partagé",
+    "humour qui masque un vrai manque"
+  ],
+  "how_she_resists": [
+    "change de sujet",
+    "baisse la température avec une blague",
+    "requalifie le trouble en nostalgie",
+    "garde une distance si Player pousse trop fort"
+  ],
+  "how_she_reopens": [
+    "initie le contact avec un prétexte concret",
+    "demande si Player se souvient aussi",
+    "relance quand Player répond juste",
+    "laisse une brèche puis revient dessus doucement"
+  ],
+  "route_specific_danger": [
+    "plus Player nomme le trouble, plus Sandra peut se protéger",
+    "la relation devient plus difficile à expliquer à Marie au fil du temps",
+    "une insistance trop directe peut ralentir la route",
+    "si Player répond trop froidement, Sandra peut croire qu’il ne veut pas vraiment retrouver cette proximité"
+  ],
+  "day_1_limits": [
+    "retour actif mais déniable",
+    "nostalgie et curiosité avant toute confession",
+    "ambiguïté légère à trouble reconnu",
+    "pas de bascule explicite",
+    "possibilité de retrait à tout moment"
   ]
 }

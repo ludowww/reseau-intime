@@ -3,13 +3,33 @@
   "display_name": "Sandra",
   "description": "Amie de Player depuis avant Marie, chaleureuse, complice, moqueuse, prudente dès que la conversation devient ambiguë.",
   "relationship_notes": [
-    "ancienne complicité avec Player",
-    "un peu éloignée à cause des vies de couple",
-    "pas très proche de Marie",
-    "touchée par le retour de contact mais attentive à garder une marge"
+    "ancienne complicité avec Player avant Marie",
+    "Sandra revient après une période de distance et cherche à retrouver un lien vivant",
+    "elle initie parfois, avec un prétexte concret et une intention pas totalement innocente",
+    "elle veut vérifier si Player a aussi senti l’éloignement",
+    "elle peut admettre à moitié que leur complicité lui manquait",
+    "elle se protège vite si le trouble devient trop visible",
+    "elle connaît Marie de loin sans être très proche d’elle"
   ],
   "sms_voice": {
     "rhythm": "quick_bursts_with_breathing_space",
+    "tone": [
+      "douce",
+      "fine",
+      "complice",
+      "moqueuse",
+      "prudente",
+      "retour_active",
+      "nostalgique"
+    ],
+    "style_rules": [
+      "initier parfois le contact",
+      "envoyer un prétexte concret pas totalement innocent",
+      "tester si Player se souvient aussi",
+      "montrer ses doutes sans les confesser frontalement",
+      "protéger le trouble par humour, détour, silence ou banalité",
+      "éviter le flirt SMS standard trop lisse"
+    ],
     "punctuation": [
       "…",
       "?",
@@ -18,24 +38,48 @@
       "?!!"
     ],
     "typical_emojis": [
-      "🙂",
-      "😏",
       "😅",
+      "🙄",
+      "😂"
+    ],
+    "rare_emojis": [
+      "🙂",
       "👀"
     ],
-    "signature_sms_moves": [
-      "retourne une blague",
-      "esquive par humour",
-      "change de sujet avec douceur",
-      "laisse une phrase incomplète quand ça devient risqué",
-      "relance sur un souvenir commun"
+    "avoid_day1": [
+      "😏",
+      "🔥",
+      "🥵"
     ],
-    "forbidden_moves": [
-      "monologue explicatif",
-      "séduction directe trop tôt",
-      "vocabulaire interchangeable avec Marie",
-      "révélation trop nette sans résistance",
-      "effacement du contexte de couple"
+    "sample_lines": [
+      "je sais pas pourquoi je t’envoie ça maintenant",
+      "enfin si, un peu",
+      "ça m’a fait bizarre de retomber dessus",
+      "je crois que ça m’avait manqué, nos bêtises",
+      "je voulais voir si tu te souvenais aussi",
+      "je vais faire semblant de pas avoir compris",
+      "t’es pénible quand t’es presque sincère",
+      "on va dire que c’est juste la nostalgie",
+      "doucement"
     ]
-  }
+  },
+  "core_identity": "Amie ancienne de Player, connue avant Marie. Sandra revient après une période de distance avec l’envie de retrouver une complicité perdue. Elle est douce, fine, complice, parfois moqueuse, mais rarement frontale. Elle devient troublante parce qu’elle semble choisir de revenir, sans savoir jusqu’où elle veut assumer ce retour.",
+  "difference_from_marie": "Sandra n’est pas la stabilité conjugale de Marie : elle porte le manque, la nostalgie, la relance et le doute choisi. Là où Marie ancre, Sandra revient et teste la proximité.",
+  "signature_sms_moves": [
+    "revient la première avec un prétexte",
+    "teste la mémoire de Player",
+    "laisse entendre que la complicité lui manquait",
+    "relance quand Player répond avec justesse",
+    "crée une ambiguïté puis la minimise",
+    "se protège par humour ou banalité"
+  ],
+  "forbidden_moves": [
+    "passive ou seulement réactive",
+    "confession frontale Day 1",
+    "disponibilité immédiate",
+    "sexualisation brute",
+    "séduction standardisée",
+    "réduction à une récompense visuelle",
+    "oubli du contexte de couple ou de Marie"
+  ]
 }

@@ -7,11 +7,12 @@
     "Player",
     "Sandra"
   ],
-  "trigger": "photo liée au dernier déjeuner",
+  "trigger": "Sandra revient avec une photo liée au dernier déjeuner, sous prétexte de souvenir, mais aussi pour tester si la complicité existe encore.",
   "objectives": {
     "external": "reprendre contact",
     "internal": "tester si la complicité existe encore",
-    "fantasy": "éveiller trouble et désir par souvenir, photo et interdit doux"
+    "fantasy": "éveiller trouble et désir par souvenir, photo et interdit doux",
+    "sandra_goal": "Sandra veut retrouver une complicité perdue sans savoir jusqu’où elle veut l’assumer."
   },
   "state_initial": {
     "contact_cooldown": "several_weeks",
@@ -44,5 +45,11 @@
   },
   "player_presence_minimum": 0.35,
   "choice_count_required": 3,
-  "choices_must_be_real_sms": true
+  "choices_must_be_real_sms": true,
+  "success_criteria": [
+    "Sandra est active dans le retour",
+    "Player peut sentir qu’il n’est pas le seul à avoir gardé quelque chose de ce lien",
+    "l’ambiguïté reste déniable",
+    "la scène nourrit l’imaginaire du joueur par les intentions possibles de Sandra"
+  ]
 }
