@@ -1,0 +1,43 @@
+{
+  "player_presence_minimum": 0.35,
+  "max_consecutive_same_speaker": 4,
+  "max_recommended_message_length": 160,
+  "choice_max_recommended_length": 95,
+  "forbidden_choice_starters": [
+    "exprimer",
+    "avouer",
+    "rassurer",
+    "flirter",
+    "demander",
+    "dire",
+    "répondre",
+    "ignorer",
+    "éviter",
+    "proposer",
+    "tester",
+    "relancer",
+    "faire",
+    "poser"
+  ],
+  "repetition_threshold": 3,
+  "punctuation_rules": {
+    "avoid_uniform_final_punctuation": true,
+    "prefer_mix": [
+      "?",
+      "!",
+      "…",
+      "."
+    ],
+    "warn_if_only_periods": true
+  },
+  "emoji_rules": {
+    "allow_characterized_emojis": true,
+    "warn_if_generic_or_neutral_only": true,
+    "typical_sandra_emojis": [
+      "🙂",
+      "😏",
+      "😅",
+      "👀"
+    ]
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "route_id": "sandra",
+  "phases": [
+    {
+      "order": 1,
+      "name": "reconnexion",
+      "purpose": "reprendre un contact vivant sans forcer"
+    },
+    {
+      "order": 2,
+      "name": "ambiguïté_deniable",
+      "purpose": "laisser le trouble apparaître sans l'assumer pleinement"
+    },
+    {
+      "order": 3,
+      "name": "désir_à_demi_mot",
+      "purpose": "faire monter la tension par petites touches"
+    },
+    {
+      "order": 4,
+      "name": "secret_partagé",
+      "purpose": "faire naître un accord implicite, encore fragile"
+    },
+    {
+      "order": 5,
+      "name": "bascule_ou_renoncement",
+      "purpose": "séparer la route entre aveu et retrait"
+    }
+  ],
+  "day_1_position": "phase_1_with_beginning_of_phase_2"
+}

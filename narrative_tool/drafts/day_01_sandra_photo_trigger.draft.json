@@ -1,0 +1,207 @@
+{
+  "scene_id": "day_01_sandra_photo_trigger",
+  "day": 1,
+  "conversation_id": "day_01_sandra_photo_trigger",
+  "type": "pillar_conversation",
+  "participants": [
+    "Player",
+    "Sandra"
+  ],
+  "desire_intensity": 3,
+  "beats": [
+    {
+      "id": "beat_001",
+      "tag": "recontact",
+      "summary": "Player relance après plusieurs semaines"
+    },
+    {
+      "id": "beat_002",
+      "tag": "photo_trigger",
+      "summary": "la photo du dernier déjeuner sert de prétexte"
+    },
+    {
+      "id": "beat_003",
+      "tag": "shared_memory",
+      "summary": "un souvenir commun revient"
+    },
+    {
+      "id": "beat_004",
+      "tag": "first_ambiguity",
+      "summary": "la réponse devient un peu trop rapide"
+    },
+    {
+      "id": "beat_005",
+      "tag": "sandra_deflects",
+      "summary": "Sandra esquive avec humour"
+    },
+    {
+      "id": "beat_006",
+      "tag": "player_repairs",
+      "summary": "Player répare et relance sans forcer"
+    },
+    {
+      "id": "beat_007",
+      "tag": "future_opening",
+      "summary": "une prochaine ouverture reste possible"
+    }
+  ],
+  "messages": [
+    {
+      "id": "m_001",
+      "sender": "Player",
+      "text": "Je suis tombé sur une photo du déjeuner, et j'ai pensé à toi."
+    },
+    {
+      "id": "m_002",
+      "sender": "Sandra",
+      "text": "Ah carrément ? Tu ressors les archives comme ça ? 😏"
+    },
+    {
+      "id": "m_003",
+      "sender": "Player",
+      "text": "C'était pas prévu. J'ai juste eu l'impression que la table avait encore ta place."
+    },
+    {
+      "id": "m_004",
+      "sender": "Sandra",
+      "text": "Ta manière de dire bonjour est toujours aussi étrange… et un peu touchante."
+    },
+    {
+      "id": "m_005",
+      "sender": "Player",
+      "text": "J'essaie de rester digne, mais la photo m'a saboté."
+    },
+    {
+      "id": "m_006",
+      "sender": "Sandra",
+      "text": "Montre-moi pas ça, après je vais finir par me souvenir de ce que j'ai mangé aussi."
+    },
+    {
+      "id": "m_007",
+      "sender": "Player",
+      "text": "Tu te souviens au moins de la partie où on a ri pour rien ?"
+    },
+    {
+      "id": "m_008",
+      "sender": "Sandra",
+      "text": "Pour rien ? Non. C'était toi qui faisais semblant d'être sage, déjà."
+    },
+    {
+      "id": "m_009",
+      "sender": "Player",
+      "text": "Je proteste. J'étais sage à ma façon."
+    },
+    {
+      "id": "m_010",
+      "sender": "Sandra",
+      "text": "Haha. Ta façon à toi, oui. Ça existe encore visiblement."
+    },
+    {
+      "id": "m_011",
+      "sender": "Player",
+      "text": "Je voulais juste te dire que j'ai bien aimé te revoir ce jour-là."
+    },
+    {
+      "id": "m_012",
+      "sender": "Sandra",
+      "text": "Je l'avais compris. J'ai juste mis un peu de temps à répondre, c'est tout."
+    },
+    {
+      "id": "m_013",
+      "sender": "Player",
+      "text": "J'ai hésité à t'écrire avant, je voulais pas débarquer comme un vieux fantôme."
+    },
+    {
+      "id": "m_014",
+      "sender": "Sandra",
+      "text": "Trop tard, maintenant la photo est là. Tu assumes tes fantômes ?"
+    },
+    {
+      "id": "m_015",
+      "sender": "Player",
+      "text": "Seulement ceux qui sourient."
+    },
+    {
+      "id": "m_016",
+      "sender": "Sandra",
+      "text": "Mmm. Là tu fais exprès ou tu le fais sans t'en rendre compte ? 👀 C'est un peu ambigu."
+    },
+    {
+      "id": "m_017",
+      "sender": "Player",
+      "text": "Un peu des deux, peut-être."
+    },
+    {
+      "id": "m_018",
+      "sender": "Sandra",
+      "text": "Je note. C'est dangereux quand t'es dans cet état-là."
+    },
+    {
+      "id": "m_019",
+      "sender": "Player",
+      "text": "Dangereux comment ?"
+    },
+    {
+      "id": "m_020",
+      "sender": "Sandra",
+      "text": "Comme un déjeuner qu'on prétend oublier et qu'on finit par raconter trop bien."
+    },
+    {
+      "id": "m_021",
+      "sender": "Player",
+      "text": "Ça me va. Je peux raconter la suite si tu veux."
+    },
+    {
+      "id": "m_022",
+      "sender": "Sandra",
+      "text": "On verra. Déjà, envoie-moi la photo, histoire que je vérifie tes souvenirs."
+    },
+    {
+      "id": "m_023",
+      "sender": "Player",
+      "text": "Promis, je te l'envoie. Avec la preuve que t'avais encore ton sourire à toi."
+    },
+    {
+      "id": "m_024",
+      "sender": "Sandra",
+      "text": "Bon. Là tu forces presque pas. J'aime mieux quand tu fais ça.",
+      "media": [
+        {
+          "type": "photo",
+          "id": "photo_last_lunch_001",
+          "uri": "fake://photo/day01/last_lunch_001.jpg",
+          "caption": "Photo du dernier déjeuner, prétexte innocent"
+        }
+      ]
+    }
+  ],
+  "choices": [
+    {
+      "id": "choice_001_a",
+      "text": "je pensais pas que ce déjeuner allait laisser des preuves",
+      "choice_type": "playful_probe"
+    },
+    {
+      "id": "choice_001_b",
+      "text": "je t'envoie la photo, mais tu me dois un vrai commentaire",
+      "choice_type": "gentle_push"
+    },
+    {
+      "id": "choice_001_c",
+      "text": "ok je reste sage, tu me diras si j'en fais trop",
+      "choice_type": "soft_check"
+    }
+  ],
+  "state_out": {
+    "shared_photo_seen": true,
+    "recontact": true,
+    "ambiguity": 1,
+    "future_opening": true,
+    "desire_intensity": 3
+  },
+  "memory_out": {
+    "last_lunch_recalled": true,
+    "sandra_has_not_forgetten_the_smile": true,
+    "player_started_contact": true
+  }
+}

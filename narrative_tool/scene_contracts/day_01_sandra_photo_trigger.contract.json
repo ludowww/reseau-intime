@@ -1,0 +1,48 @@
+{
+  "scene_id": "day_01_sandra_photo_trigger",
+  "day": 1,
+  "conversation_id": "day_01_sandra_photo_trigger",
+  "type": "pillar_conversation",
+  "participants": [
+    "Player",
+    "Sandra"
+  ],
+  "trigger": "photo liée au dernier déjeuner",
+  "objectives": {
+    "external": "reprendre contact",
+    "internal": "tester si la complicité existe encore",
+    "fantasy": "éveiller trouble et désir par souvenir, photo et interdit doux"
+  },
+  "state_initial": {
+    "contact_cooldown": "several_weeks",
+    "shared_photo_seen": false,
+    "ambiguity": 0,
+    "desire": 0,
+    "trust": 6,
+    "distance": 4
+  },
+  "state_final": {
+    "recontact": true,
+    "shared_photo_seen": true,
+    "ambiguity": 1,
+    "desire": 2,
+    "future_opening": true
+  },
+  "beats_required": [
+    "recontact",
+    "photo_trigger",
+    "shared_memory",
+    "first_ambiguity",
+    "sandra_deflects",
+    "player_repairs_or_deepens",
+    "future_opening"
+  ],
+  "limit_intensity": 3,
+  "target_message_count": {
+    "min": 150,
+    "max": 200
+  },
+  "player_presence_minimum": 0.35,
+  "choice_count_required": 3,
+  "choices_must_be_real_sms": true
+}

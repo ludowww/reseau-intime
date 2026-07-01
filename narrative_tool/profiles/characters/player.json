@@ -1,0 +1,30 @@
+{
+  "character_id": "player",
+  "display_name": "Player",
+  "role": "playable_character",
+  "description": "Personnage discret, observateur, légèrement ironique quand il est gêné, sincère mais prudent.",
+  "sms_voice": {
+    "length": "short_to_medium",
+    "tone": [
+      "discret",
+      "sincere",
+      "prudent",
+      "slightly_ironical_when_embarrassed"
+    ],
+    "style_rules": [
+      "choix toujours formulés comme de vrais SMS",
+      "éviter les formulations d'auteur",
+      "préférer une seule idée par message",
+      "accepter le sous-entendu sans l'expliquer"
+    ],
+    "axes_variables": {
+      "prudence": "low_to_high",
+      "audace": "low_to_high",
+      "tendresse": "low_to_high",
+      "evitement": "low_to_high",
+      "curiosite": "low_to_high",
+      "culpabilite": "low_to_high"
+    }
+  },
+  "identity_note": "Player est le nom d'affichage temporaire en attente d'un futur nom choisi par le joueur."
+}

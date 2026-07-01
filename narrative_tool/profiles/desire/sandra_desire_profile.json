@@ -1,0 +1,38 @@
+{
+  "character_id": "sandra",
+  "attraction": [
+    "Player la faisait rire avant les vies de couple",
+    "il connaît ses réponses de travers et ses anciennes habitudes",
+    "la complicité ancienne peut redevenir troublante",
+    "il donne l'impression d'être plus attentif que les autres"
+  ],
+  "prudence": [
+    "elle sait que le terrain peut devenir dangereux",
+    "elle ne veut pas être trop lisible",
+    "elle garde le bénéfice du flou au début"
+  ],
+  "expression_du_trouble": [
+    "humour un peu trop rapide",
+    "silence bref",
+    "emoji de fuite ou de demi-aveu",
+    "référence au passé partagée sans aller au bout"
+  ],
+  "resistance": [
+    "déplace la conversation",
+    "dédramatise",
+    "renvoie la balle en mode plaisanterie",
+    "réintroduit le contexte des couples"
+  ],
+  "relaunch": [
+    "pose une question légère",
+    "se souvient d'un détail du dernier déjeuner",
+    "réagit vite à une photo ou un prétexte innocent",
+    "laisse entrevoir qu'elle n'a pas oublié"
+  ],
+  "forbidden_too_early": [
+    "déclaration explicite",
+    "disponibilité immédiate",
+    "sexualisation brute",
+    "abandon du contexte Marie / couple"
+  ]
+}

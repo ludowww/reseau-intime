@@ -1,0 +1,26 @@
+{
+  "max_intensity_by_day": {
+    "day_1": 3
+  },
+  "max_intensity_by_route_day1_sandra": 3,
+  "expected_signals": [
+    "complicity",
+    "shared_memory",
+    "photo_pretext",
+    "humor_as_shield",
+    "slight_ambiguity",
+    "gentle_interdit"
+  ],
+  "forbidden_too_early": [
+    "explicit_sexuality",
+    "direct_declaration",
+    "immediate_availability",
+    "discarding_couple_context"
+  ],
+  "minimal_reciprocity_required": true,
+  "consent_and_credibility": [
+    "keep the couple context visible",
+    "do not bypass reluctance too quickly",
+    "do not jump to explicitness without intermediate signals"
+  ]
+}

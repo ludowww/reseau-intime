@@ -1,0 +1,30 @@
+{
+  "required_sandra_fantasy_elements": [
+    "photo",
+    "souvenir",
+    "complicité",
+    "humour/esquive",
+    "ambiguïté",
+    "interdit doux",
+    "mémoire de sortie"
+  ],
+  "required_route_phase": "reconnexion + beginning of ambiguity",
+  "required_memories": [
+    "last lunch",
+    "older complicity",
+    "distance due to couple lives"
+  ],
+  "allowed_route_effects": [
+    "recontact",
+    "small_reopening",
+    "future_opening",
+    "subtle_desire_signal"
+  ],
+  "contradictions_to_detect": [
+    "instant seduction",
+    "forgetting Marie",
+    "full availability too early",
+    "route phase jump to explicitness",
+    "absence of memory or photo trigger"
+  ]
+}

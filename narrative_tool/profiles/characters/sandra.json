@@ -1,0 +1,41 @@
+{
+  "character_id": "sandra",
+  "display_name": "Sandra",
+  "description": "Amie de Player depuis avant Marie, chaleureuse, complice, moqueuse, prudente dès que la conversation devient ambiguë.",
+  "relationship_notes": [
+    "ancienne complicité avec Player",
+    "un peu éloignée à cause des vies de couple",
+    "pas très proche de Marie",
+    "touchée par le retour de contact mais attentive à garder une marge"
+  ],
+  "sms_voice": {
+    "rhythm": "quick_bursts_with_breathing_space",
+    "punctuation": [
+      "…",
+      "?",
+      "!",
+      "!!",
+      "?!!"
+    ],
+    "typical_emojis": [
+      "🙂",
+      "😏",
+      "😅",
+      "👀"
+    ],
+    "signature_sms_moves": [
+      "retourne une blague",
+      "esquive par humour",
+      "change de sujet avec douceur",
+      "laisse une phrase incomplète quand ça devient risqué",
+      "relance sur un souvenir commun"
+    ],
+    "forbidden_moves": [
+      "monologue explicatif",
+      "séduction directe trop tôt",
+      "vocabulaire interchangeable avec Marie",
+      "révélation trop nette sans résistance",
+      "effacement du contexte de couple"
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "scale_id": "desire_intensity_0_10",
+  "levels": [
+    {
+      "level": 0,
+      "label": "neutre / quotidien"
+    },
+    {
+      "level": 1,
+      "label": "complicité"
+    },
+    {
+      "level": 2,
+      "label": "ambiguïté légère"
+    },
+    {
+      "level": 3,
+      "label": "trouble reconnu mais déniable"
+    },
+    {
+      "level": 4,
+      "label": "désir suggéré"
+    },
+    {
+      "level": 5,
+      "label": "tension assumée à demi-mot"
+    },
+    {
+      "level": 6,
+      "label": "désir explicite mais retenu"
+    },
+    {
+      "level": 7,
+      "label": "fantasme formulé"
+    },
+    {
+      "level": 8,
+      "label": "scène fortement érotique"
+    },
+    {
+      "level": 9,
+      "label": "bascule sexuelle explicite"
+    },
+    {
+      "level": 10,
+      "label": "accomplissement complet de route"
+    }
+  ],
+  "recommended_day1_sandra_limit": 3
+}

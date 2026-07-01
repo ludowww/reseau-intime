@@ -1,0 +1,143 @@
+{
+  "scene_id": "day_01_sandra_photo_trigger",
+  "status": "pass",
+  "summary": {
+    "validate_dialogue_json": {},
+    "check_player_presence": {
+      "messages": 24,
+      "player_messages": 12,
+      "player_ratio": 0.5,
+      "longest_player_absence": 1
+    },
+    "check_dialogue_rhythm": {
+      "messages": 24,
+      "avg_length": 60.5,
+      "median_length": 62.5,
+      "longest_run": 1,
+      "punctuation": {
+        "?": 7,
+        "!": 0,
+        "…": 1,
+        ".": 34
+      }
+    },
+    "check_choice_sms_quality": {
+      "choices": 3,
+      "flagged": 0
+    },
+    "check_desire_intensity": {
+      "scene_id": "day_01_sandra_photo_trigger",
+      "declared_intensity": 3,
+      "max_seen_intensity": 3,
+      "contract_limit": 3,
+      "signal_hits": {
+        "complicité": 0,
+        "photo": 7,
+        "souvenir": 3,
+        "ambigu": 1,
+        "humour": 1,
+        "interdit": 0
+      }
+    },
+    "check_route_fantasy_presence": {
+      "required_hits": {
+        "photo": true,
+        "souvenir": true,
+        "complicité": true,
+        "humour/esquive": true,
+        "ambiguïté": true,
+        "interdit doux": true,
+        "mémoire de sortie": true
+      },
+      "matched": 7
+    }
+  },
+  "checks": {
+    "validate_dialogue_json": {
+      "file": "narrative_tool/drafts/day_01_sandra_photo_trigger.draft.json",
+      "status": "pass",
+      "warnings": [],
+      "errors": []
+    },
+    "check_player_presence": {
+      "file": "narrative_tool/drafts/day_01_sandra_photo_trigger.draft.json",
+      "status": "pass",
+      "summary": {
+        "messages": 24,
+        "player_messages": 12,
+        "player_ratio": 0.5,
+        "longest_player_absence": 1
+      },
+      "warnings": [],
+      "errors": []
+    },
+    "check_dialogue_rhythm": {
+      "file": "narrative_tool/drafts/day_01_sandra_photo_trigger.draft.json",
+      "status": "pass",
+      "summary": {
+        "messages": 24,
+        "avg_length": 60.5,
+        "median_length": 62.5,
+        "longest_run": 1,
+        "punctuation": {
+          "?": 7,
+          "!": 0,
+          "…": 1,
+          ".": 34
+        }
+      },
+      "warnings": [],
+      "errors": []
+    },
+    "check_choice_sms_quality": {
+      "file": "narrative_tool/drafts/day_01_sandra_photo_trigger.draft.json",
+      "status": "pass",
+      "summary": {
+        "choices": 3,
+        "flagged": 0
+      },
+      "warnings": [],
+      "errors": []
+    },
+    "check_desire_intensity": {
+      "file": "narrative_tool/drafts/day_01_sandra_photo_trigger.draft.json",
+      "status": "pass",
+      "summary": {
+        "scene_id": "day_01_sandra_photo_trigger",
+        "declared_intensity": 3,
+        "max_seen_intensity": 3,
+        "contract_limit": 3,
+        "signal_hits": {
+          "complicité": 0,
+          "photo": 7,
+          "souvenir": 3,
+          "ambigu": 1,
+          "humour": 1,
+          "interdit": 0
+        }
+      },
+      "warnings": [],
+      "errors": []
+    },
+    "check_route_fantasy_presence": {
+      "file": "narrative_tool/drafts/day_01_sandra_photo_trigger.draft.json",
+      "status": "pass",
+      "summary": {
+        "required_hits": {
+          "photo": true,
+          "souvenir": true,
+          "complicité": true,
+          "humour/esquive": true,
+          "ambiguïté": true,
+          "interdit doux": true,
+          "mémoire de sortie": true
+        },
+        "matched": 7
+      },
+      "warnings": [],
+      "errors": []
+    }
+  },
+  "warnings": [],
+  "errors": []
+}

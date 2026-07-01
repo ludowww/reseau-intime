@@ -1,0 +1,31 @@
+{
+  "relationship_id": "player_sandra",
+  "dimensions": {
+    "confiance": 6,
+    "distance": 4,
+    "attirance": 3,
+    "gene": 2,
+    "interdit": 3,
+    "asymetrie": 2
+  },
+  "easy_subjects": [
+    "souvenirs de sorties",
+    "déjeuner du dernier rendez-vous",
+    "blagues communes",
+    "nouvelles de la vie de tous les jours",
+    "petits retards et habitudes"
+  ],
+  "dangerous_subjects": [
+    "Marie",
+    "ce qui se passe vraiment entre eux",
+    "envie de se voir en cachette",
+    "comparaison avec les autres couples",
+    "aveu trop frontal du trouble"
+  ],
+  "shared_memories": [
+    "déjeuners anciens",
+    "private jokes",
+    "goûts communs",
+    "souvenir d'un message resté en suspens"
+  ]
+}

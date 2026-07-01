@@ -1,0 +1,43 @@
+{
+  "project_id": "reseau_intime",
+  "format": "intimate_sms_narrative",
+  "core_intent": "immersive adult fantasy through credible private messaging",
+  "player_promise": [
+    "feel personally addressed",
+    "feel desired",
+    "feel curiosity, tension and forbidden attraction",
+    "experience routes as living relationships"
+  ],
+  "intention_d_oeuvre": "Créer des histoires immersives comme un livre dont le joueur est le héros, à travers des échanges SMS crédibles, tendus et singuliers.",
+  "principes_immersion": [
+    "chaque message doit sembler envoyé dans l'instant",
+    "les personnages doivent avoir mémoire, désir et limites",
+    "les routes doivent évoluer comme des relations vivantes",
+    "le joueur doit pouvoir projeter son imaginaire sans perdre la crédibilité sociale"
+  ],
+  "principes_interdit": [
+    "séduction automatique sans friction",
+    "Player passif ou réduit à observer",
+    "choix formulés comme intentions d'auteur",
+    "voix interchangeables",
+    "ponctuation uniforme",
+    "émoticônes génériques non caractérisées",
+    "routes incohérentes",
+    "mémoire émotionnelle insuffisante"
+  ],
+  "creative_guardrails": [
+    "garder des personnages reconnaissables",
+    "laisser le trouble monter par petites touches",
+    "privilégier les SMS envoyables plutôt que les formulations conceptuelles",
+    "respecter le contexte relationnel et les vies de couple",
+    "faire sentir la tension sans brûler les étapes"
+  ],
+  "what_to_avoid": [
+    "dialogues trop monologués",
+    "réponses trop prévisibles",
+    "emojis non caractérisés",
+    "routes qui oublient Marie ou le contexte social",
+    "phrasing d'auteur dans les choix",
+    "sexualisation brutale sans préparation"
+  ]
+}
