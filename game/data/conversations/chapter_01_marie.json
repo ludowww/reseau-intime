@@ -35,7 +35,7 @@
           "id": "msg_marie_002",
           "sender": "marie",
           "time_label": "18:12",
-          "text": "Et avant que tu répondes juste “bientôt”, il n’y a plus de pain."
+          "text": "Et avant que tu répondes juste “bientôt”, il n’y a plus de pain. J’ai gardé la photo du panier en souvenir, juste pour te le rappeler."
         }
       ],
       "choices": [
@@ -508,7 +508,7 @@
       "choices": [
         {
           "id": "choice_marie_001_present",
-          "text": "Je le pose ce soir. Je veux être vraiment là.",
+          "text": "désolé, j’étais un peu ailleurs. je suis là maintenant",
           "tone": "present",
           "effects": {
             "marie.trust": 1,
@@ -521,7 +521,7 @@
         },
         {
           "id": "choice_marie_001_practical",
-          "text": "Je prends le pain et je rentre. On se pose tranquillement.",
+          "text": "j’ai pensé au pain, miracle domestique",
           "tone": "practical",
           "effects": {
             "marie.trust": 1
@@ -532,7 +532,7 @@
         },
         {
           "id": "choice_marie_001_avoidant",
-          "text": "Oui, oui. Je te redis quand je pars.",
+          "text": "viens, je te garde une place sur le canapé",
           "tone": "slightly_avoidant",
           "effects": {
             "marie.lucidity": 1,
@@ -1466,5 +1466,5 @@
   "unlocks_content": [
     "profile_marie_placeholder"
   ],
-  "debug_notes": "Jour 1 Marie restauré depuis la V1 validée : routine pain/retour, téléphone comme distance, Mathilde mentionnée indirectement via le chargeur. Un seul choix de posture léger; pas de route lock."
+  "debug_notes": "V0.21 intégré depuis day_01_marie_couple_anchor : ouverture bread/photo/souvenir, ancrage du couple conservé, choix SMS naturalisés, pas de state/memory runtime ajouté, pas de route lock, Sandra et Day 2 inchangés."
 }
