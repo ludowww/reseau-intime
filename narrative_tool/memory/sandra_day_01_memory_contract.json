@@ -1,0 +1,78 @@
+{
+  "memory_contract_id": "sandra_day_01_memory_contract",
+  "source_benchmark": "sandra_day_01_validated",
+  "source_day": 1,
+  "route": "sandra",
+  "memory_function": "Define what Sandra Day 2 must remember from Sandra Day 1.",
+  "facts_created": [
+    "Sandra est revenue après une période de distance.",
+    "Sandra a envoyé une photo liée au dernier déjeuner.",
+    "Player a répondu avec humour et sincérité maladroite.",
+    "La complicité ancienne a été réactivée.",
+    "La scène s’est terminée sur une ouverture douce."
+  ],
+  "interpreted_memories": {
+    "player": [
+      "Sandra est revenue vers lui.",
+      "La photo n’était pas seulement un souvenir neutre.",
+      "Il a senti que la complicité pouvait revenir.",
+      "Il est heureux qu’elle ait repris contact."
+    ],
+    "sandra": [
+      "Player a répondu avec plaisir.",
+      "Player n’était peut-être pas seulement en train de plaisanter.",
+      "Elle a osé revenir, mais elle doit encore garder une marge.",
+      "La photo a fonctionné comme test de mémoire."
+    ],
+    "route": [
+      "first_active_return_from_sandra",
+      "photo_as_relationship_test",
+      "soft_denied_ambiguity_opened"
+    ]
+  },
+  "emotional_traces": {
+    "sandra": {
+      "openness": 0.35,
+      "caution": 0.55,
+      "nostalgia": 0.7,
+      "curiosity": 0.6,
+      "desire_intensity": 3
+    },
+    "player": {
+      "happiness_to_reconnect": 0.75,
+      "curiosity": 0.65,
+      "awkward_sincerity": 0.55,
+      "desire_intensity": 3
+    }
+  },
+  "route_state_after_day_1": {
+    "recontact": true,
+    "shared_photo_seen": true,
+    "ambiguity": 1,
+    "future_opening": true,
+    "desire_intensity": 3
+  },
+  "required_day_2_callbacks": [
+    "La photo doit pouvoir être rappelée.",
+    "Sandra doit pouvoir tester si Player l’a gardée ou y a repensé.",
+    "Player doit pouvoir montrer qu’il n’a pas oublié l’échange.",
+    "Sandra ne doit pas redevenir distante comme si Day 1 n’avait pas eu lieu.",
+    "L’ambiguïté doit être légèrement plus présente, mais encore déniable."
+  ],
+  "forbidden_day_2_resets": [
+    "Traiter Sandra comme une inconnue.",
+    "Rejouer exactement le même déclencheur photo.",
+    "Ignorer que Sandra est revenue en premier.",
+    "Ignorer que Player a répondu avec plaisir.",
+    "Faire monter l’intensité au-delà du niveau autorisé.",
+    "Transformer Day 2 en confession ou bascule explicite."
+  ],
+  "continuity_tests": [
+    "Day 2 réutilise au moins une mémoire explicite de Day 1.",
+    "Day 2 contient au moins une mémoire interprétée.",
+    "Sandra est plus à l’aise qu’au début de Day 1, mais encore prudente.",
+    "Player est plus ouvert qu’au début de Day 1.",
+    "La scène ne répète pas mécaniquement la photo.",
+    "L’ambiguïté reste déniable."
+  ]
+}

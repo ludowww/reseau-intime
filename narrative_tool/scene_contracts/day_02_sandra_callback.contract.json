@@ -1,0 +1,69 @@
+{
+  "scene_id": "day_02_sandra_callback",
+  "day": 2,
+  "conversation_id": "day_02_sandra_callback",
+  "type": "memory_callback",
+  "participants": [
+    "Player",
+    "Sandra"
+  ],
+  "source_memory_contract": "sandra_day_01_memory_contract",
+  "trigger": "Sandra revient avec une allusion au fait que Player a peut-être gardé la photo ou y a repensé.",
+  "objectives": {
+    "external": "reprendre le fil de la veille sans refaire la même scène",
+    "internal": "tester si la photo et l’échange ont laissé une trace",
+    "fantasy": "faire sentir au joueur que Sandra se souvient et revient encore",
+    "sandra_goal": "vérifier si Player a gardé quelque chose de la veille, sans s’exposer frontalement"
+  },
+  "state_initial": {
+    "day_1_reconnection": true,
+    "photo_shared": true,
+    "ambiguity": 1,
+    "desire": 2,
+    "sandra_caution": 0.55,
+    "sandra_curiosity": 0.6
+  },
+  "state_final": {
+    "callback_success": true,
+    "shared_photo_memory_reactivated": true,
+    "ambiguity": 2,
+    "desire": 3,
+    "future_opening": true
+  },
+  "beats_required": [
+    "callback_from_sandra",
+    "photo_memory_reactivated",
+    "player_remembers",
+    "sandra_tests_without_confessing",
+    "player_choice",
+    "soft_shift_forward",
+    "future_hook"
+  ],
+  "limit_intensity": 4,
+  "target_message_count": {
+    "min": 35,
+    "max": 70
+  },
+  "player_presence_minimum": 0.35,
+  "choice_count_required": 2,
+  "choices_must_be_real_sms": true,
+  "success_criteria": [
+    "Sandra revient encore, mais de manière plus discrète.",
+    "La scène prouve que Day 1 a laissé une trace.",
+    "Player peut montrer qu’il a pensé à la photo ou à l’échange.",
+    "Sandra teste sans avouer frontalement.",
+    "L’ambiguïté avance d’un cran.",
+    "La scène ne répète pas Day 1.",
+    "La fin ouvre vers une future rencontre ou un nouveau callback."
+  ],
+  "forbidden_patterns": [
+    "rejouer le même envoi de photo comme si c’était nouveau ;",
+    "Sandra trop disponible ;",
+    "confession frontale ;",
+    "oubli de Marie ou du contexte de couple ;",
+    "Player spectateur ;",
+    "choix abstraits ;",
+    "bascule sexuelle explicite ;",
+    "intensité supérieure à 4."
+  ]
+}

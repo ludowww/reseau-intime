@@ -1,0 +1,34 @@
+{
+  "memory_continuity_rules_id": "memory_continuity_rules",
+  "source_day": 1,
+  "target_day": 2,
+  "max_intensity": 4,
+  "required_memory_in": [
+    "day_01_sandra_reconnection",
+    "day_01_sandra_photo_shared",
+    "player_admitted_lunch_mattered",
+    "sandra_noticed_player_was_not_only_joking",
+    "sandra_returned_after_distance"
+  ],
+  "required_callbacks": [
+    "photo",
+    "recalled",
+    "repensé",
+    "garde"
+  ],
+  "forbidden_resets": [
+    "treat_sandra_as_stranger",
+    "repeat_same_photo_trigger",
+    "ignore_sandra_returned_first",
+    "ignore_player_replied_with_pleasure",
+    "exceed_max_intensity",
+    "explicit_confession_bascule"
+  ],
+  "required_draft_fields": [
+    "memory_in",
+    "messages",
+    "choices",
+    "state_out",
+    "memory_out"
+  ]
+}

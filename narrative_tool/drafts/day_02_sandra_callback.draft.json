@@ -1,0 +1,330 @@
+{
+  "scene_id": "day_02_sandra_callback",
+  "day": "2",
+  "route": "sandra",
+  "source_memory_contract": "sandra_day_01_memory_contract",
+  "participants": [
+    "Player",
+    "Sandra"
+  ],
+  "declared_max_desire_intensity": 4,
+  "route_phase": "deniable_ambiguity",
+  "description": "callback photo, souvenir, complicité, humour/esquive, ambiguïté déniable, interdit doux, mémoire de sortie",
+  "summary": "Sandra revient après Day 1 pour tester la mémoire de Player autour de la photo et du recontact.",
+  "desire_intensity": 4,
+  "design_goal": "callback photo, souvenir, complicité, humour/esquive, ambiguïté déniable, interdit doux, mémoire de sortie",
+  "debug_notes": "Sandra revient avec une photo comme test de mémoire; Player répond avec humour et sincérité; le couple contexte reste visible; l’ambiguïté reste déniable.",
+  "memory_in": [
+    "day_01_sandra_reconnection",
+    "day_01_sandra_photo_shared",
+    "player_admitted_lunch_mattered",
+    "sandra_noticed_player_was_not_only_joking",
+    "sandra_returned_after_distance"
+  ],
+  "messages": [
+    {
+      "id": "m_001",
+      "sender": "Sandra",
+      "text": "j’ai retrouvé un détail du déjeuner."
+    },
+    {
+      "id": "m_002",
+      "sender": "Sandra",
+      "text": "tu as gardé la photo, ou tu l’as déjà enterrée avec les dossiers gênants ?"
+    },
+    {
+      "id": "m_003",
+      "sender": "Player",
+      "text": "ça dépend si on parle d’archives ou de pièces à conviction."
+    },
+    {
+      "id": "m_004",
+      "sender": "Player",
+      "text": "parce que celle-là, je l’ai encore sous les yeux."
+    },
+    {
+      "id": "m_005",
+      "sender": "Sandra",
+      "text": "évidemment."
+    },
+    {
+      "id": "m_006",
+      "sender": "Sandra",
+      "text": "je savais que tu ne ferais pas semblant d’avoir oublié."
+    },
+    {
+      "id": "m_007",
+      "sender": "Player",
+      "text": "j’ai essayé de faire l’élégant, ça n’a pas marché."
+    },
+    {
+      "id": "m_008",
+      "sender": "Player",
+      "text": "j’ai surtout ri quand j’ai revu ta tête."
+    },
+    {
+      "id": "m_009",
+      "sender": "Sandra",
+      "text": "ma tête ?"
+    },
+    {
+      "id": "m_010",
+      "sender": "Sandra",
+      "text": "tu vois, je peux encore t’attraper sur un détail."
+    },
+    {
+      "id": "m_011",
+      "sender": "Player",
+      "text": "oui, et je peux encore être honnête malgré moi."
+    },
+    {
+      "id": "m_012",
+      "sender": "Player",
+      "text": "le déjeuner comptait."
+    },
+    {
+      "id": "m_013",
+      "sender": "Sandra",
+      "text": "tu le dis comme si tu devais te défendre."
+    },
+    {
+      "id": "m_014",
+      "sender": "Sandra",
+      "text": "c’est presque ça qui m’a fait revenir."
+    },
+    {
+      "id": "m_015",
+      "sender": "Player",
+      "text": "tu n’es pas revenue juste pour la photo, alors."
+    },
+    {
+      "id": "m_016",
+      "sender": "Player",
+      "text": "je prends ça comme une bonne nouvelle."
+    },
+    {
+      "id": "m_017",
+      "sender": "Sandra",
+      "text": "ne fais pas ton content trop vite."
+    },
+    {
+      "id": "m_018",
+      "sender": "Sandra",
+      "text": "mais oui, je suis revenue."
+    },
+    {
+      "id": "m_019",
+      "sender": "Player",
+      "text": "je suis content que tu l’aies fait."
+    },
+    {
+      "id": "m_020",
+      "sender": "Player",
+      "text": "ça m’a manqué plus que prévu."
+    },
+    {
+      "id": "m_021",
+      "sender": "Sandra",
+      "text": "tu vas finir par me rendre méfiante."
+    },
+    {
+      "id": "m_022",
+      "sender": "Sandra",
+      "text": "quand tu parles comme ça, je me demande ce que tu gardes vraiment."
+    },
+    {
+      "id": "m_023",
+      "sender": "Player",
+      "text": "la photo."
+    },
+    {
+      "id": "m_024",
+      "sender": "Player",
+      "text": "et le fait que tu étais là."
+    },
+    {
+      "id": "m_025",
+      "sender": "Sandra",
+      "text": "chez toi, Marie n’a rien remarqué ?"
+    },
+    {
+      "id": "m_026",
+      "sender": "Sandra",
+      "text": "je préfère qu’on reste officiellement dans le raisonnable."
+    },
+    {
+      "id": "m_027",
+      "sender": "Player",
+      "text": "Marie me croit juste bizarre avec mes archives."
+    },
+    {
+      "id": "m_028",
+      "sender": "Player",
+      "text": "et ça m’arrange, pour être honnête."
+    },
+    {
+      "id": "m_029",
+      "sender": "Sandra",
+      "text": "la façon dont tu réponds, c’est toujours pas très normal."
+    },
+    {
+      "id": "m_030",
+      "sender": "Sandra",
+      "text": "c’est mieux que normal, peut-être."
+    },
+    {
+      "id": "m_031",
+      "sender": "Player",
+      "text": "j’assume mal, mais j’assume."
+    },
+    {
+      "id": "m_032",
+      "sender": "Player",
+      "text": "je l’ai relue ce matin, oui."
+    },
+    {
+      "id": "m_033",
+      "sender": "Sandra",
+      "text": "ah."
+    },
+    {
+      "id": "m_034",
+      "sender": "Sandra",
+      "text": "donc tu y as repensé."
+    },
+    {
+      "id": "m_035",
+      "sender": "Player",
+      "text": "oui."
+    },
+    {
+      "id": "m_036",
+      "sender": "Player",
+      "text": "et j’ai pensé que tu avais compris que je ne faisais pas que plaisanter."
+    },
+    {
+      "id": "m_037",
+      "sender": "Sandra",
+      "text": "je l’ai compris."
+    },
+    {
+      "id": "m_038",
+      "sender": "Sandra",
+      "text": "je voulais juste voir si toi aussi."
+    },
+    {
+      "id": "m_039",
+      "sender": "Player",
+      "text": "j’ai gardé le détail que tu n’as pas nié sourire."
+    },
+    {
+      "id": "m_040",
+      "sender": "Player",
+      "text": "ça me suffit pour ne pas prétendre que c’était banal."
+    },
+    {
+      "id": "m_041",
+      "sender": "Sandra",
+      "text": "voilà."
+    },
+    {
+      "id": "m_042",
+      "sender": "Sandra",
+      "text": "on progresse sans faire de scène."
+    },
+    {
+      "id": "m_043",
+      "sender": "Player",
+      "text": "je peux vivre avec ça."
+    },
+    {
+      "id": "m_044",
+      "sender": "Player",
+      "text": "et je suis content que ce soit toi qui sois revenue la première."
+    },
+    {
+      "id": "m_045",
+      "sender": "Sandra",
+      "text": "bien."
+    },
+    {
+      "id": "m_046",
+      "sender": "Sandra",
+      "text": "pour l’instant, garde juste ça pour toi."
+    },
+    {
+      "id": "m_047",
+      "sender": "Player",
+      "text": "la photo ou le reste ?"
+    },
+    {
+      "id": "m_048",
+      "sender": "Sandra",
+      "text": "les deux, peut-être."
+    },
+    {
+      "id": "m_049",
+      "sender": "Sandra",
+      "text": "bonne nuit, Player."
+    },
+    {
+      "id": "m_050",
+      "sender": "Player",
+      "text": "bonne nuit, Sandra."
+    }
+  ],
+  "choices": [
+    {
+      "id": "choice_001",
+      "text": "je l’ai gardée pour raisons strictement administratives",
+      "choice_type": "playful_probe",
+      "state_delta": {
+        "memory_continuity": 1,
+        "ambiguity": 1
+      }
+    },
+    {
+      "id": "choice_002",
+      "text": "je l’ai revue ce matin, j’avoue",
+      "choice_type": "soft_disclosure",
+      "state_delta": {
+        "trust": 1,
+        "desire_intensity": 4
+      }
+    },
+    {
+      "id": "choice_003",
+      "text": "je peux encore nier si ça t’arrange",
+      "choice_type": "protective_deflection",
+      "state_delta": {
+        "ambiguity": 2,
+        "future_opening": true
+      }
+    }
+  ],
+  "state_out": {
+    "player_sandra": {
+      "ambiguity": 2,
+      "trust": 1,
+      "desire_intensity": 4,
+      "memory_continuity": 1
+    }
+  },
+  "memory_out": [
+    {
+      "id": "day_02_sandra_photo_callback",
+      "type": "memory_callback",
+      "summary": "Sandra tested whether Player kept or thought about the Day 1 photo."
+    },
+    {
+      "id": "player_admitted_revisiting_photo",
+      "type": "interpreted_memory",
+      "summary": "Player may have admitted he looked back at the photo or the exchange."
+    },
+    {
+      "id": "sandra_confirmed_return_was_not_neutral",
+      "type": "route_memory",
+      "summary": "Sandra's callback suggested her return was not only casual nostalgia."
+    }
+  ]
+}
