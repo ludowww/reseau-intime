@@ -1,0 +1,46 @@
+{
+  "route_id": "marie",
+  "fantasy": "l’intimité officielle qui doit être choisie à nouveau",
+  "route_identity": {
+    "summary": "Marie porte le fantasme d’un lien déjà installé mais encore désirable : être connu profondément, attendu chez soi, touché par le banal, aimé sans mise en scène et réhabité dans la routine.",
+    "difference_from_sandra": "Sandra trouble par le retour du passé et l’ambiguïté déniable ; Marie touche par la présence du présent et par la question de savoir si le couple est encore choisi activement."
+  },
+  "excitement_sources": [
+    "être connu profondément",
+    "être attendu à la maison",
+    "être touché par le banal",
+    "être aimé sans mise en scène",
+    "retrouver le désir dans une relation installée",
+    "sentir le risque de perdre ce qui semblait acquis",
+    "redevenir désirable dans la routine"
+  ],
+  "player_should_feel": [
+    "Marie me connaît vraiment.",
+    "Je peux être attendu sans jouer un rôle.",
+    "Le quotidien peut redevenir désirable.",
+    "Si je ne fais pas attention, ce lien peut se fissurer.",
+    "Sandra trouble parce qu’elle revient, mais Marie compte parce qu’elle est là."
+  ],
+  "route_costs": [
+    "la routine peut se refroidir si elle n’est jamais nourrie",
+    "la présence peut devenir automatique",
+    "le désir peut se déplacer si Player cesse d’habiter le couple",
+    "les non-dits peuvent s’accumuler sans rupture spectaculaire"
+  ],
+  "avoid": [
+    "Marie obstacle moral",
+    "Marie naïve",
+    "Marie seulement routine",
+    "Marie seulement culpabilité",
+    "Marie écrite comme inférieure à Sandra",
+    "Marie sans désir propre",
+    "séduction sans contexte domestique"
+  ],
+  "future_pivot_moments": [
+    "Player choisit de revenir vraiment vers Marie",
+    "un détail banal devient soudain intime",
+    "la routine révèle une fissure ou une réconciliation",
+    "Marie sent qu’elle est encore choisie ou qu’elle doit l’être à nouveau",
+    "la comparaison avec Sandra devient perceptible sans prendre le dessus"
+  ]
+}

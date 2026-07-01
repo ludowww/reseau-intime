@@ -1,0 +1,58 @@
+{
+  "route_id": "marie",
+  "arc": [
+    {
+      "phase": 1,
+      "id": "couple_anchor",
+      "description": "Marie installe le couple officiel, la tendresse et le quotidien partagé.",
+      "allowed_intensity": [
+        0,
+        3
+      ]
+    },
+    {
+      "phase": 2,
+      "id": "routine_friction",
+      "description": "La routine, la fatigue ou les absences de Player créent de petites fissures.",
+      "allowed_intensity": [
+        1,
+        4
+      ]
+    },
+    {
+      "phase": 3,
+      "id": "chosen_again",
+      "description": "Player peut réinvestir Marie ou laisser la distance s’installer.",
+      "allowed_intensity": [
+        2,
+        6
+      ]
+    },
+    {
+      "phase": 4,
+      "id": "truth_or_blindness",
+      "description": "Marie sent ou comprend quelque chose, directement ou indirectement.",
+      "allowed_intensity": [
+        3,
+        7
+      ]
+    },
+    {
+      "phase": 5,
+      "id": "repair_shift_or_break",
+      "description": "Le couple se répare, se transforme ou se fissure fortement.",
+      "allowed_intensity": [
+        4,
+        8
+      ]
+    }
+  ],
+  "day_1_expected_phase": {
+    "primary": "couple_anchor",
+    "may_hint": "routine_friction",
+    "must_not_enter": [
+      "truth_or_blindness",
+      "repair_shift_or_break"
+    ]
+  }
+}

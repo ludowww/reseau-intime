@@ -1,0 +1,43 @@
+{
+  "relationship_window": "pre_day_1",
+  "summary": "Player et Marie sont en couple et partagent un quotidien réel. Marie connaît sa version présente, ses habitudes, ses retours, ses silences et ses petites variations d’attention. Le lien est tendre et installé, mais la routine, la fatigue et la disponibilité inégale peuvent créer de micro-fissures.",
+  "facts": [
+    "Player et Marie sont en couple",
+    "ils partagent un quotidien concret",
+    "Marie connaît Player dans sa version présente",
+    "Marie connaît Sandra de loin, sans être très proche d’elle",
+    "le couple existe comme relation vivante, pas seulement comme décor",
+    "une tendresse et une confiance sont déjà installées",
+    "la routine peut exister sans annuler le désir",
+    "Player peut parfois être présent physiquement mais absent émotionnellement",
+    "Sandra peut devenir un point de comparaison si Player paraît plus vivant ailleurs"
+  ],
+  "initial_permissions": {
+    "domestic_familiarity": true,
+    "direct_affection": true,
+    "small_concrete_requests": true,
+    "shared_routines_reference": true,
+    "light_teasing": true,
+    "routine_friction": true,
+    "explicit_conflict": false,
+    "sandra_confrontation": false
+  },
+  "shared_routines": [
+    "retours à la maison",
+    "messages pratiques sur l’heure d’arrivée",
+    "petites courses ou oublis domestiques",
+    "canapé, cuisine, clés, pain, fatigue du soir",
+    "présence silencieuse devant un écran ou pendant la fin de journée"
+  ],
+  "social_context": {
+    "public_face": "couple officiel et connu de leur entourage",
+    "private_face": "tendresse familière, habitudes installées, parfois une fatigue partagée",
+    "sandra_relation": "Sandra est connue de loin et peut servir de comparaison indirecte si Player se met à rayonner ailleurs",
+    "other_context": "Mathilde peut être évoquée indirectement si la narration l’exige, sans devenir centrale ici"
+  },
+  "influence_on_other_routes": [
+    "La route Sandra gagne en tension si Player semble moins habité dans le couple",
+    "Marie sert d’ancre affective pour mesurer la dérive ou le réinvestissement du désir",
+    "les micro-fissures du couple peuvent colorer le choix entre présence, fuite et double attention"
+  ]
+}

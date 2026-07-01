@@ -1,0 +1,52 @@
+{
+  "relation_id": "player_marie",
+  "characters": [
+    "Player",
+    "Marie"
+  ],
+  "relationship_type": "official_couple",
+  "baseline_dynamic": {
+    "trust": 0.75,
+    "familiarity": 0.85,
+    "routine": 0.65,
+    "desire": 0.45,
+    "comfort": 0.75,
+    "distance": 0.25,
+    "risk": 0.35,
+    "unspoken_friction": 0.25
+  },
+  "safe_zones": [
+    "présence domestique",
+    "taquinerie légère",
+    "tendresse simple",
+    "messages pratiques avec sous-texte affectif",
+    "retour au quotidien partagé",
+    "familiarité assumée"
+  ],
+  "danger_zones": [
+    "silence inhabituel",
+    "Player trop absorbé par son téléphone",
+    "tendresse remplacée par automatisme",
+    "comparaison implicite avec Sandra",
+    "Marie sent que Player est présent physiquement mais ailleurs émotionnellement"
+  ],
+  "asymmetry": {
+    "Marie": "elle connaît le quotidien de Player et peut lire ses habitudes, ses retours et ses écarts d’attention",
+    "Player": "il peut encore choisir le couple, mais doit le réhabiter activement plutôt que le considérer comme acquis"
+  },
+  "shared_references": [
+    "canapé",
+    "pain",
+    "retour à la maison",
+    "fatigue du soir",
+    "messages du quotidien",
+    "habitudes partagées",
+    "présence attendue"
+  ],
+  "route_interactions": [
+    "Marie ancre la route par la tendresse du quotidien",
+    "la route Sandra peut résonner comme un contraste de présence versus retour du passé",
+    "les écarts d’attention de Player peuvent infléchir la confiance sans casser immédiatement le lien",
+    "la relation peut évoluer vers réparation, réinvestissement ou fissure progressive"
+  ]
+}

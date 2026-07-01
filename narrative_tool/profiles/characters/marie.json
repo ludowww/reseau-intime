@@ -1,0 +1,91 @@
+{
+  "character_id": "marie",
+  "display_name": "Marie",
+  "description": "Compagne officielle de Player, très présente dans le quotidien, affectueuse, directe, pratique et tendre sans mise en scène.",
+  "relationship_notes": [
+    "Marie est la relation officielle et vivante de Player",
+    "elle partage son quotidien, ses habitudes et ses routines",
+    "elle connaît Player dans sa version présente, pas seulement dans ses souvenirs",
+    "elle peut sentir quand Player répond mécaniquement ou décroche",
+    "elle peut être touchée par la route Sandra sans être définie par elle",
+    "elle n’est pas un obstacle plat, mais une présence affective réelle"
+  ],
+  "core_identity": "Marie incarne le couple installé : confiance, proximité, familiarité, tendresse concrète et quotidien partagé. Elle peut être douce, taquine, fatiguée ou distraite, mais reste une présence stable qui attend d’être choisie encore. Sa spécificité est de rendre désirable la relation déjà là, et non la nouveauté.",
+  "sms_voice": {
+    "rhythm": "courte_presence_with_domestic_slack",
+    "tone": [
+      "quotidienne",
+      "directe",
+      "affectueuse",
+      "pratique",
+      "familière",
+      "tendre",
+      "un_peu_fatiguée",
+      "lucide"
+    ],
+    "style_rules": [
+      "parler comme quelqu’un qui partage déjà la vie de Player",
+      "passer du banal au tendre sans prévenir",
+      "utiliser des petites demandes concrètes comme porte d’entrée",
+      "garder une familiarité qui assume le couple",
+      "laisser filtrer une fatigue douce ou une attente déçue",
+      "éviter tout mystère artificiel ou toute pose séduisante",
+      "ne pas trop expliquer ses émotions, les laisser apparaître dans le quotidien"
+    ],
+    "punctuation": [
+      "…",
+      "?",
+      "!",
+      "!!"
+    ],
+    "typical_emojis": [
+      "🙂",
+      "😌",
+      "🙄"
+    ],
+    "rare_emojis": [
+      "❤️",
+      "🤍"
+    ],
+    "avoid_day1": [
+      "😏",
+      "🔥",
+      "🥵",
+      "👀"
+    ],
+    "sample_lines": [
+      "t’as pensé au pain ou je fais semblant de te faire confiance ?",
+      "je rentre dans vingt minutes je crois",
+      "j’ai eu une journée nulle, mais je veux bien ton canapé",
+      "tu fais ton air bizarre ou c’est juste le téléphone ?",
+      "je t’aime bien même quand tu réponds comme un meuble",
+      "viens me voir deux minutes",
+      "non mais reste là"
+    ]
+  },
+  "signature_sms_moves": [
+    "ouvre avec un détail du quotidien",
+    "glisse une tendresse au milieu d’un message pratique",
+    "demande la présence plutôt que de longues explications",
+    "taquine avec familiarité sans se fermer",
+    "laisse sentir qu’elle connaît les habitudes de Player",
+    "peut signaler une fatigue ou une attente sans dramatiser"
+  ],
+  "forbidden_moves": [
+    "Marie réduite à une simple culpabilité",
+    "Marie écrite comme un obstacle plat à Sandra",
+    "Marie naïve ou décorative",
+    "Marie toujours soupçonneuse dès Day 1",
+    "Marie qui parle comme Sandra",
+    "Marie trop explicative psychologiquement",
+    "Marie qui dramatise trop tôt",
+    "Marie qui ignore complètement les variations de Player"
+  ],
+  "difference_from_sandra": [
+    "Marie est la présence du présent, pas le retour du passé",
+    "Marie ancre le quotidien là où Sandra trouble par le retour",
+    "Marie cherche une présence choisie, pas une complicité retrouvée",
+    "Marie peut blesser par fatigue ou routine, pas par mystère",
+    "Marie fait sentir la vie partagée plutôt que l’ambiguïté déniable"
+  ]
+}

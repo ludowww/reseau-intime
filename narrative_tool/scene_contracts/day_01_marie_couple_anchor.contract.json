@@ -1,0 +1,65 @@
+{
+  "scene_id": "day_01_marie_couple_anchor",
+  "day": 1,
+  "conversation_id": "day_01_marie_couple_anchor",
+  "type": "pillar_conversation",
+  "participants": [
+    "Player",
+    "Marie"
+  ],
+  "trigger": "Marie écrit depuis le quotidien : retour à la maison, fatigue, petite demande concrète, envie de présence.",
+  "objectives": {
+    "external": "installer le couple officiel et le quotidien partagé",
+    "internal": "montrer que Marie connaît Player dans sa vie présente",
+    "fantasy": "faire sentir que le quotidien peut être intime et désirable",
+    "marie_goal": "obtenir de la présence réelle sans avoir à la réclamer lourdement"
+  },
+  "state_initial": {
+    "couple_established": true,
+    "routine_active": true,
+    "tenderness_available": true,
+    "fatigue_present": false,
+    "sandra_concern": false,
+    "day_1_friction": "low"
+  },
+  "state_final": {
+    "couple_reaffirmed": true,
+    "presence_shared": true,
+    "routine_softened": true,
+    "future_evening_open": true,
+    "fissure_hinted": false
+  },
+  "beats_required": [
+    "daily_trigger",
+    "domestic_teasing",
+    "player_presence",
+    "soft_tenderness",
+    "small_routine_friction",
+    "repair_or_warmth",
+    "future_evening_opening"
+  ],
+  "limit_intensity": 3,
+  "target_message_count": {
+    "min": 80,
+    "max": 140
+  },
+  "player_presence_minimum": 0.35,
+  "choice_count_required": 3,
+  "choices_must_be_real_sms": true,
+  "success_criteria": [
+    "Marie existe comme personne désirable et pas comme obstacle",
+    "le couple semble réel",
+    "Player répond avec présence",
+    "la tendresse passe par le banal",
+    "une légère routine peut être perceptible sans devenir conflit",
+    "la scène différencie Marie de Sandra"
+  ],
+  "forbidden_patterns": [
+    "Marie soupçonne Sandra dès Day 1",
+    "Marie est seulement culpabilité",
+    "Marie parle comme Sandra",
+    "Player est absent ou purement fonctionnel",
+    "scène trop dramatique",
+    "séduction explicite sans contexte"
+  ]
+}

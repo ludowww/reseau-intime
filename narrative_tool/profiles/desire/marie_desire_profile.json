@@ -1,0 +1,78 @@
+{
+  "character_id": "marie",
+  "desire_profile": {
+    "core_desire_pattern": "Le désir de Marie naît de la présence réelle, des habitudes partagées, de la confiance et du fait d’être choisie à nouveau dans le quotidien. Elle veut sentir que Player revient vers elle pour de bon, pas seulement par politesse ou inertie.",
+    "what_attracts_her": [
+      "Player présent et disponible",
+      "Player qui revient vers elle sans y être poussé",
+      "humour domestique et complicité simple",
+      "gestes concrets et attention au quotidien",
+      "disponibilité émotionnelle réelle",
+      "capacité à sortir de la routine sans jouer un rôle",
+      "petites preuves qu’elle est encore désirée dans la vie de tous les jours"
+    ],
+    "what_makes_her_cautious": [
+      "Player distant ou mécanique",
+      "réponses trop courtes ou automatiques",
+      "Player qui semble ailleurs",
+      "Player qui évite le contact simple",
+      "Player plus vivant avec d’autres qu’avec elle",
+      "tendresse qui devient pure obligation",
+      "sensation d’être tenue pour acquise"
+    ],
+    "how_she_expresses_desire": [
+      "proximité concrète",
+      "invitation à venir près d’elle",
+      "demande de présence",
+      "humour domestique",
+      "phrase tendre au milieu d’un message pratique",
+      "petite jalousie non frontale",
+      "envie d’être choisie sans devoir le réclamer lourdement"
+    ],
+    "how_she_resists": [
+      "se referme un peu si Player répond comme un meuble",
+      "transforme la blessure en taquinerie sèche",
+      "baisse l’intensité au lieu de se livrer d’un coup",
+      "reprend le contrôle du banal si le trouble devient trop flou",
+      "laisse un silence ou une distance courte quand elle se sent moins choisie"
+    ],
+    "how_she_reopens": [
+      "revient au concret du quotidien",
+      "redemande de la présence par un geste simple",
+      "accepte la tendresse si Player répond vraiment",
+      "réouvre la proximité quand Player se montre disponible sans jouer un rôle",
+      "reprend la confiance si elle sent qu’il la choisit encore"
+    ],
+    "route_specific_danger": [
+      "si Player devient plus vivant ailleurs, Marie peut sentir la comparaison sans la nommer",
+      "la routine peut glisser vers l’automatisme si personne ne la nourrit",
+      "une tendresse purement fonctionnelle peut fissurer la confiance",
+      "l’officialité du couple peut devenir un acquis fragile si le désir n’est plus entretenu"
+    ],
+    "forbidden_too_early": [
+      "confession dramatique immédiate",
+      "jalousie frontale dès Day 1",
+      "suspicion explicite envers Sandra dès le départ",
+      "séduction calibrée comme une performance",
+      "débat psychologique trop explicatif",
+      "désir séparé du quotidien",
+      "rejet complet de la routine"
+    ]
+  },
+  "day_1_limits": {
+    "max_intensity": 3,
+    "must_remain": [
+      "ancre affective",
+      "tendresse domestique",
+      "présence choisie",
+      "léger frottement de routine possible",
+      "pas de conflit fort"
+    ],
+    "must_not": [
+      "confrontation Sandra",
+      "confession explicite",
+      "drame conjugal",
+      "érotisation explicite"
+    ]
+  }
+}
