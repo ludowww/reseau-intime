@@ -1,0 +1,38 @@
+{
+  "scale_id": "desire_intensity_0_10",
+  "description": "Échelle narrative d'intensité du désir, utilisée pour contrôler la progression des scènes.",
+  "levels": [
+    {"level": 0, "label": "neutre_quotidien", "description": "Échange pratique, quotidien ou social sans sous-texte."},
+    {"level": 1, "label": "complicite", "description": "Chaleur, blague, familiarité, plaisir de se parler."},
+    {"level": 2, "label": "ambiguite_legere", "description": "Sous-entendu léger, trouble possible mais facilement niable."},
+    {"level": 3, "label": "trouble_deniable", "description": "Le trouble est perceptible mais peut encore être traité comme une plaisanterie."},
+    {"level": 4, "label": "desir_suggere", "description": "Désir suggéré par images, rythme, silences ou détails sensoriels."},
+    {"level": 5, "label": "tension_a_demi_mot", "description": "Les deux personnages savent qu'un seuil émotionnel ou érotique est proche."},
+    {"level": 6, "label": "desir_explicite_retenu", "description": "Le désir est nommé ou presque nommé, mais reste retenu par contexte ou limite."},
+    {"level": 7, "label": "fantasme_formule", "description": "Un fantasme est formulé ou laissé entendre très clairement."},
+    {"level": 8, "label": "scene_fortement_erotique", "description": "Scène intime très explicite dans la tension ou la description."},
+    {"level": 9, "label": "bascule_sexuelle_explicite", "description": "Passage à l'acte ou bascule sexuelle explicite."},
+    {"level": 10, "label": "accomplissement_route", "description": "Accomplissement complet d'une route fantasmatique."}
+  ],
+  "day_route_limits": {
+    "sandra": {
+      "day_1": {
+        "recommended_max": 3,
+        "allowed": [
+          "complicité retrouvée",
+          "photo à prétexte innocent",
+          "souvenir partagé",
+          "sous-entendu léger",
+          "trouble reconnu mais niable"
+        ],
+        "forbidden": [
+          "désir sexuel explicite",
+          "déclaration amoureuse",
+          "bascule sexuelle",
+          "jalousie dramatique",
+          "oubli du contexte de couple"
+        ]
+      }
+    }
+  }
+}
