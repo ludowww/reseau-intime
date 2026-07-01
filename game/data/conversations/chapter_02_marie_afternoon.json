@@ -50,7 +50,7 @@
       "choices": [
         {
           "id": "choice_c02_marie_afternoon_02_guided",
-          "text": "Le suspense était limité.",
+          "text": "Le suspense n’a pas duré.",
           "tone": "guided_reply"
         }
       ]
