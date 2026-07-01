@@ -1,0 +1,52 @@
+{
+  "project_id": "reseau_intime",
+  "format": "intimate_sms_narrative",
+  "core_intent": "immersive adult fantasy through credible private messaging",
+  "language": "fr",
+  "work_intent": {
+    "summary": "Créer des histoires immersives sous forme de messagerie intime, proches d'un livre dont le joueur est le héros.",
+    "experience": [
+      "permettre au joueur de projeter son imaginaire",
+      "donner l'impression de vivre une relation privée et progressive",
+      "éveiller désir, excitation, interdit, trouble, tension sexuelle et pulsion",
+      "faire exister des personnages crédibles avec leur propre désir, leurs limites et leur mémoire"
+    ]
+  },
+  "player_promise": [
+    "feel personally addressed",
+    "feel desired",
+    "feel curiosity, tension and forbidden attraction",
+    "experience routes as living relationships",
+    "feel that each message may shift the relationship"
+  ],
+  "immersion_principles": [
+    "les messages doivent sembler envoyés par des personnes réelles",
+    "les personnages existent hors écran",
+    "le désir monte par détails, silences, sous-entendus et souvenirs",
+    "le Player doit rester un personnage jouable avec une voix, pas un simple curseur"
+  ],
+  "forbidden_attraction_principles": [
+    "l'interdit doit venir du contexte relationnel et social",
+    "l'intensité doit progresser par paliers",
+    "les limites et hésitations crédibles renforcent la tension",
+    "les personnages ne doivent pas devenir disponibles mécaniquement"
+  ],
+  "creative_guardrails": [
+    "tous les personnages impliqués dans des scènes de désir sont adultes",
+    "pas de pression après refus clair",
+    "pas d'escalade explicite sans réciprocité construite",
+    "ne pas réduire les personnages à des récompenses",
+    "respecter la voix, les limites et la mémoire de chaque relation"
+  ],
+  "avoid": [
+    "dialogues trop monologués",
+    "Player passif",
+    "choix formulés comme des intentions d'auteur",
+    "voix personnages interchangeables",
+    "ponctuation trop uniforme",
+    "réponses trop prévisibles",
+    "emojis non caractérisés",
+    "routes incohérentes",
+    "dialogues qui sentent l'IA"
+  ]
+}
