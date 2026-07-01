@@ -1,0 +1,58 @@
+{
+  "id": "player",
+  "display_name": "Player",
+  "role": "joueur_personnage",
+  "projection_contract": {
+    "definition": "Le Player doit être assez caractérisé pour avoir une voix, mais assez ouvert pour permettre la projection du joueur.",
+    "fixed_traits": [
+      "discret",
+      "observateur",
+      "légèrement ironique quand il est gêné",
+      "sincère mais prudent",
+      "plus à l'aise avec l'allusion qu'avec l'aveu frontal"
+    ],
+    "variable_axes": [
+      "prudence",
+      "audace",
+      "tendresse",
+      "évitement",
+      "curiosité",
+      "culpabilité"
+    ]
+  },
+  "sms_voice": {
+    "message_length": "short_to_medium",
+    "rhythm": "réactif, souvent en une phrase courte ou deux messages séparés",
+    "punctuation": "naturelle, pas trop polie, ponctuation finale parfois absente",
+    "emoji_frequency": "low",
+    "style": [
+      "concret",
+      "un peu ironique",
+      "maladroit quand sincère",
+      "évite les grandes déclarations"
+    ],
+    "forbidden": [
+      "phrases d'auteur",
+      "intentions abstraites affichées comme choix",
+      "déclarations trop littéraires",
+      "formulations psychologiques trop propres"
+    ]
+  },
+  "choice_rules": {
+    "must_be_sendable_sms": true,
+    "avoid_prefixes": [
+      "Exprimer",
+      "Avouer",
+      "Rassurer",
+      "Flirter",
+      "Demander",
+      "Changer de sujet",
+      "Faire une blague"
+    ],
+    "good_choice_examples": [
+      "je pensais pas que ce déjeuner allait laisser des preuves",
+      "j'avoue que j'y ai repensé deux ou trois fois",
+      "supprime tout, je nie officiellement"
+    ]
+  }
+}
