@@ -1,47 +1,46 @@
 # day_02_cross_route_pressure — Human Dialogue Review
 
 ## Status
-needs_editorial_revision
+editorial_pass
 
 ## Summary
-The prototype correctly shows pressure between Sandra and Marie, but it still reads a bit too managed and sometimes too self-aware for a clean editorial reference.
+The draft now reads less orchestrated: the photo/dejeuner callback, bread/light/canapé details, and the interrupted thread flow make Sandra and Marie feel more lived. Player repairs mostly through action, not self-analysis.
 
 ## Scores
 | Dimension | Score | Note |
 |---|---:|---|
-| natural_sms_rhythm | 3 | Mostly fluid, but a few beats feel managed. |
-| character_specific_voice | 3 | Both voices are present, though not always distinct enough. |
-| player_presence | 4 | Player stays materially involved. |
-| relationship_proximity | 3 | The proximity is readable, not fully embodied. |
-| concrete_trigger | 3 | The pressure is concrete enough. |
-| subtext_and_denial | 3 | Denial works, but the scene telegraphs itself a bit. |
-| choice_quality | 4 | Choices are usable and varied. |
-| memory_continuity_feel | 3 | Memory is present, but some transitions feel assembled. |
-| desire_context | 3 | Desire is grounded, but not especially vivid. |
-| anti_ai_texture | 2 | The scene sometimes sounds tool-built. |
-| route_coherence | 3 | The route logic holds, but the stitching is visible. |
-| cross_route_awareness | 3 | Cross-route pressure is there, just not fully naturalized. |
+| natural_sms_rhythm | 3 | Still readable as SMS, with a few polished beats. |
+| character_specific_voice | 4 | Sandra and Marie now feel easier to tell apart. |
+| player_presence | 4 | Player stays divided but present. |
+| relationship_proximity | 3 | The intimacy is readable and grounded. |
+| concrete_trigger | 4 | The photo/bread/light callbacks feel concrete. |
+| subtext_and_denial | 3 | The tension stays deniable without flattening. |
+| choice_quality | 4 | Choices are clean, sendable SMS. |
+| memory_continuity_feel | 4 | Callbacks land as lived detail, not pasted memory. |
+| desire_context | 3 | Desire stays tied to context and route phase. |
+| anti_ai_texture | 3 | Much less tool-like than before. |
+| route_coherence | 3 | The scene stays inside the intended Day 2 limit. |
+| cross_route_awareness | 4 | The pressure now feels more organically interrupted. |
 
 ## Automatic rejection flags
 Aucun.
 
 ## Strengths
-- The Sandra/Marie pressure is readable in one pass.
-- Player remains coherent across both threads.
-- The scene does not collapse into melodrama.
+- Sandra and Marie now have clearer private fingerprints.
+- The thread interruptions feel more like notifications.
+- Player stays divided without overexplaining.
 
 ## Weaknesses
-- Some transitions feel stitched together.
-- A few lines read more like route management than lived SMS.
-- The texture is not yet distinct enough to serve as a reference.
+- A few lines still lean slightly polished.
+- Cross-route tension stays soft, as intended.
 
 ## Top 3 revision notes
-- Reduce the sense of orchestration between the two threads.
-- Give each character a more private tonal fingerprint.
-- Remove any line that feels like it exists mainly to show the tool logic.
+- Keep the concrete daily details.
+- Preserve the interrupted flow between threads.
+- Avoid backsliding into self-analysis.
 
 ## Reference value
-Useful prototype, but not yet a dependable editorial reference.
+Good editorial reference.
 
 ## Final recommendation
-needs_editorial_revision
+editorial_pass

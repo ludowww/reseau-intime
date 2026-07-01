@@ -18,8 +18,8 @@
   "declared_max_cross_route_intensity": 2,
   "declared_max_desire_intensity": 3,
   "desire_intensity": 2,
-  "description": "Prototype QA de pression croisée douce entre Sandra et Marie, avec photo/souvenir en filigrane, complicité, humour/esquive, ambiguïté déniable, interdit doux et mémoire de sortie sans confrontation.",
-  "summary": "Sandra relance avec un détail complice; Player répond plus vivant; Marie ramène le quotidien du pain et du canapé; Player décroche un peu puis répare; Sandra revient en ambiguïté douce; la scène se clôt sur un aftertaste calme, sans crise.",
+  "description": "Prototype QA de pression croisée douce entre Sandra et Marie, avec photo/souvenir d’un déjeuner, complicité, humour/esquive, ambiguïté déniable, interdit doux et mémoire de sortie sans confrontation.",
+  "summary": "Sandra relance avec une photo et un vieux ton de déjeuner; Marie ramène le pain, la lumière et le canapé; Player coupe, revient, puis répond par petits gestes; la pression reste lisible sans crise.",
   "memory_in": [
     "day_01_sandra_photo_trigger",
     "day_02_sandra_callback",
@@ -34,7 +34,7 @@
     {
       "id": "m_001",
       "sender": "Sandra",
-      "text": "j’ai repensé à ton air de l’autre jour."
+      "text": "j’ai repensé à la photo du déjeuner. à ton air juste après."
     },
     {
       "id": "m_002",
@@ -44,7 +44,7 @@
     {
       "id": "m_003",
       "sender": "Sandra",
-      "text": "non. banal, c’est pas toi quand tu t’absentes à moitié."
+      "text": "non. banal, c’est pas le mot. tu faisais semblant d’être là."
     },
     {
       "id": "m_004",
@@ -54,7 +54,7 @@
     {
       "id": "m_005",
       "sender": "Sandra",
-      "text": "je dis ça sans conséquence, évidemment."
+      "text": "je dis ça sans conséquence, bien sûr."
     },
     {
       "id": "m_006",
@@ -64,7 +64,77 @@
     {
       "id": "m_007",
       "sender": "Sandra",
-      "text": "je sais."
+      "text": "je sais. c’est toujours là que je dérape."
+    },
+    {
+      "id": "m_013",
+      "sender": "Marie",
+      "text": "j’ai acheté du pain."
+    },
+    {
+      "id": "m_014",
+      "sender": "Marie",
+      "text": "et j’ai laissé la lumière du salon pour toi."
+    },
+    {
+      "id": "m_015",
+      "sender": "Player",
+      "text": "j’étais en train de fermer la porte. je vois ton message maintenant."
+    },
+    {
+      "id": "m_016",
+      "sender": "Marie",
+      "text": "je m’en doutais."
+    },
+    {
+      "id": "m_017",
+      "sender": "Marie",
+      "text": "tu réponds par morceaux quand tu fais mille choses à la fois."
+    },
+    {
+      "id": "m_018",
+      "sender": "Player",
+      "text": "pardon. j’étais dispersé."
+    },
+    {
+      "id": "m_019",
+      "sender": "Marie",
+      "text": "je voulais savoir si tu rentrais avant que ça refroidisse."
+    },
+    {
+      "id": "m_020",
+      "sender": "Player",
+      "text": "je rentre, oui."
+    },
+    {
+      "id": "m_021",
+      "sender": "Marie",
+      "text": "mieux."
+    },
+    {
+      "id": "m_022",
+      "sender": "Marie",
+      "text": "j’aime quand tu reviens sans faire de bruit."
+    },
+    {
+      "id": "m_023",
+      "sender": "Player",
+      "text": "je peux faire mieux que des bouts de phrase."
+    },
+    {
+      "id": "m_024",
+      "sender": "Marie",
+      "text": "je te le demande sans te courir après."
+    },
+    {
+      "id": "m_025",
+      "sender": "Player",
+      "text": "et ça me fait du bien."
+    },
+    {
+      "id": "m_026",
+      "sender": "Marie",
+      "text": "alors viens avec ça."
     },
     {
       "id": "m_008",
@@ -92,79 +162,9 @@
       "text": "et pourtant tu reviens toujours dedans."
     },
     {
-      "id": "m_013",
-      "sender": "Marie",
-      "text": "j’ai acheté du pain."
-    },
-    {
-      "id": "m_014",
-      "sender": "Marie",
-      "text": "et le canapé a gardé ta place, malgré ses protestations."
-    },
-    {
-      "id": "m_015",
-      "sender": "Player",
-      "text": "j’ai vu ton message un peu tard."
-    },
-    {
-      "id": "m_016",
-      "sender": "Marie",
-      "text": "je m’en doutais."
-    },
-    {
-      "id": "m_017",
-      "sender": "Marie",
-      "text": "tu réponds en pointillés quand tu es ailleurs."
-    },
-    {
-      "id": "m_018",
-      "sender": "Player",
-      "text": "pardon. j’étais dispersé."
-    },
-    {
-      "id": "m_019",
-      "sender": "Marie",
-      "text": "pas grave. je voulais juste savoir si tu rentrais avant que le pain sèche."
-    },
-    {
-      "id": "m_020",
-      "sender": "Player",
-      "text": "je rentre, oui."
-    },
-    {
-      "id": "m_021",
-      "sender": "Marie",
-      "text": "mieux."
-    },
-    {
-      "id": "m_022",
-      "sender": "Marie",
-      "text": "j’aime quand tu réponds pour de vrai."
-    },
-    {
-      "id": "m_023",
-      "sender": "Player",
-      "text": "je peux faire mieux que des bouts de phrase."
-    },
-    {
-      "id": "m_024",
-      "sender": "Marie",
-      "text": "je sais. je te le demande sans drame."
-    },
-    {
-      "id": "m_025",
-      "sender": "Player",
-      "text": "et ça me fait du bien."
-    },
-    {
-      "id": "m_026",
-      "sender": "Marie",
-      "text": "alors viens avec ça."
-    },
-    {
       "id": "m_027",
       "sender": "Sandra",
-      "text": "c’est drôle, j’avais oublié ce ton-là chez toi."
+      "text": "c’est drôle, j’ai encore ton ton du déjeuner en tête."
     },
     {
       "id": "m_028",
@@ -174,7 +174,7 @@
     {
       "id": "m_029",
       "sender": "Sandra",
-      "text": "plus libre, peut-être. plus vivant, sûrement."
+      "text": "plus libre, peut-être. plus léger, sûrement."
     },
     {
       "id": "m_030",
@@ -184,17 +184,17 @@
     {
       "id": "m_031",
       "sender": "Sandra",
-      "text": "je vise doucement."
+      "text": "je vise doucement, pas toujours juste."
     },
     {
       "id": "m_032",
       "sender": "Player",
-      "text": "c’est ça le problème."
+      "text": "je te suis mal, là."
     },
     {
       "id": "m_033",
       "sender": "Sandra",
-      "text": "tu préfères quand c’est frontal ?"
+      "text": "tu préfères que je te laisse respirer alors ?"
     },
     {
       "id": "m_034",
@@ -204,27 +204,27 @@
     {
       "id": "m_035",
       "sender": "Sandra",
-      "text": "bonne réponse."
+      "text": "bonne réponse. je retire un peu."
     },
     {
       "id": "m_036",
       "sender": "Player",
-      "text": "je fais de mon mieux pour rester cohérent."
+      "text": "je pose le téléphone deux minutes."
     },
     {
       "id": "m_037",
       "sender": "Sandra",
-      "text": "ça t’arrive rarement avec autant d’effort."
+      "text": "ça t’arrive rarement avec autant de soin."
     },
     {
       "id": "m_038",
       "sender": "Player",
-      "text": "tu es dure."
+      "text": "tu me prends de court."
     },
     {
       "id": "m_039",
       "sender": "Sandra",
-      "text": "je suis prudente."
+      "text": "je suis prudente, pas impeccable."
     },
     {
       "id": "m_040",
@@ -239,12 +239,12 @@
     {
       "id": "m_042",
       "sender": "Marie",
-      "text": "bien. j’aime quand c’est clair."
+      "text": "bien. j’aime quand tu me préviens."
     },
     {
       "id": "m_043",
       "sender": "Player",
-      "text": "j’essaie d’être plus clair avec toi."
+      "text": "j’essaie d’être là, pas juste de répondre."
     },
     {
       "id": "m_044",
@@ -254,7 +254,7 @@
     {
       "id": "m_045",
       "sender": "Marie",
-      "text": "et je sens aussi quand tu reviens en partie seulement."
+      "text": "je le sens aussi quand tu reviens en demi-teinte."
     },
     {
       "id": "m_046",
@@ -279,7 +279,7 @@
     {
       "id": "m_050",
       "sender": "Sandra",
-      "text": "je te laisse la soirée, alors."
+      "text": "je te laisse la soirée, alors. je te fais un peu d’air."
     },
     {
       "id": "m_051",
@@ -299,7 +299,7 @@
     {
       "id": "m_054",
       "sender": "Sandra",
-      "text": "ça me va si tu restes honnête sans tout dire."
+      "text": "ça me va si tu restes honnête sans tout ranger."
     },
     {
       "id": "m_055",
@@ -354,7 +354,7 @@
     {
       "id": "m_065",
       "sender": "Sandra",
-      "text": "bonne soirée, Player."
+      "text": "bonne soirée, Player. je te laisse souffler."
     },
     {
       "id": "m_066",
@@ -365,7 +365,7 @@
   "choices": [
     {
       "id": "choice_001",
-      "text": "pardon, j’étais dispersé. je suis là, vraiment.",
+      "text": "pardon. je pose le téléphone et je monte.",
       "choice_type": "repair_presence_with_marie",
       "state_delta": {
         "presence_marie": 1,
@@ -375,7 +375,7 @@
     },
     {
       "id": "choice_002",
-      "text": "tu ne me déranges pas. c’est peut-être ça le problème.",
+      "text": "tu ne me déranges pas. je réponds juste entre deux choses.",
       "choice_type": "keep_sandra_ambiguity_soft",
       "state_delta": {
         "ambiguity_sandra": 1,
@@ -385,7 +385,7 @@
     },
     {
       "id": "choice_003",
-      "text": "je crois que je réponds un peu trop vite quand tu reviens.",
+      "text": "je t’ai lue trop vite. je reviens après.",
       "choice_type": "honest_but_deniable",
       "state_delta": {
         "ambiguity_sandra": 1,
@@ -395,7 +395,7 @@
     },
     {
       "id": "choice_004",
-      "text": "je rentre. et je te dois une vraie présence, pas trois messages.",
+      "text": "je rentre. je pose le téléphone et j’arrive.",
       "choice_type": "domestic_grounding",
       "state_delta": {
         "presence_marie": 2,
