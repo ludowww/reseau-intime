@@ -1,0 +1,21 @@
+{
+  "player_message_ratio_min": 0.35,
+  "max_same_speaker_streak": 6,
+  "max_non_player_streak": 7,
+  "recommended_max_message_chars": 180,
+  "hard_max_message_chars": 260,
+  "choice_max_chars": 160,
+  "sandra_day_1_max_intensity": 3,
+  "required_sandra_day_1_elements": [
+    "photo_pretext",
+    "shared_memory",
+    "playful_ambiguity",
+    "sandra_deflection",
+    "future_opening",
+    "memory_out"
+  ],
+  "required_sandra_day_1_memories": [
+    "day_01_sandra_reconnection",
+    "day_01_sandra_photo_shared"
+  ]
+}
