@@ -7,7 +7,13 @@
   "thread": {
     "id": "thread_group_friends",
     "type": "group",
-    "participants": ["ludo", "marie", "mathilde", "pauline", "nico"],
+    "participants": [
+      "ludo",
+      "marie",
+      "mathilde",
+      "pauline",
+      "nico"
+    ],
     "display_name": "Groupe amis",
     "profile_content_id": "photo_group_last_party_placeholder"
   },
@@ -88,13 +94,15 @@
       "choices": [
         {
           "id": "choice_group_001_humor",
-          "text": "Répondre publiquement avec humour",
+          "text": "Je réponds publiquement avec humour.",
           "tone": "public_humor",
           "outgoing_text": "Je viens uniquement pour surveiller la playlist et les gens pas subtils.",
           "effects": {
             "social_pressure": 1
           },
-          "sets_flags": ["answered_group_with_humor_day1"],
+          "sets_flags": [
+            "answered_group_with_humor_day1"
+          ],
           "next_messages": [
             {
               "id": "msg_group_011_humor_nico",
@@ -123,7 +131,9 @@
           "effects": {
             "pauline_risk_score": 1
           },
-          "sets_flags": ["liked_pauline_party_invite_day1"],
+          "sets_flags": [
+            "liked_pauline_party_invite_day1"
+          ],
           "next_messages": [
             {
               "id": "msg_group_011_like_pauline",
@@ -141,10 +151,12 @@
         },
         {
           "id": "choice_group_001_silent",
-          "text": "Ne pas répondre",
+          "text": "Je ne réponds pas.",
           "tone": "silent",
           "effects": {},
-          "sets_flags": ["ignored_group_party_invite_day1"],
+          "sets_flags": [
+            "ignored_group_party_invite_day1"
+          ],
           "next_messages": [
             {
               "id": "msg_group_011_silent_mathilde",
@@ -189,7 +201,17 @@
       ]
     }
   ],
-  "routes_nourished": ["pauline", "nico_marie", "mathilde", "social_pressure"],
-  "unlocks_content": ["profile_pauline_placeholder", "profile_nico_placeholder", "profile_mathilde_placeholder", "photo_group_last_party_placeholder"],
+  "routes_nourished": [
+    "pauline",
+    "nico_marie",
+    "mathilde",
+    "social_pressure"
+  ],
+  "unlocks_content": [
+    "profile_pauline_placeholder",
+    "profile_nico_placeholder",
+    "profile_mathilde_placeholder",
+    "photo_group_last_party_placeholder"
+  ],
   "debug_notes": "Conversation allongée pour ancrer le groupe, afficher une première photo sociale et préparer samedi sans conséquence forte."
 }

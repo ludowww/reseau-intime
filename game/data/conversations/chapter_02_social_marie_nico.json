@@ -7,7 +7,13 @@
   "thread": {
     "id": "social_feed_day2_afternoon",
     "type": "social_feed",
-    "participants": ["ludo", "marie", "nico", "mathilde", "pauline"],
+    "participants": [
+      "ludo",
+      "marie",
+      "nico",
+      "mathilde",
+      "pauline"
+    ],
     "display_name": "Réseau social"
   },
   "segments": [
@@ -26,7 +32,12 @@
           "time_label": "15:31",
           "text": "Pause imprévue avec Mathilde. Elle avait évidemment 'juste cinq minutes'.",
           "content_id": "photo_group_last_party_placeholder",
-          "tags": ["marie", "mathilde", "social", "day2"]
+          "tags": [
+            "marie",
+            "mathilde",
+            "social",
+            "day2"
+          ]
         },
         {
           "id": "reaction_nico_001",
@@ -63,7 +74,9 @@
             "ludo_jealousy": 1,
             "nico_surveillance_score": 1
           },
-          "sets_flags": ["checked_marie_nico_story_day2"],
+          "sets_flags": [
+            "checked_marie_nico_story_day2"
+          ],
           "next_items": [
             {
               "id": "private_thought_social_001",
@@ -80,14 +93,16 @@
         },
         {
           "id": "choice_c02_social_001_reply_marie",
-          "text": "Répondre à Marie plutôt que surveiller Nico",
+          "text": "Je réponds à Marie. Nico attendra.",
           "tone": "couple_present",
           "outgoing_text": "Tu avais l’air de survivre à Mathilde, ça mérite respect.",
           "effects": {
             "marie.trust": 1,
             "marie_attention_score": 1
           },
-          "sets_flags": ["replied_to_marie_story_day2"],
+          "sets_flags": [
+            "replied_to_marie_story_day2"
+          ],
           "next_items": [
             {
               "id": "reply_marie_social_001",
@@ -107,10 +122,12 @@
         },
         {
           "id": "choice_c02_social_001_ignore",
-          "text": "Ignorer la story",
+          "text": "J’ignore la story.",
           "tone": "ignore",
           "effects": {},
-          "sets_flags": ["ignored_marie_story_day2"],
+          "sets_flags": [
+            "ignored_marie_story_day2"
+          ],
           "next_items": [
             {
               "id": "private_thought_social_002",
@@ -134,8 +151,16 @@
           "text": "Mathilde a publié : 'On rentre avant que Marie m’adopte officiellement.'"
         }
       ],
-      "routes_nourished": ["nico_marie", "marie", "mathilde_seed", "pauline_seed"],
-      "required_reveals_delivered": ["nico_interested_in_marie", "marie_has_social_life_without_ludo"]
+      "routes_nourished": [
+        "nico_marie",
+        "marie",
+        "mathilde_seed",
+        "pauline_seed"
+      ],
+      "required_reveals_delivered": [
+        "nico_interested_in_marie",
+        "marie_has_social_life_without_ludo"
+      ]
     }
   ],
   "debug_notes": "Scène sociale sans conversation privée obligatoire. Elle doit introduire la surveillance Nico / Marie et montrer que Marie a une vie sociale hors de Ludo."

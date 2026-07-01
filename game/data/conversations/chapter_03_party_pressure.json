@@ -55,14 +55,16 @@
       "choices": [
         {
           "id": "choice_c03_pressure_public_marie",
-          "text": "Répondre publiquement pour rejoindre Marie",
+          "text": "Je réponds publiquement pour rejoindre Marie.",
           "tone": "couple_public_rejoin",
           "outgoing_text": "Je confirme. Mais je garde le droit de critiquer deux choix sur trois.",
           "effects": {
             "marie.trust": 1,
             "marie_attention_score": 1
           },
-          "sets_flags": ["rejoined_marie_publicly_party_day3"],
+          "sets_flags": [
+            "rejoined_marie_publicly_party_day3"
+          ],
           "next_messages": [
             {
               "id": "msg_c03_pressure_public_marie_reply",
@@ -75,7 +77,7 @@
         },
         {
           "id": "choice_c03_pressure_answer_pauline",
-          "text": "Répondre à Pauline en privé",
+          "text": "Je réponds à Pauline en privé.",
           "tone": "private_risk",
           "outgoing_text": "Tu regardes beaucoup mon écran pour quelqu’un qui dit de ne pas réagir.",
           "effects": {
@@ -84,7 +86,9 @@
             "pauline_risk_score": 1,
             "lie_score": 1
           },
-          "sets_flags": ["answered_pauline_pressure_private_day3"],
+          "sets_flags": [
+            "answered_pauline_pressure_private_day3"
+          ],
           "next_messages": [
             {
               "id": "msg_c03_pauline_pressure_002",
@@ -97,7 +101,7 @@
         },
         {
           "id": "choice_c03_pressure_answer_mathilde",
-          "text": "Répondre à Mathilde en privé",
+          "text": "Je réponds à Mathilde en privé.",
           "tone": "private_warning",
           "outgoing_text": "Tu t’inquiètes pour moi ou pour elle ?",
           "effects": {
@@ -105,7 +109,9 @@
             "mathilde.loyalty": 1,
             "mathilde_attention_score": 1
           },
-          "sets_flags": ["asked_mathilde_who_she_protects_day3"],
+          "sets_flags": [
+            "asked_mathilde_who_she_protects_day3"
+          ],
           "next_messages": [
             {
               "id": "msg_c03_mathilde_pressure_002",
@@ -118,14 +124,16 @@
         },
         {
           "id": "choice_c03_pressure_watch_nico",
-          "text": "Ne pas écrire, surveiller Nico et Marie",
+          "text": "Je n’écris pas. Je surveille Nico et Marie.",
           "tone": "silent_jealousy",
           "effects": {
             "ludo_jealousy": 2,
             "nico_surveillance_score": 1,
             "marie_neglect_score": 1
           },
-          "sets_flags": ["watched_nico_marie_instead_of_replying_day3"],
+          "sets_flags": [
+            "watched_nico_marie_instead_of_replying_day3"
+          ],
           "next_messages": [
             {
               "id": "inner_c03_pressure_watch",
@@ -136,8 +144,18 @@
           ]
         }
       ],
-      "routes_nourished": ["marie", "pauline", "mathilde", "nico_marie"],
-      "required_events_delivered": ["party_pressure_rises", "marie_notices_phone", "nico_near_marie", "pauline_observes_ludo"]
+      "routes_nourished": [
+        "marie",
+        "pauline",
+        "mathilde",
+        "nico_marie"
+      ],
+      "required_events_delivered": [
+        "party_pressure_rises",
+        "marie_notices_phone",
+        "nico_near_marie",
+        "pauline_observes_ludo"
+      ]
     }
   ],
   "debug_notes": "Milieu de soirée : une seule scène doit pouvoir alimenter plusieurs routes selon la priorité, mais rester lisible."

@@ -32,13 +32,13 @@
           "id": "msg_c05_mathilde_002",
           "sender": "mathilde",
           "time_label": "10:06",
-          "text": "Très importante."
+          "text": "Vraiment importante."
         },
         {
           "id": "msg_c05_mathilde_003",
           "sender": "mathilde",
           "time_label": "10:06",
-          "text": "Niveau tribunal domestique."
+          "text": "On est au tribunal domestique, là."
         },
         {
           "id": "msg_c05_mathilde_004",
@@ -62,13 +62,13 @@
           "id": "msg_c05_mathilde_007",
           "sender": "mathilde",
           "time_label": "10:07",
-          "text": "C. typiquement toi 🙃👀"
+          "text": "C. toi, clairement 🙃👀"
         },
         {
           "id": "msg_c05_mathilde_008",
           "sender": "mathilde",
           "time_label": "10:08",
-          "text": "J’ai une tasse."
+          "text": "J’ai une tasse, oui."
         },
         {
           "id": "msg_c05_mathilde_009",
@@ -80,7 +80,7 @@
           "id": "msg_c05_mathilde_010",
           "sender": "mathilde",
           "time_label": "10:08",
-          "text": "Et ton aura."
+          "text": "Et ton aura, évidemment."
         },
         {
           "id": "msg_c05_mathilde_011",
@@ -135,7 +135,7 @@
         },
         {
           "id": "choice_c05_mathilde_admit",
-          "text": "Admettre qu’il y avait bien une tasse.",
+          "text": "Oui, il y avait bien une tasse. Peut-être.",
           "tone": "honest",
           "effects": {
             "mathilde.loyalty": 1
@@ -148,7 +148,7 @@
               "id": "msg_player_c05_mathilde_admit_001",
               "sender": "ludo",
               "time_label": "10:06",
-              "text": "Admettre qu’il y avait bien une tasse."
+              "text": "Oui, il y avait bien une tasse. Peut-être."
             },
             {
               "id": "msg_c05_mathilde_admit_001",
@@ -160,7 +160,7 @@
         },
         {
           "id": "choice_c05_mathilde_evade",
-          "text": "Éviter le sujet.",
+          "text": "Je vais très lâchement éviter ce sujet.",
           "tone": "avoidant",
           "effects": {
             "lie_score": 1
@@ -173,7 +173,7 @@
               "id": "msg_player_c05_mathilde_evade_001",
               "sender": "ludo",
               "time_label": "10:06",
-              "text": "Éviter le sujet."
+              "text": "Je vais très lâchement éviter ce sujet."
             },
             {
               "id": "msg_c05_mathilde_evade_001",

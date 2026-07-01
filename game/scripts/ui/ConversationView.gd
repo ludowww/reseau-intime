@@ -224,6 +224,7 @@ func _show_choices_for_segment(data: Dictionary, show_empty_hint := true, persis
 		active_state["choice_was_applied"] = false
 	_clear_node(choice_area)
 	var choices := _collect_choices(data)
+	# Keep even a single Player reply visible and clickable; do not auto-advance.
 	if choices.is_empty():
 		if show_empty_hint:
 			_add_choice_hint("Aucun choix direct dans cette conversation.")

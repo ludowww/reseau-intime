@@ -55,7 +55,9 @@
             "sandra.attachment": 1,
             "marie_neglect_score": 1
           },
-          "sets_flags": ["opened_sandra_first_party_day3"],
+          "sets_flags": [
+            "opened_sandra_first_party_day3"
+          ],
           "opens_branch": "branch_sandra_remote"
         },
         {
@@ -66,7 +68,9 @@
             "pauline.interest": 1,
             "pauline.control": 1
           },
-          "sets_flags": ["opened_pauline_first_party_day3"],
+          "sets_flags": [
+            "opened_pauline_first_party_day3"
+          ],
           "opens_branch": "branch_pauline_private_test"
         },
         {
@@ -77,7 +81,9 @@
             "mathilde.desire": 1,
             "marie.lucidity": 1
           },
-          "sets_flags": ["opened_mathilde_first_party_day3"],
+          "sets_flags": [
+            "opened_mathilde_first_party_day3"
+          ],
           "opens_branch": "branch_mathilde_observes"
         },
         {
@@ -87,7 +93,9 @@
             "ludo_jealousy": 2,
             "nico_surveillance_score": 1
           },
-          "sets_flags": ["opened_nico_marie_story_first_party_day3"],
+          "sets_flags": [
+            "opened_nico_marie_story_first_party_day3"
+          ],
           "opens_branch": "branch_nico_marie_story"
         },
         {
@@ -97,7 +105,9 @@
             "marie.trust": 2,
             "truth_tendency": 1
           },
-          "sets_flags": ["put_phone_down_for_marie_party_day3"],
+          "sets_flags": [
+            "put_phone_down_for_marie_party_day3"
+          ],
           "opens_branch": "branch_marie_present"
         }
       ],
@@ -126,7 +136,9 @@
                 "sandra.attachment": 2,
                 "lie_score": 1
               },
-              "sets_flags": ["answered_sandra_during_party_day3"],
+              "sets_flags": [
+                "answered_sandra_during_party_day3"
+              ],
               "next_messages": [
                 {
                   "id": "msg_c03_sandra_remote_003_answer",
@@ -143,7 +155,9 @@
                 "truth_tendency": 1,
                 "sandra.exposure": 1
               },
-              "sets_flags": ["delayed_sandra_for_marie_party_day3"],
+              "sets_flags": [
+                "delayed_sandra_for_marie_party_day3"
+              ],
               "next_messages": [
                 {
                   "id": "msg_c03_sandra_remote_003_later",
@@ -179,7 +193,9 @@
                 "pauline.interest": 1,
                 "pauline.control": 1
               },
-              "sets_flags": ["asked_pauline_game_party_day3"],
+              "sets_flags": [
+                "asked_pauline_game_party_day3"
+              ],
               "next_messages": [
                 {
                   "id": "msg_c03_pauline_private_003_ask",
@@ -196,7 +212,9 @@
                 "lie_score": 1,
                 "pauline.control": 1
               },
-              "sets_flags": ["minimized_opening_pauline_party_day3"],
+              "sets_flags": [
+                "minimized_opening_pauline_party_day3"
+              ],
               "next_messages": [
                 {
                   "id": "msg_c03_pauline_private_003_minimize",
@@ -232,7 +250,9 @@
                 "mathilde.desire": 1,
                 "mathilde_attention_score": 1
               },
-              "sets_flags": ["teased_mathilde_observing_phone_day3"],
+              "sets_flags": [
+                "teased_mathilde_observing_phone_day3"
+              ],
               "next_messages": [
                 {
                   "id": "msg_c03_mathilde_observe_003_tease",
@@ -249,7 +269,9 @@
                 "truth_tendency": 1,
                 "mathilde.loyalty": 1
               },
-              "sets_flags": ["put_phone_away_after_mathilde_warning_day3"],
+              "sets_flags": [
+                "put_phone_away_after_mathilde_warning_day3"
+              ],
               "next_messages": [
                 {
                   "id": "msg_c03_mathilde_observe_003_safe",
@@ -270,7 +292,9 @@
               "author": "nico",
               "time_label": "21:14",
               "text": "La seule personne capable de sauver cette playlist.",
-              "tagged": ["marie"],
+              "tagged": [
+                "marie"
+              ],
               "content_id": "photo_group_last_party_placeholder"
             },
             {
@@ -289,16 +313,20 @@
                 "ludo_jealousy": 1,
                 "nico.place_near_marie": 1
               },
-              "sets_flags": ["watched_nico_marie_story_party_day3"]
+              "sets_flags": [
+                "watched_nico_marie_story_party_day3"
+              ]
             },
             {
               "id": "choice_c03_story_reply_marie",
-              "text": "Répondre à Marie en privé",
+              "text": "Je réponds à Marie en privé.",
               "effects": {
                 "marie.trust": 1,
                 "ludo_jealousy": 1
               },
-              "sets_flags": ["replied_marie_after_nico_story_day3"]
+              "sets_flags": [
+                "replied_marie_after_nico_story_day3"
+              ]
             }
           ]
         },
@@ -325,13 +353,24 @@
               "effects": {
                 "marie.trust": 2
               },
-              "sets_flags": ["chose_marie_during_crossed_notifications_day3"]
+              "sets_flags": [
+                "chose_marie_during_crossed_notifications_day3"
+              ]
             }
           ]
         }
       },
-      "routes_nourished": ["marie", "mathilde", "sandra", "pauline", "nico_marie"],
-      "required_events_delivered": ["crossed_notifications_priority_choice", "player_priority_emerges"]
+      "routes_nourished": [
+        "marie",
+        "mathilde",
+        "sandra",
+        "pauline",
+        "nico_marie"
+      ],
+      "required_events_delivered": [
+        "crossed_notifications_priority_choice",
+        "player_priority_emerges"
+      ]
     }
   ],
   "debug_notes": "Cœur du pivot : le choix n’est pas seulement la réponse, mais la priorité d’ouverture. Aucune route finale n’est verrouillée ici, mais le debug doit montrer une tendance probable."

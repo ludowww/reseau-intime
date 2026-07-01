@@ -7,7 +7,10 @@
   "thread": {
     "id": "thread_mathilde_private",
     "type": "private",
-    "participants": ["ludo", "mathilde"],
+    "participants": [
+      "ludo",
+      "mathilde"
+    ],
     "display_name": "Mathilde",
     "profile_content_id": "profile_mathilde_placeholder"
   },
@@ -60,7 +63,9 @@
             "mathilde.desire": 1,
             "mathilde_attention_score": 1
           },
-          "sets_flags": ["opened_for_mathilde_warm_day2"],
+          "sets_flags": [
+            "opened_for_mathilde_warm_day2"
+          ],
           "next_messages": [
             {
               "id": "msg_c02_mathilde_006_soft",
@@ -85,7 +90,9 @@
             "lie_score": 1,
             "mathilde_attention_score": 1
           },
-          "sets_flags": ["made_ambiguous_home_joke_mathilde_day2"],
+          "sets_flags": [
+            "made_ambiguous_home_joke_mathilde_day2"
+          ],
           "next_messages": [
             {
               "id": "msg_c02_mathilde_006_ambiguous",
@@ -109,7 +116,9 @@
             "mathilde.loyalty": 1,
             "truth_tendency": 1
           },
-          "sets_flags": ["kept_mathilde_boundary_day2"],
+          "sets_flags": [
+            "kept_mathilde_boundary_day2"
+          ],
           "next_messages": [
             {
               "id": "msg_c02_mathilde_006_boundary",
@@ -152,12 +161,24 @@
           "character": "marie",
           "after_message_id": "msg_c02_mathilde_010_common",
           "effect": "Mathilde cesse d’écrire en privé pendant quelques minutes.",
-          "sets_flags": ["marie_interrupted_mathilde_private_day2"]
+          "sets_flags": [
+            "marie_interrupted_mathilde_private_day2"
+          ]
         }
       ],
-      "routes_nourished": ["mathilde", "marie", "secret_affair_seed"],
-      "unlocks_content": ["profile_mathilde_placeholder", "photo_mathilde_home_tier1_placeholder"],
-      "required_reveals_delivered": ["mathilde_identity_family_by_marriage", "mathilde_loyalty_to_marie"]
+      "routes_nourished": [
+        "mathilde",
+        "marie",
+        "secret_affair_seed"
+      ],
+      "unlocks_content": [
+        "profile_mathilde_placeholder",
+        "photo_mathilde_home_tier1_placeholder"
+      ],
+      "required_reveals_delivered": [
+        "mathilde_identity_family_by_marriage",
+        "mathilde_loyalty_to_marie"
+      ]
     },
     {
       "conversation_segment_id": "c02_mathilde_after_interruption",
@@ -196,7 +217,9 @@
           "effects": {
             "mathilde_attention_score": 1
           },
-          "sets_flags": ["favorited_mathilde_home_photo_day2"],
+          "sets_flags": [
+            "favorited_mathilde_home_photo_day2"
+          ],
           "next_messages": [
             {
               "id": "msg_c02_mathilde_014_favorite",
@@ -208,12 +231,14 @@
         },
         {
           "id": "choice_c02_mathilde_002_tease",
-          "text": "Répondre : 'Tu travailles mieux quand tu fais semblant de râler.'",
+          "text": "Je réponds : « Tu travailles mieux quand tu fais semblant de râler. »",
           "tone": "tease",
           "effects": {
             "mathilde.desire": 1
           },
-          "sets_flags": ["teased_mathilde_work_photo_day2"],
+          "sets_flags": [
+            "teased_mathilde_work_photo_day2"
+          ],
           "next_messages": [
             {
               "id": "msg_c02_mathilde_014_tease",
@@ -231,10 +256,12 @@
         },
         {
           "id": "choice_c02_mathilde_002_ignore",
-          "text": "Ne pas répondre tout de suite",
+          "text": "Je ne réponds pas tout de suite.",
           "tone": "wait",
           "effects": {},
-          "sets_flags": ["left_mathilde_photo_unanswered_day2"],
+          "sets_flags": [
+            "left_mathilde_photo_unanswered_day2"
+          ],
           "next_messages": [
             {
               "id": "msg_c02_mathilde_014_ignore",
@@ -245,8 +272,13 @@
           ]
         }
       ],
-      "routes_nourished": ["mathilde", "passive_attention"],
-      "required_reveals_delivered": ["mathilde_first_non_explicit_visual_content"]
+      "routes_nourished": [
+        "mathilde",
+        "passive_attention"
+      ],
+      "required_reveals_delivered": [
+        "mathilde_first_non_explicit_visual_content"
+      ]
     }
   ],
   "debug_notes": "Mathilde révèle clairement son lien à Marie, puis devient présence active dans l’appartement. Le risque vient du contexte domestique, pas d’un contenu explicite."

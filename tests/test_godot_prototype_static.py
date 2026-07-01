@@ -219,6 +219,17 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         self.assertNotIn("append_choice_result(choice)", guided_block)
         self.assertNotIn("_select_choice(choice", guided_block.split("button.pressed.connect", 1)[0])
 
+    def test_conversation_view_keeps_single_choice_visible_and_waiting(self):
+        script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
+        choices_block = script[script.index("func _show_choices_for_segment"):script.index("func append_choice_result")]
+        self.assertIn("var is_guided_reply := choices.size() == 1", choices_block)
+        self.assertIn('active_state["waiting_choices"] = true', choices_block)
+        self.assertIn('_add_choice_heading("Réponse" if is_guided_reply else "Choix disponibles")', choices_block)
+        self.assertIn("choice_area.add_child(button)", choices_block)
+        self.assertIn("return true", choices_block)
+        self.assertNotIn("choice_selected.emit(choice)", choices_block)
+        self.assertNotIn("append_choice_result(choice)", choices_block)
+
     def test_conversation_view_uses_wider_bubbles_and_time_metadata_outside_text(self):
         script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
         for expected in [

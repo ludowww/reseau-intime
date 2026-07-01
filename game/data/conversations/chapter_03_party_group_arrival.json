@@ -7,7 +7,13 @@
   "thread": {
     "id": "thread_group_party",
     "type": "group",
-    "participants": ["ludo", "marie", "mathilde", "pauline", "nico"],
+    "participants": [
+      "ludo",
+      "marie",
+      "mathilde",
+      "pauline",
+      "nico"
+    ],
     "display_name": "Soirée chez Pauline",
     "profile_content_id": "photo_group_last_party_placeholder"
   },
@@ -66,14 +72,16 @@
       "choices": [
         {
           "id": "choice_c03_group_001_reply_marie",
-          "text": "Répondre en visant Marie",
+          "text": "Je réponds en visant Marie.",
           "tone": "couple_public",
           "outgoing_text": "Marie sauve souvent les ambiances. J’essaie juste de suivre.",
           "effects": {
             "marie.trust": 1,
             "marie_attention_score": 1
           },
-          "sets_flags": ["publicly_valued_marie_party_day3"],
+          "sets_flags": [
+            "publicly_valued_marie_party_day3"
+          ],
           "next_messages": [
             {
               "id": "msg_c03_group_008_marie",
@@ -91,7 +99,7 @@
         },
         {
           "id": "choice_c03_group_001_reply_nico",
-          "text": "Répondre à Nico",
+          "text": "Je réponds à Nico.",
           "tone": "light_jealousy",
           "outgoing_text": "Doucement, Nico. Tu vas user tes compliments avant le premier verre.",
           "effects": {
@@ -99,7 +107,9 @@
             "nico_surveillance_score": 1,
             "social_pressure": 1
           },
-          "sets_flags": ["teased_nico_about_marie_party_day3"],
+          "sets_flags": [
+            "teased_nico_about_marie_party_day3"
+          ],
           "next_messages": [
             {
               "id": "msg_c03_group_008_nico",
@@ -117,12 +127,14 @@
         },
         {
           "id": "choice_c03_group_001_silent",
-          "text": "Ne pas répondre, lire seulement",
+          "text": "Je lis seulement. Je ne réponds pas.",
           "tone": "silent_observe",
           "effects": {
             "marie_neglect_score": 1
           },
-          "sets_flags": ["silent_group_arrival_party_day3"],
+          "sets_flags": [
+            "silent_group_arrival_party_day3"
+          ],
           "next_messages": [
             {
               "id": "msg_c03_group_008_silent",
@@ -149,8 +161,17 @@
           "content_behavior": "inline_preview"
         }
       ],
-      "routes_nourished": ["marie", "nico_marie", "pauline", "mathilde_seed"],
-      "required_events_delivered": ["pauline_hosts", "nico_public_interest_marie", "mathilde_observes_social_context"]
+      "routes_nourished": [
+        "marie",
+        "nico_marie",
+        "pauline",
+        "mathilde_seed"
+      ],
+      "required_events_delivered": [
+        "pauline_hosts",
+        "nico_public_interest_marie",
+        "mathilde_observes_social_context"
+      ]
     }
   ],
   "debug_notes": "Arrivée chez Pauline : groupe actif, premières piques sociales, aucun piège encore."

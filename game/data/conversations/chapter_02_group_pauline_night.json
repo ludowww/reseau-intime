@@ -7,7 +7,13 @@
   "thread": {
     "id": "thread_group_friends",
     "type": "group",
-    "participants": ["ludo", "marie", "mathilde", "pauline", "nico"],
+    "participants": [
+      "ludo",
+      "marie",
+      "mathilde",
+      "pauline",
+      "nico"
+    ],
     "display_name": "Groupe amis",
     "profile_content_id": "photo_group_last_party_placeholder"
   },
@@ -72,13 +78,15 @@
       "choices": [
         {
           "id": "choice_c02_group_001_playful",
-          "text": "Répondre dans le groupe avec humour",
+          "text": "Je réponds dans le groupe, avec humour.",
           "tone": "public_humor",
           "outgoing_text": "Je refuse cette réputation. Je peux être fatigué très discrètement.",
           "effects": {
             "social_pressure": 1
           },
-          "sets_flags": ["answered_group_night_humor_day2"],
+          "sets_flags": [
+            "answered_group_night_humor_day2"
+          ],
           "next_messages": [
             {
               "id": "msg_c02_group_009_playful_pauline",
@@ -101,7 +109,9 @@
           "effects": {
             "pauline_risk_score": 1
           },
-          "sets_flags": ["liked_pauline_night_prompt_day2"],
+          "sets_flags": [
+            "liked_pauline_night_prompt_day2"
+          ],
           "next_messages": [
             {
               "id": "msg_c02_group_009_like_pauline",
@@ -119,7 +129,7 @@
         },
         {
           "id": "choice_c02_group_001_defend_marie",
-          "text": "Répondre à Nico à propos de Marie",
+          "text": "Je réponds à Nico à propos de Marie.",
           "tone": "protective_light",
           "outgoing_text": "Doucement avec les priorités, Nico.",
           "effects": {
@@ -127,7 +137,9 @@
             "nico_surveillance_score": 1,
             "marie.lucidity": 1
           },
-          "sets_flags": ["answered_nico_about_marie_day2"],
+          "sets_flags": [
+            "answered_nico_about_marie_day2"
+          ],
           "next_messages": [
             {
               "id": "msg_c02_group_009_defend_nico",
@@ -189,16 +201,29 @@
           "sender": "pauline",
           "time_label": "23:34",
           "text": "Tu réponds moins que les autres, mais tu lis tout. C’est noté.",
-          "conditions": ["liked_pauline_night_prompt_day2 OR answered_group_night_humor_day2"],
+          "conditions": [
+            "liked_pauline_night_prompt_day2 OR answered_group_night_humor_day2"
+          ],
           "effects": {
             "pauline.interest": 1,
             "pauline.control": 1
           },
-          "sets_flags": ["pauline_noted_ludo_reads_day2"]
+          "sets_flags": [
+            "pauline_noted_ludo_reads_day2"
+          ]
         }
       ],
-      "routes_nourished": ["pauline", "social_pressure", "nico_marie", "mathilde_seed"],
-      "required_reveals_delivered": ["pauline_controls_social_game", "pauline_prepares_party_pivot", "nico_public_interest_marie"]
+      "routes_nourished": [
+        "pauline",
+        "social_pressure",
+        "nico_marie",
+        "mathilde_seed"
+      ],
+      "required_reveals_delivered": [
+        "pauline_controls_social_game",
+        "pauline_prepares_party_pivot",
+        "nico_public_interest_marie"
+      ]
     }
   ],
   "debug_notes": "Fin du Jour 2 : Pauline prépare explicitement la soirée, Nico continue de viser Marie publiquement, et Pauline peut envoyer un petit privé conditionnel."

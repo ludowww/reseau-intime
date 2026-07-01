@@ -271,7 +271,7 @@
             },
             {
               "id": "choice_c04_nico_ignore",
-              "text": "Ignorer la story",
+              "text": "Je laisse passer la story.",
               "effects": {},
               "sets_flags": [
                 "ignored_nico_marie_story_day4"

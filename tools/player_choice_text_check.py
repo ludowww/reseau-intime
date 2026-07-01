@@ -19,19 +19,33 @@ from pathlib import Path
 from narrative_check_common import choice_label, expand_paths, iter_choices, load_json, print_warnings, relative_path
 
 ENGLISH_DEBUG_TERMS = ("dodge", "say", "tell", "ask", "reply", "answer")
-FRENCH_INSTRUCTION_PREFIXES = ("dire qu", "répondre qu", "demander", "esquiver", "minimiser", "avouer", "faire")
-DIRECT_SPEECH_HINTS = (
+INSTRUCTION_PREFIXES = (
+    "admettre",
+    "éviter",
+    "choisir",
+    "chercher",
+    "dire",
+    "répondre",
+    "demander",
+    "faire",
+    "accepter",
+    "refuser",
+    "avouer",
+    "minimiser",
+    "relancer",
+    "ignorer",
+    "ne pas",
+)
+FIRST_PERSON_PREFIXES = (
+    "je vais",
+    "je crois",
+    "je préfère",
+    "j’ai",
+    "j'ai",
+    "je ne",
     "je ",
-    "j'",
     "j’",
-    "oui",
-    "non",
-    "c'est",
-    "c’est",
-    "moi",
-    "on ",
-    "tu ",
-    "nous",
+    "j'",
 )
 
 
@@ -47,9 +61,10 @@ def choice_issues(label: str) -> list[str]:
         issues.append("contains meta phrase 'mais en français'")
     if any(re.search(rf"\b{re.escape(term)}\b", lowered) for term in ENGLISH_DEBUG_TERMS):
         issues.append("contains English debug wording")
-    if lowered.startswith(FRENCH_INSTRUCTION_PREFIXES):
-        issues.append("sounds like a writing instruction rather than a spoken reply")
-    if not any(lowered.startswith(hint) for hint in DIRECT_SPEECH_HINTS) and lowered.endswith(".") and len(lowered) <= 48:
+    if any(lowered.startswith(prefix) for prefix in INSTRUCTION_PREFIXES):
+        if not any(lowered.startswith(prefix) for prefix in FIRST_PERSON_PREFIXES):
+            issues.append("sounds like a writing instruction rather than a spoken reply")
+    if not any(lowered.startswith(hint) for hint in FIRST_PERSON_PREFIXES) and lowered.endswith(".") and len(lowered) <= 48:
         if lowered.startswith(("faire ", "demander ", "répondre ", "dire ", "avouer ", "minimiser ", "esquiver ")):
             issues.append("may need a more direct first-person rewrite")
     return issues
