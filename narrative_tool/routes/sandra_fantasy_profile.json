@@ -1,0 +1,41 @@
+{
+  "route_id": "sandra",
+  "fantasy_profile": {
+    "core_fantasy": "ancienne complicité qui devient dangereusement intime",
+    "player_emotional_position": "se sentir attendu, remarqué, regretté par quelqu'un qui le connaissait avant sa vie de couple actuelle",
+    "desire_engine": "la tension naît du retour d'une intimité mise en sommeil",
+    "forbidden_charge": "les deux personnages ont une vie de couple, rendant chaque sous-entendu plus dangereux",
+    "primary_arousal_sources": [
+      "reconnexion",
+      "souvenir partagé",
+      "photo à prétexte innocent",
+      "sous-entendus",
+      "réponse trop rapide",
+      "humour comme protection",
+      "interdit doux lié aux vies de couple",
+      "sensation que Sandra se souvient plus qu'elle ne veut l'avouer"
+    ],
+    "should_feel": [
+      "désir progressif",
+      "trouble",
+      "complicité retrouvée",
+      "interdit doux",
+      "envie d'aller un peu plus loin"
+    ],
+    "should_not_feel": [
+      "séduction automatique",
+      "personnage disponible trop vite",
+      "trahison brutale dès le départ",
+      "pornographie mécanique",
+      "route sans conséquence émotionnelle"
+    ]
+  },
+  "required_day_1_elements": [
+    "photo_pretext",
+    "shared_memory",
+    "playful_ambiguity",
+    "sandra_deflection",
+    "future_opening",
+    "memory_out"
+  ]
+}
