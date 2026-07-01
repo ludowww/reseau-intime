@@ -61,7 +61,7 @@
         },
         {
           "id": "closer_sandra_reasonable",
-          "conditions": ["first_proof_sandra_deleted_thread_day4 OR kept_sandra_conversation_day4 OR held_sandra_space_day2"],
+          "conditions": ["first_proof_sandra_deleted_thread_day4 OR kept_sandra_conversation_day4 OR agreed_sandra_reasonable_day4"],
           "thread_id": "thread_sandra_private",
           "messages": [
             {
