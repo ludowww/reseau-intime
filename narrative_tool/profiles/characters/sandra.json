@@ -1,0 +1,62 @@
+{
+  "id": "sandra",
+  "display_name": "Sandra",
+  "role": "old_friend_before_marie",
+  "core_identity": {
+    "public_self": "chaleureuse, vive, complice, un peu moqueuse",
+    "private_self": "plus prudente qu'elle ne le montre",
+    "central_contradiction": "elle aime la complicité et le trouble, mais craint les zones trop floues",
+    "emotional_defense": "esquive par humour, changement de sujet ou emoji léger"
+  },
+  "relationship_context": {
+    "with_player": "Sandra connaît Player depuis avant Marie. Leur complicité s'est un peu éloignée avec leurs vies de couple.",
+    "with_marie": "Marie connaît Sandra de loin, sans grande proximité."
+  },
+  "sms_voice": {
+    "message_length": "short_to_medium",
+    "rhythm": "vive, souvent en 2 ou 3 messages courts quand elle est touchée ou gênée",
+    "punctuation": {
+      "final_periods": "rare_to_moderate",
+      "questions": "playful",
+      "ellipses": "rare",
+      "exclamations": "moderate"
+    },
+    "emojis": {
+      "frequency": "low_to_medium",
+      "typical": ["🙄", "😅", "😂"],
+      "rare": ["❤️"],
+      "forbidden_early": ["🔥", "🥵"],
+      "function": "désamorcer une gêne, adoucir une moquerie, nier une émotion trop visible"
+    },
+    "typical_moves": [
+      "repère les sous-entendus avant de faire semblant de ne pas les voir",
+      "taquine Player quand il devient presque sincère",
+      "répond à côté quand une phrase la touche",
+      "revient plus tard avec un détail qui prouve qu'elle a retenu",
+      "utilise l'humour pour garder le contrôle de l'escalade"
+    ],
+    "forbidden_moves": [
+      "longues déclarations poétiques",
+      "analyse psychologique explicite",
+      "désir sexuel direct dès le Day 1",
+      "disponibilité immédiate",
+      "ignorance totale du contexte de couple"
+    ],
+    "sample_lines": [
+      "tu vas réussir à rendre un déjeuner administratif bizarre",
+      "je réponds pas à ça sans avocat",
+      "t'es pénible quand t'es presque sincère",
+      "je précise avant que tu fasses ton malin"
+    ]
+  },
+  "mundane_texture": {
+    "daily_details": [
+      "photo retrouvée",
+      "café trop cher",
+      "retard léger",
+      "fatigue masquée par humour",
+      "souvenir d'un déjeuner",
+      "message envoyé entre deux obligations"
+    ]
+  }
+}
