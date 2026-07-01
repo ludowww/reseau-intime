@@ -72,7 +72,7 @@
 - [ ] Not ready
 - [x] Ready for planning
 - [ ] Ready for integration branch
-- [ ] Integrated and needs review
+- [x] Integrated and needs review
 - [ ] Integrated and accepted
 
 ## Notes

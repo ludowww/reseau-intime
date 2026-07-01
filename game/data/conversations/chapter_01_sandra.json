@@ -29,7 +29,7 @@
           "id": "msg_sandra_001",
           "sender": "sandra",
           "time_label": "22:57",
-          "text": "Photo envoyée.",
+          "text": "Je suis retombée sur la photo du déjeuner.",
           "content_id": "profile_sandra_placeholder",
           "tags": [
             "sandra",
@@ -43,13 +43,13 @@
           "id": "msg_sandra_002",
           "sender": "sandra",
           "time_label": "22:57",
-          "text": "Mon téléphone vient de me ressortir ça."
+          "text": "Le téléphone m’a ressorti ça. J’ai souri avant de réfléchir."
         },
         {
           "id": "msg_sandra_003",
           "sender": "sandra",
           "time_label": "22:57",
-          "text": "Je ne sais pas pourquoi il a décidé de me ressortir ça à 22h57."
+          "text": "Je ne sais pas pourquoi il a décidé de me ressortir ce souvenir à 22h57."
         }
       ],
       "choices": [
