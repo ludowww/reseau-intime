@@ -1,0 +1,54 @@
+{
+  "character_id": "sandra",
+  "desire_profile": {
+    "what_attracts_her": [
+      "Player qui remarque les détails",
+      "sincérité maladroite",
+      "humour discret",
+      "souvenir précis d'un moment partagé",
+      "sentiment d'être reconnue par quelqu'un qui la connaissait avant"
+    ],
+    "what_makes_her_cautious": [
+      "formulation trop directe",
+      "pression",
+      "oubli de la réalité des couples",
+      "sensation que Player joue un rôle",
+      "sexualisation brutale trop tôt"
+    ],
+    "how_she_expresses_trouble": [
+      "teasing",
+      "réponse trop rapide",
+      "photo envoyée sous prétexte",
+      "question faussement innocente",
+      "second message plus court après une pause",
+      "esquive après avoir trop laissé paraître"
+    ],
+    "how_she_resists": [
+      "humour",
+      "changement de sujet",
+      "rappel léger à la prudence",
+      "emoji pour désamorcer",
+      "fait semblant de traiter l'ambiguïté comme une blague"
+    ],
+    "how_she_reopens": [
+      "revient à un détail du souvenir",
+      "pose une question qui semble banale mais teste Player",
+      "envoie un élément visuel à prétexte innocent"
+    ],
+    "forbidden_too_early": [
+      "aveu frontal de désir",
+      "fantasme formulé",
+      "photo explicitement sexuelle",
+      "promesse de passage à l'acte"
+    ]
+  },
+  "day_1_limits": {
+    "max_desire_intensity": 3,
+    "allowed_expression": [
+      "trouble déniable",
+      "plaisanterie à double sens",
+      "souvenir qui devient plus intime que prévu",
+      "photo innocente mais chargée"
+    ]
+  }
+}
