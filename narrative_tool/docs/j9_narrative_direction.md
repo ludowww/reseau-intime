@@ -126,7 +126,8 @@ Réponses directes aux questions :
 - **Raphaëlle en actif ?** : non, repos recommandé.
 - **Pauline en trace sociale ?** : seulement indirecte, pas de scène complète.
 - **Mathilde ou Nico ?** : absents par défaut.
-- **Proof / photo / content_id ?** : non.
+- **Proof définitif / content_id / route lock ?** : non.
+- **Photos / contenus visuels ?** : oui, à planifier pour la future J9 beat sheet / intégration : 3 contenus visuels minimum, dont au moins 1 photo Sandra obligatoire.
 - **Route lock ?** : non.
 
 ## Options considered
@@ -217,10 +218,11 @@ Cette option est à éviter sauf justification forte.
 - No game/data modification.
 - No `chapter_09_index.json`.
 - No `chapter_09` conversation file.
-- No proof J9.
-- No new photo.
-- No new `content_id`.
-- No new flag.
+- No proof J9 file created in V0.45.
+- No runtime photo file created in V0.45.
+- No new asset created in V0.45.
+- V0.45 plans future J9 visual content but does not create it.
+- Future J9 should include 3 visual contents minimum unless a new explicit exception is validated.
 - No route lock.
 - No new system state/memory.
 - No full dialogue draft.
@@ -287,7 +289,8 @@ Why:
 - Sandra a été gardée en silence actif en J8, donc J9 peut transformer ce manque en tension.
 - Le couple doit rester dans le champ, mais sans prendre tout l’espace.
 - Le panel reviendrait immédiatement si plusieurs voix fortes étaient réouvertes.
-- Une preuve, une photo ou un lock seraient un faux signal à ce stade.
+- Une preuve définitive, un content_id ou un lock seraient un faux signal à ce stade.
+- En revanche, des photos soft / texture / relationnelles sont nécessaires pour nourrir l’accroche visuelle et la galerie.
 
 ### J9 visual content requirement
 
