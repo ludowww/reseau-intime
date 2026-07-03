@@ -306,6 +306,75 @@ It is also rhythmic:
 - too many characters sounding like they are all “up next”;
 - too few days with a clear centrality drop-off.
 
+## Writing Style Regression: J1-J4 vs J5-J7
+
+### Direct diagnosis
+
+J1-J4 still read like SMS-first writing: short bursts, quick alternance, and choices that usually feel like actual texts.
+
+J5-J7 keep the same thread logic, but the writing shifts toward longer explanatory turns, more in-band reasoning, and more consecutive character messages before the Player gets a reply window.
+
+The main regression is not only the number of active characters. It is the way several scenes start to sound like mini-expositions instead of private phone conversation.
+
+### Comparison by criterion
+
+1. **Average character-message length.**
+   J1-J4 stay shorter and lighter overall; J5-J7 move toward longer, more narrated character messages. J7 is the longest-feeling block.
+
+2. **Consecutive character messages before a Player response.**
+   J1-J4 stay in short bursts; the maximum burst stays in the 3-6 range. J5-J7 jump sharply upward, with J5 peaking at 21 consecutive character messages before the Player response window, and J6/J7 still much higher than the early block.
+
+3. **Player choices that feel like real SMS.**
+   J1-J4 have many choices that are short, direct, and text-like. J5-J7 still contain SMS-shaped choices, but they are more often full sentences or explanatory replies.
+
+4. **Player choices that feel like posture labels.**
+   Literal labels are rare, but the late block contains more choices that read like stance declarations or mini-theses. The problem is tonal: too much explanation, not just too much labeling.
+
+5. **Monologues / mini-expositions.**
+   This risk becomes visible from J5 onward, especially in Pauline and Sandra scenes. J6 controls it best; J7 starts to flatten again.
+
+6. **Alternance character / Player.**
+   J1-J4 have a quicker back-and-forth feel. J5-J7 slow the turn-taking down and make some scenes feel like one long thread before the Player gets to act.
+
+7. **Natural private-conversation feel.**
+   J1-J4 feel more like a phone already in motion. J5-J7 still feel private, but the privacy is more analytical and less spontaneous.
+
+8. **Silences and interruptions.**
+   Early days use short silences and quick pivots more naturally. Late days reduce that breathing room: even when a character is absent, the writing keeps talking about the same pressure field.
+
+### Answers to the explicit questions
+
+- **Do J5-J7 change style compared with J1-J4?** Yes.
+- **Is the problem mostly the number of characters?** Partly, but not mainly.
+- **Is the problem also too-long / too-explanatory messages?** Yes, strongly.
+- **Do Player choices become too abstract or too much like posture labels?** Yes, especially in J5-J7; the literal label problem is small, but the explanatory tone is real.
+- **Is J6 still the best reference?** Yes.
+- **Which J5-J7 scenes should be rewritten first to recover the initial SMS style?** See the priority table below.
+
+### Matrix
+
+| Bloc | Style dominant | Alternance SMS | Risque monologue | Choix Player naturels | Diagnostic |
+|---|---|---:|---:|---:|---|
+| J1-J2 | SMS domestique court, guided replies, tension légère | bonne | faible | oui, très souvent courts | Très proche du style initial; lisible, privé, réactif. |
+| J3-J4 | SMS social / soirée / photos, plus de circulation de traces | bonne à très bonne | moyen | oui, encore majoritairement naturels | Le ton s’épaissit, mais la conversation reste vivante. |
+| J5 | Aftermath social explicatif, panel de conséquences | faible à moyenne | élevé | partiellement; plusieurs choix sont plus thèses que textos | Premier vrai décrochage: trop de voix, trop de matière, trop d’explication. |
+| J6 | Décision concrète, hiérarchie claire, SMS propre | très bonne | moyen | oui, et les plus naturels du bloc tardif | Meilleure référence rythmique: concret, hiérarchisé, respirable. |
+| J7 | Observation réflexive, proximité douce, fermeture plus lente | moyenne | élevé | oui, mais souvent trop longs | Cohérent, mais le bloc redevient trop symétrique et trop bavard. |
+
+### Writing style decisions
+
+Conclusion: **garder la structure mais réécrire certains textes**, **alléger certains personnages**, et **transformer certains monologues en échanges**.
+
+Do not keep J5-J7 strictly as-is if the goal is to recover the initial SMS feel.
+
+Priority table:
+
+| Priorité | Jour/scène | Problème | Type de correction recommandée |
+|---|---|---|---|
+| 1 | J5 — `chapter_05_pauline_understands` | Burst trop long, effet panel, exposition sociale trop large | Couper la parole continue; transformer une partie en relances courtes et traces indirectes |
+| 2 | J5 — `chapter_05_sandra_first_truth_game` | Jeu de confidence intéressant mais trop verbal | Réduire les mini-explications; faire répondre plus vite le Player |
+| 3 | J7 — `chapter_07_mathilde_too_close` | Proximité domestique trop développée, scène trop lourde | Reserrer le dialogue; garder une seule tension dominante |
+
 ## Proposed rhythm model
 
 | Jour | Axe principal | Secondary | Trace indirecte | Silence actif | Absent | Justification |
@@ -320,6 +389,7 @@ It is also rhythmic:
 - Keep J5 as is in runtime for V0.31.
 - Do not patch runtime now.
 - Treat J5 as narratively acceptable but rhythmically overloaded.
+- If later revising, check monologues and choice-label drift before only trimming density.
 - If later revising, demote Raphaëlle and Sandra from full beat to trace-level presence.
 - Preserve Marie as the true center; do not let Pauline become co-central.
 
@@ -329,6 +399,7 @@ It is also rhythmic:
 - Do not add Raphaëlle.
 - Do not increase Pauline beyond her current role.
 - Let Mathilde own the day as the concrete trace decision.
+- Keep J6 as the best SMS-alternance reference if later scenes need to be retuned.
 - Use J6 as the reference for how to structure a clean day after an overloaded one.
 
 ## Recommended decisions for J7
@@ -337,6 +408,7 @@ It is also rhythmic:
 - Do not add new active characters.
 - Reduce Pauline if this day is ever revised.
 - Give one character a sharper emotional lead, instead of maintaining a four-way equilibrium.
+- Reduce the panel effect and check the length of each bubble if this day is rewritten.
 - Prefer a day that feels like desire or emotional place, not a multi-person summary of consequences.
 
 ## Recommended direction for J8
@@ -348,6 +420,7 @@ It is also rhythmic:
 - Trace indirecte: Pauline.
 - Silence actif: Sandra or Mathilde, but not both.
 - Absent: Nico.
+- Write J8 first as a short narrative_tool prototype: very SMS, with 2 strong scenes maximum.
 
 What should return in J8:
 
@@ -404,7 +477,7 @@ When not to use it:
 
 ## Next recommended step
 
-Draft a short J8 skeleton in `narrative_tool` first, with a single clear hierarchy and a maximum of 2-3 scenes.
+Draft a short J8 skeleton in `narrative_tool` first, with a single clear hierarchy, SMS-first pacing, and a maximum of 2 strong scenes.
 
 If the branch chosen is the clarity branch, center Raphaëlle and keep Marie secondary.
 If the branch chosen is the couple/cost branch, center Marie and keep Raphaëlle as the clarity contrast.
