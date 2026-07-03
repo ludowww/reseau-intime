@@ -13,7 +13,7 @@ Objectif produit pour cette note :
 ## Current baseline
 
 - Branche : `work/j9-narrative-direction-v0-45`
-- SHA : `47bb73d`
+- SHA : `ce2b749`
 - git status au départ : propre
 - Périmètre : documentation-only
 - Runtime J9 : absent à ce stade
@@ -229,9 +229,58 @@ Cette option est à éviter sauf justification forte.
 - No reports generated.
 - No merge/tag.
 
+## J5-J8 visual and emoji continuity audit
+
+### Visual content audit J5-J8
+
+| Day | Visual content file | Visual item count | Target met? | Notes |
+|---|---:|---:|---|---|
+| J5 | `chapter_05_proofs.json` | 9 | yes | Cible dépassée ; galerie nourrie, journée visuellement riche. |
+| J6 | `chapter_06_proofs.json` | 4 | yes | Cible atteinte ; bon compromis entre texture et lisibilité. |
+| J7 | `chapter_07_proofs.json` | 3 | yes | Cible atteinte au strict minimum ; encore lisible, mais plus serré. |
+| J8 | none / `proof_content_files: []` | 0 | no, exception | Sous la cible de 3 photos ; exception acceptable seulement parce que J8 est une journée volontairement sèche / recentrage ; cette exception ne doit pas devenir une habitude. |
+
+### Emoji / phone-language audit J5-J8
+
+| Day | Emoji presence | Character differentiation | Risk | Notes |
+|---|---|---|---|---|
+| J5 | correct / visible | bonne | faible à moyen | Sensation SMS bien présente ; palettes distinctes, mais Sandra reste plus sobre et peut sembler sèche. |
+| J6 | faible à correct | bonne | moyen | Très lisible, mais Raphaëlle et certains passages de Sandra sont plus austères ; le téléphone reste vivant sans surjouer. |
+| J7 | forte | bonne, avec chevauchements ponctuels | moyen | Journée très “téléphone” ; Mathilde et Pauline partagent parfois des registres proches (`😇` / `🙃` / `👀`), donc surveiller l’uniformisation. |
+| J8 | absent / très faible | limitée par le choix narratif | élevé, mais assumé | Deux scènes sobres, presque sans emoji ; acceptable pour une journée de respiration, mais trop sec pour devenir un modèle. |
+
+### What this means for J9
+
+- Les emojis sont suffisamment présents sur J5-J7 pour donner une sensation SMS vivante.
+- La différenciation par personnage existe déjà et doit être conservée.
+- Les zones les plus sèches sont Sandra sur certains jours, Raphaëlle quand le ton se veut trop clair, et J8 dans son ensemble.
+- Le risque principal n’est pas le manque d’emojis, mais leur uniformisation sur les voix sociales.
+- J9 doit donc reporter explicitement :
+  - 3 photos minimum sauf exception narrativement justifiée ;
+  - une exception sous la cible doit toujours être expliquée ;
+  - palettes emoji spécifiques par personnage ;
+  - pas d’emojis uniformes sur toutes les voix ;
+  - pas de scène SMS trop sèche sauf choix assumé.
+
+### Decision J8
+
+J8 est validé comme exception sèche.
+Mais cette exception doit être explicitement limitée à J8.
+Elle ne doit pas servir de précédent pour J9.
+
+Justification : J8 avait pour fonction respiration / recentrage.
+J8 a volontairement réduit les voix, les preuves et les photos.
+J8 peut donc être accepté malgré 0 contenu visuel.
+Mais J9 est une relance intime contrôlée : il a besoin d’accroches visuelles.
+
 ## Recommendation
 
-**Option A — J9 relance Sandra comme axe principal, avec 1 à 2 scènes maximum.**
+**Option A — J9 relance Sandra comme axe principal, avec 1 scène forte par défaut, 2 scènes maximum, et 3 contenus visuels minimum planifiés.**
+
+Cette recommandation est fondée sur l’audit J5-J8.
+J5-J7 nourrissent bien la galerie.
+J8 est l’exception sèche.
+J9 ne doit pas répéter cette sécheresse.
 
 Why:
 - J8 a déjà fait la respiration.
@@ -239,6 +288,42 @@ Why:
 - Le couple doit rester dans le champ, mais sans prendre tout l’espace.
 - Le panel reviendrait immédiatement si plusieurs voix fortes étaient réouvertes.
 - Une preuve, une photo ou un lock seraient un faux signal à ce stade.
+
+### J9 visual content requirement
+
+| Slot | Future visual content | Character | Function | Weight | Required? |
+|---|---|---|---|---|---|
+| 1 | Soft intimate photo | Sandra | Relance du manque après J8 | relationnelle / récompense | yes |
+| 2 | Daily couple presence photo | Marie | Garder le couple visible | texture / contrepoint | recommended |
+| 3 | Social trace or second Sandra texture | Pauline indirect or Sandra | Garder le monde vivant sans panel | texture / trace faible | recommended |
+
+- au moins 1 photo Sandra obligatoire ;
+- pas de preuve définitive ;
+- pas de route lock ;
+- pas de photo explicitement adulte ;
+- pas de content_id créé en V0.45 ;
+- pas de runtime créé en V0.45 ;
+- contenus soft / texture / relationnels / sociaux faibles.
+
+### J9 emoji / phone-language requirement
+
+J9 doit être écrit comme une vraie journée de téléphone.
+Les emojis doivent être fortement présents dans la sensation SMS, mais pas uniformes.
+La présence doit dépendre des personnages.
+
+| Character | J9 status | Emoji level | Recommended emojis | Function |
+|---|---|---|---|---|
+| Sandra | main axis | rare but meaningful | 🙂 😅 | gêne, esquive, phrase trop vraie |
+| Marie | counterpoint | moderate | 🙂 🙄 😅 | tendresse, fatigue, reproche adouci |
+| Pauline | indirect optional | higher if present | 😇 🙂 🙄 🙃 😅 | contrôle, fausse innocence |
+| Raphaëlle | rest | very low / absent | 🙂 😅 | sobriété if ever used |
+| Mathilde | absent | absent | 😅 🙃 😇 🫠 | not for J9 default |
+
+Toute future scène J9 devra vérifier :
+- présence d’emojis là où la voix le justifie ;
+- pas d’uniformisation des emojis ;
+- pas de scène SMS trop sèche sauf choix assumé ;
+- les emojis renforcent gêne, contrôle, tendresse, provocation ou esquive.
 
 ## Next recommended step
 
