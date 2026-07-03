@@ -1,0 +1,69 @@
+{
+  "id": "chapter_08_index",
+  "chapter": 8,
+  "day": 8,
+  "title": "Jour 8 — Recentrage lisible",
+  "description": "J8 ouvre sur Raphaëlle pour poser une limite concrète, puis passe à Marie pour faire sentir le coût émotionnel du recentrage. Aucun nouveau proof, aucun lock, aucune trace Sandra.",
+  "design_goal": "Créer un runtime J8 minimal et hiérarchisé : Raphaëlle d’abord, Marie ensuite, avec uniquement deux conversations visibles par défaut.",
+  "moment_flow": [
+    {
+      "moment_label": "matin",
+      "time_label": "09:14",
+      "transition_text": "Raphaëlle ouvre la journée avec un constat concret : un dossier, un délai, et une manière plus nette de tenir la ligne.",
+      "conversation_ids": [
+        "chapter_08_raphaelle_clarity"
+      ]
+    },
+    {
+      "moment_label": "milieu de matinée",
+      "time_label": "10:06",
+      "transition_text": "Marie reprend le fil dans le couple : elle sent la différence, le coût du recentrage, et garde la route ouverte.",
+      "conversation_ids": [
+        "chapter_08_marie_counterpoint"
+      ]
+    }
+  ],
+  "conversation_files": [
+    "res://data/conversations/chapter_08_raphaelle_clarity.json",
+    "res://data/conversations/chapter_08_marie_counterpoint.json"
+  ],
+  "proof_content_files": [],
+  "required_reveals": [
+    "Raphaëlle pose une limite lisible et demande un geste concret.",
+    "Marie fait sentir le coût émotionnel du recentrage sans fermer les routes.",
+    "Aucune trace Sandra n’est activée en runtime.",
+    "Aucun proof J8, aucun content_id, aucun flag, aucune photo nouvelle, aucun route lock."
+  ],
+  "routes_available": [
+    "raphaelle",
+    "marie"
+  ],
+  "routes_locked_to_seed_only": [],
+  "debug_expected_outcomes": [
+    "J8 contient exactement deux conversations visibles par défaut.",
+    "Raphaëlle reste concrète, pas refuge.",
+    "Marie reste un contrepoint émotionnel, pas une confrontation finale.",
+    "Aucun nouveau système state/memory n’apparaît.",
+    "Le runtime reste compatible avec l’ordre Raphaëlle puis Marie."
+  ],
+  "conversation_availability": {
+    "initial_conversation_ids": [
+      "chapter_08_raphaelle_clarity"
+    ],
+    "locked_conversation_ids": [
+      "chapter_08_marie_counterpoint"
+    ],
+    "unlocks": {
+      "chapter_08_marie_counterpoint": {
+        "after_conversation_completed": "chapter_08_raphaelle_clarity",
+        "time_label": "10:06",
+        "pending": true,
+        "notification": {
+          "title": "Marie",
+          "body": "Je sens que tu t’éloignes un peu."
+        }
+      }
+    }
+  },
+  "debug_notes": "J8 runtime minimal : deux conversations seulement, sans trace Sandra, sans proof, sans flag, sans route lock, sans nouvelle photo."
+}

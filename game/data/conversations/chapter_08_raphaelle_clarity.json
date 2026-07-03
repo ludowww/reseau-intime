@@ -1,0 +1,136 @@
+{
+  "id": "chapter_08_raphaelle_clarity",
+  "chapter": 8,
+  "day": 8,
+  "title": "Jour 8 — Raphaëlle garde la ligne",
+  "app": "messages",
+  "design_goal": "Ouvrir J8 par une clarté concrète : limite lisible, recentrage, geste net, sans refuge romantique.",
+  "thread": {
+    "id": "thread_raphaelle_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "raphaelle"
+    ],
+    "display_name": "Raphaëlle"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c08_raphaelle_clarity_01",
+      "moment_label": "matin",
+      "time_label": "09:14",
+      "transition_text": "Raphaëlle voit le dossier, le délai, et le geste encore flou. Elle recadre sans dramatiser.",
+      "availability_state": "Raphaëlle reste concrète : elle nomme, elle limite, elle ne console pas.",
+      "function": "Poser une limite lisible et recentrer Player sur une action claire.",
+      "messages": [
+        {
+          "id": "msg_c08_raphaelle_001",
+          "sender": "raphaelle",
+          "time_label": "09:14",
+          "text": "J’ai vu le dossier rester ouvert."
+        },
+        {
+          "id": "msg_c08_raphaelle_002",
+          "sender": "raphaelle",
+          "time_label": "09:15",
+          "text": "Puis se refermer sans finir."
+        },
+        {
+          "id": "msg_c08_raphaelle_003",
+          "sender": "raphaelle",
+          "time_label": "09:15",
+          "text": "Ce n’est pas la même chose que “je gère”."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c08_raphaelle_finish",
+          "text": "Je le finis maintenant.",
+          "tone": "truth",
+          "effects": {
+            "raphaelle.clarity": 1,
+            "truth_tendency": 1
+          },
+          "next_messages": [
+            {
+              "id": "msg_player_c08_raphaelle_finish_001",
+              "sender": "ludo",
+              "time_label": "09:14",
+              "text": "Je le finis maintenant."
+            },
+            {
+              "id": "msg_c08_raphaelle_finish_001",
+              "sender": "raphaelle",
+              "time_label": "09:16",
+              "text": "Bien."
+            },
+            {
+              "id": "msg_c08_raphaelle_finish_002",
+              "sender": "raphaelle",
+              "time_label": "09:16",
+              "text": "Court. Net. Sans bruit."
+            }
+          ]
+        },
+        {
+          "id": "choice_c08_raphaelle_delay",
+          "text": "Je le reprends après.",
+          "tone": "delay",
+          "effects": {
+            "raphaelle.clarity": 1
+          },
+          "next_messages": [
+            {
+              "id": "msg_player_c08_raphaelle_delay_001",
+              "sender": "ludo",
+              "time_label": "09:14",
+              "text": "Je le reprends après."
+            },
+            {
+              "id": "msg_c08_raphaelle_delay_001",
+              "sender": "raphaelle",
+              "time_label": "09:16",
+              "text": "D’accord."
+            },
+            {
+              "id": "msg_c08_raphaelle_delay_002",
+              "sender": "raphaelle",
+              "time_label": "09:16",
+              "text": "Mais pas le vieux report qui s’étire."
+            }
+          ]
+        },
+        {
+          "id": "choice_c08_raphaelle_net",
+          "text": "Je t’envoie le point net.",
+          "tone": "truth",
+          "effects": {
+            "raphaelle.clarity": 1,
+            "truth_tendency": 1
+          },
+          "next_messages": [
+            {
+              "id": "msg_player_c08_raphaelle_net_001",
+              "sender": "ludo",
+              "time_label": "09:14",
+              "text": "Je t’envoie le point net."
+            },
+            {
+              "id": "msg_c08_raphaelle_net_001",
+              "sender": "raphaelle",
+              "time_label": "09:16",
+              "text": "Mieux."
+            },
+            {
+              "id": "msg_c08_raphaelle_net_002",
+              "sender": "raphaelle",
+              "time_label": "09:17",
+              "text": "Court, clair, propre."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_notes": "Raphaëlle ouvre J8 par une clarté concrète : dossier, délai, geste net, pas de consolation, pas de romance refuge."
+}

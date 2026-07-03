@@ -1,0 +1,137 @@
+{
+  "id": "chapter_08_marie_counterpoint",
+  "chapter": 8,
+  "day": 8,
+  "title": "Jour 8 — Marie sent le coût",
+  "app": "messages",
+  "design_goal": "Faire sentir le coût émotionnel du recentrage : le couple reste visible, Marie sent la différence, la route reste ouverte.",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "marie"
+    ],
+    "display_name": "Marie"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c08_marie_counterpoint_01",
+      "moment_label": "milieu de matinée",
+      "time_label": "10:06",
+      "transition_text": "Marie part d’un détail domestique et sent que le recentrage a un prix affectif. Elle ne ferme rien.",
+      "availability_state": "Marie reste lucide, un peu fatiguée, et suffisamment calme pour garder la porte entrouverte.",
+      "function": "Ramener le couple dans le champ et montrer la fatigue sans faire une confrontation finale.",
+      "messages": [
+        {
+          "id": "msg_c08_marie_001",
+          "sender": "marie",
+          "time_label": "10:06",
+          "text": "J’ai racheté du pain."
+        },
+        {
+          "id": "msg_c08_marie_002",
+          "sender": "marie",
+          "time_label": "10:07",
+          "text": "L’autre était sec."
+        },
+        {
+          "id": "msg_c08_marie_003",
+          "sender": "marie",
+          "time_label": "10:07",
+          "text": "Comme si la matinée voulait déjà parler."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c08_marie_here",
+          "text": "Je suis là maintenant.",
+          "tone": "reconnect",
+          "effects": {
+            "marie.trust": 1,
+            "marie.lucidity": 1
+          },
+          "next_messages": [
+            {
+              "id": "msg_player_c08_marie_here_001",
+              "sender": "ludo",
+              "time_label": "10:06",
+              "text": "Je suis là maintenant."
+            },
+            {
+              "id": "msg_c08_marie_here_001",
+              "sender": "marie",
+              "time_label": "10:08",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_c08_marie_here_002",
+              "sender": "marie",
+              "time_label": "10:08",
+              "text": "Et c’est ça qui me fatigue un peu."
+            }
+          ]
+        },
+        {
+          "id": "choice_c08_marie_elsewhere",
+          "text": "J’ai été ailleurs.",
+          "tone": "truth",
+          "effects": {
+            "truth_tendency": 1,
+            "marie.trust": 1
+          },
+          "next_messages": [
+            {
+              "id": "msg_player_c08_marie_elsewhere_001",
+              "sender": "ludo",
+              "time_label": "10:06",
+              "text": "J’ai été ailleurs."
+            },
+            {
+              "id": "msg_c08_marie_elsewhere_001",
+              "sender": "marie",
+              "time_label": "10:08",
+              "text": "Merci de le dire."
+            },
+            {
+              "id": "msg_c08_marie_elsewhere_002",
+              "sender": "marie",
+              "time_label": "10:09",
+              "text": "Je préfère un retour honnête à une présence tiède."
+            }
+          ]
+        },
+        {
+          "id": "choice_c08_marie_better",
+          "text": "Je te dois mieux.",
+          "tone": "reconnect",
+          "effects": {
+            "marie.trust": 1,
+            "marie_attention_score": 1
+          },
+          "next_messages": [
+            {
+              "id": "msg_player_c08_marie_better_001",
+              "sender": "ludo",
+              "time_label": "10:06",
+              "text": "Je te dois mieux."
+            },
+            {
+              "id": "msg_c08_marie_better_001",
+              "sender": "marie",
+              "time_label": "10:08",
+              "text": "Alors commence simple."
+            },
+            {
+              "id": "msg_c08_marie_better_002",
+              "sender": "marie",
+              "time_label": "10:09",
+              "text": "Parce que moi, je sens la distance."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_notes": "Marie part du quotidien, sent la distance, garde le couple visible et n’ouvre pas de confrontation finale."
+}
