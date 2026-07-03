@@ -50,6 +50,10 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             "res://data/visual_content/chapter_06_proofs.json",
             "res://data/visual_content/chapter_07_proofs.json",
             "res://data/visual_content/chapter_09_proofs.json",
+            "func _day_key(day_value) -> String:",
+            "conversations_by_day.get(_day_key(day_value), [])",
+            "if _day_key(index.get(\"day\", index.get(\"chapter\", \"\"))) == _day_key(day_value):",
+            "labels.append(\"Jour %s\" % _day_key(index.get(\"day\", index.get(\"chapter\", \"?\"))))",
         ]:
             self.assertIn(required, loader)
 
@@ -601,6 +605,7 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             "_thread_id_for_conversation_id",
             "pending_thread_ids",
             "unlocked_thread_ids_by_day",
+            "if current_day_value != null and str(current_day_value) != str(day_value):",
         ]:
             self.assertIn(expected, script)
         self.assertIn("_conversation_episode_ids(conversation)", script)

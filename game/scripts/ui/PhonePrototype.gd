@@ -190,6 +190,13 @@ func _focus_messages() -> void:
 func _render_conversations(day_value) -> void:
 	if day_value == null:
 		return
+	if current_day_value != null and str(current_day_value) != str(day_value):
+		pending_conversation_ids.clear()
+		pending_thread_ids.clear()
+		initialized_pending_days.clear()
+		notification_target_conversation_id = ""
+		notification_target_day_value = null
+		_hide_notification()
 	current_day_value = day_value
 	_initialize_initial_pending_for_day(day_value)
 	_clear(conversation_list)

@@ -58,8 +58,19 @@ func load_json(path: String) -> Dictionary:
 		return {}
 	return parsed
 
+func _day_key(day_value) -> String:
+	if day_value == null:
+		return ""
+	var value_type := typeof(day_value)
+	if value_type == TYPE_INT or value_type == TYPE_FLOAT:
+		return str(int(day_value))
+	var text := str(day_value)
+	if text.is_valid_float():
+		return str(int(float(text)))
+	return text
+
 func _load_index_conversations(index: Dictionary) -> void:
-	var day_key := str(index.get("day", index.get("chapter", "?")))
+	var day_key := _day_key(index.get("day", index.get("chapter", "?")))
 	if not conversations_by_day.has(day_key):
 		conversations_by_day[day_key] = []
 	for file_path in index.get("conversation_files", []):
@@ -85,15 +96,15 @@ func _load_visual_content(path: String) -> void:
 func get_day_labels() -> Array[String]:
 	var labels: Array[String] = []
 	for index in chapter_indexes:
-		labels.append("Jour %s" % str(index.get("day", index.get("chapter", "?"))))
+		labels.append("Jour %s" % _day_key(index.get("day", index.get("chapter", "?"))))
 	return labels
 
 func get_conversations_for_day(day_value) -> Array:
-	return _group_segmented_conversations(conversations_by_day.get(str(day_value), []))
+	return _group_segmented_conversations(conversations_by_day.get(_day_key(day_value), []))
 
 func get_index_for_day(day_value) -> Dictionary:
 	for index in chapter_indexes:
-		if str(index.get("day", index.get("chapter", ""))) == str(day_value):
+		if _day_key(index.get("day", index.get("chapter", ""))) == _day_key(day_value):
 			return index
 	return {}
 
