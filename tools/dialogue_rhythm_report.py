@@ -11,6 +11,7 @@ This is an authoring helper only. It does not modify game data.
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 import glob
 import json
 import statistics
@@ -89,6 +90,10 @@ def count_emoji(text: str) -> int:
     return sum(1 for char in text if looks_like_emoji(char))
 
 
+def extract_emoji_chars(texts: list[str]) -> list[str]:
+    return [char for text in texts for char in text if looks_like_emoji(char)]
+
+
 def median_or_zero(values: list[int]) -> float:
     return float(statistics.median(values)) if values else 0.0
 
@@ -108,7 +113,16 @@ def report_file(path: Path) -> int:
     choices = iter_choices(data)
     texts = [str(node.get("text", "")) for node in messages if str(node.get("text", ""))]
     lengths = [len(text) for text in texts]
-    emoji_count = sum(count_emoji(text) for text in texts)
+    emoji_chars = extract_emoji_chars(texts)
+    emoji_count = len(emoji_chars)
+    emoji_unique_count = len(set(emoji_chars))
+    emoji_counter = Counter(emoji_chars)
+    dominant_emoji = None
+    dominant_count = 0
+    if emoji_counter:
+        dominant_emoji, dominant_count = emoji_counter.most_common(1)[0]
+    total_chars = sum(lengths)
+    emoji_density = (emoji_count / total_chars * 100.0) if total_chars else 0.0
     question_count = sum(text.count("?") for text in texts)
     content_refs = sum(1 for node in messages if isinstance(node.get("content_id"), str))
     next_message_choices = sum(1 for choice in choices if isinstance(choice.get("next_messages"), list))
@@ -124,11 +138,18 @@ def report_file(path: Path) -> int:
     print(f"choices_with_reactions: {next_message_choices}/{len(choices)}")
     print(f"content_refs: {content_refs}")
     print(f"questions: {question_count}")
-    print(f"emojis: {emoji_count}")
+    print(f"emoji_count: {emoji_count}")
+    print(f"emoji_unique_count: {emoji_unique_count}")
+    print(f"emoji_density_approx: {emoji_density:.2f} per 100 chars")
+    if emoji_count == 0:
+        print("emoji_absence_note: absence à justifier si la scène n’est pas volontairement sèche / grave / retenue")
+    else:
+        print("emoji_absence_note: présence d’emojis ; relire la densité selon la voix, le stage et le risque")
     print(f"avg_message_chars: {avg_or_zero(lengths):.1f}")
     print(f"median_message_chars: {median_or_zero(lengths):.1f}")
     print("senders: " + (", ".join(f"{key}={value}" for key, value in sorted(senders.items())) or "—"))
 
+    notes: list[str] = []
     warnings: list[str] = []
     if messages and len(messages) < 6:
         warnings.append("scene very short: check whether it is too functional")
@@ -138,9 +159,19 @@ def report_file(path: Path) -> int:
         warnings.append("messages are long on average: check SMS naturalness")
     if question_count >= max(4, len(messages) // 2):
         warnings.append("many questions: check interrogation rhythm")
-    if emoji_count == 0 and any(sender in senders for sender in ["marie", "mathilde", "pauline", "sandra"]):
-        warnings.append("no emojis for a usually more lively voice")
+    if emoji_count == 0:
+        notes.append("absence to justify if the scene is not intentionally dry / grave / restrained")
+    elif emoji_count >= 5:
+        notes.append("many emojis: verify that this matches the voice, stage and risk")
+    if len({sender for sender in senders if sender != "unknown"}) > 1 and emoji_count > 0:
+        notes.append("several characters in scene: reread emoji differentiation by voice")
+    if dominant_emoji and emoji_count >= 3 and dominant_count / emoji_count >= 0.6:
+        warnings.append(f"emoji_repeated_pattern warning: {dominant_emoji} dominates {dominant_count}/{emoji_count} emoji uses")
 
+    if notes:
+        print("notes:")
+        for note in notes:
+            print(f"  - {note}")
     if warnings:
         print("warnings:")
         for warning in warnings:

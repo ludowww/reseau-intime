@@ -43,6 +43,41 @@ def bullet_list(title: str, values: list[str] | None) -> list[str]:
     return lines
 
 
+def emoji_evolution_guidance(
+    character: str,
+    display_name: str,
+    stage: str,
+    risk: str,
+    profile: dict[str, Any],
+    voice_data: dict[str, Any],
+) -> list[str]:
+    allowed = profile.get("emoji_allowed", [])
+    stage_meaning = voice_data.get("stage_scale", {}).get(stage, "unknown stage")
+    risk_meaning = voice_data.get("risk_scale", {}).get(risk, "unknown risk")
+
+    lines = ["\n## Emoji evolution guidance"]
+    lines.append(f"- Palette de base : {' '.join(allowed) if allowed else 'aucun ou très rare'}")
+    lines.append("- Cette palette est une base de voix, pas un plafond fixe.")
+    lines.append(
+        f"- Stage {stage} : {stage_meaning} ; la fréquence et la diversité peuvent monter, baisser ou se charger selon la gêne et l’aisance."
+    )
+    lines.append(
+        f"- Risque {risk} : {risk_meaning} ; les emojis peuvent devenir plus rares, plus chargés, plus stratégiques, ou servir de masque."
+    )
+    lines.append("- Garde-fou de voix : rester reconnaissable, sans glisser vers la voix d’un autre personnage.")
+
+    if character == "sandra" and stage == "stage_3_intimite_naissante" and risk == "medium":
+        lines.append("- Exemple : emojis rares mais plus chargés ; 🙂 ou 😅 peuvent masquer une phrase trop vraie ; éviter de la rendre trop disponible ou trop joueuse.")
+    elif character == "mathilde" and stage == "stage_3_intimite_naissante" and risk == "medium":
+        lines.append("- Exemple : emojis plus vifs possibles ; l’absence ponctuelle d’emoji peut signaler une vraie gêne ; ne pas oublier Marie.")
+    elif character == "pauline" and risk == "high":
+        lines.append("- Exemple : emojis comme contrôle ou piège social ; 😇 peut être plus dangereux qu’un message explicite ; ne pas devenir omnisciente.")
+    else:
+        lines.append(f"- Exemple : ajuster fréquence, diversité et absence selon le contexte narratif, sans uniformiser {display_name}.")
+
+    return lines
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Build a dialogue writing context pack.")
     parser.add_argument("--character", required=True, help="Character key, e.g. marie, sandra, raphaelle")
@@ -123,6 +158,8 @@ def main() -> int:
     allowed = assembled.get("emoji_allowed") or []
     lines.append(f"- Autorisés : {' '.join(allowed) if allowed else 'aucun ou très rare'}")
     lines.append(f"- Maximum indicatif : {assembled.get('emoji_max_default')}")
+
+    lines.extend(emoji_evolution_guidance(args.character, assembled["display_name"], stage, risk, profile, voice_data))
 
     lines.append("\n## Ancrages concrets recommandés")
     anchors = assembled.get("good_anchor_words") or []

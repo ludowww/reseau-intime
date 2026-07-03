@@ -11,6 +11,7 @@ This script emits warnings for author review. It does not decide whether a scene
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 import json
 import sys
 from pathlib import Path
@@ -36,6 +37,10 @@ def looks_like_emoji(char: str) -> bool:
 
 def count_emoji(text: str) -> int:
     return sum(1 for char in text if looks_like_emoji(char))
+
+
+def emoji_chars(text: str) -> list[str]:
+    return [char for char in text if looks_like_emoji(char)]
 
 
 def iter_message_nodes(root: Any) -> list[dict[str, Any]]:
@@ -140,7 +145,16 @@ def main() -> int:
         if str(node.get("sender", node.get("author", ""))) == character and str(node.get("text", ""))
     ]
     all_texts = [str(node.get("text", "")) for node in messages if str(node.get("text", ""))]
-    character_emoji = sum(count_emoji(text) for text in character_texts)
+    character_emoji_chars = [char for text in character_texts for char in emoji_chars(text)]
+    character_emoji = len(character_emoji_chars)
+    emoji_unique_count = len(set(character_emoji_chars))
+    emoji_counter = Counter(character_emoji_chars)
+    dominant_emoji = None
+    dominant_count = 0
+    if emoji_counter:
+        dominant_emoji, dominant_count = emoji_counter.most_common(1)[0]
+    character_chars = sum(len(text) for text in character_texts)
+    emoji_density = (character_emoji / character_chars * 100.0) if character_chars else 0.0
     allowed_emoji = set(profile.get("emoji_allowed", []))
     disallowed_emoji: set[str] = set()
     for text in character_texts:
@@ -149,6 +163,7 @@ def main() -> int:
                 disallowed_emoji.add(char)
 
     warnings: list[str] = []
+    notes: list[str] = []
     emoji_max = int(profile.get("emoji_max_default", 99))
     if character_emoji > emoji_max:
         warnings.append(f"too many emojis for {character}: {character_emoji} > {emoji_max}")
@@ -179,10 +194,39 @@ def main() -> int:
     print(f"risk: {risk}")
     print(f"character_messages: {len(character_texts)}")
     print(f"character_emojis: {character_emoji}")
+    print(f"emoji_unique_count: {emoji_unique_count}")
+    print(f"emoji_density_approx: {emoji_density:.2f} per 100 chars")
     print(f"choices: {len(choices)}")
     print("stage_hint: " + str(profile.get("stage_variants", {}).get(stage, "—")))
     print("risk_hint: " + str(profile.get("risk_variants", {}).get(risk, "—")))
 
+    print("Emoji voice check")
+    print(f"- base palette: {' '.join(profile.get('emoji_allowed', [])) if profile.get('emoji_allowed') else 'aucun ou très rare'}")
+    print(f"- uniformisation risk: {'oui' if dominant_emoji and character_emoji >= 3 and dominant_count / character_emoji >= 0.6 else 'faible'}")
+    print(f"- frequency too dry if not justified: {'oui' if character_emoji == 0 else 'non'}")
+    print(f"- frequency too loud if off-voice: {'oui' if character_emoji > emoji_max else 'non'}")
+    print(f"- evolution compatible with stage/risk: {stage} / {risk}")
+    print(f"- absence of emoji as possible narrative effect: {'oui' if character_emoji == 0 else 'possible'}")
+
+    if character_emoji == 0:
+        notes.append("⚠️ Aucun emoji : acceptable si scène grave / sèche, sinon risque de SMS trop sec.")
+    elif character_emoji >= max(emoji_max, 4):
+        warnings.append(f"⚠️ {character.capitalize()} utilise beaucoup d’emojis : vérifier que l’intimité justifie cette aisance.")
+    if disallowed_emoji:
+        warnings.append(f"⚠️ {character.capitalize()} sort de sa palette de base : {' '.join(sorted(disallowed_emoji))}")
+    if dominant_emoji and character_emoji >= 3 and dominant_count / character_emoji >= 0.6:
+        warnings.append(f"⚠️ Emojis très uniformes : vérifier différenciation des voix. ({dominant_emoji} {dominant_count}/{character_emoji})")
+    if stage == "stage_1_familiarite" and risk == "low" and character_emoji == 0:
+        notes.append("⚠️ Aucun emoji : possible si scène retenue, sinon vérifier le SMS trop sec.")
+    if stage == "stage_3_intimite_naissante" and risk in {"medium", "high"} and character_emoji > 0:
+        notes.append("⚠️ L’évolution emoji doit rester lisible : la charge monte, mais la voix ne change pas de personnage.")
+    if len({str(node.get("sender", node.get("author", ""))) for node in messages if str(node.get("text", ""))}) > 1:
+        notes.append("⚠️ Plusieurs personnages sont présents : relire la différenciation emoji de chacun.")
+
+    if notes:
+        print("notes:")
+        for note in notes:
+            print(f"  - {note}")
     if warnings:
         print("warnings:")
         for warning in warnings:

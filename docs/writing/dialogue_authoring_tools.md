@@ -137,7 +137,7 @@ Exemples :
 - repérer les scènes trop sèches ou trop mécaniques.
 ```
 
-## Ce qu’ils ne doivent pas faire
+## Ce que les outils ne doivent pas faire
 
 ```text
 - écrire toute une journée à la place de l’auteur ;
@@ -147,6 +147,14 @@ Exemples :
 - transformer les routes en système mathématique lourd ;
 - créer de nouvelles variables gameplay.
 ```
+
+## Emoji evolution integration
+
+Les outils utilisent désormais `EMOJI_INTIMACY_EVOLUTION_RULES.md` comme guide de relecture.
+`context_pack` rappelle les règles avant écriture.
+`rhythm_report` mesure la présence et les patterns.
+`voice_check` signale les écarts possibles selon voix, stage et risk.
+Les alertes sont indicatives, pas des décisions automatiques.
 
 ## Règle de sécurité
 
