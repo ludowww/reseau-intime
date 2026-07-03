@@ -43,11 +43,13 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             "res://data/conversations/chapter_03_index.json",
             "res://data/conversations/chapter_04_index.json",
             "res://data/conversations/chapter_07_index.json",
+            "res://data/conversations/chapter_09_index.json",
             "res://data/visual_content/placeholders.json",
             "res://data/visual_content/chapter_04_proofs.json",
             "res://data/visual_content/chapter_05_proofs.json",
             "res://data/visual_content/chapter_06_proofs.json",
             "res://data/visual_content/chapter_07_proofs.json",
+            "res://data/visual_content/chapter_09_proofs.json",
         ]:
             self.assertIn(required, loader)
 
@@ -604,6 +606,36 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         self.assertIn("_conversation_episode_ids(conversation)", script)
         self.assertIn("_thread_id_for_conversation_id(day_value, str(target_id))", script)
 
+    def test_day9_index_keeps_sandra_only_runtime_option_a_and_three_soft_visuals(self):
+        index = json.loads((GAME / "data/conversations/chapter_09_index.json").read_text(encoding="utf-8"))
+        availability = index.get("conversation_availability", {})
+        self.assertEqual(availability.get("initial_conversation_ids"), ["chapter_09_sandra_relance"])
+        self.assertEqual(availability.get("locked_conversation_ids"), [])
+        self.assertEqual(availability.get("unlocks"), {})
+        self.assertEqual(index.get("routes_available"), ["sandra"])
+        self.assertEqual(index.get("routes_locked_to_seed_only"), [])
+        self.assertEqual(index.get("proof_content_files"), ["res://data/visual_content/chapter_09_proofs.json"])
+        self.assertEqual(index.get("conversation_files"), ["res://data/conversations/chapter_09_sandra_relance.json"])
+        self.assertIn("Sandra", index.get("description", ""))
+        self.assertIn("pas de panel", index.get("debug_notes", ""))
+
+        conversation = json.loads((GAME / "data/conversations/chapter_09_sandra_relance.json").read_text(encoding="utf-8"))
+        self.assertEqual(conversation.get("thread", {}).get("id"), "thread_sandra_private")
+        self.assertEqual(conversation.get("segments", [])[0].get("messages", [])[0].get("sender"), "sandra")
+        self.assertEqual(len(conversation.get("segments", [])[0].get("choices", [])), 3)
+        self.assertNotIn("thread_marie_private", json.dumps(conversation, ensure_ascii=False))
+        self.assertNotIn("thread_pauline_private", json.dumps(conversation, ensure_ascii=False))
+
+        proofs = json.loads((GAME / "data/visual_content/chapter_09_proofs.json").read_text(encoding="utf-8"))
+        self.assertEqual([item.get("id") for item in proofs.get("items", [])], [
+            "j9_sandra_lunch_photo_soft",
+            "j9_marie_daily_trace",
+            "j9_pauline_indirect_story",
+        ])
+        self.assertEqual(proofs.get("version"), 1)
+        self.assertEqual(len(proofs.get("items", [])), 3)
+        self.assertTrue(any(item.get("character") == "sandra" for item in proofs.get("items", [])))
+
     def test_conversation_view_resumes_newly_unlocked_episode_in_existing_thread(self):
         script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")
         for expected in [
@@ -617,7 +649,6 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         restore_block = script[script.index('if bool(active_state.get("initialized", false)):'):script.index('active_state["initialized"] = true')]
         self.assertIn("_auto_advance_segments_until_choice(conversation_id, token)", restore_block)
         self.assertIn("sequence_complete", restore_block)
-
 
 
     def test_pending_threads_are_only_set_by_real_unlocks_not_by_opening_threads(self):

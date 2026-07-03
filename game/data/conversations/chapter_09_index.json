@@ -1,0 +1,50 @@
+{
+  "id": "chapter_09_index",
+  "chapter": 9,
+  "day": 9,
+  "title": "Jour 9 — La photo qui revient",
+  "description": "Sandra relance le manque avec une photo douce et deux traces faibles, sans Marie active, sans Pauline active, sans Raphaëlle, sans Mathilde et sans panel.",
+  "design_goal": "Créer un runtime J9 minimal en Option A : un seul thread visible, trois visuels soft, aucune route lock et aucun nouveau système.",
+  "moment_flow": [
+    {
+      "moment_label": "midi",
+      "time_label": "12:18",
+      "transition_text": "Sandra revient avec une photo du déjeuner, puis laisse passer deux traces faibles qui gardent le téléphone vivant sans ouvrir d’autre fil.",
+      "conversation_ids": [
+        "chapter_09_sandra_relance"
+      ]
+    }
+  ],
+  "conversation_files": [
+    "res://data/conversations/chapter_09_sandra_relance.json"
+  ],
+  "proof_content_files": [
+    "res://data/visual_content/chapter_09_proofs.json"
+  ],
+  "required_reveals": [
+    "Sandra reste l’unique conversation runtime et relance le manque sans devenir acquise.",
+    "Les trois visuels restent soft, relationnels et non proof.",
+    "Marie n’a pas de conversation runtime ; sa trace reste visuelle seulement.",
+    "Pauline n’a pas de conversation runtime ; sa présence reste indirecte et faible.",
+    "Aucun panel, aucun route lock, aucun nouveau flag non justifié n’est ajouté."
+  ],
+  "routes_available": [
+    "sandra"
+  ],
+  "routes_locked_to_seed_only": [],
+  "debug_expected_outcomes": [
+    "J9 ouvre avec une seule conversation visible par défaut.",
+    "Sandra reste l’axe principal du runtime Option A.",
+    "Les trois visuels J9 sont chargés depuis game/data/visual_content/.",
+    "Marie, Pauline, Raphaëlle et Mathilde ne deviennent pas des conversations actives.",
+    "Aucun proof définitif ni route lock n’apparaît."
+  ],
+  "conversation_availability": {
+    "initial_conversation_ids": [
+      "chapter_09_sandra_relance"
+    ],
+    "locked_conversation_ids": [],
+    "unlocks": {}
+  },
+  "debug_notes": "Option A runtime minimal : un thread Sandra, trois visuels soft, traces Marie/Pauline seulement dans le bundle visuel, pas de Marie active et pas de panel."
+}

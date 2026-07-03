@@ -1,0 +1,140 @@
+{
+  "id": "chapter_09_sandra_relance",
+  "chapter": 9,
+  "day": 9,
+  "title": "Jour 9 — Sandra retrouve la photo du déjeuner",
+  "app": "messages",
+  "design_goal": "Relancer Sandra après J8 avec un prétexte concret, une gêne retenue et trois visuels soft sans disponibilité acquise.",
+  "thread": {
+    "id": "thread_sandra_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "sandra"
+    ],
+    "display_name": "Sandra"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c09_sandra_relance_01",
+      "moment_label": "midi",
+      "time_label": "12:18",
+      "transition_text": "Sandra revient par une photo du déjeuner, puis laisse remonter deux traces faibles sans jamais ouvrir un autre fil.",
+      "availability_state": "Sandra reste retenue, un peu gênée, et ne veut pas que la discussion se transforme en attente vide.",
+      "function": "Faire sentir le manque avec un seul thread et des visuels relationnels ou sociaux faibles.",
+      "messages": [
+        {
+          "id": "msg_c09_sandra_001",
+          "sender": "sandra",
+          "time_label": "12:18",
+          "text": "J’ai retrouvé la photo du déjeuner."
+        },
+        {
+          "id": "msg_c09_sandra_002",
+          "sender": "sandra",
+          "time_label": "12:19",
+          "text": "Tu fais exactement cette tête-là quand tu crois être discret 😅",
+          "content_id": "j9_sandra_lunch_photo_soft",
+          "content_behavior": "inline_preview"
+        },
+        {
+          "id": "msg_c09_sandra_003",
+          "sender": "sandra",
+          "time_label": "12:20",
+          "text": "J’ai aussi gardé la photo de Marie ce matin. Rien d’extra, juste un détail calme.",
+          "content_id": "j9_marie_daily_trace",
+          "content_behavior": "inline_preview"
+        },
+        {
+          "id": "msg_c09_sandra_004",
+          "sender": "sandra",
+          "time_label": "12:21",
+          "text": "Et Pauline a encore laissé une story trop propre. Je n’aurais pas dû regarder.",
+          "content_id": "j9_pauline_indirect_story",
+          "content_behavior": "inline_preview"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c09_sandra_garde",
+          "text": "Tu l’as gardée ?",
+          "tone": "soft",
+          "effects": {},
+          "next_messages": [
+            {
+              "id": "msg_player_c09_sandra_garde_001",
+              "sender": "ludo",
+              "time_label": "12:22",
+              "text": "Tu l’as gardée ?"
+            },
+            {
+              "id": "msg_c09_sandra_garde_001",
+              "sender": "sandra",
+              "time_label": "12:23",
+              "text": "Oui. Les détails me restent plus que prévu."
+            },
+            {
+              "id": "msg_c09_sandra_garde_002",
+              "sender": "sandra",
+              "time_label": "12:23",
+              "text": "Et celui-là me fait un peu sourire."
+            }
+          ]
+        },
+        {
+          "id": "choice_c09_sandra_envoie",
+          "text": "Envoie-la moi.",
+          "tone": "direct",
+          "effects": {},
+          "next_messages": [
+            {
+              "id": "msg_player_c09_sandra_envoie_001",
+              "sender": "ludo",
+              "time_label": "12:22",
+              "text": "Envoie-la moi."
+            },
+            {
+              "id": "msg_c09_sandra_envoie_001",
+              "sender": "sandra",
+              "time_label": "12:23",
+              "text": "Je peux."
+            },
+            {
+              "id": "msg_c09_sandra_envoie_002",
+              "sender": "sandra",
+              "time_label": "12:23",
+              "text": "Mais j’aime bien quand tu la réclames."
+            }
+          ]
+        },
+        {
+          "id": "choice_c09_sandra_maintenant",
+          "text": "Je préfère te lire maintenant.",
+          "tone": "restrained",
+          "effects": {},
+          "next_messages": [
+            {
+              "id": "msg_player_c09_sandra_maintenant_001",
+              "sender": "ludo",
+              "time_label": "12:22",
+              "text": "Je préfère te lire maintenant."
+            },
+            {
+              "id": "msg_c09_sandra_maintenant_001",
+              "sender": "sandra",
+              "time_label": "12:23",
+              "text": "C’est mieux que plus tard."
+            },
+            {
+              "id": "msg_c09_sandra_maintenant_002",
+              "sender": "sandra",
+              "time_label": "12:23",
+              "text": "Ça me laisse respirer sans tout effacer."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_notes": "Sandra seule en runtime ; trois visuels soft ; Marie et Pauline restent des traces visuelles faibles seulement ; aucun autre fil actif."
+}

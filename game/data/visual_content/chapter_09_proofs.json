@@ -1,0 +1,81 @@
+{
+  "id": "chapter_09_proof_placeholders",
+  "version": 1,
+  "notes": "J9 Option A ajoute trois placeholders soft : photo du déjeuner Sandra, trace quotidienne Marie et story indirecte Pauline. Aucun proof définitif.",
+  "items": [
+    {
+      "id": "j9_sandra_lunch_photo_soft",
+      "character": "sandra",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/j9_sandra_lunch_photo_soft.png",
+      "context": "Photo douce du déjeuner ; présence retenue ; souvenir relationnel ; pas de preuve et pas de bascule.",
+      "tags": [
+        "sandra",
+        "lunch",
+        "soft",
+        "relationship",
+        "memory"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": [
+        "sandra",
+        "marie"
+      ]
+    },
+    {
+      "id": "j9_marie_daily_trace",
+      "character": "marie",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/j9_marie_daily_trace.png",
+      "context": "Trace quotidienne Marie ; café, matinée calme ou détail domestique ; sert de contrepoint visuel sans scène active.",
+      "tags": [
+        "marie",
+        "daily",
+        "trace",
+        "domestic",
+        "soft"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": [
+        "marie"
+      ]
+    },
+    {
+      "id": "j9_pauline_indirect_story",
+      "character": "pauline",
+      "tier": 1,
+      "type": "story",
+      "source_app": "social",
+      "asset_path": "res://assets/placeholders/j9_pauline_indirect_story.png",
+      "context": "Story floue et socialement défendable ; simple rappel que Pauline regarde et laisse une trace faible.",
+      "tags": [
+        "pauline",
+        "story",
+        "social",
+        "weak_trace",
+        "indirect"
+      ],
+      "is_proof": false,
+      "risk_level": 2,
+      "can_delete": false,
+      "can_capture": true,
+      "can_set_as_wallpaper": false,
+      "can_be_discovered_by": [
+        "pauline",
+        "marie"
+      ]
+    }
+  ]
+}
