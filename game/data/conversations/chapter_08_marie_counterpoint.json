@@ -47,27 +47,24 @@
           "id": "choice_c08_marie_here",
           "text": "Je suis là maintenant.",
           "tone": "reconnect",
-          "effects": {
-            "marie.trust": 1,
-            "marie.lucidity": 1
-          },
+          "effects": {},
           "next_messages": [
             {
               "id": "msg_player_c08_marie_here_001",
               "sender": "ludo",
-              "time_label": "10:06",
+              "time_label": "10:08",
               "text": "Je suis là maintenant."
             },
             {
               "id": "msg_c08_marie_here_001",
               "sender": "marie",
-              "time_label": "10:08",
+              "time_label": "10:09",
               "text": "Oui."
             },
             {
               "id": "msg_c08_marie_here_002",
               "sender": "marie",
-              "time_label": "10:08",
+              "time_label": "10:09",
               "text": "Et c’est ça qui me fatigue un peu."
             }
           ]
@@ -76,21 +73,18 @@
           "id": "choice_c08_marie_elsewhere",
           "text": "J’ai été ailleurs.",
           "tone": "truth",
-          "effects": {
-            "truth_tendency": 1,
-            "marie.trust": 1
-          },
+          "effects": {},
           "next_messages": [
             {
               "id": "msg_player_c08_marie_elsewhere_001",
               "sender": "ludo",
-              "time_label": "10:06",
+              "time_label": "10:08",
               "text": "J’ai été ailleurs."
             },
             {
               "id": "msg_c08_marie_elsewhere_001",
               "sender": "marie",
-              "time_label": "10:08",
+              "time_label": "10:09",
               "text": "Merci de le dire."
             },
             {
@@ -105,21 +99,18 @@
           "id": "choice_c08_marie_better",
           "text": "Je te dois mieux.",
           "tone": "reconnect",
-          "effects": {
-            "marie.trust": 1,
-            "marie_attention_score": 1
-          },
+          "effects": {},
           "next_messages": [
             {
               "id": "msg_player_c08_marie_better_001",
               "sender": "ludo",
-              "time_label": "10:06",
+              "time_label": "10:08",
               "text": "Je te dois mieux."
             },
             {
               "id": "msg_c08_marie_better_001",
               "sender": "marie",
-              "time_label": "10:08",
+              "time_label": "10:09",
               "text": "Alors commence simple."
             },
             {

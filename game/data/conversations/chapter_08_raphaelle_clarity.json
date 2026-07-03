@@ -47,27 +47,24 @@
           "id": "choice_c08_raphaelle_finish",
           "text": "Je le finis maintenant.",
           "tone": "truth",
-          "effects": {
-            "raphaelle.clarity": 1,
-            "truth_tendency": 1
-          },
+          "effects": {},
           "next_messages": [
             {
               "id": "msg_player_c08_raphaelle_finish_001",
               "sender": "ludo",
-              "time_label": "09:14",
+              "time_label": "09:16",
               "text": "Je le finis maintenant."
             },
             {
               "id": "msg_c08_raphaelle_finish_001",
               "sender": "raphaelle",
-              "time_label": "09:16",
+              "time_label": "09:17",
               "text": "Bien."
             },
             {
               "id": "msg_c08_raphaelle_finish_002",
               "sender": "raphaelle",
-              "time_label": "09:16",
+              "time_label": "09:17",
               "text": "Court. Net. Sans bruit."
             }
           ]
@@ -76,26 +73,24 @@
           "id": "choice_c08_raphaelle_delay",
           "text": "Je le reprends après.",
           "tone": "delay",
-          "effects": {
-            "raphaelle.clarity": 1
-          },
+          "effects": {},
           "next_messages": [
             {
               "id": "msg_player_c08_raphaelle_delay_001",
               "sender": "ludo",
-              "time_label": "09:14",
+              "time_label": "09:16",
               "text": "Je le reprends après."
             },
             {
               "id": "msg_c08_raphaelle_delay_001",
               "sender": "raphaelle",
-              "time_label": "09:16",
+              "time_label": "09:17",
               "text": "D’accord."
             },
             {
               "id": "msg_c08_raphaelle_delay_002",
               "sender": "raphaelle",
-              "time_label": "09:16",
+              "time_label": "09:17",
               "text": "Mais pas le vieux report qui s’étire."
             }
           ]
@@ -104,21 +99,18 @@
           "id": "choice_c08_raphaelle_net",
           "text": "Je t’envoie le point net.",
           "tone": "truth",
-          "effects": {
-            "raphaelle.clarity": 1,
-            "truth_tendency": 1
-          },
+          "effects": {},
           "next_messages": [
             {
               "id": "msg_player_c08_raphaelle_net_001",
               "sender": "ludo",
-              "time_label": "09:14",
+              "time_label": "09:16",
               "text": "Je t’envoie le point net."
             },
             {
               "id": "msg_c08_raphaelle_net_001",
               "sender": "raphaelle",
-              "time_label": "09:16",
+              "time_label": "09:17",
               "text": "Mieux."
             },
             {
