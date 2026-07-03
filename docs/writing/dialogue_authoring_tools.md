@@ -77,7 +77,7 @@ tools/dialogue_voice_check.py
 ### 1. Préparer une scène
 
 ```bash
-python3 tools/dialogue_context_pack.py --character raphaelle --day 6 --stage intimacy_1 --risk medium
+python3 tools/dialogue_context_pack.py --character raphaelle --day 6 --stage stage_1_familiarite --risk medium
 ```
 
 Exemple d’usage : avant d’écrire une scène Raphaëlle J6, le script rappelle :
@@ -112,7 +112,7 @@ Le rapport mesure :
 ### 3. Vérifier la voix
 
 ```bash
-python3 tools/dialogue_voice_check.py game/data/conversations/chapter_05_raphaelle_boundary.json --character raphaelle --stage intimacy_1 --risk medium
+python3 tools/dialogue_voice_check.py game/data/conversations/chapter_05_raphaelle_boundary.json --character raphaelle --stage stage_1_familiarite --risk medium
 ```
 
 Le script signale des alertes, pas des décisions.
