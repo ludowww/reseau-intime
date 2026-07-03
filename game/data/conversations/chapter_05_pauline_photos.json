@@ -18,9 +18,9 @@
       "conversation_segment_id": "c05_pauline_understands_01",
       "moment_label": "milieu de matinée",
       "time_label": "10:22",
-      "transition_text": "Pauline trie les photos d’hier et laisse entendre qu’elle a compris plus que ce qu’elle montre.",
-      "availability_state": "Pauline est joueuse, dangereusement lucide, et un peu trop contente d’observer les réactions.",
-      "function": "Faire de Pauline un pivot secondaire plus dangereux qu’une simple distributrice d’images.",
+      "transition_text": "Pauline trie les photos d’hier et laisse filtrer une trace faible.",
+      "availability_state": "Pauline reste joueuse, lucide, et contrôlante sans trop en dire.",
+      "function": "Faire de Pauline un pivot secondaire plus dangereux par retenue.",
       "messages": [
         {
           "id": "msg_c05_pauline_001",
@@ -32,129 +32,21 @@
           "id": "msg_c05_pauline_002",
           "sender": "pauline",
           "time_label": "10:22",
-          "text": "Enfin “trie”."
+          "text": "Enfin. “Trie” est ambitieux."
         },
         {
           "id": "msg_c05_pauline_003",
           "sender": "pauline",
           "time_label": "10:23",
-          "text": "Je fais semblant d’être une adulte organisée 😇"
-        },
-        {
-          "id": "msg_c05_pauline_004",
-          "sender": "pauline",
-          "time_label": "10:23",
-          "text": "Dossier."
-        },
-        {
-          "id": "msg_c05_pauline_005",
-          "sender": "pauline",
-          "time_label": "10:23",
-          "text": "Tri."
-        },
-        {
-          "id": "msg_c05_pauline_006",
-          "sender": "pauline",
-          "time_label": "10:23",
-          "text": "Responsabilité."
-        },
-        {
-          "id": "msg_c05_pauline_007",
-          "sender": "pauline",
-          "time_label": "10:24",
-          "text": "Petite illusion de maîtrise."
-        },
-        {
-          "id": "msg_c05_pauline_008",
-          "sender": "pauline",
-          "time_label": "10:24",
-          "text": "Tout est faux évidemment 🙃"
-        },
-        {
-          "id": "msg_c05_pauline_009",
-          "sender": "pauline",
-          "time_label": "10:25",
-          "text": "Les détails, c’est terrible."
-        },
-        {
-          "id": "msg_c05_pauline_010",
-          "sender": "pauline",
-          "time_label": "10:25",
-          "text": "Ça ne dit rien officiellement."
-        },
-        {
-          "id": "msg_c05_pauline_011",
-          "sender": "pauline",
-          "time_label": "10:26",
-          "text": "Mais ça raconte quand même beaucoup 🙃"
-        },
-        {
-          "id": "msg_c05_pauline_012",
-          "sender": "pauline",
-          "time_label": "10:26",
-          "text": "Photo prise il y a trois minutes."
-        },
-        {
-          "id": "msg_c05_pauline_013",
-          "sender": "pauline",
-          "time_label": "10:26",
-          "text": "Rue très banale."
-        },
-        {
-          "id": "msg_c05_pauline_014",
-          "sender": "pauline",
-          "time_label": "10:26",
-          "text": "Manteau très sage."
-        },
-        {
-          "id": "msg_c05_pauline_015",
-          "sender": "pauline",
-          "time_label": "10:27",
-          "text": "Tête de fille qui attend le bus."
-        },
-        {
-          "id": "msg_c05_pauline_016",
-          "sender": "pauline",
-          "time_label": "10:27",
-          "text": "Intentions moins sages 😇",
+          "text": "Photo dehors. Rien de spectaculaire.",
           "content_id": "j5_pauline_street_selfie",
           "content_behavior": "inline_preview"
-        },
-        {
-          "id": "msg_c05_pauline_017",
-          "sender": "pauline",
-          "time_label": "10:28",
-          "text": "Je ne te juge pas, tu sais."
-        },
-        {
-          "id": "msg_c05_pauline_018",
-          "sender": "pauline",
-          "time_label": "10:28",
-          "text": "Je crois même que je comprends très bien."
-        },
-        {
-          "id": "msg_c05_pauline_019",
-          "sender": "pauline",
-          "time_label": "10:29",
-          "text": "Et c’est peut-être ça le problème."
-        },
-        {
-          "id": "msg_c05_pauline_020",
-          "sender": "pauline",
-          "time_label": "10:29",
-          "text": "Le moment où on se raconte qu’on regarde juste."
-        },
-        {
-          "id": "msg_c05_pauline_021",
-          "sender": "pauline",
-          "time_label": "10:29",
-          "text": "Alors qu’en vrai on vérifie si ça nous fait encore quelque chose."
         }
       ],
       "choices": [
         {
           "id": "choice_c05_pauline_deny",
-          "text": "Je ne vois pas ce que tu crois avoir compris. Tu fais ton cinéma, Pauline.",
+          "text": "Tu fais ton cinéma.",
           "tone": "deny",
           "effects": {
             "lie_score": 1,
@@ -168,19 +60,19 @@
               "id": "msg_player_c05_pauline_deny_001",
               "sender": "ludo",
               "time_label": "10:22",
-              "text": "Je ne vois pas ce que tu crois avoir compris. Tu fais ton cinéma, Pauline."
+              "text": "Tu fais ton cinéma."
             },
             {
               "id": "msg_c05_pauline_deny_001",
               "sender": "pauline",
               "time_label": "10:30",
-              "text": "Évidemment. Et moi je joue très mal, c’est bien connu."
+              "text": "Évidemment. Je joue très mal."
             }
           ]
         },
         {
           "id": "choice_c05_pauline_ask",
-          "text": "Qu’est-ce que tu as vu exactement ?",
+          "text": "Tu as vu quoi ?",
           "tone": "probe",
           "effects": {
             "pauline.interest": 1,
@@ -194,19 +86,19 @@
               "id": "msg_player_c05_pauline_ask_001",
               "sender": "ludo",
               "time_label": "10:22",
-              "text": "Qu’est-ce que tu as vu exactement ?"
+              "text": "Tu as vu quoi ?"
             },
             {
               "id": "msg_c05_pauline_ask_001",
               "sender": "pauline",
               "time_label": "10:30",
-              "text": "Le genre de question qui prouve qu’il y a quelque chose à voir."
+              "text": "Le genre de question qui confirme le reste."
             }
           ]
         },
         {
           "id": "choice_c05_pauline_game",
-          "text": "Et toi ? Tu préfères être regardée ou faire croire que tu ne fais qu’observer ?",
+          "text": "Tu me testes ?",
           "tone": "game",
           "effects": {
             "pauline.control": 1,
@@ -221,19 +113,19 @@
               "id": "msg_player_c05_pauline_game_001",
               "sender": "ludo",
               "time_label": "10:22",
-              "text": "Et toi ? Tu préfères être regardée ou faire croire que tu ne fais qu’observer ?"
+              "text": "Tu me testes ?"
             },
             {
               "id": "msg_c05_pauline_game_001",
               "sender": "pauline",
               "time_label": "10:30",
-              "text": "Mauvaise réponse pour quelqu’un qui veut garder le dessus."
+              "text": "Mauvaise réponse pour garder le dessus."
             }
           ]
         },
         {
           "id": "choice_c05_pauline_remind",
-          "text": "Tu dis que tu comprends très bien. C’est parce que tu observes les autres ou parce que tu as déjà été de ce côté-là ?",
+          "text": "Tu me connais si bien ?",
           "tone": "edge",
           "effects": {
             "pauline.control": -1,
@@ -248,18 +140,18 @@
               "id": "msg_player_c05_pauline_remind_001",
               "sender": "ludo",
               "time_label": "10:22",
-              "text": "Tu dis que tu comprends très bien. C’est parce que tu observes les autres ou parce que tu as déjà été de ce côté-là ?"
+              "text": "Tu me connais si bien ?"
             },
             {
               "id": "msg_c05_pauline_remind_001",
               "sender": "pauline",
               "time_label": "10:30",
-              "text": "Ouh. Voilà une vraie phrase. J’en prendrai note."
+              "text": "Ouh. Voilà une vraie phrase."
             }
           ]
         }
       ]
     }
   ],
-  "debug_notes": "Pauline devient dangereusement compréhensive ; la photo du selfie reste contrôlée par elle."
+  "debug_notes": "Pauline reste observatrice et contrôlante ; la photo demeure une trace faible."
 }
