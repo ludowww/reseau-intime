@@ -94,7 +94,7 @@ Sandra: Comme si le repas n’avait pas fini.
 Sandra: Comme si toi non plus.
 
 Player: C’est dangereux, ça.
-Sandra: C’est surtout embarrassant.
+Sandra: C’est surtout embarrassant 😅
 Sandra: Et toi, tu réponds trop vite.
 
 Choice 3 — Player
@@ -152,7 +152,7 @@ Marie : `🙂 / 🙄 / 😅` modérés, ou absence assumée si la fatigue porte 
 ### Full SMS draft
 Marie: J’ai racheté du pain.
 Marie: L’autre était sec.
-Marie: J’ai pensé à toi en le prenant.
+Marie: J’ai pensé à toi en le prenant 🙂
 
 [VISUAL_INTENT: J9 Marie daily photo — trace domestique / couple visible / non proof]
 
