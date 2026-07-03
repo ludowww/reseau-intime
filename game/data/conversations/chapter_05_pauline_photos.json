@@ -59,7 +59,7 @@
             {
               "id": "msg_player_c05_pauline_deny_001",
               "sender": "ludo",
-              "time_label": "10:22",
+              "time_label": "10:24",
               "text": "Tu fais ton cinéma."
             },
             {
@@ -85,7 +85,7 @@
             {
               "id": "msg_player_c05_pauline_ask_001",
               "sender": "ludo",
-              "time_label": "10:22",
+              "time_label": "10:24",
               "text": "Tu as vu quoi ?"
             },
             {
@@ -112,7 +112,7 @@
             {
               "id": "msg_player_c05_pauline_game_001",
               "sender": "ludo",
-              "time_label": "10:22",
+              "time_label": "10:24",
               "text": "Tu me testes ?"
             },
             {
@@ -139,7 +139,7 @@
             {
               "id": "msg_player_c05_pauline_remind_001",
               "sender": "ludo",
-              "time_label": "10:22",
+              "time_label": "10:24",
               "text": "Tu me connais si bien ?"
             },
             {
