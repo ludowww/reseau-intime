@@ -93,11 +93,10 @@
           "id": "msg_sandra_433",
           "sender": "sandra",
           "time_label": "22:59",
-          "text": "Bref, je te parle de tomates parce que c’est plus simple que de dire que tu me manques un peu.",
+          "text": "Bref, je te parle de tomates parce que c’est plus simple que d’expliquer ce que ça me fait de retomber là-dessus.",
           "tags": [
             "sandra",
             "tomates",
-            "manque",
             "souvenir",
             "day1"
           ]
@@ -106,7 +105,7 @@
       "choices": [
         {
           "id": "choice_sandra_guided_001_ah",
-          "text": "Ah.",
+          "text": "Ah, oui — je m’en souviens.",
           "tone": "guided_reply",
           "effects": {},
           "sets_flags": [
@@ -169,7 +168,7 @@
       "choices": [
         {
           "id": "choice_from_msg_sandra_008",
-          "text": "Celui qui disait “si tu montres cette photo à quelqu’un je nie tout”.",
+          "text": "Celui qui disait : si tu montres cette photo à quelqu’un, je nie tout.",
           "tone": "guided_reply",
           "source_message_id": "msg_sandra_008",
           "time_label": "22:59",
@@ -198,7 +197,7 @@
       "choices": [
         {
           "id": "choice_from_msg_sandra_011",
-          "text": "Donc tu fais ça exprès.",
+          "text": "Donc tu fais ça exprès ?",
           "tone": "guided_reply",
           "source_message_id": "msg_sandra_011",
           "time_label": "23:00",
@@ -302,7 +301,7 @@
       "choices": [
         {
           "id": "choice_from_msg_sandra_021",
-          "text": "Pas tout.",
+          "text": "Pas tout à fait.",
           "tone": "guided_reply",
           "source_message_id": "msg_sandra_021",
           "time_label": "23:03",
@@ -325,7 +324,7 @@
       "choices": [
         {
           "id": "choice_from_msg_sandra_023",
-          "text": "Celle-là oui, peut-être.",
+          "text": "Cette photo-là, oui, peut-être.",
           "tone": "guided_reply",
           "source_message_id": "msg_sandra_023",
           "time_label": "23:04",
@@ -348,7 +347,7 @@
       "choices": [
         {
           "id": "choice_from_msg_sandra_025",
-          "text": "Ça fait bizarre de la revoir.",
+          "text": "Ça fait bizarre de la revoir, c’est tout.",
           "tone": "guided_reply",
           "source_message_id": "msg_sandra_025",
           "time_label": "23:05",
@@ -1055,7 +1054,7 @@
       "choices": [
         {
           "id": "choice_sandra_001_sincere",
-          "text": "Tu m’as manqué. Plus que je ne pensais.",
+          "text": "Je crois que ça m’a fait quelque chose de retomber dessus.",
           "tone": "sincere",
           "effects": {
             "sandra.attachment": 2,
@@ -1068,7 +1067,7 @@
         },
         {
           "id": "choice_sandra_001_prudent",
-          "text": "J’aimerais qu’on se reparle, mais doucement.",
+          "text": "On peut se reparler sans se mettre la pression, oui.",
           "tone": "prudent",
           "effects": {
             "sandra.attachment": 1,
@@ -1080,7 +1079,7 @@
         },
         {
           "id": "choice_sandra_001_light_evade",
-          "text": "On est devenus très forts en amitié administrative.",
+          "text": "Je peux faire comme si de rien n’était, mais ce serait un peu faux.",
           "tone": "light_evade",
           "effects": {
             "sandra.attachment": 1

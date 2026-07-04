@@ -35,28 +35,13 @@
           "id": "msg_marie_002",
           "sender": "marie",
           "time_label": "18:12",
-          "text": "Et avant que tu répondes “bientôt” comme d’habitude, il n’y a plus de pain. J’ai gardé la photo du panier pour te le rappeler."
-        },
-        {
-          "id": "msg_marie_290",
-          "sender": "marie",
-          "time_label": "18:12",
-          "text": "J’ai aussi pris la photo de la cuisine avant que ça refroidisse : biscuits encore tièdes, ta tasse à côté, et moi qui fais semblant de ne pas aimer quand ça bouge un peu trop vite.",
-          "content_id": "j1_marie_kitchen_soft",
-          "tags": [
-            "marie",
-            "cuisine",
-            "biscuits",
-            "tasse",
-            "photo",
-            "day1"
-          ]
+          "text": "Avant que tu répondes “bientôt” comme d’habitude : il n’y a plus de pain."
         },
         {
           "id": "msg_marie_291",
           "sender": "marie",
           "time_label": "18:12",
-          "text": "Et j’ai vu les sacs de Mathilde dans l’entrée. Son sac de sport et sa raquette donnent l’impression qu’elle s’installe sans vraiment s’annoncer.",
+          "text": "J’ai vu les sacs de Mathilde dans l’entrée. Elle commence déjà à prendre de la place.",
           "content_id": "j1_mathilde_bag_domestic_trace",
           "tags": [
             "mathilde",
@@ -70,11 +55,37 @@
         {
           "id": "msg_marie_292",
           "sender": "marie",
-          "time_label": "18:13",
-          "text": "Bref, je suis gourmande et je l’assume. Et toi, tu aimes les sensations fortes ; moi je garde la cuillère, toi tu prends l’aventure.",
+          "time_label": "18:12",
+          "text": "Ses baskets traînent près du paquet de biscuits. Ça donne déjà l’impression qu’elle s’est installée.",
           "tags": [
             "marie",
             "gourmandise",
+            "biscuits",
+            "day1"
+          ]
+        },
+        {
+          "id": "msg_marie_290",
+          "sender": "marie",
+          "time_label": "18:12",
+          "text": "J’ai gardé une photo de la cuisine : ta tasse, les biscuits encore tièdes, et moi qui fais semblant d’avoir de l’énergie.",
+          "content_id": "j1_marie_kitchen_soft",
+          "tags": [
+            "marie",
+            "cuisine",
+            "biscuits",
+            "tasse",
+            "photo",
+            "day1"
+          ]
+        },
+        {
+          "id": "msg_marie_293",
+          "sender": "marie",
+          "time_label": "18:13",
+          "text": "Bref, je suis gourmande et un peu fatiguée, mais je te garde les sensations fortes pour après le dîner.",
+          "tags": [
+            "marie",
             "sensations fortes",
             "couple",
             "day1"
@@ -115,7 +126,7 @@
       "choices": [
         {
           "id": "choice_from_msg_marie_005",
-          "text": "C’est une stratégie solide.",
+          "text": "C’est une stratégie solide, oui.",
           "tone": "guided_reply",
           "source_message_id": "msg_marie_005",
           "time_label": "18:13",
@@ -138,7 +149,7 @@
       "choices": [
         {
           "id": "choice_from_msg_marie_007",
-          "text": "Je peux passer en prendre.",
+          "text": "Je peux passer en prendre si tu veux.",
           "tone": "guided_reply",
           "source_message_id": "msg_marie_007",
           "time_label": "18:14",
@@ -167,7 +178,7 @@
       "choices": [
         {
           "id": "choice_from_msg_marie_010",
-          "text": "Celle qui t’a traumatisée ?",
+          "text": "Celle qui t’a traumatisée ? Oui, je vois le genre.",
           "tone": "guided_reply",
           "source_message_id": "msg_marie_010",
           "time_label": "18:15",
@@ -190,7 +201,7 @@
       "choices": [
         {
           "id": "choice_from_msg_marie_012",
-          "text": "Je vais éviter la baguette contentieuse.",
+          "text": "Je vais éviter la baguette contentieuse, promis.",
           "tone": "guided_reply",
           "source_message_id": "msg_marie_012",
           "time_label": "18:16",
@@ -219,7 +230,7 @@
       "choices": [
         {
           "id": "choice_from_msg_marie_015",
-          "text": "Sur le pain au moins.",
+          "text": "Sur le pain au moins, je suis fiable.",
           "tone": "guided_reply",
           "source_message_id": "msg_marie_015",
           "time_label": "18:17",
@@ -242,7 +253,7 @@
       "choices": [
         {
           "id": "choice_from_msg_marie_017",
-          "text": "Je rentre vers 19h15.",
+          "text": "Je rentre vers 19h15, promis.",
           "tone": "guided_reply",
           "source_message_id": "msg_marie_017",
           "time_label": "18:17",
@@ -265,7 +276,7 @@
       "choices": [
         {
           "id": "choice_from_msg_marie_019",
-          "text": "Vrai 19h15.",
+          "text": "Vrai 19h15. Et pas le “j’arrive” qui veut dire autre chose.",
           "tone": "guided_reply",
           "source_message_id": "msg_marie_019",
           "time_label": "18:18",
@@ -294,7 +305,7 @@
       "choices": [
         {
           "id": "choice_from_msg_marie_022",
-          "text": "Tu es dure.",
+          "text": "Tu es dure, mais je prends.",
           "tone": "guided_reply",
           "source_message_id": "msg_marie_022",
           "time_label": "18:19",
@@ -346,7 +357,7 @@
       "choices": [
         {
           "id": "choice_from_msg_marie_027",
-          "text": "Un peu mérité.",
+          "text": "Un peu mérité, oui.",
           "tone": "guided_reply",
           "source_message_id": "msg_marie_027",
           "time_label": "18:21",
@@ -551,7 +562,7 @@
       "choices": [
         {
           "id": "choice_marie_001_present",
-          "text": "désolé, j’étais un peu ailleurs. je suis là maintenant",
+          "text": "Désolé, j’étais un peu ailleurs. Je suis là maintenant.",
           "tone": "present",
           "effects": {
             "marie.trust": 1,
@@ -564,7 +575,7 @@
         },
         {
           "id": "choice_marie_001_practical",
-          "text": "j’ai pensé au pain, miracle domestique",
+          "text": "J’ai pensé au pain, miracle domestique.",
           "tone": "practical",
           "effects": {
             "marie.trust": 1
@@ -575,7 +586,7 @@
         },
         {
           "id": "choice_marie_001_avoidant",
-          "text": "viens, je te garde une place sur le canapé",
+          "text": "Viens, je te garde une place sur le canapé.",
           "tone": "slightly_avoidant",
           "effects": {
             "marie.lucidity": 1,

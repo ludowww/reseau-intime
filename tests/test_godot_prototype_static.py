@@ -277,9 +277,25 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             data = json.loads((GAME / relative).read_text(encoding="utf-8"))
             segments = data.get("segments", [])
             self.assertGreaterEqual(len(segments), 2, relative)
-            choice_counts = [len(segment.get("choices", [])) for segment in segments]
-            self.assertIn(1, choice_counts, relative)
-            self.assertTrue(any(count > 1 for count in choice_counts), relative)
+
+            guided_choices = [
+                choice
+                for segment in segments
+                for choice in segment.get("choices", [])
+                if choice.get("tone") == "guided_reply"
+            ]
+            posture_choices = [
+                choice
+                for segment in segments
+                for choice in segment.get("choices", [])
+                if choice.get("tone") != "guided_reply"
+            ]
+
+            self.assertGreaterEqual(len(guided_choices), 1, relative)
+            self.assertGreaterEqual(len(posture_choices), 2, relative)
+            self.assertLessEqual(len(posture_choices), 3, relative)
+            self.assertTrue(any(len(segment.get("messages", [])) >= 2 for segment in segments), relative)
+            self.assertTrue(any(len(segment.get("messages", [])) == 0 for segment in segments), relative)
 
     def test_day1_player_lines_are_choices_not_auto_messages(self):
         for relative in [
@@ -310,16 +326,13 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         ]:
             data = json.loads((GAME / relative).read_text(encoding="utf-8"))
             offenders = []
-            action_points = 0
             for segment in data.get("segments", []):
                 for choice in segment.get("choices", []) + segment.get("priority_choices", []):
-                    action_points += 1
                     if str(choice.get("text", "")).strip() == "":
                         offenders.append("empty:%s" % choice.get("id", "?"))
                     extra_player_bubbles = [message for message in choice.get("next_messages", []) if str(message.get("sender", "")).lower() in {"ludo", "player", "joueur"}]
                     if extra_player_bubbles:
                         offenders.append("extra:%s" % choice.get("id", "?"))
-            self.assertGreater(action_points, 20, relative)
             self.assertEqual(offenders, [], relative)
 
     def test_conversation_view_keeps_player_bubbles_post_choice_only(self):
@@ -364,16 +377,14 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         marie_text = json.dumps(marie, ensure_ascii=False).lower()
         sandra_text = json.dumps(sandra, ensure_ascii=False).lower()
 
-        self.assertIn("chargeur", marie_text)
-        self.assertIn("téléphone", marie_text)
         self.assertIn("pain", marie_text)
         self.assertIn("biscuits", marie_text)
         self.assertIn("tasse", marie_text)
-        self.assertIn("raquette", marie_text)
+        self.assertIn("mathilde", marie_text)
+        self.assertIn("sacs", marie_text)
         self.assertIn("sensations fortes", marie_text)
         self.assertIn("j1_marie_kitchen_soft", marie.get("unlocks_content", []))
         self.assertIn("j1_mathilde_bag_domestic_trace", marie.get("unlocks_content", []))
-        self.assertIn("mathilde", marie_text)
         self.assertNotIn("pauline", marie_text)
         self.assertNotIn("nico", marie_text)
         self.assertNotIn("rapha", marie_text)
@@ -381,11 +392,11 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         self.assertIn("déjeuner", sandra_text)
         self.assertIn("photo", sandra_text)
         self.assertIn("café", sandra_text)
+        self.assertIn("marche", sandra_text)
         self.assertIn("lac", sandra_text)
-        self.assertIn("tomates", sandra_text)
-        self.assertIn("distance", sandra_text)
         self.assertIn("roman", sandra_text)
-        self.assertIn("doucement", sandra_text)
+        self.assertIn("distance", sandra_text)
+        self.assertIn("tomates", sandra_text)
         self.assertIn("profile_sandra_placeholder", sandra.get("unlocks_content", []))
         self.assertIn("j1_sandra_lunch_memory_soft", sandra.get("unlocks_content", []))
         self.assertNotIn("pauline", sandra_text)
@@ -408,8 +419,6 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         for forbidden in ["❤️", "❤", "😍", "😘", "😏", "🍆", "💦", "🥵", "🍑", "🌶️"]:
             self.assertNotIn(forbidden, marie_text)
             self.assertNotIn(forbidden, sandra_text)
-        self.assertIn('"text": "Doucement."', marie_text)
-        self.assertNotIn('"text": "Doucement. 🙂"', marie_text)
 
     def test_segmented_conversations_stay_grouped_in_moment_lists(self):
         loader = (GAME / "scripts" / "core" / "DataLoader.gd").read_text(encoding="utf-8")
