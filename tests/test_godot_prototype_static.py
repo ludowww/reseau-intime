@@ -42,6 +42,7 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             "res://data/conversations/chapter_02_index.json",
             "res://data/conversations/chapter_03_index.json",
             "res://data/conversations/chapter_04_index.json",
+            "res://data/conversations/chapter_05_index.json",
             "res://data/conversations/chapter_07_index.json",
             "res://data/conversations/chapter_09_index.json",
             "res://data/visual_content/placeholders.json",
@@ -640,6 +641,52 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         self.assertEqual(proofs.get("version"), 1)
         self.assertEqual(len(proofs.get("items", [])), 3)
         self.assertTrue(any(item.get("character") == "sandra" for item in proofs.get("items", [])))
+
+    def test_day5_index_reworks_nico_as_first_pivot_with_three_visual_traces(self):
+        index = json.loads((GAME / "data/conversations/chapter_05_index.json").read_text(encoding="utf-8"))
+        availability = index.get("conversation_availability", {})
+        self.assertIn("res://data/conversations/chapter_05_social_story.json", index.get("conversation_files", []))
+        self.assertEqual(availability.get("initial_conversation_ids"), ["chapter_05_marie_couple_vacille"])
+
+        expected_flow = [
+            ("08:12", "chapter_05_marie_couple_vacille", "thread_marie_private"),
+            ("10:06", "chapter_05_social_story", "thread_nico_private"),
+            ("10:22", "chapter_05_mathilde_kitchen_trial", "thread_mathilde_private"),
+            ("11:18", "chapter_05_pauline_understands", "thread_pauline_private"),
+            ("17:54", "chapter_05_raphaelle_work_breath", "thread_raphaelle_private"),
+            ("20:18", "chapter_05_sandra_first_truth_game", "thread_sandra_private"),
+            ("21:07", "chapter_05_pauline_last_photo", "thread_pauline_private"),
+        ]
+        conversation_by_id = {}
+        for rel_path in index.get("conversation_files", []):
+            data = json.loads((GAME / rel_path.removeprefix("res://")).read_text(encoding="utf-8"))
+            conversation_by_id[data.get("id")] = data
+
+        actual_flow = []
+        for moment in index.get("moment_flow", []):
+            self.assertEqual(len(moment.get("conversation_ids", [])), 1)
+            conversation_id = moment["conversation_ids"][0]
+            data = conversation_by_id[conversation_id]
+            actual_flow.append((moment.get("time_label"), conversation_id, data.get("thread", {}).get("id")))
+        self.assertEqual(actual_flow, expected_flow)
+
+        self.assertEqual(index.get("routes_available"), ["marie", "mathilde", "pauline", "raphaelle", "sandra", "nico_marie"])
+        self.assertEqual(availability.get("unlocks", {}).get("chapter_05_social_story", {}).get("after_conversation_completed"), "chapter_05_marie_couple_vacille")
+
+        conversation = conversation_by_id["chapter_05_social_story"]
+        self.assertEqual(conversation.get("thread", {}).get("id"), "thread_nico_private")
+        self.assertEqual(conversation.get("thread", {}).get("display_name"), "Nico")
+        self.assertEqual(conversation.get("thread", {}).get("type"), "private")
+        self.assertEqual(len(conversation.get("segments", [])), 1)
+        self.assertEqual(len(conversation.get("segments", [])[0].get("choices", [])), 5)
+        scene_text = json.dumps(conversation.get("segments", []), ensure_ascii=False)
+        for forbidden in ["photo intime", "non consentie", "volée", "Mathilde", "Pauline", "Sandra", "Raphaëlle"]:
+            self.assertNotIn(forbidden, scene_text)
+
+        proofs = json.loads((GAME / "data/visual_content/chapter_05_proofs.json").read_text(encoding="utf-8"))
+        proof_ids = {item.get("id") for item in proofs.get("items", [])}
+        for expected in ["j5_marie_party_nico_frame", "j5_nico_thread_capture", "j5_nico_bar_context"]:
+            self.assertIn(expected, proof_ids)
 
     def test_conversation_view_resumes_newly_unlocked_episode_in_existing_thread(self):
         script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")

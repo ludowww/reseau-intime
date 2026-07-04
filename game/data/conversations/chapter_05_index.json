@@ -3,13 +3,13 @@
   "chapter": 5,
   "day": 5,
   "title": "Jour 5 — Le couple vacille",
-  "description": "Marie fait vaciller le couple, Pauline devient dangereusement compréhensive, la story Nico / Marie et la dernière photo de Pauline élargissent la mémoire sociale, Mathilde et Raphaëlle restent en micro-présences, Sandra ouvre le jeu confidence/photo.",
-  "design_goal": "Faire sentir que Marie est le pivot principal, Pauline le pivot secondaire, et que les réponses Player changent déjà la posture relationnelle.",
+  "description": "Marie fait vaciller le couple, puis Nico devient le premier pivot en voyant la photo sociale ; Pauline, Mathilde, Raphaëlle et Sandra restent plus tard, sans être actives dans le pivot Nico.",
+  "design_goal": "Faire sentir que Marie ouvre la journée, puis Nico devient le premier vrai pivot social sans basculer en manipulateur, pendant que les autres présences restent secondaires.",
   "moment_flow": [
     {
       "moment_label": "matin",
       "time_label": "08:12",
-      "transition_text": "Marie parle d’abord du pain froid, puis de Nico et du couple qui n’arrive plus à faire semblant. Trois photos / traces circulent déjà en sous-texte.",
+      "transition_text": "Marie parle d’abord du pain froid et du café refroidi, puis elle montre que la photo de la veille continue de faire bouger le couple.",
       "conversation_ids": [
         "chapter_05_marie_couple_vacille"
       ]
@@ -17,25 +17,25 @@
     {
       "moment_label": "milieu de matinée",
       "time_label": "10:06",
-      "transition_text": "Mathilde lance un tribunal domestique : une tasse, un évier, beaucoup d’emojis, zéro trace lourde.",
+      "transition_text": "Nico revient très léger, voit Marie comme une femme, et teste la réaction de Player sans devenir lourd.",
       "conversation_ids": [
-        "chapter_05_mathilde_kitchen_trial"
+        "chapter_05_social_story"
       ]
     },
     {
       "moment_label": "fin de matinée",
       "time_label": "10:22",
-      "transition_text": "Pauline comprend trop bien ce que les détails racontent et teste Player avec un selfie contrôlé.",
+      "transition_text": "Mathilde relance la maison, mais le pivot Nico est déjà passé et laisse une petite tension derrière lui.",
       "conversation_ids": [
-        "chapter_05_pauline_understands"
+        "chapter_05_mathilde_kitchen_trial"
       ]
     },
     {
       "moment_label": "réseau social",
       "time_label": "11:18",
-      "transition_text": "Nico revient via la story comme miroir social du lendemain, sans le transformer en antagoniste lourd.",
+      "transition_text": "Pauline comprend trop bien ce que les détails racontent et teste Player avec un selfie contrôlé.",
       "conversation_ids": [
-        "chapter_05_social_story"
+        "chapter_05_pauline_understands"
       ]
     },
     {
@@ -65,9 +65,9 @@
   ],
   "conversation_files": [
     "res://data/conversations/chapter_05_marie_morning.json",
+    "res://data/conversations/chapter_05_social_story.json",
     "res://data/conversations/chapter_05_mathilde_followup.json",
     "res://data/conversations/chapter_05_pauline_photos.json",
-    "res://data/conversations/chapter_05_social_story.json",
     "res://data/conversations/chapter_05_raphaelle_boundary.json",
     "res://data/conversations/chapter_05_sandra_later.json",
     "res://data/conversations/chapter_05_pauline_last_photo.json"
@@ -77,10 +77,11 @@
   ],
   "required_reveals": [
     "Marie dit clairement que quelque chose bouge entre eux.",
-    "Pauline comprend trop bien et reste dangereusement contrôlante.",
+    "Nico remarque Marie sans devenir frontalement dangereux.",
+    "Pauline reste un relais social plus tard.",
     "Mathilde reste une micro-présence domestique sans photo intime.",
     "Raphaëlle est concrète et ne sert pas de cachette.",
-    "Sandra lance un vrai jeu confidence/photo sans tout repousser à plus tard."
+    "Sandra lance plus tard un vrai jeu confidence/photo."
   ],
   "routes_available": [
     "marie",
@@ -92,28 +93,37 @@
   ],
   "routes_locked_to_seed_only": [],
   "debug_expected_outcomes": [
-    "J5 apparaît après J4 sans refactor runtime.",
-    "Le couple vacille clairement et Marie reste le pivot principal.",
-    "Pauline n’est plus une simple distributrice de photos.",
-    "Les trois contenus visuels J5 servent de traces faibles et de jeu social.",
-    "Aucun contenu adulte définitif n’est ajouté."
+    "J5 s’ouvre sur Marie puis bascule vite vers Nico comme premier pivot.",
+    "Nico reste ami / miroir / tentateur léger, pas antagoniste lourd.",
+    "Trois contenus visuels Nico/J5 suffisent sans photo intime.",
+    "Pauline, Mathilde, Raphaëlle et Sandra restent hors du pivot Nico.",
+    "Aucune route lock, aucun vocal, aucun contenu adulte définitif."
   ],
   "conversation_availability": {
     "initial_conversation_ids": [
       "chapter_05_marie_couple_vacille"
     ],
     "locked_conversation_ids": [
+      "chapter_05_social_story",
       "chapter_05_mathilde_kitchen_trial",
       "chapter_05_pauline_understands",
-      "chapter_05_social_story",
       "chapter_05_raphaelle_work_breath",
       "chapter_05_sandra_first_truth_game",
       "chapter_05_pauline_last_photo"
     ],
     "unlocks": {
-      "chapter_05_mathilde_kitchen_trial": {
+      "chapter_05_social_story": {
         "after_conversation_completed": "chapter_05_marie_couple_vacille",
         "time_label": "10:06",
+        "pending": true,
+        "notification": {
+          "title": "Nico",
+          "body": "J’ai vu passer la photo. T’as de la chance, quand même."
+        }
+      },
+      "chapter_05_mathilde_kitchen_trial": {
+        "after_conversation_completed": "chapter_05_social_story",
+        "time_label": "10:22",
         "pending": true,
         "notification": {
           "title": "Mathilde",
@@ -122,24 +132,15 @@
       },
       "chapter_05_pauline_understands": {
         "after_conversation_completed": "chapter_05_mathilde_kitchen_trial",
-        "time_label": "10:22",
+        "time_label": "11:18",
         "pending": true,
         "notification": {
           "title": "Pauline",
           "body": "Les détails racontent beaucoup."
         }
       },
-      "chapter_05_social_story": {
-        "after_conversation_completed": "chapter_05_pauline_understands",
-        "time_label": "11:18",
-        "pending": true,
-        "notification": {
-          "title": "Réseau social",
-          "body": "Hier c’était mieux en vrai que sur la photo."
-        }
-      },
       "chapter_05_raphaelle_work_breath": {
-        "after_conversation_completed": "chapter_05_social_story",
+        "after_conversation_completed": "chapter_05_pauline_understands",
         "time_label": "17:54",
         "pending": true,
         "notification": {

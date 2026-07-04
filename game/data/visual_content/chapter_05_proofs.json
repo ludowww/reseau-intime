@@ -1,7 +1,7 @@
 {
   "id": "chapter_05_proof_placeholders",
   "version": 2,
-  "notes": "J5 ajoute trois placeholders narratifs : Nico/Marie, selfie de Pauline, photo restaurant de Sandra. Les anciens placeholders restent pour compatibilité des fichiers non réécrits.",
+  "notes": "J5 garde Marie comme trace sociale, ajoute Nico comme premier pivot léger, et reste à trois contenus visuels consentis ou neutres sans photo intime.",
   "items": [
     {
       "id": "photo_party_after_j5_placeholder",
@@ -233,6 +233,57 @@
       "can_set_as_wallpaper": true,
       "can_be_discovered_by": [
         "sandra",
+        "marie"
+      ]
+    },
+    {
+      "id": "j5_nico_thread_capture",
+      "character": "nico",
+      "tier": 1,
+      "type": "capture",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/j5_nico_thread_capture.png",
+      "context": "Capture neutre du fil Nico ; il chambre Player sans devenir menaçant.",
+      "tags": [
+        "nico",
+        "capture",
+        "messages",
+        "neutral",
+        "mirror"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": false,
+      "can_set_as_wallpaper": false,
+      "can_be_discovered_by": [
+        "nico",
+        "marie",
+        "pauline"
+      ]
+    },
+    {
+      "id": "j5_nico_bar_context",
+      "character": "nico",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/j5_nico_bar_context.png",
+      "context": "Photo de contexte ; Nico au bar avec un verre ; présence sociale réelle et défendable.",
+      "tags": [
+        "nico",
+        "bar",
+        "glass",
+        "social",
+        "context"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": false,
+      "can_be_discovered_by": [
+        "nico",
         "marie"
       ]
     }
