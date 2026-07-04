@@ -2,7 +2,7 @@
   "id": "chapter_02_raphaelle_midday",
   "chapter": 2,
   "day": 2,
-  "title": "Jour 2 — Midi avec Raphaëlle",
+  "title": "Jour 2 — Petite recommandation",
   "app": "messages",
   "thread": {
     "id": "thread_raphaelle_private",
@@ -24,14 +24,127 @@
           "id": "msg_c02_raphaelle_midday_001",
           "sender": "raphaelle",
           "time_label": "12:27",
-          "text": "J’ai récupéré quelque chose à toi."
+          "text": "Salut Player."
+        },
+        {
+          "id": "msg_c02_raphaelle_midday_002",
+          "sender": "raphaelle",
+          "time_label": "12:27",
+          "text": "Je t’envoie ça avant d’oublier."
+        },
+        {
+          "id": "msg_c02_raphaelle_midday_003",
+          "sender": "raphaelle",
+          "time_label": "12:27",
+          "text": "Tu parlais l’autre jour d’un outil simple pour tester des embranchements ?"
+        },
+        {
+          "id": "msg_c02_raphaelle_midday_004",
+          "sender": "raphaelle",
+          "time_label": "12:27",
+          "text": "À la base, c’est presque un petit jeu narratif."
+        },
+        {
+          "id": "msg_c02_raphaelle_midday_005",
+          "sender": "raphaelle",
+          "time_label": "12:27",
+          "text": "Mais ça peut aider à visualiser des choix."
+        },
+        {
+          "id": "msg_c02_raphaelle_midday_006",
+          "sender": "raphaelle",
+          "time_label": "12:27",
+          "text": "Capture envoyée.",
+          "content_id": "raphaelle_j2_work_badge_placeholder"
+        },
+        {
+          "id": "msg_c02_raphaelle_midday_007",
+          "sender": "raphaelle",
+          "time_label": "12:27",
+          "text": "Ce n’est pas exactement un outil pro."
         }
       ],
       "choices": [
         {
-          "id": "choice_c02_raphaelle_midday_01_guided",
-          "text": "Quoi ?",
-          "tone": "guided_reply"
+          "id": "choice_c02_raphaelle_midday_01_1",
+          "text": "Merci, c’est utile. Je regarderai ça.",
+          "tone": "pro",
+          "next_messages": [
+            {
+              "id": "msg_c02_raphaelle_midday_008",
+              "sender": "raphaelle",
+              "time_label": "12:27",
+              "text": "Parfait."
+            },
+            {
+              "id": "msg_c02_raphaelle_midday_009",
+              "sender": "raphaelle",
+              "time_label": "12:27",
+              "text": "Je me suis dit que ça pouvait te faire gagner du temps."
+            },
+            {
+              "id": "msg_c02_raphaelle_midday_010",
+              "sender": "raphaelle",
+              "time_label": "12:27",
+              "text": "Et j’aime bien quand les choses font gagner du temps aux gens."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_raphaelle_midday_01_2",
+          "text": "Donc tu fais plaisir aux gens avec des jeux vidéo ?",
+          "tone": "curieux",
+          "next_messages": [
+            {
+              "id": "msg_c02_raphaelle_midday_011",
+              "sender": "raphaelle",
+              "time_label": "12:27",
+              "text": "Formulé comme ça, j’ai l’air étrange."
+            },
+            {
+              "id": "msg_c02_raphaelle_midday_012",
+              "sender": "raphaelle",
+              "time_label": "12:27",
+              "text": "Mais oui."
+            },
+            {
+              "id": "msg_c02_raphaelle_midday_013",
+              "sender": "raphaelle",
+              "time_label": "12:27",
+              "text": "J’aime bien trouver le truc qui tombe juste."
+            },
+            {
+              "id": "msg_c02_raphaelle_midday_014",
+              "sender": "raphaelle",
+              "time_label": "12:27",
+              "text": "Même si c’est un jeu."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_raphaelle_midday_01_3",
+          "text": "Envoie-moi le lien, je le regarderai quand j’aurai un moment.",
+          "tone": "distance",
+          "next_messages": [
+            {
+              "id": "msg_c02_raphaelle_midday_015",
+              "sender": "raphaelle",
+              "time_label": "12:27",
+              "text": "Bien sûr."
+            },
+            {
+              "id": "msg_c02_raphaelle_midday_016",
+              "sender": "raphaelle",
+              "time_label": "12:27",
+              "text": "Je ne voulais pas t’interrompre."
+            },
+            {
+              "id": "msg_c02_raphaelle_midday_017",
+              "sender": "raphaelle",
+              "time_label": "12:27",
+              "text": "Tu me diras si ça t’aide."
+            }
+          ]
         }
       ]
     },
@@ -41,42 +154,93 @@
       "time_label": "12:27",
       "messages": [
         {
-          "id": "msg_c02_raphaelle_midday_002",
+          "id": "msg_c02_raphaelle_midday_018",
           "sender": "raphaelle",
           "time_label": "12:27",
-          "text": "Photo envoyée."
+          "text": "Je sais, c’est très moi de transformer un problème pratique en recommandation de jeu."
         },
         {
-          "id": "msg_c02_raphaelle_midday_003",
+          "id": "msg_c02_raphaelle_midday_019",
           "sender": "raphaelle",
           "time_label": "12:27",
-          "content_id": "raphaelle_j2_work_badge_placeholder",
-          "text": "Raphaëlle à son bureau, chemisier simple, cheveux légèrement attachés, badge de Player entre deux doigts. Un café est posé près du clavier. Elle sourit discrètement, sans poser ouvertement."
+          "text": "Tu joues beaucoup ?"
         },
         {
-          "id": "msg_c02_raphaelle_midday_004",
+          "id": "msg_c02_raphaelle_midday_020",
           "sender": "raphaelle",
           "time_label": "12:27",
-          "text": "Ton badge."
+          "text": "Je dis “par périodes” pour que ça semble raisonnable."
         },
         {
-          "id": "msg_c02_raphaelle_midday_005",
+          "id": "msg_c02_raphaelle_midday_021",
           "sender": "raphaelle",
           "time_label": "12:27",
-          "text": "Il était posé à côté de la machine à café."
+          "text": "En vrai, quand j’accroche à un jeu, je disparais un peu."
         },
         {
-          "id": "msg_c02_raphaelle_midday_006",
+          "id": "msg_c02_raphaelle_midday_022",
           "sender": "raphaelle",
           "time_label": "12:27",
-          "text": "Je l’ai gardé, tu en auras besoin cet après-midi."
+          "text": "Mais poliment."
         }
       ],
       "choices": [
         {
-          "id": "choice_c02_raphaelle_midday_02_guided",
-          "text": "Je plaide la fatigue.",
-          "tone": "guided_reply"
+          "id": "choice_c02_raphaelle_midday_02_1",
+          "text": "Parfait, j’aime bien les gens utiles.",
+          "tone": "pro",
+          "next_messages": [
+            {
+              "id": "msg_c02_raphaelle_midday_023",
+              "sender": "raphaelle",
+              "time_label": "12:27",
+              "text": "Moi aussi."
+            },
+            {
+              "id": "msg_c02_raphaelle_midday_024",
+              "sender": "raphaelle",
+              "time_label": "12:27",
+              "text": "Surtout quand on peut les aider sans drame."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_raphaelle_midday_02_2",
+          "text": "Disons que j’ai compris le principe de la disparition polie.",
+          "tone": "leger",
+          "next_messages": [
+            {
+              "id": "msg_c02_raphaelle_midday_025",
+              "sender": "raphaelle",
+              "time_label": "12:27",
+              "text": "Ça arrive."
+            },
+            {
+              "id": "msg_c02_raphaelle_midday_026",
+              "sender": "raphaelle",
+              "time_label": "12:27",
+              "text": "Je trouve ça plus honnête que de faire semblant d’être ultra disponible."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_raphaelle_midday_02_3",
+          "text": "Je t’écris dès que je l’ai regardé.",
+          "tone": "distance",
+          "next_messages": [
+            {
+              "id": "msg_c02_raphaelle_midday_027",
+              "sender": "raphaelle",
+              "time_label": "12:27",
+              "text": "Ça me va."
+            },
+            {
+              "id": "msg_c02_raphaelle_midday_028",
+              "sender": "raphaelle",
+              "time_label": "12:27",
+              "text": "Je te laisse retourner à ta journée."
+            }
+          ]
         }
       ]
     },
@@ -86,279 +250,34 @@
       "time_label": "12:27",
       "messages": [
         {
-          "id": "msg_c02_raphaelle_midday_007",
+          "id": "msg_c02_raphaelle_midday_029",
           "sender": "raphaelle",
           "time_label": "12:27",
-          "text": "J’avais compris 🙂"
+          "text": "Bon courage pour ta journée."
         },
         {
-          "id": "msg_c02_raphaelle_midday_008",
+          "id": "msg_c02_raphaelle_midday_030",
           "sender": "raphaelle",
           "time_label": "12:27",
-          "text": "Tu avais l’air présent physiquement ce matin."
-        },
-        {
-          "id": "msg_c02_raphaelle_midday_009",
-          "sender": "raphaelle",
-          "time_label": "12:27",
-          "text": "Mais pas tout à fait arrivé."
+          "text": "Et si tu testes, ne juge pas trop vite les graphismes."
         }
       ],
       "choices": [
         {
-          "id": "choice_c02_raphaelle_midday_03_1",
-          "text": "Oui. J’ai la tête un peu pleine aujourd’hui.",
-          "tone": "tendre",
+          "id": "choice_c02_raphaelle_midday_03_guided",
+          "text": "Je peux donner trois minutes.",
+          "tone": "guided_reply",
           "next_messages": [
             {
-              "id": "msg_c02_raphaelle_midday_seg_03_choice_1_01",
+              "id": "msg_c02_raphaelle_midday_031",
               "sender": "raphaelle",
               "time_label": "12:27",
-              "text": "Ça arrive."
-            },
-            {
-              "id": "msg_c02_raphaelle_midday_seg_03_choice_1_02",
-              "sender": "raphaelle",
-              "time_label": "12:27",
-              "text": "Je ne demande pas pourquoi."
-            },
-            {
-              "id": "msg_c02_raphaelle_midday_seg_03_choice_1_03",
-              "sender": "raphaelle",
-              "time_label": "12:27",
-              "text": "Pas par indifférence."
-            },
-            {
-              "id": "msg_c02_raphaelle_midday_seg_03_choice_1_04",
-              "sender": "raphaelle",
-              "time_label": "12:27",
-              "text": "Juste parce qu’on est au travail."
-            },
-            {
-              "id": "msg_c02_raphaelle_midday_seg_03_choice_1_05",
-              "sender": "raphaelle",
-              "time_label": "12:27",
-              "text": "Probablement."
-            },
-            {
-              "id": "msg_c02_raphaelle_midday_seg_03_choice_1_06",
-              "sender": "raphaelle",
-              "time_label": "12:27",
-              "text": "Mais mange quelque chose quand même."
-            },
-            {
-              "id": "msg_c02_raphaelle_midday_seg_03_choice_1_07",
-              "sender": "raphaelle",
-              "time_label": "12:27",
-              "text": "La lucidité passe mal avec un café froid."
+              "text": "Alors tu es officiellement le public cible."
             }
           ]
-        },
-        {
-          "id": "choice_c02_raphaelle_midday_03_2",
-          "text": "Je fonctionne mieux quand mon badge prend les décisions.",
-          "tone": "taquin",
-          "next_messages": [
-            {
-              "id": "msg_c02_raphaelle_midday_seg_03_choice_2_01",
-              "sender": "raphaelle",
-              "time_label": "12:27",
-              "text": "Je m’en doutais."
-            },
-            {
-              "id": "msg_c02_raphaelle_midday_seg_03_choice_2_02",
-              "sender": "raphaelle",
-              "time_label": "12:27",
-              "text": "Il était au moins à sa place."
-            },
-            {
-              "id": "msg_c02_raphaelle_midday_seg_03_choice_2_03",
-              "sender": "raphaelle",
-              "time_label": "12:27",
-              "text": "Je reste professionnelle."
-            },
-            {
-              "id": "msg_c02_raphaelle_midday_seg_03_choice_2_04",
-              "sender": "raphaelle",
-              "time_label": "12:27",
-              "text": "Je garde le commentaire pour moi."
-            },
-            {
-              "id": "msg_c02_raphaelle_midday_seg_03_choice_2_05",
-              "sender": "raphaelle",
-              "time_label": "12:27",
-              "text": "On est au travail 😌"
-            }
-          ]
-        },
-        {
-          "id": "choice_c02_raphaelle_midday_03_3",
-          "text": "Merci de l’avoir récupéré. Je passerai le prendre.",
-          "tone": "prudent",
-          "next_messages": [
-            {
-              "id": "msg_c02_raphaelle_midday_seg_03_choice_3_01",
-              "sender": "raphaelle",
-              "time_label": "12:27",
-              "text": "D’accord."
-            },
-            {
-              "id": "msg_c02_raphaelle_midday_seg_03_choice_3_02",
-              "sender": "raphaelle",
-              "time_label": "12:27",
-              "text": "Il sera sur mon bureau."
-            },
-            {
-              "id": "msg_c02_raphaelle_midday_seg_03_choice_3_03",
-              "sender": "raphaelle",
-              "time_label": "12:27",
-              "text": "À côté du café."
-            },
-            {
-              "id": "msg_c02_raphaelle_midday_seg_03_choice_3_04",
-              "sender": "raphaelle",
-              "time_label": "12:27",
-              "text": "Je le poserai à un endroit visible."
-            },
-            {
-              "id": "msg_c02_raphaelle_midday_seg_03_choice_3_05",
-              "sender": "raphaelle",
-              "time_label": "12:27",
-              "text": "Essaie juste de ne pas repartir sans lui."
-            },
-            {
-              "id": "msg_c02_raphaelle_midday_seg_03_choice_3_06",
-              "sender": "raphaelle",
-              "time_label": "12:27",
-              "text": "Ce serait dommage de le récupérer deux fois dans la même journée."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "conversation_segment_id": "c02_raphaelle_midday_seg_04",
-      "moment_label": "jour 2",
-      "time_label": "12:27",
-      "messages": [
-        {
-          "id": "msg_c02_raphaelle_midday_017",
-          "sender": "raphaelle",
-          "time_label": "12:27",
-          "text": "Tu as une réunion à 14h avec Camille."
-        },
-        {
-          "id": "msg_c02_raphaelle_midday_018",
-          "sender": "raphaelle",
-          "time_label": "12:27",
-          "text": "Je te le dis parce que ton agenda et toi, aujourd’hui, vous avez l’air séparés."
-        }
-      ],
-      "choices": [
-        {
-          "id": "choice_c02_raphaelle_midday_04_guided",
-          "text": "Tu viens de sauver ma crédibilité.",
-          "tone": "guided_reply"
-        }
-      ]
-    },
-    {
-      "conversation_segment_id": "c02_raphaelle_midday_seg_05",
-      "moment_label": "jour 2",
-      "time_label": "12:27",
-      "messages": [
-        {
-          "id": "msg_c02_raphaelle_midday_019",
-          "sender": "raphaelle",
-          "time_label": "12:27",
-          "text": "Je l’ajoute à la liste."
-        }
-      ],
-      "choices": [
-        {
-          "id": "choice_c02_raphaelle_midday_05_guided",
-          "text": "Il y a une liste ?",
-          "tone": "guided_reply"
-        }
-      ]
-    },
-    {
-      "conversation_segment_id": "c02_raphaelle_midday_seg_06",
-      "moment_label": "jour 2",
-      "time_label": "12:27",
-      "messages": [
-        {
-          "id": "msg_c02_raphaelle_midday_020",
-          "sender": "raphaelle",
-          "time_label": "12:27",
-          "text": "Mentale."
-        },
-        {
-          "id": "msg_c02_raphaelle_midday_021",
-          "sender": "raphaelle",
-          "time_label": "12:27",
-          "text": "Courte."
-        },
-        {
-          "id": "msg_c02_raphaelle_midday_022",
-          "sender": "raphaelle",
-          "time_label": "12:27",
-          "text": "Pour l’instant."
-        }
-      ],
-      "choices": [
-        {
-          "id": "choice_c02_raphaelle_midday_06_guided",
-          "text": "Je vais essayer de ne pas l’allonger.",
-          "tone": "guided_reply"
-        }
-      ]
-    },
-    {
-      "conversation_segment_id": "c02_raphaelle_midday_seg_07",
-      "moment_label": "jour 2",
-      "time_label": "12:27",
-      "messages": [
-        {
-          "id": "msg_c02_raphaelle_midday_023",
-          "sender": "raphaelle",
-          "time_label": "12:27",
-          "text": "Bonne idée."
-        },
-        {
-          "id": "msg_c02_raphaelle_midday_024",
-          "sender": "raphaelle",
-          "time_label": "12:27",
-          "text": "Et viens récupérer ton badge avant 15h."
-        }
-      ],
-      "choices": [
-        {
-          "id": "choice_c02_raphaelle_midday_07_guided",
-          "text": "Ordre professionnel ?",
-          "tone": "guided_reply"
-        }
-      ]
-    },
-    {
-      "conversation_segment_id": "c02_raphaelle_midday_seg_08",
-      "moment_label": "jour 2",
-      "time_label": "12:27",
-      "messages": [
-        {
-          "id": "msg_c02_raphaelle_midday_025",
-          "sender": "raphaelle",
-          "time_label": "12:27",
-          "text": "Conseil bienveillant."
-        },
-        {
-          "id": "msg_c02_raphaelle_midday_026",
-          "sender": "raphaelle",
-          "time_label": "12:27",
-          "text": "Avec une marge d’autorité 🙂"
         }
       ]
     }
   ],
-  "debug_notes": "Player au travail, Raphaëlle au bureau. Texte J2 V3 intégré; réponses Player uniquement via choices."
+  "debug_notes": "Raphaëlle reste extérieure, calme et utile, avec une légère touche jeu vidéo. Aucun refuge romantique."
 }

@@ -2,14 +2,14 @@
   "id": "chapter_02_index",
   "chapter": 2,
   "day": 2,
-  "title": "Jour 2 — Texte V3 validé",
-  "description": "Journée à distance : Player reste hors de la maison; Marie et Mathilde écrivent depuis l’appartement, Raphaëlle depuis le travail, Sandra revient doucement sur la photo J1.",
-  "design_goal": "Intégrer le J2 V3 validé sans groupe actif, sans Pauline/Nico actifs, avec quatre récompenses visuelles textuelles et des réponses Player uniquement cliquables.",
+  "title": "Jour 2 — Mathilde arrive / Marie tient le centre / Raphaëlle existe dehors / Sandra reste en écho",
+  "description": "J2 ouvre la maison sans la disperser : Marie garde le centre, Mathilde devient concrète, Raphaëlle reste extérieure et utile, Sandra revient en écho doux.",
+  "design_goal": "Valider le J2 source pack sans lock : émotions domestiques fluides, Player manuel, trois contenus visuels minimum, pas de vocal, pas de route active pour Pauline/Nico.",
   "moment_flow": [
     {
       "moment_label": "matin",
       "time_label": "08:12",
-      "transition_text": "Player est déjà parti / dans les transports. Marie écrit depuis l’appartement.",
+      "transition_text": "Marie ouvre la journée autour du petit-déjeuner aux biscuits et de l’arrivée de Mathilde.",
       "conversation_ids": [
         "chapter_02_marie_morning"
       ]
@@ -17,7 +17,7 @@
     {
       "moment_label": "midi",
       "time_label": "12:27",
-      "transition_text": "Pause de travail. Raphaëlle a récupéré le badge oublié.",
+      "transition_text": "Pause de travail : Raphaëlle renvoie un outil ludique et reste à distance.",
       "conversation_ids": [
         "chapter_02_raphaelle_midday"
       ]
@@ -25,7 +25,7 @@
     {
       "moment_label": "fin d’après-midi",
       "time_label": "17:36",
-      "transition_text": "Marie annonce que Mathilde est passée récupérer son chargeur.",
+      "transition_text": "Marie constate que Mathilde est bien là et cherche l’équilibre dans l’entrée.",
       "conversation_ids": [
         "chapter_02_marie_afternoon"
       ]
@@ -33,7 +33,7 @@
     {
       "moment_label": "début de soirée",
       "time_label": "17:52",
-      "transition_text": "Mathilde écrit directement depuis le salon.",
+      "transition_text": "Mathilde écrit directement depuis l’entrée, sacs et raquette compris.",
       "conversation_ids": [
         "chapter_02_mathilde_evening"
       ]
@@ -41,7 +41,7 @@
     {
       "moment_label": "soir",
       "time_label": "18:38",
-      "transition_text": "Sandra revient brièvement autour de la photo de la veille.",
+      "transition_text": "Sandra termine la journée au lac avec un livre et une esquive douce.",
       "conversation_ids": [
         "chapter_02_sandra_evening"
       ]
@@ -73,10 +73,10 @@
     "res://data/conversations/chapter_02_mathilde_night.json"
   ],
   "required_reveals": [
-    "Player est hors de la maison pendant toute la journée.",
-    "Marie et Mathilde échangent avec lui à distance.",
-    "Mathilde est habituée à dormir chez Marie/Player.",
-    "Sandra ne renvoie pas de nouvelle photo J2; elle reparle de celle de J1."
+    "Marie reste le centre affectif de la journée.",
+    "Mathilde devient une présence concrète, sportive et réceptive au soin.",
+    "Raphaëlle reste extérieure, serviable et liée à un outil / jeu vidéo.",
+    "Sandra revient brièvement en écho autour du lac et du roman."
   ],
   "routes_available": [
     "marie",
@@ -95,7 +95,8 @@
   "debug_expected_outcomes": [
     "No dominant route should be locked in chapter 2.",
     "No active Day 2 group conversation.",
-    "Pauline and Nico remain inactive on Day 2."
+    "Pauline and Nico remain inactive on Day 2.",
+    "Three soft visual contents or more are loaded for Day 2."
   ],
   "conversation_availability": {
     "initial_conversation_ids": [

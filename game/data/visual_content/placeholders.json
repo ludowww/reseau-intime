@@ -245,11 +245,12 @@
       "type": "photo",
       "source_app": "messages",
       "asset_path": "res://assets/placeholders/marie_j2_morning_soft_placeholder.png",
-      "context": "Marie dans l’appartement, en tenue d’intérieur simple mais flatteuse, cheveux attachés, lumière du matin. Elle tient son téléphone légèrement de côté. Le salon apparaît derrière elle. Le chargeur de Mathilde est visible sur un meuble derrière elle.",
+      "context": "Photo d’une assiette simple sur la table : café, reste de biscuits, peut-être une tartine un peu trop généreuse. On sent Marie derrière l’image, gourmande et domestique, sans pose.",
       "tags": [
         "marie",
         "day2",
         "morning",
+        "biscuits",
         "domestic",
         "soft"
       ],
@@ -269,12 +270,13 @@
       "type": "photo",
       "source_app": "messages",
       "asset_path": "res://assets/placeholders/raphaelle_j2_work_badge_placeholder.png",
-      "context": "Raphaëlle à son bureau, chemisier simple, cheveux légèrement attachés, badge de Player entre deux doigts. Un café est posé près du clavier. Elle sourit discrètement, sans poser ouvertement.",
+      "context": "Capture d’un message de Raphaëlle avec une recommandation de petit jeu ou d’outil ludique. Ton professionnel mais chaleureux. Elle aide, elle partage, elle ne cherche pas encore l’intimité.",
       "tags": [
         "raphaelle",
         "day2",
         "work",
-        "badge",
+        "game",
+        "tool",
         "soft"
       ],
       "is_proof": false,
@@ -293,13 +295,14 @@
       "type": "photo",
       "source_app": "messages",
       "asset_path": "res://assets/placeholders/mathilde_j2_arrival_marie_placeholder.png",
-      "context": "Mathilde dans l’entrée de l’appartement, veste encore sur l’épaule, chargeur à la main, sourire un peu insolent vers l’objectif. Elle a l’air chez elle sans vraiment l’être. Marie a visiblement pris la photo sur le vif.",
+      "context": "Photo de l’entrée avec un sac de sport, des baskets et une raquette posés contre le mur. Une veste dépasse du sac. Rien d’intime : seulement l’énergie de Mathilde qui arrive dans la maison.",
       "tags": [
         "mathilde",
         "day2",
         "home",
         "arrival",
-        "marie_photo"
+        "sport_bag",
+        "raquette"
       ],
       "is_proof": true,
       "risk_level": 2,
@@ -318,13 +321,12 @@
       "type": "photo",
       "source_app": "messages",
       "asset_path": "res://assets/placeholders/mathilde_j2_couch_innocent_selfie_placeholder.png",
-      "context": "Selfie de Mathilde depuis le canapé, plaid remonté sur elle, tête faussement innocente, sourire en coin. On devine le salon de Marie derrière elle. Elle ne pose pas ouvertement de manière sexy, mais le cadrage est flatteur et elle sait très bien l’effet que ça peut produire.",
+      "context": "Mathilde sur le canapé, plaid remonté sur les genoux, sac de sport à côté d’elle et sourire fatigué. Le salon de Marie apparaît derrière elle, mais l’image reste quotidienne et non suggestive.",
       "tags": [
         "mathilde",
         "day2",
         "couch",
-        "selfie",
-        "private",
+        "daily",
         "soft"
       ],
       "is_proof": true,
@@ -335,6 +337,31 @@
       "can_be_discovered_by": [
         "marie",
         "mathilde"
+      ]
+    },
+    {
+      "id": "sandra_j2_lake_book_soft_placeholder",
+      "character": "sandra",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/sandra_j2_lake_book_soft_placeholder.png",
+      "context": "Photo douce envoyée par Sandra : un banc près du lac, un coin de livre, ou une couverture de roman posée sur un sac. Rien de séduisant frontalement, juste une trace calme.",
+      "tags": [
+        "sandra",
+        "lake",
+        "book",
+        "romance",
+        "soft",
+        "day2"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": [
+        "sandra"
       ]
     }
   ]

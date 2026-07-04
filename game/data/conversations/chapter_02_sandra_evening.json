@@ -2,7 +2,7 @@
   "id": "chapter_02_sandra_evening",
   "chapter": 2,
   "day": 2,
-  "title": "Jour 2 — Soir avec Sandra",
+  "title": "Jour 2 — Trois pages et un lac",
   "app": "messages",
   "thread": {
     "id": "thread_sandra_private",
@@ -24,14 +24,139 @@
           "id": "msg_c02_sandra_evening_001",
           "sender": "sandra",
           "time_label": "18:38",
-          "text": "J’ai failli supprimer la photo ce matin."
+          "text": "Je n’ai pas racheté de tomates."
+        },
+        {
+          "id": "msg_c02_sandra_evening_002",
+          "sender": "sandra",
+          "time_label": "18:38",
+          "text": "Je tenais à te rassurer."
+        },
+        {
+          "id": "msg_c02_sandra_evening_003",
+          "sender": "sandra",
+          "time_label": "18:38",
+          "text": "À la place, je suis passée marcher près du lac."
+        },
+        {
+          "id": "msg_c02_sandra_evening_004",
+          "sender": "sandra",
+          "time_label": "18:38",
+          "text": "Et j’ai lu trois pages de mon roman beaucoup trop sentimental."
+        },
+        {
+          "id": "msg_c02_sandra_evening_005",
+          "sender": "sandra",
+          "time_label": "18:38",
+          "text": "Photo envoyée.",
+          "content_id": "sandra_j2_lake_book_soft_placeholder"
+        },
+        {
+          "id": "msg_c02_sandra_evening_006",
+          "sender": "sandra",
+          "time_label": "18:38",
+          "text": "Il y avait du vent."
+        },
+        {
+          "id": "msg_c02_sandra_evening_007",
+          "sender": "sandra",
+          "time_label": "18:38",
+          "text": "Et une dame très investie dans la vie de son chien."
+        },
+        {
+          "id": "msg_c02_sandra_evening_008",
+          "sender": "sandra",
+          "time_label": "18:38",
+          "text": "Difficile de se concentrer sur une déclaration d’amour dans ces conditions."
         }
       ],
       "choices": [
         {
-          "id": "choice_c02_sandra_evening_01_guided",
-          "text": "Pourquoi ?",
-          "tone": "guided_reply"
+          "id": "choice_c02_sandra_evening_01_1",
+          "text": "J’aime bien t’imaginer là-bas.",
+          "tone": "doux",
+          "next_messages": [
+            {
+              "id": "msg_c02_sandra_evening_009",
+              "sender": "sandra",
+              "time_label": "18:38",
+              "text": "Ne rends pas ça trop joli."
+            },
+            {
+              "id": "msg_c02_sandra_evening_010",
+              "sender": "sandra",
+              "time_label": "18:38",
+              "text": "J’avais froid aux mains."
+            },
+            {
+              "id": "msg_c02_sandra_evening_011",
+              "sender": "sandra",
+              "time_label": "18:38",
+              "text": "Et mon marque-page s’est envolé."
+            },
+            {
+              "id": "msg_c02_sandra_evening_012",
+              "sender": "sandra",
+              "time_label": "18:38",
+              "text": "Mais… oui."
+            },
+            {
+              "id": "msg_c02_sandra_evening_013",
+              "sender": "sandra",
+              "time_label": "18:38",
+              "text": "C’était bien."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_sandra_evening_01_2",
+          "text": "Le chien a ruiné la romance ?",
+          "tone": "taquin",
+          "next_messages": [
+            {
+              "id": "msg_c02_sandra_evening_014",
+              "sender": "sandra",
+              "time_label": "18:38",
+              "text": "Totalement."
+            },
+            {
+              "id": "msg_c02_sandra_evening_015",
+              "sender": "sandra",
+              "time_label": "18:38",
+              "text": "Il s’appelait Mozart."
+            },
+            {
+              "id": "msg_c02_sandra_evening_016",
+              "sender": "sandra",
+              "time_label": "18:38",
+              "text": "Impossible de rivaliser avec un chien qui s’appelle Mozart."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_sandra_evening_01_3",
+          "text": "Ça avait l’air calme.",
+          "tone": "prudent",
+          "next_messages": [
+            {
+              "id": "msg_c02_sandra_evening_017",
+              "sender": "sandra",
+              "time_label": "18:38",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_c02_sandra_evening_018",
+              "sender": "sandra",
+              "time_label": "18:38",
+              "text": "C’est ce que je cherchais."
+            },
+            {
+              "id": "msg_c02_sandra_evening_019",
+              "sender": "sandra",
+              "time_label": "18:38",
+              "text": "Un endroit où il n’y avait rien à expliquer."
+            }
+          ]
         }
       ]
     },
@@ -41,298 +166,88 @@
       "time_label": "18:38",
       "messages": [
         {
-          "id": "msg_c02_sandra_evening_002",
+          "id": "msg_c02_sandra_evening_020",
           "sender": "sandra",
           "time_label": "18:38",
-          "text": "Parce que je me suis trouvée bête de te l’avoir envoyée."
+          "text": "Et toi ?"
         },
         {
-          "id": "msg_c02_sandra_evening_003",
+          "id": "msg_c02_sandra_evening_021",
           "sender": "sandra",
           "time_label": "18:38",
-          "text": "Et puis non."
+          "text": "Ta journée a survécu ?"
         }
       ],
       "choices": [
         {
-          "id": "choice_c02_sandra_evening_02_1",
-          "text": "Je ne l’ai pas prise comme une erreur.",
-          "tone": "tendre",
+          "id": "choice_c02_sandra_evening_02_guided",
+          "text": "La maison a gagné une raquette.",
+          "tone": "guided_reply",
           "next_messages": [
             {
-              "id": "msg_c02_sandra_evening_seg_02_choice_1_01",
+              "id": "msg_c02_sandra_evening_022",
               "sender": "sandra",
               "time_label": "18:38",
-              "text": "Je sais."
+              "text": "Pardon ?"
             },
             {
-              "id": "msg_c02_sandra_evening_seg_02_choice_1_02",
+              "id": "msg_c02_sandra_evening_023",
               "sender": "sandra",
               "time_label": "18:38",
-              "text": "C’est peut-être ça le problème."
+              "text": "Un jour, tu m’expliqueras pourquoi ta maison gagne des équipements sportifs."
             },
             {
-              "id": "msg_c02_sandra_evening_seg_02_choice_1_03",
+              "id": "msg_c02_sandra_evening_024",
+              "sender": "sandra",
+              "time_label": "18:38",
+              "text": "Je note."
+            },
+            {
+              "id": "msg_c02_sandra_evening_025",
+              "sender": "sandra",
+              "time_label": "18:38",
+              "text": "Un jour."
+            },
+            {
+              "id": "msg_c02_sandra_evening_026",
+              "sender": "sandra",
+              "time_label": "18:38",
+              "text": "Très bien."
+            },
+            {
+              "id": "msg_c02_sandra_evening_027",
+              "sender": "sandra",
+              "time_label": "18:38",
+              "text": "Je vais retourner à mon roman."
+            },
+            {
+              "id": "msg_c02_sandra_evening_028",
+              "sender": "sandra",
+              "time_label": "18:38",
+              "text": "Les gens dedans sont sur le point de se dire une phrase évidente qu’ils repoussent depuis 200 pages."
+            },
+            {
+              "id": "msg_c02_sandra_evening_029",
+              "sender": "sandra",
+              "time_label": "18:38",
+              "text": "Tu vas survivre ?"
+            },
+            {
+              "id": "msg_c02_sandra_evening_030",
               "sender": "sandra",
               "time_label": "18:38",
               "text": "Non."
             },
             {
-              "id": "msg_c02_sandra_evening_seg_02_choice_1_04",
+              "id": "msg_c02_sandra_evening_031",
               "sender": "sandra",
               "time_label": "18:38",
-              "text": "Que tu comprennes trop bien pourquoi je l’ai envoyée."
+              "text": "Mais je lirai quand même."
             }
           ]
-        },
-        {
-          "id": "choice_c02_sandra_evening_02_2",
-          "text": "Je peux faire semblant de ne pas y tenir, mais je serais mauvais.",
-          "tone": "taquin",
-          "next_messages": [
-            {
-              "id": "msg_c02_sandra_evening_seg_02_choice_2_01",
-              "sender": "sandra",
-              "time_label": "18:38",
-              "text": "Tu serais catastrophique 😅"
-            },
-            {
-              "id": "msg_c02_sandra_evening_seg_02_choice_2_02",
-              "sender": "sandra",
-              "time_label": "18:38",
-              "text": "Tu n’as jamais très bien su faire semblant avec moi."
-            },
-            {
-              "id": "msg_c02_sandra_evening_seg_02_choice_2_03",
-              "sender": "sandra",
-              "time_label": "18:38",
-              "text": "Prends-le comme une observation affectueuse."
-            }
-          ]
-        },
-        {
-          "id": "choice_c02_sandra_evening_02_3",
-          "text": "On peut ne pas trop l’analyser ce soir.",
-          "tone": "prudent",
-          "next_messages": [
-            {
-              "id": "msg_c02_sandra_evening_seg_02_choice_3_01",
-              "sender": "sandra",
-              "time_label": "18:38",
-              "text": "Oui."
-            },
-            {
-              "id": "msg_c02_sandra_evening_seg_02_choice_3_02",
-              "sender": "sandra",
-              "time_label": "18:38",
-              "text": "Bonne idée."
-            },
-            {
-              "id": "msg_c02_sandra_evening_seg_02_choice_3_03",
-              "sender": "sandra",
-              "time_label": "18:38",
-              "text": "C’est souvent quand on analyse que je panique."
-            },
-            {
-              "id": "msg_c02_sandra_evening_seg_02_choice_3_04",
-              "sender": "sandra",
-              "time_label": "18:38",
-              "text": "On essaie."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "conversation_segment_id": "c02_sandra_evening_seg_03",
-      "moment_label": "jour 2",
-      "time_label": "18:38",
-      "messages": [
-        {
-          "id": "msg_c02_sandra_evening_008",
-          "sender": "sandra",
-          "time_label": "18:38",
-          "text": "Tu as passé une journée correcte ?"
-        }
-      ],
-      "choices": [
-        {
-          "id": "choice_c02_sandra_evening_03_guided",
-          "text": "Remplie.",
-          "tone": "guided_reply"
-        }
-      ]
-    },
-    {
-      "conversation_segment_id": "c02_sandra_evening_seg_04",
-      "moment_label": "jour 2",
-      "time_label": "18:38",
-      "messages": [
-        {
-          "id": "msg_c02_sandra_evening_009",
-          "sender": "sandra",
-          "time_label": "18:38",
-          "text": "Ça veut dire compliquée ?"
-        }
-      ],
-      "choices": [
-        {
-          "id": "choice_c02_sandra_evening_04_guided",
-          "text": "Disons que je n’ai pas vraiment eu de pause.",
-          "tone": "guided_reply"
-        }
-      ]
-    },
-    {
-      "conversation_segment_id": "c02_sandra_evening_seg_05",
-      "moment_label": "jour 2",
-      "time_label": "18:38",
-      "messages": [
-        {
-          "id": "msg_c02_sandra_evening_010",
-          "sender": "sandra",
-          "time_label": "18:38",
-          "text": "D’accord."
-        },
-        {
-          "id": "msg_c02_sandra_evening_011",
-          "sender": "sandra",
-          "time_label": "18:38",
-          "text": "Je vais faire semblant que c’était clair 🙂"
-        }
-      ],
-      "choices": [
-        {
-          "id": "choice_c02_sandra_evening_05_guided",
-          "text": "Merci pour ta clémence.",
-          "tone": "guided_reply"
-        }
-      ]
-    },
-    {
-      "conversation_segment_id": "c02_sandra_evening_seg_06",
-      "moment_label": "jour 2",
-      "time_label": "18:38",
-      "messages": [
-        {
-          "id": "msg_c02_sandra_evening_012",
-          "sender": "sandra",
-          "time_label": "18:38",
-          "text": "Ne t’habitue pas."
-        },
-        {
-          "id": "msg_c02_sandra_evening_013",
-          "sender": "sandra",
-          "time_label": "18:38",
-          "text": "Pour jeudi, ça tient toujours ?"
-        }
-      ],
-      "choices": [
-        {
-          "id": "choice_c02_sandra_evening_06_guided",
-          "text": "Oui. Et j’ai envie que ça tienne.",
-          "tone": "guided_reply"
-        }
-      ]
-    },
-    {
-      "conversation_segment_id": "c02_sandra_evening_seg_07",
-      "moment_label": "jour 2",
-      "time_label": "18:38",
-      "messages": [
-        {
-          "id": "msg_c02_sandra_evening_014",
-          "sender": "sandra",
-          "time_label": "18:38",
-          "text": "D’accord."
-        },
-        {
-          "id": "msg_c02_sandra_evening_015",
-          "sender": "sandra",
-          "time_label": "18:38",
-          "text": "C’est le genre de phrase qui me fait relire deux fois."
-        }
-      ],
-      "choices": [
-        {
-          "id": "choice_c02_sandra_evening_07_guided",
-          "text": "Je peux la reformuler moins dangereusement.",
-          "tone": "guided_reply"
-        }
-      ]
-    },
-    {
-      "conversation_segment_id": "c02_sandra_evening_seg_08",
-      "moment_label": "jour 2",
-      "time_label": "18:38",
-      "messages": [
-        {
-          "id": "msg_c02_sandra_evening_016",
-          "sender": "sandra",
-          "time_label": "18:38",
-          "text": "Non."
-        },
-        {
-          "id": "msg_c02_sandra_evening_017",
-          "sender": "sandra",
-          "time_label": "18:38",
-          "text": "Laisse-la comme ça."
-        },
-        {
-          "id": "msg_c02_sandra_evening_018",
-          "sender": "sandra",
-          "time_label": "18:38",
-          "text": "Juste ne la grossis pas."
-        }
-      ],
-      "choices": [
-        {
-          "id": "choice_c02_sandra_evening_08_guided",
-          "text": "D’accord.",
-          "tone": "guided_reply"
-        }
-      ]
-    },
-    {
-      "conversation_segment_id": "c02_sandra_evening_seg_09",
-      "moment_label": "jour 2",
-      "time_label": "18:38",
-      "messages": [
-        {
-          "id": "msg_c02_sandra_evening_019",
-          "sender": "sandra",
-          "time_label": "18:38",
-          "text": "Bonne nuit, Player."
-        }
-      ],
-      "choices": [
-        {
-          "id": "choice_c02_sandra_evening_09_guided",
-          "text": "Bonne nuit, Sandra.",
-          "tone": "guided_reply"
-        }
-      ]
-    },
-    {
-      "conversation_segment_id": "c02_sandra_evening_seg_10",
-      "moment_label": "jour 2",
-      "time_label": "18:38",
-      "messages": [
-        {
-          "id": "msg_c02_sandra_evening_020",
-          "sender": "sandra",
-          "time_label": "18:38",
-          "text": "Et doucement."
-        }
-      ],
-      "choices": [
-        {
-          "id": "choice_c02_sandra_evening_10_guided",
-          "text": "Doucement.",
-          "tone": "guided_reply"
         }
       ]
     }
   ],
-  "debug_notes": "Sandra revient brièvement autour de la photo J1. Texte J2 V3 intégré; réponses Player uniquement via choices."
+  "debug_notes": "Sandra reste en écho doux : lac, roman, tomates, et prudence. Pas de photo J2 supplémentaire, juste une trace calme."
 }
