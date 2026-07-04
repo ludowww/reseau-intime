@@ -48,10 +48,10 @@ Toutes les routes restent ouvertes. Aucune route n’est encore assumée, verrou
 - J2 : selfie canapé Mathilde.
 - J3 : photo Mathilde canapé matin (`mathilde_j3_morning_couch_placeholder`).
 - J3 : photo Marie maison conditionnelle (`marie_j3_home_tender_placeholder`).
-- J4 : photo Pauline avant soirée (`photo_pauline_soft_provocation_j4_placeholder`).
+- J4 : photo Pauline avant sortie (`photo_pauline_soft_provocation_j4_placeholder`).
 - J4 : photo Marie avant soirée (`photo_marie_evening_j4_placeholder`).
-- J4 : photo groupe soirée (`photo_party_group_j4_placeholder`).
-- J4 : capture Player téléphone (`capture_player_phone_party_j4_placeholder`).
+- J4 : selfie Marie / Pauline (`photo_marie_pauline_selfie_j4_placeholder`).
+- J4 : photo du lieu de sortie (`photo_j4_terrace_placeholder`).
 - J5 : photo soirée redistribuée (`photo_party_after_j5_placeholder`).
 - J5 : story Marie / Nico (`story_marie_nico_j5_placeholder`).
 - J5 : photo Mathilde conditionnelle (`photo_mathilde_after_party_j5_placeholder`).
@@ -71,20 +71,20 @@ Chaque contenu doit rester plus qu’une récompense : il sert de trace, de rapp
 - Jeudi avec Sandra : promesse ouverte qui peut entrer en conflit avec le couple ou d’autres routes.
 - Trace Sandra J3 non envoyée : frustration et promesse plutôt que récompense directe.
 - Raphaëlle J3/J5 : risque différent, non visuel, lié à la clarté, au travail et au refus du flou.
-- J4 : première exposition sociale des tensions, avec Pauline comme observatrice et Nico comme miroir du regard sur Marie.
-- J4/J5 : les photos de soirée deviennent des preuves faibles parce qu’elles circulent hors du moment où elles ont été prises.
-- J5 : Pauline possède et retient des images ; elle peut aussi avoir ses propres preuves hors champ.
-- J5 : Sandra supprime une photo avant envoi ; l’absence de l’image devient une trace émotionnelle.
+- J4 : première exposition sociale des tensions, avec Pauline comme amie / cadre social et Marie visible hors du couple.
+- J4/J5 : les photos de sortie deviennent des preuves faibles parce qu’elles circulent hors du moment où elles ont été prises.
+- J5 : Pauline peut garder et redistribuer des images ; elle reste une gardienne sociale des traces.
+- J5 : les conséquences de la sortie reviennent au jour suivant sans casser le couple immédiatement.
 - J5 : Raphaëlle repère la dispersion de Player dans un détail concret de travail, sans connaître la soirée.
 
 ## Éléments résolus par J5
 
 - J4 n’est plus isolé : la soirée a un lendemain, une mémoire et des conséquences visuelles.
-- Pauline est installée comme hôte, observatrice, redistributrice et gardienne de photos.
-- Nico est installé comme miroir social autour de Marie, sans caricature antagoniste.
-- Marie reste désirée et centrale, pas seulement jalouse.
-- Mathilde reste liée au risque de trace domestique, avec Marie présente en sous-texte.
-- Sandra reste rare et retenue, blessée par le “plus tard” plutôt que disponible.
+- Pauline est installée comme amie sociale, hôte légère et garde-fou des photos.
+- Marie reste désirée et centrale, avec une visibilité sociale nouvelle.
+- Mathilde reste liée au risque domestique mais n’entre pas dans ce pivot.
+- Sandra reste rare et retenue, hors de cette soirée.
+- Nico n’entre pas dans J4.
 - Raphaëlle est renforcée comme présence concrète du quotidien : elle voit le flou dans le travail, pas depuis l’extérieur abstrait de l’histoire.
 - Les photos deviennent un système narratif actif : elles reviennent, changent de sens, rapprochent ou menacent.
 

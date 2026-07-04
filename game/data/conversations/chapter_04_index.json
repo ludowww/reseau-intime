@@ -2,14 +2,14 @@
   "id": "chapter_04_index",
   "chapter": 4,
   "day": 4,
-  "title": "Jour 4 — Soirée sociale chez Pauline",
-  "description": "Première exposition sociale des tensions de J3 : Pauline invite et observe, Marie devient visible en public, Nico active la jalousie miroir, Mathilde voit le trouble de Player, Sandra écrit au mauvais moment et une première photo de soirée devient trace.",
-  "design_goal": "Faire passer les tensions domestiques et privées de J3 dans un espace social : soirée, groupe, photos, regards croisés, notifications et choix de priorité, sans encore traiter J5 / lendemain / preuve faible.",
+  "title": "Jour 4 — Marie sort avec Pauline",
+  "description": "Premier pivot social : Marie sort avec Pauline, Player reçoit des photos consenties, choisit son ton, et sent que Marie existe aussi hors de la maison.",
+  "design_goal": "Faire exister Marie socialement hors du couple via une sortie simple avec Pauline ; trois photos / traces consenties ; Player coloré par tendresse, jalousie légère, humour, curiosité ou distance ; sans crise, sans Nico actif, sans Mathilde active, sans verrouillage de route.",
   "moment_flow": [
     {
       "moment_label": "fin d’après-midi",
       "time_label": "17:48",
-      "transition_text": "Pauline relance la soirée. Ce qui ressemble à une invitation légère devient déjà une promesse de photos.",
+      "transition_text": "Pauline relance la sortie. Marie reste au centre, mais le regard commence à sortir de la maison.",
       "conversation_ids": [
         "chapter_04_pauline_invite"
       ]
@@ -17,69 +17,37 @@
     {
       "moment_label": "préparation",
       "time_label": "19:12",
-      "transition_text": "Marie se prépare. Avant que les autres la regardent, elle attend le regard de Player.",
+      "transition_text": "Marie envoie sa première photo avant de partir. Player peut encore la regarder avant les autres.",
       "conversation_ids": [
         "chapter_04_marie_pre_party"
       ]
     },
     {
-      "moment_label": "début de soirée",
+      "moment_label": "sortie",
       "time_label": "20:36",
-      "transition_text": "Chez Pauline. Le groupe s’anime, une photo circule, tout le monde n’a pas encore compris ce qu’elle montre.",
+      "transition_text": "Marie et Pauline sont dehors. Le cadre social devient visible, simple et irréversible pour la soirée.",
       "conversation_ids": [
         "chapter_04_party_group_arrival"
-      ]
-    },
-    {
-      "moment_label": "milieu de soirée",
-      "time_label": "21:24",
-      "transition_text": "Nico regarde Marie sans faire d’esclandre. Mathilde remarque surtout la réaction de Player.",
-      "conversation_ids": [
-        "chapter_04_mathilde_observes"
-      ]
-    },
-    {
-      "moment_label": "mauvais moment",
-      "time_label": "22:11",
-      "transition_text": "Sandra écrit depuis l’extérieur de la soirée, précisément quand Player devrait être présent dans la pièce.",
-      "conversation_ids": [
-        "chapter_04_sandra_bad_timing"
-      ]
-    },
-    {
-      "moment_label": "fin de soirée",
-      "time_label": "23:06",
-      "transition_text": "Pauline a vu quelque chose. Plusieurs fils restent ouverts, mais Player ne peut pas répondre à tout sans coût.",
-      "conversation_ids": [
-        "chapter_04_pauline_late_control"
       ]
     }
   ],
   "conversation_files": [
     "res://data/conversations/chapter_04_pauline_invite.json",
     "res://data/conversations/chapter_04_marie_pre_party.json",
-    "res://data/conversations/chapter_04_party_group_arrival.json",
-    "res://data/conversations/chapter_04_mathilde_observes.json",
-    "res://data/conversations/chapter_04_sandra_bad_timing.json",
-    "res://data/conversations/chapter_04_pauline_late_control.json"
+    "res://data/conversations/chapter_04_party_group_arrival.json"
   ],
   "proof_content_files": [
     "res://data/visual_content/chapter_04_proofs.json"
   ],
   "required_reveals": [
-    "Pauline introduit la soirée comme cadre social et visuel.",
-    "Marie est regardée et désirée en public, pas seulement domestique.",
-    "Nico active la jalousie miroir de Player sans devenir caricatural.",
-    "Mathilde devient témoin du trouble de Player.",
-    "Sandra écrit au mauvais moment depuis l’extérieur de la soirée.",
-    "Une photo de soirée J4 existe et pourra changer de sens en J5."
+    "Pauline introduit la soirée comme cadre social léger, pas comme séduction frontale.",
+    "Marie est visible et regardée hors du couple, sans crise.",
+    "Player reçoit au moins trois photos / traces consenties ou sociales sur le jour.",
+    "La sortie reste simple, crédible, et ne verrouille aucune route."
   ],
   "routes_available": [
     "marie",
-    "mathilde",
-    "sandra",
-    "pauline",
-    "nico_marie"
+    "pauline"
   ],
   "routes_locked_to_seed_only": [
     "raphaelle",
@@ -90,9 +58,9 @@
   ],
   "debug_expected_outcomes": [
     "No final route should be locked in chapter 4.",
-    "Pauline and Nico become active social pressure, not final routes.",
-    "At least one social photo / party trace should be visible.",
-    "The player should feel several possibilities opening at once without being able to pursue all of them freely."
+    "Pauline frames the outing without stealing the route.",
+    "Marie gains social visibility without breaking the couple.",
+    "At least one social photo / party trace should be visible."
   ],
   "conversation_availability": {
     "initial_conversation_ids": [
@@ -100,10 +68,7 @@
     ],
     "locked_conversation_ids": [
       "chapter_04_marie_pre_party",
-      "chapter_04_party_group_arrival",
-      "chapter_04_mathilde_observes",
-      "chapter_04_sandra_bad_timing",
-      "chapter_04_pauline_late_control"
+      "chapter_04_party_group_arrival"
     ],
     "unlocks": {
       "chapter_04_marie_pre_party": {
@@ -120,35 +85,8 @@
         "time_label": "20:36",
         "pending": true,
         "notification": {
-          "title": "Groupe amis",
-          "body": "Pauline a envoyé une photo."
-        }
-      },
-      "chapter_04_mathilde_observes": {
-        "after_conversation_completed": "chapter_04_party_group_arrival",
-        "time_label": "21:24",
-        "pending": true,
-        "notification": {
-          "title": "Mathilde",
-          "body": "T’as une tête intéressante."
-        }
-      },
-      "chapter_04_sandra_bad_timing": {
-        "after_conversation_completed": "chapter_04_mathilde_observes",
-        "time_label": "22:11",
-        "pending": true,
-        "notification": {
-          "title": "Sandra",
-          "body": "Mauvais moment ?"
-        }
-      },
-      "chapter_04_pauline_late_control": {
-        "after_conversation_completed": "chapter_04_sandra_bad_timing",
-        "time_label": "23:06",
-        "pending": true,
-        "notification": {
           "title": "Pauline",
-          "body": "Tu devrais faire attention aux photos."
+          "body": "On est arrivées. Regarde la photo."
         }
       }
     }

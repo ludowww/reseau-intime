@@ -1,7 +1,7 @@
 {
   "id": "chapter_04_proof_placeholders",
   "version": 2,
-  "notes": "Placeholders neutres/suggestifs pour tester la soirée sociale J4, les photos de groupe, les regards croisés et les premières traces réutilisables en J5.",
+  "notes": "Placeholders neutres/suggestifs pour tester la sortie sociale J4, le selfie Marie / Pauline, la photo de lieu, et les premières traces réutilisables en J5.",
   "items": [
     {
       "id": "capture_pauline_ludo_party_placeholder",
@@ -11,13 +11,22 @@
       "source_app": "messages",
       "asset_path": "res://assets/placeholders/capture_pauline_ludo_party_placeholder.png",
       "context": "Capture ou trace montrant que Player a ouvert/répondu à Pauline pendant la soirée.",
-      "tags": ["pauline", "capture", "proof", "party", "control"],
+      "tags": [
+        "pauline",
+        "capture",
+        "proof",
+        "party",
+        "control"
+      ],
       "is_proof": true,
       "risk_level": 4,
       "can_delete": true,
       "can_capture": false,
       "can_set_as_wallpaper": false,
-      "can_be_discovered_by": ["marie", "pauline"]
+      "can_be_discovered_by": [
+        "marie",
+        "pauline"
+      ]
     },
     {
       "id": "story_nico_marie_after_party_placeholder",
@@ -27,13 +36,22 @@
       "source_app": "social",
       "asset_path": "res://assets/placeholders/story_nico_marie_after_party_placeholder.png",
       "context": "Story où Marie rit près de Nico après la soirée, utilisée pour amorcer la jalousie / NTR subi.",
-      "tags": ["nico", "marie", "story", "jealousy", "ntr_seed"],
+      "tags": [
+        "nico",
+        "marie",
+        "story",
+        "jealousy",
+        "ntr_seed"
+      ],
       "is_proof": false,
       "risk_level": 3,
       "can_delete": false,
       "can_capture": true,
       "can_set_as_wallpaper": false,
-      "can_be_discovered_by": ["marie", "nico"]
+      "can_be_discovered_by": [
+        "marie",
+        "nico"
+      ]
     },
     {
       "id": "photo_mathilde_after_party_warning_placeholder",
@@ -43,13 +61,22 @@
       "source_app": "messages",
       "asset_path": "res://assets/placeholders/photo_mathilde_after_party_warning_placeholder.png",
       "context": "Photo non explicite de Mathilde après la soirée, associée à un message de recul ou de culpabilité.",
-      "tags": ["mathilde", "after_party", "warning", "guilt", "forbidden"],
+      "tags": [
+        "mathilde",
+        "after_party",
+        "warning",
+        "guilt",
+        "forbidden"
+      ],
       "is_proof": true,
       "risk_level": 3,
       "can_delete": true,
       "can_capture": true,
       "can_set_as_wallpaper": true,
-      "can_be_discovered_by": ["marie", "mathilde"]
+      "can_be_discovered_by": [
+        "marie",
+        "mathilde"
+      ]
     },
     {
       "id": "photo_marie_party_smile_placeholder",
@@ -59,13 +86,20 @@
       "source_app": "social",
       "asset_path": "res://assets/placeholders/photo_marie_party_smile_placeholder.png",
       "context": "Photo de Marie pendant la soirée, souriante, pouvant rassurer ou devenir source de jalousie selon le contexte.",
-      "tags": ["marie", "party", "smile", "social"],
+      "tags": [
+        "marie",
+        "party",
+        "smile",
+        "social"
+      ],
       "is_proof": false,
       "risk_level": 1,
       "can_delete": false,
       "can_capture": true,
       "can_set_as_wallpaper": true,
-      "can_be_discovered_by": ["marie"]
+      "can_be_discovered_by": [
+        "marie"
+      ]
     },
     {
       "id": "photo_party_group_j4_placeholder",
@@ -75,13 +109,27 @@
       "source_app": "social",
       "asset_path": "res://assets/placeholders/photo_party_group_j4_placeholder.png",
       "context": "Photo de groupe de la soirée J4 chez Pauline : Marie visible et lumineuse, Mathilde dans le cadre, Nico proche sans être frontal, Pauline au cadrage. Player peut être partiellement hors champ ou distrait par son téléphone.",
-      "tags": ["day4", "party", "group", "marie", "mathilde", "pauline", "nico", "social_trace"],
+      "tags": [
+        "day4",
+        "party",
+        "group",
+        "marie",
+        "mathilde",
+        "pauline",
+        "nico",
+        "social_trace"
+      ],
       "is_proof": true,
       "risk_level": 2,
       "can_delete": false,
       "can_capture": true,
       "can_set_as_wallpaper": false,
-      "can_be_discovered_by": ["marie", "mathilde", "pauline", "nico"]
+      "can_be_discovered_by": [
+        "marie",
+        "mathilde",
+        "pauline",
+        "nico"
+      ]
     },
     {
       "id": "photo_marie_evening_j4_placeholder",
@@ -91,13 +139,21 @@
       "source_app": "messages",
       "asset_path": "res://assets/placeholders/photo_marie_evening_j4_placeholder.png",
       "context": "Marie avant la soirée, tenue simple mais plus apprêtée que d’habitude, lumière d’entrée ou de salle de bain. Elle ne pose pas frontalement, mais elle attend le regard de Player.",
-      "tags": ["marie", "day4", "evening", "couple", "desire"],
+      "tags": [
+        "marie",
+        "day4",
+        "evening",
+        "couple",
+        "desire"
+      ],
       "is_proof": false,
       "risk_level": 1,
       "can_delete": true,
       "can_capture": true,
       "can_set_as_wallpaper": true,
-      "can_be_discovered_by": ["marie"]
+      "can_be_discovered_by": [
+        "marie"
+      ]
     },
     {
       "id": "photo_pauline_soft_provocation_j4_placeholder",
@@ -107,13 +163,22 @@
       "source_app": "messages",
       "asset_path": "res://assets/placeholders/photo_pauline_soft_provocation_j4_placeholder.png",
       "context": "Pauline en photo de soirée, sourire maîtrisé, cadrage flatteur et socialement défendable. L’image dit surtout qu’elle sait observer et choisir ce qu’elle montre.",
-      "tags": ["pauline", "day4", "party", "provocation", "control"],
+      "tags": [
+        "pauline",
+        "day4",
+        "party",
+        "provocation",
+        "control"
+      ],
       "is_proof": false,
       "risk_level": 2,
       "can_delete": true,
       "can_capture": true,
       "can_set_as_wallpaper": false,
-      "can_be_discovered_by": ["pauline", "marie"]
+      "can_be_discovered_by": [
+        "pauline",
+        "marie"
+      ]
     },
     {
       "id": "story_marie_nico_j4_placeholder",
@@ -123,13 +188,23 @@
       "source_app": "social",
       "asset_path": "res://assets/placeholders/story_marie_nico_j4_placeholder.png",
       "context": "Story ou détail social où Nico réagit à Marie pendant la soirée. Rien n’est explicitement déplacé, mais le cadrage installe la jalousie miroir de Player.",
-      "tags": ["nico", "marie", "day4", "story", "jealousy", "mirror"],
+      "tags": [
+        "nico",
+        "marie",
+        "day4",
+        "story",
+        "jealousy",
+        "mirror"
+      ],
       "is_proof": false,
       "risk_level": 2,
       "can_delete": false,
       "can_capture": true,
       "can_set_as_wallpaper": false,
-      "can_be_discovered_by": ["marie", "nico"]
+      "can_be_discovered_by": [
+        "marie",
+        "nico"
+      ]
     },
     {
       "id": "capture_player_phone_party_j4_placeholder",
@@ -139,13 +214,72 @@
       "source_app": "social",
       "asset_path": "res://assets/placeholders/capture_player_phone_party_j4_placeholder.png",
       "context": "Image ou capture montrant Player en train de regarder son téléphone pendant un moment où il devrait être présent dans la soirée.",
-      "tags": ["player", "day4", "phone", "party", "proof_seed"],
+      "tags": [
+        "player",
+        "day4",
+        "phone",
+        "party",
+        "proof_seed"
+      ],
       "is_proof": true,
       "risk_level": 3,
       "can_delete": true,
       "can_capture": false,
       "can_set_as_wallpaper": false,
-      "can_be_discovered_by": ["marie", "pauline"]
+      "can_be_discovered_by": [
+        "marie",
+        "pauline"
+      ]
+    },
+    {
+      "id": "photo_marie_pauline_selfie_j4_placeholder",
+      "character": null,
+      "tier": 1,
+      "type": "group_photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/photo_marie_pauline_selfie_j4_placeholder.png",
+      "context": "Selfie Marie / Pauline pendant la sortie : sourire social, proximité amicale, cadrage simple. La photo montre Marie visible hors du couple sans basculer dans la provocation sexuelle.",
+      "tags": [
+        "day4",
+        "marie",
+        "pauline",
+        "selfie",
+        "social_trace"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": false,
+      "can_capture": true,
+      "can_set_as_wallpaper": false,
+      "can_be_discovered_by": [
+        "marie",
+        "pauline"
+      ]
+    },
+    {
+      "id": "photo_j4_terrace_placeholder",
+      "character": null,
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/photo_j4_terrace_placeholder.png",
+      "context": "Photo du lieu de sortie : table, verre, terrasse, lumière de soirée. La trace prouve que Marie est hors de la maison et que la sortie s’inscrit dans le réel.",
+      "tags": [
+        "day4",
+        "location",
+        "terrace",
+        "evening",
+        "social_trace"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": false,
+      "can_be_discovered_by": [
+        "marie",
+        "pauline"
+      ]
     }
   ]
 }

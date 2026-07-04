@@ -2,7 +2,7 @@
   "id": "chapter_04_pauline_invite",
   "chapter": 4,
   "day": 4,
-  "title": "Jour 4 — Pauline relance la soirée",
+  "title": "Jour 4 — Pauline lance la sortie",
   "app": "messages",
   "thread": {
     "id": "thread_pauline_private",
@@ -30,19 +30,19 @@
           "id": "msg_c04_pauline_invite_002",
           "sender": "pauline",
           "time_label": "17:48",
-          "text": "On ne s’écrit presque jamais en privé, je sais. Moment historique."
+          "text": "Je t’écris avant que Marie parte."
         },
         {
           "id": "msg_c04_pauline_invite_003",
           "sender": "pauline",
           "time_label": "17:49",
-          "text": "Je te rassure : ce n’est pas pour te vendre un aspirateur. C’est pire 😇"
+          "text": "Ce soir, je la fais sortir un peu. Rien de spectaculaire."
         },
         {
           "id": "msg_c04_pauline_invite_004",
           "sender": "pauline",
           "time_label": "17:49",
-          "text": "Ce soir, petite soirée tranquille. Donc probablement pas tranquille, mais je vais dire “tranquille” pour rassurer les gens fragiles."
+          "text": "Juste une soirée simple, et quelques photos consenties."
         }
       ],
       "choices": [
@@ -76,103 +76,26 @@
           "id": "msg_c04_pauline_invite_006",
           "sender": "pauline",
           "time_label": "17:50",
-          "text": "J’organise les occasions pour que les gens se trahissent eux-mêmes."
+          "text": "J’organise une petite sortie pour que Marie prenne l’air."
         },
         {
           "id": "msg_c04_pauline_invite_007",
           "sender": "pauline",
           "time_label": "17:50",
-          "text": "Avec des chips. C’est plus convivial 🙃"
+          "text": "Avec des chips, évidemment."
         },
         {
           "id": "msg_c04_pauline_invite_008",
           "sender": "pauline",
           "time_label": "17:50",
-          "text": "Et moins attaquable juridiquement."
+          "text": "Et avec la promesse d’une photo avant le départ."
         }
       ],
       "choices": [
         {
           "id": "choice_c04_pauline_invite_02_1",
-          "text": "Je viens. Pour les chips, évidemment.",
-          "tone": "playful",
-          "effects": {
-            "pauline.interest": 1,
-            "social_pressure": 1
-          },
-          "sets_flags": [
-            "party_invite_j4"
-          ],
-          "next_messages": [
-            {
-              "id": "msg_c04_pauline_invite_02_1_01",
-              "sender": "pauline",
-              "time_label": "17:51",
-              "text": "Évidemment."
-            },
-            {
-              "id": "msg_c04_pauline_invite_02_1_02",
-              "sender": "pauline",
-              "time_label": "17:51",
-              "text": "Les hommes et leur pudeur alimentaire 😅"
-            },
-            {
-              "id": "msg_c04_pauline_invite_02_1_03",
-              "sender": "pauline",
-              "time_label": "17:51",
-              "text": "Je note quand même que tu as répondu vite. Pour les chips, bien sûr."
-            }
-          ]
-        },
-        {
-          "id": "choice_c04_pauline_invite_02_2",
-          "text": "Qui vient exactement ?",
-          "tone": "curious",
-          "effects": {
-            "pauline.interest": 1,
-            "nico.place_near_marie": 1,
-            "social_pressure": 1
-          },
-          "sets_flags": [
-            "party_invite_j4"
-          ],
-          "next_messages": [
-            {
-              "id": "choice_c04_pauline_invite_02_2_player_001",
-              "sender": "ludo",
-              "time_label": "17:51",
-              "text": "Qui vient exactement ?"
-            },
-            {
-              "id": "msg_c04_pauline_invite_02_2_01",
-              "sender": "pauline",
-              "time_label": "17:51",
-              "text": "Ah."
-            },
-            {
-              "id": "msg_c04_pauline_invite_02_2_02",
-              "sender": "pauline",
-              "time_label": "17:51",
-              "text": "Question innocente, bien sûr. Marie, Mathilde, Nico, deux-trois autres."
-            },
-            {
-              "id": "msg_c04_pauline_invite_02_2_03",
-              "sender": "pauline",
-              "time_label": "17:51",
-              "text": "Je note quand même l’ordre de tes inquiétudes 🙂"
-            },
-            {
-              "id": "msg_c04_pauline_invite_02_2_04",
-              "sender": "pauline",
-              "time_label": "17:52",
-              "text": "Très instructif, ton silence après “Nico”."
-            }
-          ]
-        },
-        {
-          "id": "choice_c04_pauline_invite_02_3",
-          "text": "Je vais rester près de Marie, ce soir.",
-          "tone": "protective",
+          "text": "Je veux bien la voir avant qu’elle parte.",
+          "tone": "tendre",
           "effects": {
             "marie_trust": 1,
             "pauline.interest": 1
@@ -182,22 +105,86 @@
           ],
           "next_messages": [
             {
+              "id": "msg_c04_pauline_invite_02_1_01",
+              "sender": "pauline",
+              "time_label": "17:51",
+              "text": "Normal."
+            },
+            {
+              "id": "msg_c04_pauline_invite_02_1_02",
+              "sender": "pauline",
+              "time_label": "17:51",
+              "text": "Je lui dirai de t’envoyer la photo."
+            },
+            {
+              "id": "msg_c04_pauline_invite_02_1_03",
+              "sender": "pauline",
+              "time_label": "17:51",
+              "text": "Elle aime savoir qu’on la regarde bien."
+            }
+          ]
+        },
+        {
+          "id": "choice_c04_pauline_invite_02_2",
+          "text": "Vous allez où, exactement ?",
+          "tone": "curious",
+          "effects": {
+            "pauline.interest": 1,
+            "social_pressure": 1
+          },
+          "sets_flags": [
+            "party_invite_j4"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c04_pauline_invite_02_2_01",
+              "sender": "pauline",
+              "time_label": "17:51",
+              "text": "Pas loin."
+            },
+            {
+              "id": "msg_c04_pauline_invite_02_2_02",
+              "sender": "pauline",
+              "time_label": "17:51",
+              "text": "Un verre, une terrasse, des gens normaux."
+            },
+            {
+              "id": "msg_c04_pauline_invite_02_2_03",
+              "sender": "pauline",
+              "time_label": "17:51",
+              "text": "Marie qui sourit en vrai, c’est le plan."
+            }
+          ]
+        },
+        {
+          "id": "choice_c04_pauline_invite_02_3",
+          "text": "Je te fais confiance pour la faire sourire.",
+          "tone": "protective",
+          "effects": {
+            "marie_trust": 1,
+            "pauline.control": 1
+          },
+          "sets_flags": [
+            "party_invite_j4"
+          ],
+          "next_messages": [
+            {
               "id": "msg_c04_pauline_invite_02_3_01",
               "sender": "pauline",
               "time_label": "17:51",
-              "text": "Très noble."
+              "text": "Ah."
             },
             {
               "id": "msg_c04_pauline_invite_02_3_02",
               "sender": "pauline",
               "time_label": "17:51",
-              "text": "J’adore quand les gens annoncent leur stratégie avant la partie 🙄"
+              "text": "Tu me confies une mission, maintenant ?"
             },
             {
               "id": "msg_c04_pauline_invite_02_3_03",
               "sender": "pauline",
               "time_label": "17:52",
-              "text": "Ça m’évite de chercher où appuyer."
+              "text": "J’aime bien."
             }
           ]
         }
@@ -218,26 +205,38 @@
           "id": "msg_c04_pauline_invite_010",
           "sender": "pauline",
           "time_label": "17:53",
-          "text": "Les gens sont plus honnêtes quand ils oublient qu’on les regarde."
+          "text": "Des photos où les gens arrêtent de jouer au mur."
         },
         {
           "id": "msg_c04_pauline_invite_011",
           "sender": "pauline",
           "time_label": "17:53",
-          "text": "Et plus drôles quand ils croient qu’ils sont discrets 😇"
+          "text": "Et où Marie a l’air contente de s’être laissée convaincre."
         }
       ],
       "choices": [
         {
           "id": "choice_c04_pauline_invite_03_guided",
-          "text": "C’est censé me rassurer ?",
+          "text": "Tu m’en feras passer une ?",
           "tone": "guided_reply",
           "next_messages": [
             {
               "id": "choice_c04_pauline_invite_03_guided_player_001",
               "sender": "ludo",
               "time_label": "17:53",
-              "text": "C’est censé me rassurer ?"
+              "text": "Tu m’en feras passer une ?"
+            },
+            {
+              "id": "choice_c04_pauline_invite_03_guided_pauline_001",
+              "sender": "pauline",
+              "time_label": "17:53",
+              "text": "Évidemment."
+            },
+            {
+              "id": "choice_c04_pauline_invite_03_guided_pauline_002",
+              "sender": "pauline",
+              "time_label": "17:53",
+              "text": "Je ne fais pas de promesses vides."
             }
           ]
         }
@@ -259,7 +258,7 @@
           "sender": "pauline",
           "time_label": "17:54",
           "content_id": "photo_pauline_soft_provocation_j4_placeholder",
-          "text": "Photo de Pauline avant la soirée : cadrage maîtrisé, sourire tranquille, tenue simple mais clairement choisie. Elle sait exactement l’effet que produit la photo, même si elle fait semblant que non."
+          "text": "Photo de Pauline avant la sortie : cadrage maîtrisé, sourire tranquille, rien d’appuyé. Elle sait très bien qu’elle donne déjà le ton social de la soirée."
         },
         {
           "id": "msg_c04_pauline_invite_014",
@@ -270,5 +269,5 @@
       ]
     }
   ],
-  "debug_notes": "J4 démarre par un message privé rare de Pauline : invitation sociale, photos annoncées, contrôle léger. Réponses Player uniquement via choices."
+  "debug_notes": "J4 démarre par une invitation rare de Pauline : cadre social léger, photos consenties, aucune crise et aucune séduction frontale."
 }
