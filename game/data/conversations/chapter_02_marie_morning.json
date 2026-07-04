@@ -111,74 +111,6 @@
               "text": "Ta confiance m’encourage dans mes pires décisions sucrées."
             }
           ]
-        },
-        {
-          "id": "choice_c02_marie_morning_02_2",
-          "text": "Si son sac de sport attaque mes chaussures, je reste neutre.",
-          "tone": "taquin",
-          "next_messages": [
-            {
-              "id": "msg_c02_marie_morning_012",
-              "sender": "marie",
-              "time_label": "08:12",
-              "text": "Traître."
-            },
-            {
-              "id": "msg_c02_marie_morning_013",
-              "sender": "marie",
-              "time_label": "08:12",
-              "text": "Mais je comprends."
-            },
-            {
-              "id": "msg_c02_marie_morning_014",
-              "sender": "marie",
-              "time_label": "08:12",
-              "text": "Ses baskets ont l’air plus disciplinées que les tiennes."
-            },
-            {
-              "id": "msg_c02_marie_morning_015",
-              "sender": "marie",
-              "time_label": "08:12",
-              "text": "C’est peut-être une bonne influence."
-            }
-          ]
-        },
-        {
-          "id": "choice_c02_marie_morning_02_3",
-          "text": "Dis-moi juste où il faut mettre ses affaires.",
-          "tone": "prudent",
-          "next_messages": [
-            {
-              "id": "msg_c02_marie_morning_016",
-              "sender": "marie",
-              "time_label": "08:12",
-              "text": "Oui."
-            },
-            {
-              "id": "msg_c02_marie_morning_017",
-              "sender": "marie",
-              "time_label": "08:12",
-              "text": "Je te dirai."
-            },
-            {
-              "id": "msg_c02_marie_morning_018",
-              "sender": "marie",
-              "time_label": "08:12",
-              "text": "Mais j’aurais bien aimé que tu demandes aussi comment moi je le vis."
-            },
-            {
-              "id": "msg_c02_marie_morning_019",
-              "sender": "marie",
-              "time_label": "08:12",
-              "text": "Enfin."
-            },
-            {
-              "id": "msg_c02_marie_morning_020",
-              "sender": "marie",
-              "time_label": "08:12",
-              "text": "Tu peux encore te rattraper."
-            }
-          ]
         }
       ]
     },
@@ -285,6 +217,74 @@
               "sender": "marie",
               "time_label": "08:12",
               "text": "Je suis contente que tu le dises comme ça."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_marie_morning_02_2",
+          "text": "Si son sac de sport attaque mes chaussures, je reste neutre.",
+          "tone": "taquin",
+          "next_messages": [
+            {
+              "id": "msg_c02_marie_morning_012",
+              "sender": "marie",
+              "time_label": "08:12",
+              "text": "Traître."
+            },
+            {
+              "id": "msg_c02_marie_morning_013",
+              "sender": "marie",
+              "time_label": "08:12",
+              "text": "Mais je comprends."
+            },
+            {
+              "id": "msg_c02_marie_morning_014",
+              "sender": "marie",
+              "time_label": "08:12",
+              "text": "Ses baskets ont l’air plus disciplinées que les tiennes."
+            },
+            {
+              "id": "msg_c02_marie_morning_015",
+              "sender": "marie",
+              "time_label": "08:12",
+              "text": "C’est peut-être une bonne influence."
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_marie_morning_02_3",
+          "text": "Dis-moi juste où il faut mettre ses affaires.",
+          "tone": "prudent",
+          "next_messages": [
+            {
+              "id": "msg_c02_marie_morning_016",
+              "sender": "marie",
+              "time_label": "08:12",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_c02_marie_morning_017",
+              "sender": "marie",
+              "time_label": "08:12",
+              "text": "Je te dirai."
+            },
+            {
+              "id": "msg_c02_marie_morning_018",
+              "sender": "marie",
+              "time_label": "08:12",
+              "text": "Mais j’aurais bien aimé que tu demandes aussi comment moi je le vis."
+            },
+            {
+              "id": "msg_c02_marie_morning_019",
+              "sender": "marie",
+              "time_label": "08:12",
+              "text": "Enfin."
+            },
+            {
+              "id": "msg_c02_marie_morning_020",
+              "sender": "marie",
+              "time_label": "08:12",
+              "text": "Tu peux encore te rattraper."
             }
           ]
         }
@@ -403,8 +403,8 @@
         },
         {
           "id": "choice_c02_marie_morning_04_3",
-          "text": "Je crois que ça va nous faire bizarre.",
-          "tone": "sincere",
+          "text": "Que la maison change ?",
+          "tone": "guided_reply",
           "next_messages": [
             {
               "id": "msg_c02_marie_morning_049",

@@ -72,25 +72,6 @@
       ],
       "choices": [
         {
-          "id": "choice_c02_mathilde_evening_01_1",
-          "text": "Tu veux que je prévienne l’entrée ?",
-          "tone": "guided_reply",
-          "next_messages": [
-            {
-              "id": "msg_c02_mathilde_evening_009",
-              "sender": "mathilde",
-              "time_label": "17:52",
-              "text": "Oui."
-            },
-            {
-              "id": "msg_c02_mathilde_evening_010",
-              "sender": "mathilde",
-              "time_label": "17:52",
-              "text": "Dis-lui d’être forte."
-            }
-          ]
-        },
-        {
           "id": "choice_c02_mathilde_evening_01_2",
           "text": "Tu peux prendre la place qu’il faut.",
           "tone": "accueillant",
@@ -149,6 +130,33 @@
               "sender": "mathilde",
               "time_label": "17:52",
               "text": "Et elle a un meilleur revers que moi quand je suis fatiguée."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_evening_seg_01_guided_entry",
+      "moment_label": "jour 2",
+      "time_label": "17:52",
+      "messages": [],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_evening_01_1",
+          "text": "Tu veux que je prévienne l’entrée ?",
+          "tone": "guided_reply",
+          "next_messages": [
+            {
+              "id": "msg_c02_mathilde_evening_009",
+              "sender": "mathilde",
+              "time_label": "17:52",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_c02_mathilde_evening_010",
+              "sender": "mathilde",
+              "time_label": "17:52",
+              "text": "Dis-lui d’être forte."
             }
           ]
         }
@@ -219,18 +227,6 @@
               "sender": "mathilde",
               "time_label": "17:52",
               "text": "Ça me va bien, comme phrase."
-            },
-            {
-              "id": "msg_c02_mathilde_evening_028",
-              "sender": "mathilde",
-              "time_label": "17:52",
-              "text": "“On s’occupe du reste après.”"
-            },
-            {
-              "id": "msg_c02_mathilde_evening_029",
-              "sender": "mathilde",
-              "time_label": "17:52",
-              "text": "Je vais la garder un peu."
             }
           ]
         },
@@ -327,18 +323,6 @@
               "sender": "mathilde",
               "time_label": "17:52",
               "text": "Ça me va bien, comme phrase."
-            },
-            {
-              "id": "msg_c02_mathilde_evening_041",
-              "sender": "mathilde",
-              "time_label": "17:52",
-              "text": "“On s’occupe du reste après.”"
-            },
-            {
-              "id": "msg_c02_mathilde_evening_042",
-              "sender": "mathilde",
-              "time_label": "17:52",
-              "text": "Je vais la garder un peu."
             }
           ]
         },
@@ -409,27 +393,9 @@
       "choices": [
         {
           "id": "choice_c02_mathilde_evening_04_guided",
-          "text": "Il y a un deuxième sac ?",
+          "text": "Bienvenue, alors.",
           "tone": "guided_reply",
           "next_messages": [
-            {
-              "id": "msg_c02_mathilde_evening_050",
-              "sender": "mathilde",
-              "time_label": "17:52",
-              "text": "J’avais dit que j’avais pris trop d’affaires."
-            },
-            {
-              "id": "msg_c02_mathilde_evening_051",
-              "sender": "mathilde",
-              "time_label": "17:52",
-              "text": "Je suis honnête, au moins 😅"
-            },
-            {
-              "id": "msg_c02_mathilde_evening_052",
-              "sender": "mathilde",
-              "time_label": "17:52",
-              "text": "Bienvenue, alors."
-            },
             {
               "id": "msg_c02_mathilde_evening_053",
               "sender": "mathilde",

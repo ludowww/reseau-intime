@@ -158,30 +158,6 @@
           "sender": "raphaelle",
           "time_label": "12:27",
           "text": "Je sais, c’est très moi de transformer un problème pratique en recommandation de jeu."
-        },
-        {
-          "id": "msg_c02_raphaelle_midday_019",
-          "sender": "raphaelle",
-          "time_label": "12:27",
-          "text": "Tu joues beaucoup ?"
-        },
-        {
-          "id": "msg_c02_raphaelle_midday_020",
-          "sender": "raphaelle",
-          "time_label": "12:27",
-          "text": "Je dis “par périodes” pour que ça semble raisonnable."
-        },
-        {
-          "id": "msg_c02_raphaelle_midday_021",
-          "sender": "raphaelle",
-          "time_label": "12:27",
-          "text": "En vrai, quand j’accroche à un jeu, je disparais un peu."
-        },
-        {
-          "id": "msg_c02_raphaelle_midday_022",
-          "sender": "raphaelle",
-          "time_label": "12:27",
-          "text": "Mais poliment."
         }
       ],
       "choices": [
@@ -206,20 +182,26 @@
         },
         {
           "id": "choice_c02_raphaelle_midday_02_2",
-          "text": "Disons que j’ai compris le principe de la disparition polie.",
-          "tone": "leger",
+          "text": "Tu joues beaucoup ?",
+          "tone": "guided_reply",
           "next_messages": [
             {
-              "id": "msg_c02_raphaelle_midday_025",
+              "id": "msg_c02_raphaelle_midday_020",
               "sender": "raphaelle",
               "time_label": "12:27",
-              "text": "Ça arrive."
+              "text": "Je dis “par périodes” pour que ça semble raisonnable."
             },
             {
-              "id": "msg_c02_raphaelle_midday_026",
+              "id": "msg_c02_raphaelle_midday_021",
               "sender": "raphaelle",
               "time_label": "12:27",
-              "text": "Je trouve ça plus honnête que de faire semblant d’être ultra disponible."
+              "text": "En vrai, quand j’accroche à un jeu, je disparais un peu."
+            },
+            {
+              "id": "msg_c02_raphaelle_midday_022",
+              "sender": "raphaelle",
+              "time_label": "12:27",
+              "text": "Mais poliment."
             }
           ]
         },

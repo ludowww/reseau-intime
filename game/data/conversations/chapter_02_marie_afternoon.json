@@ -162,7 +162,7 @@
       "choices": [
         {
           "id": "choice_c02_marie_afternoon_02_guided",
-          "text": "C’est déjà beaucoup.",
+          "text": "Elle sait cuisiner ?",
           "tone": "guided_reply",
           "next_messages": [
             {
@@ -176,12 +176,6 @@
               "sender": "marie",
               "time_label": "17:36",
               "text": "Et puis elle a proposé de faire des pâtes ce soir."
-            },
-            {
-              "id": "msg_c02_marie_afternoon_021",
-              "sender": "marie",
-              "time_label": "17:36",
-              "text": "Elle sait cuisiner ?"
             },
             {
               "id": "msg_c02_marie_afternoon_022",

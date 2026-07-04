@@ -304,8 +304,8 @@
         "sport_bag",
         "raquette"
       ],
-      "is_proof": true,
-      "risk_level": 2,
+      "is_proof": false,
+      "risk_level": 1,
       "can_delete": true,
       "can_capture": true,
       "can_set_as_wallpaper": true,
@@ -329,8 +329,8 @@
         "daily",
         "soft"
       ],
-      "is_proof": true,
-      "risk_level": 2,
+      "is_proof": false,
+      "risk_level": 1,
       "can_delete": true,
       "can_capture": true,
       "can_set_as_wallpaper": true,

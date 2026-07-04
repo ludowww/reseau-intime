@@ -201,13 +201,14 @@
               "sender": "sandra",
               "time_label": "18:38",
               "text": "Je note."
-            },
-            {
-              "id": "msg_c02_sandra_evening_025",
-              "sender": "sandra",
-              "time_label": "18:38",
-              "text": "Un jour."
-            },
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_sandra_evening_02_2_guided",
+          "text": "Un jour.",
+          "tone": "guided_reply",
+          "next_messages": [
             {
               "id": "msg_c02_sandra_evening_026",
               "sender": "sandra",
@@ -225,13 +226,14 @@
               "sender": "sandra",
               "time_label": "18:38",
               "text": "Les gens dedans sont sur le point de se dire une phrase évidente qu’ils repoussent depuis 200 pages."
-            },
-            {
-              "id": "msg_c02_sandra_evening_029",
-              "sender": "sandra",
-              "time_label": "18:38",
-              "text": "Tu vas survivre ?"
-            },
+            }
+          ]
+        },
+        {
+          "id": "choice_c02_sandra_evening_02_3_guided",
+          "text": "Tu vas survivre ?",
+          "tone": "guided_reply",
+          "next_messages": [
             {
               "id": "msg_c02_sandra_evening_030",
               "sender": "sandra",
