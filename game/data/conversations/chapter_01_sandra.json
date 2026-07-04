@@ -30,7 +30,7 @@
           "sender": "sandra",
           "time_label": "22:57",
           "text": "Je suis retombée sur la photo du déjeuner.",
-          "content_id": "profile_sandra_placeholder",
+          "content_id": "j1_sandra_lunch_memory_soft",
           "tags": [
             "sandra",
             "photo",
@@ -50,6 +50,57 @@
           "sender": "sandra",
           "time_label": "22:57",
           "text": "Je ne sais pas pourquoi il a décidé de me ressortir ce souvenir à 22h57."
+        },
+        {
+          "id": "msg_sandra_430",
+          "sender": "sandra",
+          "time_label": "22:57",
+          "text": "Le café était franchement mauvais, mais la marche après le déjeuner a sauvé la journée.",
+          "tags": [
+            "sandra",
+            "café",
+            "marche",
+            "déjeuner",
+            "day1"
+          ]
+        },
+        {
+          "id": "msg_sandra_431",
+          "sender": "sandra",
+          "time_label": "22:58",
+          "text": "On a longé le lac ensuite. Il y avait de la nature partout, et on gardait cette distance un peu sage qui fait presque rire.",
+          "tags": [
+            "sandra",
+            "lac",
+            "nature",
+            "distance",
+            "day1"
+          ]
+        },
+        {
+          "id": "msg_sandra_432",
+          "sender": "sandra",
+          "time_label": "22:58",
+          "text": "J’avais encore mon roman d’amour dans la tête, ce qui est très embarrassant à écrire.",
+          "tags": [
+            "sandra",
+            "roman",
+            "amour",
+            "day1"
+          ]
+        },
+        {
+          "id": "msg_sandra_433",
+          "sender": "sandra",
+          "time_label": "22:59",
+          "text": "Bref, je te parle de tomates parce que c’est plus simple que de dire que tu me manques un peu.",
+          "tags": [
+            "sandra",
+            "tomates",
+            "manque",
+            "souvenir",
+            "day1"
+          ]
         }
       ],
       "choices": [
@@ -3504,7 +3555,8 @@
     "secret_affair_emotional_seed"
   ],
   "unlocks_content": [
-    "profile_sandra_placeholder"
+    "profile_sandra_placeholder",
+    "j1_sandra_lunch_memory_soft"
   ],
-  "debug_notes": "Jour 1 Sandra restauré depuis la V1 validée : photo-souvenir en placeholder, conversation pilier longue, manque prudent, clarification des couples et fin sur “Doucement”. Choix de posture seulement; pas de route lock."
+  "debug_notes": "Jour 1 Sandra restauré depuis la V1 validée : photo-souvenir du déjeuner, café mauvais, marche après déjeuner, lac/nature, romans d’amour, tomates comme esquive et manque discret. Choix de posture seulement; pas de route lock."
 }

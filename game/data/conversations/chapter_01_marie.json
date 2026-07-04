@@ -36,6 +36,49 @@
           "sender": "marie",
           "time_label": "18:12",
           "text": "Et avant que tu répondes “bientôt” comme d’habitude, il n’y a plus de pain. J’ai gardé la photo du panier pour te le rappeler."
+        },
+        {
+          "id": "msg_marie_290",
+          "sender": "marie",
+          "time_label": "18:12",
+          "text": "J’ai aussi pris la photo de la cuisine avant que ça refroidisse : biscuits encore tièdes, ta tasse à côté, et moi qui fais semblant de ne pas aimer quand ça bouge un peu trop vite.",
+          "content_id": "j1_marie_kitchen_soft",
+          "tags": [
+            "marie",
+            "cuisine",
+            "biscuits",
+            "tasse",
+            "photo",
+            "day1"
+          ]
+        },
+        {
+          "id": "msg_marie_291",
+          "sender": "marie",
+          "time_label": "18:12",
+          "text": "Et j’ai vu les sacs de Mathilde dans l’entrée. Son sac de sport et sa raquette donnent l’impression qu’elle s’installe sans vraiment s’annoncer.",
+          "content_id": "j1_mathilde_bag_domestic_trace",
+          "tags": [
+            "mathilde",
+            "sacs",
+            "sport",
+            "raquette",
+            "trace",
+            "day1"
+          ]
+        },
+        {
+          "id": "msg_marie_292",
+          "sender": "marie",
+          "time_label": "18:13",
+          "text": "Bref, je suis gourmande et je l’assume. Et toi, tu aimes les sensations fortes ; moi je garde la cuillère, toi tu prends l’aventure.",
+          "tags": [
+            "marie",
+            "gourmandise",
+            "sensations fortes",
+            "couple",
+            "day1"
+          ]
         }
       ],
       "choices": [
@@ -1464,7 +1507,9 @@
     "mathilde_seed"
   ],
   "unlocks_content": [
-    "profile_marie_placeholder"
+    "profile_marie_placeholder",
+    "j1_marie_kitchen_soft",
+    "j1_mathilde_bag_domestic_trace"
   ],
-  "debug_notes": "V0.21 intégré depuis day_01_marie_couple_anchor : ouverture bread/photo/souvenir, ancrage du couple conservé, choix SMS naturalisés, pas de state/memory runtime ajouté, pas de route lock, Sandra et Day 2 inchangés."
+  "debug_notes": "V0.67 intégré depuis source pack J1 : cuisine/biscuits/tasse, traces domestiques de Mathilde via sacs et raquette, gourmandise et sensations fortes, sans reformuler les dialogues validés ni ajouter de route lock."
 }

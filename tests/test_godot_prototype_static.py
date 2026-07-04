@@ -46,6 +46,7 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             "res://data/conversations/chapter_07_index.json",
             "res://data/conversations/chapter_09_index.json",
             "res://data/visual_content/placeholders.json",
+            "res://data/visual_content/chapter_01_proofs.json",
             "res://data/visual_content/chapter_04_proofs.json",
             "res://data/visual_content/chapter_05_proofs.json",
             "res://data/visual_content/chapter_06_proofs.json",
@@ -336,6 +337,15 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             "res://data/conversations/chapter_01_marie.json",
             "res://data/conversations/chapter_01_sandra.json",
         ])
+        self.assertEqual(index.get("proof_content_files"), ["res://data/visual_content/chapter_01_proofs.json"])
+        proofs = json.loads((GAME / "data/visual_content/chapter_01_proofs.json").read_text(encoding="utf-8"))
+        self.assertEqual([item.get("id") for item in proofs.get("items", [])], [
+            "j1_marie_kitchen_soft",
+            "j1_mathilde_bag_domestic_trace",
+            "j1_sandra_lunch_memory_soft",
+        ])
+        self.assertEqual(proofs.get("version"), 1)
+        self.assertEqual(len(proofs.get("items", [])), 3)
         serialized_index = json.dumps(index, ensure_ascii=False).lower()
         for forbidden in ["rapha", "pauline", "nico", "groupe", "photo_group_last_party_placeholder"]:
             self.assertNotIn(forbidden, serialized_index)
@@ -357,6 +367,12 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         self.assertIn("chargeur", marie_text)
         self.assertIn("téléphone", marie_text)
         self.assertIn("pain", marie_text)
+        self.assertIn("biscuits", marie_text)
+        self.assertIn("tasse", marie_text)
+        self.assertIn("raquette", marie_text)
+        self.assertIn("sensations fortes", marie_text)
+        self.assertIn("j1_marie_kitchen_soft", marie.get("unlocks_content", []))
+        self.assertIn("j1_mathilde_bag_domestic_trace", marie.get("unlocks_content", []))
         self.assertIn("mathilde", marie_text)
         self.assertNotIn("pauline", marie_text)
         self.assertNotIn("nico", marie_text)
@@ -364,8 +380,14 @@ class GodotPrototypeStaticTests(unittest.TestCase):
 
         self.assertIn("déjeuner", sandra_text)
         self.assertIn("photo", sandra_text)
+        self.assertIn("café", sandra_text)
+        self.assertIn("lac", sandra_text)
+        self.assertIn("tomates", sandra_text)
+        self.assertIn("distance", sandra_text)
+        self.assertIn("roman", sandra_text)
         self.assertIn("doucement", sandra_text)
         self.assertIn("profile_sandra_placeholder", sandra.get("unlocks_content", []))
+        self.assertIn("j1_sandra_lunch_memory_soft", sandra.get("unlocks_content", []))
         self.assertNotIn("pauline", sandra_text)
         self.assertNotIn("nico", sandra_text)
         self.assertNotIn("rapha", sandra_text)

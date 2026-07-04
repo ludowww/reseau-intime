@@ -3,8 +3,8 @@
   "chapter": 1,
   "day": 1,
   "title": "Jour 1 — Routine et ancienne amitié",
-  "description": "Première journée recentrée sur Marie et Sandra : routine domestique, téléphone comme distance, Mathilde seulement mentionnée indirectement, et reprise prudente d’une ancienne amitié.",
-  "design_goal": "Installer un tronc commun progressif sans casting actif ni routes verrouillées : Marie pose le couple et la fatigue du quotidien, Sandra ouvre un manque ancien avec douceur et prudence.",
+  "description": "Première journée recentrée sur Marie et Sandra : routine domestique, cuisine douce, traces visuelles soft, Mathilde seulement mentionnée indirectement, et reprise prudente d’une ancienne amitié.",
+  "design_goal": "Installer un tronc commun progressif sans casting actif ni routes verrouillées : Marie pose le couple et la maison, Sandra ouvre un manque ancien avec douceur, et trois visuels soft soutiennent le quotidien.",
   "default_order": [
     "chapter_01_marie",
     "chapter_01_sandra"
@@ -29,11 +29,11 @@
     "trio_marie_mathilde"
   ],
   "end_of_day_player_knowledge": [
-    "Marie et Ludo sont ensemble, encore tendres, mais fatigués par la routine.",
-    "Le téléphone de Ludo crée déjà une petite distance dans le couple.",
-    "Mathilde existe dans le quotidien seulement par son chargeur oublié et son passage probable.",
-    "Sandra connaît Ludo d’avant Marie ; leur amitié s’est éloignée sans disparaître.",
-    "Sandra et Ludo sont chacun en couple, donc la reprise de lien reste prudente.",
+    "Marie et Player restent ensemble, tendres, et la cuisine / la gourmandise ancrent le quotidien.",
+    "Marie aime les petites sensations fortes, mais sans crise ni route lock.",
+    "Mathilde existe dans le quotidien par ses sacs, son sac de sport et sa raquette, sans devenir active.",
+    "Sandra connaît Player d’avant Marie ; leur amitié s’est éloignée sans disparaître.",
+    "Sandra envoie un souvenir de déjeuner, un café mauvais, une marche au lac et une esquive par les tomates.",
     "Aucune route n’est verrouillée au Jour 1 : seulement des postures et signaux légers."
   ],
   "debug_expected_outcomes": [
@@ -41,6 +41,7 @@
     "Marie trust/lucidity can move slightly through posture choices.",
     "Sandra attachment can move lightly without route lock.",
     "Mathilde is only indirectly seeded through Marie.",
+    "Three soft visual contents are loaded from chapter_01_proofs.json.",
     "No group/photo/casting-wide unlock should happen in chapter 1."
   ],
   "conversation_availability": {
@@ -61,5 +62,8 @@
         }
       }
     }
-  }
+  },
+  "proof_content_files": [
+    "res://data/visual_content/chapter_01_proofs.json"
+  ]
 }

@@ -1,0 +1,86 @@
+{
+  "id": "chapter_01_proof_placeholders",
+  "version": 1,
+  "notes": "Visuels J1 soft pour la routine de couple et la reprise prudente de Sandra : cuisine, traces domestiques de Mathilde, et souvenir de déjeuner. Aucun contenu adulte explicite.",
+  "items": [
+    {
+      "id": "j1_marie_kitchen_soft",
+      "character": "marie",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/j1_marie_kitchen_soft.png",
+      "context": "Photo de Marie dans la cuisine : biscuits, tasse et lumière douce. Elle est active, gourmande et naturelle, sans pose explicite.",
+      "tags": [
+        "marie",
+        "kitchen",
+        "biscuits",
+        "tasse",
+        "gourmandise",
+        "soft",
+        "day1"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": [
+        "marie"
+      ]
+    },
+    {
+      "id": "j1_mathilde_bag_domestic_trace",
+      "character": "mathilde",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/j1_mathilde_bag_domestic_trace.png",
+      "context": "Trace domestique de Mathilde : sacs dans l’entrée, sac de sport et raquette posés là. Présence indirecte seulement.",
+      "tags": [
+        "mathilde",
+        "bags",
+        "sport_bag",
+        "raquette",
+        "domestic_trace",
+        "day1"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": false,
+      "can_be_discovered_by": [
+        "marie",
+        "mathilde"
+      ]
+    },
+    {
+      "id": "j1_sandra_lunch_memory_soft",
+      "character": "sandra",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/j1_sandra_lunch_memory_soft.png",
+      "context": "Photo souvenir du déjeuner : café mauvais, marche après déjeuner, lac et nature. Souvenir doux, pudique et ouvert.",
+      "tags": [
+        "sandra",
+        "lunch",
+        "coffee",
+        "lake",
+        "nature",
+        "memory",
+        "soft",
+        "day1"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": [
+        "sandra"
+      ]
+    }
+  ]
+}
