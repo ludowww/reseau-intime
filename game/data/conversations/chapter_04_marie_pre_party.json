@@ -36,7 +36,7 @@
           "id": "msg_c04_marie_pre_party_002b",
           "sender": "marie",
           "time_label": "19:12",
-          "text": "Je t’envoie une photo avant de partir, comme ça tu dois me regarder vraiment."
+          "text": "Je t’envoie une photo avant de partir. J’ai envie que ce soit toi qui me voies en premier."
         }
       ],
       "choices": [
@@ -83,7 +83,7 @@
           "sender": "marie",
           "time_label": "19:13",
           "content_id": "photo_marie_evening_j4_placeholder",
-          "text": "Marie avant la soirée, tenue simple mais plus apprêtée que d’habitude. Elle ne force pas la pose, mais elle attend clairement que Player la regarde avant que la soirée commence."
+          "text": "Marie avant la soirée, tenue simple mais plus apprêtée que d’habitude. Elle ne force pas la pose, mais elle veut clairement l’avis de Player avant de sortir."
         },
         {
           "id": "msg_c04_marie_pre_party_005",

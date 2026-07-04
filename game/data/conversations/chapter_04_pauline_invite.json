@@ -42,7 +42,7 @@
           "id": "msg_c04_pauline_invite_004",
           "sender": "pauline",
           "time_label": "17:49",
-          "text": "Juste une soirée simple, et quelques photos consenties."
+          "text": "Rien de fou. Un verre, une terrasse, et une tentative de lui faire oublier la maison deux heures."
         }
       ],
       "choices": [
@@ -76,7 +76,7 @@
           "id": "msg_c04_pauline_invite_006",
           "sender": "pauline",
           "time_label": "17:50",
-          "text": "J’organise une petite sortie pour que Marie prenne l’air."
+          "text": "Je l’embarque prendre l’air ce soir."
         },
         {
           "id": "msg_c04_pauline_invite_007",
@@ -88,7 +88,7 @@
           "id": "msg_c04_pauline_invite_008",
           "sender": "pauline",
           "time_label": "17:50",
-          "text": "Et avec la promesse d’une photo avant le départ."
+          "text": "Et je t’enverrai peut-être une photo avant le départ, si elle m’autorise 😅"
         }
       ],
       "choices": [
@@ -199,19 +199,19 @@
           "id": "msg_c04_pauline_invite_009",
           "sender": "pauline",
           "time_label": "17:53",
-          "text": "Je préviens : je prends des photos."
+          "text": "Je t’enverrai peut-être une photo, si elle m’autorise 😅"
         },
         {
           "id": "msg_c04_pauline_invite_010",
           "sender": "pauline",
           "time_label": "17:53",
-          "text": "Des photos où les gens arrêtent de jouer au mur."
+          "text": "Juste la preuve qu’elle est sortie 🙂"
         },
         {
           "id": "msg_c04_pauline_invite_011",
           "sender": "pauline",
           "time_label": "17:53",
-          "text": "Et où Marie a l’air contente de s’être laissée convaincre."
+          "text": "Promis, je ne poste rien sans validation de madame."
         }
       ],
       "choices": [
@@ -236,7 +236,7 @@
               "id": "choice_c04_pauline_invite_03_guided_pauline_002",
               "sender": "pauline",
               "time_label": "17:53",
-              "text": "Je ne fais pas de promesses vides."
+              "text": "Promis, je ne poste rien sans validation de madame."
             }
           ]
         }
@@ -258,13 +258,13 @@
           "sender": "pauline",
           "time_label": "17:54",
           "content_id": "photo_pauline_soft_provocation_j4_placeholder",
-          "text": "Photo de Pauline avant la sortie : cadrage maîtrisé, sourire tranquille, rien d’appuyé. Elle sait très bien qu’elle donne déjà le ton social de la soirée."
+          "text": "Photo de Pauline avant la sortie : un sourire simple, une présence sociale tranquille, et juste assez de lumière pour montrer qu’elle accompagne Marie sans voler la scène."
         },
         {
           "id": "msg_c04_pauline_invite_014",
           "sender": "pauline",
           "time_label": "17:54",
-          "text": "À ce soir. Essaie d’avoir l’air innocent, pour voir 😇"
+          "text": "À ce soir. Je te laisse la surprise 😇"
         }
       ]
     }

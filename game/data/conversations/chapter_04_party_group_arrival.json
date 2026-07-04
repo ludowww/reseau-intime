@@ -7,7 +7,11 @@
   "thread": {
     "id": "thread_marie_pauline_outing",
     "type": "group",
-    "participants": ["ludo", "marie", "pauline"],
+    "participants": [
+      "ludo",
+      "marie",
+      "pauline"
+    ],
     "display_name": "Marie / Pauline",
     "profile_content_id": "photo_marie_pauline_selfie_j4_placeholder"
   },
@@ -27,14 +31,14 @@
           "id": "msg_c04_party_group_002",
           "sender": "pauline",
           "time_label": "20:36",
-          "text": "Marie a accepté de sortir, ce qui est déjà une petite victoire sociale."
+          "text": "Marie a accepté de sortir, donc ce soir on fait simple."
         },
         {
           "id": "msg_c04_party_group_003",
           "sender": "pauline",
           "time_label": "20:36",
           "content_id": "photo_marie_pauline_selfie_j4_placeholder",
-          "text": "Selfie Marie / Pauline dans la lumière du début de soirée. Marie sourit franchement, Pauline garde la main sur l’angle mais laisse Marie exister au premier plan."
+          "text": "Selfie Marie / Pauline dans la lumière du début de soirée. Marie sourit franchement, Pauline cadre proprement sans lui voler la place."
         },
         {
           "id": "msg_c04_party_group_003b",
@@ -52,7 +56,9 @@
             "marie_trust": 1,
             "marie_attention_score": 1
           },
-          "sets_flags": ["photo_marie_pauline_selfie_j4_received"],
+          "sets_flags": [
+            "photo_marie_pauline_selfie_j4_received"
+          ],
           "next_messages": [
             {
               "id": "msg_c04_party_group_01_tender_player_001",
@@ -76,7 +82,7 @@
               "id": "msg_c04_party_group_01_tender_pauline_001",
               "sender": "pauline",
               "time_label": "20:37",
-              "text": "Capture mentale effectuée."
+              "text": "Je garde ça."
             }
           ]
         },
@@ -88,7 +94,9 @@
             "marie_trust": 1,
             "marie_attention_score": 1
           },
-          "sets_flags": ["photo_marie_pauline_selfie_j4_received"],
+          "sets_flags": [
+            "photo_marie_pauline_selfie_j4_received"
+          ],
           "next_messages": [
             {
               "id": "msg_c04_party_group_01_present_player_001",
@@ -124,7 +132,9 @@
             "pauline.interest": 1,
             "social_pressure": 1
           },
-          "sets_flags": ["photo_marie_pauline_selfie_j4_received"],
+          "sets_flags": [
+            "photo_marie_pauline_selfie_j4_received"
+          ],
           "next_messages": [
             {
               "id": "msg_c04_party_group_01_curious_player_001",
@@ -182,7 +192,7 @@
           "id": "msg_c04_party_group_007",
           "sender": "pauline",
           "time_label": "20:37",
-          "text": "Je te laisse le droit de sourire avec elle."
+          "text": "Tu peux sourire avec elle."
         },
         {
           "id": "msg_c04_party_group_007b",
