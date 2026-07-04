@@ -1,5 +1,8 @@
 # 20 — Jour 3 : Soirée chez Pauline, premier pivot
 
+> V0.57 (`docs/V0_57_Route_Character_Rework_Blueprint.md`) est la référence de hiérarchie route/personnage.
+> Le pivot J3 reste pertinent, mais son sens doit rester Marie-centrique et ne pas rétablir un panel de routes à niveau égal.
+
 ## Objectif
 
 Préparer et cadrer le Jour 3 comme premier vrai pivot du vertical slice.

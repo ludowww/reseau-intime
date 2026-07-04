@@ -1,5 +1,8 @@
 # Plan de réécriture — J5 / J6
 
+> V0.57 est la référence narrative principale pour cette réécriture.
+> Ce plan reste pertinent, mais ses priorités doivent être lues dans une hiérarchie Marie-centrique plutôt qu’en panel égalitaire.
+
 ## Statut
 
 Document opérationnel pour préparer une future branche de réécriture runtime J5/J6.

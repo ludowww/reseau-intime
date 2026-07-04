@@ -1,5 +1,8 @@
 # 21 — Jour 4 : Lendemain et première vraie preuve
 
+> V0.57 (`docs/V0_57_Route_Character_Rework_Blueprint.md`) guide la hiérarchie actuelle.
+> Ce plan J4 reste utile, mais la “première preuve” doit être lue comme conséquence d’une hiérarchie route/personnage déjà orientée par Marie.
+
 ## Objectif
 
 Cadrer le Jour 4 comme le moment où la soirée du Jour 3 cesse d’être seulement une tension et devient une trace.

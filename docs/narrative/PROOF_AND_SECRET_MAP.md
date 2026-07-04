@@ -1,5 +1,8 @@
 # Carte des preuves et secrets
 
+> V0.57 fixe la hiérarchie narrative principale.
+> Les preuves restent valides ici, mais leur poids doit rester compatible avec une Marie centrale et des routes secondaires différées.
+
 ## Objectif
 
 Les photos, captures et traces ne doivent pas devenir un gimmick.

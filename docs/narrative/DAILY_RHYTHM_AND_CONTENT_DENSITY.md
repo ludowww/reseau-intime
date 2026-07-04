@@ -1,5 +1,8 @@
 # Rythme quotidien et densité de contenu
 
+> V0.57 est la référence de hiérarchie narrative pour routes/personnages.
+> Conserver ce guide comme cadrage de densité, mais le relire à travers la priorité Marie → routes secondaires définie en V0.57.
+
 ## Statut
 
 Document transversal de cadrage.

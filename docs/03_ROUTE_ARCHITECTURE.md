@@ -1,5 +1,8 @@
 # 03 — Architecture des routes
 
+> Mise à jour de lecture : V0.57 (`docs/V0_57_Route_Character_Rework_Blueprint.md`) est la référence pour la hiérarchie route/personnage.
+> Ce document reste utile pour le vocabulaire d’architecture, mais ne doit pas être lu comme une répartition à niveau égal.
+
 ## Principe fondamental
 
 Le jeu ne doit pas être un arbre infini. Il doit fonctionner avec :

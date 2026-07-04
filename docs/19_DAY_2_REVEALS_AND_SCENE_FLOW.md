@@ -1,5 +1,8 @@
 # 19 — Jour 2 : révélations, rythme et flux de scènes
 
+> V0.57 (`docs/V0_57_Route_Character_Rework_Blueprint.md`) est la référence de hiérarchie route/personnage.
+> Ce plan J2 reste utile, mais doit être lu avec prudence si une ancienne formulation place Raphaëlle ou d’autres routes au même niveau que Marie.
+
 ## Objectif
 
 Préparer l’écriture du Jour 2 avant de créer les JSON complets.

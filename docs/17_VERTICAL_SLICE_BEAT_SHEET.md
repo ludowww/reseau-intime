@@ -1,5 +1,8 @@
 # 17 — Beat sheet du vertical slice
 
+> V0.57 (`docs/V0_57_Route_Character_Rework_Blueprint.md`) guide désormais la hiérarchie des routes dans le slice.
+> Le beat sheet reste valable comme structure de slice, mais les routes secondaires doivent être lues en appui du centre Marie.
+
 ## Objectif
 
 Définir la première portion jouable de Réseau Intime.

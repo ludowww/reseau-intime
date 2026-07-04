@@ -1,5 +1,8 @@
 # Colonne vertébrale scénario — J1 à J10
 
+> V0.57 est désormais la source principale pour la hiérarchie routes/personnages.
+> V0.56 reste l’audit de continuité J1→J9 ; les sections plus anciennes doivent être lues avec prudence si elles divergent.
+
 ## Statut
 
 Document de cadrage narratif.

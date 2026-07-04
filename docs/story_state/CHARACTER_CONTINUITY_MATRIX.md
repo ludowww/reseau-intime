@@ -1,5 +1,8 @@
 # Matrice de continuité personnages
 
+> Référence de hiérarchie : V0.57 (`docs/V0_57_Route_Character_Rework_Blueprint.md`).
+> Cette matrice reste utile, mais toute contradiction avec V0.57 doit être lue comme un point à réconcilier.
+
 | Personnage | J1 | J2 | J3 | J4 | J5 | Évolution actuelle | Désir / tension | Risque | Contenus visuels | À préparer |
 |---|---|---|---|---|---|---|---|---|---|---|
 | Marie | Couple quotidien, téléphone, présence/absence de Player, Mathilde seulement indirecte. | Matin domestique, capsules, photo soft, Player hors maison, Mathilde arrive puis reste dormir. | Ouvre et ferme la journée ; retour physique de Player ; café, téléphone, plaid Mathilde ; photo maison conditionnelle ; demande de présence réelle le soir. | Visible et désirée en public ; photo tenue avant soirée ; Nico la regarde/commentaire ; Player peut surveiller au lieu de vraiment la regarder. | Réveil fatigué/lucide ; formule que Player était là sans être toujours avec elle ; peut recevoir une photo intime du lendemain si Player revient vers elle. | Le couple reste central, mais Marie distingue mieux présence physique, attention réelle et jalousie déplacée. | Intimité domestique + désir d’être regardée + peur d’être moins choisie + lucidité douce. | Aller trop vite vers la crise ; réduire Marie à la jalousie ; oublier qu’elle reste désirable et centrale. | J2 : photo Marie matin. J3 : `marie_j3_home_tender_placeholder` conditionnelle. J4 : `photo_marie_evening_j4_placeholder`. J5 : `photo_marie_after_party_j5_placeholder` conditionnelle. | J6 doit montrer ce que Player fait après avoir été vu comme absent : retour vers Marie, minimisation, jalousie ou fuite. |

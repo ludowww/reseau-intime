@@ -1,5 +1,8 @@
 # État global de l’histoire
 
+> V0.57 (`docs/V0_57_Route_Character_Rework_Blueprint.md`) est désormais la référence narrative principale pour la hiérarchie routes/personnages.
+> V0.56 reste l’audit de continuité J1→J9 ; lire les anciens plans avec prudence s’ils contredisent V0.57.
+
 ## Situation de Player
 
 Player est au centre d’un téléphone qui accumule déjà des traces : messages, photos, stories, captures, promesses et omissions.

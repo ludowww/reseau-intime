@@ -1,5 +1,8 @@
 # Arcs personnages — J1 à J10
 
+> V0.57 (`docs/V0_57_Route_Character_Rework_Blueprint.md`) prime pour la hiérarchie des arcs.
+> Les arcs ci-dessous restent utiles, mais toute lecture “symétrique” des personnages doit être réévaluée à travers V0.57.
+
 ## Objectif
 
 Ce document évite que les personnages répètent chaque jour la même fonction.
