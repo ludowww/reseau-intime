@@ -1,0 +1,188 @@
+{
+  "id": "chapter_06_nico_late_afternoon_limit",
+  "chapter": 6,
+  "day": 6,
+  "title": "Jour 6 — Nico clarifie la limite",
+  "app": "messages",
+  "thread": {
+    "id": "thread_nico_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "nico"
+    ],
+    "display_name": "Nico"
+  },
+  "design_goal": "Clarifier une limite légère et garder Nico dans un rôle d’ami miroir.",
+  "debug_notes": "Ton léger, respect du cadre, limite sociale claire.",
+  "segments": [
+    {
+      "conversation_segment_id": "c06_nico_late_afternoon_limit_01",
+      "moment_label": "fin d’après-midi",
+      "time_label": "17:58",
+      "transition_text": "Nico veut rester à distance correcte et dit les choses sans appuyer.",
+      "availability_state": "Le ton reste léger ; la conversation peut encore reculer derrière l’humour.",
+      "function": "Tester le bord sans devenir une scène lourde ou un piège émotionnel.",
+      "messages": [
+        {
+          "id": "msg_c06_nico_late_001",
+          "sender": "nico",
+          "time_label": "17:58",
+          "text": "Je préfère te prévenir : je peux plaisanter, mais pas insister."
+        },
+        {
+          "id": "msg_c06_nico_late_002",
+          "sender": "nico",
+          "time_label": "17:59",
+          "text": "Marie reste Marie. Ça mérite un cadre propre."
+        },
+        {
+          "id": "msg_c06_nico_late_003",
+          "sender": "nico",
+          "time_label": "17:59",
+          "text": "Capture courte du fil : rien de lourd, juste une limite dite à voix basse.",
+          "content_id": "j6_nico_chat_trace_placeholder",
+          "content_behavior": "inline_preview"
+        },
+        {
+          "id": "msg_c06_nico_late_004",
+          "sender": "nico",
+          "time_label": "18:00",
+          "text": "Si tu veux qu’on garde ça léger, je suis partant."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c06_nico_late_protect",
+          "text": "Je préfère garder Marie à l’abri de la blague facile.",
+          "tone": "protection",
+          "effects": {
+            "marie.trust": 1,
+            "truth_tendency": 1
+          },
+          "sets_flags": [
+            "j6_nico_late_protect"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c06_nico_late_protect_001",
+              "sender": "nico",
+              "time_label": "18:00",
+              "text": "C’est cohérent."
+            },
+            {
+              "id": "msg_c06_nico_late_protect_002",
+              "sender": "nico",
+              "time_label": "18:00",
+              "text": "Je n’ai pas envie de la mettre au milieu pour rien."
+            }
+          ]
+        },
+        {
+          "id": "choice_c06_nico_late_humour",
+          "text": "Je peux rire, tant que tu ne fais pas semblant de ne pas comprendre la limite.",
+          "tone": "humour",
+          "effects": {
+            "truth_tendency": 1,
+            "social_pressure": 1
+          },
+          "sets_flags": [
+            "j6_nico_late_humour"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c06_nico_late_humour_001",
+              "sender": "nico",
+              "time_label": "18:00",
+              "text": "Je comprends très bien."
+            },
+            {
+              "id": "msg_c06_nico_late_humour_002",
+              "sender": "nico",
+              "time_label": "18:01",
+              "text": "Et j’apprécie qu’on puisse le dire sans cris."
+            }
+          ]
+        },
+        {
+          "id": "choice_c06_nico_late_pride",
+          "text": "Je suis fier de ne pas laisser ça déraper.",
+          "tone": "fierte",
+          "effects": {
+            "truth_tendency": 1,
+            "marie_attention_score": 1
+          },
+          "sets_flags": [
+            "j6_nico_late_pride"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c06_nico_late_pride_001",
+              "sender": "nico",
+              "time_label": "18:00",
+              "text": "Ça s’entend."
+            },
+            {
+              "id": "msg_c06_nico_late_pride_002",
+              "sender": "nico",
+              "time_label": "18:01",
+              "text": "Et franchement, c’est plus élégant."
+            }
+          ]
+        },
+        {
+          "id": "choice_c06_nico_late_jealous",
+          "text": "Je vais être honnête : ça me rend jaloux.",
+          "tone": "jealousy",
+          "effects": {
+            "ludo_jealousy": 1,
+            "truth_tendency": 1
+          },
+          "sets_flags": [
+            "j6_nico_late_jealous"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c06_nico_late_jealous_001",
+              "sender": "nico",
+              "time_label": "18:00",
+              "text": "Je préfère ça à un faux calme."
+            },
+            {
+              "id": "msg_c06_nico_late_jealous_002",
+              "sender": "nico",
+              "time_label": "18:01",
+              "text": "Au moins, la limite est claire."
+            }
+          ]
+        },
+        {
+          "id": "choice_c06_nico_late_social",
+          "text": "Tu peux la trouver jolie, tant que ça reste défendable et social.",
+          "tone": "social_defensible",
+          "effects": {
+            "social_pressure": 1,
+            "truth_tendency": 1
+          },
+          "sets_flags": [
+            "j6_nico_late_social"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c06_nico_late_social_001",
+              "sender": "nico",
+              "time_label": "18:00",
+              "text": "C’est le cadre que je garde aussi."
+            },
+            {
+              "id": "msg_c06_nico_late_social_002",
+              "sender": "nico",
+              "time_label": "18:01",
+              "text": "Propre, lisible, défendable."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

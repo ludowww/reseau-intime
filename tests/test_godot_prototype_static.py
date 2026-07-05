@@ -43,6 +43,7 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             "res://data/conversations/chapter_03_index.json",
             "res://data/conversations/chapter_04_index.json",
             "res://data/conversations/chapter_05_index.json",
+            "res://data/conversations/chapter_06_index.json",
             "res://data/conversations/chapter_07_index.json",
             "res://data/conversations/chapter_09_index.json",
             "res://data/visual_content/placeholders.json",
@@ -1028,6 +1029,98 @@ class GodotPrototypeStaticTests(unittest.TestCase):
                 for choice in segment.get("choices", []):
                     for reply in choice.get("next_messages", []):
                         self.assertNotIn(reply.get("sender"), {"Player", "player", "joueur", "ludo"})
+    def test_day6_index_rebuilds_nico_notices_marie_with_four_social_traces(self):
+        index = json.loads((GAME / "data/conversations/chapter_06_index.json").read_text(encoding="utf-8"))
+        index_text = json.dumps(index, ensure_ascii=False)
+        availability = index.get("conversation_availability", {})
+        self.assertEqual(index.get("title"), "Jour 6 — Le regard de Nico")
+        self.assertEqual(index.get("routes_available"), ["marie", "nico_marie"])
+        self.assertNotIn("routes_locked_to_seed_only", index)
+        self.assertEqual(index.get("conversation_files"), [
+            "res://data/conversations/chapter_06_marie_morning_after_outing.json",
+            "res://data/conversations/chapter_06_nico_midday_notices_marie.json",
+            "res://data/conversations/chapter_06_nico_late_afternoon_limit.json",
+            "res://data/conversations/chapter_06_marie_evening_recenter.json",
+        ])
+        self.assertEqual(availability.get("initial_conversation_ids"), ["chapter_06_marie_morning_after_outing"])
+        self.assertEqual(
+            availability.get("progression", {}).get("chapter_06_nico_midday_notices_marie", {}).get("after_conversation_completed"),
+            "chapter_06_marie_morning_after_outing",
+        )
+        self.assertEqual(
+            availability.get("progression", {}).get("chapter_06_nico_late_afternoon_limit", {}).get("after_conversation_completed"),
+            "chapter_06_nico_midday_notices_marie",
+        )
+        self.assertEqual(
+            availability.get("progression", {}).get("chapter_06_marie_evening_recenter", {}).get("after_conversation_completed"),
+            "chapter_06_nico_late_afternoon_limit",
+        )
+        conversation_by_id = {}
+        for rel_path in index.get("conversation_files", []):
+            data = json.loads((GAME / rel_path.removeprefix("res://")).read_text(encoding="utf-8"))
+            conversation_by_id[data.get("id")] = data
+        expected_flow = [
+            ("09:08", "chapter_06_marie_morning_after_outing", "thread_marie_private"),
+            ("12:44", "chapter_06_nico_midday_notices_marie", "thread_nico_private"),
+            ("17:58", "chapter_06_nico_late_afternoon_limit", "thread_nico_private"),
+            ("21:16", "chapter_06_marie_evening_recenter", "thread_marie_private"),
+        ]
+        actual_flow = []
+        for moment in index.get("moment_flow", []):
+            self.assertEqual(len(moment.get("conversation_ids", [])), 1)
+            conversation_id = moment["conversation_ids"][0]
+            data = conversation_by_id[conversation_id]
+            actual_flow.append((moment.get("time_label"), conversation_id, data.get("thread", {}).get("id")))
+        self.assertEqual(actual_flow, expected_flow)
+        proofs = json.loads((GAME / "data/visual_content/chapter_06_proofs.json").read_text(encoding="utf-8"))
+        proof_ids = [item.get("id") for item in proofs.get("items", [])]
+        expected_visuals = [
+            "marie_j6_after_outing_soft_trace_placeholder",
+            "j6_marie_social_photo_reframed_placeholder",
+            "nico_j6_glass_social_context_placeholder",
+            "j6_nico_chat_trace_placeholder",
+        ]
+        self.assertEqual(proof_ids, expected_visuals)
+        for item in proofs.get("items", []):
+            self.assertFalse(item.get("is_proof"))
+            self.assertLessEqual(int(item.get("risk_level", 99)), 1)
+        for expected in expected_visuals:
+            self.assertIn(expected, proof_ids)
+        banned_tokens = [
+            "Pauline",
+            "Mathilde",
+            "Sandra",
+            "Raphaëlle",
+            "NTR",
+            "harem",
+            "route_" + "locked_to_seed_only",
+            "route_lock",
+            "vocal",
+            "explicit",
+            "intime",
+            "non-consenti",
+            "non consenti",
+            "manipul",
+        ]
+        for convo_path in [
+            GAME / "data" / "conversations" / "chapter_06_marie_morning_after_outing.json",
+            GAME / "data" / "conversations" / "chapter_06_nico_midday_notices_marie.json",
+            GAME / "data" / "conversations" / "chapter_06_nico_late_afternoon_limit.json",
+            GAME / "data" / "conversations" / "chapter_06_marie_evening_recenter.json",
+        ]:
+            convo = json.loads(convo_path.read_text(encoding="utf-8"))
+            convo_text = json.dumps(convo, ensure_ascii=False)
+            for legacy in banned_tokens:
+                self.assertNotIn(legacy, convo_text)
+            for segment in convo.get("segments", []):
+                for message in segment.get("messages", []):
+                    self.assertNotIn(message.get("sender"), {"Player", "player", "joueur", "ludo", "Ludo"})
+                for choice in segment.get("choices", []):
+                    for reply in choice.get("next_messages", []):
+                        self.assertNotIn(reply.get("sender"), {"Player", "player", "joueur", "ludo", "Ludo"})
+        self.assertNotIn("routes_locked_to_seed_only", index_text)
+        for legacy in banned_tokens:
+            self.assertNotIn(legacy, index_text)
 
     def test_conversation_view_resumes_newly_unlocked_episode_in_existing_thread(self):
         script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")

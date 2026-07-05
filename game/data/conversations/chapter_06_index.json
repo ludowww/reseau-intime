@@ -2,113 +2,89 @@
   "id": "chapter_06_index",
   "chapter": 6,
   "day": 6,
-  "title": "Jour 6 — Le choix de la trace",
-  "description": "Après J5, Player doit décider quoi faire d’une trace, Marie sent sa position, Pauline teste le prix du silence et Sandra réclame une vraie honnêteté.",
-  "design_goal": "Faire sentir un acte concret de Player, sans surcharge ni Raphaëlle, avec quatre photos plus utiles que spectaculaires.",
+  "title": "Jour 6 — Le regard de Nico",
+  "description": "Après J5, Nico remarque Marie à distance sociale, et la journée reste centrée sur des traces consenties, sociales et défendables.",
+  "design_goal": "Faire résonner la sortie de Marie avec Nico sans route lourde, sans verrou et sans escalade.",
   "moment_flow": [
     {
-      "moment_label": "après-midi",
-      "time_label": "14:36",
-      "transition_text": "Mathilde force une décision sur la trace : garder, supprimer, mentir ou assumer.",
+      "moment_label": "matin",
+      "time_label": "09:08",
+      "transition_text": "Marie se réveille après la sortie et garde la journée à hauteur humaine.",
       "conversation_ids": [
-        "chapter_06_mathilde_trace_choice"
+        "chapter_06_marie_morning_after_outing"
       ]
     },
     {
-      "moment_label": "après-midi",
-      "time_label": "15:08",
-      "transition_text": "Marie sent que Player a pris une position et demande si elle est dedans.",
+      "moment_label": "midi",
+      "time_label": "12:44",
+      "transition_text": "Nico remarque Marie dans un contexte social et reste un ami crédible.",
       "conversation_ids": [
-        "chapter_06_marie_position"
+        "chapter_06_nico_midday_notices_marie"
       ]
     },
     {
       "moment_label": "fin d’après-midi",
-      "time_label": "17:18",
-      "transition_text": "Pauline mesure le prix du silence et garde le contrôle sans tout révéler.",
+      "time_label": "17:58",
+      "transition_text": "Nico clarifie une limite légère avant que l’échange ne devienne lourd.",
       "conversation_ids": [
-        "chapter_06_pauline_silence_price"
+        "chapter_06_nico_late_afternoon_limit"
       ]
     },
     {
       "moment_label": "soir",
-      "time_label": "21:04",
-      "transition_text": "Sandra réclame une chose honnête contre une photo du soir plus douce.",
+      "time_label": "21:16",
+      "transition_text": "Marie recentre la soirée et garde le couple au premier plan.",
       "conversation_ids": [
-        "chapter_06_sandra_one_truth"
+        "chapter_06_marie_evening_recenter"
       ]
     }
   ],
   "conversation_files": [
-    "res://data/conversations/chapter_06_mathilde_trace.json",
-    "res://data/conversations/chapter_06_marie_morning.json",
-    "res://data/conversations/chapter_06_pauline_kept_photos.json",
-    "res://data/conversations/chapter_06_sandra_later_echo.json"
+    "res://data/conversations/chapter_06_marie_morning_after_outing.json",
+    "res://data/conversations/chapter_06_nico_midday_notices_marie.json",
+    "res://data/conversations/chapter_06_nico_late_afternoon_limit.json",
+    "res://data/conversations/chapter_06_marie_evening_recenter.json"
   ],
   "proof_content_files": [
     "res://data/visual_content/chapter_06_proofs.json"
   ],
-  "required_reveals": [
-    "Mathilde force Player à nommer ce qu’il fait de la trace.",
-    "Marie sent qu’une position a été prise sans parler du téléphone.",
-    "Pauline teste le prix du silence et reste dangereuse.",
-    "Sandra avance vers le vrai jeu confidence/photo.",
-    "Raphaëlle est absente pour éviter la surcharge."
-  ],
   "routes_available": [
     "marie",
-    "mathilde",
-    "pauline",
-    "sandra"
-  ],
-  "routes_locked_to_seed_only": [
     "nico_marie"
-  ],
-  "debug_expected_outcomes": [
-    "J6 apparaît après J5 sans refactor runtime ni nouveau système UI.",
-    "Player fait un acte concret sur une trace.",
-    "Marie ne parle pas du téléphone.",
-    "Pauline reste secondaire mais dangereuse.",
-    "Sandra n’est plus un simple plus tard.",
-    "Raphaëlle ne surcharge pas la journée."
   ],
   "conversation_availability": {
     "initial_conversation_ids": [
-      "chapter_06_mathilde_trace_choice"
+      "chapter_06_marie_morning_after_outing"
     ],
-    "locked_conversation_ids": [
-      "chapter_06_marie_position",
-      "chapter_06_pauline_silence_price",
-      "chapter_06_sandra_one_truth"
-    ],
-    "unlocks": {
-      "chapter_06_marie_position": {
-        "after_conversation_completed": "chapter_06_mathilde_trace_choice",
-        "time_label": "15:08",
+    "progression": {
+      "chapter_06_nico_midday_notices_marie": {
+        "after_conversation_completed": "chapter_06_marie_morning_after_outing",
+        "time_label": "12:44",
+        "pending": true,
+        "notification": {
+          "title": "Nico",
+          "body": "J’ai vu Marie passer."
+        }
+      },
+      "chapter_06_nico_late_afternoon_limit": {
+        "after_conversation_completed": "chapter_06_nico_midday_notices_marie",
+        "time_label": "17:58",
+        "pending": true,
+        "notification": {
+          "title": "Nico",
+          "body": "Je veux rester léger avec ça."
+        }
+      },
+      "chapter_06_marie_evening_recenter": {
+        "after_conversation_completed": "chapter_06_nico_late_afternoon_limit",
+        "time_label": "21:16",
         "pending": true,
         "notification": {
           "title": "Marie",
-          "body": "J’ai racheté du pain."
-        }
-      },
-      "chapter_06_pauline_silence_price": {
-        "after_conversation_completed": "chapter_06_marie_position",
-        "time_label": "17:18",
-        "pending": true,
-        "notification": {
-          "title": "Pauline",
-          "body": "De quoi vaut ton silence ?"
-        }
-      },
-      "chapter_06_sandra_one_truth": {
-        "after_conversation_completed": "chapter_06_pauline_silence_price",
-        "time_label": "21:04",
-        "pending": true,
-        "notification": {
-          "title": "Sandra",
-          "body": "Je viens réclamer ma chose honnête."
+          "body": "Je reviens au calme."
         }
       }
     }
-  }
+  },
+  "debug_notes": "J6 reste une retombée sociale consentie. Nico reste léger, Marie reste centrale, et aucun sender direct ne s’y glisse dans le runtime actif."
 }

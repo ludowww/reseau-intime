@@ -1,0 +1,196 @@
+{
+  "id": "chapter_06_nico_midday_notices_marie",
+  "chapter": 6,
+  "day": 6,
+  "title": "Jour 6 — Nico remarque Marie",
+  "app": "messages",
+  "thread": {
+    "id": "thread_nico_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "nico"
+    ],
+    "display_name": "Nico"
+  },
+  "design_goal": "Faire sentir que Nico remarque Marie sans basculer en rivalité lourde.",
+  "debug_notes": "Ami crédible, miroir masculin, ton léger, cadre simple.",
+  "segments": [
+    {
+      "conversation_segment_id": "c06_nico_midday_notices_marie_01",
+      "moment_label": "midi",
+      "time_label": "12:44",
+      "transition_text": "Nico a vu Marie dans un contexte social et prend le temps de le dire proprement.",
+      "availability_state": "Nico reste à distance, poli, et assez attentif pour que le regard ait du poids.",
+      "function": "Installer le miroir masculin sans faire de Nico un piège ni une menace lourde.",
+      "messages": [
+        {
+          "id": "msg_c06_nico_midday_001",
+          "sender": "nico",
+          "time_label": "12:44",
+          "text": "J’ai croisé une photo sociale de Marie tout à l’heure."
+        },
+        {
+          "id": "msg_c06_nico_midday_002",
+          "sender": "nico",
+          "time_label": "12:45",
+          "text": "Elle a une présence tranquille. C’est net, sans faire de bruit."
+        },
+        {
+          "id": "msg_c06_nico_midday_003",
+          "sender": "nico",
+          "time_label": "12:45",
+          "text": "Photo réinterprétée : Marie sourit, le cadrage reste social, rien d’intrusif.",
+          "content_id": "j6_marie_social_photo_reframed_placeholder",
+          "content_behavior": "inline_preview"
+        },
+        {
+          "id": "msg_c06_nico_midday_004",
+          "sender": "nico",
+          "time_label": "12:46",
+          "text": "Et pour être honnête, ça se voit qu’elle compte pour toi."
+        },
+        {
+          "id": "msg_c06_nico_midday_005",
+          "sender": "nico",
+          "time_label": "12:46",
+          "text": "Moi, je regarde ça depuis un verre d’eau et un bureau trop calme.",
+          "content_id": "nico_j6_glass_social_context_placeholder",
+          "content_behavior": "inline_preview"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c06_nico_midday_protect",
+          "text": "Je veux que tu restes propre avec elle.",
+          "tone": "protection",
+          "effects": {
+            "nico_surveillance_score": 1,
+            "truth_tendency": 1
+          },
+          "sets_flags": [
+            "j6_nico_midday_protect"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c06_nico_midday_protect_001",
+              "sender": "nico",
+              "time_label": "12:46",
+              "text": "C’est le minimum."
+            },
+            {
+              "id": "msg_c06_nico_midday_protect_002",
+              "sender": "nico",
+              "time_label": "12:46",
+              "text": "Je peux faire simple, sans faux pas."
+            }
+          ]
+        },
+        {
+          "id": "choice_c06_nico_midday_humour",
+          "text": "Je peux rire du truc, mais je veux que ça reste propre.",
+          "tone": "humour",
+          "effects": {
+            "truth_tendency": 1,
+            "social_pressure": 1
+          },
+          "sets_flags": [
+            "j6_nico_midday_humour"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c06_nico_midday_humour_001",
+              "sender": "nico",
+              "time_label": "12:46",
+              "text": "C’est exactement le bon dosage."
+            },
+            {
+              "id": "msg_c06_nico_midday_humour_002",
+              "sender": "nico",
+              "time_label": "12:47",
+              "text": "Marie aime bien les phrases qui ne se prennent pas trop au sérieux."
+            }
+          ]
+        },
+        {
+          "id": "choice_c06_nico_midday_pride",
+          "text": "Je suis fier qu’elle ait cette allure-là.",
+          "tone": "fierte",
+          "effects": {
+            "marie.trust": 1,
+            "marie_attention_score": 1
+          },
+          "sets_flags": [
+            "j6_nico_midday_pride"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c06_nico_midday_pride_001",
+              "sender": "nico",
+              "time_label": "12:46",
+              "text": "Je comprends."
+            },
+            {
+              "id": "msg_c06_nico_midday_pride_002",
+              "sender": "nico",
+              "time_label": "12:47",
+              "text": "La fierté, ici, se voit de loin."
+            }
+          ]
+        },
+        {
+          "id": "choice_c06_nico_midday_jealous",
+          "text": "Je vais pas faire semblant : ça me pique un peu.",
+          "tone": "jealousy",
+          "effects": {
+            "ludo_jealousy": 1,
+            "truth_tendency": 1
+          },
+          "sets_flags": [
+            "j6_nico_midday_jealous"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c06_nico_midday_jealous_001",
+              "sender": "nico",
+              "time_label": "12:46",
+              "text": "Je m’en doutais un peu."
+            },
+            {
+              "id": "msg_c06_nico_midday_jealous_002",
+              "sender": "nico",
+              "time_label": "12:47",
+              "text": "C’est une réaction lisible, et pas absurde."
+            }
+          ]
+        },
+        {
+          "id": "choice_c06_nico_midday_social",
+          "text": "Tu peux la trouver belle, tant que ça reste social et défendable.",
+          "tone": "social_defensible",
+          "effects": {
+            "truth_tendency": 1,
+            "social_pressure": 1
+          },
+          "sets_flags": [
+            "j6_nico_midday_social"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c06_nico_midday_social_001",
+              "sender": "nico",
+              "time_label": "12:46",
+              "text": "C’est exactement comme ça que je le lis."
+            },
+            {
+              "id": "msg_c06_nico_midday_social_002",
+              "sender": "nico",
+              "time_label": "12:47",
+              "text": "Social, propre, et sans mauvaise surprise."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "id": "chapter_06_marie_morning_after_outing",
+  "chapter": 6,
+  "day": 6,
+  "title": "Jour 6 — Marie après la sortie",
+  "app": "messages",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "marie"
+    ],
+    "display_name": "Marie"
+  },
+  "design_goal": "Montrer Marie au réveil après la sortie et garder sa présence au centre.",
+  "debug_notes": "Trace sociale consentie, aucun ton lourd, aucun sender direct Player/Ludo/ludo.",
+  "segments": [
+    {
+      "conversation_segment_id": "c06_marie_morning_after_outing_01",
+      "moment_label": "matin",
+      "time_label": "09:08",
+      "transition_text": "Marie se remet doucement de la sortie d’hier et garde un sourire simple.",
+      "availability_state": "Marie est reposée, visible, et tout reste à une distance sociale correcte.",
+      "function": "Faire sentir la retombée de J5 sans basculer dans une preuve ou un verrou.",
+      "messages": [
+        {
+          "id": "msg_c06_marie_morning_001",
+          "sender": "marie",
+          "time_label": "09:08",
+          "text": "Bonjour. J’ai encore un peu la tête flottante après hier."
+        },
+        {
+          "id": "msg_c06_marie_morning_002",
+          "sender": "marie",
+          "time_label": "09:09",
+          "text": "Pas dans le mauvais sens. Juste... la soirée a laissé une vraie trace sociale."
+        },
+        {
+          "id": "msg_c06_marie_morning_003",
+          "sender": "marie",
+          "time_label": "09:09",
+          "text": "Photo du matin : lumière douce, tenue simple, regard tranquille.",
+          "content_id": "marie_j6_after_outing_soft_trace_placeholder",
+          "content_behavior": "inline_preview"
+        },
+        {
+          "id": "msg_c06_marie_morning_004",
+          "sender": "marie",
+          "time_label": "09:10",
+          "text": "Je veux que la journée reste nette. Et je veux voir comment tu lis ça."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c06_marie_morning_protect",
+          "text": "Je te protège du commentaire facile.",
+          "tone": "protection",
+          "effects": {
+            "marie.trust": 1,
+            "truth_tendency": 1
+          },
+          "sets_flags": [
+            "j6_marie_morning_protect"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c06_marie_morning_protect_001",
+              "sender": "marie",
+              "time_label": "09:10",
+              "text": "Bonne réponse."
+            },
+            {
+              "id": "msg_c06_marie_morning_protect_002",
+              "sender": "marie",
+              "time_label": "09:10",
+              "text": "Ça me fait du bien de sentir que tu gardes le cadre."
+            }
+          ]
+        },
+        {
+          "id": "choice_c06_marie_morning_humour",
+          "text": "Je vais essayer de rester drôle sans te réduire.",
+          "tone": "humour",
+          "effects": {
+            "truth_tendency": 1,
+            "social_pressure": 1
+          },
+          "sets_flags": [
+            "j6_marie_morning_humour"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c06_marie_morning_humour_001",
+              "sender": "marie",
+              "time_label": "09:10",
+              "text": "C’est l’idée."
+            },
+            {
+              "id": "msg_c06_marie_morning_humour_002",
+              "sender": "marie",
+              "time_label": "09:10",
+              "text": "Je préfère quand tu es léger plutôt que flou."
+            }
+          ]
+        },
+        {
+          "id": "choice_c06_marie_morning_pride",
+          "text": "Je suis fier de te voir comme ça.",
+          "tone": "fierté",
+          "effects": {
+            "marie.trust": 1,
+            "marie_attention_score": 1
+          },
+          "sets_flags": [
+            "j6_marie_morning_pride"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c06_marie_morning_pride_001",
+              "sender": "marie",
+              "time_label": "09:10",
+              "text": "Ça, je le prends bien."
+            },
+            {
+              "id": "msg_c06_marie_morning_pride_002",
+              "sender": "marie",
+              "time_label": "09:11",
+              "text": "Et oui, ça me donne aussi un peu envie de sourire bêtement."
+            }
+          ]
+        },
+        {
+          "id": "choice_c06_marie_morning_jealous",
+          "text": "Je vais être honnête, ça me pique un peu.",
+          "tone": "jealousy",
+          "effects": {
+            "ludo_jealousy": 1,
+            "truth_tendency": 1
+          },
+          "sets_flags": [
+            "j6_marie_morning_jealous"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c06_marie_morning_jealous_001",
+              "sender": "marie",
+              "time_label": "09:10",
+              "text": "Oui, je l’ai senti."
+            },
+            {
+              "id": "msg_c06_marie_morning_jealous_002",
+              "sender": "marie",
+              "time_label": "09:11",
+              "text": "Mais merci de ne pas faire semblant que ça ne te touche pas."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

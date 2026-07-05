@@ -1,0 +1,161 @@
+{
+  "id": "chapter_06_marie_evening_recenter",
+  "chapter": 6,
+  "day": 6,
+  "title": "Jour 6 — Marie recentre le soir",
+  "app": "messages",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "marie"
+    ],
+    "display_name": "Marie"
+  },
+  "design_goal": "Refermer la journée sur Marie et remettre le couple au centre.",
+  "debug_notes": "Marie recentre, Nico reste un regard social de fond, et rien ne passe en preuve ou en verrou narratif.",
+  "segments": [
+    {
+      "conversation_segment_id": "c06_marie_evening_recenter_01",
+      "moment_label": "soir",
+      "time_label": "21:16",
+      "transition_text": "Marie revient au calme et remet la journée à sa place.",
+      "availability_state": "Marie reste centrale ; le reste n’est qu’un bruit social correctement cadré.",
+      "function": "Conclure sur un recentrage propre et défendre la place du couple.",
+      "messages": [
+        {
+          "id": "msg_c06_marie_evening_001",
+          "sender": "marie",
+          "time_label": "21:16",
+          "text": "Je reviens au calme."
+        },
+        {
+          "id": "msg_c06_marie_evening_002",
+          "sender": "marie",
+          "time_label": "21:17",
+          "text": "La journée a eu son petit écho social, mais je veux que ce soit moi que tu retrouves ici."
+        },
+        {
+          "id": "msg_c06_marie_evening_003",
+          "sender": "marie",
+          "time_label": "21:17",
+          "text": "On peut garder ça à une taille normale. Pas plus.",
+          "content_behavior": "inline_preview"
+        },
+        {
+          "id": "msg_c06_marie_evening_004",
+          "sender": "marie",
+          "time_label": "21:18",
+          "text": "Et oui : Nico a regardé, mais c’est moi qui rentre."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c06_marie_evening_priority",
+          "text": "Tu es ma priorité ce soir.",
+          "tone": "recenter",
+          "effects": {
+            "marie.trust": 1,
+            "truth_tendency": 1
+          },
+          "sets_flags": [
+            "j6_marie_evening_priority"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c06_marie_evening_priority_001",
+              "sender": "marie",
+              "time_label": "21:18",
+              "text": "Ça me va."
+            },
+            {
+              "id": "msg_c06_marie_evening_priority_002",
+              "sender": "marie",
+              "time_label": "21:18",
+              "text": "C’est la phrase qui me remet à ma place préférée."
+            }
+          ]
+        },
+        {
+          "id": "choice_c06_marie_evening_social",
+          "text": "On garde le regard social, pas davantage.",
+          "tone": "social_defensible",
+          "effects": {
+            "social_pressure": 1,
+            "truth_tendency": 1
+          },
+          "sets_flags": [
+            "j6_marie_evening_social"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c06_marie_evening_social_001",
+              "sender": "marie",
+              "time_label": "21:18",
+              "text": "Oui. C’est exactement ça."
+            },
+            {
+              "id": "msg_c06_marie_evening_social_002",
+              "sender": "marie",
+              "time_label": "21:19",
+              "text": "Du regard, pas du drame."
+            }
+          ]
+        },
+        {
+          "id": "choice_c06_marie_evening_humour",
+          "text": "Je peux être drôle si tu me laisses recoller les morceaux.",
+          "tone": "humour",
+          "effects": {
+            "truth_tendency": 1,
+            "marie_attention_score": 1
+          },
+          "sets_flags": [
+            "j6_marie_evening_humour"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c06_marie_evening_humour_001",
+              "sender": "marie",
+              "time_label": "21:18",
+              "text": "Je te laisse essayer."
+            },
+            {
+              "id": "msg_c06_marie_evening_humour_002",
+              "sender": "marie",
+              "time_label": "21:19",
+              "text": "Mais seulement si tu reviens vraiment à moi après."
+            }
+          ]
+        },
+        {
+          "id": "choice_c06_marie_evening_jealous",
+          "text": "Je suis encore un peu jaloux, mais je suis là.",
+          "tone": "jealousy",
+          "effects": {
+            "ludo_jealousy": 1,
+            "truth_tendency": 1
+          },
+          "sets_flags": [
+            "j6_marie_evening_jealous"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c06_marie_evening_jealous_001",
+              "sender": "marie",
+              "time_label": "21:18",
+              "text": "Je préfère ça à un silence artificiel."
+            },
+            {
+              "id": "msg_c06_marie_evening_jealous_002",
+              "sender": "marie",
+              "time_label": "21:19",
+              "text": "Et je préfère que tu sois là, même secoué, plutôt qu’absent."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

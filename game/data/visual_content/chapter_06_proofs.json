@@ -1,71 +1,22 @@
 {
   "id": "chapter_06_proof_placeholders",
-  "version": 1,
-  "notes": "J6 ajoute quatre placeholders : salle de bain / miroir Mathilde, fenêtre Marie, abribus Pauline, photo du soir Sandra.",
+  "version": 2,
+  "notes": "J6 social : Marie et Nico restent consentis, lisibles, défendables et à risque faible.",
   "items": [
     {
-      "id": "j6_mathilde_sink_mirror_tease",
-      "character": "mathilde",
-      "tier": 1,
-      "type": "photo",
-      "source_app": "messages",
-      "asset_path": "res://assets/placeholders/j6_mathilde_sink_mirror_tease.png",
-      "context": "Photo domestique semi-innocente ; miroir / salle de bain / détail troublant ; contrôle repris par Mathilde.",
-      "tags": [
-        "mathilde",
-        "sink",
-        "mirror",
-        "domestic",
-        "tease"
-      ],
-      "is_proof": false,
-      "risk_level": 2,
-      "can_delete": true,
-      "can_capture": true,
-      "can_set_as_wallpaper": true,
-      "can_be_discovered_by": [
-        "mathilde",
-        "marie"
-      ]
-    },
-    {
-      "id": "j6_marie_window_soft",
+      "id": "marie_j6_after_outing_soft_trace_placeholder",
       "character": "marie",
       "tier": 1,
       "type": "photo",
       "source_app": "messages",
-      "asset_path": "res://assets/placeholders/j6_marie_window_soft.png",
-      "context": "Photo quotidienne Marie près d’une fenêtre ; distance ou reconquête calme.",
+      "asset_path": "res://assets/placeholders/marie_j6_after_outing_soft_trace_placeholder.png",
+      "context": "Marie au matin après la sortie, lumière douce, visage reposé, trace sociale assumée.",
       "tags": [
         "marie",
-        "window",
+        "day6",
+        "morning",
         "soft",
-        "daily",
-        "couple"
-      ],
-      "is_proof": false,
-      "risk_level": 1,
-      "can_delete": true,
-      "can_capture": true,
-      "can_set_as_wallpaper": true,
-      "can_be_discovered_by": [
-        "marie"
-      ]
-    },
-    {
-      "id": "j6_pauline_bus_stop_followup",
-      "character": "pauline",
-      "tier": 1,
-      "type": "photo",
-      "source_app": "messages",
-      "asset_path": "res://assets/placeholders/j6_pauline_bus_stop_followup.png",
-      "context": "Selfie / détail Pauline sous abribus ou rue ; rappel contrôle / silence.",
-      "tags": [
-        "pauline",
-        "bus_stop",
-        "selfie",
-        "control",
-        "silence"
+        "social"
       ],
       "is_proof": false,
       "risk_level": 1,
@@ -73,32 +24,81 @@
       "can_capture": true,
       "can_set_as_wallpaper": false,
       "can_be_discovered_by": [
-        "pauline",
         "marie"
       ]
     },
     {
-      "id": "j6_sandra_evening_soft",
-      "character": "sandra",
+      "id": "j6_marie_social_photo_reframed_placeholder",
+      "character": "marie",
       "tier": 1,
       "type": "photo",
       "source_app": "messages",
-      "asset_path": "res://assets/placeholders/j6_sandra_evening_soft.png",
-      "context": "Photo douce du soir ; plus intime que restaurant mais encore soft.",
+      "asset_path": "res://assets/placeholders/j6_marie_social_photo_reframed_placeholder.png",
+      "context": "Photo sociale de Marie relue à distance, propre, nette et sans intrusion.",
       "tags": [
-        "sandra",
-        "evening",
-        "soft",
-        "trust",
-        "photo"
+        "marie",
+        "day6",
+        "social",
+        "reframed",
+        "safe"
       ],
       "is_proof": false,
       "risk_level": 1,
       "can_delete": true,
       "can_capture": true,
-      "can_set_as_wallpaper": true,
+      "can_set_as_wallpaper": false,
       "can_be_discovered_by": [
-        "sandra",
+        "marie",
+        "nico"
+      ]
+    },
+    {
+      "id": "nico_j6_glass_social_context_placeholder",
+      "character": "nico",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/nico_j6_glass_social_context_placeholder.png",
+      "context": "Nico dans un contexte social simple, verre en main, commentaire à distance.",
+      "tags": [
+        "nico",
+        "day6",
+        "social",
+        "glass",
+        "context"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": false,
+      "can_be_discovered_by": [
+        "nico",
+        "marie"
+      ]
+    },
+    {
+      "id": "j6_nico_chat_trace_placeholder",
+      "character": "nico",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/j6_nico_chat_trace_placeholder.png",
+      "context": "Capture courte du fil avec Nico, ton léger, aucune intensité lourde.",
+      "tags": [
+        "nico",
+        "day6",
+        "chat",
+        "trace",
+        "light"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": false,
+      "can_be_discovered_by": [
+        "nico",
         "marie"
       ]
     }
