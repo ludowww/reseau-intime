@@ -59,6 +59,70 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         ]:
             self.assertIn(required, loader)
 
+    def test_day3_index_wires_four_private_threads_and_soft_visuals(self):
+        index = json.loads((GAME / "data" / "conversations" / "chapter_03_index.json").read_text(encoding="utf-8"))
+        self.assertEqual(
+            [moment.get("conversation_ids") for moment in index.get("moment_flow", [])],
+            [
+                ["chapter_03_marie_morning"],
+                ["chapter_03_sandra_midday"],
+                ["chapter_03_marie_evening"],
+                ["chapter_03_mathilde_late_night"],
+            ],
+        )
+        self.assertEqual(
+            index.get("conversation_files"),
+            [
+                "res://data/conversations/chapter_03_marie_morning.json",
+                "res://data/conversations/chapter_03_sandra_midday.json",
+                "res://data/conversations/chapter_03_marie_evening.json",
+                "res://data/conversations/chapter_03_mathilde_late_night.json",
+            ],
+        )
+        self.assertEqual(index.get("routes_available"), ["marie", "mathilde", "sandra"])
+        self.assertNotIn("routes_locked_to_seed_only", index)
+        availability = index.get("conversation_availability", {})
+        self.assertEqual(availability.get("initial_conversation_ids"), ["chapter_03_marie_morning"])
+        self.assertEqual(
+            availability.get("locked_conversation_ids"),
+            ["chapter_03_sandra_midday", "chapter_03_marie_evening", "chapter_03_mathilde_late_night"],
+        )
+        for convo_id, expected_after in {
+            "chapter_03_sandra_midday": "chapter_03_marie_morning",
+            "chapter_03_marie_evening": "chapter_03_sandra_midday",
+            "chapter_03_mathilde_late_night": "chapter_03_marie_evening",
+        }.items():
+            self.assertEqual(availability.get("unlocks", {}).get(convo_id, {}).get("after_conversation_completed"), expected_after)
+        placeholders = json.loads((GAME / "data" / "visual_content" / "placeholders.json").read_text(encoding="utf-8"))
+        visual_items = {item["id"]: item for item in placeholders.get("items", []) if isinstance(item, dict)}
+        for expected in [
+            "chapter_03_marie_morning_soft_placeholder",
+            "chapter_03_sandra_midday_soft_placeholder",
+            "chapter_03_marie_evening_soft_placeholder",
+            "chapter_03_mathilde_late_night_soft_placeholder",
+        ]:
+            self.assertIn(expected, visual_items)
+            self.assertFalse(visual_items[expected].get("is_proof"))
+            self.assertLessEqual(int(visual_items[expected].get("risk_level", 99)), 1)
+        for convo_path in [
+            GAME / "data" / "conversations" / "chapter_03_marie_morning.json",
+            GAME / "data" / "conversations" / "chapter_03_sandra_midday.json",
+            GAME / "data" / "conversations" / "chapter_03_marie_evening.json",
+            GAME / "data" / "conversations" / "chapter_03_mathilde_late_night.json",
+        ]:
+            convo = json.loads(convo_path.read_text(encoding="utf-8"))
+            for segment in convo.get("segments", []):
+                for message in segment.get("messages", []):
+                    self.assertNotEqual(message.get("sender"), "ludo")
+                    self.assertNotIn(message.get("sender"), {"Player", "player", "joueur"})
+        active_tokens = json.dumps({
+            "conversation_ids": [cid for moment in index.get("moment_flow", []) for cid in moment.get("conversation_ids", [])],
+            "conversation_files": index.get("conversation_files", []),
+        }, ensure_ascii=False)
+        self.assertNotIn("Nico", active_tokens)
+        self.assertNotIn("Pauline", active_tokens)
+        self.assertNotIn("Raphaëlle", active_tokens)
+
     def test_effect_applier_supports_dotted_global_passive_flags_and_unknowns(self):
         script = (GAME / "scripts" / "core" / "EffectApplier.gd").read_text(encoding="utf-8")
         for expected in [

@@ -1,0 +1,238 @@
+{
+  "id": "chapter_03_marie_evening",
+  "chapter": 3,
+  "day": 3,
+  "title": "Jour 3 — Marie fin de journée",
+  "app": "messages",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "marie"
+    ],
+    "display_name": "Marie",
+    "profile_content_id": "profile_marie_placeholder"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c03_marie_evening_seg_01",
+      "moment_label": "jour 3",
+      "time_label": "18:27",
+      "messages": [
+        {
+          "id": "msg_c03_marie_evening_001",
+          "sender": "marie",
+          "time_label": "18:27",
+          "text": "T’es où ?",
+          "content_id": "chapter_03_marie_evening_soft_placeholder"
+        },
+        {
+          "id": "msg_c03_marie_evening_002",
+          "sender": "marie",
+          "time_label": "18:27",
+          "text": "Je veux dire, je sais que tu es dans le salon 🙂"
+        },
+        {
+          "id": "msg_c03_marie_evening_003",
+          "sender": "marie",
+          "time_label": "18:27",
+          "text": "Mais tu vois ce que je veux dire."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_marie_evening_01_guided",
+          "text": "Oui. Je vois.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c03_marie_evening_seg_02",
+      "moment_label": "jour 3",
+      "time_label": "18:28",
+      "messages": [
+        {
+          "id": "msg_c03_marie_evening_004",
+          "sender": "marie",
+          "time_label": "18:28",
+          "text": "T’as été gentil aujourd’hui."
+        },
+        {
+          "id": "msg_c03_marie_evening_005",
+          "sender": "marie",
+          "time_label": "18:28",
+          "text": "Le café, le plaid, le “je suis là”."
+        },
+        {
+          "id": "msg_c03_marie_evening_006",
+          "sender": "marie",
+          "time_label": "18:28",
+          "text": "Mais parfois j’avais l’impression de parler à quelqu’un qui gardait une autre fenêtre ouverte."
+        },
+        {
+          "id": "msg_c03_marie_evening_007",
+          "sender": "marie",
+          "time_label": "18:28",
+          "text": "Et pas juste sur son téléphone 🙄"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_marie_evening_02_1",
+          "text": "Je reviens vers toi. Là, maintenant.",
+          "tone": "tendre",
+          "effects": {
+            "marie_trust": 2,
+            "lie_score": -1,
+            "marie_attention_score": 1
+          },
+          "next_messages": [
+            {
+              "id": "msg_c03_marie_evening_02_1_01",
+              "sender": "marie",
+              "time_label": "18:29",
+              "text": "Alors viens vraiment."
+            },
+            {
+              "id": "msg_c03_marie_evening_02_1_02",
+              "sender": "marie",
+              "time_label": "18:29",
+              "text": "Pas en mode présence minimum."
+            },
+            {
+              "id": "msg_c03_marie_evening_02_1_03",
+              "sender": "marie",
+              "time_label": "18:29",
+              "text": "Je suis très mauvaise cliente pour les versions démo 🙄"
+            }
+          ]
+        },
+        {
+          "id": "choice_c03_marie_evening_02_2",
+          "text": "Je suis juste crevé. Rien de plus.",
+          "tone": "avoidant",
+          "effects": {
+            "lie_score": 2,
+            "marie.lucidity": 1,
+            "marie_neglect_score": 1
+          },
+          "sets_flags": [
+            "lie_to_marie_j3"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c03_marie_evening_02_2_01",
+              "sender": "marie",
+              "time_label": "18:29",
+              "text": "D’accord."
+            },
+            {
+              "id": "msg_c03_marie_evening_02_2_02",
+              "sender": "marie",
+              "time_label": "18:29",
+              "text": "Je vais essayer de te croire au même rythme que tu me réponds."
+            },
+            {
+              "id": "msg_c03_marie_evening_02_2_03",
+              "sender": "marie",
+              "time_label": "18:29",
+              "text": "Donc lentement 😅"
+            }
+          ]
+        },
+        {
+          "id": "choice_c03_marie_evening_02_3",
+          "text": "Je suis un peu perdu. Mais je veux rester ici ce soir.",
+          "tone": "truthful",
+          "effects": {
+            "marie_trust": 1,
+            "truth_tendency": 1
+          },
+          "sets_flags": [
+            "truth_seed_marie_j3"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c03_marie_evening_02_3_01",
+              "sender": "marie",
+              "time_label": "18:29",
+              "text": "Ça ne règle rien."
+            },
+            {
+              "id": "msg_c03_marie_evening_02_3_02",
+              "sender": "marie",
+              "time_label": "18:29",
+              "text": "Mais c’est déjà plus clair que tes détours."
+            },
+            {
+              "id": "msg_c03_marie_evening_02_3_03",
+              "sender": "marie",
+              "time_label": "18:29",
+              "text": "Et ce soir, j’ai besoin de clair. Même petit 🙂"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c03_marie_evening_seg_03",
+      "moment_label": "jour 3",
+      "time_label": "18:30",
+      "messages": [
+        {
+          "id": "msg_c03_marie_evening_008",
+          "sender": "marie",
+          "time_label": "18:30",
+          "text": "Je ne te demande pas de tout expliquer maintenant."
+        },
+        {
+          "id": "msg_c03_marie_evening_009",
+          "sender": "marie",
+          "time_label": "18:30",
+          "text": "Juste de rester un peu avec moi."
+        },
+        {
+          "id": "msg_c03_marie_evening_010",
+          "sender": "marie",
+          "time_label": "18:30",
+          "text": "Sans écran entre nous, si possible 🙂"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_marie_evening_03_guided",
+          "text": "Je reste.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c03_marie_evening_seg_04",
+      "moment_label": "jour 3",
+      "time_label": "18:31",
+      "messages": [
+        {
+          "id": "msg_c03_marie_evening_011",
+          "sender": "marie",
+          "time_label": "18:31",
+          "text": "Alors pose le téléphone."
+        },
+        {
+          "id": "msg_c03_marie_evening_012",
+          "sender": "marie",
+          "time_label": "18:31",
+          "text": "Viens."
+        },
+        {
+          "id": "msg_c03_marie_evening_013",
+          "sender": "marie",
+          "time_label": "18:31",
+          "text": "On verra demain pour le reste."
+        }
+      ]
+    }
+  ],
+  "debug_notes": "J3 se clôt sur Marie : douceur inquiète, présence demandée, pas de confrontation totale. Réponses Player uniquement via choices."
+}

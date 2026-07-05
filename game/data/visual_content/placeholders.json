@@ -363,6 +363,103 @@
       "can_be_discovered_by": [
         "sandra"
       ]
+    },
+    {
+      "id": "chapter_03_marie_morning_soft_placeholder",
+      "character": "marie",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/chapter_03_marie_morning_soft_placeholder.png",
+      "context": "Marie dans la cuisine au matin, lumière douce, présence simple et domestique.",
+      "tags": [
+        "chapter_03",
+        "marie",
+        "morning",
+        "soft",
+        "home"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": [
+        "marie"
+      ]
+    },
+    {
+      "id": "chapter_03_sandra_midday_soft_placeholder",
+      "character": "sandra",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/chapter_03_sandra_midday_soft_placeholder.png",
+      "context": "Sandra à midi, image douce et discrète, sans preuve ni tension lourde.",
+      "tags": [
+        "chapter_03",
+        "sandra",
+        "midday",
+        "soft",
+        "pause"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": [
+        "sandra"
+      ]
+    },
+    {
+      "id": "chapter_03_marie_evening_soft_placeholder",
+      "character": "marie",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/chapter_03_marie_evening_soft_placeholder.png",
+      "context": "Marie en fin de journée, retour maison calme, présence plus directe mais toujours soft.",
+      "tags": [
+        "chapter_03",
+        "marie",
+        "evening",
+        "soft",
+        "return"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": [
+        "marie"
+      ]
+    },
+    {
+      "id": "chapter_03_mathilde_late_night_soft_placeholder",
+      "character": "mathilde",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/chapter_03_mathilde_late_night_soft_placeholder.png",
+      "context": "Mathilde tard le soir sur le canapé, trace domestique légère et non-probante.",
+      "tags": [
+        "chapter_03",
+        "mathilde",
+        "late_night",
+        "soft",
+        "couch"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": true,
+      "can_be_discovered_by": [
+        "mathilde",
+        "marie"
+      ]
     }
   ]
 }

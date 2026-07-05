@@ -24,7 +24,8 @@
           "id": "msg_c03_marie_morning_001",
           "sender": "marie",
           "time_label": "08:12",
-          "text": "Coucou de la cuisine ☕"
+          "text": "Coucou de la cuisine ☕",
+          "content_id": "chapter_03_marie_morning_soft_placeholder"
         },
         {
           "id": "msg_c03_marie_morning_002",

@@ -1,0 +1,367 @@
+{
+  "id": "chapter_03_sandra_midday",
+  "chapter": 3,
+  "day": 3,
+  "title": "Jour 3 — Sandra midi maintenu",
+  "app": "messages",
+  "thread": {
+    "id": "thread_sandra_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "sandra"
+    ],
+    "display_name": "Sandra",
+    "profile_content_id": "profile_sandra_placeholder"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c03_sandra_midday_seg_01",
+      "moment_label": "jour 3",
+      "time_label": "12:41",
+      "messages": [
+        {
+          "id": "msg_c03_sandra_midday_001",
+          "sender": "sandra",
+          "time_label": "12:41",
+          "text": "Coucou 🙂",
+          "content_id": "chapter_03_sandra_midday_soft_placeholder"
+        },
+        {
+          "id": "msg_c03_sandra_midday_002",
+          "sender": "sandra",
+          "time_label": "12:41",
+          "text": "Je fais semblant de ne pas penser à jeudi."
+        },
+        {
+          "id": "msg_c03_sandra_midday_003",
+          "sender": "sandra",
+          "time_label": "12:41",
+          "text": "C’est très convaincant, si on ignore mon téléphone posé devant moi depuis dix minutes 😅"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_sandra_midday_01_guided",
+          "text": "Tu as l’air parfaitement crédible.",
+          "tone": "guided_reply"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c03_sandra_midday_seg_02",
+      "moment_label": "jour 3",
+      "time_label": "12:42",
+      "messages": [
+        {
+          "id": "msg_c03_sandra_midday_004",
+          "sender": "sandra",
+          "time_label": "12:42",
+          "text": "Merci."
+        },
+        {
+          "id": "msg_c03_sandra_midday_005",
+          "sender": "sandra",
+          "time_label": "12:42",
+          "text": "Je savais que mon talent de comédienne finirait par être reconnu 😅"
+        },
+        {
+          "id": "msg_c03_sandra_midday_006",
+          "sender": "sandra",
+          "time_label": "12:42",
+          "text": "J’ai failli t’écrire plus tôt."
+        },
+        {
+          "id": "msg_c03_sandra_midday_007",
+          "sender": "sandra",
+          "time_label": "12:42",
+          "text": "Puis j’ai fait semblant d’être raisonnable 🙂"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_sandra_midday_02_1",
+          "text": "J’aurais aimé que tu le fasses.",
+          "tone": "tendre",
+          "effects": {
+            "sandra.attachment": 1,
+            "sandra_priority_score": 1,
+            "lie_score": 1
+          },
+          "sets_flags": [
+            "sandra_thursday_confirmed_j3"
+          ],
+          "next_messages": [
+            {
+              "id": "choice_c03_sandra_midday_02_1_player_001",
+              "sender": "ludo",
+              "time_label": "12:42",
+              "text": "J’aurais aimé que tu le fasses."
+            },
+            {
+              "id": "msg_c03_sandra_midday_02_1_01",
+              "sender": "sandra",
+              "time_label": "12:42",
+              "text": "Voilà."
+            },
+            {
+              "id": "msg_c03_sandra_midday_02_1_02",
+              "sender": "sandra",
+              "time_label": "12:42",
+              "text": "C’est exactement le genre de réponse qui ne m’aide pas du tout."
+            },
+            {
+              "id": "msg_c03_sandra_midday_02_1_03",
+              "sender": "sandra",
+              "time_label": "12:42",
+              "text": "Mais je souris comme une idiote, donc bravo 😅"
+            }
+          ]
+        },
+        {
+          "id": "choice_c03_sandra_midday_02_2",
+          "text": "Tu pouvais. Tu peux toujours.",
+          "tone": "confessional",
+          "effects": {
+            "sandra.attachment": 2,
+            "sandra.exposure": 1,
+            "lie_score": 1
+          },
+          "sets_flags": [
+            "sandra_thursday_confirmed_j3"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c03_sandra_midday_02_2_01",
+              "sender": "sandra",
+              "time_label": "12:42",
+              "text": "Ne m’ouvre pas des portes comme ça."
+            },
+            {
+              "id": "msg_c03_sandra_midday_02_2_02",
+              "sender": "sandra",
+              "time_label": "12:42",
+              "text": "Je suis déjà très occupée à prétendre que je ne les vois pas 🫠"
+            }
+          ]
+        },
+        {
+          "id": "choice_c03_sandra_midday_02_3",
+          "text": "On garde jeudi, et on respire jusque-là.",
+          "tone": "prudent",
+          "effects": {
+            "sandra.attachment": 1,
+            "sandra.exposure": -1
+          },
+          "sets_flags": [
+            "sandra_thursday_confirmed_j3"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c03_sandra_midday_02_3_01",
+              "sender": "sandra",
+              "time_label": "12:42",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_c03_sandra_midday_02_3_02",
+              "sender": "sandra",
+              "time_label": "12:42",
+              "text": "Respirer, c’est bien."
+            },
+            {
+              "id": "msg_c03_sandra_midday_02_3_03",
+              "sender": "sandra",
+              "time_label": "12:42",
+              "text": "Je vais essayer de faire ça sans regarder l’heure toutes les vingt minutes 🙂"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c03_sandra_midday_seg_03",
+      "moment_label": "jour 3",
+      "time_label": "12:43",
+      "messages": [
+        {
+          "id": "msg_c03_sandra_midday_008",
+          "sender": "sandra",
+          "time_label": "12:43",
+          "text": "J’avais quelque chose à t’envoyer."
+        },
+        {
+          "id": "msg_c03_sandra_midday_009",
+          "sender": "sandra",
+          "time_label": "12:43",
+          "text": "Puis j’ai reposé le téléphone comme une adulte parfaitement stable."
+        },
+        {
+          "id": "msg_c03_sandra_midday_010",
+          "sender": "sandra",
+          "time_label": "12:43",
+          "text": "Mauvaise idée."
+        },
+        {
+          "id": "msg_c03_sandra_midday_011",
+          "sender": "sandra",
+          "time_label": "12:43",
+          "text": "Enfin. Mauvaise idée maintenant 😅"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_sandra_midday_03_1",
+          "text": "Je ne vais pas te pousser.",
+          "tone": "tendre",
+          "effects": {
+            "sandra.attachment": 1,
+            "sandra.exposure": -1
+          },
+          "sets_flags": [
+            "sandra_almost_sent_photo_j3"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c03_sandra_midday_03_1_01",
+              "sender": "sandra",
+              "time_label": "12:43",
+              "text": "Merci."
+            },
+            {
+              "id": "msg_c03_sandra_midday_03_1_02",
+              "sender": "sandra",
+              "time_label": "12:43",
+              "text": "C’est peut-être pour ça que je te l’ai dit 🙂"
+            }
+          ]
+        },
+        {
+          "id": "choice_c03_sandra_midday_03_2",
+          "text": "Tu sais que ce genre de phrase reste dans la tête.",
+          "tone": "ambiguous",
+          "effects": {
+            "sandra.attachment": 1,
+            "sandra.exposure": 2,
+            "lie_score": 1
+          },
+          "sets_flags": [
+            "sandra_almost_sent_photo_j3"
+          ],
+          "next_messages": [
+            {
+              "id": "choice_c03_sandra_midday_03_2_player_001",
+              "sender": "ludo",
+              "time_label": "12:43",
+              "text": "Tu sais que ce genre de phrase reste dans la tête."
+            },
+            {
+              "id": "msg_c03_sandra_midday_03_2_01",
+              "sender": "sandra",
+              "time_label": "12:43",
+              "text": "Je sais."
+            },
+            {
+              "id": "msg_c03_sandra_midday_03_2_02",
+              "sender": "sandra",
+              "time_label": "12:43",
+              "text": "C’est bien pour ça que je vais arrêter la phrase ici."
+            },
+            {
+              "id": "msg_c03_sandra_midday_03_2_03",
+              "sender": "sandra",
+              "time_label": "12:43",
+              "text": "Tu vois. Progrès 😅"
+            }
+          ]
+        },
+        {
+          "id": "choice_c03_sandra_midday_03_3",
+          "text": "On garde quelque chose pour jeudi.",
+          "tone": "prudent",
+          "effects": {
+            "sandra.attachment": 1,
+            "sandra.exposure": -1
+          },
+          "sets_flags": [
+            "sandra_almost_sent_photo_j3"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_c03_sandra_midday_03_3_01",
+              "sender": "sandra",
+              "time_label": "12:43",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_c03_sandra_midday_03_3_02",
+              "sender": "sandra",
+              "time_label": "12:43",
+              "text": "Et on fait semblant que c’est une stratégie mature 🙂"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c03_sandra_midday_seg_04",
+      "moment_label": "jour 3",
+      "time_label": "18:34",
+      "messages": [
+        {
+          "id": "msg_c03_sandra_midday_012",
+          "sender": "sandra",
+          "time_label": "18:34",
+          "text": "Je vais te laisser."
+        },
+        {
+          "id": "msg_c03_sandra_midday_013",
+          "sender": "sandra",
+          "time_label": "18:34",
+          "text": "On verra jeudi."
+        },
+        {
+          "id": "msg_c03_sandra_midday_014",
+          "sender": "sandra",
+          "time_label": "18:34",
+          "text": "Enfin. Si je ne trouve pas une excuse stupide d’ici là 😅"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_sandra_midday_04_guided",
+          "text": "Je préfère que tu n’en trouves pas.",
+          "tone": "guided_reply",
+          "next_messages": [
+            {
+              "id": "choice_c03_sandra_midday_04_guided_player_001",
+              "sender": "ludo",
+              "time_label": "18:34",
+              "text": "Je préfère que tu n’en trouves pas."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c03_sandra_midday_seg_05",
+      "moment_label": "jour 3",
+      "time_label": "18:35",
+      "messages": [
+        {
+          "id": "msg_c03_sandra_midday_015",
+          "sender": "sandra",
+          "time_label": "18:35",
+          "text": "Je vais essayer d’être courageuse."
+        },
+        {
+          "id": "msg_c03_sandra_midday_016",
+          "sender": "sandra",
+          "time_label": "18:35",
+          "text": "Doucement 🙂"
+        }
+      ]
+    }
+  ],
+  "debug_notes": "J3 Sandra maintient jeudi, évoque une trace non envoyée et reste rare. Réponses Player uniquement via choices."
+}
