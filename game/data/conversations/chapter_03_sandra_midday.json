@@ -57,8 +57,92 @@
           "tone": "prudent"
         }
       ]
+    },
+    {
+      "conversation_segment_id": "c03_sandra_midday_seg_02",
+      "moment_label": "midi",
+      "time_label": "12:19",
+      "messages": [
+        {
+          "id": "msg_c03_sandra_midday_004",
+          "sender": "sandra",
+          "time_label": "12:19",
+          "text": "Le roman est idiot, mais la page du lac est jolie."
+        },
+        {
+          "id": "msg_c03_sandra_midday_005",
+          "sender": "sandra",
+          "time_label": "12:19",
+          "text": "Je lis plus lentement quand je sais que quelqu’un peut me demander ce que j’en pense."
+        },
+        {
+          "id": "msg_c03_sandra_midday_006",
+          "sender": "sandra",
+          "time_label": "12:19",
+          "text": "Ça me donne envie de lever les yeux et pas seulement de tourner la page."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_sandra_midday_04",
+          "text": "Je veux la page du lac.",
+          "tone": "tendre"
+        },
+        {
+          "id": "choice_c03_sandra_midday_05",
+          "text": "Tu lis à ton rythme.",
+          "tone": "prudent"
+        },
+        {
+          "id": "choice_c03_sandra_midday_06",
+          "text": "Tu peux garder le silence.",
+          "tone": "calme"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c03_sandra_midday_seg_03",
+      "moment_label": "midi",
+      "time_label": "12:20",
+      "messages": [
+        {
+          "id": "msg_c03_sandra_midday_007",
+          "sender": "sandra",
+          "time_label": "12:20",
+          "text": "Je crois que j’aime surtout les phrases qui ont l’air sûres d’elles."
+        },
+        {
+          "id": "msg_c03_sandra_midday_008",
+          "sender": "sandra",
+          "time_label": "12:20",
+          "text": "Puis elles me laissent réfléchir au lieu d’aller trop vite."
+        },
+        {
+          "id": "msg_c03_sandra_midday_009",
+          "sender": "sandra",
+          "time_label": "12:20",
+          "text": "Ne te moque pas trop, je fais ma snob très sérieuse."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_sandra_midday_07",
+          "text": "Je prends ça au sérieux.",
+          "tone": "tendre"
+        },
+        {
+          "id": "choice_c03_sandra_midday_08",
+          "text": "Je te laisse ton roman idiot.",
+          "tone": "léger"
+        },
+        {
+          "id": "choice_c03_sandra_midday_09",
+          "text": "Je reviens quand tu auras tourné la page.",
+          "tone": "prudent"
+        }
+      ]
     }
   ],
   "design_goal": "Sandra reste rare, douce et prudente à midi.",
-  "debug_notes": "Pas de route lock, pas de photo lourde."
+  "debug_notes": "Sandra reste rare, douce et prudente à midi. Aucun auto-rendu Player."
 }

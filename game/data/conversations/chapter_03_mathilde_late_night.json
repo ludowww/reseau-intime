@@ -57,8 +57,135 @@
           "tone": "taquin"
         }
       ]
+    },
+    {
+      "conversation_segment_id": "c03_mathilde_late_night_seg_02",
+      "moment_label": "nuit",
+      "time_label": "23:44",
+      "messages": [
+        {
+          "id": "msg_c03_mathilde_late_night_004",
+          "sender": "mathilde",
+          "time_label": "23:44",
+          "text": "Je me sens bête d’écrire pour une araignée."
+        },
+        {
+          "id": "msg_c03_mathilde_late_night_005",
+          "sender": "mathilde",
+          "time_label": "23:44",
+          "text": "Mais elle est vraiment là-haut."
+        },
+        {
+          "id": "msg_c03_mathilde_late_night_006",
+          "sender": "mathilde",
+          "time_label": "23:44",
+          "text": "Je la vois à peine, et ça m’énerve déjà."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_mathilde_late_night_04",
+          "text": "Je te crois.",
+          "tone": "tendre"
+        },
+        {
+          "id": "choice_c03_mathilde_late_night_05",
+          "text": "Je viens regarder.",
+          "tone": "prudent"
+        },
+        {
+          "id": "choice_c03_mathilde_late_night_06",
+          "text": "Reste au téléphone.",
+          "tone": "calme"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c03_mathilde_late_night_seg_03",
+      "moment_label": "nuit",
+      "time_label": "23:45",
+      "messages": [
+        {
+          "id": "msg_c03_mathilde_late_night_007",
+          "sender": "mathilde",
+          "time_label": "23:45",
+          "text": "La chambre est trop silencieuse quand je regarde le plafond.",
+          "content_id": "mathilde_j3_room_recovered_placeholder"
+        },
+        {
+          "id": "msg_c03_mathilde_late_night_008",
+          "sender": "mathilde",
+          "time_label": "23:45",
+          "text": "Je préfère quand quelqu’un me répond."
+        },
+        {
+          "id": "msg_c03_mathilde_late_night_009",
+          "sender": "mathilde",
+          "time_label": "23:45",
+          "text": "Tu peux rester tant que j’ai l’air ridicule."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_mathilde_late_night_07",
+          "text": "Je reste.",
+          "tone": "tendre"
+        },
+        {
+          "id": "choice_c03_mathilde_late_night_08",
+          "text": "Je t’aide.",
+          "tone": "prudent"
+        },
+        {
+          "id": "choice_c03_mathilde_late_night_09",
+          "text": "Montre-moi.",
+          "tone": "taquin"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c03_mathilde_late_night_seg_04",
+      "moment_label": "nuit",
+      "time_label": "23:46",
+      "messages": [
+        {
+          "id": "msg_c03_mathilde_late_night_010",
+          "sender": "mathilde",
+          "time_label": "23:46",
+          "text": "Bon. Elle a bougé, puis elle n’a plus bougé."
+        },
+        {
+          "id": "msg_c03_mathilde_late_night_011",
+          "sender": "mathilde",
+          "time_label": "23:46",
+          "text": "La chambre a l’air plus normale."
+        },
+        {
+          "id": "msg_c03_mathilde_late_night_012",
+          "sender": "mathilde",
+          "time_label": "23:46",
+          "text": "Merci de ne pas m’avoir laissée seule avec ce plafond."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_mathilde_late_night_10",
+          "text": "Je reste encore un peu.",
+          "tone": "tendre"
+        },
+        {
+          "id": "choice_c03_mathilde_late_night_11",
+          "text": "Tu peux respirer.",
+          "tone": "calme"
+        },
+        {
+          "id": "choice_c03_mathilde_late_night_12",
+          "text": "Le plafond peut attendre.",
+          "tone": "prudent"
+        }
+      ]
     }
   ],
   "design_goal": "Mathilde appelle pour un souci de plafond / chambre.",
-  "debug_notes": "Pivot domestique soft, pas de preuve ambiguë."
+  "debug_notes": "Pivot domestique soft, plafond/chambre/gêne sans photo ambiguë."
 }

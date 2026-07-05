@@ -57,8 +57,92 @@
           "tone": "prudent"
         }
       ]
+    },
+    {
+      "conversation_segment_id": "c03_marie_morning_seg_02",
+      "moment_label": "matin",
+      "time_label": "08:27",
+      "messages": [
+        {
+          "id": "msg_c03_marie_morning_004",
+          "sender": "marie",
+          "time_label": "08:27",
+          "text": "J’ai posé ta deuxième chaussette sur la chaise."
+        },
+        {
+          "id": "msg_c03_marie_morning_005",
+          "sender": "marie",
+          "time_label": "08:27",
+          "text": "Elle avait l’air de vouloir rester dans la cuisine."
+        },
+        {
+          "id": "msg_c03_marie_morning_006",
+          "sender": "marie",
+          "time_label": "08:27",
+          "text": "Je garde le café chaud tant que tu n’as pas bougé."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_marie_morning_04",
+          "text": "J’arrive tout de suite.",
+          "tone": "tendre"
+        },
+        {
+          "id": "choice_c03_marie_morning_05",
+          "text": "Je laisse la chaussette gagner.",
+          "tone": "taquin"
+        },
+        {
+          "id": "choice_c03_marie_morning_06",
+          "text": "Je me lève avec le café.",
+          "tone": "prudent"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c03_marie_morning_seg_03",
+      "moment_label": "matin",
+      "time_label": "08:28",
+      "messages": [
+        {
+          "id": "msg_c03_marie_morning_007",
+          "sender": "marie",
+          "time_label": "08:28",
+          "text": "Si tu traînes encore, je te vole le dernier morceau de pain."
+        },
+        {
+          "id": "msg_c03_marie_morning_008",
+          "sender": "marie",
+          "time_label": "08:28",
+          "text": "Et je fais semblant que c’était une punition."
+        },
+        {
+          "id": "msg_c03_marie_morning_009",
+          "sender": "marie",
+          "time_label": "08:28",
+          "text": "En vrai, je te regarde juste revenir vers moi."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_marie_morning_07",
+          "text": "Je viens maintenant.",
+          "tone": "tendre"
+        },
+        {
+          "id": "choice_c03_marie_morning_08",
+          "text": "Je proteste.",
+          "tone": "taquin"
+        },
+        {
+          "id": "choice_c03_marie_morning_09",
+          "text": "Je te regarde aussi.",
+          "tone": "tendre"
+        }
+      ]
     }
   ],
   "design_goal": "Réinstaller Marie comme ancrage domestique doux.",
-  "debug_notes": "Aucun sender auto-rendu. Choix visibles uniquement."
+  "debug_notes": "J3 ouvre sur Marie après le retour physique. Conversation longue, sans auto-rendu Player."
 }

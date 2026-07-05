@@ -99,6 +99,20 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         placeholders = json.loads((GAME / "data" / "visual_content" / "placeholders.json").read_text(encoding="utf-8"))
         visual_items = {item["id"]: item for item in placeholders.get("items", []) if isinstance(item, dict)}
         for expected in [
+            "profile_marie_placeholder",
+            "profile_sandra_placeholder",
+            "profile_mathilde_placeholder",
+            "profile_raphaelle_placeholder",
+            "profile_pauline_placeholder",
+            "profile_nico_placeholder",
+            "marie_j2_morning_soft_placeholder",
+            "mathilde_j2_arrival_marie_placeholder",
+            "mathilde_j2_couch_innocent_selfie_placeholder",
+            "sandra_j2_lake_book_soft_placeholder",
+            "raphaelle_j2_work_badge_placeholder",
+        ]:
+            self.assertIn(expected, visual_items)
+        for expected in [
             "marie_j3_kitchen_soft_placeholder",
             "sandra_j3_lake_page_placeholder",
             "mathilde_j3_ceiling_spider_placeholder",

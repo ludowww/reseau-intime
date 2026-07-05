@@ -57,8 +57,92 @@
           "tone": "tendre"
         }
       ]
+    },
+    {
+      "conversation_segment_id": "c03_marie_evening_seg_02",
+      "moment_label": "soir",
+      "time_label": "20:18",
+      "messages": [
+        {
+          "id": "msg_c03_marie_evening_004",
+          "sender": "marie",
+          "time_label": "20:18",
+          "text": "J’ai baissé les lumières du salon."
+        },
+        {
+          "id": "msg_c03_marie_evening_005",
+          "sender": "marie",
+          "time_label": "20:18",
+          "text": "Je vais vraiment dormir tôt, cette fois."
+        },
+        {
+          "id": "msg_c03_marie_evening_006",
+          "sender": "marie",
+          "time_label": "20:18",
+          "text": "Le calme me plaît plus que d’habitude."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_marie_evening_04",
+          "text": "Je te laisse dormir tôt.",
+          "tone": "prudent"
+        },
+        {
+          "id": "choice_c03_marie_evening_05",
+          "text": "Je t’accompagne en silence.",
+          "tone": "tendre"
+        },
+        {
+          "id": "choice_c03_marie_evening_06",
+          "text": "Je t’apporte de l’eau.",
+          "tone": "calme"
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c03_marie_evening_seg_03",
+      "moment_label": "soir",
+      "time_label": "20:19",
+      "messages": [
+        {
+          "id": "msg_c03_marie_evening_007",
+          "sender": "marie",
+          "time_label": "20:19",
+          "text": "Mathilde m’a écrit qu’il y avait un petit problème au plafond."
+        },
+        {
+          "id": "msg_c03_marie_evening_008",
+          "sender": "marie",
+          "time_label": "20:19",
+          "text": "Rien de grave, juste assez pour que je garde ça en tête."
+        },
+        {
+          "id": "msg_c03_marie_evening_009",
+          "sender": "marie",
+          "time_label": "20:19",
+          "text": "Ça m’a fait penser à toi deux secondes, ce qui est déjà beaucoup à cette heure."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c03_marie_evening_07",
+          "text": "Je surveille le plafond.",
+          "tone": "prudent"
+        },
+        {
+          "id": "choice_c03_marie_evening_08",
+          "text": "Tu peux dormir tranquille.",
+          "tone": "tendre"
+        },
+        {
+          "id": "choice_c03_marie_evening_09",
+          "text": "On verra demain.",
+          "tone": "calme"
+        }
+      ]
     }
   ],
   "design_goal": "Fermer la journée tôt sans casser le lien.",
-  "debug_notes": "Soirée calme, aucun message auto-rendu."
+  "debug_notes": "Soirée calme, puis pivot domestique préparé sans auto-rendu Player."
 }
