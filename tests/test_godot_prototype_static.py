@@ -96,6 +96,8 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             "chapter_03_mathilde_late_night": "chapter_03_marie_evening",
         }.items():
             self.assertEqual(availability.get("unlocks", {}).get(convo_id, {}).get("after_conversation_completed"), expected_after)
+        self.assertNotIn("Mathilde", availability.get("unlocks", {}).get("chapter_03_marie_evening", {}).get("notification", {}).get("body", ""))
+        self.assertNotIn("plafond", availability.get("unlocks", {}).get("chapter_03_marie_evening", {}).get("notification", {}).get("body", "").lower())
         placeholders = json.loads((GAME / "data" / "visual_content" / "placeholders.json").read_text(encoding="utf-8"))
         visual_items = {item["id"]: item for item in placeholders.get("items", []) if isinstance(item, dict)}
         for expected in [
@@ -152,6 +154,14 @@ class GodotPrototypeStaticTests(unittest.TestCase):
                 "chapter_03_mathilde_late_night.json",
             ]
         )
+        marie_evening_text = (GAME / "data" / "conversations" / "chapter_03_marie_evening.json").read_text(encoding="utf-8")
+        mathilde_night_text = (GAME / "data" / "conversations" / "chapter_03_mathilde_late_night.json").read_text(encoding="utf-8")
+        self.assertNotIn("Mathilde m’a écrit", marie_evening_text)
+        self.assertNotIn("problème au plafond", marie_evening_text)
+        self.assertIn("Je prépare le calme pour demain.", marie_evening_text)
+        self.assertIn("Je préviens Marie si tu veux.", mathilde_night_text)
+        for required in ["araignée", "plafond", "chambre"]:
+            self.assertIn(required, mathilde_night_text)
         for forbidden in [
             "canapé",
             "canape",

@@ -25,7 +25,7 @@
     {
       "moment_label": "soir",
       "time_label": "20:17",
-      "transition_text": "Marie veut fermer la journée tôt et remettre la maison au repos.",
+      "transition_text": "Marie se met hors champ tôt, sans nommer le motif de nuit.",
       "conversation_ids": [
         "chapter_03_marie_evening"
       ]
@@ -33,7 +33,7 @@
     {
       "moment_label": "nuit",
       "time_label": "23:43",
-      "transition_text": "Mathilde appelle tard : problème domestique, plafond suspect, rien de plus.",
+      "transition_text": "Mathilde appelle tard : un souci domestique finit par remonter.",
       "conversation_ids": [
         "chapter_03_mathilde_late_night"
       ]
@@ -89,7 +89,7 @@
         "pending": true,
         "notification": {
           "title": "Marie",
-          "body": "Ce soir, je veux dormir tôt."
+          "body": "Je vais dormir tôt, au calme."
         }
       },
       "chapter_03_mathilde_late_night": {

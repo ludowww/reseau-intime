@@ -109,40 +109,40 @@
           "id": "msg_c03_marie_evening_007",
           "sender": "marie",
           "time_label": "20:19",
-          "text": "Mathilde m’a écrit qu’il y avait un petit problème au plafond."
+          "text": "J’ai posé mon téléphone loin du lit."
         },
         {
           "id": "msg_c03_marie_evening_008",
           "sender": "marie",
           "time_label": "20:19",
-          "text": "Rien de grave, juste assez pour que je garde ça en tête."
+          "text": "Si quelqu’un a besoin d’aide, je pourrai répondre demain."
         },
         {
           "id": "msg_c03_marie_evening_009",
           "sender": "marie",
           "time_label": "20:19",
-          "text": "Ça m’a fait penser à toi deux secondes, ce qui est déjà beaucoup à cette heure."
+          "text": "Ce soir, je veux juste dormir tôt."
         }
       ],
       "choices": [
         {
           "id": "choice_c03_marie_evening_07",
-          "text": "Je surveille le plafond.",
+          "text": "Je reste discret.",
           "tone": "prudent"
         },
         {
           "id": "choice_c03_marie_evening_08",
-          "text": "Tu peux dormir tranquille.",
+          "text": "Je te laisse te reposer.",
           "tone": "tendre"
         },
         {
           "id": "choice_c03_marie_evening_09",
-          "text": "On verra demain.",
+          "text": "Je prépare le calme pour demain.",
           "tone": "calme"
         }
       ]
     }
   ],
   "design_goal": "Fermer la journée tôt sans casser le lien.",
-  "debug_notes": "Soirée calme, puis pivot domestique préparé sans auto-rendu Player."
+  "debug_notes": "Soirée calme, Marie hors champ / au lit avant le pivot Mathilde, sans nommer le motif de nuit."
 }

@@ -24,7 +24,7 @@
           "id": "msg_c03_mathilde_late_night_001",
           "sender": "mathilde",
           "time_label": "23:43",
-          "text": "Question sérieuse : tu dors ?",
+          "text": "Question sérieuse : tu dors déjà ?",
           "content_id": "mathilde_j3_ceiling_spider_placeholder"
         },
         {
@@ -37,7 +37,7 @@
           "id": "msg_c03_mathilde_late_night_003",
           "sender": "mathilde",
           "time_label": "23:43",
-          "text": "Et la porte de ma chambre grince comme un formulaire mal rempli."
+          "text": "Je sais que c’est ridicule d’écrire pour ça, mais j’ose quand même."
         }
       ],
       "choices": [
@@ -55,6 +55,11 @@
           "id": "choice_c03_mathilde_late_night_03",
           "text": "Tu veux de l’aide pour la bête ou pour la porte ?",
           "tone": "taquin"
+        },
+        {
+          "id": "choice_c03_mathilde_late_night_13",
+          "text": "Je préviens Marie si tu veux.",
+          "tone": "transparent"
         }
       ]
     },
@@ -67,36 +72,36 @@
           "id": "msg_c03_mathilde_late_night_004",
           "sender": "mathilde",
           "time_label": "23:44",
-          "text": "Je me sens bête d’écrire pour une araignée."
+          "text": "J’ai attendu une minute avant d’envoyer, parce que je me sentais bête."
         },
         {
           "id": "msg_c03_mathilde_late_night_005",
           "sender": "mathilde",
           "time_label": "23:44",
-          "text": "Mais elle est vraiment là-haut."
+          "text": "Mais elle est toujours là-haut."
         },
         {
           "id": "msg_c03_mathilde_late_night_006",
           "sender": "mathilde",
           "time_label": "23:44",
-          "text": "Je la vois à peine, et ça m’énerve déjà."
+          "text": "Et je préfère te le dire plutôt que d’aller vérifier seule."
         }
       ],
       "choices": [
         {
           "id": "choice_c03_mathilde_late_night_04",
-          "text": "Je te crois.",
+          "text": "Je comprends.",
           "tone": "tendre"
         },
         {
           "id": "choice_c03_mathilde_late_night_05",
-          "text": "Je viens regarder.",
-          "tone": "prudent"
+          "text": "J’arrive.",
+          "tone": "protecteur"
         },
         {
           "id": "choice_c03_mathilde_late_night_06",
-          "text": "Reste au téléphone.",
-          "tone": "calme"
+          "text": "Je dis à Marie que je monte.",
+          "tone": "transparent"
         }
       ]
     },
@@ -116,13 +121,13 @@
           "id": "msg_c03_mathilde_late_night_008",
           "sender": "mathilde",
           "time_label": "23:45",
-          "text": "Je préfère quand quelqu’un me répond."
+          "text": "Respire avec moi deux secondes."
         },
         {
           "id": "msg_c03_mathilde_late_night_009",
           "sender": "mathilde",
           "time_label": "23:45",
-          "text": "Tu peux rester tant que j’ai l’air ridicule."
+          "text": "Je suis rassurée dès que tu réponds."
         }
       ],
       "choices": [
@@ -138,8 +143,8 @@
         },
         {
           "id": "choice_c03_mathilde_late_night_09",
-          "text": "Montre-moi.",
-          "tone": "taquin"
+          "text": "Je parle à Marie si besoin.",
+          "tone": "transparent"
         }
       ]
     },
@@ -164,7 +169,7 @@
           "id": "msg_c03_mathilde_late_night_012",
           "sender": "mathilde",
           "time_label": "23:46",
-          "text": "Merci de ne pas m’avoir laissée seule avec ce plafond."
+          "text": "Merci. J’avais juste besoin de ne pas rester seule avec ce plafond."
         }
       ],
       "choices": [
@@ -186,6 +191,6 @@
       ]
     }
   ],
-  "design_goal": "Mathilde appelle pour un souci de plafond / chambre.",
-  "debug_notes": "Pivot domestique soft, plafond/chambre/gêne sans photo ambiguë."
+  "design_goal": "Mathilde appelle tard pour un vrai souci domestique, avec gêne, respiration et transparence possible envers Marie.",
+  "debug_notes": "Pivot domestique soft, plafond/chambre/araignée et gêne à demander, sans photo ambiguë ni route lock."
 }
