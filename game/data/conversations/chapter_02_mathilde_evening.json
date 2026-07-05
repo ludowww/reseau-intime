@@ -43,7 +43,35 @@
           "sender": "mathilde",
           "time_label": "17:52",
           "text": "Mauvaise nouvelle : je crois que j’ai pris trop d’affaires."
-        },
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c02_mathilde_evening_01_1",
+          "text": "Tu veux que je prévienne l’entrée ?",
+          "tone": "guided_reply",
+          "next_messages": [
+            {
+              "id": "msg_c02_mathilde_evening_009",
+              "sender": "mathilde",
+              "time_label": "17:52",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_c02_mathilde_evening_010",
+              "sender": "mathilde",
+              "time_label": "17:52",
+              "text": "Dis-lui d’être forte."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c02_mathilde_evening_seg_01_guided_entry",
+      "moment_label": "jour 2",
+      "time_label": "17:52",
+      "messages": [
         {
           "id": "msg_c02_mathilde_evening_005",
           "sender": "mathilde",
@@ -130,33 +158,6 @@
               "sender": "mathilde",
               "time_label": "17:52",
               "text": "Et elle a un meilleur revers que moi quand je suis fatiguée."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "conversation_segment_id": "c02_mathilde_evening_seg_01_guided_entry",
-      "moment_label": "jour 2",
-      "time_label": "17:52",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_c02_mathilde_evening_01_1",
-          "text": "Tu veux que je prévienne l’entrée ?",
-          "tone": "guided_reply",
-          "next_messages": [
-            {
-              "id": "msg_c02_mathilde_evening_009",
-              "sender": "mathilde",
-              "time_label": "17:52",
-              "text": "Oui."
-            },
-            {
-              "id": "msg_c02_mathilde_evening_010",
-              "sender": "mathilde",
-              "time_label": "17:52",
-              "text": "Dis-lui d’être forte."
             }
           ]
         }
