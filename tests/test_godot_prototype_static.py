@@ -156,10 +156,26 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         )
         marie_evening_text = (GAME / "data" / "conversations" / "chapter_03_marie_evening.json").read_text(encoding="utf-8")
         mathilde_night_text = (GAME / "data" / "conversations" / "chapter_03_mathilde_late_night.json").read_text(encoding="utf-8")
+        marie_evening = json.loads(marie_evening_text)
+        mathilde_night = json.loads(mathilde_night_text)
         self.assertNotIn("Mathilde m’a écrit", marie_evening_text)
         self.assertNotIn("problème au plafond", marie_evening_text)
         self.assertIn("Je prépare le calme pour demain.", marie_evening_text)
         self.assertIn("Je préviens Marie si tu veux.", mathilde_night_text)
+        self.assertFalse(any(
+            str(message.get("content_id", "")).startswith("mathilde_j3_")
+            for segment in marie_evening.get("segments", [])
+            for message in segment.get("messages", [])
+        ))
+        self.assertEqual(
+            [
+                message.get("content_id")
+                for segment in mathilde_night.get("segments", [])
+                for message in segment.get("messages", [])
+                if message.get("content_id") == "mathilde_j3_room_recovered_placeholder"
+            ],
+            ["mathilde_j3_room_recovered_placeholder"],
+        )
         for required in ["araignée", "plafond", "chambre"]:
             self.assertIn(required, mathilde_night_text)
         for forbidden in [
