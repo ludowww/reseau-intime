@@ -1,5 +1,10 @@
 # 20 — Jour 3 : Soirée chez Pauline, premier pivot
 
+> **OBSOLÈTE pour le J3 runtime actuel.**
+> Ancien plan « soirée Pauline / groupe / Nico ».
+> Remplacé par le J3 pivot domestique Mathilde nocturne.
+> À ne pas utiliser pour V0.69.
+
 > V0.57 (`docs/V0_57_Route_Character_Rework_Blueprint.md`) est la référence de hiérarchie route/personnage.
 > Le pivot J3 reste pertinent, mais son sens doit rester Marie-centrique et ne pas rétablir un panel de routes à niveau égal.
 

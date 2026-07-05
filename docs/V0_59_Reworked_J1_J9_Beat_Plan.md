@@ -1,5 +1,9 @@
 # V0.59 — Reworked J1→J9 Beat Plan
 
+> **Note de cadrage :** macro-plan utile pour les principes généraux.
+> Les détails J1 / J2 / J3 sont remplacés par les runtime/source packs V0.66+ / V0.67b / V0.68c / V0.69.
+> Ne pas utiliser ce document comme source directe d’intégration jour par jour.
+
 ## 1. Intention
 
 V0.59 fixe le plan narratif documentaire qui sert de base à la future réécriture de J1→J9.
