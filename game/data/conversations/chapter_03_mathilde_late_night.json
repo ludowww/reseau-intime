@@ -2,7 +2,7 @@
   "id": "chapter_03_mathilde_late_night",
   "chapter": 3,
   "day": 3,
-  "title": "Jour 3 — Mathilde nuit tardive",
+  "title": "Jour 3 — L’araignée administrative",
   "app": "messages",
   "thread": {
     "id": "thread_mathilde_private",
@@ -17,355 +17,48 @@
   "segments": [
     {
       "conversation_segment_id": "c03_mathilde_late_night_seg_01",
-      "moment_label": "jour 3",
-      "time_label": "23:02",
+      "moment_label": "nuit",
+      "time_label": "23:43",
       "messages": [
         {
           "id": "msg_c03_mathilde_late_night_001",
           "sender": "mathilde",
-          "time_label": "23:02",
-          "text": "Coucou les propriétaires du canapé 😅",
-          "content_id": "chapter_03_mathilde_late_night_soft_placeholder"
+          "time_label": "23:43",
+          "text": "Question sérieuse : tu dors ?",
+          "content_id": "mathilde_j3_ceiling_spider_placeholder"
         },
         {
           "id": "msg_c03_mathilde_late_night_002",
           "sender": "mathilde",
-          "time_label": "23:02",
-          "text": "Votre mobilier m’a vaincue."
+          "time_label": "23:43",
+          "text": "J’ai une araignée au plafond. Littéralement."
         },
         {
           "id": "msg_c03_mathilde_late_night_003",
           "sender": "mathilde",
-          "time_label": "23:02",
-          "text": "Je joins une photo pour le dossier 😇"
-        },
-        {
-          "id": "msg_c03_mathilde_late_night_004",
-          "sender": "mathilde",
-          "time_label": "23:02",
-          "text": "Photo envoyée."
-        },
-        {
-          "id": "msg_c03_mathilde_late_night_005",
-          "sender": "mathilde",
-          "time_label": "23:02",
-          "content_id": "chapter_03_mathilde_late_night_soft_placeholder",
-          "text": "Mathilde au réveil sur le canapé, plaid autour d’elle, tasse près du coussin. Le sourire est trop innocent pour être totalement innocent."
+          "time_label": "23:43",
+          "text": "Et la porte de ma chambre grince comme un formulaire mal rempli."
         }
       ],
       "choices": [
         {
-          "id": "choice_c03_mathilde_late_night_01_guided",
-          "text": "C’est une plainte officielle ?",
-          "tone": "guided_reply"
-        }
-      ]
-    },
-    {
-      "conversation_segment_id": "c03_mathilde_late_night_seg_02",
-      "moment_label": "jour 3",
-      "time_label": "23:03",
-      "messages": [
-        {
-          "id": "msg_c03_mathilde_late_night_006",
-          "sender": "mathilde",
-          "time_label": "23:03",
-          "text": "Très officielle."
+          "id": "choice_c03_mathilde_late_night_01",
+          "text": "Je viens voir.",
+          "tone": "prudent"
         },
         {
-          "id": "msg_c03_mathilde_late_night_007",
-          "sender": "mathilde",
-          "time_label": "23:03",
-          "text": "Je demande réparation sous forme de café."
+          "id": "choice_c03_mathilde_late_night_02",
+          "text": "Je reste au téléphone.",
+          "tone": "tendre"
         },
         {
-          "id": "msg_c03_mathilde_late_night_008",
-          "sender": "mathilde",
-          "time_label": "23:03",
-          "text": "Et d’un plaid qui ne juge pas mes choix de vie 🙄"
-        }
-      ],
-      "choices": [
-        {
-          "id": "choice_c03_mathilde_late_night_02_1",
-          "text": "Tu as surtout l’air d’avoir adopté le canapé.",
-          "tone": "taquin",
-          "effects": {
-            "mathilde.desire": 1,
-            "mathilde_attention_score": 1
-          },
-          "sets_flags": [
-            "mathilde_late_night_after_home_j3",
-            "photo_mathilde_canape_late_night_j3_received"
-          ],
-          "next_messages": [
-            {
-              "id": "msg_c03_mathilde_late_night_02_1_01",
-              "sender": "mathilde",
-              "time_label": "23:04",
-              "text": "Adopter est un mot fort."
-            },
-            {
-              "id": "msg_c03_mathilde_late_night_02_1_02",
-              "sender": "mathilde",
-              "time_label": "23:04",
-              "text": "Disons que nous avons signé une trêve."
-            },
-            {
-              "id": "msg_c03_mathilde_late_night_02_1_03",
-              "sender": "mathilde",
-              "time_label": "23:04",
-              "text": "Il m’a laissée vivre. J’ai respecté sa médiocrité 😂"
-            }
-          ]
-        },
-        {
-          "id": "choice_c03_mathilde_late_night_02_2",
-          "text": "Je vais éviter de trop commenter cette photo.",
-          "tone": "prudent",
-          "effects": {
-            "mathilde.loyalty": 1,
-            "lie_score": -1
-          },
-          "sets_flags": [
-            "mathilde_late_night_after_home_j3",
-            "photo_mathilde_canape_late_night_j3_received"
-          ],
-          "next_messages": [
-            {
-              "id": "msg_c03_mathilde_late_night_02_2_01",
-              "sender": "mathilde",
-              "time_label": "23:04",
-              "text": "Tu te protèges."
-            },
-            {
-              "id": "msg_c03_mathilde_late_night_02_2_02",
-              "sender": "mathilde",
-              "time_label": "23:04",
-              "text": "J’admets, c’est cohérent."
-            },
-            {
-              "id": "msg_c03_mathilde_late_night_02_2_03",
-              "sender": "mathilde",
-              "time_label": "23:04",
-              "text": "Un peu vexant pour mon ego de survivante du canapé, mais cohérent 😅"
-            }
-          ]
-        },
-        {
-          "id": "choice_c03_mathilde_late_night_02_3",
-          "text": "Tu sais très bien ce que cette photo fait.",
-          "tone": "ambiguous",
-          "effects": {
-            "mathilde.desire": 2,
-            "mathilde.loyalty": -1,
-            "lie_score": 1
-          },
-          "sets_flags": [
-            "mathilde_late_night_after_home_j3",
-            "photo_mathilde_canape_late_night_j3_received"
-          ],
-          "next_messages": [
-            {
-              "id": "msg_c03_mathilde_late_night_02_3_01",
-              "sender": "mathilde",
-              "time_label": "23:04",
-              "text": "Ne réponds pas trop bien."
-            },
-            {
-              "id": "msg_c03_mathilde_late_night_02_3_02",
-              "sender": "mathilde",
-              "time_label": "23:04",
-              "text": "Sinon je vais devoir faire semblant de ne pas aimer 😅"
-            },
-            {
-              "id": "msg_c03_mathilde_late_night_02_3_03",
-              "sender": "mathilde",
-              "time_label": "23:05",
-              "text": "Et Marie est à deux portes, donc on respire."
-            },
-            {
-              "id": "msg_c03_mathilde_late_night_02_3_04",
-              "sender": "mathilde",
-              "time_label": "23:05",
-              "text": "Très calmement. Très adulte. Aucun problème 🫠"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "conversation_segment_id": "c03_mathilde_late_night_seg_03",
-      "moment_label": "jour 3",
-      "time_label": "23:06",
-      "messages": [
-        {
-          "id": "msg_c03_mathilde_late_night_009",
-          "sender": "mathilde",
-          "time_label": "23:06",
-          "text": "Question administrative."
-        },
-        {
-          "id": "msg_c03_mathilde_late_night_010",
-          "sender": "mathilde",
-          "time_label": "23:06",
-          "text": "Tu vas la garder ?"
-        },
-        {
-          "id": "msg_c03_mathilde_late_night_011",
-          "sender": "mathilde",
-          "time_label": "23:06",
-          "text": "La photo, pas ma dignité. Elle est partie avec le coussin du fond 😇"
-        }
-      ],
-      "choices": [
-        {
-          "id": "choice_c03_mathilde_late_night_03_1",
-          "text": "Je la garde. Mais je ne vais pas jouer au malin avec ça.",
-          "tone": "ambiguous",
-          "effects": {
-            "mathilde.desire": 1,
-            "lie_score": 1
-          },
-          "sets_flags": [
-            "photo_mathilde_canape_late_night_j3_kept"
-          ],
-          "next_messages": [
-            {
-              "id": "msg_c03_mathilde_late_night_03_1_01",
-              "sender": "mathilde",
-              "time_label": "23:07",
-              "text": "Très noble."
-            },
-            {
-              "id": "msg_c03_mathilde_late_night_03_1_02",
-              "sender": "mathilde",
-              "time_label": "23:07",
-              "text": "Et donc moyennement rassurant 🙄"
-            }
-          ]
-        },
-        {
-          "id": "choice_c03_mathilde_late_night_03_2",
-          "text": "Je vais la supprimer. C’est plus simple.",
-          "tone": "prudent",
-          "effects": {
-            "mathilde.loyalty": 1,
-            "lie_score": -1
-          },
-          "sets_flags": [
-            "photo_mathilde_canape_late_night_j3_deleted"
-          ],
-          "next_messages": [
-            {
-              "id": "msg_c03_mathilde_late_night_03_2_01",
-              "sender": "mathilde",
-              "time_label": "23:07",
-              "text": "Simple, oui."
-            },
-            {
-              "id": "msg_c03_mathilde_late_night_03_2_02",
-              "sender": "mathilde",
-              "time_label": "23:07",
-              "text": "Pas sûr que ce soit le mot le plus vrai."
-            },
-            {
-              "id": "msg_c03_mathilde_late_night_03_2_03",
-              "sender": "mathilde",
-              "time_label": "23:07",
-              "text": "Mais je prends 🙂"
-            }
-          ]
-        },
-        {
-          "id": "choice_c03_mathilde_late_night_03_3",
-          "text": "Je ne sais pas encore. C’est peut-être ça le problème.",
-          "tone": "truthful",
-          "effects": {
-            "mathilde.desire": 1,
-            "truth_tendency": 1,
-            "lie_score": 1
-          },
-          "next_messages": [
-            {
-              "id": "msg_c03_mathilde_late_night_03_3_01",
-              "sender": "mathilde",
-              "time_label": "23:07",
-              "text": "Oui."
-            },
-            {
-              "id": "msg_c03_mathilde_late_night_03_3_02",
-              "sender": "mathilde",
-              "time_label": "23:07",
-              "text": "C’est exactement le problème."
-            },
-            {
-              "id": "msg_c03_mathilde_late_night_03_3_03",
-              "sender": "mathilde",
-              "time_label": "23:07",
-              "text": "Et évidemment tu choisis la formulation qui rend le problème presque joli 🫠"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "conversation_segment_id": "c03_mathilde_late_night_seg_04",
-      "moment_label": "jour 3",
-      "time_label": "09:41",
-      "messages": [
-        {
-          "id": "msg_c03_mathilde_late_night_012",
-          "sender": "mathilde",
-          "time_label": "09:41",
-          "text": "Je plaisante."
-        },
-        {
-          "id": "msg_c03_mathilde_late_night_013",
-          "sender": "mathilde",
-          "time_label": "09:41",
-          "text": "Enfin."
-        },
-        {
-          "id": "msg_c03_mathilde_late_night_014",
-          "sender": "mathilde",
-          "time_label": "09:41",
-          "text": "Disons que je plaisante avec une marge d’erreur 😅"
-        }
-      ],
-      "choices": [
-        {
-          "id": "choice_c03_mathilde_late_night_04_guided",
-          "text": "On va dire ça.",
-          "tone": "guided_reply"
-        }
-      ]
-    },
-    {
-      "conversation_segment_id": "c03_mathilde_late_night_seg_05",
-      "moment_label": "jour 3",
-      "time_label": "09:42",
-      "messages": [
-        {
-          "id": "msg_c03_mathilde_late_night_015",
-          "sender": "mathilde",
-          "time_label": "09:42",
-          "text": "Je pars avant que Marie transforme le plaid en sujet de couple."
-        },
-        {
-          "id": "msg_c03_mathilde_late_night_016",
-          "sender": "mathilde",
-          "time_label": "09:42",
-          "text": "Bonne chance avec ton air absent."
-        },
-        {
-          "id": "msg_c03_mathilde_late_night_017",
-          "sender": "mathilde",
-          "time_label": "09:42",
-          "text": "Il est très visible, ton air absent. Juste pour info 🙃"
+          "id": "choice_c03_mathilde_late_night_03",
+          "text": "Tu veux de l’aide pour la bête ou pour la porte ?",
+          "tone": "taquin"
         }
       ]
     }
   ],
-  "debug_notes": "J3 Mathilde rend visible la nuit sur le canapé et introduit une photo comme trace domestique sensible. Réponses Player uniquement via choices."
+  "design_goal": "Mathilde appelle pour un souci de plafond / chambre.",
+  "debug_notes": "Pivot domestique soft, pas de preuve ambiguë."
 }

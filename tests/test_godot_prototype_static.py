@@ -58,9 +58,12 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             "labels.append(\"Jour %s\" % _day_key(index.get(\"day\", index.get(\"chapter\", \"?\"))))",
         ]:
             self.assertIn(required, loader)
+        self.assertNotIn("res://data/visual_content/chapter_03_placeholders.json", loader)
 
     def test_day3_index_wires_four_private_threads_and_soft_visuals(self):
         index = json.loads((GAME / "data" / "conversations" / "chapter_03_index.json").read_text(encoding="utf-8"))
+        self.assertEqual(index.get("title"), "Jour 3 — La maison respire / Mathilde appelle tard")
+        self.assertEqual([moment.get("time_label") for moment in index.get("moment_flow", [])], ["08:26", "12:18", "20:17", "23:43"])
         self.assertEqual(
             [moment.get("conversation_ids") for moment in index.get("moment_flow", [])],
             [
@@ -96,10 +99,10 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         placeholders = json.loads((GAME / "data" / "visual_content" / "placeholders.json").read_text(encoding="utf-8"))
         visual_items = {item["id"]: item for item in placeholders.get("items", []) if isinstance(item, dict)}
         for expected in [
-            "chapter_03_marie_morning_soft_placeholder",
-            "chapter_03_sandra_midday_soft_placeholder",
-            "chapter_03_marie_evening_soft_placeholder",
-            "chapter_03_mathilde_late_night_soft_placeholder",
+            "marie_j3_kitchen_soft_placeholder",
+            "sandra_j3_lake_page_placeholder",
+            "mathilde_j3_ceiling_spider_placeholder",
+            "mathilde_j3_room_recovered_placeholder",
         ]:
             self.assertIn(expected, visual_items)
             self.assertFalse(visual_items[expected].get("is_proof"))
@@ -115,6 +118,10 @@ class GodotPrototypeStaticTests(unittest.TestCase):
                 for message in segment.get("messages", []):
                     self.assertNotEqual(message.get("sender"), "ludo")
                     self.assertNotIn(message.get("sender"), {"Player", "player", "joueur"})
+                for choice in segment.get("choices", []):
+                    for reply in choice.get("next_messages", []):
+                        self.assertNotEqual(reply.get("sender"), "ludo")
+                        self.assertNotIn(reply.get("sender"), {"Player", "player", "joueur"})
         active_tokens = json.dumps({
             "conversation_ids": [cid for moment in index.get("moment_flow", []) for cid in moment.get("conversation_ids", [])],
             "conversation_files": index.get("conversation_files", []),
@@ -122,6 +129,31 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         self.assertNotIn("Nico", active_tokens)
         self.assertNotIn("Pauline", active_tokens)
         self.assertNotIn("Raphaëlle", active_tokens)
+        chapter03_text = "\n".join(
+            (GAME / "data" / "conversations" / name).read_text(encoding="utf-8")
+            for name in [
+                "chapter_03_marie_morning.json",
+                "chapter_03_sandra_midday.json",
+                "chapter_03_marie_evening.json",
+                "chapter_03_mathilde_late_night.json",
+            ]
+        )
+        for forbidden in [
+            "canapé",
+            "canape",
+            "Tu sais très bien ce que cette photo fait",
+            "mathilde.desire",
+            "lie_score",
+            "marie_attention_score",
+            "sets_flags",
+            "Raphaëlle",
+            "raphaelle",
+            "Pauline",
+            "pauline",
+            "Nico",
+            "nico",
+        ]:
+            self.assertNotIn(forbidden, chapter03_text)
 
     def test_effect_applier_supports_dotted_global_passive_flags_and_unknowns(self):
         script = (GAME / "scripts" / "core" / "EffectApplier.gd").read_text(encoding="utf-8")

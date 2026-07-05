@@ -2,38 +2,38 @@
   "id": "chapter_03_index",
   "chapter": 3,
   "day": 3,
-  "title": "Jour 3 — Retour maison",
-  "description": "Player revient physiquement dans la maison après J2. Marie ouvre la journée, Sandra passe à midi, Marie referme le soir et Mathilde laisse une trace tardive. Pas de groupe, pas de route lock, pas de Raphaëlle active.",
-  "design_goal": "Intégrer un J3 data-first court et dense : retour physique, four threads privés, quatre contenus visuels soft, sans Pauline/Nico/Raphaëlle actifs en conversation.",
+  "title": "Jour 3 — La maison respire / Mathilde appelle tard",
+  "description": "J3 reste en quatre fils privés, sans route lock, et sans retour à l’ancien motif visuel J3.",
+  "design_goal": "Un J3 court et lisible : maison, pause déjeuner, soirée calme, appel tardif de Mathilde. Player répond toujours par choices, jamais par sender auto-rendu.",
   "moment_flow": [
     {
       "moment_label": "matin",
-      "time_label": "08:12",
-      "transition_text": "Player est revenu dans la maison. Marie écrit depuis la cuisine, à quelques mètres de lui.",
+      "time_label": "08:26",
+      "transition_text": "Marie écrit depuis la cuisine, tout près du café et du bruit du matin.",
       "conversation_ids": [
         "chapter_03_marie_morning"
       ]
     },
     {
       "moment_label": "midi",
-      "time_label": "12:41",
-      "transition_text": "Pause travail. Sandra revient autour de jeudi sans pousser plus loin que nécessaire.",
+      "time_label": "12:18",
+      "transition_text": "Sandra relance à la pause avec un roman idiot et un calme prudent.",
       "conversation_ids": [
         "chapter_03_sandra_midday"
       ]
     },
     {
       "moment_label": "soir",
-      "time_label": "18:27",
-      "transition_text": "Marie reprend la main en fin de journée, avec une présence plus directe.",
+      "time_label": "20:17",
+      "transition_text": "Marie veut fermer la journée tôt et remettre la maison au repos.",
       "conversation_ids": [
         "chapter_03_marie_evening"
       ]
     },
     {
       "moment_label": "nuit",
-      "time_label": "23:02",
-      "transition_text": "Mathilde laisse une trace tardive sur le canapé et remet la maison au centre.",
+      "time_label": "23:43",
+      "transition_text": "Mathilde appelle tard : problème domestique, plafond suspect, rien de plus.",
       "conversation_ids": [
         "chapter_03_mathilde_late_night"
       ]
@@ -46,11 +46,11 @@
     "res://data/conversations/chapter_03_mathilde_late_night.json"
   ],
   "required_reveals": [
-    "Player est physiquement revenu après la fin de J2.",
-    "Marie reste une route de désir et d’ancrage, pas seulement une personne à qui mentir.",
-    "Sandra reste une présence rare et douce à midi.",
-    "Mathilde laisse une trace domestique tardive sans preuve lourde.",
-    "Les quatre visuels J3 sont catalogués en placeholders soft."
+    "Marie reste un ancrage domestique et affectif.",
+    "Sandra reste rare, prudente et douce à midi.",
+    "Marie ferme la journée sans route lock.",
+    "Mathilde termine sur un problème de plafond, pas sur une preuve ambiguë.",
+    "Les quatre visuels J3 sont des placeholders soft, tous risk_level 1 et is_proof false."
   ],
   "routes_available": [
     "marie",
@@ -58,11 +58,11 @@
     "sandra"
   ],
   "debug_expected_outcomes": [
-    "No dominant route should be locked in chapter 3.",
-    "Pauline and Nico remain inactive as heavy conversations on Day 3.",
-    "Raphaëlle is not an active J3 conversation.",
-    "The player should feel the day as a domestic return with soft traces, not a route lock.",
-    "Marie closes the day with a presence request, Mathilde ends the day with a late trace."
+    "Aucune route n’est verrouillée en J3.",
+    "Aucun autre fil social n’est actif dans les quatre conversations de J3.",
+    "Le J3 reste centré sur les échanges domestiques.",
+    "Les dialogues restent domestiques, courts et soft.",
+    "Mathilde nuit pointe vers l’araignée / plafond / chambre, pas vers une photo ambiguë."
   ],
   "conversation_availability": {
     "initial_conversation_ids": [
@@ -76,32 +76,32 @@
     "unlocks": {
       "chapter_03_sandra_midday": {
         "after_conversation_completed": "chapter_03_marie_morning",
-        "time_label": "12:41",
+        "time_label": "12:18",
         "pending": true,
         "notification": {
           "title": "Sandra",
-          "body": "Je fais semblant de ne pas penser à jeudi."
+          "body": "J’ai commencé un roman idiot à la pause."
         }
       },
       "chapter_03_marie_evening": {
         "after_conversation_completed": "chapter_03_sandra_midday",
-        "time_label": "18:27",
+        "time_label": "20:17",
         "pending": true,
         "notification": {
           "title": "Marie",
-          "body": "Tu viens vraiment te poser ?"
+          "body": "Ce soir, je veux dormir tôt."
         }
       },
       "chapter_03_mathilde_late_night": {
         "after_conversation_completed": "chapter_03_marie_evening",
-        "time_label": "23:02",
+        "time_label": "23:43",
         "pending": true,
         "notification": {
           "title": "Mathilde",
-          "body": "Votre canapé demande réparation."
+          "body": "J’ai un problème au plafond."
         }
       }
     }
   },
-  "debug_notes": "J3 charge quatre conversations privées seulement. Player répond toujours via choices, sans audio/voice et sans groupe actif."
+  "debug_notes": "J3 charge seulement quatre conversations privées. Aucun sender auto-rendu Player/Ludo dans messages ou next_messages. Aucun contenu audio/voice. Aucun visuel proof/risk 3."
 }

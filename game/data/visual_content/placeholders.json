@@ -1,381 +1,20 @@
 {
   "id": "visual_content_placeholders",
-  "version": 2,
-  "notes": "Assets neutres pour tester la galerie, les profils, le fond d’écran et l’ancrage visuel rapide des personnages sans contenu adulte définitif.",
+  "version": 1,
+  "notes": "Placeholders J3 validés : quatre visuels soft, aucun proof, aucun risque élevé.",
   "items": [
     {
-      "id": "wallpaper_default_neutral",
-      "character": null,
-      "tier": 0,
-      "type": "wallpaper",
-      "source_app": "system",
-      "asset_path": "res://assets/placeholders/wallpaper_default_neutral.png",
-      "context": "Fond d’écran neutre par défaut au début de la partie.",
-      "tags": [
-        "neutral"
-      ],
-      "is_proof": false,
-      "risk_level": 0,
-      "can_delete": false,
-      "can_capture": false,
-      "can_set_as_wallpaper": true,
-      "can_be_discovered_by": []
-    },
-    {
-      "id": "profile_marie_placeholder",
-      "character": "marie",
-      "tier": 0,
-      "type": "profile_photo",
-      "source_app": "contacts",
-      "asset_path": "res://assets/placeholders/profile_marie_placeholder.png",
-      "context": "Photo de profil de Marie, visible très tôt pour ancrer le couple.",
-      "tags": [
-        "marie",
-        "profile",
-        "partner",
-        "tender"
-      ],
-      "is_proof": false,
-      "risk_level": 0,
-      "can_delete": false,
-      "can_capture": true,
-      "can_set_as_wallpaper": true,
-      "can_be_discovered_by": [
-        "marie"
-      ]
-    },
-    {
-      "id": "profile_mathilde_placeholder",
-      "character": "mathilde",
-      "tier": 0,
-      "type": "profile_photo",
-      "source_app": "contacts",
-      "asset_path": "res://assets/placeholders/profile_mathilde_placeholder.png",
-      "context": "Photo de profil de Mathilde, visible dans le groupe amis et les contacts.",
-      "tags": [
-        "mathilde",
-        "profile",
-        "home_circle",
-        "familiar"
-      ],
-      "is_proof": false,
-      "risk_level": 1,
-      "can_delete": false,
-      "can_capture": true,
-      "can_set_as_wallpaper": true,
-      "can_be_discovered_by": [
-        "marie",
-        "mathilde"
-      ]
-    },
-    {
-      "id": "profile_sandra_placeholder",
-      "character": "sandra",
-      "tier": 0,
-      "type": "profile_photo",
-      "source_app": "contacts",
-      "asset_path": "res://assets/placeholders/profile_sandra_placeholder.png",
-      "context": "Photo de profil de Sandra, visible dès son premier message.",
-      "tags": [
-        "sandra",
-        "profile",
-        "best_friend",
-        "soft"
-      ],
-      "is_proof": false,
-      "risk_level": 1,
-      "can_delete": false,
-      "can_capture": true,
-      "can_set_as_wallpaper": true,
-      "can_be_discovered_by": [
-        "sandra",
-        "marie"
-      ]
-    },
-    {
-      "id": "profile_raphaelle_placeholder",
-      "character": "raphaelle",
-      "tier": 0,
-      "type": "profile_photo",
-      "source_app": "contacts",
-      "asset_path": "res://assets/placeholders/profile_raphaelle_placeholder.png",
-      "context": "Photo de profil de Raphaëlle, visible dans le contexte travail.",
-      "tags": [
-        "raphaelle",
-        "profile",
-        "work",
-        "clear"
-      ],
-      "is_proof": false,
-      "risk_level": 1,
-      "can_delete": false,
-      "can_capture": true,
-      "can_set_as_wallpaper": true,
-      "can_be_discovered_by": [
-        "raphaelle"
-      ]
-    },
-    {
-      "id": "profile_pauline_placeholder",
-      "character": "pauline",
-      "tier": 0,
-      "type": "profile_photo",
-      "source_app": "contacts",
-      "asset_path": "res://assets/placeholders/profile_pauline_placeholder.png",
-      "context": "Photo de profil de Pauline, visible dans le groupe amis et liée à la soirée.",
-      "tags": [
-        "pauline",
-        "profile",
-        "party",
-        "social"
-      ],
-      "is_proof": false,
-      "risk_level": 1,
-      "can_delete": false,
-      "can_capture": true,
-      "can_set_as_wallpaper": true,
-      "can_be_discovered_by": [
-        "pauline",
-        "marie"
-      ]
-    },
-    {
-      "id": "profile_nico_placeholder",
-      "character": "nico",
-      "tier": 0,
-      "type": "profile_photo",
-      "source_app": "contacts",
-      "asset_path": "res://assets/placeholders/profile_nico_placeholder.png",
-      "context": "Photo de profil de Nico, visible dans le groupe amis et les réactions sociales.",
-      "tags": [
-        "nico",
-        "profile",
-        "friend",
-        "rival_seed"
-      ],
-      "is_proof": false,
-      "risk_level": 1,
-      "can_delete": false,
-      "can_capture": true,
-      "can_set_as_wallpaper": false,
-      "can_be_discovered_by": [
-        "nico"
-      ]
-    },
-    {
-      "id": "photo_marie_tender_tier1_placeholder",
+      "id": "marie_j3_kitchen_soft_placeholder",
       "character": "marie",
       "tier": 1,
       "type": "photo",
       "source_app": "messages",
-      "asset_path": "res://assets/placeholders/photo_marie_tender_tier1_placeholder.png",
-      "context": "Photo tendre de Marie, utilisable plus tard comme fond d’écran rassurant.",
+      "asset_path": "res://assets/placeholders/marie_j3_kitchen_soft_placeholder.png",
+      "context": "Marie dans la cuisine au matin, lumière douce, détail domestique simple.",
       "tags": [
+        "j3",
         "marie",
-        "tender",
-        "couple"
-      ],
-      "is_proof": false,
-      "risk_level": 1,
-      "can_delete": true,
-      "can_capture": true,
-      "can_set_as_wallpaper": true,
-      "can_be_discovered_by": [
-        "marie"
-      ]
-    },
-    {
-      "id": "photo_mathilde_home_tier1_placeholder",
-      "character": "mathilde",
-      "tier": 1,
-      "type": "photo",
-      "source_app": "messages",
-      "asset_path": "res://assets/placeholders/photo_mathilde_home_tier1_placeholder.png",
-      "context": "Photo ambiguë de Mathilde liée à sa présence chez Marie. Sert à tester favoris/fond d’écran plus tard.",
-      "tags": [
-        "mathilde",
-        "home",
-        "ambiguous",
-        "forbidden"
-      ],
-      "is_proof": true,
-      "risk_level": 3,
-      "can_delete": true,
-      "can_capture": true,
-      "can_set_as_wallpaper": true,
-      "can_be_discovered_by": [
-        "marie",
-        "pauline",
-        "mathilde"
-      ]
-    },
-    {
-      "id": "photo_group_last_party_placeholder",
-      "character": null,
-      "tier": 0,
-      "type": "group_photo",
-      "source_app": "social",
-      "asset_path": "res://assets/placeholders/photo_group_last_party_placeholder.png",
-      "context": "Photo de groupe d’une soirée précédente, utilisée pour montrer Pauline, Nico, Marie et Mathilde ensemble.",
-      "tags": [
-        "group",
-        "party",
-        "marie",
-        "mathilde",
-        "pauline",
-        "nico",
-        "social_seed"
-      ],
-      "is_proof": false,
-      "risk_level": 1,
-      "can_delete": false,
-      "can_capture": true,
-      "can_set_as_wallpaper": false,
-      "can_be_discovered_by": [
-        "marie",
-        "mathilde",
-        "pauline",
-        "nico"
-      ]
-    },
-    {
-      "id": "marie_j2_morning_soft_placeholder",
-      "character": "marie",
-      "tier": 1,
-      "type": "photo",
-      "source_app": "messages",
-      "asset_path": "res://assets/placeholders/marie_j2_morning_soft_placeholder.png",
-      "context": "Photo d’une assiette simple sur la table : café, reste de biscuits, peut-être une tartine un peu trop généreuse. On sent Marie derrière l’image, gourmande et domestique, sans pose.",
-      "tags": [
-        "marie",
-        "day2",
-        "morning",
-        "biscuits",
-        "domestic",
-        "soft"
-      ],
-      "is_proof": false,
-      "risk_level": 1,
-      "can_delete": true,
-      "can_capture": true,
-      "can_set_as_wallpaper": true,
-      "can_be_discovered_by": [
-        "marie"
-      ]
-    },
-    {
-      "id": "raphaelle_j2_work_badge_placeholder",
-      "character": "raphaelle",
-      "tier": 1,
-      "type": "photo",
-      "source_app": "messages",
-      "asset_path": "res://assets/placeholders/raphaelle_j2_work_badge_placeholder.png",
-      "context": "Capture d’un message de Raphaëlle avec une recommandation de petit jeu ou d’outil ludique. Ton professionnel mais chaleureux. Elle aide, elle partage, elle ne cherche pas encore l’intimité.",
-      "tags": [
-        "raphaelle",
-        "day2",
-        "work",
-        "game",
-        "tool",
-        "soft"
-      ],
-      "is_proof": false,
-      "risk_level": 1,
-      "can_delete": true,
-      "can_capture": true,
-      "can_set_as_wallpaper": true,
-      "can_be_discovered_by": [
-        "raphaelle"
-      ]
-    },
-    {
-      "id": "mathilde_j2_arrival_marie_placeholder",
-      "character": "mathilde",
-      "tier": 1,
-      "type": "photo",
-      "source_app": "messages",
-      "asset_path": "res://assets/placeholders/mathilde_j2_arrival_marie_placeholder.png",
-      "context": "Photo de l’entrée avec un sac de sport, des baskets et une raquette posés contre le mur. Une veste dépasse du sac. Rien d’intime : seulement l’énergie de Mathilde qui arrive dans la maison.",
-      "tags": [
-        "mathilde",
-        "day2",
-        "home",
-        "arrival",
-        "sport_bag",
-        "raquette"
-      ],
-      "is_proof": false,
-      "risk_level": 1,
-      "can_delete": true,
-      "can_capture": true,
-      "can_set_as_wallpaper": true,
-      "can_be_discovered_by": [
-        "marie",
-        "mathilde"
-      ]
-    },
-    {
-      "id": "mathilde_j2_couch_innocent_selfie_placeholder",
-      "character": "mathilde",
-      "tier": 1,
-      "type": "photo",
-      "source_app": "messages",
-      "asset_path": "res://assets/placeholders/mathilde_j2_couch_innocent_selfie_placeholder.png",
-      "context": "Mathilde sur le canapé, plaid remonté sur les genoux, sac de sport à côté d’elle et sourire fatigué. Le salon de Marie apparaît derrière elle, mais l’image reste quotidienne et non suggestive.",
-      "tags": [
-        "mathilde",
-        "day2",
-        "couch",
-        "daily",
-        "soft"
-      ],
-      "is_proof": false,
-      "risk_level": 1,
-      "can_delete": true,
-      "can_capture": true,
-      "can_set_as_wallpaper": true,
-      "can_be_discovered_by": [
-        "marie",
-        "mathilde"
-      ]
-    },
-    {
-      "id": "sandra_j2_lake_book_soft_placeholder",
-      "character": "sandra",
-      "tier": 1,
-      "type": "photo",
-      "source_app": "messages",
-      "asset_path": "res://assets/placeholders/sandra_j2_lake_book_soft_placeholder.png",
-      "context": "Photo douce envoyée par Sandra : un banc près du lac, un coin de livre, ou une couverture de roman posée sur un sac. Rien de séduisant frontalement, juste une trace calme.",
-      "tags": [
-        "sandra",
-        "lake",
-        "book",
-        "romance",
-        "soft",
-        "day2"
-      ],
-      "is_proof": false,
-      "risk_level": 1,
-      "can_delete": true,
-      "can_capture": true,
-      "can_set_as_wallpaper": true,
-      "can_be_discovered_by": [
-        "sandra"
-      ]
-    },
-    {
-      "id": "chapter_03_marie_morning_soft_placeholder",
-      "character": "marie",
-      "tier": 1,
-      "type": "photo",
-      "source_app": "messages",
-      "asset_path": "res://assets/placeholders/chapter_03_marie_morning_soft_placeholder.png",
-      "context": "Marie dans la cuisine au matin, lumière douce, présence simple et domestique.",
-      "tags": [
-        "chapter_03",
-        "marie",
-        "morning",
+        "kitchen",
         "soft",
         "home"
       ],
@@ -389,19 +28,19 @@
       ]
     },
     {
-      "id": "chapter_03_sandra_midday_soft_placeholder",
+      "id": "sandra_j3_lake_page_placeholder",
       "character": "sandra",
       "tier": 1,
       "type": "photo",
       "source_app": "messages",
-      "asset_path": "res://assets/placeholders/chapter_03_sandra_midday_soft_placeholder.png",
-      "context": "Sandra à midi, image douce et discrète, sans preuve ni tension lourde.",
+      "asset_path": "res://assets/placeholders/sandra_j3_lake_page_placeholder.png",
+      "context": "Sandra à midi, bord de lac ou page ouverte, image douce et discrète.",
       "tags": [
-        "chapter_03",
+        "j3",
         "sandra",
-        "midday",
-        "soft",
-        "pause"
+        "lake",
+        "page",
+        "soft"
       ],
       "is_proof": false,
       "risk_level": 1,
@@ -413,19 +52,19 @@
       ]
     },
     {
-      "id": "chapter_03_marie_evening_soft_placeholder",
-      "character": "marie",
+      "id": "mathilde_j3_ceiling_spider_placeholder",
+      "character": "mathilde",
       "tier": 1,
       "type": "photo",
       "source_app": "messages",
-      "asset_path": "res://assets/placeholders/chapter_03_marie_evening_soft_placeholder.png",
-      "context": "Marie en fin de journée, retour maison calme, présence plus directe mais toujours soft.",
+      "asset_path": "res://assets/placeholders/mathilde_j3_ceiling_spider_placeholder.png",
+      "context": "Mathilde remarque une araignée au plafond et demande de l’aide pour le problème domestique.",
       "tags": [
-        "chapter_03",
-        "marie",
-        "evening",
-        "soft",
-        "return"
+        "j3",
+        "mathilde",
+        "ceiling",
+        "spider",
+        "soft"
       ],
       "is_proof": false,
       "risk_level": 1,
@@ -433,23 +72,23 @@
       "can_capture": true,
       "can_set_as_wallpaper": true,
       "can_be_discovered_by": [
-        "marie"
+        "mathilde"
       ]
     },
     {
-      "id": "chapter_03_mathilde_late_night_soft_placeholder",
+      "id": "mathilde_j3_room_recovered_placeholder",
       "character": "mathilde",
       "tier": 1,
       "type": "photo",
       "source_app": "messages",
-      "asset_path": "res://assets/placeholders/chapter_03_mathilde_late_night_soft_placeholder.png",
-      "context": "Mathilde tard le soir sur le canapé, trace domestique légère et non-probante.",
+      "asset_path": "res://assets/placeholders/mathilde_j3_room_recovered_placeholder.png",
+      "context": "Pièce remise en ordre après le chaos du soir, trace domestique légère et non-probante.",
       "tags": [
-        "chapter_03",
+        "j3",
         "mathilde",
-        "late_night",
-        "soft",
-        "couch"
+        "room",
+        "recovered",
+        "soft"
       ],
       "is_proof": false,
       "risk_level": 1,

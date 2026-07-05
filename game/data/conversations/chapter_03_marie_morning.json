@@ -2,7 +2,7 @@
   "id": "chapter_03_marie_morning",
   "chapter": 3,
   "day": 3,
-  "title": "Jour 3 — Marie matin retour maison",
+  "title": "Jour 3 — Les chaussettes ont une vie",
   "app": "messages",
   "thread": {
     "id": "thread_marie_private",
@@ -17,334 +17,48 @@
   "segments": [
     {
       "conversation_segment_id": "c03_marie_morning_seg_01",
-      "moment_label": "jour 3",
-      "time_label": "08:12",
+      "moment_label": "matin",
+      "time_label": "08:26",
       "messages": [
         {
           "id": "msg_c03_marie_morning_001",
           "sender": "marie",
-          "time_label": "08:12",
-          "text": "Coucou de la cuisine ☕",
-          "content_id": "chapter_03_marie_morning_soft_placeholder"
+          "time_label": "08:26",
+          "text": "Je fais du café et tes chaussettes ont encore une opinion sur le panier.",
+          "content_id": "marie_j3_kitchen_soft_placeholder"
         },
         {
           "id": "msg_c03_marie_morning_002",
           "sender": "marie",
-          "time_label": "08:12",
-          "text": "Tu es rentré, oui 🙂"
+          "time_label": "08:26",
+          "text": "Je t’en ai laissé une paire propre. L’autre a clairement perdu."
         },
         {
           "id": "msg_c03_marie_morning_003",
           "sender": "marie",
-          "time_label": "08:12",
-          "text": "Mais ton regard, lui, je ne sais pas encore dans quelle pièce il est."
+          "time_label": "08:26",
+          "text": "Réponds vite ou je range tout à ma manière 🙂"
         }
       ],
       "choices": [
         {
-          "id": "choice_c03_marie_morning_01_guided",
-          "text": "Je suis là. Je démarre juste lentement.",
-          "tone": "guided_reply",
-          "next_messages": [
-            {
-              "id": "choice_c03_marie_morning_01_guided_player_001",
-              "sender": "ludo",
-              "time_label": "08:12",
-              "text": "Je suis là. Je démarre juste lentement."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "conversation_segment_id": "c03_marie_morning_seg_02",
-      "moment_label": "jour 3",
-      "time_label": "08:13",
-      "messages": [
-        {
-          "id": "msg_c03_marie_morning_004",
-          "sender": "marie",
-          "time_label": "08:13",
-          "text": "Très lentement 😅"
+          "id": "choice_c03_marie_morning_01",
+          "text": "J’arrive à la cuisine.",
+          "tone": "tendre"
         },
         {
-          "id": "msg_c03_marie_morning_005",
-          "sender": "marie",
-          "time_label": "08:13",
-          "text": "Tu as regardé ton téléphone avant même de voir que j’avais changé de tasse."
+          "id": "choice_c03_marie_morning_02",
+          "text": "Je te laisse gagner pour ce matin.",
+          "tone": "taquin"
         },
         {
-          "id": "msg_c03_marie_morning_006",
-          "sender": "marie",
-          "time_label": "08:13",
-          "text": "Je ne lance pas une enquête. Pas encore 🙄"
-        },
-        {
-          "id": "msg_c03_marie_morning_007",
-          "sender": "marie",
-          "time_label": "08:13",
-          "text": "Mais tu es un peu loin ce matin."
-        }
-      ],
-      "choices": [
-        {
-          "id": "choice_c03_marie_morning_02_1",
-          "text": "Viens là. Je n’ai pas envie d’être loin de toi.",
-          "tone": "tendre",
-          "effects": {
-            "marie_trust": 1,
-            "lie_score": -1,
-            "marie_attention_score": 1
-          },
-          "sets_flags": [
-            "player_returned_home_j3"
-          ],
-          "next_messages": [
-            {
-              "id": "choice_c03_marie_morning_02_1_player_001",
-              "sender": "ludo",
-              "time_label": "08:14",
-              "text": "Viens là. Je n’ai pas envie d’être loin de toi."
-            },
-            {
-              "id": "msg_c03_marie_morning_02_1_01",
-              "sender": "marie",
-              "time_label": "08:14",
-              "text": "Ça, je prends."
-            },
-            {
-              "id": "msg_c03_marie_morning_02_1_02",
-              "sender": "marie",
-              "time_label": "08:14",
-              "text": "Même avec ta tête de mec qui a été mis à jour pendant la nuit et redémarre mal 😅"
-            },
-            {
-              "id": "msg_c03_marie_morning_02_1_03",
-              "sender": "marie",
-              "time_label": "08:14",
-              "text": "Approche."
-            }
-          ]
-        },
-        {
-          "id": "choice_c03_marie_morning_02_2",
-          "text": "Je suis juste fatigué. La journée d’hier était longue.",
-          "tone": "avoidant",
-          "effects": {
-            "lie_score": 1,
-            "marie.lucidity": 1,
-            "marie_neglect_score": 1
-          },
-          "sets_flags": [
-            "marie_noticed_distance_j3"
-          ],
-          "next_messages": [
-            {
-              "id": "msg_c03_marie_morning_02_2_01",
-              "sender": "marie",
-              "time_label": "08:14",
-              "text": "Je sais que tu es fatigué."
-            },
-            {
-              "id": "msg_c03_marie_morning_02_2_02",
-              "sender": "marie",
-              "time_label": "08:14",
-              "text": "Je ne suis juste pas sûre que ce soit le seul truc posé sur la table."
-            },
-            {
-              "id": "msg_c03_marie_morning_02_2_03",
-              "sender": "marie",
-              "time_label": "08:14",
-              "text": "À côté du pain. Et de ton air innocent très moyen 🙂"
-            }
-          ]
-        },
-        {
-          "id": "choice_c03_marie_morning_02_3",
-          "text": "Je crois que je suis un peu perdu en ce moment.",
-          "tone": "truthful",
-          "effects": {
-            "marie_trust": 1,
-            "truth_tendency": 1,
-            "lie_score": 1
-          },
-          "sets_flags": [
-            "truth_seed_marie_j3"
-          ],
-          "next_messages": [
-            {
-              "id": "msg_c03_marie_morning_02_3_01",
-              "sender": "marie",
-              "time_label": "08:14",
-              "text": "Merci de le dire comme ça."
-            },
-            {
-              "id": "msg_c03_marie_morning_02_3_02",
-              "sender": "marie",
-              "time_label": "08:14",
-              "text": "Même si “un peu” me paraît être ton service minimum syndical 😅"
-            },
-            {
-              "id": "msg_c03_marie_morning_02_3_03",
-              "sender": "marie",
-              "time_label": "08:14",
-              "text": "Mais bon. C’est déjà une vraie phrase."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "conversation_segment_id": "c03_marie_morning_seg_03",
-      "moment_label": "jour 3",
-      "time_label": "08:16",
-      "messages": [
-        {
-          "id": "msg_c03_marie_morning_008",
-          "sender": "marie",
-          "time_label": "08:16",
-          "text": "Je vais refaire du café."
-        },
-        {
-          "id": "msg_c03_marie_morning_009",
-          "sender": "marie",
-          "time_label": "08:16",
-          "text": "Et ignorer le plaid de Mathilde sur le canapé 🙄"
-        },
-        {
-          "id": "msg_c03_marie_morning_010",
-          "sender": "marie",
-          "time_label": "08:16",
-          "text": "Il a l’air plus installé que nous deux, franchement."
-        }
-      ],
-      "choices": [
-        {
-          "id": "choice_c03_marie_morning_03_guided",
-          "text": "Elle va dire que c’est un prêt culturel.",
-          "tone": "guided_reply"
-        }
-      ]
-    },
-    {
-      "conversation_segment_id": "c03_marie_morning_seg_04",
-      "moment_label": "jour 3",
-      "time_label": "08:17",
-      "messages": [
-        {
-          "id": "msg_c03_marie_morning_011",
-          "sender": "marie",
-          "time_label": "08:17",
-          "text": "Bien sûr 😂"
-        },
-        {
-          "id": "msg_c03_marie_morning_012",
-          "sender": "marie",
-          "time_label": "08:17",
-          "text": "Elle va même mettre des majuscules à Prêt Culturel."
-        },
-        {
-          "id": "msg_c03_marie_morning_013",
-          "sender": "marie",
-          "time_label": "08:17",
-          "text": "Bon. Tu veux une preuve que moi aussi je peux être présentable avant 9h ? 🙂"
-        }
-      ],
-      "choices": [
-        {
-          "id": "choice_c03_marie_morning_04_1",
-          "text": "Oui. Et je vais la regarder vraiment.",
-          "tone": "tendre",
-          "effects": {
-            "marie_trust": 1,
-            "marie_attention_score": 1
-          },
-          "sets_flags": [
-            "photo_marie_home_j3_received"
-          ],
-          "next_messages": [
-            {
-              "id": "choice_c03_marie_morning_04_1_player_001",
-              "sender": "ludo",
-              "time_label": "08:18",
-              "text": "Oui. Et je vais la regarder vraiment."
-            },
-            {
-              "id": "msg_c03_marie_morning_04_1_01",
-              "sender": "marie",
-              "time_label": "08:18",
-              "text": "Photo envoyée."
-            },
-            {
-              "id": "msg_c03_marie_morning_04_1_02",
-              "sender": "marie",
-              "time_label": "08:18",
-              "content_id": "marie_j3_home_tender_placeholder",
-              "text": "Marie dans la cuisine, lumière douce du matin, cheveux un peu attachés, tasse à la main. Elle ne pose pas vraiment, mais son sourire dit clairement qu’elle attend que tu la regardes."
-            },
-            {
-              "id": "msg_c03_marie_morning_04_1_03",
-              "sender": "marie",
-              "time_label": "08:18",
-              "text": "Voilà. Maintenant tu reviens dans la cuisine, monsieur le fantôme 😅"
-            }
-          ]
-        },
-        {
-          "id": "choice_c03_marie_morning_04_2",
-          "text": "Je préfère te voir en vrai, là, maintenant.",
-          "tone": "tendre",
-          "effects": {
-            "marie_trust": 2,
-            "marie_attention_score": 1,
-            "lie_score": -1
-          },
-          "next_messages": [
-            {
-              "id": "msg_c03_marie_morning_04_2_01",
-              "sender": "marie",
-              "time_label": "08:18",
-              "text": "Bonne réponse 🙂"
-            },
-            {
-              "id": "msg_c03_marie_morning_04_2_02",
-              "sender": "marie",
-              "time_label": "08:18",
-              "text": "Je garde quand même l’idée de la photo."
-            },
-            {
-              "id": "msg_c03_marie_morning_04_2_03",
-              "sender": "marie",
-              "time_label": "08:18",
-              "text": "Pour quand tu redeviens insupportable."
-            }
-          ]
-        },
-        {
-          "id": "choice_c03_marie_morning_04_3",
-          "text": "Tu n’as pas besoin de preuve.",
-          "tone": "neutral",
-          "effects": {
-            "marie_trust": 0,
-            "marie.lucidity": 1
-          },
-          "next_messages": [
-            {
-              "id": "msg_c03_marie_morning_04_3_01",
-              "sender": "marie",
-              "time_label": "08:18",
-              "text": "Je sais."
-            },
-            {
-              "id": "msg_c03_marie_morning_04_3_02",
-              "sender": "marie",
-              "time_label": "08:18",
-              "text": "Mais parfois j’aimerais que tu aies encore envie d’en demander une 🙂"
-            }
-          ]
+          "id": "choice_c03_marie_morning_03",
+          "text": "Je cherche ma paire et je te rejoins.",
+          "tone": "prudent"
         }
       ]
     }
   ],
-  "debug_notes": "J3 ouvre sur Marie après le retour physique de Player. Marie reste ancrage et désir; réponses Player uniquement via choices."
+  "design_goal": "Réinstaller Marie comme ancrage domestique doux.",
+  "debug_notes": "Aucun sender auto-rendu. Choix visibles uniquement."
 }
