@@ -1,0 +1,112 @@
+{
+  "id": "chapter_05_marie_before_outing",
+  "chapter": 5,
+  "day": 5,
+  "title": "Jour 5 — Regarde vraiment",
+  "app": "messages",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "marie"
+    ],
+    "display_name": "Marie",
+    "profile_content_id": "profile_marie_placeholder"
+  },
+  "design_goal": "Marie demande le regard de Player avant de sortir et reste la figure centrale.",
+  "debug_notes": "Photo consentie, douce, défendable ; Player est hors de portée physique.",
+  "segments": [
+    {
+      "conversation_segment_id": "c05_marie_before_outing_seg_01",
+      "moment_label": "avant départ",
+      "time_label": "19:12",
+      "messages": [
+        {
+          "id": "msg_c05_marie_before_001",
+          "sender": "marie",
+          "time_label": "19:12",
+          "text": "J’ai besoin d’un avis."
+        },
+        {
+          "id": "msg_c05_marie_before_002",
+          "sender": "marie",
+          "time_label": "19:12",
+          "text": "Avant que Pauline débarque avec son enthousiasme."
+        },
+        {
+          "id": "msg_c05_marie_before_003",
+          "sender": "marie",
+          "time_label": "19:12",
+          "content_id": "marie_j5_outfit_before_outing_placeholder",
+          "text": "Photo envoyée : tenue simple, jolie, prête à sortir."
+        },
+        {
+          "id": "msg_c05_marie_before_004",
+          "sender": "marie",
+          "time_label": "19:13",
+          "text": "Dis-moi franchement, mais gentiment."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c05_marie_before_01_tender",
+          "text": "Tu es très belle.",
+          "tone": "tender",
+          "next_messages": [
+            {
+              "id": "msg_c05_marie_before_01_tender_01",
+              "sender": "marie",
+              "time_label": "19:13",
+              "text": "Merci."
+            },
+            {
+              "id": "msg_c05_marie_before_01_tender_02",
+              "sender": "marie",
+              "time_label": "19:13",
+              "text": "Je voulais exactement ce genre d’avis."
+            }
+          ]
+        },
+        {
+          "id": "choice_c05_marie_before_02_doux",
+          "text": "Ça te va vraiment bien, j’aimerais te garder du regard encore un peu.",
+          "tone": "doux",
+          "next_messages": [
+            {
+              "id": "msg_c05_marie_before_02_doux_01",
+              "sender": "marie",
+              "time_label": "19:13",
+              "text": "Ah."
+            },
+            {
+              "id": "msg_c05_marie_before_02_doux_02",
+              "sender": "marie",
+              "time_label": "19:13",
+              "text": "Là, je souris vraiment."
+            }
+          ]
+        },
+        {
+          "id": "choice_c05_marie_before_03_player",
+          "text": "Je te veux bien dehors, puis je te veux aussi de retour.",
+          "tone": "possessive_doux",
+          "next_messages": [
+            {
+              "id": "msg_c05_marie_before_03_player_01",
+              "sender": "marie",
+              "time_label": "19:13",
+              "text": "Ça, c’est honnête."
+            },
+            {
+              "id": "msg_c05_marie_before_03_player_02",
+              "sender": "marie",
+              "time_label": "19:14",
+              "text": "Et un peu agaçant, mais j’aime bien."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

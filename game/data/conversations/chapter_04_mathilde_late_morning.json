@@ -1,0 +1,112 @@
+{
+  "id": "chapter_04_mathilde_late_morning",
+  "chapter": 4,
+  "day": 4,
+  "title": "Jour 4 — Gêne utile, autonomie douce",
+  "app": "messages",
+  "thread": {
+    "id": "thread_mathilde_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "mathilde"
+    ],
+    "display_name": "Mathilde",
+    "profile_content_id": "profile_mathilde_placeholder"
+  },
+  "design_goal": "Mathilde reste concrète, sportive et un peu gênée, sans sexualisation.",
+  "debug_notes": "Trace de lendemain, honneur sportif, verre et feuille ; aucune montée sociale.",
+  "segments": [
+    {
+      "conversation_segment_id": "c04_mathilde_late_morning_seg_01",
+      "moment_label": "fin de matinée",
+      "time_label": "12:18",
+      "messages": [
+        {
+          "id": "msg_c04_mathilde_001",
+          "sender": "mathilde",
+          "time_label": "12:18",
+          "text": "Je passe en mode récup."
+        },
+        {
+          "id": "msg_c04_mathilde_002",
+          "sender": "mathilde",
+          "time_label": "12:18",
+          "text": "J’ai fait une vraie sortie sportive, moi."
+        },
+        {
+          "id": "msg_c04_mathilde_003",
+          "sender": "mathilde",
+          "time_label": "12:19",
+          "content_id": "mathilde_j4_glass_leaf_trace_placeholder",
+          "text": "Verre, feuille et petite trace de passage, rien de plus."
+        },
+        {
+          "id": "msg_c04_mathilde_004",
+          "sender": "mathilde",
+          "time_label": "12:19",
+          "text": "Je dis ça avec beaucoup d’honneur."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c04_mathilde_01_tender",
+          "text": "Tu peux être fière, oui.",
+          "tone": "tender",
+          "next_messages": [
+            {
+              "id": "msg_c04_mathilde_01_tender_01",
+              "sender": "mathilde",
+              "time_label": "12:19",
+              "text": "Merci."
+            },
+            {
+              "id": "msg_c04_mathilde_01_tender_02",
+              "sender": "mathilde",
+              "time_label": "12:19",
+              "text": "Je prends le compliment sans faire de bruit."
+            }
+          ]
+        },
+        {
+          "id": "choice_c04_mathilde_02_teasing",
+          "text": "Sportive un jour, championne toujours ?",
+          "tone": "teasing",
+          "next_messages": [
+            {
+              "id": "msg_c04_mathilde_02_teasing_01",
+              "sender": "mathilde",
+              "time_label": "12:19",
+              "text": "Ne me pousse pas à faire un discours."
+            },
+            {
+              "id": "msg_c04_mathilde_02_teasing_02",
+              "sender": "mathilde",
+              "time_label": "12:20",
+              "text": "Je pourrais gagner un peu trop facilement."
+            }
+          ]
+        },
+        {
+          "id": "choice_c04_mathilde_03_supportive",
+          "text": "Repose-toi, tu l’as mérité.",
+          "tone": "supportive",
+          "next_messages": [
+            {
+              "id": "msg_c04_mathilde_03_supportive_01",
+              "sender": "mathilde",
+              "time_label": "12:20",
+              "text": "Oui, je crois."
+            },
+            {
+              "id": "msg_c04_mathilde_03_supportive_02",
+              "sender": "mathilde",
+              "time_label": "12:20",
+              "text": "Et j’accepte de faire simple pour une fois."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

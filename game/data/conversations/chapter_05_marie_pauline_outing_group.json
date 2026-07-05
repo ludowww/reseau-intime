@@ -1,0 +1,199 @@
+{
+  "id": "chapter_05_marie_pauline_outing_group",
+  "chapter": 5,
+  "day": 5,
+  "title": "Jour 5 — Elle est bien sortie",
+  "app": "messages",
+  "thread": {
+    "id": "thread_marie_pauline_group",
+    "type": "group",
+    "participants": [
+      "ludo",
+      "marie",
+      "pauline"
+    ],
+    "display_name": "Marie / Pauline",
+    "profile_content_id": "marie_pauline_j5_selfie_placeholder"
+  },
+  "design_goal": "Marie et Pauline sont dehors ; la scène reste sociale, consentie et défendable.",
+  "debug_notes": "Marie reste le centre ; Pauline est vive et complice ; Player regarde à distance.",
+  "segments": [
+    {
+      "conversation_segment_id": "c05_group_seg_01",
+      "moment_label": "début de soirée",
+      "time_label": "20:36",
+      "messages": [
+        {
+          "id": "msg_c05_group_001",
+          "sender": "pauline",
+          "time_label": "20:36",
+          "text": "On est arrivées 🙂"
+        },
+        {
+          "id": "msg_c05_group_002",
+          "sender": "marie",
+          "time_label": "20:36",
+          "text": "Je confirme : je suis dehors."
+        },
+        {
+          "id": "msg_c05_group_003",
+          "sender": "marie",
+          "time_label": "20:37",
+          "content_id": "marie_pauline_j5_selfie_placeholder",
+          "text": "Selfie Marie / Pauline, sourire social, proximité amicale."
+        },
+        {
+          "id": "msg_c05_group_004",
+          "sender": "pauline",
+          "time_label": "20:37",
+          "text": "Photo autorisée, évidemment."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c05_group_01_social",
+          "text": "Vous avez l’air bien toutes les deux.",
+          "tone": "social",
+          "next_messages": [
+            {
+              "id": "msg_c05_group_01_social_01",
+              "sender": "marie",
+              "time_label": "20:37",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_c05_group_01_social_02",
+              "sender": "pauline",
+              "time_label": "20:37",
+              "text": "C’était le but."
+            }
+          ]
+        },
+        {
+          "id": "choice_c05_group_02_couple",
+          "text": "Marie, tu as l’air plus légère.",
+          "tone": "couple",
+          "next_messages": [
+            {
+              "id": "msg_c05_group_02_couple_01",
+              "sender": "marie",
+              "time_label": "20:37",
+              "text": "Oui, un peu."
+            },
+            {
+              "id": "msg_c05_group_02_couple_02",
+              "sender": "pauline",
+              "time_label": "20:37",
+              "text": "Ça lui va bien."
+            }
+          ]
+        },
+        {
+          "id": "choice_c05_group_03_taquin",
+          "text": "Pauline, tu as l’air trop fière de cette sortie.",
+          "tone": "taquin",
+          "next_messages": [
+            {
+              "id": "msg_c05_group_03_taquin_01",
+              "sender": "pauline",
+              "time_label": "20:38",
+              "text": "Complètement."
+            },
+            {
+              "id": "msg_c05_group_03_taquin_02",
+              "sender": "marie",
+              "time_label": "20:38",
+              "text": "Elle est insupportablement contente d’elle."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "conversation_segment_id": "c05_group_seg_02",
+      "moment_label": "début de soirée",
+      "time_label": "20:37",
+      "messages": [
+        {
+          "id": "msg_c05_group_005",
+          "sender": "pauline",
+          "time_label": "20:37",
+          "content_id": "j5_terrace_evening_placeholder",
+          "text": "Terrasse, verre, lumière de début de soirée."
+        },
+        {
+          "id": "msg_c05_group_006",
+          "sender": "marie",
+          "time_label": "20:37",
+          "text": "Il y a un dessert qui me regarde depuis la carte."
+        },
+        {
+          "id": "msg_c05_group_007",
+          "sender": "pauline",
+          "time_label": "20:38",
+          "content_id": "pauline_j5_social_smile_placeholder",
+          "text": "Pauline sourit avec l’énergie de quelqu’un qui aime vraiment sortir."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c05_group_04_gourmand",
+          "text": "Prends le dessert.",
+          "tone": "gourmand",
+          "next_messages": [
+            {
+              "id": "msg_c05_group_04_gourmand_01",
+              "sender": "marie",
+              "time_label": "20:38",
+              "text": "Voilà un vrai soutien."
+            },
+            {
+              "id": "msg_c05_group_04_gourmand_02",
+              "sender": "pauline",
+              "time_label": "20:38",
+              "text": "Je valide cette équipe."
+            }
+          ]
+        },
+        {
+          "id": "choice_c05_group_05_attentif",
+          "text": "Tu as l’air plus légère, Marie.",
+          "tone": "attentif",
+          "next_messages": [
+            {
+              "id": "msg_c05_group_05_attentif_01",
+              "sender": "marie",
+              "time_label": "20:38",
+              "text": "Je crois que oui."
+            },
+            {
+              "id": "msg_c05_group_05_attentif_02",
+              "sender": "pauline",
+              "time_label": "20:38",
+              "text": "Ça se voit."
+            }
+          ]
+        },
+        {
+          "id": "choice_c05_group_06_social",
+          "text": "Profitez bien, je suis content pour vous.",
+          "tone": "social",
+          "next_messages": [
+            {
+              "id": "msg_c05_group_06_social_01",
+              "sender": "marie",
+              "time_label": "20:39",
+              "text": "Merci."
+            },
+            {
+              "id": "msg_c05_group_06_social_02",
+              "sender": "pauline",
+              "time_label": "20:39",
+              "text": "C’est simple et ça marche."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

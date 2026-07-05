@@ -821,26 +821,42 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         self.assertEqual(len(proofs.get("items", [])), 3)
         self.assertTrue(any(item.get("character") == "sandra" for item in proofs.get("items", [])))
 
-    def test_day5_index_reworks_nico_as_first_pivot_with_three_visual_traces(self):
-        index = json.loads((GAME / "data/conversations/chapter_05_index.json").read_text(encoding="utf-8"))
+    def test_day4_index_rebuilds_domestic_runtime_with_soft_visuals(self):
+        index = json.loads((GAME / "data/conversations/chapter_04_index.json").read_text(encoding="utf-8"))
         availability = index.get("conversation_availability", {})
-        self.assertIn("res://data/conversations/chapter_05_social_story.json", index.get("conversation_files", []))
-        self.assertEqual(availability.get("initial_conversation_ids"), ["chapter_05_marie_couple_vacille"])
-
-        expected_flow = [
-            ("08:12", "chapter_05_marie_couple_vacille", "thread_marie_private"),
-            ("10:06", "chapter_05_social_story", "thread_nico_private"),
-            ("10:22", "chapter_05_mathilde_kitchen_trial", "thread_mathilde_private"),
-            ("11:18", "chapter_05_pauline_understands", "thread_pauline_private"),
-            ("17:54", "chapter_05_raphaelle_work_breath", "thread_raphaelle_private"),
-            ("20:18", "chapter_05_sandra_first_truth_game", "thread_sandra_private"),
-            ("21:07", "chapter_05_pauline_last_photo", "thread_pauline_private"),
-        ]
+        self.assertEqual(index.get("title"), "Jour 4 — La maison continue")
+        self.assertEqual(index.get("routes_available"), ["marie", "mathilde", "sandra"])
+        self.assertNotIn("routes_locked_to_seed_only", index)
+        self.assertNotIn("locked_conversation_ids", availability)
+        self.assertEqual(index.get("conversation_files"), [
+            "res://data/conversations/chapter_04_marie_morning.json",
+            "res://data/conversations/chapter_04_mathilde_late_morning.json",
+            "res://data/conversations/chapter_04_sandra_midday.json",
+            "res://data/conversations/chapter_04_marie_late_afternoon.json",
+        ])
+        self.assertEqual(availability.get("initial_conversation_ids"), ["chapter_04_marie_morning"])
+        self.assertEqual(
+            availability.get("progression", {}).get("chapter_04_mathilde_late_morning", {}).get("after_conversation_completed"),
+            "chapter_04_marie_morning",
+        )
+        self.assertEqual(
+            availability.get("progression", {}).get("chapter_04_sandra_midday", {}).get("after_conversation_completed"),
+            "chapter_04_mathilde_late_morning",
+        )
+        self.assertEqual(
+            availability.get("progression", {}).get("chapter_04_marie_late_afternoon", {}).get("after_conversation_completed"),
+            "chapter_04_sandra_midday",
+        )
         conversation_by_id = {}
         for rel_path in index.get("conversation_files", []):
             data = json.loads((GAME / rel_path.removeprefix("res://")).read_text(encoding="utf-8"))
             conversation_by_id[data.get("id")] = data
-
+        expected_flow = [
+            ("08:26", "chapter_04_marie_morning", "thread_marie_private"),
+            ("12:18", "chapter_04_mathilde_late_morning", "thread_mathilde_private"),
+            ("15:43", "chapter_04_sandra_midday", "thread_sandra_private"),
+            ("19:52", "chapter_04_marie_late_afternoon", "thread_marie_private"),
+        ]
         actual_flow = []
         for moment in index.get("moment_flow", []):
             self.assertEqual(len(moment.get("conversation_ids", [])), 1)
@@ -848,24 +864,104 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             data = conversation_by_id[conversation_id]
             actual_flow.append((moment.get("time_label"), conversation_id, data.get("thread", {}).get("id")))
         self.assertEqual(actual_flow, expected_flow)
+        proofs = json.loads((GAME / "data/visual_content/chapter_04_proofs.json").read_text(encoding="utf-8"))
+        proof_ids = {item.get("id") for item in proofs.get("items", [])}
+        expected_visuals = [
+            "marie_j4_morning_table_soft_placeholder",
+            "mathilde_j4_glass_leaf_trace_placeholder",
+            "sandra_j4_book_margin_soft_placeholder",
+            "marie_j4_evening_tea_soft_placeholder",
+        ]
+        self.assertEqual([item.get("id") for item in proofs.get("items", [])], expected_visuals)
+        for item in proofs.get("items", []):
+            self.assertFalse(item.get("is_proof"))
+            self.assertLessEqual(int(item.get("risk_level", 99)), 1)
+        for expected in expected_visuals:
+            self.assertIn(expected, proof_ids)
+        for convo_path in [
+            GAME / "data" / "conversations" / "chapter_04_marie_morning.json",
+            GAME / "data" / "conversations" / "chapter_04_mathilde_late_morning.json",
+            GAME / "data" / "conversations" / "chapter_04_sandra_midday.json",
+            GAME / "data" / "conversations" / "chapter_04_marie_late_afternoon.json",
+        ]:
+            convo = json.loads(convo_path.read_text(encoding="utf-8"))
+            for segment in convo.get("segments", []):
+                for message in segment.get("messages", []):
+                    self.assertNotIn(message.get("sender"), {"Player", "player", "joueur", "ludo"})
+                for choice in segment.get("choices", []):
+                    for reply in choice.get("next_messages", []):
+                        self.assertNotIn(reply.get("sender"), {"Player", "player", "joueur", "ludo"})
 
-        self.assertEqual(index.get("routes_available"), ["marie", "mathilde", "pauline", "raphaelle", "sandra", "nico_marie"])
-        self.assertEqual(availability.get("unlocks", {}).get("chapter_05_social_story", {}).get("after_conversation_completed"), "chapter_05_marie_couple_vacille")
-
-        conversation = conversation_by_id["chapter_05_social_story"]
-        self.assertEqual(conversation.get("thread", {}).get("id"), "thread_nico_private")
-        self.assertEqual(conversation.get("thread", {}).get("display_name"), "Nico")
-        self.assertEqual(conversation.get("thread", {}).get("type"), "private")
-        self.assertEqual(len(conversation.get("segments", [])), 1)
-        self.assertEqual(len(conversation.get("segments", [])[0].get("choices", [])), 5)
-        scene_text = json.dumps(conversation.get("segments", []), ensure_ascii=False)
-        for forbidden in ["photo intime", "non consentie", "volée", "Mathilde", "Pauline", "Sandra", "Raphaëlle"]:
-            self.assertNotIn(forbidden, scene_text)
-
+    def test_day5_index_rebuilds_marie_pauline_outing_with_three_visual_traces(self):
+        index = json.loads((GAME / "data/conversations/chapter_05_index.json").read_text(encoding="utf-8"))
+        availability = index.get("conversation_availability", {})
+        self.assertEqual(index.get("title"), "Jour 5 — Elle est bien sortie")
+        self.assertEqual(index.get("routes_available"), ["marie", "pauline"])
+        self.assertNotIn("routes_locked_to_seed_only", index)
+        self.assertNotIn("locked_conversation_ids", availability)
+        self.assertEqual(index.get("conversation_files"), [
+            "res://data/conversations/chapter_05_pauline_late_morning.json",
+            "res://data/conversations/chapter_05_marie_before_outing.json",
+            "res://data/conversations/chapter_05_marie_pauline_outing_group.json",
+            "res://data/conversations/chapter_05_marie_return_message.json",
+        ])
+        self.assertEqual(availability.get("initial_conversation_ids"), ["chapter_05_pauline_late_morning"])
+        self.assertEqual(
+            availability.get("progression", {}).get("chapter_05_marie_before_outing", {}).get("after_conversation_completed"),
+            "chapter_05_pauline_late_morning",
+        )
+        self.assertEqual(
+            availability.get("progression", {}).get("chapter_05_marie_pauline_outing_group", {}).get("after_conversation_completed"),
+            "chapter_05_marie_before_outing",
+        )
+        self.assertEqual(
+            availability.get("progression", {}).get("chapter_05_marie_return_message", {}).get("after_conversation_completed"),
+            "chapter_05_marie_pauline_outing_group",
+        )
+        conversation_by_id = {}
+        for rel_path in index.get("conversation_files", []):
+            data = json.loads((GAME / rel_path.removeprefix("res://")).read_text(encoding="utf-8"))
+            conversation_by_id[data.get("id")] = data
+        expected_flow = [
+            ("10:06", "chapter_05_pauline_late_morning", "thread_pauline_private"),
+            ("19:12", "chapter_05_marie_before_outing", "thread_marie_private"),
+            ("20:36", "chapter_05_marie_pauline_outing_group", "thread_marie_pauline_group"),
+            ("21:07", "chapter_05_marie_return_message", "thread_marie_private"),
+        ]
+        actual_flow = []
+        for moment in index.get("moment_flow", []):
+            self.assertEqual(len(moment.get("conversation_ids", [])), 1)
+            conversation_id = moment["conversation_ids"][0]
+            data = conversation_by_id[conversation_id]
+            actual_flow.append((moment.get("time_label"), conversation_id, data.get("thread", {}).get("id")))
+        self.assertEqual(actual_flow, expected_flow)
         proofs = json.loads((GAME / "data/visual_content/chapter_05_proofs.json").read_text(encoding="utf-8"))
         proof_ids = {item.get("id") for item in proofs.get("items", [])}
-        for expected in ["j5_marie_party_nico_frame", "j5_nico_thread_capture", "j5_nico_bar_context"]:
+        expected_visuals = [
+            "marie_j5_outfit_before_outing_placeholder",
+            "marie_pauline_j5_selfie_placeholder",
+            "j5_terrace_evening_placeholder",
+            "pauline_j5_social_smile_placeholder",
+        ]
+        self.assertEqual([item.get("id") for item in proofs.get("items", [])], expected_visuals)
+        for item in proofs.get("items", []):
+            self.assertFalse(item.get("is_proof"))
+            self.assertLessEqual(int(item.get("risk_level", 99)), 1)
+        for expected in expected_visuals:
             self.assertIn(expected, proof_ids)
+        for convo_path in [
+            GAME / "data" / "conversations" / "chapter_05_pauline_late_morning.json",
+            GAME / "data" / "conversations" / "chapter_05_marie_before_outing.json",
+            GAME / "data" / "conversations" / "chapter_05_marie_pauline_outing_group.json",
+            GAME / "data" / "conversations" / "chapter_05_marie_return_message.json",
+        ]:
+            convo = json.loads(convo_path.read_text(encoding="utf-8"))
+            for segment in convo.get("segments", []):
+                for message in segment.get("messages", []):
+                    self.assertNotIn(message.get("sender"), {"Player", "player", "joueur", "ludo"})
+                for choice in segment.get("choices", []):
+                    for reply in choice.get("next_messages", []):
+                        self.assertNotIn(reply.get("sender"), {"Player", "player", "joueur", "ludo"})
 
     def test_conversation_view_resumes_newly_unlocked_episode_in_existing_thread(self):
         script = (GAME / "scripts" / "ui" / "ConversationView.gd").read_text(encoding="utf-8")

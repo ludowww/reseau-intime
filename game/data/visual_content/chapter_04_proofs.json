@@ -1,96 +1,95 @@
 {
   "id": "chapter_04_proof_placeholders",
-  "version": 2,
-  "notes": "Placeholders neutres pour la sortie sociale J4 : Marie avant la sortie, selfie Marie / Pauline, photo de lieu, et une présence Pauline douce. Les éléments de jalousie / proof / Nico / Mathilde restent legacy hors du bundle actif.",
+  "version": 3,
+  "notes": "J4 soft : Marie, Mathilde, Sandra et un retour calme. Aucun contenu fort.",
   "items": [
     {
-      "id": "photo_marie_evening_j4_placeholder",
+      "id": "marie_j4_morning_table_soft_placeholder",
       "character": "marie",
       "tier": 1,
       "type": "photo",
       "source_app": "messages",
-      "asset_path": "res://assets/placeholders/photo_marie_evening_j4_placeholder.png",
-      "context": "Marie avant la soirée, tenue simple mais plus apprêtée que d’habitude, lumière d’entrée ou de salle de bain. Elle ne pose pas frontalement, mais elle attend le regard de Player.",
+      "asset_path": "res://assets/placeholders/marie_j4_morning_table_soft_placeholder.png",
+      "context": "Table du matin, café, biscuits, lumière simple et calme domestique.",
       "tags": [
         "marie",
         "day4",
-        "evening",
-        "couple",
-        "desire"
+        "morning",
+        "table",
+        "coffee",
+        "biscuits"
       ],
       "is_proof": false,
       "risk_level": 1,
       "can_delete": true,
       "can_capture": true,
-      "can_set_as_wallpaper": true,
+      "can_set_as_wallpaper": false,
       "can_be_discovered_by": [
         "marie"
       ]
     },
     {
-      "id": "photo_pauline_soft_provocation_j4_placeholder",
-      "character": "pauline",
+      "id": "mathilde_j4_glass_leaf_trace_placeholder",
+      "character": "mathilde",
       "tier": 1,
       "type": "photo",
       "source_app": "messages",
-      "asset_path": "res://assets/placeholders/photo_pauline_soft_provocation_j4_placeholder.png",
-      "context": "Pauline en photo de soirée, sourire simple et présence sociale tranquille. L’image accompagne Marie sans la masquer, avec une énergie légère et naturelle.",
+      "asset_path": "res://assets/placeholders/mathilde_j4_glass_leaf_trace_placeholder.png",
+      "context": "Verre, feuille et petite trace de passage pour le lendemain discret de Mathilde.",
       "tags": [
-        "pauline",
+        "mathilde",
         "day4",
-        "party",
-        "smile",
-        "social"
+        "glass",
+        "leaf",
+        "trace"
       ],
       "is_proof": false,
-      "risk_level": 2,
+      "risk_level": 1,
       "can_delete": true,
       "can_capture": true,
       "can_set_as_wallpaper": false,
       "can_be_discovered_by": [
-        "pauline",
-        "marie"
+        "mathilde"
       ]
     },
     {
-      "id": "photo_marie_pauline_selfie_j4_placeholder",
-      "character": null,
-      "tier": 1,
-      "type": "group_photo",
-      "source_app": "messages",
-      "asset_path": "res://assets/placeholders/photo_marie_pauline_selfie_j4_placeholder.png",
-      "context": "Selfie Marie / Pauline pendant la sortie : sourire social, proximité amicale, cadrage simple. La photo montre Marie visible hors du couple sans basculer dans la provocation sexuelle.",
-      "tags": [
-        "day4",
-        "marie",
-        "pauline",
-        "selfie",
-        "social_trace"
-      ],
-      "is_proof": false,
-      "risk_level": 1,
-      "can_delete": false,
-      "can_capture": true,
-      "can_set_as_wallpaper": false,
-      "can_be_discovered_by": [
-        "marie",
-        "pauline"
-      ]
-    },
-    {
-      "id": "photo_j4_terrace_placeholder",
-      "character": null,
+      "id": "sandra_j4_book_margin_soft_placeholder",
+      "character": "sandra",
       "tier": 1,
       "type": "photo",
       "source_app": "messages",
-      "asset_path": "res://assets/placeholders/photo_j4_terrace_placeholder.png",
-      "context": "Photo du lieu de sortie : table, verre, terrasse, lumière de soirée. La trace prouve que Marie est hors de la maison et que la sortie s’inscrit dans le réel.",
+      "asset_path": "res://assets/placeholders/sandra_j4_book_margin_soft_placeholder.png",
+      "context": "Roman ouvert, marque-page et bord de lac en arrière-plan.",
       "tags": [
+        "sandra",
         "day4",
-        "location",
-        "terrace",
+        "book",
+        "margin",
+        "lake"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": false,
+      "can_be_discovered_by": [
+        "sandra"
+      ]
+    },
+    {
+      "id": "marie_j4_evening_tea_soft_placeholder",
+      "character": "marie",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/marie_j4_evening_tea_soft_placeholder.png",
+      "context": "Thé, plaid et petite lumière de fin de journée avant le retour.",
+      "tags": [
+        "marie",
+        "day4",
         "evening",
-        "social_trace"
+        "tea",
+        "plaid"
       ],
       "is_proof": false,
       "risk_level": 1,
@@ -98,8 +97,7 @@
       "can_capture": true,
       "can_set_as_wallpaper": false,
       "can_be_discovered_by": [
-        "marie",
-        "pauline"
+        "marie"
       ]
     }
   ]

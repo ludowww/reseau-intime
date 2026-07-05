@@ -1,0 +1,105 @@
+{
+  "id": "chapter_05_marie_return_message",
+  "chapter": 5,
+  "day": 5,
+  "title": "Jour 5 — Je rentre",
+  "app": "messages",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "marie"
+    ],
+    "display_name": "Marie",
+    "profile_content_id": "profile_marie_placeholder"
+  },
+  "design_goal": "Marie revient et recentre la journée sur le couple sans créer de dispute ni de preuve.",
+  "debug_notes": "Le retour ferme la parenthèse sociale en douceur.",
+  "segments": [
+    {
+      "conversation_segment_id": "c05_marie_return_seg_01",
+      "moment_label": "retour",
+      "time_label": "21:07",
+      "messages": [
+        {
+          "id": "msg_c05_return_001",
+          "sender": "marie",
+          "time_label": "21:07",
+          "text": "Je rentre."
+        },
+        {
+          "id": "msg_c05_return_002",
+          "sender": "marie",
+          "time_label": "21:07",
+          "text": "Pauline dit que j’ai très bien tenu ma soirée."
+        },
+        {
+          "id": "msg_c05_return_003",
+          "sender": "marie",
+          "time_label": "21:08",
+          "text": "Je crois que ça veut dire que j’ai souri sans renverser le dessert."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c05_return_01_tender",
+          "text": "J’ai aimé te voir sortir.",
+          "tone": "tender",
+          "next_messages": [
+            {
+              "id": "msg_c05_return_01_tender_01",
+              "sender": "marie",
+              "time_label": "21:08",
+              "text": "Moi aussi, un peu."
+            },
+            {
+              "id": "msg_c05_return_01_tender_02",
+              "sender": "marie",
+              "time_label": "21:08",
+              "text": "Je suis contente de rentrer vers toi."
+            }
+          ]
+        },
+        {
+          "id": "choice_c05_return_02_honest",
+          "text": "Ça m’a fait quelque chose, mais dans le bon sens.",
+          "tone": "honest",
+          "next_messages": [
+            {
+              "id": "msg_c05_return_02_honest_01",
+              "sender": "marie",
+              "time_label": "21:08",
+              "text": "Je comprends."
+            },
+            {
+              "id": "msg_c05_return_02_honest_02",
+              "sender": "marie",
+              "time_label": "21:09",
+              "text": "Je crois que moi aussi."
+            }
+          ]
+        },
+        {
+          "id": "choice_c05_return_03_prudent",
+          "text": "Je t’attends sans t’arracher à ta soirée.",
+          "tone": "prudent",
+          "next_messages": [
+            {
+              "id": "msg_c05_return_03_prudent_01",
+              "sender": "marie",
+              "time_label": "21:09",
+              "text": "C’est joli, ça."
+            },
+            {
+              "id": "msg_c05_return_03_prudent_02",
+              "sender": "marie",
+              "time_label": "21:09",
+              "text": "Et très rassurant."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

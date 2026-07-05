@@ -2,91 +2,87 @@
   "id": "chapter_04_index",
   "chapter": 4,
   "day": 4,
-  "title": "Jour 4 — Marie sort avec Pauline",
-  "description": "Premier pivot social : Marie sort avec Pauline, Player reçoit des photos consenties, choisit son ton, et sent que Marie existe aussi hors de la maison.",
-  "design_goal": "Faire exister Marie socialement hors du couple via une sortie simple avec Pauline ; trois photos / traces consenties ; Player coloré par tendresse, jalousie légère, humour, curiosité ou distance ; sans crise, sans Nico actif, sans Mathilde active, sans verrouillage de route.",
+  "title": "Jour 4 — La maison continue",
+  "description": "J4 domestique post-Mathilde : Marie reste le centre, Mathilde et Sandra apportent des traces douces, et la maison tient sans sortie sociale.",
+  "design_goal": "Conserver une journée calme, centrée sur Marie, avec Mathilde et Sandra en traces douces et sans socialisation forcée.",
   "moment_flow": [
     {
+      "moment_label": "matin",
+      "time_label": "08:26",
+      "transition_text": "Marie tient encore la maison avec café, biscuits et humour pendant que Player est dehors.",
+      "conversation_ids": [
+        "chapter_04_marie_morning"
+      ]
+    },
+    {
+      "moment_label": "fin de matinée",
+      "time_label": "12:18",
+      "transition_text": "Mathilde passe avec une gêne douce, ses habitudes sportives et un petit besoin d’autonomie.",
+      "conversation_ids": [
+        "chapter_04_mathilde_late_morning"
+      ]
+    },
+    {
+      "moment_label": "midi",
+      "time_label": "15:43",
+      "transition_text": "Sandra apporte une respiration discrète entre roman, marque-page et bord de lac.",
+      "conversation_ids": [
+        "chapter_04_sandra_midday"
+      ]
+    },
+    {
       "moment_label": "fin d’après-midi",
-      "time_label": "17:48",
-      "transition_text": "Pauline relance la sortie. Marie reste au centre, mais le regard commence à sortir de la maison.",
+      "time_label": "19:52",
+      "transition_text": "Marie termine la journée avec thé, plaid et rituel avant le retour.",
       "conversation_ids": [
-        "chapter_04_pauline_invite"
-      ]
-    },
-    {
-      "moment_label": "préparation",
-      "time_label": "19:12",
-      "transition_text": "Marie envoie sa première photo avant de partir. Player peut encore la regarder avant les autres.",
-      "conversation_ids": [
-        "chapter_04_marie_pre_party"
-      ]
-    },
-    {
-      "moment_label": "sortie",
-      "time_label": "20:36",
-      "transition_text": "Marie et Pauline sont dehors. Le cadre social devient visible, simple et irréversible pour la soirée.",
-      "conversation_ids": [
-        "chapter_04_party_group_arrival"
+        "chapter_04_marie_late_afternoon"
       ]
     }
   ],
   "conversation_files": [
-    "res://data/conversations/chapter_04_pauline_invite.json",
-    "res://data/conversations/chapter_04_marie_pre_party.json",
-    "res://data/conversations/chapter_04_party_group_arrival.json"
+    "res://data/conversations/chapter_04_marie_morning.json",
+    "res://data/conversations/chapter_04_mathilde_late_morning.json",
+    "res://data/conversations/chapter_04_sandra_midday.json",
+    "res://data/conversations/chapter_04_marie_late_afternoon.json"
   ],
   "proof_content_files": [
     "res://data/visual_content/chapter_04_proofs.json"
   ],
-  "required_reveals": [
-    "Pauline introduit la soirée comme cadre social léger, pas comme séduction frontale.",
-    "Marie est visible et regardée hors du couple, sans crise.",
-    "Player reçoit au moins trois photos / traces consenties ou sociales sur le jour.",
-    "La sortie reste simple, crédible, et ne verrouille aucune route."
-  ],
   "routes_available": [
     "marie",
-    "pauline"
-  ],
-  "routes_locked_to_seed_only": [
-    "raphaelle",
-    "libertinage",
-    "ntr",
-    "harem_secret",
-    "trio_marie_mathilde"
-  ],
-  "debug_expected_outcomes": [
-    "No final route should be locked in chapter 4.",
-    "Pauline frames the outing without stealing the route.",
-    "Marie gains social visibility without breaking the couple.",
-    "At least one social photo / party trace should be visible."
+    "mathilde",
+    "sandra"
   ],
   "conversation_availability": {
     "initial_conversation_ids": [
-      "chapter_04_pauline_invite"
+      "chapter_04_marie_morning"
     ],
-    "locked_conversation_ids": [
-      "chapter_04_marie_pre_party",
-      "chapter_04_party_group_arrival"
-    ],
-    "unlocks": {
-      "chapter_04_marie_pre_party": {
-        "after_conversation_completed": "chapter_04_pauline_invite",
-        "time_label": "19:12",
+    "progression": {
+      "chapter_04_mathilde_late_morning": {
+        "after_conversation_completed": "chapter_04_marie_morning",
+        "time_label": "12:18",
+        "pending": true,
+        "notification": {
+          "title": "Mathilde",
+          "body": "Je passe un peu plus tard."
+        }
+      },
+      "chapter_04_sandra_midday": {
+        "after_conversation_completed": "chapter_04_mathilde_late_morning",
+        "time_label": "15:43",
+        "pending": true,
+        "notification": {
+          "title": "Sandra",
+          "body": "Je t’envoie une respiration de midi."
+        }
+      },
+      "chapter_04_marie_late_afternoon": {
+        "after_conversation_completed": "chapter_04_sandra_midday",
+        "time_label": "19:52",
         "pending": true,
         "notification": {
           "title": "Marie",
-          "body": "Tu me dis si c’est trop ?"
-        }
-      },
-      "chapter_04_party_group_arrival": {
-        "after_conversation_completed": "chapter_04_marie_pre_party",
-        "time_label": "20:36",
-        "pending": true,
-        "notification": {
-          "title": "Pauline",
-          "body": "On est arrivées. Regarde la photo."
+          "body": "Je rentre bientôt."
         }
       }
     }

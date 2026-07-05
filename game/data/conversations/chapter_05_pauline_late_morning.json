@@ -1,0 +1,111 @@
+{
+  "id": "chapter_05_pauline_late_morning",
+  "chapter": 5,
+  "day": 5,
+  "title": "Jour 5 — Je l’embarque prendre l’air",
+  "app": "messages",
+  "thread": {
+    "id": "thread_pauline_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "pauline"
+    ],
+    "display_name": "Pauline",
+    "profile_content_id": "profile_pauline_placeholder"
+  },
+  "design_goal": "Pauline annonce la sortie avec Marie : vive, sociale, complice et non manipulatrice.",
+  "debug_notes": "Aucune pression de preuve ; simple annonce de sortie ; Player à distance.",
+  "segments": [
+    {
+      "conversation_segment_id": "c05_pauline_late_morning_seg_01",
+      "moment_label": "fin de matinée",
+      "time_label": "10:06",
+      "messages": [
+        {
+          "id": "msg_c05_pauline_001",
+          "sender": "pauline",
+          "time_label": "10:06",
+          "text": "Coucou 🙂"
+        },
+        {
+          "id": "msg_c05_pauline_002",
+          "sender": "pauline",
+          "time_label": "10:06",
+          "text": "Je t’écris avant que Marie parte."
+        },
+        {
+          "id": "msg_c05_pauline_003",
+          "sender": "pauline",
+          "time_label": "10:07",
+          "text": "Ce soir, je l’embarque prendre l’air."
+        },
+        {
+          "id": "msg_c05_pauline_004",
+          "sender": "pauline",
+          "time_label": "10:07",
+          "text": "Rien de spectaculaire. Juste un verre et un peu d’air."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c05_pauline_01_tender",
+          "text": "Tu prends soin d’elle, alors.",
+          "tone": "tender",
+          "next_messages": [
+            {
+              "id": "msg_c05_pauline_01_tender_01",
+              "sender": "pauline",
+              "time_label": "10:07",
+              "text": "Oui, c’est l’idée."
+            },
+            {
+              "id": "msg_c05_pauline_01_tender_02",
+              "sender": "pauline",
+              "time_label": "10:07",
+              "text": "Je veux juste qu’elle respire un peu."
+            }
+          ]
+        },
+        {
+          "id": "choice_c05_pauline_02_curious",
+          "text": "Vous allez où, à peu près ?",
+          "tone": "curious",
+          "next_messages": [
+            {
+              "id": "msg_c05_pauline_02_curious_01",
+              "sender": "pauline",
+              "time_label": "10:07",
+              "text": "Pas loin."
+            },
+            {
+              "id": "msg_c05_pauline_02_curious_02",
+              "sender": "pauline",
+              "time_label": "10:08",
+              "text": "Une terrasse tranquille, un endroit simple."
+            }
+          ]
+        },
+        {
+          "id": "choice_c05_pauline_03_joking",
+          "text": "Je te fais confiance pour ne pas la faire courir partout.",
+          "tone": "joking",
+          "next_messages": [
+            {
+              "id": "msg_c05_pauline_03_joking_01",
+              "sender": "pauline",
+              "time_label": "10:08",
+              "text": "Promis."
+            },
+            {
+              "id": "msg_c05_pauline_03_joking_02",
+              "sender": "pauline",
+              "time_label": "10:08",
+              "text": "Je la ménage, même quand elle râle."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

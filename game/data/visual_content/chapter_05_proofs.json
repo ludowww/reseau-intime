@@ -1,281 +1,70 @@
 {
   "id": "chapter_05_proof_placeholders",
-  "version": 2,
-  "notes": "J5 garde Marie comme trace sociale, ajoute Nico comme premier pivot léger, et reste à trois contenus visuels consentis ou neutres sans photo intime.",
+  "version": 3,
+  "notes": "J5 social : Marie sort avec Pauline, les traces sont consenties, sociales et défendables.",
   "items": [
     {
-      "id": "photo_party_after_j5_placeholder",
-      "character": "pauline",
-      "tier": 2,
+      "id": "marie_j5_outfit_before_outing_placeholder",
+      "character": "marie",
+      "tier": 1,
       "type": "photo",
       "source_app": "messages",
-      "asset_path": "res://assets/placeholders/photo_party_after_j5_placeholder.png",
-      "context": "Ancien placeholder de tri Pauline conservé pour compatibilité.",
+      "asset_path": "res://assets/placeholders/marie_j5_outfit_before_outing_placeholder.png",
+      "context": "Marie prête à sortir, tenue simple et jolie, regard demandé avant le départ.",
       "tags": [
-        "pauline",
-        "party",
-        "after_party",
-        "photo",
-        "proof",
-        "weak_evidence"
+        "marie",
+        "day5",
+        "outfit",
+        "before_outing"
       ],
-      "is_proof": true,
-      "risk_level": 4,
+      "is_proof": false,
+      "risk_level": 1,
       "can_delete": true,
       "can_capture": true,
       "can_set_as_wallpaper": false,
       "can_be_discovered_by": [
-        "marie",
-        "pauline",
-        "mathilde",
-        "nico"
+        "marie"
       ]
     },
     {
-      "id": "story_marie_nico_j5_placeholder",
-      "character": "nico",
-      "tier": 2,
-      "type": "story",
-      "source_app": "social",
-      "asset_path": "res://assets/placeholders/story_marie_nico_j5_placeholder.png",
-      "context": "Ancienne story Nico/Marie conservée pour compatibilité des fichiers non réécrits.",
+      "id": "marie_pauline_j5_selfie_placeholder",
+      "character": null,
+      "tier": 1,
+      "type": "group_photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/marie_pauline_j5_selfie_placeholder.png",
+      "context": "Selfie Marie / Pauline pendant la sortie, sourire social et cadrage simple.",
       "tags": [
-        "nico",
         "marie",
-        "story",
-        "social",
-        "jealousy",
-        "mirror"
+        "pauline",
+        "day5",
+        "selfie",
+        "social"
       ],
       "is_proof": false,
-      "risk_level": 3,
+      "risk_level": 1,
       "can_delete": false,
       "can_capture": true,
       "can_set_as_wallpaper": false,
       "can_be_discovered_by": [
         "marie",
-        "nico",
         "pauline"
       ]
     },
     {
-      "id": "photo_mathilde_after_party_j5_placeholder",
-      "character": "mathilde",
-      "tier": 2,
-      "type": "photo",
-      "source_app": "messages",
-      "asset_path": "res://assets/placeholders/photo_mathilde_after_party_j5_placeholder.png",
-      "context": "Ancien placeholder Mathilde conservé pour compatibilité.",
-      "tags": [
-        "mathilde",
-        "after_party",
-        "photo",
-        "teasing",
-        "forbidden",
-        "proof_seed"
-      ],
-      "is_proof": true,
-      "risk_level": 3,
-      "can_delete": true,
-      "can_capture": true,
-      "can_set_as_wallpaper": true,
-      "can_be_discovered_by": [
-        "marie",
-        "mathilde"
-      ]
-    },
-    {
-      "id": "photo_marie_after_party_j5_placeholder",
-      "character": "marie",
+      "id": "j5_terrace_evening_placeholder",
+      "character": null,
       "tier": 1,
       "type": "photo",
       "source_app": "messages",
-      "asset_path": "res://assets/placeholders/photo_marie_after_party_j5_placeholder.png",
-      "context": "Ancien placeholder Marie du lendemain conservé pour compatibilité.",
+      "asset_path": "res://assets/placeholders/j5_terrace_evening_placeholder.png",
+      "context": "Terrasse, verre, lumière de début de soirée et petite assiette.",
       "tags": [
-        "marie",
-        "after_party",
-        "morning",
-        "tender",
-        "couple"
-      ],
-      "is_proof": false,
-      "risk_level": 1,
-      "can_delete": true,
-      "can_capture": true,
-      "can_set_as_wallpaper": true,
-      "can_be_discovered_by": [
-        "marie"
-      ]
-    },
-    {
-      "id": "photo_pauline_soft_provocation_j5_placeholder",
-      "character": "pauline",
-      "tier": 1,
-      "type": "photo",
-      "source_app": "messages",
-      "asset_path": "res://assets/placeholders/photo_pauline_soft_provocation_j5_placeholder.png",
-      "context": "Ancien placeholder Pauline de provocation conservé pour compatibilité.",
-      "tags": [
-        "pauline",
-        "provocation",
-        "control",
-        "party",
-        "soft"
-      ],
-      "is_proof": false,
-      "risk_level": 2,
-      "can_delete": true,
-      "can_capture": true,
-      "can_set_as_wallpaper": false,
-      "can_be_discovered_by": [
-        "pauline",
-        "marie"
-      ]
-    },
-    {
-      "id": "pauline_cheating_proof_seed_j5_placeholder",
-      "character": "pauline",
-      "tier": 2,
-      "type": "capture",
-      "source_app": "messages",
-      "asset_path": "res://assets/placeholders/pauline_cheating_proof_seed_j5_placeholder.png",
-      "context": "Ancienne trace Pauline conservée pour compatibilité.",
-      "tags": [
-        "pauline",
-        "secret",
-        "seed",
-        "proof",
-        "offscreen"
-      ],
-      "is_proof": true,
-      "risk_level": 4,
-      "can_delete": true,
-      "can_capture": false,
-      "can_set_as_wallpaper": false,
-      "can_be_discovered_by": [
-        "pauline",
-        "marie",
-        "nico"
-      ]
-    },
-    {
-      "id": "j5_marie_party_nico_frame",
-      "character": "marie",
-      "tier": 1,
-      "type": "photo",
-      "source_app": "messages",
-      "asset_path": "res://assets/placeholders/j5_marie_party_nico_frame.png",
-      "context": "Photo sociale ; Marie rit avec Nico ; proximité défendable mais visible ; seed jalousie / miroir.",
-      "tags": [
-        "marie",
-        "nico",
-        "party",
-        "social",
-        "mirror",
-        "jealousy"
-      ],
-      "is_proof": false,
-      "risk_level": 2,
-      "can_delete": true,
-      "can_capture": true,
-      "can_set_as_wallpaper": false,
-      "can_be_discovered_by": [
-        "marie",
-        "pauline",
-        "nico"
-      ]
-    },
-    {
-      "id": "j5_pauline_street_selfie",
-      "character": "pauline",
-      "tier": 1,
-      "type": "photo",
-      "source_app": "messages",
-      "asset_path": "res://assets/placeholders/j5_pauline_street_selfie.png",
-      "context": "Selfie Pauline dehors ; manteau sage ; risque public contrôlé ; pas d’exposition de tiers.",
-      "tags": [
-        "pauline",
-        "street",
-        "selfie",
-        "public",
-        "control"
-      ],
-      "is_proof": false,
-      "risk_level": 1,
-      "can_delete": true,
-      "can_capture": true,
-      "can_set_as_wallpaper": false,
-      "can_be_discovered_by": [
-        "pauline",
-        "marie"
-      ]
-    },
-    {
-      "id": "j5_sandra_restaurant_soft_crop",
-      "character": "sandra",
-      "tier": 1,
-      "type": "photo",
-      "source_app": "messages",
-      "asset_path": "res://assets/placeholders/j5_sandra_restaurant_soft_crop.png",
-      "context": "Photo douce / souvenir restaurant ; confiance ; début du jeu confidence/photo.",
-      "tags": [
-        "sandra",
-        "restaurant",
-        "soft",
-        "trust",
-        "memory"
-      ],
-      "is_proof": false,
-      "risk_level": 1,
-      "can_delete": true,
-      "can_capture": true,
-      "can_set_as_wallpaper": true,
-      "can_be_discovered_by": [
-        "sandra",
-        "marie"
-      ]
-    },
-    {
-      "id": "j5_nico_thread_capture",
-      "character": "nico",
-      "tier": 1,
-      "type": "capture",
-      "source_app": "messages",
-      "asset_path": "res://assets/placeholders/j5_nico_thread_capture.png",
-      "context": "Capture neutre du fil Nico ; il chambre Player sans devenir menaçant.",
-      "tags": [
-        "nico",
-        "capture",
-        "messages",
-        "neutral",
-        "mirror"
-      ],
-      "is_proof": false,
-      "risk_level": 1,
-      "can_delete": true,
-      "can_capture": false,
-      "can_set_as_wallpaper": false,
-      "can_be_discovered_by": [
-        "nico",
-        "marie",
-        "pauline"
-      ]
-    },
-    {
-      "id": "j5_nico_bar_context",
-      "character": "nico",
-      "tier": 1,
-      "type": "photo",
-      "source_app": "messages",
-      "asset_path": "res://assets/placeholders/j5_nico_bar_context.png",
-      "context": "Photo de contexte ; Nico au bar avec un verre ; présence sociale réelle et défendable.",
-      "tags": [
-        "nico",
-        "bar",
+        "day5",
+        "terrace",
+        "evening",
         "glass",
-        "social",
-        "context"
+        "social"
       ],
       "is_proof": false,
       "risk_level": 1,
@@ -283,7 +72,31 @@
       "can_capture": true,
       "can_set_as_wallpaper": false,
       "can_be_discovered_by": [
-        "nico",
+        "marie",
+        "pauline"
+      ]
+    },
+    {
+      "id": "pauline_j5_social_smile_placeholder",
+      "character": "pauline",
+      "tier": 1,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/pauline_j5_social_smile_placeholder.png",
+      "context": "Pauline sourit avec une énergie vive et amicale.",
+      "tags": [
+        "pauline",
+        "day5",
+        "smile",
+        "social"
+      ],
+      "is_proof": false,
+      "risk_level": 1,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": false,
+      "can_be_discovered_by": [
+        "pauline",
         "marie"
       ]
     }

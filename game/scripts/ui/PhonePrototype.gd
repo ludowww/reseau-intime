@@ -354,7 +354,7 @@ func _on_conversation_completed(day_value, conversation_id: String) -> void:
 
 func _unlock_conversations_after_completion(day_value, completed_conversation_id: String) -> void:
 	var availability := _conversation_availability_for_day(day_value)
-	var unlocks: Dictionary = availability.get("unlocks", {})
+	var unlocks: Dictionary = availability.get("progression", availability.get("unlocks", {}))
 	for target_id in unlocks.keys():
 		var rule: Dictionary = unlocks[target_id]
 		if str(rule.get("after_conversation_completed", "")) != completed_conversation_id:

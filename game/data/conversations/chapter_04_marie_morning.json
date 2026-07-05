@@ -1,0 +1,112 @@
+{
+  "id": "chapter_04_marie_morning",
+  "chapter": 4,
+  "day": 4,
+  "title": "Jour 4 — Le matin tient encore la maison",
+  "app": "messages",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "marie"
+    ],
+    "display_name": "Marie",
+    "profile_content_id": "profile_marie_placeholder"
+  },
+  "design_goal": "Marie ouvre J4 depuis un moment hors maison, avec café, biscuits et humour domestique.",
+  "debug_notes": "Player est dehors ; Marie reste le centre affectif ; aucune écriture automatique Player.",
+  "segments": [
+    {
+      "conversation_segment_id": "c04_marie_morning_seg_01",
+      "moment_label": "matin",
+      "time_label": "08:26",
+      "messages": [
+        {
+          "id": "msg_c04_marie_morning_001",
+          "sender": "marie",
+          "time_label": "08:26",
+          "text": "Je suis encore sur le café du matin."
+        },
+        {
+          "id": "msg_c04_marie_morning_002",
+          "sender": "marie",
+          "time_label": "08:26",
+          "text": "Et sur les biscuits aussi, évidemment."
+        },
+        {
+          "id": "msg_c04_marie_morning_003",
+          "sender": "marie",
+          "time_label": "08:27",
+          "content_id": "marie_j4_morning_table_soft_placeholder",
+          "text": "Table, lumière simple, petite assiette et calme de maison."
+        },
+        {
+          "id": "msg_c04_marie_morning_004",
+          "sender": "marie",
+          "time_label": "08:27",
+          "text": "Je te laisse le droit d’avoir un avis."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c04_marie_morning_01_tender",
+          "text": "Tu me rends le matin plus doux.",
+          "tone": "tender",
+          "next_messages": [
+            {
+              "id": "msg_c04_marie_morning_01_tender_01",
+              "sender": "marie",
+              "time_label": "08:27",
+              "text": "Ça, c’est gentil."
+            },
+            {
+              "id": "msg_c04_marie_morning_01_tender_02",
+              "sender": "marie",
+              "time_label": "08:27",
+              "text": "Je garde ça avec le café."
+            }
+          ]
+        },
+        {
+          "id": "choice_c04_marie_morning_02_playful",
+          "text": "Je valide les biscuits, évidemment.",
+          "tone": "playful",
+          "next_messages": [
+            {
+              "id": "msg_c04_marie_morning_02_playful_01",
+              "sender": "marie",
+              "time_label": "08:27",
+              "text": "Tu sais parler à mes priorités."
+            },
+            {
+              "id": "msg_c04_marie_morning_02_playful_02",
+              "sender": "marie",
+              "time_label": "08:28",
+              "text": "Ça me rassure pour la suite."
+            }
+          ]
+        },
+        {
+          "id": "choice_c04_marie_morning_03_supportive",
+          "text": "Prends ton temps, la maison peut attendre.",
+          "tone": "supportive",
+          "next_messages": [
+            {
+              "id": "msg_c04_marie_morning_03_supportive_01",
+              "sender": "marie",
+              "time_label": "08:28",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_c04_marie_morning_03_supportive_02",
+              "sender": "marie",
+              "time_label": "08:28",
+              "text": "Et ça me fait du bien de l’entendre."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

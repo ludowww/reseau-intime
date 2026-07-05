@@ -1,0 +1,112 @@
+{
+  "id": "chapter_04_sandra_midday",
+  "chapter": 4,
+  "day": 4,
+  "title": "Jour 4 — Lecture, lac, marge",
+  "app": "messages",
+  "thread": {
+    "id": "thread_sandra_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "sandra"
+    ],
+    "display_name": "Sandra",
+    "profile_content_id": "profile_sandra_placeholder"
+  },
+  "design_goal": "Sandra offre une respiration douce, avec roman, marque-page et bord de lac.",
+  "debug_notes": "Pas de concurrence ; esquive calme ; humour léger.",
+  "segments": [
+    {
+      "conversation_segment_id": "c04_sandra_midday_seg_01",
+      "moment_label": "midi",
+      "time_label": "15:43",
+      "messages": [
+        {
+          "id": "msg_c04_sandra_001",
+          "sender": "sandra",
+          "time_label": "15:43",
+          "text": "Je lis en pause."
+        },
+        {
+          "id": "msg_c04_sandra_002",
+          "sender": "sandra",
+          "time_label": "15:43",
+          "text": "Le roman a survécu à ma concentration, ce qui est rare."
+        },
+        {
+          "id": "msg_c04_sandra_003",
+          "sender": "sandra",
+          "time_label": "15:44",
+          "content_id": "sandra_j4_book_margin_soft_placeholder",
+          "text": "Marque-page, marge pliée et lac au loin."
+        },
+        {
+          "id": "msg_c04_sandra_004",
+          "sender": "sandra",
+          "time_label": "15:44",
+          "text": "Je te dirais bien que c’est une grande aventure, mais non."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c04_sandra_01_tender",
+          "text": "J’aime bien ton calme.",
+          "tone": "tender",
+          "next_messages": [
+            {
+              "id": "msg_c04_sandra_01_tender_01",
+              "sender": "sandra",
+              "time_label": "15:44",
+              "text": "Ça m’arrange."
+            },
+            {
+              "id": "msg_c04_sandra_01_tender_02",
+              "sender": "sandra",
+              "time_label": "15:44",
+              "text": "Je le prête rarement."
+            }
+          ]
+        },
+        {
+          "id": "choice_c04_sandra_02_curious",
+          "text": "Quel livre te tient compagnie ?",
+          "tone": "curious",
+          "next_messages": [
+            {
+              "id": "msg_c04_sandra_02_curious_01",
+              "sender": "sandra",
+              "time_label": "15:44",
+              "text": "Un roman qui fait semblant d’être plus sage que moi."
+            },
+            {
+              "id": "msg_c04_sandra_02_curious_02",
+              "sender": "sandra",
+              "time_label": "15:44",
+              "text": "Il perd déjà."
+            }
+          ]
+        },
+        {
+          "id": "choice_c04_sandra_03_quiet",
+          "text": "Profite un peu du lac pour moi.",
+          "tone": "quiet",
+          "next_messages": [
+            {
+              "id": "msg_c04_sandra_03_quiet_01",
+              "sender": "sandra",
+              "time_label": "15:45",
+              "text": "Je peux faire ça."
+            },
+            {
+              "id": "msg_c04_sandra_03_quiet_02",
+              "sender": "sandra",
+              "time_label": "15:45",
+              "text": "Sans promettre de devenir philosophe."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
