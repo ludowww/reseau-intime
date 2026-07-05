@@ -1,5 +1,9 @@
 # Colonne vertébrale scénario — J1 à J10
 
+> Spine historique partiellement remplacé.
+> J1-J3 doivent être lus depuis les runtime/source packs récents ; J4+ reste à redéfinir.
+> Les mentions du type « J1-J4 base narrative utilisable » doivent être nuancées ou corrigées.
+
 > V0.57 est désormais la source principale pour la hiérarchie routes/personnages.
 > V0.56 reste l’audit de continuité J1→J9 ; les sections plus anciennes doivent être lues avec prudence si elles divergent.
 
@@ -12,7 +16,8 @@ Il sert à arrêter la progression au fil de l’eau et à fixer une trajectoire
 État actuel :
 
 ```text
-J1-J4 : base narrative utilisable.
+J1-J3 : vérité narrative récente utilisable.
+J4+ : legacy / à redéfinir.
 J5-J6 : runtime techniquement intégré, mais narrativement provisoire.
 J7 : à ne pas produire tant que J5/J6 ne sont pas recadrés.
 ```

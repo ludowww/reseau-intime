@@ -1,5 +1,10 @@
 # 17 — Beat sheet du vertical slice
 
+> ⚠️ Document historique / partiellement obsolète.
+> Ne pas l’utiliser comme source directe pour J1-J3.
+> Le beat « Pauline annonce la soirée » en J1 et l’ancien panel ne sont plus la vérité actuelle.
+> À conserver seulement comme archive d’intentions techniques / vertical slice si utile.
+
 > V0.57 (`docs/V0_57_Route_Character_Rework_Blueprint.md`) guide désormais la hiérarchie des routes dans le slice.
 > Le beat sheet reste valable comme structure de slice, mais les routes secondaires doivent être lues en appui du centre Marie.
 

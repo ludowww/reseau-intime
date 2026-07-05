@@ -1,5 +1,9 @@
 # Plan de réécriture — J5 / J6
 
+> Note de statut : ce plan reste utile uniquement après redéfinition du nouveau J4.
+> Ne pas relancer J5/J6 depuis l’ancien enchaînement J3/J4.
+> J5/J6 restent suspendus tant que le J4 nouveau n’est pas écrit et verrouillé.
+
 > V0.57 est la référence narrative principale pour cette réécriture.
 > Ce plan reste pertinent, mais ses priorités doivent être lues dans une hiérarchie Marie-centrique plutôt qu’en panel égalitaire.
 

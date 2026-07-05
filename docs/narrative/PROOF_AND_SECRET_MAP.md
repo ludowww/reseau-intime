@@ -1,5 +1,8 @@
 # Carte des preuves et secrets
 
+> Note de lecture : la « photo canapé / Mathilde » est désormais legacy / quarantinée.
+> Le J3 Mathilde actuel doit partir d’une trace douce non-preuve (plafond / araignée / chambre récupérée), pas d’une preuve forte.
+
 > V0.57 fixe la hiérarchie narrative principale.
 > Les preuves restent valides ici, mais leur poids doit rester compatible avec une Marie centrale et des routes secondaires différées.
 
@@ -106,23 +109,23 @@ J5-J6 : ne pas répéter via nouvelle photo.
 J7+ : Sandra peut retirer une image, refuser d’en envoyer une, ou proposer un vrai moment sans support visuel.
 ```
 
-### Photo canapé / Mathilde
+### Photo canapé / Mathilde (legacy quarantiné)
 
-Statut : preuve faible domestique.
+Statut : legacy historique, à ne plus traiter comme preuve actuelle J3.
 
 Possesseur : Player si gardée ; Mathilde sait ou soupçonne qu’elle existe.
 
-Ce qu’elle prouve : Player a laissé une trace d’un trouble dans l’espace de Marie.
+Ce qu’elle prouvait : Player a laissé une trace d’un trouble dans l’espace de Marie.
 
 Ce qu’elle ne prouve pas : acte consommé ou route assumée.
 
-Problème actuel : elle risque de revenir plusieurs jours comme même sujet.
+Problème actuel : elle ne doit plus revenir comme base du J3 actuel.
 
 Évolution obligatoire :
 
 ```text
 Après J6, ne plus demander simplement “tu l’as gardée ?”.
-La preuve doit être soit supprimée, soit déplacée, soit transformée en conséquence domestique.
+La trace doit être supprimée, déplacée, ou transformée en conséquence domestique.
 ```
 
 Options futures :
@@ -133,6 +136,23 @@ Options futures :
 - Marie approche sans savoir exactement ;
 - Player ment sur l’existence de la photo ;
 - la photo cesse d’être centrale et devient un comportement.
+```
+
+### Trace douce J3 Mathilde (plafond / araignée / chambre récupérée)
+
+Statut : trace douce non-preuve.
+
+Possesseur : Mathilde / Player selon la scène, sans verrou de preuve.
+
+Ce qu’elle prouve : un trouble domestique, une gêne concrète, une chambre à gérer.
+
+Ce qu’elle ne prouve pas : un acte, une route, une sexualisation, une preuve forte.
+
+Évolution :
+
+```text
+J3 : garder cette trace faible et respirable.
+J4+ : redéfinir les preuves à partir de ce pivot, pas à partir du canapé / photo ambiguë.
 ```
 
 ### Photo groupe J4

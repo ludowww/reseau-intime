@@ -1,5 +1,8 @@
 # Arcs personnages — J1 à J10
 
+> Note de lecture : le J3 « photo canapé / première trace ambiguë » est remplacé par un pivot domestique nocturne Mathilde (araignée / problème chambre / trace douce, non-proof, non-sexualisé).
+> Les arcs J4+ restent utiles comme intentions longues, mais ils sont suspendus tant que la nouvelle direction n’est pas verrouillée.
+
 > V0.57 (`docs/V0_57_Route_Character_Rework_Blueprint.md`) prime pour la hiérarchie des arcs.
 > Les arcs ci-dessous restent utiles, mais toute lecture “symétrique” des personnages doit être réévaluée à travers V0.57.
 
@@ -110,7 +113,7 @@ Mathilde amène le trouble dans le quotidien domestique. Elle est proche, vive, 
 ```text
 J1 : indirecte via Marie.
 J2 : présence domestique installée.
-J3 : première trace ambiguë.
+J3 : pivot domestique nocturne ; araignée / chambre récupérée ; trace douce, non-preuve, non-sexualisée.
 J4 : témoin social du trouble.
 J5 : question de la photo gardée ou supprimée.
 J6 : la trace est nommée comme limite, dette, jeu ou danger.
@@ -123,17 +126,19 @@ J10 : Mathilde n’est plus seulement “risque excitant” ; elle est aussi con
 ### Risque actuel
 
 ```text
-Mathilde répète : photo / canapé / tu l’as gardée ?
+Mathilde répète : photo / canapé / tu l’as gardée ? (motif legacy, à ne plus réactiver comme J3 actuel)
 ```
 
 ### Correction
+
+Le J3 photo canapé n’est plus la bonne base.
 
 Après J6, ne plus centrer Mathilde sur la même photo.
 
 Évolutions possibles :
 
 ```text
-- Mathilde retire la trace ;
+- Mathilde retire la trace ou la remplace par une scène de chambre / plafond / araignée ;
 - elle demande à Player de ne plus jouer ;
 - elle teste Player dans une scène sans photo ;
 - elle devient plus loyale envers Marie ;

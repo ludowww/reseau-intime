@@ -1,5 +1,10 @@
 # 21 — Jour 4 : Lendemain et première vraie preuve
 
+> ⚠️ Plan obsolète pour le J4 actuel à définir.
+> Ce document dépend d’un ancien J3 soirée / panel et ne doit pas servir de source directe d’intégration.
+> Le nouveau J4 devra être redéfini depuis le J3 domestique nocturne Mathilde.
+> Garder ce texte comme archive de cadrage seulement.
+
 > V0.57 (`docs/V0_57_Route_Character_Rework_Blueprint.md`) guide la hiérarchie actuelle.
 > Ce plan J4 reste utile, mais la “première preuve” doit être lue comme conséquence d’une hiérarchie route/personnage déjà orientée par Marie.
 

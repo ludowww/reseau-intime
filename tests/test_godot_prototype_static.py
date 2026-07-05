@@ -195,6 +195,18 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         ]:
             self.assertNotIn(forbidden, chapter03_text)
 
+    def test_route_simulation_reflects_j3_domestic_mathilde_labels(self):
+        tool = (ROOT / "tools" / "simulate_route_paths.py").read_text(encoding="utf-8")
+        forbidden_tokens = [
+            "party_" + "day" + "3",
+            "opened_mathilde_first_" + "party_" + "day" + "3",
+            "put_phone_down_for_marie_" + "party_" + "day" + "3",
+        ]
+        for forbidden in forbidden_tokens:
+            self.assertNotIn(forbidden, tool)
+        self.assertIn("j3_domestic_night", tool)
+        self.assertIn("Mathilde pivot on J3", tool)
+
     def test_effect_applier_supports_dotted_global_passive_flags_and_unknowns(self):
         script = (GAME / "scripts" / "core" / "EffectApplier.gd").read_text(encoding="utf-8")
         for expected in [

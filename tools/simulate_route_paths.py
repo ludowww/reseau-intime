@@ -2,7 +2,8 @@
 """Simulate simple deterministic narrative route paths for days 1-4.
 
 This is a product/debug probe, not a full game engine. Paths are manually
-curated from the current vertical-slice route matrix and initial state.
+curated from the current J1-J3 truth, including the domestic nocturnal
+Mathilde pivot on J3, with J4+ kept as legacy / prospective route probes.
 Run from repository root:
 
     python3 tools/simulate_route_paths.py
@@ -23,6 +24,9 @@ ROUTES = ("marie", "mathilde", "sandra", "pauline", "nico_marie")
 STRONG_ROUTE_MARGIN = 8
 FINAL_LOCK_SCORE = 90
 BALANCED_STRONG_SCORE = 25
+
+# J3 labels intentionally reference the domestic/night pivot instead of the old party-day wording.
+# Pauline / Nico routes remain as future or J4+ legacy probes, not as active J3 party beats.
 
 
 @dataclass(frozen=True)
@@ -241,7 +245,7 @@ PATHS = (
         steps=(
             Step("Jour 1: répondre à Marie", {"marie.trust": 2, "truth_tendency": 2}, ("answered_marie_day1",), {"marie_attention_score": 1}),
             Step("Jour 2: rassurer Marie après la story", {"marie.trust": 2, "truth_tendency": 2}, ("replied_to_marie_story_day2",), {"marie_attention_score": 1}),
-            Step("Jour 3: poser le téléphone pour Marie", {"marie.trust": 2, "truth_tendency": 1}, ("put_phone_down_for_marie_party_day3",), {"marie_attention_score": 1}),
+            Step("Jour 3: poser le téléphone pendant le pivot Mathilde nocturne", {"marie.trust": 2, "truth_tendency": 1}, ("put_phone_down_for_marie_j3_domestic_night",), {"marie_attention_score": 1}),
             Step("Jour 4: vérité partielle", {"marie.trust": 1, "marie.lucidity": 1, "truth_tendency": 2}, ("day4_closer_marie_truth",), {}),
         ),
     ),
@@ -252,7 +256,7 @@ PATHS = (
         steps=(
             Step("Jour 1: tension domestique", {"mathilde.desire": 2, "lie_score": 1}, ("mathilde_home_scene_seen",), {"mathilde_attention_score": 1}),
             Step("Jour 2: sous-entendu accepté", {"mathilde.desire": 3, "lie_score": 1}, ("mathilde_ambiguous_joke_accepted",), {"mathilde_attention_score": 1}),
-            Step("Jour 3: ouvrir Mathilde en premier", {"mathilde.desire": 2, "marie.lucidity": 1}, ("opened_mathilde_first_party_day3",), {"mathilde_attention_score": 1}),
+            Step("Jour 3: ouvrir Mathilde en premier dans le pivot domestique nocturne", {"mathilde.desire": 2, "marie.lucidity": 1}, ("opened_mathilde_first_j3_domestic_night",), {"mathilde_attention_score": 1}),
             Step("Jour 4: preuve Mathilde", {"mathilde.desire": 1}, ("first_proof_mathilde_warning_photo_day4", "day4_closer_mathilde_guilt"), {}),
         ),
     ),
@@ -263,29 +267,29 @@ PATHS = (
         steps=(
             Step("Jour 1: vulnérabilité partagée", {"sandra.attachment": 3, "truth_tendency": 1}, ("shared_small_vulnerability_with_sandra_day1",), {"sandra_priority_score": 1}),
             Step("Jour 2: priorité émotionnelle", {"sandra.attachment": 3, "lie_score": 1}, ("answered_sandra_light_day2",), {"sandra_priority_score": 1, "marie_neglect_score": 1}),
-            Step("Jour 3: ouvrir Sandra pendant la soirée", {"sandra.attachment": 2, "sandra.exposure": 1}, ("opened_sandra_first_party_day3", "answered_sandra_during_party_day3"), {"sandra_priority_score": 1}),
+            Step("Jour 3: ouvrir Sandra hors du faux panel", {"sandra.attachment": 2, "sandra.exposure": 1}, ("opened_sandra_first_j3_domestic_night", "answered_sandra_during_j3_domestic_night"), {"sandra_priority_score": 1}),
             Step("Jour 4: fil supprimé", {"sandra.attachment": 1, "lie_score": 1}, ("first_proof_sandra_deleted_thread_day4", "day4_closer_sandra_reasonable"), {}),
         ),
     ),
     PathSpec(
-        name="pauline_risk_path",
+        name="pauline_future_legacy_probe",
         expected_route="pauline",
         expected_threat="proof_capture",
         steps=(
             Step("Jour 1: accepter le jeu social", {"pauline.interest": 2, "social_pressure": 1}, ("noticed_pauline_social_game_day1",), {"pauline_risk_score": 1}),
             Step("Jour 2: répondre à Pauline", {"pauline.interest": 2, "pauline.control": 2, "lie_score": 1}, ("answered_pauline_provocation_day2",), {"pauline_risk_score": 1}),
-            Step("Jour 3: ouvrir Pauline en premier", {"pauline.interest": 2, "pauline.control": 2, "social_pressure": 1}, ("opened_pauline_first_party_day3",), {"pauline_risk_score": 1}),
+            Step("Jour 3: Pauline reste future / legacy", {"pauline.interest": 2, "pauline.control": 2, "social_pressure": 1}, ("opened_pauline_first_j3_domestic_night",), {"pauline_risk_score": 1}),
             Step("Jour 4: capture Pauline", {"pauline.control": 2, "lie_score": 1}, ("first_proof_pauline_capture_day4", "day4_closer_pauline_control"), {}),
         ),
     ),
     PathSpec(
-        name="nico_marie_jealousy_path",
+        name="nico_marie_future_legacy_probe",
         expected_route="nico_marie",
         expected_threat="nico",
         steps=(
             Step("Jour 1: laisser Nico prendre de la place", {"nico.place_near_marie": 3, "ludo_jealousy": 2}, ("nico_complimented_marie_seen_day1",), {"nico_surveillance_score": 1}),
             Step("Jour 2: regarder la story Nico/Marie", {"ludo_jealousy": 3, "nico.place_near_marie": 2}, ("checked_marie_nico_story_day2",), {"nico_surveillance_score": 1, "marie_neglect_score": 1}),
-            Step("Jour 3: continuer à regarder", {"ludo_jealousy": 2, "nico.place_near_marie": 1, "lie_score": 1}, ("watched_nico_marie_story_party_day3",), {"nico_surveillance_score": 1, "marie_neglect_score": 1}),
+            Step("Jour 3: Nico reste futur / legacy", {"ludo_jealousy": 2, "nico.place_near_marie": 1, "lie_score": 1}, ("watched_nico_marie_story_j3_domestic_night",), {"nico_surveillance_score": 1, "marie_neglect_score": 1}),
             Step("Jour 4: preuve story Nico/Marie", {"ludo_jealousy": 1}, ("first_proof_nico_marie_story_day4", "day4_closer_nico_jealousy"), {}),
         ),
     ),
@@ -297,7 +301,7 @@ PATHS = (
         steps=(
             Step("Jour 1: répondre sans ambiguïté", {"marie.trust": 1, "truth_tendency": 1}, ("answered_marie_day1",), {"marie_attention_score": 1}),
             Step("Jour 2: café Raphaëlle clair", {"raphaelle.attachment": 1, "raphaelle.clarity": 1, "truth_tendency": 1}, ("accepted_raphaelle_coffee_clear_day2",), {"raphaelle_clarity_score": 1}),
-            Step("Jour 3: ne prioriser personne fortement", {"social_pressure": 1}, ("put_phone_down_for_marie_party_day3",), {}),
+            Step("Jour 3: J3 domestique sans verrou", {"social_pressure": 1}, ("put_phone_down_for_marie_j3_domestic_night",), {}),
             Step("Jour 4: bilan ouvert", {"truth_tendency": 1}, ("day4_balanced_open_state",), {}),
         ),
     ),

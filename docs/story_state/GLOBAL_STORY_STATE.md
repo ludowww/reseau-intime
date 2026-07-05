@@ -20,6 +20,13 @@ anciens day plans = historiques ou obsolètes si contradiction
 - **J3 photo canapé** : ne plus la traiter comme vérité actuelle ; au mieux, trace historique à réécrire ou à recycler plus tard.
 - **J4 / J5 anciens plans** : ne pas les lire comme vérité runtime actuelle tant qu’ils ne sont pas réécrits et verrouillés dans la nouvelle direction.
 
+## J4+ quarantine / statut narratif
+
+- J4+ peut exister dans le slice, mais il reste hors vérité narrative actuelle tant qu’il n’est pas réécrit / verrouillé après V0.70.
+- Ne pas utiliser les J4 / J5 actuels comme base de nouvelle écriture sans review produit.
+- La prochaine vraie étape narrative après J3 doit partir du nouveau J3 domestique nocturne Mathilde, pas de l’ancien J3 soirée / panel.
+- Les anciens docs post-J3 restent suspendus comme historique / legacy tant qu’ils ne sont pas réalignés.
+
 ## Ce qu’il faut considérer comme actif aujourd’hui
 
 - les runtime JSON verrouillés du jour concerné ;
