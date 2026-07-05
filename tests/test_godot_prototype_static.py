@@ -823,8 +823,21 @@ class GodotPrototypeStaticTests(unittest.TestCase):
 
     def test_day4_index_rebuilds_domestic_runtime_with_soft_visuals(self):
         index = json.loads((GAME / "data/conversations/chapter_04_index.json").read_text(encoding="utf-8"))
+        index_text = json.dumps(index, ensure_ascii=False)
         availability = index.get("conversation_availability", {})
         self.assertEqual(index.get("title"), "Jour 4 — La maison continue")
+        for legacy in [
+            "chapter_04_pauline_invite",
+            "chapter_04_marie_pre_party",
+            "chapter_04_party_group_arrival",
+            "chapter_04_route_pressure_and_debug",
+            "chapter_04_conditional_proofs",
+            "chapter_04_pauline_late_control",
+            "chapter_04_social_after_party",
+            "chapter_04_mathilde_observes",
+            "chapter_04_raphaelle_lunch_contrast",
+        ]:
+            self.assertNotIn(legacy, index_text)
         self.assertEqual(index.get("routes_available"), ["marie", "mathilde", "sandra"])
         self.assertNotIn("routes_locked_to_seed_only", index)
         self.assertNotIn("locked_conversation_ids", availability)
@@ -885,6 +898,28 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             GAME / "data" / "conversations" / "chapter_04_marie_late_afternoon.json",
         ]:
             convo = json.loads(convo_path.read_text(encoding="utf-8"))
+            convo_text = json.dumps(convo, ensure_ascii=False)
+            for legacy in [
+                "chapter_04_pauline_invite",
+                "chapter_04_marie_pre_party",
+                "chapter_04_party_group_arrival",
+                "chapter_04_route_pressure_and_debug",
+                "chapter_04_conditional_proofs",
+                "chapter_04_pauline_late_control",
+                "chapter_04_social_after_party",
+                "chapter_04_mathilde_observes",
+                "chapter_04_raphaelle_lunch_contrast",
+                "party",
+                "panel",
+                "Nico",
+                "Raphaëlle",
+                "NTR",
+                "harem",
+                "route_lock",
+                "vocal",
+                "explicit",
+            ]:
+                self.assertNotIn(legacy, convo_text)
             for segment in convo.get("segments", []):
                 for message in segment.get("messages", []):
                     self.assertNotIn(message.get("sender"), {"Player", "player", "joueur", "ludo"})
@@ -894,8 +929,19 @@ class GodotPrototypeStaticTests(unittest.TestCase):
 
     def test_day5_index_rebuilds_marie_pauline_outing_with_three_visual_traces(self):
         index = json.loads((GAME / "data/conversations/chapter_05_index.json").read_text(encoding="utf-8"))
+        index_text = json.dumps(index, ensure_ascii=False)
         availability = index.get("conversation_availability", {})
         self.assertEqual(index.get("title"), "Jour 5 — Elle est bien sortie")
+        for legacy in [
+            "chapter_05_marie_morning",
+            "chapter_05_social_story",
+            "chapter_05_mathilde_followup",
+            "chapter_05_pauline_photos",
+            "chapter_05_raphaelle_boundary",
+            "chapter_05_sandra_later",
+            "chapter_05_pauline_last_photo",
+        ]:
+            self.assertNotIn(legacy, index_text)
         self.assertEqual(index.get("routes_available"), ["marie", "pauline"])
         self.assertNotIn("routes_locked_to_seed_only", index)
         self.assertNotIn("locked_conversation_ids", availability)
@@ -956,6 +1002,26 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             GAME / "data" / "conversations" / "chapter_05_marie_return_message.json",
         ]:
             convo = json.loads(convo_path.read_text(encoding="utf-8"))
+            convo_text = json.dumps(convo, ensure_ascii=False)
+            for legacy in [
+                "chapter_05_marie_morning",
+                "chapter_05_social_story",
+                "chapter_05_mathilde_followup",
+                "chapter_05_pauline_photos",
+                "chapter_05_raphaelle_boundary",
+                "chapter_05_sandra_later",
+                "chapter_05_pauline_last_photo",
+                "party",
+                "panel",
+                "Nico",
+                "Raphaëlle",
+                "NTR",
+                "harem",
+                "route_lock",
+                "vocal",
+                "explicit",
+            ]:
+                self.assertNotIn(legacy, convo_text)
             for segment in convo.get("segments", []):
                 for message in segment.get("messages", []):
                     self.assertNotIn(message.get("sender"), {"Player", "player", "joueur", "ludo"})
