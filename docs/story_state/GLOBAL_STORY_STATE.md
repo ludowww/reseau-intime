@@ -1,13 +1,13 @@
 # État global de l’histoire
 
-> Référence de lecture active : **runtime JSON verrouillé**, puis **source packs récents**.
-> V0.57 / V0.59 restent des repères macro ; les day plans anciens ne priment pas sur la vérité jouable actuelle.
+> Référence de lecture active : **brut narratif validé / source pack canonique**, puis **runtime JSON verrouillé comme implémentation technique**.
+> V0.57 / V0.59 restent des repères macro ; les day plans anciens ne priment pas sur la vérité narrative validée.
 
 ## Hiérarchie de vérité
 
 ```text
-runtime JSON verrouillé = vérité jouable
-source packs récents = vérité d’intention
+brut narratif validé = vérité narrative
+runtime JSON verrouillé = vérité jouable / implémentation technique
 V0.57 / V0.59 = macro-direction seulement
 anciens day plans = historiques ou obsolètes si contradiction
 ```
@@ -32,6 +32,10 @@ anciens day plans = historiques ou obsolètes si contradiction
 - les runtime JSON verrouillés du jour concerné ;
 - les source packs récents qui décrivent la direction jouable la plus récente ;
 - les docs `story_state` qui résument la vérité courante sans réactiver d’anciens beats contradictoires.
+- J1 / J2 runtime sont jouables, mais doivent être relus contre les bruts validés avant toute correction.
+- J1 V0.66 est la source canonique d’intention et de texte.
+- J2 doit recevoir une source canonique formalisée si elle n’existe pas encore en doc.
+- Les intégrations futures doivent partir du brut canonique, pas d’une version runtime réécrite.
 
 ## Ce qu’il faut lire comme historique / obsolète si contradiction
 

@@ -2,23 +2,26 @@
 
 ## Hiérarchie de lecture
 
-1. **runtime JSON verrouillé = vérité jouable**
-2. **source packs récents = vérité d’intention**
-3. **V0.57 / V0.59 = macro-direction seulement**
-4. **anciens day plans = historiques ou obsolètes s’ils contredisent la direction actuelle**
+1. **Brut narratif validé / source pack canonique = vérité narrative**
+2. **runtime JSON verrouillé = vérité jouable, mais comme implémentation technique**
+3. **si le brut et le JSON divergent, le brut validé prime pour la narration**
+4. **le JSON peut adapter la structure technique : IDs, segments, choices, guided_reply, content_id**
+5. **le JSON ne doit pas réécrire, condenser, ajouter ou supprimer des beats sans validation produit**
+6. **anciens day plans = historiques ou obsolètes s’ils contredisent la direction actuelle**
 
 ## Règles d’arbitrage
 
-- Si un runtime JSON verrouillé contredit un doc, le runtime gagne.
-- Si un source pack récent contredit un day plan ancien, le source pack récent gagne.
-- Si V0.57 / V0.59 contredisent un lock runtime plus récent, ils ne servent qu’à lire la structure macro.
+- Le brut narratif validé prime sur toute réécriture runtime.
+- Le runtime JSON verrouillé décrit l’état jouable actuel, pas la hiérarchie canonique du texte.
+- Si un runtime JSON verrouillé contredit un doc, on crée d’abord un audit avant correction.
+- Les source packs récents restent utiles comme références d’intention, mais ils ne remplacent pas le brut validé.
 - Les vieux day plans gardent de la mémoire historique, mais ne doivent pas piloter une intégration jour par jour.
 
 ## Sources actives à consulter en priorité
 
 - `docs/story_state/GLOBAL_STORY_STATE.md`
 - `docs/story_state/CHARACTER_CONTINUITY_MATRIX.md`
-- les source packs récents V0.66+ / V0.67b / V0.68c / V0.69 lorsqu’ils existent
+- les brut / source packs canonisés récents lorsqu’ils existent
 - les fichiers runtime verrouillés du jour concerné
 
 ## J4+ quarantine / statut post-J3
@@ -31,5 +34,5 @@
 ## Ce document signifie
 
 - les détails vieux ou contradictoires doivent être traités comme historiques ;
-- les intégrations futures doivent partir de la vérité jouable actuelle, pas d’un plan macro ancien ;
-- toute divergence entre histoire jouable et documentation doit être résolue par la source la plus récente et la plus verrouillée.
+- les intégrations futures doivent partir du brut canonique, pas d’une version runtime réécrite ;
+- toute divergence entre histoire jouable et documentation doit être résolue par le brut validé, avec audit si nécessaire.

@@ -1,3 +1,7 @@
+> Statut V0.71 : ce document est la source canonique narrative J1.
+> Le runtime JSON doit être lu comme une implémentation technique.
+> Toute divergence de texte, ton ou beat doit être auditée avant correction.
+
 # V0.66 — Narrative Rewrite Source Pack J1 — Version enrichie
 
 ## Sources fusionnées
