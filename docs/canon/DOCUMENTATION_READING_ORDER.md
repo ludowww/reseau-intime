@@ -6,14 +6,14 @@
 
 ## 1. Purpose
 
-The project now contains several generations of documentation, plus recent character refoundations for Marie, Sandra, and Player.
+The project contains several generations of documentation and recent character refoundations.
 
-Going forward, writing and runtime planning must not depend on scattered addendums as primary sources.
+Important character details must not remain scattered across addendums.
 
-This folder provides consolidated canon documents that should be read first.
+Current rule:
 
 ```text
-If a detail exists only in an older addendum but is absent from the consolidated canon, treat it as non-primary until deliberately restored.
+Write from full canon, not from summaries.
 ```
 
 ---
@@ -23,11 +23,21 @@ If a detail exists only in an older addendum but is absent from the consolidated
 Read in this order:
 
 1. `docs/canon/NARRATIVE_CANON_STATUS.md`
-2. `docs/canon/CHARACTERS_CANON_CURRENT.md`
-3. `docs/canon/J1_CANON_SOURCE_PACK.md`
-4. `docs/V0_64_J1_Naturalized_Script_Draft.md` only when exact J1 line text is needed
-5. Voice / intensity bibles only as support material
-6. Older arc / spine / proof / route documents only if explicitly cross-checked against the canon files above
+2. `docs/canon/characters/CHARACTER_CANON_INDEX.md`
+3. the relevant full character canon file:
+   - `docs/canon/characters/MARIE_CANON_FULL.md`
+   - `docs/canon/characters/SANDRA_CANON_FULL.md`
+   - `docs/canon/characters/PLAYER_CANON_FULL.md`
+   - `docs/canon/characters/MATHILDE_CANON_FULL.md`
+   - `docs/canon/characters/PAULINE_CANON_FULL.md`
+   - `docs/canon/characters/RAPHAELLE_CANON_FULL.md`
+   - `docs/canon/characters/NICO_CANON_FULL.md`
+4. `docs/canon/J1_CANON_SOURCE_PACK.md` when working on J1
+5. `docs/V0_64_J1_Naturalized_Script_Draft.md` only when exact J1 line text is needed
+6. Voice / intensity bibles only as support material
+7. Older arc / spine / proof / route documents only if explicitly cross-checked against the canon files above
+
+`docs/canon/CHARACTERS_CANON_CURRENT.md` remains as a doorway, but the full per-character files are the character source-of-truth.
 
 ---
 
@@ -89,6 +99,6 @@ If this detail clutters a scene, omit it. Sandra's core remains concrete trace +
 
 ## 6. Canon maintenance rule
 
-When a new character profile, day source pack, or narrative audit changes the story, update the canon files first.
+When a new character profile, day source pack, or narrative audit changes the story, update the relevant full canon file first.
 
 Do not create another isolated addendum unless it is immediately scheduled for consolidation.
