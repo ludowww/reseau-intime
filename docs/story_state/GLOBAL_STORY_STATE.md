@@ -1,53 +1,78 @@
 # État global de l’histoire
 
-> Référence de lecture active : **brut narratif validé / source pack canonique**, puis **runtime JSON verrouillé comme implémentation technique**.
-> V0.57 / V0.59 restent des repères macro ; les day plans anciens ne priment pas sur la vérité narrative validée.
+> Référence de lecture active : `docs/canon/DOCUMENTATION_READING_ORDER.md`, puis `docs/canon/NARRATIVE_CANON_STATUS.md`, puis les fiches personnages complètes et le canon NSFW.  
+> Ce fichier est un résumé opérationnel. Il ne prime pas sur les sources canon consolidées.
 
-## Hiérarchie de vérité
+## Hiérarchie de vérité actuelle
 
 ```text
-brut narratif validé = vérité narrative
-runtime JSON verrouillé = vérité jouable / implémentation technique
-V0.57 / V0.59 = macro-direction seulement
-anciens day plans = historiques ou obsolètes si contradiction
+canon consolidé = vérité narrative et direction d’écriture
+source pack du jour = vérité d’intention pour le jour concerné
+runtime JSON = implémentation technique / jouable, pas vérité narrative automatique
+anciens day plans / spine / arcs = historiques si contradiction
 ```
 
-## Vérité actuelle J1 → J3
+## Canon actif à lire avant toute écriture
 
-- **J1 runtime validé** : Marie + Sandra ; Mathilde indirecte ; 3 visuels soft.
-- **J2 V0.68c** : Marie au centre ; Mathilde concrète / sportive / non sexualisée ; Raphaëlle extérieure / pro / jeu vidéo ; Sandra écho doux.
-- **J3 direction actuelle** : pivot Mathilde nocturne domestique ; araignée / problème chambre ; Marie dort ; Nico / Pauline / Raphaëlle ne sont pas actifs dans la scène runtime.
-- **J3 photo canapé** : ne plus la traiter comme vérité actuelle ; au mieux, trace historique à réécrire ou à recycler plus tard.
-- **J4 / J5 anciens plans** : ne pas les lire comme vérité runtime actuelle tant qu’ils ne sont pas réécrits et verrouillés dans la nouvelle direction.
+```text
+docs/canon/DOCUMENTATION_READING_ORDER.md
+docs/canon/NARRATIVE_CANON_STATUS.md
+docs/canon/characters/CHARACTER_CANON_INDEX.md
+docs/canon/characters/*_CANON_FULL.md
+docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
+docs/canon/J1_CANON_SOURCE_PACK.md pour J1
+```
 
-## J4+ quarantine / statut narratif
+## Vérité actuelle J1+
 
-- J4+ peut exister dans le slice, mais il reste hors vérité narrative actuelle tant qu’il n’est pas réécrit / verrouillé après V0.70.
-- Ne pas utiliser les J4 / J5 actuels comme base de nouvelle écriture sans review produit.
-- La prochaine vraie étape narrative après J3 doit partir du nouveau J3 domestique nocturne Mathilde, pas de l’ancien J3 soirée / panel.
-- Les anciens docs post-J3 restent suspendus comme historique / legacy tant qu’ils ne sont pas réalignés.
+- **J1** : source active = `docs/canon/J1_CANON_SOURCE_PACK.md` + `docs/V0_64_J1_Naturalized_Script_Draft.md` seulement pour le texte exact. Marie + Sandra + Player ; Mathilde indirecte ; Nico / Pauline / Raphaëlle absents ; pas de groupe ; pas de route lock ; pas d’escalade explicite.
+- **J2** : runtime / idées existantes à relire ; pas encore reconfirmé comme canon narratif après les fiches personnages complètes + canon NSFW.
+- **J3** : runtime / idées existantes à relire ; la direction `photo canapé` reste legacy sauf restauration volontaire. Le pivot domestique Mathilde peut rester une hypothèse utile, mais doit être reconfirmé contre le canon complet.
+- **J4** : legacy / suspendu jusqu’à review.
+- **J5 / J6** : runtime technique existant, **canon narratif suspendu**.
+- **J7** : runtime technique existant, **canon narratif suspendu**.
+- **J8+** : non-current sauf source pack ultérieur explicite.
 
-## Ce qu’il faut considérer comme actif aujourd’hui
+## Pourquoi J5/J6/J7 sont suspendus
 
-- les runtime JSON verrouillés du jour concerné ;
-- les source packs récents qui décrivent la direction jouable la plus récente ;
-- les docs `story_state` qui résument la vérité courante sans réactiver d’anciens beats contradictoires.
-- J1 / J2 runtime sont jouables, mais doivent être relus contre les bruts validés avant toute correction.
-- J1 V0.66 est la source canonique d’intention et de texte.
-- J2 doit recevoir une source canonique formalisée si elle n’existe pas encore en doc.
-- Les intégrations futures doivent partir du brut canonique, pas d’une version runtime réécrite.
+Les contenus J5/J6/J7 ont été produits avant :
+
+- les fiches personnages complètes Marie / Sandra / Player ;
+- les fiches canon complètes Mathilde / Pauline / Raphaëlle / Nico ;
+- le canon NSFW / porno / routes adultes.
+
+Ils peuvent inspirer, mais ne doivent pas piloter la suite sans réaudit.
+
+## Règle NSFW
+
+`Réseau Intime` peut devenir pornographique quand les routes montent.
+
+Le canon NSFW est obligatoire pour toute scène impliquant :
+
+- tension sexuelle forte ;
+- tromperie ;
+- photos adultes ;
+- NTR / cuckold ;
+- sharing ;
+- trio / quatuor ;
+- routes sombres ;
+- ton plus direct / cru.
 
 ## Ce qu’il faut lire comme historique / obsolète si contradiction
 
-- les anciens day plans J3/J4/J5 qui conservent l’ancienne direction sociale ;
-- les mentions de J3 comme soirée / canapé / panel si elles contredisent le pivot domestique Mathilde nocturne ;
-- toute lecture de J4+ comme vérité active sans réécriture ou lock explicite.
+- les anciens day plans J2+ non réaudités ;
+- les anciennes lectures de J3 comme soirée / canapé / panel ;
+- les anciens arcs qui réduisent Marie au téléphone / jalousie ;
+- les anciennes lectures de Sandra comme simple attente / `plus tard` ;
+- les anciens J5/J6/J7 comme direction fixe ;
+- tout document qui ignore les fiches personnages complètes ou le canon NSFW.
 
 ## Résumé opérationnel
 
 ```text
-J1 : Marie + Sandra, Mathilde indirecte.
-J2 : Marie centre, Mathilde concrète, Raphaëlle extérieure, Sandra écho doux.
-J3 : Mathilde pivot nocturne domestique, Marie hors champ au moment nocturne, Sandra écho si prévu, Nico / Pauline / Raphaëlle absents.
-J4+ : à réécrire / non vérité runtime actuelle si non verrouillé.
+J1 : actif via source pack canonique actuel.
+J2/J3 : à relire avant confirmation.
+J4+ : suspendu / legacy tant que non réaudité.
+J5/J6/J7 : techniquement présents, narrativement suspendus.
+Prochaine étape recommandée : J1 Runtime Integration Plan depuis canon.
 ```
