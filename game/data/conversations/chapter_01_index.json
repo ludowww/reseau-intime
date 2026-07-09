@@ -2,9 +2,9 @@
   "id": "chapter_01_index",
   "chapter": 1,
   "day": 1,
-  "title": "Jour 1 — Routine et ancienne amitié",
-  "description": "Première journée recentrée sur Marie et Sandra : routine domestique, cuisine douce, traces visuelles soft, Mathilde seulement mentionnée indirectement, et reprise prudente d’une ancienne amitié.",
-  "design_goal": "Installer un tronc commun progressif sans casting actif ni routes verrouillées : Marie pose le couple et la maison, Sandra ouvre un manque ancien avec douceur, et trois visuels soft soutiennent le quotidien.",
+  "title": "Jour 1 — Les choses qu'on remarque",
+  "description": "Première journée recentrée sur Marie, Sandra et Player : chaleur domestique, La Verrière, trace photo après le poste, et reprise prudente d’une ancienne amitié sans route lock ni nouveau casting actif.",
+  "design_goal": "Installer un tronc commun progressif sans casting actif : Marie pose le couple et la maison, Sandra ouvre un manque ancien avec douceur, et les choix restent plafonnés à trois par nœud.",
   "default_order": [
     "chapter_01_marie",
     "chapter_01_sandra"
@@ -19,28 +19,20 @@
   ],
   "routes_available": [
     "marie",
-    "sandra",
-    "mathilde_seed"
-  ],
-  "routes_locked_to_seed_only": [
-    "libertinage",
-    "ntr",
-    "harem_secret",
-    "trio_marie_mathilde"
+    "sandra"
   ],
   "end_of_day_player_knowledge": [
-    "Marie et Player restent ensemble, tendres, et la cuisine / la gourmandise ancrent le quotidien.",
-    "Marie aime les petites sensations fortes, mais sans crise ni route lock.",
-    "Mathilde existe dans le quotidien par ses sacs, son sac de sport et sa raquette, sans devenir active.",
-    "Sandra connaît Player d’avant Marie ; leur amitié s’est éloignée sans disparaître.",
-    "Sandra envoie un souvenir de déjeuner, un café mauvais, une marche au lac et une esquive par les tomates.",
+    "Marie et Player restent ensemble, tendres, et le dîner / la marche ancrent le quotidien.",
+    "Marie existe aussi dans la vie sociale de La Verrière, avec Élodie et des détails de logistique.",
+    "Mathilde reste indirecte via Marie seulement, sans thread actif.",
+    "Sandra revient par une photo retrouvée après le poste et un ticket fantôme, pas par une route.",
     "Aucune route n’est verrouillée au Jour 1 : seulement des postures et signaux légers."
   ],
   "debug_expected_outcomes": [
     "Only Marie and Sandra conversations are active on day 1.",
     "Marie trust/lucidity can move slightly through posture choices.",
-    "Sandra attachment can move lightly without route lock.",
-    "Mathilde is only indirectly seeded through Marie.",
+    "Sandra attachment can move lightly.",
+    "Mathilde stays indirect through Marie only.",
     "Three soft visual contents are loaded from chapter_01_proofs.json.",
     "No group/photo/casting-wide unlock should happen in chapter 1."
   ],

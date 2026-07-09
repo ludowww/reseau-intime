@@ -2,7 +2,7 @@
   "id": "chapter_01_marie",
   "chapter": 1,
   "day": 1,
-  "title": "Jour 1 — Pain, retour et téléphone posé",
+  "title": "Jour 1 — Les choses qu'on remarque",
   "app": "messages",
   "thread": {
     "id": "thread_marie_private",
@@ -16,1496 +16,449 @@
   },
   "segments": [
     {
-      "id": "segment_marie_day1_bread_prelude",
+      "id": "segment_marie_day1_opening_dinner",
       "pattern": "guided_reply_pacing",
-      "function": "Restaurer le démarrage domestique validé : heure de retour, pain et complicité fatiguée.",
+      "function": "Restaurer l'ouverture domestique canonique : tomates, fromage, pain, canapé et marche.",
       "trigger": {
         "type": "notification",
         "title": "Marie",
-        "body": "Tu rentres vers quelle heure ?"
+        "body": "Question importante."
       },
       "messages": [
         {
           "id": "msg_marie_001",
           "sender": "marie",
           "time_label": "18:12",
-          "text": "Tu rentres vers quelle heure ?"
+          "text": "Question importante."
         },
         {
           "id": "msg_marie_002",
           "sender": "marie",
           "time_label": "18:12",
-          "text": "Avant que tu répondes “bientôt” comme d’habitude : il n’y a plus de pain."
+          "text": "Deux tomates, un reste de fromage et beaucoup d'optimisme, ça fait un dîner ?"
         },
         {
-          "id": "msg_marie_291",
+          "id": "msg_marie_003",
           "sender": "marie",
           "time_label": "18:12",
-          "text": "J’ai vu les sacs de Mathilde dans l’entrée. Elle commence déjà à prendre de la place.",
-          "content_id": "j1_mathilde_bag_domestic_trace",
-          "tags": [
-            "mathilde",
-            "sacs",
-            "sport",
-            "raquette",
-            "trace",
-            "day1"
-          ]
+          "text": "Il manque juste le pain."
         },
         {
-          "id": "msg_marie_292",
+          "id": "msg_marie_004",
           "sender": "marie",
           "time_label": "18:12",
-          "text": "Ses baskets traînent près du paquet de biscuits. Ça donne déjà l’impression qu’elle s’est installée.",
-          "tags": [
-            "marie",
-            "gourmandise",
-            "biscuits",
-            "day1"
-          ]
+          "text": "C'est pour ça que je t'écris avant que tu t'installes trop profondément dans le canapé."
         },
         {
-          "id": "msg_marie_290",
-          "sender": "marie",
-          "time_label": "18:12",
-          "text": "J’ai gardé une photo de la cuisine : ta tasse, les biscuits encore tièdes, et moi qui fais semblant d’avoir de l’énergie.",
-          "content_id": "j1_marie_kitchen_soft",
-          "tags": [
-            "marie",
-            "cuisine",
-            "biscuits",
-            "tasse",
-            "photo",
-            "day1"
-          ]
-        },
-        {
-          "id": "msg_marie_293",
+          "id": "msg_marie_005",
           "sender": "marie",
           "time_label": "18:13",
-          "text": "Bref, je suis gourmande et un peu fatiguée, mais je te garde les sensations fortes pour après le dîner.",
-          "tags": [
-            "marie",
-            "sensations fortes",
-            "couple",
-            "day1"
-          ]
-        }
-      ],
-      "choices": [
-        {
-          "id": "choice_marie_guided_001_logistique",
-          "text": "Donc c’était une embuscade logistique.",
-          "tone": "guided_reply",
-          "effects": {},
-          "sets_flags": [
-            "guided_replied_marie_logistique_day1"
-          ],
-          "next_messages": [
-            {
-              "id": "msg_marie_003",
-              "sender": "marie",
-              "time_label": "18:13",
-              "text": "Complètement."
-            },
-            {
-              "id": "msg_marie_004",
-              "sender": "marie",
-              "time_label": "18:13",
-              "text": "Je tiens la maison à coups de listes de courses 😅"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_bread_prelude__choice_followup__guided_reply_001",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_005",
-          "text": "C’est une stratégie solide, oui.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_005",
-          "time_label": "18:13",
-          "next_messages": [
-            {
-              "id": "msg_marie_006",
-              "sender": "marie",
-              "time_label": "18:14",
-              "text": "Elle a fait ses preuves."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_bread_prelude__choice_followup__guided_reply_002",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_007",
-          "text": "Je peux passer en prendre si tu veux.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_007",
-          "time_label": "18:14",
-          "next_messages": [
-            {
-              "id": "msg_marie_008",
-              "sender": "marie",
-              "time_label": "18:14",
-              "text": "Merci."
-            },
-            {
-              "id": "msg_marie_009",
-              "sender": "marie",
-              "time_label": "18:15",
-              "text": "Pas celle de la boulangerie du coin, par pitié."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_bread_prelude__choice_followup__guided_reply_003",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_010",
-          "text": "Celle qui t’a traumatisée ? Oui, je vois le genre.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_010",
-          "time_label": "18:15",
-          "next_messages": [
-            {
-              "id": "msg_marie_011",
-              "sender": "marie",
-              "time_label": "18:15",
-              "text": "Elle avait une texture de plainte administrative."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_bread_prelude__choice_followup__guided_reply_004",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_012",
-          "text": "Je vais éviter la baguette contentieuse, promis.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_012",
-          "time_label": "18:16",
-          "next_messages": [
-            {
-              "id": "msg_marie_013",
-              "sender": "marie",
-              "time_label": "18:16",
-              "text": "D’accord."
-            },
-            {
-              "id": "msg_marie_014",
-              "sender": "marie",
-              "time_label": "18:16",
-              "text": "Tu vois, quand tu veux, tu es fiable."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_bread_prelude__choice_followup__guided_reply_005",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_015",
-          "text": "Sur le pain au moins, je suis fiable.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_015",
-          "time_label": "18:17",
-          "next_messages": [
-            {
-              "id": "msg_marie_016",
-              "sender": "marie",
-              "time_label": "18:17",
-              "text": "Ne minimise pas, c’est une base."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_bread_prelude__choice_followup__guided_reply_006",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_017",
-          "text": "Je rentre vers 19h15, promis.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_017",
-          "time_label": "18:17",
-          "next_messages": [
-            {
-              "id": "msg_marie_018",
-              "sender": "marie",
-              "time_label": "18:18",
-              "text": "Vrai 19h15 ou 19h15 avec ton “j’arrive” qui veut dire “je pars dans vingt minutes” ? 🙄"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_bread_prelude__choice_followup__guided_reply_007",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_019",
-          "text": "Vrai 19h15. Et pas le “j’arrive” qui veut dire autre chose.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_019",
-          "time_label": "18:18",
-          "next_messages": [
-            {
-              "id": "msg_marie_020",
-              "sender": "marie",
-              "time_label": "18:18",
-              "text": "D’accord."
-            },
-            {
-              "id": "msg_marie_021",
-              "sender": "marie",
-              "time_label": "18:19",
-              "text": "Je vais essayer de croire à ce petit miracle 🙂"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_bread_prelude__choice_followup__guided_reply_008",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_022",
-          "text": "Tu es dure, mais je prends.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_022",
-          "time_label": "18:19",
-          "next_messages": [
-            {
-              "id": "msg_marie_023",
-              "sender": "marie",
-              "time_label": "18:19",
-              "text": "Je suis expérimentée."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_bread_prelude__choice_followup__guided_reply_009",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_024",
-          "text": "Touché 😅",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_024",
-          "time_label": "18:20",
-          "next_messages": [
-            {
-              "id": "msg_marie_025",
-              "sender": "marie",
-              "time_label": "18:20",
-              "text": "Je ne voulais pas te piquer."
-            },
-            {
-              "id": "msg_marie_026",
-              "sender": "marie",
-              "time_label": "18:20",
-              "text": "Enfin si, un peu."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_bread_prelude__choice_followup__guided_reply_010",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_027",
-          "text": "Un peu mérité, oui.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_027",
-          "time_label": "18:21",
-          "next_messages": [
-            {
-              "id": "msg_marie_028",
-              "sender": "marie",
-              "time_label": "18:21",
-              "text": "Tu as été beaucoup dans ta tête cette semaine."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_bread_prelude__choice_followup__guided_reply_011",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_029",
-          "text": "Dans ma tête ?",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_029",
-          "time_label": "18:21",
-          "next_messages": [
-            {
-              "id": "msg_marie_030",
-              "sender": "marie",
-              "time_label": "18:22",
-              "text": "Oui."
-            },
-            {
-              "id": "msg_marie_031",
-              "sender": "marie",
-              "time_label": "18:22",
-              "text": "Là, oui. Pas toujours vraiment avec moi."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_bread_prelude__choice_followup__guided_reply_012",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_032",
-          "text": "Je suis fatigué.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_032",
-          "time_label": "18:22",
-          "next_messages": [
-            {
-              "id": "msg_marie_033",
-              "sender": "marie",
-              "time_label": "18:23",
-              "text": "Je sais."
-            },
-            {
-              "id": "msg_marie_034",
-              "sender": "marie",
-              "time_label": "18:23",
-              "text": "Moi aussi."
-            },
-            {
-              "id": "msg_marie_035",
-              "sender": "marie",
-              "time_label": "18:23",
-              "text": "C’est devenu notre activité de couple 😅"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_bread_prelude__choice_followup__guided_reply_013",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_036",
-          "text": "On devrait trouver plus glamour.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_036",
-          "time_label": "18:24",
-          "next_messages": [
-            {
-              "id": "msg_marie_037",
-              "sender": "marie",
-              "time_label": "18:24",
-              "text": "On avait les séries nulles."
-            },
-            {
-              "id": "msg_marie_038",
-              "sender": "marie",
-              "time_label": "18:24",
-              "text": "Mais tu t’endors avant que le résumé soit fini."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_bread_prelude__choice_followup__guided_reply_014",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_039",
-          "text": "C’est faux.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_039",
-          "time_label": "18:25",
-          "next_messages": [
-            {
-              "id": "msg_marie_040",
-              "sender": "marie",
-              "time_label": "18:25",
-              "text": "Tu as demandé trois fois qui était le frère 🙄"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_bread_prelude__choice_followup__guided_reply_015",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_041",
-          "text": "C’était une question de scénario.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_041",
-          "time_label": "18:25",
-          "next_messages": [
-            {
-              "id": "msg_marie_042",
-              "sender": "marie",
-              "time_label": "18:26",
-              "text": "C’était un micro-sommeil avec sous-titres."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_bread_prelude__choice_followup__guided_reply_016",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_043",
-          "text": "D’accord 🙂",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_043",
-          "time_label": "18:26"
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_bread_prelude__choice_followup__guided_reply_017",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_044",
-          "text": "Je plaide coupable 😅",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_044",
-          "time_label": "18:26"
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence",
-      "pattern": "conversation_moyenne_familiarite",
-      "function": "Choix unique de posture légère après le reproche du téléphone, puis flux commun validé.",
-      "messages": [
-        {
-          "id": "msg_marie_100",
-          "sender": "marie",
-          "time_label": "18:24",
-          "text": "Je ne te reproche pas d’être fatigué."
-        },
-        {
-          "id": "msg_marie_101",
-          "sender": "marie",
-          "time_label": "18:24",
-          "text": "C’est juste que parfois j’ai l’impression que ton téléphone a plus de toi que moi."
+          "text": "Je refuse qu'on attende d'être tristes pour sortir marcher."
         }
       ],
       "choices": [
         {
           "id": "choice_marie_001_present",
-          "text": "Désolé, j’étais un peu ailleurs. Je suis là maintenant.",
-          "tone": "present",
-          "effects": {
-            "marie.trust": 1,
-            "marie_attention_score": 1,
-            "truth_tendency": 1
-          },
+          "text": "ok, pain + marche",
+          "tone": "guided_reply",
+          "effects": {},
           "sets_flags": [
-            "answered_marie_present_day1"
+            "guided_replied_marie_opening_day1"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_marie_006",
+              "sender": "marie",
+              "time_label": "18:13",
+              "text": "Voilà 🙂"
+            },
+            {
+              "id": "msg_marie_007",
+              "sender": "marie",
+              "time_label": "18:13",
+              "text": "C'est beau, un homme qui accepte sa mission."
+            }
           ]
         },
         {
-          "id": "choice_marie_001_practical",
-          "text": "J’ai pensé au pain, miracle domestique.",
-          "tone": "practical",
-          "effects": {
-            "marie.trust": 1
-          },
+          "id": "choice_marie_002_joke_present",
+          "text": "je viens mais je râle un peu",
+          "tone": "guided_reply",
+          "effects": {},
           "sets_flags": [
-            "answered_marie_practical_day1"
+            "guided_replied_marie_opening_day1"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_marie_008",
+              "sender": "marie",
+              "time_label": "18:13",
+              "text": "Accepté."
+            },
+            {
+              "id": "msg_marie_009",
+              "sender": "marie",
+              "time_label": "18:13",
+              "text": "Râle en marchant, c'est cardio."
+            }
           ]
         },
         {
-          "id": "choice_marie_001_avoidant",
-          "text": "Viens, je te garde une place sur le canapé.",
-          "tone": "slightly_avoidant",
-          "effects": {
-            "marie.lucidity": 1,
-            "marie_neglect_score": 1
-          },
+          "id": "choice_marie_003_flat_delayed",
+          "text": "oui ok",
+          "tone": "guided_reply",
+          "effects": {},
           "sets_flags": [
-            "answered_marie_avoidant_day1"
+            "guided_replied_marie_opening_day1"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_marie_010",
+              "sender": "marie",
+              "time_label": "18:13",
+              "text": "Quelle énergie."
+            },
+            {
+              "id": "msg_marie_011",
+              "sender": "marie",
+              "time_label": "18:13",
+              "text": "Mais j'ai dit oui, pas gris clair."
+            }
           ]
         }
       ]
     },
     {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_001",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
+      "id": "segment_marie_day1_laverriere",
+      "pattern": "guided_reply_pacing",
+      "function": "Donner à Marie sa vie sociale : La Verrière, logistique et Élodie.",
       "messages": [
         {
-          "id": "msg_marie_200",
+          "id": "msg_marie_012",
+          "sender": "marie",
+          "time_label": "18:24",
+          "text": "Sinon La Verrière a survécu à sa journée."
+        },
+        {
+          "id": "msg_marie_013",
+          "sender": "marie",
+          "time_label": "18:24",
+          "text": "Moi aussi, à peu près."
+        },
+        {
+          "id": "msg_marie_014",
           "sender": "marie",
           "time_label": "18:25",
-          "text": "Là, c’est mieux."
+          "text": "Petit événement jeudi."
+        },
+        {
+          "id": "msg_marie_015",
+          "sender": "marie",
+          "time_label": "18:25",
+          "text": "Deux logos inversés sur l'affiche."
+        },
+        {
+          "id": "msg_marie_016",
+          "sender": "marie",
+          "time_label": "18:25",
+          "text": "Un traiteur qui répond \"normalement oui\" à une question où la seule bonne réponse était \"oui\"."
+        },
+        {
+          "id": "msg_marie_017",
+          "sender": "marie",
+          "time_label": "18:26",
+          "text": "Élodie m'a dit que je souriais comme quelqu'un qui allait écrire un mail poli mais violent."
         }
       ],
       "choices": [
         {
-          "id": "choice_from_msg_marie_201",
-          "text": "Parce que j’ai trouvé le sous-titre ?",
+          "id": "choice_marie_011_journee_comppliquee",
+          "text": "journée compliquée ?",
           "tone": "guided_reply",
-          "source_message_id": "msg_marie_201",
-          "time_label": "18:25",
+          "effects": {},
+          "sets_flags": [
+            "guided_replied_marie_laverriere_day1"
+          ],
           "next_messages": [
             {
-              "id": "msg_marie_202",
-              "sender": "marie",
-              "time_label": "18:25",
-              "text": "Exactement."
-            },
-            {
-              "id": "msg_marie_203",
+              "id": "msg_marie_018",
               "sender": "marie",
               "time_label": "18:26",
-              "text": "Et sans que je l’écrive en majuscules."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_002",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_204",
-          "text": "Je progresse.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_204",
-          "time_label": "18:26",
-          "next_messages": [
+              "text": "Oui, mais gérable."
+            },
             {
-              "id": "msg_marie_205",
+              "id": "msg_marie_019",
               "sender": "marie",
               "time_label": "18:26",
-              "text": "Doucement."
+              "text": "Le genre de journée qui finit en sourire fatigué."
+            }
+          ]
+        },
+        {
+          "id": "choice_marie_012_dangereux_normalement",
+          "text": "dangereux le normalement",
+          "tone": "guided_reply",
+          "effects": {},
+          "sets_flags": [
+            "guided_replied_marie_laverriere_day1"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_marie_020",
+              "sender": "marie",
+              "time_label": "18:26",
+              "text": "Très."
             },
             {
-              "id": "msg_marie_206",
+              "id": "msg_marie_021",
+              "sender": "marie",
+              "time_label": "18:26",
+              "text": "J'ai failli écrire un mail poli mais violent."
+            }
+          ]
+        },
+        {
+          "id": "choice_marie_013_elodie_te_lit_bien",
+          "text": "elle te lit bien",
+          "tone": "guided_reply",
+          "effects": {},
+          "sets_flags": [
+            "guided_replied_marie_laverriere_day1"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_marie_022",
               "sender": "marie",
               "time_label": "18:27",
-              "text": "Il reste l’épreuve de la boulangerie."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_003",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_207",
-          "text": "Je vais être à la hauteur.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_207",
-          "time_label": "18:27",
-          "next_messages": [
+              "text": "Trop bien."
+            },
             {
-              "id": "msg_marie_208",
+              "id": "msg_marie_023",
               "sender": "marie",
               "time_label": "18:27",
-              "text": "On verra."
-            },
-            {
-              "id": "msg_marie_209",
-              "sender": "marie",
-              "time_label": "18:28",
-              "text": "Au fait, Mathilde passe peut-être demain."
+              "text": "C'est agaçant, les gens attentifs."
             }
           ]
         }
       ]
     },
     {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_004",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
+      "id": "segment_marie_day1_mathilde_seed",
+      "pattern": "guided_reply_pacing",
+      "function": "Garder Mathilde indirecte, via Marie בלבד, sans actif dédié.",
+      "messages": [
         {
-          "id": "choice_from_msg_marie_210",
-          "text": "Ah ?",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_210",
-          "time_label": "18:28",
-          "next_messages": [
-            {
-              "id": "msg_marie_211",
-              "sender": "marie",
-              "time_label": "18:28",
-              "text": "Elle a encore oublié son chargeur ici."
-            },
-            {
-              "id": "msg_marie_212",
-              "sender": "marie",
-              "time_label": "18:29",
-              "text": "Enfin “son” chargeur."
-            },
-            {
-              "id": "msg_marie_213",
-              "sender": "marie",
-              "time_label": "18:29",
-              "text": "À ce stade, il habite chez nous."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_005",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_214",
-          "text": "Elle les sème exprès.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_214",
-          "time_label": "18:29",
-          "next_messages": [
-            {
-              "id": "msg_marie_215",
-              "sender": "marie",
-              "time_label": "18:30",
-              "text": "Je commence à le croire."
-            },
-            {
-              "id": "msg_marie_216",
-              "sender": "marie",
-              "time_label": "18:30",
-              "text": "Ce matin elle m’a écrit “je crois que j’ai oublié un truc chez toi”."
-            },
-            {
-              "id": "msg_marie_217",
-              "sender": "marie",
-              "time_label": "18:30",
-              "text": "Comme si c’était une surprise annuelle."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_006",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_218",
-          "text": "Tu lui as répondu quoi ?",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_218",
-          "time_label": "18:31",
-          "next_messages": [
-            {
-              "id": "msg_marie_219",
-              "sender": "marie",
-              "time_label": "18:31",
-              "text": "“Étonnant.”"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_007",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_220",
-          "text": "Froide.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_220",
-          "time_label": "18:31",
-          "next_messages": [
-            {
-              "id": "msg_marie_221",
-              "sender": "marie",
-              "time_label": "18:32",
-              "text": "Familiale."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_008",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_222",
-          "text": "Elle passe donc ?",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_222",
+          "id": "msg_marie_024",
+          "sender": "marie",
           "time_label": "18:32",
+          "text": "Mathilde veut passer voir l'installation demain."
+        },
+        {
+          "id": "msg_marie_025",
+          "sender": "marie",
+          "time_label": "18:32",
+          "text": "Enfin elle dit \"voir l'installation\"."
+        },
+        {
+          "id": "msg_marie_026",
+          "sender": "marie",
+          "time_label": "18:32",
+          "text": "Je pense surtout qu'elle veut juger l'éclairage."
+        },
+        {
+          "id": "msg_marie_027",
+          "sender": "marie",
+          "time_label": "18:32",
+          "text": "Elle a une relation très personnelle avec les lumières qui la trahissent."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_marie_021_ca_lui_ressemble",
+          "text": "ça lui ressemble",
+          "tone": "guided_reply",
+          "effects": {},
+          "sets_flags": [
+            "guided_replied_marie_mathilde_day1"
+          ],
           "next_messages": [
             {
-              "id": "msg_marie_223",
-              "sender": "marie",
-              "time_label": "18:32",
-              "text": "Peut-être."
-            },
-            {
-              "id": "msg_marie_224",
+              "id": "msg_marie_028",
               "sender": "marie",
               "time_label": "18:33",
-              "text": "Elle dit qu’elle ne veut pas déranger."
-            },
-            {
-              "id": "msg_marie_225",
-              "sender": "marie",
-              "time_label": "18:33",
-              "text": "Donc elle va arriver pour cinq minutes et rester boire un café."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_009",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_226",
-          "text": "Tu dis ça comme si ça t’agaçait.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_226",
-          "time_label": "18:33",
-          "next_messages": [
-            {
-              "id": "msg_marie_227",
-              "sender": "marie",
-              "time_label": "18:34",
-              "text": "Ça m’agace deux minutes."
-            },
-            {
-              "id": "msg_marie_228",
-              "sender": "marie",
-              "time_label": "18:34",
-              "text": "Après je suis contente."
-            },
-            {
-              "id": "msg_marie_229",
-              "sender": "marie",
-              "time_label": "18:34",
-              "text": "C’est Mathilde."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_010",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_230",
-          "text": "Oui, je vois.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_230",
-          "time_label": "18:35",
-          "next_messages": [
-            {
-              "id": "msg_marie_231",
-              "sender": "marie",
-              "time_label": "18:35",
-              "text": "Elle prend de la place sans demander."
-            },
-            {
-              "id": "msg_marie_232",
-              "sender": "marie",
-              "time_label": "18:35",
-              "text": "Mais quand elle n’est pas là, ça fait bizarre aussi."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_011",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_233",
-          "text": "C’est assez juste.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_233",
-          "time_label": "18:36",
-          "next_messages": [
-            {
-              "id": "msg_marie_234",
-              "sender": "marie",
-              "time_label": "18:36",
-              "text": "Ne lui répète jamais ça 🙂"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_012",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_235",
-          "text": "Je protégerai ton autorité.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_235",
-          "time_label": "18:36",
-          "next_messages": [
-            {
-              "id": "msg_marie_236",
-              "sender": "marie",
-              "time_label": "18:37",
-              "text": "Merci."
-            },
-            {
-              "id": "msg_marie_237",
-              "sender": "marie",
-              "time_label": "18:37",
-              "text": "Il ne m’en reste déjà pas beaucoup 😅"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_013",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_238",
-          "text": "Tu as l’autorité sur les plaids.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_238",
-          "time_label": "18:37",
-          "next_messages": [
-            {
-              "id": "msg_marie_239",
-              "sender": "marie",
-              "time_label": "18:38",
-              "text": "Et sur la cuisson du pain."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_014",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_240",
-          "text": "Ton empire est intact.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_240",
-          "time_label": "18:38",
-          "next_messages": [
-            {
-              "id": "msg_marie_241",
-              "sender": "marie",
-              "time_label": "18:38",
-              "text": "Respecte-le 🙄"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_015",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_242",
-          "text": "Toujours.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_242",
-          "time_label": "18:39",
-          "next_messages": [
-            {
-              "id": "msg_marie_243",
-              "sender": "marie",
-              "time_label": "18:39",
-              "text": "Tu vois, là j’aime bien."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_016",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_244",
-          "text": "Quoi ?",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_244",
-          "time_label": "18:39",
-          "next_messages": [
-            {
-              "id": "msg_marie_245",
-              "sender": "marie",
-              "time_label": "18:40",
-              "text": "Quand tu réponds comme si tu étais vraiment dans la conversation."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_017",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_246",
-          "text": "Je suis dans la conversation.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_246",
-          "time_label": "18:40",
-          "next_messages": [
-            {
-              "id": "msg_marie_247",
-              "sender": "marie",
-              "time_label": "18:40",
-              "text": "Là, oui."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_018",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_248",
-          "text": "Je suis désolé si j’ai été absent ces derniers jours.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_248",
-          "time_label": "18:41",
-          "next_messages": [
-            {
-              "id": "msg_marie_249",
-              "sender": "marie",
-              "time_label": "18:41",
-              "text": "Je ne te demande pas de faire un discours."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_019",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_250",
-          "text": "Je sais.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_250",
-          "time_label": "18:41"
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_020",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_251",
-          "text": "Mais je peux au moins le dire.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_251",
-          "time_label": "18:42",
-          "next_messages": [
-            {
-              "id": "msg_marie_252",
-              "sender": "marie",
-              "time_label": "18:42",
               "text": "Oui."
             },
             {
-              "id": "msg_marie_253",
+              "id": "msg_marie_029",
               "sender": "marie",
-              "time_label": "18:42",
-              "text": "Tu peux."
+              "time_label": "18:33",
+              "text": "Elle repère les détails comme si c'était un sport."
+            }
+          ]
+        },
+        {
+          "id": "choice_marie_022_eclairage",
+          "text": "elle veut surtout juger l'éclairage ?",
+          "tone": "guided_reply",
+          "effects": {},
+          "sets_flags": [
+            "guided_replied_marie_mathilde_day1"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_marie_030",
+              "sender": "marie",
+              "time_label": "18:33",
+              "text": "Évidemment."
             },
             {
-              "id": "msg_marie_254",
+              "id": "msg_marie_031",
               "sender": "marie",
-              "time_label": "18:43",
-              "text": "Et moi je peux faire semblant que ça ne me touche pas."
+              "time_label": "18:33",
+              "text": "C'est sa façon de dire qu'elle s'intéresse."
             }
           ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_021",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
+        },
         {
-          "id": "choice_from_msg_marie_255",
-          "text": "Tu fais bien semblant ?",
+          "id": "choice_marie_023_ok_je_vois",
+          "text": "ok, je vois",
           "tone": "guided_reply",
-          "source_message_id": "msg_marie_255",
-          "time_label": "18:43",
+          "effects": {},
+          "sets_flags": [
+            "guided_replied_marie_mathilde_day1"
+          ],
           "next_messages": [
             {
-              "id": "msg_marie_256",
+              "id": "msg_marie_032",
               "sender": "marie",
-              "time_label": "18:43",
-              "text": "Pas tellement."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_022",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_257",
-          "text": "J’aime bien quand tu fais mal semblant.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_257",
-          "time_label": "18:44",
-          "next_messages": [
-            {
-              "id": "msg_marie_258",
-              "sender": "marie",
-              "time_label": "18:44",
-              "text": "Attention."
+              "time_label": "18:33",
+              "text": "Parfait."
             },
             {
-              "id": "msg_marie_259",
+              "id": "msg_marie_033",
               "sender": "marie",
-              "time_label": "18:44",
-              "text": "Tu vas devenir charmant, on n’a pas prévu ça au planning 😅"
+              "time_label": "18:33",
+              "text": "Tu suis vite quand tu veux."
             }
           ]
         }
       ]
     },
     {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_023",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
+      "id": "segment_marie_day1_evening_walk",
+      "pattern": "guided_reply_pacing",
+      "function": "Conclure la journée sur la marche, la présence et le retour au couple.",
+      "messages": [
         {
-          "id": "choice_from_msg_marie_260",
-          "text": "Je vais doser.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_260",
-          "time_label": "18:45",
-          "next_messages": [
-            {
-              "id": "msg_marie_261",
-              "sender": "marie",
-              "time_label": "18:45",
-              "text": "Bonne idée."
-            },
-            {
-              "id": "msg_marie_262",
-              "sender": "marie",
-              "time_label": "18:45",
-              "text": "Prends aussi du beurre si tu passes devant."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_024",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_263",
-          "text": "Pain, beurre, téléphone posé.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_263",
-          "time_label": "18:46",
-          "next_messages": [
-            {
-              "id": "msg_marie_264",
-              "sender": "marie",
-              "time_label": "18:46",
-              "text": "Et présence humaine."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_025",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_265",
-          "text": "Présence humaine.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_265",
-          "time_label": "18:46",
-          "next_messages": [
-            {
-              "id": "msg_marie_266",
-              "sender": "marie",
-              "time_label": "18:47",
-              "text": "Mieux."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_026",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_267",
-          "text": "Je pars dans dix minutes.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_267",
+          "id": "msg_marie_034",
+          "sender": "marie",
           "time_label": "18:47",
-          "next_messages": [
-            {
-              "id": "msg_marie_268",
-              "sender": "marie",
-              "time_label": "18:47",
-              "text": "D’accord."
-            },
-            {
-              "id": "msg_marie_269",
-              "sender": "marie",
-              "time_label": "18:48",
-              "text": "Fais attention sur la route."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_027",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
+          "text": "Point pain ?"
+        },
         {
-          "id": "choice_from_msg_marie_270",
-          "text": "Oui.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_270",
+          "id": "msg_marie_035",
+          "sender": "marie",
+          "time_label": "18:47",
+          "text": "Là maintenant ?"
+        },
+        {
+          "id": "msg_marie_036",
+          "sender": "marie",
+          "time_label": "18:47",
+          "text": "Bien."
+        },
+        {
+          "id": "msg_marie_037",
+          "sender": "marie",
+          "time_label": "18:47",
+          "text": "Je mets mes chaussures aussi."
+        },
+        {
+          "id": "msg_marie_038",
+          "sender": "marie",
           "time_label": "18:48",
+          "text": "Après on marche dix minutes."
+        },
+        {
+          "id": "msg_marie_039",
+          "sender": "marie",
+          "time_label": "18:48",
+          "text": "Tu peux râler à partir de la sixième."
+        },
+        {
+          "id": "msg_marie_040",
+          "sender": "marie",
+          "time_label": "18:48",
+          "text": "Je suis une femme très équilibrée 🙂"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_marie_031_active_return",
+          "text": "ok",
+          "tone": "guided_reply",
+          "effects": {},
+          "sets_flags": [
+            "guided_replied_marie_walk_day1"
+          ],
           "next_messages": [
             {
-              "id": "msg_marie_271",
+              "id": "msg_marie_041",
               "sender": "marie",
               "time_label": "18:48",
-              "text": "Et ne réponds pas en marchant."
+              "text": "Très bon programme."
+            },
+            {
+              "id": "msg_marie_042",
+              "sender": "marie",
+              "time_label": "18:48",
+              "text": "Court, mais solide."
             }
           ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_028",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
+        },
         {
-          "id": "choice_from_msg_marie_272",
-          "text": "Je suis arrêté.",
+          "id": "choice_marie_032_awkward_sincere",
+          "text": "je suis pas très bon ce soir",
           "tone": "guided_reply",
-          "source_message_id": "msg_marie_272",
-          "time_label": "18:49",
+          "effects": {},
+          "sets_flags": [
+            "guided_replied_marie_walk_day1"
+          ],
           "next_messages": [
             {
-              "id": "msg_marie_273",
+              "id": "msg_marie_043",
               "sender": "marie",
               "time_label": "18:49",
-              "text": "Mouais."
+              "text": "Ça me va."
             },
             {
-              "id": "msg_marie_274",
+              "id": "msg_marie_044",
               "sender": "marie",
               "time_label": "18:49",
-              "text": "Rentre entier, avec du pain."
+              "text": "Je préfère ça à un grand discours immobile."
             }
           ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_029",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
+        },
         {
-          "id": "choice_from_msg_marie_275",
-          "text": "Dans cet ordre ?",
+          "id": "choice_marie_033_joke_distant",
+          "text": "je promets une présence correcte",
           "tone": "guided_reply",
-          "source_message_id": "msg_marie_275",
-          "time_label": "18:50",
+          "effects": {},
+          "sets_flags": [
+            "guided_replied_marie_walk_day1"
+          ],
           "next_messages": [
             {
-              "id": "msg_marie_276",
+              "id": "msg_marie_045",
               "sender": "marie",
-              "time_label": "18:50",
-              "text": "Oui."
+              "time_label": "18:49",
+              "text": "Correcte, c'est déjà mieux que décorative."
             },
             {
-              "id": "msg_marie_277",
+              "id": "msg_marie_046",
               "sender": "marie",
-              "time_label": "18:50",
-              "text": "Mais le pain compte quand même."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_030",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_278",
-          "text": "Message reçu 🙂",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_278",
-          "time_label": "18:51",
-          "next_messages": [
-            {
-              "id": "msg_marie_279",
-              "sender": "marie",
-              "time_label": "18:51",
-              "text": "À tout à l’heure."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_031",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_280",
-          "text": "À tout à l’heure.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_280",
-          "time_label": "18:51",
-          "next_messages": [
-            {
-              "id": "msg_marie_281",
-              "sender": "marie",
-              "time_label": "18:52",
-              "text": "Player ?"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_032",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_282",
-          "text": "Oui ?",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_282",
-          "time_label": "18:52",
-          "next_messages": [
-            {
-              "id": "msg_marie_283",
-              "sender": "marie",
-              "time_label": "18:52",
-              "text": "Merci de faire l’effort."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_033",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_284",
-          "text": "Ce n’est pas un effort de rentrer vers toi.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_284",
-          "time_label": "18:53",
-          "next_messages": [
-            {
-              "id": "msg_marie_285",
-              "sender": "marie",
-              "time_label": "18:53",
-              "text": "…"
-            },
-            {
-              "id": "msg_marie_286",
-              "sender": "marie",
-              "time_label": "18:53",
-              "text": "Bon."
-            },
-            {
-              "id": "msg_marie_287",
-              "sender": "marie",
-              "time_label": "18:54",
-              "text": "Prends le beurre, sinon je vais devenir sentimentale pour rien."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "segment_marie_day1_posture_presence__automatic_followup__guided_reply_034",
-      "pattern": "guided_reply_from_validated_ludo_line",
-      "function": "Convertir une intervention Ludo validée en réponse cliquable obligatoire.",
-      "messages": [],
-      "choices": [
-        {
-          "id": "choice_from_msg_marie_288",
-          "text": "Je prends le beurre.",
-          "tone": "guided_reply",
-          "source_message_id": "msg_marie_288",
-          "time_label": "18:54",
-          "next_messages": [
-            {
-              "id": "msg_marie_289",
-              "sender": "marie",
-              "time_label": "18:54",
-              "text": "Sage décision 🙂"
+              "time_label": "18:49",
+              "text": "Motivant, presque."
             }
           ]
         }
@@ -1513,14 +466,12 @@
     }
   ],
   "routes_nourished": [
-    "marie",
-    "exclusif_reparation",
-    "mathilde_seed"
+    "marie"
   ],
   "unlocks_content": [
     "profile_marie_placeholder",
     "j1_marie_kitchen_soft",
     "j1_mathilde_bag_domestic_trace"
   ],
-  "debug_notes": "V0.67 intégré depuis source pack J1 : cuisine/biscuits/tasse, traces domestiques de Mathilde via sacs et raquette, gourmandise et sensations fortes, sans reformuler les dialogues validés ni ajouter de route lock."
+  "debug_notes": "J1 réaligné sur le canon V0.69/V0.71 : ouverture tomates/fromage/pain/canapé/marche, La Verrière et Élodie, Mathilde indirecte seulement via Marie, puis marche de fin de journée. Trois choix max par nœud; aucun lock de route ni nouveau personnage actif."
 }

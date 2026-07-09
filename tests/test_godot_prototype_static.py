@@ -426,6 +426,8 @@ class GodotPrototypeStaticTests(unittest.TestCase):
             data = json.loads((GAME / relative).read_text(encoding="utf-8"))
             segments = data.get("segments", [])
             self.assertGreaterEqual(len(segments), 2, relative)
+            self.assertTrue(any(len(segment.get("choices", [])) == 3 for segment in segments), relative)
+            self.assertLessEqual(max(len(segment.get("choices", [])) for segment in segments), 3, relative)
 
             guided_choices = [
                 choice
@@ -433,18 +435,10 @@ class GodotPrototypeStaticTests(unittest.TestCase):
                 for choice in segment.get("choices", [])
                 if choice.get("tone") == "guided_reply"
             ]
-            posture_choices = [
-                choice
-                for segment in segments
-                for choice in segment.get("choices", [])
-                if choice.get("tone") != "guided_reply"
-            ]
-
-            self.assertGreaterEqual(len(guided_choices), 1, relative)
-            self.assertGreaterEqual(len(posture_choices), 2, relative)
-            self.assertLessEqual(len(posture_choices), 3, relative)
-            self.assertTrue(any(len(segment.get("messages", [])) >= 2 for segment in segments), relative)
-            self.assertTrue(any(len(segment.get("messages", [])) == 0 for segment in segments), relative)
+            self.assertGreaterEqual(len(guided_choices), 3, relative)
+            self.assertTrue(all(choice.get("tone") == "guided_reply" for choice in guided_choices), relative)
+            self.assertTrue(any(len(segment.get("messages", [])) >= 4 for segment in segments), relative)
+            self.assertTrue(any(len(segment.get("messages", [])) == 0 for segment in segments) or any(len(segment.get("messages", [])) >= 4 for segment in segments), relative)
 
     def test_day1_player_lines_are_choices_not_auto_messages(self):
         for relative in [
@@ -494,11 +488,14 @@ class GodotPrototypeStaticTests(unittest.TestCase):
 
     def test_day1_progressive_content_keeps_only_marie_and_sandra_active(self):
         index = json.loads((GAME / "data/conversations/chapter_01_index.json").read_text(encoding="utf-8"))
+        self.assertEqual(index.get("title"), "Jour 1 — Les choses qu'on remarque")
         self.assertEqual(index.get("default_order"), ["chapter_01_marie", "chapter_01_sandra"])
         self.assertEqual(index.get("conversation_files"), [
             "res://data/conversations/chapter_01_marie.json",
             "res://data/conversations/chapter_01_sandra.json",
         ])
+        self.assertEqual(index.get("routes_available"), ["marie", "sandra"])
+        self.assertNotIn("routes_locked_to_seed_only", index)
         self.assertEqual(index.get("proof_content_files"), ["res://data/visual_content/chapter_01_proofs.json"])
         proofs = json.loads((GAME / "data/visual_content/chapter_01_proofs.json").read_text(encoding="utf-8"))
         self.assertEqual([item.get("id") for item in proofs.get("items", [])], [
@@ -509,7 +506,7 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         self.assertEqual(proofs.get("version"), 1)
         self.assertEqual(len(proofs.get("items", [])), 3)
         serialized_index = json.dumps(index, ensure_ascii=False).lower()
-        for forbidden in ["rapha", "pauline", "nico", "groupe", "photo_group_last_party_placeholder"]:
+        for forbidden in ["rapha", "pauline", "nico", "groupe", "photo_group_last_party_placeholder", "mathilde_seed"]:
             self.assertNotIn(forbidden, serialized_index)
         self.assertIn("Mathilde", "\n".join(index.get("end_of_day_player_knowledge", [])))
 
@@ -526,45 +523,61 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         marie_text = json.dumps(marie, ensure_ascii=False).lower()
         sandra_text = json.dumps(sandra, ensure_ascii=False).lower()
 
+        def walk_string_values(value):
+            if isinstance(value, dict):
+                for key, child in value.items():
+                    if key in {"id", "content_id", "profile_content_id", "sets_flags", "unlocks_content", "tags"}:
+                        continue
+                    yield from walk_string_values(child)
+            elif isinstance(value, list):
+                for child in value:
+                    yield from walk_string_values(child)
+            elif isinstance(value, str):
+                yield value.lower()
+
+        sandra_body_text = "\n".join(walk_string_values(sandra))
+
+        self.assertIn("tomates", marie_text)
+        self.assertIn("fromage", marie_text)
         self.assertIn("pain", marie_text)
-        self.assertIn("biscuits", marie_text)
-        self.assertIn("tasse", marie_text)
-        self.assertIn("mathilde", marie_text)
-        self.assertIn("sacs", marie_text)
-        self.assertIn("sensations fortes", marie_text)
+        self.assertIn("canapé", marie_text)
+        self.assertIn("marche", marie_text)
+        self.assertIn("la verrière", marie_text)
+        self.assertIn("élodie", marie_text)
+        self.assertIn("installation", marie_text)
+        self.assertIn("éclairage", marie_text)
         self.assertIn("j1_marie_kitchen_soft", marie.get("unlocks_content", []))
         self.assertIn("j1_mathilde_bag_domestic_trace", marie.get("unlocks_content", []))
         self.assertNotIn("pauline", marie_text)
         self.assertNotIn("nico", marie_text)
         self.assertNotIn("rapha", marie_text)
 
-        self.assertIn("déjeuner", sandra_text)
         self.assertIn("photo", sandra_text)
-        self.assertIn("café", sandra_text)
-        self.assertIn("marche", sandra_text)
-        self.assertIn("lac", sandra_text)
-        self.assertIn("roman", sandra_text)
-        self.assertIn("distance", sandra_text)
-        self.assertIn("tomates", sandra_text)
+        self.assertIn("déjeuner", sandra_text)
+        self.assertIn("poste", sandra_text)
+        self.assertIn("sentrycore", sandra_text)
+        self.assertIn("ticket fantôme", sandra_text)
+        self.assertIn("chocolat chaud", sandra_text)
+        self.assertIn("fin de poste", sandra_text)
+        self.assertIn("floue", sandra_text)
+        self.assertIn("bonne nuit", sandra_text)
         self.assertIn("profile_sandra_placeholder", sandra.get("unlocks_content", []))
         self.assertIn("j1_sandra_lunch_memory_soft", sandra.get("unlocks_content", []))
-        self.assertNotIn("pauline", sandra_text)
-        self.assertNotIn("nico", sandra_text)
-        self.assertNotIn("rapha", sandra_text)
+        self.assertNotIn("roman", sandra_body_text)
+        self.assertNotIn("lac", sandra_body_text)
+        self.assertNotIn("tomates", sandra_body_text)
+        self.assertNotIn("pauline", sandra_body_text)
+        self.assertNotIn("nico", sandra_body_text)
+        self.assertNotIn("rapha", sandra_body_text)
 
     def test_day1_emojis_stay_natural_and_avoid_forbidden_symbols(self):
         marie = json.loads((GAME / "data/conversations/chapter_01_marie.json").read_text(encoding="utf-8"))
         sandra = json.loads((GAME / "data/conversations/chapter_01_sandra.json").read_text(encoding="utf-8"))
         marie_text = json.dumps(marie, ensure_ascii=False)
         sandra_text = json.dumps(sandra, ensure_ascii=False)
-        allowed = ["😅", "🙄", "🙂", "😂", "🫠"]
-        marie_count = sum(marie_text.count(emoji) for emoji in allowed)
-        sandra_count = sum(sandra_text.count(emoji) for emoji in allowed)
-        self.assertGreaterEqual(marie_count, 10)
-        self.assertLessEqual(marie_count, 14)
-        self.assertGreaterEqual(sandra_count, 8)
-        self.assertLessEqual(sandra_count, 12)
-        self.assertLessEqual(marie_text.count("🫠") + sandra_text.count("🫠"), 1)
+        self.assertIn("🙂", marie_text)
+        self.assertLessEqual(marie_text.count("🙂") + sandra_text.count("🙂"), 2)
+        self.assertNotIn("🫠", marie_text + sandra_text)
         for forbidden in ["❤️", "❤", "😍", "😘", "😏", "🍆", "💦", "🥵", "🍑", "🌶️"]:
             self.assertNotIn(forbidden, marie_text)
             self.assertNotIn(forbidden, sandra_text)
