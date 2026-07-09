@@ -1,7 +1,7 @@
 # J1 Canon Source Pack — Current
 
 > Canon source pack for current J1 writing and future runtime planning.  
-> Consolidates V0.60 structure, V0.64 naturalization work, V0.69 final line review, and the current character canon.  
+> Consolidates V0.60 structure, V0.64 naturalization work, V0.69 final line review, the current character canon, and the choice-count canon.  
 > No runtime, JSON, tests, assets, or playable content are changed here.
 
 ## 1. Purpose
@@ -23,6 +23,12 @@ Exact dialogue lines must now be taken from:
 
 ```text
 docs/V0_69_J1_Canon_Text_Review_And_Final_Line_Source.md
+```
+
+Choice-count rules must be taken from:
+
+```text
+docs/canon/CHOICE_DESIGN_CANON.md
 ```
 
 V0.64 remains useful history, but it is no longer the current exact line source.
@@ -81,7 +87,8 @@ J1 must not include:
 - group thread;
 - new global system;
 - complex proof mechanics;
-- adult explicit content.
+- adult explicit content;
+- more than three runtime choices per node unless a later plan explicitly justifies an exception.
 
 J1 conflict is attention, not allegiance.
 
@@ -105,12 +112,22 @@ Anchors:
 - couch;
 - small walk.
 
-Player choices:
+Runtime choice target: 3 choices.
+
+Authoring variants may include:
 
 - present;
 - joking but present;
 - flat;
 - delayed by work.
+
+Before runtime integration, collapse to three choices, for example:
+
+```text
+1. present
+2. joking but present
+3. flat / delayed
+```
 
 ### Scene 2 — Marie / Player La Verrière color beat
 
@@ -155,12 +172,22 @@ Terminology:
 - use `fin de poste`, `poste du soir`, `poste du matin`, or `horaires décalés` if needed;
 - do not use the English word `shift` in final writing.
 
-Player choices:
+Runtime choice target: 3 choices.
+
+Authoring variants may include:
 
 - safe warmth;
 - precise observation;
 - playful but light;
 - distant / cautious.
+
+Before runtime integration, collapse to three choices, for example:
+
+```text
+1. safe warmth
+2. precise observation
+3. playful or cautious
+```
 
 ### Scene 4 — Marie / Player evening presence check
 
@@ -177,6 +204,23 @@ Anchors:
 - ten-minute walk;
 - soft pressure;
 - Player returns, dodges, or stays distant.
+
+Runtime choice target: 3 choices.
+
+Authoring variants may include:
+
+- active return;
+- awkward but sincere;
+- joke again;
+- still distant.
+
+Before runtime integration, collapse to three choices, for example:
+
+```text
+1. active return
+2. awkward but sincere
+3. joke / distant
+```
 
 ### Scene 5 — Sandra / Player soft boundary
 
@@ -251,7 +295,15 @@ If scope is tight, use only the Sandra trace.
 
 ## 7. Choice design
 
+Default J1 runtime choice count:
+
+```text
+3 choices per choice node
+```
+
 Choices should be low-intensity and color attention, not routes.
+
+Drafts may show four authoring variants, but runtime integration must collapse them to three choices unless a later plan explicitly justifies an exception.
 
 Good choice effects:
 
@@ -269,7 +321,8 @@ Forbidden choice effects:
 - immediate adult escalation;
 - introducing Nico / Pauline / Raphaëlle;
 - making Sandra available;
-- making Marie suspicious too early.
+- making Marie suspicious too early;
+- integrating 4+ choices without explicit exception.
 
 ---
 
@@ -310,6 +363,8 @@ Forbidden choice effects:
 When a future runtime integration plan is written, Hermes should be instructed to:
 
 - use `docs/V0_69_J1_Canon_Text_Review_And_Final_Line_Source.md` as exact line source;
+- use `docs/canon/CHOICE_DESIGN_CANON.md` for choice count;
+- collapse J1 authoring variants to three runtime choices per node;
 - inspect existing J1 data before patching;
 - replace or rewrite J1 only within the agreed scope;
 - avoid touching J2+ unless explicitly asked;
@@ -334,6 +389,7 @@ J1 is successful if:
 - the final beat returns to Marie and shared life;
 - no route is locked;
 - no old J5/J6/J7 assumptions leak into J1;
+- choice nodes use three runtime choices unless explicitly excepted;
 - the scene feels like a real day, not a character sheet demonstration.
 
 ---
@@ -343,4 +399,5 @@ J1 is successful if:
 ```text
 J1 is not about choosing Sandra over Marie.
 J1 is about whether Player can still join Marie while noticing that Sandra leaves a trace.
+Three runtime choices are enough for J1.
 ```
