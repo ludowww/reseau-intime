@@ -1,15 +1,35 @@
 # Matrice de continuité personnages
 
-> Référence de lecture active : **runtime verrouillé**, puis **source packs récents**.
-> J4+ est à considérer comme **à réécrire / non vérité runtime actuelle** si ce n’est pas explicitement verrouillé.
+> Référence active : fiches personnages complètes + canon NSFW + source pack du jour.  
+> Cette matrice est un résumé de vigilance, pas une vérité runtime autonome.
 
-> J4+ = legacy suspendu, pas supprimé. Les arcs post-J3 restent en attente de réalignement ; Pauline / Nico / Raphaëlle ne doivent pas redevenir actifs trop vite par héritage d’anciens docs.
+## Règle de lecture
 
-| Personnage | J1 | J2 | J3 | J4+ (legacy / suspendu) |
-|---|---|---|---|---|
-| Marie | Active avec Sandra ; Mathilde reste indirecte ; le couple reste le centre. | Centre de la journée ; Mathilde devient concrète ; Raphaëlle reste extérieure ; Sandra reste un écho doux. | Centre dramaturgique, mais hors champ au moment nocturne du pivot Mathilde. | À réécrire / non vérité runtime actuelle si non verrouillé. |
-| Sandra | Active ; reprise douce du lien ; présence encore prudente. | Écho doux ; distance maintenue ; pas d’escalade frontale. | Écho si prévu ; sinon silence actif. | À réécrire / non vérité runtime actuelle si non verrouillé. |
-| Mathilde | Indirecte ; encore en bord de champ. | Concrète, sportive, non sexualisée ; présence nette dans la maison. | Pivot nocturne domestique ; araignée / problème chambre ; centre de la tension de nuit. | À réécrire / non vérité runtime actuelle si non verrouillé. |
-| Raphaëlle | Non active. | Extérieure, pro, jeu vidéo / travail ; contrepoint clair. | Absente de l’actif nocturne. | À réécrire / non vérité runtime actuelle si non verrouillé. |
-| Pauline | Non active. | Non active. | Absente de l’actif nocturne. | À réécrire / non vérité runtime actuelle si non verrouillé. |
-| Nico | Non actif. | Non actif. | Absent de l’actif nocturne. | À réécrire / non vérité runtime actuelle si non verrouillé. |
+```text
+J1 est canonisé par le source pack actuel.
+J2/J3 doivent être relus avant confirmation.
+J4+ est suspendu / legacy.
+J5/J6/J7 existent techniquement mais sont narrativement suspendus.
+```
+
+## Matrice actuelle
+
+| Personnage | J1 canon actuel | J2/J3 | J4+ / ancien runtime |
+|---|---|---|---|
+| Marie | Active avec Player et Sandra ; couple vivant ; La Verrière / quotidien / présence ; pas de jalousie centrale trop tôt. | À relire contre `MARIE_CANON_FULL.md` ; elle doit rester vie désirable, pas seulement téléphone / soupçon. | Suspendu tant que non réaudité ; ses routes adultes peuvent aller vers reconquête, désir direct, visibilité sociale, partage/NTR seulement avec agency centrale. |
+| Sandra | Active ; reprise douce par trace concrète ; photo ancienne / SentryCore possible ; pas de disponibilité immédiate. | À relire contre `SANDRA_CANON_FULL.md` ; éviter de la réduire à `plus tard / attente / cachée`. | Suspendu ; route adulte = exposition choisie, slow burn secret, respect des limites, pas pression. |
+| Player | Actif par réponses et choix ; attention, retard, observation imparfaite ; final revient vers Marie. | À relire contre `PLAYER_CANON_FULL.md` ; ne pas le réduire à choix abstraits ou regard passif. | Suspendu ; routes adultes = désir, honte, jalousie, regard, tromperie, agency / conséquences. |
+| Mathilde | Indirecte via Marie seulement. | À relire contre `MATHILDE_CANON_FULL.md` ; pivot domestique possible mais à reconfirmer ; ne pas restaurer photo/canapé par défaut. | Suspendu ; potentiel NSFW = domestic taboo / proximité / Marie en sous-texte. |
+| Pauline | Non active. | À relire contre `PAULINE_CANON_FULL.md`; ne pas l’introduire comme photo-dispenser ou omnisciente. | Suspendu ; potentiel NSFW = contrôle image / vertu publique / faille privée / coût. |
+| Raphaëlle | Non active. | À relire contre `RAPHAELLE_CANON_FULL.md`; ne pas l’utiliser comme refuge thérapeutique ou cachette. | Suspendu ; potentiel NSFW = clarté, cadre, consentement adulte, version choisie. |
+| Nico | Non actif. | À relire contre `NICO_CANON_FULL.md`; ne pas en faire un rival plat ou raccourci de jalousie. | Suspendu ; potentiel NSFW = regard masculin, jalousie, NTR/cuckold, sharing, trio/quatuor avec agency. |
+
+## Prochaine utilisation
+
+Avant toute écriture ou intégration runtime J2+, relire :
+
+```text
+docs/canon/characters/CHARACTER_CANON_INDEX.md
+docs/canon/characters/*_CANON_FULL.md
+docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
+```
