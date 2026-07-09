@@ -10,10 +10,11 @@ The project contains several generations of documentation and recent character r
 
 Important character details must not remain scattered across addendums.
 
-Current rule:
+Current rules:
 
 ```text
 Write from full canon, not from summaries.
+Write adult escalation from NSFW route canon, not from implied tone.
 ```
 
 ---
@@ -32,10 +33,11 @@ Read in this order:
    - `docs/canon/characters/PAULINE_CANON_FULL.md`
    - `docs/canon/characters/RAPHAELLE_CANON_FULL.md`
    - `docs/canon/characters/NICO_CANON_FULL.md`
-4. `docs/canon/J1_CANON_SOURCE_PACK.md` when working on J1
-5. `docs/V0_64_J1_Naturalized_Script_Draft.md` only when exact J1 line text is needed
-6. Voice / intensity bibles only as support material
-7. Older arc / spine / proof / route documents only if explicitly cross-checked against the canon files above
+4. `docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md` when the scene involves sexual tension, adult escalation, explicit-route planning, trio/quatuor, tromperie, NTR/cuckold, sharing, or adult photo logic
+5. `docs/canon/J1_CANON_SOURCE_PACK.md` when working on J1
+6. `docs/V0_64_J1_Naturalized_Script_Draft.md` only when exact J1 line text is needed
+7. Voice / intensity bibles only as support material
+8. Older arc / spine / proof / route documents only if explicitly cross-checked against the canon files above
 
 `docs/canon/CHARACTERS_CANON_CURRENT.md` remains as a doorway, but the full per-character files are the character source-of-truth.
 
@@ -70,7 +72,31 @@ J1 must be rebuilt from the current J1 canon source pack, not from older runtime
 
 ---
 
-## 5. Current rule for Sandra terminology
+## 5. Current rule for adult tone
+
+`Réseau Intime` is allowed to become pornographic when routes escalate.
+
+Character depth must not soften every route into romance.
+
+For NSFW routes, use:
+
+```text
+docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
+```
+
+This file governs:
+
+- direct / crude tone escalation;
+- adult photo logic;
+- cheating / tromperie;
+- trio / quatuor;
+- NTR / cuckold / sharing routes;
+- consequence and consent framing;
+- character-specific pornographic engines.
+
+---
+
+## 6. Current rule for Sandra terminology
 
 Do not use the English word `shift` as a primary writing term.
 
@@ -97,8 +123,8 @@ If this detail clutters a scene, omit it. Sandra's core remains concrete trace +
 
 ---
 
-## 6. Canon maintenance rule
+## 7. Canon maintenance rule
 
-When a new character profile, day source pack, or narrative audit changes the story, update the relevant full canon file first.
+When a new character profile, day source pack, adult route rule, or narrative audit changes the story, update the relevant canon file first.
 
 Do not create another isolated addendum unless it is immediately scheduled for consolidation.
