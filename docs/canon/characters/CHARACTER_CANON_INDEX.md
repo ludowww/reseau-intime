@@ -2,7 +2,7 @@
 
 > Canon index for detailed character reference files.  
 > These files are the first source for writing scenes after the Marie / Sandra / Player refoundation.  
-> They are not summaries; they consolidate validated details from profiles, addendums, voice cards, palettes, and post-etalon corrections.
+> They are not summaries; they consolidate validated details from profiles, addendums, voice cards, palettes, post-etalon corrections, and NSFW route intent.
 
 ## 1. Purpose
 
@@ -12,6 +12,7 @@ This directory fixes that.
 
 ```text
 For scene writing, use the full per-character canon files first.
+For sexual escalation, also use the NSFW character route canon.
 Older addendums remain source history, but should not be required reading for ordinary scene work.
 ```
 
@@ -29,6 +30,12 @@ Older addendums remain source history, but should not be required reading for or
 | Raphaëlle | `docs/canon/characters/RAPHAELLE_CANON_FULL.md` | Detailed current canon from available calibration docs; future expansion possible |
 | Nico | `docs/canon/characters/NICO_CANON_FULL.md` | Detailed current canon from available calibration docs; future expansion possible |
 
+Adult / route escalation canon:
+
+| Scope | Canon file | Status |
+|---|---|---|
+| NSFW / porno / routes adultes | `docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md` | Required for sexual escalation, explicit-route planning, trio/quatuor, tromperie, NTR/cuckold, sharing, and adult photo logic |
+
 ---
 
 ## 3. Reading rule
@@ -36,9 +43,10 @@ Older addendums remain source history, but should not be required reading for or
 When writing a scene:
 
 1. Read the relevant character's full canon file.
-2. Read `docs/canon/NARRATIVE_CANON_STATUS.md` if the scene touches J2+ or older runtime.
-3. Read the day source pack, for example `docs/canon/J1_CANON_SOURCE_PACK.md` for J1.
-4. Use old addendums only to investigate history or if a detail is missing from the full canon.
+2. If the scene contains sexual tension, adult escalation, photos used as arousal, cheating, NTR/cuckold, trio/quatuor, sharing, or explicit-route logic, read `docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md`.
+3. Read `docs/canon/NARRATIVE_CANON_STATUS.md` if the scene touches J2+ or older runtime.
+4. Read the day source pack, for example `docs/canon/J1_CANON_SOURCE_PACK.md` for J1.
+5. Use old addendums only to investigate history or if a detail is missing from the full canon.
 
 ---
 
@@ -50,6 +58,8 @@ If a later PR validates a detail, it should either:
 
 - update the relevant full canon file directly; or
 - create a temporary addendum and immediately schedule a consolidation pass.
+
+If a later PR validates a new adult route rule, update `NSFW_CHARACTER_ROUTE_CANON.md`.
 
 ---
 
