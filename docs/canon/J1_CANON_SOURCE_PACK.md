@@ -1,7 +1,7 @@
 # J1 Canon Source Pack — Current
 
 > Canon source pack for current J1 writing and future runtime planning.  
-> Consolidates V0.60 structure, V0.64 naturalized draft rules, and the current character canon.  
+> Consolidates V0.60 structure, V0.64 naturalization work, V0.69 final line review, and the current character canon.  
 > No runtime, JSON, tests, assets, or playable content are changed here.
 
 ## 1. Purpose
@@ -11,14 +11,21 @@ This document is the first source to read before planning J1 runtime integration
 It prevents future prompts from scattering across:
 
 - V0.60 plan;
-- V0.64 draft;
+- V0.64 historical draft;
+- V0.69 final J1 line source;
 - Marie profile;
 - Sandra profile;
 - Player profile;
 - voice bibles;
 - addendums.
 
-Exact dialogue lines may still be checked in `docs/V0_64_J1_Naturalized_Script_Draft.md`, but the rules below are the consolidated canon.
+Exact dialogue lines must now be taken from:
+
+```text
+docs/V0_69_J1_Canon_Text_Review_And_Final_Line_Source.md
+```
+
+V0.64 remains useful history, but it is no longer the current exact line source.
 
 ---
 
@@ -145,7 +152,7 @@ Anchors:
 
 Terminology:
 
-- use `fin de poste`, `poste du soir`, or `horaires décalés` if needed;
+- use `fin de poste`, `poste du soir`, `poste du matin`, or `horaires décalés` if needed;
 - do not use the English word `shift` in final writing.
 
 Player choices:
@@ -183,7 +190,7 @@ Anchors:
 
 - early morning / tiredness if useful;
 - blurry photo that stays blurry;
-- official harmlessness;
+- harmless version / consequence denied;
 - goodnight.
 
 Earned optional warmth:
@@ -285,7 +292,8 @@ Forbidden choice effects:
 - `officiellement` used sparingly;
 - no Jeff exposition on J1;
 - no romance-reading exposition on J1;
-- no direct confession.
+- no direct confession;
+- no English `shift` wording.
 
 ### Player
 
@@ -301,6 +309,7 @@ Forbidden choice effects:
 
 When a future runtime integration plan is written, Hermes should be instructed to:
 
+- use `docs/V0_69_J1_Canon_Text_Review_And_Final_Line_Source.md` as exact line source;
 - inspect existing J1 data before patching;
 - replace or rewrite J1 only within the agreed scope;
 - avoid touching J2+ unless explicitly asked;
