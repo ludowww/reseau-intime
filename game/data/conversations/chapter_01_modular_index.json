@@ -1,0 +1,91 @@
+{
+  "id": "chapter_01_modular_index",
+  "chapter": 1,
+  "day": 1,
+  "calendar_label": "Mardi",
+  "display_label": "Mardi — Les choses qu'on remarque",
+  "day_start_time": "18:12",
+  "title": "Mardi — Les choses qu'on remarque",
+  "description": "J1 canonique : Marie et Sandra restent les seuls fils actifs. Mathilde demeure indirecte avant l'urgence du mercredi.",
+  "design_goal": "Préserver le J1 jouable existant tout en retirant du runtime actif le faux raccord où Mathilde paraît déjà installée.",
+  "default_order": [
+    "chapter_01_marie",
+    "chapter_01_sandra"
+  ],
+  "conversation_files": [
+    "res://data/conversations/chapter_01_marie.json",
+    "res://data/conversations/chapter_01_sandra.json"
+  ],
+  "moment_flow": [
+    {
+      "moment_label": "soir",
+      "time_label": "18:12",
+      "transition_text": "Mardi soir — Marie attend le retour de Player.",
+      "conversation_ids": [
+        "chapter_01_marie"
+      ]
+    },
+    {
+      "moment_label": "nuit",
+      "time_label": "22:57",
+      "transition_text": "Mardi nuit — Sandra retrouve une ancienne trace.",
+      "conversation_ids": [
+        "chapter_01_sandra"
+      ]
+    }
+  ],
+  "conversation_filters": {
+    "chapter_01_marie": {
+      "exclude_item_ids": [
+        "msg_marie_291",
+        "msg_marie_292"
+      ],
+      "exclude_content_ids": [
+        "j1_mathilde_bag_domestic_trace"
+      ]
+    }
+  },
+  "initial_visual_anchors": [
+    "profile_marie_placeholder",
+    "profile_sandra_placeholder"
+  ],
+  "routes_available": [
+    "marie",
+    "sandra",
+    "mathilde_seed"
+  ],
+  "conversation_availability": {
+    "initial_conversation_ids": [
+      "chapter_01_marie"
+    ],
+    "locked_conversation_ids": [
+      "chapter_01_sandra"
+    ],
+    "unlocks": {
+      "chapter_01_sandra": {
+        "after_conversation_completed": "chapter_01_marie",
+        "time_label": "22:57",
+        "pending": true,
+        "notification": {
+          "title": "Sandra",
+          "body": "Mon téléphone vient de me ressortir ça."
+        }
+      }
+    }
+  },
+  "end_of_day_player_knowledge": [
+    "Marie et Player restent ensemble dans une chaleur habituelle.",
+    "Sandra reprend contact par une trace douce.",
+    "Mathilde peut passer voir l'installation mercredi, mais elle ne séjourne pas encore au foyer.",
+    "Aucune route externe, aucun secret dur et aucun cadre adulte ne sont actifs."
+  ],
+  "proof_content_files": [
+    "res://data/visual_content/chapter_01_proofs.json"
+  ],
+  "debug_expected_outcomes": [
+    "Only Marie and Sandra are active on Tuesday.",
+    "The runtime filter removes the deprecated Mathilde bags/shoes/racket messages and visual reference.",
+    "Sandra remains locked until Marie completes.",
+    "No active Mathilde thread exists."
+  ]
+}
