@@ -1,43 +1,39 @@
 # Characters Canon Current
 
 > Canon entry point for character writing.  
-> This file intentionally no longer tries to summarize all character detail.  
+> This file intentionally does not summarize all character detail.  
 > Use the full per-character canon files instead.
 
-## 1. Purpose
-
-The previous version of this document was an operational synthesis. That was not detailed enough for scene writing.
-
-The current rule is:
+## 1. Core rule
 
 ```text
 Do not write scenes from summaries.
 Write scenes from full character canon files.
 ```
 
----
-
 ## 2. Full canon files
 
-Read the relevant full file before writing or integrating any scene involving that character:
+| Character | Full canon file | Current status |
+|---|---|---|
+| Marie | `docs/canon/characters/MARIE_CANON_FULL.md` | Full concrete canon |
+| Sandra | `docs/canon/characters/SANDRA_CANON_FULL.md` | Full concrete canon |
+| Player | `docs/canon/characters/PLAYER_CANON_FULL.md` | Full concrete canon |
+| Mathilde | `docs/canon/characters/MATHILDE_CANON_FULL.md` | Full concrete + NSFW canon; use with deprecation map |
+| Pauline | `docs/canon/characters/PAULINE_CANON_FULL.md` | Calibration canon; concrete expansion needed |
+| Raphaëlle | `docs/canon/characters/RAPHAELLE_CANON_FULL.md` | Calibration canon; concrete expansion needed |
+| Nico | `docs/canon/characters/NICO_CANON_FULL.md` | Calibration canon; concrete expansion needed |
 
-| Character | Full canon file |
-|---|---|
-| Marie | `docs/canon/characters/MARIE_CANON_FULL.md` |
-| Sandra | `docs/canon/characters/SANDRA_CANON_FULL.md` |
-| Player | `docs/canon/characters/PLAYER_CANON_FULL.md` |
-| Mathilde | `docs/canon/characters/MATHILDE_CANON_FULL.md` |
-| Pauline | `docs/canon/characters/PAULINE_CANON_FULL.md` |
-| Raphaëlle | `docs/canon/characters/RAPHAELLE_CANON_FULL.md` |
-| Nico | `docs/canon/characters/NICO_CANON_FULL.md` |
-
-The directory index is:
+Directory index:
 
 ```text
-`docs/canon/characters/CHARACTER_CANON_INDEX.md`
+docs/canon/characters/CHARACTER_CANON_INDEX.md
 ```
 
----
+Mathilde deprecation map:
+
+```text
+docs/canon/characters/MATHILDE_CANON_DEPRECATION_MAP.md
+```
 
 ## 3. Source policy
 
@@ -47,21 +43,21 @@ The full character canon files consolidate validated details from:
 - profile addendums;
 - voice cards;
 - voice / color / post-etalon addendums;
-- current narrative decisions.
+- current narrative decisions;
+- current NSFW route intent.
 
-Older addendums remain useful as source history, but they should not be required reading for ordinary scene writing.
+Older addendums and runtime remain useful as source history or technical reference, but they are not required reading for ordinary scene writing and do not override current canon.
 
-If a detail is missing from a full canon file, treat it as non-primary until deliberately restored or reconsolidated.
-
----
+For Mathilde specifically, older photo/canapé, sport/racket, long-grey-sweater, J1 seed, and J7 assumptions are secondary or deprecated according to her deprecation map.
 
 ## 4. Maintenance rule
 
-When a new character detail is validated, update the relevant full canon file.
+When a new character detail is validated:
 
-Do not leave important character details stranded in a separate addendum.
-
----
+- update the relevant full canon file;
+- update the index/status if completeness changes;
+- add or update a deprecation map if older material can mislead implementation;
+- do not leave important decisions stranded in conversation or isolated addenda.
 
 ## 5. Final rule
 
