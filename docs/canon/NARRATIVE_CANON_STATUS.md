@@ -64,24 +64,36 @@ Current Mathilde direction:
 - modular scene pools;
 - route consequences and adult agency.
 
-Pauline's V0.74 canon supersedes the earlier calibration-only profile and fixed old J4/J5 route assumptions.
+Pauline's revised V0.74 canon supersedes both the calibration-only profile and the first sanitized V0.74 draft.
 
 Current Pauline direction:
 
 - 32 years old and explicitly adult;
 - retail client adviser in a local mutual bank;
-- lives alone in a rented two-room apartment;
-- trusted friend of Marie for around eight years;
+- currently in a five-year relationship with Bastien;
+- lives with Bastien in a shared rented apartment;
+- has already cheated on Bastien during that current relationship;
+- the brief affair ended before the game, but Bastien does not know;
+- Marie knows the affair crossed a physical line;
+- Marie kept the confidence but did not approve or grant future permission;
+- Pauline remains vulnerable to repeating the same architecture of secrecy;
+- close friend of Marie for around eight years, with a deep but breakable bond;
 - culturally Catholic community background without religious-repression framing;
 - parish choir as a real weekly life anchor;
 - controlled, fitted clothing and composed public image;
-- previous relationship wound around losing authorship of her private self;
-- deep desire to be trusted after being seen;
-- image selection rather than accidental sensuality;
-- public trust / selected private channel / reciprocal risk / Marie loyalty NSFW engine;
-- modular scene pools rather than fixed-day escalation;
-- reciprocal exposure and social consequences;
+- public reliability and private transgression are both real;
+- double life / compartmentalization is her primary dramatic function;
+- hidden desire is managed through alternate versions, alibis, proof, and reciprocal implication;
+- Bastien and Marie remain active consequences on dangerous routes;
+- modular scene pools replace fixed-day escalation;
 - no playable choir voice message.
+
+Pauline's ensemble distinction is:
+
+```text
+She does not ask Player to choose her.
+She makes not choosing feel practical, intelligent, and temporarily harmless.
+```
 
 ### Concrete-profile expansion still needed
 
@@ -114,6 +126,15 @@ Current J1 rules:
 - maximum three choices per node;
 - final emotional center: Marie / shared life.
 
+Pauline remains absent from playable J1.
+
+The following Pauline facts still exist in background canon:
+
+- she is with Bastien;
+- she has cheated on him;
+- Bastien does not know;
+- Marie knows part of it.
+
 V0.64 remains historical and is no longer the current exact-line source.
 
 ## 5. Current J2+ status
@@ -145,8 +166,9 @@ Do not assume an old social/photo/Nico/Pauline-heavy structure remains valid.
 For Pauline specifically:
 
 - an old invitation scene does not define her current first active entry;
-- a social or practical pretext remains compatible only if rebuilt from Marie's trust and the current modular logic;
-- no private route is already active because old runtime contains one.
+- a social or practical pretext remains compatible if rebuilt from Marie's trust, Bastien's existence, and modular conditions;
+- no private Player route is already active because old runtime contains one;
+- the restored current-partner infidelity is background canon even though the old J4 schedule is suspended.
 
 ### J5 / J6
 
@@ -157,8 +179,9 @@ May contain useful implementation or isolated ideas, but must not drive future s
 For Pauline specifically:
 
 - an old `last photo` or similar scene does not define her current image progression;
-- adult escalation requires selected intent, explicit limits, and reciprocal risk;
-- a photo alone is not route activation or consent.
+- adult escalation requires selected intent, explicit limits, reciprocal risk, and awareness of both existing couples;
+- a photo alone is not route activation or consent;
+- a compatible old confrontation or proof engine may be rebuilt in a modular window.
 
 ### J7
 
@@ -171,9 +194,7 @@ For Mathilde specifically, J7 does not define:
 - current long arc;
 - required scene order.
 
-The long-grey-sweater framing and any fixed route assumptions are non-primary.
-
-For Pauline, any old `less theoretical` or later escalation remains historical and does not establish current route state.
+For Pauline, any old `less theoretical`, silence-test, or later escalation remains historical as a fixed sequence and does not establish current route state.
 
 ### J8+
 
@@ -185,7 +206,7 @@ Status: **non-current unless a later source pack explicitly validates it**.
 
 They remain operational summaries, not a replacement for full canon.
 
-If they conflict with V0.69+ J1 sources, V0.73 Mathilde canon, or V0.74 Pauline canon, the newer canon wins.
+If they conflict with V0.69+ J1 sources, V0.73 Mathilde canon, or revised V0.74 Pauline canon, the newer canon wins.
 
 ## 7. Old narrative docs
 
@@ -201,19 +222,41 @@ Status: **historical / macro reference only**.
 
 Do not use its J5/J6/J7 sections as current truth.
 
+### Old dedicated Pauline arc
+
+Status: **identity pillars partially restored; mandatory schedule suspended**.
+
+Retained pillars:
+
+- current-partner infidelity;
+- double face;
+- Marie's partial knowledge;
+- proof and control;
+- temptation through private complicity;
+- the exposed exposer;
+- Pauline understanding Player's temptation because she has lived it.
+
+Not retained as canon:
+
+- fixed J4–J10 ordering;
+- automatic orchestration of every social event;
+- omniscient proof collection;
+- automatic chantage escalation;
+- guaranteed route beats.
+
 ### `docs/narrative/PROOF_AND_SECRET_MAP.md`
 
 Status: **typology useful; day-by-day examples suspended**.
 
-Use current character and adult-photo logic before restoring any proof.
-
-For Pauline, proof logic must preserve:
+For Pauline, current proof logic must preserve:
 
 ```text
-selected image
+current hidden betrayal
++ selected private version
++ plausible deniability
 + explicit rule
 + reciprocal risk
-+ consequence
++ consequence for Bastien and Marie
 ```
 
 She cannot remain a one-way controller of other people's exposure.
@@ -239,8 +282,20 @@ Compatible only after current-canon reframing:
 
 ## 9. Pauline deprecation summary
 
-Current canon overrides:
+Current canon restores:
 
+- current relationship with Bastien;
+- prior unconfessed infidelity during that relationship;
+- Marie knowing part of the truth;
+- double life / compartmentalization;
+- proof control grounded in lived betrayal;
+- sour temptation based on `nothing has to change yet`.
+
+Current canon overrides or suspends:
+
+- Pauline as single by default;
+- ex-boyfriend-only wound;
+- indestructible friendship with Marie;
 - omniscient social or photo-controller framing;
 - Pauline only distributing or interpreting other people's images;
 - permanent `official / unofficial` rhythm;
@@ -249,19 +304,20 @@ Current canon overrides:
 - playable choir voice-message assumptions;
 - fixed old J4 invitation / J5 photo / later route sequence;
 - early route locking;
-- consequence-free betrayal of Marie;
-- automatic group-sex organizer assumptions.
+- consequence-free betrayal of Marie or Bastien;
+- automatic group-sex or consensual cuckold assumptions.
 
 Compatible only after current-canon reframing:
 
 - legitimate social or practical relay through Marie;
+- scenes with Bastien and both couples visible;
 - group-photo competence;
 - public virtue / private contradiction;
 - choir and community life;
 - fast dry Messenger complicity;
 - alternate image versions;
-- image control that becomes reciprocal exposure;
-- later trio or group material through explicit adult negotiation.
+- alibis and reciprocal proof;
+- later trio, sharing, cuckold, or group material through explicit informed adult negotiation.
 
 ## 10. Adult route rule
 
@@ -283,11 +339,13 @@ A mini-short or crop top alone is not consent or route activation.
 For Pauline, adult escalation must come from:
 
 ```text
-public trust
+current couple and prior hidden infidelity
+-> recognition of Player's denied desire
 -> legitimate private channel
--> privately selected version
+-> double-addressed private version
+-> plausible deniability
 -> reciprocal implication
--> acknowledged desire
+-> acknowledged double life
 -> adult decision and consequence
 ```
 
@@ -296,6 +354,10 @@ An alternate photo, dry joke, or private reply alone is not consent or route act
 Pauline may lose composure, timing, polish, or emotional control.
 
 She does not lose the right to decide.
+
+Bastien's ignorance never becomes consent.
+
+A later negotiated cuckold, sharing, open, trio, or group frame must be established separately and cannot retroactively erase betrayal.
 
 ## 11. Choice rule
 
@@ -311,7 +373,9 @@ Four or more choices require explicit written justification.
 
 ```text
 Build the next story step from current canon, not inherited runtime.
+Keep identity pillars when they differentiate a character.
+Discard old schedules when they force linearity.
 Characters stay deep.
 Routes may become pornographic.
-Old material remains usable only after revalidation.
+Consequences remain human.
 ```
