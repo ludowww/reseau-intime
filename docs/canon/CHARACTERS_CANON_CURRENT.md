@@ -19,7 +19,7 @@ Write scenes from full character canon files.
 | Sandra | `docs/canon/characters/SANDRA_CANON_FULL.md` | Full concrete canon |
 | Player | `docs/canon/characters/PLAYER_CANON_FULL.md` | Full concrete canon |
 | Mathilde | `docs/canon/characters/MATHILDE_CANON_FULL.md` | Full concrete + NSFW canon; use with deprecation map |
-| Pauline | `docs/canon/characters/PAULINE_CANON_FULL.md` | Calibration canon; concrete expansion needed |
+| Pauline | `docs/canon/characters/PAULINE_CANON_FULL.md` | Full concrete + NSFW canon; use with deprecation map |
 | Raphaëlle | `docs/canon/characters/RAPHAELLE_CANON_FULL.md` | Calibration canon; concrete expansion needed |
 | Nico | `docs/canon/characters/NICO_CANON_FULL.md` | Calibration canon; concrete expansion needed |
 
@@ -29,10 +29,11 @@ Directory index:
 docs/canon/characters/CHARACTER_CANON_INDEX.md
 ```
 
-Mathilde deprecation map:
+Character deprecation maps:
 
 ```text
 docs/canon/characters/MATHILDE_CANON_DEPRECATION_MAP.md
+docs/canon/characters/PAULINE_CANON_DEPRECATION_MAP.md
 ```
 
 ## 3. Source policy
@@ -49,6 +50,8 @@ The full character canon files consolidate validated details from:
 Older addendums and runtime remain useful as source history or technical reference, but they are not required reading for ordinary scene writing and do not override current canon.
 
 For Mathilde specifically, older photo/canapé, sport/racket, long-grey-sweater, J1 seed, and J7 assumptions are secondary or deprecated according to her deprecation map.
+
+For Pauline specifically, older omniscient-photo-controller, constant-halo, playable-vocal, fixed J4/J5, early-route, and consequence-free betrayal assumptions are secondary or deprecated according to her deprecation map.
 
 ## 4. Maintenance rule
 
