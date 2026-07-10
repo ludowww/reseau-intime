@@ -37,7 +37,29 @@ docs/canon/characters/PAULINE_CANON_DEPRECATION_MAP.md
 docs/canon/characters/NICO_CANON_DEPRECATION_MAP.md
 ```
 
-## 3. Source policy
+## 3. Supporting-character status
+
+Jeff remains an important supporting character whose current concrete canon is embedded in Sandra's full profile.
+
+Current source:
+
+```text
+docs/canon/characters/SANDRA_CANON_FULL.md
+```
+
+Current status:
+
+- six-year relationship with Sandra;
+- shared house for around three years;
+- mason;
+- concrete, tired, blunt, and not very verbal;
+- capable of hurting Sandra through small repeated phrases;
+- not a monster and not a simple excuse for Sandra's route;
+- standalone full-canon file still needed before final character reconciliation and the Modular Narrative Arc Blueprint.
+
+Do not invent a separate Jeff biography that contradicts Sandra's canon before that pass.
+
+## 4. Source policy
 
 The full character canon files consolidate validated details from:
 
@@ -67,7 +89,7 @@ For Nico specifically:
 - hidden Marie / Nico betrayal and consensual cuckold / sharing are separate route families;
 - direct Nico / Player sexual contact is not assumed by trio proximity and requires separate validation.
 
-## 4. Maintenance rule
+## 5. Maintenance rule
 
 When a new character detail is validated:
 
@@ -84,7 +106,7 @@ A correction is not complete
 while the character file and the general canon disagree.
 ```
 
-## 5. Final rule
+## 6. Final rule
 
 ```text
 The full character canon files are the character source-of-truth.
