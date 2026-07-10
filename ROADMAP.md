@@ -31,6 +31,12 @@ Jeff et les autres ancrages restent des personnages secondaires documentés prop
 
 `J1 — Les choses qu'on remarque` est canon et runtime-aligné.
 
+Repère actuel :
+
+```text
+Mardi soir
+```
+
 - Marie et Sandra actives ;
 - Player actif par ses réponses ;
 - Mathilde indirecte ;
@@ -70,6 +76,23 @@ R4 Consequential Frame
 R5 Integration / Aftermath
 ```
 
+### Temps et communication
+
+Le canon général est :
+
+```text
+docs/canon/DIEGETIC_TIME_AND_COMMUNICATION_CANON.md
+```
+
+Règles permanentes :
+
+- chaque fenêtre possède un jour ou repère relatif, un moment de journée et une plage horaire plausible ;
+- le joueur doit sentir les transitions matin / midi / après-midi / soir / nuit ;
+- travail, trajet, repas, sommeil et horaires tardifs influencent la disponibilité ;
+- si deux personnages sont dans la même pièce et peuvent parler, ils ne mènent pas une longue conversation Messenger ;
+- le smartphone sert lorsque distance, logistique, confidentialité, trace ou après-coup le justifie ;
+- les scènes face à face passent par `OFFLINE_BEAT` puis produisent des conséquences visibles sur le téléphone.
+
 ### Ouverture Acte I
 
 V0.79 écrit le premier source pack concret :
@@ -77,11 +100,18 @@ V0.79 écrit le premier source pack concret :
 ```text
 docs/canon/ACT_I_OPENING_WINDOWS_SOURCE_PACK.md
 docs/canon/ACT_I_OPENING_SCENE_CARDS.md
+docs/canon/ACT_I_OPENING_TEMPORAL_DELIVERY_MAP.md
 ```
 
-L’ouverture couvre approximativement trois à cinq jours diégétiques sans imposer une étiquette fixe `J2`.
+Chronologie actuelle :
 
-Elle établit :
+```text
+Mercredi = urgence et arrivée Mathilde
+Jeudi = travail, vernissage, topologie, retour Marie
+Vendredi = photos publiques, suivi Nico, respiration foyer
+```
+
+L’ouverture établit :
 
 - le dégât des eaux et l’hébergement temporaire de Mathilde ;
 - l’entrée ordinaire de Mathilde dans le foyer ;
@@ -108,15 +138,19 @@ Le plan doit :
 
 1. cartographier les conversations et indexes J2+ existants ;
 2. déterminer comment O0–O8 s’insèrent dans l’interface smartphone ;
-3. préserver un fil visible par personnage ;
-4. mapper seulement les états nécessaires à la tranche V0.79 ;
-5. identifier les anciens nœuds J2 à remplacer, contourner ou déprécier ;
-6. préserver le budget `1 scène principale / 0–2 échos` ;
-7. préserver les neuf nœuds à trois choix ;
-8. garantir le retour obligatoire vers Marie ;
-9. préserver l’origine et le public des images ;
-10. définir validations, tests et rollback ;
-11. éviter tout gros refactoring.
+3. mapper mardi–vendredi et les séparateurs de jour / moment ;
+4. proposer les timestamps représentatifs à l’intérieur des plages validées ;
+5. mapper les modes `REMOTE_ASYNC`, `TRACE_DELIVERY`, `SEPARATE_ROOMS_PING`, `SAME_VENUE_LOGISTICS`, `WORK_CHAT`, `OFFLINE_BEAT` et `AFTERGLOW_REMOTE` ;
+6. définir quand une conversation téléphone s’arrête parce que les personnages deviennent co-présents ;
+7. préserver un fil visible par personnage ;
+8. mapper seulement les états nécessaires à la tranche V0.79 ;
+9. identifier les anciens nœuds J2 à remplacer, contourner ou déprécier ;
+10. préserver le budget `1 scène principale / 0–2 échos` ;
+11. préserver les neuf nœuds à trois choix ;
+12. garantir le retour obligatoire vers Marie ;
+13. préserver l’origine et le public des images ;
+14. définir validations, tests et rollback ;
+15. éviter tout gros refactoring.
 
 ## 3. Étape runtime suivante
 
@@ -132,6 +166,14 @@ Elle intégrera seulement :
 
 - la tranche validée par le plan ;
 - ou un sous-ensemble encore plus petit si l’architecture technique l’exige.
+
+Elle devra montrer concrètement :
+
+- au moins un séparateur de journée / moment ;
+- des timestamps cohérents ;
+- une transition message -> scène hors ligne lorsqu’un personnage rejoint la pièce ;
+- le retour obligatoire vers Marie ;
+- aucune conversation artificielle entre personnes côte à côte.
 
 Elle ne devra pas :
 
@@ -182,6 +224,12 @@ Les futurs source packs devront avancer progressivement :
 - mutation des occasions manquées ;
 - seulement ensuite premières routes R2 puis R3.
 
+Chaque futur pack doit conserver :
+
+- un repère temporel lisible ;
+- une raison crédible pour chaque message ;
+- une règle de passage hors ligne dès que les personnages se rejoignent.
+
 Le contenu adulte explicite appartient normalement aux actes ultérieurs et exige un cadre nommé.
 
 ## 6. Principes produit permanents
@@ -196,6 +244,8 @@ Le contenu adulte explicite appartient normalement aux actes ultérieurs et exig
 - Une route peut se fermer avant le sexe et rester narrativement complète.
 - Les scènes explicites doivent conserver la voix du personnage et produire un après-coup.
 - Les personnages secondaires restent humains et proportionnels.
+- Le temps diégétique doit être perceptible.
+- Le téléphone ne remplace pas une conversation possible en face à face.
 
 ## 7. Règles adultes permanentes
 
@@ -229,7 +279,9 @@ Sont particulièrement dépréciés comme contraintes :
 - Player absent du foyer jusqu’à J3 ;
 - Pauline et Nico exclus uniquement par numéro de jour ;
 - progression fixe J3 → J4 → J5 ;
-- soirée pivot unique imposée à une date déterminée.
+- soirée pivot unique imposée à une date déterminée ;
+- échanges Messenger longs entre personnages présents dans la même pièce ;
+- séquences sans repère matin / soir ou sans temps écoulé lisible.
 
 ## 9. Séquence officielle
 
@@ -252,5 +304,7 @@ V0.82+ — Extension incrémentale des fenêtres et pools validés
 - ajouter une nouvelle photo Sandra immédiatement ;
 - traiter Mathilde comme la récompense du choix de rester au foyer ;
 - supprimer la conséquence de retour vers Marie ;
+- faire discuter Marie et Player par quinze messages alors qu’ils sont côte à côte ;
+- oublier les séparateurs de jour ou les rythmes travail / trajet / sommeil ;
 - développer un gros scheduler universel avant d’avoir validé une petite tranche ;
 - fusionner documentation et runtime dans la même étape sans validation.
