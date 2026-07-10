@@ -3,7 +3,7 @@
 > Adult / NSFW / pornographic intent canon for character writing.  
 > This document complements the full per-character canon files.  
 > It does not replace personality depth; it makes explicit how that depth should support a direct, sexually charged, pornographic game when routes escalate.  
-> Pauline's V0.74 double-life canon and Nico's V0.75 social-mirror / shared-gaze canon are included here as global route rules, not only as character-file exceptions.
+> Consolidated through V0.76, including Pauline's double life, Nico's domestic-access / photo-pact correction, and Raphaëlle's chosen-transformation / clear-secret engine.
 
 ## 1. Project intent
 
@@ -19,7 +19,8 @@ It is an adult narrative game built around:
 - voyeuristic imagination;
 - photos / traces / messages as arousal engines;
 - emotional risk;
-- routes that may include trio, quatuor, tromperie, cuckold / NTR, sharing, and darker secret-management fantasies.
+- roleplay and chosen transformation;
+- routes that may include trio, quatuor, tromperie, cuckold / NTR, sharing, open arrangements, and darker secret-management fantasies.
 
 The characters must remain believable, but believability is not meant to neutralize the sexual charge.
 
@@ -31,11 +32,11 @@ Realistic character depth exists to make the adult scenes hotter, not to avoid t
 
 ## 2. Adults-only rule
 
-All sexualized or adult-route material is for adult characters only.
-
-If a character does not yet have an explicit age in the full canon, future concrete-profile work must confirm they are adults before any explicit route use.
+All sexualized or adult-route material is for explicitly adult characters only.
 
 No underage framing, ambiguity, school-age coding, or minor-adjacent fantasy is allowed.
+
+A costume, role, age-play-coded vocabulary, nickname, or power dynamic must never create ambiguity about adult status.
 
 ---
 
@@ -52,7 +53,7 @@ As tension rises, the tone may become:
 - more shameless;
 - more jealous;
 - more visibly aroused;
-- more explicitly about wanting, looking, touching, showing, hiding, being watched, being chosen, or being shared.
+- more explicitly about wanting, looking, touching, showing, hiding, being watched, being chosen, playing a role, or being shared.
 
 Early scenes can remain soft and plausible.
 
@@ -63,502 +64,42 @@ J1 can be restrained.
 Later route scenes should be allowed to become pornographic.
 ```
 
----
+Pornographic does not mean generic.
 
-## 4. Pornographic route principle
-
-A pornographic route should not mean characters become generic.
-
-The sexual escalation must come from their specific canon:
-
-- Marie: being actively chosen, desired again, seen by Player and possibly by others.
-- Sandra: choosing to show herself because she feels seen, not because Player pushes.
-- Mathilde: domestic ambiguity becoming body tension under Marie's shadow.
-- Pauline: a real current couple, unresolved prior infidelity, and a plausible-deniable private compartment becoming an acknowledged double life.
-- Raphaëlle: clarity, frame, elegance, and chosen version becoming adult consent.
-- Nico: real attraction to Marie, Player's denied gaze, direct male language, rivalry or invitation, and responsibility when shared fantasy becomes action.
-- Player: desire, guilt, curiosity, shame, control, surrender, and bad faith.
-
-Character differentiation must survive explicit escalation.
-
-```text
-Sandra chooses private truth after being seen.
-Pauline creates a managed secret so nobody has to choose yet.
-Nico makes desire speak, then must answer for what the words authorize — and what they do not.
-```
+The character's ordinary voice, wound, habits, and consequences must survive explicit escalation.
 
 ---
 
-## 5. Consent, risk, and dark routes
-
-The game may include cheating, secrecy, NTR, sharing, manipulation-adjacent temptation, and darker route fantasies.
-
-But route writing must distinguish:
-
-- consensual adult exploration;
-- ambiguous secrecy;
-- betrayal / cheating fantasy;
-- voyeurism fantasy;
-- NTR / cuckold framing;
-- dark route consequences;
-- non-consented diffusion or blackmail as dangerous narrative harm, not clean reward.
-
-Allowed adult route territory:
-
-- consensual trio / quatuor fantasy;
-- consensual or narratively chosen sharing;
-- cheating route with emotional cost;
-- NTR / cuckold fantasy if all involved adults are framed with agency at the point of explicit play;
-- voyeuristic tension if privacy / consent consequences are treated seriously;
-- secret photos or messages as dangerous traces if not treated as harmless reward.
-
-Do not write sexual coercion as erotic success.
-
-Do not reward non-consensual exposure as a clean collectible path.
-
-Dark content may exist, but it must have instability and consequences.
-
-### Cheating is not negotiated consent
-
-A hidden affair may be a valid adult route.
-
-It remains betrayal for the partner who does not know.
-
-```text
-Ignorance is not consent.
-Partial knowledge is not permission.
-Jealousy is not permission.
-A fantasy is not a three-person agreement.
-Later negotiation does not rewrite the past.
-```
-
-For Pauline specifically:
-
-- Bastien's ignorance is not cuckold consent;
-- Marie knowing about Pauline's earlier affair does not authorize a Pauline / Player route;
-- a later open, sharing, cuckold, trio, or group route must be established separately and explicitly;
-- later informed consent cannot retroactively sanitize earlier deception.
-
-For Nico specifically:
-
-- Player being jealous or aroused does not authorize Nico to act with Marie;
-- Player telling Nico a fantasy does not establish Marie's consent;
-- Marie returning Nico's flirt does not establish touch, secrecy, or an NTR frame;
-- Marie and Nico crossing secretly is a cheating route, not consensual NTR;
-- Player cannot `give` Marie to Nico;
-- Marie cannot negotiate Player's humiliation without Player in a consensual route;
-- Nico must be allowed to refuse being used as a jealousy instrument;
-- direct male-male contact is not implied by trio participation and requires separate consent.
-
-The betrayed or excluded partner must remain human even when offscreen.
-
-### Intoxication is not permission
-
-Nightlife, bars, parties, and loosened behavior may be part of the setting.
-
-They do not create consent.
-
-This is especially important for Nico because he works around alcohol and is often sober while others drink.
-
-If someone is too intoxicated to choose clearly, the adult escalation stops.
-
----
-
-## 6. Photos, messages, and proof as arousal engines
-
-Photos and messages are not only plot devices.
-
-They are adult engines:
-
-- a photo can make Player want;
-- a message can make a character feel watched;
-- a delayed reply can become sexual power;
-- a proof can become danger;
-- a trace can become a masturbatory object in Player's imagination later, if route intensity supports it;
-- a visual can shift a character from ordinary to pornographic in Player's gaze.
-
-Photo categories:
-
-### Soft trace
-
-- plausible;
-- defensible;
-- arousing mostly through context;
-- early route compatible.
-
-### Ambiguous visual
-
-- body / pose / frame can be read sexually;
-- sender may deny intent;
-- Player's gaze adds heat;
-- consequences depend on who sees / saves / comments.
-
-### Double-addressed visual
-
-- one public or partner-safe image has a second private meaning;
-- the dangerous intention comes from crop, timing, wording, or selected audience;
-- the public version and private version must remain narratively connected;
-- particularly important for Pauline's compartmentalization route;
-- not consent to save, forward, expose, or reinterpret beyond the stated frame.
-
-### Shared-gaze visual
-
-- a social image becomes erotic because several adults understand who is looking and why;
-- particularly relevant to Nico / Marie / Player routes;
-- may show proximity, attention, or a deliberately chosen adult frame;
-- can become a consensual image made for Player to see;
-- must distinguish public social visibility from private sexual permission;
-- cannot rely on secret capture or one participant being unaware.
-
-### Chosen adult visual
-
-- character intentionally shows more;
-- explicit consent / chosen frame matters;
-- may become central adult reward.
-
-### Secret / dangerous visual
-
-- hidden, saved, forwarded, captured, or discovered;
-- must carry risk;
-- cannot be treated as harmless if non-consensual.
-
-Proof should not make a character omniscient.
-
-A trace becomes interesting because it changes trust, desire, power, or consequence—not because it turns the game into a perfect detective system.
-
-For Nico, social traces should usually reveal:
-
-- who joined;
-- who stayed away;
-- who looked;
-- who returned the look;
-- whether a public moment later became private;
-- who was excluded from the choice.
-
----
-
-## 7. Route families
-
-### Repair / reconquest route
-
-Sexual charge comes from returning to Marie:
-
-- choosing her actively;
-- re-eroticizing domestic life;
-- making ordinary couple intimacy feel hot again;
-- learning to look before losing;
-- Marie becoming more direct and physically demanding if Player proves presence.
-
-### Cheating / tromperie route
-
-Sexual charge comes from betrayal, secrecy, and compartmentalization:
-
-- hiding messages;
-- choosing one reply while lying elsewhere;
-- keeping photos;
-- late-night arousal;
-- guilt mixed with excitement;
-- consequences if traces leak.
-
-This route should feel hot because it is risky, not because the betrayal is emotionally free.
-
-### Sandra slow-burn secret route
-
-Sexual charge comes from:
-
-- being the one who sees her;
-- chosen distance;
-- soft boundary becoming adult trust;
-- Sandra deciding what she shows;
-- Player wanting to cross a line precisely because it has been named.
-
-Sandra's route cannot be reduced to dissatisfaction with Jeff plus availability.
-
-Her agency appears through restraint, selected exposure, and the courage created by distance.
-
-### Mathilde domestic taboo route
-
-Sexual charge comes from:
-
-- proximity in Marie's space;
-- family / domestic taboo;
-- accidental closeness;
-- playful denial;
-- body in the wrong room;
-- small trace becoming impossible to dismiss.
-
-Mathilde's ordinary sensuality is not route consent.
-
-The route advances when intention changes.
-
-### Pauline double-life / compartmentalization route
-
-Sexual charge comes from:
-
-- Pauline already being in a real current relationship with Bastien;
-- a prior hidden infidelity that she ended without resolving its psychological engine;
-- Marie knowing part of that history but not authorizing anything new;
-- Pauline recognizing Player's own habit of avoiding decisions;
-- a legitimate public or social pretext becoming a selected private channel;
-- a message, image, or gesture that remains publicly defensible and privately deliberate;
-- alibis and technically true explanations;
-- reciprocal proof;
-- ordinary affection for Bastien and Marie continuing beside betrayal;
-- secrecy itself becoming arousing;
-- the compartment eventually colliding with real relationships.
-
-Pauline does not initially offer Player romance or a clean alternative.
-
-She offers:
-
-```text
-Nothing has to change yet.
-We only have to be honest here.
-```
-
-That invitation is specifically dangerous because the private honesty exists inside a larger lie.
-
-Pauline must eventually be exposed by the same logic of proof, timing, alternate versions, and behavior she tries to control.
-
-### Raphaëlle clarity / adult frame route
-
-Sexual charge comes from:
-
-- explicit consent;
-- precise frame;
-- chosen version;
-- not hiding behind confusion;
-- slow elegance becoming direct adult desire.
-
-Raphaëlle should clarify what Pauline prefers to postpone.
-
-### Nico social mirror / rivalry route
-
-Sexual charge begins when:
-
-- Nico's real attraction to Marie becomes readable;
-- Marie actively receives, rejects, or escalates the attention;
-- Player sees Marie through another man's direct gaze;
-- Nico names the physical truth Player avoids;
-- friendship and rivalry occupy the same conversation;
-- Nico gives Player a real chance to act before treating the space as abandoned;
-- Nico must eventually admit whether advice, desire, and positioning are all active.
-
-This route can remain social, help repair the couple, become rivalry, or open another adult frame.
-
-Nico's directness does not make him automatically correct.
-
-### Hidden Marie / Nico affair route
-
-Sexual charge comes from:
-
-- real attraction;
-- a visible couple crack;
-- Marie choosing Nico without Player's knowledge;
-- Nico knowingly entering a betrayal;
-- friendship with Player continuing under the secret;
-- direct adult desire mixed with rationalization;
-- social traces and ordinary conversations becoming dangerous.
-
-This is a cheating route.
-
-It is not consensual NTR.
-
-Nico and Marie both carry responsibility.
-
-### Nico / consensual NTR / cuckold / sharing route
-
-Sexual charge comes from:
-
-- Player seeing Marie through Nico's gaze;
-- jealousy becoming admitted arousal;
-- Nico verbalizing physical desire;
-- Marie actively choosing the frame;
-- Player explicitly choosing whether he watches, participates, shares, yields control, or accepts negotiated humiliation;
-- Nico entering as an informed person rather than a body summoned for a fetish;
-- being watched and shared gaze;
-- consequences and aftercare after the fantasy becomes real.
-
-Requirements:
-
-- Marie's explicit desire;
-- Player's explicit role;
-- Nico's explicit acceptance;
-- concrete boundaries;
-- no intoxication carrying consent;
-- no assumption that one scene grants permanent permission;
-- no retroactive conversion of prior cheating into consent.
-
-Nico must not erase Marie's agency.
-
-Player must not become a passive camera by default.
-
-Nico is not automatically dominant.
-
-### Nico male-complicity / shared-gaze route
-
-Player and Nico may build an unusually direct male channel around:
-
-- jealousy;
-- bodies;
-- arousal;
-- fantasy;
-- rivalry;
-- watching;
-- permission;
-- boundaries.
-
-This route can be erotically intense without direct male-male contact.
-
-Marie cannot be reduced to material exchanged between men.
-
-Her consent and voice remain necessary before fantasy becomes action.
-
-### Trio / quatuor route
-
-Sexual charge comes from:
-
-- multiple gazes;
-- negotiated boundaries;
-- jealousy transformed into arousal;
-- photos / messages / invitations as triggers;
-- characters retaining their specific voices inside group escalation.
-
-These routes should not be introduced too early.
-
-A negotiated group route cannot be used as a shortcut that erases earlier secrecy or betrayal.
-
-A trio does not automatically establish consent for every form of contact between every participant.
-
----
-
-## 8. Character-specific adult direction
+## 4. Character-specific pornographic engines
 
 ### Marie
-
-Adult engine:
 
 ```text
 being actively desired again
 ```
 
-Marie can become more direct, physical, and demanding when Player proves he is present.
-
-Her adult route can include:
-
-- reconquest;
-- sex as proof of active choice;
-- being seen by others;
-- jealousy reversal;
-- social visibility becoming erotic;
-- possible sharing / NTR routes if Marie's agency and desire are central.
-
-Marie should not be only the woman cheated on.
-
-In adult routes, Marie can become:
-
-- initiator;
-- judge;
-- provoker;
-- center of a shared fantasy;
-- the one who makes Player watch what he took for granted.
-
-Tone can become direct when earned:
-
-- less `look at me emotionally`;
-- more `want me, prove it, touch me, watch me, choose me` style energy in later scenes.
+Marie becomes erotic through reconquest, active choice, social visibility, power reclaimed, jealousy, and the possibility that Player must watch or share what he treated as guaranteed.
 
 ### Sandra
-
-Adult engine:
 
 ```text
 I choose what I show because you saw me correctly
 ```
 
-Sandra's erotic power is not immediate availability.
-
-It comes from:
-
-- distance;
-- chosen exposure;
-- slow-burn trust;
-- private photo logic;
-- wanting to be seen differently from Jeff;
-- soft restraint cracking.
-
-Later Sandra can become direct, but still with her restraint pattern:
-
-- naming the danger;
-- sending a chosen adult trace;
-- making Player ask carefully;
-- refusing pressure;
-- becoming bolder after respect.
-
-She should not be written as simply waiting for Player to take.
-
-### Player
-
-Adult engine:
-
-```text
-the gaze becomes an act
-```
-
-Player's desire should become more explicit as routes escalate:
-
-- wanting to see;
-- wanting to save;
-- wanting to touch;
-- being jealous;
-- being aroused by jealousy;
-- wanting Marie and others in conflicting ways;
-- feeling shame and using it badly or honestly.
-
-He can become crude later, but not generically crude.
-
-His directness should often carry:
-
-- embarrassment;
-- self-awareness;
-- hunger;
-- bad faith;
-- guilt;
-- loss of control.
-
-In a Nico route, Player must distinguish:
-
-- jealousy;
-- ownership;
-- desire;
-- fear of replacement;
-- desire to watch;
-- desire to share;
-- desire to compete;
-- the wish to make another man act so Player does not have to name his own wish.
+Sandra becomes erotic through restraint, chosen exposure, precise attention, distance, and the moment soft confidence becomes adult permission.
 
 ### Mathilde
 
-Adult engine:
-
 ```text
-the domestic frame makes body tension taboo
+domestic proximity
++ forbidden gaze
++ ordinary sensuality becoming deliberate intention
++ loyalty to Marie
 ```
 
-Mathilde's NSFW route should grow from:
-
-- family proximity;
-- being in Marie's space;
-- outfit / body / room accidents;
-- teasing and denying;
-- bad faith becoming arousal;
-- legal jokes failing under physical tension.
-
-She can become more direct, but Marie's shadow remains part of the heat.
+Mathilde's mini-shorts, crop tops, fitted clothing, or temporary stay never create consent. The route advances when she recognizes and chooses the effect.
 
 ### Pauline
-
-Adult engine:
 
 ```text
 current couple
@@ -568,246 +109,738 @@ current couple
 + double life becoming consciously desired
 ```
 
-Pauline's NSFW route should grow from:
-
-- a real attachment to Bastien rather than emotional singleness;
-- recognition of Player's denied desire;
-- a legitimate Marie / Bastien / group pretext;
-- sharp private messages that ask for honesty without offering full honesty;
-- double-addressed images, wording, or gestures;
-- alibis and selected omissions;
-- testing whether Player will carry equal risk;
-- secrecy becoming part of the arousal;
-- the old affair pattern becoming visible as repetition;
-- Pauline being exposed by the same mechanisms she uses;
-- consequences for Bastien, Marie, Player, and both couples.
-
-She can become crude through fast, dry, almost mocking directness.
-
-Her route remains character-specific only when:
-
-- she does not become a single woman waiting to be understood;
-- Bastien remains human and relevant;
-- Marie's friendship remains real and breakable;
-- Player cannot erase his own agency by claiming Pauline started it;
-- controlled evidence does not erase emotional cost.
-
-```text
-Pauline does not ask Player to choose her first.
-She makes not choosing feel intelligent and temporarily harmless.
-```
+Pauline makes non-decision erotic. Her route depends on Bastien, Marie's partial knowledge, selected versions, alibis, and consequences.
 
 ### Raphaëlle
 
-Adult engine:
-
 ```text
-clear consent makes desire sharper
+chosen transformation
++ named desire
++ explicit role and limits
++ controlled anticipation
++ being seen exactly as intended
++ permission to lose composure inside the frame
++ responsibility after the version ends
 ```
 
-Raphaëlle can become explicitly adult because she refuses flou.
+Raphaëlle becomes erotic through costume, process, role, precise invitation, flexible power exchange, and the question of what remains when the role ends.
 
-Her NSFW route should grow from:
+Her route-critical contradiction is:
 
-- frame;
-- chosen version;
-- precise consent;
-- elegant control;
-- calm directness;
-- being desired without being used as a hiding place.
-
-She can be very direct later because she names the frame instead of pretending it does not exist.
+```text
+local clarity
+is not automatically
+global accountability
+```
 
 ### Nico
 
-Adult engine:
-
 ```text
 real attraction to Marie
-+ Player's denied gaze
-+ Nico's direct language
-+ Marie's active response
-+ rivalry or invitation
-+ explicit boundary
-+ shared gaze / being watched
-+ responsibility for what follows
++ real attraction to Mathilde
++ jealousy of Player's domestic access
++ direct male language
++ voyeuristic curiosity
++ Player / Nico shared gaze
++ reciprocal photo and alibi pact
++ responsibility when the gaze becomes action
 ```
 
-Nico's NSFW route should grow from:
+Nico makes desire social. He can become friend, rival, lover, invited third, voyeuristic accomplice, or negative opportunist.
 
-- ordinary social and work life before sexual function;
-- a genuine friendship with Player;
-- attraction to Marie that predates active route state;
-- Nico giving Player a real opportunity to join Marie in some compatible scenes;
-- direct words such as `sexy`, `jaloux`, `excité`, `regarder`, and later explicit adult vocabulary;
-- Nico recognizing Player's bodily reaction without treating it as permission;
-- Marie actively accepting, refusing, redirecting, or escalating Nico's attention;
-- Nico admitting his own intention rather than only diagnosing Player;
-- social rivalry becoming a named boundary question;
-- a clear branch between hidden affair and negotiated sharing;
-- being watched or shared gaze inside informed consent;
-- aftermath and consequences for friendship, couple, and group.
-
-Nico may become:
-
-- friend mirror;
-- respectful rival;
-- hidden affair partner;
-- invited third;
-- consensual NTR/cuckold participant;
-- trio or group participant;
-- man who refuses to be used;
-- negative opportunist on unstable routes.
-
-He can become crude through direct, physical, competitive language.
-
-His route remains character-specific only when:
-
-- he is not an `alpha` or fetish body without private life;
-- Marie remains the active subject;
-- Player remains capable of speech, choice, refusal, participation, and consequence;
-- Nico can be wrong, jealous, rejected, vulnerable, or afraid;
-- friendship with Player is real enough to betray or preserve;
-- direct desire does not erase incomplete intention;
-- consent is asked again when the frame changes.
+### Player
 
 ```text
-Nico does not take Marie from Player.
+the gaze becomes an act
+```
 
-He makes desire speak,
-Marie chooses her position,
-Player loses the protection of abstraction,
-and Nico must own why he entered the frame.
+Player's route engine includes observation, shame, desire, jealousy, curiosity, control, surrender, bad faith, and the responsibility attached to choosing, saving, forwarding, watching, hiding, or returning home.
+
+Character differentiation rule:
+
+```text
+Sandra chooses private truth after being seen.
+Mathilde turns ordinary sensuality into deliberate intent.
+Pauline creates a compartment so nobody has to choose yet.
+Raphaëlle chooses a version and makes the frame visible.
+Nico circulates the gaze and asks what Player will do with it.
+Marie decides whether the couple becomes an active choice again.
 ```
 
 ---
 
-## 9. Tone by intensity tier
+## 5. Consent, betrayal, and consequence
+
+The game may include cheating, secrecy, NTR, sharing, voyeuristic complicity, manipulation-adjacent temptation, roleplay, and darker routes.
+
+Route writing must distinguish:
+
+- consensual adult exploration;
+- ambiguous attraction;
+- hidden betrayal;
+- voyeurism fantasy;
+- unapproved image circulation;
+- NTR as betrayal from an excluded partner's perspective;
+- consensual cuckold / sharing;
+- roleplay with current consent;
+- dark-route harm;
+- coercion or exposure that cannot be treated as clean reward.
+
+Core rules:
+
+```text
+Ignorance is not consent.
+Partial knowledge is not permission.
+Jealousy is not permission.
+Arousal is not permission.
+A fantasy is not a multi-person agreement.
+A costume is not blanket permission.
+One scene does not create permanent access.
+Later negotiation does not rewrite earlier betrayal.
+```
+
+Do not write sexual coercion as erotic success.
+
+Do not reward non-consensual exposure as a clean collectible path.
+
+Dark content may exist, but it must have instability and consequences.
+
+### Pauline-specific consent rule
+
+- Bastien's ignorance is not cuckold consent;
+- Marie knowing about Pauline's earlier affair does not authorize a Pauline / Player route;
+- a later open, sharing, cuckold, trio, or group route must be established separately;
+- later informed consent cannot retroactively sanitize earlier deception.
+
+### Nico-specific consent rule
+
+- Player being jealous or aroused does not authorize Nico to act with Marie or Mathilde;
+- Player's domestic access does not authorize image circulation;
+- Player telling Nico a fantasy does not establish any woman's consent;
+- Marie or Mathilde returning a flirt does not establish touch, secrecy, photography, or sharing;
+- Player cannot `give` Marie or Mathilde to Nico;
+- Marie cannot negotiate Player's humiliation without Player in a consensual route;
+- Nico must be allowed to refuse being used as a jealousy or fantasy instrument;
+- direct male-male contact is not implied by trio participation and requires separate consent.
+
+### Raphaëlle-specific consent rule
+
+- a mask, costume, fitting, role, photograph, or previous adult scene does not grant current access;
+- professional trust is not sexual consent;
+- Player's claim that Marie knows is not enough if the agreement cannot be described or confirmed;
+- Raphaëlle and Player may clearly name a hidden encounter and still be cheating;
+- Raphaëlle's precise language does not absolve Player or erase Marie;
+- every new role, contact type, image rule, and group participant requires current agreement.
+
+### Intoxication is not permission
+
+Nightlife, parties, conventions, work events, bars, and loosened behavior may color scenes.
+
+They do not create consent.
+
+If an adult is too intoxicated or impaired to choose clearly, escalation stops.
+
+---
+
+## 6. Photos, versions, messages, and proof
+
+Photos and messages are not only plot devices.
+
+They are adult engines:
+
+- a photo can make Player want;
+- a message can make a character feel watched;
+- a delayed reply can become sexual power;
+- a costume image can turn transformation into invitation;
+- a proof can become danger;
+- a social trace can make jealousy public;
+- a saved image can become betrayal;
+- a visual may become a masturbatory object later if route intensity and consent support it.
+
+Every important image needs:
+
+- an origin;
+- an intended audience;
+- an intended function;
+- a saving / deletion rule when relevant;
+- consequences if it leaves its frame.
+
+### Soft trace
+
+- plausible;
+- defensible;
+- early-route compatible;
+- arousing mainly through context.
+
+### Ambiguous visual
+
+- body, pose, clothing, proximity, or framing can be read sexually;
+- intent remains uncertain;
+- Player's gaze adds heat;
+- no adult permission is inferred.
+
+### Double-addressed visual
+
+Especially relevant to Pauline.
+
+- one public or partner-safe image has a second private meaning;
+- the danger comes from crop, timing, wording, or selected audience;
+- public and private versions remain narratively connected;
+- the image does not authorize saving, forwarding, or exposure beyond the chosen frame.
+
+### Shared-gaze visual
+
+Especially relevant to Nico.
+
+- several adults understand who is looking and why;
+- may be social, voyeuristic, consensually erotic, or secretly circulated;
+- must distinguish public visibility from private sexual permission;
+- can become a chosen image made for Player and Nico only if the photographed adult knows the recipients and purpose.
+
+### Chosen-version visual
+
+Especially relevant to Raphaëlle.
+
+- the image is built around version, costume, process, role, audience, and authorship;
+- may be ordinary, charged, or explicitly adult;
+- preparation can be more intimate than the polished final image;
+- the role and image rules end or change when Raphaëlle says they do.
+
+### Chosen adult visual
+
+- the character intentionally creates adult arousal;
+- consent, audience, saving, forwarding, and future use matter;
+- may become a major route reward.
+
+### Secret / dangerous visual
+
+- hidden, saved, forwarded, recropped, captured, or discovered outside its agreed context;
+- carries trust and route consequences;
+- cannot be treated as harmless if non-consensual.
+
+---
+
+## 7. Nico photo-pact consent matrix
+
+The Player / Nico photo pact may involve descriptions, social images, domestic images, outfit photos, alternate crops, reciprocal offers, deletion rules, and mutual alibis.
+
+It must use one of three clearly identified levels.
+
+### Level A — authorized shared gaze
+
+The photographed adult knows:
+
+- the image exists;
+- who receives it;
+- why it is erotic;
+- whether it can be saved;
+- whether it can be shown to another named adult.
+
+This can become a clean adult reward.
+
+Examples:
+
+- Marie deliberately creates an image for Player and Nico;
+- Mathilde explicitly allows Player to show Nico one chosen image;
+- Pauline names the two recipients of a selected version;
+- Raphaëlle creates a roleplay image for a named negotiated frame.
+
+### Level B — unapproved recontextualization or circulation
+
+The image may be publicly available or legitimately possessed.
+
+The photographed adult did not authorize:
+
+- sexual reinterpretation;
+- recropping;
+- forwarding;
+- saving;
+- the new recipient;
+- the new erotic function.
+
+This is a dark betrayal route.
+
+It can be pornographically charged, but it is not a clean consensual reward.
+
+```text
+Permission to possess an image
+is not permission to sexualize, recrop, or forward it.
+```
+
+Consequences must reflect the woman involved:
+
+- Marie: couple privacy becomes male currency;
+- Mathilde: temporary domestic safety becomes voyeuristic access;
+- Pauline: her authorship and audience control are violated;
+- Raphaëlle: a chosen version leaves the frame she designed.
+
+### Level C — prohibited capture / severe harm
+
+The following are not a standard reward loop:
+
+- hidden cameras;
+- bathroom or under-clothing capture;
+- sleeping or incapacitated intimate capture;
+- secretly recorded sexual activity;
+- stolen explicit images;
+- coercive threats based on image possession.
+
+If used at all, this material belongs only to a severe negative/harm route with immediate instability, likely route closure, and major consequences.
+
+Level C is not Nico's default voyeur identity.
+
+### Mutual alibi rule
+
+Nico may cover Player, and Player may cover Nico.
+
+```text
+An alibi does not erase the act.
+It turns the act into a reciprocal secret.
+```
+
+First cover can resemble friendship.
+
+Second cover creates debt.
+
+Repeated cover becomes leverage, habit, erotic complicity, or evidence.
+
+---
+
+## 8. Route families
+
+### Marie repair / reconquest route
+
+Sexual charge comes from:
+
+- choosing Marie actively;
+- re-eroticizing domestic life;
+- making ordinary couple intimacy hot again;
+- naming jealousy and outside desire;
+- Marie becoming initiator, judge, provoker, or center of a shared fantasy;
+- Player learning to act before being threatened with loss.
+
+### Cheating / tromperie route
+
+Sexual charge comes from:
+
+- hiding messages;
+- choosing one reply while lying elsewhere;
+- late-night arousal;
+- saving or forwarding traces;
+- explicit knowledge that someone is excluded;
+- guilt mixed with excitement;
+- ordinary life continuing beside betrayal.
+
+Cheating remains emotionally costly even when the participants consent to each other.
+
+### Sandra slow-burn secret route
+
+Sexual charge comes from:
+
+- being the person who sees her precisely;
+- chosen distance;
+- soft boundary becoming adult trust;
+- Sandra deciding what she shows;
+- Player wanting to cross a line because it has been named.
+
+Sandra's route cannot be reduced to dissatisfaction with Jeff plus availability.
+
+### Mathilde domestic taboo route
+
+Sexual charge comes from:
+
+- proximity in Marie's space;
+- family / domestic taboo;
+- Player seeing an unprepared version;
+- image and clothing tension;
+- playful denial;
+- Mathilde recognizing and choosing the effect;
+- the risk that Marie's home becomes unsafe.
+
+### Pauline double-life route
+
+Sexual charge comes from:
+
+- Pauline's real couple with Bastien;
+- her prior hidden infidelity;
+- Marie's partial knowledge;
+- legitimate social pretexts;
+- double-addressed images and messages;
+- alibis;
+- reciprocal proof;
+- secrecy itself becoming arousing;
+- the compartment eventually colliding with ordinary life.
+
+```text
+Pauline does not first ask Player to choose her.
+She makes not choosing feel intelligent and temporarily harmless.
+```
+
+### Raphaëlle chosen-version / roleplay route
+
+Sexual charge comes from:
+
+- transformation;
+- process;
+- costume, mask, hair, glasses, fabric, or makeup as chosen tools;
+- a role defined without replacing the person;
+- explicit permission;
+- precise instructions;
+- flexible power exchange;
+- losing composure inside the frame;
+- the return to ordinary identity afterward.
+
+The route can exist inside:
+
+- exclusive relationship;
+- informed non-exclusive relationship;
+- one-night adult frame;
+- trio or group frame;
+- clear-secret affair.
+
+### Raphaëlle informed open / non-exclusive route
+
+Marie, Player, and Raphaëlle establish enough shared truth for Raphaëlle to enter without secrecy.
+
+Possible forms:
+
+- occasional adult relationship;
+- emotionally meaningful secondary relationship;
+- open dating;
+- chosen roleplay encounters;
+- shared-image route;
+- later trio or group content.
+
+Raphaëlle is not automatically polyamorous. She chooses or rejects the specific arrangement.
+
+### Raphaëlle clear-secret affair route
+
+Raphaëlle and Player explicitly know Marie is not informed.
+
+They may still cross.
+
+This is cheating.
+
+The erotic engine is:
+
+```text
+local honesty
++ exact role
++ bounded time
++ known outside consequence
++ the false comfort of calling the secret clear
+```
+
+The route asks:
+
+```text
+Does naming betrayal prevent bad faith,
+or only make the participants feel more sophisticated
+while Marie remains excluded?
+```
+
+It must carry:
+
+- Marie's humanity;
+- workplace tension;
+- image/message traces;
+- Raphaëlle confronting Étienne's logic from the other side;
+- Player unable to use her clarity as absolution;
+- aftermath.
+
+### Nico social mirror / rivalry route
+
+Sexual charge begins when:
+
+- Nico's attraction to Marie or Mathilde becomes readable;
+- Player recognizes his own gaze;
+- Nico names physical desire;
+- friendship and rivalry occupy the same conversation;
+- the woman involved actively accepts, refuses, redirects, or escalates;
+- Nico admits his self-interest.
+
+### Nico domestic-access envy route
+
+Nico envies Player's access to:
+
+- Marie as partner;
+- Mathilde temporarily under the same roof;
+- breakfast, late returns, homewear, doors, hallways, tired faces, and unprepared versions.
+
+This can remain:
+
+- banter;
+- jealousy;
+- voyeuristic fantasy;
+- catalyst for Player to notice his home;
+- gateway to a photo pact;
+- a direct Mathilde / Nico route if Mathilde independently responds.
+
+Domestic access is not ownership or permission.
+
+### Player / Nico voyeur pact route
+
+```text
+Nico asks what Player saw
+-> Player describes or refuses
+-> Nico asks for a photo
+-> offers an alibi or reciprocal image
+-> both men become implicated
+-> consent, betrayal, discovery, or informed shared play follows
+```
+
+Nico may offer images of Marie, Mathilde, Pauline, or Raphaëlle only when the image has a credible origin.
+
+He does not possess a magical archive.
+
+### Hidden Marie / Nico or Mathilde / Nico affair route
+
+The participating adults consent to each other.
+
+Player or another partner remains excluded.
+
+This is betrayal, not consensual cuckold content.
+
+### Nico consensual cuckold / sharing route
+
+Sexual charge comes from:
+
+- Player admitting jealousy, desire, or curiosity;
+- the woman actively choosing Nico;
+- Nico hearing her consent directly;
+- Player choosing whether he watches, participates, receives messages, or sets limits;
+- chosen humiliation only when explicitly requested;
+- aftercare and consequence.
+
+Nico is not automatically dominant or entitled to repeat access.
+
+### Trio / quatuor / group route
+
+Sexual charge comes from:
+
+- multiple gazes;
+- negotiated boundaries;
+- jealousy becoming arousal;
+- costumes, images, messages, and invitations as triggers;
+- characters retaining distinct motives and voices.
+
+A group route does not erase earlier betrayal.
+
+One participant's consent does not authorize every contact between all participants.
+
+Raphaëlle may help articulate a frame, but she is not the group's consent secretary.
+
+---
+
+## 9. Raphaëlle adult direction in detail
+
+Raphaëlle can become explicitly adult because she refuses to let a chosen version pretend to be an accident.
+
+Her route should grow from:
+
+- ordinary colleague life;
+- work trust without hierarchy;
+- outside-work access;
+- creative / cosplay process;
+- Player noticing intention rather than only body;
+- attraction named;
+- professional and private frames separated;
+- role and image rules stated;
+- body and desire becoming direct;
+- aftermath.
+
+She may enjoy:
+
+- being watched while transforming;
+- mirrors;
+- masks;
+- deliberate photography;
+- fitted costume pieces;
+- gloves, boots, fabric, hair, and makeup as tactile anchors;
+- a countdown;
+- permission given in stages;
+- precise verbal instruction;
+- commanding or being commanded inside a chosen role;
+- flexible dominance and submission;
+- light restraint or sensory play when negotiated;
+- direct adult language;
+- ending the role deliberately;
+- discovering she wants more than the role.
+
+She refuses:
+
+- improvised domination presented as confidence;
+- surprise humiliation;
+- workplace pressure;
+- secret recording;
+- cultural fetishization;
+- a partner who wants the costume but mocks the craft;
+- Player asking for rules so he can avoid moral responsibility;
+- a role continuing after she changes or withdraws consent.
+
+Adult dialogue rule:
+
+```text
+The rules are established before they become sexy.
+During the scene, Raphaëlle speaks as a person inside desire,
+not as a consent manual.
+```
+
+After the scene, the role ends but consequence remains.
+
+---
+
+## 10. Tone by intensity tier
 
 ### Tier 1 — Everyday charge
 
-- soft;
-- suggestive;
-- defensible;
+- ordinary life remains primary;
+- soft suggestion;
 - plausible messages;
-- small bodily noticing.
+- one bodily detail;
+- no route lock.
 
-For Nico:
+For Raphaëlle:
 
 - work;
-- invitation;
-- ordinary group banter;
-- one socially acceptable compliment;
-- no immediate jealousy engine.
+- coffee;
+- lunch walk;
+- costume problem;
+- travel or panda detail;
+- no instant diagnosis.
 
 ### Tier 2 — Acknowledged attraction
 
-- more direct compliments;
-- body named more clearly;
-- saved / kept traces;
+- direct compliment;
+- body or version named more clearly;
 - jealousy appears;
-- characters know the line exists.
+- one personal image or invitation;
+- characters know a line exists.
 
-For Nico:
+For Raphaëlle:
 
-- real attraction to Marie becomes readable;
-- Player reacts;
-- Marie responds actively;
-- no adult permission assumed.
+- creative account or process glimpse;
+- Player notices intention;
+- she asks what he believes he is seeing.
 
 ### Tier 3 — Explicit private desire
 
 - direct wanting;
-- adult photo logic;
-- masturbation / fantasy implication if route supports it;
-- sharper messages;
-- less poetic evasion.
+- adult fantasy discussed;
+- image, role, saving rule, or boundary named;
+- less poetic evasion;
+- fantasy separated from proposal.
 
-For Nico:
+For Raphaëlle:
 
-- Player may admit arousal or sharing fantasy;
-- Nico may admit wanting Marie;
-- Marie states her own desire or limit;
-- the frame must branch before physical action.
+- chosen version;
+- roleplay discussion;
+- question about Marie;
+- professional/private separation.
 
 ### Tier 4 — Adult route scene
 
 - direct sexual language allowed;
 - pornographic framing allowed;
-- body / touch / watching / sharing / cheating desire can be explicit;
-- character voice still preserved.
+- body, touch, watching, sharing, role, and power may be explicit;
+- current consent remains readable;
+- character voice survives.
 
-For Nico, Tier 4 must be identified as either:
+Raphaëlle Tier 4 must be identified as:
 
-- hidden affair;
-- negotiated sharing / NTR/cuckold;
-- trio;
-- another explicit adult frame.
+- informed exclusive / post-separation;
+- informed open / non-exclusive;
+- one-night permitted frame;
+- clear-secret cheating;
+- trio/group;
+- another explicitly named adult arrangement.
 
-Do not blur them for convenience.
+### Tier 5 — Consequence / dark / specialized routes
 
-### Tier 5 — Dark / NTR / group / consequence routes
-
-- trio / quatuor;
-- cuckold / NTR;
-- betrayal consequences;
+- betrayal;
+- NTR/cuckold;
+- trio/quatuor;
 - shared gaze;
-- secret traces;
+- roleplay escalation;
+- image risk;
+- jealousy;
 - explicit adult cost;
-- characters may be more crude, jealous, possessive, or shameless.
-
-Aftermath remains required.
+- aftermath that changes relationships.
 
 ---
 
-## 10. Writing guardrails
+## 11. Writing guardrails
 
 Avoid:
 
 - flattening everyone into the same porn voice;
 - keeping the tone too soft forever;
 - making adult routes consequence-free when built on secrecy;
-- using NTR, cuckold, sharing, open-couple, trio, or group framing without the affected adults' informed agency;
-- using later negotiation to retroactively erase prior betrayal;
+- using NTR, cuckold, sharing, open-couple, trio, or group framing without informed agency for directly involved adults;
+- using later negotiation to retroactively erase betrayal;
 - making Sandra available through pressure;
-- making Pauline omnipotent through photos;
-- making Pauline single or emotionally unattached by convenience;
-- making Pauline interchangeable with Sandra's need to be seen;
-- treating Marie's partial knowledge as permission for Pauline;
+- making Mathilde's clothing into consent;
+- making Pauline single or consequence-free by convenience;
+- making Pauline omnipotent through images;
+- treating Marie's partial knowledge as permission;
 - treating Bastien's ignorance as cuckold consent;
-- making Bastien abusive, stupid, or permanently absent to clean the route;
-- making Raphaëlle a therapist-refuge;
-- making Mathilde forget Marie;
-- making Nico predatory;
-- making Nico a flat `alpha`, fetishized `bull`, or automatic dominant;
-- making Nico a pure jealousy or NTR delivery mechanism;
-- making Nico right about every woman or every room;
-- making Nico's directness equal consent;
-- treating Player's jealousy, erection, fantasy, or private confession as permission;
-- treating Marie's flirt or social visibility as permission;
-- using intoxication to open a Nico route;
-- making Nico and Player negotiate Marie without Marie;
-- making Marie negotiate Player's humiliation without Player in a consensual route;
-- assuming direct male-male contact from trio participation;
-- turning every Nico line into crude body commentary;
+- making Raphaëlle a therapist, moral judge, exotic sage, or automatically safe route;
+- making Raphaëlle's clarity equal ethics;
+- making cosplay automatic sexual permission;
+- using sacred or cultural clothing as generic porn costume;
+- making every Raphaëlle adult line sound contractual;
+- omitting role aftermath;
+- using pandas or vulnerability to bypass a refusal;
+- using workplace hierarchy, deadline pressure, or professional retaliation for access;
+- making Nico predatory, omniscient, or a pure NTR machine;
+- treating Player's jealousy or erection as permission;
+- treating domestic access as ownership;
+- treating public images as sexual forwarding permission;
+- making Nico's archive magical;
+- hidden cameras or incapacitated capture as standard rewards;
+- direct male-male contact inferred from trio proximity;
 - making Player a passive camera only;
-- letting Player erase his agency with `elle a commencé`;
-- letting Nico erase his agency with `je n'ai pas créé la faille`;
-- confusing loss of timing, polish, or control with loss of consent;
-- omitting aftermath after explicit shared content.
+- letting Player erase agency with `elle a commencé`;
+- letting Nico erase agency with `je n'ai pas créé la faille`;
+- letting Raphaëlle erase consequence with `au moins c'était clair`;
+- confusing loss of composure with loss of consent.
 
 ---
 
-## 11. Final rule
+## 12. General documentation sync rule
+
+When a character-specific adult engine changes, update in the same documentation pass:
+
+- the full character canon;
+- the character deprecation map;
+- this global NSFW canon;
+- the character index;
+- the documentation reading order;
+- the narrative canon status;
+- the current-character doorway;
+- the active version report;
+- implementation guidance and PR description.
+
+```text
+An adult-route correction is incomplete
+while global consent rules and character canon describe different games.
+```
+
+---
+
+## 13. Final rule
 
 ```text
 The game is allowed to become pornographic.
-The heat should come from character-specific desire, risk, and routes — not from generic explicitness.
+The heat should come from character-specific desire, risk, and routes — not generic explicitness.
 
 When secrecy is part of the arousal,
 the people excluded from the secret remain real,
 and later consent cannot rewrite earlier betrayal.
 
 When shared gaze is part of the arousal,
-each adult must still choose what looking is allowed to become.
+each adult must choose what looking is allowed to become.
+
+When a role or transformation is part of the arousal,
+the person remains responsible before, during, and after the version ends.
 ```
