@@ -162,7 +162,7 @@ class V081WednesdayStaticTests(unittest.TestCase):
                     offenders.append(node.get("id", "?"))
             self.assertEqual(offenders, [], relative)
 
-    def test_arrival_trace_and_offline_beat_have_authored_semantics(self):
+    def test_arrival_trace_and_offline_beats_have_authored_semantics(self):
         arrival_trace = load_json("data/conversations/chapter_02_marie_arrival_trace.json")
         trace_messages = arrival_trace.get("segments", [])[0].get("messages", [])
         time_separator = next(item for item in trace_messages if item.get("presentation") == "time_separator")
@@ -179,12 +179,15 @@ class V081WednesdayStaticTests(unittest.TestCase):
             for node in walk(mathilde)
             if isinstance(node, dict) and node.get("presentation") == "offline_beat"
         ]
-        self.assertEqual(len(offline_items), 1)
-        offline = offline_items[0]
-        self.assertTrue(offline.get("_system_note"))
-        self.assertEqual(offline.get("time_label"), "19:15")
-        self.assertNotIn("sender", offline)
-        self.assertIn("face à face", offline.get("text", ""))
+        self.assertEqual(len(offline_items), 3)
+        self.assertEqual(
+            {item.get("time_label") for item in offline_items},
+            {"18:46", "18:50", "19:15"},
+        )
+        for offline in offline_items:
+            self.assertTrue(offline.get("_system_note"))
+            self.assertNotIn("sender", offline)
+            self.assertIn("face à face", offline.get("text", ""))
 
     def test_current_arrival_visual_is_ordinary_low_risk(self):
         bundle = load_json("data/visual_content/chapter_02_proofs.json")
