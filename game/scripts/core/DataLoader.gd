@@ -1,7 +1,14 @@
 extends Node
 
 const INITIAL_STATE_PATH := "res://data/state/initial_state.json"
+
+# Canonically active runtime slices. Legacy indexes remain listed below for
+# rollback/history but are not loaded into the current phone navigation.
 const CHAPTER_INDEX_PATHS := [
+	"res://data/conversations/chapter_01_modular_index.json",
+	"res://data/conversations/chapter_02_modular_index.json",
+]
+const LEGACY_CHAPTER_INDEX_PATHS := [
 	"res://data/conversations/chapter_01_index.json",
 	"res://data/conversations/chapter_02_index.json",
 	"res://data/conversations/chapter_03_index.json",
@@ -11,9 +18,13 @@ const CHAPTER_INDEX_PATHS := [
 	"res://data/conversations/chapter_07_index.json",
 	"res://data/conversations/chapter_09_index.json",
 ]
+
 const VISUAL_CONTENT_PATHS := [
 	"res://data/visual_content/placeholders.json",
 	"res://data/visual_content/chapter_01_proofs.json",
+	"res://data/visual_content/chapter_02_proofs.json",
+]
+const LEGACY_VISUAL_CONTENT_PATHS := [
 	"res://data/visual_content/chapter_04_proofs.json",
 	"res://data/visual_content/chapter_05_proofs.json",
 	"res://data/visual_content/chapter_06_proofs.json",
@@ -73,16 +84,59 @@ func _load_index_conversations(index: Dictionary) -> void:
 	var day_key := _day_key(index.get("day", index.get("chapter", "?")))
 	if not conversations_by_day.has(day_key):
 		conversations_by_day[day_key] = []
+	var filters: Dictionary = index.get("conversation_filters", {})
 	for file_path in index.get("conversation_files", []):
 		var convo := load_json(str(file_path))
 		if convo.is_empty():
 			continue
+		var convo_id := str(convo.get("id", file_path))
+		if filters.has(convo_id) and typeof(filters[convo_id]) == TYPE_DICTIONARY:
+			convo = _apply_conversation_filter(convo, filters[convo_id])
 		convo["_source_path"] = str(file_path)
 		convo["day"] = index.get("day", index.get("chapter", ""))
 		convo["_index_title"] = index.get("title", "")
-		var convo_id := str(convo.get("id", file_path))
+		convo["_index_calendar_label"] = index.get("calendar_label", "")
+		convo["_index_display_label"] = index.get("display_label", "")
 		conversations_by_id[convo_id] = convo
 		conversations_by_day[day_key].append(convo)
+
+func _apply_conversation_filter(conversation: Dictionary, filter: Dictionary) -> Dictionary:
+	var excluded_ids: Array = filter.get("exclude_item_ids", [])
+	var excluded_content_ids: Array = filter.get("exclude_content_ids", [])
+	var filtered = _filter_value(conversation, excluded_ids, excluded_content_ids)
+	if typeof(filtered) == TYPE_DICTIONARY:
+		return filtered
+	return conversation
+
+func _filter_value(value, excluded_ids: Array, excluded_content_ids: Array):
+	if typeof(value) == TYPE_ARRAY:
+		var filtered_array: Array = []
+		for child in value:
+			if typeof(child) == TYPE_DICTIONARY and _dictionary_is_excluded(child, excluded_ids, excluded_content_ids):
+				continue
+			filtered_array.append(_filter_value(child, excluded_ids, excluded_content_ids))
+		return filtered_array
+	if typeof(value) == TYPE_DICTIONARY:
+		var filtered_dictionary: Dictionary = {}
+		for key in value.keys():
+			var child = value[key]
+			if str(key) in ["unlocks_content", "initial_visual_anchors"] and typeof(child) == TYPE_ARRAY:
+				var filtered_ids: Array = []
+				for content_id in child:
+					if not excluded_content_ids.has(str(content_id)):
+						filtered_ids.append(content_id)
+				filtered_dictionary[key] = filtered_ids
+			else:
+				filtered_dictionary[key] = _filter_value(child, excluded_ids, excluded_content_ids)
+		return filtered_dictionary
+	return value
+
+func _dictionary_is_excluded(value: Dictionary, excluded_ids: Array, excluded_content_ids: Array) -> bool:
+	var item_id := str(value.get("id", ""))
+	if item_id != "" and excluded_ids.has(item_id):
+		return true
+	var content_id := str(value.get("content_id", ""))
+	return content_id != "" and excluded_content_ids.has(content_id)
 
 func _load_visual_content(path: String) -> void:
 	var bundle := load_json(path)
@@ -96,8 +150,29 @@ func _load_visual_content(path: String) -> void:
 func get_day_labels() -> Array[String]:
 	var labels: Array[String] = []
 	for index in chapter_indexes:
-		labels.append("Jour %s" % _day_key(index.get("day", index.get("chapter", "?"))))
+		var configured_label := str(index.get("display_label", ""))
+		if configured_label == "":
+			labels.append("Jour %s" % _day_key(index.get("day", index.get("chapter", "?"))))
+		else:
+			labels.append(configured_label)
 	return labels
+
+func get_day_display_label(day_value) -> String:
+	var index := get_index_for_day(day_value)
+	var configured_label := str(index.get("display_label", ""))
+	if configured_label != "":
+		return configured_label
+	return "Jour %s" % _day_key(day_value)
+
+func get_day_calendar_label(day_value) -> String:
+	var index := get_index_for_day(day_value)
+	var configured_label := str(index.get("calendar_label", ""))
+	if configured_label != "":
+		return configured_label
+	return "Jour %s" % _day_key(day_value)
+
+func get_day_start_time(day_value) -> String:
+	return str(get_index_for_day(day_value).get("day_start_time", "--:--"))
 
 func get_conversations_for_day(day_value) -> Array:
 	return _group_segmented_conversations(conversations_by_day.get(_day_key(day_value), []))
