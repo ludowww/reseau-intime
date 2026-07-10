@@ -1,85 +1,195 @@
 # Réseau Intime
 
-**Réseau Intime** est un jeu narratif adulte en interface smartphone.
+**Réseau Intime** est un jeu narratif adulte en interface smartphone, développé avec Godot 4.6.x.
 
-Le joueur incarne **Player** — nom générique temporaire du protagoniste, remplacé à terme par le prénom choisi par le joueur — en couple avec **Marie**, alors que la routine, les secrets, les notifications et les désirs croisés fragilisent leur relation. Le jeu se déroule principalement via messagerie instantanée, posts sociaux, notifications, photos, vidéos, conversations de groupe et contenus privés.
+Le joueur incarne **Player** — nom générique temporaire, remplacé à terme par le prénom choisi — en couple avec **Marie**. Leur vie commune reste réelle, tendre et désirable, mais la routine, les notifications, les images, les secrets et les désirs croisés obligent progressivement chacun à choisir ce qu’il veut préserver, cacher, partager ou quitter.
 
-La promesse du jeu :
+Le jeu se déroule principalement via :
 
-> Toutes les routes racontent la même histoire : un couple en routine entouré de désirs qui se réveillent. Ce qui change, c’est la façon dont le personnage joueur gère cette vérité : mentir, avouer, partager, contrôler, subir ou partir.
+- messagerie instantanée ;
+- notifications ;
+- publications sociales ;
+- photographies et vidéos ;
+- conversations privées ou de groupe ;
+- traces numériques et conséquences dans la vie ordinaire.
+
+## Promesse du jeu
+
+```text
+Toutes les routes racontent la même histoire :
+un couple en routine entouré de désirs qui se réveillent.
+
+Ce qui change,
+c'est la manière dont Player gère cette vérité :
+participer, mentir, avouer, partager, contrôler, subir, réparer ou partir.
+```
+
+Le projet n’est pas une romance classique ni un porno générique.
+
+La crédibilité psychologique existe pour rendre les scènes adultes, la tromperie, le voyeurisme, la jalousie, le NTR/cuckold, le partage, les trios, les groupes, les images et les secrets plus forts et plus spécifiques aux personnages.
 
 ## Décisions validées
 
 ```text
 Titre officiel : Réseau Intime
-Moteur : Godot 4.6.2
-Structure : tronc commun + route dominante + route secondaire + menace + mode relationnel
-Cadre : adulte progressif, non moralisateur, conséquences fortes, placeholders d’abord
+Moteur : Godot 4.6.x
+Interface principale : smartphone
+Architecture : tronc dramatique fixe + fenêtres narratives + scènes modulaires
+Choix : 3 maximum par défaut
+Méthode : documentation validée avant runtime
 ```
 
-## Piliers
-
-- Interface de smartphone immersive.
-- Conversations multiples avec notifications.
-- Photos et vidéos comme récompenses, preuves et risques narratifs.
-- Routes relationnelles : tromperie, réparation, libertinage, polyamour, NTR, harem, chaos.
-- Personnages liés entre eux : les choix envers une personne modifient les autres relations.
-- Rejouabilité fondée sur des dynamiques différentes, pas seulement sur des scènes à collectionner.
-
-## Structure du projet
+## Question centrale
 
 ```text
-README.md
-ROADMAP.md
-docs/
-  00_PROJECT_VISION.md
-  01_NARRATIVE_BIBLE.md
-  02_CHARACTER_BIBLE.md
-  03_ROUTE_ARCHITECTURE.md
-  04_ENDINGS_MATRIX.md
-  05_CONTENT_VISUAL_RULES.md
-  06_SMARTPHONE_UX.md
-  07_TECHNICAL_ARCHITECTURE.md
-  08_DATA_FORMATS.md
-  09_WRITING_GUIDELINES.md
-  10_VERTICAL_SLICE_SCOPE.md
-  J2_WRITING_FOUNDATION.md
-  J3_DATA_FIRST_IMPLEMENTATION_BRIEF.md
-  J3_J5_Desire_Tension_Visual_Routes_Spec.md
-  J3_WRITING_FOUNDATION.md
-  J4_WRITING_FOUNDATION.md
-  J5_WRITING_FOUNDATION.md
-  story_state/
-    GLOBAL_STORY_STATE.md
-    J1_SUMMARY.md
-    J2_SUMMARY.md
-    CHARACTER_CONTINUITY_MATRIX.md
-  decisions/
-    DECISION_001_ENGINE.md
-    DECISION_002_CORE_STRUCTURE.md
-    DECISION_003_GAME_TITLE.md
-    DECISION_004_FOUNDATIONAL_BOUNDARIES.md
-    DECISION_005_J2_VISUAL_RHYTHM_AND_MATHILDE.md
-    DECISION_006_PLAYER_NAME_AND_THREAD_MODEL.md
-    DECISION_007_J3_J5_DESIRE_TENSION_VISUAL_ROUTES.md
+Le couple Player / Marie
+peut-il redevenir un choix actif ?
 ```
 
-## Règle de conception
+Les autres personnages ne constituent pas des histoires séparées. Ils offrent des réponses, tentations ou conséquences différentes autour de la crise du couple.
 
-Le jeu ne doit pas devenir six histoires séparées. Il doit garder un tronc commun :
+```text
+Marie      = le couple et la reconquête active
+Sandra     = la confidence et la vérité privée choisie
+Mathilde   = la proximité domestique et le changement d'intention
+Pauline    = l'image, la compartimentation et la double vie
+Nico       = le regard social, l'envie domestique, le voyeurisme et la rivalité
+Raphaëlle  = la version choisie, le cadre explicite et l'après-rôle
+Player     = le regard qui devient acte, choix ou mauvaise foi
+```
 
-1. Player et Marie sont en couple.
-2. La routine a affaibli le désir.
-3. Chaque personnage ouvre une faille différente.
-4. Une soirée pivot révèle les tensions.
-5. Une preuve ou un contenu intime met les choix en danger.
-6. Le personnage joueur choisit entre secret, vérité, ouverture, contrôle ou fuite.
-7. Le réseau relationnel se recompose en fin de partie.
+## Architecture narrative actuelle
 
-## Cadre adulte
+Depuis V0.78, l’ancien déroulement fixe J2–J10 n’est plus le modèle de production.
 
-Le niveau est adulte progressif. Le jeu ne moralise pas, mais il ne banalise jamais : tout choix intime doit créer une trace, une conséquence ou une tension.
+Le modèle actuel est :
 
-## Statut
+```text
+tronc dramatique fixe
++ choix qui changent le contexte
++ fenêtres narratives
++ scènes modulaires propres aux personnages
++ obligations et traces persistantes
++ conséquences qui reviennent vers le couple
+```
 
-Prototype data-first en cours : J1/J2 intégrés avec placeholders, documentation en alignement continu. J3-J5 sont cadrés côté désir, tensions, contenus visuels, routes et preuves avant écriture détaillée ; J3 dispose maintenant d’un brief d’intégration data-first.
+Une fenêtre contient normalement :
+
+```text
+1 scène principale
+0–2 échos
+```
+
+Les choix ne présentent pas les personnages comme un menu de routes. Ils définissent ce que Player fait, où il se trouve, qui est réellement disponible et quelle conséquence devient due.
+
+## État narratif actuel
+
+### J1
+
+`J1 — Les choses qu'on remarque` est le contenu canon actuel et runtime-aligné.
+
+Il établit :
+
+- Marie et Player encore ensemble dans une chaleur habituelle ;
+- Sandra réintroduite par une trace douce ;
+- Mathilde indirecte seulement ;
+- Pauline, Nico et Raphaëlle absents des fils actifs ;
+- aucune route verrouillée ;
+- aucun secret dur ;
+- aucun contenu explicite.
+
+### Première ouverture post-J1
+
+V0.79 fournit le premier source pack modulaire concret :
+
+```text
+docs/canon/ACT_I_OPENING_WINDOWS_SOURCE_PACK.md
+docs/canon/ACT_I_OPENING_SCENE_CARDS.md
+```
+
+Il définit :
+
+- le séjour temporaire de Mathilde après un dégât des eaux ;
+- les premiers choix de participation au foyer ;
+- l’entrée professionnelle ordinaire de Raphaëlle ;
+- une continuité Sandra mesurée ;
+- le premier choix topologique autour d’un événement de Marie ;
+- un retour obligatoire vers le couple ;
+- l’entrée sociale ordinaire de Pauline et Nico ;
+- aucune route adulte ou trahison active.
+
+Ce contenu est documentaire et n’est pas encore intégré au runtime.
+
+### J2+ historique
+
+L’ancien J2 intégré et les anciennes fondations J3–J10 restent disponibles comme référence technique ou historique.
+
+Ils ne sont plus une source narrative automatique.
+
+Le selfie canapé Mathilde, l’ordre fixe J2 et les anciens calendriers de routes sont suspendus lorsqu’ils contredisent le canon actuel.
+
+## Canon à lire
+
+Commencer par :
+
+```text
+docs/canon/DOCUMENTATION_READING_ORDER.md
+```
+
+Principales sources :
+
+```text
+docs/canon/NARRATIVE_CANON_STATUS.md
+docs/canon/CHOICE_DESIGN_CANON.md
+docs/canon/MODULAR_NARRATIVE_ARC_BLUEPRINT.md
+docs/canon/MODULAR_SCENE_AUTHORING_CONTRACT.md
+docs/canon/ACT_I_OPENING_WINDOWS_SOURCE_PACK.md
+docs/canon/ACT_I_OPENING_SCENE_CARDS.md
+docs/canon/characters/CHARACTER_CANON_INDEX.md
+docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
+```
+
+## Piliers de conception
+
+- Smartphone immersif et conversations multiples.
+- Marie et la vie commune restent le centre vivant.
+- Les scènes adultes peuvent devenir directes et pornographiques lorsque le cadre est mérité.
+- Chaque personnage conserve sa voix et son moteur propre.
+- Images, messages, promesses, alibis et suppressions deviennent des traces.
+- Les conséquences dues passent avant les nouvelles tentations.
+- Les personnages secondaires restent humains sans recevoir automatiquement une route.
+- La rejouabilité vient des contextes, connaissances, obligations et conséquences, pas seulement de scènes à collectionner.
+
+## Règles adultes fondamentales
+
+```text
+Ignorer n'est pas consentir.
+Une connaissance partielle n'est pas une permission.
+La jalousie ou l'excitation n'est pas une permission.
+Une image publique n'est pas une permission de transmettre.
+Un vêtement ou un costume n'est pas un consentement global.
+Un secret clairement nommé reste une trahison.
+Une négociation tardive ne réécrit pas une trahison antérieure.
+```
+
+## Workflow
+
+```text
+1. canon et architecture
+2. source pack concret
+3. cartes de scènes
+4. plan d'intégration runtime
+5. petite tranche verticale
+6. validation
+7. extension pool par pool
+```
+
+Pas de gros refactoring ni de modification runtime avant validation documentaire.
+
+## Prochaine étape
+
+```text
+V0.80 — First Modular Runtime Integration Plan
+```
+
+V0.80 doit inspecter le runtime existant et proposer une intégration minimale de la tranche V0.79, sans encore modifier Godot ou les JSON narratifs.
