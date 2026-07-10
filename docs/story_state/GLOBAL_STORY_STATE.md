@@ -1,8 +1,8 @@
-# État global de l’histoire — V0.78
+# État global de l’histoire — V0.79
 
-> Résumé opérationnel après validation de l’architecture narrative modulaire.  
-> Ce fichier ne remplace pas le canon détaillé.  
-> Il sert à vérifier rapidement l’état de l’histoire avant un source pack ou une intégration runtime.
+> Résumé opérationnel après correction temporelle et communicationnelle du premier source pack modulaire post-J1.  
+> Ce fichier ne remplace ni le canon détaillé, ni le source pack, ni les cartes de scènes.  
+> Il sert à vérifier rapidement l’état courant avant le plan d’intégration runtime.
 
 ## 1. Hiérarchie de vérité actuelle
 
@@ -10,18 +10,19 @@
 canon personnages complet
 + canon NSFW
 + canon des choix
-+ Modular Narrative Arc Blueprint
-+ Modular Scene Authoring Contract
-= vérité narrative actuelle
-
-source pack / fenêtre validée
-= vérité de contenu pour la tranche concernée
++ V0.78 Modular Narrative Arc Blueprint
++ V0.78 Modular Scene Authoring Contract
++ Diegetic Time & Communication Realism Canon
++ V0.79 Act I Opening Windows Source Pack
++ V0.79 Act I Opening Scene Cards
++ V0.79 Act I Opening Temporal & Delivery Map
+= vérité narrative actuelle pour l'ouverture post-J1
 
 runtime JSON
 = implémentation technique, jamais vérité narrative automatique
 
-anciens day plans / spine / arcs / proof maps
-= historiques si contradiction
+anciens J2–J10 / day plans / foundations / summaries
+= historiques ou techniques si contradiction
 ```
 
 ## 2. Sources actives
@@ -32,13 +33,17 @@ docs/canon/NARRATIVE_CANON_STATUS.md
 docs/canon/CHOICE_DESIGN_CANON.md
 docs/canon/MODULAR_NARRATIVE_ARC_BLUEPRINT.md
 docs/canon/MODULAR_SCENE_AUTHORING_CONTRACT.md
+docs/canon/DIEGETIC_TIME_AND_COMMUNICATION_CANON.md
+docs/canon/ACT_I_OPENING_WINDOWS_SOURCE_PACK.md
+docs/canon/ACT_I_OPENING_SCENE_CARDS.md
+docs/canon/ACT_I_OPENING_TEMPORAL_DELIVERY_MAP.md
 docs/canon/characters/CHARACTER_CANON_INDEX.md
 docs/canon/characters/*_CANON_FULL.md
 docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
 docs/canon/SUPPORTING_CHARACTER_CANON_POLICY.md
 ```
 
-Pour J1 :
+Pour J1 exact :
 
 ```text
 docs/canon/J1_CANON_SOURCE_PACK.md
@@ -51,21 +56,17 @@ docs/V0_69_J1_Canon_Text_Review_And_Final_Line_Source.md
 Le couple Player / Marie peut-il redevenir un choix actif ?
 ```
 
-Les autres personnages ne remplacent pas cette histoire.
-
-Ils proposent des réponses, tentations, regards ou conséquences différents.
-
 ```text
-Marie      = le couple et la reconquête active
-Sandra     = la confidence et la vérité privée choisie
-Mathilde   = la proximité domestique et le changement d’intention
-Pauline    = l’image, la compartimentation et la double vie
-Nico       = le regard social, l’envie domestique, le voyeurisme et la rivalité
-Raphaëlle  = la version choisie, le cadre explicite et l’après-rôle
-Player     = le regard qui devient acte, choix ou mauvaise foi
+Marie      = couple et reconquête active
+Sandra     = confidence et vérité privée choisie
+Mathilde   = proximité domestique et changement d'intention
+Pauline    = image, compartimentation et double vie
+Nico       = regard social, envie domestique, voyeurisme et rivalité
+Raphaëlle  = version choisie, cadre explicite et après-rôle
+Player     = regard devenant acte, choix ou mauvaise foi
 ```
 
-## 4. État actuel après J1
+## 4. État canonique après J1
 
 Mode couple :
 
@@ -73,281 +74,285 @@ Mode couple :
 HABITUAL_WARMTH
 ```
 
-Cela signifie :
-
 - amour réel ;
 - confiance globalement intacte ;
-- exclusivité supposée, pas récemment rediscutée ;
+- exclusivité supposée ;
 - désir sous-exprimé ;
-- vie commune fonctionnelle ;
 - présence active de Player inégale ;
-- Marie demande encore de petites actions plutôt qu’une réparation totale.
-
-État des routes :
-
-- Marie / Player : couple actif, pas de crise déclarée ;
-- Sandra : trace douce, aucune route verrouillée ;
-- Mathilde : indirecte uniquement dans J1 ;
-- Pauline : absente du runtime J1 ;
-- Nico : absent du runtime J1 ;
-- Raphaëlle : absente du runtime J1 ;
+- Sandra revenue par une trace douce ;
+- aucune route externe active ;
 - aucun secret dur ;
-- aucun contenu explicite ;
-- aucun changement de cadre relationnel.
+- aucun cadre adulte.
 
-Les choix J1 créent seulement des signaux de présence, de retard ou d’attention.
+## 5. Repère temporel canonique
 
-## 5. Architecture post-J1
-
-La narration n’utilise plus un ordre fixe J2–J10.
-
-Un cycle narratif suit désormais :
+L’ouverture possède désormais une semaine lisible :
 
 ```text
-ancrage fixe
--> choix de Player
--> changement de contexte / topologie
--> une scène modulaire principale
--> zéro à deux échos
--> retour à la vie commune ou conséquence
--> mise à jour des obligations et traces
+Mardi soir
+= J1 — Les choses qu'on remarque
+
+Mercredi midi
+= urgence Mathilde / décision de faire de la place
+
+Mercredi fin d'après-midi et soir
+= arrivée de Mathilde / installation hors ligne
+
+Jeudi matin
+= première présence travail de Raphaëlle
+
+Jeudi début d'après-midi
+= écho Sandra possible après poste du matin
+
+Jeudi fin d'après-midi
+= proposition de Marie pour La Verrière
+
+Jeudi soir
+= branche topologique
+
+Jeudi nuit
+= conséquence / retour vers Marie
+
+Vendredi matin
+= relais photo publique de Pauline
+
+Vendredi après-midi
+= suivi de Nico
+
+Vendredi fin de journée
+= respiration du foyer
 ```
 
-Budget par fenêtre :
+Les jours et moments de journée sont canoniques.
+
+Les minutes exactes restent une décision d’intégration à l’intérieur des plages validées.
+
+## 6. Règle de communication réaliste
 
 ```text
-1 scène principale
-0–2 échos
+Si deux personnages sont dans la même pièce
+et peuvent parler normalement,
+ils ne mènent pas une longue conversation Messenger.
 ```
 
-Les conséquences dues passent avant une nouvelle tentation.
+Modes actifs :
 
-## 6. Tronc narratif fixe
+- `REMOTE_ASYNC` ;
+- `TRACE_DELIVERY` ;
+- `SEPARATE_ROOMS_PING` ;
+- `SAME_VENUE_LOGISTICS` ;
+- `WORK_CHAT` ;
+- `OFFLINE_BEAT` ;
+- `AFTERGLOW_REMOTE`.
+
+### Applications V0.79
+
+- O1 : Marie et Player sont séparés à midi ; messages naturels.
+- O2 : Player n’est pas encore rentré lors de la photo d’arrivée ; dès son retour, l’installation continue hors ligne.
+- O3 : Player et Raphaëlle travaillent depuis des postes / pièces distinctes ; s’ils se rejoignent, le chat s’arrête.
+- O5A : Marie et Player n’échangent que de courts messages logistiques à travers une salle bruyante.
+- O5B : Mathilde écrit depuis la chambre d’appoint ; lorsque Player entre, l’aide continue hors ligne.
+- O5C : work chat seulement pendant la séparation physique ; revue finale hors ligne si co-présence.
+- O6 : message si les partenaires se sont séparés ; `OFFLINE_BEAT` s’ils rentrent ensemble.
+- respiration du foyer : message seulement si les personnages sont séparés ; sinon la scène est parlée.
+
+Le smartphone montre ce qui passe réellement par le smartphone.
+
+## 7. Ouverture Acte I écrite
 
 ```text
-S0 Attention
-S1 Changement du foyer
-S2 Mouvement proposé
-S3 Vies extérieures visibles
-S4 Attention privée répétée
-S5 Limite nommée
-S6 Désir devenu conséquent
-S7 Collision entre privé et quotidien
-S8 Cadre du couple déclaré
-S9 Ce qui reste
+O0 — continuité J1
+O1 — Marie / faire de la place
+O2 — arrivée de Mathilde
+O3 — Raphaëlle travail + écho Sandra possible
+O4 — Marie propose un mouvement
+O5 — une branche topologique
+O6 — retour obligatoire vers Marie
+O7 — relais photo publique Pauline
+O8 — suivi place gardée Nico + respiration foyer
 ```
 
-Le contenu exact de chaque ancrage peut varier selon l’état.
+O7 et O8 peuvent s’inverser si O6 est déjà payé et si le rythme des messages reste crédible.
 
-La fonction dramatique ne disparaît pas.
+## 8. Premier choix topologique
 
-## 7. Actes actuels
+Marie propose le vernissage de La Verrière.
+
+Player choisit :
 
 ```text
-Acte 0 — Les choses qu'on remarque
-Acte I — La place qu'on laisse
-Acte II — Les regards circulent
-Acte III — Les lignes choisies
-Acte IV — Les versions se rencontrent
-Acte V — Ce qu'on choisit de garder
+1. venir tôt avec Marie
+2. rester au foyer partagé
+3. finir une vraie obligation de travail et promettre de venir ensuite
 ```
 
-Les actes ne correspondent pas à un nombre fixe de jours.
-
-## 8. Fenêtres narratives principales
-
-- foyer Player / Marie ;
-- foyer sans Marie ;
-- sortie sociale de Marie ;
-- Player avec Marie en public ;
-- sortie ou obligation séparée de Player ;
-- travail Player / Raphaëlle ;
-- canal privé de messages ;
-- événement de groupe ;
-- image / trace ;
-- après-scène ;
-- vérité du couple.
-
-Une fenêtre définit :
-
-- lieu ;
-- moment ;
-- personnages disponibles ;
-- intimité ;
-- témoins ;
-- canal ;
-- plafond d’intensité ;
-- obligations dues.
-
-## 9. Cycle de vie universel des routes
+Cela ouvre exactement une scène principale :
 
 ```text
-R0 Background
-R1 Ordinary Access
-R2 Charged Access
-R3 Acknowledged Intent
-R4 Consequential Frame
-R5 Integration / Aftermath
+Marie / participation sociale
+OU
+Mathilde / accès domestique pratique
+OU
+Raphaëlle / travail et pression de la promesse
 ```
 
-R4 doit être identifié comme :
+Chaque branche revient vers Marie.
+
+Le choix définit ce que Player fait, pas la femme qu’il sélectionne.
+
+## 9. Contenu par personnage
+
+### Marie
+
+- prend en charge l’urgence familiale ;
+- demande une participation concrète ;
+- organise le vernissage annoncé dans J1 ;
+- agit même si Player ne vient pas ;
+- reçoit la conséquence de chaque branche.
+
+### Mathilde
+
+- dégât des eaux ;
+- séjour de dix à quinze jours ;
+- valise, housse, tote bag, chaussures, chargeur ;
+- image d’arrivée ouverte et pratique ;
+- R1 domestique ;
+- aucune intention sexuelle reconnue.
+
+### Raphaëlle
+
+- première présence par une revue UX/accessibilité normale ;
+- R1 travail ;
+- work chat seulement avec séparation physique ;
+- housse de costume possible comme détail, pas comme invitation.
+
+### Sandra
+
+- bref écho après poste du matin ;
+- aucune nouvelle photo ;
+- lien actif ou refroidi selon J1.
+
+### Pauline
+
+- set de photos de groupe autorisées, envoyé vendredi matin ;
+- Bastien visible ;
+- R1 social/public ;
+- aucun crop privé.
+
+### Nico
+
+- place ou table gardée ;
+- suivi vendredi après-midi, cohérent avec son rythme tardif ;
+- R1 amitié/social ;
+- aucune demande de photo ou jalousie active.
+
+## 10. Choix documentés
 
 ```text
-trahison cachée
-cadre adulte informé
-cadre post-séparation
-cadre négatif / limite brisée
+M0  — qualité de participation à l'hébergement
+MT0 — accueil de Mathilde
+R0  — réponse à une correction professionnelle
+M1  — choix topologique
+MA0 — qualité de présence à La Verrière
+MH0 — posture domestique avec Mathilde
+RW0 — travail contre promesse explicite
+P0  — sélection photo publique autorisée
+N0  — réponse à l'amitié de Nico
 ```
 
-Plusieurs routes R1/R2 peuvent coexister.
+Tous utilisent trois choix.
 
-Trois secrets conséquents ne peuvent pas s’accumuler silencieusement : collision, exposition, confession ou choix structurel deviennent obligatoires.
+O6 n’ajoute pas de faux choix permettant d’annuler la décision précédente.
 
-## 10. Modèle du couple
+## 11. Visuels et traces
 
-Dimensions conceptuelles :
+### Actifs
+
+- `mathilde_arrival_room_01` : mercredi soir, image privée ordinaire prise par Marie avant le retour de Player ;
+- `raphaelle_blue_folder` : jeudi matin, visuel travail optionnel ;
+- `marie_laverriere_setup_01` : jeudi soir, image événement autorisée ;
+- `laverriere_public_group_photo_set_01` : vendredi matin, set social/public autorisé.
+
+### Absents
+
+- selfie canapé Mathilde ;
+- image provocante Mathilde ;
+- seconde photo Sandra ;
+- photo personnelle/cosplay Raphaëlle ;
+- crop privé Pauline ;
+- image privée Nico ;
+- capture cachée ;
+- vidéo sexuelle.
+
+Aucune image n’a de fonction adulte.
+
+## 12. État de fin du pack
 
 ```text
-présence
-désir
-confiance
-vérité
-cadre relationnel
+Mathilde stay = active
+Marie event = completed
+first topology = remembered
+public group photo = exists
+Raphaëlle R1 = established
+Pauline R1 = established
+Nico R1 = established
+Sandra trace = active or intentionally cooled
+hard secrets = none
+adult frames = none
+relationship frame = ASSUMED_EXCLUSIVE
+couple mode = HABITUAL_WARMTH
 ```
 
-Modes dérivés :
+Tendances possibles uniquement :
 
-- `HABITUAL_WARMTH` ;
-- `ACTIVE_RECONNECTION` ;
-- `PARALLEL_DRIFT` ;
-- `CONCEALED_FRACTURE` ;
-- `OPEN_CRISIS` ;
-- `NEGOTIATED_REDESIGN` ;
-- `SEPARATED_TRANSITION` ;
-- `RECONSTRUCTED_COUPLE`.
+- candidat `ACTIVE_RECONNECTION` ;
+- candidat `PARALLEL_DRIFT`.
 
-Un seul choix ou score ne suffit pas à changer le mode du couple.
-
-## 11. Obligations et mémoire
-
-La narration doit mémoriser :
-
-- promesse ;
-- invitation ;
-- question sans réponse ;
-- dette ;
-- alibi ;
-- mensonge ;
-- règle d’image ;
-- suppression promise ;
-- limite ;
-- confession due ;
-- après-scène ;
-- occasion manquée.
-
-Une obligation importante ne reste pas inchangée indéfiniment.
-
-Elle est payée, expire, mute, abîme la confiance ou crée une conséquence.
-
-## 12. Traces, connaissance et consentement
-
-Une trace importante doit conserver :
-
-- origine ;
-- détenteur ;
-- public prévu et réel ;
-- droit de conserver ou transmettre ;
-- personnes qui savent ou soupçonnent ;
-- risque et fenêtres de conséquence.
-
-États de connaissance :
+## 13. Documents historiques
 
 ```text
-KNOWN
-SUSPECTED
-MISREAD
-UNKNOWN
+docs/J2_WRITING_FOUNDATION.md
+docs/story_state/J2_SUMMARY.md
+runtime J2 existant
 ```
 
-Le consentement est spécifique à :
+Ils ne définissent plus :
 
-- personnes ;
-- activité ;
-- regard ;
-- image ;
-- conservation ;
-- transmission ;
-- durée ;
-- limites ;
-- après-scène.
+- l’ordre du récit ;
+- le selfie canapé ;
+- quatre visuels obligatoires ;
+- l’absence physique jusqu’à J3 ;
+- des échanges artificiels entre personnes co-présentes ;
+- une temporalité sans repères de journée.
 
-## 13. Règles NSFW
-
-Le jeu peut devenir pornographique lorsque le cadre est mérité.
+## 14. Prochaine étape
 
 ```text
-Ignorer n'est pas consentir.
-Une connaissance partielle n'est pas une permission.
-La jalousie n'est pas une permission.
-L'excitation n'est pas une permission.
-Une image publique n'est pas une permission de transmettre.
-Un costume n'est pas un consentement global.
-Un secret clairement nommé reste une trahison.
-Une négociation tardive ne réécrit pas une trahison antérieure.
+V0.80 — First Modular Runtime Integration Plan
 ```
 
-Toute scène explicite majeure crée une obligation d’après-scène.
+V0.80 doit :
 
-## 14. Personnages secondaires
+- inspecter le runtime existant ;
+- mapper mercredi–vendredi dans l’interface ;
+- planifier séparateurs de jour, moments et timestamps ;
+- mapper les modes de communication et `OFFLINE_BEAT` ;
+- décider comment les messages s’arrêtent lors de la co-présence ;
+- préserver un fil visible par personnage ;
+- garantir le retour Marie ;
+- éviter tout gros refactoring ;
+- définir tests, validation et rollback.
 
-Politique active :
+Aucun runtime avant validation de V0.80.
 
-```text
-docs/canon/SUPPORTING_CHARACTER_CANON_POLICY.md
-```
-
-Jeff reste rattaché à Sandra.
-
-Bastien reste rattaché à Pauline.
-
-Les personnages secondaires restent humains lorsque la connaissance, le consentement, la vie commune ou la trahison les affecte.
-
-Ils ne reçoivent pas automatiquement une route ou un système autonome.
-
-## 15. Vérité actuelle J2+
-
-- aucun ancien J2+ n’est automatiquement canon ;
-- aucun dialogue J2 n’est validé par V0.78 ;
-- les anciens J3–J10 restent historiques / suspendus ;
-- les scènes futures doivent avoir une carte modulaire validée ;
-- les choix doivent rester à trois par défaut ;
-- aucune grosse refonte runtime ne précède la validation d’une tranche verticale.
-
-## 16. Prochaine étape
+## 15. Résumé opérationnel
 
 ```text
-V0.79 — Act I Opening Windows Source Pack
-```
-
-Ce pack doit définir la première tranche concrète après J1 :
-
-- entrée de Mathilde dans le foyer ;
-- première décision topologique autour d’un mouvement proposé par Marie ;
-- fenêtres ordinaires de Raphaëlle, Nico et Pauline ;
-- continuité Sandra ;
-- retours vers Marie ;
-- cartes de scènes ;
-- choix exacts ;
-- conditions, conséquences et fallbacks.
-
-Aucun runtime avant validation de ce pack.
-
-## 17. Résumé opérationnel
-
-```text
-J1 : canon actuel.
-J2+ : architecture modulaire validée, contenu concret encore à écrire.
-Ancien J2–J10 : historique / suspendu.
-Prochaine documentation : Act I Opening Windows Source Pack.
-Runtime : seulement après source pack + cartes de scènes + plan d'intégration.
+J1 : mardi soir, canon actuel et runtime aligné.
+Ouverture Acte I : mercredi–vendredi, texte/cartes/temps validables dans V0.79.
+Communication : messages seulement lorsque distance, logistique, confidentialité, trace ou après-coup le justifie.
+Ancien J2+ : historique / technique.
+Routes : accès ordinaires seulement.
+Couple : HABITUAL_WARMTH.
+Prochaine documentation : V0.80 plan d'intégration runtime.
 ```

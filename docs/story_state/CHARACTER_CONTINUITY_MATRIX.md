@@ -1,188 +1,293 @@
-# Matrice de continuité personnages — V0.78
+# Matrice de continuité personnages — V0.79
 
-> Résumé opérationnel pour l’architecture modulaire.  
-> Les fiches personnages complètes, le canon NSFW, le blueprint modulaire et les cartes de scènes restent prioritaires.  
+> Résumé opérationnel du premier source pack modulaire post-J1.  
+> Les fiches complètes, le blueprint V0.78, le source pack V0.79 et les cartes de scènes restent prioritaires.  
 > Cette matrice ne crée aucun état runtime autonome.
 
 ## 1. Règle de lecture
 
 ```text
-J1 = canon actuel
-J2+ = architecture modulaire actuelle, scènes concrètes non encore canonisées
-anciens J2–J10 = historiques / suspendus
+J1 = canon actuel et runtime aligné
+ouverture Acte I = canon documentaire V0.79, runtime non intégré
+suite Acte I / Actes II–V = architecture V0.78, contenu exact encore à écrire
+anciens J2–J10 = historiques / techniques si contradiction
 ```
 
-Une scène future doit respecter :
+Avant une scène, vérifier :
 
-- le stade de route ;
 - le mode du couple ;
-- la fenêtre narrative ;
-- les connaissances réelles ;
-- les obligations dues ;
-- les règles d’image et de consentement ;
+- le stade de route ;
+- la fenêtre ;
+- les personnages réellement disponibles ;
+- les connaissances ;
+- les obligations ;
+- l’origine et le public des images ;
+- les conséquences dues ;
 - la fonction spécifique du personnage.
 
-## 2. Matrice principale
+## 2. Matrice de l’ouverture V0.79
 
-| Personnage | État de départ après J1 | Entrées / fenêtres modulaires | Progression spécifique | Collision / garde-fous |
-|---|---|---|---|---|
-| **Marie** | Couple réel en `HABITUAL_WARMTH`. Elle demande encore de petites présences concrètes. | Foyer, La Verrière, marche, sortie, préparation, événement social, retour après une scène extérieure, vérité du couple. | Participation domestique → visibilité sociale → reconquête / limite → cadre du couple → réparation, redéfinition ou séparation. | Doit rester active et désirable pour elle-même. Une escalade extérieure crée une conséquence couple. Elle parle directement dans tout cadre ouvert ou partagé. |
-| **Sandra** | Trace douce réactivée. Aucune route. Jeff reste hors exposition directe J1. | Fin de poste, message privé, photo imprimée, refuge domestique, Maison des Tilleuls, occasion choisie à distance. | Trace → lecture précise → confidence choisie → limite → révélation à distance → secret, arrêt, séparation ou continuation propre. | Ne s’ouvre pas sous pression. Jeff reste humain et conséquent. Sa vie ne devient pas une attente permanente du Player. |
-| **Player** | Aime Marie mais participe de manière inégale. Peut avoir remarqué Sandra. | Toutes les fenêtres selon choix de lieu, présence, canal, secret, image, travail ou retour au foyer. | Observer → répondre → agir / différer → assumer désir, limite, secret, permission ou retour → conséquence. | Ne doit pas devenir avatar vide, séducteur parfait, caméra passive ou simple sélecteur de route. |
-| **Mathilde** | Indirecte seulement dans J1. Son séjour temporaire n’est pas encore actif à l’écran. | Entrée dans le foyer, cuisine, chambre d’appoint, retour tardif, tenue avant sortie, travail, famille, fenêtre sans Marie, scène avec Nico plus tard. | Présence domestique ordinaire → regard remarqué → plaisir de l’effet → provocation choisie → loyauté, secret, confrontation ou cadre informé. | Mini-short / crop top ≠ consentement. Marie et le lien familial restent actifs. Le foyer ne devient pas un décor pornographique sans conséquence. |
-| **Pauline** | Absente de J1. En couple avec Bastien, ancienne infidélité non avouée, Marie connaît une partie de la vérité. | Relais légitime par Marie, dîner avec Bastien, photo de groupe, retour de chorale, fin de banque, version publique / privée, fenêtre sociale. | Pont social → sélection privée → preuve réciproque → double vie explicite → répétition, découverte, confession, intégration ou rupture. | Bastien reste humain. Marie n’a jamais donné une permission future. Le secret n’efface pas le coût. |
-| **Nico** | Absent de J1. Amitié réelle avec Player, attirance réelle pour Marie et Mathilde en background. | L’Annexe, place gardée, événement La Verrière, billard / fléchettes, deux femmes sous le même toit, demande de photo, échange intérieur / extérieur, alibi, groupe. | Présence sociale → attirances lisibles → envie domestique / complicité voyeuriste → pacte photo / rivalité → partage informé ou trahison → collision / retrait. | Accès domestique ≠ permission. Image publique ≠ transfert sexuel autorisé. Les femmes restent sujets. Pas d’archive magique ni de contact Nico/Player automatique. |
-| **Raphaëlle** | Absente de J1. Collègue déjà connue, aucun canal intime actif. | Bureau, revue UX/accessibilité, marche, projet tardif, housse de costume, urgence couture, compte créatif, transformation, retour au bureau. | Collègue ordinaire → personne hors bureau → version choisie → attirance et cadre nommés → roleplay informé ou secret clair → après-rôle / conséquence. | Collègue pair, pas de levier hiérarchique. Costume ≠ consentement. Clarté locale ≠ consentement de Marie. Le retour au bureau fait partie de la route. |
+| Personnage | État après J1 | Première présence V0.79 | Choix / variations | État à la fin du pack | Prochaine progression permise | Interdit dans V0.79 |
+|---|---|---|---|---|---|---|
+| **Marie** | Couple en `HABITUAL_WARMTH`, demande de petites présences concrètes. | O1 urgence Mathilde, O4 proposition La Verrière, O5A possible, O6 retour obligatoire. | Player fait de la place de manière proactive, joueuse ou passive ; il rejoint Marie, reste au foyer ou promet de venir après le travail ; la qualité de présence est mémorisée. | Couple toujours `HABITUAL_WARMTH`, avec candidat reconnexion ou dérive seulement. Marie a agi pour sa famille et son événement. | Nouvelle scène positive de vie commune, première mutation d’occasion manquée, autre cycle Acte I. | Grand discours de crise, jalousie comme seule fonction, pardon automatique, route externe remplaçant le retour vers elle. |
+| **Sandra** | Photo floue J1, lien doux et non verrouillé. | Écho O3 possible après poste du matin. | Variante selon lecture J1 : ancienne photo mentionnée, remise dans le sac ou pas mentionnée si branche distante. | Trace active ou volontairement refroidie ; aucun nouveau visuel ; aucune obligation forte. | Autre scène work-afterglow ou trace concrète dans une fenêtre compatible. | Seconde photo, confession, rendez-vous forcé, impatience, pression, Jeff exposé trop tôt. |
+| **Player** | Aime Marie, présence inégale, peut avoir lu Sandra précisément. | Tous les O1–O8 selon topologie. | Fait de la place ; accueille Mathilde ; gère une correction de travail ; choisit où être ; tient, modifie ou manque une promesse ; répond à Pauline et Nico. | Historique de présence, promesse et participation ; aucun secret ; aucune route choisie. | Accumulation de comportements, première répétition privée, premier R2 plus tard. | Menu de femmes, séducteur parfait, caméra passive, annulation d’une conséquence par un nouveau choix. |
+| **Mathilde** | Indirecte seulement. Séjour non actif. | O2 arrivée obligatoire ; O5B si Player reste ; respiration foyer. | Accueil pratique, joueur ou distant ; aide avec la chambre ou le chargeur ; aucune intention sexuelle. | Séjour actif 10–15 jours ; R1 domestique ; confiance ordinaire variable ; Marie reste le pont familial. | Cuisine du matin, chambre d’appoint, travail, anecdote familiale, première différence entre regard ordinaire et attention chargée. | Selfie canapé, provocation choisie, photo adulte, tenue interprétée comme consentement, secret avec Player. |
+| **Raphaëlle** | Collègue connue, aucun canal intime. | O3 revue du dossier bleu ; O5C possible autour d’une vraie obligation. | Player corrige, plaisante puis agit, ou reporte ; plus tard il tient, modifie ou manque sa promesse à Marie. | R1 travail ; confiance professionnelle variable ; aucun accès privé. | Marche ordinaire, détail de housse, autre collaboration, puis seulement plus tard version hors bureau. | Badge/photo personnelle obligatoire, thérapeute, refuge, compte créatif, séduction après une seule confidence. |
+| **Pauline** | Absente active ; couple avec Bastien et ancienne infidélité en background. | O5A écho possible ; O7 relais de photos publiques autorisées. | Player choisit pratiquement, plaisante ou rend la décision à Marie. | R1 social ; Bastien visible ; set photo public connu ; aucun compartiment privé. | Nouveau relais social ou logistique ; private selectivity seulement après un autre cycle et de nouvelles conditions. | Crop privé, one-view, preuve réciproque, flirt secret, Bastien effacé, photo publique sexualisée sans permission. |
+| **Nico** | Ami réel en background ; attirances existantes mais non actives. | O5A écho possible ; O8 suivi de la place gardée. | Player répond honnêtement, plaisante ou demande comment allait Marie. Nico peut apprendre le séjour de Mathilde. | R1 amitié/social ; aucune rivalité ou complicité voyeuriste active. | Scène ordinaire L’Annexe ou billard ; plus tard seulement envie domestique et regard partagé. | Commentaire sexuel, demande d’image, alibi, pacte photo, NTR/cuckold, contact Nico/Player supposé. |
 
-## 3. Fonctions d’ensemble
+## 3. Fenêtres et priorités
 
 ```text
-Marie      = couple et reconquête active
-Sandra     = confidence et vérité privée choisie
-Mathilde   = proximité domestique et changement d'intention
-Pauline    = image, compartimentation et double vie
-Nico       = regard social, envie domestique, voyeurisme et rivalité
-Raphaëlle  = version choisie, cadre explicite et après-rôle
-Player     = regard devenant acte, choix ou mauvaise foi
+O1 — Marie / faire de la place
+O2 — Mathilde / arrivée
+O3 — Raphaëlle / travail + écho Sandra possible
+O4 — Marie / proposition topologique
+O5A — Marie social
+OU O5B — Mathilde foyer
+OU O5C — Raphaëlle travail
+O6 — conséquence Marie obligatoire
+O7 — Pauline photo publique
+O8 — Nico place gardée + respiration foyer
 ```
 
-Ces fonctions ne remplacent jamais la fiche complète.
+Priorité locale :
 
-## 4. Cycle universel des routes
+```text
+ancrage du tronc
+-> branche topologique
+-> retour vers Marie
+-> accès ordinaire Pauline / Nico
+-> échos / respiration
+```
 
-| Stade | Signification |
-|---|---|
-| `R0 Background` | Le personnage existe ; aucune route active. |
-| `R1 Ordinary Access` | Accès professionnel, social, familial, domestique ou pratique légitime. |
-| `R2 Charged Access` | La tension spécifique devient lisible mais reste réversible. |
-| `R3 Acknowledged Intent` | Attirance, risque ou limite est nommé. |
-| `R4 Consequential Frame` | Trahison cachée, cadre adulte informé, post-séparation ou limite brisée. |
-| `R5 Integration / Aftermath` | Découverte, confession, répétition, réparation, rupture ou vie ordinaire après le cadre. |
+La conséquence O6 ne peut pas être remplacée par une nouvelle opportunité.
 
-Une route peut aussi être :
+## 4. État du couple
 
-- en pause ;
-- refroidie ;
-- fermée ;
-- transformée.
+### Dimensions lues par V0.79
 
-## 5. Interactions transversales à surveiller
+- présence ;
+- promesse ;
+- participation domestique ;
+- initiative sociale ;
+- vérité encore implicite ;
+- cadre exclusif supposé.
+
+### Modes
+
+Mode actuel :
+
+```text
+HABITUAL_WARMTH
+```
+
+Candidats possibles :
+
+```text
+ACTIVE_RECONNECTION
+PARALLEL_DRIFT
+```
+
+Aucun candidat ne devient un mode final dans ce pack.
+
+### Exemples
+
+```text
+faire de la place activement
++ venir tôt
++ aider sans seconde demande
+= candidat reconnexion
+
+assentiment passif
++ absence sociale
++ promesse décorative
+= candidat dérive
+```
+
+Un événement isolé ne suffit pas.
+
+## 5. Traces actuelles
+
+| Trace | Origine | Public prévu | Fonction actuelle | Risque actuel |
+|---|---|---|---|---|
+| `mathilde_arrival_room_01` | Marie, photo ouverte | Player uniquement | preuve pratique de l’installation | faible tant qu’elle n’est ni transmise ni sexualisée |
+| `raphaelle_blue_folder` | travail, optionnel | Player / contexte professionnel | couleur UX et dossier | nul hors mauvaise utilisation du canal |
+| `marie_laverriere_setup_01` | Élodie ou Pauline avec accord | événement / Player / archive | Marie active dans sa vie | faible ; ne prouve aucune route |
+| `laverriere_public_group_photo_set_01` | Pauline via télécommande | groupe photographié + La Verrière | accès public Pauline, mémoire sociale | faible ; transmission adulte non autorisée |
+| photo floue Sandra J1 | Sandra | Player | continuité douce | aucune nouvelle diffusion |
+
+Aucune trace adulte n’existe.
+
+## 6. Connaissances après V0.79
+
+### Marie
+
+Sait :
+
+- Mathilde séjourne chez eux ;
+- qualité de participation de Player ;
+- présence ou absence de Player au vernissage ;
+- Pauline a créé les photos publiques ;
+- Nico a gardé une table.
+
+Ne sait pas parce que cela n’existe pas encore :
+
+- route externe ;
+- pacte photo ;
+- secret adulte.
+
+### Mathilde
+
+Sait :
+
+- Marie et Player l’hébergent ;
+- qualité de l’accueil de Player ;
+- Marie a envoyé la photo d’arrivée à Player.
+
+Ne sait pas / n’a pas encore à savoir :
+
+- attraction active de Nico ;
+- circulation d’image ;
+- tension sexuelle avec Player.
+
+### Raphaëlle
+
+Sait :
+
+- Player travaille avec elle ;
+- éventuellement qu’il doit rejoindre Marie, uniquement s’il le dit en O5C.
+
+Ne sait pas :
+
+- détails privés du couple ;
+- autres routes ;
+- séjour de Mathilde sauf conversation professionnelle ordinaire ultérieure.
+
+### Pauline
+
+Sait :
+
+- Marie organise l’événement ;
+- qui apparaît sur les photos publiques ;
+- Player participe ou choisit une photo selon sa branche.
+
+Ne sait pas :
+
+- désir privé de Player ;
+- photo pact Nico ;
+- route active, car aucune n’existe.
+
+### Nico
+
+Sait :
+
+- déroulement social général ;
+- présence ou absence de Player ;
+- éventuellement que Mathilde séjourne au foyer via source crédible.
+
+Ne sait pas :
+
+- détails de vêtements domestiques ;
+- images privées ;
+- désir reconnu par Player.
+
+### Sandra
+
+Sait :
+
+- la qualité du dernier échange J1 ;
+- que le fil est encore ouvert ou refroidi.
+
+Ne sait rien des nouvelles présences du foyer sauf information future crédible.
+
+## 7. Consentement et images
+
+V0.79 ne crée aucun cadre adulte.
+
+Images :
+
+- photographiées avec connaissance ;
+- fonctions pratiques, professionnelles ou sociales ;
+- publics explicitement limités ;
+- aucune permission implicite de sexualisation ou transfert.
+
+```text
+Une photo publique n'est pas une permission de recadrage sexuel.
+Une photo de foyer n'est pas une permission de transmission.
+```
+
+## 8. Interactions transversales
 
 ### Marie / Mathilde
 
-- confiance familiale ;
-- sécurité du foyer ;
-- intention distincte du vêtement ;
-- conséquence si Player transforme l’accès domestique en secret.
+- urgence familiale et hébergement ;
+- confiance active ;
+- Mathilde choisit elle-même de rester au foyer lors du vernissage ;
+- aucune menace sexuelle installée.
 
 ### Marie / Pauline
 
-- vraie amitié ;
-- confession partielle ancienne ;
-- double trahison potentielle ;
-- confiance sociale de Marie.
+- confiance sociale ;
+- Pauline aide au set photo ;
+- aucun second public privé.
 
 ### Marie / Nico
 
-- regard extérieur ;
-- désir et jalousie ;
-- Marie choisit elle-même ce qu’elle répond ;
-- trahison cachée distincte du cuckold / partage consenti.
+- Nico soutient l’après-événement ;
+- son regard extérieur reste en background ;
+- aucune jalousie canonisée.
 
-### Marie / Raphaëlle
+### Player / Raphaëlle / Marie
 
-- confirmation directe pour tout cadre sainement ouvert ;
-- secret clair possible mais toujours adultère ;
-- Raphaëlle ne devient pas arbitre du couple.
+- le travail est une vraie obligation ;
+- Raphaëlle ne retient pas Player ;
+- la promesse à Marie appartient à Player ;
+- Raphaëlle ne devient pas une excuse.
 
-### Sandra / Pauline
+### Player / Mathilde / Marie
 
-- confidentialité choisie contre secret compartimenté ;
-- aucune ne doit devenir le professeur moral de l’autre.
+- la branche foyer teste la présence pratique ;
+- elle ne transforme pas Mathilde en récompense d’avoir décliné Marie ;
+- le retour O6 garde Marie centrale.
 
-### Mathilde / Nico
+## 9. Personnages secondaires
 
-- attirance réelle de Nico ;
-- regard domestique privilégié du Player ;
-- photo ou description seulement selon origine et permission ;
-- Mathilde peut accepter, refuser ou retourner le regard.
-
-### Pauline / Nico
-
-- public sélectionné contre circulation ;
-- partage consenti possible ;
-- transfert non autorisé = trahison grave.
-
-### Pauline / Raphaëlle
-
-```text
-Pauline : rien ne doit changer tout de suite.
-Raphaëlle : qui bénéficie de l'attente ?
-```
-
-### Nico / Raphaëlle
-
-- désir nommé contre permission exacte ;
-- qui savait que l’image circulait ;
-- aucun des deux n’est automatiquement plus moral.
-
-## 6. Personnages secondaires
-
-| Personnage secondaire | Première source | Fonction actuelle |
+| Personnage | Usage V0.79 | Garde-fou |
 |---|---|---|
-| Jeff | `SANDRA_CANON_FULL.md` | Partenaire réel de Sandra, maison, fatigue, conséquence ; pas de route autonome. |
-| Bastien | `PAULINE_CANON_FULL.md` | Partenaire actuel déjà trompé, vie que Pauline refuse de choisir contre ; pas de consentement implicite. |
-| Maud / Nora / Mireille / Étienne | `RAPHAELLE_CANON_FULL.md` | Création, travail, famille et passé ; pas de consentement proxy. |
-| Julie / Sophie / Malik / Clara | `NICO_CANON_FULL.md` | Famille, travail, amitié et passé ; pas de réseau omniscient. |
-| Élodie | `MARIE_CANON_FULL.md` | Couleur La Verrière ; pas de route. |
+| Bastien | visible dans le groupe / la photo publique | reste partenaire réel de Pauline ; pas d’ignorance sexualisée |
+| Élodie | couleur La Verrière, possible photographe du setup | pas de route, pas de réseau omniscient |
+| Jeff | non requis dans cette ouverture | reste humain dans Sandra canon ; aucune exposition forcée |
 
-Politique :
+## 10. Ancien J2 — statut
 
-```text
-docs/canon/SUPPORTING_CHARACTER_CANON_POLICY.md
-```
+Les anciennes continuités suivantes sont historiques :
 
-## 7. Obligations de continuité
+- Player hors maison toute la journée ;
+- retour physique réservé à J3 ;
+- quatre visuels fixes ;
+- Raphaëlle badge/photo obligatoire ;
+- Mathilde selfie canapé ;
+- Pauline/Nico interdits par numéro de jour ;
+- fil linéaire unique Marie → Raphaëlle → Mathilde → Sandra → canapé.
 
-À chaque scène, vérifier :
+Elles ne doivent pas être utilisées comme contraintes du plan runtime V0.80.
 
-- qui sait quoi ;
-- qui soupçonne quoi ;
-- qui se trompe ;
-- quelle promesse ou dette est due ;
-- quelle image existe et pour quel public ;
-- quelle limite a été posée ;
-- quelle scène d’après-coup est nécessaire ;
-- si Marie ou la vie commune doit revenir dans le prochain cycle ;
-- si un personnage ignoré doit refroidir ou agir sans Player.
+## 11. Prochaine utilisation
 
-## 8. Priorité de sélection
+Avant V0.80, relire :
 
 ```text
-sécurité / consentement / après-scène
--> ancrage du tronc
--> obligation due
--> continuation de route
--> nouvelle opportunité / entrée ordinaire
--> respiration
-```
-
-Une nouvelle tentation ne remplace pas une conséquence due.
-
-## 9. Prochaine utilisation
-
-Avant toute écriture post-J1, relire :
-
-```text
+docs/canon/ACT_I_OPENING_WINDOWS_SOURCE_PACK.md
+docs/canon/ACT_I_OPENING_SCENE_CARDS.md
 docs/canon/MODULAR_NARRATIVE_ARC_BLUEPRINT.md
 docs/canon/MODULAR_SCENE_AUTHORING_CONTRACT.md
-docs/canon/characters/CHARACTER_CANON_INDEX.md
-la fiche complète concernée
-docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md si nécessaire
+docs/canon/CHOICE_DESIGN_CANON.md
 ```
 
-Prochaine documentation :
+Prochaine étape :
 
 ```text
-V0.79 — Act I Opening Windows Source Pack
+V0.80 — First Modular Runtime Integration Plan
 ```
