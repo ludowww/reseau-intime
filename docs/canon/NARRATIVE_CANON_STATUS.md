@@ -1,25 +1,30 @@
 # Narrative Canon Status — Current
 
-> Consolidated narrative status after V0.77 character-canon reconciliation.  
-> This document defines what is current, what is historical, and what must be read before new narrative or runtime work.  
+> Consolidated narrative status after V0.78 modular narrative architecture.  
+> Defines what is current, what is historical, and what must exist before post-J1 runtime work.  
 > No runtime, JSON, tests, assets, or playable content are changed here.
 
 ## 1. Core rule
 
 ```text
 Current canon overrides older narrative interpretation.
+The V0.78 modular blueprint replaces fixed J2–J10 chronology.
 Existing runtime is not automatic narrative canon.
-Supporting characters receive documentation proportional to their function.
+Supporting characters receive documentation proportional to function.
 ```
 
-Any older content touching character identity, routes, scenes, proofs, photos, roles, consent, relationship progression, or adult escalation must be reviewed against:
+Any older content touching character identity, route order, scenes, proofs, photos, roles, consent, relationship progression, or adult escalation must be reviewed against:
 
-- the current full character canon;
-- the global NSFW canon;
-- the choice-design canon;
-- the supporting-character policy;
-- the current day source pack or modular blueprint;
+- current full character canon;
+- `MODULAR_NARRATIVE_ARC_BLUEPRINT.md`;
+- `MODULAR_SCENE_AUTHORING_CONTRACT.md`;
+- global NSFW canon;
+- choice-design canon;
+- supporting-character policy;
+- the approved modular-window source pack;
 - relevant deprecation maps.
+
+---
 
 ## 2. Current canon stack
 
@@ -28,6 +33,8 @@ Read:
 ```text
 docs/canon/DOCUMENTATION_READING_ORDER.md
 docs/canon/CHOICE_DESIGN_CANON.md
+docs/canon/MODULAR_NARRATIVE_ARC_BLUEPRINT.md
+docs/canon/MODULAR_SCENE_AUTHORING_CONTRACT.md
 docs/canon/characters/CHARACTER_CANON_INDEX.md
 docs/canon/characters/*_CANON_FULL.md
 docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
@@ -43,243 +50,551 @@ docs/canon/characters/NICO_CANON_DEPRECATION_MAP.md
 docs/canon/characters/RAPHAELLE_CANON_DEPRECATION_MAP.md
 ```
 
-## 3. Character-canon completion state
+For current J1:
 
-All seven principal characters now have full concrete canon:
+```text
+docs/canon/J1_CANON_SOURCE_PACK.md
+docs/V0_69_J1_Canon_Text_Review_And_Final_Line_Source.md
+```
+
+---
+
+## 3. Current architecture status
+
+### J1
+
+Status: **canon and runtime-aligned through existing validated work**.
+
+Narrative function:
+
+```text
+attention before allegiance
+```
+
+Current active characters:
 
 - Marie;
 - Sandra;
-- Player;
-- Mathilde;
-- Pauline;
-- Nico;
-- Raphaëlle.
+- Player.
 
-No principal character remains calibration-only.
+Mathilde remains indirect.
 
-### Ensemble functions
+Nico, Pauline, and Raphaëlle are absent from active J1.
 
-```text
-Marie      = the couple and active reconquest
-Sandra     = confidence and chosen private truth
-Mathilde   = domestic proximity and changed intention
-Pauline    = image, compartmentalization, and double life
-Nico       = social gaze, domestic envy, voyeuristic complicity, and rivalry
-Raphaëlle  = chosen version, explicit frame, and responsibility after the role
-Player     = the gaze becoming an act, choice, or bad faith
-```
+J1 creates:
 
-These functions organize the ensemble. They do not replace full personality, ordinary life, contradiction, or route detail.
+- habitual warmth in the couple;
+- soft differences in Player presence;
+- Sandra's trace seed;
+- no route lock;
+- no explicit content;
+- no hard secret;
+- no changed relationship frame.
 
-## 4. V0.77 reconciliation decisions
+### J2+
 
-### Nico consolidation
+Status: **governed by V0.78 architecture, not yet concretely canonized scene by scene**.
 
-The validated V0.75 correction has been fully integrated into:
+No existing J2+ runtime, old day plan, or historical arc becomes current without:
 
-```text
-docs/canon/characters/NICO_CANON_FULL.md
-```
+1. a validated modular window;
+2. an approved scene card;
+3. current character-canon review;
+4. explicit conditions and consequences;
+5. separate runtime integration planning.
 
-The full Nico file now directly contains:
+### Old J2–J10 chronology
 
-- attraction to Marie and Mathilde;
-- domestic-access envy;
-- voyeuristic curiosity;
-- Player / Nico photo pact;
-- reciprocal image offers;
-- mutual alibis and debt;
-- image-origin and consent matrix;
-- authorized shared gaze;
-- unapproved recropping or circulation as betrayal;
-- severe-capture guardrails;
-- character-specific consequences.
+Status: **historical / suspended**.
 
-The temporary correction file and its temporary correction report are removed in V0.77.
+Useful isolated material may be recovered.
 
-No additional Nico supplement is current.
+The old order is not current.
 
-### Jeff classification
+---
 
-Jeff is not promoted into a principal character.
+## 4. Starting state after J1
 
-He remains a supporting character anchored to Sandra.
-
-Current first source:
+The canonical post-J1 couple mode is:
 
 ```text
-docs/canon/characters/SANDRA_CANON_FULL.md
+HABITUAL_WARMTH
 ```
 
-Current product decision:
+Meaning:
 
-- no standalone Jeff canon pass is required at the current scope;
-- Jeff is not a playable route or independent narrative engine;
-- he must remain concrete enough for Sandra's relationship history and choices to matter;
-- he must not become a monster, disposable obstacle, or accidental second protagonist;
-- future detail is added only when a validated Sandra scene or consequence requires it.
+- love remains real;
+- trust is broadly intact;
+- exclusivity is assumed;
+- desire is underexpressed;
+- Player's active presence is inconsistent;
+- Marie still expects the shared life to be joined;
+- no external route is active.
 
-This decision is governed by:
+Soft J1 signals may color early variants:
+
+- present;
+- joking but present;
+- flat / delayed;
+- Sandra read safely;
+- Sandra read precisely;
+- Sandra remains cautious.
+
+These do not skip route stages.
+
+---
+
+## 5. Fixed dramatic spine
+
+The current forward spine is functional rather than day-based.
+
+```text
+S0 Attention
+S1 Household change
+S2 Movement offered
+S3 Outside lives become visible
+S4 Private attention repeats
+S5 Boundary named
+S6 Desire becomes consequential
+S7 Private and ordinary life collide
+S8 Couple frame declared
+S9 What remains
+```
+
+Key fixed truths:
+
+- Mathilde's temporary stay becomes an early household-change anchor;
+- Marie creates meaningful movement and remains active;
+- ordinary character entry precedes major erotic use;
+- choices create topology rather than direct character selection;
+- at least one boundary becomes explicit;
+- private consequences return to ordinary life;
+- the Player / Marie frame must eventually be declared;
+- endings include aftermath.
+
+The exact scene, day, and order inside an act remain variable.
+
+---
+
+## 6. Current act structure
+
+### Act 0 — `Les choses qu'on remarque`
+
+Current J1.
+
+Question:
+
+```text
+How does Player pay attention before routes exist?
+```
+
+### Act I — `La place qu'on laisse`
+
+Question:
+
+```text
+Will Player enter ordinary life before desire forces him to react?
+```
+
+Primary functions:
+
+- Mathilde household entry;
+- Marie movement / invitation;
+- ordinary access for external characters;
+- first topology choices;
+- no major adult completion.
+
+### Act II — `Les regards circulent`
+
+Question:
+
+```text
+What does Player do when private attention becomes rewarding?
+```
+
+Primary functions:
+
+- Marie social visibility;
+- repeated private access;
+- character-specific tension;
+- first persistent trace / promise / debt;
+- first route cooling or acknowledgement.
+
+### Act III — `Les lignes choisies`
+
+Question:
+
+```text
+Can desire remain hypothetical once a boundary has been named?
+```
+
+Primary functions:
+
+- explicit attraction / boundary;
+- stop, hide, disclose, ask permission, or cross;
+- first consequential adult frames;
+- aftermath due.
+
+### Act IV — `Les versions se rencontrent`
+
+Question:
+
+```text
+Who pays when private versions begin changing ordinary life?
+```
+
+Primary functions:
+
+- discovery / collision / direct negotiation;
+- Marie acts from her own knowledge;
+- route interaction;
+- couple frame becomes explicit.
+
+### Act V — `Ce qu'on choisit de garder`
+
+Question:
+
+```text
+What remains after desire, exposure, and choice?
+```
+
+Primary functions:
+
+- couple answer;
+- route integration or rupture;
+- image, work, family, and social consequences;
+- ordinary life after climax.
+
+Acts are not fixed day ranges.
+
+---
+
+## 7. Couple-state model
+
+The couple is not one score.
+
+Current conceptual dimensions:
+
+```text
+presence
+Desire
+trust
+truth
+relationship frame
+```
+
+Canonical derived modes:
+
+- `HABITUAL_WARMTH`;
+- `ACTIVE_RECONNECTION`;
+- `PARALLEL_DRIFT`;
+- `CONCEALED_FRACTURE`;
+- `OPEN_CRISIS`;
+- `NEGOTIATED_REDESIGN`;
+- `SEPARATED_TRANSITION`;
+- `RECONSTRUCTED_COUPLE`.
+
+Mode changes require events and sustained behavior.
+
+One line or hidden counter cannot move the couple directly from warmth to crisis.
+
+---
+
+## 8. Universal route lifecycle
+
+```text
+R0 Background
+R1 Ordinary Access
+R2 Charged Access
+R3 Acknowledged Intent
+R4 Consequential Frame
+R5 Integration / Aftermath
+```
+
+R4 must be identified as:
+
+```text
+HIDDEN_BETRAYAL
+INFORMED_ADULT_FRAME
+POST_SEPARATION_FRAME
+NEGATIVE_BROKEN_BOUNDARY
+```
+
+Routes may also be:
+
+- paused;
+- closed;
+- cooled;
+- transformed.
+
+A route does not open because Player selected a character once.
+
+It emerges from repeated access, attention, boundary behavior, obligations, traces, consent, secrecy, and consequence.
+
+### Secret-load rule
+
+Many R1/R2 connections may coexist.
+
+Consequential hidden routes cannot accumulate silently without limit.
+
+```text
+one secret = pressure
+two secrets = cross-pressure
+three consequential secrets = mandatory collision or structural choice
+```
+
+An informed multi-person arrangement is not counted as multiple hidden secrets.
+
+---
+
+## 9. Narrative-cycle rule
+
+The canonical story rhythm is:
+
+```text
+fixed setup
+-> Player choice
+-> topology changes
+-> one foreground modular scene
+-> optional echoes
+-> return to shared life or consequence
+-> state and obligations updated
+```
+
+Default window budget:
+
+```text
+1 foreground scene
+0–2 echoes
+```
+
+Consequences, safety, consent, and aftermath outrank new temptation.
+
+A route character cannot appear merely because a score is high.
+
+The window must make them plausibly available.
+
+---
+
+## 10. Scene-pool status
+
+The current functional scene pools are:
+
+- `ORDINARY_LIFE`;
+- `ACCESS`;
+- `ATTENTION`;
+- `TENSION`;
+- `BOUNDARY`;
+- `ESCALATION`;
+- `COLLISION`;
+- `AFTERMATH`;
+- `REPAIR_OR_WITHDRAWAL`;
+- `BREATHER`.
+
+Character-specific engines fill these pools.
+
+A pool is not a day and not a route score.
+
+A scene must follow `MODULAR_SCENE_AUTHORING_CONTRACT.md` before runtime planning.
+
+---
+
+## 11. Selection priority
+
+Current priority order:
+
+```text
+A. safety / consent / aftermath due
+B. fixed spine anchor due
+C. explicit obligation due
+D. active route continuation
+E. ordinary entry / new opportunity
+F. breather / fallback
+```
+
+Within a band:
+
+```text
+context fit
+-> overdue
+-> unseen
+-> longest deferred
+-> least recently used pool
+-> deterministic authored tie-breaker
+```
+
+Random selection does not override character logic.
+
+---
+
+## 12. Persistent-state requirements
+
+Future source packs and runtime plans must preserve enough state for:
+
+### Obligations
+
+- promises;
+- invitations;
+- unanswered questions;
+- debts;
+- alibis;
+- lies;
+- image rules;
+- aftermath;
+- missed opportunities.
+
+### Traces
+
+- origin;
+- holder;
+- intended and actual audience;
+- saving / forwarding permission;
+- knowledge;
+- risk;
+- payoff.
+
+### Knowledge
+
+```text
+KNOWN
+SUSPECTED
+MISREAD
+UNKNOWN
+```
+
+### Consent
+
+- participants;
+- activity;
+- audience;
+- image rules;
+- duration;
+- stop / slow conditions;
+- informed or hidden relationship frame;
+- aftermath.
+
+No character may act on knowledge they do not possess.
+
+---
+
+## 13. Principal-character current direction
+
+### Marie
+
+- central couple and active reconquest;
+- every act requires at least one scene where she exists for herself;
+- external escalation creates couple consequence due;
+- informed open routes require her direct voice.
+
+### Sandra
+
+- chosen confidence and concrete traces;
+- progression through being seen precisely, not pressure;
+- Jeff remains a human support-context consequence;
+- route may cool, close, become secret, or continue after separation.
+
+### Player
+
+- active through real messages and actions;
+- observation may be right or wrong;
+- chooses topology, boundaries, secrecy, images, disclosure, and return;
+- cannot be reduced to a scene scheduler.
+
+### Mathilde
+
+- temporary stay is an early spine anchor;
+- ordinary sensuality precedes changed intention;
+- Marie/family trust remains active;
+- domestic windows, Nico gaze, and image consequences may intersect.
+
+### Pauline
+
+- current couple with Bastien and prior infidelity remain active facts;
+- social legitimacy opens private selectivity;
+- reciprocal proof and alibis create double-life pressure;
+- Marie and Bastien consequences cannot be deferred forever.
+
+### Nico
+
+- real attraction to Marie and Mathilde;
+- ordinary friendship before voyeur or NTR function;
+- domestic-access envy and photo/alibi pact;
+- image origin and consent state required;
+- women remain participants, not inventory;
+- no magical archive or automatic direct Nico/Player sexual route.
+
+### Raphaëlle
+
+- ordinary work access precedes transformation;
+- chosen version, role, audience, and aftermath;
+- informed and clear-secret frames remain distinct;
+- local clarity does not create Marie's consent.
+
+---
+
+## 14. Marie-centrality status
+
+The current architecture requires:
+
+- one Marie-for-herself scene per act;
+- a Marie/shared-life anchor across any two consecutive cycles;
+- a couple consequence after major external escalation;
+- independent Marie action under repeated Player passivity;
+- no route that freezes Marie until Player returns;
+- endings that answer what the couple became.
+
+Marie is not merely the gatekeeper of other routes.
+
+---
+
+## 15. Supporting-character status
+
+Supporting characters remain governed by:
 
 ```text
 docs/canon/SUPPORTING_CHARACTER_CANON_POLICY.md
 ```
 
-### Roadmap correction
+Jeff remains anchored to Sandra.
 
-The former proposed standalone Jeff milestone is removed.
+Bastien remains anchored to Pauline.
 
-Current roadmap:
+Maud, Nora, Mireille, Étienne, Julie, Sophie, Malik, Clara, Élodie, and other anchors remain proportional.
 
-```text
-V0.77 — Character Canon Reconciliation
-V0.78 — Modular Narrative Arc Blueprint
-```
+They matter where knowledge, consent, privacy, relationship history, or consequence affects the principal story.
 
-## 5. Principal-character current direction
+They do not receive independent route architecture without Product Owner promotion.
 
-### Marie
+---
 
-- central couple with Player;
-- routine must become active choice again;
-- can be desired, jealous, provocative, betrayed, reconquered, or involved in informed adult sharing;
-- must never exist only as the woman cheated on.
+## 16. Current J2+ policy
 
-### Sandra
+No J2 scene is canonized by V0.78.
 
-- confidence and chosen private truth;
-- relationship with Jeff remains a real context and consequence;
-- route progression comes through selected exposure, distance, and being seen precisely;
-- Jeff's existence must not be erased merely because he remains offscreen or supporting.
-
-### Player
-
-- active through choices and replies;
-- gaze, passivity, desire, guilt, jealousy, curiosity, control, and bad faith are route engines;
-- remains responsible for sending, saving, hiding, forwarding, watching, choosing, refusing, or returning home.
-
-### Mathilde
-
-- temporary stay with Marie / Player;
-- ordinary sensuality in fitted homewear, mini-shorts, and crop tops;
-- clothing is not route activation;
-- progression comes from changed intention;
-- Marie's trust and family bond remain active consequences.
-
-### Pauline
-
-- current relationship with Bastien;
-- prior hidden infidelity during that relationship;
-- Bastien does not know;
-- Marie knows part of the truth without authorizing anything new;
-- double life, selected versions, alibis, proof, and non-choice drive the route;
-- betrayal remains consequential.
-
-### Nico
-
-- real attraction to Marie and Mathilde;
-- real friendship with Player;
-- jealousy of Player's domestic access;
-- social gaze, voyeuristic curiosity, and male complicity;
-- photo and alibi pact can become informed shared play or hidden betrayal;
-- image origin, audience, saving, forwarding, and consent state must remain explicit;
-- no magical archive, standard hidden-camera reward, or automatic direct Nico / Player sexual route.
-
-### Raphaëlle
-
-- Player's peer colleague in UX/accessibility;
-- serious cosplay and chosen transformation;
-- explicit role, audience, image authorship, and aftermath;
-- may support informed exclusive, open, one-night, roleplay, trio/group, colleague-only, or clear-secret cheating routes;
-- local clarity does not create Marie's informed consent;
-- a clear betrayal remains betrayal.
-
-## 6. Supporting-character status
-
-Supporting characters are governed by proportional documentation rather than symmetry.
-
-Examples:
-
-- Jeff in Sandra's canon;
-- Bastien in Pauline's canon;
-- Maud, Nora, Mireille, and Étienne in Raphaëlle's canon;
-- Julie, Sophie, Malik, and Clara in Nico's canon;
-- family and work anchors in the other full profiles.
-
-They remain human and relevant where their relationships, consent, privacy, knowledge, or consequences matter.
-
-They do not automatically receive:
-
-- standalone full-canon files;
-- independent route states;
-- inbox threads;
-- scene pools;
-- endings;
-- equal documentation mass.
-
-A support character is promoted only after an explicit Product Owner decision and a material increase in narrative function.
-
-## 7. Current J1 status
-
-Active sources:
+The next documentation pass must create:
 
 ```text
-docs/canon/J1_CANON_SOURCE_PACK.md
-docs/V0_69_J1_Canon_Text_Review_And_Final_Line_Source.md
-docs/canon/CHOICE_DESIGN_CANON.md
-full Marie / Sandra / Player canon
+V0.79 — Act I Opening Windows Source Pack
 ```
 
-Current J1 rules:
+That pack should define:
 
-- Marie + Sandra active;
-- Player active through replies and choices;
-- Mathilde indirect only;
-- Nico, Pauline, and Raphaëlle absent from playable J1;
-- Jeff not needed as active scene presence;
-- no group conversation;
-- no hard secret system;
-- no route lock;
-- no explicit escalation;
-- maximum three choices per node;
-- final emotional center: Marie and shared life.
+- the exact early spine anchors;
+- the first post-J1 topology choice;
+- Mathilde household-entry scene inventory;
+- ordinary Raphaëlle, Nico, and Pauline entry windows;
+- Sandra continuation options;
+- Marie return anchors;
+- exact scene cards;
+- exact three-choice nodes;
+- conditions, consequences, and fallbacks;
+- no runtime changes.
 
-Background canon may exist without active mention:
+Only after V0.79 validation should a runtime integration plan be written.
 
-- Mathilde's temporary stay context;
-- Pauline's relationship with Bastien and prior infidelity;
-- Nico's social orbit and attractions;
-- Raphaëlle's existing work relationship with Player;
-- Sandra's relationship with Jeff.
+---
 
-V0.64 remains historical and is not the current exact-line source.
-
-## 8. Current J2+ status
-
-### J2
-
-Status: **requires a new source pack or modular-window blueprint before canon confirmation**.
-
-Existing material may be technically useful, but character entry, pacing, choices, and consequences must be rebuilt from current canon.
-
-### J3+
-
-Status: **legacy or suspended unless a later validated source explicitly restores material**.
-
-Do not assume:
-
-- old fixed-day route orders;
-- early route locks;
-- old image permissions;
-- old proof systems;
-- old character shorthand;
-- mandatory revenge structures;
-- automatic NTR/cuckold, sharing, trio, or group progression;
-- support characters needing independent arcs.
-
-Useful isolated material may be recovered only after current-canon reframing.
-
-## 9. Old-document interpretation
+## 17. Old-document interpretation
 
 ### `docs/narrative/CHARACTER_ARCS_J1_J10.md`
 
@@ -289,50 +604,43 @@ Status: **legacy / historical problem map**.
 
 Status: **historical macro reference only**.
 
-### Older dedicated character arcs
+The V0.78 spine supersedes its fixed chronology.
 
-Status: **identity-pillar source only; chronology suspended**.
+### Dedicated old character arcs
 
-Useful identity pillars have already been consolidated into current full canon.
+Status: **identity-pillar source only; order suspended**.
 
-Do not use old route order as current truth.
+Current full character files already contain valid identity pillars.
 
 ### `docs/narrative/ROUTE_COMPATIBILITY_MATRIX.md`
 
 Status: **historical compatibility reference**.
 
-Its broad principle—that couple state changes route meaning—remains useful.
+Its broad principle—that couple state changes route meaning—remains current.
 
-Its old state names, day assumptions, and simplified character rules are not runtime specifications.
+Its old state names and day assumptions are not runtime specifications.
 
 ### `docs/narrative/PROOF_AND_SECRET_MAP.md`
 
-Status: **typology useful; day-by-day examples suspended**.
+Status: **historical typology support**.
 
-Current character-specific rules win:
+Current trace, knowledge, consent, and obligation rules in V0.78 supersede day-by-day examples.
 
-```text
-Pauline = selected version + compartment + reciprocal proof
-Nico = image origin + consent level + shared gaze + alibi consequence
-Raphaëlle = chosen version + audience + role + aftermath
-Mathilde = domestic trust + changed intention + Marie consequence
-```
+### Existing J2+ runtime
 
-### Version reports
+Status: **technical / suspended narrative source**.
 
-Version reports are historical records of their own pass.
+May be inspected before a later integration plan.
 
-When a later reconciliation changes source order, classification, or roadmap, the current canon entry points and newer reconciliation report win.
+Must not define current story order.
 
-In particular, any older report proposing a standalone Jeff profile is superseded by V0.77.
+---
 
-## 10. Adult-route rules
+## 18. Adult-route status
 
 The game may become pornographic when route conditions justify it.
 
-Character-specific adult engines remain mandatory.
-
-Core rules:
+Current core rules:
 
 ```text
 Ignorance is not consent.
@@ -345,77 +653,89 @@ A clear secret remains betrayal when an affected partner is excluded.
 Later negotiation does not rewrite earlier betrayal.
 ```
 
-Use:
+After any major adult scene:
 
 ```text
-docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
+aftermath becomes due
 ```
 
-for full adult, image, roleplay, voyeurism, cheating, NTR/cuckold, sharing, trio/group, and consequence rules.
+Group content requires separate motive and consent for every participant and relevant contact.
 
-## 11. Choice rule
+---
 
-Default runtime count:
+## 19. Choice status
+
+Default:
 
 ```text
 3 choices per node
 ```
 
-Four or more choices require explicit written justification.
+V0.78 adds:
 
-Draft variants must be collapsed before runtime integration.
+- topology choices;
+- one primary decision axis per node;
+- route emergence through accumulation;
+- explicit state writes for every foreground choice;
+- no character-selection menus;
+- no false choices when a consequence should simply occur.
 
-## 12. Runtime policy
+Use:
 
-Before modifying J2+ runtime:
+```text
+docs/canon/CHOICE_DESIGN_CANON.md
+```
+
+---
+
+## 20. Runtime policy
+
+Before modifying post-J1 runtime:
 
 1. read the current canon stack;
-2. identify the validated narrative window;
-3. inspect current runtime rather than inheriting old story assumptions;
-4. use three choices by default;
-5. preserve character-specific engines and supporting-character proportionality;
-6. identify image origin, audience, consent, and consequence when relevant;
-7. distinguish hidden betrayal from informed adult play;
-8. avoid early route locks;
-9. write aftermath;
-10. update documentation before runtime.
+2. identify the approved act and window;
+3. use approved scene cards;
+4. inspect existing runtime;
+5. map only required conceptual state;
+6. preserve three choices by default;
+7. implement due consequence before new opportunity;
+8. preserve image, knowledge, consent, and aftermath rules;
+9. avoid large refactor;
+10. validate one vertical slice;
+11. update documentation if implementation constraints change design.
 
 ```text
 Documentation validated first.
 Runtime integration second.
 ```
 
-## 13. Next milestone
+---
 
-After V0.77 reconciliation, the next major documentation task is:
+## 21. Current roadmap
 
 ```text
 V0.78 — Modular Narrative Arc Blueprint
+V0.79 — Act I Opening Windows Source Pack
+V0.80 — First Modular Runtime Integration Plan
 ```
 
-It must define:
+V0.78 does not write J2.
 
-- the main narrative spine;
-- acts;
-- couple states;
-- narrative windows;
-- modular scene pools;
-- appearance conditions;
-- consequences;
-- character interactions;
-- route emergence;
-- replayability without psychological incoherence.
+V0.79 writes the first concrete post-J1 documentation.
 
-It does not yet write J2.
+V0.80 plans a small runtime vertical slice.
 
-## 14. Final rule
+---
+
+## 22. Final rule
 
 ```text
-Build the next story step from current canon, not inherited runtime.
-Keep principal characters deep.
-Keep supporting characters proportional and human.
-Discard obsolete schedules and temporary sources.
-Routes may become pornographic.
-Consent frames remain explicit.
-Consequences remain part of the same life.
+Build the next story step from current canon and current context,
+not inherited day order.
+
+Keep the couple central.
+Let choices change topology.
+Let routes emerge from remembered patterns.
+Let consequences outrank new temptation.
+Let every private version return to the same human life.
 ```
