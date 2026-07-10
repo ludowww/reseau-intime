@@ -1,14 +1,14 @@
 # Nico — Full Concrete & NSFW Character Canon
 
 > Full current character canon.  
-> Replaces the calibration-only Nico profile with a concrete biography, work and home life, relationship history, psychological engine, NSFW progression, modular scene pools, route consequences, and deprecation rules.  
+> Replaces the calibration-only Nico profile with a concrete biography, work and home life, relationship history, psychological engine, NSFW progression, voyeur / photo-exchange logic, modular scene pools, route consequences, and deprecation rules.  
 > This is the first source for writing Nico scenes.
 
 ## 1. Core identity
 
 Nicolas, called Nico by everyone, is 34.
 
-He is a social mirror, a real friend, a possible rival, and a man with his own unfinished life.
+He is a social mirror, a real friend, a possible rival, a voyeuristic male accomplice, and a man with his own unfinished life.
 
 He is:
 
@@ -18,10 +18,15 @@ He is:
 - good at reading rooms;
 - comfortable naming what Player edits;
 - genuinely attracted to Marie;
+- genuinely and physically attracted to Mathilde;
+- fascinated by Player's privileged domestic access to both women during Mathilde's temporary stay;
+- capable of asking Player to let him see through Player's eyes;
+- capable of offering Player the reverse view from social evenings and outside spaces;
+- capable of proposing an alibi or cover because secrecy itself excites him;
 - capable of giving Player useful advice;
 - capable of benefiting from the advice he gives;
 - charming without being harmless;
-- opportunistic without being predatory;
+- opportunistic without being predatory by default;
 - loyal in ways that become complicated when desire enters;
 - more physically and verbally immediate than Player;
 - capable of stepping back;
@@ -40,12 +45,22 @@ He is not:
 - a professor who explains every fantasy to Player;
 - the only source of Marie's visibility;
 - a permanent stream of crude comments;
+- a secret-camera collector;
+- a dealer in stolen intimate images presented as a clean reward;
+- sexually interested in every woman simply because she is in the cast;
 - a man whose confidence cancels rejection, guilt, tenderness, or fear.
 
 Signature reference:
 
 ```text
 Tu veux la vérité ou une version confortable ?
+```
+
+Voyeur reference:
+
+```text
+Tu rentres chez toi, y a Marie et Mathilde,
+et c'est moi qui dois te rappeler d'avoir des yeux ?
 ```
 
 Core principle:
@@ -62,8 +77,19 @@ Second principle:
 
 ```text
 Nico can give Player advice that is true,
-want Marie at the same time,
+want Marie,
+want to see Mathilde,
 and refuse to see those motives as incompatible.
+```
+
+Third principle:
+
+```text
+Player has the domestic view.
+Nico has the social view.
+
+A dangerous route begins when they decide
+to exchange what the other man is missing.
 ```
 
 ---
@@ -74,9 +100,48 @@ Nico is explicitly an adult character.
 
 He has an adult romantic and sexual history before the game.
 
-Current base canon establishes active erotic attraction toward women, including a real attraction to Marie.
+Current base canon establishes active erotic attraction toward women.
 
-Current base canon does not require a direct romantic or sexual attraction from Nico toward Player.
+His current attraction hierarchy is not flat:
+
+### Marie
+
+Primary emotional, social, and sexual attraction.
+
+Nico wants Marie as a person, not only as a body or Player's partner.
+
+### Mathilde
+
+Real secondary sexual attraction and voyeuristic curiosity.
+
+Nico is strongly affected by:
+
+- her naturally sexy clothing;
+- her legs, waist, movement, and physical ease;
+- her playful bad faith;
+- the difference between her public night-out version and her unprepared domestic version;
+- the fact that Player temporarily sees both Marie and Mathilde inside the same home.
+
+Nico does not know Mathilde's domestic version automatically.
+
+That missing access is part of the desire.
+
+### Pauline
+
+No default romantic route is active.
+
+Nico can nevertheless find Pauline attractive and be intrigued by:
+
+- her controlled image;
+- her `sage en vitrine` contradiction;
+- the difference between public and private versions;
+- the possibility that Player receives a version Nico does not.
+
+Pauline can enter a later photo-exchange or shared-gaze route only through her own agency or through a clearly negative breach route with consequences.
+
+### Player
+
+Current base canon does not require direct romantic or sexual attraction from Nico toward Player.
 
 Their bond may nevertheless carry intense adult charge through:
 
@@ -84,6 +149,8 @@ Their bond may nevertheless carry intense adult charge through:
 - shared gaze;
 - verbalized desire;
 - permission;
+- reciprocal image exchange;
+- mutual alibis;
 - being watched;
 - competition;
 - complicity;
@@ -93,24 +160,28 @@ Their bond may nevertheless carry intense adult charge through:
 A trio involving Nico does not automatically imply male-male contact.
 
 Any direct contact must be separately chosen,
-not inferred from proximity or from Marie's consent.
+not inferred from proximity or from another participant's consent.
 ```
 
-All flirtatious, sexual, pornographic, cheating, sharing, NTR/cuckold, trio, quatuor, voyeuristic, or group-route material involving Nico must preserve:
+All flirtatious, sexual, pornographic, cheating, sharing, NTR/cuckold, trio, quatuor, voyeuristic, image-exchange, or group-route material involving Nico must preserve:
 
 - adult agency;
 - Marie's independent desire and decisions;
+- Mathilde's independent image and sexual agency;
+- Pauline's control over her chosen audience and framing;
 - Player's responsibility for his choices;
 - Nico's right to accept or refuse a frame;
 - explicit consent for negotiated adult play;
+- explicit image permission where private or sexual material is involved;
 - the difference between a hidden affair and negotiated sharing;
+- the difference between voyeuristic fantasy and unauthorized capture;
 - the difference between jealousy and permission;
-- consequences when Nico knowingly enters a betrayal route;
+- consequences when Nico knowingly enters a betrayal or image-breach route;
 - a clear refusal of intoxication as consent.
 
 Nico can be invited into danger.
 
-He cannot be used as proof that Marie, Player, or any other character has already consented.
+He cannot be used as proof that Marie, Mathilde, Pauline, Player, or any other character has already consented.
 
 ---
 
@@ -140,8 +211,9 @@ He:
 - stands close without initially making it a statement;
 - uses eye contact easily;
 - moves through a room without appearing lost;
-- touches an arm or shoulder in normal social grammar;
-- notices when proximity has stopped feeling neutral.
+- uses ordinary social touch;
+- notices when proximity has stopped feeling neutral;
+- watches reactions as much as bodies.
 
 He knows that he is attractive.
 
@@ -207,12 +279,14 @@ It comes from:
 - holding eye contact after the joke has ended;
 - changing social touch into chosen touch;
 - asking whether a gaze is allowed;
+- asking Player what he sees at home;
+- showing Player what he missed outside;
 - staying when the room has emptied;
 - becoming physically still instead of performing ease;
 - entering an explicitly shared frame.
 
 ```text
-Nico's sensuality is presence, not costume.
+Nico's sensuality is presence and circulation of gaze, not costume.
 ```
 
 ---
@@ -242,7 +316,6 @@ His work includes:
 - smoothing small staff conflicts;
 - dealing with broken glass;
 - changing the closing playlist;
-- making a bad cocktail decision survivable;
 - coordinating small event nights;
 - occasional practical collaboration with La Verrière;
 - finishing administrative notes after everyone else has gone home.
@@ -254,9 +327,10 @@ He is good at:
 - making newcomers feel included;
 - seeing when a joke has stopped being funny;
 - de-escalating without humiliating someone;
-- selling an ordinary evening as if it has momentum;
 - making a staff member feel protected;
-- keeping a room moving when logistics fail.
+- keeping a room moving when logistics fail;
+- taking social photos people actually want to keep;
+- knowing when a photo is ordinary and when someone is knowingly posing.
 
 He dislikes:
 
@@ -291,19 +365,22 @@ Alcohol can color a scene.
 
 It cannot create adult consent.
 
-Work language should remain light.
+Work gives Nico legitimate access to:
 
-Recommended dosage:
+- group invitations;
+- social photos;
+- after-event information;
+- plausible reasons to message Player, Marie, Mathilde, or Pauline;
+- possible alibis about where someone was;
+- a public frame in which private desire can hide.
 
-- ordinary private scene: no hospitality detail required;
-- work-color scene: one or two concrete details;
-- L'Annexe scene: more operational texture possible;
-- NSFW scene: work jargon should usually recede.
+That access must not make him omniscient or entitled.
 
 ```text
-L'Annexe explains why Nico reads rooms.
+L'Annexe explains why Nico sees the outside version.
 
-It does not make him right about every person in them.
+It does not give him ownership of the image
+or permission to circulate it privately.
 ```
 
 ---
@@ -369,7 +446,7 @@ Private Nico first turns the sound down.
 
 His home can become intimate because it removes his strongest social tool.
 
-It must not become an automatic seduction apartment.
+It must not become an automatic seduction apartment or hidden-image archive.
 
 ---
 
@@ -431,12 +508,6 @@ It is one reason he associates usefulness with maintaining atmosphere.
 He began hospitality work at eighteen while studying communication.
 
 He left the course before completing it.
-
-He tells the story lightly:
-
-```text
-J'ai découvert qu'un bar mal organisé donnait des réponses plus rapides qu'un exposé de groupe.
-```
 
 The unfinished study is not a shame plot.
 
@@ -555,21 +626,6 @@ Nico initially answered by arguing that he had never technically cheated.
 
 That answer was factually useful and emotionally insufficient.
 
-He now summarizes the breakup as:
-
-```text
-On voulait plus la même vie.
-```
-
-This is partly true.
-
-It leaves out:
-
-- his dependence on outside attention;
-- his fear of becoming ordinary inside a stable couple;
-- his tendency to confuse transparency about flirting with responsibility for its effect;
-- the fact that Clara had stopped feeling chosen long before she left.
-
 Since the breakup, Nico has:
 
 - dated casually;
@@ -586,8 +642,6 @@ He is not secretly attached.
 
 He is not waiting for Marie as a replacement partner.
 
-He is not a conquest collector.
-
 He is sexually experienced, but experience does not make him infallible.
 
 He can enjoy:
@@ -598,6 +652,8 @@ He can enjoy:
 - being physically wanted;
 - seeing a partner enjoy being watched;
 - being watched himself;
+- consensual voyeurism;
+- consensual image exchange;
 - consensual competition;
 - negotiated sharing;
 - entering as a chosen third;
@@ -639,7 +695,7 @@ Nico was still with Clara.
 
 His attraction to Marie appeared early but remained background.
 
-He liked:
+He likes:
 
 - her social energy;
 - her speed;
@@ -652,15 +708,6 @@ He liked:
 - the fact that she can return a direct remark instead of shrinking from it.
 
 Marie has long understood that Nico finds her attractive.
-
-That understanding has existed through:
-
-- occasional direct but socially acceptable compliments;
-- visible eye contact;
-- banter;
-- group photos;
-- event help;
-- Nico noticing an outfit without pretending he did not.
 
 Before the story begins:
 
@@ -680,15 +727,103 @@ The weakness changes what he is willing to do with an attraction
 that was already present and contained.
 ```
 
-Nico can respect Marie and still want her.
+Marie can later become part of a photo or shared-gaze game only through one of two clearly identified frames:
 
-Respect does not require pretending she has no body or effect.
+### Chosen frame
 
-Desire does not grant permission.
+Marie knowingly chooses:
+
+- the photo;
+- the audience;
+- whether Nico or Player may keep it;
+- whether the other man may see;
+- whether the image is social, flirtatious, or adult.
+
+### Hidden frame
+
+Player or Nico circulates a photo, description, or private moment without Marie's knowledge.
+
+This is betrayal and must carry consequence.
+
+It is not a clean reward.
 
 ---
 
-## 10. Relationship with Player before the game
+## 10. Relationship with Mathilde before the active route
+
+Nico has known Mathilde socially for roughly two years through Marie, Pauline, birthdays, and group evenings.
+
+They are not close friends at the beginning.
+
+They have an easy surface rhythm:
+
+- Nico notices her outfit;
+- Mathilde mocks his certainty;
+- Nico calls her on false innocence;
+- Mathilde reminds him that seeing an effect is not understanding an intention;
+- both can enjoy attention without promising a route.
+
+Nico genuinely finds Mathilde attractive.
+
+His attraction is more immediately physical and voyeuristic than his attraction to Marie.
+
+He is affected by:
+
+- her mini-shorts;
+- crop tops;
+- fitted dresses;
+- legs;
+- waist;
+- movement;
+- natural comfort with being noticed;
+- the difference between a prepared social image and the unprepared domestic version Player sees.
+
+Mathilde's temporary stay with Marie and Player intensifies Nico's envy.
+
+```text
+Player temporarily lives with two women Nico finds beautiful.
+
+Nico does not only envy access to sex.
+He envies the ordinary visual intimacy:
+morning clothes,
+late returns,
+shared kitchen,
+outfit questions,
+and the version nobody outside the home sees.
+```
+
+This envy can produce:
+
+- crude teasing;
+- genuine fascination;
+- requests for descriptions;
+- requests for photos;
+- offers to cover Player;
+- a reciprocal image game;
+- jealousy toward Player;
+- a future Mathilde/Nico flirt or adult route if Mathilde actively chooses it;
+- conflict if Mathilde discovers she was treated as exchanged content.
+
+Nico must not assume that Mathilde's ordinary sensuality is an invitation.
+
+He can say:
+
+```text
+Nico : Oui, je trouve Mathilde très sexy.
+Nico : Non, ça veut pas dire qu'elle m'a proposé quoi que ce soit.
+```
+
+Before an active route:
+
+- no secret photo exchange involving Mathilde exists;
+- Nico has not received domestic images from Player;
+- Mathilde has not consented to being part of a male voyeur game;
+- no direct Mathilde/Nico sexual route is open;
+- attraction and curiosity are background possibilities only.
+
+---
+
+## 11. Relationship with Player before the game
 
 Nico met Player through Marie soon after entering their social orbit.
 
@@ -719,11 +854,13 @@ Player likes:
 Player dislikes or fears:
 
 - Nico's ease around Marie;
-- how quickly he can name physical attraction;
+- Nico's immediate interest in Mathilde;
+- how quickly Nico can name physical attraction;
 - the suspicion that Nico sees his passivity;
 - the feeling that a true piece of advice may also be a move;
 - Nico's comfort with being seen as a man who wants;
-- the possibility that Nico could occupy a place Player left empty.
+- the possibility that Nico could occupy a place Player left empty;
+- the possibility that Nico wants access to what Player sees at home.
 
 Nico likes:
 
@@ -733,14 +870,18 @@ Nico likes:
 - the rare moments when Player says something brutally honest;
 - that Player does not compete loudly;
 - the shared life Player has built with Marie;
+- Player's temporary domestic proximity to Mathilde;
+- the possibility that Player may understand a dangerous male game without pretending it is innocent;
 - the fact that Player can surprise him by setting a real boundary.
 
-Nico is also frustrated by Player.
+Nico is frustrated by Player.
 
 He sees:
 
-- a man loved by a woman Nico finds intensely alive;
+- a man loved by Marie;
 - a stable home Nico failed to sustain in his own relationship;
+- Mathilde temporarily inside that home;
+- two attractive women close enough for Player to see ordinary versions nobody else sees;
 - attention being postponed because Player assumes there will be another evening;
 - someone calling passivity respect when it sometimes looks like absence.
 
@@ -754,16 +895,72 @@ He calls it observation.
 Player has the ordinary intimacy Nico lost.
 Nico has the active social attention Player stopped giving.
 
-Each man can see what the other wastes.
+During Mathilde's stay,
+Player also has a domestic view Nico cannot stop imagining.
 ```
 
-At the start of the game, Nico has not formed a secret plan to take Marie.
-
-He can nevertheless become self-interested when the couple opens a visible space.
+The male complicity route begins when Nico stops only joking about that privilege and asks Player to share it.
 
 ---
 
-## 11. Ordinary tastes and daily life
+## 12. Relationship with Pauline and the image game
+
+Nico knew Pauline before he knew Marie well through local event logistics and L'Annexe.
+
+They can work efficiently together.
+
+Nico finds Pauline attractive, but she is not his primary emotional route.
+
+What interests him is:
+
+- her composed public image;
+- her dry speed;
+- the impression that she has selected more than one version before sending any image;
+- the possibility that Player receives a private crop or message;
+- the fact that Pauline dislikes losing control of audience and interpretation.
+
+This creates a specific photo-game tension.
+
+Nico may be able to send Player:
+
+- a public social photo of Pauline;
+- a group image in which Pauline looks especially attractive;
+- an image Pauline knowingly allowed to be sent;
+- later, a chosen adult image if Pauline explicitly includes Nico and Player in the frame.
+
+Nico may not treat:
+
+- a social photo;
+- an image sent only to him;
+- a private crop;
+- a one-view image;
+- Pauline's controlled flirt
+
+as permission to forward it to Player.
+
+If he does, the route becomes a serious image-betrayal route.
+
+That breach is especially severe because it attacks Pauline's central canon:
+
+```text
+She chooses who receives which version.
+```
+
+Nico and Player can still be tempted to make Pauline part of their dangerous exchange.
+
+The temptation itself is valid.
+
+The consequences depend on whether Pauline:
+
+- knows;
+- chooses;
+- sets the rule;
+- discovers the circulation;
+- or becomes evidence in a game she never consented to join.
+
+---
+
+## 13. Ordinary tastes and daily life
 
 Nico can talk about:
 
@@ -800,8 +997,11 @@ Nico can talk about:
 Not every Nico scene should contain:
 
 - Marie;
+- Mathilde;
 - sex;
 - jealousy;
+- voyeurism;
+- a photo request;
 - a diagnosis of Player;
 - a dirty joke;
 - NTR foreshadowing.
@@ -810,7 +1010,7 @@ Ordinary Nico is necessary for dangerous Nico to matter.
 
 ---
 
-## 12. Recurring objects and visual anchors
+## 14. Recurring objects and visual anchors
 
 ### Scratched metal bottle opener
 
@@ -823,15 +1023,9 @@ Functions:
 - a practical object that can appear in a late closing photo;
 - proof that a message was sent during work rather than after it.
 
-It is not a permanent phallic prop or sexual gimmick.
-
 ### Black analog watch
 
 Nico keeps it six minutes fast.
-
-He claims this makes him punctual.
-
-It does not.
 
 Functions:
 
@@ -860,7 +1054,7 @@ Functions:
 - group visual anchor;
 - coat left on a chair;
 - proof of presence;
-- something Marie may borrow only in a context where that choice matters;
+- something Marie or Mathilde may borrow only in a context where that choice matters;
 - not an automatic intimacy symbol.
 
 ### Running shoes by the door
@@ -896,8 +1090,6 @@ Functions:
 
 ### Closing playlist
 
-A rotating playlist Nico changes according to mood.
-
 Functions:
 
 - ordinary work texture;
@@ -905,13 +1097,27 @@ Functions:
 - a message link or screenshot without promising playable licensed audio;
 - evidence that Nico creates atmosphere even after saying atmosphere does not matter.
 
-Do not require copyrighted audio playback.
+### The mutual-alibi thread
+
+Not a physical object, but a recurring digital anchor.
+
+It may contain:
+
+- ordinary logistics;
+- saved-seat messages;
+- `je te couvre` jokes;
+- photo requests;
+- proof of what was agreed;
+- proof that one man escalated further than the other expected;
+- deleted messages whose behavioral consequence remains.
+
+It must not become an unlimited porn archive.
 
 ---
 
-## 13. Deep desire
+## 15. Deep desire
 
-Nico wants to be chosen when he is no longer making the room easy, funny, or exciting.
+Nico wants to be chosen when he is no longer making the room easy, funny, erotic, or exciting.
 
 He wants:
 
@@ -922,7 +1128,8 @@ He wants:
 - admiration that survives fatigue;
 - someone who asks what he wants after the joke;
 - to matter when he is quiet;
-- to be more than a useful catalyst in other people's stories.
+- to be more than a useful catalyst in other people's stories;
+- to be invited into a gaze because he is wanted, not only because he can intensify Player's reaction.
 
 His deep desire is:
 
@@ -930,25 +1137,32 @@ His deep desire is:
 to be wanted when he is not performing value
 ```
 
-He is attracted to Marie partly because she responds to his energy.
+His voyeuristic desire complicates this.
 
-He is more deeply affected by the possibility that she could see the quiet version after it.
+The photo game offers him:
 
-Marie cannot become a reward that repairs Nico.
+- access without ordinary responsibility;
+- intimacy without domestic routine;
+- the excitement of seeing what belongs to another context;
+- proof that Player trusts him with a private view;
+- a way to be inside the home without actually being chosen into it.
 
-Player cannot become only a witness who validates Nico's desirability.
+This can satisfy and deepen his wound at the same time.
 
 Nico must eventually decide whether he wants:
 
 - Marie;
+- Mathilde;
+- the image;
+- Player's trust;
 - the rivalry;
 - the invitation;
 - the fantasy;
-- or proof that he could have been chosen.
+- or proof that he could enter the private world.
 
 ---
 
-## 14. Wound
+## 16. Wound
 
 Nico has often been valued as:
 
@@ -958,7 +1172,8 @@ Nico has often been valued as:
 - the charming colleague;
 - the person who can handle discomfort;
 - the one who makes other people feel visible;
-- the alternative to a dull room.
+- the alternative to a dull room;
+- the outside gaze that makes a couple feel exciting again.
 
 His relationship with Clara taught him that this skill can coexist with private failure.
 
@@ -968,6 +1183,20 @@ His wound is:
 People choose the energy Nico creates.
 He is not sure they choose the man who remains after it.
 ```
+
+The voyeur route can reproduce this wound.
+
+Player may want Nico for:
+
+- photos;
+- cover;
+- a dirty joke;
+- an alibi;
+- a rival gaze;
+- a fantasy body;
+- permission to feel desire.
+
+Nico may discover that Player wanted the game, not Nico's friendship or presence afterward.
 
 He therefore keeps desire moving.
 
@@ -981,13 +1210,9 @@ He:
 - treats direct sexual language as safer than emotional dependency;
 - can enter a complicated frame more easily than ask for an ordinary place in someone's life.
 
-This wound does not make him secretly fragile in every scene.
-
-It explains why confidence becomes most unstable after he gets what he claimed to want.
-
 ---
 
-## 15. Internal contradiction and moral blind spot
+## 17. Internal contradiction and voyeuristic blind spot
 
 ```text
 Nico tells the truth about desire
@@ -997,18 +1222,22 @@ and edits the truth about intention.
 He can say:
 
 - Marie is sexy;
+- Mathilde is sexy;
+- Player is lucky;
 - Player is jealous;
 - the attraction exists;
 - the room noticed;
-- the fantasy is possible.
+- the fantasy is possible;
+- he wants to see.
 
 He has more difficulty saying:
 
-- `I want her enough to risk our friendship`;
+- `I want Marie enough to risk our friendship`;
+- `I envy your domestic access to Mathilde`;
+- `I am asking for a photo because secrecy is part of the arousal`;
 - `I am giving you advice that also creates space for me`;
 - `I like being the person who wakes this desire in you`;
-- `I envy the home you stopped seeing`;
-- `I do not know whether I want Marie without the rivalry`;
+- `I want you to cover me so I do not have to carry the entire risk`;
 - `I may be using honesty as permission`.
 
 Nico's central blind spot is:
@@ -1018,19 +1247,23 @@ He sometimes treats clarity of desire
 as if it were clarity of consequence.
 ```
 
-He respects a clear `no`.
+His voyeuristic blind spot is:
 
-He can still step into a relational crack while telling himself:
+```text
+He distinguishes looking from touching,
+but may underestimate how circulation changes ownership, trust, and consent.
+```
 
-- he did not create it;
-- Marie chose;
-- Player already knew;
-- everyone was being honest enough;
-- the couple's responsibility belongs only to the couple.
+He may tell himself:
 
-Each statement can contain truth.
+- the photo was not nude;
+- Player already sees Mathilde dressed that way;
+- Marie posted something similar publicly;
+- Pauline knows she is attractive;
+- nobody was harmed because nobody knows;
+- an alibi only protects a harmless game.
 
-Together they can become an alibi.
+Those arguments can hide a real violation.
 
 His mature progression is not from crude man to polite man.
 
@@ -1039,12 +1272,13 @@ It is:
 ```text
 naming desire
 -> naming intention
+-> naming who consented
 -> naming responsibility
 ```
 
 ---
 
-## 16. Reaction to Marie and Player's couple tension
+## 18. Reaction to Marie and Player's couple tension
 
 Nico must not enter as a predator waiting for weakness.
 
@@ -1064,24 +1298,27 @@ His advice can be sincere.
 
 It can also sharpen his own position.
 
-Example:
+The temporary Mathilde stay adds a new layer.
+
+Nico can sincerely think Player is absurdly privileged:
 
 ```text
-Nico : Viens ce soir.
-Nico : Elle a envie que tu sois là.
-Nico : Et oui, si tu viens pas, d'autres vont la voir.
-Nico : Les trois phrases sont vraies.
+Marie is still there.
+Mathilde is temporarily inside the home.
+Player has access to both women's ordinary versions.
+Player still behaves as if nothing urgent is happening.
 ```
 
-The danger grows when:
+This can make Nico:
 
-- Player repeatedly refuses ordinary presence;
-- Marie becomes visibly receptive to outside attention;
-- Nico and Marie share a moment that no longer needs Player as audience;
-- Player confides jealousy or arousal to Nico;
-- Nico discovers he likes being inside that reaction;
-- the couple uses Nico as a symbol before treating him as a person;
-- an explicit invitation or secret opportunity appears.
+- mock Player;
+- envy him;
+- ask what Mathilde wears at home;
+- ask whether Marie notices Player looking;
+- request a photo;
+- propose an alibi;
+- offer outside images in exchange;
+- convert friendship into a male conspiracy.
 
 Possible Nico roles:
 
@@ -1090,7 +1327,11 @@ Possible Nico roles:
 - sincere adviser;
 - rival;
 - temptation for Marie;
+- admirer or potential route for Mathilde;
 - masculine confidant for Player;
+- voyeuristic accomplice;
+- alibi provider;
+- reciprocal image supplier;
 - consensually invited third;
 - hidden affair partner;
 - NTR/cuckold participant;
@@ -1104,18 +1345,16 @@ Core rule:
 Nico does not create the crack.
 
 He decides what kind of man he becomes
-when he sees it.
+when Player invites him to look through it.
 ```
 
 ---
 
-## 17. Messenger voice
+## 19. Messenger voice
 
 Nico writes in short, direct bursts.
 
 He is faster than Player and less edited.
-
-He can send one blunt line, wait, then return with the sentence that proves it was not only a joke.
 
 Base grammar:
 
@@ -1124,7 +1363,7 @@ ordinary fact
 -> direct observation
 -> provocation
 -> Player denies or answers
--> Nico either jokes, corrects, or asks one real question
+-> Nico either jokes, corrects, asks for a glimpse, or asks one real question
 ```
 
 Typical formulas:
@@ -1155,12 +1394,19 @@ Typical formulas:
 - `Non. Pas sans elle.`
 - `Tu veux me mettre au milieu ou tu veux vraiment me parler ?`
 - `Je suis pas un test de couple.`
+- `Tu vis avec deux bombes et tu fais des réunions avec toi-même.`
+- `Mathilde porte vraiment ça chez vous ?`
+- `Photo ou mauvaise foi.`
+- `Pas une photo volée. Je suis curieux, pas débile.`
+- `Je te couvre.`
+- `Tu me montres ce que je rate chez toi, je te montre ce que tu rates dehors.`
+- `Tu veux la version groupe ou la version qui va t'empêcher de dormir ?`
+- `Pauline sait que tu l'as ?`
+- `Si elle sait pas, on parle plus du même jeu.`
 - `Je vais dire un truc moins drôle.`
 - `Bref.`
 
 `Frérot` must not open every scene.
-
-Nico can be direct without calling Player by a masculine nickname every five lines.
 
 Natural ordinary rhythm:
 
@@ -1171,24 +1417,44 @@ Nico : Justement.
 Nico : L'expérience consolide l'échec.
 ```
 
-Social mirror rhythm:
+Domestic envy rhythm:
 
 ```text
-Nico : Viens ce soir.
-Player : je sais pas
-Nico : Elle, elle sait.
-Nico : Elle veut sortir.
-Nico : Commence par là.
+Nico : Attends.
+Nico : Marie et Mathilde vivent chez toi en ce moment.
+Player : temporairement
+Nico : Ah pardon.
+Nico : Temporairement deux femmes magnifiques chez toi.
+Nico : Beaucoup plus facile à supporter.
 ```
 
-Dangerous but readable rhythm:
+Photo-request rhythm:
 
 ```text
-Nico : Elle était canon.
-Player : évite
-Nico : Non.
-Nico : Toi évite de faire comme si t'avais rien senti.
-Nico : Après on peut parler de moi.
+Nico : Mathilde porte vraiment ce mini-short au petit-déj ?
+Player : t'es grave
+Nico : Oui.
+Nico : Et toi t'évites la question.
+Nico : Photo si elle sait que tu la prends. Sinon laisse tomber.
+```
+
+Dangerous mutual-game rhythm:
+
+```text
+Nico : Tu me montres ce que je rate chez toi.
+Nico : Je te montre ce que tu rates dehors.
+Player : genre quoi
+Nico : Marie. Mathilde. Pauline si elle joue.
+Nico : Et on décide avant qui sait quoi.
+```
+
+Dark-alibi rhythm:
+
+```text
+Player : Marie va demander pourquoi j'étais pas là
+Nico : Je peux dire que t'étais avec moi.
+Nico : Mais appelle pas ça innocent après.
+Nico : Un alibi, c'est déjà une décision.
 ```
 
 Boundary rhythm:
@@ -1215,19 +1481,14 @@ Adult intensity later:
 - body named plainly;
 - explicit verbs allowed;
 - permission stated directly;
+- image rules stated directly;
 - no pseudo-philosophy during physical escalation;
 - no generic porn monologue;
 - no constant humiliation language.
 
-```text
-Nico : Je la veux.
-Nico : Mais je veux savoir ce qu'elle veut.
-Nico : Et je veux savoir si toi, tu regardes ou si tu te caches encore.
-```
-
 ---
 
-## 18. Directness and crude-language dosage
+## 20. Directness and crude-language dosage
 
 Nico can say:
 
@@ -1255,13 +1516,14 @@ He must not become:
 - a locker-room voice;
 - the author speaking through bluntness;
 - a man who assumes he understands a woman because he notices her body;
-- a source of humiliation disguised as honesty.
+- a source of humiliation disguised as honesty;
+- a man who turns Marie, Mathilde, or Pauline into a shared catalogue.
 
 Recommended dosage:
 
 - ordinary scene: no sexual directness required;
 - early social scene: one direct physical observation at most;
-- private jealousy scene: one or two blunt lines, then actual dialogue;
+- private jealousy or voyeur scene: one or two blunt lines, then actual dialogue;
 - adult scene: direct language can increase;
 - vulnerable scene: crude language often decreases rather than increases.
 
@@ -1273,7 +1535,7 @@ He is not recognizable because every sentence is sexual.
 
 ---
 
-## 19. Emojis
+## 21. Emojis
 
 Base:
 
@@ -1287,6 +1549,12 @@ Observation / challenge:
 👀
 ```
 
+Photo / exchange tease:
+
+```text
+📸
+```
+
 Bad idea / later intensity:
 
 ```text
@@ -1298,104 +1566,211 @@ Rules:
 - many Nico messages use no emoji;
 - 😏 should not become punctuation;
 - 👀 is useful for one social trace, not every observation;
+- 📸 may introduce an ordinary or dangerous image question but never replaces consent;
 - 😈 appears only after an adult or dangerous frame is acknowledged;
 - serious Nico often drops emojis completely;
-- a single `😂` can soften ordinary failure, not erase a boundary.
+- a single 😂 can soften ordinary failure, not erase a boundary.
 
 ---
 
-## 20. Photos, social visibility, and trace logic
+## 22. Voyeurism, photo exchange, and alibi logic
 
-Nico is not primarily a photo character.
+Nico's voyeurism is a central adult route engine.
 
-His strongest medium is live social presence and direct language.
+It is not automatically predatory.
 
-Photos and stories matter because they preserve:
+His preferred fantasy is not a hidden camera.
 
-- who was visible;
-- who stood near whom;
-- who noticed;
-- who joined;
-- who was absent;
-- whether a social moment became private later.
-
-### Soft traces
-
-- L'Annexe before opening;
-- empty terrace after rain;
-- pool table;
-- football shoes;
-- cold pizza after closing;
-- black apron selfie with no sexual intent;
-- group invitation;
-- event wristband;
-- closing playlist screenshot;
-- photo of tables moved for La Verrière.
-
-### Socially ambiguous traces
-
-- Nico and Marie laughing in the same frame;
-- Marie wearing Nico's bomber because she was cold, only if the context supports it;
-- Nico visible beside Marie in a group story;
-- a photo where Player's absence becomes noticeable;
-- Nico looking toward Marie rather than the camera;
-- a caption that can be read as ordinary banter or selected attention;
-- Player receiving a different comment from the public caption.
-
-### Chosen adult traces
-
-Nico may send or participate in adult visual material only when the frame is explicit.
-
-Possible material:
-
-- chosen body photo sent to a consenting recipient;
-- negotiated image involving Marie and Nico;
-- image designed for Player to see in a consensual cuckold/sharing route;
-- trio or group visual with explicit agreement about capture, saving, and deletion;
-- a deliberate post-scene trace that all involved adults approved.
-
-### Dangerous traces
-
-- a private compliment appears publicly;
-- timing proves Nico and Marie stayed after Player left;
-- his watch or jacket appears in a frame;
-- a L'Annexe receipt contradicts an explanation;
-- Player's private confession is screenshotted or repeated;
-- Marie's changed behavior reveals more than a photo;
-- Nico deletes a message but answers differently afterward;
-- a group member notices that Nico stopped joking;
-- a negotiated image is saved outside the agreed frame.
-
-Guardrails:
-
-- Nico does not secretly photograph sexualized bodies;
-- he does not forward intimate material;
-- a group photo is not permission for adult commentary in public;
-- Player cannot grant permission on Marie's behalf;
-- Marie cannot grant permission for Player's humiliation in a negotiated route;
-- a hidden Marie/Nico affair is a cheating route, not consensual NTR;
-- social visibility should reveal reaction more often than prove possession.
+It is:
 
 ```text
-A Nico trace should reveal
-who chose to look,
-who chose to be seen,
-and who was excluded from the choice.
+being allowed into a private view
++ knowing Player sees more than anyone outside the home
++ exchanging the inside and outside versions
++ secrecy or permission becoming part of the excitement
+```
+
+### Core reciprocal formula
+
+```text
+Player has domestic access to Marie and Mathilde.
+Nico has social access to Marie, Mathilde, and Pauline.
+
+Player can show Nico what happens inside.
+Nico can show Player what he missed outside.
+
+The route is defined by who knows,
+who consents,
+and who is being covered.
+```
+
+### What Nico may ask Player for
+
+- a description of Marie's outfit at home;
+- a description of Mathilde's ordinary domestic look;
+- a normal photo taken with the woman's knowledge;
+- an outfit photo the woman asked Player to take;
+- a group or room photo where the woman is not secretly sexualized;
+- later, a chosen sexy or adult image if the woman explicitly agrees to Nico seeing it;
+- a consensual image made specifically for a shared-gaze route.
+
+### What Nico may offer Player
+
+- a public social photo of Marie;
+- a public or group photo of Mathilde;
+- a public social photo of Pauline;
+- a more flattering frame Nico took with the subject's knowledge;
+- an image the woman explicitly allowed him to send to Player;
+- later, a chosen sexy image made for Player, Nico, or both;
+- a social description or private reaction that Player missed;
+- an alibi for why Player was at L'Annexe or why a message arrived, if the route has entered deception.
+
+### The dangerous proposal
+
+Nico may tell Player:
+
+```text
+Tu m'envoies ce que toi seul vois chez toi.
+Je t'envoie ce que tu rates dehors.
+Je te couvre si ça devient compliqué.
+```
+
+This is not a neutral proposition.
+
+It can create:
+
+- male complicity;
+- arousal through reciprocal access;
+- jealousy;
+- a debt;
+- mutual evidence;
+- lying to Marie;
+- lying to Mathilde;
+- violating Pauline's chosen audience;
+- a later consensual voyeur frame;
+- a dark route where both men rationalize circulation.
+
+### Alibi functions
+
+Nico can offer to:
+
+- say Player was helping at L'Annexe;
+- say a message concerned reservations or an event;
+- explain why Player was late;
+- claim a social photo came from the group thread;
+- cover that Player and Nico spoke privately;
+- provide a plausible reason for Player to attend an event;
+- say Player asked for a photo for an ordinary outfit opinion.
+
+Some alibis can be true or partially true.
+
+Others can be deliberate lies.
+
+```text
+An alibi is not a consent mechanism.
+It is a deception mechanism.
+```
+
+If Nico covers Player, the route must remember:
+
+- what was hidden;
+- from whom;
+- whether Nico knew the full truth;
+- what Player now owes Nico;
+- whether the alibi protected a fantasy, an image breach, or an affair.
+
+### Four image-consent levels
+
+#### Level 1 — Public / social
+
+- already public or posted by the subject;
+- ordinary group image;
+- no intimate expectation;
+- may feed attraction but not route consent.
+
+#### Level 2 — Chosen sexy / shared-gaze
+
+- the woman knows the image is sexual or flirtatious;
+- the audience is named;
+- saving / forwarding rules are clear;
+- can be a clean adult reward.
+
+#### Level 3 — Ambiguous private circulation
+
+- non-explicit private image;
+- subject did not authorize the second recipient;
+- Player or Nico forwards, crops, or reframes it;
+- route becomes betrayal / image-boundary violation;
+- may remain erotically charged but is not a clean reward.
+
+#### Level 4 — Intimate or explicit non-consensual circulation
+
+- stolen, secretly captured, or forwarded against a clear rule;
+- serious harm;
+- cannot be treated as an uncomplicated porn reward;
+- may close positive routes and trigger confrontation, deletion demands, friendship rupture, or darker consequences.
+
+### Character-specific image rules
+
+#### Marie
+
+Her image route is about being actively desired and choosing what happens with the gaze.
+
+Player cannot assume cohabitation grants circulation rights.
+
+#### Mathilde
+
+Her ordinary sensuality is not permission.
+
+A domestic mini-short or crop top is not consent to a photo or to Nico receiving it.
+
+The contrast between ordinary clothing and deliberate intent must remain intact.
+
+#### Pauline
+
+Audience and crop are central to her identity.
+
+Forwarding a Pauline image without permission is a severe betrayal, even when the image is not explicit.
+
+#### Player
+
+Player can become:
+
+- gatekeeper;
+- accomplice;
+- voyeur;
+- recipient;
+- liar;
+- person who sets a boundary;
+- person who asks the women directly;
+- person who breaks the game.
+
+He cannot call himself passive if he selects, sends, saves, requests, or accepts the alibi.
+
+### Final voyeur rule
+
+```text
+Nico's voyeurism is hottest when the gaze is chosen
+or when a dark route knowingly risks trust.
+
+It is not hot because women unknowingly become inventory.
 ```
 
 ---
 
-## 21. NSFW engine
+## 23. NSFW engine
 
 Nico's adult engine is:
 
 ```text
 real attraction to Marie
++ real sexual attraction to Mathilde
++ jealousy of Player's domestic access
 + Player's denied gaze
 + Nico's direct language
-+ Marie's active response
-+ rivalry or invitation
-+ explicit boundary
++ reciprocal inside/outside image exchange
++ alibi or permission
++ Marie / Mathilde / Pauline agency
 + shared gaze / being watched
 + responsibility for what follows
 ```
@@ -1404,10 +1779,14 @@ Nico becomes erotic because:
 
 - he says `sexy` when Player says `jolie`;
 - he makes desire concrete;
-- he can hold Player's gaze while speaking about Marie;
-- he notices whether Marie enjoys the attention;
+- he openly envies the fact that Player sees Marie and Mathilde at home;
+- he asks Player what the outside world cannot see;
+- he can offer Player the social version he missed;
+- he can hold Player's gaze while speaking about Marie or Mathilde;
+- he notices whether a woman enjoys the attention;
 - he asks for the frame when the fantasy becomes real;
 - he can be both rival and invited participant;
+- secrecy itself can become part of the arousal;
 - his confidence becomes vulnerable when he is actually chosen;
 - he can turn jealousy into explicit adult possibility;
 - he is capable of entering a forbidden route while knowing it has a cost.
@@ -1415,15 +1794,18 @@ Nico becomes erotic because:
 He may enjoy:
 
 - Marie responding directly;
+- Mathilde knowingly making him look;
 - making Player admit physical arousal;
+- receiving a consensual domestic glimpse;
+- sending Player a consensual social or sexy image;
 - being watched with consent;
 - watching Player watch;
 - competition that all involved adults understand;
 - being invited as a third;
-- a clear instruction from Marie;
+- a clear instruction from Marie or Mathilde;
 - teasing Player inside agreed limits;
 - seeing jealousy become desire;
-- shared attention centered on Marie without erasing her voice;
+- shared attention without erasing the woman's voice;
 - a later group frame where everyone remains recognizable;
 - direct adult language;
 - the moment a hypothetical fantasy becomes a real choice.
@@ -1431,285 +1813,272 @@ He may enjoy:
 He does not need:
 
 - Player's humiliation;
-- a frightened partner;
+- a frightened or unaware woman;
 - intoxication;
 - coercion;
 - a woman treated as an object passed between men;
 - the label `bull` as an identity;
 - a secret camera;
+- an archive of stolen images;
 - Player's passivity.
-
-Later adult tone may become:
-
-- blunt;
-- physical;
-- confident;
-- competitive;
-- commanding when invited;
-- mocking inside consent;
-- explicit;
-- briefly possessive;
-- unexpectedly careful at the moment a boundary becomes real.
 
 ```text
 Nico's route is not hot because he takes what Player failed to protect.
 
 It is hot because desire becomes spoken,
-Marie chooses her position,
-Player can no longer hide behind abstraction,
-and Nico must own the consequence of entering the frame.
+the gaze starts circulating,
+each woman chooses or is betrayed in a readable way,
+and both men must own the game they created.
 ```
 
 ---
 
-## 22. Intensity progression
+## 24. Intensity progression
 
 ### Tier 1 — Ordinary social man
 
-Conditions:
-
-- no active route;
-- Marie / Player couple remains primary;
-- Nico exists through work, group plans, and normal friendship.
-
-Material:
-
-- L'Annexe anecdote;
-- invitation;
+- work;
+- group plans;
 - football failure;
 - practical help;
-- group banter;
 - one ordinary compliment;
-- saving Player a seat.
+- saving Player a seat;
+- no photo game.
+
+### Tier 2 — Two attractions become readable
+
+- Nico openly finds Marie attractive;
+- Nico openly notices Mathilde;
+- he teases Player about living with both women;
+- Player can joke, close the subject, admit envy, or become complicit;
+- no image request beyond ordinary public material.
 
 ```text
-Nico : Viens.
-Nico : On a une table et zéro conversation sérieuse prévue.
+Nico : Marie et Mathilde sous le même toit.
+Nico : Et toi tu réponds à tes mails.
+Nico : C'est presque insultant.
 ```
 
-### Tier 2 — Attraction becomes readable
+### Tier 3 — Voyeuristic complicity
+
+- Nico asks what Mathilde wears at home;
+- Player describes or refuses;
+- Nico asks for a photo;
+- consent level must be readable;
+- Nico offers an outside photo or description in return;
+- `je te couvre` becomes possible;
+- the two men begin creating mutual evidence.
+
+```text
+Nico : Pas une photo volée.
+Nico : Mais si elle sait que tu la prends, oui, je veux voir.
+```
+
+### Tier 4A — Chosen shared-gaze route
 
 Conditions:
 
-- enough social presence;
-- Marie is visible;
-- Nico's attraction or Player's jealousy can be acknowledged without route lock.
-
-Material:
-
-- Nico says Marie was sexy;
-- Marie knowingly returns a look or joke;
-- Player reacts;
-- Nico distinguishes observation from permission;
-- an ambiguous social trace appears.
-
-```text
-Nico : Oui, je l'ai regardée.
-Nico : La vraie question, c'est pourquoi ça te surprend.
-```
-
-### Tier 3 — Shared gaze and boundary question
-
-Conditions:
-
-- attraction acknowledged;
-- Player and/or Marie actively engage;
-- no adult physical scene without a named route frame.
-
-Material:
-
-- Player admits jealousy or arousal;
-- Nico admits desire;
-- Marie states what she enjoys or refuses;
-- a hypothetical sharing question appears;
-- Nico asks whether he is a fantasy, a rival, or an invitation;
-- private messages become consequential.
-
-```text
-Nico : Là on ne parle plus d'une robe.
-Nico : Tu veux quoi, exactement ?
-```
-
-### Tier 4A — Hidden affair frame
-
-Conditions:
-
-- Marie and Nico choose an adult line without Player's informed consent;
-- the route is explicitly a cheating route;
-- both bear responsibility.
+- the relevant woman knows the audience;
+- Player and Nico state the exchange;
+- image rules are explicit;
+- no intoxication carries consent.
 
 Material may include:
 
-- secret meeting;
-- explicit desire;
-- physical adult scene;
-- hidden messages;
-- deliberate lie or omission;
-- guilt and social consequence.
+- chosen sexy photos;
+- consensual voyeurism;
+- Marie or Mathilde playing with both men's gaze;
+- Pauline entering only through her explicit selected frame;
+- Player and Nico exchanging images with permission;
+- watching, teasing, or later physical escalation.
 
-```text
-Nico : Je sais qu'il ne sait pas.
-Nico : Je sais aussi que je suis encore là.
-```
-
-This is not NTR consent.
-
-### Tier 4B — Negotiated sharing / trio frame
+### Tier 4B — Hidden photo / alibi route
 
 Conditions:
 
-- Marie explicitly wants the frame;
-- Player explicitly knows and chooses his role;
-- Nico explicitly accepts;
-- boundaries are concrete;
-- intoxication is not carrying consent.
+- one or more women do not know the full circulation;
+- Player and Nico knowingly hide the game;
+- the route is marked as betrayal.
 
 Material may include:
 
-- consensual watching;
-- trio;
-- shared gaze;
-- body and touch named directly;
-- agreed teasing or humiliation boundaries;
-- aftercare / aftermath expectations;
-- image rules.
+- non-explicit private forwarding;
+- alibis;
+- recropping;
+- deleting messages;
+- mutual cover;
+- escalating request pressure;
+- one man refusing the next step;
+- discovery.
 
-```text
-Nico : Je veux l'entendre d'elle.
-Nico : Et je veux savoir ce que toi tu veux regarder.
-```
+Explicit stolen images cannot be clean rewards.
+
+### Tier 4C — Hidden affair frame
+
+Marie, Mathilde, or another adult character and Nico cross a line without the relevant partner's informed consent.
+
+The route is cheating and carries consequence.
+
+### Tier 4D — Negotiated sharing / trio frame
+
+- Marie or Mathilde states desire directly;
+- Player states his role;
+- Nico accepts;
+- boundaries and image rules are concrete;
+- no automatic male-male contact.
 
 ### Tier 5 — Consequence, integration, or rupture
 
-Nico must choose among:
+Nico and Player must choose among:
 
-- step back;
-- remain Player's friend;
-- accept being a rival;
-- continue a hidden affair;
-- tell the truth;
-- become an invited third;
-- refuse a revenge frame;
-- explore whether attraction survives after separation;
-- accept that the fantasy cost him the group;
-- admit he wanted to be chosen, not only to win.
-
-```text
-Nico : J'ai dit ce que je voulais.
-Nico : Maintenant faut que j'assume ce que ça change.
-```
+- end the exchange;
+- ask the women directly;
+- delete material;
+- confess;
+- deepen secrecy;
+- expose one another;
+- convert the game into a consensual frame;
+- enter affair or group routes;
+- lose friendship;
+- accept that the fantasy turned people into evidence;
+- admit they wanted the conspiracy as much as the images.
 
 ---
 
-## 23. Limits
+## 25. Limits
 
 Nico refuses:
 
 - pressure after a clear no;
 - sexual access created by intoxication;
 - hidden recording;
-- non-consensual intimate photography;
-- forwarding private images;
+- non-consensual intimate photography as a clean reward;
+- forwarding explicit images without consent;
 - a surprise third-person setup;
-- Player negotiating Marie's body without Marie;
+- Player negotiating Marie or Mathilde's body without them;
 - Marie negotiating Player's humiliation without Player in a consensual route;
 - being treated as a weapon without being told;
 - being asked to frighten or pressure someone into desire;
 - being asked to prove masculinity through cruelty;
 - racist or fetishized `bull` framing;
-- permanent degradation of Player unless explicitly negotiated in an adult fantasy;
-- treating Marie as a prize;
+- permanent degradation of Player unless explicitly negotiated;
+- treating Marie, Mathilde, or Pauline as prizes or inventory;
 - using a private confession from Player as public leverage;
 - pretending jealousy alone is consent;
-- continuing after Marie freezes, withdraws, or says no;
+- continuing after someone freezes, withdraws, or says no;
 - being made responsible for a couple's choices while both partners remain passive.
 
-Nico may participate in a hidden affair route.
+Nico may ask for photos.
 
-That does not mean he believes betrayal is harmless.
+He may accept a dangerous private circulation route.
 
-It means he is capable of choosing desire while rationalizing that the couple's responsibility belongs elsewhere.
+He may offer an alibi.
 
-That choice must cost him something.
+He may send Player a photo he had no right to forward on a negative route.
 
-Nico may participate in consensual NTR/cuckold or sharing.
+Those choices are moral breaches, not automatic prohibitions on narrative existence.
 
-That requires:
+They must carry:
 
-- informed adult choice;
-- Marie's active desire;
-- Player's explicit role;
-- Nico's own limits;
-- no retroactive conversion of cheating into consent.
+- trace;
+- responsibility;
+- possible deletion demands;
+- loss of trust;
+- route closure or darkening;
+- consequences specific to Marie, Mathilde, or Pauline.
 
 ---
 
-## 24. Reactions to Player postures
+## 26. Reactions to Player postures
 
 ### Player joins Marie actively
 
 Nico may tease, but he respects the move.
 
-He can become:
+He can remain attracted without converting every opportunity into access.
 
-- less threatening;
-- genuinely supportive;
-- residual attraction without pursuit;
-- a friend who sees Player finally act.
+### Player notices Mathilde and admits it
+
+Nico becomes interested in the domestic detail.
+
+He may ask:
+
+- what Player actually saw;
+- whether Mathilde knew;
+- whether Marie noticed;
+- whether Player wants to tell a story, send a photo, or set a limit.
+
+### Player sends a consensual photo
+
+Nico respects the stated rule.
+
+A positive route may deepen through:
+
+- precise reaction;
+- no forwarding;
+- returning a consensual image;
+- asking before saving;
+- acknowledging the woman as participant rather than content.
+
+### Player sends a private image without permission
+
+Nico can:
+
+- refuse and tell him to delete it;
+- look and become complicit;
+- ask for more and enter a dark route;
+- save it and create a major breach;
+- use the evidence later;
+- confront Player's claim that `it was only a photo`.
+
+Nico's choice defines his route.
+
+### Player accepts the mutual exchange
+
+Nico may propose:
 
 ```text
-Nico : Voilà.
-Nico : Là t'es avec elle.
-Nico : C'était pas si compliqué. Enfin si, visiblement.
+inside view from Player
+<-> outside view from Nico
+<-> mutual cover
 ```
 
-### Passive Player
+The scene must establish:
 
-Nico first invites or warns.
+- which women are involved;
+- whether they know;
+- what can be saved;
+- whether the exchange is flirtation, betrayal, or consensual play.
 
-Repeated passivity makes him less protective of Player's place.
+### Player asks Nico to cover him
+
+Nico may agree.
+
+He then becomes part of the deception.
 
 ```text
-Nico : Je t'ai gardé une chaise.
-Nico : Je vais pas te garder ta place dans toute ta vie.
+Nico : Je peux te couvrir.
+Nico : Mais après tu viens pas me dire que t'as rien choisi.
 ```
 
-### Jealous but controlling Player
+### Player asks Nico for sexy photos
+
+Nico can offer:
+
+- public social images;
+- images made with consent;
+- a chosen adult image in a negotiated route;
+- a dark unauthorized image on a negative route.
+
+He must not treat all four as morally equivalent.
+
+### Player is jealous but controlling
 
 Nico rejects ownership language.
 
-```text
-Nico : Être jaloux, je comprends.
-Nico : Parler comme si elle était ton terrain, non.
-```
+### Player is jealous and honest
 
-### Jealous and honest Player
-
-This can create real male intimacy.
-
-Nico may stop performing rivalry and ask what Player felt.
-
-```text
-Nico : Ok.
-Nico : Là tu me parles vraiment.
-Nico : Continue.
-```
-
-### Player curious about sharing or cuckold fantasy
-
-Nico does not jump directly into a physical route.
-
-He asks:
-
-- Does Marie know?
-- Does Marie want it?
-- Is Player asking to watch, to share, to test, or to lose control?
-- What language or humiliation is allowed?
-- What happens afterward?
-
-```text
-Nico : Ton fantasme, c'est pas encore un accord à trois.
-```
+This can create real male intimacy and a consent-aware fantasy route.
 
 ### Player uses Nico as a jealousy test
 
@@ -1723,51 +2092,19 @@ Nico : Je suis pas un bouton pour vérifier si elle t'aime.
 
 The friendship can rupture.
 
-Nico will not accept:
+Nico will not accept Player erasing his agency.
 
-```text
-Je t'avais dit que j'étais jaloux, pas que tu pouvais y aller.
-```
+He will not erase his own responsibility either.
 
-as permission.
+### Player sets a clear image boundary
 
-He will also reject Player erasing Nico's responsibility if Nico knowingly crossed a line.
+Nico can respect it.
 
-```text
-Nico : Tu m'as rien autorisé.
-Nico : Et moi j'ai choisi quand même.
-Nico : Les deux sont vrais.
-```
-
-### Player gives explicit informed permission but Marie does not
-
-Nico refuses the negotiated frame.
-
-```text
-Nico : Je veux l'entendre d'elle.
-```
-
-### Marie wants a hidden affair and Player does not know
-
-Nico can:
-
-- refuse;
-- step back;
-- accept and enter a cheating route;
-- ask Marie what she actually wants;
-- insist that she is choosing betrayal rather than calling it revenge.
-
-His decision changes his character route.
-
-### Player sets a clear respectful boundary
-
-Nico can respect it without humiliation.
-
-A clear boundary may preserve friendship and make Nico more trustworthy.
+A clear boundary may preserve friendship and increase trust.
 
 ---
 
-## 25. Reactions to emotional states
+## 27. Reactions to emotional states
 
 ### Embarrassment
 
@@ -1785,22 +2122,28 @@ A clear boundary may preserve friendship and make Nico more trustworthy.
 - body named plainly;
 - physical stillness;
 - asks a concrete question;
-- becomes more attentive to consent, not less.
+- asks what the woman knows;
+- becomes more attentive to consent, not less, on positive routes.
+
+### Voyeuristic excitement
+
+- rapid messages;
+- precise questions;
+- interest in ordinary details rather than only nudity;
+- wants the difference between public and private version;
+- may overvalue `just one photo`;
+- may offer an alibi too quickly;
+- becomes more jealous of Player's access.
 
 ### Jealousy
 
-Nico can be jealous.
+Nico can be jealous of:
 
-It appears as:
-
-- sharper comparison;
-- showing up more visibly;
-- teasing another man's timing;
-- trying to become the obvious social choice;
-- pretending he is only protecting the atmosphere;
-- irritation when Marie's attention returns fully to Player.
-
-He is not immune because he usually occupies the outside position.
+- Player's history with Marie;
+- Player seeing Mathilde at home;
+- a private photo Player refuses to share;
+- Pauline choosing Player as audience;
+- the fact that Player can close the phone and return to the women Nico is imagining.
 
 ### Hurt
 
@@ -1808,22 +2151,9 @@ Nico becomes easy to be around.
 
 That can hide withdrawal.
 
-He may:
-
-- stay professional;
-- stop private messages;
-- make one joke too polished;
-- leave first;
-- work extra;
-- avoid the group without announcing why.
-
 ### Rejection
 
 He accepts a clear no.
-
-Publicly, he recovers quickly.
-
-Privately, rejection can activate the fear that people wanted the energy, not him.
 
 He must not punish the person who refused.
 
@@ -1832,33 +2162,23 @@ He must not punish the person who refused.
 - over-helpfulness;
 - direct practical protection;
 - avoiding Player's gaze;
+- deleting a thread without solving the harm;
 - refusing to joke about the exact subject;
 - trying to make the next choice cleaner;
 - occasionally saying the true sentence too late.
 
-### Anger
-
-Nico becomes blunt and still.
-
-He is less funny.
-
-He may raise his voice, but he is not physically threatening by default.
-
 ### Fear of exposure
 
-Nico is not a digital-cleanup expert.
-
-He tries to establish:
+Nico tries to establish:
 
 - who knows;
-- what was actually agreed;
-- whether Marie is safe;
-- whether Player is about to act publicly;
-- whether silence would protect or deepen harm.
+- what was sent;
+- whether it was saved;
+- who gave permission;
+- whether an alibi still holds;
+- whether silence protects or deepens harm.
 
-He can choose confession, withdrawal, or continued secrecy.
-
-He cannot solve every social consequence through charm.
+He is not a perfect digital-cleanup expert.
 
 ### Recognition of his old pattern
 
@@ -1866,33 +2186,56 @@ When Nico realizes he is again giving the room his best self while avoiding ordi
 
 - become unexpectedly quiet;
 - think of Clara;
-- stop calling the situation `just a game`;
-- ask whether attraction survives outside the event;
+- stop calling the exchange `just a game`;
+- ask whether attraction survives without secrecy;
 - retreat before acting;
 - or cross anyway with full awareness.
 
 ---
 
-## 26. Interactions with other characters
+## 28. Interactions with other characters
 
 ### Marie — real attraction and active agency
 
 Marie is not the prize between Nico and Player.
 
-She is:
+She can:
 
-- the person Nico wants;
-- a social equal;
-- capable of using his attention knowingly;
-- capable of refusing him;
-- capable of choosing him;
-- capable of inviting him into an adult frame;
-- capable of recognizing when he is giving advice that benefits himself;
-- capable of discovering that being desired by Nico does not automatically answer what she wants from Player.
+- enjoy being seen;
+- knowingly pose;
+- refuse circulation;
+- choose Player;
+- choose Nico;
+- invite a consensual shared gaze;
+- discover that Player and Nico circulated an image without her;
+- confront both men differently.
 
 Nico must hear Marie directly.
 
-### Player — friend, mirror, rival, possible co-author of an adult frame
+### Mathilde — real sexual attraction and domestic voyeur tension
+
+Nico genuinely desires Mathilde.
+
+The route is distinct from Marie:
+
+- with Marie, Nico wants the woman and the social equal;
+- with Mathilde, the initial charge is more bodily, voyeuristic, and tied to Player's privileged domestic view.
+
+Mathilde can:
+
+- enjoy his direct attention;
+- mock him;
+- knowingly pose;
+- choose Player as photographer and Nico as audience;
+- choose Nico directly;
+- reject being treated as exchanged content;
+- discover the men discussed or circulated her image;
+- turn the gaze back on both men;
+- remain loyal to Marie and close the route.
+
+Her ordinary clothing is never automatic consent.
+
+### Player — friend, mirror, rival, accomplice
 
 Player forces Nico to answer:
 
@@ -1904,95 +2247,66 @@ or because honesty lets you enter the room without calling it a move?
 Nico forces Player to answer:
 
 ```text
-Do you want Marie,
-do you want control,
-or do you want to watch someone else awaken the desire you stopped expressing?
+Do you want Marie and Mathilde,
+do you want to share the gaze,
+or do you want another man to validate what you are afraid to admit?
 ```
 
-### Pauline — explicit desire vs managed secrecy
+Their photo game can deepen friendship, sexual complicity, rivalry, or mutual betrayal.
 
-Nico and Pauline both understand social presentation.
+### Pauline — selected audience vs male circulation
 
-Difference:
+Pauline chooses versions and audiences.
 
-- Nico says desire too openly and minimizes consequence;
-- Pauline hides desire precisely and manages consequence through compartments.
+Nico likes circulation and reciprocal access.
 
-Possible dynamics:
+This is a direct conflict.
 
-- sharp banter;
-- Pauline sees his advice serving him;
-- Nico sees that her harmless explanation is overprepared;
-- neither knows every secret;
-- each can misread the other.
+A consensual route can be intensely erotic because Pauline knowingly chooses both men.
 
-They are not automatic sexual partners.
-
-### Mathilde — direct noticing vs refusal to be reduced
-
-Nico may notice Mathilde's sensual clothing and say so.
-
-Mathilde may enjoy the recognition or reject the simplification.
-
-A good scene allows Nico to correct:
-
-```text
-Nico : Oui, j'ai vu la tenue.
-Nico : Non, ça veut pas dire que j'ai compris ce que tu voulais.
-```
-
-They must not become automatic flirt machines.
+A non-consensual forwarding route is a severe betrayal.
 
 ### Sandra — restraint he cannot accelerate
 
 Nico understands that Sandra's softness is not availability.
 
-He may read a social trace but should not push her to reveal more.
+There is no default photo-exchange route involving Sandra.
 
-Sandra can unsettle him by refusing the game rather than losing it.
+### Raphaëlle — clarity that catches the alibi
 
-### Raphaëlle — clarity that catches his partial honesty
+Raphaëlle can ask:
 
-Raphaëlle asks whether Nico is:
+```text
+Qui savait que la photo circulait ?
+```
 
-- joking;
-- flirting;
-- advising;
-- or positioning himself.
+She exposes the difference between:
 
-She can expose the gap between direct words and incomplete intention.
+- seeing;
+- permission;
+- saving;
+- forwarding;
+- covering.
 
-Nico may find this irritating and attractive without an automatic route.
+### Bastien and Jeff
 
-### Bastien — another man in the social world
+Nico may know them socially.
 
-Nico can like Bastien.
+He must not treat other men as comic obstacles to female access.
 
-He does not know Pauline's full double-life canon by default.
+An alibi or photo exchange that affects them remains relational betrayal, not only male game texture.
 
-He must not become the person who immediately reads every betrayal.
-
-### Jeff — different masculinity
-
-Nico may find Jeff too blunt in the wrong way.
-
-Jeff may find Nico performative.
-
-Neither man is automatically morally superior.
-
-### Clara — private historical mirror
+### Clara
 
 Clara represents the cost of being socially present and privately incomplete.
 
-She is not a punishment device or a future route obstacle.
+She is not a punishment device or future route obstacle.
 
 ---
 
-## 27. Modular scene engines
+## 29. Modular scene engines
 
 Nico scenes should be reusable across narrative windows.
-
-They must not depend on one fixed J4/J5/J7 jealousy sequence.
 
 ### L'Annexe ordinary entry
 
@@ -2000,31 +2314,17 @@ They must not depend on one fixed J4/J5/J7 jealousy sequence.
 reservation / work anecdote / invitation
 -> Nico opens as a normal social person
 -> Player can join, decline, or joke
--> Marie may be present or absent
--> route meaning depends on who actively enters the plan
+-> no jealousy state required
 ```
-
-Conditions:
-
-- L'Annexe available;
-- no attraction state required;
-- useful for ordinary characterization.
 
 ### La Verrière collaboration
 
 ```text
 Marie has an event problem
--> Nico provides tables / after-event space / practical help
+-> Nico provides practical help
 -> Player can join the work or arrive after it
--> Nico and Marie's competence becomes visible
 -> attraction remains social unless someone changes the frame
 ```
-
-Function:
-
-- grounds Nico/Marie history;
-- creates shared action rather than instant seduction;
-- gives Player a real chance to participate.
 
 ### The saved seat
 
@@ -2036,362 +2336,366 @@ Nico invites Player and Marie
 -> later jealousy cannot erase the earlier invitation
 ```
 
-This is an important fairness engine.
+### Two women under one roof
 
-Nico should sometimes give Player a real opening before becoming a rival.
+```text
+Nico learns Mathilde is staying with Marie and Player
+-> jokes about Player's luck
+-> asks one ordinary question
+-> Player can close, boast, admit tension, or begin voyeuristic complicity
+```
+
+### Domestic glimpse request
+
+```text
+Player describes Marie or Mathilde at home
+-> Nico asks for a photo
+-> Player must define whether she knows
+-> request closes, becomes consensual, or enters dark circulation
+```
+
+### Inside / outside exchange
+
+```text
+Player offers domestic view
+-> Nico offers social view of Marie, Mathilde, or Pauline
+-> both set or avoid rules
+-> exchange creates trust, arousal, debt, or betrayal
+```
+
+### `Je te couvre` engine
+
+```text
+Player needs explanation / access / time
+-> Nico offers a plausible alibi
+-> Player accepts or refuses
+-> hidden act occurs or does not
+-> Nico now shares responsibility and evidence
+```
+
+### Nico sends the photo
+
+```text
+Nico has social image
+-> asks whether Player wants public version or private version
+-> permission status is established or avoided
+-> Player can refuse, accept, ask consent, or push further
+```
+
+### Pauline audience collision
+
+```text
+Pauline sends or permits one version
+-> Nico considers Player as second audience
+-> he asks, forwards, or refuses
+-> Pauline's trust and image control become consequence
+```
+
+### Mathilde catches the gaze
+
+```text
+Mathilde notices Player and Nico discussing her
+-> she asks what was said or sent
+-> men can lie, admit, minimize, or invite her into the frame
+-> her response determines consent or rupture
+```
+
+### Marie knowingly plays
+
+```text
+Marie understands both men are looking
+-> chooses outfit / pose / photo / message
+-> states who may see and keep it
+-> shared-gaze route becomes consensual
+```
 
 ### Advice that is true and useful to Nico
 
 ```text
 Player asks or complains
--> Nico gives accurate advice about Marie
+-> Nico gives accurate advice
 -> the advice also increases Nico's access or visibility
 -> Player may notice both motives
--> Nico can admit, deny, or partially admit the conflict
 ```
-
-Core Nico engine.
 
 ### Pool / darts male scene
 
 ```text
 ordinary game
 -> teasing
--> Player reveals jealousy or desire indirectly
+-> Player reveals jealousy, desire, or photo curiosity
 -> Nico says one blunt truth
--> scene can remain friendship, become rivalry, or open a fantasy question
+-> friendship, rivalry, or voyeur route opens
 ```
-
-No woman needs to be present for male characterization.
 
 ### Closing-time message
 
 ```text
 L'Annexe empties
--> Nico sends ordinary trace
+-> Nico sends ordinary trace or social photo
 -> Player answers
 -> public-performance Nico becomes quieter
--> private vulnerability or adult honesty can emerge
-```
-
-### Marie compliment returned
-
-```text
-Nico gives a direct but respectful compliment
--> Marie accepts, redirects, rejects, or escalates
--> Player sees or learns
--> the route follows Marie's response, not only Nico's initiative
-```
-
-### Social trace
-
-```text
-group photo / story / caption
--> Nico and Marie appear in one frame
--> Player reacts
--> Nico later names the reaction
--> the trace reveals Player more than it proves a Nico route
+-> private vulnerability or dangerous game emerges
 ```
 
 ### Overstep and correction
 
 ```text
-Nico says or does something too direct
--> Marie or Player sets a boundary
--> Nico must correct, apologize, argue, or reveal entitlement
+Nico requests or forwards too far
+-> Player or woman sets boundary
+-> Nico corrects, argues, deletes, or reveals entitlement
 -> route trust changes
 ```
 
-A respectful Nico must be able to be wrong and repair.
-
-### Nico's quiet apartment
+### Hidden exchange collision
 
 ```text
-one person enters Nico's private space
--> no crowd to animate
--> ordinary object exposes history
--> Nico can no longer rely entirely on social ease
--> scene may become vulnerable, romantic, or adult depending on conditions
-```
-
-Not an automatic sex scene.
-
-### Clara echo
-
-```text
-current couple tension resembles Nico's past
--> Nico remembers Clara's criticism
--> he can give Player a more honest warning
--> or repeat his old minimization from the other side
-```
-
-### Revenge refusal
-
-```text
-Marie or Player tries to use Nico as a jealousy tool
--> Nico notices
--> he can play along, refuse, or demand a real frame
--> his self-respect becomes active
-```
-
-### Marie chooses without Player present
-
-```text
-Marie contacts or stays with Nico
--> she states desire, hurt, revenge, or uncertainty
--> Nico must distinguish those motives
--> hidden affair, refusal, or delayed decision becomes possible
-```
-
-Marie remains the active subject.
-
-### Player names a fantasy
-
-```text
-Player admits jealousy / watching / sharing fantasy
--> Nico does not assume permission
--> asks what Marie knows and wants
--> fantasy can close, remain verbal, or move toward negotiation
+mutual photo game exists
+-> ordinary social scene follows
+-> one woman recognizes crop / timing / phrase
+-> alibi is tested
+-> Player and Nico cannot remain only joking accomplices
 ```
 
 ### Negotiated invitation
 
 ```text
-Marie and Player establish a shared adult question
--> Nico is invited as a person, not summoned as a body
--> each states boundaries
--> Nico may accept, refuse, or propose conditions
--> adult scene becomes available only after agreement
-```
-
-### Hidden affair collision
-
-```text
-Marie and Nico cross secretly
--> ordinary social scene follows
--> Player and Nico still share friendship grammar
--> guilt, arousal, rivalry, or confession changes every normal exchange
+woman chooses shared gaze
+-> Player and Nico are named audiences
+-> image / touch / watching rules are explicit
+-> adult route opens without retroactive permission
 ```
 
 ### Post-fantasy morning
 
 ```text
-adult shared scene happened
--> no one can hide behind excitement
--> Nico, Marie, and Player clarify meaning, limits, jealousy, and future contact
+adult shared scene or photo game happened
+-> no one hides behind excitement
+-> meaning, limits, deletion, jealousy, and future contact are clarified
 ```
 
-The aftermath is part of the adult route, not optional cleanup.
-
-### Couple reconquest exit
+### Nico withdrawal
 
 ```text
-Marie and Player actively choose each other
--> Nico sees the choice
--> he can step back, remain friend, or reveal residual hurt
--> attraction does not require continued pursuit
+Nico realizes Player wants only photos / alibi / effect
+-> stops exchange
+-> asks whether friendship exists outside the game
 ```
 
 ---
 
-## 28. Route families
+## 30. Route families
 
 ### Friend-mirror / couple-repair route
 
 Nico's directness helps Player see Marie again.
 
-He may:
+He may also tell Player to stop treating Mathilde's presence as invisible.
 
-- invite Player;
-- name passivity;
-- compliment Marie without crossing;
-- refuse to become revenge material;
-- step back when the couple becomes active;
-- remain a credible friend with residual attraction.
-
-Nico must not become a selfless therapist.
-
-His attraction remains real.
-
-The value of the route is that he chooses not to convert every real desire into access.
+He refuses to circulate private images and steps back when the couple becomes active.
 
 ### Respectful rival route
 
-Nico openly wants Marie.
+Nico openly wants Marie and may openly find Mathilde attractive.
 
 He does not sabotage Player secretly.
 
-The tension comes from:
+The tension comes from direct attraction, active female response, and Player's choices.
 
-- direct attraction;
-- Marie's response;
-- Player's action or inaction;
-- social proximity;
-- adult competition without ownership language.
+### Male voyeur-complicity route
 
-This route can end in:
+Player and Nico build a private game around:
 
-- Marie choosing Player;
-- Marie choosing Nico after a real separation;
-- Nico withdrawing;
-- unresolved tension;
-- negotiated sharing.
+- descriptions;
+- domestic glimpses;
+- social photos;
+- Marie and Mathilde;
+- Pauline as a possible selected or breached image source;
+- reciprocal access;
+- alibis;
+- saving and deleting rules;
+- shared arousal.
+
+This route can remain verbal or image-based.
+
+It can become consensual or dark.
+
+### Consensual shared-gaze / photo route
+
+Marie, Mathilde, or Pauline knowingly chooses:
+
+- the image;
+- the audience;
+- the level of sexual charge;
+- saving / forwarding limits;
+- whether Player and Nico may discuss the reaction.
+
+The woman is participant, not inventory.
+
+### Dark image-circulation route
+
+Player and Nico exchange private images or crops without full permission.
+
+The route may be erotic and psychologically credible.
+
+It is not a clean reward.
+
+Consequences include:
+
+- discovery;
+- deletion demand;
+- route closure;
+- friendship rupture;
+- family or couple betrayal;
+- Pauline's severe trust reaction;
+- Mathilde refusing domestic safety;
+- Marie confronting Player and Nico separately;
+- one man exposing the other.
+
+### Mutual-alibi route
+
+Nico covers Player and Player protects Nico's involvement.
+
+Alibis can hide:
+
+- photo exchange;
+- private meetings;
+- an affair;
+- an adult negotiated plan from outsiders;
+- or a fantasy conversation.
+
+The moral meaning depends on who is being deceived and why.
 
 ### Hidden Marie / Nico affair route
 
 Marie and Nico cross a sexual or emotional line without Player's informed consent.
 
-The route is valid adult cheating territory.
+The route is cheating.
 
-It must preserve:
+### Mathilde / Nico attraction route
 
-- Marie's agency;
-- Nico's responsibility;
-- Player's humanity;
-- explicit adult consent between Marie and Nico;
-- secrecy and traces;
-- consequences;
-- the difference between attraction and justification.
+Nico's real attraction to Mathilde can become active if Mathilde chooses it.
 
-Nico cannot claim he thought Player's jealousy was permission.
+Possible engines:
+
+- social flirt;
+- direct outfit compliment;
+- a consensual photo;
+- Player's jealousy;
+- Mathilde enjoying an outside gaze after domestic tension;
+- a later adult route independent of Player's possession.
+
+Mathilde cannot become merely the second beautiful woman exchanged by two men.
+
+Her loyalty to Marie and her own intention remain active.
 
 ### Consensual NTR / cuckold / sharing route
 
 Player, Marie, and Nico consciously establish the frame.
 
-Possible charge:
-
-- Player watching;
-- Player hearing Nico speak plainly about Marie;
-- Marie enjoying both gazes;
-- agreed rivalry;
-- chosen humiliation language;
-- Nico being invited to touch or take a defined role;
-- Player losing exclusive control without losing agency;
-- jealousy becoming arousal.
-
-Requirements:
-
-- Marie wants it;
-- Player knows what he is choosing;
-- Nico knows his role;
-- boundaries are stated;
-- no intoxication carrying consent;
-- no assumption that consent once means consent forever;
-- aftermath is written.
-
-Nico is not automatically dominant.
-
-Player is not automatically humiliated.
-
-Marie is not a prize.
+Mathilde or Pauline can enter only through separate explicit choices.
 
 ### Trio route
 
-Nico may join Player and Marie in an adult trio.
+Nico may join Player and one consenting adult woman in an adult trio.
 
-The route can contain:
-
-- multiple gazes;
-- competition;
-- cooperation;
-- watching;
-- explicit instructions;
-- Marie directing attention;
-- Player and Nico negotiating space;
-- no required direct male-male contact.
-
-Any direct contact must be explicitly chosen by the participants involved.
+No automatic direct Nico/Player contact.
 
 ### Male complicity / shared-gaze route
 
-Player and Nico build an unusually honest male channel around desire.
+Player and Nico build an unusually honest channel around desire, images, jealousy, and permission.
 
-This can remain:
-
-- verbal;
-- fantasy-based;
-- observational;
-- a consent-planning space;
-- a rivalry that becomes trust.
-
-It must not reduce Marie to material exchanged between men.
-
-Her voice and consent remain necessary before the fantasy becomes action.
+It must not reduce the women to material exchanged between men.
 
 ### Post-separation Marie / Nico route
 
 If Marie and Player separate, Nico and Marie may explore a relationship.
 
-The route asks:
-
-```text
-Does Nico want Marie when Player is no longer watching?
-Does Marie want Nico when he is no longer useful as proof?
-```
-
-A post-separation route is not automatically simple.
-
-It must address:
-
-- when attraction became active;
-- whether betrayal preceded separation;
-- Player/Nico friendship;
-- Nico's ability to sustain ordinary intimacy;
-- Marie's need to be actively chosen beyond social excitement.
-
 ### Nico withdrawal route
 
-Nico can choose not to enter.
-
-Reasons:
-
-- he is being used as revenge;
-- consent is unclear;
-- Player wants a fantasy but Marie does not;
-- Marie wants to punish Player rather than choose Nico;
-- Nico recognizes his old pattern;
-- the cost to friendship outweighs the desire.
-
-Withdrawal must not make him a moral saint.
-
-It can be painful, angry, or self-protective.
+Nico refuses to remain only an image supplier, alibi, or jealousy instrument.
 
 ### Negative opportunism route
 
-Nico sees a couple crack and uses partial honesty to enter it.
-
-He may:
-
-- give advice that isolates Player;
-- minimize his own intention;
-- tell Marie a true but strategically selected version;
-- accept revenge attention while pretending it is pure desire;
-- repeat a private confidence;
-- pressure the social frame without explicit sexual coercion.
+Nico uses selected truth, social access, image circulation, and alibis to enter the crack.
 
 This route is unstable and consequential.
-
-It must not become the clean default reward.
 
 ### Group / quatuor route
 
 Nico may participate later in a larger adult frame.
 
-He is not the automatic organizer.
-
-Requirements:
-
-- each adult retains voice;
-- Marie's agency remains central where the route concerns her;
-- Player's role is explicit;
-- Nico's participation is chosen;
-- character-specific dynamics survive;
-- existing betrayals are not erased by group consent.
+Each adult retains separate consent and character-specific motive.
 
 ---
 
-## 29. Traces and consequences
+## 31. Conceptual route-state dimensions
+
+No runtime variables are created in this documentation pass.
+
+Future modular design may track:
+
+### `nico_attraction_marie`
+
+Emotional and sexual interest in Marie.
+
+### `nico_attraction_mathilde`
+
+Physical and later relational interest in Mathilde.
+
+### `nico_player_trust`
+
+Real friendship and willingness to protect Player.
+
+### `nico_player_envy`
+
+Envy of Player's couple, home, and access to Marie / Mathilde.
+
+### `nico_voyeur_complicity`
+
+How far Player and Nico have begun sharing descriptions, images, or gaze.
+
+### `nico_photo_consent_level`
+
+Whether current image material is:
+
+- public;
+- chosen for both men;
+- privately forwarded without second-audience consent;
+- explicitly stolen / prohibited.
+
+### `nico_alibi_debt`
+
+Who covered whom and what the cover hides.
+
+### `nico_feeling_used`
+
+Whether Nico believes Player wants him as a friend or only as image supplier / fantasy instrument.
+
+### `nico_frame_clarity`
+
+Whether the current route is:
+
+- ordinary social;
+- voyeur fantasy;
+- consensual photo game;
+- dark image exchange;
+- rivalry;
+- hidden affair;
+- negotiated sharing;
+- post-separation.
+
+Guardrail:
+
+```text
+High attraction never substitutes for consent.
+High voyeur complicity never grants access to a new woman.
+One alibi never authorizes the next lie.
+```
+
+---
+
+## 32. Traces and consequences
 
 Nico routes should produce character-specific traces.
 
@@ -2406,47 +2710,44 @@ Possible traces:
 - receipt or closing time;
 - a compliment repeated in the wrong context;
 - Player and Nico private messages;
-- a deleted blunt question;
+- `je te couvre`;
+- a deleted photo request;
 - Marie's changed reaction to Nico;
+- Mathilde asking who saw a photo;
+- Pauline recognizing a recrop;
 - Nico becoming quiet in a group;
 - Malik noticing an unusual closing mood;
-- a shared playlist link;
-- pool-score photo;
 - one person leaving L'Annexe later than expected;
-- Nico refusing to joke about Marie;
 - an explicit boundary screenshot;
-- consensual adult image with a defined saving rule;
-- the absence of a person who usually joins.
+- a consensual adult image with a defined saving rule;
+- the same image existing in public and private crops;
+- metadata or timing contradicting an alibi;
+- Player knowing an outside detail he should not know;
+- Nico knowing a domestic detail he should not know;
+- one man refusing to delete what the other sent.
 
 Consequences can affect:
 
 - Player / Marie couple state;
 - Player / Nico friendship;
 - Marie / Nico attraction;
+- Mathilde's sense of safety in the apartment;
+- Mathilde / Player trust;
+- Pauline's control and friendship network;
 - Nico's place in the group;
 - La Verrière / L'Annexe social overlap;
-- Pauline's reading of the group;
-- Mathilde's loyalty to Marie;
-- Raphaëlle's clarity scenes;
-- Bastien or Jeff's wider social trust;
+- future invitations;
 - Nico's work composure;
-- Nico's willingness to join future group events;
-- Player's relationship to jealousy, masculinity, and control;
-- Marie's understanding of being desired versus being chosen;
-- Nico's ability to distinguish winning from intimacy.
-
-Do not turn Nico consequences into only:
-
-- `Marie slept with another man`;
-- Player humiliation;
-- a dominance score;
-- a rivalry meter.
+- Player's relationship to jealousy, masculinity, voyeurism, and control;
+- Marie's understanding of being desired versus circulated;
+- Mathilde's distinction between ordinary sensuality and deliberate display;
+- Nico's ability to distinguish shared gaze from possession.
 
 The most important consequence may be that Nico and Player can no longer pretend their friendship was outside the desire.
 
 ---
 
-## 30. J1 usage
+## 33. J1 usage
 
 For current J1 canon:
 
@@ -2456,6 +2757,7 @@ For current J1 canon:
 - no Nico jealousy engine;
 - no group conversation;
 - no social proof involving Nico;
+- no voyeur or photo-exchange seed;
 - no NTR/sharing seed;
 - no L'Annexe scene is required.
 
@@ -2467,30 +2769,34 @@ A later validated source pack or modular-window plan must decide his first activ
 
 Do not use Nico to accelerate conflict before Marie and Player's ordinary couple life is established.
 
+Do not activate his Mathilde curiosity before her temporary stay is narratively established.
+
 ---
 
-## 31. Long arc
+## 34. Long arc
 
 ```text
 1. Nico appears as a complete social person through L'Annexe, work, and group life.
-2. His friendship with Player and existing attraction to Marie are both readable.
-3. Nico gives Player a real opportunity to join Marie rather than replacing him immediately.
-4. Player's response changes whether Nico remains mirror, becomes rival, or opens a fantasy channel.
-5. Marie actively accepts, refuses, redirects, or escalates Nico's attention.
-6. Nico names Player's jealousy or arousal, but must admit his own intention too.
-7. A boundary question separates social flirting from actual route state.
-8. Nico chooses friend, rival, hidden affair partner, invited third, or withdrawal.
-9. Adult content follows the chosen frame: cheating is not negotiated sharing.
-10. A trace or aftermath makes friendship, couple, and group consequences unavoidable.
-11. Nico must decide whether he wanted Marie, the rivalry, the fantasy, or proof that he could be chosen.
-12. His mature route requires responsibility after direct desire, not merely more direct desire.
+2. His friendship with Player and existing attraction to Marie are readable.
+3. Mathilde's temporary stay makes Nico aware of Player's unusual domestic access.
+4. Nico gives Player a real opportunity to join Marie rather than replacing him immediately.
+5. Nico jokes about Marie and Mathilde, then asks what Player actually sees.
+6. Player closes, boasts, confesses, or shares a first harmless detail.
+7. The male channel becomes a voyeuristic question: description, photo, reciprocal view, or boundary.
+8. Marie, Mathilde, or Pauline either knowingly enters the gaze or is unknowingly circulated.
+9. Nico offers an outside image or an alibi, becoming materially involved.
+10. Nico must admit his own attraction and envy rather than only diagnosing Player.
+11. The route splits into repair, rivalry, consensual shared gaze, dark image exchange, hidden affair, negotiated sharing, trio, or withdrawal.
+12. A trace or discovery makes friendship, couple, domestic safety, and group consequences unavoidable.
+13. Nico must decide whether he wanted the women, the images, the conspiracy, Player's trust, or proof that he could enter the private world.
+14. His mature route requires responsibility for circulation and aftermath, not merely more direct desire.
 ```
 
 The arc must not be tied to one mandatory day order.
 
 ---
 
-## 32. Anti-patterns
+## 35. Anti-patterns
 
 Avoid:
 
@@ -2499,9 +2805,9 @@ Avoid:
 - Nico as predator;
 - Nico as `alpha` fantasy shorthand;
 - Nico as racialized or fetishized `bull` stereotype;
-- Nico existing only to have sex with Marie;
+- Nico existing only to have sex with Marie or Mathilde;
 - Nico carrying all jealousy in the story;
-- Marie becoming an object discussed between men;
+- Marie, Mathilde, or Pauline becoming content traded between men;
 - Player becoming a passive camera;
 - every Nico line diagnosing Player;
 - every Nico line mentioning a woman's body;
@@ -2515,7 +2821,9 @@ Avoid:
 - L'Annexe becoming a magic route hub;
 - alcohol creating consent;
 - Player's jealousy treated as sharing permission;
+- Mathilde's domestic clothing treated as photo consent;
 - Marie's flirting treated as sexual consent;
+- Pauline's chosen image treated as forwarding consent;
 - hidden affair relabeled as consensual NTR;
 - one negotiated scene granting permanent consent;
 - surprise trio or group setup;
@@ -2526,13 +2834,16 @@ Avoid:
 - Nico giving true advice and therefore being morally clean;
 - Nico stepping back and therefore becoming a saint;
 - Nico entering a crack and pretending only the couple has responsibility;
-- fixed old J4/J5/J7 runtime treated as current route order;
-- social photos treated as ownership proof;
-- no aftermath after explicit adult content.
+- secret intimate photos as collectible rewards;
+- unlimited photo stash;
+- alibi treated as consent;
+- `it was only a photo` erasing circulation harm;
+- no aftermath after explicit adult content or image betrayal;
+- fixed old runtime treated as current route order.
 
 ---
 
-## 33. Deprecation map
+## 36. Deprecation map
 
 ### Current canon
 
@@ -2544,13 +2855,18 @@ Avoid:
 - real ordinary family and social anchors;
 - publicly skilled, privately quieter;
 - genuinely attracted to Marie before active route state;
+- genuinely sexually attracted to Mathilde;
+- jealousy of Player's temporary domestic access to both Marie and Mathilde;
 - credible friendship with Player;
-- envy of Player's ordinary intimacy;
-- wound around being chosen only for the energy he creates;
+- desire for male voyeur complicity and reciprocal gaze;
+- ability to ask for photos, offer photos, and offer alibis;
+- public / chosen / dark image levels clearly separated;
+- Pauline may enter the image game only through selected consent or a consequential breach;
+- wound around being chosen only for the energy or effect he creates;
 - direct desire paired with incomplete intention;
 - ability to give sincere advice that also benefits him;
 - respect for explicit refusal;
-- ability to enter a hidden affair route with responsibility and cost;
+- ability to enter hidden affair or image-breach routes with responsibility and cost;
 - consensual sharing, NTR/cuckold, trio, and group routes only through explicit informed frames;
 - modular scene pools rather than fixed jealousy schedule;
 - no active J1 thread;
@@ -2560,7 +2876,7 @@ Avoid:
 
 - social mirror;
 - real attraction to Marie;
-- charming / playful / Don Juan color, reframed as social fluency rather than conquest count;
+- charming / playful / Don Juan color;
 - direct male voice;
 - ability to name Player's jealousy and bodily reaction;
 - possible sincere friendship with Player;
@@ -2568,8 +2884,19 @@ Avoid:
 - possible temptation, affair, sharing, NTR/cuckold, trio, or group function;
 - Marie may consciously enjoy or use his attention;
 - Nico may offer advice that also positions him;
-- he can lie, minimize, or become opportunistic on negative routes;
-- he must not erase Marie's agency.
+- he can lie, minimize, cover, or become opportunistic on negative routes;
+- he must not erase women's agency.
+
+### New V0.75 correction
+
+- real attraction to Mathilde;
+- explicit envy of Player living with Marie and Mathilde during the temporary stay;
+- Nico's voyeuristic side becomes a primary route engine;
+- reciprocal photo exchange between Nico and Player;
+- Nico may request domestic photos of Marie or Mathilde;
+- Nico may offer Player social or sexy photos of Marie, Mathilde, or Pauline;
+- Nico may offer to cover Player or serve as an alibi;
+- consent and circulation state determine whether the game is consensual, cheating, or a dark image-breach route.
 
 ### Deprecated or suspended
 
@@ -2577,18 +2904,18 @@ Avoid:
 - Nico as automatic villain or manipulator;
 - Nico as an omniscient Don Juan;
 - Nico `stealing` Marie;
-- Marie existing only as revenge object;
-- Nico automatically mounting Marie against Player;
+- Marie or Mathilde existing only as revenge objects;
+- Nico automatically mounting women against Player;
 - all advice being a secret move;
 - Nico as pure jealousy button;
 - Nico as pure NTR delivery mechanism;
 - automatic consensual cuckold framing;
 - immediate group or sharing escalation;
-- fixed old J4–J10 sequence;
-- predetermined `Marie revenge` route;
+- fixed old day sequence;
 - crude commentary without ordinary life;
 - glamorous owner / nightclub fantasy;
-- absence of rejection, limits, private history, or consequence;
+- secret-camera collector;
+- non-consensual explicit-image exchange treated as clean reward;
 - direct male-male contact assumed rather than chosen.
 
 Old runtime, voice cards, addenda, arcs, and route matrices may be inspected only as support or history.
@@ -2597,20 +2924,20 @@ They do not override this file.
 
 ---
 
-## 34. Final writing rule
+## 37. Final writing rule
 
 ```text
-Nico is not dangerous because he can take Marie from Player.
+Nico is not dangerous because he can take Marie or Mathilde from Player.
 
 He is dangerous because he can see the place Player left empty,
-invite Player to fill it,
-want the place himself,
-and tell the truth about all three things
-without immediately admitting what he intends to do.
+envy the private view Player already has,
+invite Player to share that view,
+offer another view in return,
+and turn friendship into an alibi before either man admits what the game is doing.
 
 The route remains Nico only if desire is direct,
-Marie keeps agency,
+Marie, Mathilde, and Pauline keep agency,
 Player remains responsible,
 Nico can be wrong,
-and consequence begins where the joke stops.
+and consequence begins when the gaze starts circulating.
 ```
