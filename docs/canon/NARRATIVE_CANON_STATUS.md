@@ -1,6 +1,6 @@
 # Narrative Canon Status — Current
 
-> Consolidated narrative status after V0.79 Act I opening-source validation.  
+> Consolidated narrative status after the V0.79 temporal and communication correction.  
 > Defines what is current, what is historical, and what must exist before post-J1 runtime work.  
 > No runtime, JSON, tests, assets, or playable content are changed here.
 
@@ -9,21 +9,12 @@
 ```text
 Current canon overrides older narrative interpretation.
 V0.78 defines the modular architecture.
-V0.79 defines the first concrete post-J1 narrative slice.
+V0.79 defines the first concrete post-J1 slice.
+The time/communication canon defines when scenes happen and why they use a phone.
 Existing runtime is not automatic narrative canon.
 ```
 
-Any older content touching character identity, route order, scenes, proofs, photos, roles, consent, relationship progression, or adult escalation must be reviewed against:
-
-- current full character canon;
-- `MODULAR_NARRATIVE_ARC_BLUEPRINT.md`;
-- `MODULAR_SCENE_AUTHORING_CONTRACT.md`;
-- `ACT_I_OPENING_WINDOWS_SOURCE_PACK.md`;
-- `ACT_I_OPENING_SCENE_CARDS.md`;
-- global NSFW canon;
-- choice-design canon;
-- supporting-character policy;
-- relevant deprecation maps.
+Any older content touching character identity, route order, scenes, proofs, photos, roles, consent, time, co-presence, relationship progression, or adult escalation must be reviewed against the current canon stack.
 
 ---
 
@@ -36,8 +27,10 @@ docs/canon/DOCUMENTATION_READING_ORDER.md
 docs/canon/CHOICE_DESIGN_CANON.md
 docs/canon/MODULAR_NARRATIVE_ARC_BLUEPRINT.md
 docs/canon/MODULAR_SCENE_AUTHORING_CONTRACT.md
+docs/canon/DIEGETIC_TIME_AND_COMMUNICATION_CANON.md
 docs/canon/ACT_I_OPENING_WINDOWS_SOURCE_PACK.md
 docs/canon/ACT_I_OPENING_SCENE_CARDS.md
+docs/canon/ACT_I_OPENING_TEMPORAL_DELIVERY_MAP.md
 docs/canon/characters/CHARACTER_CANON_INDEX.md
 docs/canon/characters/*_CANON_FULL.md
 docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
@@ -68,11 +61,22 @@ docs/V0_69_J1_Canon_Text_Review_And_Final_Line_Source.md
 
 Status: **canon and runtime-aligned through existing validated work**.
 
-Current function:
+Function:
 
 ```text
 attention before allegiance
 ```
+
+Current calendar anchor:
+
+```text
+Tuesday evening
+```
+
+This is consistent with:
+
+- Marie's Thursday event;
+- Mathilde intending to inspect the installation `tomorrow`.
 
 J1 establishes:
 
@@ -81,26 +85,28 @@ J1 establishes:
 - Sandra returning through one soft trace;
 - Mathilde indirect only;
 - Nico, Pauline, and Raphaëlle absent from active J1;
-- no route lock;
-- no explicit content;
-- no hard secret;
-- no changed relationship frame;
+- no route lock, explicit content, hard secret, or changed relationship frame;
 - final return to Marie / shared life.
 
 ### First post-J1 opening band
 
-Status: **canonically written and carded in V0.79; not yet integrated into runtime**.
+Status: **canonically written, carded, and temporally mapped in V0.79; not yet integrated into runtime**.
 
 Current sources:
 
 ```text
 docs/canon/ACT_I_OPENING_WINDOWS_SOURCE_PACK.md
 docs/canon/ACT_I_OPENING_SCENE_CARDS.md
+docs/canon/ACT_I_OPENING_TEMPORAL_DELIVERY_MAP.md
 ```
 
-The opening band covers roughly three to five in-game days without forcing a fixed `J2` label.
+Concrete calendar:
 
-It provides exact lines, choices, traces, conditions, consequences, cooldowns, mutation rules, and fallbacks for the first Act I slice.
+```text
+Wednesday = Mathilde emergency and arrival
+Thursday = work, event topology, and couple return
+Friday = photo relay, Nico follow-up, and household residue
+```
 
 ### Remaining Act I and later acts
 
@@ -110,9 +116,7 @@ Status: **governed by V0.78 architecture, not yet concretely canonized scene by 
 
 Status: **technical / historical / narratively suspended**.
 
-They may be inspected during V0.80.
-
-They do not determine current story order, route state, visual inventory, or character entry.
+They may be inspected during V0.80 but do not determine current story order, time flow, route state, visual inventory, or character entry.
 
 ---
 
@@ -134,43 +138,101 @@ Meaning:
 - Marie still expects the shared life to be joined;
 - no external route is active.
 
-Soft J1 signals may color early variants:
-
-- present;
-- joking but present;
-- flat / delayed;
-- Sandra read safely;
-- Sandra read precisely;
-- Sandra read playfully;
-- Sandra remains cautious.
-
-These signals do not skip route stages.
+Soft J1 signals may color early variants but cannot skip route stages.
 
 ---
 
-## 5. V0.79 opening topology
-
-The opening band is organized as:
+## 5. V0.79 opening order and time
 
 ```text
+Tuesday evening
 O0 — J1 carry-over
+
+Wednesday midday
 O1 — Marie / make room
-O2 — Mathilde arrival
-O3 — Raphaëlle ordinary work + Sandra continuity echo
+
+Wednesday late afternoon and evening
+O2 — Mathilde arrival + offline settling
+
+Thursday morning
+O3 — Raphaëlle ordinary work
+
+Thursday early afternoon
+Sandra continuity echo when eligible
+
+Thursday late afternoon
 O4 — Marie offers movement
-O5 — one topology foreground
+
+Thursday evening
+O5 — one selected topology foreground
+
+Thursday late evening / night
 O6 — mandatory return to Marie
+
+Friday morning
 O7 — Pauline public group-photo relay
-O8 — Nico saved-seat follow-up + household breather
+
+Friday afternoon
+O8 — Nico saved-seat follow-up
+
+Friday late afternoon
+household breather
 ```
 
-O7 and O8 may swap when message timing makes that order more natural.
+O7 and O8 may invert only when message timing remains credible and O6 has already been paid.
 
-Sandra's echo is conditional and cannot displace a foreground scene.
+---
+
+## 6. Communication realism status
+
+The smartphone is the primary interface, not the only place life occurs.
+
+Core rule:
+
+```text
+If two characters are in the same room
+and can speak normally,
+they do not conduct a full Messenger conversation.
+```
+
+Current communication modes:
+
+- `REMOTE_ASYNC`;
+- `TRACE_DELIVERY`;
+- `SEPARATE_ROOMS_PING`;
+- `SAME_VENUE_LOGISTICS`;
+- `WORK_CHAT`;
+- `OFFLINE_BEAT`;
+- `AFTERGLOW_REMOTE`.
+
+### Co-present behavior
+
+- same room: speak offline;
+- same home, different rooms: short practical ping only;
+- same busy venue: short logistics or discreet aside only;
+- same work table: finish discussion offline;
+- face-to-face emotional scene: represent as offline beat and later consequence, not artificial chat.
+
+### Time presentation
+
+A meaningful jump must be shown through at least one of:
+
+- weekday / time-band separator;
+- timestamp;
+- notification age;
+- work, meal, transport, lighting, or sleep cue;
+- explicit line;
+- social-post timing.
+
+V0.80 must plan visible temporal cues for Wednesday–Friday.
+
+---
+
+## 7. V0.79 opening topology
 
 ### O1 — Make room
 
-Mathilde's water-damage emergency activates the household-change spine.
+Mathilde's water-damage emergency activates household change.
 
 Player chooses how he participates:
 
@@ -180,45 +242,72 @@ Player chooses how he participates:
 
 He does not choose whether Marie abandons her cousin during a practical emergency.
 
+Delivery:
+
+```text
+Wednesday midday
+Marie and Player in different locations
+REMOTE_ASYNC
+```
+
 ### O2 — Mathilde arrives
 
 Mathilde enters through:
 
-- an overfilled suitcase;
+- suitcase;
 - garment bag;
 - legal tote bag;
 - too many shoes;
 - ordinary family familiarity;
-- a practical arrival image taken openly by Marie.
+- practical arrival image taken openly by Marie.
 
-The deprecated canapé selfie is not used.
-
-Mathilde reaches:
+Delivery:
 
 ```text
-R1 Ordinary Access
+Wednesday early evening
+Marie and Mathilde at home
+Player still commuting / completing a practical errand
+TRACE_DELIVERY + REMOTE_ASYNC
 ```
 
-No deliberate sexual intention exists.
+When Player returns, the chat stops and the settling continues offline.
+
+Mathilde reaches `R1 Ordinary Access` with no deliberate sexual intention.
 
 ### O3 — Ordinary work and restrained continuity
 
 Raphaëlle enters through a normal UX/accessibility work correction as Player's peer.
 
-Sandra may send a short work-afterglow echo without a new photograph or route escalation.
+Delivery:
+
+```text
+Thursday morning
+separate workstations / rooms or hybrid review
+WORK_CHAT
+```
+
+If they sit together, the exchange continues offline.
+
+Sandra may send a short Thursday early-afternoon echo after a poste du matin.
 
 ### O4 — Marie offers movement
 
-The `petit événement jeudi` referenced in J1 becomes a local illustration vernissage at La Verrière.
+The `petit événement jeudi` becomes a local illustration vernissage at La Verrière.
 
-Marie distinguishes:
+Delivery:
 
-- practical help;
-- wanting Player there.
+```text
+Thursday around 16h
+Marie at setup
+Player elsewhere
+REMOTE_ASYNC
+```
+
+Marie distinguishes practical help from wanting Player there.
 
 ### O5 — First topology choice
 
-Player chooses one action:
+Player chooses:
 
 ```text
 1. join Marie early
@@ -226,57 +315,58 @@ Player chooses one action:
 3. finish a real work obligation and promise to join later
 ```
 
-This opens exactly one foreground scene:
+This opens exactly one foreground scene.
 
-```text
-O5A — Marie / La Verrière participation
-OR
-O5B — Mathilde / practical household access
-OR
-O5C — Raphaëlle / work and promise pressure
-```
+#### O5A — Join Marie
 
-The choice does not display a character-route menu.
+- same venue, physically separated by noise, guests, and tasks;
+- `SAME_VENUE_LOGISTICS` only;
+- long emotional discussion moves to O6 or an offline beat.
+
+#### O5B — Stay home
+
+- Player and Mathilde are in separate rooms;
+- one short `SEPARATE_ROOMS_PING` about the charger;
+- messaging stops when Player enters the spare room;
+- practical help continues offline.
+
+#### O5C — Finish work
+
+- Player and Raphaëlle are at separate workstations / rooms;
+- `WORK_CHAT` is justified by shared-file review;
+- if they meet at one table, the rest happens offline;
+- Raphaëlle does not keep Player from Marie.
 
 ### O6 — Mandatory return to Marie
 
 Every topology returns to Marie before a new external foreground opportunity.
 
-The return pays:
+Delivery depends on physical context:
 
-- participation quality;
-- household presence;
-- promise kept, honestly amended, or missed.
+- `AFTERGLOW_REMOTE` when Marie and Player have separated;
+- `OFFLINE_BEAT` when they return together.
 
-The scene has no fake undo choice.
+No artificial long chat is shown while they are side by side.
 
 ### O7 — Pauline public relay
 
-Pauline enters through an authorized public group-photo set from the La Verrière event.
+Friday morning.
 
-Bastien remains visible in the social context.
+Pauline sends an authorized group-photo set through `TRACE_DELIVERY` and `REMOTE_ASYNC`.
 
-No private crop, alternate version, reciprocal proof, or secret compartment exists yet.
+Bastien remains visible. No private crop or secret compartment exists.
 
 ### O8 — Nico saved-seat follow-up
 
-Nico enters as a genuine friend who saved a table or chair after the event.
+Friday afternoon by default, respecting his late hospitality rhythm.
 
-He may learn that Mathilde is staying through a credible source.
-
-He does not yet:
-
-- sexualize the stay;
-- diagnose Player's jealousy;
-- request a photograph;
-- offer an alibi;
-- open the voyeur pact.
+Nico enters as a genuine friend. He may know Mathilde is staying but does not yet sexualize the stay or request images.
 
 ---
 
-## 6. Exact V0.79 choice nodes
+## 8. Exact V0.79 choice nodes
 
-All foreground nodes use three choices.
+All foreground nodes use three choices:
 
 ```text
 M0  — how Player makes room
@@ -296,38 +386,35 @@ The return-to-Marie consequence is non-interactive because the meaningful topolo
 
 ---
 
-## 7. Opening visual and trace status
+## 9. Opening visual and trace status
 
-### Current V0.79 visuals
+### Current visuals
 
 #### Mathilde arrival room
 
 - ordinary private household image;
 - taken openly by Marie;
-- practical clutter and temporary occupation;
-- no body crop or erotic pose;
-- no forwarding permission.
+- sent while Player is still away;
+- no body crop, erotic pose, or forwarding permission.
 
 #### Raphaëlle blue folder
 
 - optional work visual;
-- prototype / folder / notebook detail;
-- no body or personal creative access.
+- no personal or body focus.
 
 #### Marie La Verrière setup
 
 - authorized event image;
-- shows Marie active inside her life;
-- required in the joined branch, or may appear as a social echo in another topology.
+- shows Marie active inside her life.
 
 #### Pauline public group-photo set
 
 - authorized social/public context;
 - created with Pauline's remote shutter;
-- may include Marie, Pauline, Bastien, Nico, Élodie, and Player according to attendance;
+- delivered Friday morning;
 - no adult function at creation.
 
-### Explicitly absent in V0.79
+### Explicitly absent
 
 - old Mathilde canapé selfie;
 - deliberate Mathilde seduction image;
@@ -340,7 +427,7 @@ The return-to-Marie consequence is non-interactive because the meaningful topolo
 
 ---
 
-## 8. V0.79 route and intensity ceiling
+## 10. V0.79 route and intensity ceiling
 
 The opening remains inside:
 
@@ -366,8 +453,7 @@ Not allowed:
 - deliberate adult image;
 - reciprocal proof;
 - secret compartment;
-- voyeuristic request;
-- photo/alibi pact;
+- voyeuristic request or photo/alibi pact;
 - hidden affair;
 - open-couple negotiation;
 - NTR/cuckold discussion;
@@ -377,7 +463,7 @@ Not allowed:
 
 ---
 
-## 9. Canonical state at end of opening band
+## 11. Canonical state at pack end
 
 ```text
 Mathilde stay = active
@@ -393,24 +479,18 @@ hard secrets = none
 relationship frame = ASSUMED_EXCLUSIVE
 ```
 
-The couple remains:
-
-```text
-HABITUAL_WARMTH
-```
+The couple remains `HABITUAL_WARMTH`.
 
 Possible tendencies only:
 
-- `ACTIVE_RECONNECTION` candidate after repeated active presence;
-- `PARALLEL_DRIFT` candidate after repeated passive or missed participation.
+- `ACTIVE_RECONNECTION` candidate;
+- `PARALLEL_DRIFT` candidate.
 
 One opening event cannot finalize the transition.
 
 ---
 
-## 10. Fixed dramatic spine after V0.79
-
-Current functional spine remains:
+## 12. Fixed dramatic spine after V0.79
 
 ```text
 S0 Attention
@@ -431,76 +511,11 @@ V0.79 concretely pays:
 - the first S2 movement offer;
 - the opening part of S3 outside lives becoming visible.
 
-It does not yet pay S4–S9.
+S4–S9 remain architectural only.
 
 ---
 
-## 11. Current act structure
-
-### Act 0 — `Les choses qu'on remarque`
-
-Current J1.
-
-### Act I — `La place qu'on laisse`
-
-V0.79 covers the opening band only.
-
-Remaining Act I work may later include:
-
-- first morning-kitchen Mathilde scene;
-- another ordinary Sandra or work trace;
-- a second ordinary access cycle;
-- one first boundary respected;
-- additional Marie-positive life content;
-- route cooling or missed-opportunity mutation.
-
-None of this is yet exact-line canon unless contained in V0.79.
-
-### Acts II–V
-
-Remain governed by V0.78 architecture and full character canon.
-
----
-
-## 12. Couple-state model
-
-The couple is not one score.
-
-Current conceptual dimensions:
-
-```text
-presence
-desire
-trust
-truth
-relationship frame
-```
-
-Canonical modes:
-
-- `HABITUAL_WARMTH`;
-- `ACTIVE_RECONNECTION`;
-- `PARALLEL_DRIFT`;
-- `CONCEALED_FRACTURE`;
-- `OPEN_CRISIS`;
-- `NEGOTIATED_REDESIGN`;
-- `SEPARATED_TRANSITION`;
-- `RECONSTRUCTED_COUPLE`.
-
-V0.79 writes tendencies, not an automatic mode transition.
-
----
-
-## 13. Universal route lifecycle
-
-```text
-R0 Background
-R1 Ordinary Access
-R2 Charged Access
-R3 Acknowledged Intent
-R4 Consequential Frame
-R5 Integration / Aftermath
-```
+## 13. Current route stages
 
 At V0.79 pack end:
 
@@ -511,77 +526,66 @@ At V0.79 pack end:
 - Sandra: soft trace seed / cooled R1;
 - Marie / Player: couple baseline with remembered presence history.
 
-No R2 scene is canonized by this source pack.
+No R2 scene is canonized.
 
 ---
 
-## 14. Principal-character current direction
+## 14. Principal-character direction
 
 ### Marie
 
-- central in O1, O4, O5A, and O6;
+- central in emergency, event, and return;
 - active whether Player joins or not;
-- event and family life remain desirable;
 - every branch returns to her.
 
 ### Sandra
 
 - short work echo only;
-- no new photo;
-- no Thursday promise created by V0.79;
-- may cool if J1 ended distantly.
+- no new photo or fixed rendezvous;
+- timing respects her poste du matin.
 
 ### Player
 
-- first tested through practical participation, topology, promise, and return;
-- not yet tested through seduction skill;
-- cannot undo a missed promise through the return scene.
+- tested through practical participation, topology, promise, and return;
+- cannot undo a missed promise through the consequence scene.
 
 ### Mathilde
 
-- temporary stay becomes active;
+- temporary stay active;
 - R1 through family and practical household access;
-- ordinary fitted clothing remains non-consensual background, not route activation;
-- no deliberate gaze or image play yet.
+- co-present interaction moves offline;
+- no deliberate gaze or image play.
 
 ### Pauline
 
-- R1 through Marie and an authorized public image;
+- R1 through Marie and an authorized Friday-morning public image;
 - Bastien visible;
-- no private compartment or second audience yet.
+- no private audience.
 
 ### Nico
 
 - R1 through saved-seat friendship and event logistics;
-- may know about Mathilde's stay;
-- domestic envy and voyeurism remain future engines, not current action.
+- Friday-afternoon default follow-up respects his work rhythm;
+- voyeurism and domestic envy remain future engines.
 
 ### Raphaëlle
 
-- R1 through peer work;
-- optional garment-bag detail may show ordinary creative life;
-- no personal version, photo, or refuge function yet.
+- R1 through Thursday-morning peer work;
+- work chat requires separate positions;
+- no personal version, photo, or refuge function.
 
 ---
 
 ## 15. Supporting-character status
-
-Use:
-
-```text
-docs/canon/SUPPORTING_CHARACTER_CANON_POLICY.md
-```
 
 V0.79 uses:
 
 - Bastien as a visible participant in Pauline's legitimate social context;
 - Élodie as La Verrière work-color support and possible image origin.
 
-Neither becomes a route.
+Neither becomes a route or consent proxy.
 
 Jeff is not required in the opening band.
-
-No supporting character acts as a consent proxy.
 
 ---
 
@@ -597,27 +601,23 @@ V0.79 supersedes its requirements for:
 - Player remaining physically away until a later day;
 - four mandatory visuals;
 - Mathilde's canapé selfie;
-- Pauline and Nico exclusion by day number.
+- Pauline and Nico exclusion by day number;
+- no readable time progression;
+- artificial message exchanges between co-present characters.
 
 ### `docs/story_state/J2_SUMMARY.md`
 
 Status: **historical summary of old runtime content**.
 
-It does not define current narrative continuity after V0.79.
-
 ### Existing J2 conversation JSON
 
 Status: **technical implementation to inspect in V0.80**.
 
-It may contain reusable thread or UI structure.
-
-Its story order and visual choices are not current by inheritance.
+Its story order, timestamps, co-presence assumptions, and visual choices are not current by inheritance.
 
 ### Older J3–J10 material
 
 Status: **historical / suspended**.
-
-Useful isolated ideas still require current-canon reframing.
 
 ---
 
@@ -640,36 +640,11 @@ V0.79 contains no adult frame or explicit scene.
 
 ---
 
-## 18. Choice status
-
-Default:
-
-```text
-3 choices per node
-```
-
-V0.79 demonstrates:
-
-- topology rather than route selection;
-- one primary decision axis per node;
-- documented state writes;
-- non-Player agency;
-- no false choice in a consequence scene;
-- no four-choice exception.
-
-Use:
-
-```text
-docs/canon/CHOICE_DESIGN_CANON.md
-```
-
----
-
-## 19. Runtime policy
+## 18. Runtime policy
 
 No post-J1 runtime change is authorized by V0.79 alone.
 
-The next pass must be:
+The next pass is:
 
 ```text
 V0.80 — First Modular Runtime Integration Plan
@@ -678,15 +653,17 @@ V0.80 — First Modular Runtime Integration Plan
 V0.80 must:
 
 1. inspect current J2+ conversation data and thread indexes;
-2. determine how O0–O8 map into existing UI and time flow;
-3. map only conceptual state needed by this vertical slice;
-4. identify old J2 nodes and visuals to replace, bypass, or deprecate;
-5. preserve one visible thread per character;
-6. preserve the one-foreground / zero-to-two-echo budget;
-7. preserve the mandatory return to Marie;
-8. preserve exact image origin and audience;
-9. avoid a large refactor;
-10. define tests, validation, rollback, and PR scope.
+2. map O0–O8 into the existing UI;
+3. map Wednesday–Friday day/time separators and representative timestamps;
+4. map communication modes and offline-beat handling;
+5. map only conceptual state needed by this vertical slice;
+6. identify old J2 nodes and visuals to replace, bypass, or deprecate;
+7. preserve one visible thread per character;
+8. preserve the one-foreground / zero-to-two-echo budget;
+9. preserve the mandatory return to Marie;
+10. preserve exact image origin and audience;
+11. avoid a large refactor;
+12. define tests, validation, rollback, and PR scope.
 
 ```text
 Documentation validated first.
@@ -696,7 +673,7 @@ Runtime only afterward.
 
 ---
 
-## 20. Current roadmap
+## 19. Current roadmap
 
 ```text
 V0.79 — Act I Opening Windows Source Pack
@@ -706,16 +683,16 @@ V0.81 — First Modular Runtime Vertical Slice
 
 V0.80 is planning only.
 
-V0.81 should remain a short implementation PR and cover only the approved opening slice or a smaller validated subset.
+V0.81 should remain a short implementation PR.
 
 ---
 
-## 21. Final rule
+## 20. Final rule
 
 ```text
 J1 establishes attention.
-V0.79 makes room, creates movement, and records presence.
+V0.79 makes room, creates movement, and records presence across a felt Tuesday–Friday week.
 
-No route is chosen yet.
-The opening only establishes who Player is when ordinary life asks him to act.
+The phone is used when distance, logistics, privacy, traces, or aftermath justify it.
+When characters are together, they speak.
 ```
