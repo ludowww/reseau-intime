@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://conversation_view"]
 
-[ext_resource type="Script" path="res://scripts/ui/ConversationView.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/ui/ConversationViewV081.gd" id="1"]
 
 [node name="ConversationView" type="VBoxContainer"]
 script = ExtResource("1")
