@@ -13,6 +13,13 @@ Le jeu se déroule principalement via :
 - conversations privées ou de groupe ;
 - traces numériques et conséquences dans la vie ordinaire.
 
+Le smartphone est l’interface principale, pas une justification pour faire écrire deux personnes qui peuvent simplement se parler.
+
+```text
+Quand les personnages sont ensemble, ils parlent.
+Quand la distance, la logistique, la confidentialité, une trace ou l'après-coup le justifie, le téléphone enregistre l'échange.
+```
+
 ## Promesse du jeu
 
 ```text
@@ -35,6 +42,8 @@ Titre officiel : Réseau Intime
 Moteur : Godot 4.6.x
 Interface principale : smartphone
 Architecture : tronc dramatique fixe + fenêtres narratives + scènes modulaires
+Temps : jours et moments de journée perceptibles
+Communication : pas de longues conversations Messenger entre personnages co-présents
 Choix : 3 maximum par défaut
 Méthode : documentation validée avant runtime
 ```
@@ -82,11 +91,47 @@ Une fenêtre contient normalement :
 
 Les choix ne présentent pas les personnages comme un menu de routes. Ils définissent ce que Player fait, où il se trouve, qui est réellement disponible et quelle conséquence devient due.
 
+## Temps diégétique et communication
+
+Le canon général est :
+
+```text
+docs/canon/DIEGETIC_TIME_AND_COMMUNICATION_CANON.md
+```
+
+Chaque fenêtre doit rendre lisibles :
+
+- le jour ou repère relatif ;
+- le moment de la journée ;
+- le temps écoulé ;
+- les rythmes de travail, trajet, repas et sommeil ;
+- la raison pour laquelle le téléphone est utilisé.
+
+Modes principaux :
+
+```text
+REMOTE_ASYNC
+TRACE_DELIVERY
+SEPARATE_ROOMS_PING
+SAME_VENUE_LOGISTICS
+WORK_CHAT
+OFFLINE_BEAT
+AFTERGLOW_REMOTE
+```
+
+Si les personnages se rejoignent physiquement, le chat s’arrête. La suite se déroule hors ligne et produit ensuite une trace, un message ou une conséquence visible.
+
 ## État narratif actuel
 
 ### J1
 
 `J1 — Les choses qu'on remarque` est le contenu canon actuel et runtime-aligné.
+
+Repère :
+
+```text
+Mardi soir
+```
 
 Il établit :
 
@@ -105,6 +150,15 @@ V0.79 fournit le premier source pack modulaire concret :
 ```text
 docs/canon/ACT_I_OPENING_WINDOWS_SOURCE_PACK.md
 docs/canon/ACT_I_OPENING_SCENE_CARDS.md
+docs/canon/ACT_I_OPENING_TEMPORAL_DELIVERY_MAP.md
+```
+
+Chronologie :
+
+```text
+Mercredi = urgence et arrivée Mathilde
+Jeudi = travail, vernissage, topologie et retour Marie
+Vendredi = photos publiques, suivi Nico et respiration foyer
 ```
 
 Il définit :
@@ -116,6 +170,7 @@ Il définit :
 - le premier choix topologique autour d’un événement de Marie ;
 - un retour obligatoire vers le couple ;
 - l’entrée sociale ordinaire de Pauline et Nico ;
+- des modes de communication crédibles selon les positions physiques ;
 - aucune route adulte ou trahison active.
 
 Ce contenu est documentaire et n’est pas encore intégré au runtime.
@@ -126,7 +181,7 @@ L’ancien J2 intégré et les anciennes fondations J3–J10 restent disponibles
 
 Ils ne sont plus une source narrative automatique.
 
-Le selfie canapé Mathilde, l’ordre fixe J2 et les anciens calendriers de routes sont suspendus lorsqu’ils contredisent le canon actuel.
+Le selfie canapé Mathilde, l’ordre fixe J2, les calendriers linéaires et les échanges artificiels entre personnes co-présentes sont suspendus lorsqu’ils contredisent le canon actuel.
 
 ## Canon à lire
 
@@ -143,8 +198,10 @@ docs/canon/NARRATIVE_CANON_STATUS.md
 docs/canon/CHOICE_DESIGN_CANON.md
 docs/canon/MODULAR_NARRATIVE_ARC_BLUEPRINT.md
 docs/canon/MODULAR_SCENE_AUTHORING_CONTRACT.md
+docs/canon/DIEGETIC_TIME_AND_COMMUNICATION_CANON.md
 docs/canon/ACT_I_OPENING_WINDOWS_SOURCE_PACK.md
 docs/canon/ACT_I_OPENING_SCENE_CARDS.md
+docs/canon/ACT_I_OPENING_TEMPORAL_DELIVERY_MAP.md
 docs/canon/characters/CHARACTER_CANON_INDEX.md
 docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
 ```
@@ -152,6 +209,8 @@ docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
 ## Piliers de conception
 
 - Smartphone immersif et conversations multiples.
+- Temps diégétique lisible : matin, journée, soirée, nuit et jours qui passent.
+- Communication cohérente avec la présence physique.
 - Marie et la vie commune restent le centre vivant.
 - Les scènes adultes peuvent devenir directes et pornographiques lorsque le cadre est mérité.
 - Chaque personnage conserve sa voix et son moteur propre.
@@ -178,10 +237,11 @@ Une négociation tardive ne réécrit pas une trahison antérieure.
 1. canon et architecture
 2. source pack concret
 3. cartes de scènes
-4. plan d'intégration runtime
-5. petite tranche verticale
-6. validation
-7. extension pool par pool
+4. carte temporelle et mode de communication
+5. plan d'intégration runtime
+6. petite tranche verticale
+7. validation
+8. extension pool par pool
 ```
 
 Pas de gros refactoring ni de modification runtime avant validation documentaire.
@@ -192,4 +252,4 @@ Pas de gros refactoring ni de modification runtime avant validation documentaire
 V0.80 — First Modular Runtime Integration Plan
 ```
 
-V0.80 doit inspecter le runtime existant et proposer une intégration minimale de la tranche V0.79, sans encore modifier Godot ou les JSON narratifs.
+V0.80 doit inspecter le runtime existant et proposer une intégration minimale de la tranche V0.79, avec séparateurs temporels, timestamps cohérents, communication réaliste et gestion des `OFFLINE_BEAT`, sans encore modifier Godot ou les JSON narratifs.
