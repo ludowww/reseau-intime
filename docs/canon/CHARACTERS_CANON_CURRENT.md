@@ -20,8 +20,8 @@ Write scenes from full character canon files.
 | Player | `docs/canon/characters/PLAYER_CANON_FULL.md` | Full concrete canon |
 | Mathilde | `docs/canon/characters/MATHILDE_CANON_FULL.md` | Full concrete + NSFW canon; use with deprecation map |
 | Pauline | `docs/canon/characters/PAULINE_CANON_FULL.md` | Full concrete + NSFW double-life canon; use with deprecation map |
+| Nico | `docs/canon/characters/NICO_CANON_FULL.md` | Full concrete + NSFW social-mirror / shared-gaze canon; use with deprecation map |
 | Raphaëlle | `docs/canon/characters/RAPHAELLE_CANON_FULL.md` | Calibration canon; concrete expansion needed |
-| Nico | `docs/canon/characters/NICO_CANON_FULL.md` | Calibration canon; concrete expansion needed |
 
 Directory index:
 
@@ -34,6 +34,7 @@ Character deprecation maps:
 ```text
 docs/canon/characters/MATHILDE_CANON_DEPRECATION_MAP.md
 docs/canon/characters/PAULINE_CANON_DEPRECATION_MAP.md
+docs/canon/characters/NICO_CANON_DEPRECATION_MAP.md
 ```
 
 ## 3. Source policy
@@ -56,6 +57,15 @@ For Pauline specifically:
 - the current relationship with Bastien, prior hidden infidelity, Marie's partial knowledge, double face, proof, and non-choice temptation are current canon;
 - the first V0.74 single-Pauline draft is superseded;
 - the old fixed J4/J5/later schedule, omniscient controller, constant-halo, playable-vocal, early-route, and consequence-free assumptions remain secondary or deprecated;
+- the full canon and deprecation map define the distinction.
+
+For Nico specifically:
+
+- real attraction to Marie, social charm, direct male desire, and friend/rival ambiguity with Player are current canon;
+- Nico is a complete person with work, home, family, relationship history, wound, limits, and the ability to refuse;
+- the old automatic villain, `steals Marie`, omniscient Don Juan, pure jealousy button, automatic revenge lever, and pure NTR-delivery assumptions are secondary or deprecated;
+- hidden Marie/Nico affair and informed NTR/cuckold/sharing are separate route families;
+- Player's jealousy or fantasy never replaces Marie's consent;
 - the full canon and deprecation map define the distinction.
 
 ## 4. Maintenance rule
