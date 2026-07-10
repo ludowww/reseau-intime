@@ -44,6 +44,10 @@ class V081WednesdayStaticTests(unittest.TestCase):
         phone_adapter = (GAME / "scripts/ui/PhonePrototypeV081.gd").read_text(encoding="utf-8")
         for expected in [
             "status_time_label",
+            "narrative_time_by_day",
+            "narrative_time_changed",
+            "_on_narrative_time_changed",
+            "_on_game_state_changed",
             "DataLoader.get_day_display_label",
             "DataLoader.get_day_start_time",
             "_is_episode_available",
@@ -58,6 +62,9 @@ class V081WednesdayStaticTests(unittest.TestCase):
             '"time_separator"',
             '"offline_beat"',
             "_add_system_note",
+            "rendered_authored_keys",
+            "_history_contains_authored_item",
+            "narrative_time_changed.emit",
             "await super._render_message_with_typing",
         ]:
             self.assertIn(expected, conversation_adapter)
