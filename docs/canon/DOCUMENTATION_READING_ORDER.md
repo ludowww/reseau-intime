@@ -66,17 +66,19 @@ Pauline's full canon includes:
 
 - age and explicit adult status;
 - exact work as a retail client adviser in a local mutual bank;
-- solo apartment and edited domestic life;
-- eight-year friendship history with Marie;
+- current five-year relationship and shared home with Bastien;
+- a prior physical infidelity committed during that current relationship;
+- Bastien's ignorance and Marie's partial knowledge;
+- double life / compartmentalization as primary dramatic function;
+- eight-year friendship history with Marie, real but breakable;
 - family and community background;
 - parish choir as genuine ordinary-life anchor;
-- previous relationship and private-authorship wound;
-- controlled, fitted clothing and body-image logic;
+- controlled, fitted clothing and double-addressed image logic;
 - recurring objects and social anchors;
-- desire to be trusted after being seen;
-- image selection and reciprocal-risk NSFW engine;
+- desires she can express sexually but struggles to integrate morally;
+- proof, alibi, deletion, and reciprocal-risk NSFW engine;
 - modular scene pools;
-- route consequences for Marie's friendship and the social group.
+- route consequences for Marie, Bastien, Player, and both couples.
 
 ### Concrete-profile expansion still needed
 
@@ -109,9 +111,24 @@ old J7 runtime as narrative truth
 automatic Marie–Mathilde sexual group assumptions
 ```
 
-For Pauline specifically, current canon overrides:
+For Pauline specifically, current canon preserves the old identity pillar but not the old schedule.
+
+Current canon restores:
 
 ```text
+current relationship with Bastien
+prior unconfessed infidelity during that relationship
+Marie knowing part of the truth
+double life / compartmentalization
+proof and control grounded in lived betrayal
+```
+
+Current canon overrides or suspends:
+
+```text
+Pauline as single by default
+ex-boyfriend-only wound
+indestructible friendship with Marie
 omniscient social/photo-controller framing
 one-way exposure without reciprocal risk
 constant halo / church joke
@@ -119,8 +136,8 @@ religious-repression or virgin-corruption framing
 playable choir voice-message assumptions
 fixed old J4 invitation / J5 photo / later route order
 early route lock
-consequence-free betrayal of Marie
-automatic group-sex organizer assumptions
+consequence-free betrayal of Marie or Bastien
+automatic group-sex or consensual cuckold assumptions
 ```
 
 ## 5. Choice rule
@@ -154,13 +171,17 @@ For Mathilde runtime:
 For Pauline runtime:
 
 - keep her absent from current J1;
-- do not assume old J4/J5/later scenes define her first entry or route order;
+- preserve the background truth that she is with Bastien and has already cheated on him;
+- do not assume the old J4/J5/later scenes define her first entry or route order;
 - begin from a legitimate social or practical window;
+- make her temptation about non-decision and compartmentalization, not immediate romance;
+- keep Bastien human and present even when offscreen;
 - distinguish public image competence from privately selected intent;
 - require reciprocal risk before major adult escalation;
-- keep Marie's friendship active as trust and consequence;
+- keep Marie's partial knowledge and breakable friendship active;
 - never promise a playable choir voice message;
-- avoid early route locks.
+- avoid early route locks;
+- distinguish hidden cheating from later informed cuckold, sharing, or open-couple consent.
 
 ## 7. Adult-tone rule
 
@@ -187,15 +208,19 @@ This governs:
 For Pauline specifically:
 
 ```text
-public trust
+current couple and prior hidden infidelity
+-> recognition of Player's denied desire
 -> legitimate private channel
--> selected private version
--> reciprocal risk
--> acknowledged desire
+-> selected double-addressed version
+-> plausible deniability
+-> reciprocal proof
+-> acknowledged double life
 -> adult decision and consequence
 ```
 
 Loss of polish, timing, or emotional control is never loss of consent.
+
+Bastien's ignorance is never consent.
 
 ## 8. Sandra terminology
 
