@@ -1,0 +1,102 @@
+{
+  "id": "chapter_02_modular_index",
+  "chapter": 2,
+  "day": 2,
+  "calendar_label": "Mercredi",
+  "display_label": "Mercredi — Faire de la place",
+  "day_start_time": "12:10",
+  "title": "Mercredi — Faire de la place",
+  "description": "Mathilde doit quitter temporairement son appartement. Marie et Player font de la place avant son arrivée.",
+  "design_goal": "Valider le premier passage modulaire mardi vers mercredi, les fils persistants, les choix M0/MT0 et un offline beat sans activer de route.",
+  "window_range": "O1-O2",
+  "default_order": [
+    "chapter_02_marie_make_room",
+    "chapter_02_marie_arrival_trace",
+    "chapter_02_mathilde_arrival"
+  ],
+  "conversation_files": [
+    "res://data/conversations/chapter_02_marie_make_room.json",
+    "res://data/conversations/chapter_02_marie_arrival_trace.json",
+    "res://data/conversations/chapter_02_mathilde_arrival.json"
+  ],
+  "moment_flow": [
+    {
+      "moment_label": "midi",
+      "time_label": "12:10",
+      "transition_text": "Mercredi midi — Marie appelle entre deux tâches après l'urgence de Mathilde.",
+      "conversation_ids": [
+        "chapter_02_marie_make_room"
+      ]
+    },
+    {
+      "moment_label": "fin de journée",
+      "time_label": "18:18",
+      "transition_text": "Mercredi fin de journée — Mathilde arrive pendant que Player est encore en trajet.",
+      "conversation_ids": [
+        "chapter_02_marie_arrival_trace"
+      ]
+    },
+    {
+      "moment_label": "soir",
+      "time_label": "18:22",
+      "transition_text": "Mercredi soir — Mathilde ouvre son fil avant que Player rentre.",
+      "conversation_ids": [
+        "chapter_02_mathilde_arrival"
+      ]
+    }
+  ],
+  "conversation_availability": {
+    "initial_conversation_ids": [
+      "chapter_02_marie_make_room"
+    ],
+    "locked_conversation_ids": [
+      "chapter_02_marie_arrival_trace",
+      "chapter_02_mathilde_arrival"
+    ],
+    "unlocks": {
+      "chapter_02_marie_arrival_trace": {
+        "after_conversation_completed": "chapter_02_marie_make_room",
+        "time_label": "18:18",
+        "pending": true,
+        "notification": {
+          "title": "Marie",
+          "body": "Le bureau n'est plus un bureau."
+        }
+      },
+      "chapter_02_mathilde_arrival": {
+        "after_conversation_completed": "chapter_02_marie_arrival_trace",
+        "time_label": "18:22",
+        "pending": true,
+        "notification": {
+          "title": "Mathilde",
+          "body": "Je tiens à préciser que la photo est à charge."
+        }
+      }
+    }
+  },
+  "initial_visual_anchors": [
+    "profile_marie_placeholder"
+  ],
+  "routes_available": [
+    "marie",
+    "mathilde"
+  ],
+  "route_stage_ceiling": "R1",
+  "end_of_day_player_knowledge": [
+    "Mathilde subit un dégât des eaux et séjournera environ dix à quinze jours chez Marie et Player.",
+    "Player a choisi la qualité de sa participation à l'accueil.",
+    "Mathilde dispose désormais d'un fil direct et d'un accès domestique ordinaire R1.",
+    "Le chat s'arrête lorsque Player rentre et l'installation continue face à face.",
+    "Aucun secret dur, cadre adulte ou route R2 n'existe."
+  ],
+  "proof_content_files": [
+    "res://data/visual_content/chapter_02_proofs.json"
+  ],
+  "debug_expected_outcomes": [
+    "Wednesday starts at 12:10 and progresses to 18:18, 18:22, then the 19:15 offline beat.",
+    "Marie has two episodes in one persistent thread.",
+    "Mathilde unlocks only after the authorized arrival trace.",
+    "M0 and MT0 each contain exactly three choices.",
+    "No Thursday or Friday content is active."
+  ]
+}
