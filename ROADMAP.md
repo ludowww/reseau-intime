@@ -9,253 +9,197 @@ Choix : 3 maximum par défaut
 PR : courtes, ciblées, sans gros refactoring
 ```
 
-### Canon personnages
+### Canon et architecture
 
-Complet pour :
+- sept personnages principaux complètement définis ;
+- V0.78 : architecture narrative modulaire ;
+- V0.79 : ouverture mardi–vendredi écrite ;
+- V0.80 : audit et découpage runtime validés.
+
+### Runtime V0.81
+
+V0.81 rend jouable :
 
 ```text
-Marie
-Sandra
-Player
-Mathilde
-Pauline
-Nico
-Raphaëlle
+Mardi soir — J1 actif filtré
+Mercredi midi — O1 Marie / faire de la place
+Mercredi fin de journée — O2 trace d'arrivée
+Mercredi soir — O2 Mathilde / arrivée
+Fin de scène — installation hors ligne
 ```
 
-Les personnages secondaires restent proportionnels.
-
-### Architecture
-
-V0.78 a verrouillé :
+Le runtime actif utilise :
 
 ```text
-tronc dramatique fixe
-+ fenêtres narratives
-+ scènes modulaires
-+ obligations / traces
-+ conséquences revenant vers le couple
+chapter_01_modular_index.json
+chapter_02_modular_index.json
 ```
 
-### Ouverture narrative
+Les anciens jours restent sur disque mais ne sont plus navigables comme continuation courante.
 
-V0.79 a écrit :
+## 2. Acquis techniques V0.81
+
+- raccord J1 Mathilde corrigé par filtre d’index ;
+- Mardi / Mercredi pilotés par les données ;
+- heure narrative dynamique ;
+- épisodes verrouillés exclus des métadonnées de contact ;
+- fils persistants Marie / Mathilde ;
+- déblocage séquentiel O1 → trace → Mathilde ;
+- `time_separator` ;
+- `offline_beat` centré, persistant et sans doublon ;
+- horloge monotone dans la journée ;
+- un visuel autorisé `mathilde_arrival_room_01` ;
+- flags observables uniquement ;
+- tests statiques dédiés.
+
+## 3. État narratif après mercredi
 
 ```text
-Mardi soir = J1
-Mercredi = urgence / arrivée Mathilde
-Jeudi = travail / événement / topologie / retour Marie
-Vendredi = Pauline / Nico / foyer
+Mathilde stay = active
+Mathilde route stage = R1 Ordinary Access
+couple mode = HABITUAL_WARMTH
+hard secrets = none
+adult frames = none
 ```
 
-### Runtime
+Aucun jeudi ou vendredi n’est encore jouable.
 
-Le prototype actuel reste pré-modulaire.
-
-V0.80 a audité :
-
-- DataLoader ;
-- GameState / EffectApplier ;
-- PhonePrototype / ConversationView ;
-- indexes Chapter 1–4 ;
-- ancien Chapter 2 ;
-- visuels placeholders ;
-- tests et outils de validation.
-
-Constat : la base technique est réutilisable, mais le runtime n’a pas encore les branches conditionnelles, `offline_beat`, temps piloté par les données, ni navigation limitée aux jours canoniques.
-
-## 2. Écart à corriger en premier
-
-Le J1 jouable affiche encore Mathilde comme déjà installée :
-
-- sacs dans l’entrée ;
-- baskets ;
-- sac de sport / raquette ;
-- visuel domestique associé.
-
-Le canon exige :
+## 4. Prochaine étape — V0.82
 
 ```text
-Mardi = Mathilde indirecte
-Mercredi = urgence et arrivée
-```
-
-Le prochain runtime doit corriger ce raccord sans réécrire tout J1.
-
-## 3. Séquence officielle
-
-```text
-V0.80 — First Modular Runtime Integration Plan
-V0.81 — Tuesday handoff + Wednesday runtime vertical slice
 V0.82 — Thursday topology and mandatory Marie return
-V0.83 — Friday public traces and opening completion
-V0.84+ — extension incrémentale de l'Acte I
 ```
 
-## 4. V0.80 — statut
+Périmètre prévu :
 
-Documentation uniquement.
+### Jeudi matin / début d’après-midi
 
-Sources :
+- O3 Raphaëlle travail ;
+- écho Sandra conditionnel ;
+- métadonnées temporelles du jeudi.
+
+### Jeudi fin d’après-midi
+
+- O4 Marie propose le vernissage ;
+- M1 à trois choix :
+  - rejoindre Marie tôt ;
+  - rester au foyer ;
+  - finir le travail et promettre de venir.
+
+### Jeudi soir
+
+Débloquer exactement une branche :
 
 ```text
-docs/runtime/V0_80_RUNTIME_AUDIT_AND_GAP_MAP.md
-docs/V0_80_First_Modular_Runtime_Integration_Plan.md
-docs/runtime/V0_81_WEDNESDAY_VERTICAL_SLICE_IMPLEMENTATION_PLAN.md
+O5A — Marie / La Verrière
+OU
+O5B — Mathilde / foyer
+OU
+O5C — Raphaëlle / travail
 ```
 
-Décision principale :
+### Jeudi nuit
 
-```text
-ne pas intégrer O0–O8 en une seule PR
-```
+- O6 retour obligatoire vers Marie ;
+- variante selon la branche et la qualité de présence ;
+- `AFTERGLOW_REMOTE` ou `OFFLINE_BEAT` selon la position physique.
 
-## 5. V0.81 — première tranche runtime
+## 5. Fondation technique V0.82
 
-Périmètre strict :
-
-### Raccord mardi
-
-- retirer les sacs/baskets/raquette de Mathilde du J1 actif ;
-- supprimer la référence `j1_mathilde_bag_domestic_trace` ;
-- conserver Mathilde indirecte ;
-- ajouter les métadonnées Mardi.
-
-### Mercredi
-
-```text
-O1 — Marie / faire de la place
-O2 — Marie / trace d'arrivée
-O2 — Mathilde / arrivée
-OFFLINE_BEAT — installation face à face
-```
-
-### UI / fondation
-
-- boutons Mardi / Mercredi ;
-- heure de statut pilotée par les données ;
-- métadonnées uniquement pour épisodes débloqués ;
-- présentation `time_separator` ;
-- présentation `offline_beat` ;
-- indexes actifs Chapter 1–2 uniquement ;
-- un visuel `mathilde_arrival_room_01` ;
-- flags uniquement.
-
-### Choix
-
-```text
-M0  — proactive / joueuse-présente / passive
-MT0 — pratique / taquine / distante
-```
-
-### Exclusions
-
-- aucun jeudi ;
-- aucun vendredi ;
-- aucune route R2 ;
-- aucun secret ;
-- aucun contenu adulte ;
-- aucun score d’affection supplémentaire ;
-- aucun scheduler universel ;
-- aucune suppression massive des anciens fichiers.
-
-## 6. V0.82 — topologie du jeudi
-
-Après validation de V0.81 :
-
-- Raphaëlle travail ;
-- écho Sandra ;
-- invitation Marie ;
-- flags topologiques ;
-- déblocage conditionnel d’une seule branche ;
-- variantes conditionnelles ;
-- O5A / O5B / O5C ;
-- retour O6 obligatoire vers Marie ;
-- temporalité du jeudi ;
-- communication réaliste selon co-présence.
-
-Fondation technique minimale :
+Ajouter seulement :
 
 ```text
 after_conversation_completed
 + conditions de flags
-= unlock conditionnel
+= déblocage conditionnel
 ```
 
-Pas de moteur de scheduling généralisé.
+et :
 
-## 7. V0.83 — vendredi
+```text
+conditions sur messages / segments
+= variante de conséquence
+```
+
+Ne pas ajouter un scheduler universel.
+
+Garanties :
+
+- une seule branche O5 ;
+- O6 non contournable ;
+- trois choix maximum ;
+- temps futur non visible avant déblocage ;
+- co-présence traitée hors ligne ;
+- aucune route adulte.
+
+## 6. Étape suivante — V0.83
 
 Après validation de V0.82 :
 
-- relais public Pauline ;
-- photo de groupe autorisée ;
+```text
+V0.83 — Friday public traces and opening completion
+```
+
+Contenu :
+
+- relais photo publique Pauline ;
 - Bastien visible ;
 - suivi Nico l’après-midi ;
 - respiration du foyer ;
-- vérification de l’état final V0.79 ;
-- aucun crop privé, pacte photo ou route adulte.
+- fin de l’ouverture V0.79 ;
+- Pauline et Nico en R1 uniquement.
 
-## 8. Validation runtime permanente
+## 7. Validation permanente
 
-Chaque PR doit exécuter :
+Chaque PR runtime doit exécuter :
 
 ```bash
 python3 tools/validate_game_data.py
 python3 -m unittest tests.test_godot_prototype_static -v
-python3 tools/player_choice_text_check.py
-python3 tools/player_presence_check.py
+python3 -m unittest tests.test_v081_wednesday_static -v
+python3 tools/player_choice_text_check.py <fichiers actifs>
+python3 tools/player_presence_check.py <fichiers actifs>
 python3 tools/simulate_route_paths.py
 git diff --check
 godot --headless --path game --quit
 godot --headless --path game --resolution 1280x720 --quit
 ```
 
-Le simulateur de routes reste un probe legacy tant qu’il n’a pas été réécrit explicitement.
+Le simulateur de routes reste un probe legacy.
 
-## 9. Principes techniques permanents
+Le connecteur GitHub utilisé pour V0.81 ne peut pas exécuter localement ces commandes ; elles doivent être confirmées par CI ou environnement Hermes/Codex avant merge.
 
-- réutiliser les fils persistants existants ;
-- conserver un fil visible par personnage ;
-- utiliser les indexes comme orchestration explicite ;
-- ne pas afficher un temps futur avant son déblocage ;
-- arrêter le chat lors de la co-présence ;
-- représenter le hors-ligne sans faux expéditeur ;
-- mémoriser d’abord par flags observables ;
-- éviter les nouveaux scores abstraits ;
-- masquer les anciens jours suspendus sans les supprimer ;
-- garantir le rollback par PR squashable ;
-- mettre à jour les tests qui protègent des hypothèses désormais dépréciées.
+## 8. Principes techniques permanents
 
-## 10. Contenu futur après V0.83
+- réutiliser les fils persistants ;
+- un fil visible par personnage ;
+- indexes explicites et auditables ;
+- horloge narrative pilotée par les épisodes disponibles ;
+- arrêt du chat lors de la co-présence ;
+- `offline_beat` sans faux expéditeur ;
+- flags avant scores abstraits ;
+- legacy conservé mais inactif ;
+- rollback simple par squash commit ;
+- aucune modification de sens narratif pour contourner une contrainte technique.
 
-Une fois l’ouverture V0.79 entièrement jouable :
+## 9. À éviter
 
-- poursuivre l’Acte I par nouveaux source packs ;
-- écrire les premières répétitions privées S4 ;
-- introduire une première limite S5 ;
-- faire muter les occasions manquées ;
-- seulement ensuite ouvrir R2 puis R3 ;
-- ne pas accélérer l’adulte pour justifier l’architecture.
+- réactiver les anciens J3+ ;
+- intégrer jeudi et vendredi dans la même PR ;
+- transformer les adapters V0.81 en refactor global avant validation ;
+- ajouter des scores de désir ou de couple ;
+- rendre Mathilde sexuellement intentionnelle dès mercredi ;
+- laisser une heure future apparaître avant déblocage ;
+- simuler une discussion face à face par Messenger ;
+- introduire Pauline/Nico avant leur fenêtre vendredi ;
+- supprimer les fichiers legacy ;
+- ouvrir R2 ou du contenu adulte dans V0.82.
 
-## 11. À éviter
-
-- intégrer mardi–vendredi en une seule PR ;
-- laisser les anciens J3+ cliquables après le nouveau mercredi ;
-- garder Mathilde déjà installée dans J1 ;
-- ajouter un moteur de branches universel avant le besoin du jeudi ;
-- utiliser les anciens scores comme canon ;
-- simuler une conversation face à face par Messenger ;
-- afficher `09:41` en permanence ;
-- supprimer tous les fichiers legacy ;
-- changer les lignes V0.79 pour contourner une limitation sans revue ;
-- mélanger documentation, jeudi, vendredi et adulte dans V0.81.
-
-## 12. Prochaine action
-
-Après validation de V0.80 :
+## 10. Séquence officielle
 
 ```text
-transmettre à Hermes/Codex
-le plan V0.81 Wednesday vertical slice
+V0.81 — Tuesday handoff + Wednesday runtime vertical slice
+V0.82 — Thursday topology and mandatory Marie return
+V0.83 — Friday public traces and opening completion
+V0.84+ — extension incrémentale de l'Acte I
 ```
