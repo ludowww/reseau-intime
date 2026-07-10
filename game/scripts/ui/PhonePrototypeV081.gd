@@ -3,6 +3,17 @@ extends "res://scripts/ui/PhonePrototype.gd"
 # Narrow V0.81 adapter: keep the proven phone implementation intact while
 # making the active Tuesday/Wednesday slice data-driven.
 var status_time_label: Label
+var narrative_time_by_day: Dictionary = {}
+
+func _build_layout() -> void:
+	super._build_layout()
+	var time_callback := Callable(self, "_on_narrative_time_changed")
+	if is_instance_valid(conversation_view) and conversation_view.has_signal("narrative_time_changed"):
+		if not conversation_view.is_connected("narrative_time_changed", time_callback):
+			conversation_view.connect("narrative_time_changed", time_callback)
+	var state_callback := Callable(self, "_on_game_state_changed")
+	if not GameState.is_connected("state_changed", state_callback):
+		GameState.connect("state_changed", state_callback)
 
 func _add_status_bar(parent: Node) -> void:
 	var bar := HBoxContainer.new()
@@ -66,4 +77,21 @@ func _refresh_status_time(day_value) -> void:
 		var moment_time := str(moment.get("time_label", ""))
 		if moment_time != "":
 			latest_time = moment_time
+	var authored_time := str(narrative_time_by_day.get(str(day_value), ""))
+	if authored_time != "":
+		latest_time = authored_time
 	status_time_label.text = latest_time if latest_time != "" else "--:--"
+
+func _on_narrative_time_changed(time_label: String) -> void:
+	if current_day_value == null or time_label == "":
+		return
+	narrative_time_by_day[str(current_day_value)] = time_label
+	if is_instance_valid(status_time_label):
+		status_time_label.text = time_label
+
+func _on_game_state_changed() -> void:
+	# The Reset button calls GameState.reset_state() before rebuilding the active
+	# day. Clearing the authored overrides here restores the day's start/moment
+	# metadata instead of keeping a previous offline-beat time.
+	if GameState.context.get("day", null) == null and str(GameState.context.get("last_choice", "")) == "":
+		narrative_time_by_day.clear()
