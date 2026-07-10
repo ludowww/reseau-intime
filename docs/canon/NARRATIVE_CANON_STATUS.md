@@ -1,6 +1,6 @@
 # Narrative Canon Status — Current
 
-> Consolidated narrative status after V0.65–V0.74 canon work.  
+> Consolidated narrative status after V0.65–V0.75 canon work.  
 > This document explains how to read runtime, story-state docs, arcs, spine, proof maps, and character profiles before new narrative or runtime work.  
 > No runtime, JSON, tests, assets, or playable content are changed here.
 
@@ -11,12 +11,12 @@ Current canon overrides older narrative interpretation.
 Existing runtime is not automatic narrative canon.
 ```
 
-Any older content touching character arcs, scenes, proofs, photos, routes, relationship progression, or adult escalation must be reviewed against:
+Any older content touching character arcs, scenes, proofs, photos, routes, relationship progression, social traces, or adult escalation must be reviewed against:
 
 - full character canon;
 - NSFW route canon;
 - current choice canon;
-- current day source pack;
+- current day or modular-window source;
 - character-specific deprecation maps.
 
 ## 2. Current canon stack
@@ -36,6 +36,7 @@ Also read the character-specific deprecation map when one exists:
 ```text
 docs/canon/characters/MATHILDE_CANON_DEPRECATION_MAP.md
 docs/canon/characters/PAULINE_CANON_DEPRECATION_MAP.md
+docs/canon/characters/NICO_CANON_DEPRECATION_MAP.md
 ```
 
 ## 3. Character-profile status
@@ -47,6 +48,7 @@ docs/canon/characters/PAULINE_CANON_DEPRECATION_MAP.md
 - Player
 - Mathilde
 - Pauline
+- Nico
 
 Mathilde's V0.73 canon supersedes the earlier calibration-only profile and old runtime assumptions.
 
@@ -95,12 +97,47 @@ She does not ask Player to choose her.
 She makes not choosing feel practical, intelligent, and temporarily harmless.
 ```
 
+Nico's V0.75 canon supersedes the calibration-only profile while preserving the strongest identity pillars from older Nico material.
+
+Current Nico direction:
+
+- 34 years old and explicitly adult;
+- primarily attracted to women;
+- genuinely attracted to Marie;
+- single at the beginning;
+- floor manager and private-event coordinator at `Le Sillage`;
+- credible late-working social environment;
+- lives alone near the venue;
+- grew up above his parents' café-brasserie;
+- younger sister Camille;
+- former four-year relationship with Clara;
+- prior pattern of ambiguous attention rather than a hidden second relationship;
+- one previous consensual third-person adult experience with imperfect aftermath;
+- real friendship with Player;
+- established social chemistry with Marie;
+- public charm and private fear of being useful but replaceable;
+- deep desire to be chosen after the room is empty;
+- social-mirror contradiction: he names real desire while sometimes choosing the timing because he wants the result;
+- adult engine built from Marie's agency, Player's jealousy or arousal, Nico's genuine desire, social visibility, and the risk of being used as an instrument;
+- modular friend, rival, hidden-affair, sharing, cuckold, trio, withdrawal, and dark-opportunist routes;
+- hidden Marie / Nico betrayal remains distinct from consensual cuckold / sharing;
+- no automatic direct Nico / Player sexual route;
+- no active J1 presence.
+
+Nico's ensemble distinction is:
+
+```text
+He does not merely show Player that Marie can be desired.
+He makes desire social,
+admits he wants a place in it,
+and forces the couple to decide whether he is rival, lover, third, or instrument.
+```
+
 ### Concrete-profile expansion still needed
 
 - Raphaëlle
-- Nico
 
-Their current files remain usable calibration canon, but major biography should not be invented as hard truth without a profile pass.
+Her current file remains usable calibration canon, but major biography should not be invented as hard truth without a profile pass.
 
 ## 4. Current J1 status
 
@@ -134,6 +171,15 @@ The following Pauline facts still exist in background canon:
 - she has cheated on him;
 - Bastien does not know;
 - Marie knows part of it.
+
+Nico remains absent from playable J1.
+
+The following Nico facts may exist only as background canon without active J1 mention:
+
+- he belongs to Marie's broader social orbit;
+- he is genuinely attracted to Marie;
+- he is friendly with Player;
+- no jealousy, sharing, or social-proof engine is active yet.
 
 V0.64 remains historical and is no longer the current exact-line source.
 
@@ -170,6 +216,14 @@ For Pauline specifically:
 - no private Player route is already active because old runtime contains one;
 - the restored current-partner infidelity is background canon even though the old J4 schedule is suspended.
 
+For Nico specifically:
+
+- no old social appearance establishes his current first active entry;
+- a group booking, La Verrière after-event, Le Sillage scene, or ordinary Player friendship scene may become a valid entry window;
+- ordinary social presence should be established before major jealousy or adult function;
+- genuine attraction to Marie exists before route activation;
+- no old scene grants him automatic rival or revenge status.
+
 ### J5 / J6
 
 Status: **runtime exists; narrative canon suspended**.
@@ -182,6 +236,14 @@ For Pauline specifically:
 - adult escalation requires selected intent, explicit limits, reciprocal risk, and awareness of both existing couples;
 - a photo alone is not route activation or consent;
 - a compatible old confrontation or proof engine may be rebuilt in a modular window.
+
+For Nico specifically:
+
+- an old Marie-jealousy photo or Nico seed does not define current route state;
+- Nico cannot be introduced only as evidence that Marie has another option;
+- Player must remain active through response, boundary, jealousy, fantasy, or refusal;
+- Marie must remain the person choosing how she answers Nico's attention;
+- a social trace may reveal tension but cannot activate sharing or NTR by itself.
 
 ### J7
 
@@ -198,9 +260,13 @@ The long-grey-sweater framing and any fixed Mathilde route assumptions remain no
 
 For Pauline, any old `less theoretical`, silence-test, or later escalation remains historical as a fixed sequence and does not establish current route state.
 
+For Nico, any old revenge, rivalry, or sharing escalation remains historical as chronology.
+
+It may contribute isolated identity material only after current-canon reframing.
+
 ### J8+
 
-Status: **non-current unless a later source pack explicitly validates it**.
+Status: **non-current unless a later source pack or modular blueprint explicitly validates it**.
 
 ## 6. Story-state documentation
 
@@ -208,7 +274,7 @@ Status: **non-current unless a later source pack explicitly validates it**.
 
 They remain operational summaries, not a replacement for full canon.
 
-If they conflict with V0.69+ J1 sources, V0.73 Mathilde canon, or revised V0.74 Pauline canon, the newer canon wins.
+If they conflict with V0.69+ J1 sources, V0.73 Mathilde canon, revised V0.74 Pauline canon, or V0.75 Nico canon, the newer canon wins.
 
 ## 7. Old narrative docs
 
@@ -246,6 +312,52 @@ Not retained as canon:
 - automatic chantage escalation;
 - guaranteed route beats.
 
+### `docs/narrative/NICO_AND_EXTERNAL_PARTNERS.md`
+
+Status: **Nico identity pillars partially restored; old route chronology and simplifications suspended**.
+
+Retained Nico pillars:
+
+- genuine attraction to Marie;
+- social charm;
+- ability to make Player jealous;
+- real ambiguity with Player;
+- mixed helpfulness and self-interest;
+- Marie may consciously use Nico's gaze on some routes;
+- possibility of progressive omission or strategic timing;
+- NTR, sharing, cuckold, and group potential;
+- Marie's agency;
+- Player's responsibility.
+
+Not retained as direct canon:
+
+- Nico as `Don Juan` shorthand without concrete life;
+- automatic false friendship;
+- automatic manipulation of Marie against Player;
+- Nico appearing whenever Player lies;
+- fixed revenge progression;
+- permanent role as Marie's primary lever;
+- Player as passive victim;
+- route beats tied to old J5/J6/J7 timing.
+
+### `docs/narrative/ROUTE_COMPATIBILITY_MATRIX.md`
+
+Status: **historical route-state reference; current character files govern details**.
+
+Useful principles:
+
+- couple state changes route compatibility;
+- Marie cannot be excluded from negotiated opening;
+- Nico can become more dangerous under active lying;
+- Nico may transform from revenge lever into real possibility or negotiated third.
+
+Non-current simplifications:
+
+- `Nico is a mirror of Marie, not a Player route` as a total definition;
+- Nico existing only inside Marie revenge;
+- sharing without Nico's own motive or limits;
+- old state names treated as runtime implementation.
+
 ### `docs/narrative/PROOF_AND_SECRET_MAP.md`
 
 Status: **typology useful; day-by-day examples suspended**.
@@ -262,6 +374,18 @@ current hidden betrayal
 ```
 
 She cannot remain a one-way controller of other people's exposure.
+
+For Nico, current social-trace logic must preserve:
+
+```text
+genuine attraction
++ public or group visibility
++ Marie's readable agency
++ Player's active reaction
++ distinction between social evidence, betrayal, and negotiated erotic trace
+```
+
+Nico cannot become omniscient through stories, tags, venue access, or social confidence.
 
 ## 8. Mathilde deprecation summary
 
@@ -321,7 +445,53 @@ Compatible only after current-canon reframing:
 - alibis and reciprocal proof;
 - later trio, sharing, cuckold, or group material through explicit informed adult negotiation.
 
-## 10. Adult route rule
+## 10. Nico deprecation summary
+
+Current canon restores or retains:
+
+- genuine attraction to Marie;
+- real friendship with Player;
+- social charm;
+- direct physical language with respect guardrails;
+- mixed helpfulness and self-interest;
+- Marie consciously using his gaze on some routes;
+- Nico's capacity for strategic timing and omission;
+- NTR, cuckold, sharing, trio, and group potential;
+- the principle that Nico can reveal Player's hidden bodily reaction.
+
+Current canon overrides or suspends:
+
+- flat rival;
+- villain who steals Marie;
+- automatic Don Juan attracted to everyone;
+- neutral mirror with no motive;
+- false friendship as his only strategy;
+- automatic manipulation of Marie;
+- Nico as only a revenge lever;
+- permanent crude commentary;
+- fantasy-professor role;
+- automatic dominant role;
+- Player reduced to passive victim;
+- Marie without agency;
+- hidden affair described as consensual cuckold;
+- direct Nico / Player contact inferred from trio proximity;
+- fixed old J6/J7+ revenge chronology;
+- Le Sillage used as omniscient information source.
+
+Compatible only after current-canon reframing:
+
+- social evening where Nico makes Marie laugh;
+- Nico giving Player useful but self-interested advice;
+- Marie using Nico to reclaim visibility;
+- private after-event messages;
+- Nico minimizing proximity;
+- Player jealousy and arousal;
+- secret Marie / Nico betrayal;
+- negotiated sharing or cuckold;
+- trio and later group scenes;
+- Nico withdrawing after realizing he is only an instrument.
+
+## 11. Adult route rule
 
 `Réseau Intime` may become pornographic when routes escalate.
 
@@ -361,9 +531,45 @@ Bastien's ignorance never becomes consent.
 
 A later negotiated cuckold, sharing, open, trio, or group frame must be established separately and cannot retroactively erase betrayal.
 
-The global NSFW canon now carries the same rules, including double-addressed visuals and the distinction between hidden betrayal and informed adult negotiation.
+For Nico, adult escalation must come from:
 
-## 11. Choice rule
+```text
+ordinary social friendship
+-> genuine attraction to Marie becomes visible
+-> Player's jealousy or arousal is named
+-> Nico admits he is not neutral
+-> Marie chooses whether and how to answer
+-> route separates boundary, rivalry, hidden betrayal, or informed negotiation
+-> adult decision and consequence
+```
+
+A compliment, look, story, late message, or Player bodily reaction alone is not consent or route activation.
+
+Hidden Marie / Nico affair:
+
+```text
+betrayal / possible NTR from Player's perspective
+```
+
+Explicit Player + Marie + Nico agreement:
+
+```text
+consensual sharing / cuckold / trio frame
+```
+
+Player's jealousy or arousal is not consent.
+
+Player cannot consent for Marie.
+
+Marie cannot consent for Player to acts that directly involve him.
+
+Nico must hear Marie's agreement directly.
+
+Trio proximity does not automatically establish direct Nico / Player sexual contact.
+
+The global NSFW canon carries the same rules, including social-gaze traces, the invited-third agency rule, and the distinction between hidden betrayal and informed sharing.
+
+## 12. Choice rule
 
 Default runtime count:
 
@@ -373,7 +579,7 @@ Default runtime count:
 
 Four or more choices require explicit written justification.
 
-## 12. Final rule
+## 13. Final rule
 
 ```text
 Build the next story step from current canon, not inherited runtime.
@@ -381,5 +587,6 @@ Keep identity pillars when they differentiate a character.
 Discard old schedules when they force linearity.
 Characters stay deep.
 Routes may become pornographic.
+Every participating adult remains an agent.
 Consequences remain human.
 ```
