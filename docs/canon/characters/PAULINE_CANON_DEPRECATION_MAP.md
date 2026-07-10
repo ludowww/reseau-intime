@@ -1,6 +1,6 @@
 # Pauline Canon Deprecation Map
 
-> Current compatibility map after the full Pauline concrete + NSFW canon pass.  
+> Current compatibility map after the revised V0.74 full Pauline concrete + NSFW canon pass.  
 > Documentation-only.  
 > This file does not change runtime, JSON, tests, assets, or playable content.
 
@@ -15,31 +15,114 @@ docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
 
 For day-specific work, also read the validated source pack for that day.
 
-## 2. Current canon decisions
+## 2. Restored current canon
 
-The current Pauline canon locks:
+The following elements are current canon and must not be discarded as merely historical:
 
-- age 32;
-- adult and sexually experienced;
-- Marie's trusted friend for around eight years;
+- Pauline is 32 and explicitly adult;
+- she is Marie's close friend of around eight years;
+- she is currently in a long-term relationship with Bastien;
+- Pauline and Bastien live together;
+- Pauline has already cheated on Bastien during their current relationship;
+- the brief affair ended before the game;
+- Bastien does not know;
+- Marie knows that the affair crossed a physical line;
+- Marie kept Pauline's confidence but did not approve, create an alibi, or grant future permission;
+- Pauline remains psychologically vulnerable to repeating the same structure;
+- her public reliability and private transgression are both real;
+- her central function is the double life / temptation of compartmentalization;
+- her hidden desire is not merely sexual freedom, but the fantasy of preserving stability, trust, and forbidden desire in separate compartments;
+- proof, framing, deletion, alibis, and reciprocal traces are tied to lived infidelity rather than abstract image anxiety;
+- Bastien and Marie remain active consequences on every dangerous route.
+
+The legacy runtime shorthand:
+
+```text
+pauline_cheats_on_partner
+```
+
+is interpreted as a live secret at game start:
+
+```text
+Pauline cheated on her current partner,
+ended the affair,
+did not confess,
+and has not resolved the desire architecture behind it.
+```
+
+It does not require an affair to be ongoing on J1.
+
+## 3. Full current canon decisions
+
+The current Pauline canon also locks:
+
 - retail client adviser in a local mutual bank;
-- lives alone in a rented two-room apartment;
+- shared rented apartment with Bastien;
 - culturally Catholic community background without religious-repression framing;
 - parish choir as a genuine weekly life anchor;
 - older-sister / reliable-family role;
-- previous long relationship with Bastien;
-- wound around losing authorship of her private self;
 - controlled, fitted visual style;
-- image selection rather than accidental sensuality;
-- desire to be trusted after being seen;
-- public trust + selected private channel + reciprocal risk as NSFW engine;
+- double-addressed image selection rather than accidental sensuality;
+- Marie as friend, prior witness, and possible betrayed trust;
+- Bastien as a real partner rather than a convenient obstacle;
 - modular scenes rather than one fixed J4/J5 sequence;
-- Marie's friendship as a central consequence;
+- adult agency and reciprocal risk;
 - three choices by default in future runtime;
 - no route lock too early;
-- no playable voice message.
+- no playable choir voice message.
 
-## 3. Deprecated narrative material
+## 4. Deprecated narrative material
+
+### Pauline as single by default
+
+Status: **deprecated**.
+
+The first V0.74 draft made Pauline single after a completed relationship with Bastien.
+
+That version removed the present contradiction that distinguishes her.
+
+Current canon restores:
+
+```text
+current partner
++ unconfessed infidelity
++ real attachment
++ hidden desire
++ active double life risk
+```
+
+### Ex-boyfriend-only wound
+
+Status: **deprecated**.
+
+Pauline's central wound is not merely that an ex retold private material after a breakup.
+
+Her present conflict is that:
+
+- she remains with Bastien;
+- she has betrayed him;
+- she still wants to be his reliable partner;
+- she fears one truth will rewrite her whole identity;
+- she uses compartmentalization to postpone the decision.
+
+Historical humiliation or loss-of-authorship material may color her, but it cannot replace the current infidelity.
+
+### Indestructible Marie / Pauline friendship
+
+Status: **deprecated**.
+
+Their friendship is deep and real, but breakable.
+
+Marie knows Pauline can betray a partner.
+
+Marie does not know or accept a private Pauline / Player route.
+
+Pauline targeting Player would misuse:
+
+- access created by Marie;
+- compassion Marie previously showed;
+- a secret Marie already carries;
+- Marie's trust in her own social circle.
 
 ### Pauline as omniscient social manipulator
 
@@ -52,7 +135,7 @@ She does not automatically know:
 - every route state;
 - every private message;
 - who saved which image;
-- what Marie, Sandra, Mathilde, Raphaëlle, or Nico secretly intends.
+- what Marie, Sandra, Mathilde, Raphaëlle, Nico, Player, or Bastien secretly intends.
 
 Her mistakes and misreadings are required for credibility.
 
@@ -65,13 +148,13 @@ Pauline may organize or send public images, but she cannot remain safely behind 
 Current route logic requires:
 
 ```text
-control
--> selection
--> reciprocal risk
+public competence
+-> private selection
+-> mutual implication
+-> reciprocal proof
 -> Pauline exposed too
+-> consequence for real relationships
 ```
-
-A route where Pauline only exposes others is non-current.
 
 ### Constant halo / church joke
 
@@ -83,26 +166,18 @@ They are not:
 
 - a permanent joke;
 - proof of sexual repression;
-- proof that she is hypocritical;
+- proof that one side of her is fake;
 - automatic fetish material.
-
-`Sage`, `auréole`, choir, or parish humor must remain lightly dosed.
 
 ### Religious-repression / virgin-corruption framing
 
 Status: **non-canon**.
 
-Pauline is an adult with prior romantic and sexual experience.
+Pauline is sexually experienced.
 
-Her conflict comes from:
+Her difficulty is not doctrine forbidding desire.
 
-- privacy;
-- authorship;
-- loyalty to Marie;
-- selected risk;
-- fear of being reduced after exposure.
-
-It does not come from sexual ignorance or doctrine forbidding desire.
+It is her inability to integrate desire that threatens her current relationship and trusted identity.
 
 ### Playable choir voice message
 
@@ -127,24 +202,27 @@ It must not structure every Pauline exchange.
 
 ### Fixed old J4 / J5 / later Pauline route
 
-Status: **technical or historical runtime only; narrative canon suspended**.
+Status: **technical or historical runtime only; narrative sequence suspended**.
 
 Older material involving:
 
 - Pauline's invitation;
 - a `last photo`;
+- a confrontation the next day;
+- a silence test;
 - later `less theoretical` escalation;
 - fixed day ordering;
 
 does not define the current long arc.
 
-It may contain isolated technical or tonal material to revalidate, but:
+Important distinction:
 
-- it does not establish current route state;
-- it does not force Pauline's first active day;
-- it does not validate an early photo escalation;
-- it does not override Marie's trust consequences;
-- it does not replace modular scene pools.
+```text
+The old fixed schedule is suspended.
+The current-partner infidelity and double-life function are restored canon.
+```
+
+Compatible engines may be rebuilt inside modular windows.
 
 ### Immediate private attraction or route lock
 
@@ -152,37 +230,63 @@ Status: **deprecated**.
 
 Pauline and Player have a credible practical private grammar before the game, but no established affair or open flirt.
 
-Progression begins through selected private attention, not inherited route status.
+Progression begins through recognition, selected private attention, and mutual implication.
 
-### Automatic group-sex organizer role
+### Automatic group-sex or cuckold organizer role
 
 Status: **not validated**.
 
-The global NSFW canon allows negotiated trio, quatuor, sharing, or group routes.
+The global NSFW canon allows negotiated trio, quatuor, sharing, cuckold, or group routes.
 
-Pauline's social competence does not make her the automatic organizer or permission mechanism.
+Pauline's old cheating and social competence do not create automatic consent from Marie or Bastien.
 
-Any group route requires:
+Any negotiated route requires:
 
 - explicit adult agency;
-- Marie's central consent;
+- informed consent;
 - Pauline's own desire;
+- Marie's full agency;
+- Bastien's full agency if involved;
 - named consequences;
 - a validated route frame.
 
-## 4. Material retained with conditions
+Negotiation cannot retroactively sanitize betrayal.
+
+## 5. Material retained and reframed
 
 ### Public virtue / private contradiction
 
-Status: **central and retained**.
+Status: **central and strengthened**.
 
 Current interpretation:
 
 ```text
-public trust is real
+public care is real
+current couple is real
 private desire is real
-the contradiction is not proof that one side is fake
+past betrayal is real
+neither face cancels the other
 ```
+
+Pauline's problem is not that one face is false.
+
+It is that she keeps both faces apart rather than accepting responsibility for their coexistence.
+
+### Current partner and prior infidelity
+
+Status: **restored as central canon**.
+
+Use to support:
+
+- Pauline recognizing Player's non-decisions;
+- sour, plausible-deniable temptation;
+- evidence control;
+- guilt that does not erase desire;
+- affection for Bastien beside betrayal;
+- Marie's partial knowledge;
+- route consequences for two couples.
+
+Do not use to make Pauline a generic serial cheater.
 
 ### Choir / parish background
 
@@ -198,35 +302,53 @@ Use for:
 
 Do not use as an automatic erotic shortcut.
 
-### Image and proof logic
+### Image, proof, and alibi logic
 
-Status: **retained and rebuilt**.
+Status: **retained and grounded in lived experience**.
 
 Current progression:
 
 ```text
 public image competence
+-> recognition of a hidden desire
 -> privately selected alternate
--> explicit rule
+-> plausible deniability
 -> reciprocal trace
--> loss of timing / control
--> consequence
+-> repetition of old pattern
+-> discovery or decision
 ```
 
 Wrong-recipient accidents, stolen photos, or metadata detective systems cannot replace Pauline's agency.
 
 ### Marie's trust
 
-Status: **central and retained**.
+Status: **central and made conditional**.
 
-Pauline is dangerous precisely because Marie has valid reasons to trust her.
+Marie has valid reasons to love and trust Pauline.
 
-A hidden route must affect:
+Marie also knows Pauline is capable of compartmentalized betrayal.
+
+A hidden Player route must affect:
 
 - friendship;
-- social safety;
-- Marie's confidence in her own circle;
-- Player's responsibility.
+- Marie's confidence in her judgment;
+- the old secret she already carried;
+- Player's responsibility;
+- Pauline's place in the social group.
+
+### Bastien's humanity
+
+Status: **required**.
+
+Bastien must not be:
+
+- abusive by convenience;
+- absent whenever the route needs space;
+- stupid because he trusts Pauline;
+- treated as consensually cuckolded without knowledge;
+- reduced to an obstacle.
+
+Ordinary affection between Pauline and Bastien should remain visible on dangerous routes.
 
 ### Fast dry Messenger voice
 
@@ -237,32 +359,35 @@ Pauline remains:
 - short;
 - sharp;
 - dry;
-- quick in complicity.
+- quick in complicity;
+- able to make non-decision sound reasonable.
 
 But ordinary, imperfect, non-punchline replies are required.
 
-### Photo control
-
-Status: **retained with reciprocal exposure**.
-
-Pauline may control framing, but the route must eventually make her:
-
-- the subject;
-- vulnerable;
-- readable;
-- dependent on someone else respecting the agreed frame.
-
-## 5. Old documentation policy
+## 6. Old documentation policy
 
 Older voice cards, color addenda, intensity bibles, arcs, proof maps, day plans, and runtime JSON may be used only as:
 
 - source history;
 - technical reference;
-- a pool of isolated details to revalidate.
+- a pool of isolated details or engines to revalidate.
 
 They must not override `PAULINE_CANON_FULL.md`.
 
-## 6. Runtime policy
+The old dedicated Pauline arc correctly preserved several identity pillars:
+
+- current-partner infidelity;
+- double face;
+- proof and control;
+- temptation through complicity;
+- Marie's partial knowledge;
+- the exposed exposer.
+
+Those pillars are restored.
+
+Its fixed J1–J10 ordering and overly powerful orchestration are not restored.
+
+## 7. Runtime policy
 
 Before modifying any Pauline runtime:
 
@@ -271,22 +396,28 @@ Before modifying any Pauline runtime:
 3. inspect the actual current runtime;
 4. identify legacy J4/J5/later assumptions explicitly;
 5. keep Pauline absent from current J1;
-6. do not assume an old first-entry day;
-7. use modular windows and scene conditions;
-8. keep max three choices unless an exception is justified;
-9. preserve Marie's trust and Pauline's adult agency;
-10. do not create a playable choir voice message;
-11. do not treat a photo as consent or route activation by itself;
-12. ensure risk becomes reciprocal before major adult escalation.
+6. preserve the background facts that she is with Bastien and has cheated on him;
+7. do not assume an old first-entry day;
+8. use modular windows and scene conditions;
+9. keep maximum three choices unless an exception is justified;
+10. preserve Marie's agency, Bastien's humanity, and Pauline's adult agency;
+11. do not create a playable choir voice message;
+12. do not treat a photo as consent or route activation by itself;
+13. ensure risk becomes reciprocal before major adult escalation;
+14. do not erase Bastien whenever he is offscreen;
+15. distinguish hidden cheating from later informed cuckold / open / sharing consent;
+16. make the temptation about compartmentalization, not immediate romance.
 
-## 7. Final rule
+## 8. Final rule
 
 ```text
-Old Pauline material is not deleted automatically.
-It remains historical or technical material.
+Keep the old identity pillar.
+Discard the old mandatory schedule.
+
+Pauline is currently attached,
+already compromised,
+and capable of making secrecy sound like a practical alternative to choice.
 
 Only the full current canon determines
-who Pauline is,
-what she wants,
-and how her route can escalate.
+how that contradiction becomes playable.
 ```
