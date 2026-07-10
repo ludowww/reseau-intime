@@ -1,6 +1,6 @@
 # V0.79 — Act I Opening Windows Source Pack Report
 
-> Documentation-only narrative source-pack report.  
+> Documentation-only narrative source-pack report, including the temporal and communication-realism correction.  
 > No runtime, narrative JSON, Godot scene, script, test, asset, or playable content is changed.
 
 ## 1. Scope
@@ -9,8 +9,10 @@ V0.79 converts the opening portion of the V0.78 modular architecture into concre
 
 It defines:
 
-- the first relative narrative windows after J1;
+- the first post-J1 narrative windows;
 - exact French line sources;
+- a felt Tuesday–Friday chronology;
+- believable smartphone communication modes;
 - the water-damage entry of Mathilde into the household;
 - ordinary access for Raphaëlle, Pauline, and Nico;
 - restrained Sandra continuity;
@@ -18,7 +20,7 @@ It defines:
 - exactly three choices per foreground node;
 - one foreground scene per selected topology;
 - mandatory return to Marie;
-- authorized opening visuals and their audiences;
+- authorized visuals and their audiences;
 - conceptual state writes;
 - obligations, traces, conditions, cooldowns, mutation, and fallbacks;
 - the exact end state of the opening band.
@@ -26,7 +28,7 @@ It defines:
 It does not:
 
 - modify runtime;
-- write a fixed calendar-labeled J2;
+- restore a fixed J2–J10 chronology;
 - integrate old J2 JSON;
 - activate adult routes;
 - create hard secrets;
@@ -38,6 +40,8 @@ It does not:
 ```text
 docs/canon/ACT_I_OPENING_WINDOWS_SOURCE_PACK.md
 docs/canon/ACT_I_OPENING_SCENE_CARDS.md
+docs/canon/DIEGETIC_TIME_AND_COMMUNICATION_CANON.md
+docs/canon/ACT_I_OPENING_TEMPORAL_DELIVERY_MAP.md
 docs/V0_79_Act_I_Opening_Windows_Source_Pack_Report.md
 ```
 
@@ -53,69 +57,231 @@ README.md
 ROADMAP.md
 ```
 
-The README and roadmap were updated because they still described the old fixed J2, mandatory canapé selfie, and J3–J5 linear implementation sequence as current.
+The correction updates general entry points so temporal orientation and believable use of Messenger are not left as implicit style preferences.
 
 ## 4. Relationship to V0.78
-
-V0.78 defines the architecture:
-
-```text
-fixed spine
-+ topology choices
-+ modular windows
-+ scene pools
-+ persistent obligations
-+ consequences returning to the couple
-```
-
-V0.79 defines the first concrete content inside that architecture.
 
 ```text
 V0.78 = how the story moves
 V0.79 = the first authored movement
+Time/communication canon = when the movement happens and why it passes through a phone
 ```
 
-## 5. Opening duration and order
+The architecture remains modular.
 
-The pack covers roughly:
+Weekdays and time bands now make that modularity readable to the player.
+
+## 5. Concrete chronology
+
+J1's existing clues establish:
+
+- La Verrière event on Thursday;
+- Mathilde planning to inspect the installation `tomorrow`.
+
+Current calendar:
 
 ```text
-3–5 in-game days
+Tuesday evening
+= J1 — Les choses qu'on remarque
+
+Wednesday midday
+= Mathilde emergency and shared-home decision
+
+Wednesday late afternoon / evening
+= Mathilde arrival and offline settling
+
+Thursday morning
+= Raphaëlle ordinary work access
+
+Thursday early afternoon
+= Sandra continuity echo if eligible
+
+Thursday late afternoon
+= Marie offers the event topology
+
+Thursday evening
+= one selected topology foreground
+
+Thursday late evening / night
+= mandatory return / consequence with Marie
+
+Friday morning
+= Pauline authorized public-photo relay
+
+Friday afternoon
+= Nico saved-seat follow-up
+
+Friday late afternoon
+= household breather
 ```
 
-It deliberately avoids a mandatory `J2` label.
+The exact displayed minute may vary inside approved ranges.
 
-Relative order:
+The weekday and time band are canon.
+
+## 6. Communication-realism correction
+
+Core rule:
 
 ```text
-O0 — J1 carry-over
-O1 — Marie / make room
-O2 — Mathilde arrival
-O3 — Raphaëlle ordinary work + Sandra continuity echo
-O4 — Marie offers movement
-O5 — selected topology foreground
-O6 — mandatory return to Marie
-O7 — Pauline public group-photo relay
-O8 — Nico saved-seat follow-up + household breather
+If two characters are in the same room
+and can speak normally,
+they do not conduct a full Messenger conversation.
 ```
 
-O7 and O8 may invert according to natural message timing.
+Current communication modes:
 
-## 6. Mathilde household entry
+- `REMOTE_ASYNC`;
+- `TRACE_DELIVERY`;
+- `SEPARATE_ROOMS_PING`;
+- `SAME_VENUE_LOGISTICS`;
+- `WORK_CHAT`;
+- `OFFLINE_BEAT`;
+- `AFTERGLOW_REMOTE`.
 
-Mathilde's current canon is implemented through a real water-damage emergency.
+### Same room
+
+Characters speak offline.
+
+The interface may later show:
+
+- a trace;
+- a changed state;
+- a short event card;
+- a later message referring to what happened.
+
+### Same home, separate rooms
+
+A short practical ping is allowed.
+
+When one character enters the room, the chat stops.
+
+### Same busy venue
+
+Short logistical messages are allowed across noise, guests, and work tasks.
+
+A long emotional exchange moves to a later remote or offline consequence.
+
+### Same workplace
+
+Work chat requires separate workstations / rooms, hybrid work, or asynchronous file review.
+
+If the characters sit together, the remainder occurs offline.
+
+## 7. Scene-delivery audit
+
+### O1 — Make room
+
+```text
+Wednesday midday
+Marie at La Verrière; Player at work or in transit
+REMOTE_ASYNC
+```
+
+### O2 — Mathilde arrives
+
+```text
+Wednesday early evening
+Marie and Mathilde at home; Player still away
+TRACE_DELIVERY + REMOTE_ASYNC
+```
+
+When Player returns, the move-in continues offline.
+
+### O3 — Raphaëlle work
+
+```text
+Thursday morning
+separate workstations / rooms
+WORK_CHAT
+```
+
+### Sandra echo
+
+```text
+Thursday early afternoon
+Sandra after a poste du matin; Player elsewhere
+REMOTE_ASYNC
+```
+
+### O4 — Marie's invitation
+
+```text
+Thursday around 16h
+Marie at La Verrière setup; Player elsewhere
+REMOTE_ASYNC
+```
+
+### O5A — Join Marie
+
+```text
+Thursday evening
+same venue, separated by noise and tasks
+SAME_VENUE_LOGISTICS
+```
+
+Only short practical messages remain on the phone.
+
+### O5B — Stay home
+
+```text
+Thursday evening
+Player and Mathilde in separate rooms
+SEPARATE_ROOMS_PING
+```
+
+When Player enters the spare room, help continues offline.
+
+### O5C — Finish work
+
+```text
+Thursday late afternoon / evening
+separate work positions
+WORK_CHAT
+```
+
+Raphaëlle does not keep Player from Marie.
+
+### O6 — Return to Marie
+
+```text
+Thursday late evening / night
+AFTERGLOW_REMOTE if separated
+OFFLINE_BEAT if together
+```
+
+The scene remains mandatory regardless of delivery mode.
+
+### O7 — Pauline relay
+
+```text
+Friday morning
+TRACE_DELIVERY + REMOTE_ASYNC
+```
+
+### O8 — Nico follow-up
+
+```text
+Friday afternoon
+REMOTE_ASYNC
+```
+
+This respects Nico's late hospitality rhythm.
+
+## 8. Mathilde household entry
 
 Locked facts:
 
+- real water-damage emergency;
 - bedroom and part of bathroom unusable;
-- temporary stay of around ten to fifteen days;
+- temporary stay around ten to fifteen days;
 - Marie offers the spare room / office;
-- Player chooses the quality of participation, not whether emergency shelter exists;
-- Mathilde arrives with suitcase, garment bag, legal tote, too many shoes, and a missing charger;
-- arrival visual is practical and openly taken by Marie;
+- Player chooses participation quality, not whether emergency shelter exists;
+- suitcase, garment bag, legal tote, shoes, and missing charger;
+- practical arrival image taken openly by Marie;
 - no canapé selfie;
 - no deliberate seduction;
-- no route state above R1.
+- no route above R1.
 
 Core choice:
 
@@ -125,101 +291,48 @@ playful but present
 passive assent
 ```
 
-This records how Player makes space inside shared life.
+## 9. Raphaëlle ordinary entry
 
-## 7. Raphaëlle ordinary entry
-
-Raphaëlle first appears through a concrete UX/accessibility work correction.
+Raphaëlle first appears through a concrete UX/accessibility correction.
 
 The scene establishes:
 
 - peer status;
 - work competence;
 - dry humor;
-- Player's ability to accept, joke-and-fix, or delay a normal correction;
+- accountable, joking-but-active, or delaying Player posture;
 - no diagnosis of the couple;
 - no refuge function;
 - no personal image;
 - no creative-account access.
 
-A garment bag may appear later in the work topology as ordinary creative-life texture only.
+A garment bag remains ordinary texture only.
 
-## 8. Sandra continuity
+## 10. Sandra continuity
 
-Sandra remains present without stealing the opening.
-
-The conditional echo uses:
-
-- a poste du matin;
-- the returning SentryCore button;
-- the old J1 photo only when the J1 branch earned the mention.
+Sandra receives only a conditional echo after a poste du matin.
 
 The pack adds:
 
-- no new Sandra image;
+- no new image;
 - no direct confession;
-- no new fixed Thursday rendezvous;
+- no fixed new rendezvous;
 - no pressure;
 - no route-stage increase.
 
-Sandra may remain active or cool naturally.
+## 11. Marie's topology choice
 
-## 9. Marie's first topology choice
+The `petit événement jeudi` becomes a local illustration vernissage at La Verrière.
 
-The `petit événement jeudi` referenced in J1 becomes a small local illustration vernissage at La Verrière.
-
-Marie states two separate reasons:
-
-```text
-I need two arms at 18h.
-I want you to come.
-```
+Marie states separate practical and emotional reasons for wanting Player.
 
 Player chooses:
 
-### A — Join Marie early
-
-Opens:
-
 ```text
-PLAYER_WITH_MARIE_SOCIAL
+A — join Marie early
+B — stay at the shared home
+C — finish a real work obligation and promise to join later
 ```
-
-Foreground:
-
-- La Verrière setup;
-- quality of active participation;
-- Marie socially alive;
-- ordinary Pauline and Nico echoes.
-
-### B — Stay at the shared home
-
-Opens:
-
-```text
-HOME_WITHOUT_MARIE
-```
-
-Foreground:
-
-- practical Mathilde charger / spare-room scene;
-- Mathilde independently stays for building / insurance follow-up and fatigue;
-- no sexualized reward for declining Marie;
-- Marie continues the event and sends a social echo.
-
-### C — Finish a real work obligation and promise to join later
-
-Opens:
-
-```text
-PLAYER_WORK -> MARIE_RETURN_DUE
-```
-
-Foreground:
-
-- Raphaëlle work decision;
-- promise kept, honestly amended, or missed;
-- Raphaëlle does not retain Player or become the excuse.
 
 Core rule:
 
@@ -228,74 +341,42 @@ The choice does not select a woman.
 It selects what Player does.
 ```
 
-## 10. Mandatory return to Marie
+## 12. Mandatory return to Marie
 
-Every O5 topology is followed by:
+Every topology is followed by:
 
 ```text
 marie_after_first_event_return_01
 ```
 
-The return pays:
+The return pays proactive presence, useful household participation, honest delay, distraction, or missed promise.
 
-- proactive presence;
-- playful presence;
-- distracted presence;
-- useful household participation;
-- distance at home;
-- promise kept;
-- promise amended honestly;
-- promise missed.
+No fake undo choice is offered.
 
-No new choice is offered.
+When Player and Marie are physically together, the consequence becomes an offline beat rather than an artificial chat.
 
-Reason:
+The couple remains `HABITUAL_WARMTH` with only reconnection or drift candidates.
 
-```text
-The consequence must remember the prior choice,
-not let Player undo it through a nicer reply.
-```
+## 13. Pauline ordinary access
 
-The couple remains in `HABITUAL_WARMTH`.
-
-Only reconnection or drift candidates are written.
-
-## 11. Pauline ordinary access
-
-Pauline enters through a public group-photo set created with her remote shutter.
-
-The image set may include:
-
-- Marie;
-- Pauline;
-- Bastien;
-- Nico;
-- Élodie;
-- Player according to attendance.
+Pauline enters through an authorized group-photo set created with her remote shutter.
 
 Locked rules:
 
+- Friday-morning relay;
 - authorized social/public image;
 - Marie remains event owner;
 - Bastien remains visible;
-- Player selects practically, jokes, or defers to Marie;
-- no alternate private crop;
+- no alternate crop;
 - no one-view image;
 - no reciprocal proof;
 - no private compartment.
 
-Pauline ends at R1 ordinary social access.
+Pauline ends at R1 ordinary access.
 
-## 12. Nico ordinary access
+## 14. Nico ordinary access
 
-Nico enters through:
-
-- an event table / saved-seat gesture;
-- ordinary male friendship;
-- teasing about attendance or lateness;
-- the possibility of asking how Marie was rather than commenting sexually.
-
-He may learn that Mathilde is staying, but only through a credible source.
+Nico enters through an event table / saved-seat gesture and ordinary male friendship.
 
 Locked exclusions:
 
@@ -307,9 +388,11 @@ Locked exclusions:
 - no rivalry;
 - no NTR/cuckold language.
 
+Default follow-up is Friday afternoon rather than an implausible early morning after a late close.
+
 Nico ends at R1 ordinary access.
 
-## 13. Exact choice audit
+## 15. Choice audit
 
 All foreground nodes use exactly three choices.
 
@@ -327,34 +410,14 @@ All foreground nodes use exactly three choices.
 
 No four-choice exception exists.
 
-## 14. Visual inventory
+## 16. Visual inventory
 
-### Required or conditional current visuals
+### Current
 
-#### `mathilde_arrival_room_01`
-
-- private household image;
-- taken openly by Marie;
-- practical clutter;
-- no erotic crop;
-- no forwarding.
-
-#### `raphaelle_blue_folder`
-
-- optional work visual;
-- no personal or body focus.
-
-#### `marie_laverriere_setup_01`
-
-- event image;
-- Marie active in her life;
-- required in joined branch or usable as social echo elsewhere.
-
-#### `laverriere_public_group_photo_set_01`
-
-- authorized social/public set;
-- origin and audience known;
-- no adult function.
+- `mathilde_arrival_room_01` — Wednesday evening, private ordinary household image;
+- optional `raphaelle_blue_folder` — Thursday-morning work visual;
+- `marie_laverriere_setup_01` — Thursday event image;
+- `laverriere_public_group_photo_set_01` — Friday-morning authorized social/public set.
 
 ### Explicitly absent
 
@@ -367,7 +430,7 @@ No four-choice exception exists.
 - hidden capture;
 - sexual video.
 
-## 15. Route and adult ceiling
+## 17. Route and adult ceiling
 
 V0.79 remains inside:
 
@@ -377,17 +440,9 @@ R0–R1
 soft pre-R2 signals only
 ```
 
-No adult frame exists.
+No adult frame, route lock, hard secret, or unauthorized forwarding exists.
 
-No route lock exists.
-
-No hard secret exists.
-
-No image has been forwarded outside its intended audience.
-
-No character has skipped ordinary characterization.
-
-## 16. Pack-end state
+## 18. Pack-end state
 
 ```text
 Mathilde stay = active
@@ -404,29 +459,21 @@ relationship frame = ASSUMED_EXCLUSIVE
 couple mode = HABITUAL_WARMTH
 ```
 
-Possible future tendencies:
+## 19. Deprecated old assumptions
 
-- `ACTIVE_RECONNECTION` candidate;
-- `PARALLEL_DRIFT` candidate.
-
-One event cannot finalize the transition.
-
-## 17. Deprecated old J2 assumptions
-
-V0.79 supersedes as current narrative requirements:
+V0.79 supersedes:
 
 - fixed linear J2 order;
-- Player being physically absent until J3;
-- exactly four mandatory J2 visuals;
-- Raphaëlle badge visual as mandatory entry;
+- Player physically absent until J3;
+- four mandatory J2 visuals;
+- Raphaëlle badge image as required entry;
 - Mathilde canapé selfie;
 - Pauline/Nico exclusion by day number;
-- one fixed thread sequence;
-- J3 as the mandatory first physical home return.
+- J3 as mandatory first home return;
+- long Messenger exchanges between co-present people;
+- opening content with no readable morning/evening progression.
 
-Old J2 runtime remains available for technical inspection during V0.80.
-
-## 18. General-document reconciliation
+## 20. General-document reconciliation
 
 The pass updates:
 
@@ -436,26 +483,18 @@ The pass updates:
 - global story state;
 - continuity matrix;
 - README;
-- roadmap.
+- roadmap;
+- PR description.
 
-This ensures no top-level entry point still recommends the old linear J2/J3–J5 implementation path.
+The new temporal and communication documents become required sources for V0.80.
 
-## 19. Runtime impact
+## 21. Runtime impact
 
 None.
 
-V0.79 changes no:
+V0.79 changes no Godot scene, GDScript, narrative JSON, route variable, conversation index, asset, test, or current playable line.
 
-- Godot scene;
-- GDScript;
-- narrative JSON;
-- route variable;
-- conversation index;
-- visual asset;
-- test;
-- playable line in the current prototype.
-
-## 20. Next step
+## 22. Next step
 
 ```text
 V0.80 — First Modular Runtime Integration Plan
@@ -463,42 +502,44 @@ V0.80 — First Modular Runtime Integration Plan
 
 V0.80 must inspect current runtime and document:
 
+- mapping of Tuesday–Friday time anchors;
+- day / time separators and representative timestamps;
+- communication-mode handling;
+- transitions to `OFFLINE_BEAT` at co-presence;
 - existing thread and day structures;
 - mapping of O0–O8;
 - minimal state requirements;
 - old J2 replacement/deprecation strategy;
 - visual placeholder mapping;
-- one-thread-per-character continuity;
-- test and validation plan;
-- rollback;
-- small PR boundary.
+- test, validation, rollback, and small PR boundary.
 
 V0.80 remains documentation only.
 
-A later V0.81 may implement the first small vertical slice after V0.80 Product Owner validation.
+## 23. Product Owner decisions to review
 
-## 21. Product Owner decisions to review
-
-1. The opening is a three-to-five-day relative band, not a fixed J2.
-2. Player cannot veto emergency shelter; he chooses participation quality.
-3. Mathilde's old canapé selfie is removed from current opening canon.
-4. Raphaëlle enters through ordinary peer work.
-5. Sandra receives only a restrained conditional echo.
-6. Marie's vernissage creates the first three-way topology.
-7. Staying home opens a practical Mathilde scene, not a sexual reward.
-8. Work opens a Raphaëlle obligation scene, not an emotional refuge.
-9. Every topology returns to Marie before Pauline/Nico foreground access.
-10. Pauline and Nico remain R1 ordinary access only.
-11. The public group photo has explicit origin and audience.
+1. J1 is felt as Tuesday evening; the opening runs Wednesday–Friday.
+2. The player receives day/time cues rather than an abstract scene sequence.
+3. Co-present characters do not conduct long artificial chats.
+4. Same-room events can become offline beats with later smartphone consequences.
+5. Player cannot veto emergency shelter; he chooses participation quality.
+6. Mathilde's canapé selfie is removed.
+7. Raphaëlle enters through ordinary peer work.
+8. Sandra receives only a restrained conditional echo.
+9. Marie's vernissage creates the three-way topology.
+10. Every topology returns to Marie.
+11. Pauline and Nico remain R1 ordinary access only.
 12. The pack ends with no hard secret, adult frame, or route above R1.
 
-## 22. Final rule
+## 24. Final rule
 
 ```text
-V0.79 does not begin by asking who Player wants.
+V0.79 gives the opening a real week and a believable phone.
 
-It asks whether he makes room,
-joins Marie,
-keeps a promise,
-and treats each new person as a real life before a route.
+Tuesday establishes warmth.
+Wednesday disrupts the home.
+Thursday creates movement.
+Friday preserves the residue.
+
+When characters are together, they speak.
+When distance, logistics, traces, or aftermath matter, the phone records it.
 ```
