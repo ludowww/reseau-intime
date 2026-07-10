@@ -194,6 +194,8 @@ For Mathilde specifically, J7 does not define:
 - current long arc;
 - required scene order.
 
+The long-grey-sweater framing and any fixed Mathilde route assumptions remain non-primary.
+
 For Pauline, any old `less theoretical`, silence-test, or later escalation remains historical as a fixed sequence and does not establish current route state.
 
 ### J8+
@@ -358,6 +360,8 @@ She does not lose the right to decide.
 Bastien's ignorance never becomes consent.
 
 A later negotiated cuckold, sharing, open, trio, or group frame must be established separately and cannot retroactively erase betrayal.
+
+The global NSFW canon now carries the same rules, including double-addressed visuals and the distinction between hidden betrayal and informed adult negotiation.
 
 ## 11. Choice rule
 
