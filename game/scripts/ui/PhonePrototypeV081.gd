@@ -75,19 +75,43 @@ func _refresh_status_time(day_value) -> void:
 		if not moment_is_available:
 			continue
 		var moment_time := str(moment.get("time_label", ""))
-		if moment_time != "":
-			latest_time = moment_time
+		latest_time = _later_time(latest_time, moment_time)
 	var authored_time := str(narrative_time_by_day.get(str(day_value), ""))
-	if authored_time != "":
-		latest_time = authored_time
+	latest_time = _later_time(latest_time, authored_time)
 	status_time_label.text = latest_time if latest_time != "" else "--:--"
 
 func _on_narrative_time_changed(time_label: String) -> void:
 	if current_day_value == null or time_label == "":
 		return
-	narrative_time_by_day[str(current_day_value)] = time_label
+	var day_key := str(current_day_value)
+	var stored_time := str(narrative_time_by_day.get(day_key, ""))
+	var latest_time := _later_time(stored_time, time_label)
+	narrative_time_by_day[day_key] = latest_time
 	if is_instance_valid(status_time_label):
-		status_time_label.text = time_label
+		status_time_label.text = _later_time(status_time_label.text, latest_time)
+
+func _later_time(first: String, second: String) -> String:
+	if first == "":
+		return second
+	if second == "":
+		return first
+	var first_minutes := _time_to_minutes(first)
+	var second_minutes := _time_to_minutes(second)
+	if first_minutes < 0:
+		return second
+	if second_minutes < 0:
+		return first
+	return second if second_minutes > first_minutes else first
+
+func _time_to_minutes(value: String) -> int:
+	var parts := value.split(":", false, 1)
+	if parts.size() != 2 or not parts[0].is_valid_int() or not parts[1].is_valid_int():
+		return -1
+	var hours := int(parts[0])
+	var minutes := int(parts[1])
+	if hours < 0 or hours > 23 or minutes < 0 or minutes > 59:
+		return -1
+	return hours * 60 + minutes
 
 func _on_game_state_changed() -> void:
 	# The Reset button calls GameState.reset_state() before rebuilding the active
