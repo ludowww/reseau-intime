@@ -1,0 +1,1313 @@
+# Modular Scene Authoring Contract — V0.78
+
+> Canon contract for designing, reviewing, and later implementing modular narrative scenes.  
+> Companion to `MODULAR_NARRATIVE_ARC_BLUEPRINT.md`.  
+> Documentation only: this file does not define a final JSON schema or require a runtime refactor.
+
+## 1. Purpose
+
+A modular scene must be reusable without becoming generic.
+
+It must answer:
+
+```text
+Why can this scene happen now?
+Why with these characters?
+What is emotionally different because it happened?
+What future scene or consequence now becomes possible?
+```
+
+A scene is not modular merely because it is stored in a separate file.
+
+It is modular when:
+
+- its dramatic function is stable;
+- its conditions are explicit;
+- it can appear in more than one compatible chronology;
+- its context variants preserve character truth;
+- its consequences persist;
+- its absence also has meaning;
+- it does not require a fixed day number to make sense.
+
+---
+
+## 2. Scene-card structure
+
+Every authored foreground scene must define the following fields in documentation before runtime integration.
+
+## 2.1 Identity
+
+```text
+scene_id
+working_title
+primary_function
+primary_relationship
+principal_character
+```
+
+### `scene_id`
+
+Stable human-readable identifier.
+
+Recommended pattern:
+
+```text
+<character_or_hub>_<engine>_<variant>
+```
+
+Examples:
+
+```text
+mathilde_morning_kitchen_gaze_01
+pauline_private_alternate_group_photo_01
+nico_inside_outside_exchange_01
+raphaelle_half_finished_version_01
+marie_social_visibility_joined_01
+```
+
+Do not encode a fixed day number unless the scene is truly day-specific.
+
+### `primary_function`
+
+One main dramatic function only.
+
+Examples:
+
+- ordinary access;
+- attention;
+- boundary;
+- acknowledged attraction;
+- image rule;
+- alibi debt;
+- couple repair;
+- collision;
+- aftermath.
+
+### `primary_relationship`
+
+Examples:
+
+- Player / Marie;
+- Player / Sandra;
+- Player / Mathilde;
+- Player / Pauline;
+- Player / Nico;
+- Player / Raphaëlle;
+- Marie / Pauline;
+- Player / Marie / Nico.
+
+A scene may affect several relationships, but one remains primary.
+
+---
+
+## 2.2 Canon dependencies
+
+Every scene card must list:
+
+```text
+required_canon_files
+relevant_deprecation_maps
+supporting_character_source
+adult_canon_required: yes / no
+```
+
+Example:
+
+```text
+required_canon_files:
+- MATHILDE_CANON_FULL.md
+- MARIE_CANON_FULL.md
+- PLAYER_CANON_FULL.md
+
+adult_canon_required: yes
+```
+
+This prevents an isolated scene prompt from reviving deprecated ideas.
+
+---
+
+## 2.3 Scope and intensity
+
+```text
+act_range
+route_stage_range
+intensity_tier
+window_types
+foreground_cost
+echo_compatible
+```
+
+### `act_range`
+
+The acts in which the scene can appear.
+
+Example:
+
+```text
+Act I–II
+```
+
+### `route_stage_range`
+
+Example:
+
+```text
+R1–R2
+```
+
+A scene must not require a route stage it also creates without an explicit transition.
+
+### `intensity_tier`
+
+Use a descriptive tier:
+
+```text
+ordinary
+soft charge
+acknowledged attraction
+explicit private desire
+adult consequential frame
+aftermath
+```
+
+### `foreground_cost`
+
+Default:
+
+```text
+1 full window
+```
+
+A major scene cannot be hidden inside an echo to avoid pacing rules.
+
+---
+
+## 2.4 Eligibility
+
+Eligibility is divided into four categories.
+
+### Hard requirements
+
+Every condition must be true.
+
+Examples:
+
+- Mathilde's temporary stay is active;
+- Marie is outside the room;
+- Raphaëlle and Player are no longer on a shared work channel;
+- Pauline and Marie still have social access;
+- Nico knows Mathilde is staying in the apartment;
+- a specific image exists;
+- Player has not broken the relevant boundary;
+- route stage is at least R2.
+
+### Hard exclusions
+
+Any one exclusion blocks the scene.
+
+Examples:
+
+- route closed after a clear no;
+- character unavailable;
+- supporting partner physically present when the scene requires privacy;
+- an explicit adult aftermath is overdue;
+- the image was deleted;
+- Marie has already discovered the exact secret;
+- the act intensity ceiling is lower than the scene;
+- the same engine was used too recently.
+
+### Soft preferences
+
+These improve fit but are not required.
+
+Examples:
+
+- Player noticed a related detail earlier;
+- Marie went out by choice;
+- Nico and Player already shared one ordinary photo;
+- Sandra's previous trace was read precisely;
+- Raphaëlle's creative account is still private;
+- Pauline recently offered an unnecessary alibi.
+
+### Availability reason
+
+Every scene must state why the character is available now.
+
+Examples:
+
+- Sandra is at the end of a poste du soir;
+- Pauline has left choir and is walking home;
+- Nico has finished closing L'Annexe;
+- Raphaëlle and Player are leaving the same meeting;
+- Mathilde is already in the kitchen because she lives there temporarily;
+- Marie has an event at La Verrière.
+
+```text
+Availability is a narrative fact,
+not a convenience generated by route interest.
+```
+
+---
+
+## 2.5 Context reads
+
+A scene card must list the context it reads.
+
+Possible reads:
+
+### Couple
+
+- current couple mode;
+- presence tendency;
+- trust condition;
+- truth condition;
+- relationship frame;
+- recent Marie invitation;
+- whether a Marie consequence is due.
+
+### Route
+
+- current stage;
+- trust / access;
+- acknowledged attraction;
+- open boundary;
+- route paused or closed;
+- recent route scene;
+- feeling used;
+- jealousy;
+- pending question.
+
+### World
+
+- location;
+- time band;
+- character schedules;
+- Mathilde stay active;
+- Marie / Bastien / Jeff presence;
+- work deadline;
+- social event;
+- transport or household context.
+
+### Trace
+
+- image exists;
+- image origin;
+- intended audience;
+- actual audience;
+- saved / deleted;
+- who knows;
+- alibi state;
+- discovery risk.
+
+### Knowledge
+
+- known;
+- suspected;
+- misread;
+- unknown.
+
+### Consent
+
+- participants;
+- activity allowed;
+- image audience;
+- saving rule;
+- forwarding rule;
+- expiry;
+- stop / slow signal;
+- informed or hidden relationship frame.
+
+A scene should not read every available state.
+
+Only list what changes its meaning.
+
+---
+
+## 2.6 Stable dramatic engine
+
+The card must state the engine as a short causal chain.
+
+Example:
+
+```text
+ordinary domestic situation
+-> Player notices Mathilde differently
+-> Mathilde catches the gaze
+-> she jokes to regain control
+-> Player may respect, sharpen, or overstep
+-> household trust changes slightly
+```
+
+Another example:
+
+```text
+public group image exists
+-> Pauline selects a private alternate
+-> asks Player to identify the difference
+-> he can remain practical, acknowledge intent, or refuse the private frame
+-> a reciprocal-risk obligation may open
+```
+
+If the engine could fit any character by replacing the name, it is not specific enough.
+
+---
+
+## 2.7 Entry context
+
+Every scene needs an authored entry reason.
+
+Examples:
+
+- reply to a prior promise;
+- ordinary event logistics;
+- Player returns home;
+- image arrives;
+- work task ends;
+- character asks a practical question;
+- Marie makes a plan;
+- an existing trace is recognized;
+- a route consequence interrupts ordinary life.
+
+Avoid opening every scene with:
+
+- `hey`;
+- random late-night message;
+- accidental photo;
+- unexplained availability;
+- a character immediately discussing the route theme.
+
+---
+
+## 2.8 Choice contract
+
+Default:
+
+```text
+maximum 3 choices
+```
+
+Each choice node must define:
+
+- the immediate Player message or action;
+- the posture;
+- the topology or relationship effect;
+- the state write;
+- the consequence or follow-up;
+- whether the route remains open, pauses, advances, or closes.
+
+### Choice postures
+
+Three choices should usually represent meaningfully different postures such as:
+
+```text
+engage / intensify
+reframe / tease / negotiate
+slow / refuse / remain distant
+```
+
+or:
+
+```text
+join
+let the other person act independently
+choose a separate responsibility
+```
+
+Do not use three choices that differ only in wording intensity.
+
+### One decision axis per node
+
+A node should not simultaneously ask Player to decide:
+
+- whether he desires the character;
+- whether he tells Marie;
+- whether he saves an image;
+- whether he wants a trio;
+- whether he leaves the relationship.
+
+Split distinct decisions into separate scenes or consequence windows.
+
+### Choice labels vs authored messages
+
+Short UI labels are allowed.
+
+The resulting Player message must remain a real message.
+
+Bad:
+
+```text
+Choose honesty.
+```
+
+Better:
+
+```text
+Player : j'ai envie de te répondre
+Player : mais pas de faire comme si Marie n'existait pas
+```
+
+### Four-choice exception
+
+A scene with 4+ choices must state:
+
+```text
+exception_reason
+why three choices cannot preserve distinct consent or irreversible outcomes
+```
+
+No exception is automatic because the scene is adult.
+
+---
+
+## 2.9 Character-agency check
+
+The card must answer:
+
+- What does the non-Player character want in this scene?
+- What can they refuse?
+- What can they initiate?
+- What do they know?
+- What are they wrong about?
+- What do they do if Player remains passive?
+- What would make them leave or close the channel?
+
+For Marie, also answer:
+
+```text
+What is Marie doing for herself,
+not only in reaction to Player or another route?
+```
+
+For a supporting character, answer only what the scene requires.
+
+---
+
+## 2.10 State writes
+
+Every foreground scene must list what changes.
+
+Possible writes:
+
+### Couple
+
+- presence improved / worsened;
+- desire expressed;
+- trust strained / repaired;
+- truth concealed / disclosed;
+- frame question opened;
+- Marie consequence due.
+
+### Route
+
+- ordinary access established;
+- charged access established;
+- attraction acknowledged;
+- boundary respected / broken;
+- route paused / closed;
+- consequential frame created;
+- aftermath due;
+- character withdraws.
+
+### Obligation
+
+- promise;
+- debt;
+- alibi;
+- question owed;
+- delete later;
+- talk tomorrow;
+- direct confirmation required;
+- return object;
+- attend event.
+
+### Trace
+
+- image created;
+- image sent;
+- crop differs;
+- object moved;
+- social witness;
+- notification seen;
+- phrase becomes private code;
+- behavior changes.
+
+### Knowledge
+
+- fact becomes known;
+- suspicion begins;
+- misreading corrected;
+- false belief reinforced.
+
+### Consent
+
+- activity allowed;
+- activity refused;
+- image audience named;
+- saving allowed / forbidden;
+- frame expires;
+- direct confirmation required.
+
+A scene should not increase every relevant dimension.
+
+---
+
+## 2.11 Exit contract
+
+Every scene must define:
+
+```text
+exit_state
+follow_up_candidates
+consequence_due
+cooldown
+expiry_or_mutation
+fallback_if_not_seen
+```
+
+### `exit_state`
+
+A concise summary of what is now true.
+
+Example:
+
+```text
+Mathilde knows Player noticed.
+She has not admitted deliberate intent.
+Marie does not know the exchange occurred.
+The household remains functional.
+```
+
+### `follow_up_candidates`
+
+List scene functions, not one mandatory next scene.
+
+Example:
+
+- Mathilde outfit opinion;
+- Marie returns home;
+- Nico asks about domestic access;
+- Mathilde restores distance;
+- family memory reminds Player of Marie.
+
+### `consequence_due`
+
+State whether a consequence is:
+
+- immediate;
+- next compatible window;
+- act-gated;
+- optional;
+- none.
+
+### `cooldown`
+
+Prevent exact engine repetition too soon.
+
+### `expiry_or_mutation`
+
+State what happens if the scene is deferred.
+
+Examples:
+
+- the invitation expires;
+- the photo is no longer current;
+- the message becomes colder;
+- the character acts without Player;
+- the scene mutates into a missed-opportunity consequence.
+
+### `fallback_if_not_seen`
+
+A mandatory spine function may need a substitute scene.
+
+An optional route scene may simply expire.
+
+---
+
+## 3. Scene classes
+
+## 3.1 Spine scene
+
+Carries a mandatory dramatic function.
+
+Requirements:
+
+- cannot disappear because a route score is low;
+- may have variants;
+- may create windows;
+- may be delayed only inside a defined act range;
+- has a fallback.
+
+## 3.2 Route opportunity scene
+
+Offers a plausible character-specific opening.
+
+Requirements:
+
+- ordinary access already exists;
+- context fit;
+- no overdue higher-priority consequence;
+- can be missed;
+- does not wait forever unchanged.
+
+## 3.3 Route continuation scene
+
+Pays an existing route state.
+
+Requirements:
+
+- current route stage;
+- compatible window;
+- no boundary contradiction;
+- reads recent history;
+- must not repeat the previous engine unchanged.
+
+## 3.4 Consequence scene
+
+Pays an obligation, trace, lie, image rule, disclosure, or adult aftermath.
+
+Requirements:
+
+- priority over new opportunity;
+- clear affected characters;
+- no clean reset;
+- explicit state writes.
+
+## 3.5 Breather scene
+
+Provides ordinary life and pacing.
+
+Requirements:
+
+- still character-specific;
+- no disguised route escalation;
+- may reveal work, family, food, craft, fatigue, or humor;
+- can strengthen later scenes by making the person real.
+
+## 3.6 Echo
+
+Small beat only.
+
+Requirements:
+
+- no major route-stage change;
+- no adult consent creation;
+- no major decision hidden outside a foreground scene;
+- maximum one clear function.
+
+---
+
+## 4. Priority bands
+
+When several scenes are eligible in one window, use:
+
+### A — Safety / consent / aftermath
+
+- boundary violation response;
+- image deletion or discovery;
+- post-explicit check-in;
+- return to work;
+- immediate emotional safety.
+
+### B — Spine due
+
+- mandatory act function;
+- couple anchor;
+- Mathilde household change;
+- couple-frame declaration.
+
+### C — Obligation due
+
+- promise;
+- invitation;
+- alibi;
+- debt;
+- unanswered question;
+- known trace with expiry.
+
+### D — Active route continuation
+
+- R2–R4 scene matching context.
+
+### E — Ordinary entry / new opportunity
+
+- principal character introduction;
+- route access;
+- variety scene.
+
+### F — Breather / fallback
+
+- ordinary life;
+- no route scene;
+- pacing reset.
+
+Tie-breaker order:
+
+```text
+context fit
+-> overdue
+-> unseen
+-> longest deferred
+-> least recently used pool
+-> authored deterministic order
+```
+
+Do not use random selection before these rules.
+
+---
+
+## 5. Foreground and echo budget
+
+Default window:
+
+```text
+1 foreground
+0–2 echoes
+```
+
+### Foreground rules
+
+- one primary dramatic function;
+- may contain several short beats;
+- may update route stage;
+- may create consequence;
+- may host up to three choices per node.
+
+### Echo rules
+
+- no route stage change;
+- no full consent negotiation;
+- no hidden irreversible act;
+- no explicit scene compressed into a notification;
+- should not make the player feel six routes are demanding attention simultaneously.
+
+### High-intensity rule
+
+After an explicit, discovery, or major betrayal scene:
+
+```text
+next compatible foreground
+= aftermath, ordinary return, or consequence
+```
+
+A new unrelated explicit opportunity cannot automatically take priority.
+
+---
+
+## 6. Context-variant policy
+
+A modular scene may have targeted variants.
+
+Recommended variant dimensions:
+
+- Marie present / absent / informed;
+- couple mode;
+- route stage;
+- public / private / secret channel;
+- prior boundary respected / broken;
+- trace exists / does not exist;
+- character initiated / Player initiated;
+- informed frame / hidden frame.
+
+Do not author every Cartesian combination.
+
+Use a variant only when it materially changes:
+
+- meaning;
+- consent;
+- character agency;
+- consequence;
+- voice;
+- route frame.
+
+### Variant budget
+
+Recommended:
+
+- one stable base scene;
+- two or three validated entry variants;
+- one or two consequence variants;
+- separate scene when the dramatic function changes.
+
+```text
+If a variant changes who is being betrayed,
+what is consented to,
+or what the scene is for,
+it is probably a different scene.
+```
+
+---
+
+## 7. Trace authoring contract
+
+Any scene creating or using an important trace must define:
+
+```text
+trace_id
+origin
+creator
+initial_holder
+intended_audience
+actual_audience
+consent_level
+save_rule
+forward_rule
+knowledge_state
+risk
+expiry
+possible_payoffs
+```
+
+### Image-specific consent levels
+
+#### Authorized shared gaze
+
+- photographed adult knows audience and purpose;
+- rules named;
+- can become clean adult reward.
+
+#### Unapproved recontextualization / circulation
+
+- image may be legitimate to possess;
+- sexual recropping, forwarding, saving, or new audience was not authorized;
+- dark betrayal route;
+- consequences required.
+
+#### Severe prohibited capture
+
+- hidden camera;
+- intimate theft;
+- incapacitated capture;
+- secret sexual recording;
+- coercive threat.
+
+Not a standard reward loop.
+
+### Deletion rule
+
+Deletion changes evidence.
+
+It does not erase:
+
+- what happened;
+- who saw it;
+- memory;
+- changed behavior;
+- trust damage;
+- backups or screenshots if canonically established.
+
+Do not create magical deletion consequences that suit the route.
+
+---
+
+## 8. Knowledge authoring contract
+
+A scene must state what each participant knows before and after.
+
+Use:
+
+```text
+KNOWN
+SUSPECTED
+MISREAD
+UNKNOWN
+```
+
+Example:
+
+```text
+before:
+- Player knows Pauline sent an alternate crop.
+- Marie knows only the public image.
+- Bastien knows the public event occurred.
+- Nico suspects Pauline selected Player but has no proof.
+
+after:
+- Player knows the crop was deliberate.
+- Pauline knows Player understood.
+- Marie remains unaware.
+- a future notification risk exists.
+```
+
+No character may reference hidden route facts without a source.
+
+---
+
+## 9. Consent authoring contract
+
+A scene that changes adult permission must state:
+
+```text
+who consents
+what activity
+with whom
+who may watch
+who may receive images
+what may be saved
+what may be forwarded
+what is forbidden
+how long the frame lasts
+what ends or slows the scene
+what aftermath is promised
+who outside the scene is informed or excluded
+```
+
+A scene can intentionally create hidden betrayal.
+
+The card must label it.
+
+Bad:
+
+```text
+frame: open-ish
+```
+
+Good:
+
+```text
+frame: hidden betrayal
+Marie is not informed.
+Raphaëlle and Player both know she is not informed.
+Their local consent does not create Marie's consent.
+```
+
+---
+
+## 10. Character-specific scene tests
+
+### Marie test
+
+- Does the scene show why life with Marie is desirable?
+- Does she act for herself?
+- Is Player asked to do something concrete?
+- Is she more than reaction to another route?
+
+### Sandra test
+
+- Is there a concrete trace or chosen distance?
+- Does Sandra choose what she shows?
+- Is pressure avoided?
+- Does Jeff remain human where relevant?
+
+### Mathilde test
+
+- Is ordinary sensuality distinguished from deliberate intent?
+- Is the household and Marie present in meaning?
+- Does Mathilde retain work, family, humor, and self-respect?
+
+### Pauline test
+
+- Are Bastien, Marie, public version, private version, and non-choice active?
+- Is reciprocal implication real?
+- Does proof control create rather than erase consequence?
+
+### Nico test
+
+- Is the image/gaze origin credible?
+- Does Nico want a person, an effect, or both?
+- Are Marie / Mathilde / Pauline active subjects rather than inventory?
+- Does Player own his part of the pact?
+
+### Raphaëlle test
+
+- Is the chosen version authored rather than accidental?
+- Is work separated from private access?
+- Does the role have an end and aftermath?
+- Does local clarity avoid pretending to be global innocence?
+
+### Player test
+
+- Does Player send a real reply or perform a real action?
+- Is his observation allowed to be wrong?
+- Does he choose, delay, refuse, or return?
+- Is he more than a camera or route selector?
+
+---
+
+## 11. Worked scene card — Mathilde morning kitchen
+
+This is an authoring example, not approved J2 text.
+
+```yaml
+scene_id: mathilde_morning_kitchen_gaze_01
+working_title: Unprepared version
+primary_function: attention -> soft tension
+primary_relationship: Player / Mathilde
+principal_character: Mathilde
+
+act_range: Act I–II
+route_stage_range: R1–R2
+intensity_tier: soft charge
+window_types:
+  - COUPLE_HOME
+  - HOME_WITHOUT_MARIE
+foreground_cost: 1
+
+hard_requirements:
+  - mathilde_temporary_stay_active
+  - morning_context
+  - no_active_mathilde_route_closure
+hard_exclusions:
+  - explicit_aftermath_due
+  - mathilde_boundary_broken
+  - same_engine_recently_seen
+soft_preferences:
+  - Player previously helped Mathilde practically
+  - Marie is briefly elsewhere in the apartment or already left
+availability_reason:
+  - Mathilde lives in the apartment temporarily
+
+context_reads:
+  - couple_mode
+  - recent_player_presence
+  - mathilde_route_stage
+  - Marie_location
+  - Nico_domestic_envy_seed
+
+stable_engine:
+  - tired ordinary kitchen moment
+  - Player notices Mathilde's normal fitted homewear
+  - Mathilde catches the gaze
+  - she distinguishes unprepared presence from deliberate presentation
+  - Player can respect, tease, or overstep
+
+choices:
+  1:
+    posture: respectful observation
+    result: acknowledge without sexual claim
+    writes:
+      - mathilde_trust_up
+      - gaze_acknowledged_soft
+  2:
+    posture: playful complicity
+    result: joke while admitting he noticed
+    writes:
+      - mathilde_tension_up
+      - possible_outfit_followup
+  3:
+    posture: too direct or retreat
+    result: route cools or boundary appears according to wording
+    writes:
+      - mathilde_boundary_or_distance
+
+exit_state:
+  - Mathilde knows Player noticed
+  - deliberate intent remains unconfirmed
+  - Marie does not automatically know
+follow_up_candidates:
+  - outfit opinion
+  - Marie returns
+  - Nico asks about domestic access
+  - Mathilde ordinary work scene
+consequence_due:
+  - none unless Player oversteps
+cooldown:
+  - no morning-gaze engine in next two compatible windows
+expiry_or_mutation:
+  - if deferred, replace with another ordinary domestic access scene
+fallback_if_not_seen:
+  - no route penalty; Mathilde still needs another R1 ordinary scene
+```
+
+What makes the scene Mathilde-specific:
+
+- ordinary sensuality;
+- domestic access;
+- distinction between unprepared and deliberate version;
+- Marie's household context;
+- later Nico envy without immediate photo circulation.
+
+---
+
+## 12. Worked scene card — Pauline private alternate
+
+```yaml
+scene_id: pauline_private_alternate_group_photo_01
+primary_function: charged access -> private selectivity
+primary_relationship: Player / Pauline
+act_range: Act II–III
+route_stage_range: R1–R3
+window_types:
+  - PRIVATE_MESSAGE
+  - TRACE_OR_IMAGE
+
+hard_requirements:
+  - public_group_image_exists
+  - Pauline_and_Marie_social_trust_active
+  - Pauline_has_legitimate_access_to_Player
+hard_exclusions:
+  - Pauline_route_closed
+  - image_rule_broken_unresolved
+  - Marie_discovery_consequence_due
+
+stable_engine:
+  - public image already exists
+  - Pauline sends a different crop or version
+  - Player must decide whether to treat it as practical, intentional, or inappropriate
+  - Pauline learns whether he accepts the compartment
+
+choices:
+  1:
+    posture: practical boundary
+    writes:
+      - route_remains_R1_or_pauses
+  2:
+    posture: acknowledge intent
+    writes:
+      - route_to_R2_or_R3
+      - exact_answer_obligation
+  3:
+    posture: request or intensify too quickly
+    writes:
+      - Pauline_boundary
+      - route_trust_down_or_closure
+
+trace_created:
+  - alternate_crop
+  - intended_audience_Player
+  - save_rule_must_be_defined
+
+exit_state:
+  - Player knows whether the alternate was deliberate
+  - Marie and Bastien knowledge remain separately tracked
+```
+
+---
+
+## 13. Worked window card — Marie proposes an evening
+
+```yaml
+window_id: spine_marie_evening_offer_01
+class: spine topology window
+act_range: Act I–II
+primary_function: movement offered
+foreground_capacity_after_choice: 1
+echo_capacity: 2
+
+setup:
+  - Marie proposes a real social or cultural plan
+  - the plan belongs to her life, not only route setup
+
+choice_topologies:
+  1:
+    outcome: Player joins Marie
+    opens:
+      - Marie social visibility
+      - Nico saved seat
+      - Pauline group image
+    closes_or_reduces:
+      - Mathilde private home foreground
+      - Raphaëlle work foreground
+  2:
+    outcome: Marie goes; Player stays home
+    opens:
+      - Mathilde domestic foreground
+      - Sandra private trace
+      - Nico domestic-gaze message
+      - Pauline private relay
+    creates:
+      - Marie independent social echo
+  3:
+    outcome: Player chooses separate responsibility or outing
+    opens:
+      - Raphaëlle work/walk
+      - Nico ordinary friendship
+      - Sandra private message
+    creates:
+      - later Marie consequence
+
+return_anchor:
+  - shared memory, changed energy, or question when Player and Marie reconnect
+```
+
+The source pack must author exact dialogue and choose the final third topology.
+
+The runtime must not display character names as route buttons.
+
+---
+
+## 14. Scene review checklist
+
+A scene is ready for Product Owner review only if:
+
+- [ ] current canon files are listed;
+- [ ] primary dramatic function is singular and clear;
+- [ ] act and route-stage ranges are defined;
+- [ ] availability has a believable reason;
+- [ ] hard requirements and exclusions are explicit;
+- [ ] the scene is character-specific;
+- [ ] Player has real messages/actions;
+- [ ] no more than three choices appear by default;
+- [ ] each choice writes a distinct consequence;
+- [ ] non-Player agency is explicit;
+- [ ] knowledge before/after is coherent;
+- [ ] consent frame is labeled if adult content is involved;
+- [ ] image origin and audience are known when relevant;
+- [ ] supporting characters remain proportional and human;
+- [ ] exit state and follow-up candidates are listed;
+- [ ] consequence timing is defined;
+- [ ] cooldown / expiry / mutation is defined;
+- [ ] Marie/shared-life impact is identified;
+- [ ] no old fixed-day assumption is required;
+- [ ] no runtime refactor is silently implied.
+
+---
+
+## 15. Runtime-planning checklist
+
+Before Hermes/Codex converts approved scene cards into runtime:
+
+- inspect existing data and indexes;
+- map conceptual state to the smallest compatible runtime representation;
+- preserve current tests and validation commands;
+- avoid global refactoring;
+- integrate one window/pool slice at a time;
+- use three choices by default;
+- list and justify every 4+ choice node;
+- preserve scene history and cooldown where required;
+- implement due consequences before adding new opportunities;
+- keep image/knowledge/consent state explicit enough for the approved scene;
+- do not build systems unused by the vertical slice;
+- update documentation if implementation constraints change the approved design.
+
+---
+
+## 16. Anti-patterns
+
+Reject a scene card that relies on:
+
+- fixed day number without dramatic necessity;
+- one affection score;
+- random character availability;
+- a character-selection menu;
+- all routes messaging simultaneously;
+- an image with no credible origin;
+- omniscient knowledge;
+- public image equaling forwarding permission;
+- costume equaling consent;
+- partner absence equaling permission;
+- hidden betrayal labeled open;
+- exact dialogue reused unchanged;
+- procedural generic flirt dialogue;
+- three choices that are the same posture;
+- a fourth choice without justification;
+- a consequence that disappears because the scene ended;
+- a support character promoted accidentally;
+- a scene whose only function is exposition from a character sheet;
+- an explicit scene with no aftermath;
+- a boundary that repeated pressure can bypass;
+- a major state change hidden in an echo;
+- a runtime system designed before the scene function is validated.
+
+---
+
+## 17. Final rule
+
+```text
+A modular scene is not free-floating content.
+
+It is a precise promise:
+under these conditions,
+this character can make this choice,
+Player can answer in these ways,
+and the story will remember what happened.
+```
