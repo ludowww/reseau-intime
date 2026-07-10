@@ -1,358 +1,177 @@
-# État global de l’histoire — V0.79
+# État global de l’histoire — V0.80
 
-> Résumé opérationnel après correction temporelle et communicationnelle du premier source pack modulaire post-J1.  
-> Ce fichier ne remplace ni le canon détaillé, ni le source pack, ni les cartes de scènes.  
-> Il sert à vérifier rapidement l’état courant avant le plan d’intégration runtime.
+> Résumé opérationnel après audit du prototype et planification de la première intégration modulaire.  
+> V0.80 est documentaire : le runtime reste inchangé.
 
-## 1. Hiérarchie de vérité actuelle
+## 1. Hiérarchie actuelle
 
 ```text
-canon personnages complet
-+ canon NSFW
-+ canon des choix
-+ V0.78 Modular Narrative Arc Blueprint
-+ V0.78 Modular Scene Authoring Contract
-+ Diegetic Time & Communication Realism Canon
-+ V0.79 Act I Opening Windows Source Pack
-+ V0.79 Act I Opening Scene Cards
-+ V0.79 Act I Opening Temporal & Delivery Map
-= vérité narrative actuelle pour l'ouverture post-J1
+canon personnages
++ V0.78 architecture
++ V0.79 source pack / cartes / temps
+= vérité narrative
 
-runtime JSON
-= implémentation technique, jamais vérité narrative automatique
+V0.80 audit + plan d'intégration
+= vérité technique pour la prochaine PR
 
-anciens J2–J10 / day plans / foundations / summaries
-= historiques ou techniques si contradiction
+runtime actuel
+= prototype pré-modulaire, pas vérité narrative automatique
 ```
 
-## 2. Sources actives
+Sources V0.80 :
 
 ```text
-docs/canon/DOCUMENTATION_READING_ORDER.md
-docs/canon/NARRATIVE_CANON_STATUS.md
-docs/canon/CHOICE_DESIGN_CANON.md
-docs/canon/MODULAR_NARRATIVE_ARC_BLUEPRINT.md
-docs/canon/MODULAR_SCENE_AUTHORING_CONTRACT.md
-docs/canon/DIEGETIC_TIME_AND_COMMUNICATION_CANON.md
-docs/canon/ACT_I_OPENING_WINDOWS_SOURCE_PACK.md
-docs/canon/ACT_I_OPENING_SCENE_CARDS.md
-docs/canon/ACT_I_OPENING_TEMPORAL_DELIVERY_MAP.md
-docs/canon/characters/CHARACTER_CANON_INDEX.md
-docs/canon/characters/*_CANON_FULL.md
-docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
-docs/canon/SUPPORTING_CHARACTER_CANON_POLICY.md
+docs/runtime/V0_80_RUNTIME_AUDIT_AND_GAP_MAP.md
+docs/V0_80_First_Modular_Runtime_Integration_Plan.md
+docs/runtime/V0_81_WEDNESDAY_VERTICAL_SLICE_IMPLEMENTATION_PLAN.md
 ```
 
-Pour J1 exact :
+## 2. État narratif canonique
+
+### Mardi soir — J1
 
 ```text
-docs/canon/J1_CANON_SOURCE_PACK.md
-docs/V0_69_J1_Canon_Text_Review_And_Final_Line_Source.md
+couple mode = HABITUAL_WARMTH
+Mathilde = indirecte seulement
+Sandra = trace douce
+routes externes = inactives
 ```
 
-## 3. Question centrale
+### Mercredi–vendredi — V0.79
+
+Le contenu est écrit et validable dans la documentation, mais pas encore intégré au prototype.
 
 ```text
-Le couple Player / Marie peut-il redevenir un choix actif ?
+Mercredi = urgence / arrivée Mathilde
+Jeudi = travail / événement / topologie / retour Marie
+Vendredi = photos publiques / Nico / foyer
 ```
 
+## 3. Écart runtime critique
+
+Le J1 jouable actuel montre encore :
+
+- les sacs de Mathilde dans l’entrée ;
+- ses baskets ;
+- un sac de sport / une raquette ;
+- une image `j1_mathilde_bag_domestic_trace`.
+
+Cela contredit l’arrivée du mercredi après dégât des eaux.
+
+Décision V0.80 :
+
 ```text
-Marie      = couple et reconquête active
-Sandra     = confidence et vérité privée choisie
-Mathilde   = proximité domestique et changement d'intention
-Pauline    = image, compartimentation et double vie
-Nico       = regard social, envie domestique, voyeurisme et rivalité
-Raphaëlle  = version choisie, cadre explicite et après-rôle
-Player     = regard devenant acte, choix ou mauvaise foi
+V0.81 corrige uniquement ce raccord J1
+avant d'intégrer le mercredi.
 ```
 
-## 4. État canonique après J1
+## 4. Capacités déjà réutilisables
 
-Mode couple :
+Le prototype sait déjà :
+
+- conserver un fil par personnage ;
+- fusionner plusieurs épisodes dans le même fil ;
+- afficher des segments, choix, réponses et historiques ;
+- débloquer séquentiellement des conversations ;
+- afficher notifications, heures et cartes visuelles ;
+- enregistrer des flags.
+
+Il ne sait pas encore :
+
+- débloquer une branche selon un choix ;
+- filtrer conditionnellement des variantes ;
+- représenter proprement un `offline_beat` ;
+- piloter le jour et l’heure depuis les données ;
+- masquer automatiquement les anciens jours suspendus.
+
+## 5. Découpage runtime approuvé par le plan
 
 ```text
-HABITUAL_WARMTH
+V0.81 — raccord mardi + tranche mercredi
+V0.82 — topologie du jeudi + retour Marie
+V0.83 — traces du vendredi + clôture de l'ouverture
 ```
 
-- amour réel ;
-- confiance globalement intacte ;
-- exclusivité supposée ;
-- désir sous-exprimé ;
-- présence active de Player inégale ;
-- Sandra revenue par une trace douce ;
-- aucune route externe active ;
-- aucun secret dur ;
-- aucun cadre adulte.
+Le pack complet O0–O8 ne doit pas être intégré en une seule PR.
 
-## 5. Repère temporel canonique
+## 6. Périmètre V0.81
 
-L’ouverture possède désormais une semaine lisible :
+V0.81 doit implémenter seulement :
 
 ```text
-Mardi soir
-= J1 — Les choses qu'on remarque
-
-Mercredi midi
-= urgence Mathilde / décision de faire de la place
-
-Mercredi fin d'après-midi et soir
-= arrivée de Mathilde / installation hors ligne
-
-Jeudi matin
-= première présence travail de Raphaëlle
-
-Jeudi début d'après-midi
-= écho Sandra possible après poste du matin
-
-Jeudi fin d'après-midi
-= proposition de Marie pour La Verrière
-
-Jeudi soir
-= branche topologique
-
-Jeudi nuit
-= conséquence / retour vers Marie
-
-Vendredi matin
-= relais photo publique de Pauline
-
-Vendredi après-midi
-= suivi de Nico
-
-Vendredi fin de journée
-= respiration du foyer
+J1 : suppression du faux Mathilde déjà installé
+Mercredi midi : O1 Marie / faire de la place
+Mercredi fin de journée : trace d'arrivée Marie
+Mercredi soir : fil Mathilde / arrivée
+19h15 environ : installation hors ligne
 ```
 
-Les jours et moments de journée sont canoniques.
-
-Les minutes exactes restent une décision d’intégration à l’intérieur des plages validées.
-
-## 6. Règle de communication réaliste
+Choix :
 
 ```text
-Si deux personnages sont dans la même pièce
-et peuvent parler normalement,
-ils ne mènent pas une longue conversation Messenger.
+M0  — proactive / joueuse-présente / passive
+MT0 — pratique / taquine / distante
 ```
 
-Modes actifs :
+État : flags uniquement.
 
-- `REMOTE_ASYNC` ;
-- `TRACE_DELIVERY` ;
-- `SEPARATE_ROOMS_PING` ;
-- `SAME_VENUE_LOGISTICS` ;
-- `WORK_CHAT` ;
-- `OFFLINE_BEAT` ;
-- `AFTERGLOW_REMOTE`.
+Aucune route R2, aucun secret, aucun contenu adulte.
 
-### Applications V0.79
+## 7. Temps et communication V0.81
 
-- O1 : Marie et Player sont séparés à midi ; messages naturels.
-- O2 : Player n’est pas encore rentré lors de la photo d’arrivée ; dès son retour, l’installation continue hors ligne.
-- O3 : Player et Raphaëlle travaillent depuis des postes / pièces distinctes ; s’ils se rejoignent, le chat s’arrête.
-- O5A : Marie et Player n’échangent que de courts messages logistiques à travers une salle bruyante.
-- O5B : Mathilde écrit depuis la chambre d’appoint ; lorsque Player entre, l’aide continue hors ligne.
-- O5C : work chat seulement pendant la séparation physique ; revue finale hors ligne si co-présence.
-- O6 : message si les partenaires se sont séparés ; `OFFLINE_BEAT` s’ils rentrent ensemble.
-- respiration du foyer : message seulement si les personnages sont séparés ; sinon la scène est parlée.
+- boutons : Mardi / Mercredi ;
+- heure de statut pilotée par la fenêtre active ;
+- Marie O1 à midi ;
+- trace O2 en fin de journée ;
+- Mathilde avant le retour de Player ;
+- le chat s’arrête lors de la co-présence ;
+- l’installation devient un `offline_beat` centré, pas une fausse bulle.
 
-Le smartphone montre ce qui passe réellement par le smartphone.
+## 8. Navigation active
 
-## 7. Ouverture Acte I écrite
+Pour V0.81 :
 
 ```text
-O0 — continuité J1
-O1 — Marie / faire de la place
-O2 — arrivée de Mathilde
-O3 — Raphaëlle travail + écho Sandra possible
-O4 — Marie propose un mouvement
-O5 — une branche topologique
-O6 — retour obligatoire vers Marie
-O7 — relais photo publique Pauline
-O8 — suivi place gardée Nico + respiration foyer
+indexes actifs = chapter_01 + chapter_02
 ```
 
-O7 et O8 peuvent s’inverser si O6 est déjà payé et si le rythme des messages reste crédible.
+Les anciens Chapter 3+ restent sur disque mais ne sont plus présentés comme continuation actuelle.
 
-## 8. Premier choix topologique
+Ils sont conservés pour historique, rollback et inspection technique.
 
-Marie propose le vernissage de La Verrière.
-
-Player choisit :
+## 9. État visé après V0.81
 
 ```text
-1. venir tôt avec Marie
-2. rester au foyer partagé
-3. finir une vraie obligation de travail et promettre de venir ensuite
-```
-
-Cela ouvre exactement une scène principale :
-
-```text
-Marie / participation sociale
-OU
-Mathilde / accès domestique pratique
-OU
-Raphaëlle / travail et pression de la promesse
-```
-
-Chaque branche revient vers Marie.
-
-Le choix définit ce que Player fait, pas la femme qu’il sélectionne.
-
-## 9. Contenu par personnage
-
-### Marie
-
-- prend en charge l’urgence familiale ;
-- demande une participation concrète ;
-- organise le vernissage annoncé dans J1 ;
-- agit même si Player ne vient pas ;
-- reçoit la conséquence de chaque branche.
-
-### Mathilde
-
-- dégât des eaux ;
-- séjour de dix à quinze jours ;
-- valise, housse, tote bag, chaussures, chargeur ;
-- image d’arrivée ouverte et pratique ;
-- R1 domestique ;
-- aucune intention sexuelle reconnue.
-
-### Raphaëlle
-
-- première présence par une revue UX/accessibilité normale ;
-- R1 travail ;
-- work chat seulement avec séparation physique ;
-- housse de costume possible comme détail, pas comme invitation.
-
-### Sandra
-
-- bref écho après poste du matin ;
-- aucune nouvelle photo ;
-- lien actif ou refroidi selon J1.
-
-### Pauline
-
-- set de photos de groupe autorisées, envoyé vendredi matin ;
-- Bastien visible ;
-- R1 social/public ;
-- aucun crop privé.
-
-### Nico
-
-- place ou table gardée ;
-- suivi vendredi après-midi, cohérent avec son rythme tardif ;
-- R1 amitié/social ;
-- aucune demande de photo ou jalousie active.
-
-## 10. Choix documentés
-
-```text
-M0  — qualité de participation à l'hébergement
-MT0 — accueil de Mathilde
-R0  — réponse à une correction professionnelle
-M1  — choix topologique
-MA0 — qualité de présence à La Verrière
-MH0 — posture domestique avec Mathilde
-RW0 — travail contre promesse explicite
-P0  — sélection photo publique autorisée
-N0  — réponse à l'amitié de Nico
-```
-
-Tous utilisent trois choix.
-
-O6 n’ajoute pas de faux choix permettant d’annuler la décision précédente.
-
-## 11. Visuels et traces
-
-### Actifs
-
-- `mathilde_arrival_room_01` : mercredi soir, image privée ordinaire prise par Marie avant le retour de Player ;
-- `raphaelle_blue_folder` : jeudi matin, visuel travail optionnel ;
-- `marie_laverriere_setup_01` : jeudi soir, image événement autorisée ;
-- `laverriere_public_group_photo_set_01` : vendredi matin, set social/public autorisé.
-
-### Absents
-
-- selfie canapé Mathilde ;
-- image provocante Mathilde ;
-- seconde photo Sandra ;
-- photo personnelle/cosplay Raphaëlle ;
-- crop privé Pauline ;
-- image privée Nico ;
-- capture cachée ;
-- vidéo sexuelle.
-
-Aucune image n’a de fonction adulte.
-
-## 12. État de fin du pack
-
-```text
+Tuesday handoff = cohérent
+Wednesday opening = jouable
 Mathilde stay = active
-Marie event = completed
-first topology = remembered
-public group photo = exists
-Raphaëlle R1 = established
-Pauline R1 = established
-Nico R1 = established
-Sandra trace = active or intentionally cooled
+Mathilde route stage = R1 seulement
 hard secrets = none
 adult frames = none
-relationship frame = ASSUMED_EXCLUSIVE
-couple mode = HABITUAL_WARMTH
+Thursday = non implémenté
+Friday = non implémenté
 ```
 
-Tendances possibles uniquement :
+## 10. Prochaine étape
 
-- candidat `ACTIVE_RECONNECTION` ;
-- candidat `PARALLEL_DRIFT`.
-
-## 13. Documents historiques
+Après validation de V0.80 :
 
 ```text
-docs/J2_WRITING_FOUNDATION.md
-docs/story_state/J2_SUMMARY.md
-runtime J2 existant
+V0.81 — Tuesday handoff + Wednesday runtime vertical slice
 ```
 
-Ils ne définissent plus :
-
-- l’ordre du récit ;
-- le selfie canapé ;
-- quatre visuels obligatoires ;
-- l’absence physique jusqu’à J3 ;
-- des échanges artificiels entre personnes co-présentes ;
-- une temporalité sans repères de journée.
-
-## 14. Prochaine étape
+Hermes/Codex doit suivre strictement :
 
 ```text
-V0.80 — First Modular Runtime Integration Plan
+docs/runtime/V0_81_WEDNESDAY_VERTICAL_SLICE_IMPLEMENTATION_PLAN.md
 ```
 
-V0.80 doit :
-
-- inspecter le runtime existant ;
-- mapper mercredi–vendredi dans l’interface ;
-- planifier séparateurs de jour, moments et timestamps ;
-- mapper les modes de communication et `OFFLINE_BEAT` ;
-- décider comment les messages s’arrêtent lors de la co-présence ;
-- préserver un fil visible par personnage ;
-- garantir le retour Marie ;
-- éviter tout gros refactoring ;
-- définir tests, validation et rollback.
-
-Aucun runtime avant validation de V0.80.
-
-## 15. Résumé opérationnel
+## 11. Résumé opérationnel
 
 ```text
-J1 : mardi soir, canon actuel et runtime aligné.
-Ouverture Acte I : mercredi–vendredi, texte/cartes/temps validables dans V0.79.
-Communication : messages seulement lorsque distance, logistique, confidentialité, trace ou après-coup le justifie.
-Ancien J2+ : historique / technique.
-Routes : accès ordinaires seulement.
-Couple : HABITUAL_WARMTH.
-Prochaine documentation : V0.80 plan d'intégration runtime.
+Narration : écrite jusqu'à vendredi.
+Runtime : actuel jusqu'à J1, mais raccord Mathilde incohérent.
+Plan : corriger le raccord et rendre uniquement mercredi jouable.
+Jeudi conditionnel : V0.82.
+Vendredi : V0.83.
 ```
