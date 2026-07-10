@@ -31,6 +31,7 @@ Read in this order:
 5. `docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md` for sexual tension, explicit escalation, adult-photo logic, tromperie, NTR/cuckold, sharing, trio/quatuor, or dark-route planning
 6. character-specific deprecation maps when present:
    - `docs/canon/characters/MATHILDE_CANON_DEPRECATION_MAP.md`
+   - `docs/canon/characters/PAULINE_CANON_DEPRECATION_MAP.md`
 7. the validated day source pack
 8. for J1 exact text: `docs/V0_69_J1_Canon_Text_Review_And_Final_Line_Source.md`
 9. voice / intensity bibles only as support material
@@ -46,8 +47,9 @@ Read in this order:
 - Sandra
 - Player
 - Mathilde
+- Pauline
 
-Mathilde's full canon now includes:
+Mathilde's full canon includes:
 
 - age;
 - exact job direction;
@@ -60,11 +62,28 @@ Mathilde's full canon now includes:
 - modular scenes;
 - NSFW progression and route consequences.
 
+Pauline's full canon includes:
+
+- age and explicit adult status;
+- exact work as a retail client adviser in a local mutual bank;
+- solo apartment and edited domestic life;
+- eight-year friendship history with Marie;
+- family and community background;
+- parish choir as genuine ordinary-life anchor;
+- previous relationship and private-authorship wound;
+- controlled, fitted clothing and body-image logic;
+- recurring objects and social anchors;
+- desire to be trusted after being seen;
+- image selection and reciprocal-risk NSFW engine;
+- modular scene pools;
+- route consequences for Marie's friendship and the social group.
+
 ### Concrete-profile expansion still needed
 
-- Pauline
 - Raphaëlle
 - Nico
+
+Their current files remain usable calibration canon, but major biography should not be invented as hard truth without a profile pass.
 
 ## 4. Rule for old files
 
@@ -88,6 +107,20 @@ mathilde_seed as an active J1 route
 long grey sweater as recurring signature
 old J7 runtime as narrative truth
 automatic Marie–Mathilde sexual group assumptions
+```
+
+For Pauline specifically, current canon overrides:
+
+```text
+omniscient social/photo-controller framing
+one-way exposure without reciprocal risk
+constant halo / church joke
+religious-repression or virgin-corruption framing
+playable choir voice-message assumptions
+fixed old J4 invitation / J5 photo / later route order
+early route lock
+consequence-free betrayal of Marie
+automatic group-sex organizer assumptions
 ```
 
 ## 5. Choice rule
@@ -118,6 +151,17 @@ For Mathilde runtime:
 - keep Marie's trust and family context active;
 - avoid early route locks.
 
+For Pauline runtime:
+
+- keep her absent from current J1;
+- do not assume old J4/J5/later scenes define her first entry or route order;
+- begin from a legitimate social or practical window;
+- distinguish public image competence from privately selected intent;
+- require reciprocal risk before major adult escalation;
+- keep Marie's friendship active as trust and consequence;
+- never promise a playable choir voice message;
+- avoid early route locks.
+
 ## 7. Adult-tone rule
 
 `Réseau Intime` may become pornographic when routes escalate.
@@ -139,6 +183,19 @@ This governs:
 - NTR / cuckold / sharing;
 - consent, agency, risk, and consequences;
 - character-specific pornographic engines.
+
+For Pauline specifically:
+
+```text
+public trust
+-> legitimate private channel
+-> selected private version
+-> reciprocal risk
+-> acknowledged desire
+-> adult decision and consequence
+```
+
+Loss of polish, timing, or emotional control is never loss of consent.
 
 ## 8. Sandra terminology
 
