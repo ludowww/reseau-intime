@@ -53,7 +53,8 @@ For Mathilde specifically, older photo/canapé, sport/racket, long-grey-sweater,
 
 For Pauline specifically:
 
-- the old current-partner infidelity, double-face, proof, and temptation pillars are restored;
+- the current relationship with Bastien, prior hidden infidelity, Marie's partial knowledge, double face, proof, and non-choice temptation are current canon;
+- the first V0.74 single-Pauline draft is superseded;
 - the old fixed J4/J5/later schedule, omniscient controller, constant-halo, playable-vocal, early-route, and consequence-free assumptions remain secondary or deprecated;
 - the full canon and deprecation map define the distinction.
 
@@ -64,7 +65,15 @@ When a new character detail is validated:
 - update the relevant full canon file;
 - update the index/status if completeness changes;
 - add or update a deprecation map if older material can mislead implementation;
+- update the global NSFW canon when the character's adult engine, consent frame, or route family changes;
+- update the reading order and narrative status when old-document interpretation or runtime planning changes;
+- update the version report and PR description so they describe the final corrected version;
 - do not leave important decisions stranded in conversation or isolated addenda.
+
+```text
+A correction is not complete
+while the character file and the general canon disagree.
+```
 
 ## 5. Final rule
 
