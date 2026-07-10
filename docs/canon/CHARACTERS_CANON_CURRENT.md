@@ -21,7 +21,7 @@ Write scenes from full character canon files.
 | Mathilde | `docs/canon/characters/MATHILDE_CANON_FULL.md` | Full concrete + NSFW canon; use with deprecation map |
 | Pauline | `docs/canon/characters/PAULINE_CANON_FULL.md` | Full concrete + NSFW double-life canon; use with deprecation map |
 | Raphaëlle | `docs/canon/characters/RAPHAELLE_CANON_FULL.md` | Calibration canon; concrete expansion needed |
-| Nico | `docs/canon/characters/NICO_CANON_FULL.md` | Calibration canon; concrete expansion needed |
+| Nico | `docs/canon/characters/NICO_CANON_FULL.md` | Full concrete + NSFW social-mirror canon; use with deprecation map |
 
 Directory index:
 
@@ -34,6 +34,7 @@ Character deprecation maps:
 ```text
 docs/canon/characters/MATHILDE_CANON_DEPRECATION_MAP.md
 docs/canon/characters/PAULINE_CANON_DEPRECATION_MAP.md
+docs/canon/characters/NICO_CANON_DEPRECATION_MAP.md
 ```
 
 ## 3. Source policy
@@ -57,6 +58,14 @@ For Pauline specifically:
 - the first V0.74 single-Pauline draft is superseded;
 - the old fixed J4/J5/later schedule, omniscient controller, constant-halo, playable-vocal, early-route, and consequence-free assumptions remain secondary or deprecated;
 - the full canon and deprecation map define the distinction.
+
+For Nico specifically:
+
+- genuine attraction to Marie, real friendship with Player, social charm, mixed motive, and NTR / sharing potential are current canon;
+- his adult engine depends on Marie's agency, Player's active posture, Nico's real desire, and social visibility;
+- the old flat-rival, automatic villain, universal Don-Juan, neutral-mirror, revenge-only, and fixed chronology assumptions are secondary or deprecated;
+- hidden Marie / Nico betrayal and consensual cuckold / sharing are separate route families;
+- direct Nico / Player sexual contact is not assumed by trio proximity and requires separate validation.
 
 ## 4. Maintenance rule
 
