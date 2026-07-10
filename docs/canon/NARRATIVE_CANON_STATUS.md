@@ -1,7 +1,7 @@
 # Narrative Canon Status — Current
 
-> Consolidated narrative status after V0.65–V0.76 canon work.  
-> This document explains how to read runtime, story-state docs, arcs, spine, proof maps, and character profiles before new narrative or runtime work.  
+> Consolidated narrative status after V0.77 character-canon reconciliation.  
+> This document defines what is current, what is historical, and what must be read before new narrative or runtime work.  
 > No runtime, JSON, tests, assets, or playable content are changed here.
 
 ## 1. Core rule
@@ -9,16 +9,17 @@
 ```text
 Current canon overrides older narrative interpretation.
 Existing runtime is not automatic narrative canon.
+Supporting characters receive documentation proportional to their function.
 ```
 
-Any older content touching character arcs, scenes, proofs, photos, roles, routes, relationship progression, or adult escalation must be reviewed against:
+Any older content touching character identity, routes, scenes, proofs, photos, roles, consent, relationship progression, or adult escalation must be reviewed against:
 
-- full character canon;
-- required character supplements;
-- NSFW route canon;
-- current choice canon;
-- current day source pack or modular-window blueprint;
-- character-specific deprecation maps.
+- the current full character canon;
+- the global NSFW canon;
+- the choice-design canon;
+- the supporting-character policy;
+- the current day source pack or modular blueprint;
+- relevant deprecation maps.
 
 ## 2. Current canon stack
 
@@ -30,15 +31,10 @@ docs/canon/CHOICE_DESIGN_CANON.md
 docs/canon/characters/CHARACTER_CANON_INDEX.md
 docs/canon/characters/*_CANON_FULL.md
 docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
+docs/canon/SUPPORTING_CHARACTER_CANON_POLICY.md
 ```
 
-Required current supplement:
-
-```text
-docs/canon/characters/NICO_CANON_VOYER_PHOTO_PACT_CORRECTION.md
-```
-
-Character deprecation maps:
+Relevant deprecation maps:
 
 ```text
 docs/canon/characters/MATHILDE_CANON_DEPRECATION_MAP.md
@@ -47,126 +43,185 @@ docs/canon/characters/NICO_CANON_DEPRECATION_MAP.md
 docs/canon/characters/RAPHAELLE_CANON_DEPRECATION_MAP.md
 ```
 
-## 3. Character-profile status
+## 3. Character-canon completion state
 
-### Full concrete canon
+All seven principal characters now have full concrete canon:
 
-- Marie
-- Sandra
-- Player
-- Mathilde
-- Pauline
-- Nico
-- Raphaëlle
+- Marie;
+- Sandra;
+- Player;
+- Mathilde;
+- Pauline;
+- Nico;
+- Raphaëlle.
 
-All principal characters now have full concrete profiles.
+No principal character remains calibration-only.
 
-Jeff remains a concrete supporting character inside Sandra's canon and still needs a standalone pass before final character reconciliation.
+### Ensemble functions
 
-### Mathilde — current direction
+```text
+Marie      = the couple and active reconquest
+Sandra     = confidence and chosen private truth
+Mathilde   = domestic proximity and changed intention
+Pauline    = image, compartmentalization, and double life
+Nico       = social gaze, domestic envy, voyeuristic complicity, and rivalry
+Raphaëlle  = chosen version, explicit frame, and responsibility after the role
+Player     = the gaze becoming an act, choice, or bad faith
+```
 
-- 28 years old;
-- legal-protection case manager;
-- temporary stay with Marie / Player after water damage;
-- near-sister family bond with Marie;
-- naturally sexy domestic style;
-- mini-shorts, crop tops, fitted clothing;
-- ordinary sensuality distinct from deliberate seduction;
-- desire to be desired and taken seriously;
-- domestic taboo / image control / Player gaze / Marie loyalty adult engine;
-- modular scene pools;
-- route consequences and adult agency.
+These functions organize the ensemble. They do not replace full personality, ordinary life, contradiction, or route detail.
 
-### Pauline — current direction
+## 4. V0.77 reconciliation decisions
 
-- 32 years old;
-- retail client adviser in a local mutual bank;
-- current five-year relationship with Bastien;
-- shared apartment with Bastien;
-- prior physical infidelity during that same relationship;
-- affair ended before the game, but Bastien does not know;
+### Nico consolidation
+
+The validated V0.75 correction has been fully integrated into:
+
+```text
+docs/canon/characters/NICO_CANON_FULL.md
+```
+
+The full Nico file now directly contains:
+
+- attraction to Marie and Mathilde;
+- domestic-access envy;
+- voyeuristic curiosity;
+- Player / Nico photo pact;
+- reciprocal image offers;
+- mutual alibis and debt;
+- image-origin and consent matrix;
+- authorized shared gaze;
+- unapproved recropping or circulation as betrayal;
+- severe-capture guardrails;
+- character-specific consequences.
+
+The temporary correction file and its temporary correction report are removed in V0.77.
+
+No additional Nico supplement is current.
+
+### Jeff classification
+
+Jeff is not promoted into a principal character.
+
+He remains a supporting character anchored to Sandra.
+
+Current first source:
+
+```text
+docs/canon/characters/SANDRA_CANON_FULL.md
+```
+
+Current product decision:
+
+- no standalone Jeff canon pass is required at the current scope;
+- Jeff is not a playable route or independent narrative engine;
+- he must remain concrete enough for Sandra's relationship history and choices to matter;
+- he must not become a monster, disposable obstacle, or accidental second protagonist;
+- future detail is added only when a validated Sandra scene or consequence requires it.
+
+This decision is governed by:
+
+```text
+docs/canon/SUPPORTING_CHARACTER_CANON_POLICY.md
+```
+
+### Roadmap correction
+
+The former proposed standalone Jeff milestone is removed.
+
+Current roadmap:
+
+```text
+V0.77 — Character Canon Reconciliation
+V0.78 — Modular Narrative Arc Blueprint
+```
+
+## 5. Principal-character current direction
+
+### Marie
+
+- central couple with Player;
+- routine must become active choice again;
+- can be desired, jealous, provocative, betrayed, reconquered, or involved in informed adult sharing;
+- must never exist only as the woman cheated on.
+
+### Sandra
+
+- confidence and chosen private truth;
+- relationship with Jeff remains a real context and consequence;
+- route progression comes through selected exposure, distance, and being seen precisely;
+- Jeff's existence must not be erased merely because he remains offscreen or supporting.
+
+### Player
+
+- active through choices and replies;
+- gaze, passivity, desire, guilt, jealousy, curiosity, control, and bad faith are route engines;
+- remains responsible for sending, saving, hiding, forwarding, watching, choosing, refusing, or returning home.
+
+### Mathilde
+
+- temporary stay with Marie / Player;
+- ordinary sensuality in fitted homewear, mini-shorts, and crop tops;
+- clothing is not route activation;
+- progression comes from changed intention;
+- Marie's trust and family bond remain active consequences.
+
+### Pauline
+
+- current relationship with Bastien;
+- prior hidden infidelity during that relationship;
+- Bastien does not know;
 - Marie knows part of the truth without authorizing anything new;
-- public reliability and private transgression are both real;
-- double life / compartmentalization is her primary dramatic function;
-- selected versions, alibis, proof, and reciprocal implication drive adult escalation;
-- Marie and Bastien remain active consequences;
-- modular scenes replace fixed-day escalation.
+- double life, selected versions, alibis, proof, and non-choice drive the route;
+- betrayal remains consequential.
 
-Pauline's ensemble distinction:
+### Nico
 
-```text
-She does not first ask Player to choose her.
-She makes not choosing feel practical, intelligent, and temporarily harmless.
-```
-
-### Nico — current direction
-
-- Nicolas, called Nico, is 34;
-- floor manager at `L'Annexe`;
-- lives alone after a five-year relationship with Clara;
-- single at game start;
-- public social fluency and private quiet;
+- real attraction to Marie and Mathilde;
 - real friendship with Player;
-- genuine attraction to Marie and Mathilde;
 - jealousy of Player's domestic access;
-- direct male language and body awareness;
-- central blind spot: naming desire does not name full intention or consequence;
-- voyeuristic curiosity and Player / Nico photo-alibi pact;
-- authorized shared gaze, unapproved circulation, and severe-capture levels remain distinct;
-- possible friend, rival, affair, sharing, NTR/cuckold, trio/group, withdrawal, and negative-opportunism routes;
-- no direct male-male contact is assumed from trio participation;
-- modular scenes replace fixed jealousy chronology.
+- social gaze, voyeuristic curiosity, and male complicity;
+- photo and alibi pact can become informed shared play or hidden betrayal;
+- image origin, audience, saving, forwarding, and consent state must remain explicit;
+- no magical archive, standard hidden-camera reward, or automatic direct Nico / Player sexual route.
 
-Nico's ensemble distinction:
+### Raphaëlle
 
-```text
-He makes desire social,
-circulates the gaze,
-and forces Player to answer for what looking becomes.
-```
+- Player's peer colleague in UX/accessibility;
+- serious cosplay and chosen transformation;
+- explicit role, audience, image authorship, and aftermath;
+- may support informed exclusive, open, one-night, roleplay, trio/group, colleague-only, or clear-secret cheating routes;
+- local clarity does not create Marie's informed consent;
+- a clear betrayal remains betrayal.
 
-### Raphaëlle — current direction
+## 6. Supporting-character status
 
-- 33 years old and explicitly adult;
-- UX designer and accessibility referent;
-- direct peer colleague of Player, with no managerial power between them;
-- lives alone in a two-room apartment that also functions as a costume workshop;
-- only-child family background;
-- parents' prolonged ambiguous separation shaped her need for named frames;
-- grandmother Mireille taught sewing and repair;
-- Maud and Nora provide creative and work social anchors;
-- serious cosplay / transformation practice;
-- small pseudonymous creative account kept separate from work;
-- travel and culture interests grounded in concrete memories rather than authority;
-- former six-year relationship with Étienne;
-- wound around retroactive permission and freedom requested after another connection already existed;
-- one later clearly non-exclusive adult relationship proving that limited can still be honest;
-- single at game start;
-- attraction toward Player contained before active route state;
-- deep desire to move between versions without lying about which ones are real;
-- chosen transformation / named desire / explicit role / aftermath adult engine;
-- capacity for informed open, exclusive post-separation, one-night, roleplay, clear-secret affair, trio/group, colleague-only, and withdrawal routes;
-- rare but potentially explicit chosen photographs;
-- no active J1 presence.
+Supporting characters are governed by proportional documentation rather than symmetry.
 
-Raphaëlle's ensemble distinction:
+Examples:
 
-```text
-She chooses a version,
-names what the frame permits,
-and remains responsible after the role ends.
-```
+- Jeff in Sandra's canon;
+- Bastien in Pauline's canon;
+- Maud, Nora, Mireille, and Étienne in Raphaëlle's canon;
+- Julie, Sophie, Malik, and Clara in Nico's canon;
+- family and work anchors in the other full profiles.
 
-Her route-critical blind spot:
+They remain human and relevant where their relationships, consent, privacy, knowledge, or consequences matter.
 
-```text
-She can mistake precision between two people
-for accountability to everyone affected.
-```
+They do not automatically receive:
 
-## 4. Current J1 status
+- standalone full-canon files;
+- independent route states;
+- inbox threads;
+- scene pools;
+- endings;
+- equal documentation mass.
 
-J1 active sources:
+A support character is promoted only after an explicit Product Owner decision and a material increase in narrative function.
+
+## 7. Current J1 status
+
+Active sources:
 
 ```text
 docs/canon/J1_CANON_SOURCE_PACK.md
@@ -178,449 +233,127 @@ full Marie / Sandra / Player canon
 Current J1 rules:
 
 - Marie + Sandra active;
-- Player active through replies / choices;
+- Player active through replies and choices;
 - Mathilde indirect only;
-- no Nico, Pauline, or Raphaëlle active thread;
+- Nico, Pauline, and Raphaëlle absent from playable J1;
+- Jeff not needed as active scene presence;
 - no group conversation;
 - no hard secret system;
 - no route lock;
 - no explicit escalation;
 - maximum three choices per node;
-- final emotional center: Marie / shared life.
+- final emotional center: Marie and shared life.
 
-Pauline, Nico, and Raphaëlle remain absent from playable J1.
+Background canon may exist without active mention:
 
-Background facts may exist without active mention:
+- Mathilde's temporary stay context;
+- Pauline's relationship with Bastien and prior infidelity;
+- Nico's social orbit and attractions;
+- Raphaëlle's existing work relationship with Player;
+- Sandra's relationship with Jeff.
 
-- Pauline is with Bastien, has cheated, and Marie knows part of it;
-- Nico knows Marie and Player and is attracted to Marie and Mathilde;
-- Raphaëlle already works with Player and has no active private route.
+V0.64 remains historical and is not the current exact-line source.
 
-V0.64 remains historical and is not the exact-line source.
-
-## 5. Current J2+ status
+## 8. Current J2+ status
 
 ### J2
 
-Status: **requires a new source pack / review before canon confirmation**.
+Status: **requires a new source pack or modular-window blueprint before canon confirmation**.
 
-Existing material may be technically useful, but pacing and character entry must be rebuilt from current canon.
+Existing material may be technically useful, but character entry, pacing, choices, and consequences must be rebuilt from current canon.
 
-For Raphaëlle:
+### J3+
 
-- no old office appearance automatically establishes current first entry;
-- begin with ordinary colleague texture rather than diagnosis;
-- no confession, costume, image, or attraction route is active by inheritance.
+Status: **legacy or suspended unless a later validated source explicitly restores material**.
 
-### J3
+Do not assume:
 
-Status: **requires a new source pack / review before canon confirmation**.
+- old fixed-day route orders;
+- early route locks;
+- old image permissions;
+- old proof systems;
+- old character shorthand;
+- mandatory revenge structures;
+- automatic NTR/cuckold, sharing, trio, or group progression;
+- support characters needing independent arcs.
 
-For Mathilde:
+Useful isolated material may be recovered only after current-canon reframing.
 
-- old photo/canapé is deprecated;
-- spider / spare-room may be one early foundation;
-- temporary stay and current domestic canon must be active;
-- no early route lock;
-- ordinary fitted sensuality is not automatic seduction.
-
-For Raphaëlle:
-
-- a fatigue observation may be reused only at low dosage;
-- it must not immediately become emotional diagnosis or refuge access.
-
-### J4
-
-Status: **legacy / suspended until reviewed**.
-
-Do not assume an old social/photo/Nico/Pauline-heavy structure remains valid.
-
-For Pauline:
-
-- old invitation does not define first active entry;
-- current relationship with Bastien remains background truth;
-- no private Player route is active by inheritance.
-
-For Nico:
-
-- old social seed does not define first active entry;
-- ordinary work/friendship/social presence comes first;
-- attraction to Marie and Mathilde remains background canon;
-- no jealousy, photo pact, sharing, or NTR state is active automatically.
-
-For Raphaëlle:
-
-- old absence/presence patterns do not define chronology;
-- costume or walk material requires a current window and route conditions.
-
-### J5 / J6
-
-Status: **runtime exists; narrative canon suspended**.
-
-May contain implementation or isolated ideas, but cannot drive future story without re-audit.
-
-For Pauline:
-
-- old `last photo` does not define current progression;
-- selected intent, reciprocal risk, and both couples must remain active.
-
-For Nico:
-
-- old social photo may be reused as a social trace;
-- it does not establish consent, affair, or sharing;
-- current Mathilde attraction and photo-pact rules must be considered.
-
-For Raphaëlle:
-
-- old `work breath` may preserve ordinary office tone;
-- old `not a refuge` speeches must not become the route's repeated engine;
-- a work observation, walk, or rare image may be rebuilt modularly;
-- no old J5 scene activates open, exclusive, costume, or clear-secret routes.
-
-### J7+
-
-Status: **runtime exists in places; narrative canon suspended unless a later source explicitly validates it**.
-
-For Mathilde:
-
-- old J7 does not define clothing, route state, long arc, or mandatory order.
-
-For Pauline:
-
-- old theoretical/silence escalation does not establish route state.
-
-For Nico:
-
-- revenge, rivalry, sharing, and voyeur pact must be rebuilt from current conditions.
-
-For Raphaëlle:
-
-- old walk → open/exclusive → final-frame chronology is historical;
-- current route may also become colleague-only, one-night, roleplay, clear-secret betrayal, or group content;
-- transformation and aftermath must be concrete.
-
-## 6. Story-state documentation
-
-`docs/story_state/GLOBAL_STORY_STATE.md` and `docs/story_state/CHARACTER_CONTINUITY_MATRIX.md` remain operational summaries, not replacements for full canon.
-
-If they conflict with:
-
-- V0.69+ J1 sources;
-- V0.73 Mathilde canon;
-- revised V0.74 Pauline canon;
-- V0.75 Nico canon and photo-pact correction;
-- V0.76 Raphaëlle canon;
-
-the newer canon wins.
-
-## 7. Old narrative documents
+## 9. Old-document interpretation
 
 ### `docs/narrative/CHARACTER_ARCS_J1_J10.md`
 
 Status: **legacy / historical problem map**.
 
-Do not use it as direct scene or route source.
-
 ### `docs/narrative/SCENARIO_SPINE_J1_J10.md`
 
-Status: **historical / macro reference only**.
+Status: **historical macro reference only**.
 
-Do not use J5+ sections as current truth.
+### Older dedicated character arcs
 
-### Old dedicated Pauline arc
+Status: **identity-pillar source only; chronology suspended**.
 
-Status: **identity pillars partially restored; mandatory schedule suspended**.
+Useful identity pillars have already been consolidated into current full canon.
 
-Retained:
-
-- current-partner infidelity;
-- double face;
-- Marie's partial knowledge;
-- proof and control;
-- exposed exposer;
-- private complicity.
-
-Suspended:
-
-- fixed J4–J10 order;
-- omniscient proof collection;
-- guaranteed beats;
-- automatic chantage escalation.
-
-### Old Nico / external partners document
-
-Status: **identity pillars partially restored; automatic manipulation and chronology suspended**.
-
-Retained:
-
-- attraction to Marie;
-- social charm;
-- Player friendship/rivalry;
-- direct male desire;
-- NTR/sharing potential;
-- Marie's agency;
-- Player's responsibility.
-
-Current V0.75 correction additionally establishes:
-
-- attraction to Mathilde;
-- domestic-access envy;
-- photo/alibi pact;
-- image-consent matrix.
-
-Suspended:
-
-- automatic manipulation;
-- fake friendship;
-- fixed revenge route;
-- automatic group access;
-- clean unapproved image circulation.
-
-### `docs/narrative/RAPHAELLE_ARC_J1_J10.md`
-
-Status: **identity pillars retained; safe-route assumption and fixed chronology suspended**.
-
-Retained:
-
-- work entry;
-- clarity;
-- slow trust;
-- walk;
-- rare photo;
-- open or exclusive possibility;
-- Marie's existence;
-- no-refuge principle.
-
-Current V0.76 adds:
-
-- exact biography and job;
-- serious cosplay process;
-- body and explicit adult desire;
-- one-night and roleplay routes;
-- clear-secret cheating;
-- image rules;
-- aftermath;
-- moral blind spot.
-
-Suspended:
-
-- fixed J2/J3/J5/J8/J9/J10 order;
-- therapist tone;
-- automatically healthy route;
-- assumption Raphaëlle always retreats from active lying;
-- abstract clarity as sufficient engine;
-- exclusive vs open as the only outcomes.
+Do not use old route order as current truth.
 
 ### `docs/narrative/ROUTE_COMPATIBILITY_MATRIX.md`
 
-Status: **historical compatibility reference; current character canon governs details**.
+Status: **historical compatibility reference**.
 
-Still useful:
+Its broad principle—that couple state changes route meaning—remains useful.
 
-- couple state changes route meaning;
-- Marie must remain active;
-- truth and secrecy affect compatibility;
-- routes are not independent.
-
-Outdated Raphaëlle simplification:
-
-```text
-active lie always blocks Raphaëlle
-```
-
-Current correction:
-
-```text
-active lie blocks healthy / informed Raphaëlle routes,
-but may open a clear-secret negative route
-if Raphaëlle knowingly chooses betrayal.
-```
+Its old state names, day assumptions, and simplified character rules are not runtime specifications.
 
 ### `docs/narrative/PROOF_AND_SECRET_MAP.md`
 
 Status: **typology useful; day-by-day examples suspended**.
 
-For Pauline:
+Current character-specific rules win:
 
 ```text
-current hidden betrayal
-+ selected private version
-+ plausible deniability
-+ reciprocal risk
-+ consequence for Bastien and Marie
+Pauline = selected version + compartment + reciprocal proof
+Nico = image origin + consent level + shared gaze + alibi consequence
+Raphaëlle = chosen version + audience + role + aftermath
+Mathilde = domestic trust + changed intention + Marie consequence
 ```
 
-For Nico:
+### Version reports
+
+Version reports are historical records of their own pass.
+
+When a later reconciliation changes source order, classification, or roadmap, the current canon entry points and newer reconciliation report win.
+
+In particular, any older report proposing a standalone Jeff profile is superseded by V0.77.
+
+## 10. Adult-route rules
+
+The game may become pornographic when route conditions justify it.
+
+Character-specific adult engines remain mandatory.
+
+Core rules:
 
 ```text
-ordinary social context
-+ domestic-access envy
-+ image origin and audience
-+ consent level
-+ reciprocal alibi
-+ consequence
+Ignorance is not consent.
+Partial knowledge is not permission.
+Jealousy is not permission.
+Arousal is not permission.
+A public image is not forwarding permission.
+A costume is not blanket permission.
+A clear secret remains betrayal when an affected partner is excluded.
+Later negotiation does not rewrite earlier betrayal.
 ```
 
-For Raphaëlle:
+Use:
 
 ```text
-chosen version
-+ audience
-+ role / image rule
-+ workplace and Marie context
-+ what happens after the frame ends
+docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
 ```
 
-A group photo, costume, fitting, or private account does not establish sexual permission.
+for full adult, image, roleplay, voyeurism, cheating, NTR/cuckold, sharing, trio/group, and consequence rules.
 
-## 8. Deprecation summaries
-
-### Mathilde
-
-Overrides:
-
-- old photo/canapé foundation;
-- sport/racket identity;
-- active J1 seed;
-- long grey sweater signature;
-- old J7 destination;
-- automatic family group route.
-
-### Pauline
-
-Restores:
-
-- Bastien relationship;
-- prior unconfessed infidelity;
-- Marie's partial knowledge;
-- double life;
-- proof control grounded in lived betrayal.
-
-Overrides:
-
-- single Pauline;
-- omniscient photo controller;
-- constant church gimmick;
-- virgin-corruption framing;
-- fixed route order;
-- consequence-free betrayal.
-
-### Nico
-
-Retains:
-
-- attraction to Marie and Mathilde;
-- charm;
-- direct gaze;
-- Player friendship/rivalry;
-- voyeuristic photo/alibi pact;
-- affair / sharing / NTR/cuckold / group potential.
-
-Overrides:
-
-- flat villain;
-- women as prizes;
-- omniscient Don Juan;
-- pure jealousy/NTR tool;
-- domestic access as permission;
-- public image as forwarding permission;
-- magical archive;
-- standard hidden-camera reward;
-- fixed schedule.
-
-### Raphaëlle
-
-Retains:
-
-- office precision;
-- elegance;
-- calm desire;
-- cultures and fabrics;
-- serious cosplay;
-- chosen versions;
-- rare cats/pandas;
-- rare images;
-- open/exclusive possibilities;
-- Marie as affected adult.
-
-Overrides:
-
-- therapist;
-- moral judge;
-- automatically safe route;
-- repeated refuge speeches;
-- exotic sage;
-- abstract desire;
-- cosplay gadget;
-- glasses-off true-self simplification;
-- confession as route unlock;
-- photos permanently nonsexual;
-- assumption she cannot knowingly cheat;
-- fixed chronology;
-- no aftermath.
-
-## 9. Adult route rules
-
-### Mathilde
-
-```text
-ordinary sensuality
--> Player's changed gaze
--> Mathilde notices
--> deliberate image / clothing / proximity choice
--> acknowledged desire
--> adult decision and consequence
-```
-
-### Pauline
-
-```text
-current couple and prior hidden infidelity
--> legitimate private channel
--> selected double-addressed version
--> plausible deniability
--> reciprocal proof
--> acknowledged double life
--> adult decision and consequence
-```
-
-### Nico
-
-```text
-ordinary social presence
--> attraction to Marie / Mathilde becomes readable
--> domestic-access envy and Player's reaction are named
--> shared gaze or photo pact opens
--> consent level is identified
--> hidden betrayal OR informed shared frame
--> adult action and aftermath
-```
-
-### Raphaëlle
-
-```text
-ordinary colleague
--> outside-work person
--> chosen version revealed
--> attraction named
--> role, audience, and limits defined
--> informed adult frame OR clear-secret cheating
--> loss of composure inside the frame
--> role ends
--> consequence remains
-```
-
-Core Raphaëlle rule:
-
-```text
-clear betrayal remains betrayal
-```
-
-Local clarity does not substitute for Marie's informed agency.
-
-A costume, mask, image, fitting, role, or previous yes does not establish current consent.
-
-## 10. Choice rule
+## 11. Choice rule
 
 Default runtime count:
 
@@ -630,15 +363,59 @@ Default runtime count:
 
 Four or more choices require explicit written justification.
 
-## 11. Final rule
+Draft variants must be collapsed before runtime integration.
+
+## 12. Runtime policy
+
+Before modifying J2+ runtime:
+
+1. read the current canon stack;
+2. identify the validated narrative window;
+3. inspect current runtime rather than inheriting old story assumptions;
+4. use three choices by default;
+5. preserve character-specific engines and supporting-character proportionality;
+6. identify image origin, audience, consent, and consequence when relevant;
+7. distinguish hidden betrayal from informed adult play;
+8. avoid early route locks;
+9. write aftermath;
+10. update documentation before runtime.
+
+```text
+Documentation validated first.
+Runtime integration second.
+```
+
+## 13. Next milestone
+
+After V0.77 reconciliation, the next major documentation task is:
+
+```text
+V0.78 — Modular Narrative Arc Blueprint
+```
+
+It must define:
+
+- the main narrative spine;
+- acts;
+- couple states;
+- narrative windows;
+- modular scene pools;
+- appearance conditions;
+- consequences;
+- character interactions;
+- route emergence;
+- replayability without psychological incoherence.
+
+It does not yet write J2.
+
+## 14. Final rule
 
 ```text
 Build the next story step from current canon, not inherited runtime.
-Keep identity pillars when they differentiate a character.
-Discard old schedules when they force linearity.
-Characters stay deep.
+Keep principal characters deep.
+Keep supporting characters proportional and human.
+Discard obsolete schedules and temporary sources.
 Routes may become pornographic.
 Consent frames remain explicit.
-Clarity does not erase exclusion.
-Consequences remain human.
+Consequences remain part of the same life.
 ```

@@ -1,29 +1,24 @@
 # Characters Canon Current
 
-> Canon entry point for character writing.  
-> This file intentionally does not summarize all character detail.  
-> Use the full per-character canon files instead.
+> Doorway for character writing after V0.77 reconciliation.  
+> This file intentionally stays concise.  
+> Use the full character files, not this summary, when writing scenes.
 
-## 1. Core rule
+## 1. Principal-character source of truth
 
-```text
-Do not write scenes from summaries.
-Write scenes from full character canon files.
-```
+| Character | Current full canon |
+|---|---|
+| Marie | `docs/canon/characters/MARIE_CANON_FULL.md` |
+| Sandra | `docs/canon/characters/SANDRA_CANON_FULL.md` |
+| Player | `docs/canon/characters/PLAYER_CANON_FULL.md` |
+| Mathilde | `docs/canon/characters/MATHILDE_CANON_FULL.md` |
+| Pauline | `docs/canon/characters/PAULINE_CANON_FULL.md` |
+| Nico | `docs/canon/characters/NICO_CANON_FULL.md` |
+| Raphaëlle | `docs/canon/characters/RAPHAELLE_CANON_FULL.md` |
 
-## 2. Full canon files
+All seven principal characters have full concrete canon.
 
-| Character | Full canon file | Current status |
-|---|---|---|
-| Marie | `docs/canon/characters/MARIE_CANON_FULL.md` | Full concrete canon |
-| Sandra | `docs/canon/characters/SANDRA_CANON_FULL.md` | Full concrete canon |
-| Player | `docs/canon/characters/PLAYER_CANON_FULL.md` | Full concrete canon |
-| Mathilde | `docs/canon/characters/MATHILDE_CANON_FULL.md` | Full concrete + NSFW canon; use with deprecation map |
-| Pauline | `docs/canon/characters/PAULINE_CANON_FULL.md` | Full concrete + NSFW double-life canon; use with deprecation map |
-| Nico | `docs/canon/characters/NICO_CANON_FULL.md` | Full concrete + NSFW social-mirror / domestic-access / photo-pact canon; read supplemental correction |
-| Raphaëlle | `docs/canon/characters/RAPHAELLE_CANON_FULL.md` | Full concrete + NSFW chosen-transformation / clear-secret canon; use with deprecation map |
-
-All principal characters now have a full concrete profile.
+Nico's attraction to Mathilde, domestic-access envy, voyeurism, Player/Nico photo pact, mutual alibis, and image-consent matrix are integrated directly into `NICO_CANON_FULL.md`. No supplemental Nico correction file is required after V0.77.
 
 Directory index:
 
@@ -31,13 +26,13 @@ Directory index:
 docs/canon/characters/CHARACTER_CANON_INDEX.md
 ```
 
-Required Nico supplement:
+Global adult canon:
 
 ```text
-docs/canon/characters/NICO_CANON_VOYER_PHOTO_PACT_CORRECTION.md
+docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
 ```
 
-Character deprecation maps:
+## 2. Deprecation maps
 
 ```text
 docs/canon/characters/MATHILDE_CANON_DEPRECATION_MAP.md
@@ -46,111 +41,99 @@ docs/canon/characters/NICO_CANON_DEPRECATION_MAP.md
 docs/canon/characters/RAPHAELLE_CANON_DEPRECATION_MAP.md
 ```
 
-## 3. Supporting-character status
+These maps explain which older runtime, route, image, voice, and chronology assumptions are historical or non-current.
 
-Jeff remains an important supporting character whose current concrete canon is embedded in Sandra's full profile.
+## 3. Supporting characters
 
-Current source:
+Official policy:
+
+```text
+docs/canon/SUPPORTING_CHARACTER_CANON_POLICY.md
+```
+
+Supporting characters are documented proportionally inside the principal full-canon file whose life they anchor.
+
+They do not automatically need standalone full profiles.
+
+### Jeff
+
+Jeff remains a supporting character inside Sandra's canon.
+
+Current first source:
 
 ```text
 docs/canon/characters/SANDRA_CANON_FULL.md
 ```
 
-Current Jeff status:
+Current product decision:
 
-- six-year relationship with Sandra;
-- shared house for around three years;
-- mason;
-- concrete, tired, blunt, and not very verbal;
-- capable of hurting Sandra through repeated small phrases;
-- not a monster and not a simple excuse for Sandra's route;
-- standalone full-canon pass still needed before final character reconciliation and the Modular Narrative Arc Blueprint.
+- no standalone Jeff canon pass is planned at the current scope;
+- Jeff is not a playable route or independent narrative engine;
+- he must remain concrete enough that Sandra's relationship choices and consequences matter;
+- he must not become a monster, disposable obstacle, or accidental second protagonist;
+- future detail is added only when a validated Sandra scene or consequence requires it.
 
-Do not invent a separate Jeff biography that contradicts Sandra's canon before that pass.
+This proportional rule also applies to Bastien, Maud, Nora, Julie, Clara, Sophie, Malik, and other supporting anchors unless their narrative function materially changes.
 
-## 4. Source policy
+## 4. Current ensemble functions
 
-The full character canon files consolidate validated details from:
+```text
+Marie      = the couple and active reconquest
+Sandra     = confidence and chosen private truth
+Mathilde   = domestic proximity and changed intention
+Pauline    = image, compartmentalization, and double life
+Nico       = social gaze, domestic envy, voyeuristic complicity, and rivalry
+Raphaëlle  = chosen version, explicit frame, and responsibility after the role
+Player     = the gaze becoming an act, choice, or bad faith
+```
 
-- concrete profiles;
-- profile addendums;
-- voice cards;
-- voice / color / post-etalon addendums;
-- current narrative decisions;
-- current NSFW route intent.
+These are narrative functions, not reductions of the people.
 
-Older addendums and runtime remain useful as source history or technical reference, but they do not override current canon.
+Each full canon contains ordinary life, contradictions, limits, desire, route families, and consequences beyond the one-line function.
 
-For Mathilde specifically:
+## 5. Source policy
 
-- temporary stay with Marie / Player;
-- ordinary sensual clothing;
-- deliberate-intention progression;
-- family loyalty and consequence;
-- modular domestic scenes;
+Older addenda, voice cards, arcs, route matrices, proof maps, and runtime remain useful as:
 
-are current canon. Old canapé, sport/racket, long-grey-sweater, J1 seed, and fixed J7 assumptions are secondary or deprecated.
+- history;
+- technical reference;
+- isolated material to revalidate;
+- evidence of deprecated assumptions.
 
-For Pauline specifically:
+They do not override current full canon.
 
-- current relationship with Bastien;
-- prior hidden infidelity;
-- Marie's partial knowledge;
-- double face;
-- compartmentalization;
-- proof and non-choice temptation;
+For day-specific writing, also read the validated source pack or modular-window blueprint.
 
-are current canon. The first V0.74 single-Pauline draft and fixed old route order are superseded.
+## 6. Maintenance rule
 
-For Nico specifically:
+When a character correction is validated:
 
-- real attraction to Marie and Mathilde;
-- social charm and direct male desire;
-- domestic-access envy;
-- real friendship with Player;
-- voyeuristic shared gaze;
-- reciprocal photo and alibi pact;
-- authorized sharing vs hidden circulation;
-
-are current canon through the full file, supplemental correction, and global NSFW canon.
-
-For Raphaëlle specifically:
-
-- age 33;
-- UX design and accessibility work as Player's peer;
-- serious cosplay and costume construction;
-- travel and culture through concrete memories;
-- chosen versions;
-- rare tender panda/cat fault;
-- former relationship with Étienne and wound around retroactive freedom;
-- transformation / explicit role / aftermath adult engine;
-- capacity for informed openness and clear-secret betrayal;
-
-are current canon.
-
-Raphaëlle is not a therapist, exotic sage, automatically healthy route, or abstract moral alternative.
-
-## 5. Maintenance rule
-
-When a new character detail is validated:
-
-- update the relevant full canon file;
-- update the index/status if completeness changes;
-- add or update a deprecation map if older material can mislead implementation;
-- update the global NSFW canon when the adult engine, consent frame, image logic, or route family changes;
-- update the reading order and narrative status when old-document interpretation or runtime planning changes;
-- update the version report and PR description so they describe the final corrected version;
-- schedule consolidation if a temporary correction file was required;
-- do not leave important decisions stranded in conversation or isolated addenda.
+- update the relevant full canon;
+- update the deprecation map if needed;
+- update the global NSFW canon if adult rules change;
+- update the character index, reading order, narrative status, and active version report;
+- update the supporting-character policy if classification or scope changes;
+- remove temporary correction artifacts after integration;
+- do not leave important decisions stranded in conversation or obsolete supplements.
 
 ```text
 A correction is not complete
-while the character file and the general canon disagree.
+while the full character file and the general canon disagree.
 ```
 
-## 6. Final rule
+## 7. Current completion state
 
 ```text
-The full character canon files are the character source-of-truth.
+Principal character canon: complete
+Temporary Nico supplement: consolidated and removed in V0.77
+Jeff standalone profile: not required at current scope
+Next documentation milestone: Modular Narrative Arc Blueprint
+```
+
+## 8. Final rule
+
+```text
+The full principal-character files are the source of truth.
+Supporting characters receive proportional documentation.
 This file is only the doorway.
 ```
