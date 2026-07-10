@@ -21,20 +21,21 @@ Older addendums and runtime remain historical/support material if they conflict.
 | Player | `docs/canon/characters/PLAYER_CANON_FULL.md` | Full concrete current canon |
 | Mathilde | `docs/canon/characters/MATHILDE_CANON_FULL.md` | Full concrete + NSFW current canon; supersedes calibration-only profile and old runtime assumptions |
 | Pauline | `docs/canon/characters/PAULINE_CANON_FULL.md` | Full concrete + NSFW double-life canon; restores current-partner infidelity while superseding the sanitized single draft and fixed old route schedule |
+| Nico | `docs/canon/characters/NICO_CANON_FULL.md` | Full concrete + NSFW social-mirror / shared-gaze canon; preserves real attraction to Marie while replacing flat rival, automatic NTR, and fixed jealousy assumptions |
 | Raphaëlle | `docs/canon/characters/RAPHAELLE_CANON_FULL.md` | Current calibration canon; concrete-profile expansion still needed |
-| Nico | `docs/canon/characters/NICO_CANON_FULL.md` | Current calibration canon; concrete-profile expansion still needed |
 
 Adult / route escalation canon:
 
 | Scope | Canon file | Status |
 |---|---|---|
-| NSFW / porno / routes adultes | `docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md` | Required for sexual escalation, explicit-route planning, tromperie, NTR/cuckold, sharing, trio/quatuor, adult photo logic, and Pauline double-life / informed-consent distinctions |
+| NSFW / porno / routes adultes | `docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md` | Required for sexual escalation, explicit-route planning, tromperie, NTR/cuckold, sharing, trio/quatuor, adult photo logic, Pauline double-life distinctions, and Nico shared-gaze / informed-consent distinctions |
 
 Character deprecation maps:
 
 ```text
 docs/canon/characters/MATHILDE_CANON_DEPRECATION_MAP.md
 docs/canon/characters/PAULINE_CANON_DEPRECATION_MAP.md
+docs/canon/characters/NICO_CANON_DEPRECATION_MAP.md
 ```
 
 ## 3. Reading rule
@@ -45,7 +46,7 @@ When writing a scene:
 2. If the scene contains sexual tension, adult escalation, photos used as arousal, cheating, NTR/cuckold, trio/quatuor, sharing, or explicit-route logic, read `docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md`.
 3. Read `docs/canon/NARRATIVE_CANON_STATUS.md` if the scene touches J2+ or older runtime.
 4. Read the character-specific deprecation map when one exists.
-5. Read the day source pack if one exists.
+5. Read the day source pack or modular-window blueprint if one exists.
 6. Use old addendums or runtime only to investigate history or recover a deliberately selected technical element.
 
 For Mathilde specifically:
@@ -67,6 +68,23 @@ omniscient-photo-controller framing,
 constant-halo framing,
 playable-vocal assumptions,
 and the fixed J4/J5/later route order.
+```
+
+For Nico specifically:
+
+```text
+NICO_CANON_FULL.md preserves real attraction to Marie,
+social charm,
+direct male desire,
+friend/rival ambiguity,
+and possible NTR/sharing/trio routes.
+
+It overrides automatic villain framing,
+Marie-as-prize framing,
+omniscient Don Juan assumptions,
+jealousy-as-permission,
+automatic consensual-cuckold framing,
+and the fixed old jealousy schedule.
 ```
 
 ## 4. Consolidation and correction policy
