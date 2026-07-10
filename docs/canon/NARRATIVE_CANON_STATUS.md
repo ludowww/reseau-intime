@@ -1,235 +1,229 @@
 # Narrative Canon Status — Current
 
-> Consolidated narrative status after the recent character refoundation.  
-> This document clarifies how to read the older runtime, story-state docs, arcs, spine, and proof maps before any new runtime work.  
+> Consolidated narrative status after V0.65–V0.73 canon work.  
+> This document explains how to read runtime, story-state docs, arcs, spine, proof maps, and character profiles before new narrative or runtime work.  
 > No runtime, JSON, tests, assets, or playable content are changed here.
 
-## 1. Purpose
-
-The repository contains runtime content and documentation produced in different chronological waves.
-
-The key issue:
+## 1. Core rule
 
 ```text
-Some runtime content exists technically, but was written before the recent Marie / Sandra / Player refoundation.
+Current canon overrides older narrative interpretation.
+Existing runtime is not automatic narrative canon.
 ```
 
-Therefore, existing runtime must not be treated as automatic narrative canon.
+Any older content touching character arcs, scenes, proofs, photos, routes, relationship progression, or adult escalation must be reviewed against:
 
----
+- full character canon;
+- NSFW route canon;
+- current choice canon;
+- current day source pack;
+- character-specific deprecation maps.
 
-## 2. Chronology that matters
+## 2. Current canon stack
 
-### Earlier narrative framework and runtime wave
-
-- The J1-J10 scenario framework was created first.
-- J5 / J6 runtime data were then rewritten from that earlier framework.
-- J7 runtime data were then added from that same narrative era.
-
-These works are technically present in the repository.
-
-But they predate the later character refoundation.
-
-### Later character refoundation wave
-
-The following came later and now prime over older narrative interpretation:
-
-- Sandra Concrete Profile V2 and addenda;
-- Marie Concrete Profile V2 and addendum;
-- Player Concrete Profile V2;
-- V0.62 character voice reconciliation;
-- V0.63 documentation cleanup map;
-- V0.64 J1 naturalized script draft.
-
----
-
-## 3. Current canon rule
+Read:
 
 ```text
-The character refoundation changes how the story must be read.
-Any older narrative or runtime content touching character arcs, scenes, proofs, photos, routes, or relationship progression must be reviewed against the current character canon.
+docs/canon/DOCUMENTATION_READING_ORDER.md
+docs/canon/CHOICE_DESIGN_CANON.md
+docs/canon/characters/CHARACTER_CANON_INDEX.md
+docs/canon/characters/*_CANON_FULL.md
+docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
 ```
 
-This includes:
+For Mathilde also read:
 
-- day plans;
-- scenario spine;
-- character arcs;
-- proof and secret maps;
-- route reachability;
-- JSON conversations;
-- visual content placeholders;
-- tests that encode narrative assumptions;
-- story_state summaries.
+```text
+docs/canon/characters/MATHILDE_CANON_DEPRECATION_MAP.md
+```
 
----
+## 3. Character-profile status
+
+### Full concrete canon
+
+- Marie
+- Sandra
+- Player
+- Mathilde
+
+Mathilde's V0.73 canon now supersedes the earlier calibration-only profile and old runtime assumptions.
+
+Current Mathilde direction:
+
+- 28 years old;
+- legal-protection case manager;
+- temporary stay with Marie / Player after water damage;
+- near-sister family bond with Marie;
+- naturally sexy domestic style;
+- mini-shorts, crop tops, fitted clothing;
+- ordinary sensuality distinct from deliberate seduction;
+- desire to be desired and taken seriously;
+- domestic taboo / image control / Player gaze / Marie loyalty NSFW engine;
+- modular scene pools;
+- route consequences and adult agency.
+
+### Concrete-profile expansion still needed
+
+- Pauline
+- Raphaëlle
+- Nico
+
+Their current files remain usable calibration canon, but major biography should not be invented as hard truth without a profile pass.
 
 ## 4. Current J1 status
 
-J1 active canon is:
+J1 active sources:
 
-- `docs/canon/J1_CANON_SOURCE_PACK.md`
-- `docs/V0_64_J1_Naturalized_Script_Draft.md`
-- `docs/canon/CHARACTERS_CANON_CURRENT.md`
+```text
+docs/canon/J1_CANON_SOURCE_PACK.md
+docs/V0_69_J1_Canon_Text_Review_And_Final_Line_Source.md
+docs/canon/CHOICE_DESIGN_CANON.md
+full Marie / Sandra / Player canon
+```
 
-Current J1 principles:
+Current J1 rules:
 
 - Marie + Sandra active;
 - Player active through replies / choices;
 - Mathilde indirect only;
-- no Nico active thread;
-- no Pauline active thread;
-- no Raphaëlle active thread;
+- no Nico, Pauline, or Raphaëlle active thread;
 - no group conversation;
 - no hard secret system;
 - no route lock;
 - no explicit escalation;
+- maximum three choices per node;
 - final emotional center: Marie / shared life.
 
-J1 runtime must be planned from the canon source pack, not from old runtime assumptions.
+V0.64 remains historical and is no longer the current exact-line source.
 
----
-
-## 5. Current status of J2+
+## 5. Current J2+ status
 
 ### J2
 
-Status: **requires review before being treated as current narrative canon**.
+Status: **requires a new source pack / review before canon confirmation**.
 
-Reason:
-
-- Existing J2 material may remain technically useful;
-- but character refoundation may change Marie / Sandra / Player framing;
-- Mathilde / Raphaëlle / Pauline / Nico pacing also needs re-check.
+Existing material may be technically useful, but pacing and character entry must be rebuilt from current canon.
 
 ### J3
 
-Status: **requires review before canon confirmation**.
+Status: **requires a new source pack / review before canon confirmation**.
 
-Any old J3 photo-canapé or social/panel assumptions must remain legacy unless deliberately restored.
+For Mathilde:
+
+- old photo/canapé is deprecated;
+- spider / spare-room may be used as one early foundation;
+- the active premise should use the temporary stay and current domestic canon;
+- no early route lock;
+- Mathilde's fitted sensual style is ordinary at first, not automatic seduction.
 
 ### J4
 
 Status: **legacy / suspended until reviewed**.
 
-Do not assume a social/photo/Nico/Pauline-heavy J4 remains valid after character refoundation.
+Do not assume an old social/photo/Nico/Pauline-heavy structure remains valid.
 
 ### J5 / J6
 
-Status: **runtime exists, narrative canon suspended**.
+Status: **runtime exists; narrative canon suspended**.
 
-Reason:
-
-- J5/J6 were rewritten before the Marie / Sandra / Player refoundation;
-- they may contain useful runtime ideas or tools;
-- they must not drive future story unless re-audited and either confirmed, rewritten, or retired.
+May contain useful implementation or isolated ideas, but must not drive future story without re-audit.
 
 ### J7
 
-Status: **runtime exists, narrative canon suspended**.
+Status: **runtime exists; narrative canon suspended**.
 
-Reason:
+For Mathilde specifically, J7 does not define:
 
-- J7 was added before the recent character refoundation;
-- it may no longer fit the new progression if J1-J6 are rebuilt differently;
-- it must not be used as a fixed future target.
+- current clothing canon;
+- current route state;
+- current long arc;
+- required scene order.
+
+The long-grey-sweater framing and any fixed route assumptions are non-primary.
 
 ### J8+
 
-Status: **non-current unless later source pack explicitly validates it**.
+Status: **non-current unless a later source pack explicitly validates it**.
 
----
+## 6. Story-state documentation
 
-## 6. Current status of story_state docs
+`docs/story_state/GLOBAL_STORY_STATE.md` and `docs/story_state/CHARACTER_CONTINUITY_MATRIX.md` were reconciled by V0.68.
 
-`docs/story_state/GLOBAL_STORY_STATE.md` and `docs/story_state/CHARACTER_CONTINUITY_MATRIX.md` may contain useful operational summaries, but they must be patched after this canon consolidation.
+They remain operational summaries, not a replacement for full canon.
 
-Known issue:
+If they conflict with V0.69+ J1 sources or V0.73 Mathilde canon, the newer canon wins.
 
-- they may mention future or inconsistent version numbers such as V0.66 / V0.68c;
-- they may treat older runtime as active truth;
-- they may mix previous conversation numbering with the current PR chronology.
-
-Until patched, they are secondary references, not source-of-truth.
-
----
-
-## 7. Current status of old narrative docs
+## 7. Old narrative docs
 
 ### `docs/narrative/CHARACTER_ARCS_J1_J10.md`
 
-Status: **must be rewritten or strongly corrected**.
+Status: **legacy / historical problem map**.
 
-Reason:
-
-- Marie / Sandra / Player arcs predate the strongest concrete profiles;
-- Sandra is still too centered on waiting / later / hiddenness;
-- Player lacks enough concrete daily life and passive-delay texture;
-- Marie needs more La Verrière / active life / habit-wound framing.
+Do not use it as direct scene or route source.
 
 ### `docs/narrative/SCENARIO_SPINE_J1_J10.md`
 
 Status: **historical / macro reference only**.
 
-Reason:
-
-- useful for earlier strategy;
-- not reliable as current day-by-day truth after character refoundation;
-- J5/J6/J7 sections are not current canon.
+Do not use its J5/J6/J7 sections as current truth.
 
 ### `docs/narrative/PROOF_AND_SECRET_MAP.md`
 
-Status: **valid as proof typology, not as day-by-day canon**.
+Status: **typology useful; day-by-day examples suspended**.
 
-Useful:
+Use current character and adult-photo logic before restoring any proof.
 
-- trace douce;
-- preuve faible;
-- preuve sociale;
-- preuve dangereuse;
-- photo Sandra J1 as soft trace.
+## 8. Mathilde deprecation summary
 
-Caution:
+Current canon overrides:
 
-- J4/J5 proof examples must be reviewed before use.
+- old photo/canapé foundation;
+- sport/racket identity as core;
+- active `mathilde_seed` in J1;
+- long grey sweater as recurring signature;
+- old J7 as narrative destination;
+- automatic Marie–Mathilde sexual group assumptions.
 
----
+Compatible only after current-canon reframing:
 
-## 8. What future PRs must do
+- spider / spare-room foundation;
+- legal humor;
+- outfit and image tension;
+- family trust and guilt;
+- domestic proximity.
 
-### Next PR after consolidation
+## 9. Adult route rule
 
-Recommended:
+`Réseau Intime` may become pornographic when routes escalate.
+
+For Mathilde, adult escalation must come from:
 
 ```text
-V0.66 — Narrative Refoundation Audit After Character V2
+ordinary sensuality
+-> Player's changed gaze
+-> Mathilde notices
+-> deliberate image / clothing / proximity choice
+-> acknowledged desire
+-> adult decision and consequence
 ```
 
-Scope:
+A mini-short or crop top alone is not consent or route activation.
 
-- patch story_state docs;
-- rewrite or supersede character arcs;
-- update scenario spine status;
-- mark J5/J6/J7 runtime as technical legacy / suspended narrative canon;
-- prepare a clean path for J1 runtime planning.
+## 10. Choice rule
 
-### Runtime planning after that
-
-Recommended:
+Default runtime count:
 
 ```text
-V0.67 — J1 Runtime Integration Plan
+3 choices per node
 ```
 
-Only after the audit confirms the source hierarchy.
+Four or more choices require explicit written justification.
 
----
-
-## 9. Final rule
+## 11. Final rule
 
 ```text
-Do not build the next runtime step on existing runtime merely because it exists.
-Build it on current canon.
-
-Existing J5/J6/J7 may inspire, but they do not govern.
+Build the next story step from current canon, not inherited runtime.
+Characters stay deep.
+Routes may become pornographic.
+Old material remains usable only after revalidation.
 ```
