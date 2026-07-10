@@ -222,6 +222,10 @@ Loss of polish, timing, or emotional control is never loss of consent.
 
 Bastien's ignorance is never consent.
 
+Marie's partial knowledge is never permission.
+
+A later negotiated open, sharing, cuckold, trio, or group route cannot retroactively erase earlier betrayal.
+
 ## 8. Sandra terminology
 
 Do not use English `shift` in current writing.
@@ -246,5 +250,16 @@ When a character profile, day source pack, route rule, choice rule, or narrative
 - update the relevant full canon file first;
 - update the character index;
 - update the narrative status if runtime / day interpretation changes;
-- add a deprecation map when old material could still mislead implementation;
+- add or update a deprecation map when old material could still mislead implementation;
+- update `NSFW_CHARACTER_ROUTE_CANON.md` when an adult engine, consent rule, route family, image rule, or dark-route distinction changes;
+- update `CHARACTERS_CANON_CURRENT.md`, the version report, and the PR description so all general entry points describe the final corrected version;
 - do not leave important decisions stranded in conversation or addenda.
+
+```text
+Character correction complete
+= full file
++ deprecation map
++ general canon
++ version report
++ implementation guidance aligned.
+```
