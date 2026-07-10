@@ -1,8 +1,8 @@
 # Characters Canon Current
 
-> Doorway for character writing after V0.78 modular narrative architecture.  
+> Doorway for character writing after V0.79 opening-source validation.  
 > This file intentionally stays concise.  
-> Use the full character files and modular architecture documents, not this summary, when writing scenes.
+> Use the full character files, V0.78 architecture, and V0.79 opening documents rather than this summary when writing scenes.
 
 ## 1. Principal-character source of truth
 
@@ -18,8 +18,6 @@
 
 All seven principal characters have full concrete canon.
 
-Nico's attraction to Mathilde, domestic-access envy, voyeurism, Player/Nico photo pact, mutual alibis, and image-consent matrix are integrated directly into `NICO_CANON_FULL.md`.
-
 Directory index:
 
 ```text
@@ -32,43 +30,122 @@ Global adult canon:
 docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
 ```
 
-## 2. Current narrative architecture
+## 2. Current story and opening sources
 
-Post-J1 writing must also use:
+Post-J1 architecture:
 
 ```text
 docs/canon/MODULAR_NARRATIVE_ARC_BLUEPRINT.md
 docs/canon/MODULAR_SCENE_AUTHORING_CONTRACT.md
 ```
 
-The blueprint defines:
+First concrete post-J1 slice:
 
-- fixed dramatic spine;
-- acts;
-- couple modes;
-- route lifecycle;
-- windows;
-- scene pools;
-- consequences;
-- replayability.
+```text
+docs/canon/ACT_I_OPENING_WINDOWS_SOURCE_PACK.md
+docs/canon/ACT_I_OPENING_SCENE_CARDS.md
+```
 
-The scene contract defines:
+The V0.79 source pack establishes:
 
-- scene conditions;
-- availability;
-- choices;
-- state reads and writes;
-- trace / knowledge / consent rules;
-- follow-ups;
-- cooldown and mutation;
-- runtime-readiness checks.
+- Mathilde's water-damage stay;
+- Player's first practical participation choices;
+- Raphaëlle's ordinary work access;
+- Sandra's restrained continuity;
+- Marie's first topology-changing event invitation;
+- one branch through Marie/social, Mathilde/home, or Raphaëlle/work;
+- a mandatory return to Marie;
+- Pauline's authorized public-photo access;
+- Nico's ordinary saved-seat friendship access.
 
 ```text
 Character canon defines who acts.
-Modular canon defines when and why a scene can happen.
+V0.78 defines how the story moves.
+V0.79 defines the first concrete movement.
 ```
 
-## 3. Deprecation maps
+## 3. Current opening state by character
+
+### Marie
+
+- central in the emergency, event choice, and return consequence;
+- remains active whether Player joins or not;
+- receives no crisis speech or jealousy-only function.
+
+### Sandra
+
+- retains one soft J1 trace;
+- may receive one restrained work echo;
+- no new photo or route escalation.
+
+### Mathilde
+
+- temporary stay becomes active for approximately ten to fifteen days;
+- enters through family, practical clutter, and ordinary household access;
+- reaches R1 only;
+- no canapé selfie or deliberate seduction.
+
+### Pauline
+
+- enters through an authorized public group-photo relay;
+- Bastien remains visible in the social context;
+- no private crop, reciprocal proof, or secret compartment.
+
+### Nico
+
+- enters through ordinary friendship and a saved seat/table;
+- may learn Mathilde is staying;
+- no voyeuristic request, alibi, photo pact, or rivalry yet.
+
+### Raphaëlle
+
+- enters through ordinary UX/accessibility work as Player's peer;
+- may have a garment-bag detail;
+- no private version, creative account, personal photo, or refuge role.
+
+### Player
+
+- first tested through making room, participation, topology, promise, and return;
+- does not select a woman from a route menu.
+
+## 4. Opening route ceiling
+
+V0.79 remains inside:
+
+```text
+Act I opening
+R0–R1
+soft pre-R2 signals only
+```
+
+At pack end:
+
+- Mathilde, Raphaëlle, Pauline, and Nico have ordinary access;
+- Sandra is active or intentionally cooled;
+- no adult frame exists;
+- no hard secret exists;
+- relationship frame remains `ASSUMED_EXCLUSIVE`;
+- couple mode remains `HABITUAL_WARMTH`.
+
+## 5. Supporting characters
+
+Official policy:
+
+```text
+docs/canon/SUPPORTING_CHARACTER_CANON_POLICY.md
+```
+
+Jeff remains inside Sandra's canon and does not require a standalone route or profile.
+
+In V0.79:
+
+- Bastien may appear in the authorized group photo;
+- Élodie may provide La Verrière work color or take the setup image;
+- neither becomes a route or consent proxy.
+
+The same proportional rule applies to other supporting anchors unless their function materially changes.
+
+## 6. Deprecation maps
 
 ```text
 docs/canon/characters/MATHILDE_CANON_DEPRECATION_MAP.md
@@ -77,103 +154,55 @@ docs/canon/characters/NICO_CANON_DEPRECATION_MAP.md
 docs/canon/characters/RAPHAELLE_CANON_DEPRECATION_MAP.md
 ```
 
-These maps explain which older runtime, route, image, voice, and chronology assumptions are historical or non-current.
+These maps explain which older runtime, image, voice, and chronology assumptions are historical.
 
-## 4. Supporting characters
+The old J2 canapé-selfie and fixed linear opening do not override V0.79.
 
-Official policy:
+## 7. Source policy
 
-```text
-docs/canon/SUPPORTING_CHARACTER_CANON_POLICY.md
-```
-
-Supporting characters are documented proportionally inside the principal full-canon file whose life they anchor.
-
-They do not automatically need standalone full profiles or modular routes.
-
-### Jeff
-
-Jeff remains a supporting character inside Sandra's canon.
-
-Current first source:
-
-```text
-docs/canon/characters/SANDRA_CANON_FULL.md
-```
-
-Current product decision:
-
-- no standalone Jeff canon pass is planned;
-- Jeff is not a playable route or independent narrative engine;
-- he must remain concrete enough that Sandra's relationship choices and consequences matter;
-- he must not become a monster, disposable obstacle, or accidental second protagonist;
-- future detail is added only when a validated Sandra scene or consequence requires it.
-
-This proportional rule also applies to Bastien, Maud, Nora, Julie, Clara, Sophie, Malik, and other supporting anchors unless their narrative function materially changes.
-
-## 5. Current ensemble functions
-
-```text
-Marie      = the couple and active reconquest
-Sandra     = confidence and chosen private truth
-Mathilde   = domestic proximity and changed intention
-Pauline    = image, compartmentalization, and double life
-Nico       = social gaze, domestic envy, voyeuristic complicity, and rivalry
-Raphaëlle  = chosen version, explicit frame, and responsibility after the role
-Player     = the gaze becoming an act, choice, or bad faith
-```
-
-These are narrative functions, not reductions of the people.
-
-Each full canon contains ordinary life, contradictions, limits, desire, route families, and consequences beyond the one-line function.
-
-## 6. Source policy
-
-Older addenda, voice cards, arcs, route matrices, proof maps, and runtime remain useful as:
+Older addenda, voice cards, day foundations, route matrices, proof maps, summaries, and runtime remain useful as:
 
 - history;
 - technical reference;
 - isolated material to revalidate;
 - evidence of deprecated assumptions.
 
-They do not override current full canon or V0.78 modular architecture.
+They do not override current character canon, V0.78 architecture, or V0.79 opening content.
 
-For post-J1 writing, an approved modular-window source pack is also required.
+## 8. Maintenance rule
 
-## 7. Maintenance rule
+When an opening scene or character decision changes:
 
-When a character or architecture correction is validated:
-
-- update the relevant full canon;
-- update the modular blueprint if act, window, route, or state logic changes;
-- update the scene contract if authoring requirements change;
-- update the deprecation map if needed;
-- update the global NSFW canon if adult rules change;
-- update the character index, reading order, narrative status, operational summaries, and active version report;
-- update the supporting-character policy if classification or scope changes;
-- remove temporary correction artifacts after integration;
-- do not leave important decisions stranded in conversation or obsolete supplements.
+- update the relevant full canon if identity changes;
+- update V0.79 source lines and the matching scene card together;
+- update V0.78 only if architecture changes;
+- update the global NSFW canon only if adult rules change;
+- update reading order, narrative status, operational summaries, report, and PR description;
+- keep runtime changes in a separately validated integration pass.
 
 ```text
 A correction is not complete
-while character canon and modular canon disagree.
+while character canon, source pack, and scene cards disagree.
 ```
 
-## 8. Current completion state
+## 9. Current completion state
 
 ```text
 Principal character canon: complete
 Character reconciliation: complete
-Modular Narrative Arc Blueprint: current V0.78 architecture
-Exact post-J1 scene content: not yet written
-Next documentation milestone: Act I Opening Windows Source Pack
+Modular Narrative Arc Blueprint: current
+Act I opening source pack: written in V0.79
+Act I opening scene cards: written in V0.79
+Runtime integration: not yet planned
+Next milestone: V0.80 First Modular Runtime Integration Plan
 ```
 
-## 9. Final rule
+## 10. Final rule
 
 ```text
-The full principal-character files are the source of truth for people.
-The modular blueprint is the source of truth for story movement.
-Supporting characters receive proportional documentation.
+The full principal-character files define people.
+The blueprint defines story movement.
+The V0.79 pack defines the first opening content.
+Supporting characters remain proportional.
 This file is only the doorway.
 ```
