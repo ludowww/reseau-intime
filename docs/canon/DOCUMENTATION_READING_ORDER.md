@@ -7,7 +7,7 @@
 ## 1. Core rules
 
 ```text
-Write from full canon, not summaries.
+Write people from full character canon.
 Write post-J1 structure from the modular blueprint.
 Write scenes from the modular scene contract.
 Write adult escalation from the global NSFW canon.
@@ -43,63 +43,55 @@ Read in this order:
 
 `docs/canon/CHARACTERS_CANON_CURRENT.md` is a doorway only.
 
----
+## 3. What V0.78 controls
 
-## 3. What the modular blueprint controls
+### Modular Narrative Arc Blueprint
 
-`MODULAR_NARRATIVE_ARC_BLUEPRINT.md` is the current source for:
+`docs/canon/MODULAR_NARRATIVE_ARC_BLUEPRINT.md` is the current source for:
 
 - the central fixed dramatic spine;
 - Act 0–V structure;
 - starting state after J1;
-- couple-state dimensions and modes;
-- the universal route lifecycle;
+- couple-state dimensions and derived modes;
+- universal route lifecycle;
 - narrative cycles;
 - topology-changing choices;
 - narrative windows;
 - scene-pool taxonomy;
-- character pool functions;
-- route pressure and collision;
-- knowledge, trace, consent, and obligation ledgers;
+- selection priorities;
+- obligations, traces, knowledge, consent, and aftermath;
 - route compatibility;
 - replayability;
 - ending families;
-- incremental implementation boundary.
+- incremental implementation boundaries.
 
-It replaces old fixed J2–J10 chronology as the forward architecture.
+It replaces fixed J2–J10 chronology as the forward architecture.
 
-It does not provide exact J2 text.
+It does not provide exact J2 dialogue.
 
----
+### Modular Scene Authoring Contract
 
-## 4. What the modular scene contract controls
-
-`MODULAR_SCENE_AUTHORING_CONTRACT.md` is the current source for:
+`docs/canon/MODULAR_SCENE_AUTHORING_CONTRACT.md` is the current source for:
 
 - scene-card fields;
 - hard requirements and exclusions;
-- availability reasons;
+- character availability;
 - context reads;
 - stable dramatic engines;
 - choice contracts;
 - state writes;
 - trace, knowledge, and consent records;
-- exit state;
-- follow-ups;
-- cooldown;
-- expiry / mutation;
+- exit state and follow-ups;
+- cooldown, expiry, and mutation;
 - consequence timing;
-- selection priority;
-- review and runtime-planning checklists.
+- review and runtime-readiness checks.
 
 ```text
 A scene is not ready for runtime
 until its conditions, choices, state writes, and consequence are documented.
 ```
 
----
-
-## 5. J1 status and post-J1 starting point
+## 4. J1 status and post-J1 starting point
 
 Current J1 remains:
 
@@ -126,19 +118,17 @@ J1 establishes:
 - no hard secret system;
 - final return to Marie / shared life.
 
-The modular blueprint begins from:
+The modular blueprint starts from:
 
 ```text
 couple mode = HABITUAL_WARMTH
 routes = R0 / soft R1 seeds only
-relationship frame = assumed exclusive
+relationship frame = ASSUMED_EXCLUSIVE
 ```
 
 J1 choices color early variants but do not activate routes.
 
----
-
-## 6. Principal-character completion state
+## 5. Principal-character completion
 
 All seven principal characters have full concrete canon:
 
@@ -152,9 +142,7 @@ All seven principal characters have full concrete canon:
 
 No principal character remains calibration-only.
 
-### Character-specific reminders
-
-#### Marie
+### Marie
 
 ```text
 the couple must become an active choice again
@@ -162,26 +150,31 @@ the couple must become an active choice again
 
 Every act requires Marie to remain active and desirable for her own sake.
 
-#### Sandra
+### Sandra
 
 ```text
 chosen confidence and precise private truth
 ```
 
-Do not use English `shift`; use `horaires décalés`, `poste du matin`, `poste du soir`, `poste du nuit`, `fin de poste`, or `week-end travaillé` as appropriate.
+Do not use English `shift`. Use:
 
-Correction: the standard wording is `poste de nuit`, not `poste du nuit`.
+- `horaires décalés`;
+- `poste du matin`;
+- `poste du soir`;
+- `poste de nuit`;
+- `fin de poste`;
+- `week-end travaillé`.
 
-#### Mathilde
+### Mathilde
 
 ```text
 ordinary sensuality is not route activation
 progression comes from changed intention
 ```
 
-Her temporary stay is an early spine function, but its exact first scene requires a validated source pack.
+Her temporary stay is an early spine function. Its exact first scene still requires a validated source pack.
 
-#### Pauline
+### Pauline
 
 ```text
 current couple with Bastien
@@ -192,7 +185,7 @@ double life and compartmentalization
 
 Bastien's ignorance is not cuckold consent.
 
-#### Nico
+### Nico
 
 ```text
 real attraction to Marie and Mathilde
@@ -204,7 +197,7 @@ image origin and consent level matter
 
 A public or legitimately possessed image is not automatically authorized for sexual recropping, forwarding, or a new recipient.
 
-#### Raphaëlle
+### Raphaëlle
 
 ```text
 chosen transformation
@@ -214,7 +207,7 @@ local clarity does not erase global consequence
 
 A clear secret remains cheating when Marie is not informed.
 
-#### Player
+### Player
 
 ```text
 the gaze becomes an act
@@ -222,9 +215,7 @@ the gaze becomes an act
 
 Player remains responsible for joining, delaying, sending, saving, hiding, refusing, disclosing, watching, or returning.
 
----
-
-## 7. Supporting-character rule
+## 6. Supporting-character rule
 
 Official policy:
 
@@ -253,9 +244,7 @@ Current product decision:
 
 The same proportional rule applies to Bastien, Maud, Nora, Julie, Clara, Sophie, Malik, and other supporting anchors unless their narrative function changes materially.
 
----
-
-## 8. Choice rule
+## 7. Choice rule
 
 Default:
 
@@ -274,9 +263,7 @@ They do not display character routes as menu options.
 
 Draft variants must be collapsed before runtime integration.
 
----
-
-## 9. Runtime rule
+## 8. Runtime rule
 
 ```text
 runtime existing != narrative canon
@@ -302,9 +289,7 @@ Do not inherit:
 - support-character arcs that were never validated;
 - a large refactor before a small vertical slice.
 
----
-
-## 10. Old-document policy
+## 9. Old-document policy
 
 Older files remain historical unless explicitly restored.
 
@@ -331,9 +316,7 @@ current canon
 
 Version reports describe their own pass. Newer current-canon entry points override older roadmap or source-order recommendations.
 
----
-
-## 11. Maintenance rule
+## 10. Maintenance rule
 
 When a validated correction changes story meaning:
 
@@ -349,9 +332,7 @@ When a validated correction changes story meaning:
 - update implementation guidance and PR description;
 - do not leave important decisions stranded in conversation.
 
----
-
-## 12. Current roadmap
+## 11. Current roadmap
 
 ```text
 V0.78 — Modular Narrative Arc Blueprint
@@ -359,13 +340,11 @@ V0.79 — Act I Opening Windows Source Pack
 V0.80 — First Modular Runtime Integration Plan
 ```
 
-V0.79 should define the first concrete post-J1 windows and authored scene inventory without yet modifying runtime.
+V0.79 should define the first concrete post-J1 windows and authored scene inventory without modifying runtime.
 
 V0.80 should map only the approved vertical slice into the existing Godot/data architecture with no large refactor.
 
----
-
-## 13. Final rule
+## 12. Final rule
 
 ```text
 The full character files define who people are.
