@@ -38,7 +38,25 @@ docs/canon/characters/PAULINE_CANON_DEPRECATION_MAP.md
 docs/canon/characters/NICO_CANON_DEPRECATION_MAP.md
 ```
 
-## 3. Reading rule
+## 3. Supporting-character status
+
+Jeff is already a concrete and important part of Sandra's canon, but he does not yet have a standalone full-canon file.
+
+Current status:
+
+| Character | Current source | Status |
+|---|---|---|
+| Jeff | `docs/canon/characters/SANDRA_CANON_FULL.md` | Concrete supporting canon inside Sandra's profile; standalone completion still needed before final character reconciliation |
+
+Until that pass:
+
+- use Sandra's full canon as the first source for Jeff;
+- do not invent a separate biography that contradicts Sandra's couple history;
+- preserve him as human, concrete, tired, blunt, and capable of hurting Sandra without becoming a monster;
+- do not treat his current supporting status as proof that he is narratively unimportant;
+- schedule a standalone Jeff / secondary-character pass before the Modular Narrative Arc Blueprint is finalized.
+
+## 4. Reading rule
 
 When writing a scene:
 
@@ -87,7 +105,17 @@ automatic revenge chronology,
 and proxy-consent shortcuts.
 ```
 
-## 4. Consolidation and correction policy
+For Jeff specifically, until his standalone pass:
+
+```text
+Read SANDRA_CANON_FULL.md first.
+Do not detach Jeff from Sandra's six-year relationship,
+shared house,
+work fatigue,
+and non-monster guardrail.
+```
+
+## 5. Consolidation and correction policy
 
 New character details must not remain stranded in a new addendum.
 
@@ -108,7 +136,7 @@ When a character correction changes a route engine, consent rule, old-document i
 
 Do not leave the full character file and general canon describing different versions of the same person.
 
-## 5. Sandra terminology policy
+## 6. Sandra terminology policy
 
 Do not use the English word `shift` in current writing.
 
