@@ -1,6 +1,6 @@
 # Narrative Canon Status — Current
 
-> Consolidated narrative status after V0.65–V0.73 canon work.  
+> Consolidated narrative status after V0.65–V0.74 canon work.  
 > This document explains how to read runtime, story-state docs, arcs, spine, proof maps, and character profiles before new narrative or runtime work.  
 > No runtime, JSON, tests, assets, or playable content are changed here.
 
@@ -31,10 +31,11 @@ docs/canon/characters/*_CANON_FULL.md
 docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
 ```
 
-For Mathilde also read:
+Also read the character-specific deprecation map when one exists:
 
 ```text
 docs/canon/characters/MATHILDE_CANON_DEPRECATION_MAP.md
+docs/canon/characters/PAULINE_CANON_DEPRECATION_MAP.md
 ```
 
 ## 3. Character-profile status
@@ -45,8 +46,9 @@ docs/canon/characters/MATHILDE_CANON_DEPRECATION_MAP.md
 - Sandra
 - Player
 - Mathilde
+- Pauline
 
-Mathilde's V0.73 canon now supersedes the earlier calibration-only profile and old runtime assumptions.
+Mathilde's V0.73 canon supersedes the earlier calibration-only profile and old runtime assumptions.
 
 Current Mathilde direction:
 
@@ -62,9 +64,27 @@ Current Mathilde direction:
 - modular scene pools;
 - route consequences and adult agency.
 
+Pauline's V0.74 canon supersedes the earlier calibration-only profile and fixed old J4/J5 route assumptions.
+
+Current Pauline direction:
+
+- 32 years old and explicitly adult;
+- retail client adviser in a local mutual bank;
+- lives alone in a rented two-room apartment;
+- trusted friend of Marie for around eight years;
+- culturally Catholic community background without religious-repression framing;
+- parish choir as a real weekly life anchor;
+- controlled, fitted clothing and composed public image;
+- previous relationship wound around losing authorship of her private self;
+- deep desire to be trusted after being seen;
+- image selection rather than accidental sensuality;
+- public trust / selected private channel / reciprocal risk / Marie loyalty NSFW engine;
+- modular scene pools rather than fixed-day escalation;
+- reciprocal exposure and social consequences;
+- no playable choir voice message.
+
 ### Concrete-profile expansion still needed
 
-- Pauline
 - Raphaëlle
 - Nico
 
@@ -122,11 +142,23 @@ Status: **legacy / suspended until reviewed**.
 
 Do not assume an old social/photo/Nico/Pauline-heavy structure remains valid.
 
+For Pauline specifically:
+
+- an old invitation scene does not define her current first active entry;
+- a social or practical pretext remains compatible only if rebuilt from Marie's trust and the current modular logic;
+- no private route is already active because old runtime contains one.
+
 ### J5 / J6
 
 Status: **runtime exists; narrative canon suspended**.
 
 May contain useful implementation or isolated ideas, but must not drive future story without re-audit.
+
+For Pauline specifically:
+
+- an old `last photo` or similar scene does not define her current image progression;
+- adult escalation requires selected intent, explicit limits, and reciprocal risk;
+- a photo alone is not route activation or consent.
 
 ### J7
 
@@ -141,6 +173,8 @@ For Mathilde specifically, J7 does not define:
 
 The long-grey-sweater framing and any fixed route assumptions are non-primary.
 
+For Pauline, any old `less theoretical` or later escalation remains historical and does not establish current route state.
+
 ### J8+
 
 Status: **non-current unless a later source pack explicitly validates it**.
@@ -151,7 +185,7 @@ Status: **non-current unless a later source pack explicitly validates it**.
 
 They remain operational summaries, not a replacement for full canon.
 
-If they conflict with V0.69+ J1 sources or V0.73 Mathilde canon, the newer canon wins.
+If they conflict with V0.69+ J1 sources, V0.73 Mathilde canon, or V0.74 Pauline canon, the newer canon wins.
 
 ## 7. Old narrative docs
 
@@ -173,6 +207,17 @@ Status: **typology useful; day-by-day examples suspended**.
 
 Use current character and adult-photo logic before restoring any proof.
 
+For Pauline, proof logic must preserve:
+
+```text
+selected image
++ explicit rule
++ reciprocal risk
++ consequence
+```
+
+She cannot remain a one-way controller of other people's exposure.
+
 ## 8. Mathilde deprecation summary
 
 Current canon overrides:
@@ -192,7 +237,33 @@ Compatible only after current-canon reframing:
 - family trust and guilt;
 - domestic proximity.
 
-## 9. Adult route rule
+## 9. Pauline deprecation summary
+
+Current canon overrides:
+
+- omniscient social or photo-controller framing;
+- Pauline only distributing or interpreting other people's images;
+- permanent `official / unofficial` rhythm;
+- constant halo / church jokes;
+- religious-repression or virgin-corruption framing;
+- playable choir voice-message assumptions;
+- fixed old J4 invitation / J5 photo / later route sequence;
+- early route locking;
+- consequence-free betrayal of Marie;
+- automatic group-sex organizer assumptions.
+
+Compatible only after current-canon reframing:
+
+- legitimate social or practical relay through Marie;
+- group-photo competence;
+- public virtue / private contradiction;
+- choir and community life;
+- fast dry Messenger complicity;
+- alternate image versions;
+- image control that becomes reciprocal exposure;
+- later trio or group material through explicit adult negotiation.
+
+## 10. Adult route rule
 
 `Réseau Intime` may become pornographic when routes escalate.
 
@@ -209,7 +280,24 @@ ordinary sensuality
 
 A mini-short or crop top alone is not consent or route activation.
 
-## 10. Choice rule
+For Pauline, adult escalation must come from:
+
+```text
+public trust
+-> legitimate private channel
+-> privately selected version
+-> reciprocal implication
+-> acknowledged desire
+-> adult decision and consequence
+```
+
+An alternate photo, dry joke, or private reply alone is not consent or route activation.
+
+Pauline may lose composure, timing, polish, or emotional control.
+
+She does not lose the right to decide.
+
+## 11. Choice rule
 
 Default runtime count:
 
@@ -219,7 +307,7 @@ Default runtime count:
 
 Four or more choices require explicit written justification.
 
-## 11. Final rule
+## 12. Final rule
 
 ```text
 Build the next story step from current canon, not inherited runtime.
