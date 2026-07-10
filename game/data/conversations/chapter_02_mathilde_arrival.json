@@ -1,0 +1,194 @@
+{
+  "id": "chapter_02_mathilde_arrival",
+  "chapter": 2,
+  "day": 2,
+  "title": "Mercredi soir — Pièce à conviction",
+  "app": "messages",
+  "window_id": "O2_MATHILDE",
+  "calendar_label": "Mercredi",
+  "time_band": "EVENING",
+  "communication_mode": "REMOTE_ASYNC_TO_OFFLINE_BEAT",
+  "foreground_role": "spine",
+  "physical_context": "Mathilde est dans la chambre d'appoint avec Marie. Player n'est pas encore rentré. Le chat s'arrête lorsqu'il rejoint le foyer.",
+  "thread": {
+    "id": "thread_mathilde_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "mathilde"
+    ],
+    "display_name": "Mathilde",
+    "profile_content_id": "profile_mathilde_placeholder"
+  },
+  "segments": [
+    {
+      "id": "segment_wednesday_mathilde_photo_defense",
+      "pattern": "guided_reply_pacing",
+      "function": "Mathilde répond à la photo pratique sans transformer son arrivée en scène de séduction.",
+      "messages": [
+        {
+          "id": "msg_wed_mathilde_001",
+          "sender": "mathilde",
+          "time_label": "18:22",
+          "text": "Je tiens à préciser que la photo est à charge."
+        },
+        {
+          "id": "msg_wed_mathilde_002",
+          "sender": "mathilde",
+          "time_label": "18:22",
+          "text": "Il y a un angle qui multiplie les sacs."
+        },
+        {
+          "id": "msg_wed_mathilde_003",
+          "sender": "mathilde",
+          "time_label": "18:23",
+          "text": "Et probablement les chaussures."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_wed_mathilde_probably_guided",
+          "text": "Probablement.",
+          "tone": "guided_reply",
+          "next_messages": [
+            {
+              "id": "msg_wed_mathilde_004",
+              "sender": "mathilde",
+              "time_label": "18:23",
+              "text": "Promis je prends très peu de place."
+            },
+            {
+              "id": "msg_wed_mathilde_005",
+              "sender": "mathilde",
+              "time_label": "18:24",
+              "text": "Cette phrase est déjà contredite par la pièce à conviction."
+            },
+            {
+              "id": "msg_wed_mathilde_006",
+              "sender": "mathilde",
+              "time_label": "18:24",
+              "text": "Super arrivée."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_wednesday_mathilde_welcome_choice",
+      "pattern": "three_posture_choice",
+      "function": "MT0 — définir la qualité de l'accueil domestique de Player.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "choice_wed_mathilde_practical",
+          "text": "J'arrive dans vingt minutes. Laisse le reste, je porterai les cartons et je finirai le bureau.",
+          "tone": "practical_welcome",
+          "sets_flags": [
+            "mathilde_arrival_practical",
+            "mathilde_stay_active",
+            "opening_wednesday_complete"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_wed_mathilde_007a",
+              "sender": "mathilde",
+              "time_label": "18:25",
+              "text": "Très bien."
+            },
+            {
+              "id": "msg_wed_mathilde_008a",
+              "sender": "mathilde",
+              "time_label": "18:25",
+              "text": "Tu es terriblement utile."
+            },
+            {
+              "id": "msg_wed_mathilde_009a",
+              "sender": "mathilde",
+              "time_label": "18:26",
+              "text": "Je vais essayer de ne pas m'y habituer."
+            }
+          ]
+        },
+        {
+          "id": "choice_wed_mathilde_playful",
+          "text": "J'ai compté quatre paires de chaussures. L'enquête continue.",
+          "tone": "teasing_helpful",
+          "sets_flags": [
+            "mathilde_arrival_playful",
+            "mathilde_stay_active",
+            "opening_wednesday_complete"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_wed_mathilde_007b",
+              "sender": "mathilde",
+              "time_label": "18:25",
+              "text": "Objection."
+            },
+            {
+              "id": "msg_wed_mathilde_008b",
+              "sender": "mathilde",
+              "time_label": "18:25",
+              "text": "Méthode de comptage hostile."
+            },
+            {
+              "id": "msg_wed_mathilde_009b",
+              "sender": "mathilde",
+              "time_label": "18:26",
+              "text": "Mais tu peux quand même m'aider avec le portant."
+            }
+          ]
+        },
+        {
+          "id": "choice_wed_mathilde_distant",
+          "text": "Installe-toi. Je rentrerai plus tard.",
+          "tone": "distant_welcome",
+          "sets_flags": [
+            "mathilde_arrival_distant",
+            "mathilde_stay_active",
+            "opening_wednesday_complete"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_wed_mathilde_007c",
+              "sender": "mathilde",
+              "time_label": "18:25",
+              "text": "D'accord."
+            },
+            {
+              "id": "msg_wed_mathilde_008c",
+              "sender": "mathilde",
+              "time_label": "18:26",
+              "text": "Marie m'a montré où tout était."
+            },
+            {
+              "id": "msg_wed_mathilde_009c",
+              "sender": "mathilde",
+              "time_label": "18:26",
+              "text": "Je vais essayer de ne pas déclarer le bureau territoire indépendant avant ton retour."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_wednesday_mathilde_offline_settling",
+      "pattern": "offline_transition",
+      "function": "Arrêter le chat lorsque Player rentre et représenter l'installation face à face.",
+      "messages": [
+        {
+          "id": "offline_wednesday_mathilde_settling",
+          "presentation": "offline_beat",
+          "_system_note": true,
+          "time_label": "19:15",
+          "text": "19:15 — Player rentre. Les derniers cartons, le couchage et les règles pratiques du foyer se règlent face à face."
+        }
+      ],
+      "choices": []
+    }
+  ],
+  "routes_nourished": [
+    "mathilde"
+  ],
+  "debug_notes": "V0.81 O2 Mathilde. Accès domestique R1 uniquement ; aucun regard chargé, aucune image envoyée par Mathilde et aucun dialogue Messenger après la co-présence."
+}
