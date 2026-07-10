@@ -1,8 +1,8 @@
 # Documentation Reading Order — Canon Current
 
-> Canon entry point after V0.79 Act I opening-source validation.  
+> Canon entry point after V0.79 Act I opening-source correction.  
 > Read this file before older character, route, proof, day-plan, or runtime documentation.  
-> Documentation first; runtime only after the V0.79 source pack, approved scene cards, and a dedicated integration plan.
+> Documentation first; runtime only after the V0.79 source pack, temporal/delivery map, approved scene cards, and a dedicated integration plan.
 
 ## 1. Core rules
 
@@ -10,6 +10,7 @@
 Write people from full character canon.
 Write story movement from the V0.78 modular blueprint.
 Write the first post-J1 content from the V0.79 opening source pack.
+Write time and message delivery from the diegetic-time canon and V0.79 temporal map.
 Write scenes from approved modular scene cards.
 Write adult escalation from the global NSFW canon.
 Use three choices by default.
@@ -25,11 +26,13 @@ Read in this order:
 2. `docs/canon/CHOICE_DESIGN_CANON.md`
 3. `docs/canon/MODULAR_NARRATIVE_ARC_BLUEPRINT.md`
 4. `docs/canon/MODULAR_SCENE_AUTHORING_CONTRACT.md`
-5. for the first post-J1 slice:
+5. `docs/canon/DIEGETIC_TIME_AND_COMMUNICATION_CANON.md`
+6. for the first post-J1 slice:
    - `docs/canon/ACT_I_OPENING_WINDOWS_SOURCE_PACK.md`
    - `docs/canon/ACT_I_OPENING_SCENE_CARDS.md`
-6. `docs/canon/characters/CHARACTER_CANON_INDEX.md`
-7. the relevant principal full-canon file:
+   - `docs/canon/ACT_I_OPENING_TEMPORAL_DELIVERY_MAP.md`
+7. `docs/canon/characters/CHARACTER_CANON_INDEX.md`
+8. the relevant principal full-canon file:
    - `docs/canon/characters/MARIE_CANON_FULL.md`
    - `docs/canon/characters/SANDRA_CANON_FULL.md`
    - `docs/canon/characters/PLAYER_CANON_FULL.md`
@@ -37,14 +40,14 @@ Read in this order:
    - `docs/canon/characters/PAULINE_CANON_FULL.md`
    - `docs/canon/characters/NICO_CANON_FULL.md`
    - `docs/canon/characters/RAPHAELLE_CANON_FULL.md`
-8. `docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md` when a scene touches sexual tension, explicit escalation, roleplay, images, voyeurism, cheating, NTR/cuckold, sharing, open arrangements, trio/quatuor, group content, or dark-route consequences
-9. the relevant character deprecation map when older material may conflict
-10. `docs/canon/SUPPORTING_CHARACTER_CANON_POLICY.md` when a supporting character appears or is materially affected
-11. for current J1 exact text:
+9. `docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md` when a scene touches sexual tension, explicit escalation, roleplay, images, voyeurism, cheating, NTR/cuckold, sharing, open arrangements, trio/quatuor, group content, or dark-route consequences
+10. the relevant character deprecation map when older material may conflict
+11. `docs/canon/SUPPORTING_CHARACTER_CANON_POLICY.md` when a supporting character appears or is materially affected
+12. for current J1 exact text:
     - `docs/canon/J1_CANON_SOURCE_PACK.md`
     - `docs/V0_69_J1_Canon_Text_Review_And_Final_Line_Source.md`
-12. voice and intensity bibles only as support material
-13. older arcs, spine, proof maps, route matrices, version reports, and runtime only after explicit cross-checking
+13. voice and intensity bibles only as support material
+14. older arcs, spine, proof maps, route matrices, version reports, and runtime only after explicit cross-checking
 
 `docs/canon/CHARACTERS_CANON_CURRENT.md` is a doorway only.
 
@@ -57,8 +60,10 @@ full character canon
 + choice canon
 + V0.78 modular blueprint
 + modular scene authoring contract
++ diegetic time and communication canon
 + V0.79 opening source pack
-+ V0.79 approved scene cards
++ V0.79 opening scene cards
++ V0.79 temporal and delivery map
 = current narrative truth for the opening post-J1 slice
 ```
 
@@ -74,19 +79,15 @@ Older J2+ runtime, summaries, day plans, and foundations remain technical or his
 
 `docs/canon/MODULAR_NARRATIVE_ARC_BLUEPRINT.md` controls:
 
-- the central fixed dramatic spine;
+- the fixed dramatic spine;
 - Act 0–V structure;
 - couple-state dimensions and modes;
 - universal route lifecycle;
-- narrative cycles;
 - topology-changing choices;
-- narrative windows;
-- scene pools;
-- selection priorities;
+- narrative windows and scene pools;
 - obligations, traces, knowledge, consent, and aftermath;
-- route compatibility;
-- replayability;
-- endings and implementation boundaries.
+- route compatibility and replayability;
+- implementation boundaries.
 
 It replaces fixed J2–J10 chronology.
 
@@ -97,17 +98,40 @@ It replaces fixed J2–J10 chronology.
 - required scene-card fields;
 - hard requirements and exclusions;
 - believable availability;
-- context reads;
+- context reads and state writes;
 - choice contracts;
-- state writes;
 - trace, knowledge, and consent records;
-- exit state and follow-ups;
-- cooldown, expiry, mutation, and fallback;
-- runtime-readiness checks.
+- exit state, consequence, cooldown, mutation, and fallback.
 
 ---
 
-## 5. What V0.79 controls
+## 5. What the time and communication canon controls
+
+`docs/canon/DIEGETIC_TIME_AND_COMMUNICATION_CANON.md` controls:
+
+- weekday / relative-day anchors;
+- morning, midday, afternoon, evening, and night readability;
+- representative timestamp ranges;
+- elapsed-time cues;
+- realistic reply delays;
+- character availability through work, travel, meals, sleep, and venue schedules;
+- communication modes;
+- the rule that co-present characters speak rather than conducting artificial full chats;
+- conversion of face-to-face events into offline beats and later smartphone consequences.
+
+Core rule:
+
+```text
+If two characters are in the same room
+and can speak normally,
+they do not conduct a full Messenger conversation.
+```
+
+Short same-home or same-venue messages remain valid only when distance, noise, logistics, privacy, or trace delivery justifies the phone.
+
+---
+
+## 6. What V0.79 controls
 
 ### Act I Opening Windows Source Pack
 
@@ -125,8 +149,6 @@ O7 — Pauline public group-photo relay
 O8 — Nico saved-seat follow-up + household breather
 ```
 
-The pack covers roughly three to five in-game days without assigning a fixed `J2` calendar label.
-
 It establishes:
 
 - Mathilde's water-damage stay;
@@ -138,48 +160,67 @@ It establishes:
 - an authorized public group-photo trace;
 - a mandatory couple return.
 
-It does **not** establish:
-
-- an adult route;
-- a hard secret;
-- a hidden affair;
-- a private crop;
-- the Nico photo pact;
-- a Raphaëlle personal image;
-- a deliberate Mathilde seduction;
-- a second Sandra photo;
-- a relationship-frame change.
+It does not establish an adult route, hard secret, hidden affair, private crop, Nico photo pact, Raphaëlle personal image, deliberate Mathilde seduction, second Sandra photo, or relationship-frame change.
 
 ### Act I Opening Scene Cards
 
-`docs/canon/ACT_I_OPENING_SCENE_CARDS.md` is the structured approval source for:
+`docs/canon/ACT_I_OPENING_SCENE_CARDS.md` controls:
 
 - scene IDs;
 - windows;
 - conditions and exclusions;
-- topology exclusivity;
 - exact three-choice contracts;
 - character agency;
 - conceptual state writes;
 - trace records;
 - return consequences;
-- cooldowns, mutation, and fallbacks;
-- end-of-pack state.
+- cooldowns, mutation, and fallbacks.
+
+### Act I Opening Temporal & Delivery Map
+
+`docs/canon/ACT_I_OPENING_TEMPORAL_DELIVERY_MAP.md` controls the concrete felt chronology and delivery mode.
+
+Current calendar:
+
+```text
+Tuesday evening = J1
+Wednesday = Mathilde emergency and arrival
+Thursday = work, La Verrière topology, and couple return
+Friday = public images, Nico follow-up, and household residue
+```
+
+The map specifies for every opening scene:
+
+- approved time range;
+- physical positions;
+- communication mode;
+- why a message is used;
+- when messaging stops;
+- whether an offline beat replaces chat;
+- how missed time windows mutate.
+
+Where it is more specific than the broader source pack, the temporal/delivery map controls.
 
 ```text
 The source pack supplies the lines.
-The cards prove why each scene may happen and what it changes.
+The cards prove why the scenes exist.
+The temporal map proves when they happen and why they pass through a phone.
 ```
 
 ---
 
-## 6. J1 status and opening handoff
+## 7. J1 status and opening handoff
 
 Current J1 remains:
 
 ```text
 J1 — Les choses qu'on remarque
 ```
+
+The current calendar reads J1 as Tuesday evening because:
+
+- Marie's event is Thursday;
+- Mathilde intends to inspect the installation `tomorrow`.
 
 J1 establishes:
 
@@ -188,10 +229,7 @@ J1 establishes:
 - Sandra returning through one soft trace;
 - Mathilde indirect only;
 - Nico, Pauline, and Raphaëlle absent from active J1;
-- no route lock;
-- no explicit content;
-- no hard secret;
-- final return to Marie / shared life.
+- no route lock, explicit content, hard secret, or changed relationship frame.
 
 The V0.79 opening starts from:
 
@@ -205,9 +243,9 @@ J1 choices color early variants but do not activate routes.
 
 ---
 
-## 7. V0.79 topology choice
+## 8. V0.79 topology choice
 
-The first topology node is Marie's La Verrière invitation.
+The first topology node is Marie's Thursday La Verrière invitation.
 
 Player may:
 
@@ -236,7 +274,34 @@ It does not ask which route character he selects.
 
 ---
 
-## 8. Opening route and intensity ceiling
+## 9. Communication realism in the three branches
+
+### Join Marie
+
+- Player and Marie may exchange short logistical messages while on opposite sides of a noisy La Verrière;
+- they do not conduct a long emotional chat while standing together;
+- emotional evaluation moves to O6 after separation or becomes an offline beat.
+
+### Stay home
+
+- Player and Mathilde may use one short practical ping from separate rooms;
+- when Player enters the spare room, the chat stops;
+- the help itself occurs offline.
+
+### Finish work
+
+- Player and Raphaëlle use work chat only from separate workstations / rooms or asynchronous file review;
+- if they sit together, the rest of the review happens offline;
+- Raphaëlle does not become the reason Player misses Marie.
+
+### Return to Marie
+
+- when physically separated, O6 uses `AFTERGLOW_REMOTE`;
+- when they return together, O6 becomes an `OFFLINE_BEAT` rather than an artificial Messenger exchange.
+
+---
+
+## 10. Opening route and intensity ceiling
 
 V0.79 remains inside:
 
@@ -253,13 +318,12 @@ By pack end:
 - Pauline social access is established;
 - Nico friendship/social access is established;
 - Sandra remains active or intentionally cooled;
-- no adult frame exists;
-- no consequential hidden secret exists;
-- the couple remains in `HABITUAL_WARMTH`, with only reconnection or drift candidates.
+- no adult frame or consequential hidden secret exists;
+- the couple remains `HABITUAL_WARMTH`, with only reconnection or drift candidates.
 
 ---
 
-## 9. Choice rule
+## 11. Choice rule
 
 Default:
 
@@ -285,7 +349,7 @@ The return-to-Marie scene has no fake undo choice.
 
 ---
 
-## 10. Character reminders
+## 12. Character reminders
 
 ### Marie
 
@@ -293,13 +357,7 @@ The return-to-Marie scene has no fake undo choice.
 the couple must become an active choice again
 ```
 
-V0.79 gives her:
-
-- family action;
-- a real event;
-- independent movement;
-- practical and emotional reasons to want Player present;
-- a mandatory return consequence.
+V0.79 gives her family action, a real event, independent movement, practical and emotional reasons to want Player, and a mandatory return consequence.
 
 ### Sandra
 
@@ -318,49 +376,27 @@ ordinary sensuality is not route activation
 progression comes from changed intention
 ```
 
-Her entry is the water-damage stay, suitcase, garment bag, practical clutter, and family trust—not the deprecated canapé selfie.
+Her entry is the water-damage stay and practical household life, not the deprecated canapé selfie.
 
 ### Pauline
 
-```text
-current couple with Bastien
-prior hidden infidelity
-double life and compartmentalization
-```
-
-V0.79 uses only an authorized public group-photo relay. Bastien remains visible. No private alternate exists yet.
+V0.79 uses only an authorized Friday-morning public group-photo relay. Bastien remains visible. No private alternate exists yet.
 
 ### Nico
 
-```text
-real attraction to Marie and Mathilde
-domestic-access envy
-voyeuristic shared gaze
-```
-
-V0.79 stops before those engines activate. Nico first appears as a real friend who saves a seat and comments on Marie's event without sexualizing it.
+V0.79 stops before domestic envy, voyeurism, body comments, or the photo pact. His default follow-up is Friday afternoon, respecting his late hospitality work rhythm.
 
 ### Raphaëlle
 
-```text
-chosen transformation
-explicit frame
-local clarity does not erase global consequence
-```
-
-V0.79 begins with peer work. A garment bag may seed ordinary creative life, but no photo, costume access, or personal frame opens.
+V0.79 begins with Thursday-morning peer work. A garment bag may seed ordinary creative life, but no private frame opens.
 
 ### Player
-
-```text
-the gaze becomes an act
-```
 
 V0.79 first tests practical participation, presence, promise, and return—not seduction skill.
 
 ---
 
-## 11. Supporting-character rule
+## 13. Supporting-character rule
 
 Use:
 
@@ -378,7 +414,7 @@ In V0.79:
 
 ---
 
-## 12. Runtime rule
+## 14. Runtime rule
 
 ```text
 runtime existing != narrative canon
@@ -390,59 +426,62 @@ Before any post-J1 runtime change, V0.80 must:
 
 1. inspect current J2+ data and visible-thread architecture;
 2. map the smallest required conceptual state;
-3. decide how O0–O8 map to runtime days/windows;
-4. identify old J2 content to replace, bypass, or archive;
-5. preserve one visible thread per character;
-6. preserve the 1 foreground / 0–2 echoes budget;
-7. implement the mandatory Marie return;
-8. preserve image origin and audience;
-9. avoid a large refactor;
-10. define tests, validation, and rollback.
+3. map Wednesday–Friday windows and representative time separators;
+4. map communication modes and offline-beat handling;
+5. identify old J2 content to replace, bypass, or archive;
+6. preserve one visible thread per character;
+7. preserve the `1 foreground / 0–2 echoes` budget;
+8. implement the mandatory Marie return;
+9. preserve image origin and audience;
+10. avoid a large refactor;
+11. define tests, validation, and rollback.
 
 ---
 
-## 13. Old-document policy
+## 15. Old-document policy
 
 Older J2 documents remain historical / technical support.
 
-In particular, they do not override V0.79 where they require:
+They do not override V0.79 where they require:
 
 - Player to remain physically away from home until a fixed later day;
 - Mathilde's canapé selfie;
 - four fixed J2 visuals;
 - Pauline and Nico exclusion by day number;
 - a fixed linear message order;
-- old route assumptions.
-
-Reusable technical details may still be inspected during V0.80.
+- artificial chats between co-present people;
+- no readable passage from morning to night.
 
 Current hierarchy:
 
 ```text
 current character canon
 -> V0.78 architecture
+-> time and communication canon
 -> V0.79 opening source pack
--> V0.79 opening scene cards
+-> V0.79 scene cards
+-> V0.79 temporal/delivery map
 -> V0.80 runtime integration plan
 -> runtime implementation
 ```
 
 ---
 
-## 14. Maintenance rule
+## 16. Maintenance rule
 
 When a validated correction changes opening content:
 
-- update the V0.79 source pack first;
-- update the corresponding scene card;
+- update the V0.79 source pack if dialogue or event meaning changes;
+- update the corresponding scene card if conditions or state writes change;
+- update the temporal/delivery map if weekday, time, physical position, or communication mode changes;
+- update the general time/communication canon if the rule changes globally;
 - update the modular blueprint only if architecture changes;
-- update character or NSFW canon only if identity or adult rules change;
 - update reading order, narrative status, operational summaries, report, and PR description;
-- do not modify runtime in the same correction without a separately validated integration plan.
+- keep runtime changes in a separately validated integration pass.
 
 ---
 
-## 15. Current roadmap
+## 17. Current roadmap
 
 ```text
 V0.79 — Act I Opening Windows Source Pack
@@ -455,12 +494,12 @@ A later runtime PR should implement one small opening vertical slice after V0.80
 
 ---
 
-## 16. Final rule
+## 18. Final rule
 
 ```text
 The full character files define who people are.
-The V0.78 blueprint defines how the story moves.
-The V0.79 source pack defines the first concrete movement.
-The V0.79 cards define why every opening scene is eligible and consequential.
+V0.78 defines how the story moves.
+V0.79 defines the first concrete movement.
+The temporal map defines the felt week and believable use of the phone.
 Only V0.80 may plan how runtime implements it.
 ```
