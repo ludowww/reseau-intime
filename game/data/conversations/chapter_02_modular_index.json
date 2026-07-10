@@ -93,7 +93,8 @@
     "res://data/visual_content/chapter_02_proofs.json"
   ],
   "debug_expected_outcomes": [
-    "Wednesday starts at 12:10 and progresses to 18:18, 18:22, then the 19:15 offline beat.",
+    "Wednesday starts at 12:10 and progresses to 18:18 and 18:22.",
+    "The final offline time is branch-specific: 18:46 practical, 18:50 playful, or 19:15 distant.",
     "Marie has two episodes in one persistent thread.",
     "Mathilde unlocks only after the authorized arrival trace.",
     "M0 and MT0 each contain exactly three choices.",
