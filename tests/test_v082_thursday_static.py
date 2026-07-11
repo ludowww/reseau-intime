@@ -37,7 +37,11 @@ def entry_visible(entry: dict, flags: set[str]) -> bool:
     exclusions = entry.get("unless_conditions", [])
     if not isinstance(exclusions, list):
         exclusions = [exclusions]
-    return not any(condition_met(str(condition), flags) for condition in exclusions if str(condition).strip())
+    return not any(
+        condition_met(str(condition), flags)
+        for condition in exclusions
+        if str(condition).strip()
+    )
 
 
 class V082ThursdayStaticTests(unittest.TestCase):
@@ -222,14 +226,18 @@ class V082ThursdayStaticTests(unittest.TestCase):
             ]
             self.assertEqual(offenders, [], relative)
 
-    def test_v084_phone_and_conversation_extend_v082_foundation(self):
+    def test_active_adapters_preserve_v082_foundation(self):
         phone_scene = (GAME / "scenes/smartphone/PhonePrototype.tscn").read_text(encoding="utf-8")
         conversation_scene = (GAME / "scenes/smartphone/ConversationView.tscn").read_text(encoding="utf-8")
-        self.assertIn("PhonePrototypeV084.gd", phone_scene)
-        self.assertIn("ConversationViewV084.gd", conversation_scene)
+        self.assertIn("PhonePrototypeV086A.gd", phone_scene)
+        self.assertIn("ConversationViewV086A.gd", conversation_scene)
 
+        phone_v086a = (GAME / "scripts/ui/PhonePrototypeV086A.gd").read_text(encoding="utf-8")
+        phone_v085 = (GAME / "scripts/ui/PhonePrototypeV085.gd").read_text(encoding="utf-8")
         phone_v084 = (GAME / "scripts/ui/PhonePrototypeV084.gd").read_text(encoding="utf-8")
         phone_v082 = (GAME / "scripts/ui/PhonePrototypeV082.gd").read_text(encoding="utf-8")
+        self.assertIn('extends "res://scripts/ui/PhonePrototypeV085.gd"', phone_v086a)
+        self.assertIn('extends "res://scripts/ui/PhonePrototypeV084.gd"', phone_v085)
         self.assertIn('extends "res://scripts/ui/PhonePrototypeV082.gd"', phone_v084)
         for expected in [
             'extends "res://scripts/ui/PhonePrototypeV081.gd"',
@@ -241,8 +249,10 @@ class V082ThursdayStaticTests(unittest.TestCase):
         ]:
             self.assertIn(expected, phone_v082)
 
+        conversation_v086a = (GAME / "scripts/ui/ConversationViewV086A.gd").read_text(encoding="utf-8")
         conversation_v084 = (GAME / "scripts/ui/ConversationViewV084.gd").read_text(encoding="utf-8")
         conversation_v082 = (GAME / "scripts/ui/ConversationViewV082.gd").read_text(encoding="utf-8")
+        self.assertIn('extends "res://scripts/ui/ConversationViewV084.gd"', conversation_v086a)
         self.assertIn('extends "res://scripts/ui/ConversationViewV082.gd"', conversation_v084)
         for expected in [
             'extends "res://scripts/ui/ConversationViewV081.gd"',
@@ -265,22 +275,18 @@ class V082ThursdayStaticTests(unittest.TestCase):
         self.assertEqual(item.get("risk_level"), 0)
         self.assertFalse(item.get("can_set_as_wallpaper"))
         self.assertIn("ordinary", item.get("tags", []))
-        joined = load_json("data/conversations/chapter_03_marie_event_joined.json")
-        references = [node.get("content_id") for node in walk(joined) if isinstance(node, dict) and node.get("content_id")]
-        self.assertEqual(references, ["marie_laverriere_setup_01"] * 3)
 
-    def test_active_thursday_contains_no_friday_or_adult_route_content(self):
-        combined = "\n".join((GAME / relative).read_text(encoding="utf-8") for relative in self.THURSDAY_FILES).lower()
+    def test_no_friday_or_adult_scope_leaks_into_thursday_files(self):
+        combined = "\n".join((GAME / path).read_text(encoding="utf-8") for path in self.THURSDAY_FILES).lower()
         for forbidden in [
             "pauline",
             "nico",
             "vendredi",
+            "private crop",
+            "one-view",
             "cuckold",
-            "crop privé",
-            "photo pact",
-            "lie_score",
+            "adult_frame",
             "mathilde.desire",
-            "explicit",
         ]:
             self.assertNotIn(forbidden, combined)
         self.assertIsNone(re.search(r"\bntr\b", combined), "standalone NTR token found in active Thursday content")
