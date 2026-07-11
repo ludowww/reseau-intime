@@ -1,0 +1,33 @@
+{
+  "id": "chapter_02_modular_visuals",
+  "version": 1,
+  "notes": "Visuel actif de la tranche V0.81 : arrivée pratique de Mathilde dans la chambre d'appoint. Aucun contenu adulte ou preuve de route.",
+  "items": [
+    {
+      "id": "mathilde_arrival_room_01",
+      "character": "mathilde",
+      "tier": 0,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/mathilde_arrival_room_01.png",
+      "context": "Photo pratique prise ouvertement par Marie : chambre d'appoint en cours d'installation, valise ouverte, housse à vêtements, tote bag de travail et quelques chaussures. Mathilde sait que la photo est destinée à Player.",
+      "tags": [
+        "mathilde",
+        "arrival",
+        "spare_room",
+        "household",
+        "ordinary",
+        "wednesday"
+      ],
+      "is_proof": false,
+      "risk_level": 0,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": false,
+      "can_be_discovered_by": [
+        "marie",
+        "mathilde"
+      ]
+    }
+  ]
+}

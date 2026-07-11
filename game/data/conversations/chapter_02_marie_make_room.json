@@ -1,0 +1,204 @@
+{
+  "id": "chapter_02_marie_make_room",
+  "chapter": 2,
+  "day": 2,
+  "title": "Mercredi midi — Faire de la place",
+  "app": "messages",
+  "window_id": "O1",
+  "calendar_label": "Mercredi",
+  "time_band": "MIDDAY",
+  "communication_mode": "REMOTE_ASYNC",
+  "foreground_role": "spine",
+  "physical_context": "Marie est à La Verrière entre deux tâches. Player est au travail ou en trajet. Mathilde se trouve dans son appartement endommagé.",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "marie"
+    ],
+    "display_name": "Marie",
+    "profile_content_id": "profile_marie_placeholder"
+  },
+  "segments": [
+    {
+      "id": "segment_wednesday_marie_emergency_context",
+      "pattern": "guided_reply_pacing",
+      "function": "Présenter l'urgence de Mathilde avant la décision de participation de Player.",
+      "messages": [
+        {
+          "id": "msg_wed_marie_001",
+          "sender": "marie",
+          "time_label": "12:10",
+          "text": "Petit changement de programme."
+        },
+        {
+          "id": "msg_wed_marie_002",
+          "sender": "marie",
+          "time_label": "12:10",
+          "text": "Mathilde vient de m'appeler."
+        },
+        {
+          "id": "msg_wed_marie_003",
+          "sender": "marie",
+          "time_label": "12:11",
+          "text": "Dégât des eaux chez elle."
+        },
+        {
+          "id": "msg_wed_marie_004",
+          "sender": "marie",
+          "time_label": "12:11",
+          "text": "Sa chambre et une partie de la salle de bain ont décidé de devenir une piscine municipale."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_wed_marie_emergency_guided",
+          "text": "Sérieux ?",
+          "tone": "guided_reply",
+          "next_messages": [
+            {
+              "id": "msg_wed_marie_005",
+              "sender": "marie",
+              "time_label": "12:12",
+              "text": "Très."
+            },
+            {
+              "id": "msg_wed_marie_006",
+              "sender": "marie",
+              "time_label": "12:12",
+              "text": "L'appartement du dessus a fui toute la nuit."
+            },
+            {
+              "id": "msg_wed_marie_007",
+              "sender": "marie",
+              "time_label": "12:13",
+              "text": "Elle peut sauver son ordinateur et probablement six paires de chaussures, donc l'essentiel va bien."
+            },
+            {
+              "id": "msg_wed_marie_008",
+              "sender": "marie",
+              "time_label": "12:13",
+              "text": "Je lui ai dit qu'on pouvait l'héberger quelques jours."
+            },
+            {
+              "id": "msg_wed_marie_009",
+              "sender": "marie",
+              "time_label": "12:14",
+              "text": "Enfin..."
+            },
+            {
+              "id": "msg_wed_marie_010",
+              "sender": "marie",
+              "time_label": "12:14",
+              "text": "Je lui ai dit qu'on allait vérifier ensemble."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_wednesday_marie_make_room_choice",
+      "pattern": "three_posture_choice",
+      "function": "M0 — définir comment Player participe à l'accueil d'urgence.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "choice_wed_make_room_proactive",
+          "text": "Oui. Je vide le bureau ce soir et je récupère des draps.",
+          "tone": "proactive",
+          "sets_flags": [
+            "opening_make_room_proactive"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_wed_marie_011a",
+              "sender": "marie",
+              "time_label": "12:15",
+              "text": "Merci."
+            },
+            {
+              "id": "msg_wed_marie_012a",
+              "sender": "marie",
+              "time_label": "12:15",
+              "text": "C'est exactement le genre de oui qui fait bouger des objets."
+            },
+            {
+              "id": "msg_wed_marie_013a",
+              "sender": "marie",
+              "time_label": "12:16",
+              "text": "Je prends les serviettes et je lui confirme."
+            }
+          ]
+        },
+        {
+          "id": "choice_wed_make_room_playful",
+          "text": "Oui, mais elle a droit à une valise, pas à une annexion complète du bureau.",
+          "tone": "playful_present",
+          "sets_flags": [
+            "opening_make_room_playful"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_wed_marie_011b",
+              "sender": "marie",
+              "time_label": "12:15",
+              "text": "Je vais lui transmettre la clause."
+            },
+            {
+              "id": "msg_wed_marie_012b",
+              "sender": "marie",
+              "time_label": "12:15",
+              "text": "Elle va la contester."
+            },
+            {
+              "id": "msg_wed_marie_013b",
+              "sender": "marie",
+              "time_label": "12:16",
+              "text": "Tu peux quand même libérer l'étagère du bas ?"
+            },
+            {
+              "id": "msg_wed_marie_014b",
+              "sender": "marie",
+              "time_label": "12:16",
+              "text": "Très juridique. Elle va adorer."
+            }
+          ]
+        },
+        {
+          "id": "choice_wed_make_room_passive",
+          "text": "Si tu penses que c'est le mieux.",
+          "tone": "passive_assent",
+          "sets_flags": [
+            "opening_make_room_passive"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_wed_marie_011c",
+              "sender": "marie",
+              "time_label": "12:15",
+              "text": "Je pense qu'elle a besoin d'un lit."
+            },
+            {
+              "id": "msg_wed_marie_012c",
+              "sender": "marie",
+              "time_label": "12:16",
+              "text": "Je vais lui dire oui."
+            },
+            {
+              "id": "msg_wed_marie_013c",
+              "sender": "marie",
+              "time_label": "12:16",
+              "text": "Essaie juste de ne pas avoir l'air surpris quand elle arrive avec trois fois trop d'affaires."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "routes_nourished": [
+    "marie",
+    "mathilde_seed"
+  ],
+  "debug_notes": "V0.81 O1. Trois postures seulement, flags observables, aucun score de route et aucune possibilité de refuser l'hébergement d'urgence."
+}

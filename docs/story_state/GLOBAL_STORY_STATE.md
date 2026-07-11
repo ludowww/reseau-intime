@@ -1,7 +1,7 @@
-# État global de l’histoire — V0.80
+# État global de l’histoire — V0.81
 
-> Résumé opérationnel après audit du prototype et planification de la première intégration modulaire.  
-> V0.80 est documentaire : le runtime reste inchangé.
+> Résumé opérationnel après intégration de la première tranche runtime modulaire.  
+> Le runtime jouable actuel est canonique jusqu’au mercredi soir seulement.
 
 ## 1. Hiérarchie actuelle
 
@@ -11,167 +11,191 @@ canon personnages
 + V0.79 source pack / cartes / temps
 = vérité narrative
 
-V0.80 audit + plan d'intégration
-= vérité technique pour la prochaine PR
+V0.80 audit / plan
+= stratégie technique
 
-runtime actuel
-= prototype pré-modulaire, pas vérité narrative automatique
+V0.81 runtime actif
+= vérité jouable mardi–mercredi
+
+anciens Chapter 2–9
+= fichiers legacy inactifs
 ```
 
-Sources V0.80 :
+## 2. Runtime actif
 
 ```text
-docs/runtime/V0_80_RUNTIME_AUDIT_AND_GAP_MAP.md
-docs/V0_80_First_Modular_Runtime_Integration_Plan.md
-docs/runtime/V0_81_WEDNESDAY_VERTICAL_SLICE_IMPLEMENTATION_PLAN.md
+chapter_01_modular_index.json
+chapter_02_modular_index.json
 ```
 
-## 2. État narratif canonique
+Seuls Mardi et Mercredi apparaissent dans la navigation actuelle.
 
-### Mardi soir — J1
+Les anciens jours restent sur disque pour historique et rollback.
+
+## 3. Mardi — J1
 
 ```text
+Marie + Sandra actives
+Mathilde indirecte seulement
 couple mode = HABITUAL_WARMTH
-Mathilde = indirecte seulement
-Sandra = trace douce
-routes externes = inactives
 ```
 
-### Mercredi–vendredi — V0.79
-
-Le contenu est écrit et validable dans la documentation, mais pas encore intégré au prototype.
-
-```text
-Mercredi = urgence / arrivée Mathilde
-Jeudi = travail / événement / topologie / retour Marie
-Vendredi = photos publiques / Nico / foyer
-```
-
-## 3. Écart runtime critique
-
-Le J1 jouable actuel montre encore :
+Le runtime actif filtre désormais :
 
 - les sacs de Mathilde dans l’entrée ;
-- ses baskets ;
-- un sac de sport / une raquette ;
-- une image `j1_mathilde_bag_domestic_trace`.
+- les baskets / sac de sport / raquette ;
+- le visuel `j1_mathilde_bag_domestic_trace`.
 
-Cela contredit l’arrivée du mercredi après dégât des eaux.
+Mathilde ne possède aucun fil actif mardi.
 
-Décision V0.80 :
+## 4. Mercredi — tranche jouable
+
+### 12:10 — Marie / faire de la place
+
+Mathilde subit un dégât des eaux.
+
+Player choisit :
 
 ```text
-V0.81 corrige uniquement ce raccord J1
-avant d'intégrer le mercredi.
+M0A — participer activement
+M0B — plaisanter tout en étant présent
+M0C — donner un assentiment passif
 ```
 
-## 4. Capacités déjà réutilisables
+### 18:18 — Marie / trace d’arrivée
 
-Le prototype sait déjà :
-
-- conserver un fil par personnage ;
-- fusionner plusieurs épisodes dans le même fil ;
-- afficher des segments, choix, réponses et historiques ;
-- débloquer séquentiellement des conversations ;
-- afficher notifications, heures et cartes visuelles ;
-- enregistrer des flags.
-
-Il ne sait pas encore :
-
-- débloquer une branche selon un choix ;
-- filtrer conditionnellement des variantes ;
-- représenter proprement un `offline_beat` ;
-- piloter le jour et l’heure depuis les données ;
-- masquer automatiquement les anciens jours suspendus.
-
-## 5. Découpage runtime approuvé par le plan
+Marie envoie :
 
 ```text
-V0.81 — raccord mardi + tranche mercredi
-V0.82 — topologie du jeudi + retour Marie
-V0.83 — traces du vendredi + clôture de l'ouverture
+mathilde_arrival_room_01
 ```
 
-Le pack complet O0–O8 ne doit pas être intégré en une seule PR.
+Image :
 
-## 6. Périmètre V0.81
+- pratique ;
+- autorisée ;
+- privée ;
+- sans fonction sexuelle ;
+- non transmissible par défaut.
 
-V0.81 doit implémenter seulement :
+### 18:22 — Mathilde / arrivée
+
+Player choisit :
 
 ```text
-J1 : suppression du faux Mathilde déjà installé
-Mercredi midi : O1 Marie / faire de la place
-Mercredi fin de journée : trace d'arrivée Marie
-Mercredi soir : fil Mathilde / arrivée
-19h15 environ : installation hors ligne
+MT0A — accueil pratique
+MT0B — accueil taquin et serviable
+MT0C — accueil distant
 ```
 
-Choix :
+### Co-présence
+
+Selon la branche, Player rentre vers :
 
 ```text
-M0  — proactive / joueuse-présente / passive
-MT0 — pratique / taquine / distante
+18:46
+18:50
+19:15
 ```
 
-État : flags uniquement.
-
-Aucune route R2, aucun secret, aucun contenu adulte.
-
-## 7. Temps et communication V0.81
-
-- boutons : Mardi / Mercredi ;
-- heure de statut pilotée par la fenêtre active ;
-- Marie O1 à midi ;
-- trace O2 en fin de journée ;
-- Mathilde avant le retour de Player ;
-- le chat s’arrête lors de la co-présence ;
-- l’installation devient un `offline_beat` centré, pas une fausse bulle.
-
-## 8. Navigation active
-
-Pour V0.81 :
+À ce moment :
 
 ```text
-indexes actifs = chapter_01 + chapter_02
+le chat s’arrête
+-> l’installation continue face à face
 ```
 
-Les anciens Chapter 3+ restent sur disque mais ne sont plus présentés comme continuation actuelle.
+Le runtime affiche un `offline_beat` centré, sans expéditeur ni indicateur de frappe.
 
-Ils sont conservés pour historique, rollback et inspection technique.
-
-## 9. État visé après V0.81
+## 5. État après mercredi
 
 ```text
-Tuesday handoff = cohérent
-Wednesday opening = jouable
 Mathilde stay = active
-Mathilde route stage = R1 seulement
+Mathilde route stage = R1 Ordinary Access
+opening Wednesday = complete
 hard secrets = none
 adult frames = none
-Thursday = non implémenté
-Friday = non implémenté
+Thursday = not implemented
+Friday = not implemented
 ```
+
+Flags possibles :
+
+```text
+opening_make_room_proactive
+opening_make_room_playful
+opening_make_room_passive
+mathilde_arrival_practical
+mathilde_arrival_playful
+mathilde_arrival_distant
+mathilde_stay_active
+opening_wednesday_complete
+```
+
+Aucun score de désir ou de route n’est ajouté.
+
+## 6. Temps et interface
+
+Le statut du téléphone n’est plus figé à `09:41` dans la tranche active.
+
+Il suit les moments débloqués et les événements hors ligne.
+
+Une heure future ne doit pas apparaître avant le déblocage de son épisode.
+
+Un ancien séparateur ne peut pas faire reculer l’heure après un moment plus tardif.
+
+## 7. Fils persistants
+
+Marie conserve un seul fil regroupant :
+
+- J1 ;
+- O1 mercredi ;
+- O2 trace d’arrivée.
+
+Mathilde ouvre un seul fil mercredi soir.
+
+Le joueur ne voit pas une carte différente pour chaque épisode.
+
+## 8. Visuel actuel
+
+```text
+mathilde_arrival_room_01
+```
+
+Le catalogue legacy contient encore d’anciens placeholders, mais aucun contenu actif V0.81 ne référence le selfie canapé ou le faux raccord J1.
+
+## 9. Validation
+
+Tests ajoutés :
+
+```text
+tests/test_v081_wednesday_static.py
+```
+
+Leur exécution doit être confirmée hors du connecteur GitHub actuel, qui ne dispose ni d’un clone local accessible ni du binaire Godot.
 
 ## 10. Prochaine étape
 
-Après validation de V0.80 :
-
 ```text
-V0.81 — Tuesday handoff + Wednesday runtime vertical slice
+V0.82 — Thursday topology and mandatory Marie return
 ```
 
-Hermes/Codex doit suivre strictement :
+V0.82 devra ajouter uniquement :
+
+- Raphaëlle travail ;
+- écho Sandra ;
+- invitation Marie ;
+- un déblocage conditionnel d’une seule branche ;
+- O5A/O5B/O5C ;
+- retour O6 obligatoire vers Marie.
+
+## 11. Résumé
 
 ```text
-docs/runtime/V0_81_WEDNESDAY_VERTICAL_SLICE_IMPLEMENTATION_PLAN.md
-```
-
-## 11. Résumé opérationnel
-
-```text
-Narration : écrite jusqu'à vendredi.
-Runtime : actuel jusqu'à J1, mais raccord Mathilde incohérent.
-Plan : corriger le raccord et rendre uniquement mercredi jouable.
-Jeudi conditionnel : V0.82.
-Vendredi : V0.83.
+J1 : raccord Mathilde corrigé dans le runtime actif.
+Mercredi : jouable.
+Jeudi : écrit mais non intégré.
+Vendredi : écrit mais non intégré.
+Routes : R1 Mathilde seulement.
+Couple : HABITUAL_WARMTH.
 ```

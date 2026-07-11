@@ -1,0 +1,70 @@
+{
+  "id": "chapter_02_marie_arrival_trace",
+  "chapter": 2,
+  "day": 2,
+  "title": "Mercredi fin de journée — Le bureau n'est plus un bureau",
+  "app": "messages",
+  "window_id": "O2_TRACE",
+  "calendar_label": "Mercredi",
+  "time_band": "LATE_AFTERNOON",
+  "communication_mode": "TRACE_DELIVERY",
+  "foreground_role": "spine",
+  "physical_context": "Marie et Mathilde sont au foyer. Player est encore en trajet ou termine l'achat pratique lié à l'installation.",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "marie"
+    ],
+    "display_name": "Marie",
+    "profile_content_id": "profile_marie_placeholder"
+  },
+  "segments": [
+    {
+      "id": "segment_wednesday_marie_arrival_trace",
+      "pattern": "trace_delivery",
+      "function": "Faire sentir le passage de midi à la fin de journée et documenter l'arrivée de Mathilde pendant que Player est encore absent.",
+      "messages": [
+        {
+          "id": "time_separator_wednesday_late_day",
+          "presentation": "time_separator",
+          "_system_note": true,
+          "time_label": "18:18",
+          "text": "MERCREDI — FIN DE JOURNÉE"
+        },
+        {
+          "id": "msg_wed_marie_arrival_001",
+          "sender": "marie",
+          "time_label": "18:18",
+          "text": "Le bureau n'est plus un bureau."
+        },
+        {
+          "id": "msg_wed_marie_arrival_002",
+          "sender": "marie",
+          "time_label": "18:18",
+          "text": "Preuve jointe.",
+          "content_id": "mathilde_arrival_room_01"
+        },
+        {
+          "id": "msg_wed_marie_arrival_003",
+          "sender": "marie",
+          "time_label": "18:19",
+          "text": "Elle dit que c'est pour dix jours."
+        },
+        {
+          "id": "msg_wed_marie_arrival_004",
+          "sender": "marie",
+          "time_label": "18:19",
+          "text": "Son nombre de chaussures n'est pas cohérent avec cette déclaration."
+        }
+      ],
+      "choices": []
+    }
+  ],
+  "routes_nourished": [
+    "marie",
+    "mathilde_seed"
+  ],
+  "debug_notes": "V0.81 O2 trace. Aucun choix : la scène paie le temps écoulé, crée l'image autorisée et débloque le fil Mathilde."
+}
