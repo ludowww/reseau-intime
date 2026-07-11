@@ -99,10 +99,12 @@ func _build_layout() -> void:
 
 	card_panel = PanelContainer.new()
 	card_panel.custom_minimum_size = Vector2(480, 230)
+	card_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	card_panel.add_theme_stylebox_override("panel", _panel_style(CARD_COLOR, 24))
 	center.add_child(card_panel)
 
 	var column := VBoxContainer.new()
+	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	column.add_theme_constant_override("separation", 14)
 	column.alignment = BoxContainer.ALIGNMENT_CENTER
 	card_panel.add_child(column)
@@ -130,6 +132,7 @@ func _set_label(label: Label, text: String) -> void:
 
 func _make_label(size: int, color: Color) -> Label:
 	var label := Label.new()
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
