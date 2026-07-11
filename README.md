@@ -29,9 +29,9 @@ tronc dramatique fixe
 
 Les routes utilisent R0–R5, mais le runtime actuel reste en R1 maximum.
 
-## Runtime jouable actuel — V0.84
+## Runtime jouable actuel — V0.85
 
-Le contenu est jouable jusqu’au jeudi soir, mais les jours sont désormais déverrouillés chronologiquement.
+Le contenu est jouable jusqu’au jeudi soir avec jours et phases déverrouillés chronologiquement.
 
 Au lancement :
 
@@ -58,25 +58,72 @@ Jeudi terminé
 -> aucune suite encore disponible
 ```
 
-Contenu :
+## Mardi — J1 réconcilié
 
 ```text
-Mardi      J1 Marie + Sandra (legacy temporaire)
-Mercredi   urgence et arrivée Mathilde
-Jeudi      Raphaëlle, Sandra optionnelle, choix topologique, une branche O5, retour Marie
+18:12 Marie / dîner, pain et marche
+-> M1 à trois choix
+
+19:15 ou 19:35
+-> dîner et marche hors ligne
+
+22:57 Sandra / ancienne photo floue
+-> S1 à trois choix
+
+23:25 ou 23:28
+-> retour final Marie / vie commune
+
+fin Mardi -> Mercredi
 ```
 
-État :
+Le J1 actif garantit désormais :
+
+- le pain est encore à acheter quand Player répond ;
+- M1 compare trois postures de présence cohérentes ;
+- tous les timestamps restent mardi et progressent normalement ;
+- Sandra partage une seule trace douce ;
+- aucun lac, roman, aveu profond ou score d’attachement ;
+- Mathilde reste indirecte ;
+- la journée finit sur Marie et la vie commune.
+
+Les anciens gros fichiers J1 restent dans le dépôt comme legacy, mais ne sont plus référencés par l’index actif.
+
+## Mercredi
 
 ```text
-Mathilde = R1 domestique
-Raphaëlle = R1 travail
-Sandra = continuité douce ou écho jeudi expiré
-Marie/Player = HABITUAL_WARMTH
-hard secrets = none
-adult frames = none
-Friday = not implemented
+12:10 Marie / faire de la place
+-> 18:18 trace d'arrivée
+-> 18:22 Mathilde / arrivée
+-> installation hors ligne
 ```
+
+Mathilde termine mercredi en :
+
+```text
+R1 Ordinary Access
+stay active
+aucune intention sexuelle
+```
+
+## Jeudi
+
+```text
+09:10 Raphaëlle obligatoire
+-> 13:50 Sandra optionnelle
+-> Sandra vue ou expirée
+-> 16:05 Marie obligatoire
+-> une seule branche O5
+-> 22:10 retour Marie obligatoire
+```
+
+Si Sandra est ignorée :
+
+```text
+chapter_03_sandra_continuity = EXPIRED
+thursday_sandra_echo_missed = true
+```
+
+Elle ne reste pas accessible après 16:05.
 
 ## Temps autoritaire
 
@@ -103,52 +150,22 @@ Les timestamps décrivent la chronologie.
 L'état temporel contrôle l'accès.
 ```
 
-Le joueur ne peut plus ouvrir une conversation de 13:50 après avoir fait avancer l’histoire à 16:05.
+## Interstitiels et moments hors ligne
 
-## Interstitiels
+Les changements de jour et grands sauts horaires utilisent des cartes bloquantes et brièvement skippables.
 
-Changement de jour :
+V0.85 ajoute deux phases mardi sans conversation :
 
-```text
-MARDI — FIN DE JOURNÉE
+- dîner et marche ;
+- retour final vers Marie.
 
-MERCREDI — MIDI
-Faire de la place · 12:10
-```
-
-Saut intrajournalier :
+Elles sont sélectionnées par les flags de choix, affichées une fois, puis conservées dans l’archive sous :
 
 ```text
-JEUDI — FIN D'APRÈS-MIDI
-16:05
+Moments hors ligne
 ```
 
-Les cartes :
-
-- bloquent le téléphone pendant la transition ;
-- restent lisibles pendant un délai minimal ;
-- deviennent skippables ensuite ;
-- laissent une page neutre correspondant au nouveau moment.
-
-## Jeudi — Sandra avant Marie
-
-```text
-09:10 Raphaëlle obligatoire
--> 13:50 Sandra optionnelle
--> Sandra vue ou expirée
--> 16:05 Marie obligatoire
--> une seule branche O5
--> 22:10 retour Marie obligatoire
-```
-
-Si Sandra est ignorée :
-
-```text
-chapter_03_sandra_continuity = EXPIRED
-thursday_sandra_echo_missed = true
-```
-
-Elle ne reste pas accessible après 16:05.
+Elles ne deviennent jamais de fausses bulles Messenger.
 
 ## Archives
 
@@ -161,41 +178,35 @@ Une archive :
 - ne réapplique aucun effet ;
 - ne change pas l’heure courante ;
 - ne réactive pas une scène expirée ;
-- filtre les fils persistants par épisode source pour éviter de montrer le futur dans un jour passé.
+- filtre les fils persistants par épisode source ;
+- affiche ses moments hors ligne une seule fois.
 
-## J1 — dette restante
-
-V0.84 ne réécrit aucun dialogue.
-
-Le mardi actif utilise encore les gros fichiers legacy filtrés et conserve notamment :
-
-- une contradiction Mardi/Mercredi ;
-- des timestamps qui reculent ;
-- une fin sur Sandra plutôt que Marie ;
-- une progression Sandra trop avancée ;
-- d’anciens scores numériques ;
-- trop de clics à réponse unique.
-
-Le remplacement V0.85 est déjà documenté :
+## État narratif courant
 
 ```text
-18:12 Marie remote + M1
-19:15 dîner/marche hors ligne
-22:57 Sandra / trace douce + S1
-23:25 retour final Marie hors ligne
-fin Mardi -> Mercredi
+Marie/Player = HABITUAL_WARMTH
+relationship frame = ASSUMED_EXCLUSIVE
+Sandra J1 = soft trace seed only
+Mathilde = R1 domestique
+Raphaëlle = R1 travail
+Pauline = inactive
+Nico = inactive
+hard secrets = none
+adult frames = none
+Friday = not implemented
 ```
 
-## Fondation runtime V0.84
+## Fondation runtime
 
 ```text
 game/scripts/core/TimelineState.gd
 game/scripts/ui/PhonePrototypeV084.gd
+game/scripts/ui/PhonePrototypeV085.gd
 game/scripts/ui/ConversationViewV084.gd
 game/scripts/ui/TimelineTransitionView.gd
 ```
 
-La couche V0.84 étend les moteurs V0.81/V0.82 sans les refactorer et ajoute uniquement l’état temporel, les interstitiels, l’expiration optionnelle et les archives.
+La couche V0.85 étend V0.84 uniquement pour les phases hors ligne sans conversation et leur journal d’archive.
 
 ## Sources
 
@@ -205,16 +216,15 @@ Commencer par :
 docs/canon/DOCUMENTATION_READING_ORDER.md
 ```
 
-Rapport runtime :
+Rapport V0.85 :
 
 ```text
-docs/V0_84_Day_And_Moment_Flow_Runtime_Report.md
+docs/V0_85_J1_Canon_Runtime_Reconciliation_Report.md
 ```
 
-## Prochaines versions
+## Prochaine version
 
 ```text
-V0.85 — J1 Canon Runtime Reconciliation
 V0.86 — Friday Public Traces & Opening Completion
 ```
 
@@ -234,6 +244,6 @@ Une négociation tardive ne réécrit pas une trahison antérieure.
 
 ```text
 V0.84 rend le temps autoritaire.
-V0.85 doit maintenant rendre le premier soir cohérent.
-Vendredi attend les deux.
+V0.85 rend le premier soir cohérent.
+Vendredi peut reprendre seulement après validation de ce socle.
 ```
