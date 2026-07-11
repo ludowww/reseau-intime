@@ -1,0 +1,193 @@
+{
+  "id": "chapter_04_modular_index",
+  "chapter": 4,
+  "day": 4,
+  "calendar_label": "Vendredi",
+  "display_label": "Vendredi — Le lendemain",
+  "day_start_time": "08:35",
+  "title": "Vendredi — Le lendemain",
+  "description": "Les traces publiques de la soirée circulent, Nico reprend le fil de l'amitié et le nouveau foyer trouve un premier rythme ordinaire.",
+  "design_goal": "Établir Pauline et Nico en R1, préserver l'origine et le public des images, puis clore l'ouverture V0.79 sur la vie du foyer sans ouvrir de route adulte.",
+  "window_range": "O7-O8",
+  "default_order": [
+    "chapter_04_pauline_public_photo_relay",
+    "chapter_04_nico_saved_seat_followup",
+    "chapter_04_marie_household_report",
+    "chapter_04_mathilde_bathroom_correction"
+  ],
+  "conversation_files": [
+    "res://data/conversations/chapter_04_pauline_public_photo_relay.json",
+    "res://data/conversations/chapter_04_nico_saved_seat_followup.json",
+    "res://data/conversations/chapter_04_marie_household_report.json",
+    "res://data/conversations/chapter_04_mathilde_bathroom_correction.json"
+  ],
+  "moment_flow": [
+    {
+      "moment_label": "matin",
+      "time_label": "08:35",
+      "transition_text": "Vendredi matin — Pauline relaie les versions autorisées de la photo de groupe.",
+      "conversation_ids": [
+        "chapter_04_pauline_public_photo_relay"
+      ]
+    },
+    {
+      "moment_label": "après-midi",
+      "time_label": "14:05",
+      "transition_text": "Vendredi après-midi — Nico reprend la plaisanterie de la place gardée.",
+      "conversation_ids": [
+        "chapter_04_nico_saved_seat_followup"
+      ]
+    },
+    {
+      "moment_label": "fin de journée",
+      "time_label": "18:05",
+      "transition_text": "Vendredi fin de journée — Le foyer à trois produit déjà ses premiers rapports contradictoires.",
+      "conversation_ids": [
+        "chapter_04_marie_household_report",
+        "chapter_04_mathilde_bathroom_correction"
+      ]
+    }
+  ],
+  "timeline_flow": {
+    "initial_state": "LOCKED",
+    "initial_phase_id": "friday_pauline_public_relay",
+    "day_start_card": {
+      "eyebrow": "VENDREDI — MATIN",
+      "title": "Le lendemain",
+      "subtitle": "08:35",
+      "duration": 1.35,
+      "min_time": 0.35
+    },
+    "day_end_card": {
+      "eyebrow": "VENDREDI — FIN DE JOURNÉE",
+      "title": "Le foyer a changé de rythme.",
+      "subtitle": "La suite n'est pas encore disponible.",
+      "duration": 1.55,
+      "min_time": 0.45
+    },
+    "next_day": null,
+    "phases": [
+      {
+        "id": "friday_pauline_public_relay",
+        "moment_label": "matin",
+        "time_label": "08:35",
+        "required_conversation_ids": [
+          "chapter_04_pauline_public_photo_relay"
+        ]
+      },
+      {
+        "id": "friday_nico_followup",
+        "moment_label": "après-midi",
+        "time_label": "14:05",
+        "required_conversation_ids": [
+          "chapter_04_nico_saved_seat_followup"
+        ],
+        "transition_card": {
+          "eyebrow": "VENDREDI — APRÈS-MIDI",
+          "title": "14:05",
+          "duration": 0.9,
+          "min_time": 0.35
+        }
+      },
+      {
+        "id": "friday_household_echoes",
+        "moment_label": "fin de journée",
+        "time_label": "18:05",
+        "required_conversation_ids": [
+          "chapter_04_marie_household_report",
+          "chapter_04_mathilde_bathroom_correction"
+        ],
+        "transition_card": {
+          "eyebrow": "VENDREDI — FIN DE JOURNÉE",
+          "title": "18:05",
+          "duration": 0.9,
+          "min_time": 0.35
+        }
+      },
+      {
+        "id": "friday_opening_close",
+        "moment_label": "soir",
+        "time_label": "18:25",
+        "authored_beat": {
+          "id": "friday_household_close_01",
+          "eyebrow": "VENDREDI — SOIR",
+          "title": "Le foyer se retrouve.",
+          "subtitle": "Player retrouve Marie et Mathilde. La salle de bain est libre, le chargeur est retrouvé et le bureau n'est plus tout à fait un bureau. Personne ne fait de discours. Le nouveau rythme tient pour ce soir.",
+          "text": "Player retrouve Marie et Mathilde. La salle de bain est libre, le chargeur est retrouvé et le bureau n'est plus tout à fait un bureau. Personne ne fait de discours. Le nouveau rythme tient pour ce soir.",
+          "time_label": "18:25",
+          "duration": 2.8,
+          "min_time": 0.55,
+          "show_landing": false,
+          "sets_flags": [
+            "household_rhythm_confirmed",
+            "opening_band_complete"
+          ]
+        }
+      }
+    ]
+  },
+  "conversation_availability": {
+    "initial_conversation_ids": [
+      "chapter_04_pauline_public_photo_relay"
+    ],
+    "locked_conversation_ids": [
+      "chapter_04_nico_saved_seat_followup",
+      "chapter_04_marie_household_report",
+      "chapter_04_mathilde_bathroom_correction"
+    ],
+    "unlocks": {
+      "chapter_04_nico_saved_seat_followup": {
+        "after_conversation_completed": "chapter_04_pauline_public_photo_relay",
+        "time_label": "14:05",
+        "pending": true,
+        "notification": {
+          "title": "Nico",
+          "body": "La chaise avait de meilleurs horaires que toi."
+        }
+      },
+      "chapter_04_marie_household_report": {
+        "after_conversation_completed": "chapter_04_nico_saved_seat_followup",
+        "time_label": "18:05",
+        "pending": true,
+        "notification": {
+          "title": "Marie",
+          "body": "Rapport du foyer."
+        }
+      },
+      "chapter_04_mathilde_bathroom_correction": {
+        "after_conversation_completed": "chapter_04_nico_saved_seat_followup",
+        "time_label": "18:05",
+        "pending": true,
+        "notify": false
+      }
+    }
+  },
+  "initial_visual_anchors": [
+    "profile_pauline_placeholder"
+  ],
+  "routes_available": [
+    "marie",
+    "mathilde",
+    "pauline",
+    "nico"
+  ],
+  "route_stage_ceiling": "R1",
+  "end_of_day_player_knowledge": [
+    "Pauline a relayé un set de groupe autorisé dont l'origine et le public sont connus.",
+    "Bastien reste visible dans le contexte social de Pauline.",
+    "Nico dispose d'un accès d'amitié ordinaire R1 et connaît le séjour temporaire de Mathilde sans le sexualiser.",
+    "Le nouveau rythme du foyer est confirmé.",
+    "L'ouverture V0.79 est complète sans route R2, secret dur ou cadre adulte."
+  ],
+  "proof_content_files": [
+    "res://data/visual_content/chapter_04_opening_proofs.json"
+  ],
+  "debug_expected_outcomes": [
+    "Friday is hidden until the mandatory Thursday Marie return and day completion.",
+    "Pauline opens Friday with one authorized public group-photo set and P0.",
+    "Nico follows in the afternoon with one topology-aware friendship scene and N0.",
+    "Marie and Mathilde unlock together in separate household threads at 18:05.",
+    "The final authored household beat writes opening_band_complete.",
+    "Friday has no next day and no route above R1."
+  ]
+}
