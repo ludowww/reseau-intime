@@ -47,7 +47,7 @@ func _activate_phase(day_value, phase: Dictionary, show_transition: bool) -> voi
 	_hide_notification()
 	var phase_id := str(phase.get("id", ""))
 	TimelineState.set_current_phase(day_value, phase_id)
-	var notifications := _unlock_phase_conversations(day_value, phase)
+	var notifications: Array = _unlock_phase_conversations(day_value, phase)
 	transition_in_progress = false
 	_render_active_day(day_value)
 	_render_days_buttons_only()
@@ -90,7 +90,9 @@ func _show_conversation_notification(day_value, conversation_id: String, title: 
 	notification_target_day_value = day_value
 	notification_target_conversation_id = conversation_id
 	var has_open_thread := is_instance_valid(conversation_view) and not conversation_view.current_conversation.is_empty()
-	var current_thread := str(conversation_view.active_conversation_id) if has_open_thread else ""
+	var current_thread: String = ""
+	if has_open_thread:
+		current_thread = str(conversation_view.active_conversation_id)
 	if has_open_thread and current_thread != conversation_id and conversation_view.has_method("show_thread_notification"):
 		conversation_view.call(
 			"show_thread_notification",
