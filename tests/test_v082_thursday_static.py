@@ -222,11 +222,11 @@ class V082ThursdayStaticTests(unittest.TestCase):
             ]
             self.assertEqual(offenders, [], relative)
 
-    def test_v084_phone_extends_v082_condition_and_thread_foundation(self):
+    def test_v084_phone_and_conversation_extend_v082_foundation(self):
         phone_scene = (GAME / "scenes/smartphone/PhonePrototype.tscn").read_text(encoding="utf-8")
         conversation_scene = (GAME / "scenes/smartphone/ConversationView.tscn").read_text(encoding="utf-8")
         self.assertIn("PhonePrototypeV084.gd", phone_scene)
-        self.assertIn("ConversationViewV082.gd", conversation_scene)
+        self.assertIn("ConversationViewV084.gd", conversation_scene)
 
         phone_v084 = (GAME / "scripts/ui/PhonePrototypeV084.gd").read_text(encoding="utf-8")
         phone_v082 = (GAME / "scripts/ui/PhonePrototypeV082.gd").read_text(encoding="utf-8")
@@ -241,7 +241,9 @@ class V082ThursdayStaticTests(unittest.TestCase):
         ]:
             self.assertIn(expected, phone_v082)
 
-        conversation = (GAME / "scripts/ui/ConversationViewV082.gd").read_text(encoding="utf-8")
+        conversation_v084 = (GAME / "scripts/ui/ConversationViewV084.gd").read_text(encoding="utf-8")
+        conversation_v082 = (GAME / "scripts/ui/ConversationViewV082.gd").read_text(encoding="utf-8")
+        self.assertIn('extends "res://scripts/ui/ConversationViewV082.gd"', conversation_v084)
         for expected in [
             'extends "res://scripts/ui/ConversationViewV081.gd"',
             "_merge_updated_conversation",
@@ -252,7 +254,7 @@ class V082ThursdayStaticTests(unittest.TestCase):
             "suppress_empty_hint",
             "EffectApplier.condition_is_met",
         ]:
-            self.assertIn(expected, conversation)
+            self.assertIn(expected, conversation_v082)
 
     def test_thursday_visual_is_authorized_ordinary_and_low_risk(self):
         bundle = load_json("data/visual_content/chapter_03_proofs.json")
