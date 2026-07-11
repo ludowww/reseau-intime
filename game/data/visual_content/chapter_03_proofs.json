@@ -1,0 +1,33 @@
+{
+  "chapter": 3,
+  "day": 3,
+  "bundle": "chapter_03_modular_visuals",
+  "items": [
+    {
+      "id": "marie_laverriere_setup_01",
+      "character": "marie",
+      "tier": 0,
+      "type": "photo",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/marie_laverriere_setup_01.png",
+      "context": "Photo autorisée de Marie pendant les préparatifs du vernissage : affiche, table ou matériel visibles, Marie active dans son travail, sans cadrage érotique.",
+      "tags": [
+        "marie",
+        "laverriere",
+        "event",
+        "setup",
+        "ordinary",
+        "thursday"
+      ],
+      "is_proof": false,
+      "risk_level": 0,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": false,
+      "can_be_discovered_by": [
+        "marie",
+        "elodie"
+      ]
+    }
+  ]
+}
