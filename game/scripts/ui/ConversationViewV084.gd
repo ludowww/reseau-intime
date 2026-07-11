@@ -5,6 +5,13 @@ extends "res://scripts/ui/ConversationViewV082.gd"
 # Thursday episodes from the same persistent contact thread.
 var archive_rendering := false
 
+func show_conversation(conversation: Dictionary) -> void:
+	if TimelineState.is_day_completed(conversation.get("day", conversation.get("chapter", null))):
+		show_archive_conversation(conversation)
+		return
+	archive_rendering = false
+	super.show_conversation(conversation)
+
 func _record_history_entry(entry: Dictionary) -> void:
 	var annotated := entry.duplicate(true)
 	annotated["_source_conversation_id"] = _current_history_source_id()
