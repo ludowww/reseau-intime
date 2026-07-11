@@ -16,9 +16,13 @@ PR : courtes, ciblées, sans gros refactoring
 - V0.79 : ouverture mardi–vendredi écrite ;
 - V0.80 : plan runtime phasé ;
 - V0.81 : mercredi intégré ;
-- V0.82 : jeudi topologique intégré.
+- V0.82 : jeudi topologique intégré ;
+- V0.83 : canon du flux temporel et réconciliation J1 ;
+- V0.84 : fondation runtime des jours/phases/interstitiels.
 
-### Runtime actif
+## 2. Runtime actif V0.84
+
+Contenu chargé :
 
 ```text
 Mardi
@@ -26,124 +30,92 @@ Mercredi
 Jeudi
 ```
 
-Le runtime reste en R1 maximum et sans contenu adulte.
+Accès initial :
 
-## 2. Audit V0.83
+```text
+Mardi actif
+Mercredi verrouillé
+Jeudi verrouillé
+```
 
-Trois problèmes sont confirmés :
+Progression :
 
-### Jours immédiatement accessibles
+```text
+fin Mardi -> interstitiel -> Mercredi
+fin Mercredi -> interstitiel -> Jeudi
+fin Jeudi -> aucune suite disponible
+```
 
-Mardi, Mercredi et Jeudi sont tous visibles dès le lancement.
+Le runtime reste en R1 maximum, sans secret dur ni contenu adulte.
 
-La navigation fonctionne comme un menu de jours plutôt que comme une chronologie vécue.
+## 3. Acquis techniques V0.84
 
-### Phases horaires concurrentes
+### État temporel
 
-Après Raphaëlle jeudi, Sandra 13:50 et Marie 16:05 deviennent disponibles ensemble.
+```text
+Day: LOCKED -> AVAILABLE -> ACTIVE -> COMPLETE -> ARCHIVED
+Phase: LOCKED -> CURRENT -> COMPLETE / SKIPPED / EXPIRED
+```
 
-Le joueur peut agir à 16:05 puis revenir répondre à 13:50.
+### Interface
 
-### J1 legacy incohérent
+- interstitiels de changement de jour ;
+- cartes courtes pour grands sauts horaires ;
+- délai minimal de lecture ;
+- skip souris/clavier après ce délai ;
+- page neutre au nouveau moment ;
+- jours terminés en historique lecture seule.
 
-Le mardi actif contient encore :
+### Ordre narratif
+
+- un jour futur ne peut plus être ouvert manuellement ;
+- un épisode futur ne fuit plus par son heure ;
+- Sandra jeudi doit être terminée ou expirée avant Marie ;
+- une conversation expirée n’est plus répondable ;
+- O6 Marie termine toujours jeudi.
+
+### Archives
+
+- aucun choix ou effet réappliqué ;
+- aucun badge/notification ;
+- aucune modification de l’heure ;
+- historique filtré par épisode source pour ne pas révéler les jours ultérieurs d’un fil persistant.
+
+## 4. État narratif après jeudi
+
+```text
+Marie/Player = HABITUAL_WARMTH
+relationship frame = ASSUMED_EXCLUSIVE
+Mathilde = R1 domestique
+Raphaëlle = R1 travail
+Sandra = continuité douce ou écho jeudi expiré
+Pauline = inactive
+Nico = inactive
+hard secrets = none
+adult frames = none
+```
+
+## 5. Dette restante — J1
+
+V0.84 conserve temporairement le J1 legacy filtré.
+
+Problèmes encore présents :
 
 - contradiction Mardi/Mercredi ;
 - timestamps qui reculent ;
-- absence du dîner/marche hors ligne ;
-- fin sur Sandra plutôt que Marie ;
+- dîner/marche absents comme beat hors ligne ;
+- journée terminée sur Sandra ;
 - Sandra trop avancée ;
 - anciens scores ;
-- trop de clics guidés.
+- trop de clics à réponse unique.
 
-## 3. Décision produit
+Cette dette ne doit pas être contournée dans V0.84.
 
-```text
-Vendredi est reporté.
-```
-
-La priorité devient :
+## 6. Prochaine étape — V0.85
 
 ```text
-1. rendre le temps autoritaire
-2. reconstruire J1
-3. reprendre Pauline/Nico
-```
-
-## 4. Séquence officielle
-
-```text
-V0.83 — Temporal Flow & J1 Reconciliation Spec
-V0.84 — Day & Moment Flow Runtime Foundation
 V0.85 — J1 Canon Runtime Reconciliation
-V0.86 — Friday Public Traces & Opening Completion
-V0.87+ — extension incrémentale de l'Acte I
 ```
-
-## 5. V0.83 — documentation actuelle
-
-Nouveaux canons/plans :
-
-```text
-docs/canon/TEMPORAL_FLOW_AND_DAY_TRANSITION_CANON.md
-docs/canon/J1_RUNTIME_RECONCILIATION_SOURCE_PACK.md
-docs/runtime/V0_84_DAY_AND_MOMENT_FLOW_IMPLEMENTATION_PLAN.md
-docs/runtime/V0_85_J1_CANON_RUNTIME_RECONCILIATION_PLAN.md
-docs/V0_83_Temporal_Flow_And_J1_Reconciliation_Report.md
-```
-
-Aucun runtime modifié.
-
-## 6. V0.84 — fondation temps
-
-### Jours
-
-```text
-LOCKED -> AVAILABLE -> ACTIVE -> COMPLETE -> ARCHIVED
-```
-
-- Mardi seul au lancement ;
-- Mercredi déverrouillé après fin Mardi ;
-- Jeudi déverrouillé après fin Mercredi ;
-- anciens jours en lecture seule ;
-- futur invisible ou verrouillé.
-
-### Interstitiels
-
-```text
-MARDI — FIN DE JOURNÉE
-MERCREDI — MIDI / Faire de la place
-```
-
-et cartes courtes pour grands sauts intrajournaliers.
-
-### Phases
-
-```text
-LOCKED -> CURRENT -> COMPLETE / SKIPPED / EXPIRED
-```
-
-Jeudi cible :
-
-```text
-09:10 Raphaëlle obligatoire
-13:50 Sandra optionnelle
-16:05 Marie obligatoire
-soir une branche O5
-22:10 retour Marie obligatoire
-```
-
-Si Sandra est ignorée, elle expire avant 16:05.
-
-### Exclusions V0.84
-
-- aucun dialogue J1 réécrit ;
-- aucun vendredi ;
-- aucun R2 ;
-- aucun scheduler universel ;
-- aucune migration de sauvegarde.
-
-## 7. V0.85 — reconstruction J1
 
 ### Nouveau Mardi actif
 
@@ -178,20 +150,19 @@ truth_tendency
 
 ### Stratégie fichiers
 
-Créer de nouveaux fichiers J1 actifs.
+- créer de nouveaux fichiers J1 actifs ;
+- conserver les gros fichiers legacy sur disque ;
+- ne plus les référencer dans l’index Mardi ;
+- préserver sans modification la fondation temporelle V0.84 ;
+- ne pas changer Mercredi/Jeudi.
 
-Conserver les gros fichiers legacy mais ne plus les référencer dans l’index Mardi.
+## 7. Étape suivante — V0.86
 
-### Exclusions V0.85
+Après validation de V0.85 :
 
-- aucun changement mercredi/jeudi ;
-- aucun vendredi ;
-- aucune suppression globale de state legacy ;
-- aucun contenu adulte.
-
-## 8. V0.86 — vendredi
-
-Après validation V0.84 et V0.85 :
+```text
+V0.86 — Friday Public Traces & Opening Completion
+```
 
 ### Vendredi matin
 
@@ -214,29 +185,33 @@ Après validation V0.84 et V0.85 :
 - clôture du pack V0.79 ;
 - transition temporelle cohérente.
 
-## 9. Validation permanente
+## 8. Validation V0.84
 
-Chaque PR runtime doit exécuter :
+Avant merge :
 
 ```bash
 python3 tools/validate_game_data.py
-python3 -m unittest tests.test_godot_prototype_static -v
-python3 -m unittest tests.test_v081_wednesday_static -v
-python3 -m unittest tests.test_v082_thursday_static -v
-python3 -m unittest <tests de la version> -v
-python3 tools/player_choice_text_check.py <fichiers actifs>
-python3 tools/player_presence_check.py <fichiers actifs>
+python3 -m unittest \
+  tests.test_godot_prototype_static \
+  tests.test_v081_wednesday_static \
+  tests.test_v082_thursday_static \
+  tests.test_v084_temporal_flow_static \
+  -v
+python3 tools/player_choice_text_check.py <fichiers actifs mercredi/jeudi>
+python3 tools/player_presence_check.py <fichiers actifs mercredi/jeudi>
 git diff --check
 godot --headless --path game --quit
 godot --headless --path game --resolution 1280x720 --quit
 ```
 
-## 10. Principes permanents
+Le connecteur GitHub ne peut pas exécuter ces commandes ; Hermes/local/CI doit confirmer.
+
+## 9. Principes permanents
 
 - le temps contrôle l’accès ;
 - un timestamp seul ne débloque rien ;
 - futurs jours verrouillés ;
-- archives en lecture seule ;
+- archives en lecture seule et limitées au jour choisi ;
 - scènes optionnelles vues ou expirées ;
 - aucune réponse après expiration de la fenêtre ;
 - conséquence obligatoire avant fin de journée ;
@@ -248,22 +223,24 @@ godot --headless --path game --resolution 1280x720 --quit
 - rollback simple par squash ;
 - aucune modification narrative silencieuse.
 
-## 11. À éviter
+## 10. À éviter
 
-- commencer V0.86 avant V0.84/V0.85 ;
-- afficher tous les jours dès le lancement ;
+- commencer vendredi avant V0.85 ;
+- réafficher tous les jours dès le lancement ;
 - permettre Sandra 13:50 après Marie 16:05 ;
+- confondre archive et replay ;
 - utiliser l’horloge monotone pour masquer des timestamps incohérents ;
 - continuer à filtrer indéfiniment les gros fichiers J1 ;
-- garder `On est mercredi` dans Mardi ;
 - finir J1 sur Sandra ;
 - réintroduire les anciens scores ;
 - construire un scheduler général ou aléatoire ;
 - ouvrir R2 ou l’adulte.
 
-## 12. Prochaine action après validation V0.83
+## 11. Séquence officielle
 
 ```text
-transmettre à Hermes/Codex
-le plan V0.84 Day & Moment Flow Runtime Foundation
+V0.84 — Day & Moment Flow Runtime Foundation
+V0.85 — J1 Canon Runtime Reconciliation
+V0.86 — Friday Public Traces & Opening Completion
+V0.87+ — extension incrémentale de l'Acte I
 ```
