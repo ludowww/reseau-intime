@@ -1,16 +1,17 @@
 # Narrative Canon Status — Current
 
-> Narrative and implementation status after V0.82.  
-> Current playable runtime is canonical through Thursday night. Friday remains authored in V0.79 but unimplemented.
+> Narrative and implementation status after V0.83 temporal-flow and J1 reconciliation planning.  
+> V0.82 remains the playable baseline through Thursday night. Friday is postponed until chronology and J1 are corrected.
 
 ## 1. Core rule
 
 ```text
 V0.78 defines modular story movement.
 V0.79 defines the Tuesday–Friday opening content.
-V0.80 defines the phased runtime plan.
-V0.81 implements Tuesday and Wednesday.
-V0.82 implements Thursday topology and the mandatory Marie return.
+V0.80 defines phased runtime integration.
+V0.81 implements Wednesday.
+V0.82 implements Thursday topology and Marie return.
+V0.83 corrects chronological access and active J1 truth.
 Legacy runtime is not automatic narrative canon.
 ```
 
@@ -21,88 +22,29 @@ docs/canon/DOCUMENTATION_READING_ORDER.md
 docs/canon/MODULAR_NARRATIVE_ARC_BLUEPRINT.md
 docs/canon/MODULAR_SCENE_AUTHORING_CONTRACT.md
 docs/canon/DIEGETIC_TIME_AND_COMMUNICATION_CANON.md
+docs/canon/TEMPORAL_FLOW_AND_DAY_TRANSITION_CANON.md
 docs/canon/ACT_I_OPENING_WINDOWS_SOURCE_PACK.md
 docs/canon/ACT_I_OPENING_SCENE_CARDS.md
 docs/canon/ACT_I_OPENING_TEMPORAL_DELIVERY_MAP.md
-docs/runtime/V0_80_RUNTIME_AUDIT_AND_GAP_MAP.md
-docs/V0_80_First_Modular_Runtime_Integration_Plan.md
-docs/runtime/V0_81_WEDNESDAY_VERTICAL_SLICE_IMPLEMENTATION_PLAN.md
-docs/V0_81_Tuesday_Handoff_And_Wednesday_Runtime_Report.md
-docs/runtime/V0_82_THURSDAY_TOPOLOGY_IMPLEMENTATION_PLAN.md
-docs/V0_82_Thursday_Topology_And_Marie_Return_Runtime_Report.md
+docs/canon/J1_RUNTIME_RECONCILIATION_SOURCE_PACK.md
+docs/V0_83_Temporal_Flow_And_J1_Reconciliation_Report.md
+docs/runtime/V0_84_DAY_AND_MOMENT_FLOW_IMPLEMENTATION_PLAN.md
+docs/runtime/V0_85_J1_CANON_RUNTIME_RECONCILIATION_PLAN.md
 ```
 
-Then read relevant character canon and the global NSFW canon when applicable.
+Read current character canon and global NSFW canon when relevant.
 
-## 3. Current playable chronology
+---
 
-### Tuesday evening — J1
+## 3. Current playable baseline
 
-- Marie and Sandra active;
-- Mathilde indirect only;
-- couple in `HABITUAL_WARMTH`;
-- no route lock, hard secret, adult frame, or changed relationship agreement.
-
-### Wednesday — O1/O2
-
-- Marie asks Player to make room after Mathilde's water damage;
-- Mathilde arrives;
-- `mathilde_arrival_room_01` is an authorized ordinary image;
-- Player's welcome creates observable flags;
-- co-present settling continues as `offline_beat`;
-- Mathilde reaches R1 only.
-
-### Thursday morning — O3 Raphaëlle
-
-Raphaëlle appears through ordinary peer work.
-
-R0 records accountable, playful-active, or delayed professional behavior.
+V0.82 currently exposes:
 
 ```text
-Raphaëlle = R1 Ordinary Work Access
+Mardi
+Mercredi
+Jeudi
 ```
-
-No personal/private route opens.
-
-### Thursday early afternoon — Sandra echo
-
-Sandra may be opened after a poste du matin.
-
-The echo adds:
-
-- no new image;
-- no promise;
-- no route-stage increase.
-
-It remains optional and does not gate Marie.
-
-### Thursday late afternoon — O4 Marie
-
-Marie proposes the La Verrière vernissage and M1 asks where/how Player will be present.
-
-M1 sets exactly one topology flag.
-
-### Thursday evening — O5
-
-Exactly one branch unlocks:
-
-```text
-O5A — Player joins Marie at La Verrière
-O5B — Player stays home with Mathilde in another room
-O5C — Player finishes work with Raphaëlle and handles his promise
-```
-
-The other two remain unavailable.
-
-### Thursday night — O6 Marie
-
-Every branch completion unlocks the same Marie consequence episode.
-
-Messages and guided acknowledgements are filtered from the actual quality flag.
-
-O6 cannot be replaced by another route opportunity and does not offer a new topology.
-
-## 4. Current runtime architecture
 
 Active indexes:
 
@@ -112,180 +54,244 @@ chapter_02_modular_index.json
 chapter_03_modular_index.json
 ```
 
-V0.82 reuses V0.81 time/thread adapters and adds narrow condition-aware adapters.
+Playable narrative content still ends Thursday night after O6 Marie.
 
-### PhonePrototypeV082
+No Friday, Pauline, Nico, R2, hard secret, or adult frame is active.
 
-Supports:
+---
 
-- `conditions` on unlock rules;
-- `after_any_conversation_completed`;
-- `notify: false` for silent echo access;
-- condition-aware contact messages/choices.
+## 4. Confirmed temporal debt
 
-### ConversationViewV082
+### Days are immediately selectable
 
-Supports:
+The phone currently renders every loaded active day from startup.
 
-- conditional messages and choices;
-- `unless_conditions`;
-- suppressed empty-choice hint for pure consequence variants;
-- cumulative cross-day segment/episode merging while preserving history.
+This allows the player to enter Wednesday or Thursday before completing Tuesday.
 
-No base-script refactor or scheduler is introduced.
-
-## 5. Thursday state writes
-
-### Raphaëlle
+Target after V0.84:
 
 ```text
-raphaelle_work_accountable
-raphaelle_work_playful
-raphaelle_work_delayed
-raphaelle_r1_established
+Tuesday active
+Wednesday locked
+Thursday locked
+
+Tuesday complete
+-> transition
+-> Wednesday unlocked and selected
+
+Wednesday complete
+-> transition
+-> Thursday unlocked and selected
 ```
 
-### Topology
+Past days become read-only archives.
+
+### No day-transition interstitial
+
+Target sequence:
 
 ```text
-opening_topology_join_marie
-opening_topology_stay_home
-opening_topology_work_then_join
-join_after_work_obligation
+MARDI — FIN DE JOURNÉE
+
+MERCREDI — MIDI
+Faire de la place
 ```
 
-### Joined branch
+### Thursday phases overlap
+
+Current V0.82 behavior unlocks:
 
 ```text
-marie_event_initiative
-marie_event_playful_help
-marie_event_distracted
-couple_reconnection_candidate
-couple_presence_strained
+Sandra 13:50
+Marie 16:05
 ```
 
-### Home branch
+simultaneously after Raphaëlle.
+
+Target after V0.84:
 
 ```text
-mathilde_home_help
-mathilde_home_playful_help
-mathilde_home_distance
-household_participation_positive
-parallel_drift_candidate
+09:10 Raphaëlle required
+-> 13:50 Sandra optional
+-> explicit advance
+-> Sandra seen or expired
+-> 16:05 Marie required
 ```
 
-### Work branch
+Sandra cannot remain answerable after the timeline advances.
+
+---
+
+## 5. Temporal-flow canon
+
+Day lifecycle:
 
 ```text
-work_promise_kept
-work_promise_amended
-work_promise_missed
-couple_reconnection_candidate
-parallel_drift_candidate
+LOCKED
+AVAILABLE
+ACTIVE
+COMPLETE
+ARCHIVED
 ```
 
-These are remembered actions/tendencies, not new route scores.
-
-## 6. Time and communication status
-
-Thursday sequence:
+Phase lifecycle:
 
 ```text
-09:10 Raphaëlle
-13:50 Sandra
-16:05 Marie offer
-17:45 / 17:55 / 18:20 selected branch
-22:10+ Marie return
+LOCKED
+CURRENT
+COMPLETE
+SKIPPED
+EXPIRED
 ```
 
-Communication remains realistic:
-
-- same-venue Marie messages are short logistics;
-- helpful Mathilde branches stop chat when Player enters the room;
-- Raphaëlle work chat requires physical separation;
-- emotional consequence arrives later through Marie's afterglow thread.
-
-## 7. Character status after Thursday
-
-### Marie
-
-- remains the central event and consequence anchor;
-- knows whether Player joined, helped elsewhere, amended a promise, or missed it;
-- couple remains in `HABITUAL_WARMTH`.
-
-### Mathilde
-
-- temporary stay active;
-- R1 ordinary domestic access;
-- optional practical Thursday scene only when Player stays home;
-- no deliberate sexual intention.
-
-### Raphaëlle
-
-- R1 work access established;
-- may become Thursday branch only when Player chose work;
-- no private creative/sexual frame.
-
-### Sandra
-
-- soft continuity echo only;
-- no new image or route escalation.
-
-### Pauline and Nico
-
-- no current playable post-J1 access;
-- wait for V0.83 Friday.
-
-## 8. Visual status
-
-Current Thursday visual:
+Core rule:
 
 ```text
-marie_laverriere_setup_01
+Time labels describe chronology.
+Timeline state controls access.
 ```
 
-It is authorized, ordinary, event-contextual, non-proof, and risk zero.
+Optional scenes must be seen, skipped, expired, or mutated before the story moves beyond their window.
 
-No adult or private-route visual exists.
+---
 
-## 9. Current exclusions
+## 6. Confirmed active J1 debt
 
-Not implemented:
+The current active Tuesday index filters a few legacy Mathilde items but still uses the large historical Marie/Sandra conversations.
 
-- Friday O7/O8;
-- Pauline/Nico threads;
-- public group-photo relay;
-- route R2+;
-- hard secrets;
-- adult content;
-- open-couple or group negotiation;
-- NTR/cuckold logic;
-- universal scheduler;
-- save migration;
-- legacy-file deletion.
+Confirmed issues:
 
-## 10. Validation status
+- Player says `On est mercredi` during active Tuesday;
+- timestamps move backward inside Marie and Sandra;
+- all Marie content occurs before all Sandra content;
+- the day ends on Sandra rather than Marie/shared life;
+- promised dinner/walk is not represented as a real offline event;
+- Sandra includes lake/nature, romance-novel, deep confidence, and missing-each-other escalation beyond J1's soft-trace function;
+- old numeric effects still write attachment/attention/neglect/priority scores;
+- dozens of fixed Player lines are presented as one-option clicks.
 
-Static coverage includes:
+These are not current story decisions to preserve.
+
+---
+
+## 7. Corrected J1 source
+
+Future active Tuesday structure:
 
 ```text
-tests/test_v081_wednesday_static.py
-tests/test_v082_thursday_static.py
+18:12 Marie remote opening
+-> dinner / bread / walk
+-> M1: present / playful-present / delayed-flat
+-> La Verrière + indirect Mathilde seed
+
+19:15 shared dinner/walk offline beat
+
+22:57 Sandra old lunch trace
+-> S1: safe warmth / precise observation / cautious
+-> soft boundary
+
+23:25 final Marie/shared-life offline beat
+
+Tuesday complete
+-> transition
+-> Wednesday unlock
 ```
 
-The GitHub connector cannot execute Python/Godot commands or the manual walkthrough. CI or a local Hermes/Codex environment must confirm them before merge.
+The active J1 must use new concise files rather than filter the legacy files further.
 
-## 11. Next step
+State writes are flags only.
 
-After V0.82 validation:
+---
+
+## 8. Current route and character status
+
+V0.83 changes documentation only.
+
+Playable state remains:
 
 ```text
-V0.83 — Friday public traces and opening completion
+Marie/Player = HABITUAL_WARMTH
+relationship frame = ASSUMED_EXCLUSIVE
+Mathilde = R1 Ordinary Access
+Raphaëlle = R1 Ordinary Work Access
+Sandra = soft continuity
+Pauline = inactive
+Nico = inactive
+hard secrets = none
+adult frames = none
 ```
 
-## 12. Final rule
+---
+
+## 9. V0.84 implementation boundary
+
+V0.84 implements only:
+
+- day lock/unlock state;
+- phase state;
+- day-end/day-start interstitial;
+- intra-day transition cards;
+- archive-safe navigation;
+- required vs optional phase gating;
+- Sandra optional expiry before Marie Thursday;
+- source-episode completion tracking;
+- Friday remaining absent.
+
+It does not rewrite J1 or add story content.
+
+---
+
+## 10. V0.85 implementation boundary
+
+V0.85 implements only:
+
+- new active Marie/Sandra J1 conversation files;
+- concise M1/S1 three-choice nodes;
+- Tuesday shared-evening offline beat;
+- Tuesday final Marie offline beat;
+- flag-only state;
+- removal of filter-based active J1 references;
+- Wednesday unlocking only after final Marie beat.
+
+It does not alter Wednesday/Thursday story meaning or add Friday.
+
+---
+
+## 11. Current validation status
+
+V0.82 was validated before merge:
 
 ```text
-Current playable canon ends Thursday night after Marie has received the consequence of the selected topology.
-Friday remains unavailable until V0.82 is validated.
+74 tests OK
+validate_game_data OK
+writing tools OK
+git diff --check OK
+Godot headless boots OK
+```
+
+V0.83 adds documentation only and requires no runtime execution.
+
+V0.84 and V0.85 will each require dedicated static tests, writing checks, diff check, and both Godot headless boots.
+
+---
+
+## 12. Roadmap
+
+```text
+V0.83 — temporal-flow and J1 documentation correction
+V0.84 — day and moment flow runtime foundation
+V0.85 — J1 canon runtime reconciliation
+V0.86 — Friday public traces and opening completion
+```
+
+Friday must not begin before V0.84 and V0.85 are validated.
+
+---
+
+## 13. Final rule
+
+```text
+Current playable canon ends Thursday night.
+The next work is not more content.
+It is making time authoritative and Tuesday truthful.
 ```
