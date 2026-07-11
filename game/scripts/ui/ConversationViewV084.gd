@@ -12,6 +12,25 @@ func show_conversation(conversation: Dictionary) -> void:
 	archive_rendering = false
 	super.show_conversation(conversation)
 
+func show_timeline_landing(title: String, subtitle: String = "") -> void:
+	current_render_token += 1
+	archive_rendering = false
+	active_conversation_id = ""
+	active_state = {}
+	current_conversation = {}
+	current_segment_index = 0
+	choice_buttons.clear()
+	choice_was_applied = false
+	_clear()
+	custom_minimum_size = Vector2(600, 0)
+	size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_build_chat_shell()
+	var text := title
+	if subtitle != "":
+		text += "\n" + subtitle
+	_add_system_note(text, false)
+
 func _record_history_entry(entry: Dictionary) -> void:
 	var annotated := entry.duplicate(true)
 	annotated["_source_conversation_id"] = _current_history_source_id()
