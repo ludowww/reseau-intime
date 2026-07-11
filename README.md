@@ -29,9 +29,9 @@ tronc dramatique fixe
 
 Les routes utilisent R0–R5, mais le runtime actuel reste en R1 maximum.
 
-## Runtime jouable actuel — V0.85
+## Runtime jouable actuel — V0.86
 
-Le contenu est jouable jusqu’au jeudi soir avec jours et phases déverrouillés chronologiquement.
+Le contenu est jouable du mardi au vendredi avec jours et phases déverrouillés chronologiquement.
 
 Au lancement :
 
@@ -39,81 +39,63 @@ Au lancement :
 Mardi = actif
 Mercredi = verrouillé
 Jeudi = verrouillé
-Vendredi = absent
+Vendredi = verrouillé
 ```
 
 Progression :
 
 ```text
-Mardi terminé
--> interstitiel
--> Mercredi déverrouillé et sélectionné
-
-Mercredi terminé
--> interstitiel
--> Jeudi déverrouillé et sélectionné
-
-Jeudi terminé
--> fin de journée
--> aucune suite encore disponible
+Mardi terminé -> interstitiel -> Mercredi
+Mercredi terminé -> interstitiel -> Jeudi
+Jeudi terminé -> interstitiel -> Vendredi
+Vendredi terminé -> aucune suite encore disponible
 ```
 
 ## Mardi — J1 réconcilié
 
 ```text
-18:12 Marie / dîner, pain et marche
--> M1 à trois choix
-
-19:15 ou 19:35
--> dîner et marche hors ligne
-
-22:57 Sandra / ancienne photo floue
--> S1 à trois choix
-
-23:25 ou 23:28
--> retour final Marie / vie commune
-
+18:12 Marie / dîner, pain et marche + M1
+19:15 ou 19:35 dîner et marche hors ligne
+22:57 Sandra / ancienne photo floue + S1
+23:25 ou 23:28 retour final Marie hors ligne
 fin Mardi -> Mercredi
 ```
 
-Le J1 actif garantit désormais :
+Garanties :
 
 - le pain est encore à acheter quand Player répond ;
 - M1 compare trois postures de présence cohérentes ;
-- tous les timestamps restent mardi et progressent normalement ;
+- les timestamps restent mardi et progressent normalement ;
 - Sandra partage une seule trace douce ;
-- aucun lac, roman, aveu profond ou score d’attachement ;
 - Mathilde reste indirecte ;
+- aucun ancien score numérique ;
 - la journée finit sur Marie et la vie commune.
 
-Les anciens gros fichiers J1 restent dans le dépôt comme legacy, mais ne sont plus référencés par l’index actif.
-
-## Mercredi
+## Mercredi — Faire de la place
 
 ```text
-12:10 Marie / faire de la place
--> 18:18 trace d'arrivée
--> 18:22 Mathilde / arrivée
--> installation hors ligne
+12:10 Marie / urgence Mathilde
+18:18 trace d'arrivée
+18:22 Mathilde / arrivée
+installation poursuivie hors ligne
 ```
 
-Mathilde termine mercredi en :
+État :
 
 ```text
-R1 Ordinary Access
+Mathilde = R1 Ordinary Access
 stay active
 aucune intention sexuelle
 ```
 
-## Jeudi
+## Jeudi — Être là
 
 ```text
 09:10 Raphaëlle obligatoire
--> 13:50 Sandra optionnelle
--> Sandra vue ou expirée
--> 16:05 Marie obligatoire
--> une seule branche O5
--> 22:10 retour Marie obligatoire
+13:50 Sandra optionnelle
+16:05 Marie obligatoire
+soirée : une seule branche O5
+22:10 retour Marie obligatoire
 ```
 
 Si Sandra est ignorée :
@@ -124,6 +106,68 @@ thursday_sandra_echo_missed = true
 ```
 
 Elle ne reste pas accessible après 16:05.
+
+## Vendredi — Le lendemain
+
+### Pauline — 08:35
+
+Pauline relaie trois versions autorisées de la photo de groupe.
+
+```text
+P0
+pratique
+plaisanterie sèche
+renvoyer vers Marie
+```
+
+Le set :
+
+- vient de la télécommande de Pauline ;
+- montre notamment Marie, Pauline, Bastien et Élodie ;
+- peut inclure Nico et, selon la topologie, Player ;
+- n’inclut pas Mathilde ;
+- appartient au contexte public/événement de La Verrière ;
+- ne possède aucun crop privé ou sens adulte.
+
+Pauline atteint :
+
+```text
+R1 Legitimate Social Access
+```
+
+### Nico — 14:05
+
+Nico reprend la plaisanterie de la place gardée selon ce que Player a réellement fait jeudi.
+
+```text
+N0
+honnête
+joueur
+demander comment allait Marie
+```
+
+Il peut apprendre que Mathilde séjourne chez eux, mais son commentaire reste pratique.
+
+Nico atteint :
+
+```text
+R1 Ordinary Friendship / Social Access
+```
+
+Aucun regard partagé dangereux, demande d’image, rivalité ou cadre adulte n’est activé.
+
+### Foyer — 18:05 / 18:25
+
+Marie et Mathilde envoient deux courts échos dans leurs fils séparés.
+
+Puis Player retrouve le foyer hors ligne :
+
+```text
+household_rhythm_confirmed
+opening_band_complete
+```
+
+L’ouverture se termine sur la vie ordinaire à trois, pas sur une tentation.
 
 ## Temps autoritaire
 
@@ -154,18 +198,17 @@ L'état temporel contrôle l'accès.
 
 Les changements de jour et grands sauts horaires utilisent des cartes bloquantes et brièvement skippables.
 
-V0.85 ajoute deux phases mardi sans conversation :
+Les phases hors ligne actuelles comprennent :
 
-- dîner et marche ;
-- retour final vers Marie.
+- dîner et marche mardi ;
+- retour final Marie mardi ;
+- fermeture du foyer vendredi.
 
-Elles sont sélectionnées par les flags de choix, affichées une fois, puis conservées dans l’archive sous :
+Elles sont affichées une fois, enregistrées une fois, puis consultables en lecture seule dans l’archive sous :
 
 ```text
 Moments hors ligne
 ```
-
-Elles ne deviennent jamais de fausses bulles Messenger.
 
 ## Archives
 
@@ -176,7 +219,7 @@ Une archive :
 - n’affiche aucun badge ou notification ;
 - ne propose aucun nouveau choix ;
 - ne réapplique aucun effet ;
-- ne change pas l’heure courante ;
+- ne change pas l’heure ;
 - ne réactive pas une scène expirée ;
 - filtre les fils persistants par épisode source ;
 - affiche ses moments hors ligne une seule fois.
@@ -186,14 +229,15 @@ Une archive :
 ```text
 Marie/Player = HABITUAL_WARMTH
 relationship frame = ASSUMED_EXCLUSIVE
-Sandra J1 = soft trace seed only
+Sandra = soft trace / continuité ordinaire
 Mathilde = R1 domestique
 Raphaëlle = R1 travail
-Pauline = inactive
-Nico = inactive
+Pauline = R1 social/public
+Nico = R1 amitié/social
 hard secrets = none
 adult frames = none
-Friday = not implemented
+routes R2+ = none
+opening_band_complete = true
 ```
 
 ## Fondation runtime
@@ -206,7 +250,7 @@ game/scripts/ui/ConversationViewV084.gd
 game/scripts/ui/TimelineTransitionView.gd
 ```
 
-La couche V0.85 étend V0.84 uniquement pour les phases hors ligne sans conversation et leur journal d’archive.
+V0.86 réutilise cette fondation et ajoute seulement les données/index/visuels du vendredi.
 
 ## Sources
 
@@ -216,17 +260,19 @@ Commencer par :
 docs/canon/DOCUMENTATION_READING_ORDER.md
 ```
 
-Rapport V0.85 :
+Rapport V0.86 :
 
 ```text
-docs/V0_85_J1_Canon_Runtime_Reconciliation_Report.md
+docs/V0_86_Friday_Public_Traces_And_Opening_Completion_Report.md
 ```
 
 ## Prochaine version
 
 ```text
-V0.86 — Friday Public Traces & Opening Completion
+V0.87 — Next Act I Windows Source Pack
 ```
+
+La prochaine étape revient à la documentation avant toute extension runtime. Elle doit définir les premières répétitions et attentions privées sans sauter automatiquement vers R2.
 
 ## Règles adultes fondamentales
 
@@ -245,5 +291,6 @@ Une négociation tardive ne réécrit pas une trahison antérieure.
 ```text
 V0.84 rend le temps autoritaire.
 V0.85 rend le premier soir cohérent.
-Vendredi peut reprendre seulement après validation de ce socle.
+V0.86 termine l'ouverture sur des traces publiques connues,
+une vraie amitié et le nouveau rythme du foyer.
 ```
