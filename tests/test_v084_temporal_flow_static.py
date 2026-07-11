@@ -13,9 +13,11 @@ def load_json(relative: str):
 class V084TemporalFlowStaticTests(unittest.TestCase):
     def test_timeline_state_is_registered_and_phone_uses_v084_adapter(self):
         project = (GAME / "project.godot").read_text(encoding="utf-8")
-        scene = (GAME / "scenes/smartphone/PhonePrototype.tscn").read_text(encoding="utf-8")
+        phone_scene = (GAME / "scenes/smartphone/PhonePrototype.tscn").read_text(encoding="utf-8")
+        conversation_scene = (GAME / "scenes/smartphone/ConversationView.tscn").read_text(encoding="utf-8")
         self.assertIn('TimelineState="*res://scripts/core/TimelineState.gd"', project)
-        self.assertIn("PhonePrototypeV084.gd", scene)
+        self.assertIn("PhonePrototypeV084.gd", phone_scene)
+        self.assertIn("ConversationViewV084.gd", conversation_scene)
 
         state = (GAME / "scripts/core/TimelineState.gd").read_text(encoding="utf-8")
         for expected in [
@@ -110,6 +112,7 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
             "TimelineState.mark_optional_opened",
             "EffectApplier.apply_flags",
             "TimelineState.is_episode_completed",
+            "_clear_pending_for_episode",
         ]:
             self.assertIn(expected, phone)
 
@@ -132,7 +135,7 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
         self.assertIn("_completion_id_for_current_segment", conversation)
         self.assertIn('data.get("_source_conversation_id"', conversation)
 
-    def test_transition_overlay_blocks_input_and_supports_readable_skip(self):
+    def test_transition_overlay_blocks_input_supports_skip_and_lands_on_new_moment(self):
         scene = (GAME / "scenes/smartphone/TimelineTransitionView.tscn").read_text(encoding="utf-8")
         script = (GAME / "scripts/ui/TimelineTransitionView.gd").read_text(encoding="utf-8")
         self.assertIn("TimelineTransitionView.gd", scene)
@@ -140,22 +143,25 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
             "show_moment_transition",
             "show_day_transition",
             "MOUSE_FILTER_STOP",
+            "FOCUS_ALL",
+            "grab_focus",
             "can_skip",
             "skip_requested",
             "min_time",
             "duration",
             "clear_transition",
             "transition_finished",
+            "_show_timeline_landing",
+            'call("show_timeline_landing"',
         ]:
             self.assertIn(expected, script)
 
-    def test_archive_navigation_is_read_only_and_does_not_drive_time(self):
+    def test_archive_navigation_is_day_scoped_read_only_and_does_not_drive_time(self):
         phone = (GAME / "scripts/ui/PhonePrototypeV084.gd").read_text(encoding="utf-8")
         for expected in [
             "_render_archived_day",
             "Journée terminée · lecture seule",
             "if TimelineState.is_day_completed(day_value):",
-            "conversation_view.show_conversation(conversation)",
             "if viewing_archived_day:",
             "return false",
         ]:
@@ -164,6 +170,21 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
         self.assertNotIn("_initialize_initial_pending_for_day", archived_block)
         self.assertNotIn("_refresh_status_time", archived_block)
         self.assertNotIn("GameState.set_context", archived_block)
+
+        archive = (GAME / "scripts/ui/ConversationViewV084.gd").read_text(encoding="utf-8")
+        for expected in [
+            "show_archive_conversation",
+            "show_timeline_landing",
+            'annotated["_source_conversation_id"]',
+            "allowed_episode_ids",
+            "archived_history",
+            "Historique en lecture seule.",
+            "_render_archive_history_entry",
+            "if not archive_rendering:",
+        ]:
+            self.assertIn(expected, archive)
+        self.assertNotIn("EffectApplier.apply_choice", archive)
+        self.assertNotIn("GameState.set_context", archive)
 
     def test_reset_returns_to_tuesday_and_clears_transition_state(self):
         phone = (GAME / "scripts/ui/PhonePrototypeV084.gd").read_text(encoding="utf-8")
