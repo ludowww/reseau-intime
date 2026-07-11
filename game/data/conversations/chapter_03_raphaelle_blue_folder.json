@@ -1,0 +1,182 @@
+{
+  "id": "chapter_03_raphaelle_blue_folder",
+  "chapter": 3,
+  "day": 3,
+  "title": "Jeudi matin — Le dossier bleu",
+  "app": "messages",
+  "window_id": "O3",
+  "calendar_label": "Jeudi",
+  "time_band": "MORNING",
+  "communication_mode": "WORK_CHAT",
+  "foreground_role": "foreground",
+  "physical_context": "Player et Raphaëlle travaillent depuis des postes ou pièces distinctes sur le même dossier UX/accessibilité.",
+  "thread": {
+    "id": "thread_raphaelle_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "raphaelle"
+    ],
+    "display_name": "Raphaëlle",
+    "profile_content_id": "profile_raphaelle_placeholder"
+  },
+  "segments": [
+    {
+      "id": "segment_thursday_raphaelle_blue_folder_context",
+      "pattern": "guided_reply_pacing",
+      "function": "Établir Raphaëlle par une correction professionnelle ordinaire entre pairs.",
+      "messages": [
+        {
+          "id": "msg_thu_raph_001",
+          "sender": "raphaelle",
+          "time_label": "09:10",
+          "text": "Tu as laissé « à vérifier » sur la seule section déjà vérifiée."
+        },
+        {
+          "id": "msg_thu_raph_002",
+          "sender": "raphaelle",
+          "time_label": "09:10",
+          "text": "Trois fois, pour être précise."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_thu_raph_method_guided",
+          "text": "C'est une méthode.",
+          "tone": "guided_reply",
+          "next_messages": [
+            {
+              "id": "msg_thu_raph_003",
+              "sender": "raphaelle",
+              "time_label": "09:11",
+              "text": "Je crains que le mot soit généreux."
+            },
+            {
+              "id": "msg_thu_raph_004",
+              "sender": "raphaelle",
+              "time_label": "09:11",
+              "text": "Tu corriges avant le point client ?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_thursday_raphaelle_work_choice",
+      "pattern": "three_posture_choice",
+      "function": "R0 — définir comment Player répond à une correction professionnelle ordinaire.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "choice_thu_raph_accountable",
+          "text": "J'ai copié la mauvaise note. Je corrige maintenant.",
+          "tone": "accountable",
+          "sets_flags": [
+            "raphaelle_work_accountable",
+            "raphaelle_r1_established"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_thu_raph_005a",
+              "sender": "raphaelle",
+              "time_label": "09:12",
+              "text": "Merci."
+            },
+            {
+              "id": "msg_thu_raph_006a",
+              "sender": "raphaelle",
+              "time_label": "09:12",
+              "text": "Je préfère une erreur corrigée à un mystère bien présenté."
+            },
+            {
+              "id": "msg_thu_raph_007a",
+              "sender": "raphaelle",
+              "time_label": "09:14",
+              "text": "Et mange quelque chose avant le point."
+            },
+            {
+              "id": "msg_thu_raph_008a",
+              "sender": "raphaelle",
+              "time_label": "09:14",
+              "text": "Ce n'est pas une analyse. Tu as oublié ton sandwich sur l'imprimante."
+            }
+          ]
+        },
+        {
+          "id": "choice_thu_raph_playful",
+          "text": "Je testais la résistance de ton calme. Je corrige.",
+          "tone": "dry_humor",
+          "sets_flags": [
+            "raphaelle_work_playful",
+            "raphaelle_r1_established"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_thu_raph_005b",
+              "sender": "raphaelle",
+              "time_label": "09:12",
+              "text": "Mon calme facture les tests non sollicités."
+            },
+            {
+              "id": "msg_thu_raph_006b",
+              "sender": "raphaelle",
+              "time_label": "09:12",
+              "text": "Mais il accepte la correction."
+            },
+            {
+              "id": "msg_thu_raph_007b",
+              "sender": "raphaelle",
+              "time_label": "09:14",
+              "text": "Et mange quelque chose avant le point."
+            },
+            {
+              "id": "msg_thu_raph_008b",
+              "sender": "raphaelle",
+              "time_label": "09:14",
+              "text": "Ce n'est pas une analyse. Tu as oublié ton sandwich sur l'imprimante."
+            }
+          ]
+        },
+        {
+          "id": "choice_thu_raph_delay",
+          "text": "Je le reprends après le point client.",
+          "tone": "delay",
+          "sets_flags": [
+            "raphaelle_work_delayed",
+            "raphaelle_r1_established"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_thu_raph_005c",
+              "sender": "raphaelle",
+              "time_label": "09:12",
+              "text": "D'accord."
+            },
+            {
+              "id": "msg_thu_raph_006c",
+              "sender": "raphaelle",
+              "time_label": "09:12",
+              "text": "Je te le laisse. Mais pas jusqu'à demain."
+            },
+            {
+              "id": "msg_thu_raph_007c",
+              "sender": "raphaelle",
+              "time_label": "09:14",
+              "text": "Et mange quelque chose avant le point."
+            },
+            {
+              "id": "msg_thu_raph_008c",
+              "sender": "raphaelle",
+              "time_label": "09:14",
+              "text": "Ce n'est pas une analyse. Tu as oublié ton sandwich sur l'imprimante."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "routes_nourished": [
+    "raphaelle"
+  ],
+  "debug_notes": "V0.82 O3. Accès travail R1 uniquement, trois postures, aucun diagnostic du couple et aucun accès privé."
+}
