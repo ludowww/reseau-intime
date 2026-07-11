@@ -1,0 +1,272 @@
+{
+  "id": "chapter_01_sandra_trace",
+  "chapter": 1,
+  "day": 1,
+  "title": "Mardi nuit — Deux verres et un bord flou",
+  "app": "messages",
+  "window_id": "J1_SANDRA_TRACE",
+  "calendar_label": "Mardi",
+  "time_band": "NIGHT",
+  "communication_mode": "REMOTE_ASYNC",
+  "foreground_role": "soft_trace",
+  "physical_context": "Sandra est chez elle après son poste. Player est à la maison mais utilise son téléphone séparément. La photographie justifie le message.",
+  "thread": {
+    "id": "thread_sandra_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "sandra"
+    ],
+    "display_name": "Sandra",
+    "profile_content_id": "profile_sandra_placeholder"
+  },
+  "segments": [
+    {
+      "id": "segment_j1_sandra_trace_entry",
+      "pattern": "guided_reply_pacing",
+      "function": "Faire revenir Sandra par une seule photographie concrète.",
+      "messages": [
+        {
+          "id": "msg_j1_sandra_trace_001",
+          "sender": "sandra",
+          "time_label": "22:57",
+          "text": "Je tombe peut-être mal."
+        },
+        {
+          "id": "msg_j1_sandra_trace_002",
+          "sender": "sandra",
+          "time_label": "22:57",
+          "text": "Mais j'ai retrouvé une photo."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_j1_sandra_what_guided",
+          "text": "De quoi ?",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "next_messages": [
+            {
+              "id": "msg_j1_sandra_trace_003",
+              "sender": "sandra",
+              "time_label": "22:58",
+              "text": "De notre dernier déjeuner."
+            },
+            {
+              "id": "msg_j1_sandra_trace_004",
+              "sender": "sandra",
+              "time_label": "22:58",
+              "text": "Enfin... Deux verres, un coin de table, et moi floue sur le bord.",
+              "content_id": "j1_sandra_lunch_memory_soft"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_j1_sandra_trace_context",
+      "pattern": "guided_reply_pacing",
+      "function": "Donner l'origine de la trace et une couleur de travail sans confession profonde.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "choice_j1_sandra_art_guided",
+          "text": "Très artistique. Tu l'as retrouvée comment ?",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "next_messages": [
+            {
+              "id": "msg_j1_sandra_trace_005",
+              "sender": "sandra",
+              "time_label": "22:59",
+              "text": "Non. Juste ratée."
+            },
+            {
+              "id": "msg_j1_sandra_trace_006",
+              "sender": "sandra",
+              "time_label": "22:59",
+              "text": "Mais je crois que je l'aime bien quand même."
+            },
+            {
+              "id": "msg_j1_sandra_trace_007",
+              "sender": "sandra",
+              "time_label": "23:00",
+              "text": "J'ai imprimé quelques photos après mon poste."
+            },
+            {
+              "id": "msg_j1_sandra_trace_008",
+              "sender": "sandra",
+              "time_label": "23:00",
+              "text": "Mauvaise idée à 22h, probablement."
+            },
+            {
+              "id": "msg_j1_sandra_trace_009",
+              "sender": "sandra",
+              "time_label": "23:01",
+              "text": "SentryCore a fait semblant de coopérer. Un ticket fantôme, quand même."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_j1_sandra_reading_choice",
+      "pattern": "three_posture_choice",
+      "function": "S1 — définir comment Player lit la trace sans activer une route.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "choice_j1_sandra_safe_warmth",
+          "text": "Je suis content que tu l'aies gardée.",
+          "tone": "safe_warmth",
+          "sets_flags": [
+            "j1_sandra_safe_warmth"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_j1_sandra_trace_010a",
+              "sender": "sandra",
+              "time_label": "23:02",
+              "text": "C'est gentil."
+            },
+            {
+              "id": "msg_j1_sandra_trace_011a",
+              "sender": "sandra",
+              "time_label": "23:03",
+              "text": "Et presque raisonnable. Ne gâchons pas tout de suite."
+            }
+          ]
+        },
+        {
+          "id": "choice_j1_sandra_precise_observation",
+          "text": "Elle est floue, mais je me souviens que tu souriais.",
+          "tone": "precise_observation",
+          "sets_flags": [
+            "j1_sandra_precise_observation"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_j1_sandra_trace_010b",
+              "sender": "sandra",
+              "time_label": "23:02",
+              "text": "Haha."
+            },
+            {
+              "id": "msg_j1_sandra_trace_011b",
+              "sender": "sandra",
+              "time_label": "23:03",
+              "text": "Tu as une mémoire pénible. Je n'ai pas dit mauvaise."
+            }
+          ]
+        },
+        {
+          "id": "choice_j1_sandra_cautious",
+          "text": "Ah oui. Je me souviens.",
+          "tone": "cautious",
+          "sets_flags": [
+            "j1_sandra_cautious"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_j1_sandra_trace_010c",
+              "sender": "sandra",
+              "time_label": "23:02",
+              "text": "Réponse prudente."
+            },
+            {
+              "id": "msg_j1_sandra_trace_011c",
+              "sender": "sandra",
+              "time_label": "23:03",
+              "text": "Ce n'est pas mal. Juste un peu propre."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_j1_sandra_soft_boundary",
+      "pattern": "guided_reply_pacing",
+      "function": "Sandra ferme elle-même la fenêtre avant que la trace devienne une déclaration.",
+      "messages": [
+        {
+          "id": "msg_j1_sandra_trace_012",
+          "sender": "sandra",
+          "time_label": "23:06",
+          "text": "Je vais te laisser. Je travaille tôt demain."
+        },
+        {
+          "id": "msg_j1_sandra_trace_013",
+          "sender": "sandra",
+          "time_label": "23:06",
+          "text": "Donc je devrais dormir au lieu de relire une photo floue comme si elle allait devenir nette."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_j1_sandra_thanks_guided",
+          "text": "Elle ne deviendra pas nette. Merci de me l'avoir envoyée.",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "next_messages": [
+            {
+              "id": "msg_j1_sandra_trace_014",
+              "sender": "sandra",
+              "time_label": "23:08",
+              "text": "Je sais. C'est peut-être pour ça que je l'aime bien."
+            },
+            {
+              "id": "msg_j1_sandra_trace_015",
+              "sender": "sandra",
+              "time_label": "23:09",
+              "text": "De rien. Enfin... on va dire que c'était sans conséquence."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_j1_sandra_goodnight",
+      "pattern": "guided_reply_pacing",
+      "function": "Accepter la limite douce et terminer la trace avant le retour vers Marie.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "choice_j1_sandra_goodnight_guided",
+          "text": "On garde cette version ? Bonne nuit Sandra.",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "sets_flags": [
+            "j1_sandra_trace_complete"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_j1_sandra_trace_016",
+              "sender": "sandra",
+              "time_label": "23:10",
+              "text": "Oui. Pour ce soir."
+            },
+            {
+              "id": "msg_j1_sandra_trace_017_precise",
+              "sender": "sandra",
+              "time_label": "23:11",
+              "text": "Et pour la photo... tu avais raison. Je souriais.",
+              "conditions": [
+                "j1_sandra_precise_observation"
+              ]
+            },
+            {
+              "id": "msg_j1_sandra_trace_018",
+              "sender": "sandra",
+              "time_label": "23:12",
+              "text": "Bonne nuit, Player 🙂"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "routes_nourished": [
+    "sandra"
+  ],
+  "debug_notes": "V0.85 J1 Sandra : une seule trace, quatre interactions guidées, un seul vrai nœud S1 et aucune activation de route."
+}
