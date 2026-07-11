@@ -1,0 +1,176 @@
+{
+  "id": "chapter_03_mathilde_home_charger",
+  "chapter": 3,
+  "day": 3,
+  "title": "Jeudi soir — Le chargeur",
+  "app": "messages",
+  "window_id": "O5B",
+  "calendar_label": "Jeudi",
+  "time_band": "EVENING",
+  "communication_mode": "SEPARATE_ROOMS_PING",
+  "foreground_role": "foreground",
+  "physical_context": "Player est dans le salon ou le bureau. Mathilde déballe encore des affaires derrière la porte de la chambre d'appoint. Marie est à La Verrière.",
+  "thread": {
+    "id": "thread_mathilde_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "mathilde"
+    ],
+    "display_name": "Mathilde",
+    "profile_content_id": "profile_mathilde_placeholder"
+  },
+  "segments": [
+    {
+      "id": "segment_thursday_mathilde_charger_context",
+      "pattern": "guided_reply_pacing",
+      "function": "Ouvrir une demande pratique entre deux pièces sans transformer le foyer en récompense sexuelle.",
+      "messages": [
+        {
+          "id": "msg_thu_mathilde_001",
+          "sender": "mathilde",
+          "time_label": "18:20",
+          "text": "Question urgente."
+        },
+        {
+          "id": "msg_thu_mathilde_002",
+          "sender": "mathilde",
+          "time_label": "18:20",
+          "text": "Enfin juridiquement discutable."
+        },
+        {
+          "id": "msg_thu_mathilde_003",
+          "sender": "mathilde",
+          "time_label": "18:21",
+          "text": "Tu as vu mon chargeur ?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_thu_mathilde_table_guided",
+          "text": "Celui que tu as posé sur la table ?",
+          "tone": "guided_reply",
+          "next_messages": [
+            {
+              "id": "msg_thu_mathilde_004",
+              "sender": "mathilde",
+              "time_label": "18:22",
+              "text": "Non."
+            },
+            {
+              "id": "msg_thu_mathilde_005",
+              "sender": "mathilde",
+              "time_label": "18:22",
+              "text": "Celui que j'ai posé sur la table et qui n'y est plus parce que Marie a rangé."
+            },
+            {
+              "id": "msg_thu_mathilde_006",
+              "sender": "mathilde",
+              "time_label": "18:22",
+              "text": "Ce qui est une agression très organisée."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_thursday_mathilde_home_choice",
+      "pattern": "three_posture_choice",
+      "function": "MH0 — définir la posture domestique de Player sans créer de tension sexuelle.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "choice_thu_mathilde_help",
+          "text": "Boîte bleue sous le bureau. J'arrive.",
+          "tone": "direct_help",
+          "sets_flags": [
+            "mathilde_home_help",
+            "household_participation_positive"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_thu_mathilde_007a",
+              "sender": "mathilde",
+              "time_label": "18:24",
+              "text": "Tu sais déjà où sont mes affaires."
+            },
+            {
+              "id": "msg_thu_mathilde_008a",
+              "sender": "mathilde",
+              "time_label": "18:24",
+              "text": "C'est rapide et légèrement inquiétant. Mais merci."
+            }
+          ],
+          "next_items": [
+            {
+              "id": "offline_thu_mathilde_charger_help",
+              "presentation": "offline_beat",
+              "_system_note": true,
+              "time_label": "18:30",
+              "text": "Player entre dans la chambre d'appoint. La recherche du chargeur et le déplacement d'une boîte continuent face à face."
+            }
+          ]
+        },
+        {
+          "id": "choice_thu_mathilde_playful_help",
+          "text": "Je peux ouvrir une enquête, mais mes tarifs sont élevés.",
+          "tone": "playful_help",
+          "sets_flags": [
+            "mathilde_home_playful_help",
+            "household_participation_positive"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_thu_mathilde_007b",
+              "sender": "mathilde",
+              "time_label": "18:24",
+              "text": "Objection."
+            },
+            {
+              "id": "msg_thu_mathilde_008b",
+              "sender": "mathilde",
+              "time_label": "18:24",
+              "text": "Abus de position domestique. Mais viens quand même."
+            }
+          ],
+          "next_items": [
+            {
+              "id": "offline_thu_mathilde_charger_playful",
+              "presentation": "offline_beat",
+              "_system_note": true,
+              "time_label": "18:32",
+              "text": "Player rejoint Mathilde dans la chambre d'appoint. L'enquête se termine face à face, sans prolonger le chat."
+            }
+          ]
+        },
+        {
+          "id": "choice_thu_mathilde_distance",
+          "text": "Regarde dans tes sacs. Je finis un truc.",
+          "tone": "distance",
+          "sets_flags": [
+            "mathilde_home_distance",
+            "parallel_drift_candidate"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_thu_mathilde_007c",
+              "sender": "mathilde",
+              "time_label": "18:24",
+              "text": "Message reçu."
+            },
+            {
+              "id": "msg_thu_mathilde_008c",
+              "sender": "mathilde",
+              "time_label": "18:24",
+              "text": "Je vais survivre seule avec mes six sacs et ma dignité. Enfin l'un des deux."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "routes_nourished": [
+    "mathilde"
+  ],
+  "debug_notes": "V0.82 O5B. Demande pratique entre pièces, arrêt du chat lors de la co-présence, aucune intention ou image sexuelle."
+}
