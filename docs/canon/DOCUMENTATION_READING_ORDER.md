@@ -11,7 +11,7 @@ Write story movement from V0.78.
 Write opening content from V0.79.
 Write communication realism from the diegetic-time canon.
 Write chronological access from the V0.83 temporal-flow canon.
-Write active Tuesday from the V0.83 J1 reconciliation source.
+Write active Tuesday from the V0.83 J1 source pack and scene cards.
 Use V0.84 and V0.85 plans before changing runtime.
 Use three choices by default.
 Legacy runtime is not automatic narrative canon.
@@ -32,6 +32,7 @@ Legacy runtime is not automatic narrative canon.
    - `docs/canon/ACT_I_OPENING_TEMPORAL_DELIVERY_MAP.md`
 7. current Tuesday correction:
    - `docs/canon/J1_RUNTIME_RECONCILIATION_SOURCE_PACK.md`
+   - `docs/canon/J1_RUNTIME_RECONCILIATION_SCENE_CARDS.md`
 8. runtime audit, plans, and reports:
    - `docs/runtime/V0_80_RUNTIME_AUDIT_AND_GAP_MAP.md`
    - `docs/V0_80_First_Modular_Runtime_Integration_Plan.md`
@@ -67,7 +68,7 @@ full character canon
 = broad narrative truth
 
 V0.83 temporal-flow canon
-+ V0.83 J1 reconciliation source pack
++ V0.83 J1 reconciliation source pack / scene cards
 = corrected chronology and Tuesday truth
 
 V0.80–V0.82 reports
