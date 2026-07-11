@@ -85,7 +85,7 @@ class V082ThursdayStaticTests(unittest.TestCase):
             ],
         )
 
-    def test_unlock_graph_opens_one_topology_and_mandatory_return(self):
+    def test_unlock_graph_preserves_topology_and_mandatory_return(self):
         index = load_json("data/conversations/chapter_03_modular_index.json")
         availability = index.get("conversation_availability", {})
         unlocks = availability.get("unlocks", {})
@@ -96,6 +96,20 @@ class V082ThursdayStaticTests(unittest.TestCase):
         self.assertEqual(sandra.get("after_conversation_completed"), "chapter_03_raphaelle_blue_folder")
         self.assertFalse(sandra.get("notify"))
         self.assertEqual(marie_offer.get("after_conversation_completed"), "chapter_03_raphaelle_blue_folder")
+
+        phases = index.get("timeline_flow", {}).get("phases", [])
+        self.assertEqual(
+            [phase.get("id") for phase in phases],
+            [
+                "thursday_raphaelle_work",
+                "thursday_sandra_optional",
+                "thursday_marie_offer",
+                "thursday_selected_topology",
+                "thursday_marie_return",
+            ],
+        )
+        self.assertEqual(phases[1].get("optional_conversation_ids"), ["chapter_03_sandra_continuity"])
+        self.assertEqual(phases[2].get("required_conversation_ids"), ["chapter_03_marie_event_offer"])
 
         topology_rules = {
             "chapter_03_marie_event_joined": "opening_topology_join_marie",
@@ -208,13 +222,15 @@ class V082ThursdayStaticTests(unittest.TestCase):
             ]
             self.assertEqual(offenders, [], relative)
 
-    def test_v082_adapters_add_conditions_and_cross_day_thread_merge(self):
+    def test_v084_phone_extends_v082_condition_and_thread_foundation(self):
         phone_scene = (GAME / "scenes/smartphone/PhonePrototype.tscn").read_text(encoding="utf-8")
         conversation_scene = (GAME / "scenes/smartphone/ConversationView.tscn").read_text(encoding="utf-8")
-        self.assertIn("PhonePrototypeV082.gd", phone_scene)
+        self.assertIn("PhonePrototypeV084.gd", phone_scene)
         self.assertIn("ConversationViewV082.gd", conversation_scene)
 
-        phone = (GAME / "scripts/ui/PhonePrototypeV082.gd").read_text(encoding="utf-8")
+        phone_v084 = (GAME / "scripts/ui/PhonePrototypeV084.gd").read_text(encoding="utf-8")
+        phone_v082 = (GAME / "scripts/ui/PhonePrototypeV082.gd").read_text(encoding="utf-8")
+        self.assertIn('extends "res://scripts/ui/PhonePrototypeV082.gd"', phone_v084)
         for expected in [
             'extends "res://scripts/ui/PhonePrototypeV081.gd"',
             "after_any_conversation_completed",
@@ -223,7 +239,7 @@ class V082ThursdayStaticTests(unittest.TestCase):
             'rule.get("notify", true)',
             "EffectApplier.condition_is_met",
         ]:
-            self.assertIn(expected, phone)
+            self.assertIn(expected, phone_v082)
 
         conversation = (GAME / "scripts/ui/ConversationViewV082.gd").read_text(encoding="utf-8")
         for expected in [
