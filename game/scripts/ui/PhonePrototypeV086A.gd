@@ -180,6 +180,7 @@ func _add_conversation_card(day_value, conversation: Dictionary) -> void:
 	)
 
 func _on_game_state_changed() -> void:
-	super._on_game_state_changed()
-	if GameState.context.get("day", null) == null and str(GameState.context.get("last_choice", "")) == "":
+	var resetting := GameState.context.get("day", null) == null and str(GameState.context.get("last_choice", "")) == ""
+	if resetting:
 		day_finish_ready.clear()
+	super._on_game_state_changed()
