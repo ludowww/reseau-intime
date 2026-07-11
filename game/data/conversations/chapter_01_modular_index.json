@@ -7,7 +7,7 @@
   "day_start_time": "18:12",
   "title": "Mardi — Les choses qu'on remarque",
   "description": "J1 canonique : Marie et Sandra restent les seuls fils actifs. Mathilde demeure indirecte avant l'urgence du mercredi.",
-  "design_goal": "Préserver le J1 jouable existant tout en retirant du runtime actif le faux raccord où Mathilde paraît déjà installée.",
+  "design_goal": "Préserver temporairement le J1 jouable existant tout en imposant une progression Mardi vers Mercredi. V0.85 remplacera les conversations legacy.",
   "default_order": [
     "chapter_01_marie",
     "chapter_01_sandra"
@@ -34,6 +34,47 @@
       ]
     }
   ],
+  "timeline_flow": {
+    "initial_state": "AVAILABLE",
+    "initial_phase_id": "tuesday_marie",
+    "day_start_card": {
+      "eyebrow": "MARDI — SOIR",
+      "title": "Les choses qu'on remarque",
+      "subtitle": "18:12",
+      "duration": 1.25,
+      "min_time": 0.35
+    },
+    "day_end_card": {
+      "eyebrow": "MARDI — FIN DE JOURNÉE",
+      "duration": 1.0,
+      "min_time": 0.35
+    },
+    "next_day": 2,
+    "phases": [
+      {
+        "id": "tuesday_marie",
+        "moment_label": "soir",
+        "time_label": "18:12",
+        "required_conversation_ids": [
+          "chapter_01_marie"
+        ]
+      },
+      {
+        "id": "tuesday_sandra",
+        "moment_label": "nuit",
+        "time_label": "22:57",
+        "required_conversation_ids": [
+          "chapter_01_sandra"
+        ],
+        "transition_card": {
+          "eyebrow": "MARDI — NUIT",
+          "title": "22:57",
+          "duration": 0.9,
+          "min_time": 0.35
+        }
+      }
+    ]
+  },
   "conversation_filters": {
     "chapter_01_marie": {
       "exclude_item_ids": [
@@ -83,9 +124,9 @@
     "res://data/visual_content/chapter_01_proofs.json"
   ],
   "debug_expected_outcomes": [
-    "Only Marie and Sandra are active on Tuesday.",
-    "The runtime filter removes the deprecated Mathilde bags/shoes/racket messages and visual reference.",
-    "Sandra remains locked until Marie completes.",
-    "No active Mathilde thread exists."
+    "Only Tuesday is initially visible.",
+    "Marie completion activates the Tuesday Sandra phase.",
+    "Sandra completion closes Tuesday and unlocks Wednesday through an interstitial.",
+    "The J1 dialogue remains temporary legacy content until V0.85."
   ]
 }
