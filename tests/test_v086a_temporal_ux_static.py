@@ -1,3 +1,4 @@
+import re
 import unittest
 from pathlib import Path
 
@@ -73,8 +74,9 @@ class V086ATemporalUxStaticTests(unittest.TestCase):
         phone = (GAME / "scripts/ui/PhonePrototypeV086A.gd").read_text(encoding="utf-8").lower()
         conversation = (GAME / "scripts/ui/ConversationViewV086A.gd").read_text(encoding="utf-8").lower()
         combined = phone + "\n" + conversation
-        for forbidden in ["sets_flags", "apply_choice", "route_stage", "adult_frame", "ntr", "cuckold"]:
+        for forbidden in ["sets_flags", "apply_choice", "route_stage", "adult_frame", "cuckold"]:
             self.assertNotIn(forbidden, combined)
+        self.assertIsNone(re.search(r"\bntr\b", combined), "standalone NTR token found in UX-only adapters")
 
 
 if __name__ == "__main__":
