@@ -1,6 +1,6 @@
 {
   "id": "chapter_01_proof_placeholders",
-  "version": 2,
+  "version": 1,
   "notes": "V0.85 : seul j1_sandra_lunch_memory_soft est référencé par le J1 actif. Les visuels Marie cuisine et Mathilde bagages restent des métadonnées legacy non référencées pour rollback/historique.",
   "items": [
     {
