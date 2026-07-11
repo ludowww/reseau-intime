@@ -1,0 +1,167 @@
+{
+  "id": "chapter_03_marie_event_joined",
+  "chapter": 3,
+  "day": 3,
+  "title": "Jeudi soir — La rallonge noire",
+  "app": "messages",
+  "window_id": "O5A",
+  "calendar_label": "Jeudi",
+  "time_band": "EVENING",
+  "communication_mode": "SAME_VENUE_LOGISTICS",
+  "foreground_role": "foreground",
+  "physical_context": "Player et Marie sont à La Verrière, séparés par la salle, le bruit, les invités et les tâches de préparation.",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "marie"
+    ],
+    "display_name": "Marie",
+    "profile_content_id": "profile_marie_placeholder"
+  },
+  "segments": [
+    {
+      "id": "segment_thursday_marie_event_location",
+      "pattern": "guided_reply_pacing",
+      "function": "Justifier un échange bref et logistique dans une salle bruyante.",
+      "messages": [
+        {
+          "id": "msg_thu_event_001",
+          "sender": "marie",
+          "time_label": "17:55",
+          "text": "Tu es où ?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_thu_event_behind_chairs",
+          "text": "Derrière les chaises.",
+          "tone": "guided_reply",
+          "next_messages": [
+            {
+              "id": "msg_thu_event_002",
+              "sender": "marie",
+              "time_label": "17:56",
+              "text": "Réponse inquiétante."
+            },
+            {
+              "id": "msg_thu_event_003",
+              "sender": "marie",
+              "time_label": "17:56",
+              "text": "J'ai besoin de la rallonge noire côté scène."
+            },
+            {
+              "id": "msg_thu_event_004",
+              "sender": "marie",
+              "time_label": "17:56",
+              "text": "Pas la grise. La grise est maudite."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_thursday_marie_event_participation",
+      "pattern": "three_posture_choice",
+      "function": "MA0 — mesurer la qualité de présence après le choix de venir.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "choice_thu_event_initiative",
+          "text": "Je l'ai. Et j'ai déjà déplacé les deux tables du fond.",
+          "tone": "initiative",
+          "sets_flags": [
+            "marie_event_initiative",
+            "couple_reconnection_candidate"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_thu_event_005a",
+              "sender": "marie",
+              "time_label": "17:58",
+              "text": "Très bien."
+            },
+            {
+              "id": "msg_thu_event_006a",
+              "sender": "marie",
+              "time_label": "17:58",
+              "text": "Je retire provisoirement toutes mes critiques sur ta vitesse de réaction. Provisoirement."
+            },
+            {
+              "id": "msg_thu_event_007a",
+              "sender": "marie",
+              "time_label": "19:05",
+              "text": "Élodie vient de nous envoyer ça.",
+              "content_id": "marie_laverriere_setup_01"
+            }
+          ]
+        },
+        {
+          "id": "choice_thu_event_playful_help",
+          "text": "Je négocie avec la rallonge noire. Elle demande une pause et un meilleur salaire.",
+          "tone": "playful_help",
+          "sets_flags": [
+            "marie_event_playful_help",
+            "couple_reconnection_candidate"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_thu_event_005b",
+              "sender": "marie",
+              "time_label": "17:58",
+              "text": "Refuse."
+            },
+            {
+              "id": "msg_thu_event_006b",
+              "sender": "marie",
+              "time_label": "17:58",
+              "text": "Elle a déjà de meilleurs horaires que nous. Et apporte-la, s'il te plaît."
+            },
+            {
+              "id": "msg_thu_event_007b",
+              "sender": "marie",
+              "time_label": "19:05",
+              "text": "Élodie vient de nous envoyer ça.",
+              "content_id": "marie_laverriere_setup_01"
+            }
+          ]
+        },
+        {
+          "id": "choice_thu_event_distracted",
+          "text": "Deux minutes. Je finis un message.",
+          "tone": "distracted",
+          "sets_flags": [
+            "marie_event_distracted",
+            "couple_presence_strained"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_thu_event_005c",
+              "sender": "marie",
+              "time_label": "17:58",
+              "text": "D'accord."
+            },
+            {
+              "id": "msg_thu_event_006c",
+              "sender": "marie",
+              "time_label": "17:58",
+              "text": "Mais tu es venu pour être là. Pas pour déplacer ton absence dans une autre pièce."
+            },
+            {
+              "id": "msg_thu_event_007c",
+              "sender": "marie",
+              "time_label": "19:05",
+              "text": "Élodie vient de nous envoyer ça.",
+              "content_id": "marie_laverriere_setup_01"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "routes_nourished": [
+    "marie"
+  ],
+  "debug_notes": "V0.82 O5A. Même lieu mais messages logistiques courts. L'évaluation émotionnelle est reportée à O6."
+}
