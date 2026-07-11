@@ -1,8 +1,7 @@
-# État global de l’histoire — V0.84
+# État global de l’histoire — V0.85
 
-> Résumé opérationnel après intégration du flux temporel autoritaire.  
-> Le runtime reste narrativement identique à V0.82 jusqu’au jeudi soir, mais les jours et moments ne sont plus réarrangeables.  
-> J1 reste temporairement legacy jusqu’à V0.85.
+> Résumé opérationnel après remplacement du J1 legacy actif.  
+> Le runtime est jouable jusqu’au jeudi soir, avec ordre temporel autoritaire et mardi désormais cohérent avec le canon.
 
 ## 1. Hiérarchie actuelle
 
@@ -12,15 +11,14 @@ canon personnages
 + V0.79 ouverture
 = vérité narrative large
 
-V0.83 flux temporel
-+ V0.83 source J1 réconciliée
+V0.83 flux temporel et source J1 réconciliée
 = vérité corrective
 
 V0.84
 = runtime temporel actif
 
 V0.85
-= prochaine correction du contenu mardi
+= contenu mardi canonique actif
 
 legacy Chapter 1–9
 = historique technique sauf référence active explicite
@@ -37,63 +35,94 @@ Jeudi = verrouillé
 Vendredi = absent
 ```
 
-Les indexes Mercredi et Jeudi sont chargés techniquement, mais invisibles et inaccessibles tant que la journée précédente n’est pas terminée.
+Les jours suivants sont chargés techniquement mais restent inaccessibles jusqu’à la fin de la journée précédente.
 
-## 3. Progression des journées
+## 3. Mardi — J1 réconcilié
 
 ```text
+18:12 Marie / dîner, pain et marche
+-> M1 à trois choix
+
+19:15 ou 19:35
+-> dîner et marche hors ligne
+
+22:57 Sandra / ancienne photo floue
+-> S1 à trois choix
+
+23:25 ou 23:28
+-> retour final vers Marie hors ligne
+
 fin Mardi
--> MARDI — FIN DE JOURNÉE
--> MERCREDI — MIDI
--> Mercredi déverrouillé et sélectionné
-
-fin Mercredi
--> MERCREDI — FIN DE JOURNÉE
--> JEUDI — MATIN
--> Jeudi déverrouillé et sélectionné
-
-fin Jeudi
--> JEUDI — FIN DE JOURNÉE
--> la suite n'est pas encore disponible
-```
-
-Les anciennes journées deviennent des archives en lecture seule.
-
-## 4. Phases temporelles
-
-Jour :
-
-```text
-LOCKED -> AVAILABLE -> ACTIVE -> COMPLETE -> ARCHIVED
-```
-
-Phase :
-
-```text
-LOCKED -> CURRENT -> COMPLETE / SKIPPED / EXPIRED
-```
-
-Règle :
-
-```text
-les timestamps décrivent le temps
-les phases autorisent l'accès
-```
-
-## 5. Mardi actuel
-
-Structure temporelle V0.84 :
-
-```text
-18:12 Marie obligatoire
--> 22:57 Sandra obligatoire
--> Mardi terminé
 -> Mercredi
 ```
 
-Le contenu reste le J1 legacy filtré.
+### M1
 
-Les incohérences de texte, timestamps, rythme et fin sur Sandra restent une dette explicitement prévue pour V0.85.
+```text
+présent
+joueur mais présent
+retardé / plat
+```
+
+Le pain est formulé comme une action future : Player s’engage à le prendre, puis revient réellement avec dans le beat hors ligne.
+
+### S1
+
+```text
+chaleur sûre
+observation précise
+prudence
+```
+
+Sandra partage une seule trace concrète, pose elle-même une limite douce, puis quitte l’échange.
+
+### Ce qui a disparu du J1 actif
+
+- `On est mercredi` pendant Mardi ;
+- heures `24:xx` ;
+- timestamps qui reculent ;
+- longue progression lac/roman/manque ;
+- déclaration `Moi aussi / Toi` ;
+- scores numériques de confiance, négligence, vérité, attachement ou priorité ;
+- fin de journée sur Sandra ;
+- dizaines de boutons à réponse unique.
+
+## 4. États J1
+
+Flags observables uniquement :
+
+```text
+j1_marie_present
+j1_marie_playful_present
+j1_marie_delayed_flat
+j1_shared_evening_due
+j1_shared_evening_completed
+j1_marie_return_active / delayed
+j1_sandra_safe_warmth
+j1_sandra_precise_observation
+j1_sandra_cautious
+j1_sandra_trace_complete
+j1_marie_final_return_present / delayed
+j1_day_complete
+```
+
+Aucun score de route n’est écrit.
+
+## 5. Moments hors ligne
+
+V0.85 ajoute deux phases sans conversation :
+
+- dîner et marche ;
+- retour final vers Marie.
+
+Elles :
+
+- sont sélectionnées selon les flags précédents ;
+- utilisent l’interstitiel temporel ;
+- appliquent leurs flags une seule fois ;
+- sont enregistrées dans le journal de la journée ;
+- apparaissent une seule fois dans l’archive sous `Moments hors ligne` ;
+- ne deviennent jamais des bulles Messenger artificielles.
 
 ## 6. Mercredi actuel
 
@@ -127,30 +156,25 @@ aucune intention sexuelle
 -> Jeudi terminé
 ```
 
-Marie n’est plus accessible en même temps que Sandra immédiatement après Raphaëlle.
+L’ordre temporel V0.84 reste inchangé.
 
-### Sandra ignorée
+## 8. Progression des journées
 
 ```text
-chapter_03_sandra_continuity = EXPIRED
-thursday_sandra_echo_missed = true
+fin Mardi
+-> MARDI — FIN DE JOURNÉE
+-> MERCREDI — MIDI
+-> Mercredi déverrouillé et sélectionné
+
+fin Mercredi
+-> MERCREDI — FIN DE JOURNÉE
+-> JEUDI — MATIN
+-> Jeudi déverrouillé et sélectionné
+
+fin Jeudi
+-> JEUDI — FIN DE JOURNÉE
+-> la suite n'est pas encore disponible
 ```
-
-Sandra disparaît de la phase et ne peut plus être répondue après 16:05.
-
-### Sandra ouverte
-
-L’avancement est bloqué tant que son échange n’est pas terminé.
-
-## 8. Interstitiels
-
-Le runtime possède désormais :
-
-- une page bloquante de changement de jour ;
-- une carte courte pour les grands sauts intrajournaliers ;
-- un délai minimal de lecture ;
-- un skip souris/clavier après ce délai ;
-- une page neutre correspondant au nouveau moment une fois la transition fermée.
 
 ## 9. Archives
 
@@ -163,16 +187,18 @@ Une journée terminée :
 - ne réapplique aucun effet ;
 - ne change pas l’heure actuelle ;
 - ne réactive pas une scène expirée ;
-- filtre les fils persistants par épisode source pour éviter de montrer du futur dans le passé.
+- filtre les fils persistants par épisode source ;
+- affiche ses beats hors ligne en lecture seule.
 
 ## 10. État narratif après jeudi
 
 ```text
 Marie/Player = HABITUAL_WARMTH
 relationship frame = ASSUMED_EXCLUSIVE
+Sandra J1 = soft trace seed only
 Mathilde = R1 domestique
 Raphaëlle = R1 travail
-Sandra = continuité douce ou écho jeudi expiré
+Sandra jeudi = continuité douce ou écho expiré
 Pauline = inactive
 Nico = inactive
 hard secrets = none
@@ -180,54 +206,45 @@ adult frames = none
 Friday = not implemented
 ```
 
-V0.84 n’ajoute aucun score relationnel ou route.
-
-## 11. J1 cible V0.85
+## 11. Fichiers actifs mardi
 
 ```text
-18:12 Marie à distance + M1
-19:15 dîner / marche hors ligne
-22:57 Sandra / trace douce + S1
-23:25 retour final Marie / vie commune
-fin Mardi -> Mercredi
+game/data/conversations/chapter_01_marie_opening.json
+game/data/conversations/chapter_01_sandra_trace.json
 ```
 
-V0.85 remplacera les deux gros fichiers actifs par de nouveaux fichiers concis, avec flags uniquement.
+Les anciens fichiers `chapter_01_marie.json` et `chapter_01_sandra.json` restent sur disque mais sont inactifs.
 
 ## 12. Runtime ajouté
 
 ```text
-game/scripts/core/TimelineState.gd
-game/scripts/ui/PhonePrototypeV084.gd
-game/scripts/ui/ConversationViewV084.gd
-game/scripts/ui/TimelineTransitionView.gd
-game/scenes/smartphone/TimelineTransitionView.tscn
+game/scripts/ui/PhonePrototypeV085.gd
 ```
 
-Les scripts V0.84 étendent les fondations V0.81/V0.82 plutôt que de les refactorer.
+Extension minimale de V0.84 pour les phases hors ligne sans conversation et leur journal d’archive.
 
 ## 13. Validation
 
 Nouveau test :
 
 ```text
-tests/test_v084_temporal_flow_static.py
+tests/test_v085_j1_reconciliation_static.py
 ```
 
-Les commandes Python et Godot doivent être exécutées par Hermes/local/CI avant merge, le connecteur GitHub ne disposant pas d’un environnement d’exécution.
+Les commandes Python et Godot doivent être exécutées par Hermes/local/CI avant merge.
 
-## 14. Prochaines versions
+## 14. Prochaine version
 
 ```text
-V0.85 — J1 Canon Runtime Reconciliation
 V0.86 — Friday Public Traces & Opening Completion
 ```
 
 ## 15. Résumé opérationnel
 
 ```text
-Runtime : jouable jusqu'à jeudi, ordre désormais imposé.
-J1 : encore legacy, remplacement prévu V0.85.
+Runtime : jouable jusqu'à jeudi, ordre imposé.
+J1 : réconcilié et centré sur Marie.
+Sandra : une trace douce seulement.
 Vendredi : toujours absent.
-Prochaine étape : rendre mardi narrativement vrai sans toucher à la fondation temporelle.
+Prochaine étape : terminer l'ouverture V0.79 avec Pauline, Nico et la respiration du foyer.
 ```

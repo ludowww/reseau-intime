@@ -1,0 +1,306 @@
+{
+  "id": "chapter_01_marie_opening",
+  "chapter": 1,
+  "day": 1,
+  "title": "Mardi soir — Pain et dix minutes dehors",
+  "app": "messages",
+  "window_id": "J1_MARIE_OPENING",
+  "calendar_label": "Mardi",
+  "time_band": "EARLY_EVENING",
+  "communication_mode": "REMOTE_ASYNC",
+  "foreground_role": "couple_anchor",
+  "physical_context": "Marie est à La Verrière ou en repart. Player quitte le travail, se déplace ou se trouve ailleurs. Ils ne sont pas dans la même pièce.",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "marie"
+    ],
+    "display_name": "Marie",
+    "profile_content_id": "profile_marie_placeholder"
+  },
+  "segments": [
+    {
+      "id": "segment_j1_marie_dinner_setup",
+      "pattern": "guided_reply_pacing",
+      "function": "Présenter le dîner ordinaire et la demande concrète sans multiplier les clics.",
+      "messages": [
+        {
+          "id": "msg_j1_marie_opening_001",
+          "sender": "marie",
+          "time_label": "18:12",
+          "text": "Question importante."
+        },
+        {
+          "id": "msg_j1_marie_opening_002",
+          "sender": "marie",
+          "time_label": "18:12",
+          "text": "Deux tomates, un reste de fromage et beaucoup d'optimisme, ça fait un dîner ?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_j1_marie_optimism_guided",
+          "text": "Ça dépend de l'optimisme. Donc oui.",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "next_messages": [
+            {
+              "id": "msg_j1_marie_opening_003",
+              "sender": "marie",
+              "time_label": "18:13",
+              "text": "Moyen."
+            },
+            {
+              "id": "msg_j1_marie_opening_004",
+              "sender": "marie",
+              "time_label": "18:13",
+              "text": "Mais courageux 😅"
+            },
+            {
+              "id": "msg_j1_marie_opening_005",
+              "sender": "marie",
+              "time_label": "18:14",
+              "text": "Bonne réponse. Il manque juste le pain."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_j1_marie_walk_setup",
+      "pattern": "guided_reply_pacing",
+      "function": "Nommer le pain et la marche avant que Player demande si le couple est en crise.",
+      "messages": [
+        {
+          "id": "msg_j1_marie_opening_006",
+          "sender": "marie",
+          "time_label": "18:14",
+          "text": "Évidemment."
+        },
+        {
+          "id": "msg_j1_marie_opening_007",
+          "sender": "marie",
+          "time_label": "18:15",
+          "text": "Et petite marche après. Dix minutes."
+        },
+        {
+          "id": "msg_j1_marie_opening_008",
+          "sender": "marie",
+          "time_label": "18:15",
+          "text": "Pas une randonnée de couple en crise."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_j1_marie_crisis_guided",
+          "text": "On est en crise ?",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "next_messages": [
+            {
+              "id": "msg_j1_marie_opening_009",
+              "sender": "marie",
+              "time_label": "18:16",
+              "text": "Non. Justement."
+            },
+            {
+              "id": "msg_j1_marie_opening_010",
+              "sender": "marie",
+              "time_label": "18:16",
+              "text": "Je refuse qu'on attende d'être tristes pour sortir marcher."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_j1_marie_presence_choice",
+      "pattern": "three_posture_choice",
+      "function": "M1 — définir comment Player rejoint la vie commune avant le retour hors ligne.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "choice_j1_marie_present",
+          "text": "Ok. Je prends le pain et on marche. Je participe à la survie du dîner.",
+          "tone": "present",
+          "sets_flags": [
+            "j1_marie_present",
+            "j1_shared_evening_due"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_j1_marie_opening_011a",
+              "sender": "marie",
+              "time_label": "18:17",
+              "text": "Voilà 🙂"
+            },
+            {
+              "id": "msg_j1_marie_opening_012a",
+              "sender": "marie",
+              "time_label": "18:17",
+              "text": "C'est beau, un homme qui accepte sa mission."
+            }
+          ]
+        },
+        {
+          "id": "choice_j1_marie_playful_present",
+          "text": "Je viens. Je prends le pain, mais je râle un peu pour la forme.",
+          "tone": "playful_present",
+          "sets_flags": [
+            "j1_marie_playful_present",
+            "j1_shared_evening_due"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_j1_marie_opening_011b",
+              "sender": "marie",
+              "time_label": "18:17",
+              "text": "Accepté."
+            },
+            {
+              "id": "msg_j1_marie_opening_012b",
+              "sender": "marie",
+              "time_label": "18:17",
+              "text": "Râle en marchant, c'est cardio."
+            }
+          ]
+        },
+        {
+          "id": "choice_j1_marie_delayed_flat",
+          "text": "Désolé, j'avais un mail. Je prends le pain et je viens marcher.",
+          "tone": "delayed_flat",
+          "sets_flags": [
+            "j1_marie_delayed_flat",
+            "j1_shared_evening_due"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_j1_marie_opening_011c",
+              "sender": "marie",
+              "time_label": "18:17",
+              "text": "Ton mail peut acheter du pain ?"
+            },
+            {
+              "id": "msg_j1_marie_opening_012c",
+              "sender": "marie",
+              "time_label": "18:18",
+              "text": "Alors je préfère toi. Mais en version présente, si possible."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_j1_marie_laverriere_color",
+      "pattern": "guided_reply_pacing",
+      "function": "Faire exister La Verrière et le jeudi sans ouvrir une nouvelle route.",
+      "messages": [
+        {
+          "id": "msg_j1_marie_opening_013",
+          "sender": "marie",
+          "time_label": "18:19",
+          "text": "Sinon La Verrière a survécu à sa journée."
+        },
+        {
+          "id": "msg_j1_marie_opening_014",
+          "sender": "marie",
+          "time_label": "18:19",
+          "text": "Moi aussi, à peu près."
+        },
+        {
+          "id": "msg_j1_marie_opening_015",
+          "sender": "marie",
+          "time_label": "18:20",
+          "text": "Petit événement jeudi. Deux logos inversés sur l'affiche."
+        },
+        {
+          "id": "msg_j1_marie_opening_016",
+          "sender": "marie",
+          "time_label": "18:20",
+          "text": "Et un traiteur qui répond « normalement oui » à une question où la seule bonne réponse était « oui »."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_j1_marie_laverriere_guided",
+          "text": "Dangereux, le « normalement ».",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "next_messages": [
+            {
+              "id": "msg_j1_marie_opening_017",
+              "sender": "marie",
+              "time_label": "18:21",
+              "text": "Très."
+            },
+            {
+              "id": "msg_j1_marie_opening_018",
+              "sender": "marie",
+              "time_label": "18:21",
+              "text": "Élodie m'a dit que je souriais comme quelqu'un qui allait écrire un mail poli mais violent."
+            },
+            {
+              "id": "msg_j1_marie_opening_019",
+              "sender": "marie",
+              "time_label": "18:21",
+              "text": "Elle me lit trop bien. C'est agaçant, les gens attentifs."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_j1_marie_mathilde_seed",
+      "pattern": "guided_reply_pacing",
+      "function": "Garder Mathilde indirecte et cohérente avec l'urgence du mercredi.",
+      "messages": [
+        {
+          "id": "msg_j1_marie_opening_020",
+          "sender": "marie",
+          "time_label": "18:22",
+          "text": "Mathilde veut passer voir l'installation demain."
+        },
+        {
+          "id": "msg_j1_marie_opening_021",
+          "sender": "marie",
+          "time_label": "18:22",
+          "text": "Enfin elle dit « voir l'installation »."
+        },
+        {
+          "id": "msg_j1_marie_opening_022",
+          "sender": "marie",
+          "time_label": "18:22",
+          "text": "Je pense surtout qu'elle veut juger l'éclairage."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_j1_marie_mathilde_guided",
+          "text": "Ça lui ressemble.",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "next_messages": [
+            {
+              "id": "msg_j1_marie_opening_023",
+              "sender": "marie",
+              "time_label": "18:23",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_j1_marie_opening_024",
+              "sender": "marie",
+              "time_label": "18:23",
+              "text": "Elle a une relation très personnelle avec les lumières qui la trahissent."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "routes_nourished": [
+    "marie"
+  ],
+  "debug_notes": "V0.85 J1 Marie : quatre interactions guidées, un seul vrai nœud M1, aucun score numérique et Mathilde indirecte seulement."
+}

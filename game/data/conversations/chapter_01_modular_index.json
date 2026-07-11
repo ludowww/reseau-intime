@@ -6,37 +6,37 @@
   "display_label": "Mardi — Les choses qu'on remarque",
   "day_start_time": "18:12",
   "title": "Mardi — Les choses qu'on remarque",
-  "description": "J1 canonique : Marie et Sandra restent les seuls fils actifs. Mathilde demeure indirecte avant l'urgence du mercredi.",
-  "design_goal": "Préserver temporairement le J1 jouable existant tout en imposant une progression Mardi vers Mercredi. V0.85 remplacera les conversations legacy.",
+  "description": "Une soirée ordinaire : Marie demande une présence concrète, Sandra partage une ancienne trace, puis Player revient vers la vie commune.",
+  "design_goal": "Remplacer le J1 legacy par deux conversations concises, deux vrais nœuds à trois choix et deux conséquences hors ligne, sans score de route.",
   "default_order": [
-    "chapter_01_marie",
-    "chapter_01_sandra"
+    "chapter_01_marie_opening",
+    "chapter_01_sandra_trace"
   ],
   "conversation_files": [
-    "res://data/conversations/chapter_01_marie.json",
-    "res://data/conversations/chapter_01_sandra.json"
+    "res://data/conversations/chapter_01_marie_opening.json",
+    "res://data/conversations/chapter_01_sandra_trace.json"
   ],
   "moment_flow": [
     {
       "moment_label": "soir",
       "time_label": "18:12",
-      "transition_text": "Mardi soir — Marie attend le retour de Player.",
+      "transition_text": "Mardi soir — Marie demande un petit acte de présence.",
       "conversation_ids": [
-        "chapter_01_marie"
+        "chapter_01_marie_opening"
       ]
     },
     {
       "moment_label": "nuit",
       "time_label": "22:57",
-      "transition_text": "Mardi nuit — Sandra retrouve une ancienne trace.",
+      "transition_text": "Mardi nuit — Sandra retrouve une ancienne photographie.",
       "conversation_ids": [
-        "chapter_01_sandra"
+        "chapter_01_sandra_trace"
       ]
     }
   ],
   "timeline_flow": {
     "initial_state": "AVAILABLE",
-    "initial_phase_id": "tuesday_marie",
+    "initial_phase_id": "tuesday_marie_opening",
     "day_start_card": {
       "eyebrow": "MARDI — SOIR",
       "title": "Les choses qu'on remarque",
@@ -52,19 +52,62 @@
     "next_day": 2,
     "phases": [
       {
-        "id": "tuesday_marie",
+        "id": "tuesday_marie_opening",
         "moment_label": "soir",
         "time_label": "18:12",
         "required_conversation_ids": [
-          "chapter_01_marie"
+          "chapter_01_marie_opening"
         ]
       },
       {
-        "id": "tuesday_sandra",
+        "id": "tuesday_shared_evening",
+        "moment_label": "soir",
+        "time_label": "19:15",
+        "authored_beat_variants": [
+          {
+            "id": "j1_shared_evening_present",
+            "conditions": [
+              "j1_marie_present OR j1_marie_playful_present"
+            ],
+            "eyebrow": "MARDI — SOIR",
+            "title": "Player rentre avec le pain.",
+            "subtitle": "Ils dînent, marchent dix minutes. Le téléphone reste dans sa poche.",
+            "text": "Player rentre avec le pain. Ils dînent, puis marchent dix minutes. Marie râle une fois contre le traiteur, Player contre la météo. Le téléphone reste dans sa poche.",
+            "time_label": "19:15",
+            "duration": 2.9,
+            "min_time": 0.55,
+            "show_landing": false,
+            "sets_flags": [
+              "j1_shared_evening_completed",
+              "j1_marie_return_active"
+            ]
+          },
+          {
+            "id": "j1_shared_evening_delayed",
+            "conditions": [
+              "j1_marie_delayed_flat"
+            ],
+            "eyebrow": "MARDI — SOIR",
+            "title": "Player arrive plus tard, mais avec le pain.",
+            "subtitle": "Le retard est là. L'effort aussi. Ils dînent et marchent quand même.",
+            "text": "Player arrive plus tard que prévu, mais avec le pain. Marie ne transforme pas le retard en scène. Ils dînent et marchent quand même quelques minutes. Elle remarque l'effort sans prétendre que le retard n'existe pas.",
+            "time_label": "19:35",
+            "duration": 3.0,
+            "min_time": 0.55,
+            "show_landing": false,
+            "sets_flags": [
+              "j1_shared_evening_completed",
+              "j1_marie_return_delayed"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "tuesday_sandra_trace",
         "moment_label": "nuit",
         "time_label": "22:57",
         "required_conversation_ids": [
-          "chapter_01_sandra"
+          "chapter_01_sandra_trace"
         ],
         "transition_card": {
           "eyebrow": "MARDI — NUIT",
@@ -72,19 +115,51 @@
           "duration": 0.9,
           "min_time": 0.35
         }
+      },
+      {
+        "id": "tuesday_marie_final_return",
+        "moment_label": "nuit",
+        "time_label": "23:25",
+        "authored_beat_variants": [
+          {
+            "id": "j1_marie_final_return_present",
+            "conditions": [
+              "j1_marie_present OR j1_marie_playful_present"
+            ],
+            "eyebrow": "MARDI — NUIT",
+            "title": "Message à prouver.",
+            "subtitle": "Marie lui tend le couteau à fromage. Player range son téléphone.",
+            "text": "Player pose le téléphone. Dans la cuisine, Marie a laissé le pain, le fromage et deux assiettes. Marie le remercie pour la marche, puis lui tend le couteau. « Message à prouver. Coupe le fromage. » Player range son téléphone. Ils restent encore quelques minutes ensemble, sans écran.",
+            "time_label": "23:25",
+            "duration": 3.0,
+            "min_time": 0.65,
+            "show_landing": false,
+            "sets_flags": [
+              "j1_marie_final_return_present",
+              "j1_day_complete"
+            ]
+          },
+          {
+            "id": "j1_marie_final_return_delayed",
+            "conditions": [
+              "j1_marie_delayed_flat"
+            ],
+            "eyebrow": "MARDI — NUIT",
+            "title": "Fais un petit truc vrai.",
+            "subtitle": "Marie demande un acte réel, pas une meilleure promesse. Player pose son téléphone.",
+            "text": "Player pose le téléphone. Marie est encore dans la cuisine. Elle lui dit qu'il était un peu loin, sans transformer cela en scène : « Ne promets pas mieux. Fais un petit truc vrai. » Elle lui tend le couteau à fromage. Player le prend et laisse son téléphone sur la table.",
+            "time_label": "23:28",
+            "duration": 3.0,
+            "min_time": 0.65,
+            "show_landing": false,
+            "sets_flags": [
+              "j1_marie_final_return_delayed",
+              "j1_day_complete"
+            ]
+          }
+        ]
       }
     ]
-  },
-  "conversation_filters": {
-    "chapter_01_marie": {
-      "exclude_item_ids": [
-        "msg_marie_291",
-        "msg_marie_292"
-      ],
-      "exclude_content_ids": [
-        "j1_mathilde_bag_domestic_trace"
-      ]
-    }
   },
   "initial_visual_anchors": [
     "profile_marie_placeholder",
@@ -95,38 +170,41 @@
     "sandra",
     "mathilde_seed"
   ],
+  "route_stage_ceiling": "soft_trace_only",
   "conversation_availability": {
     "initial_conversation_ids": [
-      "chapter_01_marie"
+      "chapter_01_marie_opening"
     ],
     "locked_conversation_ids": [
-      "chapter_01_sandra"
+      "chapter_01_sandra_trace"
     ],
     "unlocks": {
-      "chapter_01_sandra": {
-        "after_conversation_completed": "chapter_01_marie",
+      "chapter_01_sandra_trace": {
+        "after_conversation_completed": "chapter_01_marie_opening",
         "time_label": "22:57",
         "pending": true,
         "notification": {
           "title": "Sandra",
-          "body": "Mon téléphone vient de me ressortir ça."
+          "body": "J'ai retrouvé une photo."
         }
       }
     }
   },
   "end_of_day_player_knowledge": [
     "Marie et Player restent ensemble dans une chaleur habituelle.",
-    "Sandra reprend contact par une trace douce.",
-    "Mathilde peut passer voir l'installation mercredi, mais elle ne séjourne pas encore au foyer.",
-    "Aucune route externe, aucun secret dur et aucun cadre adulte ne sont actifs."
+    "Player a réellement rejoint le dîner et la marche, avec une présence plus ou moins active.",
+    "Sandra a choisi de partager une ancienne photo floue puis de fermer doucement l'échange.",
+    "Mathilde reste indirecte et ne séjourne pas encore au foyer.",
+    "Aucune route, aucun secret dur et aucun cadre adulte ne sont actifs."
   ],
   "proof_content_files": [
     "res://data/visual_content/chapter_01_proofs.json"
   ],
   "debug_expected_outcomes": [
-    "Only Tuesday is initially visible.",
-    "Marie completion activates the Tuesday Sandra phase.",
-    "Sandra completion closes Tuesday and unlocks Wednesday through an interstitial.",
-    "The J1 dialogue remains temporary legacy content until V0.85."
+    "Tuesday contains two meaningful three-choice nodes only.",
+    "The dinner/walk and final Marie return are authored offline timeline phases.",
+    "Sandra remains one soft trace with no route score.",
+    "Tuesday completes only after the final Marie/shared-life beat.",
+    "Wednesday unlocks through the V0.84 day transition."
   ]
 }

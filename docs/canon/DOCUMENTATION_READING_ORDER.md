@@ -1,8 +1,8 @@
 # Documentation Reading Order — Canon Current
 
-> Canon entry point after the V0.84 day-and-moment runtime foundation.  
-> Runtime is playable through Thursday with chronological day/phase gating.  
-> J1 dialogue remains temporary legacy content until V0.85; Friday remains postponed.
+> Canon entry point after the V0.85 J1 runtime reconciliation.  
+> Runtime is playable through Thursday with authoritative day/phase order.  
+> Tuesday now uses current canon rather than filtered legacy dialogue; Friday remains postponed.
 
 ## 1. Core rules
 
@@ -12,8 +12,8 @@ Write story movement from V0.78.
 Write opening content from V0.79.
 Write communication realism from the diegetic-time canon.
 Write chronological access from the temporal-flow canon.
-Treat V0.84 as the current runtime access model.
-Use the V0.85 source pack before replacing active J1.
+Treat V0.84 as the current day/phase access model.
+Treat V0.85 as the current active J1 content.
 Use three choices by default.
 Legacy runtime is not automatic narrative canon.
 ```
@@ -31,7 +31,7 @@ Legacy runtime is not automatic narrative canon.
    - `docs/canon/ACT_I_OPENING_WINDOWS_SOURCE_PACK.md`
    - `docs/canon/ACT_I_OPENING_SCENE_CARDS.md`
    - `docs/canon/ACT_I_OPENING_TEMPORAL_DELIVERY_MAP.md`
-7. planned J1 replacement:
+7. current J1 replacement sources:
    - `docs/canon/J1_RUNTIME_RECONCILIATION_SOURCE_PACK.md`
    - `docs/canon/J1_RUNTIME_RECONCILIATION_SCENE_CARDS.md`
 8. runtime audit, plans, and current reports:
@@ -45,12 +45,13 @@ Legacy runtime is not automatic narrative canon.
    - `docs/runtime/V0_84_DAY_AND_MOMENT_FLOW_IMPLEMENTATION_PLAN.md`
    - `docs/V0_84_Day_And_Moment_Flow_Runtime_Report.md`
    - `docs/runtime/V0_85_J1_CANON_RUNTIME_RECONCILIATION_PLAN.md`
+   - `docs/V0_85_J1_Canon_Runtime_Reconciliation_Report.md`
 9. `docs/canon/characters/CHARACTER_CANON_INDEX.md`
 10. relevant principal full-canon file
 11. `docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md` when adult tension, images, voyeurism, cheating, sharing, roleplay, NTR/cuckold, group content, or dark consequences are involved
 12. relevant character deprecation map
 13. `docs/canon/SUPPORTING_CHARACTER_CANON_POLICY.md` when a supporting character appears or is affected
-14. historical J1 sources when auditing line origin:
+14. historical J1 sources only when auditing line origin:
     - `docs/canon/J1_CANON_SOURCE_PACK.md`
     - `docs/V0_69_J1_Canon_Text_Review_And_Final_Line_Source.md`
 15. voice/intensity bibles as support only
@@ -68,14 +69,12 @@ full character canon
 = narrative truth
 
 V0.83 temporal-flow canon
-= chronological-access truth
-
-V0.84 runtime state, phase metadata, transition overlay, and archive adapters
-= current playable access implementation
++ V0.84 timeline state, interstitials, phase gates, and archives
+= chronological-access truth and implementation
 
 V0.83 J1 reconciliation source pack / cards
-+ V0.85 plan
-= next Tuesday-content replacement
++ V0.85 active Tuesday files and authored offline phases
+= current J1 truth and implementation
 
 legacy Chapter 1–9 files
 = inactive technical/history material unless a current index explicitly references them
@@ -83,7 +82,7 @@ legacy Chapter 1–9 files
 
 ## 4. Current playable runtime
 
-The active loader contains:
+Active indexes:
 
 ```text
 chapter_01_modular_index.json
@@ -91,7 +90,7 @@ chapter_02_modular_index.json
 chapter_03_modular_index.json
 ```
 
-But visibility is chronological:
+Chronological visibility:
 
 ```text
 launch: Tuesday only
@@ -100,127 +99,139 @@ Wednesday complete -> Thursday unlock/select
 Thursday complete -> no Friday yet
 ```
 
-The old free day menu is no longer the intended V0.84 behavior.
+## 5. Active Tuesday — reconciled J1
 
-## 5. Timeline state
+```text
+18:12 Marie remote opening
+-> M1: present / playful-present / delayed-flat
 
-Current day lifecycle:
+19:15 or 19:35
+-> dinner and walk offline
+
+22:57 Sandra soft trace
+-> S1: safe warmth / precise observation / cautious
+
+23:25 or 23:28
+-> final Marie/shared-life offline return
+
+Tuesday complete
+-> Wednesday transition
+```
+
+Active files:
+
+```text
+game/data/conversations/chapter_01_marie_opening.json
+game/data/conversations/chapter_01_sandra_trace.json
+```
+
+The active Tuesday index no longer references or filters the large legacy Marie/Sandra files.
+
+J1 guarantees:
+
+- bread is requested before it is obtained;
+- all bubble timestamps remain Tuesday and monotonic;
+- Mathilde is indirect only;
+- Sandra shares one imperfect image and closes the exchange herself;
+- no numeric route effects;
+- the day ends on Marie/shared life, not Sandra.
+
+## 6. Timeline and offline phases
+
+Day lifecycle:
 
 ```text
 LOCKED -> AVAILABLE -> ACTIVE -> COMPLETE -> ARCHIVED
 ```
 
-Current phase lifecycle:
+Phase lifecycle:
 
 ```text
 LOCKED -> CURRENT -> COMPLETE / SKIPPED / EXPIRED
 ```
 
-Implementation sources:
+Current runtime sources:
 
 ```text
 game/scripts/core/TimelineState.gd
 game/scripts/ui/PhonePrototypeV084.gd
+game/scripts/ui/PhonePrototypeV085.gd
 game/scripts/ui/TimelineTransitionView.gd
 game/scripts/ui/ConversationViewV084.gd
 ```
 
-Core rule:
+V0.85 adds authored, conversation-free phases for:
+
+- the dinner/walk;
+- the final Marie return.
+
+These phases are selected by flags, displayed as temporal cards, recorded once in the completed-day log, and remain read-only in archives.
+
+## 7. Wednesday and Thursday status
+
+Wednesday remains:
 
 ```text
-Time labels describe chronology.
-Timeline state controls access.
+12:10 Marie / make room
+-> 18:18 arrival trace
+-> 18:22 Mathilde arrival + offline settling
+-> Wednesday complete
 ```
 
-## 6. Day and moment transitions
-
-Day completion shows a blocking, readable interstitial before the next day unlocks.
-
-Example:
-
-```text
-MARDI — FIN DE JOURNÉE
-
-MERCREDI — MIDI
-Faire de la place · 12:10
-```
-
-Large intra-day jumps show shorter cards:
-
-```text
-JEUDI — DÉBUT D'APRÈS-MIDI
-13:50
-```
-
-The overlay may be skipped only after a short minimum display time and leaves a neutral landing view for the new moment.
-
-## 7. Thursday order
-
-Current chronological Thursday:
+Thursday remains:
 
 ```text
 09:10 Raphaëlle required
 -> 13:50 Sandra optional
--> explicit advance
--> Sandra completed or expired
+-> complete or expire Sandra
 -> 16:05 Marie required
 -> exactly one O5 branch
 -> 22:10 Marie return required
 -> Thursday complete
 ```
 
-If Player advances without opening Sandra:
+V0.85 does not change their dialogue or route meaning.
 
-```text
-chapter_03_sandra_continuity = expired
-thursday_sandra_echo_missed = true
-```
+## 8. Archive behavior
 
-Sandra cannot be answered after the story reaches 16:05.
-
-## 8. Read-only archives
-
-Completed days remain selectable as history.
+Completed days remain selectable as read-only history.
 
 Archive access:
 
 - shows no pending badge or notification;
 - permits no new choice or effect;
 - does not move narrative time;
-- does not reactivate expired scenes;
-- filters persistent-thread history by source episode/day so Tuesday does not reveal later Marie/Sandra content.
+- does not reactivate expired content;
+- filters persistent-thread history by source episode/day;
+- now also lists completed authored offline moments once under `Moments hors ligne`.
 
-## 9. Temporary J1 status
-
-V0.84 deliberately preserves the filtered legacy Tuesday content.
-
-This is temporary technical continuity only.
-
-V0.85 will replace active J1 with:
+## 9. Current route and intensity ceiling
 
 ```text
-18:12 Marie remote opening + M1
-19:15 dinner/walk offline beat
-22:57 Sandra soft trace + S1
-23:25 final Marie/shared-life offline beat
-Tuesday complete -> Wednesday
-```
-
-No Friday work starts before V0.85 is validated.
-
-## 10. Current route/intensity ceiling
-
-```text
-Mathilde = R1 Ordinary Access
-Raphaëlle = R1 Ordinary Work Access
-Sandra = soft continuity or expired Thursday echo
 Marie/Player = HABITUAL_WARMTH
+relationship frame = ASSUMED_EXCLUSIVE
+Sandra J1 = soft trace seed only
+Mathilde = R1 Ordinary Access after Wednesday
+Raphaëlle = R1 Ordinary Work Access after Thursday
+Pauline = inactive
+Nico = inactive
 hard secrets = none
 adult frames = none
 Friday = not implemented
 ```
 
-V0.84 adds no story state beyond temporal/expiry flags.
+## 10. Historical J1 status
+
+The following remain on disk but are inactive:
+
+```text
+game/data/conversations/chapter_01_marie.json
+game/data/conversations/chapter_01_sandra.json
+```
+
+Their former issues—weekday contradiction, 24:xx timestamps, deep Sandra escalation, old scores, excessive guided clicking, and ending on Sandra—are not current behavior.
+
+Do not restore them through filters.
 
 ## 11. Implementation sequence
 
@@ -240,12 +251,10 @@ If a runtime constraint changes story meaning:
 4. obtain Product Owner validation;
 5. resume implementation.
 
-Do not bypass phase order merely because a legacy unlock rule is already true.
-
 ## 13. Final rule
 
 ```text
-V0.84 controls when the existing story may happen.
-V0.85 will correct what Tuesday actually says.
-Friday waits until both are trustworthy.
+V0.84 controls when the story may happen.
+V0.85 makes Tuesday truthful.
+Friday waits until this reconciled opening is validated in runtime.
 ```

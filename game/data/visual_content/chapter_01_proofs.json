@@ -1,7 +1,7 @@
 {
   "id": "chapter_01_proof_placeholders",
   "version": 1,
-  "notes": "Visuels J1 soft pour la routine de couple et la reprise prudente de Sandra : cuisine, traces domestiques de Mathilde, et souvenir de déjeuner. Aucun contenu adulte explicite.",
+  "notes": "V0.85 : seul j1_sandra_lunch_memory_soft est référencé par le J1 actif. Les visuels Marie cuisine et Mathilde bagages restent des métadonnées legacy non référencées pour rollback/historique.",
   "items": [
     {
       "id": "j1_marie_kitchen_soft",
@@ -10,14 +10,11 @@
       "type": "photo",
       "source_app": "messages",
       "asset_path": "res://assets/placeholders/j1_marie_kitchen_soft.png",
-      "context": "Photo de Marie dans la cuisine : biscuits, tasse et lumière douce. Elle est active, gourmande et naturelle, sans pose explicite.",
+      "context": "Visuel legacy non référencé par le J1 actif V0.85.",
       "tags": [
         "marie",
         "kitchen",
-        "biscuits",
-        "tasse",
-        "gourmandise",
-        "soft",
+        "legacy",
         "day1"
       ],
       "is_proof": false,
@@ -36,13 +33,11 @@
       "type": "photo",
       "source_app": "messages",
       "asset_path": "res://assets/placeholders/j1_mathilde_bag_domestic_trace.png",
-      "context": "Trace domestique de Mathilde : sacs dans l’entrée, sac de sport et raquette posés là. Présence indirecte seulement.",
+      "context": "Visuel legacy non référencé : ancien raccord où Mathilde semblait déjà installée avant l'urgence du mercredi.",
       "tags": [
         "mathilde",
-        "bags",
-        "sport_bag",
-        "raquette",
-        "domestic_trace",
+        "legacy",
+        "deprecated_handoff",
         "day1"
       ],
       "is_proof": false,
@@ -58,26 +53,26 @@
     {
       "id": "j1_sandra_lunch_memory_soft",
       "character": "sandra",
-      "tier": 1,
+      "tier": 0,
       "type": "photo",
       "source_app": "messages",
       "asset_path": "res://assets/placeholders/j1_sandra_lunch_memory_soft.png",
-      "context": "Photo souvenir du déjeuner : café mauvais, marche après déjeuner, lac et nature. Souvenir doux, pudique et ouvert.",
+      "context": "Ancienne photo imparfaite d'un déjeuner : deux verres, un coin de table et Sandra floue sur le bord. Sandra choisit de l'envoyer uniquement à Player ; aucune fonction adulte.",
       "tags": [
         "sandra",
         "lunch",
-        "coffee",
-        "lake",
-        "nature",
-        "memory",
-        "soft",
+        "table",
+        "two_glasses",
+        "blurred_edge",
+        "ordinary",
+        "private_trace",
         "day1"
       ],
       "is_proof": false,
-      "risk_level": 1,
+      "risk_level": 0,
       "can_delete": true,
       "can_capture": true,
-      "can_set_as_wallpaper": true,
+      "can_set_as_wallpaper": false,
       "can_be_discovered_by": [
         "sandra"
       ]
