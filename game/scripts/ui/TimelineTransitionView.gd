@@ -65,13 +65,13 @@ func _play_cards(cards: Array) -> void:
 	transition_finished.emit()
 
 func _wait_for_card(card: Dictionary, token: int) -> void:
-	var minimum := max(float(card.get("min_time", 0.35)), 0.0)
-	var duration := max(float(card.get("duration", 1.0)), minimum)
-	var elapsed := 0.0
+	var minimum: float = maxf(float(card.get("min_time", 0.35)), 0.0)
+	var duration: float = maxf(float(card.get("duration", 1.0)), minimum)
+	var elapsed: float = 0.0
 	can_skip = false
 	skip_requested = false
 	while elapsed < duration and token == sequence_token:
-		var step := min(0.05, duration - elapsed)
+		var step: float = minf(0.05, duration - elapsed)
 		await get_tree().create_timer(step).timeout
 		elapsed += step
 		if elapsed >= minimum:
