@@ -159,4 +159,5 @@ func is_conversation_expired(day_value, conversation_id: String) -> bool:
 	return bool(_bucket(expired_conversation_ids_by_day, day_value).get(conversation_id, false))
 
 func _bucket(source: Dictionary, day_value) -> Dictionary:
-	return source.get(day_key(day_value), {})
+	var value = source.get(day_key(day_value), {})
+	return value if typeof(value) == TYPE_DICTIONARY else {}
