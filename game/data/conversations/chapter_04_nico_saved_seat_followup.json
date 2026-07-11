@@ -1,0 +1,258 @@
+{
+  "id": "chapter_04_nico_saved_seat_followup",
+  "chapter": 4,
+  "day": 4,
+  "title": "Vendredi après-midi — La chaise avait de meilleurs horaires",
+  "app": "messages",
+  "window_id": "O8_NICO",
+  "calendar_label": "Vendredi",
+  "time_band": "AFTERNOON",
+  "communication_mode": "REMOTE_ASYNC",
+  "foreground_role": "ordinary_access",
+  "physical_context": "Nico est réveillé avant son service tardif à L'Annexe ou prend un déjeuner décalé. Player est ailleurs. Le message est un suivi d'amitié après l'événement.",
+  "thread": {
+    "id": "thread_nico_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "nico"
+    ],
+    "display_name": "Nico",
+    "profile_content_id": "profile_nico_placeholder"
+  },
+  "segments": [
+    {
+      "id": "segment_friday_nico_topology_opening",
+      "pattern": "conditional_messages",
+      "function": "Faire varier la première plaisanterie selon la présence réelle de Player jeudi.",
+      "messages": [
+        {
+          "id": "msg_friday_nico_joined_001",
+          "sender": "nico",
+          "time_label": "14:05",
+          "text": "T'as survécu aux rallonges.",
+          "conditions": [
+            "opening_topology_join_marie"
+          ]
+        },
+        {
+          "id": "msg_friday_nico_joined_002",
+          "sender": "nico",
+          "time_label": "14:05",
+          "text": "Je suis presque déçu.",
+          "conditions": [
+            "opening_topology_join_marie"
+          ]
+        },
+        {
+          "id": "msg_friday_nico_home_001",
+          "sender": "nico",
+          "time_label": "14:05",
+          "text": "Je t'avais gardé une chaise.",
+          "conditions": [
+            "opening_topology_stay_home"
+          ]
+        },
+        {
+          "id": "msg_friday_nico_home_002",
+          "sender": "nico",
+          "time_label": "14:05",
+          "text": "Elle a fini avec le manteau de Pauline dessus.",
+          "conditions": [
+            "opening_topology_stay_home"
+          ]
+        },
+        {
+          "id": "msg_friday_nico_late_001",
+          "sender": "nico",
+          "time_label": "14:05",
+          "text": "Arrivée de fin de générique.",
+          "conditions": [
+            "work_promise_kept OR work_promise_amended"
+          ]
+        },
+        {
+          "id": "msg_friday_nico_late_002",
+          "sender": "nico",
+          "time_label": "14:05",
+          "text": "Très conceptuel.",
+          "conditions": [
+            "work_promise_kept OR work_promise_amended"
+          ]
+        },
+        {
+          "id": "msg_friday_nico_missed_001",
+          "sender": "nico",
+          "time_label": "14:05",
+          "text": "La chaise a demandé de tes nouvelles.",
+          "conditions": [
+            "work_promise_missed"
+          ]
+        },
+        {
+          "id": "msg_friday_nico_missed_002",
+          "sender": "nico",
+          "time_label": "14:05",
+          "text": "J'ai menti pour la protéger.",
+          "conditions": [
+            "work_promise_missed"
+          ]
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_friday_nico_honest_joined",
+          "text": "J'ai fait un effort historique.",
+          "tone": "honest",
+          "conditions": [
+            "opening_topology_join_marie"
+          ],
+          "sets_flags": [
+            "nico_friendship_honest",
+            "nico_r1_established",
+            "nico_saved_seat_resolved"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_friday_nico_honest_joined_001",
+              "sender": "nico",
+              "time_label": "14:06",
+              "text": "J'ai vu."
+            },
+            {
+              "id": "msg_friday_nico_honest_joined_002",
+              "sender": "nico",
+              "time_label": "14:06",
+              "text": "Ne t'inquiète pas, je ne vais pas te féliciter trop longtemps."
+            }
+          ]
+        },
+        {
+          "id": "choice_friday_nico_honest_other",
+          "text": "J'aurais dû venir plus tôt.",
+          "tone": "honest",
+          "conditions": [
+            "opening_topology_stay_home OR opening_topology_work_then_join"
+          ],
+          "sets_flags": [
+            "nico_friendship_honest",
+            "nico_r1_established",
+            "nico_saved_seat_resolved",
+            "nico_missed_opportunity_acknowledged"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_friday_nico_honest_other_001",
+              "sender": "nico",
+              "time_label": "14:06",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_friday_nico_honest_other_002",
+              "sender": "nico",
+              "time_label": "14:06",
+              "text": "La prochaine fois, viens avant que les manteaux prennent toutes les places."
+            }
+          ]
+        },
+        {
+          "id": "choice_friday_nico_playful",
+          "text": "La chaise avait de meilleurs horaires que moi.",
+          "tone": "playful",
+          "sets_flags": [
+            "nico_friendship_playful",
+            "nico_r1_established",
+            "nico_saved_seat_resolved"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_friday_nico_playful_001",
+              "sender": "nico",
+              "time_label": "14:06",
+              "text": "Elle était ponctuelle, elle."
+            },
+            {
+              "id": "msg_friday_nico_playful_002",
+              "sender": "nico",
+              "time_label": "14:07",
+              "text": "Et beaucoup moins de mauvaise foi."
+            }
+          ]
+        },
+        {
+          "id": "choice_friday_nico_ask_marie",
+          "text": "Marie avait l'air bien ?",
+          "tone": "social_mirror",
+          "sets_flags": [
+            "nico_social_mirror_seed",
+            "nico_r1_established",
+            "nico_saved_seat_resolved",
+            "player_attention_returns_to_marie"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_friday_nico_ask_marie_001",
+              "sender": "nico",
+              "time_label": "14:06",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_friday_nico_ask_marie_002",
+              "sender": "nico",
+              "time_label": "14:06",
+              "text": "Dans son élément."
+            },
+            {
+              "id": "msg_friday_nico_ask_marie_003",
+              "sender": "nico",
+              "time_label": "14:07",
+              "text": "Ça lui va bien quand elle n'attend pas que la soirée commence."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_friday_nico_mathilde_knowledge",
+      "pattern": "guided_reply_pacing",
+      "function": "Établir que Nico connaît le séjour temporaire sans activer envie, regard ou demande d'image.",
+      "messages": [
+        {
+          "id": "msg_friday_nico_mathilde_001",
+          "sender": "nico",
+          "time_label": "14:08",
+          "text": "Et Mathilde s'installe vraiment chez vous ?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_friday_nico_mathilde_guided",
+          "text": "Pour dix jours environ.",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "sets_flags": [
+            "nico_knows_mathilde_stay"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_friday_nico_mathilde_002",
+              "sender": "nico",
+              "time_label": "14:08",
+              "text": "Courage pour les prises électriques."
+            },
+            {
+              "id": "msg_friday_nico_mathilde_003",
+              "sender": "nico",
+              "time_label": "14:09",
+              "text": "Et pour les chaussures, visiblement."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "routes_nourished": [
+    "nico"
+  ],
+  "debug_notes": "V0.86 O8. Nico atteint R1 comme ami et miroir social. La phrase d'alibi sur la chaise reste une plaisanterie ; aucune envie domestique, demande de photo, rivalité ou trame NTR n'est activée."
+}
