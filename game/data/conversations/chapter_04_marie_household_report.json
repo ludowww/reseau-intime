@@ -1,0 +1,53 @@
+{
+  "id": "chapter_04_marie_household_report",
+  "chapter": 4,
+  "day": 4,
+  "title": "Vendredi fin de journée — Rapport du foyer",
+  "app": "messages",
+  "window_id": "O8_HOUSEHOLD_MARIE",
+  "calendar_label": "Vendredi",
+  "time_band": "LATE_AFTERNOON",
+  "communication_mode": "REMOTE_ASYNC",
+  "foreground_role": "household_echo",
+  "physical_context": "Marie est encore à La Verrière ou en trajet. Player est ailleurs et Mathilde est à l'appartement. Le rapport passe naturellement par le fil Marie.",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "marie"
+    ],
+    "display_name": "Marie",
+    "profile_content_id": "profile_marie_placeholder"
+  },
+  "segments": [
+    {
+      "id": "segment_friday_marie_household_report",
+      "pattern": "automatic_echo",
+      "function": "Confirmer le nouveau rythme du foyer sans ouvrir une nouvelle décision.",
+      "messages": [
+        {
+          "id": "msg_friday_marie_household_001",
+          "sender": "marie",
+          "time_label": "18:05",
+          "text": "Rapport du foyer."
+        },
+        {
+          "id": "msg_friday_marie_household_002",
+          "sender": "marie",
+          "time_label": "18:05",
+          "text": "Mathilde a pris la salle de bain vingt-sept minutes."
+        },
+        {
+          "id": "msg_friday_marie_household_003",
+          "sender": "marie",
+          "time_label": "18:06",
+          "text": "Nous sommes officiellement trois adultes très organisés."
+        }
+      ],
+      "choices": []
+    }
+  ],
+  "routes_nourished": [],
+  "debug_notes": "V0.86 household echo. Marie reste le centre pratique du foyer ; aucun choix, score ou état de route n'est ajouté."
+}
