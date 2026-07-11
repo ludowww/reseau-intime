@@ -1,4 +1,5 @@
 import json
+import re
 import unittest
 from pathlib import Path
 
@@ -256,7 +257,6 @@ class V082ThursdayStaticTests(unittest.TestCase):
             "pauline",
             "nico",
             "vendredi",
-            "ntr",
             "cuckold",
             "crop privé",
             "photo pact",
@@ -265,6 +265,7 @@ class V082ThursdayStaticTests(unittest.TestCase):
             "explicit",
         ]:
             self.assertNotIn(forbidden, combined)
+        self.assertIsNone(re.search(r"\bntr\b", combined), "standalone NTR token found in active Thursday content")
 
 
 if __name__ == "__main__":
