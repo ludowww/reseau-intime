@@ -1,147 +1,170 @@
-# Matrice de continuité personnages — V0.81
+# Matrice de continuité personnages — V0.82
 
-> Résumé opérationnel après la première tranche runtime modulaire.  
-> Les fiches complètes, V0.78, V0.79 et le rapport V0.81 restent prioritaires.
+> Résumé opérationnel après la tranche runtime du jeudi.  
+> Les fiches complètes, V0.78, V0.79 et le rapport V0.82 restent prioritaires.
 
 ## 1. Règle de lecture
 
 ```text
-Mardi–mercredi = runtime V0.81 actif
-Jeudi–vendredi = canon documentaire V0.79, runtime non intégré
+Mardi–jeudi = runtime modulaire actif
+Vendredi = canon documentaire V0.79, runtime non intégré
 Actes ultérieurs = architecture V0.78
 anciens Chapter 2–9 = legacy inactif
 ```
 
-## 2. État jouable actuel
+## 2. Matrice actuelle
 
-| Personnage | Mardi | Mercredi V0.81 | État après mercredi | Prochaine étape permise | Interdit actuellement |
+| Personnage | État avant jeudi | Présence V0.82 | État après jeudi | Prochaine progression | Interdit actuellement |
 |---|---|---|---|---|---|
-| **Marie** | Fil actif J1 ; couple en `HABITUAL_WARMTH`. | O1 urgence Mathilde puis O2 trace d’arrivée dans le même fil persistant. | Qualité de participation de Player mémorisée ; aucune crise ; reste le pont famille/couple. | O4 invitation et retour O6 dans V0.82. | Être remplacée par la route Mathilde ; saut direct vers crise ou pardon. |
-| **Sandra** | Fil actif et trace douce J1. | Aucun nouvel épisode jouable. | Continuité inchangée. | Écho après poste du matin dans V0.82. | Nouvelle photo, pression, confession, route accélérée. |
-| **Player** | Répond par choix dans les fils Marie/Sandra. | M0 puis MT0 ; fait de la place et accueille Mathilde. | Historique observable par flags ; aucun secret ni route choisie. | Choix topologique M1 dans V0.82. | Scores abstraits supplémentaires, menu de personnages, annulation rétroactive du choix. |
-| **Mathilde** | Indirecte seulement ; faux bagage déjà installé filtré. | Fil ouvert à 18:22 ; accueil pratique, taquin ou distant ; passage hors ligne au retour de Player. | `mathilde_stay_active` ; R1 Ordinary Access ; aucune intention sexuelle. | Scène foyer O5B possible dans V0.82 selon topologie. | Selfie canapé, séduction, image adulte, consentement inféré du vêtement. |
-| **Raphaëlle** | Absente du runtime actif. | Absente. | Aucun accès post-J1 jouable. | O3 travail puis O5C possible dans V0.82. | Compte créatif, refuge, photo personnelle, route active avant travail ordinaire. |
-| **Pauline** | Absente du runtime actif. | Absente. | Aucun accès post-J1 jouable. | O7 photo publique dans V0.83. | Crop privé, preuve réciproque, secret, Bastien effacé. |
-| **Nico** | Absent du runtime actif. | Absent. | Aucun accès post-J1 jouable. | O8 place gardée dans V0.83. | Voyeurisme, demande de photo, alibi, rivalité ou NTR trop tôt. |
+| **Marie** | Couple en `HABITUAL_WARMTH`, historique M0/MT0 connu. | O4 proposition, O5A possible, O6 obligatoire dans toutes les branches. | Sait si Player a rejoint, aidé ailleurs, annoncé un retard ou manqué sa promesse. Reconnexion/dérive seulement candidates. | Vendredi et nouveau cycle Acte I après V0.83. | Être contournée par la branche ; crise automatique ; route externe remplaçant O6. |
+| **Sandra** | Trace douce J1, aucun mercredi. | Écho optionnel après poste du matin. | Continuité vivante, sans nouvelle photo ni promesse. | Autre fenêtre future seulement après respiration. | Pression, confession, route R2 ou second visuel immédiat. |
+| **Player** | A fait de la place et accueilli Mathilde. | R0 Raphaëlle, M1, un seul O5, conséquence O6. | Historique topologique et qualité de présence mémorisés par flags. | Vendredi O7/O8 puis nouveaux cycles. | Plusieurs O5 à la fois, nouveau choix annulant O6, scores abstraits supplémentaires. |
+| **Mathilde** | Séjour actif, R1 domestique, aucune intention sexuelle. | O5B uniquement si Player reste au foyer. | Aide pratique / complicité ordinaire / distance. R1 maintenu. | Respiration foyer vendredi ; tension R2 seulement dans un pack ultérieur. | Récompense sexuelle du choix de rester, image corporelle, consentement inféré du vêtement. |
+| **Raphaëlle** | Aucun accès post-J1 jouable. | O3 travail obligatoire ; O5C seulement si Player choisit le travail. | R1 travail. Peut avoir observé une décision professionnelle, jamais reçu l’intimité du couple. | Nouvelle présence ordinaire future après V0.83. | Refuge, compte créatif, photo privée, désir nommé, responsabilité de la promesse de Player. |
+| **Pauline** | Absente du runtime post-J1. | Absente. | Aucun accès jouable. | O7 relais photo publique dans V0.83. | Crop privé, preuve réciproque, secret. |
+| **Nico** | Absent du runtime post-J1. | Absent. | Aucun accès jouable. | O8 place gardée dans V0.83. | Voyeurisme, demande de photo, alibi, rivalité ou NTR. |
 
-## 3. Fils et épisodes
-
-### Marie
+## 3. Fils persistants
 
 ```text
-thread_marie_private
+Marie      = thread_marie_private
+Sandra     = thread_sandra_private
+Mathilde   = thread_mathilde_private
+Raphaëlle  = thread_raphaelle_private
 ```
 
-Contient actuellement :
+V0.82 fusionne les nouveaux segments avec l’historique déjà rendu au lieu de remplacer le fil par le seul épisode du jeudi.
 
-- J1 Mardi ;
-- mercredi O1 ;
-- mercredi O2 trace.
-
-Les épisodes verrouillés ne doivent pas exposer leur heure avant déblocage.
-
-### Mathilde
+Les clés de fusion utilisent :
 
 ```text
-thread_mathilde_private
+source conversation ID + segment ID
 ```
 
-S’ouvre seulement après la trace d’arrivée de Marie.
+Cela évite les doublons lors des réouvertures.
 
-### Sandra
+## 4. Topologie et connaissances
 
-Son fil J1 reste inchangé ; aucun mercredi artificiel n’est ajouté.
+### Rejoindre Marie
 
-## 4. Connaissances après mercredi
+Marie sait :
 
-### Marie
+- que Player a choisi de venir ;
+- s’il a pris l’initiative, aidé en plaisantant ou déplacé son absence dans la salle.
 
-Sait :
+Mathilde sait seulement que Marie est à l’événement.
 
-- l’urgence de Mathilde ;
-- le niveau de participation de Player ;
-- que Mathilde est arrivée ;
-- que la photo d’arrivée a été envoyée à Player.
+### Rester au foyer
 
-### Mathilde
+Mathilde sait :
 
-Sait :
+- que Player est resté ;
+- s’il a aidé ou gardé ses distances.
 
-- que Marie et Player l’hébergent ;
-- que Marie a pris/envoyé la photo pratique ;
-- la qualité de l’accueil de Player.
+Marie sait au retour ce que Player lui dit dans O6.
 
-Ne sait pas, parce que cela n’existe pas encore :
+Aucun regard sexuel n’est reconnu.
 
-- route externe ;
-- photo transmise ;
-- intention sexuelle ;
-- attraction active de Nico.
+### Finir le travail
 
-### Player
+Raphaëlle sait :
 
-Sait :
+- que le dossier doit être décidé ;
+- éventuellement que Player doit rejoindre Marie, parce qu’il le dit.
 
-- la cause du séjour ;
-- la durée approximative ;
-- l’état pratique de la chambre ;
-- ce qu’il a choisi de faire.
+Elle ne sait pas les détails du couple.
 
-## 5. Traces actuelles
+Marie sait si la promesse a été tenue, modifiée honnêtement ou manquée.
 
-| Trace | Public | Fonction | Risque |
-|---|---|---|---|
-| `j1_marie_kitchen_soft` | Player | chaleur domestique J1 | faible |
-| `j1_sandra_lunch_memory_soft` | Player | trace Sandra J1 | faible |
-| `mathilde_arrival_room_01` | Player, avec connaissance Marie/Mathilde | documenter l’installation | 0 / non-preuve |
+## 5. Flags actuels
 
-Le visuel legacy `j1_mathilde_bag_domestic_trace` reste dans les fichiers historiques mais est exclu du contenu actif Mardi.
-
-## 6. Temps et communication
+### Topologie
 
 ```text
-Mardi : 18:12+
-Mercredi : 12:10 -> 18:18 -> 18:22 -> retour hors ligne
+opening_topology_join_marie
+opening_topology_stay_home
+opening_topology_work_then_join
 ```
 
-- pas de conversation longue entre personnes co-présentes ;
-- l’arrivée est messagée pendant l’absence de Player ;
-- l’installation réelle passe en `offline_beat` ;
-- l’heure narrative ne recule pas ;
-- le beat hors ligne ne se duplique pas à la réouverture.
+Une seule valeur est possible par parcours normal.
 
-## 7. État et flags
+### Qualité de branche
 
 ```text
-opening_make_room_proactive / playful / passive
-mathilde_arrival_practical / playful / distant
-mathilde_stay_active
-opening_wednesday_complete
+marie_event_initiative
+marie_event_playful_help
+marie_event_distracted
+
+mathilde_home_help
+mathilde_home_playful_help
+mathilde_home_distance
+
+work_promise_kept
+work_promise_amended
+work_promise_missed
 ```
 
-Aucun :
-
-- score d’affection supplémentaire ;
-- désir ;
-- jalousie ;
-- secret ;
-- cadre adulte ;
-- changement de couple.
-
-## 8. Prochaine matrice
-
-V0.82 devra ajouter :
-
-- Raphaëlle R1 travail ;
-- écho Sandra ;
-- topologie M1 ;
-- une seule branche O5 ;
-- retour Marie O6 obligatoire ;
-- état de promesse tenue, modifiée ou manquée.
-
-## 9. Final
+### Tendances couple
 
 ```text
-Le runtime actuel s'arrête après l'installation de Mathilde mercredi soir.
-Tout ce qui concerne jeudi et vendredi reste documenté mais non jouable.
+couple_reconnection_candidate
+couple_presence_strained
+household_participation_positive
+parallel_drift_candidate
+```
+
+Ce sont des indices historiques, pas un changement automatique de mode.
+
+## 6. Traces
+
+| Trace | Origine | Public | Fonction | Risque |
+|---|---|---|---|---|
+| `mathilde_arrival_room_01` | Marie mercredi | Player, connaissance Marie/Mathilde | arrivée au foyer | 0 |
+| `marie_laverriere_setup_01` | Élodie / événement jeudi | Marie/Player, contexte événement | Marie active dans son monde | 0 |
+
+Aucune image adulte ou transmission non autorisée.
+
+## 7. Communication
+
+- Raphaëlle : work chat à distance ;
+- Sandra : message après poste ;
+- Marie O4 : échange à distance ;
+- Marie O5A : logistique courte dans une salle bruyante ;
+- Mathilde O5B : ping entre pièces puis hors ligne ;
+- Raphaëlle O5C : work chat ;
+- Marie O6 : après-coup à distance.
+
+## 8. État de couple
+
+```text
+mode = HABITUAL_WARMTH
+frame = ASSUMED_EXCLUSIVE
+truth = no consequential hidden secret
+```
+
+V0.82 peut renforcer :
+
+```text
+ACTIVE_RECONNECTION candidate
+ou
+PARALLEL_DRIFT candidate
+```
+
+mais ne modifie pas encore officiellement le mode.
+
+## 9. Prochaine matrice
+
+V0.83 devra ajouter :
+
+- Pauline R1 public/social ;
+- Nico R1 friendship/social ;
+- public group-photo trace ;
+- household breather ;
+- état final complet de l’ouverture V0.79.
+
+## 10. Final
+
+```text
+Le runtime actuel s'arrête jeudi nuit après la conséquence Marie.
+Vendredi reste documenté mais non jouable.
 ```
