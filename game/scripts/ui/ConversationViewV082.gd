@@ -69,8 +69,12 @@ func _show_choices_for_segment(data: Dictionary, show_empty_hint := true, persis
 func _entry_conditions_are_met(entry: Dictionary) -> bool:
 	if not _conditions_are_met(entry.get("conditions", [])):
 		return false
-	var excluded = entry.get("unless_conditions", [])
-	var exclusions: Array = excluded if typeof(excluded) == TYPE_ARRAY else [excluded]
+	var exclusions: Array = []
+	var raw_exclusions = entry.get("unless_conditions", [])
+	if typeof(raw_exclusions) == TYPE_ARRAY:
+		exclusions = raw_exclusions
+	else:
+		exclusions.append(raw_exclusions)
 	for condition in exclusions:
 		if condition != null and str(condition).strip_edges() != "" and EffectApplier.condition_is_met(condition):
 			return false
@@ -83,7 +87,7 @@ func _conditions_are_met(raw_conditions) -> bool:
 	if typeof(raw_conditions) == TYPE_ARRAY:
 		conditions = raw_conditions
 	else:
-		conditions = [raw_conditions]
+		conditions.append(raw_conditions)
 	for condition in conditions:
 		if not EffectApplier.condition_is_met(condition):
 			return false
