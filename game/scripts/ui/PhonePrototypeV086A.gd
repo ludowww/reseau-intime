@@ -89,7 +89,7 @@ func _finish_day_requested(day_value) -> void:
 func _show_conversation_notification(day_value, conversation_id: String, title: String, body: String) -> void:
 	notification_target_day_value = day_value
 	notification_target_conversation_id = conversation_id
-	var has_open_thread := is_instance_valid(conversation_view) and not conversation_view.current_conversation.is_empty()
+	var has_open_thread: bool = is_instance_valid(conversation_view) and not conversation_view.current_conversation.is_empty()
 	var current_thread: String = ""
 	if has_open_thread:
 		current_thread = str(conversation_view.active_conversation_id)
