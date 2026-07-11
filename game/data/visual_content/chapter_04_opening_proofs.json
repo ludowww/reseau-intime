@@ -1,0 +1,48 @@
+{
+  "id": "chapter_04_opening_visuals",
+  "version": 1,
+  "notes": "V0.86 Friday opening completion. One authorized public/social set only; no private crop, adult function, or forwarding breach.",
+  "items": [
+    {
+      "id": "laverriere_public_group_photo_set_01",
+      "character": "pauline",
+      "tier": 0,
+      "type": "photo_set",
+      "source_app": "messages",
+      "asset_path": "res://assets/placeholders/laverriere_public_group_photo_set_01.png",
+      "context": "Trois versions autorisées d'une photo de groupe prise par Pauline avec sa télécommande compacte près de la fin du vernissage. Marie, Pauline, Bastien et Élodie sont visibles ; Nico peut apparaître avant son passage à L'Annexe. Player apparaît seulement s'il a rejoint le groupe avant la prise. Mathilde est absente parce qu'elle est restée au foyer. Le set appartient au groupe photographié et à l'archive/publication de La Verrière ; aucun recadrage privé ou corporel n'existe.",
+      "origin": "Pauline remote shutter at La Verrière",
+      "intended_audience": [
+        "photographed_group",
+        "laverriere_archive",
+        "laverriere_public_post"
+      ],
+      "tags": [
+        "pauline",
+        "marie",
+        "bastien_visible",
+        "elodie",
+        "nico_possible",
+        "player_contextual",
+        "mathilde_absent",
+        "group_photo",
+        "authorized",
+        "public_event",
+        "ordinary",
+        "friday"
+      ],
+      "is_proof": false,
+      "risk_level": 0,
+      "can_delete": true,
+      "can_capture": true,
+      "can_set_as_wallpaper": false,
+      "can_be_discovered_by": [
+        "marie",
+        "pauline",
+        "bastien",
+        "nico",
+        "elodie"
+      ]
+    }
+  ]
+}
