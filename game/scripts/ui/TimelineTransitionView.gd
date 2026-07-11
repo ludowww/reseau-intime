@@ -19,6 +19,7 @@ var skip_requested := false
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
+	focus_mode = Control.FOCUS_ALL
 	visible = false
 	_build_layout()
 
@@ -47,6 +48,7 @@ func _play_cards(cards: Array) -> void:
 	var token := sequence_token
 	visible = true
 	move_to_front()
+	grab_focus()
 	for raw_card in cards:
 		if token != sequence_token:
 			return
@@ -56,6 +58,7 @@ func _play_cards(cards: Array) -> void:
 	visible = false
 	can_skip = false
 	skip_requested = false
+	release_focus()
 	transition_finished.emit()
 
 func _wait_for_card(card: Dictionary, token: int) -> void:
