@@ -46,6 +46,7 @@ func _play_cards(cards: Array) -> void:
 		return
 	sequence_token += 1
 	var token := sequence_token
+	var last_card: Dictionary = {}
 	visible = true
 	move_to_front()
 	grab_focus()
@@ -53,12 +54,14 @@ func _play_cards(cards: Array) -> void:
 		if token != sequence_token:
 			return
 		var card: Dictionary = raw_card if typeof(raw_card) == TYPE_DICTIONARY else {}
+		last_card = card
 		_apply_card(card)
 		await _wait_for_card(card, token)
 	visible = false
 	can_skip = false
 	skip_requested = false
 	release_focus()
+	_show_timeline_landing(last_card)
 	transition_finished.emit()
 
 func _wait_for_card(card: Dictionary, token: int) -> void:
@@ -87,6 +90,19 @@ func _gui_input(event: InputEvent) -> void:
 	elif event is InputEventKey and event.pressed and not event.echo:
 		skip_requested = true
 		accept_event()
+
+func _show_timeline_landing(card: Dictionary) -> void:
+	if card.is_empty() or not bool(card.get("show_landing", true)):
+		return
+	var conversation = get_parent().find_child("ConversationView", true, false)
+	if conversation == null or not conversation.has_method("show_timeline_landing"):
+		return
+	var details: Array[String] = []
+	for key in ["title", "subtitle"]:
+		var value := str(card.get(key, ""))
+		if value != "" and not details.has(value):
+			details.append(value)
+	conversation.show_timeline_landing(str(card.get("eyebrow", "")), " · ".join(details))
 
 func _build_layout() -> void:
 	var background := PanelContainer.new()
