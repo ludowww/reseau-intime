@@ -38,16 +38,18 @@ class V081WednesdayStaticTests(unittest.TestCase):
         self.assertIn("chapter_03_proofs.json", visual_block)
         self.assertNotIn("chapter_04_proofs.json", visual_block)
 
-    def test_active_scenes_use_v084_adapters_while_preserving_v081_v082_foundations(self):
+    def test_active_scenes_use_v085_adapter_while_preserving_v081_v082_v084_foundations(self):
         phone_scene = (GAME / "scenes/smartphone/PhonePrototype.tscn").read_text(encoding="utf-8")
         conversation_scene = (GAME / "scenes/smartphone/ConversationView.tscn").read_text(encoding="utf-8")
-        self.assertIn("PhonePrototypeV084.gd", phone_scene)
+        self.assertIn("PhonePrototypeV085.gd", phone_scene)
         self.assertIn("ConversationViewV084.gd", conversation_scene)
 
+        phone_v085 = (GAME / "scripts/ui/PhonePrototypeV085.gd").read_text(encoding="utf-8")
         phone_v084 = (GAME / "scripts/ui/PhonePrototypeV084.gd").read_text(encoding="utf-8")
         phone_v082 = (GAME / "scripts/ui/PhonePrototypeV082.gd").read_text(encoding="utf-8")
         conversation_v084 = (GAME / "scripts/ui/ConversationViewV084.gd").read_text(encoding="utf-8")
         conversation_v082 = (GAME / "scripts/ui/ConversationViewV082.gd").read_text(encoding="utf-8")
+        self.assertIn('extends "res://scripts/ui/PhonePrototypeV084.gd"', phone_v085)
         self.assertIn('extends "res://scripts/ui/PhonePrototypeV082.gd"', phone_v084)
         self.assertIn('extends "res://scripts/ui/PhonePrototypeV081.gd"', phone_v082)
         self.assertIn('extends "res://scripts/ui/ConversationViewV082.gd"', conversation_v084)
@@ -81,23 +83,18 @@ class V081WednesdayStaticTests(unittest.TestCase):
         ]:
             self.assertIn(expected, conversation_adapter)
 
-    def test_tuesday_modular_index_filters_deprecated_mathilde_handoff(self):
+    def test_tuesday_modular_index_uses_reconciled_sources_without_filters(self):
         index = load_json("data/conversations/chapter_01_modular_index.json")
         self.assertEqual(index.get("calendar_label"), "Mardi")
         self.assertEqual(index.get("day_start_time"), "18:12")
         self.assertEqual(index.get("conversation_files"), [
-            "res://data/conversations/chapter_01_marie.json",
-            "res://data/conversations/chapter_01_sandra.json",
+            "res://data/conversations/chapter_01_marie_opening.json",
+            "res://data/conversations/chapter_01_sandra_trace.json",
         ])
-        filters = index.get("conversation_filters", {}).get("chapter_01_marie", {})
-        self.assertEqual(filters.get("exclude_item_ids"), ["msg_marie_291", "msg_marie_292"])
-        self.assertEqual(filters.get("exclude_content_ids"), ["j1_mathilde_bag_domestic_trace"])
+        self.assertNotIn("conversation_filters", index)
         self.assertNotIn("thread_mathilde_private", json.dumps(index, ensure_ascii=False))
-
-        loader = (GAME / "scripts/core/DataLoader.gd").read_text(encoding="utf-8")
-        self.assertIn("_apply_conversation_filter", loader)
-        self.assertIn("_dictionary_is_excluded", loader)
-        self.assertIn("exclude_content_ids", loader)
+        self.assertTrue((GAME / "data/conversations/chapter_01_marie.json").exists())
+        self.assertTrue((GAME / "data/conversations/chapter_01_sandra.json").exists())
 
     def test_wednesday_index_has_exact_sequential_slice(self):
         index = load_json("data/conversations/chapter_02_modular_index.json")
