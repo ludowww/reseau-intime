@@ -14,16 +14,11 @@ PR : courtes, ciblées, sans gros refactoring
 - sept personnages principaux complètement définis ;
 - V0.78 : architecture modulaire ;
 - V0.79 : ouverture mardi–vendredi écrite ;
-- V0.80 : plan runtime phasé.
+- V0.80 : plan runtime phasé ;
+- V0.81 : mercredi intégré ;
+- V0.82 : jeudi topologique intégré.
 
 ### Runtime actif
-
-```text
-V0.81 = mardi–mercredi
-V0.82 = jeudi conditionnel + retour Marie
-```
-
-Jours actifs :
 
 ```text
 Mardi
@@ -31,102 +26,204 @@ Mercredi
 Jeudi
 ```
 
-Vendredi reste non intégré.
+Le runtime reste en R1 maximum et sans contenu adulte.
 
-## 2. Acquis V0.82
+## 2. Audit V0.83
 
-### Contenu
+Trois problèmes sont confirmés :
 
-- Raphaëlle R1 travail ;
-- écho Sandra optionnel ;
-- invitation Marie ;
-- M1 à trois choix topologiques ;
-- une seule branche O5 ;
-- retour O6 obligatoire ;
-- visuel événement Marie autorisé ;
-- aucun vendredi ou contenu adulte.
+### Jours immédiatement accessibles
 
-### Fondation technique
+Mardi, Mercredi et Jeudi sont tous visibles dès le lancement.
 
-```text
-conditions sur unlocks
-conditions sur messages / choix
-after_any_conversation_completed
-notify: false
-fusion cumulative des fils entre les jours
-```
+La navigation fonctionne comme un menu de jours plutôt que comme une chronologie vécue.
 
-Les adaptateurs V0.82 étendent V0.81 ; les scripts de base restent inchangés.
+### Phases horaires concurrentes
 
-## 3. État narratif après jeudi
+Après Raphaëlle jeudi, Sandra 13:50 et Marie 16:05 deviennent disponibles ensemble.
 
-```text
-Mathilde = R1 domestique
-Raphaëlle = R1 travail
-Sandra = continuité douce
-Marie/Player = HABITUAL_WARMTH
-reconnection/drift = candidates seulement
-hard secrets = none
-adult frames = none
-```
+Le joueur peut agir à 16:05 puis revenir répondre à 13:50.
 
-## 4. Prochaine étape — V0.83
+### J1 legacy incohérent
+
+Le mardi actif contient encore :
+
+- contradiction Mardi/Mercredi ;
+- timestamps qui reculent ;
+- absence du dîner/marche hors ligne ;
+- fin sur Sandra plutôt que Marie ;
+- Sandra trop avancée ;
+- anciens scores ;
+- trop de clics guidés.
+
+## 3. Décision produit
 
 ```text
-V0.83 — Friday public traces and opening completion
+Vendredi est reporté.
 ```
 
-Périmètre :
+La priorité devient :
+
+```text
+1. rendre le temps autoritaire
+2. reconstruire J1
+3. reprendre Pauline/Nico
+```
+
+## 4. Séquence officielle
+
+```text
+V0.83 — Temporal Flow & J1 Reconciliation Spec
+V0.84 — Day & Moment Flow Runtime Foundation
+V0.85 — J1 Canon Runtime Reconciliation
+V0.86 — Friday Public Traces & Opening Completion
+V0.87+ — extension incrémentale de l'Acte I
+```
+
+## 5. V0.83 — documentation actuelle
+
+Nouveaux canons/plans :
+
+```text
+docs/canon/TEMPORAL_FLOW_AND_DAY_TRANSITION_CANON.md
+docs/canon/J1_RUNTIME_RECONCILIATION_SOURCE_PACK.md
+docs/runtime/V0_84_DAY_AND_MOMENT_FLOW_IMPLEMENTATION_PLAN.md
+docs/runtime/V0_85_J1_CANON_RUNTIME_RECONCILIATION_PLAN.md
+docs/V0_83_Temporal_Flow_And_J1_Reconciliation_Report.md
+```
+
+Aucun runtime modifié.
+
+## 6. V0.84 — fondation temps
+
+### Jours
+
+```text
+LOCKED -> AVAILABLE -> ACTIVE -> COMPLETE -> ARCHIVED
+```
+
+- Mardi seul au lancement ;
+- Mercredi déverrouillé après fin Mardi ;
+- Jeudi déverrouillé après fin Mercredi ;
+- anciens jours en lecture seule ;
+- futur invisible ou verrouillé.
+
+### Interstitiels
+
+```text
+MARDI — FIN DE JOURNÉE
+MERCREDI — MIDI / Faire de la place
+```
+
+et cartes courtes pour grands sauts intrajournaliers.
+
+### Phases
+
+```text
+LOCKED -> CURRENT -> COMPLETE / SKIPPED / EXPIRED
+```
+
+Jeudi cible :
+
+```text
+09:10 Raphaëlle obligatoire
+13:50 Sandra optionnelle
+16:05 Marie obligatoire
+soir une branche O5
+22:10 retour Marie obligatoire
+```
+
+Si Sandra est ignorée, elle expire avant 16:05.
+
+### Exclusions V0.84
+
+- aucun dialogue J1 réécrit ;
+- aucun vendredi ;
+- aucun R2 ;
+- aucun scheduler universel ;
+- aucune migration de sauvegarde.
+
+## 7. V0.85 — reconstruction J1
+
+### Nouveau Mardi actif
+
+```text
+18:12 Marie / dîner, pain, marche
+19:15 dîner et marche hors ligne
+22:57 Sandra / photo floue
+23:25 final Marie / vie commune hors ligne
+fin Mardi -> Mercredi
+```
+
+### Choix
+
+```text
+M1 — présent / joueur-présent / retardé-plat
+S1 — chaleur sûre / observation précise / prudence
+```
+
+### État
+
+Flags observables uniquement.
+
+Ne plus écrire :
+
+```text
+marie_attention_score
+marie_neglect_score
+sandra.attachment
+sandra_priority_score
+truth_tendency
+```
+
+### Stratégie fichiers
+
+Créer de nouveaux fichiers J1 actifs.
+
+Conserver les gros fichiers legacy mais ne plus les référencer dans l’index Mardi.
+
+### Exclusions V0.85
+
+- aucun changement mercredi/jeudi ;
+- aucun vendredi ;
+- aucune suppression globale de state legacy ;
+- aucun contenu adulte.
+
+## 8. V0.86 — vendredi
+
+Après validation V0.84 et V0.85 :
 
 ### Vendredi matin
 
-- O7 Pauline ;
-- relais du set de photos publiques autorisées ;
-- Bastien visible dans le contexte ;
-- choix P0 à trois réponses ;
+- Pauline R1 ;
+- photos publiques autorisées ;
+- Bastien visible ;
+- choix P0 ;
 - aucun crop privé.
 
 ### Vendredi après-midi
 
-- O8 Nico ;
-- suivi de la place/table gardée ;
-- choix N0 à trois réponses ;
-- possibilité de savoir que Mathilde séjourne au foyer ;
-- aucun voyeurisme, photo pact ou alibi.
+- Nico R1 ;
+- place/table gardée ;
+- choix N0 ;
+- aucun voyeurisme, pacte photo ou alibi.
 
 ### Vendredi fin de journée
 
 - respiration du foyer ;
 - clôture du pack V0.79 ;
-- état final d’ouverture vérifié.
+- transition temporelle cohérente.
 
-## 5. Fondation V0.83 attendue
+## 9. Validation permanente
 
-Réutiliser :
-
-- déblocages conditionnels V0.82 ;
-- fils persistants ;
-- temps piloté par les données ;
-- trace metadata ;
-- messages/choix conditionnels si nécessaire.
-
-Ne pas ajouter :
-
-- nouveau scheduler ;
-- route R2 ;
-- système d’image adulte ;
-- secret dur ;
-- score de couple.
-
-## 6. Validation runtime
-
-Avant merge V0.82 puis V0.83 :
+Chaque PR runtime doit exécuter :
 
 ```bash
 python3 tools/validate_game_data.py
 python3 -m unittest tests.test_godot_prototype_static -v
 python3 -m unittest tests.test_v081_wednesday_static -v
 python3 -m unittest tests.test_v082_thursday_static -v
+python3 -m unittest <tests de la version> -v
 python3 tools/player_choice_text_check.py <fichiers actifs>
 python3 tools/player_presence_check.py <fichiers actifs>
 git diff --check
@@ -134,39 +231,39 @@ godot --headless --path game --quit
 godot --headless --path game --resolution 1280x720 --quit
 ```
 
-Le connecteur GitHub ne peut pas exécuter ces commandes ; CI ou Hermes/local doit confirmer.
+## 10. Principes permanents
 
-## 7. Principes permanents
-
+- le temps contrôle l’accès ;
+- un timestamp seul ne débloque rien ;
+- futurs jours verrouillés ;
+- archives en lecture seule ;
+- scènes optionnelles vues ou expirées ;
+- aucune réponse après expiration de la fenêtre ;
+- conséquence obligatoire avant fin de journée ;
+- final J1 sur Marie ;
 - un fil visible par personnage ;
-- une topologie seulement par événement ;
-- conséquences dues avant nouvelles opportunités ;
-- retour vers Marie garanti ;
-- temps futur non visible avant déblocage ;
-- chat interrompu lors de la co-présence ;
-- flags observables avant scores abstraits ;
+- co-présence hors ligne ;
+- flags avant scores abstraits ;
 - legacy conservé mais inactif ;
 - rollback simple par squash ;
 - aucune modification narrative silencieuse.
 
-## 8. À éviter
+## 11. À éviter
 
-- débloquer plusieurs O5 ;
-- rendre l’écho Sandra obligatoire pour Marie ;
-- faire de Raphaëlle l’excuse de Player ;
-- transformer le foyer Mathilde en récompense sexuelle ;
-- offrir une quatrième topologie dans O6 ;
-- commencer vendredi avant la validation de jeudi ;
-- réactiver l’ancien Chapter 3 ;
-- ouvrir Pauline/Nico trop tôt ;
-- ajouter R2, secrets ou adulte ;
-- refactorer les scripts de base sans nécessité.
+- commencer V0.86 avant V0.84/V0.85 ;
+- afficher tous les jours dès le lancement ;
+- permettre Sandra 13:50 après Marie 16:05 ;
+- utiliser l’horloge monotone pour masquer des timestamps incohérents ;
+- continuer à filtrer indéfiniment les gros fichiers J1 ;
+- garder `On est mercredi` dans Mardi ;
+- finir J1 sur Sandra ;
+- réintroduire les anciens scores ;
+- construire un scheduler général ou aléatoire ;
+- ouvrir R2 ou l’adulte.
 
-## 9. Séquence officielle
+## 12. Prochaine action après validation V0.83
 
 ```text
-V0.81 — Tuesday handoff + Wednesday runtime slice
-V0.82 — Thursday topology + mandatory Marie return
-V0.83 — Friday public traces + opening completion
-V0.84+ — extension incrémentale de l'Acte I
+transmettre à Hermes/Codex
+le plan V0.84 Day & Moment Flow Runtime Foundation
 ```
