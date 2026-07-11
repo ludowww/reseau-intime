@@ -1,4 +1,5 @@
 import json
+import re
 import unittest
 from pathlib import Path
 
@@ -174,7 +175,6 @@ class V085J1ReconciliationStaticTests(unittest.TestCase):
         lowered = sandra_text.lower()
         for forbidden in [
             "on est mercredi",
-            "lac",
             "nature",
             "roman d'amour",
             "roman d’amour",
@@ -184,6 +184,10 @@ class V085J1ReconciliationStaticTests(unittest.TestCase):
             "tomates",
         ]:
             self.assertNotIn(forbidden, lowered)
+        self.assertIsNone(
+            re.search(r"\blac\b", lowered),
+            "standalone 'lac' found in active Sandra J1 content",
+        )
         sandra = load_json("data/conversations/chapter_01_sandra_trace.json")
         content_ids = [
             node.get("content_id")
