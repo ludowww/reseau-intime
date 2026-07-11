@@ -1,7 +1,7 @@
-# État global de l’histoire — V0.81
+# État global de l’histoire — V0.82
 
-> Résumé opérationnel après intégration de la première tranche runtime modulaire.  
-> Le runtime jouable actuel est canonique jusqu’au mercredi soir seulement.
+> Résumé opérationnel après intégration de la topologie du jeudi.  
+> Le runtime jouable actuel est canonique jusqu’au jeudi soir inclus.
 
 ## 1. Hiérarchie actuelle
 
@@ -11,191 +11,223 @@ canon personnages
 + V0.79 source pack / cartes / temps
 = vérité narrative
 
-V0.80 audit / plan
-= stratégie technique
+V0.80 plan technique
+= stratégie d'intégration
 
-V0.81 runtime actif
-= vérité jouable mardi–mercredi
+V0.81 mardi–mercredi
++ V0.82 jeudi conditionnel
+= vérité jouable actuelle
 
 anciens Chapter 2–9
 = fichiers legacy inactifs
 ```
 
-## 2. Runtime actif
+## 2. Navigation active
+
+```text
+Mardi — Les choses qu'on remarque
+Mercredi — Faire de la place
+Jeudi — Être là
+```
+
+Indexes actifs :
 
 ```text
 chapter_01_modular_index.json
 chapter_02_modular_index.json
+chapter_03_modular_index.json
 ```
 
-Seuls Mardi et Mercredi apparaissent dans la navigation actuelle.
+Vendredi n’est pas encore jouable.
 
-Les anciens jours restent sur disque pour historique et rollback.
+## 3. État avant jeudi
 
-## 3. Mardi — J1
-
-```text
-Marie + Sandra actives
-Mathilde indirecte seulement
-couple mode = HABITUAL_WARMTH
-```
-
-Le runtime actif filtre désormais :
-
-- les sacs de Mathilde dans l’entrée ;
-- les baskets / sac de sport / raquette ;
-- le visuel `j1_mathilde_bag_domestic_trace`.
-
-Mathilde ne possède aucun fil actif mardi.
-
-## 4. Mercredi — tranche jouable
-
-### 12:10 — Marie / faire de la place
-
-Mathilde subit un dégât des eaux.
-
-Player choisit :
-
-```text
-M0A — participer activement
-M0B — plaisanter tout en étant présent
-M0C — donner un assentiment passif
-```
-
-### 18:18 — Marie / trace d’arrivée
-
-Marie envoie :
-
-```text
-mathilde_arrival_room_01
-```
-
-Image :
-
-- pratique ;
-- autorisée ;
-- privée ;
-- sans fonction sexuelle ;
-- non transmissible par défaut.
-
-### 18:22 — Mathilde / arrivée
-
-Player choisit :
-
-```text
-MT0A — accueil pratique
-MT0B — accueil taquin et serviable
-MT0C — accueil distant
-```
-
-### Co-présence
-
-Selon la branche, Player rentre vers :
-
-```text
-18:46
-18:50
-19:15
-```
-
-À ce moment :
-
-```text
-le chat s’arrête
--> l’installation continue face à face
-```
-
-Le runtime affiche un `offline_beat` centré, sans expéditeur ni indicateur de frappe.
-
-## 5. État après mercredi
+Après mercredi :
 
 ```text
 Mathilde stay = active
-Mathilde route stage = R1 Ordinary Access
-opening Wednesday = complete
+Mathilde = R1 Ordinary Access
+couple = HABITUAL_WARMTH
 hard secrets = none
 adult frames = none
-Thursday = not implemented
+```
+
+## 4. Jeudi matin — Raphaëlle
+
+```text
+09:10
+WORK_CHAT
+```
+
+Player répond à une correction UX/accessibilité par :
+
+- responsabilité ;
+- humour suivi d’une correction ;
+- report.
+
+Raphaëlle atteint :
+
+```text
+R1 Ordinary Work Access
+```
+
+Aucun accès privé ou sexuel.
+
+## 5. Jeudi début d’après-midi — Sandra
+
+```text
+13:50
+REMOTE_ASYNC
+```
+
+Écho optionnel après un poste du matin :
+
+- aucun nouveau visuel ;
+- aucune promesse ;
+- aucun changement de route.
+
+Sandra ne bloque pas la suite Marie.
+
+## 6. Jeudi fin d’après-midi — choix topologique
+
+```text
+16:05
+Marie / vernissage La Verrière
+```
+
+M1 :
+
+```text
+1. rejoindre Marie tôt
+2. rester au foyer
+3. finir le travail et promettre de venir ensuite
+```
+
+Le runtime pose exactement un flag topologique et débloque une seule soirée.
+
+## 7. Jeudi soir — une seule branche
+
+### O5A — Marie / La Verrière
+
+```text
+17:55
+SAME_VENUE_LOGISTICS
+```
+
+Player peut :
+
+- prendre l’initiative ;
+- aider en plaisantant ;
+- être présent mais distrait.
+
+Visuel possible :
+
+```text
+marie_laverriere_setup_01
+```
+
+### O5B — Mathilde / foyer
+
+```text
+18:20
+SEPARATE_ROOMS_PING
+```
+
+Player peut :
+
+- aider directement ;
+- aider en plaisantant ;
+- garder ses distances.
+
+Les branches aidantes cessent le chat lorsque Player entre dans la chambre et passent en `offline_beat`.
+
+### O5C — Raphaëlle / travail
+
+```text
+17:45
+WORK_CHAT
+```
+
+Player peut :
+
+- tenir sa promesse ;
+- annoncer honnêtement un retard ;
+- laisser le travail absorber la soirée.
+
+Raphaëlle ne porte ni son indécision ni la conséquence de couple.
+
+## 8. Jeudi nuit — retour obligatoire vers Marie
+
+```text
+22:10+
+AFTERGLOW_REMOTE
+```
+
+Toute branche O5 terminée débloque O6.
+
+La variante visible dépend du choix réel :
+
+- présence active ;
+- présence joueuse ;
+- distraction ;
+- aide au foyer ;
+- distance ;
+- promesse tenue ;
+- retard annoncé ;
+- promesse manquée.
+
+O6 ne propose aucune nouvelle topologie et ne permet pas d’annuler le comportement précédent.
+
+## 9. État après jeudi
+
+```text
+Raphaëlle = R1 travail
+Mathilde = R1 domestique
+Sandra = continuité douce
+Marie/Player = HABITUAL_WARMTH
+reconnection candidate = possible
+parallel drift candidate = possible
+hard secrets = none
+adult frames = none
 Friday = not implemented
 ```
 
-Flags possibles :
+Un seul jeudi ne change pas automatiquement le mode du couple.
 
-```text
-opening_make_room_proactive
-opening_make_room_playful
-opening_make_room_passive
-mathilde_arrival_practical
-mathilde_arrival_playful
-mathilde_arrival_distant
-mathilde_stay_active
-opening_wednesday_complete
-```
+## 10. Fondation technique V0.82
 
-Aucun score de désir ou de route n’est ajouté.
+- unlocks conditionnés par flags ;
+- `after_any_conversation_completed` ;
+- notification silencieuse possible ;
+- messages et choix conditionnels ;
+- fil persistant cumulé entre les jours ;
+- historique conservé ;
+- aucun scheduler universel.
 
-## 6. Temps et interface
+## 11. Validation
 
-Le statut du téléphone n’est plus figé à `09:41` dans la tranche active.
-
-Il suit les moments débloqués et les événements hors ligne.
-
-Une heure future ne doit pas apparaître avant le déblocage de son épisode.
-
-Un ancien séparateur ne peut pas faire reculer l’heure après un moment plus tardif.
-
-## 7. Fils persistants
-
-Marie conserve un seul fil regroupant :
-
-- J1 ;
-- O1 mercredi ;
-- O2 trace d’arrivée.
-
-Mathilde ouvre un seul fil mercredi soir.
-
-Le joueur ne voit pas une carte différente pour chaque épisode.
-
-## 8. Visuel actuel
-
-```text
-mathilde_arrival_room_01
-```
-
-Le catalogue legacy contient encore d’anciens placeholders, mais aucun contenu actif V0.81 ne référence le selfie canapé ou le faux raccord J1.
-
-## 9. Validation
-
-Tests ajoutés :
+Tests statiques :
 
 ```text
 tests/test_v081_wednesday_static.py
+tests/test_v082_thursday_static.py
 ```
 
-Leur exécution doit être confirmée hors du connecteur GitHub actuel, qui ne dispose ni d’un clone local accessible ni du binaire Godot.
+L’exécution Python/Godot doit être confirmée en CI ou localement avant merge.
 
-## 10. Prochaine étape
+## 12. Prochaine étape
 
 ```text
-V0.82 — Thursday topology and mandatory Marie return
+V0.83 — Friday public traces and opening completion
 ```
 
-V0.82 devra ajouter uniquement :
-
-- Raphaëlle travail ;
-- écho Sandra ;
-- invitation Marie ;
-- un déblocage conditionnel d’une seule branche ;
-- O5A/O5B/O5C ;
-- retour O6 obligatoire vers Marie.
-
-## 11. Résumé
+## 13. Résumé
 
 ```text
-J1 : raccord Mathilde corrigé dans le runtime actif.
+Mardi : jouable.
 Mercredi : jouable.
-Jeudi : écrit mais non intégré.
+Jeudi : une topologie exclusive + retour Marie jouables.
 Vendredi : écrit mais non intégré.
-Routes : R1 Mathilde seulement.
+Routes : R1 seulement.
 Couple : HABITUAL_WARMTH.
 ```
