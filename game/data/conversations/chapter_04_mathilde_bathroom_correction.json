@@ -1,0 +1,53 @@
+{
+  "id": "chapter_04_mathilde_bathroom_correction",
+  "chapter": 4,
+  "day": 4,
+  "title": "Vendredi fin de journée — Correction officielle",
+  "app": "messages",
+  "window_id": "O8_HOUSEHOLD_MATHILDE",
+  "calendar_label": "Vendredi",
+  "time_band": "LATE_AFTERNOON",
+  "communication_mode": "REMOTE_ASYNC",
+  "foreground_role": "household_echo",
+  "physical_context": "Mathilde est à l'appartement. Player est encore ailleurs. Elle corrige le rapport de Marie dans son fil privé, sans conversation artificielle à trois.",
+  "thread": {
+    "id": "thread_mathilde_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "mathilde"
+    ],
+    "display_name": "Mathilde",
+    "profile_content_id": "profile_mathilde_placeholder"
+  },
+  "segments": [
+    {
+      "id": "segment_friday_mathilde_bathroom_correction",
+      "pattern": "automatic_echo",
+      "function": "Donner à Mathilde une voix domestique ordinaire et fermer le rapport avec une friction familiale légère.",
+      "messages": [
+        {
+          "id": "msg_friday_mathilde_household_001",
+          "sender": "mathilde",
+          "time_label": "18:07",
+          "text": "Marie dramatise."
+        },
+        {
+          "id": "msg_friday_mathilde_household_002",
+          "sender": "mathilde",
+          "time_label": "18:07",
+          "text": "Vingt-deux minutes maximum."
+        },
+        {
+          "id": "msg_friday_mathilde_household_003",
+          "sender": "mathilde",
+          "time_label": "18:08",
+          "text": "Et il y avait une urgence capillaire."
+        }
+      ],
+      "choices": []
+    }
+  ],
+  "routes_nourished": [],
+  "debug_notes": "V0.86 household echo. Mathilde reste une présence ordinaire du foyer ; aucune intention, image ou progression de route n'est ajoutée."
+}
