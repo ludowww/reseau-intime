@@ -1,233 +1,275 @@
-# État global de l’histoire — V0.82
+# État global de l’histoire — V0.83
 
-> Résumé opérationnel après intégration de la topologie du jeudi.  
-> Le runtime jouable actuel est canonique jusqu’au jeudi soir inclus.
+> Résumé opérationnel après audit du flux temporel et de J1.  
+> V0.82 reste le runtime jouable actuel. V0.83 est documentaire et suspend l’intégration du vendredi.
 
 ## 1. Hiérarchie actuelle
 
 ```text
 canon personnages
 + V0.78 architecture
-+ V0.79 source pack / cartes / temps
-= vérité narrative
++ V0.79 ouverture
+= vérité narrative large
 
-V0.80 plan technique
-= stratégie d'intégration
+V0.83 flux temporel
++ V0.83 source J1 réconciliée
+= vérité corrective actuelle
 
-V0.81 mardi–mercredi
-+ V0.82 jeudi conditionnel
-= vérité jouable actuelle
+V0.81–V0.82
+= runtime jouable mardi–jeudi
 
-anciens Chapter 2–9
-= fichiers legacy inactifs
+V0.84–V0.85
+= prochaines implémentations
+
+legacy Chapter 1–9
+= historique technique inactif sauf référence explicite
 ```
 
-## 2. Navigation active
+## 2. Runtime actuellement jouable
 
 ```text
-Mardi — Les choses qu'on remarque
-Mercredi — Faire de la place
-Jeudi — Être là
+Mardi
+Mercredi
+Jeudi
 ```
 
-Indexes actifs :
+État après jeudi :
 
 ```text
-chapter_01_modular_index.json
-chapter_02_modular_index.json
-chapter_03_modular_index.json
-```
-
-Vendredi n’est pas encore jouable.
-
-## 3. État avant jeudi
-
-Après mercredi :
-
-```text
-Mathilde stay = active
-Mathilde = R1 Ordinary Access
-couple = HABITUAL_WARMTH
-hard secrets = none
-adult frames = none
-```
-
-## 4. Jeudi matin — Raphaëlle
-
-```text
-09:10
-WORK_CHAT
-```
-
-Player répond à une correction UX/accessibilité par :
-
-- responsabilité ;
-- humour suivi d’une correction ;
-- report.
-
-Raphaëlle atteint :
-
-```text
-R1 Ordinary Work Access
-```
-
-Aucun accès privé ou sexuel.
-
-## 5. Jeudi début d’après-midi — Sandra
-
-```text
-13:50
-REMOTE_ASYNC
-```
-
-Écho optionnel après un poste du matin :
-
-- aucun nouveau visuel ;
-- aucune promesse ;
-- aucun changement de route.
-
-Sandra ne bloque pas la suite Marie.
-
-## 6. Jeudi fin d’après-midi — choix topologique
-
-```text
-16:05
-Marie / vernissage La Verrière
-```
-
-M1 :
-
-```text
-1. rejoindre Marie tôt
-2. rester au foyer
-3. finir le travail et promettre de venir ensuite
-```
-
-Le runtime pose exactement un flag topologique et débloque une seule soirée.
-
-## 7. Jeudi soir — une seule branche
-
-### O5A — Marie / La Verrière
-
-```text
-17:55
-SAME_VENUE_LOGISTICS
-```
-
-Player peut :
-
-- prendre l’initiative ;
-- aider en plaisantant ;
-- être présent mais distrait.
-
-Visuel possible :
-
-```text
-marie_laverriere_setup_01
-```
-
-### O5B — Mathilde / foyer
-
-```text
-18:20
-SEPARATE_ROOMS_PING
-```
-
-Player peut :
-
-- aider directement ;
-- aider en plaisantant ;
-- garder ses distances.
-
-Les branches aidantes cessent le chat lorsque Player entre dans la chambre et passent en `offline_beat`.
-
-### O5C — Raphaëlle / travail
-
-```text
-17:45
-WORK_CHAT
-```
-
-Player peut :
-
-- tenir sa promesse ;
-- annoncer honnêtement un retard ;
-- laisser le travail absorber la soirée.
-
-Raphaëlle ne porte ni son indécision ni la conséquence de couple.
-
-## 8. Jeudi nuit — retour obligatoire vers Marie
-
-```text
-22:10+
-AFTERGLOW_REMOTE
-```
-
-Toute branche O5 terminée débloque O6.
-
-La variante visible dépend du choix réel :
-
-- présence active ;
-- présence joueuse ;
-- distraction ;
-- aide au foyer ;
-- distance ;
-- promesse tenue ;
-- retard annoncé ;
-- promesse manquée.
-
-O6 ne propose aucune nouvelle topologie et ne permet pas d’annuler le comportement précédent.
-
-## 9. État après jeudi
-
-```text
-Raphaëlle = R1 travail
 Mathilde = R1 domestique
+Raphaëlle = R1 travail
 Sandra = continuité douce
 Marie/Player = HABITUAL_WARMTH
-reconnection candidate = possible
-parallel drift candidate = possible
 hard secrets = none
 adult frames = none
 Friday = not implemented
 ```
 
-Un seul jeudi ne change pas automatiquement le mode du couple.
+## 3. Dette temporelle confirmée
 
-## 10. Fondation technique V0.82
+Le runtime actuel présente les trois jours dès le lancement.
 
-- unlocks conditionnés par flags ;
-- `after_any_conversation_completed` ;
-- notification silencieuse possible ;
-- messages et choix conditionnels ;
-- fil persistant cumulé entre les jours ;
-- historique conservé ;
-- aucun scheduler universel.
+Le joueur peut donc :
 
-## 11. Validation
+- ouvrir Mercredi avant de terminer Mardi ;
+- ouvrir Jeudi avant de terminer Mercredi ;
+- revenir dans un ancien jour sans distinction claire entre archive et présent ;
+- voir plusieurs heures disponibles simultanément.
 
-Tests statiques :
+Cible V0.84 :
 
 ```text
-tests/test_v081_wednesday_static.py
-tests/test_v082_thursday_static.py
+Mardi actif
+Mercredi verrouillé
+Jeudi verrouillé
+
+fin Mardi
+-> interstitiel
+-> Mercredi déverrouillé et sélectionné
+
+fin Mercredi
+-> interstitiel
+-> Jeudi déverrouillé et sélectionné
 ```
 
-L’exécution Python/Godot doit être confirmée en CI ou localement avant merge.
+## 4. Interstitiels temporels
 
-## 12. Prochaine étape
+Transition de jour :
 
 ```text
-V0.83 — Friday public traces and opening completion
+MARDI — FIN DE JOURNÉE
+
+MERCREDI — MIDI
+Faire de la place
 ```
 
-## 13. Résumé
+Transition intrajournalière :
 
 ```text
-Mardi : jouable.
-Mercredi : jouable.
-Jeudi : une topologie exclusive + retour Marie jouables.
-Vendredi : écrit mais non intégré.
-Routes : R1 seulement.
-Couple : HABITUAL_WARMTH.
+JEUDI — DÉBUT D'APRÈS-MIDI
+13:50
+```
+
+ou :
+
+```text
+JEUDI — FIN D'APRÈS-MIDI
+16:05
+```
+
+Ces cartes doivent être courtes, lisibles, skippables après un délai minimal, et bloquer l’accès aux conversations futures tant qu’elles ne sont pas terminées.
+
+## 5. Phases temporelles
+
+Jour :
+
+```text
+LOCKED
+AVAILABLE
+ACTIVE
+COMPLETE
+ARCHIVED
+```
+
+Phase :
+
+```text
+LOCKED
+CURRENT
+COMPLETE
+SKIPPED
+EXPIRED
+```
+
+Règle :
+
+```text
+les timestamps décrivent le temps
+les phases autorisent l'accès
+```
+
+## 6. Correction du jeudi
+
+Comportement actuel :
+
+```text
+Raphaëlle terminée
+-> Sandra 13:50 et Marie 16:05 disponibles ensemble
+```
+
+Cible V0.84 :
+
+```text
+09:10 Raphaëlle obligatoire
+-> 13:50 Sandra optionnelle
+-> avancer explicitement
+-> Sandra vue ou expirée
+-> 16:05 Marie obligatoire
+-> une branche O5
+-> 22:10 retour Marie obligatoire
+-> jeudi terminé
+```
+
+Si Sandra est ignorée, elle ne reste pas répondable après 16:05.
+
+## 7. Dette J1 confirmée
+
+Le Mardi actif utilise encore deux gros fichiers legacy, simplement filtrés.
+
+Problèmes confirmés :
+
+- une ligne dit `On est mercredi` pendant Mardi ;
+- les heures reculent dans les fils ;
+- la soirée se termine sur Sandra ;
+- le dîner et la marche ne sont pas représentés hors ligne ;
+- Sandra va trop loin émotionnellement ;
+- anciens scores numériques actifs ;
+- trop de clics à choix unique ;
+- le texte diverge du source V0.69.
+
+## 8. J1 cible
+
+```text
+18:12 Marie à distance
+-> dîner / pain / marche
+-> M1 trois postures
+-> La Verrière / Mathilde indirecte
+
+19:15 dîner et marche hors ligne
+
+22:57 Sandra / photo floue
+-> S1 trois postures
+-> limite douce
+
+23:25 retour final Marie / vie commune hors ligne
+
+fin Mardi
+-> transition
+-> Mercredi
+```
+
+M1 :
+
+```text
+présent
+joueur-présent
+retardé/plat
+```
+
+S1 :
+
+```text
+chaleur sûre
+observation précise
+prudence
+```
+
+Aucun score d’attachement, désir, priorité ou négligence.
+
+## 9. État des personnages après la future correction J1
+
+### Marie
+
+- ouverture domestique concise ;
+- La Verrière visible ;
+- action hors ligne réellement accomplie ;
+- dernier beat obligatoire de la journée.
+
+### Sandra
+
+- une seule trace ;
+- une limite douce ;
+- aucune scène lac/roman/manque profond ;
+- aucune route R2.
+
+### Mathilde
+
+- indirecte mardi ;
+- urgence et arrivée mercredi inchangées.
+
+### Raphaëlle
+
+- jeudi travail inchangé.
+
+### Pauline / Nico
+
+- toujours absents du runtime ;
+- vendredi reporté à V0.86.
+
+## 10. Prochaines versions
+
+```text
+V0.84 — Day & Moment Flow Runtime Foundation
+V0.85 — J1 Canon Runtime Reconciliation
+V0.86 — Friday Public Traces & Opening Completion
+```
+
+## 11. Périmètre V0.84
+
+- verrouillage/déverrouillage des jours ;
+- phases ;
+- interstitiels ;
+- archives en lecture seule ;
+- expiration des scènes optionnelles ;
+- correction Sandra 13:50 -> Marie 16:05 ;
+- aucun nouveau dialogue.
+
+## 12. Périmètre V0.85
+
+- nouveaux fichiers J1 actifs ;
+- deux choix à trois réponses ;
+- deux beats hors ligne ;
+- flags seulement ;
+- fin obligatoire sur Marie ;
+- aucun changement mercredi/jeudi.
+
+## 13. Résumé opérationnel
+
+```text
+Runtime actuel : jouable jusqu'à jeudi, mais temps réarrangeable.
+J1 actuel : jouable, mais non cohérent avec le canon consolidé.
+V0.83 : correction documentaire.
+V0.84 : rendre le temps autoritaire.
+V0.85 : reconstruire mardi.
+V0.86 : reprendre vendredi.
 ```
