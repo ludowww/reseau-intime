@@ -7,6 +7,7 @@ const INITIAL_STATE_PATH := "res://data/state/initial_state.json"
 const CHAPTER_INDEX_PATHS := [
 	"res://data/conversations/chapter_01_modular_index.json",
 	"res://data/conversations/chapter_02_modular_index.json",
+	"res://data/conversations/chapter_03_modular_index.json",
 ]
 const LEGACY_CHAPTER_INDEX_PATHS := [
 	"res://data/conversations/chapter_01_index.json",
@@ -23,6 +24,7 @@ const VISUAL_CONTENT_PATHS := [
 	"res://data/visual_content/placeholders.json",
 	"res://data/visual_content/chapter_01_proofs.json",
 	"res://data/visual_content/chapter_02_proofs.json",
+	"res://data/visual_content/chapter_03_proofs.json",
 ]
 const LEGACY_VISUAL_CONTENT_PATHS := [
 	"res://data/visual_content/chapter_04_proofs.json",

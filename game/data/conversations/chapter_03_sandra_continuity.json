@@ -1,0 +1,72 @@
+{
+  "id": "chapter_03_sandra_continuity",
+  "chapter": 3,
+  "day": 3,
+  "title": "Jeudi début d'après-midi — Le bouton est revenu",
+  "app": "messages",
+  "window_id": "O3_ECHO",
+  "calendar_label": "Jeudi",
+  "time_band": "AFTERNOON",
+  "communication_mode": "REMOTE_ASYNC",
+  "foreground_role": "echo",
+  "physical_context": "Sandra a terminé un poste du matin. Player est encore au travail ou ailleurs.",
+  "thread": {
+    "id": "thread_sandra_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "sandra"
+    ],
+    "display_name": "Sandra",
+    "profile_content_id": "profile_sandra_placeholder"
+  },
+  "segments": [
+    {
+      "id": "segment_thursday_sandra_continuity",
+      "pattern": "guided_reply_pacing",
+      "function": "Préserver la continuité J1 par un écho de travail sans nouvelle photo ni progression de route.",
+      "messages": [
+        {
+          "id": "msg_thu_sandra_001",
+          "sender": "sandra",
+          "time_label": "13:50",
+          "text": "Poste du matin terminé."
+        },
+        {
+          "id": "msg_thu_sandra_002",
+          "sender": "sandra",
+          "time_label": "13:50",
+          "text": "Le bouton est revenu."
+        },
+        {
+          "id": "msg_thu_sandra_003",
+          "sender": "sandra",
+          "time_label": "13:51",
+          "text": "J'hésite entre miracle et menace."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_thu_sandra_day_saved",
+          "text": "Journée sauvée alors.",
+          "tone": "guided_reply",
+          "sets_flags": [
+            "sandra_thursday_echo_seen"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_thu_sandra_004",
+              "sender": "sandra",
+              "time_label": "13:53",
+              "text": "N'allons pas jusque-là."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "routes_nourished": [
+    "sandra"
+  ],
+  "debug_notes": "V0.82 echo. Aucun nouveau visuel, aucune promesse et aucun stade de route supplémentaire."
+}

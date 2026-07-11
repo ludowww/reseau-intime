@@ -1,0 +1,194 @@
+{
+  "id": "chapter_03_modular_index",
+  "chapter": 3,
+  "day": 3,
+  "calendar_label": "Jeudi",
+  "display_label": "Jeudi — Être là",
+  "day_start_time": "09:10",
+  "title": "Jeudi — Être là",
+  "description": "Raphaëlle ouvre la journée au travail. Marie propose ensuite le vernissage et le choix de Player ouvre une seule soirée possible avant un retour obligatoire vers le couple.",
+  "design_goal": "Valider les déblocages conditionnels, une topologie exclusive et la conséquence Marie sans dépasser R1.",
+  "window_range": "O3-O6",
+  "default_order": [
+    "chapter_03_raphaelle_blue_folder",
+    "chapter_03_sandra_continuity",
+    "chapter_03_marie_event_offer",
+    "chapter_03_marie_event_joined",
+    "chapter_03_mathilde_home_charger",
+    "chapter_03_raphaelle_late_review",
+    "chapter_03_marie_event_return"
+  ],
+  "conversation_files": [
+    "res://data/conversations/chapter_03_raphaelle_blue_folder.json",
+    "res://data/conversations/chapter_03_sandra_continuity.json",
+    "res://data/conversations/chapter_03_marie_event_offer.json",
+    "res://data/conversations/chapter_03_marie_event_joined.json",
+    "res://data/conversations/chapter_03_mathilde_home_charger.json",
+    "res://data/conversations/chapter_03_raphaelle_late_review.json",
+    "res://data/conversations/chapter_03_marie_event_return.json"
+  ],
+  "moment_flow": [
+    {
+      "moment_label": "matin",
+      "time_label": "09:10",
+      "transition_text": "Jeudi matin — Raphaëlle relit le dossier avant le point client.",
+      "conversation_ids": [
+        "chapter_03_raphaelle_blue_folder"
+      ]
+    },
+    {
+      "moment_label": "début d'après-midi",
+      "time_label": "13:50",
+      "transition_text": "Jeudi début d'après-midi — Sandra sort d'un poste du matin.",
+      "conversation_ids": [
+        "chapter_03_sandra_continuity"
+      ]
+    },
+    {
+      "moment_label": "fin d'après-midi",
+      "time_label": "16:05",
+      "transition_text": "Jeudi fin d'après-midi — Marie demande une réponse concrète avant le vernissage.",
+      "conversation_ids": [
+        "chapter_03_marie_event_offer"
+      ]
+    },
+    {
+      "moment_label": "fin de journée",
+      "time_label": "17:45",
+      "transition_text": "Jeudi fin de journée — Le travail peut encore retenir Player.",
+      "conversation_ids": [
+        "chapter_03_raphaelle_late_review"
+      ]
+    },
+    {
+      "moment_label": "soir",
+      "time_label": "17:55",
+      "transition_text": "Jeudi soir — La Verrière ouvre ses portes.",
+      "conversation_ids": [
+        "chapter_03_marie_event_joined"
+      ]
+    },
+    {
+      "moment_label": "soir",
+      "time_label": "18:20",
+      "transition_text": "Jeudi soir — Le foyer reste calme pendant que Marie est à La Verrière.",
+      "conversation_ids": [
+        "chapter_03_mathilde_home_charger"
+      ]
+    },
+    {
+      "moment_label": "nuit",
+      "time_label": "22:10",
+      "transition_text": "Jeudi nuit — La soirée revient vers Marie et la vie commune.",
+      "conversation_ids": [
+        "chapter_03_marie_event_return"
+      ]
+    }
+  ],
+  "conversation_availability": {
+    "initial_conversation_ids": [
+      "chapter_03_raphaelle_blue_folder"
+    ],
+    "locked_conversation_ids": [
+      "chapter_03_sandra_continuity",
+      "chapter_03_marie_event_offer",
+      "chapter_03_marie_event_joined",
+      "chapter_03_mathilde_home_charger",
+      "chapter_03_raphaelle_late_review",
+      "chapter_03_marie_event_return"
+    ],
+    "unlocks": {
+      "chapter_03_sandra_continuity": {
+        "after_conversation_completed": "chapter_03_raphaelle_blue_folder",
+        "time_label": "13:50",
+        "pending": true,
+        "notify": false
+      },
+      "chapter_03_marie_event_offer": {
+        "after_conversation_completed": "chapter_03_raphaelle_blue_folder",
+        "time_label": "16:05",
+        "pending": true,
+        "notification": {
+          "title": "Marie",
+          "body": "J'ai besoin de deux bras à 18h. Et j'ai envie que tu viennes."
+        }
+      },
+      "chapter_03_marie_event_joined": {
+        "after_conversation_completed": "chapter_03_marie_event_offer",
+        "conditions": [
+          "opening_topology_join_marie"
+        ],
+        "time_label": "17:55",
+        "pending": true,
+        "notification": {
+          "title": "Marie",
+          "body": "Tu es où ?"
+        }
+      },
+      "chapter_03_mathilde_home_charger": {
+        "after_conversation_completed": "chapter_03_marie_event_offer",
+        "conditions": [
+          "opening_topology_stay_home"
+        ],
+        "time_label": "18:20",
+        "pending": true,
+        "notification": {
+          "title": "Mathilde",
+          "body": "Question urgente. Enfin juridiquement discutable."
+        }
+      },
+      "chapter_03_raphaelle_late_review": {
+        "after_conversation_completed": "chapter_03_marie_event_offer",
+        "conditions": [
+          "opening_topology_work_then_join"
+        ],
+        "time_label": "17:45",
+        "pending": true,
+        "notification": {
+          "title": "Raphaëlle",
+          "body": "Nous avons deux options."
+        }
+      },
+      "chapter_03_marie_event_return": {
+        "after_any_conversation_completed": [
+          "chapter_03_marie_event_joined",
+          "chapter_03_mathilde_home_charger",
+          "chapter_03_raphaelle_late_review"
+        ],
+        "time_label": "22:10",
+        "pending": true,
+        "notification": {
+          "title": "Marie",
+          "body": "Je rentre."
+        }
+      }
+    }
+  },
+  "initial_visual_anchors": [
+    "profile_raphaelle_placeholder"
+  ],
+  "routes_available": [
+    "marie",
+    "sandra",
+    "mathilde",
+    "raphaelle"
+  ],
+  "route_stage_ceiling": "R1",
+  "end_of_day_player_knowledge": [
+    "Raphaëlle dispose d'un accès professionnel ordinaire R1.",
+    "Sandra reste un écho doux sans nouvelle photo.",
+    "Player a choisi une seule topologie pour la soirée de Marie.",
+    "La conséquence de la soirée est revenue vers Marie.",
+    "Aucune route R2, secret dur ou cadre adulte n'existe."
+  ],
+  "proof_content_files": [
+    "res://data/visual_content/chapter_03_proofs.json"
+  ],
+  "debug_expected_outcomes": [
+    "Raphaëlle unlocks Sandra silently and Marie with a notification.",
+    "M1 unlocks exactly one of three topology branches.",
+    "Any completed branch unlocks the mandatory Marie return.",
+    "The return variant matches branch-quality flags.",
+    "Friday, Pauline, Nico, R2 and adult content remain inactive."
+  ]
+}

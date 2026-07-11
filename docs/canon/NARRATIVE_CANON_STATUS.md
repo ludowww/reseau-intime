@@ -1,7 +1,7 @@
 # Narrative Canon Status — Current
 
-> Narrative and implementation status after V0.81.  
-> Current playable runtime is canonical through Wednesday only. Thursday and Friday remain authored in V0.79 but unimplemented.
+> Narrative and implementation status after V0.82.  
+> Current playable runtime is canonical through Thursday night. Friday remains authored in V0.79 but unimplemented.
 
 ## 1. Core rule
 
@@ -9,7 +9,8 @@
 V0.78 defines modular story movement.
 V0.79 defines the Tuesday–Friday opening content.
 V0.80 defines the phased runtime plan.
-V0.81 implements only the Tuesday handoff and Wednesday slice.
+V0.81 implements Tuesday and Wednesday.
+V0.82 implements Thursday topology and the mandatory Marie return.
 Legacy runtime is not automatic narrative canon.
 ```
 
@@ -27,59 +28,79 @@ docs/runtime/V0_80_RUNTIME_AUDIT_AND_GAP_MAP.md
 docs/V0_80_First_Modular_Runtime_Integration_Plan.md
 docs/runtime/V0_81_WEDNESDAY_VERTICAL_SLICE_IMPLEMENTATION_PLAN.md
 docs/V0_81_Tuesday_Handoff_And_Wednesday_Runtime_Report.md
+docs/runtime/V0_82_THURSDAY_TOPOLOGY_IMPLEMENTATION_PLAN.md
+docs/V0_82_Thursday_Topology_And_Marie_Return_Runtime_Report.md
 ```
 
-Then read the relevant full character canon and NSFW canon when applicable.
+Then read relevant character canon and the global NSFW canon when applicable.
 
 ## 3. Current playable chronology
 
 ### Tuesday evening — J1
 
-Active threads:
+- Marie and Sandra active;
+- Mathilde indirect only;
+- couple in `HABITUAL_WARMTH`;
+- no route lock, hard secret, adult frame, or changed relationship agreement.
 
-- Marie;
-- Sandra.
+### Wednesday — O1/O2
 
-Current result:
+- Marie asks Player to make room after Mathilde's water damage;
+- Mathilde arrives;
+- `mathilde_arrival_room_01` is an authorized ordinary image;
+- Player's welcome creates observable flags;
+- co-present settling continues as `offline_beat`;
+- Mathilde reaches R1 only.
 
-```text
-couple mode = HABITUAL_WARMTH
-Mathilde = indirect only
-hard secrets = none
-adult frames = none
-```
+### Thursday morning — O3 Raphaëlle
 
-The active modular index removes the deprecated messages and visual reference that presented Mathilde as already installed.
+Raphaëlle appears through ordinary peer work.
 
-### Wednesday midday — O1
-
-Marie announces Mathilde's water-damage emergency.
-
-M0 records how Player makes room:
-
-- proactive;
-- playful-present;
-- passive assent.
-
-No choice denies emergency shelter.
-
-### Wednesday late afternoon — O2 trace
-
-Marie sends the authorized ordinary image:
+R0 records accountable, playful-active, or delayed professional behavior.
 
 ```text
-mathilde_arrival_room_01
+Raphaëlle = R1 Ordinary Work Access
 ```
 
-The image is practical, low-risk, and known to Mathilde.
+No personal/private route opens.
 
-### Wednesday evening — O2 Mathilde
+### Thursday early afternoon — Sandra echo
 
-Mathilde opens her persistent direct thread.
+Sandra may be opened after a poste du matin.
 
-MT0 records a practical, teasing-helpful, or distant welcome.
+The echo adds:
 
-When Player returns, chat stops and settling continues through an authored `offline_beat`.
+- no new image;
+- no promise;
+- no route-stage increase.
+
+It remains optional and does not gate Marie.
+
+### Thursday late afternoon — O4 Marie
+
+Marie proposes the La Verrière vernissage and M1 asks where/how Player will be present.
+
+M1 sets exactly one topology flag.
+
+### Thursday evening — O5
+
+Exactly one branch unlocks:
+
+```text
+O5A — Player joins Marie at La Verrière
+O5B — Player stays home with Mathilde in another room
+O5C — Player finishes work with Raphaëlle and handles his promise
+```
+
+The other two remain unavailable.
+
+### Thursday night — O6 Marie
+
+Every branch completion unlocks the same Marie consequence episode.
+
+Messages and guided acknowledgements are filtered from the actual quality flag.
+
+O6 cannot be replaced by another route opportunity and does not offer a new topology.
 
 ## 4. Current runtime architecture
 
@@ -88,152 +109,183 @@ Active indexes:
 ```text
 chapter_01_modular_index.json
 chapter_02_modular_index.json
+chapter_03_modular_index.json
 ```
 
-Legacy Chapter 1–9 files remain on disk but Chapter 3+ is not selectable in current navigation.
+V0.82 reuses V0.81 time/thread adapters and adds narrow condition-aware adapters.
 
-The implementation reuses:
+### PhonePrototypeV082
 
-- persistent thread grouping;
-- segmented conversations;
-- sequential unlocks;
-- notifications;
-- existing choices and effects;
-- placeholder visual cards.
+Supports:
 
-Narrow V0.81 adapters add:
+- `conditions` on unlock rules;
+- `after_any_conversation_completed`;
+- `notify: false` for silent echo access;
+- condition-aware contact messages/choices.
 
-- data-driven day labels;
-- data-driven narrative time;
-- available-episode-only metadata;
-- authored `time_separator` and `offline_beat` handling;
-- persistent/deduplicated system notes;
-- narrative-time updates from offline beats.
+### ConversationViewV082
 
-## 5. Current state writes
+Supports:
+
+- conditional messages and choices;
+- `unless_conditions`;
+- suppressed empty-choice hint for pure consequence variants;
+- cumulative cross-day segment/episode merging while preserving history.
+
+No base-script refactor or scheduler is introduced.
+
+## 5. Thursday state writes
+
+### Raphaëlle
 
 ```text
-opening_make_room_proactive
-opening_make_room_playful
-opening_make_room_passive
-mathilde_arrival_practical
-mathilde_arrival_playful
-mathilde_arrival_distant
-mathilde_stay_active
-opening_wednesday_complete
+raphaelle_work_accountable
+raphaelle_work_playful
+raphaelle_work_delayed
+raphaelle_r1_established
 ```
 
-These are observable-history flags.
+### Topology
 
-V0.81 does not write:
+```text
+opening_topology_join_marie
+opening_topology_stay_home
+opening_topology_work_then_join
+join_after_work_obligation
+```
 
-- new affection/desire scores;
-- route dominance;
-- jealousy state;
-- hard secrets;
-- adult consent frames;
-- couple-mode transitions.
+### Joined branch
+
+```text
+marie_event_initiative
+marie_event_playful_help
+marie_event_distracted
+couple_reconnection_candidate
+couple_presence_strained
+```
+
+### Home branch
+
+```text
+mathilde_home_help
+mathilde_home_playful_help
+mathilde_home_distance
+household_participation_positive
+parallel_drift_candidate
+```
+
+### Work branch
+
+```text
+work_promise_kept
+work_promise_amended
+work_promise_missed
+couple_reconnection_candidate
+parallel_drift_candidate
+```
+
+These are remembered actions/tendencies, not new route scores.
 
 ## 6. Time and communication status
 
-Current UI labels:
+Thursday sequence:
 
 ```text
-Mardi — Les choses qu'on remarque
-Mercredi — Faire de la place
+09:10 Raphaëlle
+13:50 Sandra
+16:05 Marie offer
+17:45 / 17:55 / 18:20 selected branch
+22:10+ Marie return
 ```
 
-Wednesday narrative times:
+Communication remains realistic:
 
-```text
-12:10
-18:18
-18:22
-18:46 / 18:50 / 19:15
-```
+- same-venue Marie messages are short logistics;
+- helpful Mathilde branches stop chat when Player enters the room;
+- Raphaëlle work chat requires physical separation;
+- emotional consequence arrives later through Marie's afterglow thread.
 
-Rules enforced by the slice:
-
-- locked episodes do not leak future time metadata;
-- narrative time cannot move backward inside the active day;
-- authored time separators and offline beats have no sender or typing indicator;
-- offline beats are restored without duplication;
-- co-present settling is not simulated as Messenger dialogue.
-
-## 7. Character status after Wednesday
+## 7. Character status after Thursday
 
 ### Marie
 
-- remains the active family/couple bridge;
-- receives Player's participation response;
-- keeps one persistent thread across Tuesday and Wednesday.
+- remains the central event and consequence anchor;
+- knows whether Player joined, helped elsewhere, amended a promise, or missed it;
+- couple remains in `HABITUAL_WARMTH`.
 
 ### Mathilde
 
-```text
-stay = active
-route stage = R1 Ordinary Access
-sexual intention = not established
-```
+- temporary stay active;
+- R1 ordinary domestic access;
+- optional practical Thursday scene only when Player stays home;
+- no deliberate sexual intention.
+
+### Raphaëlle
+
+- R1 work access established;
+- may become Thursday branch only when Player chose work;
+- no private creative/sexual frame.
 
 ### Sandra
 
-- remains Tuesday trace only in current playable runtime;
-- Thursday echo is not implemented.
+- soft continuity echo only;
+- no new image or route escalation.
 
-### Raphaëlle, Pauline, Nico
+### Pauline and Nico
 
-- no current playable post-J1 access yet;
-- their V0.79 entry scenes wait for V0.82/V0.83.
+- no current playable post-J1 access;
+- wait for V0.83 Friday.
 
-## 8. Current exclusions
+## 8. Visual status
+
+Current Thursday visual:
+
+```text
+marie_laverriere_setup_01
+```
+
+It is authorized, ordinary, event-contextual, non-proof, and risk zero.
+
+No adult or private-route visual exists.
+
+## 9. Current exclusions
 
 Not implemented:
 
-- Thursday O3–O6;
-- condition-aware topology branches;
-- mandatory Thursday return variants;
-- Friday O7–O8;
-- adult content;
+- Friday O7/O8;
+- Pauline/Nico threads;
+- public group-photo relay;
 - route R2+;
-- hard secret load;
+- hard secrets;
+- adult content;
+- open-couple or group negotiation;
+- NTR/cuckold logic;
 - universal scheduler;
-- save migration.
+- save migration;
+- legacy-file deletion.
 
-## 9. Validation status
+## 10. Validation status
 
-The branch contains targeted static tests in:
+Static coverage includes:
 
 ```text
 tests/test_v081_wednesday_static.py
+tests/test_v082_thursday_static.py
 ```
 
-They cover:
+The GitHub connector cannot execute Python/Godot commands or the manual walkthrough. CI or a local Hermes/Codex environment must confirm them before merge.
 
-- active index whitelist;
-- J1 filter;
-- Wednesday unlock sequence;
-- persistent threads;
-- three-choice shape and flag-only effects;
-- no automatic Player messages;
-- semantic temporal/offline items;
-- visual risk;
-- exclusion of Thursday/Friday/adult content;
-- wrapper connection and offline-note deduplication.
+## 11. Next step
 
-The current connector environment cannot execute the repository or Godot binaries. Command execution must be confirmed by CI or a local Hermes/Codex environment before merge.
-
-## 10. Next step
-
-After V0.81 validation:
+After V0.82 validation:
 
 ```text
-V0.82 — Thursday topology and mandatory Marie return
+V0.83 — Friday public traces and opening completion
 ```
 
-## 11. Final rule
+## 12. Final rule
 
 ```text
-Current playable canon ends Wednesday night.
-The next branch must teach one Thursday topology without reopening the old linear days.
+Current playable canon ends Thursday night after Marie has received the consequence of the selected topology.
+Friday remains unavailable until V0.82 is validated.
 ```

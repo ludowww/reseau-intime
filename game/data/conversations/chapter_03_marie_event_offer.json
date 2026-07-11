@@ -1,0 +1,186 @@
+{
+  "id": "chapter_03_marie_event_offer",
+  "chapter": 3,
+  "day": 3,
+  "title": "Jeudi fin d'après-midi — Deux raisons",
+  "app": "messages",
+  "window_id": "O4",
+  "calendar_label": "Jeudi",
+  "time_band": "LATE_AFTERNOON",
+  "communication_mode": "REMOTE_ASYNC",
+  "foreground_role": "spine",
+  "physical_context": "Marie prépare le vernissage à La Verrière. Player est au travail, en trajet ou au foyer.",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "marie"
+    ],
+    "display_name": "Marie",
+    "profile_content_id": "profile_marie_placeholder"
+  },
+  "segments": [
+    {
+      "id": "segment_thursday_marie_event_context",
+      "pattern": "guided_reply_pacing",
+      "function": "Présenter le mouvement de Marie avant le choix topologique.",
+      "messages": [
+        {
+          "id": "msg_thu_marie_offer_001",
+          "sender": "marie",
+          "time_label": "16:05",
+          "text": "Jeudi, le petit événement dont je te parlais."
+        },
+        {
+          "id": "msg_thu_marie_offer_002",
+          "sender": "marie",
+          "time_label": "16:05",
+          "text": "Vernissage local."
+        },
+        {
+          "id": "msg_thu_marie_offer_003",
+          "sender": "marie",
+          "time_label": "16:06",
+          "text": "Trente-cinq personnes annoncées, donc probablement cinquante."
+        },
+        {
+          "id": "msg_thu_marie_offer_004",
+          "sender": "marie",
+          "time_label": "16:06",
+          "text": "Le traiteur a confirmé « oui ». Avec un vrai oui cette fois."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_thu_marie_progress_guided",
+          "text": "Progrès historique.",
+          "tone": "guided_reply",
+          "next_messages": [
+            {
+              "id": "msg_thu_marie_offer_005",
+              "sender": "marie",
+              "time_label": "16:07",
+              "text": "Immense."
+            },
+            {
+              "id": "msg_thu_marie_offer_006",
+              "sender": "marie",
+              "time_label": "16:07",
+              "text": "J'ai besoin de deux bras à 18h."
+            },
+            {
+              "id": "msg_thu_marie_offer_007",
+              "sender": "marie",
+              "time_label": "16:08",
+              "text": "Et j'ai envie que tu viennes."
+            },
+            {
+              "id": "msg_thu_marie_offer_008",
+              "sender": "marie",
+              "time_label": "16:08",
+              "text": "Ce sont deux raisons différentes."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_thursday_marie_topology_choice",
+      "pattern": "three_topology_choice",
+      "function": "M1 — choisir où et comment Player sera présent pour le mouvement de Marie.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "choice_thu_topology_join_marie",
+          "text": "Je viens à 18h. Donne-moi la liste et évite-moi seulement le traiteur.",
+          "tone": "join_early",
+          "sets_flags": [
+            "opening_topology_join_marie"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_thu_marie_offer_009a",
+              "sender": "marie",
+              "time_label": "16:09",
+              "text": "Marché conclu."
+            },
+            {
+              "id": "msg_thu_marie_offer_010a",
+              "sender": "marie",
+              "time_label": "16:09",
+              "text": "Je te garde les chaises, les rallonges et les décisions de dernière minute."
+            },
+            {
+              "id": "msg_thu_marie_offer_011a",
+              "sender": "marie",
+              "time_label": "16:10",
+              "text": "Arrive vraiment à 18h et je serai impressionnée."
+            }
+          ]
+        },
+        {
+          "id": "choice_thu_topology_stay_home",
+          "text": "Vas-y sans moi. Je reste ici, je termine la chambre et je souffle un peu.",
+          "tone": "stay_home",
+          "sets_flags": [
+            "opening_topology_stay_home"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_thu_marie_offer_009b",
+              "sender": "marie",
+              "time_label": "16:09",
+              "text": "D'accord. Moi j'y vais quand même."
+            },
+            {
+              "id": "msg_thu_marie_offer_010b",
+              "sender": "marie",
+              "time_label": "16:10",
+              "text": "Mathilde m'a dit qu'elle restait pour l'appel de l'assurance."
+            },
+            {
+              "id": "msg_thu_marie_offer_011b",
+              "sender": "marie",
+              "time_label": "16:10",
+              "text": "Demande-lui quand même ce dont elle a besoin avant de décider que vous êtes deux ermites autonomes."
+            }
+          ]
+        },
+        {
+          "id": "choice_thu_topology_work_then_join",
+          "text": "J'ai la revue d'accessibilité à finir. Je passe après.",
+          "tone": "work_then_join",
+          "sets_flags": [
+            "opening_topology_work_then_join",
+            "join_after_work_obligation"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_thu_marie_offer_009c",
+              "sender": "marie",
+              "time_label": "16:09",
+              "text": "Ok."
+            },
+            {
+              "id": "msg_thu_marie_offer_010c",
+              "sender": "marie",
+              "time_label": "16:09",
+              "text": "Mais « je passe après » est une promesse. Pas une ambiance."
+            },
+            {
+              "id": "msg_thu_marie_offer_011c",
+              "sender": "marie",
+              "time_label": "16:10",
+              "text": "Je note l'heure pour le plaisir de te juger proprement."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "routes_nourished": [
+    "marie"
+  ],
+  "debug_notes": "V0.82 O4. Trois actions topologiques, aucune route affichée comme menu et une seule branche doit se débloquer."
+}

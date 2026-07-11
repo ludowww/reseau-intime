@@ -1,0 +1,137 @@
+{
+  "id": "chapter_03_raphaelle_late_review",
+  "chapter": 3,
+  "day": 3,
+  "title": "Jeudi fin de journée — Une version correcte",
+  "app": "messages",
+  "window_id": "O5C",
+  "calendar_label": "Jeudi",
+  "time_band": "LATE_AFTERNOON_TO_EVENING",
+  "communication_mode": "WORK_CHAT",
+  "foreground_role": "foreground",
+  "physical_context": "Player et Raphaëlle terminent la revue depuis des postes ou pièces distinctes. Marie prépare le vernissage à La Verrière.",
+  "thread": {
+    "id": "thread_raphaelle_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "raphaelle"
+    ],
+    "display_name": "Raphaëlle",
+    "profile_content_id": "profile_raphaelle_placeholder"
+  },
+  "segments": [
+    {
+      "id": "segment_thursday_raphaelle_late_review",
+      "pattern": "three_posture_choice",
+      "function": "RW0 — faire de la promesse à Marie une responsabilité de Player plutôt qu'une excuse Raphaëlle.",
+      "messages": [
+        {
+          "id": "msg_thu_raph_late_001",
+          "sender": "raphaelle",
+          "time_label": "17:45",
+          "text": "Nous avons deux options."
+        },
+        {
+          "id": "msg_thu_raph_late_002",
+          "sender": "raphaelle",
+          "time_label": "17:45",
+          "text": "Envoyer une version correcte à 18h40."
+        },
+        {
+          "id": "msg_thu_raph_late_003",
+          "sender": "raphaelle",
+          "time_label": "17:46",
+          "text": "Ou inventer un quatrième écran et détester notre vie à 20h."
+        },
+        {
+          "id": "msg_thu_raph_late_004",
+          "sender": "raphaelle",
+          "time_label": "17:46",
+          "text": "Je vote pour la première."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_thu_work_promise_kept",
+          "text": "On envoie la version correcte. Je dois rejoindre Marie.",
+          "tone": "decide_and_leave",
+          "sets_flags": [
+            "work_promise_kept",
+            "couple_reconnection_candidate"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_thu_raph_late_005a",
+              "sender": "raphaelle",
+              "time_label": "17:48",
+              "text": "Décision prise."
+            },
+            {
+              "id": "msg_thu_raph_late_006a",
+              "sender": "raphaelle",
+              "time_label": "17:48",
+              "text": "J'approuve le concept. Je verrouille le prototype."
+            }
+          ]
+        },
+        {
+          "id": "choice_thu_work_promise_amended",
+          "text": "On termine le dernier point. Je la préviens que j'aurai vingt minutes.",
+          "tone": "honest_delay",
+          "sets_flags": [
+            "work_promise_amended"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_thu_raph_late_005b",
+              "sender": "raphaelle",
+              "time_label": "17:48",
+              "text": "Très bien."
+            },
+            {
+              "id": "msg_thu_raph_late_006b",
+              "sender": "raphaelle",
+              "time_label": "17:48",
+              "text": "Préviens-la maintenant. Pas quand les vingt minutes seront devenues une heure."
+            }
+          ]
+        },
+        {
+          "id": "choice_thu_work_promise_missed",
+          "text": "On voit combien de temps ça prend.",
+          "tone": "vague_absorption",
+          "sets_flags": [
+            "work_promise_missed",
+            "parallel_drift_candidate"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_thu_raph_late_005c",
+              "sender": "raphaelle",
+              "time_label": "17:48",
+              "text": "Non."
+            },
+            {
+              "id": "msg_thu_raph_late_006c",
+              "sender": "raphaelle",
+              "time_label": "17:48",
+              "text": "« On voit » est exactement comme on finit ici à vingt heures."
+            },
+            {
+              "id": "msg_thu_raph_late_007c",
+              "sender": "raphaelle",
+              "time_label": "17:49",
+              "text": "Je t'envoie le fichier et je pars après ma partie."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "routes_nourished": [
+    "raphaelle",
+    "marie"
+  ],
+  "debug_notes": "V0.82 O5C. Raphaëlle ne retient pas Player et ne porte pas son indécision. La promesse reste une conséquence de couple."
+}
