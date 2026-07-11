@@ -7,7 +7,7 @@
   "day_start_time": "12:10",
   "title": "Mercredi — Faire de la place",
   "description": "Mathilde doit quitter temporairement son appartement. Marie et Player font de la place avant son arrivée.",
-  "design_goal": "Valider le premier passage modulaire mardi vers mercredi, les fils persistants, les choix M0/MT0 et un offline beat sans activer de route.",
+  "design_goal": "Valider le passage automatique de mardi vers mercredi, les phases temporelles, les fils persistants, les choix M0/MT0 et un offline beat sans activer de route.",
   "window_range": "O1-O2",
   "default_order": [
     "chapter_02_marie_make_room",
@@ -45,6 +45,62 @@
       ]
     }
   ],
+  "timeline_flow": {
+    "initial_state": "LOCKED",
+    "initial_phase_id": "wednesday_make_room",
+    "day_start_card": {
+      "eyebrow": "MERCREDI — MIDI",
+      "title": "Faire de la place",
+      "subtitle": "12:10",
+      "duration": 1.35,
+      "min_time": 0.35
+    },
+    "day_end_card": {
+      "eyebrow": "MERCREDI — FIN DE JOURNÉE",
+      "duration": 1.0,
+      "min_time": 0.35
+    },
+    "next_day": 3,
+    "phases": [
+      {
+        "id": "wednesday_make_room",
+        "moment_label": "midi",
+        "time_label": "12:10",
+        "required_conversation_ids": [
+          "chapter_02_marie_make_room"
+        ]
+      },
+      {
+        "id": "wednesday_arrival_trace",
+        "moment_label": "fin de journée",
+        "time_label": "18:18",
+        "required_conversation_ids": [
+          "chapter_02_marie_arrival_trace"
+        ],
+        "transition_card": {
+          "eyebrow": "MERCREDI — FIN DE JOURNÉE",
+          "title": "18:18",
+          "duration": 0.9,
+          "min_time": 0.35
+        }
+      },
+      {
+        "id": "wednesday_mathilde_arrival",
+        "moment_label": "soir",
+        "time_label": "18:22",
+        "required_conversation_ids": [
+          "chapter_02_mathilde_arrival"
+        ],
+        "completion_includes_offline_beat": true,
+        "transition_card": {
+          "eyebrow": "MERCREDI — SOIR",
+          "title": "18:22",
+          "duration": 0.9,
+          "min_time": 0.35
+        }
+      }
+    ]
+  },
   "conversation_availability": {
     "initial_conversation_ids": [
       "chapter_02_marie_make_room"
@@ -93,11 +149,10 @@
     "res://data/visual_content/chapter_02_proofs.json"
   ],
   "debug_expected_outcomes": [
-    "Wednesday starts at 12:10 and progresses to 18:18 and 18:22.",
-    "The final offline time is branch-specific: 18:46 practical, 18:50 playful, or 19:15 distant.",
-    "Marie has two episodes in one persistent thread.",
-    "Mathilde unlocks only after the authorized arrival trace.",
-    "M0 and MT0 each contain exactly three choices.",
-    "No Thursday or Friday content is active."
+    "Wednesday is hidden until Tuesday completes.",
+    "The day starts through the Wednesday start interstitial.",
+    "The timeline advances from 12:10 to 18:18 and 18:22 in separate phases.",
+    "Mathilde conversation completion includes the branch-specific offline beat and closes Wednesday.",
+    "Thursday unlocks only after Wednesday completion."
   ]
 }

@@ -188,6 +188,54 @@ func get_index_for_day(day_value) -> Dictionary:
 func get_moments_for_day(day_value) -> Array:
 	return get_index_for_day(day_value).get("moment_flow", [])
 
+func get_timeline_flow(day_value) -> Dictionary:
+	return get_index_for_day(day_value).get("timeline_flow", {})
+
+func get_timeline_phases(day_value) -> Array:
+	return get_timeline_flow(day_value).get("phases", [])
+
+func get_timeline_initial_phase_id(day_value) -> String:
+	var flow := get_timeline_flow(day_value)
+	var configured := str(flow.get("initial_phase_id", ""))
+	if configured != "":
+		return configured
+	var phases := get_timeline_phases(day_value)
+	if not phases.is_empty() and typeof(phases[0]) == TYPE_DICTIONARY:
+		return str(phases[0].get("id", ""))
+	return ""
+
+func get_timeline_phase(day_value, phase_id: String) -> Dictionary:
+	for phase in get_timeline_phases(day_value):
+		if typeof(phase) == TYPE_DICTIONARY and str(phase.get("id", "")) == phase_id:
+			return phase
+	return {}
+
+func get_timeline_phase_for_conversation(day_value, conversation_id: String) -> Dictionary:
+	for phase in get_timeline_phases(day_value):
+		if typeof(phase) != TYPE_DICTIONARY:
+			continue
+		if _timeline_phase_conversation_ids(phase).has(conversation_id):
+			return phase
+	return {}
+
+func get_timeline_next_day(day_value):
+	return get_timeline_flow(day_value).get("next_day", null)
+
+func get_timeline_day_start_card(day_value) -> Dictionary:
+	return get_timeline_flow(day_value).get("day_start_card", {})
+
+func get_timeline_day_end_card(day_value) -> Dictionary:
+	return get_timeline_flow(day_value).get("day_end_card", {})
+
+func _timeline_phase_conversation_ids(phase: Dictionary) -> Array:
+	var ids: Array = []
+	for key in ["required_conversation_ids", "optional_conversation_ids", "required_any_conversation_ids"]:
+		for conversation_id in phase.get(key, []):
+			var value := str(conversation_id)
+			if value != "" and not ids.has(value):
+				ids.append(value)
+	return ids
+
 func get_conversations_for_moment(day_value, moment: Dictionary) -> Array:
 	var source: Array = []
 	for conversation_id in moment.get("conversation_ids", []):

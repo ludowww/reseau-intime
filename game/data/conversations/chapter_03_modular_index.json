@@ -6,8 +6,8 @@
   "display_label": "Jeudi — Être là",
   "day_start_time": "09:10",
   "title": "Jeudi — Être là",
-  "description": "Raphaëlle ouvre la journée au travail. Marie propose ensuite le vernissage et le choix de Player ouvre une seule soirée possible avant un retour obligatoire vers le couple.",
-  "design_goal": "Valider les déblocages conditionnels, une topologie exclusive et la conséquence Marie sans dépasser R1.",
+  "description": "Raphaëlle ouvre la journée au travail. Sandra devient ensuite une fenêtre optionnelle avant que Marie propose le vernissage et que Player ouvre une seule soirée possible.",
+  "design_goal": "Valider les phases temporelles, l'expiration d'une scène optionnelle, une topologie exclusive et la conséquence Marie sans dépasser R1.",
   "window_range": "O3-O6",
   "default_order": [
     "chapter_03_raphaelle_blue_folder",
@@ -85,6 +85,111 @@
       ]
     }
   ],
+  "timeline_flow": {
+    "initial_state": "LOCKED",
+    "initial_phase_id": "thursday_raphaelle_work",
+    "day_start_card": {
+      "eyebrow": "JEUDI — MATIN",
+      "title": "Être là",
+      "subtitle": "09:10",
+      "duration": 1.35,
+      "min_time": 0.35
+    },
+    "day_end_card": {
+      "eyebrow": "JEUDI — FIN DE JOURNÉE",
+      "title": "La suite n'est pas encore disponible.",
+      "duration": 1.35,
+      "min_time": 0.35
+    },
+    "next_day": null,
+    "phases": [
+      {
+        "id": "thursday_raphaelle_work",
+        "moment_label": "matin",
+        "time_label": "09:10",
+        "required_conversation_ids": [
+          "chapter_03_raphaelle_blue_folder"
+        ]
+      },
+      {
+        "id": "thursday_sandra_optional",
+        "moment_label": "début d'après-midi",
+        "time_label": "13:50",
+        "optional_conversation_ids": [
+          "chapter_03_sandra_continuity"
+        ],
+        "advance_label": "Passer à 16:05",
+        "advance_label_completed": "Continuer vers 16:05",
+        "advance_label_blocked": "Terminer Sandra avant de continuer",
+        "skip_sets_flags": [
+          "thursday_sandra_echo_missed"
+        ],
+        "transition_card": {
+          "eyebrow": "JEUDI — DÉBUT D'APRÈS-MIDI",
+          "title": "13:50",
+          "duration": 0.9,
+          "min_time": 0.35
+        }
+      },
+      {
+        "id": "thursday_marie_offer",
+        "moment_label": "fin d'après-midi",
+        "time_label": "16:05",
+        "required_conversation_ids": [
+          "chapter_03_marie_event_offer"
+        ],
+        "transition_card": {
+          "eyebrow": "JEUDI — FIN D'APRÈS-MIDI",
+          "title": "16:05",
+          "duration": 0.9,
+          "min_time": 0.35
+        }
+      },
+      {
+        "id": "thursday_selected_topology",
+        "moment_label": "soir",
+        "required_any_conversation_ids": [
+          "chapter_03_marie_event_joined",
+          "chapter_03_mathilde_home_charger",
+          "chapter_03_raphaelle_late_review"
+        ],
+        "transition_cards_by_conversation": {
+          "chapter_03_raphaelle_late_review": {
+            "eyebrow": "JEUDI — FIN DE JOURNÉE",
+            "title": "17:45",
+            "duration": 0.9,
+            "min_time": 0.35
+          },
+          "chapter_03_marie_event_joined": {
+            "eyebrow": "JEUDI — SOIR",
+            "title": "17:55",
+            "duration": 0.9,
+            "min_time": 0.35
+          },
+          "chapter_03_mathilde_home_charger": {
+            "eyebrow": "JEUDI — SOIR",
+            "title": "18:20",
+            "duration": 0.9,
+            "min_time": 0.35
+          }
+        }
+      },
+      {
+        "id": "thursday_marie_return",
+        "moment_label": "nuit",
+        "time_label": "22:10",
+        "required_conversation_ids": [
+          "chapter_03_marie_event_return"
+        ],
+        "transition_card": {
+          "eyebrow": "JEUDI — NUIT",
+          "title": "22:10",
+          "duration": 0.9,
+          "min_time": 0.35
+        }
+      }
+    ]
+  },
   "conversation_availability": {
     "initial_conversation_ids": [
       "chapter_03_raphaelle_blue_folder"
@@ -176,7 +281,7 @@
   "route_stage_ceiling": "R1",
   "end_of_day_player_knowledge": [
     "Raphaëlle dispose d'un accès professionnel ordinaire R1.",
-    "Sandra reste un écho doux sans nouvelle photo.",
+    "Sandra est vue ou expirée avant le passage à 16:05.",
     "Player a choisi une seule topologie pour la soirée de Marie.",
     "La conséquence de la soirée est revenue vers Marie.",
     "Aucune route R2, secret dur ou cadre adulte n'existe."
@@ -185,10 +290,11 @@
     "res://data/visual_content/chapter_03_proofs.json"
   ],
   "debug_expected_outcomes": [
-    "Raphaëlle unlocks Sandra silently and Marie with a notification.",
+    "Thursday is hidden until Wednesday completes.",
+    "Raphaëlle completion activates only the optional Sandra phase at 13:50.",
+    "Marie remains hidden until Sandra is completed or explicitly expired.",
     "M1 unlocks exactly one of three topology branches.",
-    "Any completed branch unlocks the mandatory Marie return.",
-    "The return variant matches branch-quality flags.",
-    "Friday, Pauline, Nico, R2 and adult content remain inactive."
+    "Any completed branch unlocks the mandatory Marie return at 22:10.",
+    "Thursday completion shows an end card and does not expose Friday."
   ]
 }

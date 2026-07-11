@@ -38,15 +38,19 @@ class V081WednesdayStaticTests(unittest.TestCase):
         self.assertIn("chapter_03_proofs.json", visual_block)
         self.assertNotIn("chapter_04_proofs.json", visual_block)
 
-    def test_active_phone_scenes_use_v082_adapters_that_extend_v081(self):
+    def test_active_scenes_use_v084_adapters_while_preserving_v081_v082_foundations(self):
         phone_scene = (GAME / "scenes/smartphone/PhonePrototype.tscn").read_text(encoding="utf-8")
         conversation_scene = (GAME / "scenes/smartphone/ConversationView.tscn").read_text(encoding="utf-8")
-        self.assertIn("PhonePrototypeV082.gd", phone_scene)
-        self.assertIn("ConversationViewV082.gd", conversation_scene)
+        self.assertIn("PhonePrototypeV084.gd", phone_scene)
+        self.assertIn("ConversationViewV084.gd", conversation_scene)
 
+        phone_v084 = (GAME / "scripts/ui/PhonePrototypeV084.gd").read_text(encoding="utf-8")
         phone_v082 = (GAME / "scripts/ui/PhonePrototypeV082.gd").read_text(encoding="utf-8")
+        conversation_v084 = (GAME / "scripts/ui/ConversationViewV084.gd").read_text(encoding="utf-8")
         conversation_v082 = (GAME / "scripts/ui/ConversationViewV082.gd").read_text(encoding="utf-8")
+        self.assertIn('extends "res://scripts/ui/PhonePrototypeV082.gd"', phone_v084)
         self.assertIn('extends "res://scripts/ui/PhonePrototypeV081.gd"', phone_v082)
+        self.assertIn('extends "res://scripts/ui/ConversationViewV082.gd"', conversation_v084)
         self.assertIn('extends "res://scripts/ui/ConversationViewV081.gd"', conversation_v082)
 
         phone_adapter = (GAME / "scripts/ui/PhonePrototypeV081.gd").read_text(encoding="utf-8")
