@@ -13,6 +13,7 @@ var skipped_phase_ids_by_day: Dictionary = {}
 var expired_conversation_ids_by_day: Dictionary = {}
 var completed_episode_ids_by_day: Dictionary = {}
 var opened_optional_conversation_ids_by_day: Dictionary = {}
+var day_log_entries_by_day: Dictionary = {}
 
 func reset_timeline() -> void:
 	unlocked_day_keys.clear()
@@ -24,6 +25,7 @@ func reset_timeline() -> void:
 	expired_conversation_ids_by_day.clear()
 	completed_episode_ids_by_day.clear()
 	opened_optional_conversation_ids_by_day.clear()
+	day_log_entries_by_day.clear()
 	if DataLoader.chapter_indexes.is_empty():
 		timeline_changed.emit()
 		return
@@ -157,6 +159,26 @@ func expire_conversation(day_value, conversation_id: String) -> void:
 
 func is_conversation_expired(day_value, conversation_id: String) -> bool:
 	return bool(_bucket(expired_conversation_ids_by_day, day_value).get(conversation_id, false))
+
+func record_day_log_entry(day_value, entry: Dictionary) -> void:
+	var entry_id := str(entry.get("id", ""))
+	if entry_id == "":
+		return
+	var key := day_key(day_value)
+	var raw_entries = day_log_entries_by_day.get(key, [])
+	var entries: Array = raw_entries if typeof(raw_entries) == TYPE_ARRAY else []
+	for raw_entry in entries:
+		if typeof(raw_entry) == TYPE_DICTIONARY and str(raw_entry.get("id", "")) == entry_id:
+			return
+	entries.append(entry.duplicate(true))
+	day_log_entries_by_day[key] = entries
+	timeline_changed.emit()
+
+func get_day_log_entries(day_value) -> Array:
+	var raw_entries = day_log_entries_by_day.get(day_key(day_value), [])
+	if typeof(raw_entries) != TYPE_ARRAY:
+		return []
+	return raw_entries.duplicate(true)
 
 func _bucket(source: Dictionary, day_value) -> Dictionary:
 	var value = source.get(day_key(day_value), {})
