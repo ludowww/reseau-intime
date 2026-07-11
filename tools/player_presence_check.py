@@ -94,6 +94,9 @@ def report_file(path: Path, player: str, min_ratio: float) -> int:
     player_messages = [node for node in messages if sender_of(node) == player and text_of(node).strip()]
     visible_choice_replies = [choice for choice in choices if choice_label(choice).strip()]
     non_player_messages, longest_non_player_streak = message_presence_stats(messages, player)
+    # Backward-compatible alias: the legacy static suite and downstream authoring
+    # integrations used this name for the same longest non-Player message streak.
+    longest_player_absence_streak = longest_non_player_streak
     choices_with_next = [choice for choice in choices if next_messages(choice)]
     choices_with_player = [choice for choice in choices if has_player_reply(choice, player)]
     strong_choices = [choice for choice in choices if choice_looks_strong(choice_label(choice))]
@@ -124,8 +127,8 @@ def report_file(path: Path, player: str, min_ratio: float) -> int:
         warnings.append(
             f"low Player reply ratio after choices: {len(choices_with_player)}/{len(choices)} < {min_ratio:.2f}"
         )
-    if longest_non_player_streak >= 5:
-        warnings.append(f"Player absent for {longest_non_player_streak} consecutive automatic messages")
+    if longest_player_absence_streak >= 5:
+        warnings.append(f"Player absent for {longest_player_absence_streak} consecutive automatic messages")
     if strong_without_player:
         labels = "; ".join(choice_label(choice) for choice in strong_without_player[:5])
         warnings.append("strong choice(s) without visible Player reply: " + labels)
