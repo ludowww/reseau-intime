@@ -102,7 +102,7 @@ func _show_timeline_landing(card: Dictionary) -> void:
 		var value := str(card.get(key, ""))
 		if value != "" and not details.has(value):
 			details.append(value)
-	conversation.show_timeline_landing(str(card.get("eyebrow", "")), " · ".join(details))
+	conversation.call("show_timeline_landing", str(card.get("eyebrow", "")), " · ".join(details))
 
 func _build_layout() -> void:
 	var background := PanelContainer.new()
