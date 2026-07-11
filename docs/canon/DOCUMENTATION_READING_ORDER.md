@@ -1,8 +1,7 @@
 # Documentation Reading Order — Canon Current
 
-> Canon entry point after the V0.81 Tuesday-to-Wednesday runtime slice.  
-> Read this file before older character, route, proof, day-plan, or runtime documentation.  
-> Current playable runtime is canonical only through Wednesday; Thursday and Friday remain documented but unimplemented.
+> Canon entry point after the V0.82 Thursday topology runtime slice.  
+> Current playable runtime is canonical through Thursday night. Friday remains authored in V0.79 but unimplemented.
 
 ## 1. Core rules
 
@@ -11,10 +10,10 @@ Write people from full character canon.
 Write story movement from V0.78.
 Write opening content from V0.79.
 Write time and delivery from the temporal canon and map.
-Read V0.80 for the technical audit and phased plan.
-Treat V0.81 as the current runtime implementation boundary.
+Read V0.80 for the phased technical strategy.
+Treat V0.81 and V0.82 as the current runtime implementation boundary.
 Use three choices by default.
-Existing legacy runtime is not automatic narrative canon.
+Legacy runtime is not automatic narrative canon.
 ```
 
 ## 2. Official reading order
@@ -28,11 +27,13 @@ Existing legacy runtime is not automatic narrative canon.
    - `docs/canon/ACT_I_OPENING_WINDOWS_SOURCE_PACK.md`
    - `docs/canon/ACT_I_OPENING_SCENE_CARDS.md`
    - `docs/canon/ACT_I_OPENING_TEMPORAL_DELIVERY_MAP.md`
-7. runtime audit, plan, and current implementation report:
+7. runtime audit, plans, and reports:
    - `docs/runtime/V0_80_RUNTIME_AUDIT_AND_GAP_MAP.md`
    - `docs/V0_80_First_Modular_Runtime_Integration_Plan.md`
    - `docs/runtime/V0_81_WEDNESDAY_VERTICAL_SLICE_IMPLEMENTATION_PLAN.md`
    - `docs/V0_81_Tuesday_Handoff_And_Wednesday_Runtime_Report.md`
+   - `docs/runtime/V0_82_THURSDAY_TOPOLOGY_IMPLEMENTATION_PLAN.md`
+   - `docs/V0_82_Thursday_Topology_And_Marie_Return_Runtime_Report.md`
 8. `docs/canon/characters/CHARACTER_CANON_INDEX.md`
 9. relevant principal full-canon file
 10. `docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md` when adult tension, images, voyeurism, cheating, sharing, roleplay, NTR/cuckold, group content, or dark consequences are involved
@@ -55,26 +56,18 @@ full character canon
 + V0.79 opening source pack / cards / temporal map
 = narrative truth
 
-V0.80 audit and implementation plan
-= technical design truth
+V0.80 phased plan
+= technical strategy
 
-V0.81 active indexes, conversations, visual metadata, adapters, and tests
-= current playable runtime truth through Wednesday
+V0.81 Tuesday–Wednesday runtime
++ V0.82 Thursday conditional topology runtime
+= current playable truth through Thursday night
 
 legacy Chapter 2–9 files
 = inactive technical/history material
 ```
 
-## 4. V0.81 current runtime scope
-
-The active loader exposes only:
-
-```text
-chapter_01_modular_index.json
-chapter_02_modular_index.json
-```
-
-Current playable chronology:
+## 4. Current playable chronology
 
 ```text
 Mardi soir
@@ -84,173 +77,156 @@ Mercredi midi
 = Marie / faire de la place
 
 Mercredi fin de journée
-= Marie / trace d'arrivée de Mathilde
+= Marie / trace d'arrivée
 
 Mercredi soir
-= Mathilde / arrivée puis installation hors ligne
+= Mathilde / arrivée + installation hors ligne
+
+Jeudi matin
+= Raphaëlle / travail ordinaire
+
+Jeudi début d'après-midi
+= écho Sandra optionnel
+
+Jeudi fin d'après-midi
+= Marie / choix topologique M1
+
+Jeudi soir
+= une seule branche O5A, O5B ou O5C
+
+Jeudi nuit
+= retour O6 obligatoire vers Marie
 ```
 
-V0.81 implements:
+Friday remains absent from active navigation.
 
-- a filtered J1 handoff where Mathilde is indirect rather than already installed;
-- data-driven Tuesday/Wednesday labels;
-- narrative status-bar time;
-- currently available episode metadata only;
-- persistent Marie and Mathilde threads;
-- sequential Wednesday unlocks;
-- M0 and MT0 with exactly three choices;
-- observable action flags only;
-- `time_separator` and `offline_beat` semantic presentations;
-- one authorized ordinary visual: `mathilde_arrival_room_01`;
-- inactive legacy days retained on disk but hidden from current navigation.
-
-## 5. J1 handoff rule
-
-The active Tuesday index filters out:
+## 5. Active runtime indexes
 
 ```text
-msg_marie_291
-msg_marie_292
-j1_mathilde_bag_domestic_trace
+chapter_01_modular_index.json
+chapter_02_modular_index.json
+chapter_03_modular_index.json
 ```
 
-Therefore Tuesday no longer shows Mathilde's bags, shoes, sport bag, or racket as if she were already living at the apartment.
+Legacy indexes remain on disk but are not loaded.
 
-The original files remain available as legacy data, but the active modular index controls playable continuity.
+## 6. V0.82 topology rule
 
-Mathilde has no active Tuesday thread.
-
-## 6. Wednesday choice and state ceiling
-
-Implemented choice nodes:
+M1 contains exactly three actions:
 
 ```text
-M0  — proactive / playful-present / passive assent
-MT0 — practical / teasing-helpful / distant welcome
+1. join Marie early
+2. stay at the shared home
+3. finish work and promise to join later
 ```
 
-Runtime writes only:
+The selected flag unlocks exactly one:
 
 ```text
-opening_make_room_proactive
-opening_make_room_playful
-opening_make_room_passive
-mathilde_arrival_practical
-mathilde_arrival_playful
-mathilde_arrival_distant
-mathilde_stay_active
-opening_wednesday_complete
+opening_topology_join_marie
+-> O5A Marie / La Verrière
+
+opening_topology_stay_home
+-> O5B Mathilde / foyer
+
+opening_topology_work_then_join
+-> O5C Raphaëlle / travail
 ```
 
-No new affection, desire, jealousy, route, secret, or couple-mode score is written.
+Any completed branch unlocks the single O6 Marie consequence.
 
-Current ceiling:
+No branch is a direct character-route menu.
+
+## 7. Conditional runtime foundation
+
+V0.82 adds only:
+
+```text
+unlock conditions
++ after_any_conversation_completed
++ conditional messages/choices
++ cross-day cumulative thread merge
+```
+
+It does not add a universal scheduler.
+
+The same persistent contact may now append unseen Thursday episodes while preserving Tuesday/Wednesday history.
+
+## 8. Time and communication
+
+Core rule:
+
+```text
+If characters are co-present and can talk,
+they do not conduct a long Messenger conversation.
+```
+
+Thursday modes:
+
+```text
+Raphaëlle O3       = WORK_CHAT
+Sandra echo        = REMOTE_ASYNC
+Marie O4           = REMOTE_ASYNC
+Marie O5A          = SAME_VENUE_LOGISTICS
+Mathilde O5B       = SEPARATE_ROOMS_PING -> OFFLINE_BEAT for helpful branches
+Raphaëlle O5C      = WORK_CHAT
+Marie O6           = AFTERGLOW_REMOTE
+```
+
+The joined branch keeps emotional evaluation for O6 after separation.
+
+## 9. Current route and state ceiling
+
+After Thursday:
 
 ```text
 Mathilde = R1 Ordinary Access
-adult frames = none
+Raphaëlle = R1 Ordinary Work Access
+Sandra = soft continuity echo
+Marie/Player = HABITUAL_WARMTH with remembered reconnection/drift candidates
 hard secrets = none
+adult frames = none
 ```
 
-## 7. Time and communication rule in runtime
-
-The phone now uses data-driven narrative time rather than the hardcoded current-scene value.
-
-Wednesday advances through:
-
-```text
-12:10
-18:18
-18:22
-18:46 / 18:50 / 19:15 according to MT0
-```
-
-A previous authored separator cannot move the clock backward after a later episode unlocks.
-
-When Player returns home:
-
-```text
-Messenger stops
--> installation continues as an authored offline beat
-```
-
-The offline beat:
-
-- has no sender;
-- shows no typing indicator;
-- is centered;
-- remains in conversation history;
-- updates narrative time;
-- does not duplicate when the thread is reopened.
-
-## 8. Persistent-thread rule
-
-Marie has two Wednesday episodes inside:
-
-```text
-thread_marie_private
-```
-
-Mathilde opens:
-
-```text
-thread_mathilde_private
-```
-
-The contact list remains one visible card per character. Locked future episodes do not leak their time into current contact metadata.
-
-## 9. Legacy-runtime policy
-
-Legacy indexes and conversation files remain in the repository for:
-
-- rollback;
-- history;
-- technical comparison;
-- isolated future recovery.
-
-They are not loaded by the current canonical phone navigation.
-
-Do not delete or rewrite Chapter 3+ during V0.81 review.
+Runtime writes observable flags, not new affection/desire scores or a forced couple-mode transition.
 
 ## 10. Current exclusions
 
-V0.81 does not implement:
+Not implemented:
 
-- Thursday Raphaëlle/Sandra content;
-- Marie's topology invitation;
-- O5A/O5B/O5C;
-- mandatory Thursday return to Marie;
-- Pauline or Nico opening access;
-- branch-conditioned unlocks;
+- Friday O7/O8;
+- Pauline or Nico threads;
+- public group-photo relay;
 - route R2+;
-- adult images or adult content;
 - hard secrets;
-- a universal scheduler;
-- a new couple-state engine.
+- adult content;
+- open-couple negotiation;
+- NTR/cuckold logic;
+- universal scheduler;
+- save migration;
+- legacy-file deletion.
 
-## 11. Next runtime step
+## 11. Next step
 
-After V0.81 validation and merge:
+After V0.82 validation and merge:
 
 ```text
-V0.82 — Thursday topology and mandatory Marie return
+V0.83 — Friday public traces and opening completion
 ```
-
-V0.82 may add only the condition-aware unlock/content foundation required by O3–O6. It must not become a universal scheduling refactor.
 
 ## 12. Maintenance rule
 
-When runtime constraints affect story meaning:
+If a runtime constraint changes story meaning:
 
-- stop implementation expansion;
-- update the source pack/card/map first;
-- update the relevant runtime plan/report;
-- obtain Product Owner validation;
-- then resume code work.
+1. stop expansion;
+2. update the relevant source pack/card/temporal map;
+3. update the runtime plan/report;
+4. obtain Product Owner validation;
+5. resume implementation.
 
 ## 13. Final rule
 
 ```text
-V0.81 proves that Tuesday can become Wednesday coherently.
-The engine does not learn Thursday branching until this small slice is validated.
+V0.82 opens one Thursday context and always returns its consequence to Marie.
+Friday does not begin until that topology is validated.
 ```
