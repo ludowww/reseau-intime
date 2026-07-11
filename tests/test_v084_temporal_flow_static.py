@@ -11,12 +11,12 @@ def load_json(relative: str):
 
 
 class V084TemporalFlowStaticTests(unittest.TestCase):
-    def test_timeline_state_is_registered_and_phone_uses_v084_adapter(self):
+    def test_timeline_state_is_registered_and_phone_uses_v085_over_v084(self):
         project = (GAME / "project.godot").read_text(encoding="utf-8")
         phone_scene = (GAME / "scenes/smartphone/PhonePrototype.tscn").read_text(encoding="utf-8")
         conversation_scene = (GAME / "scenes/smartphone/ConversationView.tscn").read_text(encoding="utf-8")
         self.assertIn('TimelineState="*res://scripts/core/TimelineState.gd"', project)
-        self.assertIn("PhonePrototypeV084.gd", phone_scene)
+        self.assertIn("PhonePrototypeV085.gd", phone_scene)
         self.assertIn("ConversationViewV084.gd", conversation_scene)
 
         state = (GAME / "scripts/core/TimelineState.gd").read_text(encoding="utf-8")
@@ -29,11 +29,17 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
             "expired_conversation_ids_by_day",
             "completed_episode_ids_by_day",
             "opened_optional_conversation_ids_by_day",
+            "day_log_entries_by_day",
             "record_episode_completed",
+            "record_day_log_entry",
+            "get_day_log_entries",
             "expire_conversation",
             "reset_timeline",
         ]:
             self.assertIn(expected, state)
+
+        phone_v085 = (GAME / "scripts/ui/PhonePrototypeV085.gd").read_text(encoding="utf-8")
+        self.assertIn('extends "res://scripts/ui/PhonePrototypeV084.gd"', phone_v085)
 
     def test_only_tuesday_is_initially_available_and_day_chain_is_explicit(self):
         indexes = [
@@ -55,8 +61,10 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
     def test_all_active_indexes_define_ordered_timeline_phases(self):
         expected = {
             "data/conversations/chapter_01_modular_index.json": [
-                ("tuesday_marie", ["chapter_01_marie"], [], []),
-                ("tuesday_sandra", ["chapter_01_sandra"], [], []),
+                ("tuesday_marie_opening", ["chapter_01_marie_opening"], [], []),
+                ("tuesday_shared_evening", [], [], []),
+                ("tuesday_sandra_trace", ["chapter_01_sandra_trace"], [], []),
+                ("tuesday_marie_final_return", [], [], []),
             ],
             "data/conversations/chapter_02_modular_index.json": [
                 ("wednesday_make_room", ["chapter_02_marie_make_room"], [], []),
@@ -156,7 +164,7 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
         ]:
             self.assertIn(expected, script)
 
-    def test_archive_navigation_is_day_scoped_read_only_and_does_not_drive_time(self):
+    def test_archive_navigation_is_day_scoped_read_only_and_includes_offline_log(self):
         phone = (GAME / "scripts/ui/PhonePrototypeV084.gd").read_text(encoding="utf-8")
         for expected in [
             "_render_archived_day",
@@ -170,6 +178,10 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
         self.assertNotIn("_initialize_initial_pending_for_day", archived_block)
         self.assertNotIn("_refresh_status_time", archived_block)
         self.assertNotIn("GameState.set_context", archived_block)
+
+        v085 = (GAME / "scripts/ui/PhonePrototypeV085.gd").read_text(encoding="utf-8")
+        self.assertIn("TimelineState.get_day_log_entries", v085)
+        self.assertIn("Moments hors ligne", v085)
 
         archive = (GAME / "scripts/ui/ConversationViewV084.gd").read_text(encoding="utf-8")
         for expected in [
@@ -194,6 +206,7 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
         state = (GAME / "scripts/core/TimelineState.gd").read_text(encoding="utf-8")
         self.assertIn("unlocked_day_keys[first_key] = true", state)
         self.assertIn("current_day_key = first_key", state)
+        self.assertIn("day_log_entries_by_day.clear()", state)
 
     def test_friday_remains_absent_from_active_runtime(self):
         loader = (GAME / "scripts/core/DataLoader.gd").read_text(encoding="utf-8")
