@@ -11,13 +11,13 @@ def load_json(relative: str):
 
 
 class V084TemporalFlowStaticTests(unittest.TestCase):
-    def test_timeline_state_is_registered_and_phone_uses_v085_over_v084(self):
+    def test_timeline_state_is_registered_and_active_scenes_preserve_v084_foundation(self):
         project = (GAME / "project.godot").read_text(encoding="utf-8")
         phone_scene = (GAME / "scenes/smartphone/PhonePrototype.tscn").read_text(encoding="utf-8")
         conversation_scene = (GAME / "scenes/smartphone/ConversationView.tscn").read_text(encoding="utf-8")
         self.assertIn('TimelineState="*res://scripts/core/TimelineState.gd"', project)
-        self.assertIn("PhonePrototypeV085.gd", phone_scene)
-        self.assertIn("ConversationViewV084.gd", conversation_scene)
+        self.assertIn("PhonePrototypeV086A.gd", phone_scene)
+        self.assertIn("ConversationViewV086A.gd", conversation_scene)
 
         state = (GAME / "scripts/core/TimelineState.gd").read_text(encoding="utf-8")
         for expected in [
@@ -38,8 +38,16 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
         ]:
             self.assertIn(expected, state)
 
+        phone_v086a = (GAME / "scripts/ui/PhonePrototypeV086A.gd").read_text(encoding="utf-8")
         phone_v085 = (GAME / "scripts/ui/PhonePrototypeV085.gd").read_text(encoding="utf-8")
+        phone_v084 = (GAME / "scripts/ui/PhonePrototypeV084.gd").read_text(encoding="utf-8")
+        conversation_v086a = (GAME / "scripts/ui/ConversationViewV086A.gd").read_text(encoding="utf-8")
+        conversation_v084 = (GAME / "scripts/ui/ConversationViewV084.gd").read_text(encoding="utf-8")
+        self.assertIn('extends "res://scripts/ui/PhonePrototypeV085.gd"', phone_v086a)
         self.assertIn('extends "res://scripts/ui/PhonePrototypeV084.gd"', phone_v085)
+        self.assertIn('extends "res://scripts/ui/PhonePrototypeV082.gd"', phone_v084)
+        self.assertIn('extends "res://scripts/ui/ConversationViewV084.gd"', conversation_v086a)
+        self.assertIn('extends "res://scripts/ui/ConversationViewV082.gd"', conversation_v084)
 
     def test_only_tuesday_is_initially_available_and_four_day_chain_is_explicit(self):
         indexes = [
@@ -121,7 +129,7 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
         sandra = phases[1]
         marie = phases[2]
         self.assertEqual(sandra.get("time_label"), "13:50")
-        self.assertEqual(sandra.get("advance_label"), "Passer à 16:05")
+        self.assertEqual(sandra.get("advance_label"), "Continuer la journée")
         self.assertEqual(sandra.get("skip_sets_flags"), ["thursday_sandra_echo_missed"])
         self.assertEqual(marie.get("time_label"), "16:05")
         self.assertEqual(marie.get("required_conversation_ids"), ["chapter_03_marie_event_offer"])
