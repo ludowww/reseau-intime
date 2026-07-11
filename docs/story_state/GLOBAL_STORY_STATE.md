@@ -1,7 +1,8 @@
-# État global de l’histoire — V0.83
+# État global de l’histoire — V0.84
 
-> Résumé opérationnel après audit du flux temporel et de J1.  
-> V0.82 reste le runtime jouable actuel. V0.83 est documentaire et suspend l’intégration du vendredi.
+> Résumé opérationnel après intégration du flux temporel autoritaire.  
+> Le runtime reste narrativement identique à V0.82 jusqu’au jeudi soir, mais les jours et moments ne sont plus réarrangeables.  
+> J1 reste temporairement legacy jusqu’à V0.85.
 
 ## 1. Hiérarchie actuelle
 
@@ -13,112 +14,63 @@ canon personnages
 
 V0.83 flux temporel
 + V0.83 source J1 réconciliée
-= vérité corrective actuelle
+= vérité corrective
 
-V0.81–V0.82
-= runtime jouable mardi–jeudi
+V0.84
+= runtime temporel actif
 
-V0.84–V0.85
-= prochaines implémentations
+V0.85
+= prochaine correction du contenu mardi
 
 legacy Chapter 1–9
-= historique technique inactif sauf référence explicite
+= historique technique sauf référence active explicite
 ```
 
-## 2. Runtime actuellement jouable
+## 2. Visibilité initiale
+
+Au lancement :
 
 ```text
-Mardi
-Mercredi
-Jeudi
+Mardi = actif
+Mercredi = verrouillé
+Jeudi = verrouillé
+Vendredi = absent
 ```
 
-État après jeudi :
+Les indexes Mercredi et Jeudi sont chargés techniquement, mais invisibles et inaccessibles tant que la journée précédente n’est pas terminée.
+
+## 3. Progression des journées
 
 ```text
-Mathilde = R1 domestique
-Raphaëlle = R1 travail
-Sandra = continuité douce
-Marie/Player = HABITUAL_WARMTH
-hard secrets = none
-adult frames = none
-Friday = not implemented
-```
-
-## 3. Dette temporelle confirmée
-
-Le runtime actuel présente les trois jours dès le lancement.
-
-Le joueur peut donc :
-
-- ouvrir Mercredi avant de terminer Mardi ;
-- ouvrir Jeudi avant de terminer Mercredi ;
-- revenir dans un ancien jour sans distinction claire entre archive et présent ;
-- voir plusieurs heures disponibles simultanément.
-
-Cible V0.84 :
-
-```text
-Mardi actif
-Mercredi verrouillé
-Jeudi verrouillé
-
 fin Mardi
--> interstitiel
+-> MARDI — FIN DE JOURNÉE
+-> MERCREDI — MIDI
 -> Mercredi déverrouillé et sélectionné
 
 fin Mercredi
--> interstitiel
+-> MERCREDI — FIN DE JOURNÉE
+-> JEUDI — MATIN
 -> Jeudi déverrouillé et sélectionné
+
+fin Jeudi
+-> JEUDI — FIN DE JOURNÉE
+-> la suite n'est pas encore disponible
 ```
 
-## 4. Interstitiels temporels
+Les anciennes journées deviennent des archives en lecture seule.
 
-Transition de jour :
-
-```text
-MARDI — FIN DE JOURNÉE
-
-MERCREDI — MIDI
-Faire de la place
-```
-
-Transition intrajournalière :
-
-```text
-JEUDI — DÉBUT D'APRÈS-MIDI
-13:50
-```
-
-ou :
-
-```text
-JEUDI — FIN D'APRÈS-MIDI
-16:05
-```
-
-Ces cartes doivent être courtes, lisibles, skippables après un délai minimal, et bloquer l’accès aux conversations futures tant qu’elles ne sont pas terminées.
-
-## 5. Phases temporelles
+## 4. Phases temporelles
 
 Jour :
 
 ```text
-LOCKED
-AVAILABLE
-ACTIVE
-COMPLETE
-ARCHIVED
+LOCKED -> AVAILABLE -> ACTIVE -> COMPLETE -> ARCHIVED
 ```
 
 Phase :
 
 ```text
-LOCKED
-CURRENT
-COMPLETE
-SKIPPED
-EXPIRED
+LOCKED -> CURRENT -> COMPLETE / SKIPPED / EXPIRED
 ```
 
 Règle :
@@ -128,16 +80,41 @@ les timestamps décrivent le temps
 les phases autorisent l'accès
 ```
 
-## 6. Correction du jeudi
+## 5. Mardi actuel
 
-Comportement actuel :
+Structure temporelle V0.84 :
 
 ```text
-Raphaëlle terminée
--> Sandra 13:50 et Marie 16:05 disponibles ensemble
+18:12 Marie obligatoire
+-> 22:57 Sandra obligatoire
+-> Mardi terminé
+-> Mercredi
 ```
 
-Cible V0.84 :
+Le contenu reste le J1 legacy filtré.
+
+Les incohérences de texte, timestamps, rythme et fin sur Sandra restent une dette explicitement prévue pour V0.85.
+
+## 6. Mercredi actuel
+
+```text
+12:10 Marie / faire de la place
+-> 18:18 Marie / trace d'arrivée
+-> 18:22 Mathilde / arrivée
+-> installation hors ligne
+-> Mercredi terminé
+-> Jeudi
+```
+
+Mathilde termine mercredi en :
+
+```text
+R1 Ordinary Access
+stay active
+aucune intention sexuelle
+```
+
+## 7. Jeudi actuel
 
 ```text
 09:10 Raphaëlle obligatoire
@@ -147,129 +124,110 @@ Cible V0.84 :
 -> 16:05 Marie obligatoire
 -> une branche O5
 -> 22:10 retour Marie obligatoire
--> jeudi terminé
+-> Jeudi terminé
 ```
 
-Si Sandra est ignorée, elle ne reste pas répondable après 16:05.
+Marie n’est plus accessible en même temps que Sandra immédiatement après Raphaëlle.
 
-## 7. Dette J1 confirmée
-
-Le Mardi actif utilise encore deux gros fichiers legacy, simplement filtrés.
-
-Problèmes confirmés :
-
-- une ligne dit `On est mercredi` pendant Mardi ;
-- les heures reculent dans les fils ;
-- la soirée se termine sur Sandra ;
-- le dîner et la marche ne sont pas représentés hors ligne ;
-- Sandra va trop loin émotionnellement ;
-- anciens scores numériques actifs ;
-- trop de clics à choix unique ;
-- le texte diverge du source V0.69.
-
-## 8. J1 cible
+### Sandra ignorée
 
 ```text
-18:12 Marie à distance
--> dîner / pain / marche
--> M1 trois postures
--> La Verrière / Mathilde indirecte
-
-19:15 dîner et marche hors ligne
-
-22:57 Sandra / photo floue
--> S1 trois postures
--> limite douce
-
-23:25 retour final Marie / vie commune hors ligne
-
-fin Mardi
--> transition
--> Mercredi
+chapter_03_sandra_continuity = EXPIRED
+thursday_sandra_echo_missed = true
 ```
 
-M1 :
+Sandra disparaît de la phase et ne peut plus être répondue après 16:05.
+
+### Sandra ouverte
+
+L’avancement est bloqué tant que son échange n’est pas terminé.
+
+## 8. Interstitiels
+
+Le runtime possède désormais :
+
+- une page bloquante de changement de jour ;
+- une carte courte pour les grands sauts intrajournaliers ;
+- un délai minimal de lecture ;
+- un skip souris/clavier après ce délai ;
+- une page neutre correspondant au nouveau moment une fois la transition fermée.
+
+## 9. Archives
+
+Une journée terminée :
+
+- reste consultable ;
+- n’affiche aucun badge pending ;
+- ne produit aucune notification ;
+- n’offre aucun nouveau choix ;
+- ne réapplique aucun effet ;
+- ne change pas l’heure actuelle ;
+- ne réactive pas une scène expirée ;
+- filtre les fils persistants par épisode source pour éviter de montrer du futur dans le passé.
+
+## 10. État narratif après jeudi
 
 ```text
-présent
-joueur-présent
-retardé/plat
+Marie/Player = HABITUAL_WARMTH
+relationship frame = ASSUMED_EXCLUSIVE
+Mathilde = R1 domestique
+Raphaëlle = R1 travail
+Sandra = continuité douce ou écho jeudi expiré
+Pauline = inactive
+Nico = inactive
+hard secrets = none
+adult frames = none
+Friday = not implemented
 ```
 
-S1 :
+V0.84 n’ajoute aucun score relationnel ou route.
+
+## 11. J1 cible V0.85
 
 ```text
-chaleur sûre
-observation précise
-prudence
+18:12 Marie à distance + M1
+19:15 dîner / marche hors ligne
+22:57 Sandra / trace douce + S1
+23:25 retour final Marie / vie commune
+fin Mardi -> Mercredi
 ```
 
-Aucun score d’attachement, désir, priorité ou négligence.
+V0.85 remplacera les deux gros fichiers actifs par de nouveaux fichiers concis, avec flags uniquement.
 
-## 9. État des personnages après la future correction J1
-
-### Marie
-
-- ouverture domestique concise ;
-- La Verrière visible ;
-- action hors ligne réellement accomplie ;
-- dernier beat obligatoire de la journée.
-
-### Sandra
-
-- une seule trace ;
-- une limite douce ;
-- aucune scène lac/roman/manque profond ;
-- aucune route R2.
-
-### Mathilde
-
-- indirecte mardi ;
-- urgence et arrivée mercredi inchangées.
-
-### Raphaëlle
-
-- jeudi travail inchangé.
-
-### Pauline / Nico
-
-- toujours absents du runtime ;
-- vendredi reporté à V0.86.
-
-## 10. Prochaines versions
+## 12. Runtime ajouté
 
 ```text
-V0.84 — Day & Moment Flow Runtime Foundation
+game/scripts/core/TimelineState.gd
+game/scripts/ui/PhonePrototypeV084.gd
+game/scripts/ui/ConversationViewV084.gd
+game/scripts/ui/TimelineTransitionView.gd
+game/scenes/smartphone/TimelineTransitionView.tscn
+```
+
+Les scripts V0.84 étendent les fondations V0.81/V0.82 plutôt que de les refactorer.
+
+## 13. Validation
+
+Nouveau test :
+
+```text
+tests/test_v084_temporal_flow_static.py
+```
+
+Les commandes Python et Godot doivent être exécutées par Hermes/local/CI avant merge, le connecteur GitHub ne disposant pas d’un environnement d’exécution.
+
+## 14. Prochaines versions
+
+```text
 V0.85 — J1 Canon Runtime Reconciliation
 V0.86 — Friday Public Traces & Opening Completion
 ```
 
-## 11. Périmètre V0.84
-
-- verrouillage/déverrouillage des jours ;
-- phases ;
-- interstitiels ;
-- archives en lecture seule ;
-- expiration des scènes optionnelles ;
-- correction Sandra 13:50 -> Marie 16:05 ;
-- aucun nouveau dialogue.
-
-## 12. Périmètre V0.85
-
-- nouveaux fichiers J1 actifs ;
-- deux choix à trois réponses ;
-- deux beats hors ligne ;
-- flags seulement ;
-- fin obligatoire sur Marie ;
-- aucun changement mercredi/jeudi.
-
-## 13. Résumé opérationnel
+## 15. Résumé opérationnel
 
 ```text
-Runtime actuel : jouable jusqu'à jeudi, mais temps réarrangeable.
-J1 actuel : jouable, mais non cohérent avec le canon consolidé.
-V0.83 : correction documentaire.
-V0.84 : rendre le temps autoritaire.
-V0.85 : reconstruire mardi.
-V0.86 : reprendre vendredi.
+Runtime : jouable jusqu'à jeudi, ordre désormais imposé.
+J1 : encore legacy, remplacement prévu V0.85.
+Vendredi : toujours absent.
+Prochaine étape : rendre mardi narrativement vrai sans toucher à la fondation temporelle.
 ```
