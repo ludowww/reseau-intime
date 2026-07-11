@@ -1,0 +1,298 @@
+{
+  "id": "chapter_03_marie_event_return",
+  "chapter": 3,
+  "day": 3,
+  "title": "Jeudi nuit — Ce que la soirée a voulu dire",
+  "app": "messages",
+  "window_id": "O6",
+  "calendar_label": "Jeudi",
+  "time_band": "NIGHT",
+  "communication_mode": "AFTERGLOW_REMOTE",
+  "foreground_role": "consequence",
+  "physical_context": "Marie et Player sont séparés après la soirée : Marie ferme La Verrière ou rentre, tandis que Player est en trajet, au foyer ou encore au travail.",
+  "suppress_empty_hint": true,
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "marie"
+    ],
+    "display_name": "Marie",
+    "profile_content_id": "profile_marie_placeholder"
+  },
+  "segments": [
+    {
+      "id": "segment_thursday_marie_return_variants",
+      "pattern": "conditional_consequence",
+      "function": "O6 — payer la topologie et la qualité de présence sans offrir un choix d'annulation.",
+      "suppress_empty_hint": true,
+      "messages": [
+        {
+          "id": "msg_thu_return_join_warm_001",
+          "sender": "marie",
+          "time_label": "22:10",
+          "conditions": [
+            "marie_event_initiative OR marie_event_playful_help"
+          ],
+          "text": "Merci pour ce soir."
+        },
+        {
+          "id": "msg_thu_return_join_warm_002",
+          "sender": "marie",
+          "time_label": "22:10",
+          "conditions": [
+            "marie_event_initiative OR marie_event_playful_help"
+          ],
+          "text": "Et je ne parle pas seulement des rallonges."
+        },
+        {
+          "id": "msg_thu_return_join_distant_001",
+          "sender": "marie",
+          "time_label": "22:10",
+          "conditions": [
+            "marie_event_distracted"
+          ],
+          "text": "Merci d'être venu."
+        },
+        {
+          "id": "msg_thu_return_join_distant_002",
+          "sender": "marie",
+          "time_label": "22:10",
+          "conditions": [
+            "marie_event_distracted"
+          ],
+          "text": "Tu étais là. Pas toujours avec moi, mais là."
+        },
+        {
+          "id": "msg_thu_return_home_help_001",
+          "sender": "marie",
+          "time_label": "22:18",
+          "conditions": [
+            "mathilde_home_help"
+          ],
+          "text": "Je rentre. Vous avez trouvé le chargeur ?"
+        },
+        {
+          "id": "msg_thu_return_home_playful_001",
+          "sender": "marie",
+          "time_label": "22:18",
+          "conditions": [
+            "mathilde_home_playful_help"
+          ],
+          "text": "Je rentre. Vous avez trouvé le chargeur ?"
+        },
+        {
+          "id": "msg_thu_return_home_distance_001",
+          "sender": "marie",
+          "time_label": "22:18",
+          "conditions": [
+            "mathilde_home_distance"
+          ],
+          "text": "Je rentre. Vous avez trouvé le chargeur ?"
+        },
+        {
+          "id": "msg_thu_return_work_kept_001",
+          "sender": "marie",
+          "time_label": "22:25",
+          "conditions": [
+            "work_promise_kept"
+          ],
+          "text": "Tu as dit « après »."
+        },
+        {
+          "id": "msg_thu_return_work_kept_002",
+          "sender": "marie",
+          "time_label": "22:25",
+          "conditions": [
+            "work_promise_kept"
+          ],
+          "text": "Et tu es vraiment venu après."
+        },
+        {
+          "id": "msg_thu_return_work_kept_003",
+          "sender": "marie",
+          "time_label": "22:26",
+          "conditions": [
+            "work_promise_kept"
+          ],
+          "text": "Ça devrait être normal. Ce soir ça m'a fait plaisir quand même."
+        },
+        {
+          "id": "msg_thu_return_work_amended_001",
+          "sender": "marie",
+          "time_label": "22:25",
+          "conditions": [
+            "work_promise_amended"
+          ],
+          "text": "Merci d'avoir prévenu."
+        },
+        {
+          "id": "msg_thu_return_work_amended_002",
+          "sender": "marie",
+          "time_label": "22:26",
+          "conditions": [
+            "work_promise_amended"
+          ],
+          "text": "J'aurais préféré te voir davantage."
+        },
+        {
+          "id": "msg_thu_return_work_amended_003",
+          "sender": "marie",
+          "time_label": "22:26",
+          "conditions": [
+            "work_promise_amended"
+          ],
+          "text": "Les deux phrases sont vraies."
+        },
+        {
+          "id": "msg_thu_return_work_missed_001",
+          "sender": "marie",
+          "time_label": "22:25",
+          "conditions": [
+            "work_promise_missed"
+          ],
+          "text": "Je crois que ton « je passe après » a pris un autre chemin."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_thu_return_join_warm_guided",
+          "text": "De quoi alors ?",
+          "tone": "guided_reply",
+          "conditions": [
+            "marie_event_initiative OR marie_event_playful_help"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_thu_return_join_warm_003",
+              "sender": "marie",
+              "time_label": "22:11",
+              "text": "D'être venu avant que j'aie besoin de te rattraper."
+            },
+            {
+              "id": "msg_thu_return_join_warm_004",
+              "sender": "marie",
+              "time_label": "22:11",
+              "text": "Garde cette version de toi. Elle me plaît bien."
+            }
+          ]
+        },
+        {
+          "id": "choice_thu_return_join_distant_guided",
+          "text": "Je sais.",
+          "tone": "guided_reply",
+          "conditions": [
+            "marie_event_distracted"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_thu_return_join_distant_003",
+              "sender": "marie",
+              "time_label": "22:11",
+              "text": "Je ne fais pas un procès."
+            },
+            {
+              "id": "msg_thu_return_join_distant_004",
+              "sender": "marie",
+              "time_label": "22:11",
+              "text": "Je note juste la différence."
+            }
+          ]
+        },
+        {
+          "id": "choice_thu_return_home_help_guided",
+          "text": "Oui. Et la chambre ressemble presque à une chambre.",
+          "tone": "guided_reply",
+          "conditions": [
+            "mathilde_home_help"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_thu_return_home_help_002",
+              "sender": "marie",
+              "time_label": "22:19",
+              "text": "Très bien."
+            },
+            {
+              "id": "msg_thu_return_home_help_003",
+              "sender": "marie",
+              "time_label": "22:19",
+              "text": "Tu as été là autrement, alors. Ça compte aussi."
+            }
+          ]
+        },
+        {
+          "id": "choice_thu_return_home_playful_guided",
+          "text": "Oui. L'accusée a coopéré.",
+          "tone": "guided_reply",
+          "conditions": [
+            "mathilde_home_playful_help"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_thu_return_home_playful_002",
+              "sender": "marie",
+              "time_label": "22:19",
+              "text": "Je refuse de vous laisser seuls avec du vocabulaire judiciaire."
+            },
+            {
+              "id": "msg_thu_return_home_playful_003",
+              "sender": "marie",
+              "time_label": "22:19",
+              "text": "Mais merci d'avoir aidé."
+            }
+          ]
+        },
+        {
+          "id": "choice_thu_return_home_distance_guided",
+          "text": "Je sais pas. Elle s'est débrouillée.",
+          "tone": "guided_reply",
+          "conditions": [
+            "mathilde_home_distance"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_thu_return_home_distance_002",
+              "sender": "marie",
+              "time_label": "22:19",
+              "text": "D'accord."
+            },
+            {
+              "id": "msg_thu_return_home_distance_003",
+              "sender": "marie",
+              "time_label": "22:19",
+              "text": "Je te raconterai demain. Là je suis crevée."
+            }
+          ]
+        },
+        {
+          "id": "choice_thu_return_work_missed_guided",
+          "text": "Désolé.",
+          "tone": "guided_reply",
+          "conditions": [
+            "work_promise_missed"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_thu_return_work_missed_002",
+              "sender": "marie",
+              "time_label": "22:26",
+              "text": "Je ne te demande pas une dissertation."
+            },
+            {
+              "id": "msg_thu_return_work_missed_003",
+              "sender": "marie",
+              "time_label": "22:26",
+              "text": "Juste d'éviter les promesses décoratives."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "routes_nourished": [
+    "marie"
+  ],
+  "debug_notes": "V0.82 O6. Une conséquence obligatoire, variantes conditionnelles, aucune nouvelle décision topologique et aucun changement immédiat de mode du couple."
+}
