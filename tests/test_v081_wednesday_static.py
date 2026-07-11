@@ -22,24 +22,31 @@ def walk(value):
 
 
 class V081WednesdayStaticTests(unittest.TestCase):
-    def test_active_loader_whitelists_only_modular_tuesday_and_wednesday(self):
+    def test_active_loader_preserves_modular_tuesday_and_wednesday_with_thursday_extension(self):
         loader = (GAME / "scripts/core/DataLoader.gd").read_text(encoding="utf-8")
         active_block = loader[loader.index("const CHAPTER_INDEX_PATHS") : loader.index("const LEGACY_CHAPTER_INDEX_PATHS")]
         self.assertIn("chapter_01_modular_index.json", active_block)
         self.assertIn("chapter_02_modular_index.json", active_block)
+        self.assertIn("chapter_03_modular_index.json", active_block)
         for legacy_day in ["chapter_01_index.json", "chapter_02_index.json", "chapter_03_index.json", "chapter_09_index.json"]:
             self.assertNotIn(legacy_day, active_block)
             self.assertIn(legacy_day, loader)
         visual_block = loader[loader.index("const VISUAL_CONTENT_PATHS") : loader.index("const LEGACY_VISUAL_CONTENT_PATHS")]
         self.assertIn("chapter_01_proofs.json", visual_block)
         self.assertIn("chapter_02_proofs.json", visual_block)
+        self.assertIn("chapter_03_proofs.json", visual_block)
         self.assertNotIn("chapter_04_proofs.json", visual_block)
 
-    def test_active_phone_scenes_use_v081_adapters(self):
+    def test_active_phone_scenes_use_v082_adapters_that_extend_v081(self):
         phone_scene = (GAME / "scenes/smartphone/PhonePrototype.tscn").read_text(encoding="utf-8")
         conversation_scene = (GAME / "scenes/smartphone/ConversationView.tscn").read_text(encoding="utf-8")
-        self.assertIn("PhonePrototypeV081.gd", phone_scene)
-        self.assertIn("ConversationViewV081.gd", conversation_scene)
+        self.assertIn("PhonePrototypeV082.gd", phone_scene)
+        self.assertIn("ConversationViewV082.gd", conversation_scene)
+
+        phone_v082 = (GAME / "scripts/ui/PhonePrototypeV082.gd").read_text(encoding="utf-8")
+        conversation_v082 = (GAME / "scripts/ui/ConversationViewV082.gd").read_text(encoding="utf-8")
+        self.assertIn('extends "res://scripts/ui/PhonePrototypeV081.gd"', phone_v082)
+        self.assertIn('extends "res://scripts/ui/ConversationViewV081.gd"', conversation_v082)
 
         phone_adapter = (GAME / "scripts/ui/PhonePrototypeV081.gd").read_text(encoding="utf-8")
         for expected in [
