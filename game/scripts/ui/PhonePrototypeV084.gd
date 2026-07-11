@@ -2,7 +2,7 @@ extends "res://scripts/ui/PhonePrototypeV082.gd"
 
 # V0.84 makes time an explicit access state without replacing the existing
 # thread, choice, notification, or conditional-unlock engines.
-var timeline_transition_view: Control
+var timeline_transition_view
 var viewing_archived_day := false
 var transition_in_progress := false
 
@@ -163,7 +163,8 @@ func _activate_phase(day_value, phase: Dictionary, show_transition: bool) -> voi
 func _unlock_phase_conversations(day_value, phase: Dictionary) -> Array:
 	var notifications: Array = []
 	var initial_ids: Array = _conversation_availability_for_day(day_value).get("initial_conversation_ids", [])
-	for target_id in _phase_conversation_ids(phase):
+	for raw_target_id in _phase_conversation_ids(phase):
+		var target_id := str(raw_target_id)
 		if TimelineState.is_conversation_expired(day_value, target_id):
 			continue
 		if not _unlock_rule_ready(day_value, target_id, initial_ids):
@@ -271,10 +272,17 @@ func _advance_optional_phase(day_value, phase_id: String) -> void:
 		TimelineState.complete_phase(day_value, phase_id)
 	else:
 		for raw_id in phase.get("optional_conversation_ids", []):
-			TimelineState.expire_conversation(day_value, str(raw_id))
+			var conversation_id := str(raw_id)
+			TimelineState.expire_conversation(day_value, conversation_id)
+			_clear_pending_for_episode(day_value, conversation_id)
 		EffectApplier.apply_flags(phase.get("skip_sets_flags", []))
 		TimelineState.skip_phase(day_value, phase_id)
 	await _advance_after_phase(day_value, phase_id)
+
+func _clear_pending_for_episode(day_value, conversation_id: String) -> void:
+	var thread_id := _thread_id_for_conversation_id(day_value, conversation_id)
+	pending_thread_ids.erase(thread_id)
+	pending_conversation_ids.erase(thread_id)
 
 func _complete_day(day_value) -> void:
 	if transition_in_progress:
