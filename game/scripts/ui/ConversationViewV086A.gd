@@ -15,6 +15,7 @@ func _build_thread_notification_banner() -> void:
 	thread_notification_panel.visible = false
 	thread_notification_panel.mouse_filter = Control.MOUSE_FILTER_STOP
 	thread_notification_panel.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	thread_notification_panel.focus_mode = Control.FOCUS_ALL
 	thread_notification_panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	thread_notification_panel.add_theme_stylebox_override(
 		"panel",
