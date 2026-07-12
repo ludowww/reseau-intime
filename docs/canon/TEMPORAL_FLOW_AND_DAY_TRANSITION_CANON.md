@@ -1,8 +1,8 @@
-# Temporal Flow & Day Transition Canon — V0.83
+# Temporal Flow & Day Transition Canon — Current
 
-> Canon rules for chronological progression, moment gating, optional-scene expiry, day completion, and transition presentation.  
-> Companion to `DIEGETIC_TIME_AND_COMMUNICATION_CANON.md`.  
-> Documentation only: no runtime, JSON, GDScript, tests, assets, or playable content are changed here.
+> Canon rules for chronological progression, phase gating, opportunity expiry, day completion, smartphone-time presentation, and archives.  
+> Reconciled through V0.87.  
+> Companion to `DIEGETIC_TIME_AND_COMMUNICATION_CANON.md` and the active temporal maps.
 
 ## 1. Purpose
 
@@ -15,13 +15,13 @@ what time it is
 what is currently happening
 what may still happen now
 what has been missed
-when the day is genuinely over
-why the next day has begun
+when a consequence is due
+when the next day has genuinely begun
 ```
 
 A timestamp is not enough.
 
-The runtime must control narrative time explicitly.
+The runtime controls narrative time explicitly.
 
 ---
 
@@ -32,17 +32,21 @@ Time labels describe chronology.
 Timeline state controls access.
 ```
 
-A conversation is not available merely because it has a later timestamp in the same index.
+A conversation is not available merely because:
 
-A future day is not selectable merely because its index is loaded.
+- its JSON is loaded;
+- its timestamp is later;
+- its contact exists in another day;
+- the player can see an archived thread;
+- a later route engine exists in canon.
 
-A past optional scene is not still playable as though its original hour had not passed.
+A past optional scene cannot remain playable as though its original context still existed.
 
 ---
 
 ## 3. Day lifecycle
 
-Every active story day uses one lifecycle state.
+Every active story day uses one lifecycle state:
 
 ```text
 LOCKED
@@ -54,9 +58,9 @@ ARCHIVED
 
 ### `LOCKED`
 
-- not visible or visibly disabled according to the approved UI;
+- unavailable and normally hidden;
 - cannot be selected;
-- no conversation, notification, timestamp, or visual from that day may leak into the current day.
+- leaks no conversation, notification, timestamp, visual, or route state.
 
 ### `AVAILABLE`
 
@@ -67,21 +71,27 @@ ARCHIVED
 ### `ACTIVE`
 
 - current narrative day;
-- only the current temporal phase and retained past conversations are accessible;
-- future phases remain hidden.
+- only current-phase content and retained past thread history are accessible;
+- future phases remain inaccessible.
 
 ### `COMPLETE`
 
-- all mandatory phases are resolved;
-- all optional opportunities are seen, explicitly deferred, missed, or expired;
-- no mandatory consequence remains due;
-- the day-end transition may run.
+A day becomes complete only when:
+
+- every required phase is resolved;
+- optional opportunities have a terminal state;
+- the final required consequence/shared-life anchor is resolved;
+- no safety, consent, discovery, or aftermath scene remains due;
+- end-state writes are applied.
+
+The presence of a final timestamp does not complete a day by itself.
 
 ### `ARCHIVED`
 
 - previous completed day;
-- remains reviewable through message history;
-- cannot create new notifications, choices, or route changes merely because the player revisits it.
+- reviewable in read-only form;
+- creates no new notification, choice, effect, or route change;
+- never changes current narrative time.
 
 ```text
 Revisiting history is not replaying time.
@@ -103,7 +113,7 @@ EVENING_TOPOLOGY
 NIGHT_CONSEQUENCE
 ```
 
-A phase uses one of:
+A phase uses:
 
 ```text
 LOCKED
@@ -115,7 +125,7 @@ EXPIRED
 
 ### `LOCKED`
 
-Future phase. Its conversations and timestamps are inaccessible.
+Future phase. Its conversations, choices, and timestamps are inaccessible.
 
 ### `CURRENT`
 
@@ -123,332 +133,408 @@ The only phase allowed to create new playable content.
 
 ### `COMPLETE`
 
-All mandatory content for the phase is resolved and the phase has advanced.
+All required content and the phase's authored contract are resolved.
 
 ### `SKIPPED`
 
-The player explicitly chose to advance without seeing an optional scene.
+The player deliberately advanced without seeing an optional opportunity when that action exists in the current interaction model.
 
 ### `EXPIRED`
 
-The original context no longer exists. The exact scene cannot be opened later.
+The original physical, temporal, or social context no longer exists.
 
 A skipped or expired scene may later create:
 
 - a missed-opportunity flag;
 - a colder mutation;
 - a delayed consequence;
-- no effect, when the opportunity was deliberately low-stakes.
+- no effect when deliberately low-stakes.
 
-It may not remain frozen at its old timestamp.
+It may not remain frozen at its old hour.
 
 ---
 
-## 5. Required and optional content
+## 5. Opportunity lifecycle
 
-Every temporal phase declares:
+Post-opening modular scenes use a separate authored lifecycle:
+
+```text
+DORMANT
+ELIGIBLE
+OFFERED
+SEEN
+DEFERRED
+MISSED
+MUTATED
+EXPIRED
+CONSEQUENCE_DUE
+RESOLVED
+```
+
+### Rules
+
+- `ELIGIBLE` means conditions fit; it does not guarantee selection.
+- `OFFERED` is bounded by real availability.
+- opening an offer may pause automatic expiry until its choice resolves.
+- ignoring an offer lets the authored window close.
+- one honest defer may create a named later obligation when the scene contract allows it.
+- missed content mutates or needs a fresh reason.
+- no exact offer waits indefinitely.
+
+V0.87 adds a foreground-ticket budget:
+
+```text
+maximum two external foreground tickets
+maximum one charged-access owner
+same character cannot consume both tickets
+```
+
+A quiet window is valid when no scene fits.
+
+---
+
+## 6. Required, optional, and selected content
+
+Every phase declares the relevant categories:
 
 ```text
 required_conversation_ids
 optional_conversation_ids
+required_any_conversation_ids
+selected topology / candidate result when applicable
 ```
 
 ### Required content
 
-The phase cannot advance until every required item is complete.
+The phase cannot advance until required content is resolved.
 
 Examples:
 
 - Marie's opening request;
-- the selected O5 branch;
-- the mandatory O6 return to Marie;
-- a consent or aftermath consequence.
+- selected O5 branch;
+- O6 return to Marie;
+- mandatory couple return after charged external attention;
+- safety or aftermath consequence.
 
 ### Optional content
 
 The player may:
 
-- open it now;
-- ignore it and continue;
-- deliberately defer it only when the authored contract provides a later mutation.
+- open it during its real window;
+- leave it unopened and let it expire;
+- defer only when the scene contract defines a bounded mutation.
 
 Optional does not mean timeless.
 
----
+### Selected opportunity
 
-## 6. Advancing a phase
+A modular pool may have several eligible scenes but only one selected foreground.
 
-When required content is complete, the interface may display an explicit action:
+Selection must respect:
 
 ```text
-Continuer
+safety / aftermath
+-> fixed spine
+-> obligation due
+-> compatible continuation
+-> physical and temporal context
+-> unseen eligible scene
+-> longest deferred
+-> least recently foregrounded
+-> authored deterministic order
+```
+
+Free randomness does not precede these rules.
+
+---
+
+## 7. Advancing time without a scheduler button
+
+The active smartphone flow does not expose technical commands such as:
+
+```text
 Passer à 16:05
-Terminer la soirée
+Continuer la journée
 Aller au lendemain
 ```
 
-If optional content remains unseen, the advance action must communicate consequence clearly enough for the context.
+Instead, progression follows authored completion and real opportunity expiry.
 
-Examples:
-
-```text
-Passer à 16:05
-Sandra ne sera plus disponible dans cette fenêtre.
-```
-
-or, for a low-pressure echo:
+Normal cross-thread sequence at `Speed x1`:
 
 ```text
-Continuer
+last visible message
+-> contact shown offline
+-> approximately two real seconds
+-> conversation-side clock accelerates for approximately four seconds
+-> target phase becomes current
+-> target thread becomes unread
+-> compact cross-thread notification appears
 ```
 
-The advance operation must:
+The transcript stays at the bottom.
 
-1. mark the current phase `COMPLETE`;
-2. mark unseen optional scenes `SKIPPED` or `EXPIRED`;
-3. write any configured missed flags;
-4. hide those expired episodes from active interaction;
-5. activate the next phase;
-6. update narrative time;
-7. display the appropriate temporal transition.
+Notification preview:
+
+```text
+first ten characters + ...
+```
+
+The notification is a shortcut to another thread, not a duplicate message bubble.
+
+### Same-thread continuation
+
+When the next episode belongs to the already open persistent thread:
+
+```text
+contact offline
+-> clock advances
+-> no same-contact notification
+-> new episode continues directly below existing history
+```
+
+### Optional window expiry
+
+An unopened optional notification may remain available for its authored real-time window.
+
+When that window closes:
+
+1. the optional episode becomes `SKIPPED` or `EXPIRED`;
+2. configured missed flags are applied;
+3. the episode is no longer answerable;
+4. the clock advances toward the next visible event;
+5. the next notification appears only when its phase becomes current.
+
+If the optional conversation has been opened but not completed, time does not jump through the unresolved exchange.
 
 ---
 
-## 7. Day completion contract
+## 8. Day completion and couple centrality
 
-A day is complete only when:
+A day with meaningful external attention closes only after the required shared-life consequence.
 
-- every required phase is complete;
-- the final consequence or shared-life anchor is resolved;
-- no safety, consent, discovery, or aftermath scene is due;
-- all optional content has a terminal state;
-- the day-end state writes have been applied.
-
-The presence of a final timestamp does not complete a day by itself.
-
-### Couple-centrality requirement
-
-When the day contains meaningful external attention, the final required phase must return to:
+The final required function must return to:
 
 - Marie;
 - the shared home;
+- a concrete couple act;
 - an explicit couple consequence;
-- or a documented reason why the shared-life return belongs to the next immediate phase.
+- or a documented immediate carryover.
 
-J1 must end on Marie/shared life.
+Implemented examples:
 
-Thursday must end on O6 Marie.
+```text
+Tuesday ends on Marie/shared life.
+Thursday ends on O6 Marie.
+Friday ends on the enlarged household.
+```
+
+V0.87 documented rule:
+
+```text
+external foreground
+-> Marie/shared-life return due
+-> no later external opportunity outranks it
+```
+
+Private attention does not automatically require confession when no named boundary was crossed.
+
+It does require the story to account for changed time, presence, and opportunity cost.
 
 ---
 
-## 8. Day-transition interstitial
+## 9. Day-transition presentation
 
-A completed day transitions through a full-screen or phone-screen overlay.
+The active flow no longer uses a blank full-screen or phone-screen card containing only:
 
-Recommended sequence:
+- weekday;
+- moment label;
+- title;
+- timestamp.
 
-```text
-<MARDI — FIN DE JOURNÉE>
-
-then
-
-<MERCREDI — MIDI>
-<Faire de la place>
-```
-
-### Presentation contract
-
-The interstitial should:
-
-- cover or clearly replace the conversation list;
-- use large readable weekday typography;
-- optionally show the next narrative title;
-- use a short fade or cut;
-- last long enough to be perceived, but not become a loading screen;
-- be skippable after a minimum readable delay;
-- block interaction with future conversations until completion;
-- automatically select the newly unlocked day.
-
-Recommended default timing:
+Day change uses the fixed smartphone clock:
 
 ```text
-end card: 0.9–1.2 seconds
-start card: 1.2–1.6 seconds
-minimum before skip: 0.35 seconds
+late current-day time
+-> accelerated passage crosses midnight
+-> next day's visible message time
+-> next day becomes active
+-> notification or same-thread continuation
 ```
 
-Exact animation timing is a runtime decision within this range.
+The previous conversation may remain visible until the next event arrives.
 
-### No false loading promise
+Weekday and moment are communicated through:
 
-The overlay is an authored time transition, not evidence of background loading.
+- current day label/navigation while the prototype panel exists;
+- fixed phone clock;
+- message timestamps;
+- work/weekend language;
+- character schedules and changed availability.
+
+No text-only landing page is required.
 
 ---
 
-## 9. Intra-day transition card
+## 10. Intra-day time passage
 
-Large changes within a day use a shorter overlay or timeline card.
+Large jumps within a day use the same clock animation, not a separate moment card.
 
-Examples:
+Use visible time passage when:
 
-```text
-JEUDI — DÉBUT D'APRÈS-MIDI
-13:50
-```
+- several narrative hours pass;
+- a work block ends;
+- an optional window expires;
+- a character becomes newly available;
+- physical context materially changes;
+- evening or night begins and a visible event follows.
 
-```text
-JEUDI — FIN D'APRÈS-MIDI
-16:05
-```
+Do not animate a trivial five-minute change merely to decorate time.
 
-Recommended duration:
+Do not advance the clock without a real next event or state transition.
 
-```text
-0.7–1.1 seconds
-```
-
-The card may be skipped after a brief readable delay.
-
-A minor five-minute progression does not require an overlay.
-
-Use an intra-day card when:
-
-- several hours have passed;
-- work has ended;
-- the location/context changes materially;
-- an optional window closes;
-- the story moves from setup to an event;
-- evening or night begins.
+The conversation remains visible throughout.
 
 ---
 
-## 10. Current-day and archive navigation
+## 11. Offline and co-present activity
 
-### Current/future
+When characters are together, important conversation normally happens offline.
 
-- only unlocked days appear as usable buttons;
-- future days remain hidden by default;
-- a visible locked preview is allowed only if Product Owner explicitly validates it.
+Internal authored beats may still:
 
-### Past days
+- select a branch-specific variant;
+- apply flags;
+- maintain chronology;
+- record internal continuity/debug state;
+- complete a phase.
 
-Past completed days remain reviewable.
+They are not player-facing exposition by default.
 
-Opening an archived day:
+The active UI does not display them as:
 
-- does not recreate pending badges;
-- does not replay notifications;
-- does not rerun choices;
-- does not change current narrative time;
-- does not reactivate missed optional scenes;
-- does not overwrite active-day context.
+- full-screen card;
+- centered prose note;
+- `Moments hors ligne` archive section;
+- replayable clue.
 
-The interface should visibly distinguish:
+The player infers off-phone activity from:
+
+- elapsed time;
+- later dialogue;
+- object positions;
+- knowledge changes;
+- fulfilled or missed promises;
+- consequences.
 
 ```text
-archive review
-vs
-current playable day
+Internal state may know more than the interface explains.
 ```
 
 ---
 
-## 11. Notification rule
+## 12. Notifications
 
 A notification belongs to one active temporal phase.
 
 It may appear only when:
 
-- the target day is `ACTIVE`;
-- the target phase is `CURRENT`;
-- the conversation is available in that phase;
-- its conditions are satisfied;
-- it has not already been opened or expired.
+- target day is `ACTIVE`;
+- target phase is `CURRENT`;
+- conversation is available;
+- conditions are satisfied;
+- it has not been opened or expired;
+- the target thread differs from the currently open thread.
 
-Opening another conversation with a later timestamp must never be possible before the timeline has advanced to that phase.
+A notification cannot make time advance by itself.
 
-A notification cannot move time by itself without the corresponding phase transition.
+Time/state advances first; notification reflects that result.
+
+When a phase contains multiple required contacts:
+
+- the first authored notification appears according to the phase contract;
+- after completing one contact, the next unfinished required contact may receive a compact notification;
+- silent unlock does not mean permanently invisible;
+- same-thread continuation still uses no banner.
 
 ---
 
-## 12. Timestamp rule
+## 13. Timestamp rule
 
 Within one active chronology:
 
 - message timestamps are non-decreasing;
 - phase time is non-decreasing;
-- an archived old message may show its historical time without changing the current clock;
-- a new episode with an earlier timestamp than current narrative time is invalid unless explicitly framed as an old imported trace.
+- archived messages keep historical time without changing the current clock;
+- a new episode with an earlier time is invalid unless explicitly framed as an imported past trace;
+- `24:xx` is not used as a disguised next-day time;
+- the status clock cannot hide contradictory source timestamps.
 
 ```text
-The status-bar clock must not be used to hide contradictory message timestamps.
-```
-
 The source data itself must remain chronologically coherent.
-
----
-
-## 13. Data contract
-
-Recommended index structure:
-
-```json
-{
-  "timeline_flow": {
-    "initial_phase_id": "thursday_morning_work",
-    "phases": [
-      {
-        "id": "thursday_morning_work",
-        "calendar_label": "Jeudi",
-        "moment_label": "matin",
-        "time_label": "09:10",
-        "required_conversation_ids": [
-          "chapter_03_raphaelle_blue_folder"
-        ],
-        "optional_conversation_ids": [],
-        "entry_card": {
-          "eyebrow": "JEUDI — MATIN",
-          "title": "Être là"
-        },
-        "next_phase_id": "thursday_midday_optional"
-      },
-      {
-        "id": "thursday_midday_optional",
-        "calendar_label": "Jeudi",
-        "moment_label": "début d'après-midi",
-        "time_label": "13:50",
-        "required_conversation_ids": [],
-        "optional_conversation_ids": [
-          "chapter_03_sandra_continuity"
-        ],
-        "advance_label": "Passer à 16:05",
-        "expire_optional_on_advance": true,
-        "missed_flags": [
-          "thursday_sandra_echo_missed"
-        ],
-        "next_phase_id": "thursday_marie_offer"
-      }
-    ]
-  }
-}
 ```
 
-Field names remain subject to the V0.84 implementation plan, but the semantics are canonical.
+---
+
+## 14. Current-day and archive navigation
+
+### Current/future
+
+- only unlocked days are usable;
+- future days remain hidden by default;
+- visible locked previews require explicit Product Owner validation.
+
+### Archived days
+
+Opening an archive:
+
+- creates no pending badge;
+- replays no notification;
+- offers no new choice;
+- applies no effect;
+- changes no current day/phase/time;
+- reactivates no expired scene;
+- exposes no future episode;
+- shows no internal offline-beat journal.
+
+The interface must distinguish archive review from current play.
 
 ---
 
-## 14. Thursday correction
+## 15. Reset rule
 
-The current V0.82 behavior unlocks Sandra at 13:50 and Marie at 16:05 simultaneously after Raphaëlle.
+Reset restores:
 
-That is no longer the target behavior.
+- first active day only;
+- initial phase of that day;
+- no pending later-phase history;
+- no expired/missed state from the prior run;
+- no clock animation in progress;
+- no notification shortcut left visible;
+- no future-day access;
+- no duplicate internal day-log record.
 
-Correct flow:
+---
+
+## 16. Current implemented chronology
+
+```text
+Tuesday initially active
+Wednesday locked
+Thursday locked
+Friday locked
+
+Tuesday complete -> Wednesday
+Wednesday complete -> Thursday
+Thursday complete -> Friday
+Friday complete -> no later playable day
+```
+
+Thursday:
 
 ```text
 09:10 Raphaëlle required
 -> 13:50 Sandra optional
--> explicit advance
 -> Sandra seen or expired
 -> 16:05 Marie required
 -> selected O5 branch
@@ -456,77 +542,111 @@ Correct flow:
 -> Thursday complete
 ```
 
-The player may skip Sandra.
-
-The player may not answer Sandra at 13:50 after already acting at 16:05 or later.
+The player cannot answer Sandra at 13:50 after the chronology has reached 16:05.
 
 ---
 
-## 15. Tuesday–Wednesday correction
+## 17. V0.87 documented chronology
 
-The current runtime exposes Tuesday, Wednesday, and Thursday from the beginning.
+V0.87 is not yet implemented.
 
-Target behavior:
+Authorized wave:
 
 ```text
-Tuesday is initially active.
-Wednesday remains locked.
-Thursday remains locked.
-
-Tuesday complete
--> day-end/start interstitial
--> Wednesday unlocked and selected
-
-Wednesday complete
--> day-end/start interstitial
--> Thursday unlocked and selected
+Saturday morning — Marie shared hour
+weekend — one selected external opportunity
+same evening / next morning — Marie return
+first workday — one second external opportunity maximum
+same evening — Marie return and wave close
 ```
 
-Thursday completion may show a day-end card while Friday remains unavailable until its later implementation.
+Constraints:
+
+```text
+maximum two external foreground tickets
+maximum one charged-access owner
+Pauline and Nico remain R1
+no hard secret
+no adult frame
+no new image
+```
+
+V0.88 must map these semantics onto runtime state before any new day/index is added.
 
 ---
 
-## 16. Reset rule
+## 18. Data-contract principles
 
-Reset must restore:
+Exact field names belong to the integration plan, but every authored phase/opportunity must expose semantics equivalent to:
 
-- first active day only;
-- initial phase of that day;
-- no pending history from later phases;
-- no expired/missed flags;
-- no transition overlay left visible;
-- no future-day button;
-- no duplicate archived offline beat.
+```text
+id
+calendar/time band
+required/optional/selected content
+entry conditions
+exclusions
+current/terminal state
+expiry rule
+cooldown
+missed mutation
+obligation writes
+next eligible transition
+```
+
+Post-opening selection additionally needs:
+
+```text
+foreground ticket budget
+last foreground character
+charged-access owner
+consequence due priority
+```
+
+Conceptual labels in source packs are not automatically final JSON keys.
 
 ---
 
-## 17. Validation checklist
+## 19. Validation checklist
 
 A temporal implementation is valid only if:
 
-- [ ] future days are inaccessible before unlock;
-- [ ] completing a day automatically unlocks/selects the next day;
-- [ ] a readable day-end/start interstitial appears;
+- [ ] future days remain inaccessible before unlock;
+- [ ] only the current phase creates new content;
+- [ ] the clock visibly bridges meaningful time gaps;
+- [ ] no blank time-of-day card interrupts the transcript;
+- [ ] same-thread episodes resume directly;
+- [ ] cross-thread notifications remain compact and clickable;
 - [ ] archived days remain read-only;
 - [ ] required phases cannot be skipped;
-- [ ] optional phases can be explicitly skipped;
-- [ ] skipped optional conversations expire or mutate;
-- [ ] no conversation can be answered after its time window has passed;
+- [ ] optional windows expire or mutate;
+- [ ] an opened unresolved conversation blocks time advance;
+- [ ] no conversation can be answered after its context expires;
 - [ ] future timestamps do not appear early;
-- [ ] message timestamps never move backward within active chronology;
-- [ ] final day consequence is paid before completion;
+- [ ] timestamps never move backward;
+- [ ] co-present activity is not rewritten as fake long chat;
+- [ ] offline continuity is not over-explained;
+- [ ] final couple/shared-life consequence is paid before completion;
 - [ ] reset restores the initial chronology cleanly.
+
+V0.87/V0.88 additional checks:
+
+- [ ] external ticket cap is enforced;
+- [ ] one charged owner maximum;
+- [ ] obligation due outranks external opportunity;
+- [ ] same character cannot consume both external tickets;
+- [ ] no exact offer waits indefinitely.
 
 ---
 
-## 18. Final rule
+## 20. Final rule
 
 ```text
 The player may choose what to do inside time.
 The player may not rearrange time by opening whatever thread is visible.
 
 Days unlock.
-Moments advance.
+Moments advance on the phone.
 Opportunities expire.
-Consequences close the day.
+Consequences take priority.
+The story does not explain every hour the player did not see.
 ```
