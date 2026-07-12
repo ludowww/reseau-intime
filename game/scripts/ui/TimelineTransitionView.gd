@@ -65,19 +65,25 @@ func _play_cards(cards: Array) -> void:
 	transition_finished.emit()
 
 func _wait_for_card(card: Dictionary, token: int) -> void:
-	var minimum: float = maxf(float(card.get("min_time", 0.35)), 0.0)
+	var minimum: float = maxf(float(card.get("min_time", 0.2)), 0.0)
 	var duration: float = maxf(float(card.get("duration", 1.0)), minimum)
+	var click_required := bool(card.get("click_required", true))
 	var elapsed: float = 0.0
 	can_skip = false
 	skip_requested = false
-	while elapsed < duration and token == sequence_token:
-		var step: float = minf(0.05, duration - elapsed)
+	while elapsed < minimum and token == sequence_token:
+		var step: float = minf(0.05, minimum - elapsed)
 		await get_tree().create_timer(step).timeout
 		elapsed += step
-		if elapsed >= minimum:
-			can_skip = true
-			if skip_requested:
-				break
+	can_skip = token == sequence_token
+	if click_required:
+		while token == sequence_token and not skip_requested:
+			await get_tree().process_frame
+	else:
+		while elapsed < duration and token == sequence_token and not skip_requested:
+			var step: float = minf(0.05, duration - elapsed)
+			await get_tree().create_timer(step).timeout
+			elapsed += step
 	can_skip = false
 	skip_requested = false
 
