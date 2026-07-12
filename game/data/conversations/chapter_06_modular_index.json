@@ -117,10 +117,11 @@
   },
   "conversation_availability": {
     "initial_conversation_ids": [
-      "chapter_06_mathilde_morning_afterglow",
       "chapter_06_marie_concrete_return"
     ],
-    "locked_conversation_ids": [],
+    "locked_conversation_ids": [
+      "chapter_06_mathilde_morning_afterglow"
+    ],
     "unlocks": {
       "chapter_06_mathilde_morning_afterglow": {
         "pending": true,
