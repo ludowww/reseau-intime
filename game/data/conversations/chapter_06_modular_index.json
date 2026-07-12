@@ -161,7 +161,7 @@
     "Sunday offers Mathilde or silently defers her.",
     "Ignoring Mathilde expires the exact scene without consuming a foreground ticket.",
     "Marie return is required after seen, expired or deferred Mathilde.",
-    "Sunday writes first_repetition_slice_01_complete and never first_repetition_wave_complete.",
+    "Sunday closes only the first runtime slice.",
     "Monday remains unavailable."
   ]
 }
