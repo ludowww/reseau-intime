@@ -7,6 +7,7 @@ const TIME_PASSAGE_DELAY_SECONDS := 2.0
 const CLOCK_ANIMATION_SECONDS := 4.0
 const OPTIONAL_WINDOW_SECONDS := 8.0
 const CLOCK_STEP_SECONDS := 0.05
+const NOTIFICATION_PREVIEW_CHARACTERS := 10
 const PHONE_CONNECTIVITY_TEXT := "▮▮  Wi‑Fi  82%"
 
 var time_passage_in_progress := false
@@ -64,7 +65,7 @@ func _add_phase_advance_control(_day_value) -> void:
 func _on_conversation_completed(day_value, conversation_id: String) -> void:
 	if is_instance_valid(conversation_view) and conversation_view.has_method("show_contact_offline"):
 		conversation_view.call("show_contact_offline", conversation_id)
-	var phase := DataLoader.get_timeline_phase_for_conversation(day_value, conversation_id)
+	var phase: Dictionary = DataLoader.get_timeline_phase_for_conversation(day_value, conversation_id)
 	if (
 		not phase.is_empty()
 		and str(phase.get("id", "")) == TimelineState.current_phase_id(day_value)
@@ -77,6 +78,25 @@ func _on_conversation_completed(day_value, conversation_id: String) -> void:
 		await _advance_after_phase(day_value, str(phase.get("id", "")))
 		return
 	await super._on_conversation_completed(day_value, conversation_id)
+	if phase.is_empty():
+		return
+	var phase_id: String = str(phase.get("id", ""))
+	if phase_id != TimelineState.current_phase_id(day_value):
+		return
+	if _phase_requirements_are_met(day_value, phase):
+		return
+	var remaining_notification: Dictionary = _next_unfinished_phase_notification(
+		day_value,
+		phase,
+		conversation_id
+	)
+	if not remaining_notification.is_empty():
+		_show_conversation_notification(
+			day_value,
+			str(remaining_notification.get("thread_id", "")),
+			str(remaining_notification.get("title", "")),
+			str(remaining_notification.get("body", ""))
+		)
 
 func _advance_after_phase(day_value, phase_id: String) -> void:
 	if time_passage_in_progress:
@@ -289,16 +309,44 @@ func _primary_notification_for_phase(day_value, phase: Dictionary, notifications
 	if not notifications.is_empty() and typeof(notifications[0]) == TYPE_DICTIONARY:
 		return notifications[0]
 	for raw_id in _phase_conversation_ids(phase):
+		var notification: Dictionary = _notification_for_episode(day_value, str(raw_id))
+		if not notification.is_empty():
+			return notification
+	return {}
+
+func _next_unfinished_phase_notification(day_value, phase: Dictionary, completed_id: String) -> Dictionary:
+	for raw_id in _phase_conversation_ids(phase):
 		var conversation_id: String = str(raw_id)
-		if not _is_episode_available(day_value, conversation_id):
+		if conversation_id == completed_id:
 			continue
-		var raw_conversation = DataLoader.conversations_by_id.get(conversation_id, {})
-		if typeof(raw_conversation) != TYPE_DICTIONARY:
+		if TimelineState.is_episode_completed(day_value, conversation_id):
 			continue
-		var conversation: Dictionary = raw_conversation
-		var thread = conversation.get("thread", {})
-		var title: String = str(thread.get("display_name", conversation.get("title", conversation_id))) if typeof(thread) == TYPE_DICTIONARY else str(conversation.get("title", conversation_id))
-		var body: String = "Nouveau message"
+		var notification: Dictionary = _notification_for_episode(day_value, conversation_id)
+		if not notification.is_empty():
+			return notification
+	return {}
+
+func _notification_for_episode(day_value, conversation_id: String) -> Dictionary:
+	if not _is_episode_available(day_value, conversation_id):
+		return {}
+	var raw_conversation = DataLoader.conversations_by_id.get(conversation_id, {})
+	if typeof(raw_conversation) != TYPE_DICTIONARY:
+		return {}
+	var conversation: Dictionary = raw_conversation
+	var thread = conversation.get("thread", {})
+	var title: String = str(conversation.get("title", conversation_id))
+	if typeof(thread) == TYPE_DICTIONARY and str(thread.get("display_name", "")) != "":
+		title = str(thread.get("display_name", title))
+	var body: String = "Nouveau message"
+	var rule: Dictionary = _unlock_rule_for_target(day_value, conversation_id)
+	var authored_notification = rule.get("notification", {})
+	if typeof(authored_notification) == TYPE_DICTIONARY:
+		var authored: Dictionary = authored_notification
+		if str(authored.get("title", "")) != "":
+			title = str(authored.get("title"))
+		if str(authored.get("body", "")) != "":
+			body = str(authored.get("body"))
+	if body == "Nouveau message":
 		for message in _collect_messages(conversation):
 			if typeof(message) != TYPE_DICTIONARY or bool(message.get("_system_note", false)):
 				continue
@@ -306,12 +354,11 @@ func _primary_notification_for_phase(day_value, phase: Dictionary, notifications
 			if candidate != "":
 				body = candidate
 				break
-		return {
-			"thread_id": _thread_id_for_conversation_id(day_value, conversation_id),
-			"title": title,
-			"body": body,
-		}
-	return {}
+	return {
+		"thread_id": _thread_id_for_conversation_id(day_value, conversation_id),
+		"title": title,
+		"body": body,
+	}
 
 func _complete_day(day_value) -> void:
 	_hide_notification()
@@ -340,9 +387,13 @@ func _complete_day(day_value) -> void:
 	_sync_conversation_phone_status()
 
 func _show_conversation_notification(day_value, conversation_id: String, title: String, body: String) -> void:
+	var has_open_thread: bool = is_instance_valid(conversation_view) and not conversation_view.current_conversation.is_empty()
+	var active_thread_id: String = _active_thread_id()
+	if has_open_thread and active_thread_id == conversation_id:
+		_continue_active_thread(day_value, conversation_id)
+		return
 	notification_target_day_value = day_value
 	notification_target_conversation_id = conversation_id
-	var has_open_thread: bool = is_instance_valid(conversation_view) and not conversation_view.current_conversation.is_empty()
 	if has_open_thread and conversation_view.has_method("show_thread_notification"):
 		conversation_view.call(
 			"show_thread_notification",
@@ -351,7 +402,43 @@ func _show_conversation_notification(day_value, conversation_id: String, title: 
 			_notification_time_for_thread(day_value, conversation_id)
 		)
 		return
-	_show_notification("%s — %s" % [title, body])
+	_show_notification("%s — %s" % [title, _compact_notification_preview(body)])
+
+func _active_thread_id() -> String:
+	if not is_instance_valid(conversation_view):
+		return ""
+	if conversation_view.has_method("current_thread_id"):
+		return str(conversation_view.call("current_thread_id"))
+	return str(conversation_view.active_conversation_id)
+
+func _continue_active_thread(day_value, thread_id: String) -> void:
+	_clear_pending_for_conversation(thread_id)
+	if is_instance_valid(conversation_view) and conversation_view.has_method("hide_thread_notification"):
+		conversation_view.call("hide_thread_notification")
+	var updated_conversation: Dictionary = _conversation_for_thread(day_value, thread_id)
+	if not updated_conversation.is_empty() and is_instance_valid(conversation_view) and conversation_view.has_method("continue_active_thread"):
+		conversation_view.call("continue_active_thread", updated_conversation)
+	if current_day_value != null and str(current_day_value) == str(day_value):
+		_render_active_day(day_value)
+		_render_days_buttons_only()
+	_sync_conversation_phone_status()
+
+func _conversation_for_thread(day_value, thread_id: String) -> Dictionary:
+	for raw_conversation in _collect_contact_conversations_for_day(day_value):
+		if typeof(raw_conversation) != TYPE_DICTIONARY:
+			continue
+		var conversation: Dictionary = raw_conversation
+		if _conversation_id(conversation) == thread_id:
+			return conversation
+	return {}
+
+func _compact_notification_preview(body: String) -> String:
+	var normalized: String = body.replace("\r", " ").replace("\n", " ").strip_edges()
+	while normalized.contains("  "):
+		normalized = normalized.replace("  ", " ")
+	if normalized.length() <= NOTIFICATION_PREVIEW_CHARACTERS:
+		return normalized
+	return "%s..." % normalized.substr(0, NOTIFICATION_PREVIEW_CHARACTERS)
 
 func _notification_time_for_thread(day_value, conversation_id: String) -> String:
 	var metadata: Dictionary = _moment_metadata_by_conversation_id(day_value)
