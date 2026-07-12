@@ -28,10 +28,6 @@ def walk(value):
             yield from walk(child)
 
 
-def all_choices(data):
-    return [node for node in walk(data) if isinstance(node, dict) and isinstance(node.get("choices"), list) for node in node["choices"]]
-
-
 def text_values(data):
     return [str(node["text"]) for node in walk(data) if isinstance(node, dict) and "text" in node]
 
@@ -82,6 +78,7 @@ class V089FirstRepetitionStaticTests(unittest.TestCase):
         self.assertEqual(data.get("thread", {}).get("id"), "thread_marie_private")
         self.assertEqual(data.get("communication_mode"), "REMOTE_ASYNC")
         segment = data["segments"][0]
+        self.assertLessEqual(len(segment.get("messages", [])), 3)
         choices = segment.get("choices", [])
         self.assertEqual(len(choices), 3)
         self.assertEqual(
@@ -92,7 +89,14 @@ class V089FirstRepetitionStaticTests(unittest.TestCase):
                 ["marie_moves_without_player", "marie_weekend_return_scheduled", "parallel_drift_evidence_soft"],
             ],
         )
-        self.assertEqual([choice.get("text") for choice in choices], ["oui", "je peux pas tout de suite", "je dois finir deux trucs"])
+        self.assertEqual(
+            [choice.get("text") for choice in choices],
+            [
+                "Oui. Donne-moi dix minutes, je viens sans ordinateur.",
+                "Je peux pas tout de suite, mais je fais le déjeuner et on marche après. Vraie proposition, pas report flou.",
+                "Je dois finir deux trucs. Profite, je te retrouve plus tard.",
+            ],
+        )
         self.assertTrue(all(choice.get("next_messages") for choice in choices))
         self.assertTrue(all("effects" not in choice for choice in choices))
 
@@ -115,11 +119,16 @@ class V089FirstRepetitionStaticTests(unittest.TestCase):
         self.assertEqual(availability.get("initial_conversation_ids"), ["chapter_06_marie_concrete_return"])
         self.assertEqual(availability.get("locked_conversation_ids"), ["chapter_06_mathilde_morning_afterglow"])
 
-    def test_mt1_has_three_choices_one_legal_turn_and_no_permission_escalation(self):
+    def test_mt1_has_manual_guided_entry_then_three_postures(self):
         data = load_json(MATHILDE_MT1)
         self.assertEqual(data.get("thread", {}).get("id"), "thread_mathilde_private")
         self.assertEqual(data.get("communication_mode"), "AFTERGLOW_REMOTE")
-        choices = data["segments"][0].get("choices", [])
+        segments = {segment.get("id"): segment for segment in data.get("segments", [])}
+        guided = segments["segment_sunday_mathilde_opening_reply"].get("choices", [])
+        self.assertEqual(len(guided), 1)
+        self.assertTrue(guided[0].get("_guided_reply"))
+        self.assertEqual(guided[0].get("text"), "sur quoi")
+        choices = segments["segment_sunday_mathilde_gaze_choice"].get("choices", [])
         self.assertEqual(len(choices), 3)
         self.assertEqual(
             [choice.get("sets_flags") for choice in choices],
@@ -136,12 +145,14 @@ class V089FirstRepetitionStaticTests(unittest.TestCase):
         for forbidden in ["permission", "consentement", "photo sexy", "cadre adulte", "secret dur", "séduction délibérée"]:
             self.assertNotIn(forbidden, dialogue)
 
-    def test_marie_return_has_warm_echo_and_exactly_three_m3_actions_when_due(self):
+    def test_marie_return_has_manual_warm_echo_and_exactly_three_m3_actions_when_due(self):
         data = load_json(MARIE_W11)
         self.assertEqual(data.get("thread", {}).get("id"), "thread_marie_private")
         segments = {segment.get("id"): segment for segment in data.get("segments", [])}
-        warm = segments["segment_sunday_marie_warm_paid_echo"]
-        self.assertEqual(warm.get("choices"), [])
+        warm = segments["segment_sunday_marie_warm_paid_echo"].get("choices", [])
+        self.assertEqual(len(warm), 1)
+        self.assertTrue(warm[0].get("_guided_reply"))
+        self.assertEqual(warm[0].get("text"), "performance historique")
         m3 = segments["segment_sunday_marie_return_choice"].get("choices", [])
         self.assertEqual(len(m3), 3)
         self.assertEqual(
@@ -153,6 +164,23 @@ class V089FirstRepetitionStaticTests(unittest.TestCase):
             ],
         )
         self.assertTrue(all("effects" not in choice for choice in m3))
+
+    def test_every_player_message_is_sent_manually_through_a_choice(self):
+        for relative in [MARIE_W9, MATHILDE_MT1, MARIE_W11]:
+            data = load_json(relative)
+            automatic_player_nodes = [
+                node.get("id", "?")
+                for node in walk(data)
+                if isinstance(node, dict) and str(node.get("sender", "")).lower() in {"ludo", "player", "joueur"}
+            ]
+            self.assertEqual(automatic_player_nodes, [], relative)
+            choices = [
+                choice
+                for segment in data.get("segments", [])
+                for choice in segment.get("choices", [])
+            ]
+            self.assertTrue(choices, relative)
+            self.assertTrue(all(str(choice.get("text", "")).strip() for choice in choices), relative)
 
     def test_new_conversations_have_unique_ids_no_numeric_effects_and_no_visual_payload(self):
         seen: set[str] = set()
