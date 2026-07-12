@@ -31,11 +31,16 @@ Status after V0.86 + V0.86a:
 
 ```text
 Tuesday–Friday opening implemented
-manual end-of-day transition
+conversation-side fixed time / Wi‑Fi / battery strip
+2-second pause + 4-second accelerated clock
 in-thread incoming-message shortcut
 strong unread-contact styling
+no active text-only timeline landing pages
+no visible or archived Moments hors ligne section
 opening_band_complete = true
 next step = documentation-only V0.87 source pack
 ```
+
+Offline phases may still apply internal continuity flags and records, but their explanatory text is not player-facing.
 
 Older runtime plans remain historical evidence of the phased integration path and must not override current canon/status files.
