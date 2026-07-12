@@ -56,6 +56,17 @@
     "wallpaper_risk_level": 0,
     "wallpaper_known_by": []
   },
+  "story_ledgers": {
+    "first_repetition": {
+      "opportunity_window_ordinal": 0,
+      "external_foreground_scene_ids": [],
+      "external_foreground_character_ids": [],
+      "charged_access_owner": "",
+      "scene_status": {},
+      "cooldown_until_ordinal": {},
+      "obligations": {}
+    }
+  },
   "flags": [],
   "seen_messages": [],
   "unlocked_content": [
