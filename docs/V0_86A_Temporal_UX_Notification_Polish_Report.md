@@ -5,91 +5,97 @@
 
 ## Trigger
 
-Manual review identified five usability problems:
+Manual review identified seven usability problems:
 
 1. `Continuer vers 16:05` and `Continuer la journée` felt like scheduler controls.
 2. `Le temps passe` was not a natural smartphone message.
-3. Text-only interstitials hid the last message and broke reading rhythm.
-4. Some newly available messages did not surface as an in-thread notification.
+3. Text-only interstitials hid the last message.
+4. Some newly available messages lacked an in-thread notification.
 5. Unread contact cards were too subtle.
+6. Time/Wi‑Fi/battery information belonged with the conversation UI rather than the temporary left panel.
+7. Explicit `Moments hors ligne` notes over-explained activity the player should infer.
 
 ## Implemented behavior
 
 ### No left-column daytime control
 
-The optional-phase progression button is removed entirely from the contact list.
-
-There is no visible:
-
-```text
-Continuer la journée
-```
-
-or time-coded equivalent.
+There is no visible daytime progression button or time-coded equivalent.
 
 ### Contact goes offline
 
-When a conversation finishes, the final message stays visible and a centered status is appended beneath it:
+After the last message, the thread remains visible and receives an interface status:
 
 ```text
 Contact est hors ligne
 ```
 
-This status is UI feedback, not a new authored dialogue line or relationship state.
+This is not authored dialogue or route state.
+
+### Fixed conversation-side phone status
+
+A fixed strip now appears above the contact header:
+
+```text
+09:14                         ▮▮  Wi‑Fi  82%
+Raphaëlle
+En ligne
+```
+
+The strip stays fixed while messages scroll. The temporary left prototype panel keeps only an invisible compatibility clock, so the time is not duplicated visually.
 
 ### Accelerated smartphone clock
 
-Two seconds after completion, the status-bar clock animates from the last visible message time to the next narrative time.
+Two seconds after completion, the fixed conversation clock animates from the last visible message time to the next narrative time.
 
-At normal speed:
+At `Speed x1`:
 
 ```text
 pause after final message = 2 seconds
-clock animation = 5 seconds
+clock animation = 4 seconds
 ```
 
-The conversation remains on screen throughout. The active path no longer opens a blank card containing only a weekday, moment label, or timestamp.
-
-The clock animation supports midnight rollover for day changes.
+The animation supports midnight rollover. The conversation remains visible throughout; no blank weekday/moment/timestamp card opens.
 
 ### Next-message notification
 
 After the clock reaches the destination time:
 
-1. the next timeline phase becomes active;
+1. the next phase becomes active;
 2. its conversation becomes unread;
 3. the completed thread remains visible;
 4. a compact notification appears below its header;
-5. clicking that notification opens the target thread.
+5. clicking it opens the target thread.
 
-The same behavior applies when the new episode belongs to the same persistent contact thread.
-
-If a data rule intentionally had no notification payload, V0.86a derives a normal contact name and first-message preview so the arrival is still perceptible.
+The same behavior applies to a later episode in the same persistent contact thread. If a rule has no authored notification payload, the adapter derives a contact name and first-message preview.
 
 ### Optional conversation behavior
 
-Optional scenes no longer need a continue button.
+Optional scenes require no continue button.
 
-- opening the optional notification cancels automatic expiry;
-- finishing the optional exchange starts the next clock passage;
-- leaving it unopened allows the existing V0.84 expiry rule to run after a short real-time window;
-- opening but not finishing it prevents expiry until the exchange is resolved.
+- opening the notification cancels automatic expiry;
+- finishing the exchange starts the next clock passage;
+- leaving it unopened permits the existing V0.84 expiry rule;
+- opening but not finishing it prevents expiry.
 
-### Authored offline beats
+### Offline activity is implicit
 
-Canonical offline actions such as dinner, walking, returning to Marie, or the household close remain active.
+Canonical offline actions remain internal continuity operations. Their variants, flags, and internal day-log records are preserved, but V0.86a does not display their explanatory text.
 
-They are now shown as centered system notes inside the current phone view rather than full-screen text cards. They continue to:
+The active UI shows no:
 
-- apply their existing flags;
-- write their existing day-log entry;
-- appear once in read-only archives.
+```text
+Moments hors ligne
+```
+
+section, no centered offline-beat explanation, and no replayable archive clue. Inline `offline_beat` authoring items are consumed silently.
+
+The player infers off-screen activity through elapsed time, later dialogue, objects, state, and consequences.
 
 ### Day changes
 
-A day change uses the same clock animation instead of an empty day-start page.
+A day change uses the same conversation-side clock animation with midnight rollover. The previous thread stays visible until the next day’s first notification appears.
 
-The old thread remains visible until the next day's first-message notification appears. The left prototype panel updates only after the accelerated clock reaches the new day.
+No day-start landing page containing only weekday or moment text is used.
 
 ### Strong unread state
 
@@ -112,7 +118,7 @@ game/scenes/smartphone/PhonePrototype.tscn
 game/scenes/smartphone/ConversationView.tscn
 ```
 
-`TimelineTransitionView.gd` remains present for legacy/history compatibility, but V0.86a does not call it for active intra-day or day-start progression.
+`TimelineTransitionView.gd` remains for legacy/history compatibility, but active V0.86a progression does not use it.
 
 ## Test coverage
 
@@ -120,18 +126,21 @@ game/scenes/smartphone/ConversationView.tscn
 tests/test_v086a_temporal_ux_static.py
 ```
 
-The test verifies:
+Coverage verifies:
 
 - active adapter wiring;
 - absence of scheduler buttons and `Le temps passe` prompts;
-- two-second delay and five-second clock animation;
+- two-second delay and four-second clock animation;
+- fixed conversation-side status strip;
+- hidden left-side compatibility clock;
 - contact-offline status beneath the last message;
-- no active call to text-only transition overlays;
-- inline authored offline beats;
+- no active text-only transition overlay;
+- silent authored and inline offline beats;
+- no visible or archived `Moments hors ligne` section;
 - natural optional-scene expiry;
 - in-thread new-message notifications;
 - unread-card styling;
-- UX-only scope plus reuse of existing offline-beat flags.
+- UX-only scope plus reuse of existing state flags.
 
 ## Explicit exclusions
 
