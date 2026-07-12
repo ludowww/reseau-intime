@@ -177,14 +177,61 @@ func continue_active_thread(conversation: Dictionary) -> void:
 		return
 	if _conversation_key(conversation) != active_conversation_id:
 		return
-	_merge_updated_conversation(conversation)
-	var merged_conversation: Dictionary = active_state.get("conversation", {})
-	current_conversation = merged_conversation
-	if bool(active_state.get("sequence_in_progress", false)):
+	var appended: bool = _append_unseen_thread_segments(conversation)
+	if not appended or bool(active_state.get("sequence_in_progress", false)):
 		return
 	if bool(active_state.get("sequence_complete", false)) and _has_next_segment():
 		active_state["sequence_complete"] = false
 		_resume_active_thread.call_deferred(active_conversation_id, current_render_token)
+
+func _append_unseen_thread_segments(conversation: Dictionary) -> bool:
+	var merged: Dictionary = active_state.get("conversation", {}).duplicate(true)
+	var merged_segments: Array = merged.get("segments", []).duplicate(true)
+	var seen_keys: Dictionary = {}
+	for raw_segment in merged_segments:
+		if typeof(raw_segment) == TYPE_DICTIONARY:
+			seen_keys[_continuation_segment_key(raw_segment)] = true
+	var appended := false
+	for raw_segment in conversation.get("segments", []):
+		if typeof(raw_segment) != TYPE_DICTIONARY:
+			continue
+		var segment: Dictionary = raw_segment
+		var key: String = _continuation_segment_key(segment)
+		if bool(seen_keys.get(key, false)):
+			continue
+		merged_segments.append(segment.duplicate(true))
+		seen_keys[key] = true
+		appended = true
+	var episode_ids: Array = merged.get("_episode_ids", []).duplicate()
+	for raw_episode_id in conversation.get("_episode_ids", []):
+		var episode_id: String = str(raw_episode_id)
+		if not episode_ids.has(episode_id):
+			episode_ids.append(episode_id)
+	merged["segments"] = merged_segments
+	merged["_episode_ids"] = episode_ids
+	merged["_segment_count"] = merged_segments.size()
+	for metadata_key in [
+		"day",
+		"chapter",
+		"title",
+		"thread",
+		"thread_id",
+		"_parent_conversation_id",
+		"_index_title",
+		"_index_calendar_label",
+		"_index_display_label",
+	]:
+		if conversation.has(metadata_key):
+			merged[metadata_key] = conversation.get(metadata_key)
+	active_state["conversation"] = merged
+	current_conversation = merged
+	return appended
+
+func _continuation_segment_key(segment: Dictionary) -> String:
+	return "%s|%s" % [
+		str(segment.get("_source_conversation_id", "")),
+		str(segment.get("id", "")),
+	]
 
 func _resume_active_thread(conversation_id: String, token: int) -> void:
 	if not _is_render_current(conversation_id, token):
