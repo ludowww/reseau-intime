@@ -1,6 +1,6 @@
 # Documentation Reading Order — Canon Current
 
-> Canon entry point after the V0.87 first-repetition source-pack pass.  
+> Canon entry point after the V0.87 first-repetition source-pack and voice-distinction pass.  
 > Runtime remains implemented from Tuesday through Friday at V0.86.  
 > V0.87 defines, but does not yet implement, the first post-opening repetition wave.
 
@@ -8,6 +8,7 @@
 
 ```text
 Write people from full character canon.
+Preserve cross-character voice distinction.
 Write story movement from V0.78.
 Write the opening from V0.79 and its reconciliation sources.
 Write the first post-opening repetition wave from V0.87.
@@ -18,6 +19,8 @@ Use three choices by default.
 Legacy runtime is not automatic narrative canon.
 Documented is not the same as implemented.
 ```
+
+---
 
 ## 2. Official reading order
 
@@ -59,26 +62,46 @@ Documented is not the same as implemented.
    - `docs/runtime/V0_88_FIRST_REPETITION_RUNTIME_PREPARATION_NOTE.md`
 10. `docs/canon/characters/CHARACTER_CANON_INDEX.md`
 11. relevant principal full-canon file
-12. `docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md` when adult tension, images, voyeurism, cheating, sharing, roleplay, NTR/cuckold, group content, or dark consequences are involved
-13. relevant character deprecation map
-14. `docs/canon/SUPPORTING_CHARACTER_CANON_POLICY.md` when a supporting character appears or is affected
-15. historical J1 sources only when auditing line origin:
+12. `docs/canon/CHARACTER_VOICE_DISTINCTION_CANON.md`
+13. `docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md` when adult tension, images, voyeurism, cheating, sharing, roleplay, NTR/cuckold, group content, or dark consequences are involved
+14. relevant character deprecation map
+15. `docs/canon/SUPPORTING_CHARACTER_CANON_POLICY.md` when a supporting character appears or is affected
+16. historical J1 sources only when auditing line origin:
     - `docs/canon/J1_CANON_SOURCE_PACK.md`
     - `docs/V0_69_J1_Canon_Text_Review_And_Final_Line_Source.md`
-16. voice/intensity bibles as support only
-17. older fixed-day plans, summaries, route matrices, proof maps, and inactive runtime only after explicit cross-checking
+17. voice/intensity bibles as support only
+18. older fixed-day plans, summaries, route matrices, proof maps, and inactive runtime only after explicit cross-checking
 
 `docs/canon/CHARACTERS_CANON_CURRENT.md` remains a doorway only.
 
 ---
 
-## 3. Current source hierarchy
+## 3. Voice authority
+
+The full character canon defines the person. The voice-distinction canon prevents strong markers from leaking across the cast.
+
+```text
+Mathilde's legal seasoning is not shared cast vocabulary.
+Marie moves shared life.
+Sandra protects a trace.
+Pauline controls timing and audience.
+Nico makes food, rooms, friendship, and desire concrete.
+Raphaëlle selects detail and asks one clear question.
+Player remains short, dry, observant, and imperfect.
+```
+
+Literal professional vocabulary remains possible where context requires it. Recurring legal punchlines outside Mathilde are rejected unless the borrowing itself is deliberately meaningful.
+
+---
+
+## 4. Current source hierarchy
 
 ```text
 full character canon
++ character voice distinction canon
 + choice canon
 + V0.78 modular architecture
-= identity and movement truth
+= identity, voice, and movement truth
 
 V0.79 opening source pack / cards / temporal map
 + V0.83 J1 reconciliation sources
@@ -108,7 +131,7 @@ without being available in the current build.
 
 ---
 
-## 4. Current playable runtime
+## 5. Current playable runtime
 
 Active indexes:
 
@@ -139,7 +162,7 @@ V0.87 Saturday/Monday windows are not yet playable.
 
 ---
 
-## 5. Tuesday — reconciled J1
+## 6. Tuesday — reconciled J1
 
 ```text
 18:12 Marie remote opening
@@ -175,7 +198,7 @@ Guarantees:
 
 ---
 
-## 6. Wednesday and Thursday
+## 7. Wednesday and Thursday
 
 Wednesday:
 
@@ -211,7 +234,7 @@ Every branch returns to Marie before Friday.
 
 ---
 
-## 7. Friday — public traces and opening close
+## 8. Friday — public traces and opening close
 
 ```text
 08:35 Pauline / authorized group-photo relay
@@ -239,7 +262,7 @@ Friday guarantees:
 
 ---
 
-## 8. Current phone-time presentation
+## 9. Current phone-time presentation
 
 The active V0.86a path uses:
 
@@ -270,9 +293,7 @@ Current UI rules:
 
 ---
 
-## 9. V0.87 — first repetition wave
-
-V0.87 defines:
+## 10. V0.87 — first repetition wave
 
 ```text
 W9  Marie claims one shared hour
@@ -318,9 +339,7 @@ V0.87 creates no required image asset and no fixed character order.
 
 ---
 
-## 10. First repetition selection rule
-
-Selection is deterministic:
+## 11. First repetition selection rule
 
 ```text
 safety / aftermath
@@ -338,14 +357,14 @@ Global constraints:
 
 - one foreground per window;
 - zero to two echoes;
-- same character cannot consume both external tickets;
+- the same character cannot consume both external tickets;
 - a Marie consequence outranks a new external opportunity;
 - silence is valid when no scene fits;
 - timestamps describe chronology but never grant access alone.
 
 ---
 
-## 11. Current traces
+## 12. Current traces
 
 ```text
 j1_sandra_lunch_memory_soft
@@ -360,7 +379,7 @@ No new crop, audience, sexual function, forwarding permission, or adult collecti
 
 ---
 
-## 12. Current route and intensity status
+## 13. Current route and intensity status
 
 Runtime end state remains:
 
@@ -388,7 +407,7 @@ Do not treat that documented ceiling as current save state.
 
 ---
 
-## 13. Legacy policy
+## 14. Legacy policy
 
 Legacy files remain on disk for rollback, history, and technical comparison.
 
@@ -405,9 +424,7 @@ Do not restore old fixed day orders, Mathilde canapé foundations, Pauline insta
 
 ---
 
-## 14. Next implementation step
-
-The next milestone is:
+## 15. Next implementation step
 
 ```text
 V0.88 — First Repetition Runtime Integration Plan
@@ -415,7 +432,7 @@ V0.88 — First Repetition Runtime Integration Plan
 
 It must map the approved source pack onto current state and choose a small vertical slice.
 
-Recommended first slice boundary:
+Recommended first-slice boundary:
 
 ```text
 W9 Marie shared hour
@@ -427,32 +444,34 @@ No V0.87 scene enters runtime before that plan is validated.
 
 ---
 
-## 15. Maintenance rule
+## 16. Maintenance rule
 
-If scene meaning changes:
+If scene meaning or voice changes:
 
 1. update the V0.87 source pack;
-2. update the matching scene card;
-3. update the temporal map when time, place, or delivery changes;
-4. update full character canon only if identity changes;
-5. update global NSFW canon only if adult rules change;
-6. update status/report/roadmap;
-7. validate documentation;
-8. only then update the runtime plan.
+2. update the matching scene card if engine, posture, or consequence changes;
+3. update the voice-distinction canon when a cross-character rule changes;
+4. update the temporal map when time, place, or delivery changes;
+5. update full character canon only if identity changes;
+6. update global NSFW canon only if adult rules change;
+7. update status/report/roadmap;
+8. validate documentation;
+9. only then update the runtime plan.
 
 ```text
 A correction is incomplete
-while source pack, card, temporal map, and current status disagree.
+while source pack, card, temporal map, voice policy, and current status disagree.
 ```
 
 ---
 
-## 16. Final rule
+## 17. Final rule
 
 ```text
 V0.86 proves ordinary access.
 V0.87 proves that repetition can change meaning.
 V0.88 must integrate only the smallest truthful slice.
 
+Every character must remain recognizable before desire intensifies.
 No later adult engine may erase the ordinary person who earned it.
 ```
