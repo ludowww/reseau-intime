@@ -165,7 +165,7 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
         self.assertIn("_completion_id_for_current_segment", conversation)
         self.assertIn('data.get("_source_conversation_id"', conversation)
 
-    def test_transition_overlay_blocks_input_supports_skip_and_lands_on_new_moment(self):
+    def test_transition_overlay_remains_available_as_technical_compatibility(self):
         scene = (GAME / "scenes/smartphone/TimelineTransitionView.tscn").read_text(encoding="utf-8")
         script = (GAME / "scripts/ui/TimelineTransitionView.gd").read_text(encoding="utf-8")
         self.assertIn("TimelineTransitionView.gd", scene)
@@ -175,18 +175,12 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
             "MOUSE_FILTER_STOP",
             "FOCUS_ALL",
             "grab_focus",
-            "can_skip",
-            "skip_requested",
-            "min_time",
-            "duration",
             "clear_transition",
             "transition_finished",
-            "_show_timeline_landing",
-            'call("show_timeline_landing"',
         ]:
             self.assertIn(expected, script)
 
-    def test_archive_navigation_is_day_scoped_read_only_and_includes_offline_log(self):
+    def test_archive_navigation_is_day_scoped_read_only_and_keeps_day_logs_internal(self):
         phone = (GAME / "scripts/ui/PhonePrototypeV084.gd").read_text(encoding="utf-8")
         for expected in [
             "_render_archived_day",
@@ -202,8 +196,12 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
         self.assertNotIn("GameState.set_context", archived_block)
 
         v085 = (GAME / "scripts/ui/PhonePrototypeV085.gd").read_text(encoding="utf-8")
-        self.assertIn("TimelineState.get_day_log_entries", v085)
-        self.assertIn("Moments hors ligne", v085)
+        self.assertNotIn('"Moments hors ligne"', v085)
+        self.assertNotIn("TimelineState.get_day_log_entries", v085)
+
+        state = (GAME / "scripts/core/TimelineState.gd").read_text(encoding="utf-8")
+        self.assertIn("record_day_log_entry", state)
+        self.assertIn("get_day_log_entries", state)
 
         archive = (GAME / "scripts/ui/ConversationViewV084.gd").read_text(encoding="utf-8")
         for expected in [
