@@ -1,508 +1,316 @@
 # Roadmap
 
-## 1. État actuel
+## 1. Project rules
 
 ```text
-Moteur : Godot 4.6.x
-Workflow : documentation validée avant runtime
-Choix : 3 maximum par défaut
-PR : courtes, ciblées, sans gros refactoring
+Engine: Godot 4.6.x
+Workflow: documentation validated before runtime
+Choices: 3 maximum by default
+PRs: short, targeted, squashable
+Runtime refactors: local and justified only
 ```
 
-### Canon, architecture et intégration
-
-- sept personnages principaux complètement définis ;
-- V0.78 : architecture narrative modulaire ;
-- V0.79 : ouverture mardi–vendredi écrite ;
-- V0.80 : plan runtime phasé ;
-- V0.81 : mercredi intégré ;
-- V0.82 : jeudi topologique intégré ;
-- V0.83 : canon du flux temporel et réconciliation J1 ;
-- V0.84 : fondation runtime jours/phases/archives ;
-- V0.85 : J1 actif réconcilié ;
-- V0.86 : vendredi public/social et clôture de l’ouverture ;
-- V0.86a : simulation temporelle smartphone, notifications et non-lus ;
-- V0.87 : première vague de répétitions post-ouverture documentée.
-
----
-
-## 2. Runtime actif V0.86 + V0.86a
-
-Contenu chargé :
+Central question:
 
 ```text
-Mardi
-Mercredi
-Jeudi
-Vendredi
+Can Player and Marie make their couple an active choice again?
 ```
 
-Accès initial :
+## 2. Completed canon and runtime milestones
 
 ```text
-Mardi actif
-Mercredi verrouillé
-Jeudi verrouillé
-Vendredi verrouillé
+V0.65  consolidated documentation canon
+V0.66  full character files
+V0.67  global NSFW canon
+V0.68  narrative reconciliation
+V0.69  canonical J1 text
+V0.70  3-choice default
+V0.71  J1 runtime plan
+V0.72  J1 runtime alignment
+V0.73  Mathilde full concrete + NSFW canon
+V0.74  Pauline full concrete + double-life canon
+V0.75  Nico full concrete + voyeur/photo correction
+V0.76  Raphaëlle full concrete + chosen-version canon
+V0.77  supporting-character policy
+V0.78  modular narrative arc blueprint
+V0.79  Tuesday–Friday opening source pack
+V0.80  phased runtime audit and integration plan
+V0.81  Wednesday vertical slice
+V0.82  Thursday topology and Marie return
+V0.83  temporal-flow canon and J1 reconciliation
+V0.84  authoritative runtime days/phases
+V0.85  reconciled active Tuesday
+V0.86  Friday public traces and opening completion
+V0.86a smartphone time, notifications, unread state, and hidden offline exposition
+V0.87  first repetition windows source pack + voice-distinction canon
 ```
 
-Progression active :
+## 3. Current implemented runtime
+
+Playable content:
 
 ```text
-fin d'échange
--> contact hors ligne
--> pause 2 secondes
--> horloge accélérée 4 secondes à Speed x1
--> notification compacte si le prochain épisode appartient à un autre fil
+Tuesday
+Wednesday
+Thursday
+Friday
 ```
 
-Même fil :
+Initial access:
 
 ```text
-horloge
--> aucune notification même contact
--> reprise directe de la conversation
+Tuesday active
+Wednesday locked
+Thursday locked
+Friday locked
 ```
 
-Le runtime se termine vendredi soir sur :
+Current phone-time behavior:
 
 ```text
-household_rhythm_confirmed = true
+last message
+-> contact offline
+-> 2-second pause
+-> clock advances for 4 seconds at Speed x1
+-> compact notification for another thread
+```
+
+Same-thread continuation resumes directly without a redundant notification.
+
+Current endpoint:
+
+```text
 opening_band_complete = true
+Friday evening
 ```
 
-Il reste en R1 maximum, sans secret dur ni cadre adulte.
-
----
-
-## 3. Ouverture concrète terminée
-
-### Mardi
-
-```text
-Marie + M1
--> activité commune hors téléphone
--> Sandra + S1
--> retour final vers Marie
-```
-
-### Mercredi
-
-```text
-urgence Mathilde
--> faire de la place
--> arrivée
--> installation hors téléphone
-```
-
-### Jeudi
-
-```text
-Raphaëlle travail
--> Sandra optionnelle
--> invitation Marie
--> une seule topologie
--> retour Marie obligatoire
-```
-
-### Vendredi
-
-```text
-08:35 Pauline / photo publique + P0
-14:05 Nico / place gardée + N0
-18:05 Marie + Mathilde / échos du foyer
-18:25 continuité interne du foyer
--> opening_band_complete
-```
-
----
-
-## 4. État narratif runtime
+Runtime state:
 
 ```text
 Marie/Player = HABITUAL_WARMTH
 relationship frame = ASSUMED_EXCLUSIVE
-Sandra = soft trace / continuité ordinaire
-Mathilde = R1 domestique
-Raphaëlle = R1 travail
-Pauline = R1 social/public
-Nico = R1 amitié/social
-
-Pauline private compartment = false
-Nico dangerous shared-gaze frame = false
+Sandra = soft trace / ordinary continuity
+Mathilde = R1 household access
+Raphaëlle = R1 work access
+Pauline = R1 social/public access
+Nico = R1 friendship/social access
 hard secrets = none
 adult frames = none
 routes R2+ = none
-opening_band_complete = true
 ```
 
----
+No Saturday, Sunday, or Monday content is currently loaded.
 
-## 5. Acquis techniques V0.84–V0.86a
-
-### Temps et accès
+## 4. V0.87 authorized narrative wave
 
 ```text
-Day: LOCKED -> AVAILABLE -> ACTIVE -> COMPLETE -> ARCHIVED
-Phase: LOCKED -> CURRENT -> COMPLETE / SKIPPED / EXPIRED
+W9  Marie claims one shared hour
+W10 weekend repetition opportunity
+W11 mandatory Marie return
+W12 first-workday repetition opportunity
+W13 wave close / couple balance
 ```
 
-- le temps contrôle l’accès ;
-- un timestamp seul ne débloque rien ;
-- les jours futurs restent verrouillés ;
-- une scène optionnelle est vue ou expire ;
-- une conséquence due passe avant une nouvelle opportunité.
-
-### Interface smartphone
-
-- heure, Wi-Fi et batterie dans la barre fixe de conversation ;
-- dernier message visible pendant le passage du temps ;
-- notification compacte limitée à dix caractères puis `...` ;
-- bref effet d’insertion/flash ;
-- transcript maintenu en bas ;
-- non-lus visuellement forts ;
-- aucun bouton `Continuer la journée` ;
-- aucune page vide de moment/jour ;
-- pas de notification lorsque le bon fil est déjà ouvert.
-
-### Activité hors téléphone
-
-Les états internes peuvent :
-
-- sélectionner une variante ;
-- appliquer des flags ;
-- maintenir l’ordre et les conséquences ;
-- faciliter le débogage.
-
-Ils ne sont pas exposés comme :
-
-- carte plein écran ;
-- note explicative ;
-- rubrique `Moments hors ligne` ;
-- indice d’archive rejouable.
-
----
-
-## 6. V0.87 — First Repetition Windows Source Pack
-
-Statut :
+Wave limits:
 
 ```text
-documentation écrite
-runtime non modifié
-validation produit requise avant V0.88
+maximum 2 external foreground tickets
+maximum 1 charged-access owner
+same character cannot consume both tickets
+Marie consequence outranks a new external opportunity
+quiet windows are valid
 ```
 
-Sources :
+Character ceilings:
 
 ```text
-docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_SOURCE_PACK.md
-docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_SCENE_CARDS.md
-docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_TEMPORAL_DELIVERY_MAP.md
-docs/V0_87_Next_Act_I_Windows_Source_Pack_Report.md
+Mathilde = R1 or R2 at most
+Sandra = R1 or R2 at most
+Raphaëlle = R1 or R2 at most
+Pauline = R1
+Nico = R1
 ```
 
-### Architecture de vague
+Only one of Mathilde, Sandra, or Raphaëlle may own first charged access.
+
+No hard secret, adult image, adult frame, R3+, or relationship-frame change is authorized.
+
+## 5. Current milestone — V0.88
 
 ```text
-W9  Marie réclame une heure partagée
-W10 opportunité de répétition week-end
-W11 retour obligatoire vers Marie
-W12 opportunité de répétition premier jour ouvré
-W13 fermeture de vague / équilibre du couple
+V0.88 — First Repetition Runtime Integration Plan
 ```
 
-Budget :
+Status:
 
 ```text
-1 foreground Marie fixe
-+ 2 foregrounds externes maximum
-+ 0–2 échos par fenêtre
-+ 1 seul propriétaire d'accès chargé maximum
+documentation only
+runtime unchanged
 ```
 
-Sélection :
+Approved planning slice:
 
 ```text
-sécurité / aftermath
--> tronc fixe
--> obligation due
--> continuation compatible
--> contexte réel
--> scène éligible non vue
--> scène la plus différée
--> personnage le moins récemment foreground
--> ordre authored
+Saturday W9 Marie shared hour
+-> Sunday Mathilde morning candidate or silent defer
+-> Sunday W11 Marie concrete return
 ```
 
-Aucune sélection aléatoire avant ces règles.
+Mathilde is selected because:
 
----
+- the stay and household state already exist;
+- her persistent thread already exists;
+- no image is required;
+- the scene tests context selection, expiry, R1/R2 gating, and couple return;
+- Marie/family trust remains central;
+- the choice is based on implementation fit, not later erotic priority.
 
-## 7. Scènes V0.87 autorisées
+## 6. V0.88 state architecture
 
-### Marie — heure partagée
+Planned state root:
 
 ```text
-marie_saturday_shared_hour_01
+story_ledgers.first_repetition
 ```
 
-- Marie a déjà une vraie matinée ;
-- Player rejoint, propose un horaire borné ou la laisse profiter seule ;
-- preuve de reconnexion ou dérive, sans changement immédiat de mode du couple.
-
-### Mathilde — regard cuisine
+Planned fields:
 
 ```text
-mathilde_morning_kitchen_afterglow_01
+opportunity_window_ordinal
+external_foreground_scene_ids
+external_foreground_character_ids
+charged_access_owner
+scene_status
+cooldown_until_ordinal
+obligations
 ```
 
-- tenue ajustée ordinaire ;
-- regard reconnu après séparation physique ;
-- R2 possible au maximum ;
-- intention délibérée, image et consentement adulte toujours absents.
-
-### Sandra — après-poste choisi
+Separation of concerns:
 
 ```text
-sandra_ticket_ghost_hot_chocolate_01
+TimelineState = chronology
+GameState story ledger = wave state
+flat flags = observable branch facts
+index data = authored limits and candidate order
 ```
 
-- détail SentryCore concret ;
-- aucune nouvelle photo ;
-- R2 possible seulement si précision et limites antérieures le justifient.
+Candidate selection is deterministic and returns one episode or none.
 
-### Raphaëlle — marche hors travail
+No random scheduler or character-selection menu is planned.
+
+## 7. Planned V0.89 vertical slice
+
+Future implementation files are expected to add:
 
 ```text
-raphaelle_lunch_walk_outside_work_01
+Saturday index + Marie W9 conversation
+Sunday index + Mathilde opportunity + Marie W11 return
+FirstRepetitionSelector.gd
+PhonePrototypeV089.gd
+story-ledger defaults/helpers
+one static test module
 ```
 
-- vrai dossier résolu ;
-- une couche ordinaire hors bureau ;
-- R2 possible au maximum ;
-- compte créatif, costume, photo et attraction nommée toujours verrouillés.
+The first implementation must not add:
 
-### Pauline — deuxième cycle social légitime
+- Sandra;
+- Raphaëlle;
+- Pauline;
+- Nico;
+- the second external ticket;
+- the complete W12/W13 wave;
+- new images;
+- adult content;
+- a full save system.
+
+The slice ends with:
 
 ```text
-pauline_bastien_sunday_table_01
+first_repetition_slice_01_complete = true
+first_repetition_wave_complete = false / absent
 ```
 
-- Bastien présent et humain ;
-- Marie autonome ;
-- aucun crop privé, test secret ou alibi ;
-- Pauline reste R1.
+Monday remains unavailable.
 
-### Nico — deuxième cycle d’amitié
+## 8. Voice requirement
+
+Current source:
 
 ```text
-nico_pre_shift_lunch_friendship_01
+docs/canon/CHARACTER_VOICE_DISTINCTION_CANON.md
 ```
 
-- Nico calme et ordinaire ;
-- vraie amitié avant le futur regard partagé ;
-- aucune photo, alibi ou demande domestique ;
-- Nico reste R1.
-
-### Marie — retour concret
+Runtime authoring must preserve:
 
 ```text
-marie_concrete_return_due_01
+Marie = shared life, movement, food, practical humor
+Mathilde = speed, correction, bad faith, image + limited legal seasoning
+Player = short, dry, observant, imperfect action
 ```
 
-Après chaque foreground externe :
+Legal-register jokes must not spread from Mathilde to the rest of the cast.
 
-- acte immédiat ;
-- acte futur borné ;
-- ou reconnaissance honnête d’une non-réparation.
-
-Cette conséquence a priorité sur toute nouvelle opportunité.
-
----
-
-## 8. Plafond V0.87 documenté
-
-```text
-charged_access_owner = none | mathilde | sandra | raphaelle
-maximum one owner
-```
-
-| Personnage | Runtime actuel | Maximum futur autorisé par V0.87 |
-|---|---|---|
-| Marie | `HABITUAL_WARMTH` | même mode + preuves reconnexion/dérive |
-| Sandra | R1/soft | R2 max |
-| Mathilde | R1 | R2 max |
-| Raphaëlle | R1 | R2 max |
-| Pauline | R1 | R1 |
-| Nico | R1 | R1 |
-
-Toujours exclus :
-
-```text
-hard secret
-adult frame
-adult image
-route R3+
-relationship-frame change
-```
-
-Le plafond V0.87 ne correspond pas encore à la sauvegarde/runtime actuel.
-
----
-
-## 9. Traces et images
-
-V0.87 ne demande aucun nouvel asset visuel.
-
-Traces existantes :
-
-```text
-j1_sandra_lunch_memory_soft
-mathilde_arrival_room_01
-marie_laverriere_setup_01
-laverriere_public_group_photo_set_01
-```
-
-Aucun :
-
-- recadrage ;
-- second public ;
-- transfert privé ;
-- sens sexuel ajouté ;
-- collectible adulte.
-
----
-
-## 10. Cooldowns et replay
-
-- deux tickets externes maximum par partie ;
-- même personnage interdit sur les deux tickets ;
-- scène manquée = expiration, mutation ou nouvelle raison requise ;
-- aucune scène offerte indéfiniment ;
-- une fenêtre silencieuse est valide ;
-- tous les personnages ne sont pas foreground dans la même partie.
-
-Replay :
-
-- change le personnage sélectionné ;
-- change le propriétaire chargé éventuel ;
-- change les promesses payées ou manquées ;
-- ne change pas les règles de consentement ou les identités.
-
----
-
-## 11. V0.87 validation documentaire
-
-Avant merge :
+## 9. Validation requirement for V0.89
 
 ```bash
+python3 tools/validate_game_data.py
+python3 -m unittest \
+  tests.test_godot_prototype_static \
+  tests.test_v081_wednesday_static \
+  tests.test_v082_thursday_static \
+  tests.test_v084_temporal_flow_static \
+  tests.test_v085_j1_reconciliation_static \
+  tests.test_v086_friday_opening_static \
+  tests.test_v086a_temporal_ux_static \
+  tests.test_v089_first_repetition_static \
+  -v
+python3 tools/player_choice_text_check.py <three new conversation files>
+python3 tools/player_presence_check.py <three new conversation files>
 git diff --check
-git diff --name-only main...HEAD
+godot --headless --path game --quit
+godot --headless --path game --resolution 1280x720 --quit
 ```
 
-Scope attendu :
+Manual validation must cover:
+
+- Mathilde eligible and R2;
+- Mathilde eligible but R1;
+- Mathilde notification expired;
+- Mathilde ineligible / silent defer;
+- Marie immediate return;
+- Marie bounded carried promise;
+- honest non-repair;
+- no blank interstitial or visible offline explanation.
+
+## 10. Official sequence
 
 ```text
-docs/**
-README.md
-ROADMAP.md
+V0.87  First Repetition Windows Source Pack        merged
+V0.88  First Repetition Runtime Integration Plan   current documentation milestone
+V0.89  Marie -> Mathilde -> Marie vertical slice   next after validation
+V0.90+ remaining candidate pools in small PRs
 ```
 
-Scope interdit :
+## 11. Permanent guardrails
+
+- documentation before runtime;
+- consequences before new temptation;
+- one foreground per window;
+- no route menu;
+- three choices by default;
+- time and physical context are hard conditions;
+- co-presence is not converted into fake Messenger dialogue;
+- images keep origin, audience, and permission;
+- no visible `Moments hors ligne` exposition;
+- character voice remains distinct;
+- no large refactor before a proven slice;
+- rollback remains one squash commit.
+
+## 12. Final direction
 
 ```text
-game/**
-tests/**
-tools/**
-```
-
-Questions produit :
-
-- Marie reçoit-elle bien une scène positive pour elle-même ?
-- Deux tickets externes suffisent-ils à créer du replay sans surcharge ?
-- Le plafond d’un seul R2 est-il assez lisible ?
-- Pauline et Nico restent-ils assez distincts sans activer trop tôt leurs moteurs dangereux ?
-- Mathilde, Sandra et Raphaëlle ont-elles chacune une grammaire de charge différente ?
-- Les conséquences reviennent-elles assez concrètement vers Marie ?
-- Les scènes manquées mutent-elles au lieu d’attendre ?
-
----
-
-## 12. Prochaine étape — V0.88
-
-```text
-V0.88 — First Repetition Runtime Integration Plan
-```
-
-Documentation d’abord.
-
-V0.88 doit mapper :
-
-- tickets foreground ;
-- sélection déterministe ;
-- propriétaire chargé ;
-- obligations Marie ;
-- cooldowns/expiry/mutation ;
-- continuité même fil ;
-- représentation de la co-présence ;
-- compatibilité sauvegarde ;
-- petite tranche d’intégration ;
-- rollback et validations.
-
-Tranche recommandée :
-
-```text
-W9 Marie
-+ un candidat externe
-+ retour Marie obligatoire
-```
-
-Aucun fichier runtime ne doit changer avant validation du plan.
-
----
-
-## 13. Principes permanents
-
-- documentation avant runtime ;
-- trois choix par défaut ;
-- un timestamp ne donne pas accès ;
-- une scène existe seulement si le contexte physique et social la justifie ;
-- conséquence due avant nouvelle tentation ;
-- co-présence hors chat ;
-- image = origine + public + permission ;
-- privé ≠ secret ;
-- chargé ≠ consentement ;
-- flags observables avant scores abstraits ;
-- legacy conservé mais inactif ;
-- aucune modification narrative silencieuse.
-
----
-
-## 14. À éviter
-
-- intégrer V0.87 directement sans V0.88 ;
-- afficher les cinq personnages externes dans une partie ;
-- donner plus de deux tickets externes ;
-- donner R2 à plus d’un personnage ;
-- donner un crop privé à Pauline ;
-- activer le pacte photo/alibi de Nico ;
-- transformer la tenue Mathilde en permission ;
-- donner une nouvelle photo à Sandra ;
-- révéler le compte/costume Raphaëlle trop tôt ;
-- oublier le retour Marie ;
-- réintroduire les pages textuelles de temps ;
-- exposer les activités hors téléphone ;
-- construire un scheduler aléatoire général.
-
----
-
-## 15. Séquence officielle
-
-```text
-V0.86 — Friday Public Traces & Opening Completion
-V0.86a — Smartphone Time & Notification Polish
-V0.87 — First Repetition Windows Source Pack
-V0.88 — First Repetition Runtime Integration Plan
-V0.89+ — petites tranches runtime validées
+V0.86 proved ordinary access.
+V0.87 defined how repetition may acquire charge.
+V0.88 selects the smallest honest runtime proof.
+V0.89 may implement only that proof.
 ```
