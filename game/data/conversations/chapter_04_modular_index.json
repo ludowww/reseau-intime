@@ -61,11 +61,11 @@
     "day_end_card": {
       "eyebrow": "VENDREDI — FIN DE JOURNÉE",
       "title": "Le foyer a changé de rythme.",
-      "subtitle": "La suite n'est pas encore disponible.",
+      "subtitle": "Le week-end continue.",
       "duration": 1.55,
       "min_time": 0.45
     },
-    "next_day": null,
+    "next_day": 5,
     "phases": [
       {
         "id": "friday_pauline_public_relay",
@@ -188,6 +188,6 @@
     "Nico follows in the afternoon with one topology-aware friendship scene and N0.",
     "Marie and Mathilde unlock together in separate household threads at 18:05.",
     "The final authored household beat writes opening_band_complete.",
-    "Friday has no next day and no route above R1."
+    "Friday completion unlocks Saturday without changing the R1 opening content."
   ]
 }
