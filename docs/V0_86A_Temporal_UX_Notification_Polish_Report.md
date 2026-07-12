@@ -5,7 +5,7 @@
 
 ## Trigger
 
-Manual review identified seven usability problems:
+Manual review identified ten usability problems:
 
 1. `Continuer vers 16:05` and `Continuer la journée` felt like scheduler controls.
 2. `Le temps passe` was not a natural smartphone message.
@@ -14,6 +14,9 @@ Manual review identified seven usability problems:
 5. Unread contact cards were too subtle.
 6. Time/Wi‑Fi/battery information belonged with the conversation UI rather than the temporary left panel.
 7. Explicit `Moments hors ligne` notes over-explained activity the player should infer.
+8. Showing a notification could move the transcript away from its final messages.
+9. Full-message notification previews overloaded the header.
+10. Same-thread continuations incorrectly displayed a switch shortcut and choice-free conversations displayed an unnecessary empty-choice hint.
 
 ## Implemented behavior
 
@@ -31,9 +34,15 @@ Contact est hors ligne
 
 This is not authored dialogue or route state.
 
+Choice-free conversations no longer display:
+
+```text
+Aucun choix direct dans cette conversation.
+```
+
 ### Fixed conversation-side phone status
 
-A fixed strip now appears above the contact header:
+A fixed strip appears above the contact header:
 
 ```text
 09:14                         ▮▮  Wi‑Fi  82%
@@ -56,17 +65,31 @@ clock animation = 4 seconds
 
 The animation supports midnight rollover. The conversation remains visible throughout; no blank weekday/moment/timestamp card opens.
 
-### Next-message notification
+### Compact notification for another thread
 
-After the clock reaches the destination time:
+When the next message belongs to another contact:
 
-1. the next phase becomes active;
-2. its conversation becomes unread;
-3. the completed thread remains visible;
-4. a compact notification appears below its header;
-5. clicking it opens the target thread.
+1. the target conversation becomes unread;
+2. the completed thread remains visible and stays scrolled to its bottom;
+3. the notification is inserted below the fixed header without taking focus;
+4. its preview is reduced to the first ten characters followed by `...`;
+5. a short fade/flash pulse attracts attention;
+6. clicking it opens the target thread.
 
-The same behavior applies to a later episode in the same persistent contact thread. If a rule has no authored notification payload, the adapter derives a contact name and first-message preview.
+If a phase contains several required contacts, completing one now surfaces the next unfinished unread contact. This covers the Friday Marie/Mathilde pair even though Mathilde’s simultaneous unlock is initially silent to avoid competing banners.
+
+If a rule has no authored notification payload, the adapter derives a contact name and first-message preview before applying the same compact presentation.
+
+### Direct continuation in the already open thread
+
+When the clock reaches a later episode belonging to the thread already displayed:
+
+- no notification banner appears;
+- the thread is marked read automatically;
+- the newly available segment is merged into the existing conversation state;
+- messages resume directly below the previous history with normal typing cadence.
+
+A notification now means “switch to another conversation,” not merely “more content exists.”
 
 ### Optional conversation behavior
 
@@ -93,7 +116,7 @@ The player infers off-screen activity through elapsed time, later dialogue, obje
 
 ### Day changes
 
-A day change uses the same conversation-side clock animation with midnight rollover. The previous thread stays visible until the next day’s first notification appears.
+A day change uses the same conversation-side clock animation with midnight rollover. The previous thread stays visible until another thread notifies, or resumes directly when the first new episode belongs to that same thread.
 
 No day-start landing page containing only weekday or moment text is used.
 
@@ -123,6 +146,7 @@ game/scenes/smartphone/ConversationView.tscn
 ## Test coverage
 
 ```text
+tests/test_v085_j1_reconciliation_static.py
 tests/test_v086a_temporal_ux_static.py
 ```
 
@@ -134,11 +158,16 @@ Coverage verifies:
 - fixed conversation-side status strip;
 - hidden left-side compatibility clock;
 - contact-offline status beneath the last message;
+- no empty-choice hint in the active adapter;
 - no active text-only transition overlay;
 - silent authored and inline offline beats;
 - no visible or archived `Moments hors ligne` section;
 - natural optional-scene expiry;
-- in-thread new-message notifications;
+- compact ten-character notification previews;
+- non-focusing insertion/flash behavior;
+- bottom-preserving external-thread notifications;
+- direct same-thread continuation without a banner;
+- remaining-contact notification inside multi-contact phases;
 - unread-card styling;
 - UX-only scope plus reuse of existing state flags.
 
