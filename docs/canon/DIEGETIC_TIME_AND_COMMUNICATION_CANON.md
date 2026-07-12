@@ -1,8 +1,8 @@
-# Diegetic Time & Communication Realism Canon
+# Diegetic Time & Communication Realism Canon — Current
 
 > Canon rules for temporal orientation and believable smartphone communication.  
-> Applies to every future source pack, modular scene card, runtime integration plan, and playable conversation.  
-> Documentation only: no runtime, JSON, Godot scene, script, test, asset, or playable content is changed here.
+> Reconciled through V0.87 and the V0.86a smartphone-time presentation.  
+> Applies to every source pack, scene card, runtime plan, and playable conversation.
 
 ## 1. Core purpose
 
@@ -10,35 +10,38 @@
 
 That does not mean every interaction happens through messages.
 
-The interface must preserve two kinds of realism at the same time:
+The interface must preserve two forms of realism:
 
 ```text
-the player must understand when life is happening
-and why a message is being sent instead of spoken
+the player understands when life is happening
+and
+understands why a message is sent instead of spoken
 ```
 
 A scene is not credible if:
 
-- two adults stand within normal conversational reach and exchange a long chat for no reason;
-- several hours pass without a readable temporal cue;
-- work, meals, travel, sleep, and evening routines have no influence on availability;
-- an emotional conversation is forced into Messenger only because Messenger is the main interface.
+- two adults stand within normal conversational reach and conduct a long chat without a reason;
+- several hours pass without a readable time cue;
+- work, meals, travel, sleep, weekends, and venue schedules do not affect availability;
+- an emotional conversation is forced into Messenger only because the phone is the main interface;
+- the game explains every off-phone action instead of letting the player infer life.
 
 ---
 
 ## 2. Time must be felt
 
-The player does not need a minute-by-minute simulation clock.
+The game does not need minute-by-minute simulation.
 
-The player does need to feel:
+The player must feel:
 
-- the day of the week when it matters;
+- weekday or relative day when relevant;
 - morning, midday, afternoon, evening, and night;
 - meaningful elapsed time;
-- work and travel rhythms;
-- whether a reply is immediate, delayed, or sent the following day;
-- whether an event is approaching, underway, or finished;
-- whether a character is tired because it is late rather than because the script says so.
+- work, weekend, travel, meal, and sleep rhythm;
+- immediate, delayed, or next-day reply;
+- whether an event is approaching, underway, or over;
+- whether an opportunity is still physically possible;
+- whether a promise has reached its real deadline.
 
 ```text
 Time is a narrative condition,
@@ -47,7 +50,7 @@ not decorative metadata.
 
 ## 2.1 Required temporal fields
 
-Every foreground window and authored scene card must identify:
+Every foreground window and scene card identifies:
 
 ```text
 calendar_anchor
@@ -59,17 +62,17 @@ temporal_cues
 
 ### `calendar_anchor`
 
-Use one of:
+Use:
 
-- named weekday when the story has a real anchor;
-- relative day such as `D+1` when the weekday is intentionally unknown;
+- named weekday when established;
+- relative day such as `D+1` when intentionally unknown;
 - event-relative anchor such as `the morning after the vernissage`.
 
-Do not use a bare scene order as the only time reference.
+Do not use bare scene order as the only time reference.
 
 ### `time_band`
 
-Canonical bands:
+Canonical guidance:
 
 ```text
 EARLY_MORNING    06:00–09:00
@@ -81,19 +84,17 @@ EVENING          19:00–22:30
 NIGHT            22:30–02:00
 ```
 
-The clock ranges are guidance, not rigid simulation boundaries.
+Ranges guide plausibility; they are not rigid simulation walls.
 
 ### `approximate_clock_range`
 
-Use a plausible range rather than one exact minute during documentation.
-
-Example:
+Documentation uses a plausible range:
 
 ```text
-Jeudi — 17:50–18:20
+Lundi — 12:05–13:15
 ```
 
-Runtime may choose a precise displayed timestamp within the approved range.
+Runtime may choose precise displayed minutes inside the approved range.
 
 ### `elapsed_since_previous_window`
 
@@ -103,57 +104,95 @@ Examples:
 - `after lunch`;
 - `the following morning`;
 - `two hours after the event ended`;
-- `after a full workday`.
+- `after a full workday`;
+- `after one social cycle`.
 
 ### `temporal_cues`
 
-Use concrete life markers:
+Use life markers:
 
 - alarm or commute;
 - coffee, lunch, dinner, late snack;
 - light outside;
-- work start or end;
-- `poste du matin` / `poste du soir` / `poste de nuit`;
-- shop or venue opening/closing;
+- work start/end;
+- `poste du matin`, `poste du soir`, `poste de nuit`;
+- venue opening/closing;
 - transport delay;
-- battery level only when relevant;
-- pajamas, coat, shower, or bed preparation;
-- next-day photo relay;
-- `vu à` / delayed reply when narratively meaningful.
+- shower, pajamas, coat, bed preparation;
+- a work file finally closing;
+- a next-day photo relay;
+- delayed `vu à` when narratively meaningful.
 
-Do not repeat a time label in every message. Use enough cues for orientation.
+Do not repeat time labels in every message. Use enough cues for orientation.
 
 ---
 
-## 3. Runtime presentation rule
+## 3. Current smartphone time presentation
 
-A meaningful time jump should be visible through at least one of:
+A meaningful gap is presented primarily through the fixed conversation-side phone clock.
 
-- weekday / time-band separator;
-- message timestamp;
-- notification timestamp;
-- social-post age;
-- explicit character line;
-- lighting or visual context;
-- work / meal / transport cue;
-- short system card such as `Jeudi — Soir`.
-
-Recommended separator style:
+At normal speed:
 
 ```text
-MERCREDI — MIDI
-JEUDI — FIN D'APRÈS-MIDI
-JEUDI — NUIT
-VENDREDI — MATIN
+last visible message
+-> contact shown offline
+-> approximately two real seconds
+-> fixed clock advances for approximately four seconds
+-> next visible event arrives
 ```
 
-The UI may also show a representative time:
+### Cross-thread event
+
+When the next event belongs to another contact:
 
 ```text
-Jeudi — 18:04
+clock reaches target time
+-> target thread becomes unread
+-> compact notification appears under the fixed header
 ```
 
-Exact clock display is an implementation decision, but the approved time band is narrative canon.
+The notification:
+
+- previews only the first ten characters plus `...` when needed;
+- uses a brief insertion/flash effect;
+- keeps the transcript at the bottom;
+- acts as a thread-switch shortcut;
+- does not duplicate the whole incoming message.
+
+### Same-thread continuation
+
+When the next episode belongs to the already open contact:
+
+```text
+clock advances
+-> no same-contact notification
+-> new messages continue directly below existing history
+```
+
+### Day change
+
+A day change uses the same clock continuity, including midnight rollover.
+
+The active flow does not use a blank page containing only:
+
+- weekday;
+- moment label;
+- story title;
+- timestamp.
+
+Temporal orientation may also come from:
+
+- current day label while the prototype navigation exists;
+- message timestamps;
+- notification time;
+- work/meal/transport language;
+- changed character availability;
+- visual and object context.
+
+```text
+The phone shows time moving.
+The story shows what changed because it moved.
+```
 
 ---
 
@@ -165,18 +204,19 @@ and can speak normally,
 they do not conduct a full Messenger conversation.
 ```
 
-They may send one item while co-present when the medium itself matters:
+They may send one medium-specific item while co-present:
 
-- a photo;
-- a link;
-- an address;
-- a document;
-- a private aside that cannot be spoken publicly;
-- a message intended to remain as a trace.
+- photo;
+- link;
+- address;
+- document;
+- exact object location;
+- private aside that cannot be spoken publicly;
+- message intended to remain as a trace.
 
-Even then, the surrounding conversation normally happens aloud.
+The surrounding conversation normally happens aloud.
 
-A long emotional exchange between co-present characters is written as an offline beat, not as artificial text messages.
+A long emotional exchange between co-present characters is an offline scene or consequence, not an artificial transcript.
 
 ## 4.1 Same home, different rooms
 
@@ -184,9 +224,9 @@ Short practical messages are credible when characters are:
 
 - behind a closed door;
 - unpacking in another room;
-- in the shower or kitchen while the other works elsewhere;
+- in shower/kitchen while another works elsewhere;
 - avoiding shouting across the apartment;
-- sending a photo or precise object location.
+- sending a photo or exact object location.
 
 Allowed:
 
@@ -196,13 +236,13 @@ Player : boîte bleue sous le bureau
 Player : j'arrive
 ```
 
-When Player enters the room, the chat stops.
+When Player enters the room, chat stops.
 
 Not allowed:
 
 ```text
 Player and Mathilde remain face to face
-and continue fifteen messages about their emotional tension.
+and continue fifteen messages about their tension.
 ```
 
 ## 4.2 Same venue, spatially separated
@@ -210,8 +250,8 @@ and continue fifteen messages about their emotional tension.
 Short messages are credible when characters are:
 
 - on opposite sides of a busy venue;
-- separated by noise, guests, or work tasks;
-- coordinating objects, timings, or arrivals;
+- separated by noise, guests, equipment, or tasks;
+- coordinating location, timings, or objects;
 - sending a discreet aside in public.
 
 Allowed:
@@ -224,67 +264,67 @@ Marie : rallonge noire côté scène
 
 Not allowed:
 
-- a full relationship confrontation while both are standing ten metres apart and free to speak;
-- several paragraphs of emotional explanation during active setup.
+- full relationship confrontation while free to speak;
+- paragraphs of emotional explanation during setup.
 
-Move the emotional content to:
+Move emotional meaning to:
 
-- a quieter face-to-face offline beat;
-- the walk home;
-- a later message after they separate;
-- an aftermath window.
+- a quiet face-to-face beat;
+- walk home;
+- later message after separation;
+- aftermath window.
 
 ## 4.3 Same workplace
 
-Work chat remains plausible when characters are:
+Work chat is plausible when characters are:
 
 - in different rooms;
-- working remotely or hybrid;
-- reviewing a shared file asynchronously;
-- avoiding interrupting another meeting;
-- sending exact references that belong in writing.
+- remote/hybrid;
+- reviewing a file asynchronously;
+- avoiding interrupting a meeting;
+- sending exact written references.
 
-If Player and Raphaëlle sit at the same table for the final review, the Messenger exchange stops and the offline result is summarized afterward.
+If Player and Raphaëlle sit at the same table, Messenger stops and the result is understood through later state or a later message after separation.
 
 ---
 
 ## 5. Canon communication modes
 
-Every foreground scene card must identify one primary communication mode.
+Every foreground scene card identifies one primary mode.
 
 ### `REMOTE_ASYNC`
 
-Characters are in different locations.
+Different locations.
 
 Suitable for:
 
-- normal Messenger dialogue;
+- normal personal messaging;
 - delayed replies;
-- longer personal exchanges;
+- longer remote exchanges;
 - promises and follow-ups.
 
 ### `TRACE_DELIVERY`
 
-The message exists because a photo, screenshot, file, or link is being delivered.
+A message exists because a photo, screenshot, file, or link is delivered.
 
-Characters may be geographically close or far apart, but origin and audience remain explicit.
+Origin, intended audience, and function remain explicit.
 
 ### `SEPARATE_ROOMS_PING`
 
-Characters share a home or building but occupy separate rooms.
+Same home/building, separate rooms.
 
 Suitable only for:
 
-- brief practical requests;
+- brief practical request;
 - object location;
 - short private aside;
-- invitation to come into the room.
+- invitation to enter the room.
 
-The chat stops when they meet.
+Chat stops when they meet.
 
 ### `SAME_VENUE_LOGISTICS`
 
-Characters are in one event space but separated by distance, noise, guests, or tasks.
+Same venue but separated by distance, noise, guests, or tasks.
 
 Suitable for:
 
@@ -301,45 +341,60 @@ Professional written exchange justified by separate workstations, shared files, 
 
 It must not become automatic intimacy.
 
-### `OFFLINE_BEAT`
-
-The meaningful exchange occurs face to face.
-
-The smartphone UI represents it through one or more of:
-
-- a short event card;
-- a later message referring to what was said;
-- changed state / tone;
-- a photograph or object trace;
-- a concise summary in the source pack.
-
-The game must not fabricate a chat transcript for an offline conversation.
-
 ### `AFTERGLOW_REMOTE`
 
-The characters have just separated after a shared event.
+Characters have just separated after a shared moment.
 
 Suitable for:
 
 - thanks;
 - one honest observation;
 - promise or consequence;
-- late-night emotional residue.
+- late emotional residue;
+- reopening an awkward physical moment at a safer distance.
 
-The documentation must state why they are no longer co-present.
+Documentation states why they are no longer co-present.
+
+### `OFFLINE_BEAT`
+
+Meaningful interaction happens face to face or outside the phone.
+
+It may change:
+
+- flags;
+- knowledge;
+- object position;
+- obligation state;
+- relationship tone;
+- phase completion.
+
+The active interface does not automatically display an explanatory card or transcript.
+
+The player infers the result through:
+
+- elapsed time;
+- later messages;
+- changed tone;
+- object traces;
+- fulfilled/missed promises;
+- later consequences.
+
+Internal state may retain a concise authored summary for continuity/debugging.
+
+It is not shown as a `Moments hors ligne` archive section.
 
 ---
 
 ## 6. Required communication fields
 
-Every foreground scene card must identify:
+Every foreground scene card identifies:
 
 ```text
 physical_context
 communication_mode
 why_message_is_used
 when_messaging_stops
-possible_offline_beat
+possible_offline_continuation
 ```
 
 ### `physical_context`
@@ -367,24 +422,26 @@ Example:
 When Player enters the spare room, the practical exchange continues offline.
 ```
 
-### `possible_offline_beat`
+### `possible_offline_continuation`
 
-Describe what happens face to face without inventing a full transcript unless that offline scene is deliberately authored.
+Describe the action/function without inventing a full transcript unless a face-to-face scene is deliberately authored.
+
+Do not make the phone narrate that summary to the player by default.
 
 ---
 
 ## 7. Reply latency
 
-Replies should reflect life.
+Replies reflect life.
 
 Possible patterns:
 
-- immediate logistics: seconds to a few minutes;
-- work reply: a few minutes to an hour;
+- urgent logistics: seconds to a few minutes;
+- work reply: minutes to an hour;
 - emotional hesitation: visible delay;
-- late-night non-urgent message: may wait until morning;
-- supporting-character work schedules: respect current shift or closing rhythm;
-- no character must answer every thread instantly.
+- late non-urgent message: may wait until morning;
+- weekend/work schedule: depends on real availability;
+- no character answers every thread instantly.
 
 A delay can mean:
 
@@ -393,81 +450,150 @@ A delay can mean:
 - travel;
 - uncertainty;
 - deliberate distance;
-- another person being physically present.
+- another person physically present;
+- opportunity expiry.
 
-It should not always mean route punishment.
+Delay is not always route punishment.
 
 ---
 
-## 8. Offline action and smartphone consequences
-
-Offline events may still drive a smartphone game.
+## 8. Offline action and smartphone consequence
 
 Correct pattern:
 
 ```text
 message creates or arranges an offline event
 -> event happens without fake chat
--> later message / trace / notification shows consequence
+-> time passes visibly
+-> later message / object / changed state shows consequence
 ```
 
 Examples:
 
-- Player helps Mathilde carry boxes; later she sends a short thank-you or Marie comments on the room.
-- Player and Marie walk home; the next message references a promise made during the walk.
-- Raphaëlle and Player finish a review at the same table; the task state changes and later work chat reflects the result.
-- A group photo records a face-to-face event and creates a later message window.
+- Player joins Marie for coffee; next Marie tone remembers the shared hour.
+- Player helps Mathilde; later household knowledge and object placement reflect it.
+- Player and Raphaëlle walk; a short post-walk message occurs only after separation.
+- Pauline/Bastien dinner happens offline; later social state knows who attended.
+- Nico lunch occurs without a full friendship transcript; a later line can acknowledge it.
 
-Do not try to make every spoken sentence visible just because the UI is a phone.
+Do not make every spoken sentence visible because the interface is a phone.
+
+Do not explain every action through a system note.
 
 ---
 
-## 9. Scene-selection interaction
+## 9. Opportunity and scene-selection interaction
 
 Time and communication mode are hard eligibility conditions.
 
 A scene is blocked when:
 
-- the character is asleep or working incompatibly;
-- the required venue is closed;
-- the character is physically co-present and the scene requires remote emotional messaging;
-- the time band exceeds the scene's intensity or privacy logic;
-- a promised `tomorrow morning` follow-up is being offered the same night without cause;
-- a late reply would contradict the established schedule.
+- character is asleep or working incompatibly;
+- required venue is closed;
+- character is co-present while the scene requires remote emotional messaging;
+- time band contradicts privacy/intensity logic;
+- a promised future follow-up is offered too early;
+- reply timing contradicts established schedule;
+- a higher-priority consequence is due;
+- foreground ticket budget is exhausted;
+- exact scene is in cooldown.
 
-A scene may mutate when the intended time window is missed.
+A scene may mutate when its intended window is missed.
 
 Example:
 
 ```text
 invitation before 18h
 -> accepted in time = arrival scene
--> answered after 20h = missed-opportunity consequence
+-> answered after event starts = lateness consequence
 -> not answered until morning = invitation expired
 ```
 
+V0.87 adds:
+
+```text
+maximum two external foreground tickets
+maximum one charged-access owner
+same character cannot consume both tickets
+Marie consequence outranks later external opportunity
+```
+
+A quiet interval is valid.
+
 ---
 
-## 10. Review checklist
+## 10. Notifications and interruptions
+
+A new notification may interrupt a completed thread only when:
+
+- target phase is current;
+- target conversation is available;
+- target thread differs from the open thread;
+- no unresolved choice is on screen;
+- arrival time has been reached.
+
+A notification does not interrupt:
+
+- an unresolved foreground choice;
+- an active typing sequence;
+- an opened optional exchange;
+- a co-present action represented outside chat.
+
+If one phase has several required contacts, completing one may reveal the next unfinished contact through a compact notification.
+
+A silent data unlock must not strand required content permanently invisible.
+
+---
+
+## 11. Images and traces during communication
+
+A message carrying an image must identify:
+
+- origin;
+- intended audience;
+- intended function;
+- saving/deletion rule when relevant;
+- whether the sender and subject are the same person;
+- consequence if the image leaves its frame.
+
+A public/social image is not permission for:
+
+- private recrop;
+- sexual reinterpretation shared with another person;
+- forwarding;
+- permanent saving;
+- adult use.
+
+V0.87 requires no new image.
+
+---
+
+## 12. Review checklist
 
 A scene is not temporally or communicatively ready unless:
 
 - [ ] weekday or relative day is known;
-- [ ] time band is known;
-- [ ] elapsed time from the prior major window is readable;
+- [ ] time band and approximate range are known;
+- [ ] elapsed time from prior major window is readable;
 - [ ] each character's location is known;
 - [ ] communication mode is identified;
-- [ ] the reason for messaging is credible;
+- [ ] reason for messaging is credible;
+- [ ] messaging stop point is defined;
 - [ ] co-present characters do not conduct artificial long chats;
-- [ ] transition from message to offline interaction is defined when relevant;
 - [ ] reply latency fits work, sleep, travel, and emotional context;
-- [ ] visual lighting / clothing / meal / work cues match the time;
-- [ ] a missed time window mutates or expires rather than waiting forever;
-- [ ] runtime planning includes day separators or equivalent temporal cues.
+- [ ] visual/clothing/meal/work cues fit the time;
+- [ ] a missed window mutates or expires;
+- [ ] no exact offer waits forever;
+- [ ] current fixed clock can express the time jump;
+- [ ] same-thread continuation avoids redundant notification;
+- [ ] cross-thread notification is compact and justified;
+- [ ] offline action is inferred rather than over-explained;
+- [ ] future timestamps do not appear early;
+- [ ] consequence due has priority over new temptation.
 
 ---
 
-## 11. Final rule
+## 13. Final rule
 
 ```text
 The phone shows the parts of life
@@ -476,4 +602,7 @@ that genuinely pass through a phone.
 Time continues outside the chat.
 People speak when they are together.
 Messages begin when distance, privacy, logistics, or traces make them believable.
+
+The interface shows elapsed time.
+It does not narrate every unseen hour.
 ```

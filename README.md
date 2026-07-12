@@ -27,11 +27,15 @@ tronc dramatique fixe
 + conséquences revenant vers le couple
 ```
 
-Les routes utilisent R0–R5, mais le runtime actuel reste en R1 maximum.
+Les routes utilisent R0–R5.
+
+Le runtime actif reste en R1 maximum. V0.87 documente un futur premier accès R2 pour un seul personnage au maximum, mais cette progression n’est pas encore jouable.
+
+---
 
 ## Runtime jouable actuel — V0.86 + V0.86a
 
-Le contenu est jouable du mardi au vendredi avec jours et phases déverrouillés chronologiquement.
+Le contenu est jouable du mardi au vendredi.
 
 Au lancement :
 
@@ -48,11 +52,23 @@ Progression :
 fin d'un échange
 -> le contact passe hors ligne
 -> pause de 2 secondes
--> horloge accélérée pendant 4 secondes
--> notification du prochain message
+-> horloge accélérée pendant 4 secondes à Speed x1
+-> notification compacte du prochain autre contact
 ```
 
-Le changement de journée utilise le même principe avec franchissement de minuit. Il n’existe plus de page vide indiquant seulement le jour ou le moment de la journée.
+Si le nouvel épisode appartient au fil déjà ouvert :
+
+```text
+horloge
+-> pas de notification même contact
+-> reprise directe à la suite
+```
+
+Le changement de journée utilise le même principe avec franchissement de minuit.
+
+Il n’existe plus de page vide indiquant seulement le jour ou le moment de la journée.
+
+---
 
 ## Mardi — J1 réconcilié
 
@@ -170,36 +186,15 @@ household_rhythm_confirmed
 opening_band_complete
 ```
 
-L’ouverture se termine sur la vie ordinaire à trois, pas sur une tentation. Le runtime n’explique pas explicitement ce que Player fait hors téléphone : le joueur l’infère par l’heure, les objets, les échanges suivants et les conséquences.
+L’ouverture se termine sur la vie ordinaire à trois, pas sur une tentation.
 
-## Temps autoritaire
+Le runtime n’explique pas explicitement ce que Player fait hors téléphone : le joueur l’infère par l’heure, les objets, les échanges suivants et les conséquences.
 
-Source :
-
-```text
-docs/canon/TEMPORAL_FLOW_AND_DAY_TRANSITION_CANON.md
-```
-
-Cycle des jours :
-
-```text
-LOCKED -> AVAILABLE -> ACTIVE -> COMPLETE -> ARCHIVED
-```
-
-Cycle des phases :
-
-```text
-LOCKED -> CURRENT -> COMPLETE / SKIPPED / EXPIRED
-```
-
-```text
-Les timestamps décrivent la chronologie.
-L'état temporel contrôle l'accès.
-```
+---
 
 ## Simulation smartphone du temps
 
-La barre fixe située au-dessus du nom du contact affiche :
+La barre fixe au-dessus du nom du contact affiche :
 
 ```text
 heure                         Wi‑Fi / batterie
@@ -212,7 +207,15 @@ pause après le dernier message = 2 secondes
 animation accélérée de l'horloge = 4 secondes
 ```
 
-La conversation reste visible pendant que l’heure avance. La notification suivante apparaît ensuite sous l’en-tête et permet d’ouvrir directement le nouveau fil.
+La conversation reste visible pendant que l’heure avance.
+
+Une notification vers un autre contact :
+
+- reste sous l’en-tête ;
+- limite l’aperçu à dix caractères puis `...` ;
+- utilise un bref effet d’insertion/flash ;
+- conserve le transcript en bas ;
+- sert de raccourci vers le nouveau fil.
 
 Le panneau gauche temporaire ne duplique plus visuellement l’heure. Il sera supprimé dans une future refonte aux dimensions réelles d’un smartphone.
 
@@ -220,7 +223,7 @@ Le panneau gauche temporaire ne duplique plus visuellement l’heure. Il sera su
 
 Les phases hors téléphone restent utiles à la cohérence interne : variantes, flags, ordre, conséquences et débogage.
 
-Elles ne sont toutefois pas exposées au joueur sous forme de :
+Elles ne sont pas exposées au joueur sous forme de :
 
 - carte plein écran ;
 - note explicative centrée ;
@@ -243,7 +246,9 @@ Une archive :
 - filtre les fils persistants par épisode source ;
 - n’expose pas le journal interne des activités hors téléphone.
 
-## État narratif courant
+---
+
+## État narratif runtime courant
 
 ```text
 Marie/Player = HABITUAL_WARMTH
@@ -259,6 +264,108 @@ routes R2+ = none
 opening_band_complete = true
 ```
 
+---
+
+## V0.87 — First Repetition Windows Source Pack
+
+V0.87 est une étape **documentation uniquement**.
+
+Elle définit la première vague narrative suivant l’ouverture :
+
+```text
+W9  Marie réclame une heure partagée
+W10 opportunité de répétition week-end
+W11 retour obligatoire vers Marie
+W12 opportunité de répétition premier jour ouvré
+W13 fermeture de vague / équilibre du couple
+```
+
+Budget :
+
+```text
+1 foreground Marie fixe
++ 2 foregrounds externes maximum
++ 1 seul accès chargé maximum
++ conséquences Marie obligatoires
+```
+
+Scènes candidates :
+
+```text
+Mathilde — regard cuisine reconnu
+Sandra — après-poste choisi
+Raphaëlle — couche ordinaire hors travail
+Pauline — deuxième cycle social légitime avec Bastien
+Nico — deuxième cycle d'amitié calme
+```
+
+### Plafond V0.87 documenté
+
+```text
+charged_access_owner = none | mathilde | sandra | raphaelle
+maximum one owner
+```
+
+| Personnage | Runtime actuel | Maximum documenté V0.87 |
+|---|---|---|
+| Marie | `HABITUAL_WARMTH` | même mode + preuves reconnexion/dérive |
+| Sandra | R1/soft | R2 max |
+| Mathilde | R1 | R2 max |
+| Raphaëlle | R1 | R2 max |
+| Pauline | R1 | R1 |
+| Nico | R1 | R1 |
+
+Toujours exclus :
+
+- hard secret ;
+- cadre adulte ;
+- image adulte ;
+- route R3+ ;
+- changement de cadre du couple ;
+- tous les personnages foreground dans une même partie.
+
+### Pourquoi Pauline et Nico restent R1
+
+Pauline doit d’abord répéter un contexte social/public légitime avec Bastien et Marie encore réels.
+
+Nico doit d’abord exister comme ami calme avant de devenir complice d’un regard partagé.
+
+Leur futur moteur NSFW n’est pas supprimé. Il est rendu crédible.
+
+### Pourquoi aucune nouvelle image
+
+V0.87 ne demande aucun nouvel asset visuel.
+
+Les traces existantes gardent leur origine, public et fonction.
+
+```text
+j1_sandra_lunch_memory_soft
+mathilde_arrival_room_01
+marie_laverriere_setup_01
+laverriere_public_group_photo_set_01
+```
+
+Aucun recadrage, transfert, second public ou sens sexuel n’est ajouté.
+
+---
+
+## Sources V0.87
+
+```text
+docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_SOURCE_PACK.md
+docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_SCENE_CARDS.md
+docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_TEMPORAL_DELIVERY_MAP.md
+docs/V0_87_Next_Act_I_Windows_Source_Pack_Report.md
+```
+
+Commencer toujours par :
+
+```text
+docs/canon/DOCUMENTATION_READING_ORDER.md
+```
+
+---
+
 ## Fondation runtime
 
 ```text
@@ -270,30 +377,29 @@ game/scripts/ui/ConversationViewV084.gd
 game/scripts/ui/ConversationViewV086A.gd
 ```
 
-V0.86 ajoute le vendredi. V0.86a rapproche l’interface d’une messagerie réelle sans modifier les scènes, les routes ou le canon personnages.
+V0.87 ne modifie aucun de ces fichiers.
 
-## Sources
-
-Commencer par :
-
-```text
-docs/canon/DOCUMENTATION_READING_ORDER.md
-```
-
-Rapports actuels :
-
-```text
-docs/V0_86_Friday_Public_Traces_And_Opening_Completion_Report.md
-docs/V0_86A_Temporal_UX_Notification_Polish_Report.md
-```
+---
 
 ## Prochaine version
 
 ```text
-V0.87 — Next Act I Windows Source Pack
+V0.88 — First Repetition Runtime Integration Plan
 ```
 
-La prochaine étape revient à la documentation avant toute extension runtime. Elle doit définir les premières répétitions et attentions privées sans sauter automatiquement vers R2.
+V0.88 devra mapper les tickets foreground, le propriétaire chargé, les obligations Marie, les cooldowns, les mutations, la continuité même fil et une petite tranche d’intégration.
+
+Tranche recommandée :
+
+```text
+W9 Marie
++ un candidat externe
++ retour Marie obligatoire
+```
+
+Aucune scène V0.87 ne doit entrer en runtime avant validation de ce plan.
+
+---
 
 ## Règles adultes fondamentales
 
@@ -313,6 +419,9 @@ Une négociation tardive ne réécrit pas une trahison antérieure.
 V0.84 rend le temps autoritaire.
 V0.85 rend le premier soir cohérent.
 V0.86 termine l'ouverture.
-V0.86a fait ressentir le temps comme une vraie messagerie,
-sans expliquer ce qui doit rester hors champ.
+V0.86a fait ressentir le temps comme une vraie messagerie.
+V0.87 décide quelles répétitions peuvent changer de sens.
+
+Une répétition peut devenir chargée.
+Elle ne devient pas encore permission.
 ```

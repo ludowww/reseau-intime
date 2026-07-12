@@ -1,10 +1,10 @@
 # V0.87 — Next Act I Windows Preparation Note
 
-> Boundary note only.  
-> V0.86 completes the implemented V0.79 opening.  
-> No post-opening scene is authorized by this note.
+> Historical boundary note, fulfilled by the V0.87 first-repetition source pack.  
+> V0.86 completed the implemented opening.  
+> V0.87 now defines post-opening scenes in documentation only; runtime remains unauthorized until V0.88 is validated.
 
-## 1. Why the next step returns to documentation
+## 1. Baseline that triggered V0.87
 
 At the end of V0.86:
 
@@ -16,24 +16,30 @@ hard secrets = none
 adult frames = none
 ```
 
-The next scenes cannot be selected merely because a character is now visible in the phone.
+The next scenes could not be selected merely because a character was visible in the phone.
 
-They must be chosen from:
+They had to arise from:
 
 - repeated behavior;
-- current couple history;
-- topology memory;
-- promises kept or missed;
+- couple history;
+- topology and promise memory;
 - ordinary availability;
-- character-specific route engines;
+- character-specific engines;
 - cooldowns and exclusions;
 - consequences already due.
 
-## 2. Required V0.87 deliverable
+## 2. Deliverable completed
 
-Create a documentation-only source pack defining the first post-opening windows.
+V0.87 now provides:
 
-It must include:
+```text
+docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_SOURCE_PACK.md
+docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_SCENE_CARDS.md
+docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_TEMPORAL_DELIVERY_MAP.md
+docs/V0_87_Next_Act_I_Windows_Source_Pack_Report.md
+```
+
+The pack includes:
 
 ```text
 fixed spine position
@@ -50,50 +56,38 @@ mandatory couple consequences
 route-stage ceiling
 ```
 
-## 3. Character order is not predetermined
-
-V0.87 must not assume one fixed sequence such as:
+## 3. Product decisions produced
 
 ```text
-Sandra -> Mathilde -> Pauline -> Nico -> Raphaëlle
+fixed Marie shared-hour entry
+maximum two external foreground tickets
+maximum one charged-access owner
+mandatory Marie return after external attention
+Pauline remains R1
+Nico remains R1
+Mathilde / Sandra / Raphaëlle may reach R2 at most
+no hard secret
+no adult frame
+no new required image
 ```
 
-Selection depends on the state produced by Tuesday–Friday.
+Character order remains state-dependent rather than fixed.
 
-Examples:
+## 4. Runtime boundary
 
-- Marie presence may be due before a new external window;
-- Sandra may repeat only if her soft trace remained active;
-- Mathilde may receive a domestic repetition if Player participated in the household;
-- Raphaëlle may receive a second ordinary work/outside window;
-- Pauline should repeat a legitimate public/social context before private selection;
-- Nico should receive another friendship/social scene before shared gaze.
+V0.87 does not authorize direct implementation.
 
-## 4. Ceiling
-
-The next source pack may define:
+The next required document is:
 
 ```text
-R1 repetitions
-soft pre-R2 signals
-first clearly charged-access candidates
+docs/runtime/V0_88_FIRST_REPETITION_RUNTIME_PREPARATION_NOTE.md
 ```
 
-It must not automatically canonize:
-
-- explicit content;
-- private adult images;
-- hidden affair;
-- negotiated sharing;
-- image pact;
-- NTR/cuckold frame;
-- trio/group proposition;
-- relationship-frame change.
+V0.88 must map the approved source pack onto the current runtime and choose a small vertical slice before any game-data or Godot change.
 
 ## 5. Final rule
 
 ```text
-Ordinary access is now complete.
-The next narrative value comes from repetition changing meaning.
-Documentation must decide whose repetition is earned before runtime continues.
+V0.87 has decided whose repetitions may become meaningful.
+V0.88 must decide how to integrate the smallest truthful part of that decision.
 ```
