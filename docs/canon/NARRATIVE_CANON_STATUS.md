@@ -1,8 +1,8 @@
 # Narrative Canon Status — Current
 
-> Narrative and implementation status after V0.86 Friday public traces and opening completion.  
+> Narrative and implementation status after V0.86 Friday completion and V0.86a smartphone-time polish.  
 > Runtime is playable from Tuesday through Friday with chronological access.  
-> The concrete V0.79 opening band is now implemented and ends at `opening_band_complete`.
+> The concrete V0.79 opening band ends at `opening_band_complete`.
 
 ## 1. Core rule
 
@@ -16,6 +16,7 @@ V0.83 defines authoritative temporal flow and the J1 replacement.
 V0.84 makes temporal flow authoritative in runtime.
 V0.85 replaces active Tuesday with the reconciled J1.
 V0.86 implements Friday public traces and closes the opening band.
+V0.86a makes elapsed time and notifications behave like a smartphone.
 Legacy runtime is not automatic narrative canon.
 ```
 
@@ -35,6 +36,8 @@ docs/canon/J1_RUNTIME_RECONCILIATION_SCENE_CARDS.md
 docs/V0_85_J1_Canon_Runtime_Reconciliation_Report.md
 docs/runtime/V0_86_FRIDAY_PUBLIC_TRACES_IMPLEMENTATION_PLAN.md
 docs/V0_86_Friday_Public_Traces_And_Opening_Completion_Report.md
+docs/runtime/V0_86A_TEMPORAL_UX_NOTIFICATION_POLISH_PLAN.md
+docs/V0_86A_Temporal_UX_Notification_Polish_Report.md
 ```
 
 Read the relevant full character canon before changing a character scene.
@@ -51,28 +54,17 @@ launch
 -> Friday locked
 ```
 
-Day progression:
+Day progression is experienced through the active conversation UI:
 
 ```text
-Tuesday complete
--> Tuesday end card
--> Wednesday start card
--> Wednesday unlock/select
-
-Wednesday complete
--> Wednesday end card
--> Thursday start card
--> Thursday unlock/select
-
-Thursday complete
--> Thursday end card
--> Friday start card
--> Friday unlock/select
-
-Friday complete
--> Friday end card
--> no later day yet
+last message remains visible
+-> contact goes offline
+-> 2-second pause
+-> fixed conversation clock advances for 4 seconds
+-> next message notification appears
 ```
+
+The clock may cross midnight. There is no active blank end-card/start-card landing page containing only a weekday, moment label, or timestamp.
 
 Completed days remain read-only archives.
 
@@ -84,9 +76,9 @@ Completed days remain read-only archives.
 
 ```text
 18:12 Marie remote opening + M1
-19:15 / 19:35 dinner and walk offline
+19:15 / 19:35 shared activity outside the phone
 22:57 Sandra soft trace + S1
-23:25 / 23:28 final Marie/shared-life return offline
+23:25 / 23:28 final return toward Marie/shared life
 Tuesday complete
 ```
 
@@ -105,7 +97,8 @@ Guarantees:
 ```text
 12:10 Marie / make room
 -> 18:18 Marie / arrival trace
--> 18:22 Mathilde / arrival + offline settling
+-> 18:22 Mathilde / arrival
+-> installation continues outside the phone
 -> Wednesday complete
 ```
 
@@ -122,7 +115,6 @@ sexual intention = not established
 ```text
 09:10 Raphaëlle required
 -> 13:50 Sandra optional
--> explicit advance
 -> Sandra complete or expired
 -> 16:05 Marie required
 -> one O5 topology branch
@@ -144,7 +136,7 @@ Guarantees:
 08:35 Pauline public group-photo relay + P0
 14:05 Nico saved-seat follow-up + N0
 18:05 Marie + Mathilde household echoes
-18:25 household close offline
+18:25 internal household continuity close
 -> opening_band_complete
 ```
 
@@ -161,7 +153,7 @@ Guarantees:
 
 ---
 
-## 5. Current temporal state
+## 5. Current temporal and smartphone state
 
 Day lifecycle:
 
@@ -175,34 +167,60 @@ Phase lifecycle:
 LOCKED -> CURRENT -> COMPLETE / SKIPPED / EXPIRED
 ```
 
-Runtime sources:
+Current runtime sources:
 
 ```text
 game/scripts/core/TimelineState.gd
 game/scripts/ui/PhonePrototypeV084.gd
 game/scripts/ui/PhonePrototypeV085.gd
-game/scripts/ui/TimelineTransitionView.gd
+game/scripts/ui/PhonePrototypeV086A.gd
 game/scripts/ui/ConversationViewV084.gd
+game/scripts/ui/ConversationViewV086A.gd
 ```
 
-Authored offline phases currently include:
+The active conversation has a fixed status strip above the contact name:
 
-- Tuesday dinner/walk;
-- Tuesday final Marie return;
-- Friday final household close.
+```text
+time                         Wi‑Fi / battery
+contact
+presence status
+```
 
-They appear once during play and once as read-only day-log entries in archives.
+The temporary left prototype panel keeps no duplicate visible status strip.
 
 Core rule:
 
 ```text
 Time labels describe chronology.
 Timeline state controls access.
+The smartphone clock makes elapsed time perceptible.
 ```
 
 ---
 
-## 6. Friday image status
+## 6. Offline activity policy
+
+Authored offline phases currently include internal continuity for:
+
+- Tuesday dinner/walk;
+- Tuesday final return toward Marie;
+- Wednesday settling;
+- Friday household close.
+
+They may still select variants, apply flags, preserve order, and retain internal debug/day-log data.
+
+They are not player-facing exposition. The active runtime displays no:
+
+- full-screen offline card;
+- centered offline-beat explanation;
+- `Moments hors ligne` archive section;
+- replayable clue describing Player’s off-screen actions.
+
+The player infers activity through elapsed time, later dialogue, objects, knowledge, and consequences.
+
+---
+
+## 7. Friday image status
 
 Active trace:
 
@@ -239,7 +257,7 @@ A public image is not permission for a new private crop or private forwarding co
 
 ---
 
-## 7. Choice/state status
+## 8. Choice/state status
 
 Meaningful opening nodes include:
 
@@ -268,7 +286,7 @@ No Friday affection, desire, jealousy, adult-consent, or route score is written.
 
 ---
 
-## 8. Current character and route status
+## 9. Current character and route status
 
 ```text
 Marie/Player = HABITUAL_WARMTH
@@ -292,7 +310,7 @@ V0.86 completes ordinary access. It does not activate the later NSFW engines.
 
 ---
 
-## 9. Archive behavior
+## 10. Archive behavior
 
 Completed days are read-only.
 
@@ -304,11 +322,11 @@ Archive access:
 - does not change current day, phase, or status time;
 - cannot reactivate expired content;
 - filters persistent-thread history by source episode/day;
-- lists authored offline phases once under `Moments hors ligne`.
+- does not expose internal offline day-log entries.
 
 ---
 
-## 10. Legacy status
+## 11. Legacy status
 
 Legacy files remain on disk but inactive unless explicitly referenced by a modular index.
 
@@ -325,35 +343,36 @@ Do not treat their chapter number as authority over current modular files.
 
 ---
 
-## 11. Validation status
+## 12. Validation status
 
-V0.86 adds dedicated static coverage in:
+V0.86 and V0.86a have dedicated static coverage in:
 
 ```text
 tests/test_v086_friday_opening_static.py
+tests/test_v086a_temporal_ux_static.py
 ```
 
-Executable validation and both Godot headless boots must be confirmed by Hermes/local/CI before merge.
+Executable validation and both Godot headless boots must be confirmed locally before merge.
 
 ---
 
-## 12. Roadmap
+## 13. Roadmap
 
 ```text
 V0.86 — Friday public traces and opening completion
+V0.86a — Smartphone time and notification polish
 V0.87 — Next Act I Windows Source Pack
 ```
 
-V0.87 should return to documentation before any new runtime expansion.
-
-It should define the first repeated/private-attention windows after all ordinary access has been established.
+V0.87 returns to documentation before new runtime expansion. It defines the first repeated/private-attention windows after ordinary access.
 
 ---
 
-## 13. Final rule
+## 14. Final rule
 
 ```text
-The playable opening now ends Friday evening.
-Every principal character has first appeared through an ordinary, defensible context.
+The playable opening ends Friday evening.
+Every principal character first appears through an ordinary, defensible context.
+Time is felt through the messaging interface, not explained by blank cards or offline logs.
 No dangerous route may skip the next documentation pass.
 ```
