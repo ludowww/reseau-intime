@@ -9,9 +9,10 @@
 2. Keep the completed conversation visible while several narrative hours pass.
 3. Replace blank moment-of-day interstitials with an accelerated smartphone clock.
 4. Put time, Wi‑Fi, and battery information in the fixed conversation header.
-5. Deliver the next message as a normal in-thread notification.
-6. Keep unread contacts immediately identifiable.
-7. Keep offline activity implicit rather than explaining it to the player.
+5. Deliver genuinely external messages as compact in-thread notifications.
+6. Resume a later episode directly when the player is already viewing the correct thread.
+7. Keep unread contacts immediately identifiable.
+8. Keep offline activity implicit rather than explaining it to the player.
 
 ## Product decisions
 
@@ -24,6 +25,14 @@ Contact est hors ligne
 ```
 
 is appended as a centered interface status. The thread remains visible.
+
+A choice-free conversation must not add:
+
+```text
+Aucun choix direct dans cette conversation.
+```
+
+The absence of a choice is expressed by the absence of buttons, not by explanatory UI text.
 
 ### Conversation-side smartphone status
 
@@ -59,17 +68,32 @@ The active flow displays no:
 - blank transition page;
 - left-column continue button.
 
-### Incoming notification
+### Incoming notification for another thread
 
-At the end of the clock animation:
+When the next message belongs to a different contact thread:
 
 1. the next phase becomes active;
-2. its conversation becomes unread;
-3. the previous conversation remains visible;
-4. a compact notification appears below the contact header;
-5. clicking it opens the target thread.
+2. the target contact becomes unread;
+3. the previous conversation remains visible at its bottom position;
+4. a compact notification is inserted below the fixed contact header;
+5. the preview contains at most the first ten characters followed by `...`;
+6. a brief insertion/flash animation attracts the eye;
+7. clicking the notification opens the target thread.
 
-This also applies to a new episode in the same persistent contact thread.
+Displaying the notification must not steal keyboard focus or move the transcript back to its beginning.
+
+If several contacts belong to the same phase, completing one conversation must surface the next unfinished unread contact even when its original unlock rule was intentionally silent to avoid simultaneous banners.
+
+### Later episode in the already open thread
+
+When narrative time advances and the next episode belongs to the thread already visible:
+
+- no notification banner is shown;
+- the pending state for that thread is cleared automatically;
+- the newly unlocked segment is merged into the open conversation;
+- after the clock animation, messages resume directly below the existing history with normal typing cadence.
+
+A notification is a shortcut for switching threads. It is not needed when no switch is required.
 
 ### Optional windows
 
@@ -101,7 +125,7 @@ Existing inline `offline_beat` authoring items are consumed silently by the acti
 
 ### Day changes
 
-A day change uses the same accelerated clock with midnight rollover. The old conversation remains visible until the next day’s first notification appears.
+A day change uses the same accelerated clock with midnight rollover. The old conversation remains visible until the next day’s first external-thread notification appears or the same open thread resumes directly.
 
 No weekday/moment landing page is used in the active flow.
 
@@ -149,16 +173,28 @@ godot --headless --path game --quit
 godot --headless --path game --resolution 1280x720 --quit
 ```
 
-## Manual acceptance path
+## Manual acceptance paths
+
+### Different thread
 
 ```text
 last message remains visible
 -> Contact est hors ligne
 -> two-second pause
 -> conversation-side clock advances for four seconds
--> no blank moment screen
--> next-message banner appears below the fixed header
+-> compact notification flashes in without moving the transcript
+-> preview is ten characters maximum plus ...
 -> clicking it opens the unread contact
+```
+
+### Same thread
+
+```text
+last message remains visible
+-> Contact est hors ligne
+-> clock advances
+-> no notification banner
+-> later episode continues directly below the existing messages
 ```
 
 Also verify:
@@ -167,7 +203,9 @@ Also verify:
 - the left prototype panel has no duplicate visible status strip;
 - optional Sandra can be opened before expiry;
 - ignoring Sandra eventually produces Marie’s later notification;
-- same-thread next episodes still notify;
+- finishing Marie in a two-contact phase surfaces Mathilde’s pending thread;
+- the transcript remains scrolled to the bottom when an external notification appears;
+- no `Aucun choix direct dans cette conversation.` hint is visible;
 - midnight rollover changes day without a text-only landing page;
 - no active or archived `Moments hors ligne` section is visible.
 
