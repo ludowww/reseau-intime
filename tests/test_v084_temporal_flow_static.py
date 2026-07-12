@@ -11,13 +11,13 @@ def load_json(relative: str):
 
 
 class V084TemporalFlowStaticTests(unittest.TestCase):
-    def test_timeline_state_is_registered_and_phone_uses_v085_over_v084(self):
+    def test_timeline_state_is_registered_and_active_scenes_preserve_v084_foundation(self):
         project = (GAME / "project.godot").read_text(encoding="utf-8")
         phone_scene = (GAME / "scenes/smartphone/PhonePrototype.tscn").read_text(encoding="utf-8")
         conversation_scene = (GAME / "scenes/smartphone/ConversationView.tscn").read_text(encoding="utf-8")
         self.assertIn('TimelineState="*res://scripts/core/TimelineState.gd"', project)
-        self.assertIn("PhonePrototypeV085.gd", phone_scene)
-        self.assertIn("ConversationViewV084.gd", conversation_scene)
+        self.assertIn("PhonePrototypeV086A.gd", phone_scene)
+        self.assertIn("ConversationViewV086A.gd", conversation_scene)
 
         state = (GAME / "scripts/core/TimelineState.gd").read_text(encoding="utf-8")
         for expected in [
@@ -38,25 +38,36 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
         ]:
             self.assertIn(expected, state)
 
+        phone_v086a = (GAME / "scripts/ui/PhonePrototypeV086A.gd").read_text(encoding="utf-8")
         phone_v085 = (GAME / "scripts/ui/PhonePrototypeV085.gd").read_text(encoding="utf-8")
+        phone_v084 = (GAME / "scripts/ui/PhonePrototypeV084.gd").read_text(encoding="utf-8")
+        conversation_v086a = (GAME / "scripts/ui/ConversationViewV086A.gd").read_text(encoding="utf-8")
+        conversation_v084 = (GAME / "scripts/ui/ConversationViewV084.gd").read_text(encoding="utf-8")
+        self.assertIn('extends "res://scripts/ui/PhonePrototypeV085.gd"', phone_v086a)
         self.assertIn('extends "res://scripts/ui/PhonePrototypeV084.gd"', phone_v085)
+        self.assertIn('extends "res://scripts/ui/PhonePrototypeV082.gd"', phone_v084)
+        self.assertIn('extends "res://scripts/ui/ConversationViewV084.gd"', conversation_v086a)
+        self.assertIn('extends "res://scripts/ui/ConversationViewV082.gd"', conversation_v084)
 
-    def test_only_tuesday_is_initially_available_and_day_chain_is_explicit(self):
+    def test_only_tuesday_is_initially_available_and_four_day_chain_is_explicit(self):
         indexes = [
             load_json("data/conversations/chapter_01_modular_index.json"),
             load_json("data/conversations/chapter_02_modular_index.json"),
             load_json("data/conversations/chapter_03_modular_index.json"),
+            load_json("data/conversations/chapter_04_modular_index.json"),
         ]
         self.assertEqual(
             [index.get("timeline_flow", {}).get("initial_state") for index in indexes],
-            ["AVAILABLE", "LOCKED", "LOCKED"],
+            ["AVAILABLE", "LOCKED", "LOCKED", "LOCKED"],
         )
         self.assertEqual(indexes[0]["timeline_flow"].get("next_day"), 2)
         self.assertEqual(indexes[1]["timeline_flow"].get("next_day"), 3)
-        self.assertIsNone(indexes[2]["timeline_flow"].get("next_day"))
+        self.assertEqual(indexes[2]["timeline_flow"].get("next_day"), 4)
+        self.assertIsNone(indexes[3]["timeline_flow"].get("next_day"))
         self.assertEqual(indexes[0]["timeline_flow"]["day_end_card"]["eyebrow"], "MARDI — FIN DE JOURNÉE")
         self.assertEqual(indexes[1]["timeline_flow"]["day_start_card"]["eyebrow"], "MERCREDI — MIDI")
         self.assertEqual(indexes[2]["timeline_flow"]["day_start_card"]["eyebrow"], "JEUDI — MATIN")
+        self.assertEqual(indexes[3]["timeline_flow"]["day_start_card"]["eyebrow"], "VENDREDI — MATIN")
 
     def test_all_active_indexes_define_ordered_timeline_phases(self):
         expected = {
@@ -87,6 +98,17 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
                 ),
                 ("thursday_marie_return", ["chapter_03_marie_event_return"], [], []),
             ],
+            "data/conversations/chapter_04_modular_index.json": [
+                ("friday_pauline_public_relay", ["chapter_04_pauline_public_photo_relay"], [], []),
+                ("friday_nico_followup", ["chapter_04_nico_saved_seat_followup"], [], []),
+                (
+                    "friday_household_echoes",
+                    ["chapter_04_marie_household_report", "chapter_04_mathilde_bathroom_correction"],
+                    [],
+                    [],
+                ),
+                ("friday_opening_close", [], [], []),
+            ],
         }
         for relative, phase_expectations in expected.items():
             phases = load_json(relative)["timeline_flow"]["phases"]
@@ -107,7 +129,7 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
         sandra = phases[1]
         marie = phases[2]
         self.assertEqual(sandra.get("time_label"), "13:50")
-        self.assertEqual(sandra.get("advance_label"), "Passer à 16:05")
+        self.assertEqual(sandra.get("advance_label"), "Continuer la journée")
         self.assertEqual(sandra.get("skip_sets_flags"), ["thursday_sandra_echo_missed"])
         self.assertEqual(marie.get("time_label"), "16:05")
         self.assertEqual(marie.get("required_conversation_ids"), ["chapter_03_marie_event_offer"])
@@ -143,7 +165,7 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
         self.assertIn("_completion_id_for_current_segment", conversation)
         self.assertIn('data.get("_source_conversation_id"', conversation)
 
-    def test_transition_overlay_blocks_input_supports_skip_and_lands_on_new_moment(self):
+    def test_transition_overlay_remains_available_as_technical_compatibility(self):
         scene = (GAME / "scenes/smartphone/TimelineTransitionView.tscn").read_text(encoding="utf-8")
         script = (GAME / "scripts/ui/TimelineTransitionView.gd").read_text(encoding="utf-8")
         self.assertIn("TimelineTransitionView.gd", scene)
@@ -153,18 +175,12 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
             "MOUSE_FILTER_STOP",
             "FOCUS_ALL",
             "grab_focus",
-            "can_skip",
-            "skip_requested",
-            "min_time",
-            "duration",
             "clear_transition",
             "transition_finished",
-            "_show_timeline_landing",
-            'call("show_timeline_landing"',
         ]:
             self.assertIn(expected, script)
 
-    def test_archive_navigation_is_day_scoped_read_only_and_includes_offline_log(self):
+    def test_archive_navigation_is_day_scoped_read_only_and_keeps_day_logs_internal(self):
         phone = (GAME / "scripts/ui/PhonePrototypeV084.gd").read_text(encoding="utf-8")
         for expected in [
             "_render_archived_day",
@@ -180,8 +196,12 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
         self.assertNotIn("GameState.set_context", archived_block)
 
         v085 = (GAME / "scripts/ui/PhonePrototypeV085.gd").read_text(encoding="utf-8")
-        self.assertIn("TimelineState.get_day_log_entries", v085)
-        self.assertIn("Moments hors ligne", v085)
+        self.assertNotIn('"Moments hors ligne"', v085)
+        self.assertNotIn("TimelineState.get_day_log_entries", v085)
+
+        state = (GAME / "scripts/core/TimelineState.gd").read_text(encoding="utf-8")
+        self.assertIn("record_day_log_entry", state)
+        self.assertIn("get_day_log_entries", state)
 
         archive = (GAME / "scripts/ui/ConversationViewV084.gd").read_text(encoding="utf-8")
         for expected in [
@@ -208,13 +228,15 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
         self.assertIn("current_day_key = first_key", state)
         self.assertIn("day_log_entries_by_day.clear()", state)
 
-    def test_friday_remains_absent_from_active_runtime(self):
+    def test_friday_is_final_active_day_after_thursday_completion(self):
         loader = (GAME / "scripts/core/DataLoader.gd").read_text(encoding="utf-8")
         active_indexes = loader[loader.index("const CHAPTER_INDEX_PATHS") : loader.index("const LEGACY_CHAPTER_INDEX_PATHS")]
-        self.assertNotIn("chapter_04_modular_index", active_indexes)
+        self.assertIn("chapter_04_modular_index.json", active_indexes)
         thursday = load_json("data/conversations/chapter_03_modular_index.json")
-        self.assertIsNone(thursday["timeline_flow"].get("next_day"))
-        self.assertIn("La suite n'est pas encore disponible", thursday["timeline_flow"]["day_end_card"]["title"])
+        friday = load_json("data/conversations/chapter_04_modular_index.json")
+        self.assertEqual(thursday["timeline_flow"].get("next_day"), 4)
+        self.assertIsNone(friday["timeline_flow"].get("next_day"))
+        self.assertIn("La suite n'est pas encore disponible", friday["timeline_flow"]["day_end_card"]["subtitle"])
 
 
 if __name__ == "__main__":

@@ -97,11 +97,10 @@
     },
     "day_end_card": {
       "eyebrow": "JEUDI — FIN DE JOURNÉE",
-      "title": "La suite n'est pas encore disponible.",
-      "duration": 1.35,
+      "duration": 1.0,
       "min_time": 0.35
     },
-    "next_day": null,
+    "next_day": 4,
     "phases": [
       {
         "id": "thursday_raphaelle_work",
@@ -118,8 +117,8 @@
         "optional_conversation_ids": [
           "chapter_03_sandra_continuity"
         ],
-        "advance_label": "Passer à 16:05",
-        "advance_label_completed": "Continuer vers 16:05",
+        "advance_label": "Continuer la journée",
+        "advance_label_completed": "Continuer la journée",
         "advance_label_blocked": "Terminer Sandra avant de continuer",
         "skip_sets_flags": [
           "thursday_sandra_echo_missed"
@@ -295,6 +294,6 @@
     "Marie remains hidden until Sandra is completed or explicitly expired.",
     "M1 unlocks exactly one of three topology branches.",
     "Any completed branch unlocks the mandatory Marie return at 22:10.",
-    "Thursday completion shows an end card and does not expose Friday."
+    "Thursday completion transitions to the locked Friday start card."
   ]
 }

@@ -65,11 +65,13 @@ class V085J1ReconciliationStaticTests(unittest.TestCase):
         self.assertEqual(len(phases[3].get("authored_beat_variants", [])), 2)
         self.assertEqual(index["timeline_flow"].get("next_day"), 2)
 
-    def test_phone_uses_v085_authored_beat_adapter_and_day_log(self):
+    def test_phone_preserves_v085_authored_beat_state_without_exposing_day_log(self):
         phone_scene = (GAME / "scenes/smartphone/PhonePrototype.tscn").read_text(encoding="utf-8")
         phone = (GAME / "scripts/ui/PhonePrototypeV085.gd").read_text(encoding="utf-8")
+        active_phone = (GAME / "scripts/ui/PhonePrototypeV086A.gd").read_text(encoding="utf-8")
         state = (GAME / "scripts/core/TimelineState.gd").read_text(encoding="utf-8")
-        self.assertIn("PhonePrototypeV085.gd", phone_scene)
+        self.assertIn("PhonePrototypeV086A.gd", phone_scene)
+        self.assertIn('extends "res://scripts/ui/PhonePrototypeV085.gd"', active_phone)
         self.assertIn('extends "res://scripts/ui/PhonePrototypeV084.gd"', phone)
         for expected in [
             "_phase_has_authored_beat",
@@ -80,9 +82,14 @@ class V085J1ReconciliationStaticTests(unittest.TestCase):
             "EffectApplier.apply_flags",
             "TimelineState.complete_phase",
             "await _advance_after_phase",
-            "Moments hors ligne",
         ]:
             self.assertIn(expected, phone)
+        for expected in [
+            "_activate_authored_beat_silently",
+            "TimelineState.record_day_log_entry",
+            "EffectApplier.apply_flags",
+        ]:
+            self.assertIn(expected, active_phone)
         for expected in [
             "day_log_entries_by_day",
             "record_day_log_entry",

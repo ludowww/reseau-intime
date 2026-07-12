@@ -9,26 +9,9 @@ func _activate_phase(day_value, phase: Dictionary, show_transition: bool) -> voi
 	await super._activate_phase(day_value, phase, show_transition)
 
 func _render_archived_day(day_value) -> void:
+	# Authored day-log entries remain available to state/debug systems, but the
+	# player archive no longer explains ordinary off-phone life explicitly.
 	super._render_archived_day(day_value)
-	var entries: Array = TimelineState.get_day_log_entries(day_value)
-	if entries.is_empty():
-		return
-	_add_label(conversation_list, "Moments hors ligne", 15)
-	for raw_entry in entries:
-		if typeof(raw_entry) != TYPE_DICTIONARY:
-			continue
-		var entry: Dictionary = raw_entry
-		var lines: Array[String] = []
-		var time_label := str(entry.get("time_label", ""))
-		var title := str(entry.get("title", ""))
-		var text := str(entry.get("text", ""))
-		if time_label != "":
-			lines.append(time_label)
-		if title != "":
-			lines.append(title)
-		if text != "" and text != title:
-			lines.append(text)
-		_add_muted_label(conversation_list, "\n".join(lines), 12)
 
 func _phase_has_authored_beat(phase: Dictionary) -> bool:
 	return phase.has("authored_beat") or not phase.get("authored_beat_variants", []).is_empty()
