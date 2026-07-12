@@ -1,6 +1,6 @@
 # Act I First Repetition Windows Source Pack — V0.87
 
-> Canon line, state, and selection source for the first post-opening repetition wave.  
+> Canon line, state, selection, and voice source for the first post-opening repetition wave.  
 > Begins after V0.86 writes `opening_band_complete`.  
 > Documentation only: this file does not authorize a runtime, JSON, GDScript, test, scene, or asset change.
 
@@ -17,6 +17,7 @@ docs/canon/CHOICE_DESIGN_CANON.md
 docs/canon/MODULAR_NARRATIVE_ARC_BLUEPRINT.md
 docs/canon/MODULAR_SCENE_AUTHORING_CONTRACT.md
 docs/canon/DIEGETIC_TIME_AND_COMMUNICATION_CANON.md
+docs/canon/CHARACTER_VOICE_DISTINCTION_CANON.md
 ```
 
 Then read:
@@ -26,19 +27,19 @@ docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_SCENE_CARDS.md
 docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_TEMPORAL_DELIVERY_MAP.md
 ```
 
-For character writing, the relevant full character canon and deprecation map remain primary.
+The relevant full character canon and deprecation map remain primary for every character scene.
 
 This pack supersedes any older fixed-day assumption that would automatically move from Friday into:
 
 - a private Pauline crop;
 - a Nico photo request;
 - a Mathilde seduction scene;
-- a Raphaëlle private account reveal;
+- a Raphaëlle private-account reveal;
 - a new Sandra image;
 - an explicit adult scene;
 - a character-selection menu.
 
-It does not invalidate later character engines. It decides which first repetitions must occur before those engines can become earned.
+Later character engines remain valid. This pack decides which repetitions must occur before those engines can become earned.
 
 ---
 
@@ -53,7 +54,7 @@ S4 — Private attention repeats
 
 The opening has already established ordinary access.
 
-V0.87 now asks:
+V0.87 asks:
 
 ```text
 When ordinary access repeats,
@@ -67,7 +68,7 @@ roughly the weekend after Friday
 through the first one or two workdays
 ```
 
-The source pack covers a first repetition wave, not the rest of Act I.
+This is one first-repetition wave, not the rest of Act I.
 
 ---
 
@@ -104,7 +105,7 @@ Opening history remains readable:
 - Nico's friendship posture;
 - all existing trace origins and audiences.
 
-No old affection score replaces these observable reads.
+No generic affection score replaces those observable facts.
 
 ---
 
@@ -147,19 +148,107 @@ Arousal or jealousy is not consent.
 
 ---
 
-## 5. First-repetition wave architecture
+## 5. Voice separation contract
 
-The wave uses one fixed couple entry, two external foreground tickets, and mandatory couple returns.
+The six non-Player voices must not collapse into one shared style of clever, procedural dialogue.
+
+```text
+A memorable phrase belongs to the person whose life produced it.
+It is not communal vocabulary for the whole cast.
+```
+
+### 5.1 Legal vocabulary belongs primarily to Mathilde
+
+Mathilde may use legal seasoning such as:
+
+```text
+objection
+irrecevable
+dossier
+pièce à conviction
+preuve insuffisante
+je plaide...
+```
+
+Dosage in this wave:
+
+```text
+ordinary Mathilde scene = zero or one legal turn
+work-centered or earned complicity scene = one or two maximum
+```
+
+Other characters may use a legal word only when it is literally required by context. They do not borrow legal vocabulary as recurring flirt, humor, or emotional shorthand.
+
+Forbidden voice leakage in non-Mathilde dialogue includes:
+
+```text
+base contractuelle
+j'enregistre la dette sans intérêts
+je classe le dossier
+objection
+verdict
+accusé
+pièce à conviction
+```
+
+### 5.2 Character-specific lexical anchors
+
+```text
+Marie
+= shared life, food, movement, invitations, social energy,
+  practical teasing, concrete action before reassurance
+
+Sandra
+= traces, minimization, quiet work absurdity, warmth,
+  hesitation, chosen distance, soft boundary
+
+Mathilde
+= speed, correction, embarrassment, bad faith,
+  image control, occasional legal seasoning
+
+Pauline
+= dry control, timing, audience, public/private versions,
+  practical social competence, a line closed then reopened
+
+Nico
+= food, service, chairs, rooms, social rhythm,
+  blunt ordinary language, humor that can fall quiet
+
+Raphaëlle
+= process, detail, one clear question, selected information,
+  calm space, precise invitation or limit
+
+Player
+= short, dry, imperfect, occasionally work-tired,
+  observant without becoming a perfect stylistic mimic
+```
+
+### 5.3 Review rule
+
+Before approving any line, ask:
+
+```text
+Could another character say this unchanged?
+Is the joke borrowed from Mathilde's profession?
+Is everyone sounding administratively clever?
+Does the line arise from this person's actual work, home, wound, and rhythm?
+```
+
+If the answer reveals voice borrowing, rewrite before runtime planning.
+
+---
+
+## 6. First-repetition wave architecture
 
 ```text
 W9  — Marie claims one shared hour                    fixed foreground
 W10 — Weekend repetition opportunity                 variable foreground
 W11 — Weekend couple return                          fixed consequence / anchor
 W12 — First-workday repetition opportunity           variable foreground
-W13 — Wave close / couple balance                     fixed consequence / anchor
+W13 — Wave close / couple balance                    fixed consequence / anchor
 ```
 
-### 5.1 Foreground budget
+### 6.1 Foreground budget
 
 Across `W10` and `W12`:
 
@@ -170,27 +259,27 @@ maximum echoes per window = 2
 same character foreground twice = forbidden
 ```
 
-A scene is not shown merely because its character exists in the phone.
-
-Selection uses:
+Selection order:
 
 ```text
 safety / consequence due
 -> fixed spine due
 -> obligation due
 -> compatible continuation
--> context fit
+-> physical and temporal context fit
 -> unseen eligible scene
 -> longest deferred
 -> least recently foregrounded pool
 -> authored deterministic order
 ```
 
-No random selection occurs before these rules.
+No random choice occurs before these rules.
 
-### 5.2 Charged-access budget
+A quiet window is valid.
 
-Only these scenes can become the first charged-access transition in this pack:
+### 6.2 Charged-access budget
+
+Only these scenes can create the first charged-access transition in V0.87:
 
 ```text
 Mathilde — morning gaze acknowledged
@@ -205,23 +294,21 @@ charged_access_owner = none | mathilde | sandra | raphaelle
 maximum one owner in V0.87
 ```
 
-If one route reaches `R2 Charged Access`:
+If one route reaches R2:
 
-- all other charged candidates use their ordinary variant or defer;
+- all other charged candidates remain ordinary or defer;
 - a Marie/shared-life consequence becomes due before another external foreground;
 - no sexual permission is inferred;
 - no image permission is inferred;
 - no relationship frame changes.
 
-Pauline and Nico remain at R1 throughout this pack.
-
-They need this second ordinary cycle before their dangerous engines may even become candidates in a later source pack.
+Pauline and Nico remain R1 throughout this pack. Their dangerous engines require another validated cycle.
 
 ---
 
-# 6. W9 — Marie claims one shared hour
+# 7. W9 — Marie claims one shared hour
 
-## 6.1 Scene identity
+## 7.1 Scene identity
 
 ```text
 scene_id: marie_saturday_shared_hour_01
@@ -232,7 +319,7 @@ intensity: ordinary / warm
 route effect: none
 ```
 
-## 6.2 Calendar and delivery
+## 7.2 Calendar and delivery
 
 Preferred anchor:
 
@@ -253,20 +340,20 @@ Communication mode:
 REMOTE_ASYNC
 ```
 
-The shared hour itself happens offline if Player joins.
+The shared hour happens offline if Player joins. No fake Messenger transcript replaces the café, market, or walk.
 
-No fake Messenger transcript replaces the café, market, or walk.
-
-## 6.3 Canon line source
+## 7.3 Canon line source
 
 ```text
 Marie : J'ai rendu les clés de La Verrière.
-Marie : Et j'ai acheté des tomates qui ne ressemblent pas à un dossier.
+Marie : Et j'ai trouvé des tomates qui n'ont pas l'air tristes.
 Marie : J'ai une heure avant de redevenir une adulte utile.
 Marie : Tu me rejoins pour un café ?
 ```
 
-## 6.4 Choice M2 — What Player does with the hour
+The humor comes from Marie's lived morning, not from Mathilde's legal vocabulary or Player's office language.
+
+## 7.4 Choice M2 — What Player does with the hour
 
 Primary axis:
 
@@ -283,7 +370,7 @@ Player : oui
 Player : donne-moi dix minutes
 Player : je viens sans ordinateur
 
-Marie : C'est précisément la dernière partie qui m'intéresse.
+Marie : C'est surtout la dernière phrase qui m'intéresse.
 Marie : Je suis près du marché.
 ```
 
@@ -303,8 +390,8 @@ Player : mais je fais le déjeuner et on marche après
 Player : vraie proposition, pas report flou
 
 Marie : Accepté.
-Marie : J'enregistre le mot vraie.
-Marie : Et l'heure avec.
+Marie : Je garde l'heure, pas la bonne intention.
+Marie : À tout à l'heure.
 ```
 
 Writes:
@@ -333,7 +420,7 @@ Writes:
 - soft parallel-drift evidence only;
 - no punishment route and no crisis speech.
 
-## 6.5 Offline result
+## 7.5 Offline result
 
 If M2A:
 
@@ -352,7 +439,7 @@ If M2C:
 - she may buy flowers, sit with coffee, or call Pauline briefly;
 - she is not frozen until Player becomes available.
 
-## 6.6 Exit state
+## 7.6 Exit state
 
 - Marie has done something for herself;
 - Player's weekend presence posture is observable;
@@ -362,9 +449,9 @@ If M2C:
 
 ---
 
-# 7. W10 / W12 candidate — Mathilde morning gaze acknowledged
+# 8. W10 / W12 candidate — Mathilde morning gaze acknowledged
 
-## 7.1 Scene identity
+## 8.1 Scene identity
 
 ```text
 scene_id: mathilde_morning_kitchen_afterglow_01
@@ -376,7 +463,7 @@ route range: R1 -> optional R2 Charged Access
 intensity: soft charge
 ```
 
-## 7.2 Entry conditions
+## 8.2 Entry conditions
 
 Required:
 
@@ -402,13 +489,13 @@ Excluded:
 - Marie present in the kitchen and free to speak;
 - Player secretly photographing or describing Mathilde to another person.
 
-## 7.3 Physical event and message reason
+## 8.3 Physical event and message reason
 
 The kitchen moment is ordinary:
 
 - coffee;
 - a cupboard or filter question;
-- Mathilde in her normal fitted homewear;
+- Mathilde in normal fitted homewear;
 - Player looking slightly too long;
 - Mathilde noticing;
 - no touch and no staged pose.
@@ -421,7 +508,7 @@ Mode:
 AFTERGLOW_REMOTE
 ```
 
-## 7.4 Canon line source
+## 8.4 Canon line source
 
 ```text
 Mathilde : Tu sais que tu n'es pas discret avant le café ?
@@ -433,7 +520,7 @@ Mathilde : Et c'est ma tenue normale.
 Mathilde : Donc ne transforme pas ça en scénario.
 ```
 
-## 7.5 Choice MT1 — How Player owns the gaze
+## 8.5 Choice MT1 — How Player owns the gaze
 
 Primary axis:
 
@@ -460,7 +547,7 @@ Writes:
 - `mathilde_gaze_acknowledged_soft`;
 - Mathilde knows Player noticed;
 - Player owns his gaze without claiming her clothing as permission;
-- `R2 Charged Access` only if prior household trust is positive and no other charged owner exists;
+- R2 only if prior household trust is positive and no other charged owner exists;
 - deliberate Mathilde intent remains false.
 
 ### MT1B — Playful but readable
@@ -474,11 +561,13 @@ Mathilde : Je la garde pour le dossier.
 Mathilde : Et je refuse de préciser pourquoi je souris.
 ```
 
+This is the one legal-flavored turn in the scene. It belongs to Mathilde's established voice.
+
 Writes:
 
 - `mathilde_gaze_playful_soft`;
 - ordinary complicity gains charge;
-- `R2 Charged Access` only if prior playful trust exists and no other charged owner exists;
+- R2 only if prior playful trust exists and no other charged owner exists;
 - no image, invitation, or sexual permission.
 
 ### MT1C — Restore distance
@@ -499,19 +588,19 @@ Writes:
 - no punishment;
 - Mathilde does not respond by escalating harder.
 
-## 7.6 Exit state
+## 8.6 Exit state
 
 - Mathilde knows whether Player can own a gaze without taking control of its meaning;
 - Marie remains family trust and household context;
 - no deliberate provocation has occurred;
-- an outfit-opinion or chosen-image scene remains locked;
+- outfit-opinion and chosen-image scenes remain locked;
 - exact engine cooldown: two compatible foreground windows.
 
 ---
 
-# 8. W10 / W12 candidate — Sandra work-afterglow
+# 9. W10 / W12 candidate — Sandra work-afterglow
 
-## 8.1 Scene identity
+## 9.1 Scene identity
 
 ```text
 scene_id: sandra_ticket_ghost_hot_chocolate_01
@@ -522,7 +611,7 @@ route range: R1 -> optional R2 Charged Access
 intensity: soft charge
 ```
 
-## 8.2 Entry conditions
+## 9.2 Entry conditions
 
 Required:
 
@@ -539,11 +628,11 @@ Preferred:
 - Thursday Sandra scene completed rather than ignored;
 - Player previously accepted Sandra ending an exchange.
 
-Mutation if Thursday was missed:
+If Thursday was missed:
 
 - do not replay the exact `button returned` exchange immediately;
 - defer to a later colder work-afterglow variant;
-- no route penalty if Sandra had already cooled.
+- do not punish a route that had already cooled.
 
 Excluded:
 
@@ -552,7 +641,7 @@ Excluded:
 - a late-night message while Sandra is asleep or unavailable;
 - Player repeatedly trying to reopen a closed subject.
 
-## 8.3 Canon line source
+## 9.3 Canon line source
 
 ```text
 Sandra : Le bouton fantôme est revenu.
@@ -566,7 +655,9 @@ Sandra : J'ai fait un chocolat chaud.
 Sandra : C'est mon escalade professionnelle.
 ```
 
-## 8.4 Choice S2 — What Player answers to the chosen contact
+Sandra uses her own SentryCore rhythm and soft understatement. She does not borrow Mathilde's legal humor.
+
+## 9.4 Choice S2 — What Player answers to the chosen contact
 
 Primary axis:
 
@@ -592,7 +683,7 @@ Writes:
 
 - `sandra_chosen_contact_read_precisely`;
 - Sandra admits she selected Player for this quiet interval;
-- `R2 Charged Access` only if prior precise warmth and respected boundary exist and no other charged owner exists;
+- R2 only if prior precise warmth and respected boundary exist and no other charged owner exists;
 - no confession and no image.
 
 ### S2B — Ordinary care
@@ -631,19 +722,19 @@ Writes:
 - route remains R1 but trust stays open;
 - no missed-opportunity penalty.
 
-## 8.5 Exit state
+## 9.5 Exit state
 
 - Sandra has chosen a second private rhythm or remained ordinary;
-- Player's precision is not automatically virtue;
+- Player's precision is not automatic virtue;
 - no new trace exists;
 - Jeff remains a real but unexploited part of Sandra's life;
 - exact engine cooldown: two compatible private-message windows.
 
 ---
 
-# 9. W12 candidate — Raphaëlle outside-work person
+# 10. W12 candidate — Raphaëlle outside-work person
 
-## 9.1 Scene identity
+## 10.1 Scene identity
 
 ```text
 scene_id: raphaelle_lunch_walk_outside_work_01
@@ -654,7 +745,7 @@ route range: R1 -> optional R2 Charged Access
 intensity: ordinary to soft charge
 ```
 
-## 9.2 Entry conditions
+## 10.2 Entry conditions
 
 Required:
 
@@ -675,11 +766,11 @@ Excluded:
 
 - Player using work to avoid an immediate Marie obligation;
 - private creative account reveal;
-- costume, fitting, garment-bag, or adult image;
+- costume, fitting, garment bag, or adult image;
 - emotional confession during deadline pressure;
 - workplace hierarchy or leverage.
 
-## 9.3 Canon line source
+## 10.3 Canon line source
 
 ```text
 Raphaëlle : Le prototype est validé.
@@ -692,7 +783,9 @@ Raphaëlle : Je vais marcher dix minutes avant le point de 14h.
 Raphaëlle : Tu viens ?
 ```
 
-## 9.4 Choice R1 — Whether Player enters the selected ordinary layer
+Raphaëlle's humor comes from process and observation, not legal vocabulary.
+
+## 10.4 Choice R1 — Whether Player enters the selected ordinary layer
 
 Primary axis:
 
@@ -706,11 +799,11 @@ or remain inside work as shelter?
 
 ```text
 Player : oui
-Player : je ferme le dossier
+Player : je ferme mes onglets
 Player : et je ne parle pas du bouton
 
-Raphaëlle : Très bonne base contractuelle.
-Raphaëlle : Enfin, presque.
+Raphaëlle : C'est presque une promenade normale.
+Raphaëlle : On va tester.
 ```
 
 Offline walk:
@@ -730,7 +823,7 @@ Writes:
 
 - `raphaelle_outside_work_access`;
 - one selected personal layer;
-- `R2 Charged Access` only if Player joined without using Raphaëlle as refuge and no other charged owner exists;
+- R2 only if Player joined without using Raphaëlle as refuge and no other charged owner exists;
 - creative account remains private.
 
 ### R1B — Honest defer
@@ -741,7 +834,8 @@ Player : j'ai besoin de finir proprement
 Player : mais je veux bien la prochaine fois
 
 Raphaëlle : D'accord.
-Raphaëlle : Je note la prochaine fois une seule fois.
+Raphaëlle : Je te proposerai une autre fois.
+Raphaëlle : Une seule.
 ```
 
 Writes:
@@ -758,7 +852,8 @@ Player : je vais rester
 Player : j'ai trop de retard
 
 Raphaëlle : Très bien.
-Raphaëlle : Je te laisse avec ton bouton et tes conséquences.
+Raphaëlle : Je te laisse avec ton bouton.
+Raphaëlle : Il avait l'air inquiet.
 ```
 
 Writes:
@@ -766,9 +861,9 @@ Writes:
 - `raphaelle_professional_frame_maintained`;
 - route remains R1;
 - no private invitation waits forever;
-- later scene needs a fresh reason.
+- a later scene needs a fresh reason.
 
-## 9.5 Exit state
+## 10.5 Exit state
 
 - Raphaëlle may become a person Player knows outside the office, not yet a chosen transformed version;
 - no private account, photo, costume, or adult frame exists;
@@ -777,9 +872,9 @@ Writes:
 
 ---
 
-# 10. W10 / W12 candidate — Pauline legitimate social repetition
+# 11. W10 / W12 candidate — Pauline legitimate social repetition
 
-## 10.1 Scene identity
+## 11.1 Scene identity
 
 ```text
 scene_id: pauline_bastien_sunday_table_01
@@ -791,7 +886,7 @@ route range: R1 only
 intensity: ordinary
 ```
 
-## 10.2 Entry conditions
+## 11.2 Entry conditions
 
 Required:
 
@@ -812,7 +907,7 @@ Excluded:
 - choir used as sexual shorthand;
 - Bastien conveniently erased.
 
-## 10.3 Canon line source
+## 11.3 Canon line source
 
 ```text
 Pauline : Bastien a décidé que les restes du vernissage méritaient une seconde carrière.
@@ -821,7 +916,9 @@ Pauline : Marie dit oui.
 Pauline : Elle te laisse gérer ta propre existence.
 ```
 
-## 10.4 Choice P1 — How Player enters a real social plan
+Pauline sounds dry and controlled. She does not borrow Mathilde's legal jokes merely because she is organized.
+
+## 11.4 Choice P1 — How Player enters a real social plan
 
 Primary axis:
 
@@ -847,7 +944,7 @@ Writes:
 - `pauline_legitimate_social_repetition`;
 - `bastien_visible_again`;
 - Player joins Marie socially;
-- Pauline route remains R1.
+- Pauline remains R1.
 
 ### P1B — Help before the group arrives
 
@@ -863,8 +960,8 @@ Pauline : Je corrigerai discrètement.
 Writes:
 
 - `pauline_practical_access_repeated`;
-- Player and Pauline may share brief legitimate logistics while Bastien remains present;
-- Pauline may notice Player's private/public rhythm;
+- Player and Pauline share brief legitimate logistics while Bastien remains present;
+- Pauline may notice Player's public/private rhythm;
 - no private selection and no charged route stage.
 
 ### P1C — Decline without speaking for Marie
@@ -876,7 +973,7 @@ Player : je décide pas pour elle
 
 Pauline : C'est déjà fait.
 Pauline : Elle vient.
-Pauline : Réponse correcte, malgré ton absence de dessert.
+Pauline : Je prends la réponse. Malgré l'absence de dessert.
 ```
 
 Writes:
@@ -886,27 +983,27 @@ Writes:
 - route remains R1;
 - soft `pauline_reads_player_nondecision` only if this repeats an existing pattern.
 
-## 10.5 Offline result
+## 11.5 Offline result
 
 If the dinner occurs:
 
 - Bastien cooks or changes the recipe;
 - Marie remains socially alive;
 - Pauline and Player do not conduct a secret chat while sitting at the same table;
-- any later message requires physical separation and a new reason.
+- any later message requires physical separation and a fresh reason.
 
-## 10.6 Exit state
+## 11.6 Exit state
 
 - Pauline has completed the required second legitimate social cycle;
 - Bastien and Marie remain active people rather than cover;
 - private selectivity remains locked for at least one later compatible cycle;
-- no R2, no private version, no secret test.
+- no R2, private version, or secret test exists.
 
 ---
 
-# 11. W10 / W12 candidate — Nico quiet friendship repetition
+# 12. W10 / W12 candidate — Nico quiet friendship repetition
 
-## 11.1 Scene identity
+## 12.1 Scene identity
 
 ```text
 scene_id: nico_pre_shift_lunch_friendship_01
@@ -917,7 +1014,7 @@ route range: R1 only
 intensity: ordinary
 ```
 
-## 11.2 Entry conditions
+## 12.2 Entry conditions
 
 Required:
 
@@ -936,15 +1033,17 @@ Excluded:
 - rivalry used as the only scene function;
 - Nico treated as a route machine instead of a friend.
 
-## 11.3 Canon line source
+## 12.3 Canon line source
 
 ```text
 Nico : J'ai une heure avant le service.
-Nico : Et une omelette qui nécessite un témoin.
+Nico : Et une omelette qui a besoin de soutien moral.
 Nico : Tu manges ?
 ```
 
-## 11.4 Choice N1 — Whether Player invests in the friendship
+Nico's joke comes from food and service life, not legal or banking language.
+
+## 12.4 Choice N1 — Whether Player invests in the friendship
 
 Primary axis:
 
@@ -993,7 +1092,7 @@ Player : mais je te dois le déjeuner
 Player : mardi ?
 
 Nico : Mardi.
-Nico : J'enregistre la dette sans intérêts pour l'instant.
+Nico : Si tu me plantes, je mange ta part.
 ```
 
 Writes:
@@ -1001,7 +1100,7 @@ Writes:
 - `nico_lunch_deferred_once`;
 - real friendship obligation;
 - route remains R1;
-- missed promise later mutates into distance, not instant rivalry.
+- a missed promise later mutates into distance, not instant rivalry.
 
 ### N1C — Withdraw plainly
 
@@ -1021,18 +1120,18 @@ Writes:
 - Nico does not immediately weaponize Marie or Mathilde;
 - a later invitation needs a new reason.
 
-## 11.5 Exit state
+## 12.5 Exit state
 
 - Nico is proven as a friend with an ordinary quiet mode;
-- the future male gaze route has something real to corrupt or transform;
+- the future male-gaze route has something real to corrupt or transform;
 - image request, alibi, and domestic envy remain locked;
 - exact engine cooldown: one full social cycle.
 
 ---
 
-# 12. W11 / W13 — Marie concrete return
+# 13. W11 / W13 — Marie concrete return
 
-## 12.1 Scene identity
+## 13.1 Scene identity
 
 ```text
 scene_id: marie_concrete_return_due_01
@@ -1044,21 +1143,21 @@ intensity: ordinary, warm, or lightly hurt
 
 This function is mandatory after every external foreground.
 
-It can be represented through:
+It may be represented through:
 
 - a short remote exchange if Marie and Player are apart;
-- an offline action if they are together;
+- an off-phone action if they are together;
 - changed next-message tone when the act is already paid.
 
 It must not create a fake Messenger conversation between co-present partners.
 
-## 12.2 Warm paid variant
+## 13.2 Warm paid variant
 
 Used when M2A occurred or M2B was paid.
 
 ```text
-Marie : Le café compte comme une activité de couple adulte.
-Marie : On a même parlé sans optimiser quoi que ce soit.
+Marie : Le café compte.
+Marie : On a même réussi à marcher sans regarder nos téléphones.
 
 Player : performance historique
 
@@ -1070,9 +1169,9 @@ Writes:
 - `marie_return_paid`;
 - active-reconnection evidence;
 - no abstract relationship speech;
-- next opportunity may proceed if no other obligation is due.
+- the next opportunity may proceed if no other obligation is due.
 
-## 12.3 Unpaid or external-attention variant
+## 13.3 Unpaid or external-attention variant
 
 ```text
 Marie : J'ai fait ma journée quand même.
@@ -1098,7 +1197,7 @@ Player : je prends de quoi dîner
 Player : je suis là dans trente minutes
 
 Marie : D'accord.
-Marie : Trente minutes, c'est une phrase que je peux vérifier.
+Marie : Trente minutes. Là, je sais quoi attendre.
 ```
 
 Writes:
@@ -1115,7 +1214,7 @@ Player : café dehors
 Player : je bloque l'heure
 
 Marie : D'accord.
-Marie : Une heure existe seulement si tu arrives dedans.
+Marie : À 9h31, je commande sans toi.
 ```
 
 Writes:
@@ -1139,30 +1238,30 @@ Writes:
 - honest drift evidence;
 - no false repair;
 - couple mode remains `HABITUAL_WARMTH` in this pack;
-- next pack may evaluate accumulated pattern.
+- the next pack may evaluate the accumulated pattern.
 
-## 12.4 Charged-route consequence variant
+## 13.4 Charged-route consequence variant
 
 If Mathilde, Sandra, or Raphaëlle reaches R2:
 
 - the Marie return is mandatory before another external foreground;
-- Player is not required to confess a thought or private conversation that has not crossed a named couple boundary;
-- he is required to choose whether he re-enters shared life concretely;
-- the private attention remains psychologically meaningful even without a hard secret.
+- Player is not required to confess a thought or private conversation that crossed no named couple boundary;
+- he is required to decide whether he re-enters shared life concretely;
+- private attention remains psychologically meaningful without becoming a hard secret.
 
 ```text
 Private attention can be real
 before it becomes a confession obligation.
-The couple consequence is the opportunity cost and changed presence.
+The couple consequence is opportunity cost and changed presence.
 ```
 
 ---
 
-# 13. Selection pools
+# 14. Selection pools
 
-## 13.1 Weekend repetition pool
+## 14.1 Weekend repetition pool
 
-Eligible scenes:
+Eligible:
 
 ```text
 mathilde_morning_kitchen_afterglow_01
@@ -1171,7 +1270,7 @@ nico_pre_shift_lunch_friendship_01
 sandra_ticket_ghost_hot_chocolate_01
 ```
 
-Recommended context order:
+Context priority:
 
 1. due consequence or promise;
 2. exact home context for Mathilde;
@@ -1181,9 +1280,9 @@ Recommended context order:
 
 Do not compress all four into one weekend.
 
-## 13.2 First-workday repetition pool
+## 14.2 First-workday repetition pool
 
-Eligible scenes:
+Eligible:
 
 ```text
 raphaelle_lunch_walk_outside_work_01
@@ -1193,13 +1292,11 @@ pauline_bastien_sunday_table_01 only as a fresh social-plan variant
 nico_pre_shift_lunch_friendship_01 if not used
 ```
 
-The first workday does not guarantee Raphaëlle foreground.
+The first workday does not guarantee Raphaëlle foreground. It guarantees only that work and schedules remain real.
 
-It guarantees only that work and schedules remain real.
+## 14.3 Ordinary fallback pool
 
-## 13.3 Ordinary fallback pool
-
-If no character scene fits:
+If no foreground fits:
 
 - Marie / Player shared-life breather;
 - Mathilde practical household echo;
@@ -1208,20 +1305,72 @@ If no character scene fits:
 - Pauline public scheduling note;
 - no notification at all.
 
-A quiet window is valid.
-
 ```text
 The game does not owe the player a route scene every time the clock advances.
 ```
 
 ---
 
-# 14. Route-stage contract
+# 15. Route-stage contract
 
-## 14.1 Pauline
+## 15.1 Marie
+
+Marie does not use the external R0–R5 ladder.
+
+V0.87 may write evidence toward:
 
 ```text
-end of V0.87 ceiling: R1
+ACTIVE_RECONNECTION candidate
+or
+PARALLEL_DRIFT candidate
+```
+
+It does not change couple mode from `HABITUAL_WARMTH` after one weekend choice.
+
+## 15.2 Mathilde
+
+```text
+end-of-pack ceiling: R1 or R2 Charged Access
+```
+
+R2 means only:
+
+- Player's gaze was acknowledged;
+- Mathilde did not reject the acknowledgement;
+- deliberate seduction remains unconfirmed;
+- Marie's trust remains active;
+- no image or adult permission exists.
+
+## 15.3 Sandra
+
+```text
+end-of-pack ceiling: R1 or R2 Charged Access
+```
+
+R2 means only:
+
+- Sandra deliberately selected a quiet private contact;
+- Player read the reason without pressure;
+- Sandra kept a soft limit;
+- no confession, image, or affair exists.
+
+## 15.4 Raphaëlle
+
+```text
+end-of-pack ceiling: R1 or R2 Charged Access
+```
+
+R2 means only:
+
+- Raphaëlle chose one ordinary outside-work layer;
+- Player joined without turning her into refuge;
+- work and private contexts remain distinct;
+- no creative account, costume, image, or attraction statement exists.
+
+## 15.5 Pauline
+
+```text
+end-of-pack ceiling: R1
 ```
 
 Required result:
@@ -1233,10 +1382,10 @@ Required result:
 - no secret test;
 - private selectivity remains future material.
 
-## 14.2 Nico
+## 15.6 Nico
 
 ```text
-end of V0.87 ceiling: R1
+end-of-pack ceiling: R1
 ```
 
 Required result:
@@ -1248,63 +1397,9 @@ Required result:
 - no alibi;
 - shared gaze remains future material.
 
-## 14.3 Mathilde
-
-```text
-end of V0.87 ceiling: R1 or R2 Charged Access
-```
-
-R2 means only:
-
-- Player's gaze was acknowledged;
-- Mathilde did not reject the acknowledgement;
-- deliberate seduction remains unconfirmed;
-- Marie's trust remains active;
-- no image or adult permission exists.
-
-## 14.4 Sandra
-
-```text
-end of V0.87 ceiling: R1 or R2 Charged Access
-```
-
-R2 means only:
-
-- Sandra deliberately selected a quiet private contact;
-- Player read the reason without pressure;
-- Sandra kept a soft limit;
-- no confession, image, or affair exists.
-
-## 14.5 Raphaëlle
-
-```text
-end of V0.87 ceiling: R1 or R2 Charged Access
-```
-
-R2 means only:
-
-- Raphaëlle chose one ordinary outside-work layer;
-- Player joined without turning her into refuge;
-- work and private contexts remain distinct;
-- no creative account, costume, image, or attraction statement exists.
-
-## 14.6 Marie
-
-Marie does not use the same R0–R5 route progression as external characters.
-
-V0.87 may write evidence toward:
-
-```text
-ACTIVE_RECONNECTION candidate
-or
-PARALLEL_DRIFT candidate
-```
-
-It does not change couple mode from `HABITUAL_WARMTH` on one weekend choice alone.
-
 ---
 
-# 15. Cooldown, missed opportunity, and mutation matrix
+# 16. Cooldown, missed opportunity, and mutation matrix
 
 | Scene | Cooldown | If declined | If ignored / missed | Future mutation |
 |---|---|---|---|---|
@@ -1312,9 +1407,9 @@ It does not change couple mode from `HABITUAL_WARMTH` on one weekend choice alon
 | Mathilde morning gaze | two compatible foreground windows | route stays R1 | she stops asking about the moment | later work or outfit scene needs fresh intent |
 | Sandra work-afterglow | two private-message windows | Sandra closes warmly | exact late window expires | colder work echo or later chosen contact |
 | Raphaëlle lunch walk | one work cycle | professional frame remains | invitation expires after one defer | fresh work reason required |
-| Pauline Sunday table | one social cycle | Marie may attend independently | dinner occurs without Player | later legitimate public/social scene, not private crop automatically |
-| Nico pre-shift lunch | one social cycle | friendship remains | chair/meal moves on | later invitation needs fresh reason; missed promise may cool trust |
-| Marie return | until obligation paid or explicitly failed | not applicable | drift evidence accumulates | next couple consequence gains priority |
+| Pauline Sunday table | one social cycle | Marie may attend independently | dinner occurs without Player | later legitimate social scene, not automatic private crop |
+| Nico pre-shift lunch | one social cycle | friendship remains | meal and service move on | fresh invitation; missed promise may cool trust |
+| Marie return | until paid or explicitly failed | not applicable | drift evidence accumulates | next couple consequence gains priority |
 
 No exact scene waits forever unchanged.
 
@@ -1322,9 +1417,9 @@ No refusal is bypassed by repeating the same wording.
 
 ---
 
-# 16. Knowledge and trace contract
+# 17. Knowledge and trace contract
 
-## 16.1 No new image inventory
+## 17.1 No new image inventory
 
 V0.87 creates no required image or visual asset.
 
@@ -1337,16 +1432,16 @@ Existing traces remain in their original frame:
 | `marie_laverriere_setup_01` | event participation history | private jealousy proof |
 | `laverriere_public_group_photo_set_01` | authorized public/social trace | Pauline private alternate, Nico forwarding game |
 
-## 16.2 Private does not equal secret
+## 17.2 Private does not equal secret
 
-The following may remain ordinary private knowledge:
+These facts may remain ordinary private knowledge:
 
 - Mathilde noticed Player's gaze;
 - Sandra selected Player for a late quiet conversation;
 - Raphaëlle and Player took a lunch walk;
 - Pauline or Nico sent an individual practical invitation.
 
-These facts do not automatically create:
+They do not automatically create:
 
 - a hard secret;
 - an alibi;
@@ -1355,7 +1450,7 @@ These facts do not automatically create:
 
 A hard secret begins only when a later scene creates a named deception, hidden boundary crossing, or evidence-control obligation.
 
-## 16.3 Knowledge limits
+## 17.3 Knowledge limits
 
 - Marie does not know private threads by default.
 - Mathilde does not know Sandra, Pauline, Raphaëlle, or Nico route states.
@@ -1367,7 +1462,7 @@ A hard secret begins only when a later scene creates a named deception, hidden b
 
 ---
 
-# 17. Foreground / echo budget
+# 18. Foreground and echo budget
 
 Per authored window:
 
@@ -1381,7 +1476,7 @@ Allowed echoes:
 - Marie practical or social echo;
 - Mathilde household joke;
 - Sandra delayed work line;
-- Pauline public plan confirmation;
+- Pauline public-plan confirmation;
 - Nico ordinary logistics;
 - Raphaëlle work closure.
 
@@ -1397,15 +1492,13 @@ Echoes may not:
 
 ---
 
-# 18. Replay and branch guarantees
+# 19. Replay and exit guarantees
 
-A single playthrough of this wave should not contain every character foreground.
-
-Recommended results:
+A single playthrough should contain:
 
 ```text
 fixed Marie foreground
-+ two selected external foregrounds maximum
++ zero to two selected external foregrounds
 + mandatory couple returns
 + ordinary echoes from zero to three other characters
 ```
@@ -1419,18 +1512,15 @@ Replay changes:
 - which opportunities defer or mutate;
 - whether the weekend feels joined or parallel.
 
-Replay must not change:
+Replay does not change:
 
-- characters' identities;
+- character identity;
+- voice ownership;
 - image consent rules;
-- Bastien / Jeff / Marie humanity;
+- Bastien, Jeff, and Marie's humanity;
 - relationship frame at pack start;
 - maximum one charged owner;
 - adult-content exclusion.
-
----
-
-# 19. Exit state
 
 At pack end:
 
@@ -1484,6 +1574,7 @@ Reject any V0.87 implementation or rewrite that adds:
 - fake long chats between co-present characters;
 - visible explanatory `Moments hors ligne` cards;
 - old blank time-of-day interstitials;
+- legal wordplay copied from Mathilde into other voices;
 - a runtime refactor bundled into this documentation pass.
 
 ---
@@ -1492,7 +1583,6 @@ Reject any V0.87 implementation or rewrite that adds:
 
 ```text
 The opening proved access.
-
 V0.87 proves repetition.
 
 One repeated look,
@@ -1502,5 +1592,6 @@ one ordinary dinner,
 or one quiet lunch
 can change meaning.
 
+Each person must still sound like themselves.
 It does not yet change permission.
 ```
