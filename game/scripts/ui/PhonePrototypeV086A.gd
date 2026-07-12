@@ -1,16 +1,26 @@
 extends "res://scripts/ui/PhonePrototypeV085.gd"
 
 # V0.86a keeps the conversation visible while narrative time advances through
-# the smartphone status clock. No blank moment-of-day card is used in the
-# active flow.
+# a fixed smartphone status strip above the active contact. Offline activity
+# remains internal continuity rather than explicit player-facing exposition.
 const TIME_PASSAGE_DELAY_SECONDS := 2.0
-const CLOCK_ANIMATION_SECONDS := 5.0
+const CLOCK_ANIMATION_SECONDS := 4.0
 const OPTIONAL_WINDOW_SECONDS := 8.0
 const CLOCK_STEP_SECONDS := 0.05
+const PHONE_CONNECTIVITY_TEXT := "▮▮  Wi‑Fi  82%"
 
 var time_passage_in_progress := false
 var time_passage_token := 0
 var optional_window_token := 0
+
+func _add_status_bar(parent: Node) -> void:
+	# Keep the inherited narrative clock model without duplicating a visible
+	# status strip in the temporary left prototype panel.
+	status_time_label = Label.new()
+	status_time_label.name = "HiddenNarrativeClock"
+	status_time_label.text = "--:--"
+	status_time_label.visible = false
+	parent.add_child(status_time_label)
 
 func _build_layout() -> void:
 	super._build_layout()
@@ -20,9 +30,31 @@ func _build_layout() -> void:
 		var callback := Callable(self, "_open_notification_target")
 		if not conversation_view.is_connected("thread_notification_pressed", callback):
 			conversation_view.connect("thread_notification_pressed", callback)
+	_sync_conversation_phone_status()
+
+func _refresh_status_time(day_value) -> void:
+	super._refresh_status_time(day_value)
+	_sync_conversation_phone_status()
+
+func _on_narrative_time_changed(time_label: String) -> void:
+	super._on_narrative_time_changed(time_label)
+	_sync_conversation_phone_status()
 
 func _render_active_day(day_value) -> void:
 	super._render_active_day(day_value)
+	_sync_conversation_phone_status()
+
+func _render_archived_day(day_value) -> void:
+	# V0.86a deliberately bypasses the V0.85 day-log presentation. Offline
+	# continuity remains internal and is not exposed as "Moments hors ligne".
+	viewing_archived_day = true
+	_clear(conversation_list)
+	_add_label(conversation_list, "%s — Historique" % _format_day_label(day_value), 18)
+	_add_muted_label(conversation_list, "Journée terminée · lecture seule", 12)
+	_render_conversation_buttons(day_value, _collect_contact_conversations_for_day(day_value))
+	if TimelineState.is_current_day(day_value) and DataLoader.get_timeline_next_day(day_value) == null:
+		_add_muted_label(conversation_list, "La suite n'est pas encore disponible.", 12)
+	_sync_conversation_phone_status()
 
 func _add_phase_advance_control(_day_value) -> void:
 	# No scheduler-like control is shown in the contact list. Optional windows
@@ -59,12 +91,18 @@ func _advance_after_phase(day_value, phase_id: String) -> void:
 		var raw_next = phases[current_index + 1]
 		if typeof(raw_next) == TYPE_DICTIONARY:
 			var next_phase: Dictionary = raw_next
-			await _pass_time_then_activate_phase(day_value, next_phase)
+			if _phase_has_authored_beat(next_phase):
+				var is_final_phase: bool = current_index + 1 == phases.size() - 1
+				if is_final_phase and DataLoader.get_timeline_next_day(day_value) == null:
+					await _run_clock_passage(day_value, _target_time_for_phase(day_value, next_phase), false)
+				await _activate_authored_beat_silently(day_value, next_phase)
+			else:
+				await _pass_time_then_activate_phase(day_value, next_phase)
 		return
 	await _pass_time_then_complete_day(day_value)
 
 func _pass_time_then_activate_phase(day_value, phase: Dictionary) -> void:
-	var target_time := _target_time_for_phase(day_value, phase)
+	var target_time: String = _target_time_for_phase(day_value, phase)
 	await _run_clock_passage(day_value, target_time, false)
 	await _activate_phase(day_value, phase, false)
 
@@ -88,7 +126,7 @@ func _run_clock_passage(day_value, target_time: String, crosses_midnight: bool) 
 	await _wait_scaled(TIME_PASSAGE_DELAY_SECONDS)
 	if token != time_passage_token:
 		return
-	var start_time := _current_clock_time()
+	var start_time: String = _current_clock_time()
 	await _animate_status_clock(start_time, target_time, crosses_midnight, token)
 	if token != time_passage_token:
 		return
@@ -98,12 +136,12 @@ func _run_clock_passage(day_value, target_time: String, crosses_midnight: bool) 
 	transition_in_progress = false
 
 func _current_clock_time() -> String:
-	var current_time := status_time_label.text if is_instance_valid(status_time_label) else ""
+	var current_time: String = status_time_label.text if is_instance_valid(status_time_label) else ""
 	if is_instance_valid(conversation_view) and conversation_view.has_method("current_last_message_time"):
-		var last_message_time := str(conversation_view.call("current_last_message_time"))
+		var last_message_time: String = str(conversation_view.call("current_last_message_time"))
 		current_time = _later_time(current_time, last_message_time)
-	if is_instance_valid(status_time_label) and current_time != "":
-		status_time_label.text = current_time
+	if current_time != "":
+		_set_phone_clock_text(current_time)
 	return current_time
 
 func _animate_status_clock(start_time: String, target_time: String, crosses_midnight: bool, token: int) -> void:
@@ -120,20 +158,37 @@ func _animate_status_clock(start_time: String, target_time: String, crosses_midn
 		target_total += 24 * 60
 	var duration: float = _scaled_seconds(CLOCK_ANIMATION_SECONDS)
 	if duration <= 0.0 or target_total == start_minutes:
-		status_time_label.text = target_time
+		_set_phone_clock_text(target_time)
 		return
-	status_time_label.add_theme_font_size_override("font_size", 17)
+	_set_phone_clock_emphasis(true)
 	var elapsed: float = 0.0
 	while elapsed < duration and token == time_passage_token:
 		var ratio: float = clampf(elapsed / duration, 0.0, 1.0)
 		var shown_minutes: int = roundi(lerpf(float(start_minutes), float(target_total), ratio))
-		status_time_label.text = _minutes_to_clock(shown_minutes)
+		_set_phone_clock_text(_minutes_to_clock(shown_minutes))
 		var step: float = minf(CLOCK_STEP_SECONDS, duration - elapsed)
 		await get_tree().create_timer(step).timeout
 		elapsed += step
 	if token == time_passage_token:
-		status_time_label.text = target_time
-	status_time_label.add_theme_font_size_override("font_size", 13)
+		_set_phone_clock_text(target_time)
+	_set_phone_clock_emphasis(false)
+
+func _set_phone_clock_text(time_label: String) -> void:
+	if is_instance_valid(status_time_label):
+		status_time_label.text = time_label
+	_sync_conversation_phone_status(time_label)
+
+func _set_phone_clock_emphasis(active: bool) -> void:
+	if is_instance_valid(conversation_view) and conversation_view.has_method("set_phone_clock_emphasis"):
+		conversation_view.call("set_phone_clock_emphasis", active)
+
+func _sync_conversation_phone_status(time_override: String = "") -> void:
+	if not is_instance_valid(conversation_view) or not conversation_view.has_method("set_phone_status"):
+		return
+	var time_text: String = time_override
+	if time_text == "" and is_instance_valid(status_time_label):
+		time_text = status_time_label.text
+	conversation_view.call("set_phone_status", time_text, PHONE_CONNECTIVITY_TEXT)
 
 func _minutes_to_clock(total_minutes: int) -> String:
 	var normalized: int = total_minutes % (24 * 60)
@@ -152,34 +207,34 @@ func _wait_scaled(seconds: float) -> void:
 
 func _target_time_for_phase(day_value, phase: Dictionary) -> String:
 	if _phase_has_authored_beat(phase):
-		var beat := _authored_beat_for_phase(phase)
-		var beat_time := str(beat.get("time_label", phase.get("time_label", "")))
+		var beat: Dictionary = _authored_beat_for_phase(phase)
+		var beat_time: String = str(beat.get("time_label", phase.get("time_label", "")))
 		if _time_to_minutes(beat_time) >= 0:
 			return beat_time
-	var direct_time := str(phase.get("time_label", ""))
+	var direct_time: String = str(phase.get("time_label", ""))
 	if _time_to_minutes(direct_time) >= 0:
 		return direct_time
-	var card := _transition_card_for_phase(day_value, phase)
+	var card: Dictionary = _transition_card_for_phase(day_value, phase)
 	for key in ["title", "subtitle"]:
-		var candidate := str(card.get(key, ""))
+		var candidate: String = str(card.get(key, ""))
 		if _time_to_minutes(candidate) >= 0:
 			return candidate
 	return ""
 
 func _activate_phase(day_value, phase: Dictionary, _show_transition: bool) -> void:
 	if _phase_has_authored_beat(phase):
-		await _activate_authored_beat_inline(day_value, phase)
+		await _activate_authored_beat_silently(day_value, phase)
 		return
 	if phase.is_empty():
 		return
 	transition_in_progress = true
-	var phase_id := str(phase.get("id", ""))
+	var phase_id: String = str(phase.get("id", ""))
 	TimelineState.set_current_phase(day_value, phase_id)
 	var notifications: Array = _unlock_phase_conversations(day_value, phase)
 	transition_in_progress = false
 	_render_active_day(day_value)
 	_render_days_buttons_only()
-	var notification := _primary_notification_for_phase(day_value, phase, notifications)
+	var notification: Dictionary = _primary_notification_for_phase(day_value, phase, notifications)
 	if not notification.is_empty():
 		_show_conversation_notification(
 			day_value,
@@ -190,31 +245,21 @@ func _activate_phase(day_value, phase: Dictionary, _show_transition: bool) -> vo
 	if _phase_is_optional(phase):
 		_schedule_optional_expiry(day_value, phase)
 
-func _activate_authored_beat_inline(day_value, phase: Dictionary) -> void:
+func _activate_authored_beat_silently(day_value, phase: Dictionary) -> void:
 	if phase.is_empty():
 		return
 	transition_in_progress = true
-	var phase_id := str(phase.get("id", ""))
+	var phase_id: String = str(phase.get("id", ""))
 	TimelineState.set_current_phase(day_value, phase_id)
-	var beat := _authored_beat_for_phase(phase)
+	var beat: Dictionary = _authored_beat_for_phase(phase)
 	if beat.is_empty():
 		push_error("No authored beat variant matched timeline phase: %s" % phase_id)
 		transition_in_progress = false
 		return
-	var time_label := str(beat.get("time_label", phase.get("time_label", "")))
-	if time_label != "":
-		_on_narrative_time_changed(time_label)
-	if is_instance_valid(conversation_view) and conversation_view.has_method("show_offline_beat"):
-		conversation_view.call(
-			"show_offline_beat",
-			str(beat.get("id", phase_id)),
-			str(beat.get("title", "")),
-			str(beat.get("text", beat.get("subtitle", "")))
-		)
 	TimelineState.record_day_log_entry(day_value, {
 		"id": str(beat.get("id", phase_id)),
 		"phase_id": phase_id,
-		"time_label": time_label,
+		"time_label": str(beat.get("time_label", phase.get("time_label", ""))),
 		"title": str(beat.get("title", "")),
 		"text": str(beat.get("text", beat.get("subtitle", ""))),
 	})
@@ -228,14 +273,14 @@ func _activate_authored_beat_inline(day_value, phase: Dictionary) -> void:
 func _schedule_optional_expiry(day_value, phase: Dictionary) -> void:
 	optional_window_token += 1
 	var token: int = optional_window_token
-	var phase_id := str(phase.get("id", ""))
+	var phase_id: String = str(phase.get("id", ""))
 	await get_tree().create_timer(OPTIONAL_WINDOW_SECONDS).timeout
 	if token != optional_window_token or time_passage_in_progress:
 		return
 	if phase_id != TimelineState.current_phase_id(day_value):
 		return
 	for raw_id in phase.get("optional_conversation_ids", []):
-		var conversation_id := str(raw_id)
+		var conversation_id: String = str(raw_id)
 		if TimelineState.is_optional_opened(day_value, conversation_id) or TimelineState.is_episode_completed(day_value, conversation_id):
 			return
 	await _advance_optional_phase(day_value, phase_id)
@@ -244,7 +289,7 @@ func _primary_notification_for_phase(day_value, phase: Dictionary, notifications
 	if not notifications.is_empty() and typeof(notifications[0]) == TYPE_DICTIONARY:
 		return notifications[0]
 	for raw_id in _phase_conversation_ids(phase):
-		var conversation_id := str(raw_id)
+		var conversation_id: String = str(raw_id)
 		if not _is_episode_available(day_value, conversation_id):
 			continue
 		var raw_conversation = DataLoader.conversations_by_id.get(conversation_id, {})
@@ -252,12 +297,12 @@ func _primary_notification_for_phase(day_value, phase: Dictionary, notifications
 			continue
 		var conversation: Dictionary = raw_conversation
 		var thread = conversation.get("thread", {})
-		var title := str(thread.get("display_name", conversation.get("title", conversation_id))) if typeof(thread) == TYPE_DICTIONARY else str(conversation.get("title", conversation_id))
-		var body := "Nouveau message"
+		var title: String = str(thread.get("display_name", conversation.get("title", conversation_id))) if typeof(thread) == TYPE_DICTIONARY else str(conversation.get("title", conversation_id))
+		var body: String = "Nouveau message"
 		for message in _collect_messages(conversation):
 			if typeof(message) != TYPE_DICTIONARY or bool(message.get("_system_note", false)):
 				continue
-			var candidate := str(message.get("text", message.get("body", "")))
+			var candidate: String = str(message.get("text", message.get("body", "")))
 			if candidate != "":
 				body = candidate
 				break
@@ -279,8 +324,8 @@ func _complete_day(day_value) -> void:
 		current_day_value = next_day
 		viewing_archived_day = false
 		_render_days()
-		var initial_phase := DataLoader.get_timeline_phase(next_day, TimelineState.current_phase_id(next_day))
-		var notification := _primary_notification_for_phase(next_day, initial_phase, [])
+		var initial_phase: Dictionary = DataLoader.get_timeline_phase(next_day, TimelineState.current_phase_id(next_day))
+		var notification: Dictionary = _primary_notification_for_phase(next_day, initial_phase, [])
 		if not notification.is_empty():
 			_show_conversation_notification(
 				next_day,
@@ -292,6 +337,7 @@ func _complete_day(day_value) -> void:
 		_render_days_buttons_only()
 	transition_in_progress = false
 	time_passage_in_progress = false
+	_sync_conversation_phone_status()
 
 func _show_conversation_notification(day_value, conversation_id: String, title: String, body: String) -> void:
 	notification_target_day_value = day_value
@@ -308,7 +354,7 @@ func _show_conversation_notification(day_value, conversation_id: String, title: 
 	_show_notification("%s — %s" % [title, body])
 
 func _notification_time_for_thread(day_value, conversation_id: String) -> String:
-	var metadata := _moment_metadata_by_conversation_id(day_value)
+	var metadata: Dictionary = _moment_metadata_by_conversation_id(day_value)
 	var bucket = metadata.get(conversation_id, {})
 	if typeof(bucket) == TYPE_DICTIONARY:
 		var times: Array = bucket.get("times", [])
@@ -321,15 +367,16 @@ func _notification_time_for_thread(day_value, conversation_id: String) -> String
 func _open_conversation(day_value, conversation: Dictionary) -> void:
 	if time_passage_in_progress:
 		return
-	var phase := DataLoader.get_timeline_phase(day_value, TimelineState.current_phase_id(day_value))
+	var phase: Dictionary = DataLoader.get_timeline_phase(day_value, TimelineState.current_phase_id(day_value))
 	if _phase_is_optional(phase):
 		for optional_id in phase.get("optional_conversation_ids", []):
 			if _conversation_episode_ids(conversation).has(str(optional_id)):
 				optional_window_token += 1
 				break
-	var opening_id := _conversation_id(conversation)
-	var target_before := notification_target_conversation_id
+	var opening_id: String = _conversation_id(conversation)
+	var target_before: String = notification_target_conversation_id
 	super._open_conversation(day_value, conversation)
+	_sync_conversation_phone_status()
 	if opening_id == target_before:
 		_hide_notification()
 
@@ -339,8 +386,8 @@ func _hide_notification() -> void:
 		conversation_view.call("hide_thread_notification")
 
 func _add_conversation_card(day_value, conversation: Dictionary) -> void:
-	var is_pending := _is_conversation_pending(conversation)
-	var is_active := (
+	var is_pending: bool = _is_conversation_pending(conversation)
+	var is_active: bool = (
 		str(GameState.context.get("day", "")) == str(day_value)
 		and str(GameState.context.get("conversation_id", "")) == _conversation_id(conversation)
 	)
@@ -392,9 +439,10 @@ func _add_conversation_card(day_value, conversation: Dictionary) -> void:
 	)
 
 func _on_game_state_changed() -> void:
-	var resetting := GameState.context.get("day", null) == null and str(GameState.context.get("last_choice", "")) == ""
+	var resetting: bool = GameState.context.get("day", null) == null and str(GameState.context.get("last_choice", "")) == ""
 	if resetting:
 		time_passage_token += 1
 		optional_window_token += 1
 		time_passage_in_progress = false
 	super._on_game_state_changed()
+	_sync_conversation_phone_status()
