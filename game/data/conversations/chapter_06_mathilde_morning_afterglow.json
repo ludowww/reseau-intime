@@ -23,76 +23,74 @@
   },
   "segments": [
     {
-      "id": "segment_sunday_mathilde_gaze_choice",
-      "pattern": "three_posture_choice",
-      "function": "MT1 — décider comment Player assume le regard sans décider à la place de Mathilde ce qu'il signifie.",
+      "id": "segment_sunday_mathilde_opening_reply",
+      "pattern": "guided_reply_pacing",
+      "function": "Laisser Player demander manuellement ce que Mathilde a remarqué avant MT1.",
       "messages": [
         {
           "id": "msg_sun_mathilde_afterglow_001",
           "sender": "mathilde",
           "time_label": "10:25",
           "text": "Tu sais que tu n'es pas discret avant le café ?"
-        },
-        {
-          "id": "msg_sun_mathilde_afterglow_002",
-          "sender": "ludo",
-          "time_label": "10:25",
-          "text": "sur quoi"
-        },
-        {
-          "id": "msg_sun_mathilde_afterglow_003",
-          "sender": "mathilde",
-          "time_label": "10:26",
-          "text": "Mauvaise défense."
-        },
-        {
-          "id": "msg_sun_mathilde_afterglow_004",
-          "sender": "mathilde",
-          "time_label": "10:26",
-          "text": "Et c'est ma tenue normale."
-        },
-        {
-          "id": "msg_sun_mathilde_afterglow_005",
-          "sender": "mathilde",
-          "time_label": "10:27",
-          "text": "Donc ne transforme pas ça en scénario."
         }
       ],
       "choices": [
         {
+          "id": "choice_sun_mathilde_what_guided",
+          "text": "sur quoi",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "next_messages": [
+            {
+              "id": "msg_sun_mathilde_afterglow_002",
+              "sender": "mathilde",
+              "time_label": "10:26",
+              "text": "Mauvaise défense."
+            },
+            {
+              "id": "msg_sun_mathilde_afterglow_003",
+              "sender": "mathilde",
+              "time_label": "10:26",
+              "text": "Et c'est ma tenue normale."
+            },
+            {
+              "id": "msg_sun_mathilde_afterglow_004",
+              "sender": "mathilde",
+              "time_label": "10:27",
+              "text": "Donc ne transforme pas ça en scénario."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_sunday_mathilde_gaze_choice",
+      "pattern": "three_posture_choice",
+      "function": "MT1 — décider comment Player assume le regard sans décider à la place de Mathilde ce qu'il signifie.",
+      "messages": [],
+      "choices": [
+        {
           "id": "choice_sun_mathilde_acknowledge_gaze",
-          "text": "j'ai regardé",
+          "text": "J'ai regardé, oui. Pas une raison pour te mettre mal à l'aise.",
           "tone": "respectful_acknowledgement",
           "sets_flags": [
             "mathilde_gaze_acknowledged_soft"
           ],
           "next_messages": [
             {
-              "id": "msg_sun_mathilde_afterglow_006a",
-              "sender": "ludo",
-              "time_label": "10:27",
-              "text": "oui"
-            },
-            {
-              "id": "msg_sun_mathilde_afterglow_007a",
-              "sender": "ludo",
-              "time_label": "10:27",
-              "text": "pas une raison pour te mettre mal à l'aise"
-            },
-            {
-              "id": "msg_sun_mathilde_afterglow_008a",
+              "id": "msg_sun_mathilde_afterglow_005a",
               "sender": "mathilde",
               "time_label": "10:28",
               "text": "Ça ne m'a pas mise mal à l'aise."
             },
             {
-              "id": "msg_sun_mathilde_afterglow_009a",
+              "id": "msg_sun_mathilde_afterglow_006a",
               "sender": "mathilde",
               "time_label": "10:28",
               "text": "C'est justement pénible."
             },
             {
-              "id": "msg_sun_mathilde_afterglow_010a",
+              "id": "msg_sun_mathilde_afterglow_007a",
               "sender": "mathilde",
               "time_label": "10:29",
               "text": "Bref."
@@ -101,32 +99,26 @@
         },
         {
           "id": "choice_sun_mathilde_playful_gaze",
-          "text": "j'étais surtout inquiet pour le café",
+          "text": "J'étais surtout inquiet pour le café. La tenue n'a pas aidé.",
           "tone": "playful_readable",
           "sets_flags": [
             "mathilde_gaze_playful_soft"
           ],
           "next_messages": [
             {
-              "id": "msg_sun_mathilde_afterglow_006b",
-              "sender": "ludo",
-              "time_label": "10:27",
-              "text": "la tenue n'a pas aidé"
-            },
-            {
-              "id": "msg_sun_mathilde_afterglow_007b",
+              "id": "msg_sun_mathilde_afterglow_005b",
               "sender": "mathilde",
               "time_label": "10:28",
               "text": "Très mauvaise défense."
             },
             {
-              "id": "msg_sun_mathilde_afterglow_008b",
+              "id": "msg_sun_mathilde_afterglow_006b",
               "sender": "mathilde",
               "time_label": "10:28",
               "text": "Je la garde pour le dossier."
             },
             {
-              "id": "msg_sun_mathilde_afterglow_009b",
+              "id": "msg_sun_mathilde_afterglow_007b",
               "sender": "mathilde",
               "time_label": "10:29",
               "text": "Et je refuse de préciser pourquoi je souris."
@@ -135,32 +127,26 @@
         },
         {
           "id": "choice_sun_mathilde_restore_distance",
-          "text": "j'aurais dû être plus discret",
+          "text": "J'aurais dû être plus discret. On garde ça simple.",
           "tone": "restore_distance",
           "sets_flags": [
             "mathilde_distance_respected"
           ],
           "next_messages": [
             {
-              "id": "msg_sun_mathilde_afterglow_006c",
-              "sender": "ludo",
-              "time_label": "10:27",
-              "text": "on garde ça simple"
-            },
-            {
-              "id": "msg_sun_mathilde_afterglow_007c",
+              "id": "msg_sun_mathilde_afterglow_005c",
               "sender": "mathilde",
               "time_label": "10:28",
               "text": "Oui."
             },
             {
-              "id": "msg_sun_mathilde_afterglow_008c",
+              "id": "msg_sun_mathilde_afterglow_006c",
               "sender": "mathilde",
               "time_label": "10:28",
               "text": "Simple, ça me va."
             },
             {
-              "id": "msg_sun_mathilde_afterglow_009c",
+              "id": "msg_sun_mathilde_afterglow_007c",
               "sender": "mathilde",
               "time_label": "10:29",
               "text": "Et le café était quand même mauvais."
@@ -173,5 +159,5 @@
   "routes_nourished": [
     "mathilde"
   ],
-  "debug_notes": "V0.89 MT1. Le moment physique est terminé avant le chat. Mathilde nomme le regard, rappelle que sa tenue est ordinaire et conserve son agence. R1 par défaut ; un éventuel R2 dépend du gate runtime, jamais du texte seul."
+  "debug_notes": "V0.89 MT1. Le moment physique est terminé avant le chat. Chaque réplique Player passe par un bouton manuel. Mathilde nomme le regard, rappelle que sa tenue est ordinaire et conserve son agence ; le gate runtime décide seul d'un éventuel R2."
 }
