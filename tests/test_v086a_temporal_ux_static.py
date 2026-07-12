@@ -74,6 +74,12 @@ class V086ATemporalUxStaticTests(unittest.TestCase):
         ]:
             self.assertIn(expected, phone)
 
+    def test_choice_free_threads_do_not_explain_the_absence_of_choices(self):
+        conversation = (GAME / "scripts/ui/ConversationViewV086A.gd").read_text(encoding="utf-8")
+        self.assertIn("func _show_choices_for_segment", conversation)
+        self.assertIn("super._show_choices_for_segment(data, false, persist_state)", conversation)
+        self.assertNotIn("Aucun choix direct dans cette conversation.", conversation)
+
     def test_offline_activity_remains_internal_and_is_not_rendered_or_archived(self):
         phone = (GAME / "scripts/ui/PhonePrototypeV086A.gd").read_text(encoding="utf-8")
         conversation = (GAME / "scripts/ui/ConversationViewV086A.gd").read_text(encoding="utf-8")
@@ -99,6 +105,44 @@ class V086ATemporalUxStaticTests(unittest.TestCase):
             "_schedule_optional_expiry",
             "TimelineState.is_optional_opened",
             "_advance_optional_phase",
+        ]:
+            self.assertIn(expected, phone)
+
+    def test_external_notification_is_compact_animated_and_preserves_bottom(self):
+        conversation = (GAME / "scripts/ui/ConversationViewV086A.gd").read_text(encoding="utf-8")
+        for expected in [
+            "NOTIFICATION_PREVIEW_CHARACTERS := 10",
+            "_compact_notification_preview",
+            "normalized.substr(0, NOTIFICATION_PREVIEW_CHARACTERS)",
+            "_play_thread_notification_arrival",
+            "create_tween()",
+            '"modulate"',
+            "_scroll_to_bottom.call_deferred()",
+        ]:
+            self.assertIn(expected, conversation)
+        self.assertNotIn("thread_notification_panel.grab_focus", conversation)
+
+    def test_same_thread_resumes_without_notification_banner(self):
+        phone = (GAME / "scripts/ui/PhonePrototypeV086A.gd").read_text(encoding="utf-8")
+        conversation = (GAME / "scripts/ui/ConversationViewV086A.gd").read_text(encoding="utf-8")
+        for expected in [
+            "if has_open_thread and active_thread_id == conversation_id",
+            "_continue_active_thread",
+            'conversation_view.call("continue_active_thread"',
+            "current_thread_id",
+            "continue_active_thread",
+            "_resume_active_thread",
+            "_auto_advance_segments_until_choice",
+        ]:
+            self.assertIn(expected, phone + "\n" + conversation)
+
+    def test_multi_contact_phase_surfaces_next_unfinished_thread(self):
+        phone = (GAME / "scripts/ui/PhonePrototypeV086A.gd").read_text(encoding="utf-8")
+        for expected in [
+            "_next_unfinished_phase_notification",
+            "_notification_for_episode",
+            "TimelineState.is_episode_completed",
+            "remaining_notification",
         ]:
             self.assertIn(expected, phone)
 
