@@ -3,6 +3,7 @@ extends "res://scripts/ui/ConversationViewV084.gd"
 signal thread_notification_pressed
 
 const PHONE_STATUS_CONNECTIVITY := "▮▮  Wi‑Fi  82%"
+const NOTIFICATION_PREVIEW_CHARACTERS := 10
 
 var phone_status_panel: PanelContainer
 var phone_status_time_label: Label
@@ -11,6 +12,7 @@ var phone_status_time_text: String = "--:--"
 var phone_status_connectivity_text: String = PHONE_STATUS_CONNECTIVITY
 var thread_notification_panel: PanelContainer
 var thread_notification_label: Label
+var thread_notification_tween: Tween
 
 func _add_chat_header(conversation: Dictionary) -> void:
 	super._add_chat_header(conversation)
@@ -101,15 +103,60 @@ func show_thread_notification(contact_name: String, preview: String, time_label:
 	var header: String = "Nouveau message · %s" % contact_name
 	if time_label != "":
 		header += " · %s" % time_label
-	thread_notification_label.text = "%s\n%s" % [header, preview]
+	var compact_preview: String = _compact_notification_preview(preview)
+	thread_notification_label.text = header if compact_preview == "" else "%s\n%s" % [header, compact_preview]
 	thread_notification_panel.visible = true
-	thread_notification_panel.grab_focus()
+	_play_thread_notification_arrival()
+	_scroll_to_bottom.call_deferred()
 
 func hide_thread_notification() -> void:
+	if thread_notification_tween != null:
+		thread_notification_tween.kill()
+		thread_notification_tween = null
 	if is_instance_valid(thread_notification_panel):
 		thread_notification_panel.visible = false
+		thread_notification_panel.modulate = Color(1.0, 1.0, 1.0, 1.0)
 	if is_instance_valid(thread_notification_label):
 		thread_notification_label.text = ""
+
+func _compact_notification_preview(preview: String) -> String:
+	var normalized: String = preview.replace("\r", " ").replace("\n", " ").strip_edges()
+	while normalized.contains("  "):
+		normalized = normalized.replace("  ", " ")
+	if normalized.length() <= NOTIFICATION_PREVIEW_CHARACTERS:
+		return normalized
+	return "%s..." % normalized.substr(0, NOTIFICATION_PREVIEW_CHARACTERS)
+
+func _play_thread_notification_arrival() -> void:
+	if not is_instance_valid(thread_notification_panel):
+		return
+	if thread_notification_tween != null:
+		thread_notification_tween.kill()
+	thread_notification_panel.modulate = Color(0.72, 0.86, 1.0, 0.0)
+	thread_notification_tween = create_tween()
+	thread_notification_tween.set_trans(Tween.TRANS_QUAD)
+	thread_notification_tween.set_ease(Tween.EASE_OUT)
+	thread_notification_tween.tween_property(
+		thread_notification_panel,
+		"modulate",
+		Color(1.0, 1.0, 1.0, 1.0),
+		0.16
+	)
+	thread_notification_tween.tween_property(
+		thread_notification_panel,
+		"modulate",
+		Color(0.80, 0.91, 1.0, 1.0),
+		0.10
+	)
+	thread_notification_tween.tween_property(
+		thread_notification_panel,
+		"modulate",
+		Color(1.0, 1.0, 1.0, 1.0),
+		0.24
+	)
+
+func _show_choices_for_segment(data: Dictionary, _show_empty_hint := true, persist_state := true) -> bool:
+	return super._show_choices_for_segment(data, false, persist_state)
 
 func show_contact_offline(marker_id: String = "") -> void:
 	if current_conversation.is_empty() or active_state.is_empty():
@@ -124,6 +171,25 @@ func show_contact_offline(marker_id: String = "") -> void:
 	markers[key] = true
 	active_state["v086a_offline_markers"] = markers
 	_add_system_note("%s est hors ligne" % contact_name, false)
+
+func continue_active_thread(conversation: Dictionary) -> void:
+	if current_conversation.is_empty() or active_state.is_empty():
+		return
+	if _conversation_key(conversation) != active_conversation_id:
+		return
+	_merge_updated_conversation(conversation)
+	var merged_conversation: Dictionary = active_state.get("conversation", {})
+	current_conversation = merged_conversation
+	if bool(active_state.get("sequence_in_progress", false)):
+		return
+	if bool(active_state.get("sequence_complete", false)) and _has_next_segment():
+		active_state["sequence_complete"] = false
+		_resume_active_thread.call_deferred(active_conversation_id, current_render_token)
+
+func _resume_active_thread(conversation_id: String, token: int) -> void:
+	if not _is_render_current(conversation_id, token):
+		return
+	await _auto_advance_segments_until_choice(conversation_id, token)
 
 func _render_message_with_typing(message: Dictionary, conversation_id: String, token: int) -> void:
 	if str(message.get("presentation", "")) == "offline_beat":
@@ -158,6 +224,9 @@ func current_contact_name() -> String:
 	if current_conversation.is_empty():
 		return ""
 	return _conversation_name(current_conversation)
+
+func current_thread_id() -> String:
+	return active_conversation_id
 
 func _on_thread_notification_input(event: InputEvent) -> void:
 	var activated: bool = false
