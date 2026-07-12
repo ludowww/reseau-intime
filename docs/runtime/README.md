@@ -33,8 +33,11 @@ Status after V0.86 + V0.86a:
 Tuesday–Friday opening implemented
 conversation-side fixed time / Wi‑Fi / battery strip
 2-second pause + 4-second accelerated clock
-in-thread incoming-message shortcut
+compact 10-character notification shortcut for another thread
+same-thread episodes resume directly without a notification banner
+external notifications preserve the transcript bottom and use an insertion flash
 strong unread-contact styling
+no explanatory empty-choice hint
 no active text-only timeline landing pages
 no visible or archived Moments hors ligne section
 opening_band_complete = true
