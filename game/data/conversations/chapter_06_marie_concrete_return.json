@@ -1,0 +1,284 @@
+{
+  "id": "chapter_06_marie_concrete_return",
+  "scene_id": "marie_concrete_return_due_01",
+  "chapter": 6,
+  "day": 6,
+  "title": "Dimanche soir — Le retour",
+  "app": "messages",
+  "window_id": "W11_MARIE_CONCRETE_RETURN",
+  "calendar_label": "Dimanche",
+  "time_band": "EVENING",
+  "communication_mode": "AFTERGLOW_REMOTE",
+  "foreground_role": "couple_consequence",
+  "physical_context": "Marie termine sa journée dehors ou rentre de son propre programme. Player est encore ailleurs lorsqu'elle écrit. Si Player choisit de rentrer immédiatement, le chat s'arrête au point de rencontre et la suite se paie hors téléphone.",
+  "suppress_empty_hint": true,
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "marie"
+    ],
+    "display_name": "Marie",
+    "profile_content_id": "profile_marie_placeholder"
+  },
+  "segments": [
+    {
+      "id": "segment_sunday_marie_warm_paid_echo",
+      "pattern": "conditional_consequence",
+      "function": "Fermer chaleureusement le retour lorsque le temps partagé a déjà été réellement payé et qu'aucun foreground Mathilde n'a créé une nouvelle obligation.",
+      "suppress_empty_hint": true,
+      "messages": [
+        {
+          "id": "msg_sun_marie_return_warm_001",
+          "sender": "marie",
+          "time_label": "18:35",
+          "conditions": [
+            "marie_shared_hour_paid OR marie_shared_time_paid"
+          ],
+          "unless_conditions": [
+            "mathilde_gaze_acknowledged_soft OR mathilde_gaze_playful_soft OR mathilde_distance_respected"
+          ],
+          "text": "Le café compte."
+        },
+        {
+          "id": "msg_sun_marie_return_warm_002",
+          "sender": "marie",
+          "time_label": "18:35",
+          "conditions": [
+            "marie_shared_hour_paid OR marie_shared_time_paid"
+          ],
+          "unless_conditions": [
+            "mathilde_gaze_acknowledged_soft OR mathilde_gaze_playful_soft OR mathilde_distance_respected"
+          ],
+          "text": "On a même réussi à marcher sans regarder nos téléphones."
+        },
+        {
+          "id": "msg_sun_marie_return_warm_003",
+          "sender": "ludo",
+          "time_label": "18:36",
+          "conditions": [
+            "marie_shared_hour_paid OR marie_shared_time_paid"
+          ],
+          "unless_conditions": [
+            "mathilde_gaze_acknowledged_soft OR mathilde_gaze_playful_soft OR mathilde_distance_respected"
+          ],
+          "text": "performance historique"
+        },
+        {
+          "id": "msg_sun_marie_return_warm_004",
+          "sender": "marie",
+          "time_label": "18:36",
+          "conditions": [
+            "marie_shared_hour_paid OR marie_shared_time_paid"
+          ],
+          "unless_conditions": [
+            "mathilde_gaze_acknowledged_soft OR mathilde_gaze_playful_soft OR mathilde_distance_respected"
+          ],
+          "text": "Je demande une seconde saison."
+        }
+      ],
+      "choices": []
+    },
+    {
+      "id": "segment_sunday_marie_external_opening",
+      "pattern": "conditional_consequence",
+      "function": "Après un foreground Mathilde, ramener l'attention vers une action de couple sans demander une confession sur une limite non franchie.",
+      "messages": [
+        {
+          "id": "msg_sun_marie_return_external_001",
+          "sender": "marie",
+          "time_label": "18:40",
+          "conditions": [
+            "mathilde_gaze_acknowledged_soft OR mathilde_gaze_playful_soft OR mathilde_distance_respected"
+          ],
+          "text": "J'ai fini ma journée."
+        },
+        {
+          "id": "msg_sun_marie_return_external_002",
+          "sender": "marie",
+          "time_label": "18:40",
+          "conditions": [
+            "mathilde_gaze_acknowledged_soft OR mathilde_gaze_playful_soft OR mathilde_distance_respected"
+          ],
+          "text": "Je passe prendre du pain."
+        },
+        {
+          "id": "msg_sun_marie_return_external_003",
+          "sender": "marie",
+          "time_label": "18:41",
+          "conditions": [
+            "mathilde_gaze_acknowledged_soft OR mathilde_gaze_playful_soft OR mathilde_distance_respected"
+          ],
+          "text": "Tu rentres quand ?"
+        }
+      ],
+      "choices": []
+    },
+    {
+      "id": "segment_sunday_marie_independent_opening",
+      "pattern": "conditional_consequence",
+      "function": "Rappeler le plus tard laissé à Player lorsque Marie a fait son samedi indépendamment et qu'aucun foreground Mathilde n'a pris la priorité.",
+      "messages": [
+        {
+          "id": "msg_sun_marie_return_independent_001",
+          "sender": "marie",
+          "time_label": "18:40",
+          "conditions": [
+            "marie_moves_without_player OR marie_weekend_return_scheduled"
+          ],
+          "unless_conditions": [
+            "mathilde_gaze_acknowledged_soft OR mathilde_gaze_playful_soft OR mathilde_distance_respected"
+          ],
+          "text": "J'ai fait ma journée quand même."
+        },
+        {
+          "id": "msg_sun_marie_return_independent_002",
+          "sender": "marie",
+          "time_label": "18:40",
+          "conditions": [
+            "marie_moves_without_player OR marie_weekend_return_scheduled"
+          ],
+          "unless_conditions": [
+            "mathilde_gaze_acknowledged_soft OR mathilde_gaze_playful_soft OR mathilde_distance_respected"
+          ],
+          "text": "C'était bien."
+        },
+        {
+          "id": "msg_sun_marie_return_independent_003",
+          "sender": "marie",
+          "time_label": "18:41",
+          "conditions": [
+            "marie_moves_without_player OR marie_weekend_return_scheduled"
+          ],
+          "unless_conditions": [
+            "mathilde_gaze_acknowledged_soft OR mathilde_gaze_playful_soft OR mathilde_distance_respected"
+          ],
+          "text": "Le plus tard est toujours à toi."
+        }
+      ],
+      "choices": []
+    },
+    {
+      "id": "segment_sunday_marie_return_choice",
+      "pattern": "three_posture_choice",
+      "function": "M3 — choisir un acte immédiat, un acte borné plus tard ou une non-réparation honnête.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "choice_sun_marie_return_immediate",
+          "text": "je rentre",
+          "tone": "immediate_act",
+          "conditions": [
+            "mathilde_gaze_acknowledged_soft OR mathilde_gaze_playful_soft OR mathilde_distance_respected OR marie_moves_without_player OR marie_weekend_return_scheduled"
+          ],
+          "sets_flags": [
+            "marie_return_immediate_act",
+            "marie_return_paid",
+            "active_reconnection_evidence"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sun_marie_return_m3_001a",
+              "sender": "ludo",
+              "time_label": "18:43",
+              "text": "je prends de quoi dîner"
+            },
+            {
+              "id": "msg_sun_marie_return_m3_002a",
+              "sender": "ludo",
+              "time_label": "18:43",
+              "text": "je suis là dans trente minutes"
+            },
+            {
+              "id": "msg_sun_marie_return_m3_003a",
+              "sender": "marie",
+              "time_label": "18:44",
+              "text": "D'accord."
+            },
+            {
+              "id": "msg_sun_marie_return_m3_004a",
+              "sender": "marie",
+              "time_label": "18:44",
+              "text": "Trente minutes. Là, je sais quoi attendre."
+            }
+          ]
+        },
+        {
+          "id": "choice_sun_marie_return_bounded",
+          "text": "demain 9h30",
+          "tone": "bounded_next_act",
+          "conditions": [
+            "mathilde_gaze_acknowledged_soft OR mathilde_gaze_playful_soft OR mathilde_distance_respected OR marie_moves_without_player OR marie_weekend_return_scheduled"
+          ],
+          "sets_flags": [
+            "marie_return_bounded_next_act",
+            "marie_next_morning_obligation_scheduled"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sun_marie_return_m3_001b",
+              "sender": "ludo",
+              "time_label": "18:43",
+              "text": "café dehors"
+            },
+            {
+              "id": "msg_sun_marie_return_m3_002b",
+              "sender": "ludo",
+              "time_label": "18:43",
+              "text": "je bloque l'heure"
+            },
+            {
+              "id": "msg_sun_marie_return_m3_003b",
+              "sender": "marie",
+              "time_label": "18:44",
+              "text": "D'accord."
+            },
+            {
+              "id": "msg_sun_marie_return_m3_004b",
+              "sender": "marie",
+              "time_label": "18:44",
+              "text": "À 9h31, je commande sans toi."
+            }
+          ]
+        },
+        {
+          "id": "choice_sun_marie_return_honest_drift",
+          "text": "je vais pas te vendre une autre promesse",
+          "tone": "honest_non_repair",
+          "conditions": [
+            "mathilde_gaze_acknowledged_soft OR mathilde_gaze_playful_soft OR mathilde_distance_respected OR marie_moves_without_player OR marie_weekend_return_scheduled"
+          ],
+          "sets_flags": [
+            "marie_return_honest_drift",
+            "parallel_drift_evidence"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sun_marie_return_m3_001c",
+              "sender": "ludo",
+              "time_label": "18:43",
+              "text": "j'ai été ailleurs aujourd'hui"
+            },
+            {
+              "id": "msg_sun_marie_return_m3_002c",
+              "sender": "marie",
+              "time_label": "18:44",
+              "text": "Merci pour la phrase."
+            },
+            {
+              "id": "msg_sun_marie_return_m3_003c",
+              "sender": "marie",
+              "time_label": "18:44",
+              "text": "Elle ne remplace pas le reste."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "routes_nourished": [
+    "marie"
+  ],
+  "debug_notes": "V0.89 W11. Le retour chaud est un écho sans faux choix lorsque l'heure est déjà payée. Après Mathilde ou l'indépendance de Marie, M3 propose exactement trois actes. Le couple reste en HABITUAL_WARMTH ; aucun choix ne crée de confession, secret dur ou cadre adulte."
+}
