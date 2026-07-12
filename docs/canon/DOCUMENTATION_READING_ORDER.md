@@ -1,8 +1,8 @@
 # Documentation Reading Order — Canon Current
 
-> Canon entry point after the V0.87 first-repetition source-pack and voice-distinction pass.  
+> Canon entry point after the V0.88 first-repetition runtime-integration planning pass.  
 > Runtime remains implemented from Tuesday through Friday at V0.86.  
-> V0.87 defines, but does not yet implement, the first post-opening repetition wave.
+> V0.87 defines the first post-opening repetition wave; V0.88 defines its smallest runtime slice. Neither is playable yet.
 
 ## 1. Core rules
 
@@ -12,6 +12,7 @@ Preserve cross-character voice distinction.
 Write story movement from V0.78.
 Write the opening from V0.79 and its reconciliation sources.
 Write the first post-opening repetition wave from V0.87.
+Map the first runtime slice from the validated V0.88 integration plan.
 Write communication realism from the diegetic-time canon.
 Write chronological access from the temporal-flow canon.
 Treat V0.84–V0.86a as the current runtime foundation.
@@ -60,6 +61,8 @@ Documented is not the same as implemented.
    - `docs/V0_86A_Temporal_UX_Notification_Polish_Report.md`
    - `docs/V0_87_Next_Act_I_Windows_Source_Pack_Report.md`
    - `docs/runtime/V0_88_FIRST_REPETITION_RUNTIME_PREPARATION_NOTE.md`
+   - `docs/runtime/V0_88_FIRST_REPETITION_RUNTIME_INTEGRATION_PLAN.md`
+   - `docs/V0_88_First_Repetition_Runtime_Integration_Plan_Report.md`
 10. `docs/canon/characters/CHARACTER_CANON_INDEX.md`
 11. relevant principal full-canon file
 12. `docs/canon/CHARACTER_VOICE_DISTINCTION_CANON.md`
@@ -118,6 +121,11 @@ V0.87 first-repetition source pack / cards / temporal map
 = current authorized post-opening narrative truth
 = not yet implemented
 
+V0.88 runtime integration plan / report
+= current authorized implementation boundary
+= Saturday Marie -> Sunday Mathilde candidate -> Sunday Marie return
+= not yet implemented
+
 legacy Chapter 1–9 files
 = inactive technical/history material unless a current index explicitly references them
 ```
@@ -126,6 +134,7 @@ Important distinction:
 
 ```text
 A scene can be canonically authored
+and have an approved integration plan
 without being available in the current build.
 ```
 
@@ -158,7 +167,7 @@ The current build ends Friday evening at:
 opening_band_complete = true
 ```
 
-V0.87 Saturday/Monday windows are not yet playable.
+V0.87 Saturday–Tuesday windows and the V0.88 Saturday/Sunday slice are not yet playable.
 
 ---
 
@@ -339,18 +348,64 @@ V0.87 creates no required image asset and no fixed character order.
 
 ---
 
-## 11. First repetition selection rule
+## 11. V0.88 — first integration boundary
+
+Approved future vertical slice:
+
+```text
+Saturday W9 Marie shared hour
+-> Sunday Mathilde morning candidate or silent defer
+-> Sunday W11 Marie concrete return
+```
+
+State ownership:
+
+```text
+TimelineState = chronology
+GameState.story_ledgers.first_repetition = wave state
+flat flags = observable branch facts
+index data = authored limits and deterministic candidate order
+```
+
+Planned ledger concerns:
+
+```text
+external foreground history
+charged-access owner
+scene lifecycle
+cooldowns
+structured obligations
+```
+
+The first slice may end with:
+
+```text
+first_repetition_slice_01_complete = true
+```
+
+It must not write:
+
+```text
+first_repetition_wave_complete
+```
+
+Monday remains unavailable.
+
+---
+
+## 12. First repetition selection rule
 
 ```text
 safety / aftermath
--> fixed spine
--> obligation due
--> compatible continuation
--> context fit
--> unseen eligible scene
--> longest deferred
--> least recently foregrounded
--> authored order
+-> due Marie consequence
+-> foreground ticket budget
+-> character already used
+-> authored candidate order
+-> hard requirements
+-> hard exclusions
+-> cooldown / scene lifecycle
+-> physical and temporal context
+-> one candidate or none
 ```
 
 Global constraints:
@@ -360,11 +415,12 @@ Global constraints:
 - the same character cannot consume both external tickets;
 - a Marie consequence outranks a new external opportunity;
 - silence is valid when no scene fits;
-- timestamps describe chronology but never grant access alone.
+- timestamps describe chronology but never grant access alone;
+- no random scheduler or character-selection menu is allowed.
 
 ---
 
-## 12. Current traces
+## 13. Current traces
 
 ```text
 j1_sandra_lunch_memory_soft
@@ -373,13 +429,13 @@ marie_laverriere_setup_01
 laverriere_public_group_photo_set_01
 ```
 
-V0.87 leaves all four in their existing frame.
+V0.87 and V0.88 leave all four in their existing frame.
 
 No new crop, audience, sexual function, forwarding permission, or adult collectible is created.
 
 ---
 
-## 13. Current route and intensity status
+## 14. Current route and intensity status
 
 Runtime end state remains:
 
@@ -396,18 +452,19 @@ adult frames = none
 opening_band_complete = true
 ```
 
-Documented future ceiling after a V0.88+ implementation:
+Authorized future ceiling after V0.89 integration:
 
 ```text
-one of Mathilde / Sandra / Raphaëlle may reach R2
+Mathilde may remain R1 or become the single first R2 owner
+Sandra / Raphaëlle remain documented future candidates
 Pauline and Nico remain R1
 ```
 
-Do not treat that documented ceiling as current save state.
+Do not treat that planned ceiling as current save state.
 
 ---
 
-## 14. Legacy policy
+## 15. Legacy policy
 
 Legacy files remain on disk for rollback, history, and technical comparison.
 
@@ -424,27 +481,27 @@ Do not restore old fixed day orders, Mathilde canapé foundations, Pauline insta
 
 ---
 
-## 15. Next implementation step
+## 16. Next implementation step
 
 ```text
-V0.88 — First Repetition Runtime Integration Plan
+V0.89 — First Repetition Vertical Slice
 ```
 
-It must map the approved source pack onto current state and choose a small vertical slice.
-
-Recommended first-slice boundary:
+It may implement only:
 
 ```text
-W9 Marie shared hour
-+ one external candidate
-+ mandatory Marie return
+Saturday W9 Marie shared hour
++ Sunday Mathilde candidate or silent defer
++ Sunday W11 Marie return
 ```
 
-No V0.87 scene enters runtime before that plan is validated.
+It must not add Sandra, Raphaëlle, Pauline, Nico, the second external ticket, the complete W12/W13 wave, a new image, or adult content in the same PR.
+
+No V0.87 scene enters runtime outside the validated V0.88 boundary.
 
 ---
 
-## 16. Maintenance rule
+## 17. Maintenance rule
 
 If scene meaning or voice changes:
 
@@ -452,25 +509,28 @@ If scene meaning or voice changes:
 2. update the matching scene card if engine, posture, or consequence changes;
 3. update the voice-distinction canon when a cross-character rule changes;
 4. update the temporal map when time, place, or delivery changes;
-5. update full character canon only if identity changes;
-6. update global NSFW canon only if adult rules change;
-7. update status/report/roadmap;
-8. validate documentation;
-9. only then update the runtime plan.
+5. update the V0.88 integration plan when state mapping or slice scope changes;
+6. update full character canon only if identity changes;
+7. update global NSFW canon only if adult rules change;
+8. update status/report/roadmap;
+9. validate documentation;
+10. only then update runtime.
 
 ```text
 A correction is incomplete
-while source pack, card, temporal map, voice policy, and current status disagree.
+while source pack, card, temporal map, voice policy,
+integration plan, and current status disagree.
 ```
 
 ---
 
-## 17. Final rule
+## 18. Final rule
 
 ```text
 V0.86 proves ordinary access.
 V0.87 proves that repetition can change meaning.
-V0.88 must integrate only the smallest truthful slice.
+V0.88 selects the smallest truthful runtime slice.
+V0.89 may implement only that slice.
 
 Every character must remain recognizable before desire intensifies.
 No later adult engine may erase the ordinary person who earned it.
