@@ -7,82 +7,107 @@
 
 1. Remove scheduler-like progression controls from the contact list.
 2. Keep the completed conversation visible while several narrative hours pass.
-3. Replace blank moment-of-day interstitials with an accelerated smartphone-clock animation.
-4. Deliver the next message as a normal in-thread notification after the clock finishes.
-5. Keep unread contacts immediately identifiable.
+3. Replace blank moment-of-day interstitials with an accelerated smartphone clock.
+4. Put time, Wi‑Fi, and battery information in the fixed conversation header.
+5. Deliver the next message as a normal in-thread notification.
+6. Keep unread contacts immediately identifiable.
+7. Keep offline activity implicit rather than explaining it to the player.
 
 ## Product decisions
 
 ### Conversation completion
 
-After the last visible message of a conversation:
+After the last visible message:
 
 ```text
 Contact est hors ligne
 ```
 
-is appended as a centered system status inside the current thread.
+is appended as a centered interface status. The thread remains visible.
 
-The thread remains visible. The player is not moved to a blank screen.
+### Conversation-side smartphone status
+
+The active phone status strip belongs above the contact header, on the conversation side:
+
+```text
+09:14                         ▮▮  Wi‑Fi  82%
+Raphaëlle
+En ligne
+```
+
+The temporary left prototype panel no longer owns a visible status strip. It may keep an invisible clock model for compatibility until the full smartphone layout replaces it.
+
+The status strip is fixed: messages scroll below it.
 
 ### Accelerated clock
 
-Two real seconds after the conversation completes, the status-bar clock begins to advance from the last visible message time to the next narrative message time.
+Two real seconds after conversation completion, the fixed conversation clock advances from the last visible message time to the next narrative message time.
 
-Default normal-speed timing:
+Normal-speed timing:
 
 ```text
 pre-animation pause: 2 seconds
-clock animation: 5 seconds
+clock animation: 4 seconds
 ```
 
-The clock can cross midnight for a day change. Debug speed may shorten the delay and animation, but normal speed preserves the five-second passage.
+The clock may cross midnight. Debug speed may shorten the animation, but `Speed x1` preserves the four-second passage.
 
-The animation changes only the smartphone clock. It does not display:
+The active flow displays no:
 
-- `Le temps passe`;
-- a moment-of-day title;
-- an empty transition card;
-- a left-column continue button.
+- `Le temps passe` banner;
+- moment-of-day title;
+- blank transition page;
+- left-column continue button.
 
 ### Incoming notification
 
 At the end of the clock animation:
 
-1. the next phase is activated;
-2. its messages become unread;
-3. the previous conversation remains on screen;
-4. a compact notification appears below its header;
-5. clicking the notification opens the target thread.
+1. the next phase becomes active;
+2. its conversation becomes unread;
+3. the previous conversation remains visible;
+4. a compact notification appears below the contact header;
+5. clicking it opens the target thread.
 
-This applies even when the next episode belongs to the same persistent contact thread.
+This also applies to a new episode in the same persistent contact thread.
 
 ### Optional windows
 
-An optional conversation is presented through a normal unread notification.
+An optional conversation appears as a normal unread notification.
 
 - opening it cancels automatic expiry;
-- completing it advances naturally to the next time window;
-- leaving it unopened allows the existing expiry rule to run after a short real-time window;
-- no `Continuer la journée` control is shown.
+- completing it advances naturally;
+- leaving it unopened permits the existing expiry rule;
+- no progression button is shown.
 
-The V0.84 narrative distinction between `seen` and `expired` remains intact.
+### Offline activity
 
-### Authored offline beats
+Authored offline beats remain internal continuity/state operations. They may still:
 
-Existing authored offline beats remain canonical, but they no longer use a full-screen text card.
+- select the correct variant;
+- apply existing flags;
+- preserve internal day-log data for debugging and continuity.
 
-They are rendered as centered in-thread system notes, recorded in the day log, and restored in read-only archives through the existing V0.85 foundation.
+They must not be shown as:
+
+- a centered explanatory note;
+- a full-screen card;
+- a `Moments hors ligne` archive section;
+- a replayable clue about what Player supposedly did off screen.
+
+The player infers elapsed activity from the clock, later dialogue, objects, consequences, and character knowledge.
+
+Existing inline `offline_beat` authoring items are consumed silently by the active V0.86a conversation adapter.
 
 ### Day changes
 
-A day change uses the same accelerated clock, including midnight rollover. The old conversation stays visible until the next day's first message notification arrives.
+A day change uses the same accelerated clock with midnight rollover. The old conversation remains visible until the next day’s first notification appears.
 
-No day-start screen containing only weekday/moment text is used in the active flow.
+No weekday/moment landing page is used in the active flow.
 
 ### Unread styling
 
-Unread contact cards retain:
+Unread cards retain:
 
 - stronger contact-name treatment;
 - stronger preview text;
@@ -100,9 +125,9 @@ game/scripts/ui/PhonePrototypeV086A.gd
 game/scripts/ui/ConversationViewV086A.gd
 ```
 
-They extend the current V0.85/V0.84 foundations and preserve V0.86 narrative data.
+They extend the V0.85/V0.84 foundations and preserve V0.86 narrative data.
 
-`TimelineTransitionView.gd` remains available to legacy/history code, but the V0.86a active progression path does not invoke it for intra-day or day-start text screens.
+`TimelineTransitionView.gd` remains legacy/history-compatible but is not used by active intra-day or day-start progression.
 
 No save migration, route refactor, universal scheduler, or narrative rewrite is introduced.
 
@@ -130,18 +155,21 @@ godot --headless --path game --resolution 1280x720 --quit
 last message remains visible
 -> Contact est hors ligne
 -> two-second pause
--> status clock advances for five seconds
+-> conversation-side clock advances for four seconds
 -> no blank moment screen
--> next-message banner appears in the same visible thread
+-> next-message banner appears below the fixed header
 -> clicking it opens the unread contact
 ```
 
 Also verify:
 
+- time/Wi‑Fi/battery appear above every opened contact;
+- the left prototype panel has no duplicate visible status strip;
 - optional Sandra can be opened before expiry;
-- ignoring Sandra eventually produces Marie's later notification;
-- same-thread next episodes still produce a notification;
-- midnight rollover leads to the next day without a text-only day-start page.
+- ignoring Sandra eventually produces Marie’s later notification;
+- same-thread next episodes still notify;
+- midnight rollover changes day without a text-only landing page;
+- no active or archived `Moments hors ligne` section is visible.
 
 ## Explicit exclusions
 
