@@ -33,16 +33,16 @@ class V086ATemporalUxStaticTests(unittest.TestCase):
         ]:
             self.assertNotIn(forbidden, phone)
 
-    def test_last_message_stays_visible_during_accelerated_clock(self):
+    def test_last_message_stays_visible_during_four_second_clock(self):
         phone = (GAME / "scripts/ui/PhonePrototypeV086A.gd").read_text(encoding="utf-8")
         conversation = (GAME / "scripts/ui/ConversationViewV086A.gd").read_text(encoding="utf-8")
         for expected in [
             "TIME_PASSAGE_DELAY_SECONDS := 2.0",
-            "CLOCK_ANIMATION_SECONDS := 5.0",
+            "CLOCK_ANIMATION_SECONDS := 4.0",
             "_run_clock_passage",
             "_animate_status_clock",
             "_minutes_to_clock",
-            "status_time_label.text",
+            "_set_phone_clock_text",
             "current_last_message_time",
         ]:
             self.assertIn(expected, phone + "\n" + conversation)
@@ -52,16 +52,45 @@ class V086ATemporalUxStaticTests(unittest.TestCase):
         self.assertNotIn("show_day_transition", phone)
         self.assertNotIn("timeline_transition_view", phone)
 
-    def test_authored_offline_beats_render_inside_current_thread(self):
+    def test_phone_status_is_fixed_above_contact_and_left_copy_is_hidden(self):
         phone = (GAME / "scripts/ui/PhonePrototypeV086A.gd").read_text(encoding="utf-8")
         conversation = (GAME / "scripts/ui/ConversationViewV086A.gd").read_text(encoding="utf-8")
         for expected in [
-            "_activate_authored_beat_inline",
+            "ConversationPhoneStatusBar",
+            "ConversationPhoneClock",
+            "ConversationPhoneConnectivity",
+            "set_phone_status",
+            "set_phone_clock_emphasis",
+            "Wi‑Fi",
+            "82%",
+            "chat_shell.move_child(phone_status_panel, 0)",
+        ]:
+            self.assertIn(expected, conversation)
+        for expected in [
+            "HiddenNarrativeClock",
+            "status_time_label.visible = false",
+            "_sync_conversation_phone_status",
+            "PHONE_CONNECTIVITY_TEXT",
+        ]:
+            self.assertIn(expected, phone)
+
+    def test_offline_activity_remains_internal_and_is_not_rendered_or_archived(self):
+        phone = (GAME / "scripts/ui/PhonePrototypeV086A.gd").read_text(encoding="utf-8")
+        conversation = (GAME / "scripts/ui/ConversationViewV086A.gd").read_text(encoding="utf-8")
+        for expected in [
+            "_activate_authored_beat_silently",
             "TimelineState.record_day_log_entry",
             "EffectApplier.apply_flags",
-            "show_offline_beat",
+            'str(message.get("presentation", "")) == "offline_beat"',
+            "_record_authored_history_key",
         ]:
             self.assertIn(expected, phone + "\n" + conversation)
+        self.assertNotIn("show_offline_beat", phone + "\n" + conversation)
+
+        archive = phone[phone.index("func _render_archived_day") : phone.index("func _add_phase_advance_control")]
+        self.assertNotIn("get_day_log_entries", archive)
+        self.assertNotIn('_add_label(conversation_list, "Moments hors ligne"', archive)
+        self.assertNotIn("super._render_archived_day", archive)
 
     def test_optional_window_can_expire_without_left_column_control(self):
         phone = (GAME / "scripts/ui/PhonePrototypeV086A.gd").read_text(encoding="utf-8")
@@ -103,7 +132,7 @@ class V086ATemporalUxStaticTests(unittest.TestCase):
         ]:
             self.assertIn(expected, phone)
 
-    def test_scope_remains_ux_and_existing_offline_foundation_only(self):
+    def test_scope_remains_ux_and_existing_state_foundation_only(self):
         phone = (GAME / "scripts/ui/PhonePrototypeV086A.gd").read_text(encoding="utf-8").lower()
         conversation = (GAME / "scripts/ui/ConversationViewV086A.gd").read_text(encoding="utf-8").lower()
         combined = phone + "\n" + conversation
