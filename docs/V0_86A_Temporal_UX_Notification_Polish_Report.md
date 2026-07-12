@@ -5,20 +5,21 @@
 
 ## Trigger
 
-Manual review identified four usability problems:
+Manual review identified five usability problems:
 
-1. `Continuer vers 16:05` and later `Continuer la journée` still felt like scheduler controls.
-2. Automatic moment cards interrupted reading and disappeared too quickly.
-3. A new message in another thread lacked a consistent smartphone-like shortcut inside the currently open conversation.
-4. Unread contact cards were too subtle.
+1. `Continuer vers 16:05` and `Continuer la journée` felt like scheduler controls.
+2. `Le temps passe` was not a natural smartphone message.
+3. Text-only interstitials hid the last message and broke reading rhythm.
+4. Some newly available messages did not surface as an in-thread notification.
+5. Unread contact cards were too subtle.
 
 ## Implemented behavior
 
-### No left-column daytime advance control
+### No left-column daytime control
 
 The optional-phase progression button is removed entirely from the contact list.
 
-There is no longer a visible:
+There is no visible:
 
 ```text
 Continuer la journée
@@ -26,70 +27,73 @@ Continuer la journée
 
 or time-coded equivalent.
 
-### Contextual time-passage shortcut
+### Contact goes offline
 
-Completing a phase queues the next time window instead of activating it immediately.
-
-The currently open conversation keeps its last message visible and receives a compact shortcut below the header:
+When a conversation finishes, the final message stays visible and a centered status is appended beneath it:
 
 ```text
-Le temps passe · 16:05
-Nouveau message de Marie : ...
+Contact est hors ligne
 ```
 
-Clicking that shortcut:
+This status is UI feedback, not a new authored dialogue line or relationship state.
 
-1. acknowledges that time has passed;
-2. displays the relevant timeline card when one exists;
-3. unlocks the next phase;
-4. surfaces the new-message notification.
+### Accelerated smartphone clock
 
-For an optional phase, the same shortcut permits the player to move on without opening the optional thread. The existing expiry and missed-echo rules remain unchanged.
+Two seconds after completion, the status-bar clock animates from the last visible message time to the next narrative time.
 
-If the player has opened the optional conversation but has not finished it, the time-passage shortcut is hidden until the exchange ends.
-
-### Timeline cards remain until click
-
-Timeline and authored offline cards now default to:
+At normal speed:
 
 ```text
-click_required = true
+pause after final message = 2 seconds
+clock animation = 5 seconds
 ```
 
-After a short minimum display time, the card remains visible until the player clicks or presses a key.
+The conversation remains on screen throughout. The active path no longer opens a blank card containing only a weekday, moment label, or timestamp.
 
-It no longer disappears merely because a duration elapsed.
+The clock animation supports midnight rollover for day changes.
 
-No card is launched directly by the completion of an ordinary conversation; the player first activates the contextual time-passage shortcut.
+### Next-message notification
 
-### Player-triggered day ending
+After the clock reaches the destination time:
 
-Completing the final required phase leaves the last conversation visible.
+1. the next timeline phase becomes active;
+2. its conversation becomes unread;
+3. the completed thread remains visible;
+4. a compact notification appears below its header;
+5. clicking that notification opens the target thread.
 
-The left panel then displays:
+The same behavior applies when the new episode belongs to the same persistent contact thread.
 
-```text
-Finir la journée
-```
+If a data rule intentionally had no notification payload, V0.86a derives a normal contact name and first-message preview so the arrival is still perceptible.
 
-Only that click launches the end-day/start-next-day transition.
+### Optional conversation behavior
 
-### In-thread incoming-message shortcut
+Optional scenes no longer need a continue button.
 
-When another thread receives a notification while a conversation is open, a compact clickable banner appears directly below the current conversation header:
+- opening the optional notification cancels automatic expiry;
+- finishing the optional exchange starts the next clock passage;
+- leaving it unopened allows the existing V0.84 expiry rule to run after a short real-time window;
+- opening but not finishing it prevents expiry until the exchange is resolved.
 
-```text
-Nouveau message · Contact · heure
-aperçu du message
-```
+### Authored offline beats
 
-Clicking the banner opens the target thread.
+Canonical offline actions such as dinner, walking, returning to Marie, or the household close remain active.
 
-The same banner location is reused for time passage, with a distinct internal mode and signal.
+They are now shown as centered system notes inside the current phone view rather than full-screen text cards. They continue to:
+
+- apply their existing flags;
+- write their existing day-log entry;
+- appear once in read-only archives.
+
+### Day changes
+
+A day change uses the same clock animation instead of an empty day-start page.
+
+The old thread remains visible until the next day's first-message notification appears. The left prototype panel updates only after the accelerated clock reaches the new day.
 
 ### Strong unread state
 
-Unread cards now use:
+Unread cards retain:
 
 - larger, brighter contact name;
 - stronger preview;
@@ -104,12 +108,11 @@ Active, unread, read, and archived states remain distinct.
 ```text
 game/scripts/ui/PhonePrototypeV086A.gd
 game/scripts/ui/ConversationViewV086A.gd
-game/scripts/ui/TimelineTransitionView.gd
 game/scenes/smartphone/PhonePrototype.tscn
 game/scenes/smartphone/ConversationView.tscn
 ```
 
-The adapters extend the existing V0.85/V0.84 implementations. No general phone or timeline refactor is introduced.
+`TimelineTransitionView.gd` remains present for legacy/history compatibility, but V0.86a does not call it for active intra-day or day-start progression.
 
 ## Test coverage
 
@@ -120,22 +123,23 @@ tests/test_v086a_temporal_ux_static.py
 The test verifies:
 
 - active adapter wiring;
-- absence of the left-column daytime advance button;
-- contextual time-passage prompting;
-- no automatic phase activation after conversation completion;
-- click-held timeline cards;
-- manual `Finir la journée` flow;
-- in-thread notification shortcut;
+- absence of scheduler buttons and `Le temps passe` prompts;
+- two-second delay and five-second clock animation;
+- contact-offline status beneath the last message;
+- no active call to text-only transition overlays;
+- inline authored offline beats;
+- natural optional-scene expiry;
+- in-thread new-message notifications;
 - unread-card styling;
-- UX-only scope.
+- UX-only scope plus reuse of existing offline-beat flags.
 
 ## Explicit exclusions
 
-- no dialogue or JSON narrative edit;
+- no dialogue or narrative JSON edit;
 - no Friday story expansion;
 - no route or score change;
 - no R2/adult escalation;
 - no Contacts application;
 - no save migration;
-- no new scheduler;
+- no removal of the temporary left-side prototype panel;
 - no legacy deletion.
