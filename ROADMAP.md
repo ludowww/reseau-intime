@@ -20,9 +20,10 @@ PR : courtes, ciblées, sans gros refactoring
 - V0.83 : canon du flux temporel et réconciliation J1 ;
 - V0.84 : fondation runtime des jours/phases/interstitiels ;
 - V0.85 : J1 actif réconcilié ;
-- V0.86 : vendredi public/social et clôture de l’ouverture.
+- V0.86 : vendredi public/social et clôture de l’ouverture ;
+- V0.86a : simulation temporelle smartphone, notifications et non-lus.
 
-## 2. Runtime actif V0.86
+## 2. Runtime actif V0.86 + V0.86a
 
 Contenu chargé :
 
@@ -42,14 +43,17 @@ Jeudi verrouillé
 Vendredi verrouillé
 ```
 
-Progression :
+Progression active :
 
 ```text
-fin Mardi -> interstitiel -> Mercredi
-fin Mercredi -> interstitiel -> Jeudi
-fin Jeudi -> interstitiel -> Vendredi
-fin Vendredi -> aucune suite disponible
+fin d'échange
+-> contact hors ligne
+-> pause 2 secondes
+-> horloge accélérée 4 secondes
+-> notification du prochain message
 ```
+
+Le franchissement de minuit remplace les anciennes pages textuelles de début de journée.
 
 Le runtime reste en R1 maximum, sans secret dur ni contenu adulte.
 
@@ -59,9 +63,9 @@ Le runtime reste en R1 maximum, sans secret dur ni contenu adulte.
 
 ```text
 Marie + M1
--> dîner/marche offline
+-> activité commune hors téléphone
 -> Sandra + S1
--> final Marie offline
+-> retour final vers Marie
 ```
 
 ### Mercredi
@@ -70,7 +74,7 @@ Marie + M1
 urgence Mathilde
 -> faire de la place
 -> arrivée
--> installation hors ligne
+-> installation hors téléphone
 ```
 
 ### Jeudi
@@ -89,7 +93,7 @@ Raphaëlle travail
 08:35 Pauline / photo publique + P0
 14:05 Nico / place gardée + N0
 18:05 Marie + Mathilde / échos du foyer
-18:25 fermeture hors ligne
+18:25 continuité interne du foyer
 -> opening_band_complete
 ```
 
@@ -113,7 +117,7 @@ household_rhythm_confirmed = true
 opening_band_complete = true
 ```
 
-## 5. Acquis techniques V0.84–V0.86
+## 5. Acquis techniques V0.84–V0.86a
 
 ### État temporel
 
@@ -122,29 +126,33 @@ Day: LOCKED -> AVAILABLE -> ACTIVE -> COMPLETE -> ARCHIVED
 Phase: LOCKED -> CURRENT -> COMPLETE / SKIPPED / EXPIRED
 ```
 
-### Interface
+### Interface smartphone
 
-- interstitiels de changement de jour ;
-- cartes courtes pour grands sauts horaires ;
-- délai minimal de lecture ;
-- skip après ce délai ;
-- jours terminés en historique lecture seule.
+- l’heure, le Wi‑Fi et la batterie sont affichés dans une barre fixe au-dessus du contact ;
+- le panneau gauche temporaire ne duplique plus visuellement le statut ;
+- le dernier message reste visible pendant le passage du temps ;
+- l’horloge avance en accéléré pendant quatre secondes à vitesse normale ;
+- la notification suivante apparaît sous l’en-tête du fil courant ;
+- les fils non lus utilisent un état visuel fort ;
+- aucun bouton `Continuer la journée` ;
+- aucune page vide indiquant seulement un moment ou un jour.
 
-### Phases hors ligne
+### Activité hors téléphone
 
-```text
-mardi dîner/marche
-mardi final Marie
-vendredi final foyer
-```
+Les phases hors téléphone restent dans l’état interne pour :
 
-Elles sont enregistrées dans le journal du jour et apparaissent une seule fois dans l’archive.
+- sélectionner une variante ;
+- appliquer les flags ;
+- maintenir l’ordre et la cohérence ;
+- faciliter le débogage.
+
+Elles ne sont plus exposées comme notes, cartes ou rubrique `Moments hors ligne` dans les archives. Le joueur les infère à partir du temps écoulé et des conséquences.
 
 ### Ordre narratif
 
 - un jour futur ne peut pas être ouvert manuellement ;
 - un épisode futur ne fuit pas par son heure ;
-- une scène optionnelle doit être vue ou expirée ;
+- une scène optionnelle doit être vue ou expirer ;
 - les conséquences dues passent avant la nouvelle tentation ;
 - le final vendredi exige les deux échos du foyer ;
 - aucun jour ultérieur n’est exposé.
@@ -249,7 +257,7 @@ Il ne doit pas écrire directement tout l’Acte I ni intégrer le runtime dans 
 - sa propre vie et son travail restent visibles ;
 - envie domestique seulement après connaissance/contextes répétés.
 
-## 10. Validation V0.86
+## 10. Validation V0.86 + V0.86a
 
 Avant merge :
 
@@ -262,6 +270,7 @@ python3 -m unittest \
   tests.test_v084_temporal_flow_static \
   tests.test_v085_j1_reconciliation_static \
   tests.test_v086_friday_opening_static \
+  tests.test_v086a_temporal_ux_static \
   -v
 python3 tools/player_choice_text_check.py \
   game/data/conversations/chapter_04_pauline_public_photo_relay.json \
@@ -285,9 +294,10 @@ Le connecteur GitHub ne peut pas exécuter ces commandes ; Hermes/local/CI doit 
 - futurs jours verrouillés ;
 - archives en lecture seule et limitées au jour choisi ;
 - scènes optionnelles vues ou expirées ;
-- conséquence obligatoire avant fin de journée ;
+- conséquence obligatoire avant nouvelle fenêtre ;
 - un fil visible par personnage ;
-- co-présence hors ligne ;
+- co-présence et activité hors téléphone non transformées en fausses bulles ;
+- activité hors téléphone suggérée, pas expliquée par une rubrique de journal ;
 - image = origine + public + permission ;
 - flags avant scores abstraits ;
 - legacy conservé mais inactif ;
@@ -302,6 +312,8 @@ Le connecteur GitHub ne peut pas exécuter ces commandes ; Hermes/local/CI doit 
 - transformer la connaissance de Mathilde en commentaire de corps ;
 - oublier Bastien dans la réalité de Pauline ;
 - ajouter une nouvelle photo Sandra sans besoin ;
+- réintroduire des écrans textuels de moment de journée ;
+- exposer les activités hors téléphone comme indices explicites ;
 - confondre archive et replay ;
 - construire un scheduler général ou aléatoire ;
 - écrire le prochain source pack et son runtime dans la même PR.
@@ -310,6 +322,7 @@ Le connecteur GitHub ne peut pas exécuter ces commandes ; Hermes/local/CI doit 
 
 ```text
 V0.86 — Friday Public Traces & Opening Completion
+V0.86a — Smartphone Time & Notification Polish
 V0.87 — Next Act I Windows Source Pack
 V0.88 — Next Act I Runtime Integration Plan
 V0.89+ — petites tranches runtime validées
