@@ -2,12 +2,76 @@ extends "res://scripts/ui/ConversationViewV084.gd"
 
 signal thread_notification_pressed
 
+const PHONE_STATUS_CONNECTIVITY := "▮▮  Wi‑Fi  82%"
+
+var phone_status_panel: PanelContainer
+var phone_status_time_label: Label
+var phone_status_connectivity_label: Label
+var phone_status_time_text: String = "--:--"
+var phone_status_connectivity_text: String = PHONE_STATUS_CONNECTIVITY
 var thread_notification_panel: PanelContainer
 var thread_notification_label: Label
 
 func _add_chat_header(conversation: Dictionary) -> void:
 	super._add_chat_header(conversation)
+	_build_phone_status_bar()
 	_build_thread_notification_banner()
+
+func _build_phone_status_bar() -> void:
+	phone_status_panel = PanelContainer.new()
+	phone_status_panel.name = "ConversationPhoneStatusBar"
+	phone_status_panel.custom_minimum_size = Vector2(0, 34)
+	phone_status_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	phone_status_panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	phone_status_panel.add_theme_stylebox_override(
+		"panel",
+		_panel_style(Color(0.045, 0.05, 0.075), 12)
+	)
+	chat_shell.add_child(phone_status_panel)
+	chat_shell.move_child(phone_status_panel, 0)
+
+	var row := HBoxContainer.new()
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	phone_status_panel.add_child(row)
+
+	phone_status_time_label = Label.new()
+	phone_status_time_label.name = "ConversationPhoneClock"
+	phone_status_time_label.text = phone_status_time_text
+	phone_status_time_label.add_theme_font_size_override("font_size", 13)
+	phone_status_time_label.add_theme_color_override("font_color", Color(0.91, 0.93, 0.98))
+	row.add_child(phone_status_time_label)
+
+	var spacer := Control.new()
+	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(spacer)
+
+	phone_status_connectivity_label = Label.new()
+	phone_status_connectivity_label.name = "ConversationPhoneConnectivity"
+	phone_status_connectivity_label.text = phone_status_connectivity_text
+	phone_status_connectivity_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	phone_status_connectivity_label.add_theme_font_size_override("font_size", 12)
+	phone_status_connectivity_label.add_theme_color_override("font_color", Color(0.78, 0.81, 0.88))
+	row.add_child(phone_status_connectivity_label)
+
+func set_phone_status(time_label: String, connectivity_text: String = PHONE_STATUS_CONNECTIVITY) -> void:
+	if time_label != "":
+		phone_status_time_text = time_label
+	if connectivity_text != "":
+		phone_status_connectivity_text = connectivity_text
+	if is_instance_valid(phone_status_time_label):
+		phone_status_time_label.text = phone_status_time_text
+	if is_instance_valid(phone_status_connectivity_label):
+		phone_status_connectivity_label.text = phone_status_connectivity_text
+
+func set_phone_clock_emphasis(active: bool) -> void:
+	if not is_instance_valid(phone_status_time_label):
+		return
+	phone_status_time_label.add_theme_font_size_override("font_size", 17 if active else 13)
+	phone_status_time_label.add_theme_color_override(
+		"font_color",
+		Color(1.0, 1.0, 1.0) if active else Color(0.91, 0.93, 0.98)
+	)
 
 func _build_thread_notification_banner() -> void:
 	thread_notification_panel = PanelContainer.new()
@@ -23,7 +87,7 @@ func _build_thread_notification_banner() -> void:
 	)
 	thread_notification_panel.gui_input.connect(_on_thread_notification_input)
 	chat_shell.add_child(thread_notification_panel)
-	chat_shell.move_child(thread_notification_panel, 1)
+	chat_shell.move_child(thread_notification_panel, 2)
 
 	thread_notification_label = Label.new()
 	thread_notification_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -34,7 +98,7 @@ func _build_thread_notification_banner() -> void:
 func show_thread_notification(contact_name: String, preview: String, time_label: String = "") -> void:
 	if not is_instance_valid(thread_notification_panel) or not is_instance_valid(thread_notification_label):
 		return
-	var header := "Nouveau message · %s" % contact_name
+	var header: String = "Nouveau message · %s" % contact_name
 	if time_label != "":
 		header += " · %s" % time_label
 	thread_notification_label.text = "%s\n%s" % [header, preview]
@@ -50,33 +114,26 @@ func hide_thread_notification() -> void:
 func show_contact_offline(marker_id: String = "") -> void:
 	if current_conversation.is_empty() or active_state.is_empty():
 		return
-	var contact_name := _conversation_name(current_conversation)
+	var contact_name: String = _conversation_name(current_conversation)
 	if contact_name == "":
 		return
 	var markers: Dictionary = active_state.get("v086a_offline_markers", {})
-	var key := marker_id if marker_id != "" else active_conversation_id
+	var key: String = marker_id if marker_id != "" else active_conversation_id
 	if bool(markers.get(key, false)):
 		return
 	markers[key] = true
 	active_state["v086a_offline_markers"] = markers
 	_add_system_note("%s est hors ligne" % contact_name, false)
 
-func show_offline_beat(marker_id: String, title: String, text: String) -> void:
-	if active_state.is_empty():
+func _render_message_with_typing(message: Dictionary, conversation_id: String, token: int) -> void:
+	if str(message.get("presentation", "")) == "offline_beat":
+		if not _is_render_current(conversation_id, token):
+			return
+		if _history_contains_authored_item(message):
+			return
+		_record_authored_history_key(message)
 		return
-	var markers: Dictionary = active_state.get("v086a_offline_beat_markers", {})
-	if marker_id != "" and bool(markers.get(marker_id, false)):
-		return
-	if marker_id != "":
-		markers[marker_id] = true
-		active_state["v086a_offline_beat_markers"] = markers
-	var lines: Array[String] = []
-	if title != "":
-		lines.append(title)
-	if text != "" and text != title:
-		lines.append(text)
-	if not lines.is_empty():
-		_add_system_note("\n".join(lines), false)
+	await super._render_message_with_typing(message, conversation_id, token)
 
 func current_last_message_time() -> String:
 	if active_state.is_empty():
@@ -92,7 +149,7 @@ func current_last_message_time() -> String:
 		var raw_message = entry.get("message", {})
 		if typeof(raw_message) != TYPE_DICTIONARY:
 			continue
-		var time_label := str((raw_message as Dictionary).get("time_label", ""))
+		var time_label: String = str((raw_message as Dictionary).get("time_label", ""))
 		if time_label != "":
 			return time_label
 	return ""
@@ -103,7 +160,7 @@ func current_contact_name() -> String:
 	return _conversation_name(current_conversation)
 
 func _on_thread_notification_input(event: InputEvent) -> void:
-	var activated := false
+	var activated: bool = false
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		activated = true
 	elif event is InputEventKey and event.pressed and not event.echo and event.keycode in [KEY_ENTER, KEY_KP_ENTER, KEY_SPACE]:
