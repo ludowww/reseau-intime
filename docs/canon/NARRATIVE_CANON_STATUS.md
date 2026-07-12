@@ -1,8 +1,8 @@
 # Narrative Canon Status — Current
 
-> Narrative status after the V0.87 first-repetition source-pack pass.  
-> Runtime remains playable from Tuesday through Friday at V0.86.  
-> V0.87 defines the first post-opening repetition wave but does not yet implement it.
+> Narrative and implementation status after the V0.88 first-repetition runtime-integration planning pass.  
+> Runtime remains playable from Tuesday through Friday at V0.86 + V0.86a.  
+> V0.87 defines the first repetition wave; V0.88 defines the smallest future runtime slice. Neither is playable yet.
 
 ## 1. Core rule
 
@@ -18,8 +18,10 @@ V0.85 replaces active Tuesday with reconciled J1.
 V0.86 implements Friday and closes the opening band.
 V0.86a makes time and notifications feel like a smartphone.
 V0.87 defines the first post-opening repetition wave.
+V0.88 maps the first Marie -> Mathilde -> Marie runtime slice.
+V0.89 may implement only that validated slice.
 Legacy runtime is not automatic narrative canon.
-Documented scenes are not current playable state until integrated.
+Documented or planned scenes are not current playable state until integrated.
 ```
 
 ---
@@ -32,6 +34,7 @@ docs/canon/MODULAR_NARRATIVE_ARC_BLUEPRINT.md
 docs/canon/MODULAR_SCENE_AUTHORING_CONTRACT.md
 docs/canon/DIEGETIC_TIME_AND_COMMUNICATION_CANON.md
 docs/canon/TEMPORAL_FLOW_AND_DAY_TRANSITION_CANON.md
+docs/canon/CHARACTER_VOICE_DISTINCTION_CANON.md
 
 docs/canon/ACT_I_OPENING_WINDOWS_SOURCE_PACK.md
 docs/canon/ACT_I_OPENING_SCENE_CARDS.md
@@ -44,9 +47,12 @@ docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_SOURCE_PACK.md
 docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_SCENE_CARDS.md
 docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_TEMPORAL_DELIVERY_MAP.md
 
+docs/runtime/V0_88_FIRST_REPETITION_RUNTIME_INTEGRATION_PLAN.md
+
 docs/V0_86_Friday_Public_Traces_And_Opening_Completion_Report.md
 docs/V0_86A_Temporal_UX_Notification_Polish_Report.md
 docs/V0_87_Next_Act_I_Windows_Source_Pack_Report.md
+docs/V0_88_First_Repetition_Runtime_Integration_Plan_Report.md
 ```
 
 Read the relevant full character canon before changing any character scene.
@@ -79,7 +85,7 @@ Friday evening
 opening_band_complete = true
 ```
 
-Saturday, Sunday, Monday, and the V0.87 repetition windows are not yet in the build.
+Saturday, Sunday, Monday, the V0.87 repetition windows, and the V0.88 slice are not yet in the build.
 
 Completed days remain read-only archives.
 
@@ -410,7 +416,7 @@ marie_laverriere_setup_01
 laverriere_public_group_photo_set_01
 ```
 
-No source pack scene creates:
+No source-pack scene creates:
 
 - a private crop;
 - a second audience;
@@ -450,7 +456,183 @@ No exact offer waits forever.
 
 ---
 
-## 12. Legacy and deprecation status
+## 12. V0.88 integration boundary
+
+V0.88 selects the first future runtime proof:
+
+```text
+Saturday W9 Marie shared hour
+-> Sunday Mathilde morning candidate or silent defer
+-> Sunday W11 Marie concrete return
+```
+
+The slice is intentionally incomplete.
+
+It may write:
+
+```text
+first_repetition_slice_01_complete
+```
+
+It must not write:
+
+```text
+first_repetition_wave_complete
+```
+
+Monday remains unavailable.
+
+### Why Mathilde is first
+
+- her stay and household access already exist;
+- `thread_mathilde_private` already exists;
+- no new image or social hub is required;
+- the scene grows directly from ordinary household continuity;
+- it tests candidate eligibility, expiry, R1/R2 gating, and return priority;
+- Marie and family trust remain active in the meaning;
+- selection is based on fit, not the excitement of Mathilde's later adult route.
+
+Sandra, Raphaëlle, Pauline, and Nico remain authored future candidates.
+
+---
+
+## 13. V0.88 runtime-state plan
+
+Separation of concerns:
+
+```text
+TimelineState
+= chronology, days, phases, episodes, expiry
+
+GameState.story_ledgers.first_repetition
+= wave-level foreground history, charged owner, scene lifecycle,
+  cooldowns, and obligations
+
+flat flags
+= observable authored branch facts
+
+index data
+= authored limits and deterministic candidate order
+```
+
+Planned ledger fields:
+
+```text
+opportunity_window_ordinal
+external_foreground_scene_ids
+external_foreground_character_ids
+charged_access_owner
+scene_status
+cooldown_until_ordinal
+obligations
+```
+
+The current prototype has no persistent save/load migration path.
+
+V0.89 must not invent a full save system. Missing ledger keys receive safe defaults.
+
+---
+
+## 14. V0.88 selection and charged-owner plan
+
+A future `FirstRepetitionSelector.gd` returns:
+
+```text
+one eligible candidate
+or
+none
+```
+
+Selection order:
+
+```text
+safety / aftermath
+-> due Marie consequence
+-> external ticket budget
+-> character already foregrounded
+-> authored candidate order
+-> hard requirements
+-> hard exclusions
+-> scene lifecycle / cooldown
+-> physical and temporal context
+```
+
+No random scheduler and no route menu are allowed.
+
+Mathilde may claim:
+
+```text
+charged_access_owner = mathilde
+```
+
+only if:
+
+- MT1A or MT1B was chosen;
+- positive household trust or playful history exists;
+- no unresolved overstep exists;
+- no other owner exists;
+- no due Marie consequence was bypassed.
+
+If the claim fails, Mathilde remains R1 while the soft gaze flag remains valid.
+
+---
+
+## 15. V0.88 obligation plan
+
+First-slice obligation statuses:
+
+```text
+SCHEDULED
+DUE
+PAID
+FAILED
+CARRIED
+```
+
+Key outcomes:
+
+- M2A pays the shared hour through internal continuity;
+- M2B schedules and pays the bounded Saturday alternative in this limited slice;
+- M2C lets Marie enjoy her hour independently and schedules the Sunday return;
+- Mathilde completion schedules a Marie return;
+- a due Marie return blocks another external opportunity;
+- M3A pays the return;
+- M3B carries a bounded Monday-morning obligation without pretending it is paid;
+- M3C resolves the current obligation as honest non-repair.
+
+Couple mode remains `HABITUAL_WARMTH` throughout the first slice.
+
+---
+
+## 16. V0.88 communication and voice plan
+
+The slice reuses V0.86a:
+
+```text
+last message
+-> contact offline
+-> two-second pause
+-> four-second clock animation
+-> compact cross-thread notification
+```
+
+Same-thread Marie episodes resume directly.
+
+Co-present actions remain off-chat and receive no explanatory card.
+
+Voice gate:
+
+```text
+Marie = shared life, food, movement, practical humor
+Mathilde = speed, correction, bad faith, image + limited legal seasoning
+Player = short, dry, observant, imperfect action
+```
+
+Recurring legal humor outside Mathilde remains prohibited.
+
+---
+
+## 17. Legacy and deprecation status
 
 Do not restore:
 
@@ -465,19 +647,18 @@ Do not restore:
 - fixed character order;
 - old blank interstitial presentation.
 
-Full current character canon and V0.87 scene cards control.
+Full current character canon, voice distinction, V0.87 scene cards, and V0.88 integration plan control.
 
 ---
 
-## 13. Validation and implementation status
+## 18. Validation and implementation status
 
-V0.87 is documentation-only.
+V0.88 is documentation-only.
 
 Expected repository scope:
 
 ```text
 docs/**
-README.md
 ROADMAP.md
 ```
 
@@ -486,26 +667,27 @@ No `game/**`, `tests/**`, or `tools/**` change belongs in this milestone.
 Next required milestone:
 
 ```text
-V0.88 — First Repetition Runtime Integration Plan
+V0.89 — First Repetition Vertical Slice
 ```
 
-Recommended first vertical slice:
+Authorized runtime boundary:
 
 ```text
 W9 Marie shared hour
-+ one external candidate
-+ mandatory Marie return
++ Sunday Mathilde candidate or silent defer
++ W11 Marie return
 ```
 
-No V0.87 scene enters runtime before V0.88 is validated.
+V0.89 must not include the complete candidate pool or second external ticket.
 
 ---
 
-## 14. Final rule
+## 19. Final rule
 
 ```text
 The playable story still ends Friday.
-The authorized story now knows what may repeat next.
+The authorized story knows what may repeat next.
+The integration plan now knows the first truthful runtime proof.
 
 One repeated attention may become charged.
 It does not yet become permission.
