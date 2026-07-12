@@ -7,14 +7,16 @@ GAME = ROOT / "game"
 
 
 class V086ATemporalUxStaticTests(unittest.TestCase):
-    def test_active_scenes_use_v086a_adapters(self):
+    def test_active_scenes_use_v089_over_v086a_adapters(self):
         phone_scene = (GAME / "scenes/smartphone/PhonePrototype.tscn").read_text(encoding="utf-8")
         conversation_scene = (GAME / "scenes/smartphone/ConversationView.tscn").read_text(encoding="utf-8")
-        self.assertIn("PhonePrototypeV086A.gd", phone_scene)
+        self.assertIn("PhonePrototypeV089.gd", phone_scene)
         self.assertIn("ConversationViewV086A.gd", conversation_scene)
 
+        active_phone = (GAME / "scripts/ui/PhonePrototypeV089.gd").read_text(encoding="utf-8")
         phone = (GAME / "scripts/ui/PhonePrototypeV086A.gd").read_text(encoding="utf-8")
         conversation = (GAME / "scripts/ui/ConversationViewV086A.gd").read_text(encoding="utf-8")
+        self.assertIn('extends "res://scripts/ui/PhonePrototypeV086A.gd"', active_phone)
         self.assertIn('extends "res://scripts/ui/PhonePrototypeV085.gd"', phone)
         self.assertIn('extends "res://scripts/ui/ConversationViewV084.gd"', conversation)
 
