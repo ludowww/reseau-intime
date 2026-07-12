@@ -1,16 +1,25 @@
 extends "res://scripts/ui/PhonePrototypeV085.gd"
 
 # Small UX layer: intra-day time stays readable through the status bar and
-# contact timestamps, while full-screen transitions are reserved for authored
-# offline beats and a player-triggered end of day.
+# contact timestamps. Time passage is acknowledged from the open thread before
+# the next phase, while full-screen cards wait for an explicit click.
 var day_finish_ready: Dictionary = {}
+var timeline_prompt_action := ""
+var timeline_prompt_day = null
+var timeline_prompt_phase_id := ""
 
 func _build_layout() -> void:
 	super._build_layout()
-	if is_instance_valid(conversation_view) and conversation_view.has_signal("thread_notification_pressed"):
-		var callback := Callable(self, "_open_notification_target")
-		if not conversation_view.is_connected("thread_notification_pressed", callback):
-			conversation_view.connect("thread_notification_pressed", callback)
+	if not is_instance_valid(conversation_view):
+		return
+	if conversation_view.has_signal("thread_notification_pressed"):
+		var thread_callback := Callable(self, "_open_notification_target")
+		if not conversation_view.is_connected("thread_notification_pressed", thread_callback):
+			conversation_view.connect("thread_notification_pressed", thread_callback)
+	if conversation_view.has_signal("timeline_prompt_pressed"):
+		var timeline_callback := Callable(self, "_on_timeline_prompt_pressed")
+		if not conversation_view.is_connected("timeline_prompt_pressed", timeline_callback):
+			conversation_view.connect("timeline_prompt_pressed", timeline_callback)
 
 func _render_active_day(day_value) -> void:
 	super._render_active_day(day_value)
@@ -19,6 +28,7 @@ func _render_active_day(day_value) -> void:
 		var finish_button := _add_button(conversation_list, "Finir la journée")
 		finish_button.name = "FinishDayButton"
 		finish_button.pressed.connect(func(): _finish_day_requested(day_value))
+	_refresh_timeline_prompt(day_value)
 
 func _advance_after_phase(day_value, phase_id: String) -> void:
 	if transition_in_progress:
@@ -30,10 +40,14 @@ func _advance_after_phase(day_value, phase_id: String) -> void:
 			current_index = index
 			break
 	if current_index >= 0 and current_index + 1 < phases.size():
-		await _activate_phase(day_value, phases[current_index + 1], false)
+		_queue_phase_activation(day_value, phases[current_index + 1])
+		transition_in_progress = false
+		_render_active_day(day_value)
+		_render_days_buttons_only()
 	else:
 		day_finish_ready[str(day_value)] = true
 		transition_in_progress = false
+		_clear_timeline_prompt()
 		_render_active_day(day_value)
 		_render_days_buttons_only()
 
@@ -59,31 +73,103 @@ func _activate_phase(day_value, phase: Dictionary, show_transition: bool) -> voi
 			str(notification.get("body", ""))
 		)
 
-func _add_phase_advance_control(day_value) -> void:
-	if transition_in_progress or TimelineState.is_day_completed(day_value):
+func _add_phase_advance_control(_day_value) -> void:
+	# V0.86a removes the scheduler-like left-column button. Optional phases are
+	# advanced from a contextual time-passage shortcut in the open conversation.
+	return
+
+func _queue_phase_activation(day_value, phase: Dictionary) -> void:
+	timeline_prompt_action = "activate_phase"
+	timeline_prompt_day = day_value
+	timeline_prompt_phase_id = str(phase.get("id", ""))
+
+func _refresh_timeline_prompt(day_value) -> void:
+	if transition_in_progress or TimelineState.is_day_completed(day_value) or not is_instance_valid(conversation_view):
 		return
-	var phase := DataLoader.get_timeline_phase(day_value, TimelineState.current_phase_id(day_value))
-	var optional_ids: Array = phase.get("optional_conversation_ids", [])
+	if timeline_prompt_action == "activate_phase" and str(timeline_prompt_day) == str(day_value):
+		var queued_phase := DataLoader.get_timeline_phase(day_value, timeline_prompt_phase_id)
+		_show_timeline_prompt_for_phase(day_value, queued_phase)
+		return
+	var current_phase := DataLoader.get_timeline_phase(day_value, TimelineState.current_phase_id(day_value))
+	var optional_ids: Array = current_phase.get("optional_conversation_ids", [])
 	if optional_ids.is_empty():
 		return
-	var opened_incomplete := false
 	for raw_id in optional_ids:
 		var conversation_id := str(raw_id)
 		if TimelineState.is_optional_opened(day_value, conversation_id) and not TimelineState.is_episode_completed(day_value, conversation_id):
-			opened_incomplete = true
-	var label := "Continuer la journée"
-	if opened_incomplete:
-		label = "Terminer la conversation avant de continuer"
-	var button := _add_button(conversation_list, label)
-	button.name = "ContinueDayButton"
-	button.disabled = opened_incomplete
-	var phase_id := str(phase.get("id", ""))
-	button.pressed.connect(func(): _advance_optional_phase(day_value, phase_id))
+			conversation_view.call("hide_thread_notification")
+			return
+	timeline_prompt_action = "advance_optional"
+	timeline_prompt_day = day_value
+	timeline_prompt_phase_id = str(current_phase.get("id", ""))
+	var next_phase := _next_phase_after(day_value, timeline_prompt_phase_id)
+	_show_timeline_prompt_for_phase(day_value, next_phase)
+
+func _show_timeline_prompt_for_phase(day_value, phase: Dictionary) -> void:
+	if phase.is_empty() or not conversation_view.has_method("show_timeline_prompt"):
+		return
+	var time_label := str(phase.get("time_label", ""))
+	var title := "Le temps passe"
+	if time_label != "":
+		title += " · %s" % time_label
+	var preview := _phase_notification_preview(day_value, phase)
+	if preview == "":
+		preview = "Cliquer pour voir la suite."
+	conversation_view.call("show_timeline_prompt", title, preview)
+
+func _phase_notification_preview(day_value, phase: Dictionary) -> String:
+	for raw_id in _phase_conversation_ids(phase):
+		var rule := _unlock_rule_for_target(day_value, str(raw_id))
+		var notification = rule.get("notification", {})
+		if typeof(notification) == TYPE_DICTIONARY:
+			var title := str(notification.get("title", ""))
+			var body := str(notification.get("body", ""))
+			if title != "" and body != "":
+				return "Nouveau message de %s : %s" % [title, body]
+			if body != "":
+				return body
+	return ""
+
+func _next_phase_after(day_value, phase_id: String) -> Dictionary:
+	var phases := DataLoader.get_timeline_phases(day_value)
+	for index in range(phases.size()):
+		if typeof(phases[index]) == TYPE_DICTIONARY and str(phases[index].get("id", "")) == phase_id:
+			if index + 1 < phases.size() and typeof(phases[index + 1]) == TYPE_DICTIONARY:
+				return phases[index + 1]
+			break
+	return {}
+
+func _on_timeline_prompt_pressed() -> void:
+	if timeline_prompt_action == "" or timeline_prompt_day == null:
+		return
+	var action := timeline_prompt_action
+	var day_value = timeline_prompt_day
+	var phase_id := timeline_prompt_phase_id
+	_clear_timeline_prompt()
+	if action == "advance_optional":
+		await _advance_optional_phase(day_value, phase_id)
+		return
+	var phase := DataLoader.get_timeline_phase(day_value, phase_id)
+	if phase.is_empty():
+		return
+	if not _phase_has_authored_beat(phase):
+		var card := _transition_card_for_phase(day_value, phase)
+		if not card.is_empty():
+			await timeline_transition_view.show_moment_transition(card)
+	await _activate_phase(day_value, phase, false)
+
+func _clear_timeline_prompt() -> void:
+	timeline_prompt_action = ""
+	timeline_prompt_day = null
+	timeline_prompt_phase_id = ""
+	if is_instance_valid(conversation_view) and conversation_view.has_method("hide_thread_notification"):
+		conversation_view.call("hide_thread_notification")
 
 func _finish_day_requested(day_value) -> void:
 	if transition_in_progress or not bool(day_finish_ready.get(str(day_value), false)):
 		return
 	day_finish_ready.erase(str(day_value))
+	_clear_timeline_prompt()
 	await _complete_day(day_value)
 
 func _show_conversation_notification(day_value, conversation_id: String, title: String, body: String) -> void:
@@ -120,6 +206,13 @@ func _open_conversation(day_value, conversation: Dictionary) -> void:
 	super._open_conversation(day_value, conversation)
 	if opening_id == target_before:
 		_hide_notification()
+	_refresh_timeline_prompt(day_value)
+
+func _open_notification_target() -> void:
+	if timeline_prompt_action != "":
+		_on_timeline_prompt_pressed()
+		return
+	super._open_notification_target()
 
 func _hide_notification() -> void:
 	super._hide_notification()
@@ -183,4 +276,5 @@ func _on_game_state_changed() -> void:
 	var resetting := GameState.context.get("day", null) == null and str(GameState.context.get("last_choice", "")) == ""
 	if resetting:
 		day_finish_ready.clear()
+		_clear_timeline_prompt()
 	super._on_game_state_changed()
