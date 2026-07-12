@@ -68,10 +68,12 @@ class V085J1ReconciliationStaticTests(unittest.TestCase):
     def test_phone_preserves_v085_authored_beat_state_without_exposing_day_log(self):
         phone_scene = (GAME / "scenes/smartphone/PhonePrototype.tscn").read_text(encoding="utf-8")
         phone = (GAME / "scripts/ui/PhonePrototypeV085.gd").read_text(encoding="utf-8")
-        active_phone = (GAME / "scripts/ui/PhonePrototypeV086A.gd").read_text(encoding="utf-8")
+        active_phone = (GAME / "scripts/ui/PhonePrototypeV089.gd").read_text(encoding="utf-8")
+        temporal_phone = (GAME / "scripts/ui/PhonePrototypeV086A.gd").read_text(encoding="utf-8")
         state = (GAME / "scripts/core/TimelineState.gd").read_text(encoding="utf-8")
-        self.assertIn("PhonePrototypeV086A.gd", phone_scene)
-        self.assertIn('extends "res://scripts/ui/PhonePrototypeV085.gd"', active_phone)
+        self.assertIn("PhonePrototypeV089.gd", phone_scene)
+        self.assertIn('extends "res://scripts/ui/PhonePrototypeV086A.gd"', active_phone)
+        self.assertIn('extends "res://scripts/ui/PhonePrototypeV085.gd"', temporal_phone)
         self.assertIn('extends "res://scripts/ui/PhonePrototypeV084.gd"', phone)
         for expected in [
             "_phase_has_authored_beat",
@@ -89,7 +91,7 @@ class V085J1ReconciliationStaticTests(unittest.TestCase):
             "TimelineState.record_day_log_entry",
             "EffectApplier.apply_flags",
         ]:
-            self.assertIn(expected, active_phone)
+            self.assertIn(expected, temporal_phone)
         for expected in [
             "day_log_entries_by_day",
             "record_day_log_entry",
