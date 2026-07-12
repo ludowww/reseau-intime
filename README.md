@@ -29,7 +29,7 @@ tronc dramatique fixe
 
 Les routes utilisent R0–R5.
 
-Le runtime actif reste en R1 maximum. V0.87 documente un futur premier accès R2 pour un seul personnage au maximum, mais cette progression n’est pas encore jouable.
+Le runtime actif reste en R1 maximum. V0.87 documente un futur premier accès R2 pour un seul personnage au maximum. V0.88 définit la première tranche d’intégration possible, mais cette progression n’est pas encore jouable.
 
 ---
 
@@ -197,7 +197,7 @@ Le runtime n’explique pas explicitement ce que Player fait hors téléphone : 
 La barre fixe au-dessus du nom du contact affiche :
 
 ```text
-heure                         Wi‑Fi / batterie
+heure                         Wi-Fi / batterie
 ```
 
 À `Speed x1` :
@@ -349,13 +349,121 @@ Aucun recadrage, transfert, second public ou sens sexuel n’est ajouté.
 
 ---
 
-## Sources V0.87
+## V0.88 — First Repetition Runtime Integration Plan
+
+V0.88 reste une étape **documentation uniquement**.
+
+Elle sélectionne une petite preuve runtime au lieu de planifier l’intégration complète de V0.87 en une seule PR.
+
+Tranche validée pour la future V0.89 :
+
+```text
+Samedi W9 — Marie réclame une heure partagée
+-> Dimanche — Mathilde devient candidate ou est différée silencieusement
+-> Dimanche W11 — retour Marie obligatoire
+```
+
+### Pourquoi Mathilde est la première candidate
+
+- son séjour est déjà actif ;
+- le rythme du foyer est déjà confirmé ;
+- son fil persistant existe ;
+- aucune nouvelle image n’est nécessaire ;
+- la scène teste l’éligibilité, l’expiration, le maintien R1 ou le passage R2 ;
+- Marie et la confiance familiale restent dans le sens de la scène ;
+- le choix est fondé sur la cohérence et la surface technique, pas sur la priorité de sa future route adulte.
+
+Sandra, Raphaëlle, Pauline et Nico restent dans le pack V0.87 pour des intégrations ultérieures et courtes.
+
+### État planifié
+
+```text
+TimelineState
+= jours, phases, épisodes, expiration
+
+GameState.story_ledgers.first_repetition
+= foregrounds, propriétaire R2, lifecycle des scènes,
+  cooldowns et obligations
+
+flags plats
+= faits observables des choix
+
+index narratifs
+= limites et ordre déterministe des candidats
+```
+
+Le sélecteur futur retourne :
+
+```text
+un candidat éligible
+ou aucun
+```
+
+Il n’utilise ni hasard libre ni menu de personnages.
+
+### Fin de la première tranche
+
+La future implémentation pourra écrire :
+
+```text
+first_repetition_slice_01_complete
+```
+
+Elle ne devra pas écrire :
+
+```text
+first_repetition_wave_complete
+```
+
+Lundi restera indisponible.
+
+### Plafond Mathilde
+
+Mathilde pourra rester R1 ou devenir l’unique propriétaire R2 si :
+
+- MT1A ou MT1B est choisi ;
+- l’historique positif du foyer le justifie ;
+- aucune limite n’a été brisée ;
+- aucun autre propriétaire n’existe ;
+- aucune conséquence Marie due n’a été contournée.
+
+R2 n’accordera toujours aucune :
+
+```text
+intention de séduction reconnue
+permission d'image
+permission adulte
+secret dur
+```
+
+### Obligations Marie
+
+Les obligations seront structurées comme :
+
+```text
+SCHEDULED
+DUE
+PAID
+FAILED
+CARRIED
+```
+
+Une conséquence Marie due bloquera toute nouvelle opportunité externe.
+
+M3B pourra conserver une promesse concrète pour lundi comme `CARRIED` sans la marquer comme payée.
+
+---
+
+## Sources V0.87 et V0.88
 
 ```text
 docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_SOURCE_PACK.md
 docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_SCENE_CARDS.md
 docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_TEMPORAL_DELIVERY_MAP.md
+docs/canon/CHARACTER_VOICE_DISTINCTION_CANON.md
+docs/runtime/V0_88_FIRST_REPETITION_RUNTIME_INTEGRATION_PLAN.md
 docs/V0_87_Next_Act_I_Windows_Source_Pack_Report.md
+docs/V0_88_First_Repetition_Runtime_Integration_Plan_Report.md
 ```
 
 Commencer toujours par :
@@ -377,27 +485,34 @@ game/scripts/ui/ConversationViewV084.gd
 game/scripts/ui/ConversationViewV086A.gd
 ```
 
-V0.87 ne modifie aucun de ces fichiers.
+V0.87 et V0.88 ne modifient aucun de ces fichiers.
 
 ---
 
 ## Prochaine version
 
 ```text
-V0.88 — First Repetition Runtime Integration Plan
+V0.89 — First Repetition Vertical Slice
 ```
 
-V0.88 devra mapper les tickets foreground, le propriétaire chargé, les obligations Marie, les cooldowns, les mutations, la continuité même fil et une petite tranche d’intégration.
-
-Tranche recommandée :
+V0.89 pourra intégrer uniquement :
 
 ```text
 W9 Marie
-+ un candidat externe
++ candidat Mathilde ou différé silencieux
 + retour Marie obligatoire
 ```
 
-Aucune scène V0.87 ne doit entrer en runtime avant validation de ce plan.
+Elle ne devra pas ajouter dans la même PR :
+
+- Sandra ;
+- Raphaëlle ;
+- Pauline ;
+- Nico ;
+- le deuxième ticket externe ;
+- la vague W12/W13 complète ;
+- une nouvelle image ;
+- un cadre adulte.
 
 ---
 
@@ -421,6 +536,8 @@ V0.85 rend le premier soir cohérent.
 V0.86 termine l'ouverture.
 V0.86a fait ressentir le temps comme une vraie messagerie.
 V0.87 décide quelles répétitions peuvent changer de sens.
+V0.88 choisit la plus petite intégration honnête.
+V0.89 pourra implémenter uniquement cette tranche.
 
 Une répétition peut devenir chargée.
 Elle ne devient pas encore permission.

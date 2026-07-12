@@ -1,34 +1,37 @@
 # V0.88 — First Repetition Runtime Preparation Note
 
-> Boundary note only.  
+> Fulfilled boundary note.  
 > V0.87 defines the first post-opening repetition wave.  
-> This note does not authorize runtime implementation by itself.
+> V0.88 now defines the integration plan, but runtime still remains unchanged.
 
-## 1. Source authority
+## 1. Current authority
 
-Read first:
+Read:
 
 ```text
 docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_SOURCE_PACK.md
 docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_SCENE_CARDS.md
 docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_TEMPORAL_DELIVERY_MAP.md
-docs/V0_87_Next_Act_I_Windows_Source_Pack_Report.md
+docs/canon/CHARACTER_VOICE_DISTINCTION_CANON.md
+docs/runtime/V0_88_FIRST_REPETITION_RUNTIME_INTEGRATION_PLAN.md
+docs/V0_88_First_Repetition_Runtime_Integration_Plan_Report.md
 ```
 
-Runtime baseline:
+Runtime baseline remains:
 
 ```text
-V0.86
-main commit ba22baf1f901e932f9c755344712363274a827ae
+V0.86 + V0.86a
+main planning base: 1d739454a280c17c76c33c74eab3c6e8a81f2a24
+playable Tuesday through Friday
 ```
 
-## 2. Required V0.88 deliverable
+## 2. Fulfilled V0.88 decisions
 
-V0.88 must be a documentation-first integration plan defining:
+V0.88 now defines:
 
 ```text
 runtime inventory
-state mapping
+structured story-ledger mapping
 foreground-ticket representation
 deterministic candidate selection
 one charged-access owner
@@ -38,82 +41,81 @@ missed-opportunity mutation
 same-thread continuation
 cross-thread notifications
 co-presence representation
-save compatibility
+safe missing-state defaults
 smallest vertical slice
 rollback boundary
 validation matrix
 ```
 
-## 3. Small-slice rule
+## 3. First implementation slice
 
-V0.88 must not plan all V0.87 scenes as one runtime PR.
-
-Recommended first vertical slice:
+Approved planning target:
 
 ```text
-W9 Marie shared hour
-+ one external candidate
-+ mandatory Marie return
+Saturday W9 Marie shared hour
+-> Sunday Mathilde morning candidate or silent defer
+-> Sunday W11 Marie concrete return
 ```
 
-The integration plan must justify which external candidate is technically and narratively best for the first slice.
+Why Mathilde:
 
-It must not choose merely because that character has the most exciting later adult route.
+- current household access already exists;
+- current persistent thread already exists;
+- no image is required;
+- the scene tests repetition, expiry, R1/R2 gating, and return logic;
+- selection is based on fit, not later adult-route excitement.
 
-## 4. Runtime invariants
+## 4. Runtime boundary
 
-Any future implementation must preserve:
+This note and the V0.88 plan do not modify:
 
-- maximum two external foreground tickets in the wave;
-- maximum one R2 owner;
-- Pauline and Nico at R1;
-- Marie consequence before a later external opportunity;
+```text
+game/**
+tests/**
+tools/**
+```
+
+The current build still ends Friday at:
+
+```text
+opening_band_complete = true
+```
+
+No Saturday or Sunday content is playable yet.
+
+## 5. Invariants for V0.89
+
+The future implementation must preserve:
+
+- maximum two external foreground tickets in the full wave;
+- maximum one charged-access owner;
+- only one external candidate in the first slice;
+- Marie return before another external opportunity;
 - current V0.86a phone clock and notification behavior;
 - no blank timeline cards;
 - no visible `Moments hors ligne` section;
 - no fake long chat during co-presence;
 - no new required image asset;
-- no adult frame, hard secret, or R3+ route.
+- no adult frame, hard secret, or R3+ route;
+- Pauline and Nico remaining R1;
+- character voice distinction.
 
-## 5. State-mapping caution
+## 6. Next step
 
-Conceptual labels in V0.87 are not automatically final JSON keys.
+After Product Owner validation:
 
-V0.88 must:
+```text
+V0.89 — First Repetition Vertical Slice
+```
 
-1. inspect existing `TimelineState`, `GameState`, flags, and conversation data;
-2. reuse existing state where semantics match;
-3. introduce only the smallest necessary new state;
-4. document every mapping;
-5. avoid score proliferation;
-6. preserve rollback and static-test readability.
+V0.89 must implement only the approved Marie -> Mathilde -> Marie chain.
 
-## 6. Selection caution
-
-The scene-selection engine must be deterministic.
-
-It must read:
-
-- prerequisites;
-- exclusions;
-- obligations;
-- cooldowns;
-- actual time/location context;
-- foreground ticket budget;
-- charged owner;
-- prior foreground history.
-
-It must not:
-
-- use free randomness before authored priority;
-- expose every eligible contact simultaneously;
-- treat timestamps as sufficient access;
-- create a route menu.
+It must not add the complete V0.87 candidate pool in the same PR.
 
 ## 7. Final rule
 
 ```text
-V0.87 decides the story.
-V0.88 decides how to integrate the smallest truthful part of it.
-Runtime begins only after both decisions are validated.
+V0.87 decides what repetition means.
+V0.88 decides the smallest honest integration.
+V0.89 may implement only that validated slice.
 ```

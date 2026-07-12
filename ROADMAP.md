@@ -22,7 +22,8 @@ PR : courtes, ciblées, sans gros refactoring
 - V0.85 : J1 actif réconcilié ;
 - V0.86 : vendredi public/social et clôture de l’ouverture ;
 - V0.86a : simulation temporelle smartphone, notifications et non-lus ;
-- V0.87 : première vague de répétitions post-ouverture documentée.
+- V0.87 : première vague de répétitions post-ouverture documentée ;
+- V0.88 : première tranche d’intégration runtime planifiée, sans modification du jeu.
 
 ---
 
@@ -188,9 +189,8 @@ Ils ne sont pas exposés comme :
 Statut :
 
 ```text
-documentation écrite
+documentation validée et mergée
 runtime non modifié
-validation produit requise avant V0.88
 ```
 
 Sources :
@@ -199,6 +199,7 @@ Sources :
 docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_SOURCE_PACK.md
 docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_SCENE_CARDS.md
 docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_TEMPORAL_DELIVERY_MAP.md
+docs/canon/CHARACTER_VOICE_DISTINCTION_CANON.md
 docs/V0_87_Next_Act_I_Windows_Source_Pack_Report.md
 ```
 
@@ -353,7 +354,7 @@ Le plafond V0.87 ne correspond pas encore à la sauvegarde/runtime actuel.
 
 ## 9. Traces et images
 
-V0.87 ne demande aucun nouvel asset visuel.
+V0.87 et V0.88 ne demandent aucun nouvel asset visuel.
 
 Traces existantes :
 
@@ -392,7 +393,196 @@ Replay :
 
 ---
 
-## 11. V0.87 validation documentaire
+## 11. V0.88 — First Repetition Runtime Integration Plan
+
+Statut :
+
+```text
+documentation uniquement
+runtime inchangé
+```
+
+Sources :
+
+```text
+docs/runtime/V0_88_FIRST_REPETITION_RUNTIME_INTEGRATION_PLAN.md
+docs/V0_88_First_Repetition_Runtime_Integration_Plan_Report.md
+docs/runtime/V0_88_FIRST_REPETITION_RUNTIME_PREPARATION_NOTE.md
+```
+
+### Première tranche retenue
+
+```text
+Samedi W9 — Marie réclame une heure partagée
+-> Dimanche — Mathilde candidate ou différée silencieusement
+-> Dimanche W11 — retour Marie obligatoire
+```
+
+La tranche ne termine pas toute la vague.
+
+Elle pourra écrire :
+
+```text
+first_repetition_slice_01_complete
+```
+
+Elle ne devra pas écrire :
+
+```text
+first_repetition_wave_complete
+```
+
+Lundi restera indisponible.
+
+### Pourquoi Mathilde est retenue
+
+- son séjour est déjà actif ;
+- le rythme du foyer est confirmé ;
+- son fil privé existe déjà ;
+- aucune image n’est nécessaire ;
+- la scène teste éligibilité, expiration, maintien R1 ou passage R2 ;
+- le retour vers Marie reste obligatoire ;
+- ce choix répond au contexte et à la surface technique, pas à une priorité de sa future route adulte.
+
+Sandra, Raphaëlle, Pauline et Nico restent des candidats V0.87 pour des PR ultérieures.
+
+---
+
+## 12. Architecture d’état V0.88
+
+Séparation prévue :
+
+```text
+TimelineState
+= jours, phases, épisodes, expiration
+
+GameState.story_ledgers.first_repetition
+= foregrounds, propriétaire chargé, lifecycle,
+  cooldowns et obligations
+
+flags plats
+= faits observables des choix
+
+index narratifs
+= limites et ordre déterministe
+```
+
+Ledger prévu :
+
+```text
+opportunity_window_ordinal
+external_foreground_scene_ids
+external_foreground_character_ids
+charged_access_owner
+scene_status
+cooldown_until_ordinal
+obligations
+```
+
+Le sélecteur futur retourne :
+
+```text
+un candidat éligible
+ou aucun
+```
+
+Il n’utilise ni hasard libre, ni score d’affection, ni menu de personnages.
+
+---
+
+## 13. Plafond de la tranche Mathilde
+
+Mathilde peut devenir :
+
+```text
+charged_access_owner = mathilde
+```
+
+seulement si :
+
+- MT1A ou MT1B est choisi ;
+- l’historique positif ou joueur du foyer existe ;
+- aucune limite non résolue n’existe ;
+- aucun autre propriétaire n’existe ;
+- aucune conséquence Marie due n’a été contournée.
+
+Si le gate échoue :
+
+```text
+soft gaze flag conservé
+Mathilde reste R1
+charged_access_owner reste vide
+```
+
+R2 ne crée toujours aucune :
+
+```text
+intention de séduction reconnue
+permission d'image
+permission sexuelle
+secret dur
+cadre adulte
+```
+
+---
+
+## 14. Obligations V0.88
+
+Statuts prévus :
+
+```text
+SCHEDULED
+DUE
+PAID
+FAILED
+CARRIED
+```
+
+Règles :
+
+- M2A paie l’heure partagée par continuité interne ;
+- M2B programme et paie l’alternative bornée du samedi dans cette tranche limitée ;
+- M2C laisse Marie profiter seule et programme le retour du dimanche ;
+- terminer Mathilde programme un retour Marie ;
+- une conséquence Marie `DUE` bloque une nouvelle opportunité externe ;
+- M3A paie le retour ;
+- M3B garde une promesse du lundi comme `CARRIED` sans la marquer payée ;
+- M3C résout honnêtement la non-réparation comme `FAILED`.
+
+Le couple reste `HABITUAL_WARMTH`.
+
+---
+
+## 15. Communication et voix
+
+V0.89 devra réutiliser :
+
+```text
+dernier message
+-> contact hors ligne
+-> pause 2 secondes
+-> horloge 4 secondes
+-> notification compacte autre fil
+```
+
+Même fil Marie : reprise directe.
+
+Co-présence : hors chat, sans carte explicative.
+
+Canon vocal obligatoire :
+
+```text
+Marie = vie commune, nourriture, mouvement, humour pratique
+Mathilde = vitesse, correction, mauvaise foi, image
+           + vocabulaire juridique très dosé
+Player = court, sec, observateur, imparfait
+```
+
+Le vocabulaire juridique ne doit pas contaminer Marie ou Player.
+
+---
+
+## 16. Validation V0.88 documentaire
 
 Avant merge :
 
@@ -417,52 +607,39 @@ tests/**
 tools/**
 ```
 
-Questions produit :
-
-- Marie reçoit-elle bien une scène positive pour elle-même ?
-- Deux tickets externes suffisent-ils à créer du replay sans surcharge ?
-- Le plafond d’un seul R2 est-il assez lisible ?
-- Pauline et Nico restent-ils assez distincts sans activer trop tôt leurs moteurs dangereux ?
-- Mathilde, Sandra et Raphaëlle ont-elles chacune une grammaire de charge différente ?
-- Les conséquences reviennent-elles assez concrètement vers Marie ?
-- Les scènes manquées mutent-elles au lieu d’attendre ?
+Aucun test Godot n’est requis pour une PR documentaire, mais aucune validation exécutable ne doit être revendiquée sans exécution locale.
 
 ---
 
-## 12. Prochaine étape — V0.88
+## 17. Prochaine étape — V0.89
 
 ```text
-V0.88 — First Repetition Runtime Integration Plan
+V0.89 — First Repetition Vertical Slice
 ```
 
-Documentation d’abord.
-
-V0.88 doit mapper :
-
-- tickets foreground ;
-- sélection déterministe ;
-- propriétaire chargé ;
-- obligations Marie ;
-- cooldowns/expiry/mutation ;
-- continuité même fil ;
-- représentation de la co-présence ;
-- compatibilité sauvegarde ;
-- petite tranche d’intégration ;
-- rollback et validations.
-
-Tranche recommandée :
+V0.89 pourra intégrer uniquement :
 
 ```text
 W9 Marie
-+ un candidat externe
-+ retour Marie obligatoire
++ candidat Mathilde ou différé silencieux
++ W11 retour Marie
 ```
 
-Aucun fichier runtime ne doit changer avant validation du plan.
+Elle ne devra pas ajouter dans la même PR :
+
+- Sandra ;
+- Raphaëlle ;
+- Pauline ;
+- Nico ;
+- le deuxième ticket externe ;
+- W12/W13 complets ;
+- une nouvelle image ;
+- un cadre adulte ;
+- un système de sauvegarde complet.
 
 ---
 
-## 13. Principes permanents
+## 18. Principes permanents
 
 - documentation avant runtime ;
 - trois choix par défaut ;
@@ -474,14 +651,17 @@ Aucun fichier runtime ne doit changer avant validation du plan.
 - privé ≠ secret ;
 - chargé ≠ consentement ;
 - flags observables avant scores abstraits ;
+- voix distinctes par personnage ;
 - legacy conservé mais inactif ;
-- aucune modification narrative silencieuse.
+- aucune modification narrative silencieuse ;
+- rollback en un squash commit.
 
 ---
 
-## 14. À éviter
+## 19. À éviter
 
-- intégrer V0.87 directement sans V0.88 ;
+- intégrer toute la V0.87 dans une seule PR ;
+- dépasser la tranche Marie -> Mathilde -> Marie en V0.89 ;
 - afficher les cinq personnages externes dans une partie ;
 - donner plus de deux tickets externes ;
 - donner R2 à plus d’un personnage ;
@@ -493,16 +673,18 @@ Aucun fichier runtime ne doit changer avant validation du plan.
 - oublier le retour Marie ;
 - réintroduire les pages textuelles de temps ;
 - exposer les activités hors téléphone ;
-- construire un scheduler aléatoire général.
+- construire un scheduler aléatoire général ;
+- construire un système de sauvegarde non requis par la tranche.
 
 ---
 
-## 15. Séquence officielle
+## 20. Séquence officielle
 
 ```text
-V0.86 — Friday Public Traces & Opening Completion
-V0.86a — Smartphone Time & Notification Polish
-V0.87 — First Repetition Windows Source Pack
-V0.88 — First Repetition Runtime Integration Plan
-V0.89+ — petites tranches runtime validées
+V0.86  Friday Public Traces & Opening Completion
+V0.86a Smartphone Time & Notification Polish
+V0.87  First Repetition Windows Source Pack
+V0.88  First Repetition Runtime Integration Plan
+V0.89  Marie -> Mathilde -> Marie vertical slice
+V0.90+ autres candidats en petites tranches validées
 ```
