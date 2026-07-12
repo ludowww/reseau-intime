@@ -229,13 +229,15 @@ class V082ThursdayStaticTests(unittest.TestCase):
     def test_active_adapters_preserve_v082_foundation(self):
         phone_scene = (GAME / "scenes/smartphone/PhonePrototype.tscn").read_text(encoding="utf-8")
         conversation_scene = (GAME / "scenes/smartphone/ConversationView.tscn").read_text(encoding="utf-8")
-        self.assertIn("PhonePrototypeV086A.gd", phone_scene)
+        self.assertIn("PhonePrototypeV089.gd", phone_scene)
         self.assertIn("ConversationViewV086A.gd", conversation_scene)
 
+        phone_v089 = (GAME / "scripts/ui/PhonePrototypeV089.gd").read_text(encoding="utf-8")
         phone_v086a = (GAME / "scripts/ui/PhonePrototypeV086A.gd").read_text(encoding="utf-8")
         phone_v085 = (GAME / "scripts/ui/PhonePrototypeV085.gd").read_text(encoding="utf-8")
         phone_v084 = (GAME / "scripts/ui/PhonePrototypeV084.gd").read_text(encoding="utf-8")
         phone_v082 = (GAME / "scripts/ui/PhonePrototypeV082.gd").read_text(encoding="utf-8")
+        self.assertIn('extends "res://scripts/ui/PhonePrototypeV086A.gd"', phone_v089)
         self.assertIn('extends "res://scripts/ui/PhonePrototypeV085.gd"', phone_v086a)
         self.assertIn('extends "res://scripts/ui/PhonePrototypeV084.gd"', phone_v085)
         self.assertIn('extends "res://scripts/ui/PhonePrototypeV082.gd"', phone_v084)
