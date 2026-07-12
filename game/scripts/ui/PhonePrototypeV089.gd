@@ -79,6 +79,8 @@ func _defer_candidate_phase(day_value, phase: Dictionary) -> void:
 	await _advance_after_phase(day_value, phase_id)
 
 func _open_conversation(day_value, conversation: Dictionary) -> void:
+	if time_passage_in_progress:
+		return
 	var opens_mathilde := _conversation_episode_ids(conversation).has(MATHILDE_CONVERSATION_ID)
 	super._open_conversation(day_value, conversation)
 	if opens_mathilde:
@@ -233,14 +235,14 @@ func _resolve_due_obligations(status: String, result: String) -> void:
 func _complete_day(day_value) -> void:
 	var next_day = DataLoader.get_timeline_next_day(day_value)
 	if next_day == null:
-		await super._complete_day(day_value)
+		super._complete_day(day_value)
 		return
 	var initial_phase := DataLoader.get_timeline_phase(
 		next_day,
 		DataLoader.get_timeline_initial_phase_id(next_day)
 	)
 	if not _phase_has_candidate_pool(initial_phase):
-		await super._complete_day(day_value)
+		super._complete_day(day_value)
 		return
 
 	_hide_notification()
@@ -267,17 +269,23 @@ func _first_candidate_descriptor(phase: Dictionary) -> Dictionary:
 	if typeof(raw_pool) != TYPE_DICTIONARY:
 		return {}
 	for raw_candidate in raw_pool.get("ordered_candidates", []):
-		if typeof(raw_candidate) == TYPE_DICTIONARY:
-			return raw_candidate
+		if typeof(raw_candidate) != TYPE_DICTIONARY:
+			continue
+		var candidate: Dictionary = raw_candidate
+		return candidate
 	return {}
 
 func _mathilde_candidate_descriptor() -> Dictionary:
 	var phase := DataLoader.get_timeline_phase(6, SUNDAY_CANDIDATE_PHASE_ID)
-	for raw_candidate in phase.get("candidate_pool", {}).get("ordered_candidates", []):
+	var raw_pool = phase.get("candidate_pool", {})
+	if typeof(raw_pool) != TYPE_DICTIONARY:
+		return {}
+	for raw_candidate in raw_pool.get("ordered_candidates", []):
 		if typeof(raw_candidate) != TYPE_DICTIONARY:
 			continue
-		if str(raw_candidate.get("scene_id", "")) == MATHILDE_SCENE_ID:
-			return raw_candidate
+		var candidate: Dictionary = raw_candidate
+		if str(candidate.get("scene_id", "")) == MATHILDE_SCENE_ID:
+			return candidate
 	return {}
 
 func _has_due_obligation(ledger: Dictionary) -> bool:
