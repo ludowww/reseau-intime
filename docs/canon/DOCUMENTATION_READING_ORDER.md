@@ -1,21 +1,22 @@
 # Documentation Reading Order — Canon Current
 
-> Canon entry point after the V0.86 Friday public-trace and opening-completion runtime pass.  
-> Runtime is playable from Tuesday through Friday with authoritative day/phase order.  
-> The concrete V0.79 opening band is now implemented through `opening_band_complete`.
+> Canon entry point after the V0.87 first-repetition source-pack pass.  
+> Runtime remains implemented from Tuesday through Friday at V0.86.  
+> V0.87 defines, but does not yet implement, the first post-opening repetition wave.
 
 ## 1. Core rules
 
 ```text
 Write people from full character canon.
 Write story movement from V0.78.
-Write the opening from V0.79 and its later reconciliation sources.
+Write the opening from V0.79 and its reconciliation sources.
+Write the first post-opening repetition wave from V0.87.
 Write communication realism from the diegetic-time canon.
 Write chronological access from the temporal-flow canon.
-Treat V0.84–V0.85 as the current time/offline foundation.
-Treat V0.86 as the current end of the implemented opening.
+Treat V0.84–V0.86a as the current runtime foundation.
 Use three choices by default.
 Legacy runtime is not automatic narrative canon.
+Documented is not the same as implemented.
 ```
 
 ## 2. Official reading order
@@ -34,7 +35,11 @@ Legacy runtime is not automatic narrative canon.
 7. reconciled Tuesday sources:
    - `docs/canon/J1_RUNTIME_RECONCILIATION_SOURCE_PACK.md`
    - `docs/canon/J1_RUNTIME_RECONCILIATION_SCENE_CARDS.md`
-8. runtime audit, plans, and current reports:
+8. first post-opening repetition wave:
+   - `docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_SOURCE_PACK.md`
+   - `docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_SCENE_CARDS.md`
+   - `docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_TEMPORAL_DELIVERY_MAP.md`
+9. runtime audit, plans, and current reports:
    - `docs/runtime/V0_80_RUNTIME_AUDIT_AND_GAP_MAP.md`
    - `docs/V0_80_First_Modular_Runtime_Integration_Plan.md`
    - `docs/runtime/V0_81_WEDNESDAY_VERTICAL_SLICE_IMPLEMENTATION_PLAN.md`
@@ -48,16 +53,20 @@ Legacy runtime is not automatic narrative canon.
    - `docs/V0_85_J1_Canon_Runtime_Reconciliation_Report.md`
    - `docs/runtime/V0_86_FRIDAY_PUBLIC_TRACES_IMPLEMENTATION_PLAN.md`
    - `docs/V0_86_Friday_Public_Traces_And_Opening_Completion_Report.md`
-9. `docs/canon/characters/CHARACTER_CANON_INDEX.md`
-10. relevant principal full-canon file
-11. `docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md` when adult tension, images, voyeurism, cheating, sharing, roleplay, NTR/cuckold, group content, or dark consequences are involved
-12. relevant character deprecation map
-13. `docs/canon/SUPPORTING_CHARACTER_CANON_POLICY.md` when a supporting character appears or is affected
-14. historical J1 sources only when auditing line origin:
+   - `docs/runtime/V0_86A_TEMPORAL_UX_NOTIFICATION_POLISH_PLAN.md`
+   - `docs/V0_86A_Temporal_UX_Notification_Polish_Report.md`
+   - `docs/V0_87_Next_Act_I_Windows_Source_Pack_Report.md`
+   - `docs/runtime/V0_88_FIRST_REPETITION_RUNTIME_PREPARATION_NOTE.md`
+10. `docs/canon/characters/CHARACTER_CANON_INDEX.md`
+11. relevant principal full-canon file
+12. `docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md` when adult tension, images, voyeurism, cheating, sharing, roleplay, NTR/cuckold, group content, or dark consequences are involved
+13. relevant character deprecation map
+14. `docs/canon/SUPPORTING_CHARACTER_CANON_POLICY.md` when a supporting character appears or is affected
+15. historical J1 sources only when auditing line origin:
     - `docs/canon/J1_CANON_SOURCE_PACK.md`
     - `docs/V0_69_J1_Canon_Text_Review_And_Final_Line_Source.md`
-15. voice/intensity bibles as support only
-16. older fixed-day plans, summaries, route matrices, proof maps, and inactive runtime only after explicit cross-checking
+16. voice/intensity bibles as support only
+17. older fixed-day plans, summaries, route matrices, proof maps, and inactive runtime only after explicit cross-checking
 
 `docs/canon/CHARACTERS_CANON_CURRENT.md` remains a doorway only.
 
@@ -69,22 +78,32 @@ Legacy runtime is not automatic narrative canon.
 full character canon
 + choice canon
 + V0.78 modular architecture
-+ V0.79 opening source pack / cards / temporal map
-= narrative truth for the opening
+= identity and movement truth
+
+V0.79 opening source pack / cards / temporal map
++ V0.83 J1 reconciliation sources
+= opening narrative truth
 
 V0.83 temporal-flow canon
-+ V0.84 timeline state, interstitials, phase gates, and archives
-= chronological-access truth and implementation
++ V0.84 timeline state / phase gates / archives
++ V0.85 active Tuesday
++ V0.86 Friday opening completion
++ V0.86a phone-time and notification UX
+= current implemented runtime truth
 
-V0.83 J1 reconciliation source pack / cards
-+ V0.85 active Tuesday files and authored offline phases
-= current J1 truth and implementation
-
-V0.86 Friday index, conversations, visual trace, and final household beat
-= current implemented opening completion
+V0.87 first-repetition source pack / cards / temporal map
+= current authorized post-opening narrative truth
+= not yet implemented
 
 legacy Chapter 1–9 files
 = inactive technical/history material unless a current index explicitly references them
+```
+
+Important distinction:
+
+```text
+A scene can be canonically authored
+without being available in the current build.
 ```
 
 ---
@@ -110,7 +129,13 @@ Thursday complete -> Friday unlock/select
 Friday complete -> no later day yet
 ```
 
-A day is never available merely because its JSON is loaded.
+The current build ends Friday evening at:
+
+```text
+opening_band_complete = true
+```
+
+V0.87 Saturday/Monday windows are not yet playable.
 
 ---
 
@@ -121,13 +146,13 @@ A day is never available merely because its JSON is loaded.
 -> M1: present / playful-present / delayed-flat
 
 19:15 or 19:35
--> dinner and walk offline
+-> dinner and walk off phone
 
 22:57 Sandra soft trace
 -> S1: safe warmth / precise observation / cautious
 
 23:25 or 23:28
--> final Marie/shared-life offline return
+-> final Marie/shared-life return
 
 Tuesday complete -> Wednesday
 ```
@@ -157,7 +182,8 @@ Wednesday:
 ```text
 12:10 Marie / make room
 -> 18:18 arrival trace
--> 18:22 Mathilde arrival + offline settling
+-> 18:22 Mathilde arrival
+-> household settling
 -> Wednesday complete
 ```
 
@@ -173,7 +199,7 @@ Thursday:
 -> Thursday complete
 ```
 
-The topology remains:
+Topology:
 
 ```text
 join Marie early
@@ -185,7 +211,7 @@ Every branch returns to Marie before Friday.
 
 ---
 
-## 7. Friday — public traces and residue
+## 7. Friday — public traces and opening close
 
 ```text
 08:35 Pauline / authorized group-photo relay
@@ -197,71 +223,129 @@ Every branch returns to Marie before Friday.
 18:05 Marie + Mathilde household echoes
 -> both required, separate private threads
 
-18:25 household close offline
+18:25 household close
 -> household_rhythm_confirmed
 -> opening_band_complete
-```
-
-Active Friday files:
-
-```text
-game/data/conversations/chapter_04_pauline_public_photo_relay.json
-game/data/conversations/chapter_04_nico_saved_seat_followup.json
-game/data/conversations/chapter_04_marie_household_report.json
-game/data/conversations/chapter_04_mathilde_bathroom_correction.json
-game/data/visual_content/chapter_04_opening_proofs.json
 ```
 
 Friday guarantees:
 
 - Pauline reaches R1 through legitimate public-image competence;
 - Bastien remains visible in her social world;
-- the group-photo origin and audience are explicit;
 - no private crop or secret audience exists;
 - Nico reaches R1 as a genuine friend and social mirror;
-- Nico may know Mathilde is staying without sexualizing it;
 - no image request, cover arrangement, rivalry, or adult frame opens;
 - the opening closes on the enlarged household.
 
 ---
 
-## 8. Timeline and offline phases
+## 8. Current phone-time presentation
 
-Day lifecycle:
-
-```text
-LOCKED -> AVAILABLE -> ACTIVE -> COMPLETE -> ARCHIVED
-```
-
-Phase lifecycle:
+The active V0.86a path uses:
 
 ```text
-LOCKED -> CURRENT -> COMPLETE / SKIPPED / EXPIRED
+last visible message
+-> contact offline
+-> two-second pause
+-> four-second accelerated clock at Speed x1
+-> cross-thread compact notification
 ```
 
-Runtime sources:
+When the next episode belongs to the already open contact:
 
 ```text
-game/scripts/core/TimelineState.gd
-game/scripts/ui/PhonePrototypeV084.gd
-game/scripts/ui/PhonePrototypeV085.gd
-game/scripts/ui/TimelineTransitionView.gd
-game/scripts/ui/ConversationViewV084.gd
+clock advances
+-> no same-contact notification
+-> conversation resumes directly
 ```
 
-Authored conversation-free phases currently cover:
+Current UI rules:
 
-- Tuesday dinner/walk;
-- Tuesday final Marie return;
-- Friday final household close.
-
-They are selected by state, displayed once, recorded once in the day log, and restored read-only in archives.
+- time, Wi-Fi, and battery stay in the fixed conversation header;
+- notifications show a compact preview and keep the transcript at the bottom;
+- no blank moment-of-day page;
+- no `Le temps passe` prompt;
+- no visible `Moments hors ligne` section;
+- co-present action is inferred or handled outside chat rather than explained in prose.
 
 ---
 
-## 9. Image and trace status
+## 9. V0.87 — first repetition wave
 
-Current opening traces include:
+V0.87 defines:
+
+```text
+W9  Marie claims one shared hour
+W10 weekend repetition opportunity
+W11 mandatory Marie return
+W12 first-workday repetition opportunity
+W13 wave close / couple balance
+```
+
+Wave budget:
+
+```text
+fixed Marie foreground
++ maximum two external foreground tickets
++ maximum one charged-access owner
++ mandatory couple returns
+```
+
+Candidate external scenes:
+
+```text
+Mathilde — morning gaze acknowledged
+Sandra — work-afterglow confidence
+Raphaëlle — outside-work person
+Pauline — legitimate social repetition with Bastien visible
+Nico — quiet friendship repetition
+```
+
+Route ceilings:
+
+```text
+Mathilde / Sandra / Raphaëlle = R1 or one of them R2 at most
+Pauline = R1
+Nico = R1
+Marie / Player = HABITUAL_WARMTH + evidence only
+hard secrets = none
+adult frames = none
+adult images = none
+routes R3+ = none
+```
+
+V0.87 creates no required image asset and no fixed character order.
+
+---
+
+## 10. First repetition selection rule
+
+Selection is deterministic:
+
+```text
+safety / aftermath
+-> fixed spine
+-> obligation due
+-> compatible continuation
+-> context fit
+-> unseen eligible scene
+-> longest deferred
+-> least recently foregrounded
+-> authored order
+```
+
+Global constraints:
+
+- one foreground per window;
+- zero to two echoes;
+- same character cannot consume both external tickets;
+- a Marie consequence outranks a new external opportunity;
+- silence is valid when no scene fits;
+- timestamps describe chronology but never grant access alone.
+
+---
+
+## 11. Current traces
 
 ```text
 j1_sandra_lunch_memory_soft
@@ -270,39 +354,41 @@ marie_laverriere_setup_01
 laverriere_public_group_photo_set_01
 ```
 
-The Friday group-photo set is:
+V0.87 leaves all four in their existing frame.
 
-- created with Pauline's remote shutter;
-- authorized for the photographed group and La Verrière archive/public post;
-- ordinary and risk 0;
-- visibly connected to Marie, Pauline, Bastien, and Élodie;
-- possibly inclusive of Nico and contextually Player;
-- explicitly without Mathilde;
-- not permission for a private recrop or private redistribution.
+No new crop, audience, sexual function, forwarding permission, or adult collectible is created.
 
 ---
 
-## 10. Current route and intensity ceiling
+## 12. Current route and intensity status
+
+Runtime end state remains:
 
 ```text
 Marie/Player = HABITUAL_WARMTH
 relationship frame = ASSUMED_EXCLUSIVE
-Sandra = soft trace / cooled ordinary continuity
+Sandra = soft trace / ordinary continuity
 Mathilde = R1 Ordinary Access
 Raphaëlle = R1 Ordinary Work Access
 Pauline = R1 Legitimate Social Access
 Nico = R1 Ordinary Friendship / Social Access
 hard secrets = none
 adult frames = none
-routes R2+ = none
 opening_band_complete = true
 ```
 
-V0.86 completes ordinary access. It does not begin the dangerous route phases.
+Documented future ceiling after a V0.88+ implementation:
+
+```text
+one of Mathilde / Sandra / Raphaëlle may reach R2
+Pauline and Nico remain R1
+```
+
+Do not treat that documented ceiling as current save state.
 
 ---
 
-## 11. Legacy policy
+## 13. Legacy policy
 
 Legacy files remain on disk for rollback, history, and technical comparison.
 
@@ -315,45 +401,58 @@ game/data/conversations/chapter_04_index.json
 game/data/visual_content/chapter_04_proofs.json
 ```
 
-Do not restore them merely because they share a chapter number with current modular content.
+Do not restore old fixed day orders, Mathilde canapé foundations, Pauline instant private crops, Nico immediate photo pacts, or Raphaëlle early costume access merely because those ideas exist historically.
 
 ---
 
-## 12. Next documentation step
+## 14. Next implementation step
 
-The concrete V0.79 opening is now implemented.
-
-Before another runtime expansion, write:
+The next milestone is:
 
 ```text
-V0.87 — Next Act I Windows Source Pack
+V0.88 — First Repetition Runtime Integration Plan
 ```
 
-That pack should define the first repeated/private-attention windows after ordinary access, with explicit conditions, cooldowns, missed opportunities, and couple consequences.
+It must map the approved source pack onto current state and choose a small vertical slice.
 
-No R2 scene should enter runtime before that documentation is validated.
-
----
-
-## 13. Maintenance rule
-
-If a runtime constraint changes story meaning:
-
-1. stop implementation expansion;
-2. update canon/source pack first;
-3. update the relevant plan/report;
-4. obtain Product Owner validation;
-5. resume implementation.
-
----
-
-## 14. Final rule
+Recommended first slice boundary:
 
 ```text
-V0.84 controls when the story happens.
-V0.85 makes Tuesday truthful.
-V0.86 completes the opening through public traces, friendship, and household residue.
+W9 Marie shared hour
++ one external candidate
++ mandatory Marie return
+```
 
-The next danger must grow from these people,
-not replace their ordinary lives.
+No V0.87 scene enters runtime before that plan is validated.
+
+---
+
+## 15. Maintenance rule
+
+If scene meaning changes:
+
+1. update the V0.87 source pack;
+2. update the matching scene card;
+3. update the temporal map when time, place, or delivery changes;
+4. update full character canon only if identity changes;
+5. update global NSFW canon only if adult rules change;
+6. update status/report/roadmap;
+7. validate documentation;
+8. only then update the runtime plan.
+
+```text
+A correction is incomplete
+while source pack, card, temporal map, and current status disagree.
+```
+
+---
+
+## 16. Final rule
+
+```text
+V0.86 proves ordinary access.
+V0.87 proves that repetition can change meaning.
+V0.88 must integrate only the smallest truthful slice.
+
+No later adult engine may erase the ordinary person who earned it.
 ```
