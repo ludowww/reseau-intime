@@ -1,9 +1,11 @@
 extends "res://scripts/ui/ConversationViewV084.gd"
 
 signal thread_notification_pressed
+signal timeline_prompt_pressed
 
 var thread_notification_panel: PanelContainer
 var thread_notification_label: Label
+var shortcut_mode := ""
 
 func _add_chat_header(conversation: Dictionary) -> void:
 	super._add_chat_header(conversation)
@@ -34,20 +36,36 @@ func _build_thread_notification_banner() -> void:
 func show_thread_notification(contact_name: String, preview: String, time_label: String = "") -> void:
 	if not is_instance_valid(thread_notification_panel) or not is_instance_valid(thread_notification_label):
 		return
+	shortcut_mode = "thread"
 	var header := "Nouveau message · %s" % contact_name
 	if time_label != "":
 		header += " · %s" % time_label
 	thread_notification_label.text = "%s\n%s" % [header, preview]
 	thread_notification_panel.visible = true
 
+func show_timeline_prompt(title: String, preview: String = "") -> void:
+	if not is_instance_valid(thread_notification_panel) or not is_instance_valid(thread_notification_label):
+		return
+	shortcut_mode = "timeline"
+	thread_notification_label.text = title if preview == "" else "%s\n%s" % [title, preview]
+	thread_notification_panel.visible = true
+
 func hide_thread_notification() -> void:
+	shortcut_mode = ""
 	if is_instance_valid(thread_notification_panel):
 		thread_notification_panel.visible = false
 	if is_instance_valid(thread_notification_label):
 		thread_notification_label.text = ""
 
 func _on_thread_notification_input(event: InputEvent) -> void:
+	var activated := false
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		thread_notification_pressed.emit()
+		activated = true
 	elif event is InputEventKey and event.pressed and not event.echo and event.keycode in [KEY_ENTER, KEY_KP_ENTER, KEY_SPACE]:
+		activated = true
+	if not activated:
+		return
+	if shortcut_mode == "timeline":
+		timeline_prompt_pressed.emit()
+	else:
 		thread_notification_pressed.emit()
