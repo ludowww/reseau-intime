@@ -1,0 +1,294 @@
+{
+  "id": "chapter_07_modular_index",
+  "chapter": 7,
+  "day": 7,
+  "calendar_label": "Lundi",
+  "display_label": "Lundi — Vingt minutes",
+  "day_start_time": "09:30",
+  "title": "Lundi — Vingt minutes",
+  "description": "Une promesse du dimanche est payée le matin si elle existe. Sandra peut ensuite ouvrir une fenêtre de vingt minutes avant un retour Marie obligatoire.",
+  "design_goal": "Tester une deuxième fenêtre déterministe sur le ledger V0.89, sans dépasser deux foregrounds externes, sans accès chargé Sandra et sans interrompre la colonne vertébrale Marie.",
+  "window_range": "W12-W13",
+  "default_order": [
+    "chapter_07_sandra_end_of_shift",
+    "chapter_07_marie_monday_return"
+  ],
+  "conversation_files": [
+    "res://data/conversations/chapter_07_sandra_end_of_shift.json",
+    "res://data/conversations/chapter_07_marie_monday_return.json"
+  ],
+  "moment_flow": [
+    {
+      "moment_label": "fin de poste",
+      "time_label": "18:17",
+      "transition_text": "Lundi fin de poste — Sandra passe devant le café de l'ancienne photo.",
+      "conversation_ids": [
+        "chapter_07_sandra_end_of_shift"
+      ]
+    },
+    {
+      "moment_label": "soir",
+      "time_label": "20:05",
+      "transition_text": "Lundi soir — La journée revient vers Marie.",
+      "conversation_ids": [
+        "chapter_07_marie_monday_return"
+      ]
+    }
+  ],
+  "timeline_flow": {
+    "initial_state": "LOCKED",
+    "initial_phase_id": "monday_morning_commitment",
+    "day_start_card": {
+      "eyebrow": "LUNDI — MATIN",
+      "title": "Ce qu'on tient",
+      "subtitle": "09:30",
+      "duration": 1.2,
+      "min_time": 0.35
+    },
+    "day_end_card": {
+      "eyebrow": "LUNDI — SOIR",
+      "title": "La répétition reste ouverte.",
+      "subtitle": "Deux fenêtres ont été observées, sans fermer toute la vague.",
+      "duration": 1.2,
+      "min_time": 0.35
+    },
+    "next_day": null,
+    "phases": [
+      {
+        "id": "monday_morning_commitment",
+        "moment_label": "matin",
+        "time_label": "09:30",
+        "authored_beat_variants": [
+          {
+            "id": "monday_promised_coffee_paid",
+            "conditions": [
+              "marie_next_morning_obligation_scheduled"
+            ],
+            "time_label": "09:30",
+            "title": "Le café promis a lieu.",
+            "text": "Player et Marie prennent le café dehors à l'heure annoncée. Le téléphone reste dans la poche. La promesse portée depuis dimanche est payée.",
+            "sets_flags": [
+              "marie_monday_morning_paid",
+              "active_reconnection_evidence"
+            ]
+          },
+          {
+            "id": "monday_ordinary_start",
+            "time_label": "09:30",
+            "title": "La semaine recommence.",
+            "text": "Marie et Player commencent leur lundi sans nouvelle promesse à solder. Chacun part vers sa journée.",
+            "sets_flags": [
+              "monday_day_started"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "monday_sandra_end_shift_candidate",
+        "moment_label": "fin de poste",
+        "time_label": "18:17",
+        "optional_conversation_ids": [
+          "chapter_07_sandra_end_of_shift"
+        ],
+        "candidate_pool": {
+          "id": "first_repeat_weekday_sandra_b",
+          "wave_id": "first_repetition",
+          "external_ticket_limit": 2,
+          "ordered_candidates": [
+            {
+              "scene_id": "sandra_end_of_shift_twenty_minutes_01",
+              "conversation_id": "chapter_07_sandra_end_of_shift",
+              "character_id": "sandra",
+              "requires_all_flags": [
+                "first_repetition_slice_01_complete",
+                "j1_sandra_trace_complete"
+              ],
+              "excludes_any_flags": [],
+              "compatible_days": [
+                7
+              ],
+              "compatible_phase_ids": [
+                "monday_sandra_end_shift_candidate"
+              ],
+              "cooldown_windows": 2
+            }
+          ],
+          "fallback": "silent_defer"
+        }
+      },
+      {
+        "id": "monday_sandra_resolution",
+        "moment_label": "fin de poste",
+        "time_label": "18:42",
+        "authored_beat_variants": [
+          {
+            "id": "monday_sandra_joined_resolution",
+            "conditions": [
+              "sandra_end_shift_joined"
+            ],
+            "time_label": "18:42",
+            "title": "Vingt minutes, pas davantage.",
+            "text": "Player rejoint Sandra devant le café. Ils prennent une table, parlent de son poste et de presque rien. Sandra regarde l'heure la première et part prendre son train.",
+            "sets_flags": [
+              "sandra_end_shift_meeting_complete",
+              "sandra_r1_repeat_complete"
+            ]
+          },
+          {
+            "id": "monday_sandra_lunch_resolution",
+            "conditions": [
+              "sandra_lunch_rescheduled"
+            ],
+            "time_label": "18:42",
+            "title": "Un déjeuner trouve une place.",
+            "text": "Sandra monte dans son train. Le prochain déjeuner existe désormais comme proposition concrète, sans transformer ce soir en rendez-vous manqué.",
+            "sets_flags": [
+              "sandra_lunch_plan_recorded",
+              "sandra_r1_repeat_complete"
+            ]
+          },
+          {
+            "id": "monday_sandra_boundary_resolution",
+            "conditions": [
+              "sandra_boundary_respected_soft"
+            ],
+            "time_label": "18:42",
+            "title": "La fenêtre reste légère.",
+            "text": "Sandra garde ses vingt minutes pour elle. La proximité demeure lisible, mais personne ne force la soirée à devenir autre chose.",
+            "sets_flags": [
+              "sandra_soft_boundary_kept",
+              "sandra_r1_repeat_complete"
+            ]
+          },
+          {
+            "id": "monday_sandra_silent_resolution",
+            "time_label": "18:42",
+            "title": "La fin de poste passe.",
+            "text": "La fenêtre Sandra expire ou reste différée. Aucun ticket externe n'est consommé et la journée continue.",
+            "sets_flags": [
+              "sandra_second_window_silent"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "monday_marie_return",
+        "moment_label": "soir",
+        "time_label": "20:05",
+        "required_conversation_ids": [
+          "chapter_07_marie_monday_return"
+        ]
+      },
+      {
+        "id": "monday_marie_resolution",
+        "moment_label": "soir",
+        "time_label": "20:40",
+        "authored_beat_variants": [
+          {
+            "id": "monday_marie_active_resolution",
+            "conditions": [
+              "marie_monday_return_active"
+            ],
+            "time_label": "20:40",
+            "title": "Player rentre avec le pain.",
+            "text": "Player rentre comme annoncé. Marie pose deux bols sur la table. La journée se ferme dans la même pièce.",
+            "sets_flags": [
+              "marie_monday_return_realized"
+            ]
+          },
+          {
+            "id": "monday_marie_bounded_resolution",
+            "conditions": [
+              "marie_monday_return_bounded"
+            ],
+            "time_label": "20:40",
+            "title": "Le sas reste borné.",
+            "text": "Player prend les trente minutes annoncées, puis coupe et rejoint Marie. La limite donnée devient un acte réel.",
+            "sets_flags": [
+              "marie_monday_bounded_time_paid",
+              "active_reconnection_evidence"
+            ]
+          },
+          {
+            "id": "monday_marie_separate_resolution",
+            "conditions": [
+              "marie_monday_return_honest_distance"
+            ],
+            "time_label": "20:40",
+            "title": "Chacun atterrit de son côté.",
+            "text": "Marie ne garde pas d'assiette en attente. La distance est réelle mais dite, sans mensonge ajouté.",
+            "sets_flags": [
+              "marie_monday_evening_separate"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "monday_slice_close",
+        "moment_label": "soir",
+        "time_label": "20:45",
+        "authored_beat": {
+          "id": "monday_first_repetition_slice_close",
+          "time_label": "20:45",
+          "title": "La deuxième fenêtre est enregistrée.",
+          "text": "Sandra a été vue, expirée ou différée, puis la journée est revenue vers Marie. La vague complète reste ouverte.",
+          "sets_flags": [
+            "first_repetition_slice_02_complete"
+          ]
+        }
+      }
+    ]
+  },
+  "conversation_availability": {
+    "initial_conversation_ids": [
+      "chapter_07_marie_monday_return"
+    ],
+    "locked_conversation_ids": [
+      "chapter_07_sandra_end_of_shift"
+    ],
+    "unlocks": {
+      "chapter_07_sandra_end_of_shift": {
+        "pending": true,
+        "notification": {
+          "title": "Sandra",
+          "body": "J'ai vingt minutes avant mon train."
+        }
+      },
+      "chapter_07_marie_monday_return": {
+        "pending": true,
+        "notification": {
+          "title": "Marie",
+          "body": "On mange ensemble ou chacun atterrit de son côté ?"
+        }
+      }
+    }
+  },
+  "initial_visual_anchors": [
+    "profile_sandra_placeholder",
+    "profile_marie_placeholder"
+  ],
+  "routes_available": [
+    "marie",
+    "sandra"
+  ],
+  "route_stage_ceiling": "SANDRA_R1_MAX",
+  "end_of_day_player_knowledge": [
+    "L'éventuelle promesse du lundi matin est payée avant toute nouvelle opportunité.",
+    "Sandra a été vue, expirée ou différée sans dépasser R1.",
+    "Un foreground Sandra consomme un ticket seulement après achèvement.",
+    "Sandra ne peut pas devenir propriétaire de l'accès chargé.",
+    "La journée revient toujours vers Marie.",
+    "Le couple reste en HABITUAL_WARMTH.",
+    "La vague complète n'est pas terminée."
+  ],
+  "proof_content_files": [],
+  "debug_expected_outcomes": [
+    "Sunday completion unlocks Monday.",
+    "A carried Monday-morning promise is paid before candidate selection.",
+    "Monday offers Sandra or silently defers her.",
+    "Ignoring Sandra expires the exact scene without consuming a foreground ticket.",
+    "Completing Sandra records at most the second external foreground and never claims charged access.",
+    "Marie return is required after seen, expired or deferred Sandra.",
+    "Monday closes only the second runtime slice."
+  ]
+}
