@@ -42,7 +42,7 @@ func _run() -> void:
 
 func _scenario_a_carried_morning_promise() -> void:
 	var context := await _new_phone_context()
-	var phone: Node = context["phone"]
+	var phone = context["phone"]
 	EffectApplier.apply_flags([
 		"first_repetition_slice_01_complete",
 		"j1_sandra_trace_complete",
@@ -68,7 +68,7 @@ func _scenario_a_carried_morning_promise() -> void:
 
 func _scenario_b_ordinary_morning() -> void:
 	var context := await _new_phone_context()
-	var phone: Node = context["phone"]
+	var phone = context["phone"]
 	EffectApplier.apply_flags([
 		"first_repetition_slice_01_complete",
 		"j1_sandra_trace_complete",
@@ -81,7 +81,7 @@ func _scenario_b_ordinary_morning() -> void:
 
 func _scenario_c_sandra_lunch() -> void:
 	var context := await _new_phone_context()
-	var phone: Node = context["phone"]
+	var phone = context["phone"]
 	_prepare_sandra_eligibility()
 	await _activate_and_play_sandra(phone, 1)
 	var ledger := _ledger()
@@ -101,7 +101,7 @@ func _scenario_c_sandra_lunch() -> void:
 
 func _scenario_d_sandra_soft_boundary() -> void:
 	var context := await _new_phone_context()
-	var phone: Node = context["phone"]
+	var phone = context["phone"]
 	_prepare_sandra_eligibility()
 	await _activate_and_play_sandra(phone, 2)
 	_expect(_scene_status(_ledger()) == "RESOLVED", "D: Sandra scene did not resolve")
@@ -116,7 +116,7 @@ func _scenario_d_sandra_soft_boundary() -> void:
 
 func _scenario_e_sandra_expiry() -> void:
 	var context := await _new_phone_context()
-	var phone: Node = context["phone"]
+	var phone = context["phone"]
 	_prepare_sandra_eligibility()
 	await phone._activate_phase(DAY, DataLoader.get_timeline_phase(DAY, SANDRA_PHASE_ID), false)
 	var expired := await _wait_until(func(): return _scene_status(_ledger()) == "EXPIRED", 3.0)
@@ -131,7 +131,7 @@ func _scenario_e_sandra_expiry() -> void:
 
 func _scenario_f_sandra_defer() -> void:
 	var context := await _new_phone_context()
-	var phone: Node = context["phone"]
+	var phone = context["phone"]
 	EffectApplier.apply_flags(["first_repetition_slice_01_complete"])
 	await phone._activate_phase(DAY, DataLoader.get_timeline_phase(DAY, SANDRA_PHASE_ID), false)
 	var ledger := _ledger()
@@ -184,20 +184,22 @@ func _run_marie_outcome_scenario(
 	preserve_mathilde_owner: bool
 ) -> void:
 	var context := await _new_phone_context()
-	var phone: Node = context["phone"]
+	var phone = context["phone"]
 	_prepare_sandra_eligibility()
 	if preserve_mathilde_owner:
 		GameState.set_story_ledger_value(LEDGER_ID, "charged_access_owner", "mathilde")
 	await _activate_and_play_sandra(phone, 0)
-	var due := await _wait_until(func():
-		return str(GameState.get_obligation_status(LEDGER_ID, "marie_return_after_sandra").get("status", "")) == "DUE"
-	, DEFAULT_TIMEOUT_SECONDS)
+	var due := await _wait_until(
+		func(): return str(GameState.get_obligation_status(LEDGER_ID, "marie_return_after_sandra").get("status", "")) == "DUE",
+		DEFAULT_TIMEOUT_SECONDS
+	)
 	_expect(due, "%s: Marie obligation never became DUE" % label)
 	_expect(TimelineState.current_phase_id(DAY) == MARIE_PHASE_ID, "%s: Marie phase not active" % label)
 	await _open_and_play(phone, MARIE_CONVERSATION_ID, [marie_choice_index])
-	var resolved := await _wait_until(func():
-		return str(GameState.get_obligation_status(LEDGER_ID, "marie_return_after_sandra").get("status", "")) == expected_status
-	, DEFAULT_TIMEOUT_SECONDS)
+	var resolved := await _wait_until(
+		func(): return str(GameState.get_obligation_status(LEDGER_ID, "marie_return_after_sandra").get("status", "")) == expected_status,
+		DEFAULT_TIMEOUT_SECONDS
+	)
 	_expect(resolved, "%s: Marie obligation did not resolve" % label)
 	var obligation := GameState.get_obligation_status(LEDGER_ID, "marie_return_after_sandra")
 	_expect(str(obligation.get("resolved_by", "")) == MARIE_CONVERSATION_ID, "%s: resolved_by mismatch" % label)
@@ -217,7 +219,7 @@ func _new_phone_context() -> Dictionary:
 	root.add_child(main)
 	await process_frame
 	await process_frame
-	var phone: Node = main.get_node("PhonePrototype")
+	var phone = main.get_node("PhonePrototype")
 	phone.conversation_view.set_debug_speed_multiplier(DEBUG_SPEED)
 	GameState.reset_state()
 	TimelineState.reset_timeline()
@@ -246,25 +248,26 @@ func _prepare_sandra_eligibility() -> void:
 	])
 
 
-func _activate_and_play_sandra(phone: Node, main_choice_index: int) -> void:
+func _activate_and_play_sandra(phone, main_choice_index: int) -> void:
 	await phone._activate_phase(DAY, DataLoader.get_timeline_phase(DAY, SANDRA_PHASE_ID), false)
 	await _open_and_play(phone, SANDRA_CONVERSATION_ID, [0, main_choice_index])
 	var resolved := await _wait_until(func(): return _scene_status(_ledger()) == "RESOLVED", DEFAULT_TIMEOUT_SECONDS)
 	_expect(resolved, "Sandra conversation did not reach RESOLVED")
 
 
-func _open_and_play(phone: Node, episode_id: String, choice_indexes: Array) -> void:
+func _open_and_play(phone, episode_id: String, choice_indexes: Array) -> void:
 	var conversation := _conversation_for_episode(episode_id)
 	_expect(not conversation.is_empty(), "Missing conversation for %s" % episode_id)
 	if conversation.is_empty():
 		return
 	phone._open_conversation(DAY, conversation)
-	var view: Node = phone.conversation_view
+	var view = phone.conversation_view
 	for raw_index in choice_indexes:
 		var choice_index := int(raw_index)
-		var choices_ready := await _wait_until(func():
-			return bool(view.active_state.get("waiting_choices", false)) and view.choice_buttons.size() > choice_index
-		, DEFAULT_TIMEOUT_SECONDS)
+		var choices_ready := await _wait_until(
+			func(): return bool(view.active_state.get("waiting_choices", false)) and view.choice_buttons.size() > choice_index,
+			DEFAULT_TIMEOUT_SECONDS
+		)
 		_expect(choices_ready, "Choices not ready for %s index %d" % [episode_id, choice_index])
 		if not choices_ready:
 			return
