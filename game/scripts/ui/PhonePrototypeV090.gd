@@ -26,7 +26,7 @@ func _ensure_v090_chapter_loaded() -> void:
 
 func _complete_day(day_value) -> void:
 	var next_day = DataLoader.get_timeline_next_day(day_value)
-	if str(next_day) != "7":
+	if next_day == null or int(next_day) != 7:
 		await super._complete_day(day_value)
 		return
 	var initial_phase := DataLoader.get_timeline_phase(
