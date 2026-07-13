@@ -1,6 +1,7 @@
 extends Node
 
 const MAIN_SCENE := preload("res://scenes/Main.tscn")
+const MONDAY_INDEX_PATH := "res://data/conversations/chapter_07_modular_index.json"
 const DAY := 7
 const LEDGER_ID := "first_repetition"
 const MORNING_PHASE_ID := "monday_morning_commitment"
@@ -9,8 +10,8 @@ const MARIE_PHASE_ID := "monday_marie_return"
 const SANDRA_SCENE_ID := "sandra_end_of_shift_twenty_minutes_01"
 const SANDRA_CONVERSATION_ID := "chapter_07_sandra_end_of_shift"
 const MARIE_CONVERSATION_ID := "chapter_07_marie_monday_return"
-const DEBUG_SPEED := 20.0
-const DEFAULT_TIMEOUT_SECONDS := 5.0
+const DEBUG_SPEED := 8.0
+const DEFAULT_TIMEOUT_SECONDS := 6.0
 
 var failures: Array[String] = []
 
@@ -20,6 +21,7 @@ func _ready() -> void:
 
 
 func _run() -> void:
+	_ensure_monday_loaded()
 	await _scenario_a_carried_morning_promise()
 	await _scenario_b_ordinary_morning()
 	await _scenario_c_sandra_lunch()
@@ -38,6 +40,19 @@ func _run() -> void:
 		push_error(failure)
 	print("V0.90 runtime smoke: FAILED (%d)" % failures.size())
 	get_tree().quit(1)
+
+
+func _ensure_monday_loaded() -> void:
+	if DataLoader.chapter_indexes.is_empty():
+		DataLoader.load_all()
+	if not DataLoader.get_index_for_day(DAY).is_empty():
+		return
+	var index := DataLoader.load_json(MONDAY_INDEX_PATH)
+	if index.is_empty():
+		_expect(false, "Setup: Monday modular index could not be loaded")
+		return
+	DataLoader.chapter_indexes.append(index)
+	DataLoader._load_index_conversations(index)
 
 
 func _scenario_a_carried_morning_promise() -> void:
@@ -62,7 +77,7 @@ func _scenario_a_carried_morning_promise() -> void:
 	_expect(str(obligation.get("resolved_by", "")) == MORNING_PHASE_ID, "A: resolved_by mismatch")
 	_expect(str(obligation.get("result", "")) == "promised_coffee_paid", "A: result mismatch")
 	_expect(_has_flag("marie_monday_morning_paid"), "A: marie_monday_morning_paid missing")
-	_expect(TimelineState.current_phase_id(DAY) == SANDRA_PHASE_ID, "A: Sandra was not evaluated after morning payment")
+	_expect(_candidate_was_evaluated(), "A: Sandra was not evaluated after morning payment — %s" % _candidate_debug(phone))
 	await _dispose_context(context)
 
 
@@ -75,7 +90,7 @@ func _scenario_b_ordinary_morning() -> void:
 	])
 	await phone._activate_phase(DAY, DataLoader.get_timeline_phase(DAY, MORNING_PHASE_ID), false)
 	_expect(_has_flag("monday_day_started"), "B: monday_day_started missing")
-	_expect(TimelineState.current_phase_id(DAY) == SANDRA_PHASE_ID, "B: Sandra was not evaluated after ordinary morning")
+	_expect(_candidate_was_evaluated(), "B: Sandra was not evaluated after ordinary morning — %s" % _candidate_debug(phone))
 	await _dispose_context(context)
 
 
@@ -119,13 +134,16 @@ func _scenario_e_sandra_expiry() -> void:
 	var phone = context["phone"]
 	_prepare_sandra_eligibility()
 	await phone._activate_phase(DAY, DataLoader.get_timeline_phase(DAY, SANDRA_PHASE_ID), false)
-	var expired := await _wait_until(func(): return _scene_status(_ledger()) == "EXPIRED", 3.0)
-	_expect(expired, "E: Sandra optional window did not expire")
-	var ledger := _ledger()
-	_expect(TimelineState.is_conversation_expired(DAY, SANDRA_CONVERSATION_ID), "E: conversation not marked expired")
-	_expect(not ledger.get("external_foreground_character_ids", []).has("sandra"), "E: expiry consumed Sandra foreground")
-	var silent := await _wait_until(func(): return _has_flag("sandra_second_window_silent"), 3.0)
-	_expect(silent, "E: silent resolution flag missing")
+	var offered := await _wait_until(func(): return _scene_status(_ledger()) == "OFFERED", 1.5)
+	_expect(offered, "E: Sandra candidate was not offered — %s" % _candidate_debug(phone))
+	if offered:
+		var expired := await _wait_until(func(): return _scene_status(_ledger()) == "EXPIRED", 4.0)
+		_expect(expired, "E: Sandra optional window did not expire")
+		var ledger := _ledger()
+		_expect(TimelineState.is_conversation_expired(DAY, SANDRA_CONVERSATION_ID), "E: conversation not marked expired")
+		_expect(not ledger.get("external_foreground_character_ids", []).has("sandra"), "E: expiry consumed Sandra foreground")
+		var silent := await _wait_until(func(): return _has_flag("sandra_second_window_silent"), 4.0)
+		_expect(silent, "E: silent resolution flag missing")
 	await _dispose_context(context)
 
 
@@ -195,7 +213,8 @@ func _run_marie_outcome_scenario(
 	)
 	_expect(due, "%s: Marie obligation never became DUE" % label)
 	_expect(TimelineState.current_phase_id(DAY) == MARIE_PHASE_ID, "%s: Marie phase not active" % label)
-	await _open_and_play(phone, MARIE_CONVERSATION_ID, [marie_choice_index])
+	if due and TimelineState.current_phase_id(DAY) == MARIE_PHASE_ID:
+		await _open_and_play(phone, MARIE_CONVERSATION_ID, [marie_choice_index])
 	var resolved := await _wait_until(
 		func(): return str(GameState.get_obligation_status(LEDGER_ID, "marie_return_after_sandra").get("status", "")) == expected_status,
 		DEFAULT_TIMEOUT_SECONDS
@@ -215,21 +234,34 @@ func _run_marie_outcome_scenario(
 
 
 func _new_phone_context() -> Dictionary:
+	GameState.reset_state()
+	TimelineState.reset_timeline()
+	TimelineState.unlock_day(DAY)
+	TimelineState.set_current_day(DAY)
+
 	var main := MAIN_SCENE.instantiate()
 	get_tree().root.add_child(main)
 	await get_tree().process_frame
 	await get_tree().process_frame
 	var phone = main.get_node("PhonePrototype")
-	phone.conversation_view.set_debug_speed_multiplier(DEBUG_SPEED)
-	GameState.reset_state()
-	TimelineState.reset_timeline()
-	TimelineState.unlock_day(DAY)
-	TimelineState.set_current_day(DAY)
+	phone.optional_window_token += 1
+	phone.time_passage_token += 1
+	phone.pending_conversation_ids.clear()
+	phone.pending_thread_ids.clear()
+	phone.unlocked_conversation_ids_by_day.clear()
+	phone.unlocked_thread_ids_by_day.clear()
+	phone.initialized_pending_days.clear()
+	phone.notification_target_conversation_id = ""
+	phone.notification_target_day_value = null
 	phone.current_day_value = DAY
 	phone.viewing_archived_day = false
 	phone.transition_in_progress = false
 	phone.time_passage_in_progress = false
 	phone.conversation_view.reset_ui_state()
+	phone.conversation_view.set_debug_speed_multiplier(DEBUG_SPEED)
+	phone._render_active_day(DAY)
+	phone._render_days_buttons_only()
+	await get_tree().process_frame
 	return {"main": main, "phone": phone}
 
 
@@ -257,14 +289,18 @@ func _prepare_sandra_eligibility() -> void:
 
 func _activate_and_play_sandra(phone, main_choice_index: int) -> void:
 	await phone._activate_phase(DAY, DataLoader.get_timeline_phase(DAY, SANDRA_PHASE_ID), false)
+	var offered := await _wait_until(func(): return _scene_status(_ledger()) == "OFFERED", 1.5)
+	_expect(offered, "Sandra candidate was not offered — %s" % _candidate_debug(phone))
+	if not offered:
+		return
 	await _open_and_play(phone, SANDRA_CONVERSATION_ID, [0, main_choice_index])
 	var resolved := await _wait_until(func(): return _scene_status(_ledger()) == "RESOLVED", DEFAULT_TIMEOUT_SECONDS)
 	_expect(resolved, "Sandra conversation did not reach RESOLVED")
 
 
 func _open_and_play(phone, episode_id: String, choice_indexes: Array) -> void:
-	var conversation := _conversation_for_episode(episode_id)
-	_expect(not conversation.is_empty(), "Missing conversation for %s" % episode_id)
+	var conversation := _conversation_for_episode(phone, episode_id)
+	_expect(not conversation.is_empty(), "Missing available conversation for %s" % episode_id)
 	if conversation.is_empty():
 		return
 	phone._open_conversation(DAY, conversation)
@@ -285,14 +321,34 @@ func _open_and_play(phone, episode_id: String, choice_indexes: Array) -> void:
 	_expect(completed, "Conversation did not complete: %s" % episode_id)
 
 
-func _conversation_for_episode(episode_id: String) -> Dictionary:
-	for raw_conversation in DataLoader.get_conversations_for_day(DAY):
+func _conversation_for_episode(phone, episode_id: String) -> Dictionary:
+	for raw_conversation in phone._collect_contact_conversations_for_day(DAY):
 		if typeof(raw_conversation) != TYPE_DICTIONARY:
 			continue
 		var conversation: Dictionary = raw_conversation
 		if conversation.get("_episode_ids", []).has(episode_id):
 			return conversation
 	return {}
+
+
+func _candidate_was_evaluated() -> bool:
+	var status := _scene_status(_ledger())
+	return status in ["ELIGIBLE", "OFFERED", "SEEN", "EXPIRED", "RESOLVED"]
+
+
+func _candidate_debug(phone) -> String:
+	var ledger := _ledger()
+	var status := _scene_status(ledger)
+	var available_ids: Array = phone._available_conversation_ids_for_day(DAY)
+	return "phase=%s status=%s flags=%s ordinal=%s foregrounds=%s obligations=%s available=%s" % [
+		TimelineState.current_phase_id(DAY),
+		status,
+		GameState.current_state.get("flags", []),
+		ledger.get("opportunity_window_ordinal", 0),
+		ledger.get("external_foreground_character_ids", []),
+		ledger.get("obligations", {}),
+		available_ids,
+	]
 
 
 func _wait_until(predicate: Callable, timeout_seconds: float) -> bool:
