@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://tests/V090RuntimeSmokeStableDriver.gd" id="1"]
+[ext_resource type="Script" path="res://tests/V090RuntimeSmokeScenarioDriver.gd" id="1"]
 
 [node name="V090RuntimeSmokeTest" type="Node"]
 script = ExtResource("1")
