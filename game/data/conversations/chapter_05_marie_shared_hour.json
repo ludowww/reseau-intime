@@ -1,0 +1,132 @@
+{
+  "id": "chapter_05_marie_shared_hour",
+  "scene_id": "marie_saturday_shared_hour_01",
+  "chapter": 5,
+  "day": 5,
+  "title": "Samedi matin — Une heure",
+  "app": "messages",
+  "window_id": "W9_MARIE_SHARED_HOUR",
+  "calendar_label": "Samedi",
+  "time_band": "MORNING",
+  "communication_mode": "REMOTE_ASYNC",
+  "foreground_role": "couple_spine",
+  "physical_context": "Marie est déjà dehors après avoir rendu les clés de La Verrière et être passée au marché. Player est encore à l'appartement ou sur le point de sortir. Mathilde est occupée de son côté. Le chat s'arrête si Player rejoint Marie.",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "marie"
+    ],
+    "display_name": "Marie",
+    "profile_content_id": "profile_marie_placeholder"
+  },
+  "segments": [
+    {
+      "id": "segment_saturday_marie_shared_hour_choice",
+      "pattern": "three_posture_choice",
+      "function": "M2 — décider comment Player fait une place réelle à l'heure proposée par Marie.",
+      "messages": [
+        {
+          "id": "msg_sat_marie_shared_hour_001",
+          "sender": "marie",
+          "time_label": "09:35",
+          "text": "J'ai rendu les clés de La Verrière. Et j'ai trouvé des tomates qui n'ont pas l'air tristes."
+        },
+        {
+          "id": "msg_sat_marie_shared_hour_002",
+          "sender": "marie",
+          "time_label": "09:36",
+          "text": "J'ai une heure avant de redevenir une adulte utile."
+        },
+        {
+          "id": "msg_sat_marie_shared_hour_003",
+          "sender": "marie",
+          "time_label": "09:36",
+          "text": "Tu me rejoins pour un café ?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_sat_marie_join_now",
+          "text": "Oui. Donne-moi dix minutes, je viens sans ordinateur.",
+          "tone": "join_now",
+          "sets_flags": [
+            "marie_shared_hour_joined"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sat_marie_shared_hour_004a",
+              "sender": "marie",
+              "time_label": "09:38",
+              "text": "C'est surtout la dernière phrase qui m'intéresse."
+            },
+            {
+              "id": "msg_sat_marie_shared_hour_005a",
+              "sender": "marie",
+              "time_label": "09:38",
+              "text": "Je suis près du marché."
+            }
+          ]
+        },
+        {
+          "id": "choice_sat_marie_bounded_alternative",
+          "text": "Je peux pas tout de suite, mais je fais le déjeuner et on marche après. Vraie proposition, pas report flou.",
+          "tone": "bounded_alternative",
+          "sets_flags": [
+            "marie_shared_hour_rescheduled",
+            "marie_shared_time_scheduled"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sat_marie_shared_hour_004b",
+              "sender": "marie",
+              "time_label": "09:38",
+              "text": "Accepté."
+            },
+            {
+              "id": "msg_sat_marie_shared_hour_005b",
+              "sender": "marie",
+              "time_label": "09:38",
+              "text": "Je garde l'heure, pas la bonne intention."
+            },
+            {
+              "id": "msg_sat_marie_shared_hour_006b",
+              "sender": "marie",
+              "time_label": "09:39",
+              "text": "À tout à l'heure."
+            }
+          ]
+        },
+        {
+          "id": "choice_sat_marie_moves_independently",
+          "text": "Je dois finir deux trucs. Profite, je te retrouve plus tard.",
+          "tone": "let_marie_move",
+          "sets_flags": [
+            "marie_moves_without_player",
+            "marie_weekend_return_scheduled",
+            "parallel_drift_evidence_soft"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_sat_marie_shared_hour_004c",
+              "sender": "marie",
+              "time_label": "09:38",
+              "text": "Je vais profiter."
+            },
+            {
+              "id": "msg_sat_marie_shared_hour_005c",
+              "sender": "marie",
+              "time_label": "09:38",
+              "text": "Le plus tard est à toi cette fois."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "routes_nourished": [
+    "marie"
+  ],
+  "debug_notes": "V0.89 W9. Marie propose une heure bornée depuis une vie déjà en mouvement. Les trois réponses Player sont des SMS manuels complets ; aucun message Player n'est automatisé et le chat s'arrête à la co-présence."
+}

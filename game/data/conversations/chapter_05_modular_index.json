@@ -1,0 +1,135 @@
+{
+  "id": "chapter_05_modular_index",
+  "chapter": 5,
+  "day": 5,
+  "calendar_label": "Samedi",
+  "display_label": "Samedi — Une heure",
+  "day_start_time": "09:35",
+  "title": "Samedi — Une heure",
+  "description": "Marie ouvre le week-end par une heure concrète. Player la rejoint, propose une alternative bornée ou la laisse profiter sans lui.",
+  "design_goal": "Tester une scène de couple positive et trois postures observables avant la première opportunité externe, sans faux chat pendant le temps partagé.",
+  "window_range": "W9",
+  "default_order": [
+    "chapter_05_marie_shared_hour"
+  ],
+  "conversation_files": [
+    "res://data/conversations/chapter_05_marie_shared_hour.json"
+  ],
+  "moment_flow": [
+    {
+      "moment_label": "matin",
+      "time_label": "09:35",
+      "transition_text": "Samedi matin — Marie propose une heure déjà inscrite dans sa propre journée.",
+      "conversation_ids": [
+        "chapter_05_marie_shared_hour"
+      ]
+    }
+  ],
+  "timeline_flow": {
+    "initial_state": "LOCKED",
+    "initial_phase_id": "saturday_marie_shared_hour",
+    "day_start_card": {
+      "eyebrow": "SAMEDI — MATIN",
+      "title": "Une heure",
+      "subtitle": "09:35",
+      "duration": 1.2,
+      "min_time": 0.35
+    },
+    "day_end_card": {
+      "eyebrow": "SAMEDI — FIN DE JOURNÉE",
+      "duration": 1.0,
+      "min_time": 0.35
+    },
+    "next_day": 6,
+    "phases": [
+      {
+        "id": "saturday_marie_shared_hour",
+        "moment_label": "matin",
+        "time_label": "09:35",
+        "required_conversation_ids": [
+          "chapter_05_marie_shared_hour"
+        ]
+      },
+      {
+        "id": "saturday_shared_hour_resolution",
+        "moment_label": "journée",
+        "time_label": "10:35",
+        "authored_beat_variants": [
+          {
+            "id": "saturday_shared_hour_joined_resolution",
+            "conditions": [
+              "marie_shared_hour_joined"
+            ],
+            "time_label": "10:35",
+            "title": "L'heure est partagée.",
+            "text": "Player rejoint Marie près du marché. Le café et la marche continuent hors téléphone.",
+            "sets_flags": [
+              "marie_shared_hour_paid",
+              "active_reconnection_evidence"
+            ]
+          },
+          {
+            "id": "saturday_shared_time_rescheduled_resolution",
+            "conditions": [
+              "marie_shared_hour_rescheduled"
+            ],
+            "time_label": "14:10",
+            "title": "L'alternative a lieu.",
+            "text": "Le déjeuner et la marche promis ont lieu. Le téléphone ne remplace pas le temps partagé.",
+            "sets_flags": [
+              "marie_shared_time_paid",
+              "active_reconnection_evidence"
+            ]
+          },
+          {
+            "id": "saturday_marie_independent_resolution",
+            "conditions": [
+              "marie_moves_without_player"
+            ],
+            "time_label": "10:45",
+            "title": "Marie garde son heure.",
+            "text": "Marie termine le marché et prend son café sans attendre Player. Le retour concret reste à sa charge.",
+            "sets_flags": [
+              "marie_independent_hour_complete"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "conversation_availability": {
+    "initial_conversation_ids": [
+      "chapter_05_marie_shared_hour"
+    ],
+    "locked_conversation_ids": [],
+    "unlocks": {
+      "chapter_05_marie_shared_hour": {
+        "pending": true,
+        "notification": {
+          "title": "Marie",
+          "body": "J'ai une heure avant de redevenir une adulte utile."
+        }
+      }
+    }
+  },
+  "initial_visual_anchors": [
+    "profile_marie_placeholder"
+  ],
+  "routes_available": [
+    "marie"
+  ],
+  "route_stage_ceiling": "HABITUAL_WARMTH",
+  "end_of_day_player_knowledge": [
+    "Marie a réellement utilisé son samedi, avec ou sans Player.",
+    "L'heure partagée ou l'alternative est payée lorsqu'elle a été promise dans cette tranche.",
+    "Un retour concret reste programmé si Player a laissé Marie agir seule.",
+    "Aucun mode de couple, secret dur ou cadre adulte ne change."
+  ],
+  "proof_content_files": [],
+  "debug_expected_outcomes": [
+    "Friday completion unlocks Saturday.",
+    "M2 has exactly three choices and no numeric effect.",
+    "The shared-hour result remains off phone.",
+    "Saturday completion unlocks Sunday."
+  ]
+}

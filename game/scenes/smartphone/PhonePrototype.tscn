@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://phone_prototype"]
 
-[ext_resource type="Script" path="res://scripts/ui/PhonePrototypeV086A.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/ui/PhonePrototypeV089.gd" id="1"]
 
 [node name="PhonePrototype" type="Control"]
-editor_description = "V0.86a UX adapter extends PhonePrototypeV085.gd."
+editor_description = "V0.89 first-repetition adapter extends PhonePrototypeV086A.gd."
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

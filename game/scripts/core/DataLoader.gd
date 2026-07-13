@@ -9,6 +9,8 @@ const CHAPTER_INDEX_PATHS := [
 	"res://data/conversations/chapter_02_modular_index.json",
 	"res://data/conversations/chapter_03_modular_index.json",
 	"res://data/conversations/chapter_04_modular_index.json",
+	"res://data/conversations/chapter_05_modular_index.json",
+	"res://data/conversations/chapter_06_modular_index.json",
 ]
 const LEGACY_CHAPTER_INDEX_PATHS := [
 	"res://data/conversations/chapter_01_index.json",
@@ -234,6 +236,14 @@ func _timeline_phase_conversation_ids(phase: Dictionary) -> Array:
 	for key in ["required_conversation_ids", "optional_conversation_ids", "required_any_conversation_ids"]:
 		for conversation_id in phase.get(key, []):
 			var value := str(conversation_id)
+			if value != "" and not ids.has(value):
+				ids.append(value)
+	var raw_pool = phase.get("candidate_pool", {})
+	if typeof(raw_pool) == TYPE_DICTIONARY:
+		for raw_candidate in raw_pool.get("ordered_candidates", []):
+			if typeof(raw_candidate) != TYPE_DICTIONARY:
+				continue
+			var value := str(raw_candidate.get("conversation_id", ""))
 			if value != "" and not ids.has(value):
 				ids.append(value)
 	return ids

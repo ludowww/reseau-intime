@@ -82,14 +82,14 @@ class V086FridayOpeningStaticTests(unittest.TestCase):
         self.assertNotIn('"res://data/visual_content/chapter_04_proofs.json"', active_visuals)
         self.assertIn("chapter_04_proofs.json", legacy_visuals)
 
-    def test_thursday_unlocks_friday_and_friday_is_the_final_active_day(self):
+    def test_thursday_unlocks_friday_and_friday_hands_off_to_saturday(self):
         thursday = load_json("data/conversations/chapter_03_modular_index.json")
         friday = load_json("data/conversations/chapter_04_modular_index.json")
         self.assertEqual(thursday["timeline_flow"].get("next_day"), 4)
         self.assertEqual(friday["timeline_flow"].get("initial_state"), "LOCKED")
         self.assertEqual(friday["timeline_flow"]["day_start_card"]["eyebrow"], "VENDREDI — MATIN")
-        self.assertIsNone(friday["timeline_flow"].get("next_day"))
-        self.assertIn("La suite n'est pas encore disponible", friday["timeline_flow"]["day_end_card"]["subtitle"])
+        self.assertEqual(friday["timeline_flow"].get("next_day"), 5)
+        self.assertIn("Le week-end continue", friday["timeline_flow"]["day_end_card"]["subtitle"])
 
     def test_friday_index_has_exact_moments_phase_order_and_unlock_chain(self):
         index = load_json("data/conversations/chapter_04_modular_index.json")
@@ -247,7 +247,7 @@ class V086FridayOpeningStaticTests(unittest.TestCase):
         self.assertIn("Marie", beat.get("text", ""))
         self.assertIn("Mathilde", beat.get("text", ""))
         self.assertNotIn("effects", beat)
-        self.assertIsNone(index["timeline_flow"].get("next_day"))
+        self.assertEqual(index["timeline_flow"].get("next_day"), 5)
 
     def test_friday_player_dialogue_is_choice_driven_and_effects_are_flags_only(self):
         for relative in self.FRIDAY_FILES:

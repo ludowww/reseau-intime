@@ -38,20 +38,26 @@ class V081WednesdayStaticTests(unittest.TestCase):
         self.assertIn("chapter_03_proofs.json", visual_block)
         self.assertNotIn("chapter_04_proofs.json", visual_block)
 
-    def test_active_scenes_use_v085_adapter_while_preserving_v081_v082_v084_foundations(self):
+    def test_active_scenes_use_v089_while_preserving_v081_v082_v084_foundations(self):
         phone_scene = (GAME / "scenes/smartphone/PhonePrototype.tscn").read_text(encoding="utf-8")
         conversation_scene = (GAME / "scenes/smartphone/ConversationView.tscn").read_text(encoding="utf-8")
-        self.assertIn("PhonePrototypeV085.gd", phone_scene)
-        self.assertIn("ConversationViewV084.gd", conversation_scene)
+        self.assertIn("PhonePrototypeV089.gd", phone_scene)
+        self.assertIn("ConversationViewV086A.gd", conversation_scene)
 
+        phone_v089 = (GAME / "scripts/ui/PhonePrototypeV089.gd").read_text(encoding="utf-8")
+        phone_v086a = (GAME / "scripts/ui/PhonePrototypeV086A.gd").read_text(encoding="utf-8")
         phone_v085 = (GAME / "scripts/ui/PhonePrototypeV085.gd").read_text(encoding="utf-8")
         phone_v084 = (GAME / "scripts/ui/PhonePrototypeV084.gd").read_text(encoding="utf-8")
         phone_v082 = (GAME / "scripts/ui/PhonePrototypeV082.gd").read_text(encoding="utf-8")
+        conversation_v086a = (GAME / "scripts/ui/ConversationViewV086A.gd").read_text(encoding="utf-8")
         conversation_v084 = (GAME / "scripts/ui/ConversationViewV084.gd").read_text(encoding="utf-8")
         conversation_v082 = (GAME / "scripts/ui/ConversationViewV082.gd").read_text(encoding="utf-8")
+        self.assertIn('extends "res://scripts/ui/PhonePrototypeV086A.gd"', phone_v089)
+        self.assertIn('extends "res://scripts/ui/PhonePrototypeV085.gd"', phone_v086a)
         self.assertIn('extends "res://scripts/ui/PhonePrototypeV084.gd"', phone_v085)
         self.assertIn('extends "res://scripts/ui/PhonePrototypeV082.gd"', phone_v084)
         self.assertIn('extends "res://scripts/ui/PhonePrototypeV081.gd"', phone_v082)
+        self.assertIn('extends "res://scripts/ui/ConversationViewV084.gd"', conversation_v086a)
         self.assertIn('extends "res://scripts/ui/ConversationViewV082.gd"', conversation_v084)
         self.assertIn('extends "res://scripts/ui/ConversationViewV081.gd"', conversation_v082)
 
