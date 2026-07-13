@@ -1,4 +1,4 @@
-extends SceneTree
+extends Node
 
 const MAIN_SCENE := preload("res://scenes/Main.tscn")
 const DAY := 7
@@ -15,7 +15,7 @@ const DEFAULT_TIMEOUT_SECONDS := 5.0
 var failures: Array[String] = []
 
 
-func _init() -> void:
+func _ready() -> void:
 	call_deferred("_run")
 
 
@@ -32,12 +32,12 @@ func _run() -> void:
 
 	if failures.is_empty():
 		print("V0.90 runtime smoke: OK (A-I)")
-		quit(0)
+		get_tree().quit(0)
 		return
 	for failure in failures:
 		push_error(failure)
 	print("V0.90 runtime smoke: FAILED (%d)" % failures.size())
-	quit(1)
+	get_tree().quit(1)
 
 
 func _scenario_a_carried_morning_promise() -> void:
@@ -216,9 +216,9 @@ func _run_marie_outcome_scenario(
 
 func _new_phone_context() -> Dictionary:
 	var main := MAIN_SCENE.instantiate()
-	root.add_child(main)
-	await process_frame
-	await process_frame
+	get_tree().root.add_child(main)
+	await get_tree().process_frame
+	await get_tree().process_frame
 	var phone = main.get_node("PhonePrototype")
 	phone.conversation_view.set_debug_speed_multiplier(DEBUG_SPEED)
 	GameState.reset_state()
@@ -234,11 +234,18 @@ func _new_phone_context() -> Dictionary:
 
 
 func _dispose_context(context: Dictionary) -> void:
+	var phone = context.get("phone")
+	if is_instance_valid(phone):
+		phone.optional_window_token += 1
+		phone.time_passage_token += 1
+		phone.time_passage_in_progress = false
+		phone.transition_in_progress = false
+		phone.conversation_view.reset_ui_state()
 	var main: Node = context.get("main")
 	if is_instance_valid(main):
 		main.queue_free()
-	await process_frame
-	await process_frame
+	await get_tree().process_frame
+	await get_tree().process_frame
 
 
 func _prepare_sandra_eligibility() -> void:
@@ -273,7 +280,7 @@ func _open_and_play(phone, episode_id: String, choice_indexes: Array) -> void:
 			return
 		var button: Button = view.choice_buttons[choice_index]
 		button.emit_signal("pressed")
-		await process_frame
+		await get_tree().process_frame
 	var completed := await _wait_until(func(): return TimelineState.is_episode_completed(DAY, episode_id), DEFAULT_TIMEOUT_SECONDS)
 	_expect(completed, "Conversation did not complete: %s" % episode_id)
 
@@ -293,7 +300,7 @@ func _wait_until(predicate: Callable, timeout_seconds: float) -> bool:
 	while Time.get_ticks_msec() < deadline:
 		if bool(predicate.call()):
 			return true
-		await process_frame
+		await get_tree().process_frame
 	return bool(predicate.call())
 
 
