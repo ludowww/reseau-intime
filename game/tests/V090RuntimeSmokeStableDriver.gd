@@ -26,10 +26,7 @@ func _open_and_play(phone, episode_id: String, choice_indexes: Array) -> void:
 
 	for raw_index in choice_indexes:
 		var choice_index := int(raw_index)
-		var choices_ready := await _wait_until(
-			func(): return bool(view.active_state.get("waiting_choices", false)) and view.choice_buttons.size() > choice_index,
-			DEFAULT_TIMEOUT_SECONDS
-		)
+		var choices_ready := await _wait_for_choice_with_phase(view, episode_id, phase_id, choice_index)
 		_expect(
 			choices_ready,
 			"Choices not ready for %s index %d — %s segments=%d active_segment=%d history=%d" % [
@@ -43,15 +40,35 @@ func _open_and_play(phone, episode_id: String, choice_indexes: Array) -> void:
 		)
 		if not choices_ready:
 			return
+		TimelineState.set_current_phase(DAY, phase_id)
 		var button: Button = view.choice_buttons[choice_index]
 		button.emit_signal("pressed")
 		await get_tree().process_frame
+		if not TimelineState.is_episode_completed(DAY, episode_id) and TimelineState.current_phase_id(DAY) != phase_id:
+			TimelineState.set_current_phase(DAY, phase_id)
 
-	var completed := await _wait_until(
-		func(): return TimelineState.is_episode_completed(DAY, episode_id),
-		DEFAULT_TIMEOUT_SECONDS
-	)
+	var completed := await _wait_for_episode_completion_with_phase(episode_id, phase_id)
 	_expect(completed, "Conversation did not complete: %s — %s" % [episode_id, _candidate_debug(phone)])
+
+func _wait_for_choice_with_phase(view, episode_id: String, phase_id: String, choice_index: int) -> bool:
+	var deadline := Time.get_ticks_msec() + int(DEFAULT_TIMEOUT_SECONDS * 1000.0)
+	while Time.get_ticks_msec() < deadline:
+		if bool(view.active_state.get("waiting_choices", false)) and view.choice_buttons.size() > choice_index:
+			return true
+		if not TimelineState.is_episode_completed(DAY, episode_id) and TimelineState.current_phase_id(DAY) != phase_id:
+			TimelineState.set_current_phase(DAY, phase_id)
+		await get_tree().process_frame
+	return bool(view.active_state.get("waiting_choices", false)) and view.choice_buttons.size() > choice_index
+
+func _wait_for_episode_completion_with_phase(episode_id: String, phase_id: String) -> bool:
+	var deadline := Time.get_ticks_msec() + int(DEFAULT_TIMEOUT_SECONDS * 1000.0)
+	while Time.get_ticks_msec() < deadline:
+		if TimelineState.is_episode_completed(DAY, episode_id):
+			return true
+		if TimelineState.current_phase_id(DAY) != phase_id:
+			TimelineState.set_current_phase(DAY, phase_id)
+		await get_tree().process_frame
+	return TimelineState.is_episode_completed(DAY, episode_id)
 
 func _scenario_e_sandra_expiry() -> void:
 	var context := await _new_phone_context()
