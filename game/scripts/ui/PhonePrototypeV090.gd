@@ -24,6 +24,27 @@ func _ensure_v090_chapter_loaded() -> void:
 	DataLoader.chapter_indexes.append(index)
 	DataLoader._load_index_conversations(index)
 
+func _complete_day(day_value) -> void:
+	var next_day = DataLoader.get_timeline_next_day(day_value)
+	if str(next_day) != "7":
+		await super._complete_day(day_value)
+		return
+	var initial_phase := DataLoader.get_timeline_phase(
+		next_day,
+		DataLoader.get_timeline_initial_phase_id(next_day)
+	)
+	_hide_notification()
+	_clear_pending_for_day(day_value)
+	TimelineState.mark_day_complete(day_value)
+	TimelineState.unlock_day(next_day)
+	TimelineState.set_current_day(next_day)
+	current_day_value = next_day
+	viewing_archived_day = false
+	transition_in_progress = false
+	time_passage_in_progress = false
+	await _activate_phase(next_day, initial_phase, false)
+	_sync_conversation_phone_status()
+
 func _activate_phase(day_value, phase: Dictionary, show_transition: bool) -> void:
 	if str(phase.get("id", "")) == MONDAY_MARIE_RETURN_PHASE_ID:
 		_mark_monday_obligations_due()
