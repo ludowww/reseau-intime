@@ -48,11 +48,11 @@
     "day_end_card": {
       "eyebrow": "DIMANCHE — SOIR",
       "title": "Le week-end reste ouvert.",
-      "subtitle": "La suite n'est pas encore disponible.",
+      "subtitle": "Lundi devient disponible.",
       "duration": 1.2,
       "min_time": 0.35
     },
-    "next_day": null,
+    "next_day": 7,
     "phases": [
       {
         "id": "sunday_household_candidate",
@@ -162,6 +162,6 @@
     "Ignoring Mathilde expires the exact scene without consuming a foreground ticket.",
     "Marie return is required after seen, expired or deferred Mathilde.",
     "Sunday closes only the first runtime slice.",
-    "Monday remains unavailable."
+    "Monday unlocks after Sunday completion."
   ]
 }

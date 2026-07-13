@@ -1,0 +1,141 @@
+{
+  "id": "chapter_07_marie_monday_return",
+  "scene_id": "marie_monday_evening_return_01",
+  "chapter": 7,
+  "day": 7,
+  "title": "Lundi soir — Atterrir",
+  "app": "messages",
+  "window_id": "W13_MARIE_MONDAY_RETURN",
+  "calendar_label": "Lundi",
+  "time_band": "EVENING",
+  "communication_mode": "REMOTE_ASYNC",
+  "foreground_role": "couple_spine_return",
+  "physical_context": "Marie vient de rentrer. Player est encore dehors ou termine sa journée. La conversation décide seulement comment ils atterrissent ce soir ; elle ne demande aucune confession sur les autres fils.",
+  "suppress_empty_hint": true,
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "marie"
+    ],
+    "display_name": "Marie",
+    "profile_content_id": "profile_marie_placeholder"
+  },
+  "segments": [
+    {
+      "id": "segment_monday_marie_return_choice",
+      "pattern": "three_posture_choice",
+      "function": "M4 — revenir activement, prendre un sas borné ou annoncer honnêtement une soirée séparée.",
+      "suppress_empty_hint": true,
+      "messages": [
+        {
+          "id": "msg_mon_marie_return_001_paid",
+          "sender": "marie",
+          "time_label": "20:05",
+          "conditions": [
+            "marie_next_morning_obligation_scheduled"
+          ],
+          "text": "Le café de ce matin comptait."
+        },
+        {
+          "id": "msg_mon_marie_return_001_default",
+          "sender": "marie",
+          "time_label": "20:05",
+          "unless_conditions": [
+            "marie_next_morning_obligation_scheduled"
+          ],
+          "text": "Je viens de rentrer."
+        },
+        {
+          "id": "msg_mon_marie_return_002",
+          "sender": "marie",
+          "time_label": "20:06",
+          "text": "J'ai mis de l'eau à chauffer."
+        },
+        {
+          "id": "msg_mon_marie_return_003",
+          "sender": "marie",
+          "time_label": "20:06",
+          "text": "On mange ensemble ou chacun atterrit de son côté ?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_mon_marie_return_active",
+          "text": "Ensemble. Je passe prendre quelque chose et je rentre.",
+          "tone": "active_return",
+          "sets_flags": [
+            "marie_monday_return_active",
+            "marie_monday_return_paid",
+            "active_reconnection_evidence"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_mon_marie_return_004a",
+              "sender": "marie",
+              "time_label": "20:08",
+              "text": "D'accord."
+            },
+            {
+              "id": "msg_mon_marie_return_005a",
+              "sender": "marie",
+              "time_label": "20:08",
+              "text": "Prends du pain. Le reste est déjà là."
+            }
+          ]
+        },
+        {
+          "id": "choice_mon_marie_return_bounded",
+          "text": "Ensemble, mais laisse-moi trente minutes en rentrant. Après, je coupe.",
+          "tone": "bounded_landing",
+          "sets_flags": [
+            "marie_monday_return_bounded",
+            "marie_monday_evening_time_scheduled"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_mon_marie_return_004b",
+              "sender": "marie",
+              "time_label": "20:08",
+              "text": "Trente vraies minutes."
+            },
+            {
+              "id": "msg_mon_marie_return_005b",
+              "sender": "marie",
+              "time_label": "20:08",
+              "text": "Après tu reviens dans la pièce."
+            }
+          ]
+        },
+        {
+          "id": "choice_mon_marie_return_separate",
+          "text": "Chacun atterrit. Je préfère être clair ce soir plutôt que te faire attendre.",
+          "tone": "honest_distance",
+          "sets_flags": [
+            "marie_monday_return_honest_distance",
+            "parallel_drift_evidence_soft"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_mon_marie_return_004c",
+              "sender": "marie",
+              "time_label": "20:08",
+              "text": "Merci de me le dire."
+            },
+            {
+              "id": "msg_mon_marie_return_005c",
+              "sender": "marie",
+              "time_label": "20:09",
+              "text": "Je ne vais pas t'attendre avec une assiette tiède."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "routes_nourished": [
+    "marie"
+  ],
+  "debug_notes": "V0.90 W13. Retour Marie obligatoire après Sandra vue, expirée ou différée. Trois SMS Player manuels ; pas de confession forcée et couple maintenu dans HABITUAL_WARMTH."
+}

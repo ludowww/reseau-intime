@@ -82,6 +82,72 @@ def message_presence_stats(messages: list[dict[str, object]], player: str) -> tu
     return non_player_messages, longest_non_player_streak
 
 
+def _is_conditioned_message(node: dict[str, object]) -> bool:
+    return bool(node.get("conditions")) or bool(node.get("unless_conditions"))
+
+
+def _collapse_same_slot_condition_variants(
+    messages: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    """Keep one representative from mutually exclusive authored variants.
+
+    Conversation files commonly place alternative condition-driven lines at the
+    same timestamp and sender slot. Flattening every branch made unrelated choice
+    paths look like one long automatic monologue. This helper remains conservative:
+    unconditional lines are all retained, and conditioned lines are collapsed only
+    when they share the exact sender/time slot.
+    """
+
+    collapsed: list[dict[str, object]] = []
+    seen_condition_slots: set[tuple[str, str]] = set()
+    for node in messages:
+        if not _is_conditioned_message(node):
+            collapsed.append(node)
+            continue
+        slot = (sender_of(node), str(node.get("time_label", "")))
+        if slot in seen_condition_slots:
+            continue
+        seen_condition_slots.add(slot)
+        collapsed.append(node)
+    return collapsed
+
+
+def iter_authored_message_runs(data: dict[str, object]) -> list[list[dict[str, object]]]:
+    """Return automatic-message runs separated by visible Player choices."""
+
+    runs: list[list[dict[str, object]]] = []
+    raw_segments = data.get("segments", [])
+    if not isinstance(raw_segments, list):
+        return runs
+    for raw_segment in raw_segments:
+        if not isinstance(raw_segment, dict):
+            continue
+        raw_messages = raw_segment.get("messages", [])
+        if isinstance(raw_messages, list):
+            messages = [node for node in raw_messages if isinstance(node, dict)]
+            if messages:
+                runs.append(messages)
+        raw_choices = raw_segment.get("choices", [])
+        if not isinstance(raw_choices, list):
+            continue
+        for raw_choice in raw_choices:
+            if not isinstance(raw_choice, dict):
+                continue
+            followups = next_messages(raw_choice)
+            if followups:
+                runs.append(followups)
+    return runs
+
+
+def longest_authored_non_player_streak(data: dict[str, object], player: str) -> int:
+    longest = 0
+    for run in iter_authored_message_runs(data):
+        visible_upper_bound = _collapse_same_slot_condition_variants(run)
+        _, streak = message_presence_stats(visible_upper_bound, player)
+        longest = max(longest, streak)
+    return longest
+
+
 def report_file(path: Path, player: str, min_ratio: float) -> int:
     try:
         data = load_json(path)
@@ -93,9 +159,10 @@ def report_file(path: Path, player: str, min_ratio: float) -> int:
     choices = iter_choices(data)
     player_messages = [node for node in messages if sender_of(node) == player and text_of(node).strip()]
     visible_choice_replies = [choice for choice in choices if choice_label(choice).strip()]
-    non_player_messages, longest_non_player_streak = message_presence_stats(messages, player)
-    # Backward-compatible alias: the legacy static suite and downstream authoring
-    # integrations used this name for the same longest non-Player message streak.
+    non_player_messages = sum(1 for node in messages if sender_of(node) != player or not text_of(node).strip())
+    longest_non_player_streak = longest_authored_non_player_streak(data, player)
+    # Backward-compatible alias: downstream authoring integrations use this name
+    # for the longest genuinely consecutive authored non-Player run.
     longest_player_absence_streak = longest_non_player_streak
     choices_with_next = [choice for choice in choices if next_messages(choice)]
     choices_with_player = [choice for choice in choices if has_player_reply(choice, player)]

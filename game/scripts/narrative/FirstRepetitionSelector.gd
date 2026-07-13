@@ -72,10 +72,22 @@ static func _any_flag_present(excluded_flags, flags: Array) -> bool:
 static func _day_is_compatible(raw_days, day_value) -> bool:
 	if typeof(raw_days) != TYPE_ARRAY or raw_days.is_empty():
 		return true
+	var expected_key := _normalized_day_key(day_value)
 	for raw_day in raw_days:
-		if str(raw_day) == str(day_value):
+		if _normalized_day_key(raw_day) == expected_key:
 			return true
 	return false
+
+static func _normalized_day_key(day_value) -> String:
+	if day_value == null:
+		return ""
+	var value_type := typeof(day_value)
+	if value_type == TYPE_INT or value_type == TYPE_FLOAT:
+		return str(int(day_value))
+	var text := str(day_value)
+	if text.is_valid_float():
+		return str(int(float(text)))
+	return text
 
 static func _phase_is_compatible(raw_phase_ids, phase_id: String) -> bool:
 	if typeof(raw_phase_ids) != TYPE_ARRAY or raw_phase_ids.is_empty():

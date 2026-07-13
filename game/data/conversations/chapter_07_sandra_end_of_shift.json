@@ -1,0 +1,193 @@
+{
+  "id": "chapter_07_sandra_end_of_shift",
+  "scene_id": "sandra_end_of_shift_twenty_minutes_01",
+  "chapter": 7,
+  "day": 7,
+  "title": "Lundi fin de poste — Vingt minutes",
+  "app": "messages",
+  "window_id": "W12_SANDRA_END_OF_SHIFT",
+  "calendar_label": "Lundi",
+  "time_band": "EARLY_EVENING",
+  "communication_mode": "REMOTE_ASYNC",
+  "foreground_role": "external_repeat_candidate",
+  "physical_context": "Sandra vient de terminer son poste et passe devant le café visible sur l'ancienne photo du déjeuner. Son train part dans vingt minutes. Player est encore au travail, en déplacement ou assez près pour la rejoindre. Si Player vient, le chat s'arrête avant la rencontre.",
+  "suppress_empty_hint": true,
+  "thread": {
+    "id": "thread_sandra_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "sandra"
+    ],
+    "display_name": "Sandra",
+    "profile_content_id": "profile_sandra_placeholder"
+  },
+  "segments": [
+    {
+      "id": "segment_monday_sandra_concrete_trigger",
+      "pattern": "guided_reply_pacing",
+      "function": "Réactiver la continuité Sandra par un détail de poste puis une occasion bornée, sans déclaration ni nouvel asset.",
+      "suppress_empty_hint": true,
+      "messages": [
+        {
+          "id": "msg_mon_sandra_shift_001_seen",
+          "sender": "sandra",
+          "time_label": "18:17",
+          "conditions": [
+            "sandra_thursday_echo_seen"
+          ],
+          "text": "Le bouton tient toujours."
+        },
+        {
+          "id": "msg_mon_sandra_shift_001_missed",
+          "sender": "sandra",
+          "time_label": "18:17",
+          "unless_conditions": [
+            "sandra_thursday_echo_seen"
+          ],
+          "text": "Le bouton est revenu jeudi. Tu as raté l'annonce officielle."
+        },
+        {
+          "id": "msg_mon_sandra_shift_002",
+          "sender": "sandra",
+          "time_label": "18:18",
+          "text": "Je viens de finir mon poste et je passe devant le café de la photo."
+        },
+        {
+          "id": "msg_mon_sandra_shift_003",
+          "sender": "sandra",
+          "time_label": "18:18",
+          "text": "J'ai vingt minutes avant mon train."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_mon_sandra_coincidence_guided",
+          "text": "Tu me racontes ça comme une coïncidence ?",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "next_messages": [
+            {
+              "id": "msg_mon_sandra_shift_004",
+              "sender": "sandra",
+              "time_label": "18:19",
+              "text": "Je te raconte ça comme une question."
+            },
+            {
+              "id": "msg_mon_sandra_shift_005",
+              "sender": "sandra",
+              "time_label": "18:19",
+              "text": "Tu es encore dans le quartier ?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_monday_sandra_twenty_minute_choice",
+      "pattern": "three_posture_choice",
+      "function": "S2 — accepter une rencontre très bornée, proposer un vrai futur déjeuner ou protéger la limite douce.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "choice_mon_sandra_join_twenty_minutes",
+          "text": "Oui. Je suis à dix minutes. Prends-nous une table, j'arrive.",
+          "tone": "join_bounded_now",
+          "sets_flags": [
+            "sandra_end_shift_joined"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_mon_sandra_shift_006a",
+              "sender": "sandra",
+              "time_label": "18:20",
+              "text": "Tu viens vraiment ?"
+            },
+            {
+              "id": "msg_mon_sandra_shift_007a_precise",
+              "sender": "sandra",
+              "time_label": "18:20",
+              "conditions": [
+                "j1_sandra_precise_observation"
+              ],
+              "text": "D'accord. Tu pourras vérifier ta mémoire pénible."
+            },
+            {
+              "id": "msg_mon_sandra_shift_007a_safe",
+              "sender": "sandra",
+              "time_label": "18:20",
+              "conditions": [
+                "j1_sandra_safe_warmth"
+              ],
+              "text": "D'accord. Vingt minutes presque raisonnables."
+            },
+            {
+              "id": "msg_mon_sandra_shift_007a_cautious",
+              "sender": "sandra",
+              "time_label": "18:20",
+              "conditions": [
+                "j1_sandra_cautious"
+              ],
+              "text": "D'accord. Pour une fois, ce n'est pas la réponse prudente."
+            },
+            {
+              "id": "msg_mon_sandra_shift_008a",
+              "sender": "sandra",
+              "time_label": "18:21",
+              "text": "Pas un grand événement. Vingt minutes."
+            }
+          ]
+        },
+        {
+          "id": "choice_mon_sandra_schedule_lunch",
+          "text": "Pas assez près ce soir. Mais on se cale un déjeuner la semaine prochaine.",
+          "tone": "bounded_future",
+          "sets_flags": [
+            "sandra_lunch_rescheduled",
+            "sandra_next_lunch_scheduled"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_mon_sandra_shift_006b",
+              "sender": "sandra",
+              "time_label": "18:20",
+              "text": "Tu ne me dois rien."
+            },
+            {
+              "id": "msg_mon_sandra_shift_007b",
+              "sender": "sandra",
+              "time_label": "18:21",
+              "text": "Mais je note « déjeuner » avant que ça devienne une bonne intention."
+            }
+          ]
+        },
+        {
+          "id": "choice_mon_sandra_keep_soft_boundary",
+          "text": "Non. Garde tes vingt minutes pour souffler. On évite la deuxième photo floue.",
+          "tone": "protect_soft_boundary",
+          "sets_flags": [
+            "sandra_boundary_respected_soft"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_mon_sandra_shift_006c",
+              "sender": "sandra",
+              "time_label": "18:20",
+              "text": "Réponse raisonnable."
+            },
+            {
+              "id": "msg_mon_sandra_shift_007c",
+              "sender": "sandra",
+              "time_label": "18:21",
+              "text": "C'est presque décevant. Presque."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "routes_nourished": [
+    "sandra"
+  ],
+  "debug_notes": "V0.90 W12. Sandra réapparaît après son poste par le bouton de jeudi puis le café de la photo. Une réponse guidée et trois SMS Player manuels. Aucun asset, aucune déclaration, aucun secret et aucun accès chargé."
+}
