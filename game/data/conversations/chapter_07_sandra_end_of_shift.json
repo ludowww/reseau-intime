@@ -42,8 +42,8 @@
           "id": "msg_mon_sandra_shift_001_missed",
           "sender": "sandra",
           "time_label": "18:17",
-          "conditions": [
-            "thursday_sandra_echo_missed"
+          "unless_conditions": [
+            "sandra_thursday_echo_seen"
           ],
           "text": "Le bouton est revenu jeudi. Tu as raté l'annonce officielle."
         },
