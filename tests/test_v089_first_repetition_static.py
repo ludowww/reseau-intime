@@ -8,6 +8,7 @@ GAME = ROOT / "game"
 
 SATURDAY_INDEX = "data/conversations/chapter_05_modular_index.json"
 SUNDAY_INDEX = "data/conversations/chapter_06_modular_index.json"
+MONDAY_INDEX = "data/conversations/chapter_07_modular_index.json"
 MARIE_W9 = "data/conversations/chapter_05_marie_shared_hour.json"
 MATHILDE_MT1 = "data/conversations/chapter_06_mathilde_morning_afterglow.json"
 MARIE_W11 = "data/conversations/chapter_06_marie_concrete_return.json"
@@ -52,17 +53,21 @@ class V089FirstRepetitionStaticTests(unittest.TestCase):
         for expected in ["candidate_pool", "ordered_candidates", "conversation_id"]:
             self.assertIn(expected, phase_lookup)
 
-    def test_chronology_is_friday_to_saturday_to_sunday_without_monday(self):
+    def test_chronology_is_friday_to_saturday_to_sunday_then_monday(self):
         friday = load_json("data/conversations/chapter_04_modular_index.json")
         saturday = load_json(SATURDAY_INDEX)
         sunday = load_json(SUNDAY_INDEX)
+        monday = load_json(MONDAY_INDEX)
         self.assertEqual(friday["timeline_flow"].get("next_day"), 5)
         self.assertEqual(saturday["timeline_flow"].get("next_day"), 6)
-        self.assertIsNone(sunday["timeline_flow"].get("next_day"))
+        self.assertEqual(sunday["timeline_flow"].get("next_day"), 7)
+        self.assertIsNone(monday["timeline_flow"].get("next_day"))
         self.assertEqual(saturday.get("calendar_label"), "Samedi")
         self.assertEqual(sunday.get("calendar_label"), "Dimanche")
+        self.assertEqual(monday.get("calendar_label"), "Lundi")
         self.assertEqual(saturday.get("day_start_time"), "09:35")
         self.assertEqual(sunday.get("day_start_time"), "10:25")
+        self.assertEqual(monday.get("day_start_time"), "09:30")
 
     def test_saturday_contains_only_marie_w9_and_silent_resolution(self):
         index = load_json(SATURDAY_INDEX)
@@ -252,9 +257,11 @@ class V089FirstRepetitionStaticTests(unittest.TestCase):
 
     def test_phone_adapter_reuses_v086a_and_records_ticket_only_on_completion(self):
         phone = (GAME / "scripts/ui/PhonePrototypeV089.gd").read_text(encoding="utf-8")
+        active_phone = (GAME / "scripts/ui/PhonePrototypeV090.gd").read_text(encoding="utf-8")
         scene = (GAME / "scenes/smartphone/PhonePrototype.tscn").read_text(encoding="utf-8")
         self.assertIn('extends "res://scripts/ui/PhonePrototypeV086A.gd"', phone)
-        self.assertIn("PhonePrototypeV089.gd", scene)
+        self.assertIn('extends "res://scripts/ui/PhonePrototypeV089.gd"', active_phone)
+        self.assertIn("PhonePrototypeV090.gd", scene)
         for status in ["ELIGIBLE", "OFFERED", "SEEN", "DEFERRED", "EXPIRED", "RESOLVED"]:
             self.assertIn(f'"{status}"', phone)
         completion = method_block(phone, "_complete_mathilde_candidate", "_evaluate_mathilde_r2_gate")
