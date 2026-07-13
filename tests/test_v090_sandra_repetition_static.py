@@ -101,14 +101,21 @@ class V090SandraRepetitionStaticTests(unittest.TestCase):
         text = json.dumps(data, ensure_ascii=False)
         for expected in [
             "sandra_thursday_echo_seen",
-            "thursday_sandra_echo_missed",
             "Le bouton tient toujours.",
             "Tu as raté l'annonce officielle.",
             "café de la photo",
             "vingt minutes avant mon train",
         ]:
             self.assertIn(expected, text)
-        self.assertNotIn("content_id", text)
+        opening = data["segments"][0]["messages"]
+        missed = next(message for message in opening if message.get("id") == "msg_mon_sandra_shift_001_missed")
+        self.assertEqual(missed.get("unless_conditions"), ["sandra_thursday_echo_seen"])
+        self.assertNotIn("conditions", missed)
+        self.assertFalse(
+            any(isinstance(node, dict) and "content_id" in node for node in walk(data)),
+            "message payload must not add a visual content_id",
+        )
+        self.assertEqual(data["thread"].get("profile_content_id"), "profile_sandra_placeholder")
 
     def test_sandra_has_one_guided_sms_then_three_real_postures(self):
         data = load_json(SANDRA_W12)
@@ -141,21 +148,41 @@ class V090SandraRepetitionStaticTests(unittest.TestCase):
         index = load_json(MONDAY_INDEX)
         phone = (GAME / "scripts/ui/PhonePrototypeV090.gd").read_text(encoding="utf-8")
         self.assertEqual(index.get("route_stage_ceiling"), "SANDRA_R1_MAX")
-        completion = method_block(phone, "_complete_sandra_candidate", "_pay_monday_morning_obligations")
+        completion = method_block(phone, "_complete_sandra_candidate", "_apply_sandra_resolution_state")
         self.assertIn('record_external_foreground(LEDGER_ID, SANDRA_SCENE_ID, "sandra")', completion)
         self.assertIn("set_scene_cooldown", completion)
         self.assertNotIn("claim_charged_access_owner", completion)
         self.assertNotIn("sandra_r2", (json.dumps(index) + phone).lower())
 
+    def test_sandra_resolution_state_is_immediate_and_idempotent_with_authored_beats(self):
+        phone = (GAME / "scripts/ui/PhonePrototypeV090.gd").read_text(encoding="utf-8")
+        completion = method_block(phone, "_complete_sandra_candidate", "_apply_sandra_resolution_state")
+        resolution = method_block(phone, "_apply_sandra_resolution_state", "_pay_monday_morning_obligations")
+        self.assertIn("_apply_sandra_resolution_state()", completion)
+        for expected in [
+            "sandra_end_shift_meeting_complete",
+            "sandra_lunch_plan_recorded",
+            "sandra_soft_boundary_kept",
+            "sandra_r1_repeat_complete",
+        ]:
+            self.assertIn(expected, resolution)
+
     def test_ticket_is_consumed_only_on_sandra_completion_not_expiry(self):
         phone = (GAME / "scripts/ui/PhonePrototypeV090.gd").read_text(encoding="utf-8")
         expiry = method_block(phone, "_advance_optional_phase", "_on_conversation_completed")
-        completion = method_block(phone, "_complete_sandra_candidate", "_pay_monday_morning_obligations")
+        completion = method_block(phone, "_complete_sandra_candidate", "_apply_sandra_resolution_state")
         self.assertIn('set_scene_status(LEDGER_ID, SANDRA_SCENE_ID, "EXPIRED")', expiry)
         self.assertIn("TimelineState.expire_conversation", expiry)
         self.assertNotIn("record_external_foreground", expiry)
         self.assertIn("record_external_foreground", completion)
         self.assertIn('set_scene_status(LEDGER_ID, SANDRA_SCENE_ID, "RESOLVED")', completion)
+
+    def test_monday_optional_expiry_uses_debug_speed_without_changing_x1_duration(self):
+        phone = (GAME / "scripts/ui/PhonePrototypeV090.gd").read_text(encoding="utf-8")
+        schedule = method_block(phone, "_schedule_optional_expiry", "_advance_optional_phase")
+        self.assertIn("MONDAY_SANDRA_PHASE_ID", schedule)
+        self.assertIn("_scaled_seconds(OPTIONAL_WINDOW_SECONDS)", schedule)
+        self.assertIn("await _advance_optional_phase(day_value, phase_id)", schedule)
 
     def test_carried_monday_obligations_are_paid_before_candidate_selection(self):
         phone = (GAME / "scripts/ui/PhonePrototypeV090.gd").read_text(encoding="utf-8")
@@ -186,18 +213,31 @@ class V090SandraRepetitionStaticTests(unittest.TestCase):
         self.assertTrue(all(str(choice.get("text", "")).strip() for choice in choices))
         self.assertTrue(all("effects" not in choice for choice in choices))
 
-    def test_marie_obligation_is_due_only_after_completed_sandra_and_then_resolved(self):
+    def test_marie_obligation_is_promoted_due_and_resolved_even_for_direct_probe_completion(self):
         phone = (GAME / "scripts/ui/PhonePrototypeV090.gd").read_text(encoding="utf-8")
-        completion = method_block(phone, "_complete_sandra_candidate", "_pay_monday_morning_obligations")
+        completion = method_block(phone, "_complete_sandra_candidate", "_apply_sandra_resolution_state")
         self.assertIn('"marie_return_after_sandra"', completion)
         self.assertIn('"status": "SCHEDULED"', completion)
         self.assertIn('"expected_by": MONDAY_MARIE_RETURN_PHASE_ID', completion)
         due = method_block(phone, "_mark_monday_obligations_due", "_apply_monday_marie_return_outcome")
         self.assertIn('entry["status"] = "DUE"', due)
-        outcome = method_block(phone, "_apply_monday_marie_return_outcome", "_resolve_monday_due_obligations")
+        outcome = method_block(phone, "_apply_monday_marie_return_outcome", "_apply_monday_marie_resolution_state")
+        self.assertIn("_mark_monday_obligations_due()", outcome)
         self.assertIn('"PAID", "active_return"', outcome)
         self.assertIn('"PAID", "bounded_return"', outcome)
         self.assertIn('"FAILED", "honest_distance"', outcome)
+
+    def test_marie_resolution_state_is_immediate_and_authored_close_remains_separate(self):
+        phone = (GAME / "scripts/ui/PhonePrototypeV090.gd").read_text(encoding="utf-8")
+        resolution = method_block(phone, "_apply_monday_marie_resolution_state", "_resolve_monday_due_obligations")
+        for expected in [
+            "marie_monday_return_realized",
+            "marie_monday_bounded_time_paid",
+            "marie_monday_evening_separate",
+            "active_reconnection_evidence",
+        ]:
+            self.assertIn(expected, resolution)
+        self.assertNotIn("first_repetition_slice_02_complete", resolution)
 
     def test_all_player_messages_are_manual_and_ids_are_unique(self):
         seen: set[str] = set()
@@ -218,6 +258,17 @@ class V090SandraRepetitionStaticTests(unittest.TestCase):
                     seen.add(node_id)
                 self.assertNotIn("effects", node, relative)
                 self.assertNotIn("content_id", node, relative)
+
+    def test_player_presence_tool_measures_authored_runs_not_flattened_branches(self):
+        tool = (ROOT / "tools/player_presence_check.py").read_text(encoding="utf-8")
+        for expected in [
+            "iter_authored_message_runs",
+            "_collapse_same_slot_condition_variants",
+            "longest_authored_non_player_streak",
+            "runs separated by visible Player choices",
+        ]:
+            self.assertIn(expected, tool)
+        self.assertNotIn("message_presence_stats(messages, player)", tool)
 
     def test_no_other_route_asset_wave_completion_or_adult_frame_is_added(self):
         data_text = "\n".join((GAME / relative).read_text(encoding="utf-8") for relative in NEW_DATA_FILES)
