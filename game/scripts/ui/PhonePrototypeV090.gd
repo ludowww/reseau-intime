@@ -63,6 +63,24 @@ func _open_conversation(day_value, conversation: Dictionary) -> void:
 	if opens_sandra:
 		GameState.set_scene_status(LEDGER_ID, SANDRA_SCENE_ID, "SEEN")
 
+func _schedule_optional_expiry(day_value, phase: Dictionary) -> void:
+	if str(phase.get("id", "")) != MONDAY_SANDRA_PHASE_ID:
+		await super._schedule_optional_expiry(day_value, phase)
+		return
+	optional_window_token += 1
+	var token: int = optional_window_token
+	var phase_id: String = str(phase.get("id", ""))
+	await get_tree().create_timer(maxf(_scaled_seconds(OPTIONAL_WINDOW_SECONDS), 0.01)).timeout
+	if token != optional_window_token or time_passage_in_progress:
+		return
+	if phase_id != TimelineState.current_phase_id(day_value):
+		return
+	for raw_id in phase.get("optional_conversation_ids", []):
+		var conversation_id: String = str(raw_id)
+		if TimelineState.is_optional_opened(day_value, conversation_id) or TimelineState.is_episode_completed(day_value, conversation_id):
+			return
+	await _advance_optional_phase(day_value, phase_id)
+
 func _advance_optional_phase(day_value, phase_id: String) -> void:
 	if phase_id != MONDAY_SANDRA_PHASE_ID:
 		await super._advance_optional_phase(day_value, phase_id)
@@ -99,6 +117,7 @@ func _complete_sandra_candidate() -> void:
 	var descriptor := _sandra_candidate_descriptor()
 	var cooldown_windows := int(descriptor.get("cooldown_windows", 2))
 	GameState.set_scene_cooldown(LEDGER_ID, SANDRA_SCENE_ID, ordinal + cooldown_windows + 1)
+	_apply_sandra_resolution_state()
 	GameState.set_obligation_status(LEDGER_ID, "marie_return_after_sandra", {
 		"status": "SCHEDULED",
 		"owner": "player",
@@ -107,6 +126,26 @@ func _complete_sandra_candidate() -> void:
 		"resolved_by": "",
 		"result": "",
 	})
+
+func _apply_sandra_resolution_state() -> void:
+	var flags: Array = GameState.current_state.get("flags", [])
+	if flags.has("sandra_end_shift_joined"):
+		EffectApplier.apply_flags([
+			"sandra_end_shift_meeting_complete",
+			"sandra_r1_repeat_complete",
+		])
+		return
+	if flags.has("sandra_lunch_rescheduled"):
+		EffectApplier.apply_flags([
+			"sandra_lunch_plan_recorded",
+			"sandra_r1_repeat_complete",
+		])
+		return
+	if flags.has("sandra_boundary_respected_soft"):
+		EffectApplier.apply_flags([
+			"sandra_soft_boundary_kept",
+			"sandra_r1_repeat_complete",
+		])
 
 func _pay_monday_morning_obligations() -> void:
 	var ledger := _ensure_first_repetition_ledger()
@@ -153,15 +192,33 @@ func _mark_monday_obligations_due() -> void:
 		GameState.set_obligation_status(LEDGER_ID, obligation_id, entry)
 
 func _apply_monday_marie_return_outcome() -> void:
+	_mark_monday_obligations_due()
 	var flags: Array = GameState.current_state.get("flags", [])
 	if flags.has("marie_monday_return_active"):
+		_apply_monday_marie_resolution_state()
 		_resolve_monday_due_obligations("PAID", "active_return")
 		return
 	if flags.has("marie_monday_return_bounded"):
+		_apply_monday_marie_resolution_state()
 		_resolve_monday_due_obligations("PAID", "bounded_return")
 		return
 	if flags.has("marie_monday_return_honest_distance"):
+		_apply_monday_marie_resolution_state()
 		_resolve_monday_due_obligations("FAILED", "honest_distance")
+
+func _apply_monday_marie_resolution_state() -> void:
+	var flags: Array = GameState.current_state.get("flags", [])
+	if flags.has("marie_monday_return_active"):
+		EffectApplier.apply_flags(["marie_monday_return_realized"])
+		return
+	if flags.has("marie_monday_return_bounded"):
+		EffectApplier.apply_flags([
+			"marie_monday_bounded_time_paid",
+			"active_reconnection_evidence",
+		])
+		return
+	if flags.has("marie_monday_return_honest_distance"):
+		EffectApplier.apply_flags(["marie_monday_evening_separate"])
 
 func _resolve_monday_due_obligations(status: String, result: String) -> void:
 	var ledger := _ensure_first_repetition_ledger()
