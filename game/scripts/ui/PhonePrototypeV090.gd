@@ -101,6 +101,12 @@ func _advance_optional_phase(day_value, phase_id: String) -> void:
 		EffectApplier.apply_flags(phase.get("skip_sets_flags", []))
 		TimelineState.skip_phase(day_value, phase_id)
 	await _advance_after_phase(day_value, phase_id)
+	# Advancing through the silent resolution may rebuild the active-day UI. Keep
+	# the chronology registry aligned with the authoritative scene lifecycle so an
+	# expired Sandra episode cannot reappear after Marie becomes active.
+	if not completed and str(_ensure_first_repetition_ledger().get("scene_status", {}).get(SANDRA_SCENE_ID, "")) == "EXPIRED":
+		TimelineState.expire_conversation(day_value, SANDRA_CONVERSATION_ID)
+		_clear_pending_for_episode(day_value, SANDRA_CONVERSATION_ID)
 
 func _on_conversation_completed(day_value, conversation_id: String) -> void:
 	if conversation_id == SANDRA_CONVERSATION_ID:
