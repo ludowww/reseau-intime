@@ -36,6 +36,10 @@ def method_block(source: str, method_name: str, next_method_name: str) -> str:
     return source[source.index(f"func {method_name}") : source.index(f"func {next_method_name}")]
 
 
+def is_reusable_thread_definition(node: dict) -> bool:
+    return isinstance(node.get("participants"), list) and str(node.get("id", "")).startswith("thread_")
+
+
 class V089FirstRepetitionStaticTests(unittest.TestCase):
     def test_loader_activates_only_modular_days_five_and_six_and_maps_candidate_ids(self):
         loader = (GAME / "scripts/core/DataLoader.gd").read_text(encoding="utf-8")
@@ -182,7 +186,7 @@ class V089FirstRepetitionStaticTests(unittest.TestCase):
             self.assertTrue(choices, relative)
             self.assertTrue(all(str(choice.get("text", "")).strip() for choice in choices), relative)
 
-    def test_new_conversations_have_unique_ids_no_numeric_effects_and_no_visual_payload(self):
+    def test_new_conversations_have_unique_non_thread_ids_no_numeric_effects_and_no_visual_payload(self):
         seen: set[str] = set()
         for relative in [MARIE_W9, MATHILDE_MT1, MARIE_W11]:
             data = load_json(relative)
@@ -190,7 +194,7 @@ class V089FirstRepetitionStaticTests(unittest.TestCase):
                 if not isinstance(node, dict):
                     continue
                 node_id = str(node.get("id", ""))
-                if node_id:
+                if node_id and not is_reusable_thread_definition(node):
                     self.assertNotIn(node_id, seen, f"duplicate id {node_id}")
                     seen.add(node_id)
                 self.assertNotIn("effects", node, relative)
