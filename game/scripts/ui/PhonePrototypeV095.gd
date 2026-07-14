@@ -44,16 +44,31 @@ func _ensure_named_boundaries_ledger() -> Dictionary:
 	return GameState.ensure_story_ledger(NAMED_LEDGER_ID, _named_boundaries_defaults())
 
 func _add_home_navigation(parent: Node) -> void:
-	super._add_home_navigation(parent)
-	var nav: HBoxContainer = null
-	for child in parent.get_children():
-		if child is HBoxContainer:
-			nav = child
-	if nav == null:
-		return
-	gallery_button = _add_button(nav, "Galerie")
-	nav.move_child(gallery_button, mini(1, nav.get_child_count() - 1))
+	var title := Label.new()
+	title.text = "Réseau Intime"
+	title.add_theme_font_size_override("font_size", 22)
+	title.add_theme_color_override("font_color", Color(0.92, 0.93, 0.98))
+	parent.add_child(title)
+
+	var primary_nav := HBoxContainer.new()
+	primary_nav.add_theme_constant_override("separation", 8)
+	primary_nav.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	parent.add_child(primary_nav)
+	var messages_button := _add_button(primary_nav, "Messages")
+	messages_button.pressed.connect(func(): _focus_messages())
+	gallery_button = _add_button(primary_nav, "Galerie")
 	gallery_button.pressed.connect(func(): _show_gallery())
+
+	var technical_nav := HBoxContainer.new()
+	technical_nav.add_theme_constant_override("separation", 8)
+	technical_nav.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	parent.add_child(technical_nav)
+	var debug_button := _add_button(technical_nav, "Debug")
+	debug_button.pressed.connect(func(): _toggle_debug(debug_button))
+	debug_speed_button = _add_button(technical_nav, _debug_speed_label())
+	debug_speed_button.pressed.connect(func(): _cycle_debug_speed())
+	var reset_button := _add_button(technical_nav, "Reset")
+	reset_button.pressed.connect(func(): GameState.reset_state(); conversation_view.reset_ui_state(); pending_conversation_ids.clear(); pending_thread_ids.clear(); unlocked_conversation_ids_by_day.clear(); unlocked_thread_ids_by_day.clear(); initialized_pending_days.clear(); _hide_notification(); _set_debug_speed_index(0); _render_conversations(current_day_value); debug_panel.refresh())
 
 func _build_layout() -> void:
 	super._build_layout()
