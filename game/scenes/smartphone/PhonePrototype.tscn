@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://phone_prototype"]
 
-[ext_resource type="Script" path="res://scripts/ui/PhonePrototypeV090.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/ui/PhonePrototypeV092.gd" id="1"]
 
 [node name="PhonePrototype" type="Control"]
-editor_description = "V0.90 Sandra second-repetition adapter extends PhonePrototypeV089.gd."
+editor_description = "V0.92 first-repetition wave-closure adapter extends PhonePrototypeV090.gd."
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
