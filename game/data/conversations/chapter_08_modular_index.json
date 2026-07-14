@@ -42,7 +42,7 @@
       "duration": 1.1,
       "min_time": 0.35
     },
-    "next_day": null,
+    "next_day": 9,
     "phases": [
       {
         "id": "tuesday_marie_visual_opening",

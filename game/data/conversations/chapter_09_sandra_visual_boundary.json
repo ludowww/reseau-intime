@@ -1,0 +1,111 @@
+{
+  "id": "chapter_09_sandra_visual_boundary",
+  "scene_id": "sandra_wednesday_visual_boundary_01",
+  "chapter": 9,
+  "day": 9,
+  "title": "Mercredi — Sandra garde Jeff réel",
+  "app": "messages",
+  "design_goal": "Sandra déplace le déjeuner, prépare un dîner avec Jeff et laisse Player choisir entre un vrai rendez-vous sans pression, un contact rare ou un recul minimal.",
+  "debug_notes": "Bonus route Sandra only. Jeff stays real; no risk seed; no Nico selection.",
+  "thread": {
+    "id": "thread_sandra_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "sandra"
+    ],
+    "display_name": "Sandra",
+    "profile_content_id": "profile_sandra_placeholder"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c09_sandra_boundary_01",
+      "moment_label": "fin d'après-midi",
+      "time_label": "16:12",
+      "transition_text": "Sandra déplace le déjeuner et garde Jeff réel pendant qu'elle prépare le dîner.",
+      "messages": [
+        {
+          "id": "v096_sandra_msg_001",
+          "sender": "sandra",
+          "time_label": "16:12",
+          "text": "Je dois déplacer le déjeuner."
+        },
+        {
+          "id": "v096_sandra_msg_002",
+          "sender": "sandra",
+          "time_label": "16:13",
+          "text": "Je prépare aussi un dîner avec Jeff. Je te le dis parce qu'il est réel."
+        },
+        {
+          "id": "v096_sandra_msg_003",
+          "sender": "sandra",
+          "time_label": "16:13",
+          "content_id": "sandra_wednesday_fitted_outfit_01",
+          "text": "Je suis déjà en tenue."
+        },
+        {
+          "id": "v096_sandra_msg_004",
+          "sender": "sandra",
+          "time_label": "16:14",
+          "content_id": "sandra_wednesday_mirror_hesitation_02",
+          "text": "Et je peux encore changer d'avis."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c09_sandra_private_extra",
+          "text": "Tu me dois une vraie date, sans pression, et je garde seulement l'image que je choisis.",
+          "tone": "direct",
+          "effects": {},
+          "sets_flags": [
+            "sandra_chosen_exposure"
+          ],
+          "next_messages": [
+            {
+              "id": "v096_sandra_private_extra_001",
+              "sender": "sandra",
+              "time_label": "16:15",
+              "content_id": "sandra_wednesday_private_extra_03",
+              "text": "Je peux faire ça. Une seule image, choisie."
+            },
+            {
+              "id": "v096_sandra_private_extra_002",
+              "sender": "sandra",
+              "time_label": "16:16",
+              "text": "Et on laisse Jeff tranquille."
+            }
+          ]
+        },
+        {
+          "id": "choice_c09_sandra_composed_close",
+          "text": "On garde le contact rare; je ne te pousse pas.",
+          "tone": "restrained",
+          "effects": {},
+          "next_messages": [
+            {
+              "id": "v096_sandra_composed_close_001",
+              "sender": "sandra",
+              "time_label": "16:15",
+              "content_id": "sandra_wednesday_composed_close_alt_03",
+              "text": "Alors on garde le rythme rare."
+            }
+          ]
+        },
+        {
+          "id": "choice_c09_sandra_minimise",
+          "text": "On laisse tomber et tu te retires un peu.",
+          "tone": "soft",
+          "effects": {},
+          "next_messages": [
+            {
+              "id": "sandra_visual_access_cooled",
+              "sender": "sandra",
+              "time_label": "16:15",
+              "text": "Je me retire un peu, oui."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

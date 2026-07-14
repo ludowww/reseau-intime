@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://phone_prototype"]
 
-[ext_resource type="Script" path="res://scripts/ui/PhonePrototypeV095.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/ui/PhonePrototypeV096.gd" id="1"]
 
 [node name="PhonePrototype" type="Control"]
-editor_description = "Active chain: V095 -> V092 -> V090 -> V089 -> V086A. V0.95 adds Tuesday visual opening and Gallery MVP."
+editor_description = "Active chain: V096 -> V095 -> V092 -> V090 -> V089 -> V086A. V0.96 adds Wednesday carry-over, guaranteed social set, and a local endpoint."
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

@@ -1,0 +1,63 @@
+{
+  "id": "chapter_09_marie_pauline_social_set",
+  "scene_id": "marie_pauline_wednesday_social_set_01",
+  "chapter": 9,
+  "day": 9,
+  "title": "Mercredi — L'Annexe tient la table",
+  "app": "messages",
+  "design_goal": "Le set social garanti apparaît sur tous les chemins avec la bonne table tenue jusqu'à 20 h 45, Bastien déjà commandé, Pauline à une place oubliée et Marie qui sort réellement de La Verrière.",
+  "debug_notes": "Guaranteed social set. No Pauline private note. No Nico selection.",
+  "thread": {
+    "id": "thread_marie_pauline_social",
+    "type": "group",
+    "participants": [
+      "ludo",
+      "marie",
+      "pauline"
+    ],
+    "display_name": "Marie + Pauline"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c09_social_01",
+      "moment_label": "soir",
+      "time_label": "20:45",
+      "transition_text": "Le set social se pose sur tous les chemins.",
+      "messages": [
+        {
+          "id": "msg_c09_social_001",
+          "sender": "marie",
+          "time_label": "20:45",
+          "text": "Nico tient la bonne table jusqu'à 20 h 45."
+        },
+        {
+          "id": "msg_c09_social_002",
+          "sender": "pauline",
+          "time_label": "20:46",
+          "text": "J'ai oublié une place. Bastien est là, et il a déjà commandé."
+        },
+        {
+          "id": "msg_c09_social_003",
+          "sender": "marie",
+          "time_label": "20:47",
+          "content_id": "marie_wednesday_lannexe_social_01",
+          "text": "Je sors vraiment de La Verrière."
+        },
+        {
+          "id": "msg_c09_social_004",
+          "sender": "pauline",
+          "time_label": "20:47",
+          "content_id": "pauline_wednesday_green_dress_02",
+          "text": "Je garde la robe verte."
+        },
+        {
+          "id": "msg_c09_social_005",
+          "sender": "marie",
+          "time_label": "20:48",
+          "content_id": "marie_pauline_wednesday_duo_03",
+          "text": "On reste lisibles jusqu'au bout."
+        }
+      ]
+    }
+  ]
+}

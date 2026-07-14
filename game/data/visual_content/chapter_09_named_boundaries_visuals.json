@@ -1,0 +1,94 @@
+{
+  "id": "chapter_09_named_boundaries_visuals",
+  "version": 1,
+  "items": [
+    {
+      "id": "marie_wednesday_lannexe_social_01",
+      "character": "marie",
+      "type": "photo",
+      "asset_status": "PROTOTYPE",
+      "asset_path": "res://assets/visual_content/v0_96/marie_wednesday_lannexe_social_01.png",
+      "caption": "L'Annexe — Marie sort de La Verrière"
+    },
+    {
+      "id": "pauline_wednesday_green_dress_02",
+      "character": "pauline",
+      "type": "photo",
+      "asset_status": "PROTOTYPE",
+      "asset_path": "res://assets/visual_content/v0_96/pauline_wednesday_green_dress_02.png",
+      "caption": "Pauline — robe verte"
+    },
+    {
+      "id": "marie_pauline_wednesday_duo_03",
+      "character": "marie",
+      "type": "photo",
+      "asset_status": "PROTOTYPE",
+      "asset_path": "res://assets/visual_content/v0_96/marie_pauline_wednesday_duo_03.png",
+      "caption": "Marie + Pauline — duo social"
+    },
+    {
+      "id": "mathilde_wednesday_homewear_mirror_01",
+      "character": "mathilde",
+      "type": "photo",
+      "asset_status": "PROTOTYPE",
+      "asset_path": "res://assets/visual_content/v0_96/mathilde_wednesday_homewear_mirror_01.png",
+      "caption": "Mathilde — miroir et homewear"
+    },
+    {
+      "id": "mathilde_wednesday_outfit_choice_02",
+      "character": "mathilde",
+      "type": "photo",
+      "asset_status": "PROTOTYPE",
+      "asset_path": "res://assets/visual_content/v0_96/mathilde_wednesday_outfit_choice_02.png",
+      "caption": "Mathilde — choix de tenue"
+    },
+    {
+      "id": "mathilde_wednesday_deliberate_pose_03",
+      "character": "mathilde",
+      "type": "photo",
+      "asset_status": "PROTOTYPE",
+      "asset_path": "res://assets/visual_content/v0_96/mathilde_wednesday_deliberate_pose_03.png",
+      "caption": "Mathilde — pose volontaire"
+    },
+    {
+      "id": "mathilde_wednesday_deliberate_pose_cold_alt_03",
+      "character": "mathilde",
+      "type": "photo",
+      "asset_status": "PROTOTYPE",
+      "asset_path": "res://assets/visual_content/v0_96/mathilde_wednesday_deliberate_pose_cold_alt_03.png",
+      "caption": "Mathilde — alternative froide"
+    },
+    {
+      "id": "sandra_wednesday_fitted_outfit_01",
+      "character": "sandra",
+      "type": "photo",
+      "asset_status": "PROTOTYPE",
+      "asset_path": "res://assets/visual_content/v0_96/sandra_wednesday_fitted_outfit_01.png",
+      "caption": "Sandra — tenue ajustée"
+    },
+    {
+      "id": "sandra_wednesday_mirror_hesitation_02",
+      "character": "sandra",
+      "type": "photo",
+      "asset_status": "PROTOTYPE",
+      "asset_path": "res://assets/visual_content/v0_96/sandra_wednesday_mirror_hesitation_02.png",
+      "caption": "Sandra — hésitation au miroir"
+    },
+    {
+      "id": "sandra_wednesday_private_extra_03",
+      "character": "sandra",
+      "type": "photo",
+      "asset_status": "PROTOTYPE",
+      "asset_path": "res://assets/visual_content/v0_96/sandra_wednesday_private_extra_03.png",
+      "caption": "Sandra — extra privé choisi"
+    },
+    {
+      "id": "sandra_wednesday_composed_close_alt_03",
+      "character": "sandra",
+      "type": "photo",
+      "asset_status": "PROTOTYPE",
+      "asset_path": "res://assets/visual_content/v0_96/sandra_wednesday_composed_close_alt_03.png",
+      "caption": "Sandra — fermeture composée"
+    }
+  ]
+}

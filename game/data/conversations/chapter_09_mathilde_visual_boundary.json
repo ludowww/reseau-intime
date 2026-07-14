@@ -1,0 +1,111 @@
+{
+  "id": "chapter_09_mathilde_visual_boundary",
+  "scene_id": "mathilde_wednesday_visual_boundary_01",
+  "chapter": 9,
+  "day": 9,
+  "title": "Mercredi — Mathilde, la fin du séjour devient visible",
+  "app": "messages",
+  "design_goal": "Mathilde reçoit une date réelle du réparateur, voit le retour samedi matin devenir crédible, puis laisse Player choisir entre provocation volontaire, distance coûteuse ou minimisation.",
+  "debug_notes": "Bonus route Mathilde only. The ordinary outfit never becomes a permission.",
+  "thread": {
+    "id": "thread_mathilde_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "mathilde"
+    ],
+    "display_name": "Mathilde",
+    "profile_content_id": "profile_mathilde_placeholder"
+  },
+  "segments": [
+    {
+      "conversation_segment_id": "c09_mathilde_boundary_01",
+      "moment_label": "fin d'après-midi",
+      "time_label": "16:12",
+      "transition_text": "Le réparateur a enfin donné une date et la fin du séjour temporaire devient visible.",
+      "messages": [
+        {
+          "id": "v096_mathilde_msg_001",
+          "sender": "mathilde",
+          "time_label": "16:12",
+          "text": "Le réparateur a enfin donné une date."
+        },
+        {
+          "id": "v096_mathilde_msg_002",
+          "sender": "mathilde",
+          "time_label": "16:13",
+          "text": "Vendredi 16 h 30. Je peux retourner dans mon appartement samedi matin."
+        },
+        {
+          "id": "v096_mathilde_msg_003",
+          "sender": "mathilde",
+          "time_label": "16:13",
+          "content_id": "mathilde_wednesday_homewear_mirror_01",
+          "text": "Je suis encore au miroir."
+        },
+        {
+          "id": "v096_mathilde_msg_004",
+          "sender": "mathilde",
+          "time_label": "16:14",
+          "content_id": "mathilde_wednesday_outfit_choice_02",
+          "text": "Et j'hésite encore sur la tenue."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_c09_mathilde_deliberate",
+          "text": "Tu la provoques volontairement. Assume la pose.",
+          "tone": "direct",
+          "effects": {},
+          "sets_flags": [
+            "mathilde_deliberate_visual"
+          ],
+          "next_messages": [
+            {
+              "id": "v096_mathilde_deliberate_001",
+              "sender": "mathilde",
+              "time_label": "16:15",
+              "content_id": "mathilde_wednesday_deliberate_pose_03",
+              "text": "D'accord. Je la prends sans me cacher."
+            },
+            {
+              "id": "v096_mathilde_deliberate_002",
+              "sender": "mathilde",
+              "time_label": "16:16",
+              "text": "Mais ne confonds pas ça avec une permission."
+            }
+          ]
+        },
+        {
+          "id": "choice_c09_mathilde_distance",
+          "text": "Je préfère une distance claire, même si ça coûte.",
+          "tone": "restrained",
+          "effects": {},
+          "next_messages": [
+            {
+              "id": "v096_mathilde_distance_001",
+              "sender": "mathilde",
+              "time_label": "16:15",
+              "content_id": "mathilde_wednesday_deliberate_pose_cold_alt_03",
+              "text": "Je garde la distance. C'est plus cher, mais plus net."
+            }
+          ]
+        },
+        {
+          "id": "choice_c09_mathilde_minimise",
+          "text": "Je ne lis pas ça comme une invitation; reste simple.",
+          "tone": "soft",
+          "effects": {},
+          "next_messages": [
+            {
+              "id": "mathilde_visual_access_cooled",
+              "sender": "mathilde",
+              "time_label": "16:15",
+              "text": "Alors je redescends d'un cran."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
