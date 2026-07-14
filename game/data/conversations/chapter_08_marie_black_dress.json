@@ -1,0 +1,214 @@
+{
+  "id": "chapter_08_marie_black_dress",
+  "scene_id": "marie_next_week_real_plan_01",
+  "chapter": 8,
+  "day": 8,
+  "title": "Mardi soir — La robe noire",
+  "app": "messages",
+  "window_id": "W14_MARIE_VISUAL_OPENING",
+  "calendar_label": "Mardi",
+  "time_band": "EARLY_EVENING",
+  "communication_mode": "REMOTE_ASYNC_VISUAL",
+  "foreground_role": "spine",
+  "physical_context": "Marie est seule dans la chambre ou le dressing après le travail. Elle essaie la robe noire prévue pour mercredi. Player est ailleurs et reçoit les images dans leur fil privé.",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "marie"
+    ],
+    "display_name": "Marie",
+    "profile_content_id": "profile_marie_placeholder"
+  },
+  "segments": [
+    {
+      "id": "tuesday_marie_black_dress_open",
+      "pattern": "guided_reply_pacing",
+      "function": "Ouvrir la vague par une image en pied et une demande de réaction réelle.",
+      "messages": [
+        {
+          "id": "msg_d8_marie_001",
+          "sender": "marie",
+          "time_label": "18:05",
+          "text": "J'ai besoin d'un avis. Un vrai."
+        },
+        {
+          "id": "msg_d8_marie_002",
+          "sender": "marie",
+          "time_label": "18:05",
+          "text": "Je garde la robe noire pour demain ou je change ?"
+        },
+        {
+          "id": "msg_d8_marie_003",
+          "sender": "marie",
+          "time_label": "18:06",
+          "text": "Version entière.",
+          "content_id": "marie_tuesday_black_dress_mirror_01"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_d8_marie_other_angle_guided",
+          "text": "Tu sais déjà qu'elle fonctionne. Montre-moi l'autre angle.",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "next_messages": [
+            {
+              "id": "msg_d8_marie_004",
+              "sender": "marie",
+              "time_label": "18:07",
+              "text": "C'est mieux qu'un « les deux sont bien »."
+            },
+            {
+              "id": "msg_d8_marie_005",
+              "sender": "marie",
+              "time_label": "18:08",
+              "text": "L'autre angle.",
+              "content_id": "marie_tuesday_black_dress_turn_02"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tuesday_marie_real_plan_choice",
+      "pattern": "three_action_fantasy_choice",
+      "function": "M4 — relier la troisième image à une place concrète dans les soirées de mercredi et jeudi.",
+      "messages": [
+        {
+          "id": "msg_d8_marie_006",
+          "sender": "marie",
+          "time_label": "18:09",
+          "text": "La troisième est moins faite pour le groupe."
+        },
+        {
+          "id": "msg_d8_marie_007",
+          "sender": "marie",
+          "time_label": "18:09",
+          "content_id": "marie_tuesday_black_dress_close_03"
+        },
+        {
+          "id": "msg_d8_marie_008",
+          "sender": "marie",
+          "time_label": "18:10",
+          "text": "Demain je termine vers dix-neuf heures."
+        },
+        {
+          "id": "msg_d8_marie_009",
+          "sender": "marie",
+          "time_label": "18:10",
+          "text": "Pauline et Bastien passent à L'Annexe après. Nico peut garder une table jusqu'à 20 h 45."
+        },
+        {
+          "id": "msg_d8_marie_010",
+          "sender": "marie",
+          "time_label": "18:11",
+          "text": "Tu viens avec moi, tu prends la suite en charge, ou tu bloques jeudi juste pour nous ?"
+        },
+        {
+          "id": "msg_d8_marie_011",
+          "sender": "marie",
+          "time_label": "18:11",
+          "text": "Je prends les trois réponses. Pas « on verra »."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_d8_m4_join_movement",
+          "text": "Je viens à La Verrière avant la fin. Je t'aide à fermer et on part ensemble.",
+          "tone": "join_and_claim",
+          "sets_flags": [
+            "marie_m4_join_movement",
+            "marie_visual_interest_public_claim",
+            "named_boundaries_m4_selected"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_d8_marie_012a",
+              "sender": "marie",
+              "time_label": "18:12",
+              "text": "Très bien."
+            },
+            {
+              "id": "msg_d8_marie_013a",
+              "sender": "marie",
+              "time_label": "18:12",
+              "text": "Alors tu verras la robe dans une salle pleine, pas seulement dans mon miroir."
+            },
+            {
+              "id": "msg_d8_marie_014a",
+              "sender": "marie",
+              "time_label": "18:13",
+              "text": "Dix-huit heures quarante-cinq. La Verrière."
+            }
+          ]
+        },
+        {
+          "id": "choice_d8_m4_take_table",
+          "text": "Je prends la table à L'Annexe. 20 h 45, et si ça bouge je te préviens avant.",
+          "tone": "public_visibility_responsibility",
+          "sets_flags": [
+            "marie_m4_take_lannexe_table",
+            "marie_visual_interest_social_visibility",
+            "named_boundaries_m4_selected"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_d8_marie_012b",
+              "sender": "marie",
+              "time_label": "18:12",
+              "text": "Ça, c'est une heure."
+            },
+            {
+              "id": "msg_d8_marie_013b",
+              "sender": "marie",
+              "time_label": "18:13",
+              "text": "Je peux donc finir sans regarder mon téléphone toutes les six minutes."
+            },
+            {
+              "id": "msg_d8_marie_014b",
+              "sender": "marie",
+              "time_label": "18:13",
+              "text": "Et oui, je porterai celle-là."
+            }
+          ]
+        },
+        {
+          "id": "choice_d8_m4_private_thursday",
+          "text": "Demain profite avec eux. Je réserve jeudi soir pour la version que tu ne leur enverras pas.",
+          "tone": "private_couple_claim",
+          "sets_flags": [
+            "marie_m4_private_thursday",
+            "marie_visual_interest_private_continuation",
+            "named_boundaries_m4_selected"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_d8_marie_012c",
+              "sender": "marie",
+              "time_label": "18:12",
+              "text": "D'accord."
+            },
+            {
+              "id": "msg_d8_marie_013c",
+              "sender": "marie",
+              "time_label": "18:13",
+              "text": "Je vais donc sortir demain sans attendre que tu viennes me récupérer."
+            },
+            {
+              "id": "msg_d8_marie_014c",
+              "sender": "marie",
+              "time_label": "18:13",
+              "text": "Jeudi, tu réserves. Et la version privée dépendra de ce que tu fais vraiment."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "routes_nourished": [
+    "marie"
+  ],
+  "debug_notes": "V0.95 W14 : trois images Marie distinctes, un nœud M4 à trois actions/fantasmes et aucune ouverture du mercredi."
+}

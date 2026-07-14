@@ -1,7 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://conversation_view"]
 
-[ext_resource type="Script" path="res://scripts/ui/ConversationViewV086A.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/ui/ConversationViewV095.gd" id="1"]
 
 [node name="ConversationView" type="VBoxContainer"]
-editor_description = "V0.86a notification adapter extends ConversationViewV084.gd."
+editor_description = "V0.95 renders real visual assets, preserves fallback cards, and opens Gallery detail."
 script = ExtResource("1")

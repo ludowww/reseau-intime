@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://phone_prototype"]
 
-[ext_resource type="Script" path="res://scripts/ui/PhonePrototypeV092.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/ui/PhonePrototypeV095.gd" id="1"]
 
 [node name="PhonePrototype" type="Control"]
-editor_description = "Active chain: PhonePrototypeV092.gd -> PhonePrototypeV090.gd -> PhonePrototypeV089.gd -> PhonePrototypeV086A.gd. V0.92 adds only guarded first-repetition wave closure."
+editor_description = "Active chain: V095 -> V092 -> V090 -> V089 -> V086A. V0.95 adds Tuesday visual opening and Gallery MVP."
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

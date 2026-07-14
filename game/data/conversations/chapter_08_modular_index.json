@@ -1,0 +1,141 @@
+{
+  "id": "chapter_08_modular_index",
+  "chapter": 8,
+  "day": 8,
+  "calendar_label": "Mardi",
+  "display_label": "Mardi — La robe noire",
+  "day_start_time": "18:05",
+  "title": "Mardi — La robe noire",
+  "description": "Marie choisit la tenue du mercredi, demande une réaction réelle et oblige Player à prendre une place concrète dans les deux soirées suivantes.",
+  "design_goal": "Prouver le premier jour visual-first : trois images distinctes, un choix M4 lisible, une obligation structurée, une galerie consultable et une fermeture bloquée sous le minimum visuel.",
+  "window_range": "W14",
+  "default_order": [
+    "chapter_08_marie_black_dress"
+  ],
+  "conversation_files": [
+    "res://data/conversations/chapter_08_marie_black_dress.json"
+  ],
+  "moment_flow": [
+    {
+      "moment_label": "fin de journée",
+      "time_label": "18:05",
+      "transition_text": "Mardi soir — Marie essaie la robe noire prévue pour le lendemain.",
+      "conversation_ids": [
+        "chapter_08_marie_black_dress"
+      ]
+    }
+  ],
+  "timeline_flow": {
+    "initial_state": "LOCKED",
+    "initial_phase_id": "tuesday_marie_visual_opening",
+    "day_start_card": {
+      "eyebrow": "MARDI — SOIR",
+      "title": "La robe noire",
+      "subtitle": "18:05",
+      "duration": 1.2,
+      "min_time": 0.35
+    },
+    "day_end_card": {
+      "eyebrow": "MARDI — FIN DE SOIRÉE",
+      "title": "Une place concrète est choisie.",
+      "subtitle": "La suite du mercredi n'est pas encore disponible.",
+      "duration": 1.1,
+      "min_time": 0.35
+    },
+    "next_day": null,
+    "phases": [
+      {
+        "id": "tuesday_marie_visual_opening",
+        "moment_label": "fin de journée",
+        "time_label": "18:05",
+        "required_conversation_ids": [
+          "chapter_08_marie_black_dress"
+        ]
+      },
+      {
+        "id": "tuesday_visual_contract_close",
+        "moment_label": "soir",
+        "time_label": "18:16",
+        "internal_closure": "visual_day_contract",
+        "authored_beat": {
+          "id": "tuesday_visual_contract_close_internal",
+          "time_label": "18:16"
+        }
+      },
+      {
+        "id": "tuesday_named_boundaries_slice_close",
+        "moment_label": "soir",
+        "time_label": "18:17",
+        "authored_beat": {
+          "id": "tuesday_named_boundaries_slice_close_internal",
+          "time_label": "18:17",
+          "sets_flags": [
+            "named_boundaries_slice_01_complete"
+          ]
+        }
+      }
+    ]
+  },
+  "daily_visual_contract": {
+    "minimum_unlocks": 3,
+    "slots": [
+      {
+        "id": "marie_black_dress_full",
+        "any_content_ids": [
+          "marie_tuesday_black_dress_mirror_01"
+        ]
+      },
+      {
+        "id": "marie_black_dress_turn",
+        "any_content_ids": [
+          "marie_tuesday_black_dress_turn_02"
+        ]
+      },
+      {
+        "id": "marie_black_dress_close",
+        "any_content_ids": [
+          "marie_tuesday_black_dress_close_03"
+        ]
+      }
+    ]
+  },
+  "conversation_availability": {
+    "initial_conversation_ids": [
+      "chapter_08_marie_black_dress"
+    ],
+    "locked_conversation_ids": [],
+    "unlocks": {
+      "chapter_08_marie_black_dress": {
+        "pending": true,
+        "notification": {
+          "title": "Marie",
+          "body": "J'ai besoin d'un avis. Un vrai."
+        }
+      }
+    }
+  },
+  "initial_visual_anchors": [
+    "profile_marie_placeholder"
+  ],
+  "routes_available": [
+    "marie"
+  ],
+  "route_stage_ceiling": "MARIE_VISUAL_OPENING_ONLY",
+  "end_of_day_player_knowledge": [
+    "Marie a envoyé trois versions distinctes de la robe noire.",
+    "Player a choisi une action concrète pour mercredi ou jeudi.",
+    "Une obligation M4 existe dans le ledger named_boundaries_wave.",
+    "Aucune permission sexuelle automatique n'est créée.",
+    "Mercredi reste indisponible dans V0.95."
+  ],
+  "proof_content_files": [
+    "res://data/visual_content/chapter_08_named_boundaries_visuals.json"
+  ],
+  "debug_expected_outcomes": [
+    "Monday completion unlocks Tuesday day 8 through the V095 adapter.",
+    "All three Marie images unlock individually.",
+    "M4 has exactly three distinct action/fantasy choices.",
+    "The daily visual contract blocks completion below three slots.",
+    "Tuesday remains the local endpoint."
+  ]
+}
