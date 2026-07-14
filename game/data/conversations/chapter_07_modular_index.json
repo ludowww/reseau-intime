@@ -6,8 +6,8 @@
   "display_label": "Lundi — Vingt minutes",
   "day_start_time": "09:30",
   "title": "Lundi — Vingt minutes",
-  "description": "Une promesse du dimanche est payée le matin si elle existe. Sandra peut ensuite ouvrir une fenêtre de vingt minutes avant un retour Marie obligatoire.",
-  "design_goal": "Tester une deuxième fenêtre déterministe sur le ledger V0.89, sans dépasser deux foregrounds externes, sans accès chargé Sandra et sans interrompre la colonne vertébrale Marie.",
+  "description": "Une promesse du dimanche est payée le matin si elle existe. Sandra peut ensuite ouvrir une fenêtre de vingt minutes avant un retour Marie obligatoire et la fermeture silencieuse de la première vague.",
+  "design_goal": "Tester une deuxième fenêtre déterministe sur le ledger V0.89, puis fermer la vague seulement après vérification des slices, obligations, lifecycles, foregrounds et propriétaire chargé.",
   "window_range": "W12-W13",
   "default_order": [
     "chapter_07_sandra_end_of_shift",
@@ -47,8 +47,8 @@
     },
     "day_end_card": {
       "eyebrow": "LUNDI — SOIR",
-      "title": "La répétition reste ouverte.",
-      "subtitle": "Deux fenêtres ont été observées, sans fermer toute la vague.",
+      "title": "Ce qui s'est répété devient historique.",
+      "subtitle": "La première vague est désormais bornée et enregistrée.",
       "duration": 1.2,
       "min_time": 0.35
     },
@@ -231,10 +231,20 @@
           "id": "monday_first_repetition_slice_close",
           "time_label": "20:45",
           "title": "La deuxième fenêtre est enregistrée.",
-          "text": "Sandra a été vue, expirée ou différée, puis la journée est revenue vers Marie. La vague complète reste ouverte.",
+          "text": "Sandra a été vue, expirée ou différée, puis la journée est revenue vers Marie. Les conditions de fermeture peuvent maintenant être évaluées.",
           "sets_flags": [
             "first_repetition_slice_02_complete"
           ]
+        }
+      },
+      {
+        "id": "monday_first_repetition_wave_close",
+        "moment_label": "soir",
+        "time_label": "20:46",
+        "internal_closure": "first_repetition",
+        "authored_beat": {
+          "id": "monday_first_repetition_wave_close_internal",
+          "time_label": "20:46"
         }
       }
     ]
@@ -279,7 +289,7 @@
     "Sandra ne peut pas devenir propriétaire de l'accès chargé.",
     "La journée revient toujours vers Marie.",
     "Le couple reste en HABITUAL_WARMTH.",
-    "La vague complète n'est pas terminée."
+    "La première vague est fermée seulement après vérification de toutes ses conditions terminales."
   ],
   "proof_content_files": [],
   "debug_expected_outcomes": [
@@ -289,6 +299,6 @@
     "Ignoring Sandra expires the exact scene without consuming a foreground ticket.",
     "Completing Sandra records at most the second external foreground and never claims charged access.",
     "Marie return is required after seen, expired or deferred Sandra.",
-    "Monday closes only the second runtime slice."
+    "Monday closes the second runtime slice and then the bounded first-repetition wave."
   ]
 }
