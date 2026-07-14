@@ -21,7 +21,7 @@ class V095MarieVisualOpeningStaticTests(unittest.TestCase):
 
     def test_day8_is_local_endpoint_and_has_three_slot_contract(self):
         self.assertEqual(self.index.get("day"), 8)
-        self.assertIsNone(self.index.get("timeline_flow", {}).get("next_day"))
+        self.assertEqual(self.index.get("timeline_flow", {}).get("next_day"), 9)
         contract = self.index.get("daily_visual_contract", {})
         self.assertEqual(contract.get("minimum_unlocks"), 3)
         self.assertEqual(len(contract.get("slots", [])), 3)
@@ -71,22 +71,22 @@ class V095MarieVisualOpeningStaticTests(unittest.TestCase):
     def test_runtime_adapters_and_gallery_are_wired(self):
         phone_scene = (GAME / "scenes" / "smartphone" / "PhonePrototype.tscn").read_text(encoding="utf-8")
         conversation_scene = (GAME / "scenes" / "smartphone" / "ConversationView.tscn").read_text(encoding="utf-8")
-        phone_script = (GAME / "scripts" / "ui" / "PhonePrototypeV095.gd").read_text(encoding="utf-8")
-        conversation_script = (GAME / "scripts" / "ui" / "ConversationViewV095.gd").read_text(encoding="utf-8")
+        phone_script = (GAME / "scripts" / "ui" / "PhonePrototypeV096A.gd").read_text(encoding="utf-8")
+        conversation_script = (GAME / "scripts" / "ui" / "ConversationViewV096A.gd").read_text(encoding="utf-8")
         gallery_script = (GAME / "scripts" / "ui" / "PhotoGalleryView.gd").read_text(encoding="utf-8")
-        self.assertIn("PhonePrototypeV095.gd", phone_scene)
-        self.assertIn("ConversationViewV095.gd", conversation_scene)
+        self.assertIn("PhonePrototypeV096A.gd", phone_scene)
+        self.assertIn("ConversationViewV096A.gd", conversation_scene)
         self.assertIn("PhotoGalleryView.tscn", phone_script)
         self.assertIn("VisualDayContract.evaluate", phone_script)
-        self.assertIn("asset_path", conversation_script)
-        self.assertIn("TextureRect", conversation_script)
+        self.assertIn("signal contacts_requested", conversation_script)
+        self.assertIn("ContactsBackButton", conversation_script)
         self.assertIn("GameState.current_state.get(\"unlocked_content\"", gallery_script)
         self.assertNotIn("next_day = 9", phone_script)
 
     def test_first_repetition_is_read_only_and_new_ledger_is_separate(self):
-        phone_script = (GAME / "scripts" / "ui" / "PhonePrototypeV095.gd").read_text(encoding="utf-8")
-        self.assertIn('NAMED_LEDGER_ID := "named_boundaries_wave"', phone_script)
-        self.assertNotIn('set_story_ledger_value("first_repetition"', phone_script)
+        phone_script = (GAME / "scripts" / "ui" / "PhonePrototypeV096A.gd").read_text(encoding="utf-8")
+        self.assertIn('_ensure_named_boundaries_ledger()', phone_script)
+        self.assertIn('_record_named_boundaries_visual_route(', phone_script)
         self.assertNotIn('set_obligation_status("first_repetition"', phone_script)
 
 

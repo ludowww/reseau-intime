@@ -151,7 +151,35 @@
       "chapter_09_marie_pauline_social_set"
     ],
     "locked_conversation_ids": [],
-    "unlocks": {}
+    "unlocks": {
+      "chapter_09_mathilde_visual_boundary": {
+        "after_conversation_completed": "chapter_08_marie_black_dress",
+        "time_label": "16:12",
+        "pending": true,
+        "notification": {
+          "title": "Mathilde",
+          "body": "J’ai enfin eu le réparateur."
+        }
+      },
+      "chapter_09_sandra_visual_boundary": {
+        "after_conversation_completed": "chapter_08_marie_black_dress",
+        "time_label": "16:18",
+        "pending": true,
+        "notification": {
+          "title": "Sandra",
+          "body": "Je dois déplacer notre déjeuner."
+        }
+      },
+      "chapter_09_marie_pauline_social_set": {
+        "after_conversation_completed": "chapter_08_marie_black_dress",
+        "time_label": "20:45",
+        "pending": true,
+        "notification": {
+          "title": "Marie + Pauline",
+          "body": "Nico garde la table encore quelques minutes."
+        }
+      }
+    }
   },
   "daily_visual_contract": {
     "minimum_unlocks": 3,

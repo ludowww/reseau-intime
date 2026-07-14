@@ -11,8 +11,9 @@ class V096WednesdayCarryoverSocialStaticTests(unittest.TestCase):
         self.chapter8 = json.loads((GAME / "data" / "conversations" / "chapter_08_modular_index.json").read_text(encoding="utf-8"))
         self.chapter9 = json.loads((GAME / "data" / "conversations" / "chapter_09_modular_index.json").read_text(encoding="utf-8"))
         self.selector = (GAME / "scripts" / "narrative" / "NamedBoundariesSelector.gd").read_text(encoding="utf-8")
-        self.phone = (GAME / "scripts" / "ui" / "PhonePrototypeV096.gd").read_text(encoding="utf-8")
-        self.scene = (GAME / "scenes" / "smartphone" / "PhonePrototype.tscn").read_text(encoding="utf-8")
+        self.phone = (GAME / "scripts" / "ui" / "PhonePrototypeV096A.gd").read_text(encoding="utf-8")
+        self.phone_scene = (GAME / "scenes" / "smartphone" / "PhonePrototype.tscn").read_text(encoding="utf-8")
+        self.conversation_scene = (GAME / "scenes" / "smartphone" / "ConversationView.tscn").read_text(encoding="utf-8")
         self.visual_bundle = json.loads((GAME / "data" / "visual_content" / "chapter_09_named_boundaries_visuals.json").read_text(encoding="utf-8"))
         self.visuals = {item["id"]: item for item in self.visual_bundle.get("items", [])}
 
@@ -51,8 +52,8 @@ class V096WednesdayCarryoverSocialStaticTests(unittest.TestCase):
         self.assertIn('foreground_history_resolved=%s', self.selector)
 
     def test_phone_targets_v096_assets_and_prototype_ledger(self):
-        self.assertIn('PhonePrototypeV096.gd', self.scene)
-        self.assertIn('_ensure_named_boundaries_ledger()', self.phone)
+        self.assertIn("PhonePrototypeV096A.gd", self.phone_scene)
+        self.assertIn("ConversationViewV096A.gd", self.conversation_scene)
         self.assertIn('_record_named_boundaries_visual_route(', self.phone)
         self.assertNotIn('secondary_risk_seed', self.phone)
         self.assertNotIn('chapter_09_index.json', self.phone)
