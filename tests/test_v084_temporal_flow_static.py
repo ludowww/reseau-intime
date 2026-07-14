@@ -16,7 +16,7 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
         phone_scene = (GAME / "scenes/smartphone/PhonePrototype.tscn").read_text(encoding="utf-8")
         conversation_scene = (GAME / "scenes/smartphone/ConversationView.tscn").read_text(encoding="utf-8")
         self.assertIn('TimelineState="*res://scripts/core/TimelineState.gd"', project)
-        self.assertIn("PhonePrototypeV090.gd", phone_scene)
+        self.assertIn("PhonePrototypeV092.gd", phone_scene)
         self.assertIn("ConversationViewV086A.gd", conversation_scene)
 
         state = (GAME / "scripts/core/TimelineState.gd").read_text(encoding="utf-8")
@@ -38,6 +38,7 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
         ]:
             self.assertIn(expected, state)
 
+        phone_v092 = (GAME / "scripts/ui/PhonePrototypeV092.gd").read_text(encoding="utf-8")
         phone_v090 = (GAME / "scripts/ui/PhonePrototypeV090.gd").read_text(encoding="utf-8")
         phone_v089 = (GAME / "scripts/ui/PhonePrototypeV089.gd").read_text(encoding="utf-8")
         phone_v086a = (GAME / "scripts/ui/PhonePrototypeV086A.gd").read_text(encoding="utf-8")
@@ -45,6 +46,7 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
         phone_v084 = (GAME / "scripts/ui/PhonePrototypeV084.gd").read_text(encoding="utf-8")
         conversation_v086a = (GAME / "scripts/ui/ConversationViewV086A.gd").read_text(encoding="utf-8")
         conversation_v084 = (GAME / "scripts/ui/ConversationViewV084.gd").read_text(encoding="utf-8")
+        self.assertIn('extends "res://scripts/ui/PhonePrototypeV090.gd"', phone_v092)
         self.assertIn('extends "res://scripts/ui/PhonePrototypeV089.gd"', phone_v090)
         self.assertIn('extends "res://scripts/ui/PhonePrototypeV086A.gd"', phone_v089)
         self.assertIn('extends "res://scripts/ui/PhonePrototypeV085.gd"', phone_v086a)
@@ -138,6 +140,7 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
                 ("monday_marie_return", ["chapter_07_marie_monday_return"], [], []),
                 ("monday_marie_resolution", [], [], []),
                 ("monday_slice_close", [], [], []),
+                ("monday_first_repetition_wave_close", [], [], []),
             ],
         }
         for relative, phase_expectations in expected.items():
@@ -258,10 +261,11 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
         self.assertIn("current_day_key = first_key", state)
         self.assertIn("day_log_entries_by_day.clear()", state)
 
-    def test_monday_is_final_active_day_after_second_repetition_slice(self):
-        phone = (GAME / "scripts/ui/PhonePrototypeV090.gd").read_text(encoding="utf-8")
-        self.assertIn('MONDAY_INDEX_PATH := "res://data/conversations/chapter_07_modular_index.json"', phone)
-        self.assertIn("DataLoader.get_index_for_day(7)", phone)
+    def test_monday_is_final_active_day_after_first_repetition_wave_closure(self):
+        phone = (GAME / "scripts/ui/PhonePrototypeV092.gd").read_text(encoding="utf-8")
+        self.assertIn('extends "res://scripts/ui/PhonePrototypeV090.gd"', phone)
+        self.assertIn("MONDAY_WAVE_CLOSE_PHASE_ID", phone)
+        self.assertIn("first_repetition_wave_complete", phone)
         friday = load_json("data/conversations/chapter_04_modular_index.json")
         saturday = load_json("data/conversations/chapter_05_modular_index.json")
         sunday = load_json("data/conversations/chapter_06_modular_index.json")
@@ -270,7 +274,8 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
         self.assertEqual(saturday["timeline_flow"].get("next_day"), 6)
         self.assertEqual(sunday["timeline_flow"].get("next_day"), 7)
         self.assertIsNone(monday["timeline_flow"].get("next_day"))
-        self.assertIn("La répétition reste ouverte", monday["timeline_flow"]["day_end_card"]["title"])
+        self.assertIn("La première vague est close", monday["timeline_flow"]["day_end_card"]["title"])
+        self.assertEqual(monday["timeline_flow"]["phases"][-1].get("id"), "monday_first_repetition_wave_close")
 
 
 if __name__ == "__main__":
