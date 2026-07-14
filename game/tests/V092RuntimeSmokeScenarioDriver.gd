@@ -156,7 +156,7 @@ func _scenario_i_idempotent_close() -> void:
 	var ledger_before := _ledger()
 	var logs_before := TimelineState.get_day_log_entries(DAY)
 	await phone._activate_phase(DAY, phase, false)
-	var first_flag_count := GameState.current_state.get("flags", []).count(WAVE_COMPLETE_FLAG)
+	var first_flag_count: int = GameState.current_state.get("flags", []).count(WAVE_COMPLETE_FLAG)
 	await phone._activate_first_repetition_wave_close(DAY, phase)
 	_expect(GameState.current_state.get("flags", []).count(WAVE_COMPLETE_FLAG) == first_flag_count, "I: duplicate wave flag")
 	_expect(_ledger() == ledger_before, "I: ledger changed during idempotent close")
