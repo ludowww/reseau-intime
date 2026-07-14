@@ -5,7 +5,7 @@
   "day": 9,
   "title": "Mercredi — Sandra garde Jeff réel",
   "app": "messages",
-  "design_goal": "Sandra déplace le déjeuner, prépare un dîner avec Jeff et laisse Player choisir entre un vrai rendez-vous sans pression, un contact rare ou un recul minimal.",
+  "design_goal": "Sandra doit déplacer le déjeuner, prépare un dîner ordinaire avec Jeff et laisse filtrer une hésitation visuelle sans devenir disponible parce que Player insiste.",
   "debug_notes": "Bonus route Sandra only. Jeff stays real; no risk seed; no Nico selection.",
   "thread": {
     "id": "thread_sandra_private",
@@ -22,39 +22,51 @@
       "conversation_segment_id": "c09_sandra_boundary_01",
       "moment_label": "fin d'après-midi",
       "time_label": "16:12",
-      "transition_text": "Sandra déplace le déjeuner et garde Jeff réel pendant qu'elle prépare le dîner.",
+      "transition_text": "Sandra recale le déjeuner entre une fin de poste déplacée et un dîner avec Jeff, puis envoie deux versions qu'elle hésite à garder.",
       "messages": [
         {
           "id": "v096_sandra_msg_001",
           "sender": "sandra",
           "time_label": "16:12",
-          "text": "Je dois déplacer le déjeuner."
+          "text": "Je dois déplacer notre déjeuner."
         },
         {
           "id": "v096_sandra_msg_002",
           "sender": "sandra",
           "time_label": "16:13",
-          "text": "Je prépare aussi un dîner avec Jeff. Je te le dis parce qu'il est réel."
+          "text": "On vient de me remettre une fin de poste au milieu. Je n'ai pas encore regardé où le recaser."
+        },
+        {
+          "id": "v096_sandra_msg_002b",
+          "sender": "sandra",
+          "time_label": "16:13",
+          "text": "Et ce soir Jeff a décidé qu'on faisait « un vrai dîner ». Il a déjà sorti trois casseroles pour des pâtes."
         },
         {
           "id": "v096_sandra_msg_003",
           "sender": "sandra",
           "time_label": "16:13",
           "content_id": "sandra_wednesday_fitted_outfit_01",
-          "text": "Je suis déjà en tenue."
+          "text": "J'avais prévu celle-là."
         },
         {
           "id": "v096_sandra_msg_004",
           "sender": "sandra",
           "time_label": "16:14",
           "content_id": "sandra_wednesday_mirror_hesitation_02",
-          "text": "Et je peux encore changer d'avis."
+          "text": "Puis j'ai essayé l'autre. Mauvaise idée de demander son avis à un miroir."
+        },
+        {
+          "id": "v096_sandra_msg_005",
+          "sender": "sandra",
+          "time_label": "16:14",
+          "text": "Je pars dans dix minutes."
         }
       ],
       "choices": [
         {
           "id": "choice_c09_sandra_private_extra",
-          "text": "Tu me dois une vraie date, sans pression, et je garde seulement l'image que je choisis.",
+          "text": "On recale le déjeuner pour de vrai. Et pour ce soir, envoie seulement celle que toi tu veux m'envoyer.",
           "tone": "direct",
           "effects": {},
           "sets_flags": [
@@ -62,23 +74,29 @@
           ],
           "next_messages": [
             {
+              "id": "v096_sandra_private_extra_date_001",
+              "sender": "sandra",
+              "time_label": "16:15",
+              "text": "Mardi prochain, 12 h 30. Je te laisse choisir le café."
+            },
+            {
               "id": "v096_sandra_private_extra_001",
               "sender": "sandra",
               "time_label": "16:15",
               "content_id": "sandra_wednesday_private_extra_03",
-              "text": "Je peux faire ça. Une seule image, choisie."
+              "text": "Et celle-ci, parce que c'est moi qui ai décidé."
             },
             {
               "id": "v096_sandra_private_extra_002",
               "sender": "sandra",
               "time_label": "16:16",
-              "text": "Et on laisse Jeff tranquille."
+              "text": "Jeff m'appelle pour les pâtes. Je vais éviter de sourire à mon téléphone dans la cuisine."
             }
           ]
         },
         {
           "id": "choice_c09_sandra_composed_close",
-          "text": "On garde le contact rare; je ne te pousse pas.",
+          "text": "On recale quand tu peux. Garde celle où tu te reconnais le plus.",
           "tone": "restrained",
           "effects": {},
           "next_messages": [
@@ -87,13 +105,13 @@
               "sender": "sandra",
               "time_label": "16:15",
               "content_id": "sandra_wednesday_composed_close_alt_03",
-              "text": "Alors on garde le rythme rare."
+              "text": "Alors celle-là. Et pas de commentaire trop précis, s'il te plaît."
             }
           ]
         },
         {
           "id": "choice_c09_sandra_minimise",
-          "text": "On laisse tomber et tu te retires un peu.",
+          "text": "Laisse, ce n'est pas important. Bon dîner.",
           "tone": "soft",
           "effects": {},
           "next_messages": [
@@ -101,7 +119,7 @@
               "id": "sandra_visual_access_cooled",
               "sender": "sandra",
               "time_label": "16:15",
-              "text": "Je me retire un peu, oui."
+              "text": "D'accord. Bon dîner aussi."
             }
           ]
         }

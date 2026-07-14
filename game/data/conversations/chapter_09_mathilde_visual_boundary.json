@@ -5,7 +5,7 @@
   "day": 9,
   "title": "Mercredi — Mathilde, la fin du séjour devient visible",
   "app": "messages",
-  "design_goal": "Mathilde reçoit une date réelle du réparateur, voit le retour samedi matin devenir crédible, puis laisse Player choisir entre provocation volontaire, distance coûteuse ou minimisation.",
+  "design_goal": "Mathilde reçoit une date réelle du réparateur, comprend que son séjour chez Marie touche à sa fin, puis transforme une demande de tenue en test qu'elle contrôle moins bien qu'elle ne le prétend.",
   "debug_notes": "Bonus route Mathilde only. The ordinary outfit never becomes a permission.",
   "thread": {
     "id": "thread_mathilde_private",
@@ -22,39 +22,51 @@
       "conversation_segment_id": "c09_mathilde_boundary_01",
       "moment_label": "fin d'après-midi",
       "time_label": "16:12",
-      "transition_text": "Le réparateur a enfin donné une date et la fin du séjour temporaire devient visible.",
+      "transition_text": "Mathilde envoie enfin la date du réparateur, puis deux tenues qu'elle prétend ne pas avoir déjà départagées.",
       "messages": [
         {
           "id": "v096_mathilde_msg_001",
           "sender": "mathilde",
           "time_label": "16:12",
-          "text": "Le réparateur a enfin donné une date."
+          "text": "J'ai enfin eu le réparateur."
         },
         {
           "id": "v096_mathilde_msg_002",
           "sender": "mathilde",
+          "time_label": "16:12",
+          "text": "Enfin, son assistante. Lui reste une créature théorique."
+        },
+        {
+          "id": "v096_mathilde_msg_002b",
+          "sender": "mathilde",
           "time_label": "16:13",
-          "text": "Vendredi 16 h 30. Je peux retourner dans mon appartement samedi matin."
+          "text": "Vendredi 16 h 30. Si tout sèche correctement, je récupère mon appart samedi matin."
         },
         {
           "id": "v096_mathilde_msg_003",
           "sender": "mathilde",
           "time_label": "16:13",
           "content_id": "mathilde_wednesday_homewear_mirror_01",
-          "text": "Je suis encore au miroir."
+          "text": "Donc normalement c'est mon dernier mercredi à coloniser votre miroir."
         },
         {
           "id": "v096_mathilde_msg_004",
           "sender": "mathilde",
           "time_label": "16:14",
           "content_id": "mathilde_wednesday_outfit_choice_02",
-          "text": "Et j'hésite encore sur la tenue."
+          "text": "Je dois ressortir après. J'avais décidé de faire simple. Échec documenté."
+        },
+        {
+          "id": "v096_mathilde_msg_005",
+          "sender": "mathilde",
+          "time_label": "16:14",
+          "text": "Laquelle ? Et ne réponds pas « les deux ». Marie le fait déjà très bien."
         }
       ],
       "choices": [
         {
           "id": "choice_c09_mathilde_deliberate",
-          "text": "Tu la provoques volontairement. Assume la pose.",
+          "text": "La deuxième. Et tu sais très bien pourquoi.",
           "tone": "direct",
           "effects": {},
           "sets_flags": [
@@ -66,19 +78,19 @@
               "sender": "mathilde",
               "time_label": "16:15",
               "content_id": "mathilde_wednesday_deliberate_pose_03",
-              "text": "D'accord. Je la prends sans me cacher."
+              "text": "Je savais que tu allais choisir celle-là."
             },
             {
               "id": "v096_mathilde_deliberate_002",
               "sender": "mathilde",
               "time_label": "16:16",
-              "text": "Mais ne confonds pas ça avec une permission."
+              "text": "J'avais même déjà repris la photo. C'est agaçant."
             }
           ]
         },
         {
           "id": "choice_c09_mathilde_distance",
-          "text": "Je préfère une distance claire, même si ça coûte.",
+          "text": "La première. Demain sera déjà assez compliqué.",
           "tone": "restrained",
           "effects": {},
           "next_messages": [
@@ -87,13 +99,13 @@
               "sender": "mathilde",
               "time_label": "16:15",
               "content_id": "mathilde_wednesday_deliberate_pose_cold_alt_03",
-              "text": "Je garde la distance. C'est plus cher, mais plus net."
+              "text": "Prudent. Très toi. Bon, une chose à gérer à la fois."
             }
           ]
         },
         {
           "id": "choice_c09_mathilde_minimise",
-          "text": "Je ne lis pas ça comme une invitation; reste simple.",
+          "text": "Mets celle que tu préfères. Ce n'est qu'une tenue.",
           "tone": "soft",
           "effects": {},
           "next_messages": [
@@ -101,7 +113,7 @@
               "id": "mathilde_visual_access_cooled",
               "sender": "mathilde",
               "time_label": "16:15",
-              "text": "Alors je redescends d'un cran."
+              "text": "Oui. Juste une tenue."
             }
           ]
         }

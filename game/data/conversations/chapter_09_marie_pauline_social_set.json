@@ -5,7 +5,7 @@
   "day": 9,
   "title": "Mercredi — L'Annexe tient la table",
   "app": "messages",
-  "design_goal": "Le set social garanti apparaît sur tous les chemins avec la bonne table tenue jusqu'à 20 h 45, Bastien déjà commandé, Pauline à une place oubliée et Marie qui sort réellement de La Verrière.",
+  "design_goal": "Faire vivre le set social garanti à travers une réservation mal comptée, Marie qui sort enfin de La Verrière et Bastien déjà lancé dans le dîner, sans ouvrir encore le canal privé Pauline ni le risque Nico.",
   "debug_notes": "Guaranteed social set. No Pauline private note. No Nico selection.",
   "thread": {
     "id": "thread_marie_pauline_social",
@@ -22,40 +22,79 @@
       "conversation_segment_id": "c09_social_01",
       "moment_label": "soir",
       "time_label": "20:45",
-      "transition_text": "Le set social se pose sur tous les chemins.",
+      "transition_text": "La table tient encore quelques minutes quand Pauline découvre qu'elle a réservé pour quatre.",
       "messages": [
         {
           "id": "msg_c09_social_001",
           "sender": "marie",
           "time_label": "20:45",
-          "text": "Nico tient la bonne table jusqu'à 20 h 45."
+          "text": "Nico dit qu'il garde la table du fond jusqu'à 20 h 45. Après, je cite, « débrouillez-vous »."
         },
         {
           "id": "msg_c09_social_002",
           "sender": "pauline",
+          "time_label": "20:45",
+          "text": "Il a raison. J'ai réservé quatre places."
+        },
+        {
+          "id": "msg_c09_social_002b",
+          "sender": "marie",
           "time_label": "20:46",
-          "text": "J'ai oublié une place. Bastien est là, et il a déjà commandé."
+          "text": "On est cinq, Pauline."
+        },
+        {
+          "id": "msg_c09_social_002c",
+          "sender": "pauline",
+          "time_label": "20:46",
+          "text": "Je sais. Bastien vient de me le faire remarquer. Il a déjà commandé, évidemment."
+        },
+        {
+          "id": "msg_c09_social_join_001",
+          "sender": "marie",
+          "time_label": "20:46",
+          "conditions": [
+            "marie_m4_join_movement"
+          ],
+          "text": "Et tu es vraiment passé à La Verrière. J'ai un témoin, pour une fois."
+        },
+        {
+          "id": "msg_c09_social_table_001",
+          "sender": "pauline",
+          "time_label": "20:46",
+          "conditions": [
+            "marie_m4_take_lannexe_table"
+          ],
+          "text": "Tu as rappelé avant moi. Je déteste quand les gens organisés ont raison."
+        },
+        {
+          "id": "msg_c09_social_private_001",
+          "sender": "marie",
+          "time_label": "20:46",
+          "conditions": [
+            "marie_m4_private_thursday"
+          ],
+          "text": "Tu nous laisses ce soir. Tu as réservé demain, donc je note l'effort."
         },
         {
           "id": "msg_c09_social_003",
           "sender": "marie",
           "time_label": "20:47",
           "content_id": "marie_wednesday_lannexe_social_01",
-          "text": "Je sors vraiment de La Verrière."
+          "text": "Je sors enfin. J'ai encore un bout de gaffer sur la manche."
         },
         {
           "id": "msg_c09_social_004",
           "sender": "pauline",
           "time_label": "20:47",
           "content_id": "pauline_wednesday_green_dress_02",
-          "text": "Je garde la robe verte."
+          "text": "Moi j'oublie une chaise, mais la robe verte est validée. Priorités."
         },
         {
           "id": "msg_c09_social_005",
           "sender": "marie",
           "time_label": "20:48",
           "content_id": "marie_pauline_wednesday_duo_03",
-          "text": "On reste lisibles jusqu'au bout."
+          "text": "Bastien a pris ça avant de retourner défendre ses ravioles. Et on a récupéré la cinquième chaise."
         }
       ]
     }
