@@ -1,1134 +1,953 @@
 # Act I Named Boundaries Wave Scene Cards — V0.93
 
-> Modular scene cards for the V0.93 named-boundaries wave.
+> Reconciled visual-first scene contracts for the V0.93 wave.
 > Companion to `ACT_I_NAMED_BOUNDARIES_WAVE_SOURCE_PACK.md`.
-> Documentation only. These cards do not create runtime, JSON, GDScript, tests, assets, saves, commits on `main`, merges, or tags.
+> Documentation only: no runtime, JSON, tests, or final assets are created here.
 
-## 1. Card usage rules
+## 1. Global card rules
 
-Every future implementation must preserve:
+Every card must preserve:
 
 ```text
-3 choices per normal node
-one primary decision axis per node
+3 choices maximum at a normal node
+one primary decision axis
 real Player messages
-character agency
-Marie centrality
-explicit state writes
-no route-selection menu
-no automatic adult permission
+adult character agency
+clear visual reward
+clear route opportunity
+clear risk
+character-specific voice and fantasy
 ```
 
-The full character canon remains primary.
+Every playable day must unlock at least three female-focused gallery images.
 
-Read the global NSFW canon when reviewing attraction, image, secrecy, voyeurism, cheating, or adult-route implications, even though this wave does not open an adult frame.
-
-Scene absence is meaningful.
-
-The W15 carry-over consequence may be:
+Every route card must define:
 
 ```text
-Mathilde
-Sandra
-none
+visual set
+visual intensity
+public/private/secret/shared status
+origin and audience
+what choice unlocks or withholds
+what future pornographic fantasy is promised
 ```
 
-It must never be replaced by an unrelated character merely to fill a slot.
+A route is not advanced by an internal flag alone.
+
+The player must see a visible difference in the gallery or in the access promised by the route.
 
 ---
 
-# 2. Card — Marie next-week real plan
+# 2. Marie black-dress real-plan card
 
 ## Identity
 
 ```text
-scene_id: marie_next_week_real_plan_01
-working_title: Pas une semaine floue
-primary_function: explicit couple request + topology choice
+scene_id: marie_black_dress_real_plan_01
+working_title: La robe noire
+primary_function: visual reconquest + concrete topology
 primary_relationship: Player / Marie
 principal_character: Marie
 ```
 
-## Canon dependencies
+## Visual set
 
 ```text
-required_canon_files:
-- MARIE_CANON_FULL.md
-- PLAYER_CANON_FULL.md
-- CHOICE_DESIGN_CANON.md
-- MODULAR_NARRATIVE_ARC_BLUEPRINT.md
-- DIEGETIC_TIME_AND_COMMUNICATION_CANON.md
-adult_canon_required: no
+marie_tuesday_black_dress_mirror_01
+marie_tuesday_black_dress_turn_02
+marie_tuesday_black_dress_close_03
 ```
 
-## Scope and intensity
+Intensity:
 
 ```text
-act_range: Act I S5
-route_stage_range: couple HABITUAL_WARMTH
-intensity_tier: warm pressure
-window_types: REMOTE_ASYNC -> OFFLINE_TOPOLOGY
-foreground_cost: 1 fixed foreground
-echo_compatible: yes
+V1 -> V2
 ```
 
-## Eligibility
+Visual content:
 
-Hard requirements:
+1. full-body mirror image, black dress and heels or ankle boots;
+2. turned pose emphasizing back, waist, legs, and gold earrings;
+3. closer image with lipstick, neckline, and direct gaze.
 
-- `first_repetition_wave_complete`;
-- Tuesday after the closed Monday;
-- Marie and Player still share a home and assumed-exclusive frame;
-- no urgent safety or adult aftermath;
-- Marie has a real Wednesday La Verrière commitment;
-- Pauline and Bastien are legitimately available for the social hub;
-- Nico is scheduled at L'Annexe.
-
-Hard exclusions:
-
-- relationship already explicitly ended;
-- Marie route closed through a future state not defined in V0.93;
-- the Wednesday hub was already resolved;
-- the same exact plan was already offered.
-
-Availability reason:
+Origin:
 
 ```text
-Marie needs to confirm the Wednesday social table before noon.
-She also refuses another week structured by Player's vague availability.
+Marie takes the images herself while choosing Wednesday's look.
 ```
 
-## Context reads
-
-- active-reconnection evidence;
-- parallel-drift evidence;
-- whether both coexist;
-- Monday Marie return outcome;
-- recent broken or paid promises;
-- current work pressure;
-- Mathilde stay active;
-- no private route knowledge beyond what Marie directly observed.
-
-## Opening beat
-
-Marie gives concrete facts before emotional interpretation:
-
-- La Verrière ends around 19:00;
-- Pauline and Bastien plan to stop at L'Annexe;
-- Nico needs a table answer;
-- Thursday is still available as couple time;
-- Player must choose an action, not a route.
-
-## Choice node M4
-
-Choice count:
+Audience:
 
 ```text
-3
+Player only at send time
 ```
 
-Primary axis:
+Saving rule:
 
 ```text
-What real place does Player choose inside the next two evenings?
+normal gallery unlock
+no forwarding permission inferred
 ```
 
-### M4A — Join from the beginning
+## Concrete trigger
 
-Player action:
+Marie needs to decide the final look before Wednesday.
+
+She also needs a real answer about Player's place in the evening.
+
+Opening rhythm:
 
 ```text
-join Marie at La Verrière
-help close
-leave with her for L'Annexe
+photo
+short joke
+second photo
+clear desire for reaction
+third photo
+real plan question
 ```
 
-State writes:
+Do not front-load a relationship speech.
+
+## M4 choice node
+
+### M4A — Join and claim the movement
+
+Player message:
 
 ```text
-marie_wednesday_join_from_start
+garde la noire
+je viens t'aider à fermer et je repars avec toi
+```
+
+Writes:
+
+```text
 social_hub_topology_joined
-obligation: marie_wednesday_shared_presence = SCHEDULED
+marie_wednesday_shared_presence = SCHEDULED
+marie_reconquest_public_join_seed
 ```
 
-Consequence due:
+Visual consequence:
 
-- payment at La Verrière before the group table;
-- no external route reward;
-- failure if Player simply does not appear.
+- possible fourth selected-look image;
+- Thursday Marie route payoff eligible if the obligation is paid.
 
-### M4B — Precise late arrival
-
-Player action:
+Fantasy signal:
 
 ```text
-finish real work
-arrive at L'Annexe at a named time
-warn before any change
+join Marie's visible life
+reclaim the woman others can see
 ```
 
-State writes:
+### M4B — Make her visible and take responsibility
+
+Player message:
 
 ```text
-marie_wednesday_precise_arrival
-social_hub_topology_late
-obligation: marie_wednesday_arrival = SCHEDULED
+porte-la
+je gère la table et je vous rejoins à 20 h 45
 ```
 
-Consequence due:
-
-- paid if on time or amended before deadline;
-- failed if missed without warning;
-- work remains a fact, not a moral excuse.
-
-### M4C — Decline group, protect Thursday
-
-Player action:
+Writes:
 
 ```text
-do not attend the group evening
-reserve Thursday couple time
-make one concrete proposal
+social_hub_topology_precise_arrival
+marie_wednesday_arrival = SCHEDULED
+marie_public_visibility_accepted
 ```
 
-State writes:
+Visual consequence:
+
+- Marie remains publicly visible without Player beside her;
+- a sharper reminder image can unlock before the deadline;
+- jealousy and social-risk futures become readable.
+
+Fantasy signal:
 
 ```text
-marie_thursday_couple_time_reserved
+let others see her
+still prove Player can act
+```
+
+### M4C — Claim the private continuation
+
+Player message:
+
+```text
+porte ce que tu veux demain
+jeudi je veux la version que tu ne mets pas pour les autres
+je réserve
+```
+
+Writes:
+
+```text
 social_hub_topology_marie_independent
-obligation: marie_thursday_couple_time = SCHEDULED
+marie_thursday_couple_time = SCHEDULED
+marie_private_reconquest_seed
 ```
 
-Consequence due:
+Visual consequence:
 
-- Marie attends Wednesday independently;
-- Thursday plan must be paid or honestly failed;
-- this choice is not labeled bad or cowardly.
+- the most private continuation remains locked until Thursday payment;
+- Marie lingerie or undressing set becomes eligible.
 
-## Character agency
-
-Marie may accept all three choices.
-
-She does not promise identical warmth after every outcome.
-
-She keeps the right to enjoy Wednesday, change her own plan, refuse a late amendment, or shorten Thursday if Player turns another concrete promise into a vague one.
-
-## Exit contract
+Fantasy signal:
 
 ```text
-one M4 obligation exists
-Wednesday topology is known
-Marie remains active
-no route stage changes
+private couple access
+first erotic reconquest image
 ```
+
+## Agency and failure
+
+Marie may:
+
+- wear the dress without Player;
+- enjoy the social evening;
+- refuse a late vague amendment;
+- keep or withdraw the private continuation;
+- choose a different image than Player expected.
 
 ## Anti-patterns
 
 Reject:
 
-- `choose Marie / Pauline / Nico` labels;
-- Marie asking for reassurance instead of action;
-- Player promising both Wednesday and Thursday to avoid choosing;
-- a fourth choice for `maybe`;
-- automatic jealousy because Pauline or Nico will be present;
-- a scene that frames Marie as the safe option against erotic routes.
+- `join / join later / do not join` as three flat variants;
+- all three answers producing the same photos;
+- Marie asking whether Player still loves her;
+- dress photos treated as neutral wardrobe documentation;
+- Player automatically owning the private image because he is her partner.
 
 ---
 
-# 3. Card — Mathilde named gaze boundary
+# 3. Mathilde last-days deliberate-set card
 
 ## Identity
 
 ```text
-scene_id: mathilde_named_gaze_boundary_01
-working_title: Pas innocent, pas autorisé
-primary_function: acknowledged attraction + explicit limit
+scene_id: mathilde_last_days_deliberate_set_01
+working_title: Les derniers jours ici
+primary_function: domestic visual intention + taboo risk
 primary_relationship: Player / Mathilde
 principal_character: Mathilde
 ```
 
-## Canon dependencies
-
-```text
-required_canon_files:
-- MATHILDE_CANON_FULL.md
-- MARIE_CANON_FULL.md
-- PLAYER_CANON_FULL.md
-relevant_deprecation_maps:
-- MATHILDE_CANON_DEPRECATION_MAP.md
-adult_canon_required: yes, for exclusions and consent meaning
-```
-
-## Scope and intensity
-
-```text
-act_range: Act I S5
-route_stage_range: R1-R2
-intensity_tier: acknowledged attraction
-window_types: DOMESTIC_PRIVATE_CONVERSATION
-foreground_cost: 1 carry-over consequence
-echo_compatible: no
-```
-
 ## Eligibility
 
-Preferred hard trigger:
+Preferred:
 
 ```text
 first_repetition.charged_access_owner = mathilde
 ```
 
-Fallback trigger:
+Possible fallback:
 
 ```text
-Mathilde historical scene = RESOLVED
-and no more urgent charged-owner consequence exists
+Mathilde historical foreground = RESOLVED
+and no stronger route consequence is due
 ```
 
-Additional requirements:
-
-- temporary stay active;
-- Mathilde has not clearly closed the route;
-- Player did not pressure her after a refusal;
-- Marie is absent from the immediate room but present in the meaning;
-- no adult aftermath due.
-
-Hard exclusions:
-
-- Mathilde scene never occurred;
-- historical scene expired or deferred without acknowledgement;
-- boundary already named in an equivalent scene;
-- Mathilde has left the apartment permanently;
-- a future Marie discovery requires priority.
-
-Availability reason:
+Required world change:
 
 ```text
-Mathilde and Player share the kitchen before work.
-The same ordinary outfit now carries remembered meaning because the Sunday gaze was acknowledged.
+Mathilde receives a credible repair date.
+Her stay at Marie and Player's apartment now has an end.
 ```
 
-## Context reads
+This gives urgency without inventing a crisis.
 
-- historical charged owner;
-- Mathilde Sunday choice;
-- Player's earlier Mathilde posture;
-- Marie return outcomes;
-- current household trust;
-- whether Player denied, joked, or owned the gaze before;
-- no Sandra knowledge leak.
-
-## Choice node MT2
-
-Choice count:
+## Visual set
 
 ```text
-3
+mathilde_wednesday_homewear_mirror_01
+mathilde_wednesday_outfit_choice_02
+mathilde_wednesday_deliberate_pose_03
 ```
 
-Primary axis:
+Intensity:
 
 ```text
-Does Player own the gaze and respect the limit,
-restore distance,
-or deny what Mathilde has named?
+V2 -> V3
 ```
 
-### MT2A — Own and slow
+Image content:
 
-State writes:
+1. fitted homewear or mini-shorts and crop top in the mirror;
+2. tight going-out dress or fitted jeans/crop-top option;
+3. deliberate pose clearly directed toward Player's gaze.
+
+Origin:
 
 ```text
-mathilde_gaze_owned_without_escalation
-mathilde_boundary_respected_explicit
-named_boundary: mathilde_no_secret_escalation
+Mathilde takes the images while deciding what to wear before the social evening or another outing.
 ```
 
-Preserves:
+Audience:
 
-- Mathilde owner if already owner;
-- future trust;
-- no image, touch, or adult permission.
+```text
+image 1 may be defensible/ordinary
+image 2 sent to Player for opinion
+image 3 private and conditional
+```
 
-### MT2B — Restore ordinary distance
+## Opening rhythm
 
-State writes:
+Use:
+
+- repair-date message;
+- one irritated joke;
+- first image;
+- practical outfit question;
+- second image;
+- Player response;
+- Mathilde admits there is a third.
+
+Do not start with `we need to define our boundary`.
+
+## MT2 choices
+
+### MT2A — Encourage deliberate provocation
+
+Player message:
+
+```text
+la troisième n'est pas une question de tenue
+et tu sais très bien l'effet qu'elle me fait
+```
+
+Writes:
+
+```text
+mathilde_deliberate_visual_access
+mathilde_domestic_taboo_risk
+primary_visual_route = mathilde
+```
+
+Visual consequence:
+
+- image 3 unlocks private;
+- possible fourth V3 image;
+- Thursday underwear set eligible.
+
+Future fantasy:
+
+```text
+lingerie in Marie's apartment
+hidden domestic route
+discovery or confession
+future sex in shared space
+```
+
+### MT2B — Create costly distance
+
+Player message:
+
+```text
+oui, elle me fait de l'effet
+alors tant que tu es ici on arrête les photos privées et les tête-à-tête
+```
+
+Writes:
 
 ```text
 mathilde_attraction_named
-mathilde_route_held
-named_boundary: mathilde_distance_before_escalation
+mathilde_costly_distance
 ```
 
-Preserves:
+Visual consequence:
 
-- attraction as real;
-- route stage unchanged;
-- ordinary household functioning.
+- third private image remains locked;
+- route stays charged but does not advance;
+- the approaching end of the stay makes the distance meaningful.
 
 ### MT2C — Minimize
 
-State writes:
+Player message:
+
+```text
+tu donnes trop de sens à trois photos de tenue
+```
+
+Writes:
 
 ```text
 mathilde_feels_gaze_denied
 mathilde_access_cooled
-named_boundary: mathilde_no_more_opinion_requests
 ```
 
-Consequences:
+Visual consequence:
 
-- Mathilde stops asking Player's view during this wave;
-- no punishment seduction;
-- no historical ledger erasure;
-- current access may pause.
+- third image withheld;
+- Mathilde may use a colder public version elsewhere;
+- no punishment seduction.
 
-## Character agency
+## Distinct voice
 
-Mathilde initiates the boundary because she wants control over what her own pleasure means.
+Mathilde uses:
 
-She may:
+- speed;
+- irritation at the repair process;
+- embarrassment;
+- bad faith;
+- at most one legal joke.
 
-- stay playful;
-- become briefly serious;
-- reject a response;
-- leave the kitchen;
-- continue ordinary life without resolving the attraction.
-
-Player does not decide whether Mathilde liked being watched.
-
-She says it herself.
-
-## Exit contract
-
-```text
-Mathilde pleasure may be named
-Mathilde limit is explicit
-Marie remains active in the subtext
-route stage <= R2
-adult permission = false
-```
-
-## Anti-patterns
-
-Reject:
-
-- wardrobe change presented as consent;
-- more than one legal joke;
-- `you know you wanted it` language from Player;
-- Mathilde forgetting Marie;
-- instant confession or physical crossing;
-- chosen provocative photo;
-- route advancement because Player gives the boldest reply;
-- owner clearing merely to simplify later selection.
+She does not speak like Sandra's hesitant confession or Pauline's audience management.
 
 ---
 
-# 4. Card — Sandra not-a-secret-routine boundary
+# 4. Sandra one-more-chosen-image card
 
 ## Identity
 
 ```text
-scene_id: sandra_not_a_secret_routine_01
-working_title: Pas une habitude cachée
-primary_function: name emotional repetition + soft limit
+scene_id: sandra_one_more_chosen_image_01
+working_title: Celle que je n'envoie pas
+primary_function: chosen private exposure + repetition decision
 primary_relationship: Player / Sandra
 principal_character: Sandra
 ```
 
-## Canon dependencies
-
-```text
-required_canon_files:
-- SANDRA_CANON_FULL.md
-- PLAYER_CANON_FULL.md
-- MARIE_CANON_FULL.md
-supporting_character_source:
-- Jeff remains part of Sandra's real life through SANDRA_CANON_FULL.md
-adult_canon_required: yes, for secrecy and consent exclusions
-```
-
-## Scope and intensity
-
-```text
-act_range: Act I S5
-route_stage_range: R1
-intensity_tier: soft charge
-window_types: REMOTE_ASYNC
-foreground_cost: 1 carry-over consequence
-echo_compatible: no
-```
-
 ## Eligibility
 
-Hard requirements:
-
-- Sandra historical Monday scene = `RESOLVED`;
-- charged owner is empty;
-- Sandra is the most recent resolved foreground, or Mathilde has no higher-priority consequence;
-- no unanswered Player pressure;
-- route not closed;
-- concrete availability reason.
-
-Hard exclusions:
-
-- Sandra scene expired or deferred;
-- Player ignored a clear no and continued;
-- same exact boundary already named;
-- Jeff or Marie knowledge is incorrectly inferred;
-- the scene would require a new photo.
-
-Availability reason:
-
 ```text
-Sandra passes the café again during a lunch break or after a later poste.
-The place creates a concrete trace before she names the emotional problem.
+Sandra Monday foreground = RESOLVED
+charged owner is empty
+Sandra is the selected historical consequence
+no pressure or route closure
 ```
 
-## Context reads
-
-- Monday Sandra outcome;
-- Thursday Sandra trace history;
-- whether Player was precise, warm, or evasive;
-- whether the meeting occurred or a future lunch was proposed;
-- no Mathilde details;
-- no Jeff villainization.
-
-## Choice node S3
-
-Choice count:
+## Visual set
 
 ```text
-3
+sandra_wednesday_fitted_outfit_01
+sandra_wednesday_mirror_hesitation_02
+sandra_wednesday_private_extra_03
 ```
 
-Primary axis:
+Intensity:
 
 ```text
-Does Player accept the truth without pressure,
-protect rarity,
-or avoid responsibility through humor?
+V1 -> V3
 ```
 
-### S3A — Name mutual importance
+Image content:
 
-State writes:
+1. fitted blouse or dress, elegant and protected;
+2. mirror image with more body and visible hesitation;
+3. extra private version with stronger neckline, legs, robe, or intimate framing.
+
+Origin:
 
 ```text
-sandra_importance_named_soft
-sandra_boundary_respected
-named_boundary: sandra_no_proof_demand
+Sandra is choosing an outfit for a real lunch, family visit, or evening.
 ```
 
-No writes:
+Audience:
 
 ```text
-confession
-affair
-new image
-R2
+image 1 sent safely
+image 2 sent after hesitation
+image 3 exists but is conditional
 ```
 
-### S3B — Protect a rare rhythm
+## Opening rhythm
 
-State writes:
+Sandra begins with:
+
+- a café or end-of-post detail;
+- a line about needing an opinion she should ask someone else;
+- first image;
+- minimization;
+- second image;
+- admission that there is another.
+
+## S3 choices
+
+### S3A — Ask for a real meeting and the extra image
+
+Player message:
+
+```text
+garde la tenue
+jeudi midi, même café, vraie date
+et envoie-moi celle que tu hésites à envoyer
+```
+
+Writes:
+
+```text
+sandra_next_meeting_concrete
+sandra_private_exposure_access
+primary_visual_route = sandra
+```
+
+Visual consequence:
+
+- Sandra independently decides whether to unlock image 3;
+- Thursday satin/lingerie set becomes eligible;
+- emotional-affair risk becomes explicit.
+
+### S3B — Keep rare contact without demand
+
+Player message:
+
+```text
+garde l'autre pour toi ce soir
+j'aime mieux quand tu choisis sans que je réclame
+```
+
+Writes:
 
 ```text
 sandra_contact_kept_rare
-sandra_warm_bounded_access
-named_boundary: sandra_no_hidden_routine
+sandra_choice_respected
 ```
 
-No future promise is required.
+Visual consequence:
 
-### S3C — Deflect
+- image 2 is the guaranteed ceiling;
+- Sandra may later surprise Player, but no reward is promised.
 
-State writes:
+### S3C — Reduce the moment
+
+Player message:
 
 ```text
-sandra_reads_avoidance
+la première suffit
+on ne va pas transformer une tenue en événement
+```
+
+Writes:
+
+```text
+sandra_reads_reduction
 sandra_access_cooled
-named_boundary: sandra_withdraws_after_deflection
 ```
 
-Sandra closes the conversation herself.
+Visual consequence:
 
-## Character agency
+- image 3 remains locked;
+- Sandra withdraws rather than arguing.
 
-Sandra chooses to reveal that the moment mattered.
+## Distinct voice
 
-She also chooses the limit.
+Sandra uses:
 
-Player may answer well or badly.
+- a concrete trace;
+- minimization;
+- small message splits;
+- warmth that embarrasses her;
+- one soft closure.
 
-He may not earn more access by pressing after she has closed the exchange.
-
-## Exit contract
-
-```text
-repetition can no longer be called accidental
-Sandra remains R1
-no new image
-no confession
-no affair
-```
-
-## Anti-patterns
-
-Reject:
-
-- direct love confession;
-- Jeff made monstrous to justify the scene;
-- another café meeting as automatic reward;
-- photo as proof of trust;
-- multiple `haha` markers;
-- Mathilde legal vocabulary;
-- pressure rewarded;
-- Sandra explaining the whole route architecture.
+She does not use Mathilde's legal humor or Pauline's language of versions and recipients.
 
 ---
 
-# 5. Card — L'Annexe legitimate social return
+# 5. L'Annexe visual social-hub card
 
 ## Identity
 
 ```text
-scene_id: lannexe_legitimate_social_return_01
-working_title: La table gardée
-primary_function: social visibility + obligation payment
+scene_id: lannexe_visual_social_hub_01
+working_title: La table jusqu'à 20 h 45
+primary_function: social visibility + obligation payment + Pauline opportunity
 primary_relationship: Player / Marie
-principal_characters: Marie, Pauline, Nico
-supporting_character: Bastien
+principal_characters: Marie, Pauline
+supporting: Bastien, Nico
 ```
 
-## Canon dependencies
+## Concrete incident
 
 ```text
-required_canon_files:
-- MARIE_CANON_FULL.md
-- PAULINE_CANON_FULL.md
-- NICO_CANON_FULL.md
-- PLAYER_CANON_FULL.md
-supporting_character_source:
-- SUPPORTING_CHARACTER_CANON_POLICY.md
-adult_canon_required: yes, for image and betrayed-partner exclusions
+Nico can hold the good table only until 20 h 45.
+A late booking is waiting.
+Pauline counted one seat too few.
+Bastien has already ordered a shared plate.
 ```
 
-## Scope and intensity
+This incident makes Player's timing visibly change the evening.
+
+## Guaranteed visual set
 
 ```text
-act_range: Act I S5
-route_stage_range: R1 only
-intensity_tier: ordinary social charge
-window_types: CO_PRESENT_SOCIAL_HUB
-foreground_cost: fixed hub, not a route-stage foreground
-echo_compatible: yes
+marie_wednesday_lannexe_social_01
+pauline_wednesday_green_dress_02
+marie_pauline_wednesday_duo_03
 ```
 
-## Eligibility
-
-Hard requirements:
-
-- M4 resolved;
-- Wednesday evening;
-- Marie's La Verrière task occurred;
-- Pauline and Bastien are both legitimately available;
-- Nico is working at L'Annexe;
-- no safety incident outranks the hub.
-
-Hard exclusions:
-
-- Bastien erased from a scene that depends on his hosting/social presence;
-- Pauline private route already active through a future state;
-- Nico unavailable due to a future authored schedule conflict;
-- Player topology already failed in a way requiring immediate Marie consequence before social content.
-
-Availability reason:
+Intensity:
 
 ```text
-Marie, Pauline, and Bastien stop at L'Annexe after La Verrière.
-Nico is working and has held a table after a real confirmation.
+V2 social
 ```
 
-## Context reads
+Image functions:
 
-- M4 topology;
-- precise arrival obligation;
-- Marie presence/drift evidence;
-- Pauline public-photo posture;
-- Nico friendship posture;
-- no hidden route information.
+- Marie: sexy, alive, socially visible;
+- Pauline: controlled elegance and fitted green dress;
+- duo: comparison, friendship, and route fantasy;
+- Bastien remains real in the story but need not dominate the erotic composition.
 
-## Interaction contract
+Origin:
 
-This hub is primarily co-present.
+```text
+legitimate social photos taken at L'Annexe
+```
 
-Do not represent the full table as a long Messenger transcript.
+Base audience:
 
-Phone content may include:
+```text
+group / normal social sharing
+```
 
-- arrival logistics;
-- one compact delay notification;
-- a short table-location message;
-- a later follow-up.
-
-The actual social evening is represented through:
-
-- state;
-- short result beats;
-- later character tone;
-- no explanatory `Moments hors ligne` card.
-
-## Topology results
+## Topology outcomes
 
 ### Joined
 
-```text
-Player helps Marie close
--> obligation paid
--> couple enters hub together
-```
+Player helps Marie close La Verrière and enters with her.
 
 ### Precise arrival paid
 
-```text
-Player arrives at named time
--> obligation paid
--> Marie did not need to chase him
-```
+Player saves or reaches the table at the promised time.
 
 ### Precise arrival failed
 
-```text
-Player misses without warning
--> obligation failed
--> Marie stays socially active
--> Thursday consequence sharpens
-```
+Nico releases the table or changes seating; Marie orders and continues without Player.
 
 ### Marie independent
 
-```text
-Player does not attend by prior agreement
--> Marie enjoys the hub independently
--> Thursday obligation remains due
-```
+Player receives no minute-by-minute report. Thursday remains due.
 
-## Pauline state
+## Pauline P2 choice
 
-May write:
+### P2A — Keep public
 
 ```text
-pauline_legitimate_social_cycle_02_complete
+la verte est la meilleure
+garde celle-là pour le groupe
 ```
 
-Must keep false:
+- Pauline legitimate cycle completes;
+- no private route.
+
+### P2B — Ask for the alternate crop
 
 ```text
-pauline_private_compartment
-pauline_private_crop
-pauline_secret_test
-pauline_reciprocal_proof
+tu as cadré la robe trois fois
+il y en a forcément une que tu n'as pas mise dans le groupe
 ```
 
-## Bastien contract
+- Pauline may independently send a private alternate;
+- possible secondary risk seed;
+- Thursday Pauline set eligible.
 
-Bastien must:
-
-- have ordinary dialogue or action;
-- remain affectionate or socially real with Pauline;
-- not be made stupid because he trusts her;
-- not become implied consenting cuckold;
-- not disappear when the camera or Player's gaze turns toward Pauline.
-
-## Nico contract
-
-Nico is publicly competent before the W17 quiet scene.
-
-He may:
-
-- manage the table;
-- bring food;
-- tease the group;
-- notice timing;
-- become quiet only after the room thins.
-
-He may not:
-
-- request a private image;
-- offer an alibi;
-- privately sexualize Marie or Mathilde during the public hub;
-- treat work access as ownership of social images.
-
-## Image rule
-
-New required asset:
+### P2C — Refuse the compartment
 
 ```text
-none
+si tu en as une autre, garde-la
+je ne veux pas être le deuxième destinataire caché
 ```
 
-A referenced public photo must preserve:
+- private route refused in this context;
+- Pauline remains attractive and socially legitimate.
+
+## Pauline private visual family
+
+Conditional images:
 
 ```text
-origin = known
-intended audience = group or legitimate social circle
-private crop = none
-forwarding permission = none inferred
-route progression = none
+pauline_thursday_public_green_dress_01
+pauline_thursday_private_crop_02
+pauline_thursday_double_address_03
 ```
 
-## Exit contract
+The private crop is a chosen cheating seed between Pauline and Player.
 
-```text
-Pauline second legitimate social cycle may be complete
-Bastien remains visible
-Nico public competence established
-M4 obligation paid or failed
-W17 Nico scene becomes available
-```
-
-## Anti-patterns
-
-Reject:
-
-- Pauline private message hidden inside the hub;
-- seductive group photo created as route reward;
-- Nico narrating everyone's desire;
-- Marie reduced to jealousy observation;
-- Player receiving surveillance details when absent;
-- a social evening that exists only to place attractive characters in one room.
+It is not Bastien's consent.
 
 ---
 
-# 6. Card — Nico quiet truth after the room
+# 6. Nico image-selection card
 
 ## Identity
 
 ```text
-scene_id: nico_quiet_truth_after_room_01
-working_title: La version confortable
-primary_function: second friendship cycle + male-gaze boundary
+scene_id: nico_what_do_you_want_to_see_01
+working_title: Les trois plus dangereuses
+primary_function: male desire + image recontextualization
 primary_relationship: Player / Nico
 principal_character: Nico
 ```
 
-## Canon dependencies
-
-```text
-required_canon_files:
-- NICO_CANON_FULL.md
-- PLAYER_CANON_FULL.md
-- MARIE_CANON_FULL.md
-- MATHILDE_CANON_FULL.md
-adult_canon_required: yes, for gaze, image, alibi, and consent exclusions
-```
-
-## Scope and intensity
-
-```text
-act_range: Act I S5
-route_stage_range: R1
-intensity_tier: ordinary friendship with named desire
-window_types: QUIET_AFTER_SOCIAL | REMOTE_FOLLOWUP
-foreground_cost: 1 fixed foreground
-echo_compatible: no
-```
-
 ## Eligibility
 
-Hard requirements:
+- social set exists;
+- Nico friendship access active;
+- no magical private archive;
+- no severe prohibited capture.
 
-- social hub terminal;
-- Nico ordinary friendship access active;
-- no Nico route closure;
-- no image request or alibi already active;
-- no overdue Marie consequence requiring immediate priority.
+## Opening trigger
 
-Hard exclusions:
+Nico has seen the legitimate public images.
 
-- Nico is intoxicated;
-- Player uses the scene to disclose private images;
-- Marie or Mathilde consent is inferred;
-- same quiet-truth scene already resolved;
-- a future safety conflict makes the conversation inappropriate.
+He says which frame he looked at twice.
 
-Availability reason variants:
+He admits attraction rather than pretending to be neutral.
+
+## N2 choices
+
+### N2A — Make Nico name his desire
 
 ```text
-Player attended
--> room thins after service
-
-Player arrived late
--> Nico comments after timing became visible
-
-Player was absent
--> Thursday message about the empty chair and Marie's independent evening
+arrête de parler de mon regard
+laquelle tu veux vraiment voir autrement ?
 ```
 
-## Context reads
-
-- M4 topology;
-- whether Player paid the arrival obligation;
-- whether Mathilde is charged owner;
-- only public knowledge of Mathilde's stay;
-- Marie social visibility;
-- Nico Friday saved-seat posture;
-- no private Sandra knowledge.
-
-## Choice node N2
-
-Choice count:
+Writes:
 
 ```text
-3
+nico_desire_named
+nico_rivalry_or_shared_gaze_visible
 ```
 
-Primary axis:
+No image unlock is automatic.
+
+### N2B — Accept the sexualized selection
 
 ```text
-Does Player answer honestly without exchanging access,
-enter soft complicity,
-or define a boundary around the women in his life?
+choisis les trois plus dangereuses
+pas celles que le groupe choisirait
 ```
 
-### N2A — Honest without exchange
-
-State writes:
+Writes:
 
 ```text
-nico_quiet_friendship_cycle_02_complete
-nico_truth_without_private_exchange
-named_boundary: nico_no_domestic_circulation
+nico_private_erotic_selection
+secondary_risk_seed = nico_recontextualization
 ```
 
-No writes:
+Gallery selection:
 
 ```text
-shared_gaze
-image_request
-alibi
-R2
+nico_selection_marie_social_01
+nico_selection_pauline_social_02
+nico_selection_route_woman_03
 ```
 
-### N2B — Soft complicity
+The underlying images may be legitimate.
 
-State writes:
+The erotic recontextualization may not be authorized.
+
+The player must see the risk marker.
+
+### N2C — Refuse women as currency
 
 ```text
-nico_quiet_friendship_cycle_02_complete
-nico_complicity_risk_soft
-named_boundary: none yet, risk recorded
+tu peux me dire que tu les désires
+tu ne les transformes pas en monnaie entre nous
 ```
 
-The scene may name attraction.
-
-It may not exchange descriptions, images, or access.
-
-### N2C — Explicit boundary
-
-State writes:
+Writes:
 
 ```text
-nico_quiet_friendship_cycle_02_complete
 nico_gaze_boundary_set
-named_boundary: women_not_content_between_men
 ```
 
-Nico may respect the boundary without becoming humiliated or villainous.
+No private selection unlock.
 
-## Character agency
+## Distinct voice
 
-Nico may:
+Nico uses:
 
-- admit attraction;
-- admit envy;
-- reject being treated as only a threat;
-- become quieter;
-- respect a line;
-- recognize that direct language is not complete ethics.
+- table and room observations;
+- blunt body language;
+- direct attraction;
+- silence after the joke;
+- his own envy.
 
-Player does not control Nico's attraction.
-
-Nico does not control Marie or Mathilde through his attraction.
-
-## Exit contract
-
-```text
-Nico second ordinary cycle complete
-shared gaze = false
-image request = false
-alibi = false
-route stage = R1
-```
-
-## Anti-patterns
-
-Reject:
-
-- pornographic locker-room monologue;
-- stolen or domestic image request;
-- `I know she wants it` language;
-- Marie or Mathilde treated as objects being traded;
-- Nico made villainous for naming attraction;
-- Player rewarded for disclosing private details;
-- a secret cover pact;
-- automatic rivalry route.
+He does not become a therapist, porn narrator, or consent manual.
 
 ---
 
-# 7. Card — Marie named-boundary return
+# 7. Thursday dominant visual-payoff card
+
+## Identity
+
+```text
+scene_id: named_boundaries_visual_payoff_01
+primary_function: route-specific visual advancement
+foreground_cost: 1 dominant route family
+```
+
+Exactly one main set dominates the run.
+
+A secondary risk seed may coexist, but must not replace the primary payoff.
+
+## Marie set
+
+```text
+marie_thursday_private_dress_01
+marie_thursday_lingerie_tease_02
+marie_thursday_reconquest_private_03
+```
+
+Eligibility:
+
+- Marie action paid or strongly amended;
+- Player chose visible or private reconquest.
+
+Intensity:
+
+```text
+V2 -> V4 teaser
+```
+
+## Mathilde set
+
+```text
+mathilde_thursday_private_homewear_01
+mathilde_thursday_underwear_choice_02
+mathilde_thursday_for_your_eyes_03
+```
+
+Eligibility:
+
+- MT2A;
+- no cooling or boundary break.
+
+Intensity:
+
+```text
+V3 -> V4 teaser
+```
+
+## Sandra set
+
+```text
+sandra_thursday_evening_dress_01
+sandra_thursday_satin_private_02
+sandra_thursday_chosen_exposure_03
+```
+
+Eligibility:
+
+- S3A or strong chosen exposure;
+- no pressure route.
+
+Intensity:
+
+```text
+V2 -> V4 teaser
+```
+
+## Pauline set
+
+```text
+pauline_thursday_public_green_dress_01
+pauline_thursday_private_crop_02
+pauline_thursday_double_address_03
+```
+
+Eligibility:
+
+- P2B;
+- Pauline independently chooses the private alternate.
+
+Intensity:
+
+```text
+V2 -> V3
+```
+
+## Nico risk track
+
+Uses selected legitimate images with a new private erotic meaning.
+
+It is a route/risk overlay, not a replacement for female-focused images.
+
+## Raphaëlle teaser
+
+```text
+raphaelle_thursday_office_full_01
+raphaelle_thursday_workshop_fit_02
+raphaelle_thursday_partial_costume_03
+```
+
+May be an additional teaser when production scope permits.
+
+It must not dilute the chosen main payoff.
+
+---
+
+# 8. Marie obligation-return card
 
 ## Identity
 
 ```text
 scene_id: marie_named_boundary_return_01
-working_title: Ce qu'on fait vraiment
-primary_function: obligation payment + couple consequence
+primary_function: pay, amend, or fail Player's earlier action
 primary_relationship: Player / Marie
-principal_character: Marie
 ```
 
-## Canon dependencies
+The visual payoff does not erase the obligation.
+
+Terminal outcomes:
 
 ```text
-required_canon_files:
-- MARIE_CANON_FULL.md
-- PLAYER_CANON_FULL.md
-- CHOICE_DESIGN_CANON.md
-adult_canon_required: no
+PAID
+AMENDED
+FAILED
 ```
 
-## Scope and intensity
+Paid:
+
+- active-reconnection evidence;
+- Marie private payoff may unlock;
+- shared time happens offline.
+
+Amended:
+
+- must contain a new concrete action;
+- cannot become infinite postponement.
+
+Failed:
+
+- Marie continues her evening;
+- drift evidence recorded;
+- another route payoff may still exist;
+- couple consequence remains real.
+
+No grand breakup speech is required.
+
+---
+
+# 9. Internal closure card
+
+## Identity
 
 ```text
-act_range: Act I S5
-route_stage_range: couple HABITUAL_WARMTH
-intensity_tier: warm, disappointed, or mixed
-window_types: REMOTE_RETURN -> OFFLINE_SHARED_LIFE
-foreground_cost: fixed consequence
-echo_compatible: no
+scene_id: named_boundaries_wave_close_01
+primary_function: guarded silent completion
 ```
 
-## Eligibility
+No:
 
-Hard requirements:
-
-- M4 obligation exists;
-- carry-over consequence terminal or absent;
-- social hub terminal;
-- Nico scene terminal or explicitly deferred;
-- Thursday evening;
-- no higher-priority safety aftermath.
-
-Hard exclusions:
-
-- M4 obligation missing because the opening scene never occurred;
-- unresolved Wednesday phase;
-- another scene attempts to erase the obligation;
-- future relationship mode already changed.
-
-Availability reason:
-
-```text
-Thursday is the deadline created by Player's own M4 choice.
-Marie does not manufacture a crisis; she reads whether the chosen action happened.
-```
-
-## Result variants
-
-### Paid join-from-start
-
-Writes:
-
-```text
-marie_real_plan_paid
-active_reconnection_evidence
-couple_boundary_named
-```
-
-### Paid precise arrival
-
-Writes:
-
-```text
-marie_precise_arrival_paid
-active_reconnection_evidence
-couple_boundary_named
-```
-
-### Paid Thursday couple time
-
-Writes:
-
-```text
-marie_thursday_time_paid
-active_reconnection_evidence
-couple_boundary_named
-```
-
-### Amended before deadline
-
-Writes:
-
-```text
-marie_real_plan_amended
-couple_boundary_named
-```
-
-The amendment must contain a new real action.
-
-It is not automatically positive evidence.
-
-### Failed honestly
-
-Writes:
-
-```text
-marie_real_plan_failed
-parallel_drift_evidence_soft
-couple_boundary_named
-```
-
-Marie continues her evening.
-
-She does not keep an indefinite invitation open.
-
-## Choice rule
-
-No new three-choice node is required when M4 already determined the action and the result is observable.
-
-A short Player reply may exist only when it changes:
-
-- whether failure is admitted;
-- whether a real amendment is offered;
-- whether Player lies.
-
-V0.93 does not authorize a lie branch or hard secret.
-
-The preferred source-pack outcome is consequence, not duplicate choice.
-
-## Character agency
-
-Marie may:
-
-- be warm after payment;
-- remain mixed after an amendment;
-- shorten the conversation after failure;
-- go out, eat, walk, or call Pauline;
-- refuse a late abstract apology;
-- remain desirable and active.
-
-## Wave close contract
+- conversation;
+- Player choice;
+- notification;
+- visible system summary;
+- route selection UI.
 
 Closure requires:
 
 ```text
 M4 obligation terminal
-carry-over scene terminal or absent
+carry-over route terminal or absent
 social hub terminal
-Nico scene terminal or explicitly deferred
-no unowned SCHEDULED / DUE obligation
+Nico scene terminal or deferred
+Thursday visual payoff resolved
+no pending unowned obligation
 ```
 
 Recommended completion fact:
@@ -1137,83 +956,54 @@ Recommended completion fact:
 named_boundaries_wave_complete
 ```
 
-Relationship exit:
-
-```text
-Marie / Player = HABITUAL_WARMTH
-relationship frame = ASSUMED_EXCLUSIVE
-couple boundary = explicitly named through action
-```
-
-## Anti-patterns
-
-Reject:
-
-- a grand breakup speech;
-- instant repair mode;
-- Marie forgiving a missed action because Player phrases regret well;
-- Marie waiting motionless;
-- final score summary;
-- route menu;
-- hard-secret creation;
-- adult-frame negotiation inside this wave.
+The close is idempotent.
 
 ---
 
-# 8. Internal closure card
+# 10. Cross-card product matrix
 
-## Identity
+| Card | Guaranteed photos | Conditional photos | Main fantasy | Strong risk |
+|---|---:|---:|---|---|
+| Marie Tuesday | 3 | 1 | reconquest / visibility | jealousy / private claim |
+| Mathilde W15 | 3 when selected | 1 | domestic taboo | hidden route / discovery |
+| Sandra W15 | 3 when selected | 0–1 | chosen private exposure | emotional affair |
+| Social hub | 3 | Pauline alternate | Marie/Pauline visibility | double address |
+| Nico | 0 new women required | 3-image erotic selection | shared gaze | unauthorized recontextualization |
+| Thursday payoff | 3 | Raphaëlle teaser | selected route fantasy | route-specific |
 
-```text
-scene_id: named_boundaries_wave_close_01
-working_title: Internal wave close
-primary_function: guarded completion
-primary_relationship: none
-principal_character: none
-```
-
-This is not a visible narrative scene.
-
-It must contain:
+Minimum per day:
 
 ```text
-no conversation
-no Player choice
-no notification
-no day-log exposition
-no visible closure card
-no new route content
+Tuesday = 3
+Wednesday = 3, often 6
+Thursday = 3
 ```
-
-It may write only the validated completion fact after every closure condition passes.
-
-It must remain idempotent.
-
-A later runtime plan must define the exact pure closure predicate and test matrix.
 
 ---
 
-# 9. Cross-card validation matrix
+# 11. Choice-pattern audit
 
-| Contract | Marie M4 | Mathilde | Sandra | Social hub | Nico N2 | Marie return |
-|---|---:|---:|---:|---:|---:|---:|
-| Marie remains active | yes | subtext | subtext | yes | consequence | yes |
-| 3 choices max | 3 | 3 | 3 | 0 | 3 | 0 preferred |
-| New adult permission | no | no | no | no | no | no |
-| New required image | no | no | no | no | no | no |
-| Hard secret | no | no | no | no | no | no |
-| Route R2+ created | no | no | no | no | no | no |
-| Concrete consequence | obligation | boundary | boundary | payment | boundary/risk | payment/failure |
-| Can be absent | no | yes | yes | no | no | no |
+The final JSON must not reduce the cards to the same structure.
+
+```text
+Marie = choose how her visibility and private continuation are handled
+Mathilde = encourage provocation / create costly distance / deny
+Sandra = ask for repetition and extra exposure / preserve rarity / reduce
+Pauline = keep public / ask private alternate / refuse compartment
+Nico = force his desire into the open / accept sexualized selection / forbid currency
+```
+
+The route identities must be visible before clicking.
 
 ---
 
-# 10. Final scene-card rule
+# 12. Final card rule
 
 ```text
-A boundary scene is not a reward scene.
+A strong adult-game scene does not hide the opportunity.
 
-The character names what became real,
-Player answers through an action or a limit,
-and the story records what remains possible afterward.
+It shows the woman.
+It reveals what kind of access may open.
+It lets Player choose the fantasy or the risk.
+It records a visibly different gallery consequence.
 ```
