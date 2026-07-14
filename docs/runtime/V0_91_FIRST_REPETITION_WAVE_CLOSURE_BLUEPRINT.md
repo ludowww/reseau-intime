@@ -1,7 +1,7 @@
 # V0.91 — First Repetition Wave Closure Blueprint
 
-> Documentation-only product and runtime blueprint after the locked V0.90 second-repetition slice.  
-> This document authorizes no runtime, JSON, GDScript, test, scene, asset, save, merge, or tag change by itself.  
+> Documentation-only product and runtime blueprint after the locked V0.90 second-repetition slice.
+> This document authorizes no runtime, JSON, GDScript, test, scene, asset, save, merge, or tag change by itself.
 > Future implementation begins only after Product Owner validation.
 
 ## 1. Authority and locked baseline
