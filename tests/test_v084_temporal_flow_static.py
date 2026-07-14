@@ -274,7 +274,9 @@ class V084TemporalFlowStaticTests(unittest.TestCase):
         self.assertEqual(saturday["timeline_flow"].get("next_day"), 6)
         self.assertEqual(sunday["timeline_flow"].get("next_day"), 7)
         self.assertIsNone(monday["timeline_flow"].get("next_day"))
-        self.assertIn("La première vague est close", monday["timeline_flow"]["day_end_card"]["title"])
+        day_end_card = monday["timeline_flow"]["day_end_card"]
+        self.assertIn("devient historique", day_end_card["title"])
+        self.assertIn("première vague", day_end_card["subtitle"])
         self.assertEqual(monday["timeline_flow"]["phases"][-1].get("id"), "monday_first_repetition_wave_close")
 
 
