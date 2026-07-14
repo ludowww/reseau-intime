@@ -35,15 +35,17 @@ def is_reusable_thread_definition(node: dict) -> bool:
 
 
 class V090SandraRepetitionStaticTests(unittest.TestCase):
-    def test_active_scene_uses_v090_and_runtime_loads_only_monday_modular_index(self):
+    def test_active_scene_keeps_v090_runtime_under_v092_closure_adapter(self):
         scene = (GAME / "scenes/smartphone/PhonePrototype.tscn").read_text(encoding="utf-8")
-        phone = (GAME / "scripts/ui/PhonePrototypeV090.gd").read_text(encoding="utf-8")
-        self.assertIn("PhonePrototypeV090.gd", scene)
-        self.assertIn('extends "res://scripts/ui/PhonePrototypeV089.gd"', phone)
-        self.assertIn('MONDAY_INDEX_PATH := "res://data/conversations/chapter_07_modular_index.json"', phone)
-        self.assertIn("DataLoader.get_index_for_day(7)", phone)
-        self.assertIn("DataLoader._load_index_conversations(index)", phone)
-        self.assertNotIn("chapter_07_index.json", phone)
+        phone_v090 = (GAME / "scripts/ui/PhonePrototypeV090.gd").read_text(encoding="utf-8")
+        phone_v092 = (GAME / "scripts/ui/PhonePrototypeV092.gd").read_text(encoding="utf-8")
+        self.assertIn("PhonePrototypeV092.gd", scene)
+        self.assertIn('extends "res://scripts/ui/PhonePrototypeV090.gd"', phone_v092)
+        self.assertIn('extends "res://scripts/ui/PhonePrototypeV089.gd"', phone_v090)
+        self.assertIn('MONDAY_INDEX_PATH := "res://data/conversations/chapter_07_modular_index.json"', phone_v090)
+        self.assertIn("DataLoader.get_index_for_day(7)", phone_v090)
+        self.assertIn("DataLoader._load_index_conversations(index)", phone_v090)
+        self.assertNotIn("chapter_07_index.json", phone_v090)
 
     def test_chronology_unlocks_monday_and_stops_before_tuesday(self):
         sunday = load_json("data/conversations/chapter_06_modular_index.json")
@@ -54,7 +56,7 @@ class V090SandraRepetitionStaticTests(unittest.TestCase):
         self.assertEqual(monday.get("day_start_time"), "09:30")
         self.assertEqual(monday.get("window_range"), "W12-W13")
 
-    def test_monday_phase_order_pays_morning_then_sandra_then_marie(self):
+    def test_monday_phase_order_preserves_v090_prefix_before_v092_close(self):
         index = load_json(MONDAY_INDEX)
         phases = index["timeline_flow"]["phases"]
         self.assertEqual(
@@ -66,6 +68,7 @@ class V090SandraRepetitionStaticTests(unittest.TestCase):
                 "monday_marie_return",
                 "monday_marie_resolution",
                 "monday_slice_close",
+                "monday_first_repetition_wave_close",
             ],
         )
         morning = phases[0].get("authored_beat_variants", [])
@@ -73,7 +76,9 @@ class V090SandraRepetitionStaticTests(unittest.TestCase):
         self.assertEqual(morning[0].get("conditions"), ["marie_next_morning_obligation_scheduled"])
         self.assertIn("marie_monday_morning_paid", morning[0].get("sets_flags", []))
         self.assertEqual(phases[3].get("required_conversation_ids"), ["chapter_07_marie_monday_return"])
-        self.assertEqual(phases[-1]["authored_beat"].get("sets_flags"), ["first_repetition_slice_02_complete"])
+        self.assertEqual(phases[5]["authored_beat"].get("sets_flags"), ["first_repetition_slice_02_complete"])
+        self.assertEqual(phases[6].get("internal_closure"), "first_repetition")
+        self.assertNotIn("sets_flags", phases[6].get("authored_beat", {}))
 
     def test_sandra_pool_is_single_deterministic_candidate_or_silent_defer(self):
         index = load_json(MONDAY_INDEX)
