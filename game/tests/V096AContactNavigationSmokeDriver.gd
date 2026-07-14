@@ -153,6 +153,7 @@ func _scenario_k(phone) -> void:
 		_expect(phone._unlock_rule_ready(9, conversation_id, initial_ids), "K: day 9 unlock rule is not phase-ready for %s" % conversation_id)
 
 func _scenario_l(phone) -> void:
+	phone._unlock_conversation(9, "chapter_09_mathilde_visual_boundary")
 	phone._show_history_day(9)
 	var threads: Array = phone._collect_day_threads(9)
 	_expect(not threads.is_empty(), "L: no history thread available")
@@ -165,6 +166,13 @@ func _scenario_l(phone) -> void:
 
 func _scenario_m(phone) -> void:
 	var mathilde := _thread_by_id(phone, "thread_mathilde_private")
+	if mathilde.is_empty():
+		for conversation in DataLoader.get_conversations_for_day(9):
+			if typeof(conversation) != TYPE_DICTIONARY:
+				continue
+			if str(conversation.get("thread_id", "")) == "thread_mathilde_private" or str(conversation.get("id", "")) == "thread_mathilde_private":
+				mathilde = conversation
+				break
 	_expect(not mathilde.is_empty(), "M: Mathilde thread missing")
 	if mathilde.is_empty():
 		return

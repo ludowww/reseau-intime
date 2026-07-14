@@ -387,8 +387,6 @@ func _unlock_conversation(day_value, conversation_id: String) -> bool:
 func _available_conversation_ids_for_day(day_value) -> Array:
 	var availability := _conversation_availability_for_day(day_value)
 	var initial_ids: Array = availability.get("initial_conversation_ids", [])
-	if initial_ids.is_empty():
-		return []
 	var ids: Array = []
 	for conversation_id in initial_ids:
 		_add_unique(ids, str(conversation_id))

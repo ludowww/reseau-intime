@@ -240,6 +240,7 @@ func _open_history_conversation(day_value, conversation: Dictionary) -> void:
 			conversation_view.call("show_archive_conversation", conversation)
 		else:
 			conversation_view.show_conversation(conversation)
+		conversation_view.active_conversation_id = "archive::%s::%s" % [str(day_value), _conversation_id(conversation)]
 	if is_instance_valid(landing_panel):
 		landing_panel.visible = false
 	_sync_conversation_phone_status()
@@ -310,6 +311,10 @@ func _filter_history_conversation_to_unlocked_episodes(day_value, conversation: 
 func _annotate_source_day(day_value, conversation: Dictionary) -> Dictionary:
 	var entry: Dictionary = conversation.duplicate(true)
 	entry["_source_day_value"] = day_value
+	if not entry.has("day"):
+		entry["day"] = day_value
+	if not entry.has("chapter"):
+		entry["chapter"] = day_value
 	return entry
 
 func _conversation_recency_score(conversation: Dictionary) -> int:
