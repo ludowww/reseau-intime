@@ -1,7 +1,7 @@
 # V0.91 — First Repetition Wave Closure Blueprint Report
 
-> Documentation-only milestone after locked V0.90.  
-> Defines how the implemented W9–W13 first-repetition wave closes before any new narrative wave begins.  
+> Documentation-only milestone after locked V0.90.
+> Defines how the implemented W9–W13 first-repetition wave closes before any new narrative wave begins.
 > No runtime, JSON, GDScript, test, scene, asset, save, merge, or tag change is made by this report.
 
 ## 1. Baseline
