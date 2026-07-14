@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/ui/PhonePrototypeV092.gd" id="1"]
 
 [node name="PhonePrototype" type="Control"]
-editor_description = "V0.92 first-repetition wave-closure adapter extends PhonePrototypeV090.gd."
+editor_description = "Active chain: PhonePrototypeV092.gd -> PhonePrototypeV090.gd -> PhonePrototypeV089.gd -> PhonePrototypeV086A.gd. V0.92 adds only guarded first-repetition wave closure."
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
