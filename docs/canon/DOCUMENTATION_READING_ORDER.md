@@ -1,8 +1,8 @@
 # Documentation Reading Order — Canon Current
 
-> Canon entry point after the V0.88 first-repetition runtime-integration planning pass.  
-> Runtime remains implemented from Tuesday through Friday at V0.86.  
-> V0.87 defines the first post-opening repetition wave; V0.88 defines its smallest runtime slice. Neither is playable yet.
+> Canon entry point after the V0.92 locked runtime baseline and the V0.93 documentation reconciliation.
+> Runtime is locked at V0.92; V0.93 is documentation-only and non playable.
+> V0.87 defines the first post-opening repetition wave; V0.88 defines its smallest runtime slice; V0.93 reorients the next wave as the authoritative visual-first documentation set.
 
 ## 1. Core rules
 
@@ -63,18 +63,24 @@ Documented is not the same as implemented.
    - `docs/runtime/V0_88_FIRST_REPETITION_RUNTIME_PREPARATION_NOTE.md`
    - `docs/runtime/V0_88_FIRST_REPETITION_RUNTIME_INTEGRATION_PLAN.md`
    - `docs/V0_88_First_Repetition_Runtime_Integration_Plan_Report.md`
-10. `docs/canon/characters/CHARACTER_CANON_INDEX.md`
-11. relevant principal full-canon file
-12. `docs/canon/CHARACTER_VOICE_DISTINCTION_CANON.md`
-13. `docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md` when adult tension, images, voyeurism, cheating, sharing, roleplay, NTR/cuckold, group content, or dark consequences are involved
-14. relevant character deprecation map
-15. `docs/canon/SUPPORTING_CHARACTER_CANON_POLICY.md` when a supporting character appears or is affected
-16. historical J1 sources only when auditing line origin:
+10. reconciled V0.93 documentation layer:
+   - `docs/canon/ACT_I_NAMED_BOUNDARIES_WAVE_SOURCE_PACK.md`
+   - `docs/canon/ACT_I_NAMED_BOUNDARIES_WAVE_SCENE_CARDS.md`
+   - `docs/canon/ACT_I_NAMED_BOUNDARIES_WAVE_TEMPORAL_DELIVERY_MAP.md`
+   - `docs/canon/ACT_I_NAMED_BOUNDARIES_VISUAL_ESCALATION_ADDENDUM.md`
+   - `docs/V0_93_Next_Act_I_Wave_Source_Pack_Report.md`
+   - `docs/V0_93_Visual_First_Pornographic_Reorientation_Report.md`
+11. `docs/canon/CHARACTER_CANON_INDEX.md`
+12. relevant principal full-canon file
+13. `docs/canon/CHARACTER_VOICE_DISTINCTION_CANON.md`
+14. `docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md` when adult tension, images, voyeurism, cheating, sharing, roleplay, NTR/cuckold, group content, or dark consequences are involved
+15. relevant character deprecation map
+16. `docs/canon/SUPPORTING_CHARACTER_CANON_POLICY.md` when a supporting character appears or is affected
+17. historical J1 sources only when auditing line origin:
     - `docs/canon/J1_CANON_SOURCE_PACK.md`
     - `docs/V0_69_J1_Canon_Text_Review_And_Final_Line_Source.md`
-17. voice/intensity bibles as support only
-18. older fixed-day plans, summaries, route matrices, proof maps, and inactive runtime only after explicit cross-checking
-
+18. voice/intensity bibles as support only
+19. older fixed-day plans, summaries, route matrices, proof maps, and inactive runtime only after explicit cross-checking
 `docs/canon/CHARACTERS_CANON_CURRENT.md` remains a doorway only.
 
 ---

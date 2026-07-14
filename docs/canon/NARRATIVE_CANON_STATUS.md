@@ -1,8 +1,8 @@
 # Narrative Canon Status — Current
 
-> Narrative and implementation status after the V0.88 first-repetition runtime-integration planning pass.  
-> Runtime remains playable from Tuesday through Friday at V0.86 + V0.86a.  
-> V0.87 defines the first repetition wave; V0.88 defines the smallest future runtime slice. Neither is playable yet.
+> Narrative and implementation status after the V0.92 locked runtime baseline and the V0.93 reconciliation.
+> Runtime remains playable from Tuesday through Monday at the locked V0.92 baseline.
+> V0.93 is documentation-only and non playable; it defines the next visual-first wave as a future authority layer.
 
 ## 1. Core rule
 
@@ -53,6 +53,12 @@ docs/V0_86_Friday_Public_Traces_And_Opening_Completion_Report.md
 docs/V0_86A_Temporal_UX_Notification_Polish_Report.md
 docs/V0_87_Next_Act_I_Windows_Source_Pack_Report.md
 docs/V0_88_First_Repetition_Runtime_Integration_Plan_Report.md
+docs/canon/ACT_I_NAMED_BOUNDARIES_WAVE_SOURCE_PACK.md
+docs/canon/ACT_I_NAMED_BOUNDARIES_WAVE_SCENE_CARDS.md
+docs/canon/ACT_I_NAMED_BOUNDARIES_WAVE_TEMPORAL_DELIVERY_MAP.md
+docs/canon/ACT_I_NAMED_BOUNDARIES_VISUAL_ESCALATION_ADDENDUM.md
+docs/V0_93_Next_Act_I_Wave_Source_Pack_Report.md
+docs/V0_93_Visual_First_Pornographic_Reorientation_Report.md
 ```
 
 Read the relevant full character canon before changing any character scene.
@@ -64,9 +70,12 @@ Read the relevant full character canon before changing any character scene.
 ```text
 launch
 -> Tuesday active
--> Wednesday locked
--> Thursday locked
--> Friday locked
+-> Wednesday active
+-> Thursday active
+-> Friday active
+-> Saturday active
+-> Sunday active
+-> Monday active
 ```
 
 Day progression:
@@ -75,17 +84,23 @@ Day progression:
 Tuesday complete -> Wednesday
 Wednesday complete -> Thursday
 Thursday complete -> Friday
-Friday complete -> no later playable day
+Friday complete -> Saturday
+Saturday complete -> Sunday
+Sunday complete -> Monday
+Monday complete -> no later playable day
 ```
 
 Current runtime endpoint:
 
 ```text
-Friday evening
+Monday evening
 opening_band_complete = true
+first_repetition_slice_01_complete = true
+first_repetition_slice_02_complete = true
+first_repetition_wave_complete = true
 ```
 
-Saturday, Sunday, Monday, the V0.87 repetition windows, and the V0.88 slice are not yet in the build.
+The V0.93 documentation layer is not yet implemented in runtime.
 
 Completed days remain read-only archives.
 

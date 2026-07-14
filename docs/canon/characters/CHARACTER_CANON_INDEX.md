@@ -10,6 +10,7 @@
 Write principal characters from their full canon files.
 Write adult escalation from the global NSFW canon.
 Write the next repetition wave from the V0.87 source pack and cards.
+Write the V0.93 documented ceilings from the reconciled visual-first source pack.
 Do not confuse a later engine with current runtime activation.
 Do not confuse documented future access with current save state.
 Do not promote a supporting character into an independent route by accident.
@@ -35,7 +36,7 @@ Nico's Mathilde attraction, domestic envy, voyeurism, image-consent matrix, reci
 
 ## 3. Current runtime ceiling
 
-V0.86 completes the first ordinary-access band.
+V0.92 locks the current runtime baseline.
 
 ```text
 Marie/Player = HABITUAL_WARMTH
@@ -182,6 +183,19 @@ routes R3+ = none
 ```
 
 This is future authorized story state after integration, not the current runtime state.
+
+### V0.93 documented ceilings
+
+The reconciled V0.93 documentation authorizes the following future ceilings, but they are not yet integrated into runtime:
+
+- Marie: reconquest visuals, social visibility, and private couple progression;
+- Mathilde: voluntary domestic visual progression;
+- Sandra: chosen private exposure;
+- Pauline: first private version / double address;
+- Nico: voyeur-selection risk and future image pact;
+- Raphaëlle: transformation teaser.
+
+These accesses are documented by V0.93 and remain future authority until runtime integration.
 
 ---
 
