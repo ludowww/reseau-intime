@@ -1,7 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://conversation_view"]
 
-[ext_resource type="Script" path="res://scripts/ui/ConversationViewV096A.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/ui/ConversationViewV096AResume.gd" id="1"]
 
 [node name="ConversationView" type="VBoxContainer"]
-editor_description = "V0.95 renders real visual assets, preserves fallback cards, and opens Gallery detail."
+editor_description = "V0.96a adds contact return navigation and an explicit completed-thread return control while preserving visual assets and Gallery detail."
 script = ExtResource("1")

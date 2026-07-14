@@ -10,13 +10,17 @@ class V096AContactNavigationNotificationsStaticTests(unittest.TestCase):
     def setUp(self):
         self.phone_scene = (GAME / "scenes" / "smartphone" / "PhonePrototype.tscn").read_text(encoding="utf-8")
         self.conversation_scene = (GAME / "scenes" / "smartphone" / "ConversationView.tscn").read_text(encoding="utf-8")
-        self.phone = (GAME / "scripts" / "ui" / "PhonePrototypeV096A.gd").read_text(encoding="utf-8")
-        self.conversation = (GAME / "scripts" / "ui" / "ConversationViewV096A.gd").read_text(encoding="utf-8")
+        self.phone_base = (GAME / "scripts" / "ui" / "PhonePrototypeV096A.gd").read_text(encoding="utf-8")
+        self.phone_resume = (GAME / "scripts" / "ui" / "PhonePrototypeV096AResume.gd").read_text(encoding="utf-8")
+        self.phone = self.phone_base + "\n" + self.phone_resume
+        self.conversation_base = (GAME / "scripts" / "ui" / "ConversationViewV096A.gd").read_text(encoding="utf-8")
+        self.conversation_resume = (GAME / "scripts" / "ui" / "ConversationViewV096AResume.gd").read_text(encoding="utf-8")
+        self.conversation = self.conversation_base + "\n" + self.conversation_resume
         self.chapter9 = json.loads((GAME / "data" / "conversations" / "chapter_09_modular_index.json").read_text(encoding="utf-8"))
 
-    def test_scenes_point_to_v096a_scripts(self):
-        self.assertIn("PhonePrototypeV096A.gd", self.phone_scene)
-        self.assertIn("ConversationViewV096A.gd", self.conversation_scene)
+    def test_scenes_point_to_resume_scripts(self):
+        self.assertIn("PhonePrototypeV096AResume.gd", self.phone_scene)
+        self.assertIn("ConversationViewV096AResume.gd", self.conversation_scene)
 
     def test_phone_script_exposes_contacts_and_history_navigation(self):
         for token in [
@@ -89,6 +93,26 @@ class V096AContactNavigationNotificationsStaticTests(unittest.TestCase):
         self.assertIn('var same_thread :=', self.phone)
         self.assertIn('_set_thread_view_visible(true)', self.phone)
         self.assertIn('continue_active_thread', self.phone)
+
+    def test_completed_contacts_are_read_only_and_actionable_contacts_are_explicit(self):
+        for token in [
+            'func _thread_is_actionable(',
+            'return "À poursuivre"',
+            'return "Historique"',
+            'if not _thread_is_actionable(day_value, conversation):',
+            '_open_history_conversation(day_value, conversation)',
+            'return _is_conversation_pending(conversation) or _is_contact_actionable(conversation)',
+        ]:
+            self.assertIn(token, self.phone_resume)
+
+    def test_completed_conversation_has_return_control(self):
+        for token in [
+            'Conversation terminée.',
+            'CompletedReturnToContactsButton',
+            'Retour aux contacts',
+            'contacts_requested.emit()',
+        ]:
+            self.assertIn(token, self.conversation_resume)
 
 
 if __name__ == "__main__":

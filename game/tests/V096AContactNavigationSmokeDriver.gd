@@ -1,7 +1,7 @@
 extends Node
 
-const PHONE_SCRIPT = preload("res://scripts/ui/PhonePrototypeV096A.gd")
-const CONVERSATION_SCRIPT = preload("res://scripts/ui/ConversationViewV096A.gd")
+const PHONE_SCRIPT = preload("res://scripts/ui/PhonePrototypeV096AResume.gd")
+const CONVERSATION_SCRIPT = preload("res://scripts/ui/ConversationViewV096AResume.gd")
 
 var failures: Array[String] = []
 
@@ -38,6 +38,9 @@ func _run() -> void:
 		"L": _scenario_l(phone)
 		"M": _scenario_m(phone)
 		"N": _scenario_n(phone)
+		"O": _scenario_o(phone)
+		"P": _scenario_p(phone)
+		"Q": _scenario_q(phone)
 		_:
 			failures.append("Unknown scenario: %s" % _scenario())
 	await get_tree().process_frame
@@ -95,7 +98,7 @@ func _scenario_d(phone) -> void:
 		convo = threads.front()
 	if convo.is_empty():
 		return
-	phone._open_conversation(9, convo)
+	phone._open_conversation(int(convo.get("_source_day_value", 9)), convo)
 	var current_id := str(phone.conversation_view.call("current_thread_id"))
 	phone._show_contacts()
 	_expect(current_id == str(phone.conversation_view.call("current_thread_id")), "D: conversation state changed on contacts return")
@@ -189,3 +192,51 @@ func _scenario_n(phone) -> void:
 	phone._show_gallery()
 	_expect(not phone.landing_panel.visible, "N: gallery did not hide Messages landing")
 	_expect(phone.photo_gallery_view.visible, "N: gallery is not visible")
+
+func _scenario_o(phone) -> void:
+	var historical: Dictionary = {}
+	for conversation in phone._collect_global_threads():
+		if int(conversation.get("_source_day_value", 9)) != 9:
+			historical = conversation
+			break
+	_expect(not historical.is_empty(), "O: no historical contact available")
+	if historical.is_empty():
+		return
+	var source_day := int(historical.get("_source_day_value", 1))
+	phone._open_conversation(source_day, historical)
+	_expect(str(phone.conversation_view.active_conversation_id).begins_with("archive::"), "O: historical contact opened as an active thread")
+	_expect(TimelineState.is_current_day(9), "O: historical contact changed the narrative day")
+	_expect(int(phone.current_day_value) == 9, "O: historical contact changed the phone current day")
+
+func _scenario_p(phone) -> void:
+	var mathilde := _thread_by_id(phone, "thread_mathilde_private")
+	_expect(not mathilde.is_empty(), "P: Mathilde actionable thread missing")
+	if mathilde.is_empty():
+		return
+	_expect(phone._is_contact_actionable(mathilde), "P: current unfinished thread is not actionable")
+	_expect(phone._conversation_status_text(mathilde) in ["Nouveau", "À poursuivre"], "P: actionable status is unclear")
+	_expect(phone._conversation_has_activity_badge(mathilde), "P: actionable thread has no badge")
+	TimelineState.record_episode_completed(9, "chapter_09_mathilde_visual_boundary")
+	var completed := _thread_by_id(phone, "thread_mathilde_private")
+	_expect(not completed.is_empty(), "P: completed Mathilde thread disappeared")
+	if completed.is_empty():
+		return
+	_expect(not phone._is_contact_actionable(completed), "P: completed thread remains actionable")
+	_expect(not phone._conversation_has_activity_badge(completed), "P: completed thread keeps a misleading badge")
+
+func _scenario_q(phone) -> void:
+	var mathilde := _thread_by_id(phone, "thread_mathilde_private")
+	_expect(not mathilde.is_empty(), "Q: Mathilde thread missing")
+	if mathilde.is_empty():
+		return
+	phone._open_conversation(9, mathilde)
+	var view = phone.conversation_view
+	view.active_state["sequence_complete"] = true
+	view._show_completion_controls()
+	var button := view.choice_area.get_node_or_null("CompletedReturnToContactsButton")
+	_expect(button != null, "Q: completed conversation has no return button")
+	if button == null:
+		return
+	phone.phone_mode = "HISTORY"
+	button.pressed.emit()
+	_expect(phone.phone_mode == "CONTACTS", "Q: completed return button did not restore Contacts")

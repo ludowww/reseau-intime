@@ -52,8 +52,8 @@ class V096WednesdayCarryoverSocialStaticTests(unittest.TestCase):
         self.assertIn('foreground_history_resolved=%s', self.selector)
 
     def test_phone_targets_v096_assets_and_prototype_ledger(self):
-        self.assertIn("PhonePrototypeV096A.gd", self.phone_scene)
-        self.assertIn("ConversationViewV096A.gd", self.conversation_scene)
+        self.assertIn("PhonePrototypeV096AResume.gd", self.phone_scene)
+        self.assertIn("ConversationViewV096AResume.gd", self.conversation_scene)
         self.assertIn('_record_named_boundaries_visual_route(', self.phone)
         self.assertNotIn('secondary_risk_seed', self.phone)
         self.assertNotIn('chapter_09_index.json', self.phone)
