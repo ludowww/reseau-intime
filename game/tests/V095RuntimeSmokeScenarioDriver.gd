@@ -87,8 +87,9 @@ func _scenario_duplicate_does_not_count() -> void:
 func _scenario_asset_fallback_contract() -> void:
 	for content_id in IMAGE_IDS:
 		var item := DataLoader.get_visual_content(content_id)
-		_expect(ResourceLoader.exists(str(item.get("asset_path", ""))), "prototype asset missing: %s" % content_id)
-	_expect(not ResourceLoader.exists("res://assets/visual_content/v0_95/does_not_exist.png"), "known missing asset unexpectedly exists")
+		var asset_path := str(item.get("asset_path", ""))
+		_expect(FileAccess.file_exists(ProjectSettings.globalize_path(asset_path)), "prototype asset missing: %s" % content_id)
+	_expect(not FileAccess.file_exists(ProjectSettings.globalize_path("res://assets/visual_content/v0_95/does_not_exist.png")), "known missing asset unexpectedly exists")
 
 func _scenario_reset() -> void:
 	for content_id in IMAGE_IDS:

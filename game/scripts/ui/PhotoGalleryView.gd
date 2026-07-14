@@ -128,7 +128,7 @@ func unlocked_photo_ids() -> Array[String]:
 		if item.is_empty() or str(item.get("type", "")) != "photo":
 			continue
 		var asset_path := str(item.get("asset_path", ""))
-		if asset_path == "" or not ResourceLoader.exists(asset_path):
+		if _load_texture(asset_path) == null:
 			continue
 		result.append(content_id)
 	result.sort_custom(func(a, b):
@@ -141,10 +141,8 @@ func unlocked_photo_ids() -> Array[String]:
 func show_content(content_id: String) -> void:
 	var item := DataLoader.get_visual_content(content_id)
 	var asset_path := str(item.get("asset_path", ""))
-	if item.is_empty() or asset_path == "" or not ResourceLoader.exists(asset_path):
-		return
-	var loaded = load(asset_path)
-	if not loaded is Texture2D:
+	var loaded := _load_texture(asset_path)
+	if item.is_empty() or loaded == null:
 		return
 	selected_content_id = content_id
 	detail_panel.visible = true
@@ -168,13 +166,23 @@ func _photo_button(content_id: String) -> Button:
 	button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	button.text = str(item.get("caption", content_id))
 	var asset_path := str(item.get("asset_path", ""))
-	if asset_path != "" and ResourceLoader.exists(asset_path):
-		var loaded = load(asset_path)
-		if loaded is Texture2D:
-			button.icon = loaded
-			button.expand_icon = true
-			button.pressed.connect(func(): show_content(content_id))
+	var loaded := _load_texture(asset_path)
+	if loaded != null:
+		button.icon = loaded
+		button.expand_icon = true
+		button.pressed.connect(func(): show_content(content_id))
 	return button
+
+func _load_texture(asset_path: String) -> Texture2D:
+	if asset_path == "":
+		return null
+	var global_path := ProjectSettings.globalize_path(asset_path)
+	if not FileAccess.file_exists(global_path):
+		return null
+	var image := Image.load_from_file(global_path)
+	if image == null:
+		return null
+	return ImageTexture.create_from_image(image)
 
 func _intensity_label(value: String) -> String:
 	match value:

@@ -9,11 +9,7 @@ const IMAGE_MAX_HEIGHT := 420
 func _add_placeholder_card(content_id: String, is_ludo := false, record_history := true) -> void:
 	var item := DataLoader.get_visual_content(content_id)
 	var asset_path := str(item.get("asset_path", ""))
-	var texture: Texture2D = null
-	if asset_path != "" and ResourceLoader.exists(asset_path):
-		var loaded = load(asset_path)
-		if loaded is Texture2D:
-			texture = loaded
+	var texture := _load_texture(asset_path)
 	if texture == null:
 		super._add_placeholder_card(content_id, is_ludo, record_history)
 		return
@@ -93,3 +89,14 @@ func _player_visibility_label(value: String) -> String:
 		"SHARED": return "Partagée"
 		"RISK_RECONTEXTUALIZED": return "À risque"
 	return ""
+
+func _load_texture(asset_path: String) -> Texture2D:
+	if asset_path == "":
+		return null
+	var global_path := ProjectSettings.globalize_path(asset_path)
+	if not FileAccess.file_exists(global_path):
+		return null
+	var image := Image.load_from_file(global_path)
+	if image == null:
+		return null
+	return ImageTexture.create_from_image(image)
