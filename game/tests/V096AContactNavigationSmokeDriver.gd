@@ -17,6 +17,8 @@ func _run() -> void:
 	phone._build_layout()
 	phone._render_days()
 	TimelineState.unlock_day(9)
+	TimelineState.set_current_day(9)
+	TimelineState.set_current_phase(9, "wednesday_carryover_route")
 	phone._unlock_conversation(9, "chapter_09_mathilde_visual_boundary")
 	phone._unlock_conversation(9, "chapter_09_sandra_visual_boundary")
 	phone._unlock_conversation(9, "chapter_09_marie_pauline_social_set")
@@ -32,6 +34,10 @@ func _run() -> void:
 		"H": _scenario_h(phone)
 		"I": _scenario_i(phone)
 		"J": _scenario_j(phone)
+		"K": _scenario_k(phone)
+		"L": _scenario_l(phone)
+		"M": _scenario_m(phone)
+		"N": _scenario_n(phone)
 		_:
 			failures.append("Unknown scenario: %s" % _scenario())
 	await get_tree().process_frame
@@ -53,6 +59,12 @@ func _scenario() -> String:
 func _expect(condition: bool, message: String) -> void:
 	if not condition:
 		failures.append(message)
+
+func _thread_by_id(phone, thread_id: String) -> Dictionary:
+	for conversation in phone._collect_global_threads():
+		if phone._conversation_id(conversation) == thread_id:
+			return conversation
+	return {}
 
 func _scenario_a(phone) -> void:
 	phone._show_contacts()
@@ -123,3 +135,49 @@ func _scenario_j(phone) -> void:
 	phone._hide_notification()
 	phone._show_contacts()
 	_expect(phone.phone_mode == "CONTACTS", "J: reset/navigate state broken")
+
+func _scenario_k(phone) -> void:
+	var chapter9 := FileAccess.get_file_as_string("res://data/conversations/chapter_09_modular_index.json")
+	var parsed: Dictionary = JSON.parse_string(chapter9)
+	var availability: Dictionary = parsed.get("conversation_availability", {})
+	var initial_ids: Array = availability.get("initial_conversation_ids", [])
+	var unlocks: Dictionary = availability.get("unlocks", {})
+	_expect(initial_ids.is_empty(), "K: social set is pending before its authored phase")
+	for conversation_id in [
+		"chapter_09_mathilde_visual_boundary",
+		"chapter_09_sandra_visual_boundary",
+		"chapter_09_marie_pauline_social_set",
+	]:
+		var rule: Dictionary = unlocks.get(conversation_id, {})
+		_expect(not rule.has("after_conversation_completed"), "K: cross-day completion gate remains for %s" % conversation_id)
+		_expect(phone._unlock_rule_ready(9, conversation_id, initial_ids), "K: day 9 unlock rule is not phase-ready for %s" % conversation_id)
+
+func _scenario_l(phone) -> void:
+	phone._show_history_day(9)
+	var threads: Array = phone._collect_day_threads(9)
+	_expect(not threads.is_empty(), "L: no history thread available")
+	if threads.is_empty():
+		return
+	phone._open_history_conversation(9, threads.front())
+	_expect(phone.phone_mode == "HISTORY", "L: opening archive left history mode")
+	_expect(phone.conversation_view.visible, "L: archive thread is not visible")
+	_expect(str(phone.conversation_view.active_conversation_id).begins_with("archive::9::"), "L: history did not use read-only archive rendering")
+
+func _scenario_m(phone) -> void:
+	var mathilde := _thread_by_id(phone, "thread_mathilde_private")
+	_expect(not mathilde.is_empty(), "M: Mathilde thread missing")
+	if mathilde.is_empty():
+		return
+	phone._open_conversation(9, mathilde)
+	phone._show_contacts()
+	phone._show_conversation_notification(9, "chapter_09_sandra_visual_boundary", "Sandra", "Je dois déplacer notre déjeuner.")
+	_expect(phone.notification_banner.visible, "M: phone banner is not visible from Contacts")
+	if is_instance_valid(phone.conversation_view.thread_notification_panel):
+		_expect(not phone.conversation_view.thread_notification_panel.visible, "M: notification was sent to a hidden thread banner")
+
+func _scenario_n(phone) -> void:
+	phone._show_contacts()
+	_expect(phone.landing_panel.visible, "N: contacts landing must start visible")
+	phone._show_gallery()
+	_expect(not phone.landing_panel.visible, "N: gallery did not hide Messages landing")
+	_expect(phone.photo_gallery_view.visible, "N: gallery is not visible")

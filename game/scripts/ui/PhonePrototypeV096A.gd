@@ -147,6 +147,11 @@ func _show_history_day(day_value) -> void:
 	if is_instance_valid(landing_panel):
 		landing_panel.visible = true
 
+func _show_gallery(content_id: String = "") -> void:
+	if is_instance_valid(landing_panel):
+		landing_panel.visible = false
+	super._show_gallery(content_id)
+
 func _set_thread_view_visible(visible: bool) -> void:
 	if is_instance_valid(conversation_view):
 		conversation_view.visible = visible
@@ -200,6 +205,9 @@ func _render_history_day(day_value) -> void:
 	_add_muted_label(conversation_list, "Lecture seule.", 12)
 	for conversation in _collect_day_threads(day_value):
 		var card := PanelContainer.new()
+		card.mouse_filter = Control.MOUSE_FILTER_STOP
+		card.focus_mode = Control.FOCUS_ALL
+		card.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		card.add_theme_stylebox_override("panel", _panel_style(Color(0.10, 0.11, 0.16), 14))
 		card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		conversation_list.add_child(card)
@@ -209,14 +217,38 @@ func _render_history_day(day_value) -> void:
 		_add_label(column, _conversation_name(conversation), 16)
 		_add_muted_label(column, _conversation_subtitle(conversation), 12)
 		_add_muted_label(column, _conversation_status_text(conversation), 11)
+		var selected_day = day_value
+		var selected_conversation: Dictionary = conversation.duplicate(true)
+		card.gui_input.connect(func(event):
+			var activated := false
+			if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+				activated = true
+			elif event is InputEventKey and event.pressed and not event.echo and event.keycode in [KEY_ENTER, KEY_KP_ENTER, KEY_SPACE]:
+				activated = true
+			if activated:
+				_open_history_conversation(selected_day, selected_conversation)
+		)
+
+func _open_history_conversation(day_value, conversation: Dictionary) -> void:
+	phone_mode = MODE_HISTORY
+	history_day_value = day_value
+	if is_instance_valid(photo_gallery_view):
+		photo_gallery_view.visible = false
+	_set_thread_view_visible(true)
+	if is_instance_valid(conversation_view):
+		if conversation_view.has_method("show_archive_conversation"):
+			conversation_view.call("show_archive_conversation", conversation)
+		else:
+			conversation_view.show_conversation(conversation)
+	if is_instance_valid(landing_panel):
+		landing_panel.visible = false
+	_sync_conversation_phone_status()
 
 func _collect_global_threads() -> Array:
 	var by_thread: Dictionary = {}
 	for day_value in _history_day_values():
-		for conversation in DataLoader.get_conversations_for_day(day_value):
+		for conversation in _collect_contact_conversations_for_day(day_value):
 			if typeof(conversation) != TYPE_DICTIONARY:
-				continue
-			if not _is_conversation_available(day_value, conversation):
 				continue
 			var entry := _annotate_source_day(day_value, conversation)
 			var thread_id := _conversation_id(entry)
@@ -238,10 +270,8 @@ func _collect_global_threads() -> Array:
 
 func _collect_day_threads(day_value) -> Array:
 	var by_thread: Dictionary = {}
-	for conversation in DataLoader.get_conversations_for_day(day_value):
+	for conversation in _collect_contact_conversations_for_day(day_value):
 		if typeof(conversation) != TYPE_DICTIONARY:
-			continue
-		if not _is_conversation_available(day_value, conversation):
 			continue
 		var entry := _annotate_source_day(day_value, conversation)
 		var thread_id := _conversation_id(entry)
@@ -296,7 +326,12 @@ func _show_conversation_notification(day_value, conversation_id: String, title: 
 	notification_target_conversation_id = thread_id
 	pending_thread_ids[thread_id] = true
 	pending_conversation_ids[thread_id] = true
-	if is_instance_valid(conversation_view) and not conversation_view.current_conversation.is_empty() and conversation_view.has_method("show_thread_notification"):
+	if (
+		is_instance_valid(conversation_view)
+		and conversation_view.visible
+		and not conversation_view.current_conversation.is_empty()
+		and conversation_view.has_method("show_thread_notification")
+	):
 		conversation_view.call(
 			"show_thread_notification",
 			title,
@@ -316,7 +351,15 @@ func _open_notification_target() -> void:
 		pending_conversation_ids.erase(target_id)
 		_hide_notification()
 		return
-	if is_instance_valid(conversation_view) and conversation_view.has_method("current_thread_id") and str(conversation_view.call("current_thread_id")) == target_id:
+	var same_thread := (
+		is_instance_valid(conversation_view)
+		and conversation_view.has_method("current_thread_id")
+		and str(conversation_view.call("current_thread_id")) == target_id
+	)
+	if same_thread:
+		phone_mode = MODE_CONTACTS
+		history_day_value = null
+		_set_thread_view_visible(true)
 		if conversation_view.has_method("continue_active_thread"):
 			conversation_view.call("continue_active_thread", updated_conversation)
 	else:
@@ -348,8 +391,6 @@ func _open_conversation(day_value, conversation: Dictionary) -> void:
 	super._open_conversation(day_value, conversation)
 	if is_instance_valid(landing_panel):
 		landing_panel.visible = false
-	if phone_mode == MODE_HISTORY and is_instance_valid(conversation_view):
-		conversation_view.visible = false
 
 func _add_conversation_card(day_value, conversation: Dictionary) -> void:
 	if phone_mode == MODE_HISTORY:
