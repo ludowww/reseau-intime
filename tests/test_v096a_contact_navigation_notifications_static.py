@@ -68,6 +68,14 @@ class V096AContactNavigationNotificationsStaticTests(unittest.TestCase):
         ]:
             self.assertIn(token, self.phone)
 
+    def test_history_collection_ignores_active_phase_gate(self):
+        for token in [
+            'func _filter_history_conversation_to_unlocked_episodes(',
+            'DataLoader.get_conversations_for_day(day_value)',
+            '_is_episode_available_without_phase_gate(day_value, episode_id)',
+        ]:
+            self.assertIn(token, self.phone)
+
     def test_hidden_conversation_uses_visible_phone_notification(self):
         self.assertIn('and conversation_view.visible', self.phone)
         self.assertIn('_show_notification("%s — %s"', self.phone)

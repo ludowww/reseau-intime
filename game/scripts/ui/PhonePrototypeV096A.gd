@@ -270,14 +270,42 @@ func _collect_global_threads() -> Array:
 
 func _collect_day_threads(day_value) -> Array:
 	var by_thread: Dictionary = {}
-	for conversation in _collect_contact_conversations_for_day(day_value):
+	for conversation in DataLoader.get_conversations_for_day(day_value):
 		if typeof(conversation) != TYPE_DICTIONARY:
 			continue
-		var entry := _annotate_source_day(day_value, conversation)
+		var filtered := _filter_history_conversation_to_unlocked_episodes(day_value, conversation)
+		if filtered.is_empty():
+			continue
+		var entry := _annotate_source_day(day_value, filtered)
 		var thread_id := _conversation_id(entry)
 		if not by_thread.has(thread_id):
 			by_thread[thread_id] = entry
 	return by_thread.values()
+
+func _filter_history_conversation_to_unlocked_episodes(day_value, conversation: Dictionary) -> Dictionary:
+	var unlocked_episode_ids: Array = []
+	for raw_episode_id in _conversation_episode_ids(conversation):
+		var episode_id := str(raw_episode_id)
+		if _is_episode_available_without_phase_gate(day_value, episode_id):
+			unlocked_episode_ids.append(episode_id)
+	if unlocked_episode_ids.is_empty():
+		return {}
+	var entry: Dictionary = conversation.duplicate(true)
+	var filtered_segments: Array = []
+	for raw_segment in entry.get("segments", []):
+		if typeof(raw_segment) != TYPE_DICTIONARY:
+			continue
+		var segment: Dictionary = raw_segment
+		var source_id := str(segment.get("_source_conversation_id", ""))
+		if source_id == "" or unlocked_episode_ids.has(source_id):
+			filtered_segments.append(segment)
+	entry["segments"] = filtered_segments
+	entry["_episode_ids"] = unlocked_episode_ids
+	entry["_segment_count"] = filtered_segments.size()
+	entry["_current_segment_index"] = 0
+	if not filtered_segments.is_empty():
+		entry["_current_segment_id"] = "%s__segment_1" % str(filtered_segments[0].get("_source_conversation_id", _conversation_id(entry)))
+	return entry
 
 func _annotate_source_day(day_value, conversation: Dictionary) -> Dictionary:
 	var entry: Dictionary = conversation.duplicate(true)
