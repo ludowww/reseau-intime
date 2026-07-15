@@ -1,223 +1,268 @@
-# Documentation Reading Order — Canon Current
+# Documentation Reading Order — Bible Narrative Current
 
-> Canon entry point after locked V0.93 and the V0.94 runtime-integration planning pass.
-> Runtime is locked at V0.92 and playable from Tuesday through Monday.
-> V0.93 defines the next visual-first adult wave; V0.94 defines its approved implementation sequence. Neither V0.93 nor V0.94 is playable yet.
-
-## 1. Core rules
-
-```text
-Write people from full character canon.
-Preserve character-specific voice and pornographic identity.
-Write story movement from the modular architecture.
-Treat V0.92 as current runtime truth.
-Treat V0.93 as next-wave product and narrative truth.
-Treat V0.94 as the current authorized runtime plan.
-Three Player choices remain the normal maximum.
-Photos are the primary daily reward loop.
-Documented is not implemented.
-Legacy runtime is not automatic canon.
-```
+> **Phase actuelle : Bible Narrative / North Star**
+>
+> La Bible Narrative est la source de vérité principale pour la promesse du jeu, l’expérience joueur, les fantasmes, la structure globale, les routes et les transformations. Le canon complet des personnages reste l’autorité sur leur identité et leur voix. Le runtime décrit ce qui est implémenté et jouable.
 
 ---
 
-## 2. Official reading order
+# 1. Règles fondamentales
 
-1. `docs/canon/NARRATIVE_CANON_STATUS.md`
-2. `docs/canon/CHOICE_DESIGN_CANON.md`
-3. `docs/canon/MODULAR_NARRATIVE_ARC_BLUEPRINT.md`
-4. `docs/canon/MODULAR_SCENE_AUTHORING_CONTRACT.md`
-5. temporal and communication rules:
-   - `docs/canon/DIEGETIC_TIME_AND_COMMUNICATION_CANON.md`
-   - `docs/canon/TEMPORAL_FLOW_AND_DAY_TRANSITION_CANON.md`
-6. adult visual and route rules:
-   - `docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md`
-7. implemented opening sources:
-   - `docs/canon/ACT_I_OPENING_WINDOWS_SOURCE_PACK.md`
-   - `docs/canon/ACT_I_OPENING_SCENE_CARDS.md`
-   - `docs/canon/ACT_I_OPENING_TEMPORAL_DELIVERY_MAP.md`
-   - `docs/canon/J1_RUNTIME_RECONCILIATION_SOURCE_PACK.md`
-   - `docs/canon/J1_RUNTIME_RECONCILIATION_SCENE_CARDS.md`
-8. implemented first-repetition wave sources:
-   - `docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_SOURCE_PACK.md`
-   - `docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_SCENE_CARDS.md`
-   - `docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_TEMPORAL_DELIVERY_MAP.md`
-   - `docs/runtime/V0_88_FIRST_REPETITION_RUNTIME_INTEGRATION_PLAN.md`
-   - `docs/runtime/V0_91_FIRST_REPETITION_WAVE_CLOSURE_BLUEPRINT.md`
-9. next visual-first wave — V0.93 narrative authority:
-   - `docs/canon/ACT_I_NAMED_BOUNDARIES_WAVE_SOURCE_PACK.md`
-   - `docs/canon/ACT_I_NAMED_BOUNDARIES_WAVE_SCENE_CARDS.md`
-   - `docs/canon/ACT_I_NAMED_BOUNDARIES_WAVE_TEMPORAL_DELIVERY_MAP.md`
-   - `docs/canon/ACT_I_NAMED_BOUNDARIES_VISUAL_ESCALATION_ADDENDUM.md`
-   - `docs/V0_93_Next_Act_I_Wave_Source_Pack_Report.md`
-   - `docs/V0_93_Visual_First_Pornographic_Reorientation_Report.md`
-10. current implementation authority — V0.94:
-    - `docs/runtime/V0_94_VISUAL_FIRST_NAMED_BOUNDARIES_RUNTIME_INTEGRATION_PLAN.md`
-    - `docs/V0_94_Visual_First_Named_Boundaries_Runtime_Integration_Plan_Report.md`
-11. `docs/canon/characters/CHARACTER_CANON_INDEX.md`
-12. relevant principal full-canon file
-13. `docs/canon/CHARACTER_VOICE_DISTINCTION_CANON.md`
-14. relevant character deprecation map
-15. `docs/canon/SUPPORTING_CHARACTER_CANON_POLICY.md` when supporting characters appear or are affected
-16. historical J1 or fixed-day documents only when auditing line origin or deprecated assumptions
+```text
+Commencer par la North Star et l’expérience joueur.
+Définir les fantasmes avant les routes.
+Définir les routes avant les actes.
+Définir les actes avant les séquences.
+Définir les séquences avant les scènes.
+Écrire les dialogues et les photos après la fonction relationnelle.
+Découper en journées après la validation des séquences.
+Utiliser le runtime pour savoir ce qui est jouable.
+Un ancien plan par journée ne peut pas contredire la Bible.
+```
 
-`docs/canon/CHARACTERS_CANON_CURRENT.md` remains a doorway, not a substitute for full canon.
+Les journées restent une couche de diffusion, de respiration et de rythme.
 
 ---
 
-## 3. Current source hierarchy
+# 2. Ordre de lecture officiel
 
-```text
-full character canon
-+ voice distinction canon
-+ NSFW route canon
-+ choice canon
-+ modular architecture
-= identity, voice, desire, and movement truth
+## 1. README de la Bible
 
-V0.79 / V0.83 opening sources
-+ locked runtime V0.85–V0.86a
-= implemented opening truth
+`docs/canon/bible/README.md`
 
-V0.87 first-repetition sources
-+ V0.88 integration plan
-+ V0.89–V0.92 runtime
-= implemented Saturday–Monday repetition truth
+Définit la gouvernance, la hiérarchie, les différences entre les couches et les règles de réutilisation.
 
-V0.93 named-boundaries visual-first sources
-= next-wave narrative and product truth
-= not yet playable
+## 2. North Star
 
-V0.94 integration plan
-= current authorized implementation boundary
-= V0.95 Tuesday Marie + Gallery MVP
-= V0.96 Wednesday route/social set
-= V0.97 Pauline/Nico visual risk
-= V0.98 Thursday payoff and closure
-```
+`docs/canon/bible/00_NORTH_STAR.md`
 
----
+Définit l’identité du jeu, la promesse centrale et les principes non négociables.
 
-## 4. Current playable runtime
+## 3. Expérience joueur
 
-Active chronology:
+`docs/canon/bible/01_EXPERIENCE_JOUEUR.md`
 
-```text
-Tuesday day 1
--> Wednesday day 2
--> Thursday day 3
--> Friday day 4
--> Saturday day 5
--> Sunday day 6
--> Monday day 7
-```
+Définit ce que le joueur doit ressentir, comprendre et attribuer à ses propres actes.
 
-Current endpoint:
+## 4. Fantasmes centraux
 
-```text
-Monday evening
-opening_band_complete = true
-first_repetition_slice_01_complete = true
-first_repetition_slice_02_complete = true
-first_repetition_wave_complete = true
-chapter_07_modular_index.json next_day = null
-```
+`docs/canon/bible/02_FANTASMES_CENTRAUX.md`
 
-Current route state:
+Définit les promesses transversales, leurs formes négociées, leurs formes sombres, leurs limites et les personnages capables de les incarner différemment.
 
-```text
-Marie / Player = HABITUAL_WARMTH
-relationship frame = ASSUMED_EXCLUSIVE
-Mathilde = R1 or R2 Charged Access
-Sandra = R1
-Pauline = R1
-Nico = R1
-Raphaëlle = R1
-hard secrets = none
-adult frames = none
-adult images = none
-```
+## 5. Grammaire narrative
 
-Completed days remain read-only archives.
+`docs/canon/bible/03_GRAMMAIRE_NARRATIVE.md`
 
----
+Définit les fonctions réutilisables des séquences sans fournir de scènes interchangeables.
 
-## 5. V0.93 visual-first contract
+## 6. Trame principale et actes de saison
 
-The next wave covers the following week from Tuesday through Thursday.
+`docs/canon/bible/04_TRAME_PRINCIPALE_ET_ACTES_SAISON_1.md`
 
-```text
-3 female-focused images minimum per playable day
-9 images minimum across the wave
-12–18 target with route variants
-one primary female visual route maximum
-one secondary Pauline/Nico risk maximum
-one V3 provocative set or first V4 teaser during the wave
-Friday after the wave remains unavailable
-```
+Définit la crise commune, les transformations globales, les fantasmes activés, les types de séquences utiles, les états de sortie et les hooks d’extension.
 
-Character visual identities:
+## 7. Futures routes macro
 
-```text
-Marie = visible desirability and couple reconquest
-Mathilde = domestic taboo becoming deliberate visual intent
-Sandra = restrained private exposure chosen for Player
-Pauline = public version, alternate crop, and double address
-Raphaëlle = office, workshop, and chosen transformation
-Nico = circulation, recontextualization, jealousy, and shared-gaze risk
-```
+Futur document canonique.
 
----
+Définira les transformations durables de chaque relation, leurs bascules, résistances, conséquences et états de fin de saison.
 
-## 6. V0.94 implementation order
+## 8. Bibliothèque de séquences
 
-```text
-V0.95 — Tuesday Marie Visual Opening + Gallery MVP
-V0.96 — Wednesday Carry-Over Route + Guaranteed Social Set
-V0.97 — Pauline/Nico Visual Risk Continuation
-V0.98 — Thursday Dominant Payoff + Guarded Wave Closure
-```
+Futur document canonique.
 
-V0.95 must prove:
+Déclinera la grammaire en séquences mémorables servant les routes et les actes.
 
-```text
-three real Marie images
-actual inline texture rendering
-individual unlocks
-Gallery MVP reading unlocked_content
-M4 fantasy/action choice
-new named-boundaries ledger
-three-slot visual day contract
-guarded Tuesday completion
-```
+## 9. Règles des scènes modulaires
 
-V0.95 ends locally on Tuesday with `next_day = null` until V0.96 adds Wednesday.
+Futur document canonique.
+
+Définira comment une séquence s’adapte à l’état réel de la partie sans créer une nouvelle route.
+
+## 10. Progression visuelle
+
+Futur document canonique.
+
+Définira les étapes, audiences, intentions, limites, risques et conséquences des photos.
+
+## 11. Découpage des journées
+
+Futur document canonique.
+
+Répartira les séquences, silences, respirations et photos une fois l’architecture relationnelle validée.
+
+## 12. Canon complet des personnages
+
+Lire :
+
+- `docs/canon/characters/CHARACTER_CANON_INDEX.md` ;
+- le fichier canon complet du personnage concerné ;
+- `docs/canon/CHARACTER_VOICE_DISTINCTION_CANON.md` ;
+- `docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md` lorsque les moteurs adultes, les images, les risques ou les conséquences sont impliqués ;
+- la carte de dépréciation correspondante lorsqu’elle existe ;
+- `docs/canon/SUPPORTING_CHARACTER_CANON_POLICY.md` pour Jeff, Bastien et les autres personnages secondaires.
+
+Le canon complet des personnages reste l’autorité sur :
+
+- l’identité ;
+- le passé ;
+- la proximité initiale ;
+- la voix ;
+- les contradictions ;
+- les limites personnelles ;
+- les désirs spécifiques ;
+- la continuité individuelle.
+
+## 13. Contrats narratifs
+
+Lire selon le besoin :
+
+- `docs/canon/CHOICE_DESIGN_CANON.md` ;
+- `docs/canon/MODULAR_NARRATIVE_ARC_BLUEPRINT.md` ;
+- `docs/canon/MODULAR_SCENE_AUTHORING_CONTRACT.md` ;
+- `docs/canon/DIEGETIC_TIME_AND_COMMUNICATION_CANON.md` ;
+- `docs/canon/TEMPORAL_FLOW_AND_DAY_TRANSITION_CANON.md`.
+
+Ces documents définissent les règles de choix, de modularité, de communication et de temporalité compatibles avec la Bible.
+
+## 14. Runtime
+
+Lire les plans, rapports, index de chapitres, conversations actives, données visuelles, tests, ledgers et validations de la version concernée.
+
+Le runtime répond à :
+
+> « Qu’est-ce qui est effectivement implémenté et jouable ? »
+
+Il ne répond pas seul à :
+
+> « Quelle doit être la vision définitive du jeu ? »
 
 ---
 
-## 7. Voice authority
+# 3. Hiérarchie de conception officielle
 
 ```text
-Marie moves shared life and visible desire.
-Mathilde turns embarrassment and image control into deliberate provocation.
-Sandra protects and chooses each private exposure.
-Pauline controls versions, timing, and audience.
-Nico makes rooms, bodies, jealousy, and gaze circulation concrete.
-Raphaëlle selects a version and names its frame.
-Player remains short, dry, observant, desirous, and responsible for the action he takes.
+North Star
+-> Expérience joueur
+-> Fantasmes centraux
+-> Routes macro
+-> Actes
+-> Séquences
+-> Scènes modulaires
+-> Dialogues et photos
+-> Découpage en journées
+-> Runtime
 ```
 
-Do not make every character explain a boundary in the same therapeutic language.
-The photo, incident, outfit, room, work rhythm, or social situation should carry part of the scene.
+Précisions :
+
+- la grammaire narrative fournit le vocabulaire des séquences ;
+- les routes macro donnent une direction aux actes ;
+- les actes expriment des transformations globales ;
+- les séquences accomplissent des fonctions ;
+- les scènes adaptent ces fonctions à la partie ;
+- les scènes ne créent pas les routes ;
+- les journées sont construites après les séquences.
 
 ---
 
-## 8. Final reading rule
+# 4. Hiérarchie d’autorité
+
+## Bible Narrative
+
+Autorité sur :
+
+- la promesse du jeu ;
+- l’expérience joueur ;
+- les fantasmes ;
+- la structure globale ;
+- les routes et transformations ;
+- les actes ;
+- la progression visuelle ;
+- la fonction des séquences.
+
+## Canon complet des personnages
+
+Autorité sur :
+
+- l’identité ;
+- la voix ;
+- l’histoire ;
+- les responsabilités ;
+- les limites ;
+- les réactions propres ;
+- la continuité individuelle.
+
+## Contrats narratifs
+
+Autorité sur les règles techniques d’écriture compatibles :
+
+- choix ;
+- modularité ;
+- temps ;
+- communication ;
+- adaptation des scènes.
+
+## Runtime
+
+Autorité uniquement sur l’état effectivement implémenté et validé.
+
+## Archive et À réécrire
+
+Contexte historique ou intention à requalifier, sans autorité en cas de contradiction.
+
+---
+
+# 5. Règle de spécificité
+
+La grammaire peut être partagée.
+
+> **Les fonctions de scène peuvent être réutilisées. Les dialogues, les réactions, les risques et les conséquences doivent rester propres au personnage.**
+
+Une scène ne devient pas spécifique parce que le nom du personnage a été remplacé.
+
+Le canon complet doit être relu avant toute écriture de dialogue.
+
+---
+
+# 6. Règle sur les anciens documents
+
+Les anciens source packs, plans de vagues, cartes de scènes, matrices de routes et plans par journée restent utiles pour :
+
+- comprendre le runtime existant ;
+- retrouver l’origine d’une décision ;
+- préserver un détail compatible ;
+- identifier une scène réutilisable dans une séquence.
+
+Ils ne constituent plus l’architecture principale.
+
+Un ancien document peut être classé :
+
+- Canon ;
+- Runtime ;
+- Archive ;
+- À réécrire.
+
+Un document non classé ne peut pas prévaloir sur la Bible.
+
+---
+
+# 7. Règle sur le moteur
+
+Le moteur narratif est considéré comme acquis.
+
+Sauf nécessité narrative exceptionnelle, la Bible se construit au-dessus du téléphone, des conversations persistantes, de la galerie, des notifications, des photos, des ledgers, des obligations, des scènes modulaires, des tests et de l’architecture générale.
+
+---
+
+# 8. Règle finale
 
 ```text
-Use V0.92 to answer what is playable now.
-Use V0.93 to answer what the next wave should feel like and unlock.
-Use V0.94 to answer what may be implemented next and in what order.
-Use full character canon to write the person.
-Use NSFW canon to preserve route-specific heat, risk, consent, betrayal, and pornographic destination.
+Utiliser la Bible pour savoir ce que le jeu doit faire ressentir et devenir.
+Utiliser le canon complet pour écrire une personne précise.
+Utiliser la grammaire pour identifier la fonction d’une séquence.
+Utiliser les contrats narratifs pour adapter la scène.
+Utiliser les journées pour distribuer le rythme.
+Utiliser le runtime pour décrire ce qui est jouable.
 ```
