@@ -1,8 +1,8 @@
 # Documentation Reading Order — Bible Narrative Current
 
-> **Phase actuelle : Bible Narrative / North Star**
+> **Phase actuelle : Bible Narrative / Routes macro et évolution érotique**
 >
-> La Bible Narrative est la source de vérité principale pour la promesse du jeu, l’expérience joueur, les fantasmes, la structure globale, les routes et les transformations. Le canon complet des personnages reste l’autorité sur leur identité et leur voix. Le runtime décrit ce qui est implémenté et jouable.
+> La Bible Narrative est la source de vérité principale pour la promesse du jeu, l’expérience joueur, les fantasmes, la structure globale, les routes, leur évolution érotique et les transformations. Le canon complet des personnages reste l’autorité sur leur identité et leur voix. Le runtime décrit ce qui est implémenté et jouable.
 
 ---
 
@@ -11,7 +11,8 @@
 ```text
 Commencer par la North Star et l’expérience joueur.
 Définir les fantasmes avant les routes.
-Définir les routes avant les actes.
+Définir les routes avant leur évolution érotique.
+Définir les routes et leur évolution avant les actes et les séquences.
 Définir les actes avant les séquences.
 Définir les séquences avant les scènes.
 Écrire les dialogues et les photos après la fonction relationnelle.
@@ -50,49 +51,61 @@ Définit ce que le joueur doit ressentir, comprendre et attribuer à ses propres
 
 Définit les promesses transversales, leurs formes négociées, leurs formes sombres, leurs limites et les personnages capables de les incarner différemment.
 
-## 5. Grammaire narrative
+## 5. Routes macro de la saison 1
+
+`docs/canon/bible/05_ROUTES_MACRO_SAISON_1.md`
+
+Définit les transformations durables des relations de Marie, Sandra, Mathilde, Pauline, Raphaëlle et Nico, leurs résistances, bascules, conséquences, états de sortie et plafonds de saison.
+
+Nico y est défini comme hétérosexuel, sans route romantique ou sexuelle avec Player.
+
+## 6. Évolution érotique des routes
+
+`docs/canon/bible/06_EVOLUTION_EROTIQUE_DES_ROUTES.md`
+
+Définit comment le trouble devient désir, disponibilité, intimité, sexualité puis éventuellement représentation pornographique sans perdre la crédibilité du personnage ou de la relation.
+
+Distingue la progression relationnelle du degré d’explicitation visuelle et définit les conditions de consentement, d’initiative, d’après-coup et de conséquence.
+
+## 7. Grammaire narrative
 
 `docs/canon/bible/03_GRAMMAIRE_NARRATIVE.md`
 
 Définit les fonctions réutilisables des séquences sans fournir de scènes interchangeables.
 
-## 6. Trame principale et actes de saison
+## 8. Trame principale et actes de saison
 
 `docs/canon/bible/04_TRAME_PRINCIPALE_ET_ACTES_SAISON_1.md`
 
 Définit la crise commune, les transformations globales, les fantasmes activés, les types de séquences utiles, les états de sortie et les hooks d’extension.
 
-## 7. Futures routes macro
+La numérotation des fichiers reflète leur ordre historique de création. L’ordre de lecture place désormais les routes macro et leur évolution érotique avant la grammaire appliquée aux actes.
+
+## 9. Bibliothèque de séquences
 
 Futur document canonique.
 
-Définira les transformations durables de chaque relation, leurs bascules, résistances, conséquences et états de fin de saison.
+Déclinera la grammaire en séquences mémorables servant les routes, leur évolution érotique et les actes.
 
-## 8. Bibliothèque de séquences
-
-Futur document canonique.
-
-Déclinera la grammaire en séquences mémorables servant les routes et les actes.
-
-## 9. Règles des scènes modulaires
+## 10. Règles des scènes modulaires
 
 Futur document canonique.
 
 Définira comment une séquence s’adapte à l’état réel de la partie sans créer une nouvelle route.
 
-## 10. Progression visuelle
+## 11. Progression visuelle détaillée
 
 Futur document canonique.
 
-Définira les étapes, audiences, intentions, limites, risques et conséquences des photos.
+Définira les étapes, audiences, intentions, limites, risques et conséquences des photos en cohérence avec `06_EVOLUTION_EROTIQUE_DES_ROUTES.md`.
 
-## 11. Découpage des journées
+## 12. Découpage des journées
 
 Futur document canonique.
 
 Répartira les séquences, silences, respirations et photos une fois l’architecture relationnelle validée.
 
-## 12. Canon complet des personnages
+## 13. Canon complet des personnages
 
 Lire :
 
@@ -114,7 +127,7 @@ Le canon complet des personnages reste l’autorité sur :
 - les désirs spécifiques ;
 - la continuité individuelle.
 
-## 13. Contrats narratifs
+## 14. Contrats narratifs
 
 Lire selon le besoin :
 
@@ -126,7 +139,7 @@ Lire selon le besoin :
 
 Ces documents définissent les règles de choix, de modularité, de communication et de temporalité compatibles avec la Bible.
 
-## 14. Runtime
+## 15. Runtime
 
 Lire les plans, rapports, index de chapitres, conversations actives, données visuelles, tests, ledgers et validations de la version concernée.
 
@@ -147,6 +160,7 @@ North Star
 -> Expérience joueur
 -> Fantasmes centraux
 -> Routes macro
+-> Évolution érotique des routes
 -> Actes
 -> Séquences
 -> Scènes modulaires
@@ -159,6 +173,7 @@ Précisions :
 
 - la grammaire narrative fournit le vocabulaire des séquences ;
 - les routes macro donnent une direction aux actes ;
+- l’évolution érotique précise comment le désir devient crédible et incarné ;
 - les actes expriment des transformations globales ;
 - les séquences accomplissent des fonctions ;
 - les scènes adaptent ces fonctions à la partie ;
@@ -178,6 +193,7 @@ Autorité sur :
 - les fantasmes ;
 - la structure globale ;
 - les routes et transformations ;
+- l’évolution érotique, sexuelle et pornographique ;
 - les actes ;
 - la progression visuelle ;
 - la fonction des séquences.
@@ -222,7 +238,7 @@ La grammaire peut être partagée.
 
 Une scène ne devient pas spécifique parce que le nom du personnage a été remplacé.
 
-Le canon complet doit être relu avant toute écriture de dialogue.
+Le canon complet et l’évolution érotique de la route doivent être relus avant toute écriture de dialogue, de photo intime ou de séquence explicite.
 
 ---
 
@@ -260,6 +276,8 @@ Sauf nécessité narrative exceptionnelle, la Bible se construit au-dessus du t�
 
 ```text
 Utiliser la Bible pour savoir ce que le jeu doit faire ressentir et devenir.
+Utiliser les routes macro pour savoir comment les relations peuvent changer.
+Utiliser l’évolution érotique pour savoir comment le désir devient crédible et incarné.
 Utiliser le canon complet pour écrire une personne précise.
 Utiliser la grammaire pour identifier la fonction d’une séquence.
 Utiliser les contrats narratifs pour adapter la scène.
