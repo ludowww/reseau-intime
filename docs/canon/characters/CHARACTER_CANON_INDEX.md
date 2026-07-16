@@ -1,7 +1,8 @@
 # Character Canon Index — Current
 
-> Canon index after locked V0.93 and the V0.94 runtime-integration planning pass.
-> Full principal-character files remain the first source for identity, voice, erotic engine, consent, and route consequences.
+> **Phase actuelle : Bible Narrative / North Star**  
+> The full principal-character files are the first source for identity, voice, body logic, erotic engine, consent, and route consequences.  
+> The Bible defines how those people transform during the season.  
 > Runtime activation and documented future ceilings must always be read separately.
 
 ## 1. Core rule
@@ -9,12 +10,13 @@
 ```text
 Write principal characters from their full canon files.
 Write adult escalation from NSFW_CHARACTER_ROUTE_CANON.md.
-Write current runtime from the locked V0.92 state.
-Write the next visual wave from V0.93.
-Implement it only through the V0.94 V0.95–V0.98 sequence.
-Do not confuse documented visual access with current save state.
-Do not make every woman deliver the same images, choices, voice, or pornographic fantasy.
+Write season movement from the Bible Narrative.
+Write current playable state from runtime documentation.
+Do not confuse documented access with current save state.
+Do not make every character deliver the same images, choices, voice, or fantasy.
 ```
+
+A route, act, or sequence is incomplete until it has been confronted with the relevant full character canon.
 
 ---
 
@@ -22,268 +24,220 @@ Do not make every woman deliver the same images, choices, voice, or pornographic
 
 | Character | Full canon file | Core route function |
 |---|---|---|
-| Marie | `docs/canon/characters/MARIE_CANON_FULL.md` | couple reconquest, visibility, and active choice |
-| Sandra | `docs/canon/characters/SANDRA_CANON_FULL.md` | private truth and chosen exposure |
-| Player | `docs/canon/characters/PLAYER_CANON_FULL.md` | the gaze becomes an act, risk, or refusal |
-| Mathilde | `docs/canon/characters/MATHILDE_CANON_FULL.md` | domestic taboo and sensuality becoming deliberate |
-| Pauline | `docs/canon/characters/PAULINE_CANON_FULL.md` | double life, alternate versions, and hidden compartment |
-| Nico | `docs/canon/characters/NICO_CANON_FULL.md` | social mirror, circulating gaze, jealousy, and image pact |
-| Raphaëlle | `docs/canon/characters/RAPHAELLE_CANON_FULL.md` | chosen transformation, explicit frame, and roleplay |
+| Marie | `docs/canon/characters/MARIE_CANON_FULL.md` | couple reconquest, social visibility, active choice, and living domestic desire |
+| Sandra | `docs/canon/characters/SANDRA_CANON_FULL.md` | concrete traces, private truth, chosen exposure, and distance |
+| Player | `docs/canon/characters/PLAYER_CANON_FULL.md` | the gaze becomes an act, risk, refusal, promise, or consequence |
+| Mathilde | `docs/canon/characters/MATHILDE_CANON_FULL.md` | domestic taboo, image control, and ordinary sensuality becoming deliberate |
+| Pauline | `docs/canon/characters/PAULINE_CANON_FULL.md` | double life, alternate versions, reciprocal proof, and private compartment |
+| Nico | `docs/canon/characters/NICO_CANON_FULL.md` | heterosexual social mirror, desire for Marie and Mathilde, gaze circulation, rivalry, and image pact |
+| Raphaëlle | `docs/canon/characters/RAPHAELLE_CANON_FULL.md` | chosen transformation, craft, explicit frame, roleplay, and responsibility after the role |
 
 All principal characters are adults.
+
 Supporting characters remain governed by `SUPPORTING_CHARACTER_CANON_POLICY.md` and never become consent proxies.
 
 ---
 
-## 3. Current runtime ceiling — locked V0.92 behavior
+## 3. Official reading order for character writing
 
-```text
-Marie / Player = HABITUAL_WARMTH
-relationship frame = ASSUMED_EXCLUSIVE
+1. relevant `*_CANON_FULL.md`;
+2. `CHARACTER_VOICE_DISTINCTION_CANON.md`;
+3. `NSFW_CHARACTER_ROUTE_CANON.md` when desire, images, risk, or explicit content is involved;
+4. relevant deprecation map;
+5. Bible documents:
+   - `04_TRAME_PRINCIPALE_ET_ACTES_SAISON_1.md`;
+   - `05_ROUTES_MACRO_SAISON_1.md`;
+   - `06_EVOLUTION_EROTIQUE_DES_ROUTES.md`;
+   - `07_BIBLIOTHEQUE_DE_SEQUENCES_SAISON_1.md`;
+6. scene-authoring and temporal contracts;
+7. runtime documentation for what is currently playable.
 
-Mathilde = R1 or R2 Charged Access
-Sandra = R1
-Pauline = R1 Legitimate Social Access
-Nico = R1 Ordinary Friendship / Social Access
-Raphaëlle = R1 Ordinary Work Access
+The Bible does not replace a character's identity.
 
-opening_band_complete = true
-first_repetition_wave_complete = true
-hard secrets = none
-adult frames = none
-adult images = none
-routes R3+ = none
-```
-
-Current endpoint:
-
-```text
-Monday evening
-next_day = null
-```
-
-Currently inactive:
-
-- Marie black-dress visual reconquest set;
-- Mathilde deliberate domestic photo set;
-- Sandra chosen private exposure;
-- Pauline alternate private crop;
-- Nico shared-gaze or image-pact risk;
-- Raphaëlle transformation teaser;
-- Gallery MVP;
-- any V3/V4 new-wave image.
+The character canon does not replace season architecture.
 
 ---
 
-## 4. First-repetition history
+## 4. Character-specific season anchors
 
-The implemented first-repetition wave may have produced:
+### Marie
+
+Required recurring material:
+
+- La Verrière;
+- Élodie;
+- shared apartment;
+- food, walks, practical humor;
+- black dress;
+- gold earrings;
+- entrance mirror;
+- playlist and movement;
+- active choice rather than passive jealousy.
+
+Adult direction:
 
 ```text
-external foregrounds = 0 to 2
-Mathilde resolved / expired / deferred
-Sandra resolved / expired / deferred
-charged_access_owner = none | mathilde
-Marie evidence = reconnection | drift | mixed
+familiar life
+-> social visibility
+-> gaze consciously renewed
+-> active reconquest or new couple frame
+-> ordinary life after the erotic scene
 ```
 
-History remains in:
+### Sandra
+
+Required recurring material:
+
+- SentryCore;
+- horaires décalés;
+- ticket fantôme;
+- printed photos;
+- frames, books, scrapbooking;
+- hot chocolate and plaid;
+- Jeff;
+- maison des Tilleuls;
+- distance and chosen showing.
+
+Adult direction:
 
 ```text
-story_ledgers.first_repetition
+concrete trace
+-> Player reads something
+-> Sandra minimizes
+-> private continuity
+-> chosen image or meeting
+-> desire, limit, or secret
+-> trace kept, moved, or removed
 ```
 
-V0.94 forbids resetting, transferring, or rewriting that ledger.
+### Mathilde
+
+Required recurring material:
+
+- water damage;
+- temporary ten-to-fifteen-day stay;
+- spare room;
+- suitcase and garment bag;
+- legal-protection work;
+- fitted ordinary homewear;
+- image control;
+- family history and Marie's trust;
+- end of stay.
+
+Adult direction:
+
+```text
+ordinary sensuality
+-> gaze noticed
+-> bad-faith denial
+-> effect chosen
+-> domestic intention
+-> rule, secret, or rupture
+```
+
+### Pauline
+
+Required recurring material:
+
+- real relationship with Bastien;
+- prior hidden infidelity;
+- Marie's partial knowledge;
+- mutual-bank work and incomplete stories;
+- choir and community life;
+- legitimate social images;
+- alternate crop;
+- proof, compartment, and collision.
+
+Adult direction:
+
+```text
+publicly reliable version
+-> private difference
+-> test of discretion
+-> alternate version
+-> reciprocal proof
+-> compartment
+-> collision with official life
+```
+
+### Raphaëlle
+
+Required recurring material:
+
+- UX and accessibility work;
+- peer relationship with Player;
+- notebook, garment bag, red seam ripper, brass thimble;
+- sewing, pattern work, fabrics, makeup, wigs;
+- private creative account;
+- Maud;
+- home workshop and dress form;
+- masks, bodices, gloves, boots, and chosen roles;
+- aftermath after the version ends.
+
+Adult direction:
+
+```text
+office version
+-> craft detail
+-> creative-account or process access
+-> unfinished preparation
+-> chosen audience
+-> role and image rules
+-> adult frame
+-> role ends
+-> responsibility remains
+```
+
+### Nico
+
+Nico is heterosexual.
+
+Required recurring material:
+
+- L'Annexe;
+- floor-manager work;
+- apron, watch, bottle opener, closing room;
+- real friendship with Player;
+- real attraction to Marie;
+- real sexual attraction to Mathilde;
+- outside social view against Player's domestic view;
+- alibis, descriptions, images, and consent distinctions;
+- quiet private Nico after the room empties.
+
+Adult direction:
+
+```text
+ordinary friendship
+-> desire for a woman named
+-> Player's gaze reflected
+-> request, description, image, or alibi
+-> authorized pact or breach
+-> woman acts through her own agency
+-> friendship absorbs the consequence
+```
+
+There is no romantic or sexual route between Nico and Player.
 
 ---
 
-## 5. V0.93 documented visual ceilings
+## 5. Current runtime separation
 
-These ceilings are locked as product and narrative authority but are not yet playable.
+The runtime currently describes what is playable.
 
-### Marie — reconquest and visible desirability
+The Bible and full canons describe what the complete first season and future arcs must be able to support.
 
-Visual progression:
+Do not infer current access from future canon.
 
-```text
-black dress
-public social visibility
-private continuation
-lingerie / erotic couple image
-future couple pornography or shared-gaze fantasy
-```
+Examples:
 
-V0.93 may document:
-
-- three guaranteed black-dress images on Tuesday;
-- social comparison with Pauline on Wednesday;
-- a three-image private reconquest payoff on Thursday;
-- Marie as default dominant payoff when no external visual route was claimed.
-
-Marie remains active, desirable, social, and capable of moving without Player.
-
-### Mathilde — deliberate domestic visual access
-
-Visual progression:
-
-```text
-ordinary sexy homewear
-outfit choice
-pose knowingly made for Player
-underwear / lingerie in Marie's apartment
-future hidden taboo, discovery, confession, or sex in shared space
-```
-
-Eligibility remains tied to first-repetition history and her temporary stay.
-
-The route advances when Mathilde chooses the effect, not because her normal clothes are treated as permission.
-
-### Sandra — chosen private exposure
-
-Visual progression:
-
-```text
-fitted elegant image
-mirror hesitation
-one extra private image
-satin / lingerie
-future chosen nudity, emotional affair, secret meetings, or sex
-```
-
-Sandra's route must preserve:
-
-- distance;
-- chosen showing;
-- no pressure reward;
-- Jeff as a real adult consequence;
-- withdrawal when Player minimizes or pushes.
-
-### Pauline — public/private double address
-
-Visual progression:
-
-```text
-public green-dress image
-alternate private crop
-second version with secret timing or audience
-future proof, alibi, and double-life pornography
-```
-
-Bastien remains real.
-His ignorance is never consent.
-
-Pauline can become the primary female visual route when she independently chooses the private version, or a secondary compartment risk depending on the authored branch.
-
-### Nico — image circulation and risk
-
-Nico does not own a female gallery album.
-
-His progression is represented through:
-
-```text
-credible already-unlocked public images
-private erotic selection
-male complicity
-shared-gaze opportunity
-unapproved recontextualization risk
-future authorized image pact, betrayal, jealousy, sharing, or cuckold/NTR route
-```
-
-Nico cannot create consent for Marie, Mathilde, Pauline, or any other woman.
-He cannot duplicate image files to inflate the daily visual count.
-
-### Raphaëlle — chosen transformation teaser
-
-Visual progression:
-
-```text
-elegant office version
-fitted workshop version
-partial costume / mask / bodice / gloves
-future explicit roleplay, power exchange, and costume pornography
-```
-
-V0.93 permits a teaser.
-Raphaëlle does not claim the dominant V0.93 payoff and remains a later dedicated route priority.
-
-### Player — route selection through action
-
-Player's choices must clearly express:
-
-- who he wants to see more privately;
-- whether he wants public visibility, exclusive access, secrecy, or shared gaze;
-- whether he asks for another version;
-- whether he saves, circulates, refuses, or creates risk;
-- whether he pays the concrete Marie obligation;
-- whether he admits desire or hides behind neutrality.
-
-The UI must not expose internal route names as menu labels.
-The actual choice wording must nevertheless make opportunity and danger readable.
+- Raphaëlle's cosplay and roleplay canon can be authoritative while the current runtime still exposes only ordinary work access;
+- Pauline's double-life engine can be authoritative while no private crop is currently unlocked;
+- Nico's attraction and image-pact routes can be authoritative while runtime remains ordinary friendship;
+- Marie, Sandra, and Mathilde may have adult ceilings that are not yet playable.
 
 ---
 
-## 6. V0.94 implementation mapping
-
-### V0.95 — Marie
-
-Implements:
-
-```text
-Tuesday day 8
-three real Marie black-dress images
-actual inline image rendering
-Gallery MVP
-M4 action/fantasy choice
-one structured obligation
-named-boundaries ledger
-three-slot visual gate
-```
-
-No Mathilde, Sandra, Pauline, Nico, or Raphaëlle route runtime is added in V0.95.
-
-### V0.96 — Mathilde / Sandra / Marie / Pauline social set
-
-Implements:
-
-```text
-historical Mathilde/Sandra carry-over selection
-Mathilde or Sandra visual route set when eligible
-three guaranteed Marie/Pauline social images
-Mathilde repair date
-L'Annexe incident
-one primary visual route claim maximum
-```
-
-A quiet history remains visually complete through the guaranteed social set.
-
-### V0.97 — Pauline / Nico risk
-
-Implements:
-
-```text
-Pauline private-alternate opportunity
-Nico erotic selection from credible unlocked images
-one secondary risk maximum
-```
-
-### V0.98 — dominant payoff and closure
-
-Implements one three-image female payoff:
-
-```text
-Marie
-OR Mathilde
-OR Sandra
-OR Pauline
-```
-
-Marie is fallback.
-Nico modifies risk.
-Raphaëlle may add a teaser but cannot replace the dominant payoff.
-
----
-
-## 7. Global adult canon
+## 6. Adult and image canon
 
 Primary source:
 
@@ -293,15 +247,14 @@ docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
 
 Use it for:
 
-- pornographic intensity progression;
+- erotic and pornographic intensity;
 - lingerie, nudity, explicit images, and sexual acts;
 - cheating and secrecy;
-- image origin, audience, saving, and forwarding;
+- image origin, audience, saving, deletion, and forwarding;
 - voyeurism and recontextualization;
 - shared gaze and image pacts;
 - roleplay and transformation;
-- NTR / cuckold / sharing;
-- trio, quatuor, and group routes;
+- NTR, cuckold, sharing, trio, quatuor, and group routes;
 - consequences and dark-route distinctions.
 
 ```text
@@ -312,19 +265,19 @@ Pornographic does not mean generic.
 
 ---
 
-## 8. Voice and scene differentiation reminders
+## 7. Voice and differentiation reminders
 
 ```text
-Marie = movement, practical plans, visibility, reconquest
-Mathilde = speed, embarrassment, bad faith, outfit and image control
-Sandra = traces, hesitation, minimization, chosen extra exposure
-Pauline = timing, versions, audience, public/private contradiction
-Nico = tables, rooms, bodies, direct desire, circulation of gaze
-Raphaëlle = detail, craft, transformation, exact invitation or limit
-Player = short, dry, observant, desirous, responsible
+Marie      = movement, practical plans, visible life, reconquest
+Sandra     = trace, hesitation, minimization, chosen showing
+Mathilde   = speed, correction, bad faith, image control, family weight
+Pauline    = timing, versions, confidentiality, public/private contradiction
+Raphaëlle  = detail, craft, transformation, exact invitation or limit
+Nico       = rooms, bodies, direct desire, women, circulation of gaze, quiet aftermath
+Player     = short, dry, observant, desirous, responsible
 ```
 
-Do not repeat the same scene pattern as:
+Do not repeat:
 
 ```text
 character explains attraction
@@ -332,49 +285,79 @@ character explains attraction
 -> route stays safe
 ```
 
-Choices must create visibly different access, gallery, fantasy, and risk outcomes.
+Choices must create different access, image, fantasy, obligation, and risk outcomes.
 
 ---
 
-## 9. Supporting characters
+## 8. Supporting characters
 
 ### Jeff
 
-- anchored to Sandra;
+- Sandra's real partner;
+- mason;
 - not a monster used to justify her route;
 - remains part of emotional and discovery consequences.
 
 ### Bastien
 
 - Pauline's real current partner;
-- present in the legitimate social set;
+- practical and ordinary;
+- present in legitimate social life;
 - not stupid because he trusts her;
 - ignorance is not cuckold consent.
 
-### Élodie, Inès, Chloé, Léa, Amandine, Maud and others
+### Élodie
 
-- provide life texture and witnesses;
-- do not become automatic routes;
-- do not know private route state without a source;
-- do not speak for another adult's consent.
+- La Verrière work witness;
+- not a route;
+- makes Marie's professional world real.
+
+### Maud
+
+- Raphaëlle's costume-making friend and occasional photographer;
+- provides image origin and process;
+- never grants consent for Raphaëlle.
+
+### Other anchors
+
+Inès, Chloé, Léa, Amandine, Nora, Julie, Malik, Sophie, and others provide life texture and witnesses without omniscience.
+
+---
+
+## 9. Deprecation maps
+
+```text
+docs/canon/characters/MATHILDE_CANON_DEPRECATION_MAP.md
+docs/canon/characters/PAULINE_CANON_DEPRECATION_MAP.md
+docs/canon/characters/NICO_CANON_DEPRECATION_MAP.md
+docs/canon/characters/RAPHAELLE_CANON_DEPRECATION_MAP.md
+```
+
+Do not restore:
+
+- Mathilde's grey-sweater or canapé-selfie identity;
+- Pauline as single, innocent, or instant private-crop dispenser;
+- Nico as fake friend, automatic villain, magical archive, or bisexual route with Player;
+- Raphaëlle as only a calm colleague, therapist, or cosplay gimmick;
+- fixed old day ordering;
+- generic character interchangeability.
 
 ---
 
 ## 10. Maintenance rule
 
-When a later implementation changes a character's actual runtime access, update together:
+When identity or adult engine changes, update together:
 
-- relevant full character canon only if identity or engine changes;
-- relevant deprecation map;
-- NSFW canon when adult route rules change;
+- full character canon;
+- deprecation map;
+- global NSFW canon;
 - this index;
-- reading order;
-- narrative status;
-- active runtime report;
-- implementation guidance.
+- `CHARACTERS_CANON_CURRENT.md`;
+- documentation reading order;
+- narrative canon status;
+- Bible routes and sequences when affected.
 
 ```text
-V0.93 defines the future visual promise.
-V0.94 defines the integration order.
-Only V0.95–V0.98 may turn those promises into playable access.
+A correction is incomplete
+while character canon and season architecture describe different people.
 ```

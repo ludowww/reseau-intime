@@ -8,21 +8,41 @@
 
 Ce document définit la trame commune et les cinq actes de la première saison.
 
-Il ne fixe pas les journées, les horaires, les conversations détaillées ou l’ordre précis des scènes.
+Il ne fixe pas :
 
-Un acte est une transformation dramatique globale. Les séquences sont choisies pour accomplir cette transformation. Les journées sont définies plus tard afin d’organiser la diffusion, le rythme et les respirations.
+- les journées ;
+- les horaires ;
+- les dialogues ;
+- l’ordre exact des scènes ;
+- les choix détaillés ;
+- l’implémentation runtime.
 
-La première saison doit former une histoire complète, avec une résolution provisoire et des relations capables de nourrir de futurs arcs.
+La conception doit respecter simultanément :
+
+1. la North Star ;
+2. l’expérience joueur ;
+3. les fantasmes centraux ;
+4. les canons complets des personnages ;
+5. les routes macro ;
+6. l’évolution érotique ;
+7. la grammaire narrative.
+
+> **Une architecture correcte ne suffit pas si les personnages pourraient être intervertis sans modifier les événements.**
 
 ---
 
 # 1. Phrase directrice de la saison
 
-> **Alors que Marie et Player tentent de sortir leur couple d’une période de routine et de distance, la réactivation progressive de leur réseau social fait naître plusieurs espaces d’intimité parallèles. Ce que chacun choisit de ne pas raconter finit par circuler sous forme de messages, de photos, d’absences, d’obligations et de contradictions, jusqu’à rendre impossible le maintien de toutes les versions de leur vie.**
+> **Alors que Marie et Player tentent de sortir leur couple d’une période de routine et de distance, la réactivation progressive de leur réseau social crée plusieurs espaces d’intimité parallèles. Ce que chacun choisit de ne pas raconter circule malgré tout par les messages, les photos, les absences, les objets, les obligations et les changements de comportement, jusqu’à rendre impossible le maintien de toutes les versions de leur vie.**
 
 La saison ne raconte pas seulement une infidélité potentielle.
 
-Elle raconte la formation de plusieurs réalités relationnelles concurrentes et la difficulté de continuer à les présenter comme compatibles.
+Elle raconte :
+
+- un couple encore réel mais devenu trop automatique ;
+- plusieurs relations qui acquièrent une continuité propre ;
+- des versions privées qui semblent d’abord compatibles ;
+- le moment où leur coexistence exige un choix, une règle ou une fracture.
 
 ---
 
@@ -34,16 +54,16 @@ Cette vérité peut concerner :
 
 - la distance déjà installée ;
 - le besoin de retrouver une intimité ailleurs ;
-- l’autonomie retrouvée de Marie ;
+- l’autonomie sociale et érotique de Marie ;
 - une proximité émotionnelle avec Sandra ;
 - un interdit domestique avec Mathilde ;
-- une ligne privée ouverte par Pauline ;
-- une vie extérieure rendue possible par Raphaëlle ;
-- les confidences et permissions recherchées auprès de Nico ;
-- des photos dont l’existence change le sens d’une relation ;
-- des promesses et versions devenues incompatibles.
+- un compartiment secret avec Pauline ;
+- une version extérieure de Player révélée par Raphaëlle ;
+- le regard social et les permissions recherchées auprès de Nico ;
+- des images dont la destination change le sens ;
+- des promesses devenues incompatibles.
 
-La réponse dépend de l’ensemble du comportement du joueur, pas d’un choix final isolé.
+La réponse découle de l’accumulation des actes du joueur. Elle ne doit jamais dépendre d’un unique choix final.
 
 ---
 
@@ -57,21 +77,20 @@ Une photo semble n’être qu’un instant.
 
 Une absence semble pouvoir être expliquée.
 
-Un silence semble ne produire aucune conséquence.
+Un silence semble ne rien produire.
 
-Mais chaque élément modifie une relation, puis la manière dont Player se comporte dans les autres.
-
-L’intime circule par :
+Mais l’intime circule par :
 
 - le temps accordé ;
 - les promesses ;
-- les comparaisons ;
-- les changements de comportement ;
+- les objets laissés dans un lieu ;
+- les changements d’habitudes ;
 - les images ;
+- les audiences ;
 - les confidences ;
 - les alibis ;
 - les dettes ;
-- les personnes qui savent partiellement ;
+- les témoins partiels ;
 - les retours au foyer.
 
 Le réseau est le véritable espace dramatique de la saison.
@@ -82,23 +101,28 @@ Le réseau est le véritable espace dramatique de la saison.
 
 Marie et Player forment encore un couple réel.
 
-Ils disposent d’une histoire, d’une affection, d’habitudes et d’une loyauté qui ne sont pas fictives.
+Ils disposent :
 
-Mais leur quotidien fonctionne mieux qu’il ne les rapproche.
+- d’environ cinq années de relation ;
+- d’un appartement partagé ;
+- d’habitudes ;
+- d’affection ;
+- de blagues privées ;
+- d’une vie quotidienne qui fonctionne encore.
 
-La distance initiale peut être interprétée comme :
+Le danger n’est pas que leur amour soit déjà mort.
 
-- fatigue ;
-- routine ;
-- frustrations non formulées ;
-- désir moins spontané ;
-- manque de curiosité ;
-- difficulté à parler de ce qui manque ;
-- différence de rythme ou de disponibilité.
+Le danger est que Player traite Marie comme une vie acquise plutôt que comme une personne à choisir activement.
 
-Le jeu ne doit pas annoncer que le couple est condamné.
+Marie reste :
 
-La réparation, la reconquête et la transformation négociée doivent rester des possibilités crédibles.
+- vive ;
+- sociable ;
+- désirable ;
+- active à La Verrière ;
+- capable de sortir, d’organiser, de rire, de se préparer et de bouger sans attendre Player.
+
+La réparation, la reconquête, la reconfiguration et la rupture doivent toutes rester crédibles.
 
 ---
 
@@ -106,91 +130,196 @@ La réparation, la reconquête et la transformation négociée doivent rester de
 
 La saison commence par une réouverture du réseau.
 
-Marie et Player recommencent à être traversés par d’autres présences, d’autres regards et d’autres possibilités.
+Cette réouverture n’est pas une catastrophe. Elle apporte d’abord :
 
-Cette réouverture repose sur plusieurs mouvements compatibles :
+- de l’air ;
+- de la curiosité ;
+- des invitations ;
+- de nouveaux rythmes ;
+- le sentiment que la vie recommence à circuler.
 
-- Marie retrouve une énergie sociale propre ;
-- Sandra reprend une place dans la vie émotionnelle de Player ;
-- Mathilde entre davantage dans l’espace concret du couple ;
-- Pauline existe d’abord dans le social avant d’ouvrir une ligne personnelle ;
-- Raphaëlle rend visible une vie extérieure ;
-- Nico redevient un interlocuteur capable de recevoir certaines contradictions ;
-- Jeff et Bastien donnent une réalité aux autres couples, aux invitations et aux conséquences sociales.
+Elle repose sur plusieurs mouvements concrets :
 
-Le déclencheur n’est pas une catastrophe.
+- Marie retrouve une énergie sociale propre à travers La Verrière, Pauline et ses sorties ;
+- Sandra réapparaît par une trace concrète liée à leur histoire ;
+- un dégât des eaux conduit Mathilde à séjourner temporairement chez Marie et Player ;
+- Pauline existe d’abord dans un cadre social légitime avec Bastien ;
+- Raphaëlle laisse apparaître une version personnelle derrière la collègue UX et accessibilité ;
+- Nico redevient un ami actif à travers L’Annexe, les soirées et les confidences ;
+- Jeff et Bastien donnent un poids réel aux couples extérieurs ;
+- Élodie, Maud, Inès, Chloé, Léa, Amandine, Nora, Jeff et Bastien fournissent du monde sans devenir des détecteurs omniscients.
 
-Il apporte d’abord de l’air, de la curiosité et le sentiment que la vie recommence à circuler.
-
-Le conflit naît lorsque tout ne peut plus être raconté de la même manière à tout le monde.
+Le conflit apparaît lorsque tout ne peut plus être raconté de la même manière à tout le monde.
 
 ---
 
-# 6. Périmètre relationnel de la première saison
+# 6. Contrat d’incarnation des personnages
+
+Les actes ne doivent pas seulement attribuer une fonction abstraite à chaque personnage. Ils doivent utiliser les ancrages de son canon complet.
+
+## Marie
+
+Moteur dramatique :
+
+> **Être activement choisie plutôt qu’aimée comme une habitude.**
+
+Ancrages indispensables :
+
+- La Verrière ;
+- les événements, affiches, invitations et imprévus ;
+- Élodie comme témoin professionnel proportionné ;
+- la robe noire, les boucles dorées, le miroir d’entrée, la musique, les chaussures près de la porte ;
+- le canapé, la cuisine, les courses, les repas improvisés et les promenades ;
+- sa manière de bouger lorsqu’elle cesse d’attendre.
+
+## Sandra
+
+Moteur dramatique :
+
+> **Une trace devient dangereuse parce que Player la lit trop précisément.**
+
+Ancrages indispensables :
+
+- SentryCore et les horaires décalés ;
+- le ticket fantôme ;
+- les photos imprimées, cadres, livres, scrapbooking et objets ;
+- le chocolat chaud, le plaid et ses refuges ;
+- Jeff comme partenaire réel et conséquence adulte ;
+- la maison des Tilleuls ;
+- la distance comme condition de son courage.
+
+## Mathilde
+
+Moteur dramatique :
+
+> **Une sensualité ordinaire devient intentionnelle dans un espace fondé sur la confiance de Marie.**
+
+Ancrages indispensables :
+
+- le dégât des eaux ;
+- le séjour temporaire de dix à quinze jours ;
+- la petite chambre ou le bureau d’appoint ;
+- la valise trop pleine, le garment bag, la trousse ouverte, le chargeur perdu ;
+- son métier de gestionnaire en protection juridique ;
+- les vêtements près du corps qu’elle porte déjà naturellement ;
+- l’histoire familiale avec Marie ;
+- la confiance de Marie comme poids central de la route.
+
+## Pauline
+
+Moteur dramatique :
+
+> **Préserver le couple, l’image sociale et le désir en créant un compartiment privé.**
+
+Ancrages indispensables :
+
+- son couple réel avec Bastien ;
+- l’infidélité passée non révélée à Bastien ;
+- la connaissance partielle de Marie ;
+- la banque mutualiste et son rapport professionnel aux versions incomplètes ;
+- la chorale et les engagements communautaires ;
+- les repas, événements et photos légitimes ;
+- la différence entre version publique, cadrage privé et preuve réciproque.
+
+## Raphaëlle
+
+Moteur dramatique :
+
+> **Choisir une version, nommer le cadre et rester responsable lorsque le rôle se termine.**
+
+Ancrages indispensables :
+
+- le travail UX et accessibilité comme pairs ;
+- les prototypes, dossiers, marches de midi et revues tardives ;
+- la couture, les patrons, le découd-vite, le dé à coudre, les tissus et les essais ;
+- le compte créatif sous pseudonyme ;
+- Maud comme amie et photographe occasionnelle ;
+- l’atelier domestique, le mannequin, le miroir et le garment bag ;
+- les costumes, masques, bustiers, gants, bottes et transformations choisies ;
+- la séparation entre travail, préparation, rôle et lendemain ;
+- l’obligation de nommer qui reste exclu d’un cadre pourtant clair.
+
+## Nico
+
+Moteur dramatique :
+
+> **Faire circuler le regard entre l’espace social et l’espace domestique, puis assumer ce que cette circulation devient.**
+
+Décision canonique :
+
+- Nico est hétérosexuel ;
+- aucune attirance romantique ou sexuelle n’existe entre Nico et Player ;
+- aucune ambiguïté homosexuelle cachée ne doit être écrite.
+
+Ancrages indispensables :
+
+- L’Annexe ;
+- le service, les tables, la terrasse et la salle après le départ des clients ;
+- son attirance réelle pour Marie ;
+- son attirance sexuelle réelle pour Mathilde ;
+- sa jalousie de l’accès domestique de Player ;
+- le contraste entre ce que Player voit chez lui et ce que Nico voit socialement ;
+- les confidences, descriptions, images, alibis et échanges de regard ;
+- sa capacité à être ami, rival, garde-fou, tentateur, complice ou témoin compromis.
+
+---
+
+# 7. Périmètre relationnel de la première saison
 
 ## Relations pouvant atteindre une vraie bascule
 
-Marie, Mathilde et Sandra sont les trois premières relations capables d’atteindre une transformation relationnelle majeure pendant la première saison.
+- Marie ;
+- Sandra ;
+- Mathilde.
 
-Cette bascule n’a pas besoin de prendre la même forme ni d’être atteinte avec les trois dans une même partie.
+La bascule peut être :
 
-Elle peut devenir :
-
-- reconquête ou reconfiguration du couple avec Marie ;
-- interdit domestique devenu intentionnel avec Mathilde ;
-- relation retrouvée devenue émotionnellement ou physiquement ambiguë avec Sandra.
+- conjugale ;
+- émotionnelle ;
+- sexuelle ;
+- domestique ;
+- fondée sur une règle ;
+- fondée sur un secret ;
+- fondée sur une fracture.
 
 ## Promesse forte d’extension
 
-Pauline doit obtenir une ligne relationnelle autonome, une fonction claire dans le réseau et une promesse forte pour les arcs suivants.
+Pauline doit obtenir :
 
-Elle ne doit pas rester seulement « l’amie de Marie » ou une distributrice de photos.
-
-La première saison peut ouvrir :
-
-- son jeu avec les audiences ;
-- sa capacité à créer plusieurs versions ;
-- une curiosité envers les limites du couple ;
-- un premier secret, test ou risque propre.
-
-Son potentiel doit être évident sans obliger la saison à accomplir immédiatement sa route la plus avancée.
+- une ligne privée autonome ;
+- une différence d’audience significative ;
+- un test de fiabilité ;
+- une conséquence liée à Bastien ou Marie ;
+- un hook concret pour la suite.
 
 ## Graines structurantes
 
-Raphaëlle et Nico sont des graines structurantes.
+Raphaëlle et Nico doivent produire des conséquences réelles pendant la saison.
 
-Raphaëlle ouvre la possibilité d’une vie extérieure et d’une autre version de Player.
+Raphaëlle doit au minimum passer de la collègue à une personne dont Player connaît une version créative choisie.
 
-Nico devient gardien, miroir ou amplificateur des contradictions.
-
-Leur rôle doit produire de vraies conséquences dans la saison, tout en laissant une montée plus importante pour les arcs suivants.
-
-## Personnages secondaires structurants
-
-Jeff et Bastien rendent les relations existantes, les partenaires et le réseau social crédibles.
-
-Ils ne sont ni des obstacles jetables ni des consentements par procuration.
+Nico doit au minimum devenir une personne qui sait, désire ou couvre quelque chose de suffisamment précis pour transformer leur amitié.
 
 ---
 
-# 7. Architecture fixe et contenu variable
+# 8. Architecture fixe et contenu variable
 
 ## Mouvements fixes
 
-Toutes les parties doivent contenir :
+Toute partie complète contient :
 
 1. un couple réel mais trop prévisible ;
-2. une réactivation du réseau ;
-3. le retour émotionnel de Sandra ;
-4. l’entrée de Mathilde dans une proximité concrète ;
-5. l’autonomie sociale de Marie ;
-6. une ligne personnelle ouverte ou préparée par Pauline ;
-7. une possibilité extérieure portée par Raphaëlle ;
-8. un rôle de confident, miroir ou complice pour Nico ;
-9. des photos qui changent de valeur selon leur audience ;
-10. des obligations et secrets qui commencent à se superposer ;
-11. une convergence rendant une version officielle incomplète ;
-12. une confrontation partielle à la vérité ;
+2. une réouverture du réseau ;
+3. une trace concrète ramenant Sandra ;
+4. l’arrivée temporaire de Mathilde dans le foyer ;
+5. une autonomie sociale visible de Marie ;
+6. un cadre social légitime pour Pauline et Bastien ;
+7. un accès professionnel puis créatif préparé pour Raphaëlle ;
+8. un retour de Nico comme ami et regard social ;
+9. des photos dont la valeur change selon l’audience ;
+10. des obligations qui commencent à se superposer ;
+11. une convergence ;
+12. une vérité partielle devenue impossible à repousser ;
 13. une nouvelle configuration du couple et du réseau.
 
 ## Variables de partie
@@ -200,444 +329,263 @@ Le comportement du joueur détermine :
 - la relation prioritaire ;
 - les opportunités saisies, différées ou perdues ;
 - les limites respectées ou franchies ;
-- les photos existantes ;
-- les audiences réelles de ces photos ;
-- les personnes impliquées comme témoins ou complices ;
-- le degré de confiance avec Marie ;
-- la force de la bascule avec Mathilde ou Sandra ;
-- la profondeur de la ligne Pauline ;
-- l’importance prise par Raphaëlle ;
-- ce que Nico sait ou accepte de couvrir ;
-- la nature de la trace de convergence ;
+- les images existantes ;
+- les audiences réelles ;
+- les personnes devenues témoins ou complices ;
+- la force de la reconquête Marie ;
+- la profondeur de la ligne Sandra ;
+- le degré d’intention de Mathilde ;
+- la profondeur du compartiment Pauline ;
+- l’accès au processus créatif de Raphaëlle ;
+- le rôle de Nico ;
 - la vérité finalement assumée.
 
 ---
 
-# 8. Acte I — La réouverture
+# 9. Acte I — La réouverture
 
 ## Fonction dramatique
 
-Réinstaller le réseau autour du couple et faire sentir que le retour des autres apporte d’abord de l’air, de la curiosité et une nouvelle énergie.
+Réinstaller le réseau autour du couple et faire sentir que le retour des autres apporte d’abord une énergie nouvelle.
 
-## Transformation globale
+## Transformations obligatoires
 
-Le monde de Marie et Player cesse d’être refermé sur leur routine.
+- Marie doit être vivante avant d’être blessée ;
+- Sandra revient par une trace, pas par une déclaration ;
+- Mathilde entre par une nécessité concrète ;
+- Pauline apparaît dans une situation socialement légitime ;
+- Raphaëlle reste d’abord dans un cadre de travail réel ;
+- Nico retrouve une présence d’ami avant toute proposition dangereuse.
 
-Les relations redeviennent actives sans encore être présentées comme des routes.
+## Intensité maximale
 
-## Relations concernées
+- neutralité crédible ;
+- conscience du regard ;
+- curiosité ;
+- aucune permission adulte déduite.
 
-- Marie : affection réelle, routine visible, première reprise d’autonomie ;
-- Sandra : réapparition concrète et mémoire affective ;
-- Mathilde : présence plus proche ou future entrée dans le foyer ;
-- Pauline : présence sociale indirecte ;
-- Raphaëlle : existence professionnelle légère ;
-- Nico : disponibilité amicale ;
-- Jeff et Bastien : ancrage des couples et du réseau.
+## État de sortie
 
-## Fantasmes activés
-
-Reconquête du couple, relation retrouvée, proximité quotidienne, regard des autres, vie extérieure.
-
-## Types de séquences utiles
-
-MESSAGE PRATIQUE, PHOTO SPONTANÉE, CAFÉ annoncé ou rappelé, REPAS PARTAGÉ, TRAJET, GROUPE OU CHAT COLLECTIF discret, RETOUR À LA MAISON.
-
-## Photos
-
-Les photos établissent les visages, les habitudes, les audiences et les différences entre image publique, image directe et trace conservée.
-
-Elles n’ont pas besoin d’être toutes suggestives.
-
-## États de sortie
-
-L’acte est accompli lorsque :
-
-- le réseau est redevenu vivant ;
-- au moins une relation extérieure possède une continuité future ;
-- Marie a une trajectoire propre visible ;
-- Player conserve ou tait un premier élément qu’il aurait auparavant partagé sans hésiter ;
-- aucune route n’est encore explicitement verrouillée.
-
-## Hooks d’extension
-
-- invitation non encore honorée ;
-- rendez-vous déplacé ;
-- premier détail professionnel avec Raphaëlle ;
-- première question de Nico restée sans réponse ;
-- présence sociale de Pauline susceptible de devenir privée.
+Le réseau est actif et plusieurs continuités futures sont possibles.
 
 ---
 
-# 9. Acte II — Les lignes privées
+# 10. Acte II — Les lignes privées
 
 ## Fonction dramatique
 
-Transformer des présences sociales ou familières en relations individualisées possédant leurs propres attentes.
+Donner à plusieurs relations une continuité qui ne dépend plus entièrement du groupe.
 
-## Transformation globale
+## Incarnations attendues
 
-Player n’est plus seulement membre d’un réseau.
+- Marie demande ou provoque une présence concrète dans sa propre vie ;
+- Sandra obtient un café, un appel ou un rituel lié à une trace ;
+- Mathilde crée une routine dans le foyer ;
+- Pauline ouvre une différence entre version publique et version privée ;
+- Raphaëlle révèle un détail créatif, son compte ou une préparation ;
+- Nico reçoit une confidence ou partage un regard social précis.
 
-Il devient un destinataire particulier pour plusieurs personnes.
+## Intensité maximale
 
-## Relations concernées
+- désir possible ;
+- réciprocité soupçonnée ;
+- intention encore partielle ;
+- aucune sexualité automatique.
 
-- Marie : autonomie et possibilité de reconquête ;
-- Sandra : rythme privé, souvenirs et manque ;
-- Mathilde : observation et proximité concrète ;
-- Pauline : passage du collectif à une première ligne personnelle ;
-- Raphaëlle : premier échange extérieur au strict travail ;
-- Nico : première vérité incomplète ou première permission recherchée.
+## État de sortie
 
-## Fantasmes activés
-
-Destinataire privilégié, secret partagé, complicité, exhibition choisie, interdit domestique, relation parallèle en germe.
-
-## Types de séquences utiles
-
-CONFIDENCE, CAFÉ, ESSAYAGE, PHOTO DEMANDÉE, PHOTO SPONTANÉE, APPEL TARDIF, SERVICE RENDU, INVITATION, SILENCE.
-
-## Photos
-
-La destination devient plus importante que le degré d’exposition.
-
-Le joueur doit commencer à se demander :
-
-- pourquoi moi ;
-- qui d’autre voit cette version ;
-- que dois-je répondre ;
-- cette image crée-t-elle une attente ;
-- dois-je la conserver ou la protéger.
-
-## États de sortie
-
-L’acte est accompli lorsque :
-
-- au moins une ligne privée possède une attente concrète ;
-- une photo ou une confidence engage Player au-delà de l’instant ;
-- Marie perçoit ou produit un changement ;
-- une relation peut désormais être différée, réparée ou aggravée ;
-- Pauline, Raphaëlle ou Nico possède une graine autonome, même si elle n’est pas encore une bascule majeure.
-
-## Hooks d’extension
-
-- invitation à reprogrammer ;
-- photo non envoyée ou autre version promise ;
-- dette envers Nico ;
-- possibilité d’un échange privé Pauline ;
-- contexte professionnel susceptible de sortir du travail.
+Au moins deux relations possèdent une attente propre.
 
 ---
 
-# 10. Acte III — Les vies parallèles
+# 11. Acte III — Les vies parallèles
 
 ## Fonction dramatique
 
-Faire comprendre que les rapprochements ne peuvent pas rester indépendants et que le temps, les promesses et les versions commencent à se contredire.
+Transformer les lignes privées en réalités qui coûtent du temps, de l’attention ou de la loyauté.
 
-## Transformation globale
+## Incarnations attendues
 
-Player gère plusieurs relations possédant désormais leur propre mémoire.
+- Marie devient visible ailleurs et observe si Player la rejoint ou la surveille ;
+- Sandra et Player développent un rituel émotionnel risqué ;
+- Mathilde répète volontairement une situation autrefois accidentelle ;
+- Pauline teste la possibilité d’un compartiment secret ;
+- Raphaëlle décide qui peut voir la préparation plutôt que seulement le résultat ;
+- Nico commence à échanger l’accès social contre l’accès domestique ou à refuser cette logique.
 
-Marie construit également des espaces auxquels Player n’a pas pleinement accès.
+## Intensité maximale
 
-## Relations concernées
+- intention reconnue ;
+- disponibilité conditionnelle ;
+- premières expériences possibles sur les routes avancées ;
+- conséquences obligatoires.
 
-- Marie : rapprochement, inquiétude ou autonomie plus visible ;
-- Sandra : confidente réelle ou attirance reconnue ;
-- Mathilde : interdit domestique qui peut devenir intentionnel ;
-- Pauline : test de cadre ou d’audience ;
-- Raphaëlle : occasion extérieure plus importante ;
-- Nico : compréhension qu’il ne s’agit plus d’un événement isolé.
+## État de sortie
 
-## Fantasmes activés
-
-Relation parallèle, double vie, jalousie, rivalité, secret partagé, perte de contrôle, confiance et réparation.
-
-## Types de séquences utiles
-
-ATTENTE OU RETARD, RENDEZ-VOUS DÉPLACÉ, DISPUTE LÉGÈRE, RETOUR À LA MAISON, PHOTO À DOUBLE DESTINATION, SORTIE PROFESSIONNELLE, SILENCE, OBJET OU TRACE.
-
-## Photos
-
-Les images deviennent des rappels de promesses, des preuves de proximité ou des objets dont le contexte réel diffère de la version officielle.
-
-## États de sortie
-
-L’acte est accompli lorsque :
-
-- Marie, Mathilde ou Sandra peut atteindre une vraie bascule selon la partie ;
-- au moins deux obligations sont difficiles à concilier ;
-- Nico sait ou soupçonne une contradiction structurante ;
-- une image possède un risque d’audience ;
-- Player comprend qu’il ne pourra pas tout préserver sans prendre position.
-
-## Hooks d’extension
-
-- ligne Pauline prête à devenir plus risquée ;
-- occasion Raphaëlle hors contexte habituel ;
-- dette de couverture envers Nico ;
-- limite respectée pouvant produire une relance future ;
-- relation refroidie mais réparable.
+Les lignes privées ne peuvent plus être considérées comme sans effet sur le couple.
 
 ---
 
-# 11. Acte IV — La convergence
+# 12. Acte IV — La convergence
 
 ## Fonction dramatique
 
-Faire entrer plusieurs lignes relationnelles dans le même espace de conséquences et rendre une version officielle insuffisante.
+Faire entrer plusieurs versions dans le même espace social, domestique ou visuel.
 
-## Transformation globale
+## Formes possibles
 
-Ce qui pouvait rester séparé devient observable, comparable ou transmissible.
+- événement à La Verrière ;
+- après-soirée à L’Annexe ;
+- photo visible sur le mauvais écran ;
+- visite imprévue dans le foyer ;
+- incompatibilité d’horaires ;
+- objet ou garment bag déplacé ;
+- commentaire de Jeff ou Bastien ;
+- témoignage partiel d’un personnage secondaire ;
+- erreur d’audience ;
+- alibi que Nico refuse ou conditionne.
 
-La crise sort du seul téléphone de Player.
+## Règle
 
-## Relations concernées
+La convergence doit découler de traces déjà établies. Elle ne doit pas dépendre d’une coïncidence artificielle.
 
-Toutes les relations actives, avec une intensité dépendant de la partie.
+## État de sortie
 
-Marie et Player sont vus comme couple.
-
-Sandra cherche une place sans nécessairement vouloir devenir visible.
-
-Mathilde est assez proche pour remarquer des incohérences.
-
-Pauline peut contrôler ou perturber les audiences.
-
-Raphaëlle rappelle l’existence d’une vie extérieure.
-
-Nico choisit jusqu’où il protège, avertit ou encourage.
-
-Jeff et Bastien peuvent devenir témoins ou limites concrètes.
-
-## Fantasmes activés
-
-Regard des autres, conséquences sociales, jalousie, rivalité, perte de contrôle, voyeurisme, double vie, transgression.
-
-## Types de séquences utiles
-
-SOIRÉE, CONVERGENCE SOCIALE, GROUPE OU CHAT COLLECTIF, VISITE IMPREVUE, OBJET OU TRACE, PHOTO À DOUBLE DESTINATION, RETOUR À LA MAISON.
-
-## Trace de convergence
-
-La trace peut être :
-
-- une photo destinée à une personne et vue par une autre ;
-- une notification ;
-- une absence ;
-- un détail visuel ;
-- une version répétée différemment ;
-- une confidence qui circule ;
-- un alibi refusé ;
-- plusieurs images dont l’ordre contredit le récit officiel ;
-- une attitude remarquée.
-
-Elle ne doit pas forcément prouver une relation sexuelle.
-
-Elle doit prouver qu’une version de la situation est incomplète.
-
-## États de sortie
-
-L’acte est accompli lorsque :
-
-- au moins une personne sait ou soupçonne suffisamment ;
-- Player doit protéger, avouer, réparer, aggraver ou renoncer ;
-- une photo a agi comme objet dramatique ;
-- le couple ne peut plus revenir à l’innocence initiale ;
-- les conséquences restent partielles afin de préserver les arcs futurs.
-
-## Hooks d’extension
-
-- témoin possédant une information incomplète ;
-- photo toujours dangereuse ;
-- secret déplacé vers un autre gardien ;
-- Pauline capable d’exploiter une audience future ;
-- Raphaëlle désormais reliée au réseau principal ;
-- Nico compromis par ce qu’il a accepté de faire.
+Une version officielle devient insuffisante.
 
 ---
 
-# 12. Acte V — La vérité supportable
+# 13. Acte V — La vérité supportable
 
 ## Fonction dramatique
 
-Donner une résolution provisoire à la crise principale et transformer durablement le couple et le réseau.
+Donner une résolution provisoire à la crise principale et un état final lisible à chaque relation majeure.
 
-## Transformation globale
+## Marie
 
-Les personnages ne peuvent plus conserver exactement leurs anciennes définitions relationnelles.
+Le couple devient :
 
-La fin résulte de l’accumulation des actes, pas d’un menu de fins.
+- reconquis ;
+- reconfiguré ;
+- maintenu dans un accord incomplet ;
+- fragilisé par une double vie ;
+- séparé ou transformé.
 
-## Relations concernées
+## Sandra
 
-- Marie et Player affrontent une part réelle de leur distance et de leurs omissions ;
-- Sandra réévalue la place qu’elle accepte d’occuper ;
-- Mathilde assume, limite ou refuse la signification de la proximité domestique ;
-- Pauline conserve une promesse d’extension forte et une ligne autonome ;
-- Raphaëlle reste une possibilité extérieure devenue concrète ;
-- Nico confirme son rôle de garde-fou, complice, miroir ou personne compromise ;
-- Jeff et Bastien conservent une lecture sociale propre.
+La relation devient :
 
-## Fantasmes activés
+- amitié renouvelée ;
+- confidence privilégiée ;
+- désir reconnu ;
+- relation parallèle ;
+- recul protecteur ;
+- rupture de confiance.
 
-Reconquête du couple, confiance et réparation, relation parallèle, secret partagé, transgression, conséquences sociales, perte de contrôle.
+## Mathilde
 
-## Types de séquences utiles
+Le foyer obtient :
 
-RÉPARATION, RETOUR À LA MAISON, CONFIDENCE, DISPUTE LÉGÈRE, CAFÉ, PHOTO SPONTANÉE, SILENCE, OBJET OU TRACE.
+- une limite ;
+- un secret ;
+- une règle négociée ;
+- une rupture de confiance ;
+- une distance ;
+- un futur possible mais non résolu.
 
-## Formes de résolution
+## Pauline
 
-### Recomposition du couple
+Le compartiment est :
 
-Marie et Player traitent honnêtement une partie de leur crise.
+- refusé ;
+- entrouvert ;
+- protégé ;
+- compromis ;
+- laissé comme promesse dangereuse.
 
-Le couple devient plus conscient et actif sans revenir à son état initial.
+## Raphaëlle
 
-### Accord incomplet
+Player est :
 
-Le couple reconnaît qu’un changement est nécessaire, mais certains désirs ou secrets restent en suspens.
+- resté à la version bureau ;
+- invité dans le processus créatif ;
+- destinataire d’une version choisie ;
+- confronté à un cadre futur concret ;
+- écarté pour avoir confondu clarté locale et responsabilité globale.
 
-### Transparence négociée
+## Nico
 
-Marie et Player redéfinissent plus explicitement leur cadre, sans supprimer la jalousie ou les asymétries.
+Il devient :
 
-### Double vie fragile
+- ami garde-fou ;
+- rival ;
+- confident ;
+- complice ;
+- partenaire d’un regard partagé autorisé ;
+- témoin compromis ;
+- ami prenant ses distances.
 
-Player évite une rupture immédiate au prix de nouveaux mensonges, dettes ou dépendances.
+## État final
 
-### Fracture
-
-La définition initiale du couple ne tient plus.
-
-Marie reste un personnage majeur et la relation peut entrer dans une nouvelle forme au lieu de disparaître.
-
-## Photos
-
-Les dernières photos matérialisent le nouvel état :
-
-- image de reconquête ;
-- photo désormais consciemment privée ;
-- souvenir devenu douloureux ;
-- preuve conservée ;
-- image publique dont le contexte réel est connu ;
-- photo impossible au début de la saison.
-
-## États de sortie
-
-La saison est accomplie lorsque :
-
-- la crise principale reçoit une résolution provisoire ;
-- toutes les relations majeures ont changé ;
-- au moins une bascule importante est visible ;
-- les choix de limites, risques et réparations ont produit des différences lisibles ;
-- Pauline possède une promesse forte d’extension ;
-- Raphaëlle et Nico restent des graines structurantes ;
-- certaines traces, attentes ou dettes ouvrent naturellement la suite.
-
-## Hooks d’extension
-
-- conséquences différées d’une photo ;
-- nouvelle crise du couple ;
-- ligne Pauline devenue prioritaire ;
-- déplacement ou séjour avec Raphaëlle ;
-- Nico qui refuse, révèle ou approfondit son implication ;
-- retour d’une relation différée ;
-- témoin social qui interprète autrement les événements ;
-- règle du couple mise à l’épreuve par un nouvel arc.
+Une dernière photo, un objet ou une absence doit pouvoir être interprété différemment de son sens initial.
 
 ---
 
-# 13. Transformations obligatoires de fin de saison
+# 14. Conditions de complétude de la saison
 
-Même lorsqu’une route intime n’est pas poursuivie, chaque relation principale doit avoir changé.
+La saison est complète lorsque :
 
-Une relation peut finir en :
-
-- confiance renforcée ;
-- attirance reconnue ;
-- intimité consommée ;
-- complicité secrète ;
-- distance protectrice ;
-- méfiance ;
-- frustration ;
-- suspension ;
-- loyauté renforcée ;
-- possibilité différée ;
-- dette ou obligation future.
-
-L’absence de progression sexuelle ne signifie jamais l’absence de progression narrative.
-
-Respecter une limite, refuser une occasion ou réparer une faute doit également produire un nouvel état.
+- la crise Marie–Player reçoit une résolution provisoire ;
+- Marie, Sandra et Mathilde ont chacune obtenu un état relationnel lisible ;
+- Pauline possède une ligne autonome ;
+- Raphaëlle possède un accès créatif ou un cadre futur concret ;
+- Nico a pris une position qui modifie les arcs suivants ;
+- Jeff et Bastien restent des personnes réelles ;
+- une conséquence circule au-delà de la relation où elle est née ;
+- les photos ont servi de traces et non de simples récompenses ;
+- le réseau ne peut plus revenir exactement à son état initial.
 
 ---
 
-# 14. Règles de construction
+# 15. Critères d’acceptation
 
-## La crise vient des relations
+Avant de valider un acte ou une séquence, vérifier :
 
-Les événements extérieurs accélèrent la crise mais ne la remplacent pas.
-
-## Marie reste active
-
-Marie agit, choisit, se protège, désire, doute et peut ne pas tout raconter.
-
-## Le climax ne révèle pas tout
-
-La convergence rend le retour à l’innocence impossible sans fermer toutes les routes.
-
-## Les photos participent à l’action
-
-Au moins une part de la convergence dépend de la destination, de la signification ou de la circulation d’une image.
-
-## Les routes ne se succèdent pas en chapitres isolés
-
-Les relations avancent simultanément et se répondent.
-
-## Les actes précèdent le calendrier
-
-Aucun acte ne correspond par principe à un nombre fixe de journées.
-
-## Les séquences précèdent les journées
-
-Une séquence est validée pour sa fonction, ses fantasmes et sa transformation avant d’être placée dans un rythme quotidien.
-
-## La fin reste diégétique
-
-Le joueur comprend la configuration finale par les comportements, les photos, les silences et les conséquences, sans écran de résultat nommant une route.
+1. Quel canon complet est utilisé ?
+2. Quels objets, lieux, métiers ou proches rendent la situation spécifique ?
+3. Le personnage pourrait-il être remplacé sans réécriture majeure ?
+4. Quelle route est servie ?
+5. Quelle conséquence circule dans le réseau ?
+6. Quelle photo ou trace change de sens ?
+7. Quelle limite reste active ?
+8. Quel après-coup est prévu ?
+9. La situation respecte-t-elle les partenaires réels et les responsabilités existantes ?
+10. Le runtime est-il traité comme une couche ultérieure plutôt que comme l’origine de la direction narrative ?
 
 ---
 
-# 15. Résumé canonique
+# 16. Résumé canonique
 
-La première saison commence avec un couple réel mais trop prévisible.
+La première saison commence quand la vie recommence à circuler autour de Marie et Player.
 
-La réactivation du réseau apporte d’abord de l’air et du désir.
+Marie redevient visible et exige d’être activement choisie.
 
-Sandra réveille une intimité ancienne.
+Sandra revient par les traces d’une proximité ancienne.
 
-Mathilde charge l’espace domestique.
+Mathilde entre dans le foyer à cause d’un problème concret et transforme progressivement un confort familial en tension intentionnelle.
 
-Marie redevient autonome, visible et désirable.
+Pauline propose implicitement la possibilité de préserver plusieurs réalités par le compartiment et la maîtrise des preuves.
 
-Pauline transforme progressivement le social en promesse privée.
+Raphaëlle fait passer Player de la version bureau au processus d’une transformation choisie, puis lui demande d’assumer ce que le cadre signifie après la fin du rôle.
 
-Raphaëlle ouvre une vie extérieure.
+Nico, hétérosexuel, désire réellement Marie et Mathilde, échange avec Player le regard social contre le regard domestique et doit décider jusqu’où l’amitié peut porter cette circulation.
 
-Nico recueille et influence les contradictions.
+Les lignes privées créent des attentes.
 
-Jeff et Bastien rendent les autres relations et les conséquences sociales réelles.
+Les attentes créent des obligations.
 
-Les lignes privées se développent, puis leurs obligations et leurs traces se superposent.
+Les obligations deviennent incompatibles.
 
-Une convergence rend visible qu’au moins une version officielle est devenue fausse ou incomplète.
+Une convergence rend la version officielle insuffisante.
 
-Marie et Player doivent découvrir quelle vérité leur couple peut supporter.
-
-La crise reçoit une résolution provisoire.
-
-Le réseau reste vivant, transformé et prêt à entrer dans un nouvel arc.
+Marie et Player doivent alors découvrir quelle vérité leur couple peut encore supporter.
