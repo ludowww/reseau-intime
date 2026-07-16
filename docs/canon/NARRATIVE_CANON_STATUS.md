@@ -1,8 +1,10 @@
 # Narrative Canon Status — Current
 
-> **Current phase: full-season detailed planning complete**
+> **Current phase: full-season planning complete / dialogue production contract complete**
 
-The Bible Narrative now covers the complete first season from J01 to J21.
+The Bible Narrative covers J01–J21.
+
+The operational voice contract is now documented.
 
 Runtime remains limited to J01–J06.
 
@@ -15,6 +17,7 @@ North Star
 → Player experience
 → Fantasies
 → Full character canon
+→ Cross-character voice distinction
 → Routes
 → Erotic evolution
 → Acts
@@ -24,57 +27,152 @@ North Star
 → Consequences
 → 21-day calendar
 → Detailed plans J01–J21
+→ Operational messaging voice bible
 → Dialogues
 → Runtime
 ```
 
 ---
 
-## 2. Detailed-plan documents
+## 2. Current voice authority
+
+Primary sources:
 
 ```text
-docs/canon/bible/12_PLANS_SCENES_AUDIT_RUNTIME_J01_J08.md
-docs/canon/bible/12B_PLANS_SCENES_J09_J12.md
-docs/canon/bible/12C_PLANS_SCENES_J13_J16.md
-docs/canon/bible/12D_PLANS_SCENES_J17_J21.md
-docs/canon/bible/12E_AUDIT_GLOBAL_COHERENCE_J01_J21.md
+docs/canon/characters/*_CANON_FULL.md
+docs/canon/CHARACTER_VOICE_DISTINCTION_CANON.md
+docs/canon/bible/13_BIBLE_VOIX_MESSAGERIE_ET_TESTS_DISTINCTION.md
 ```
 
-Status:
+The full canon defines who the person is.
+
+The distinction canon governs lexical ownership and cross-character leakage.
+
+Document `13` governs operational execution in text messaging:
+
+- message length ;
+- burst shape ;
+- syntax ;
+- punctuation ;
+- capitalization ;
+- emojis ;
+- error and correction behavior ;
+- humor ;
+- defense ;
+- public/private variation ;
+- stress and desire transformation ;
+- forbidden leakage ;
+- blind recognition tests.
+
+---
+
+## 3. Voice audit verdict
+
+Before document `13`:
 
 ```text
-J01–J21 detailed architecture: COMPLETE
-global coherence audit: COMPLETE
-dialogue production: NOT COMPLETE
-runtime J07–J21: NOT IMPLEMENTED
-visual assets: NOT PROVIDED
+psychological voice identity: STRONG
+long-form production contract: INCOMPLETE
+```
+
+After document `13`:
+
+```text
+principal-character operational voice contract: COMPLETE
+supporting-character minimum voice contract: COMPLETE
+scene-by-scene dialogue validation: REQUIRED
+```
+
+The cast must remain recognizable without relying on:
+
+- names ;
+- professions ;
+- catchphrases ;
+- repeated emojis ;
+- audio performance.
+
+---
+
+## 4. Character voice summary
+
+### Marie
+
+Movement, shared life, practical humor, concrete action, rapid shift from warmth to seriousness.
+
+### Sandra
+
+Restrained private warmth, controlled representation, soft minimization, rare `haha`, protective silence.
+
+### Mathilde
+
+Fast fragments, correction, bad faith, occasional legal seasoning, visible embarrassment.
+
+### Pauline
+
+Short controlled bursts, public/private split, dry timing, closure followed by a revealing return.
+
+### Raphaëlle
+
+Calm spacing, one exact observation and question, precise invitation or limit, ordinary after-role responsibility.
+
+### Nico
+
+Short oral directness, room and desire made concrete, jokes that stop when the friendship becomes real.
+
+### Player
+
+Short, dry, observant, imperfect, often correcting a weak first answer with one more honest line.
+
+---
+
+## 5. Mandatory voice tests
+
+Every important dialogue must pass:
+
+```text
+name-removal test
+substitution test
+message-silhouette test
+ordinary-message test
+stress-continuity test
+public/private test
+anti-punchline test
+professional-leakage test
+Player-presence test
+text-only test
+```
+
+Recommended blind test target:
+
+```text
+at least 9 of 12 lines correctly attributable
+by two readers familiar with the Bible
 ```
 
 ---
 
-## 3. Runtime scope
+## 6. Runtime voice audit J01–J06
 
-The active runtime loads:
+### Strong foundations
 
-```text
-J01
-J02
-J03
-J04
-J05
-J06
-```
+- Marie J01 and J05 ;
+- Mathilde J02 and J06 ;
+- Raphaëlle work entry ;
+- Pauline public image control ;
+- Player short-choice structure.
 
-Therefore:
+### Required reconciliation
 
-```text
-J01–J06 playable, subject to reconciliation
-J07–J21 documented only
-```
+- Sandra J01 must move from blur-poetry toward selected representation and image control ;
+- J03–J04 chronology must be reconciled ;
+- Nico needs later quiet and vulnerable modes, not only provocation ;
+- Raphaëlle needs ordinary and imperfect messages between exact formulations ;
+- Mathilde legal vocabulary must remain seasoning ;
+- Pauline and Raphaëlle precision must remain distinct.
 
 ---
 
-## 4. Text-only product rule
+## 7. Text-only product rule
 
 Current source:
 
@@ -82,130 +180,30 @@ Current source:
 docs/canon/TEXT_ONLY_MESSAGING_CANON.md
 ```
 
-The game contains:
+The game contains no playable audio scenes, calls, voice notes, or voiced dialogue choices.
+
+Voice distinction must therefore exist entirely through writing, pacing, context, and message architecture.
+
+---
+
+## 8. Detailed-plan status
 
 ```text
-no playable audio scenes
-no voice calls
-no voice notes
-no audio messages
-no voiced dialogue choices
-no audio sexual scenes
+J01–J21 detailed architecture: COMPLETE
+global coherence audit: COMPLETE
+operational voice bible: COMPLETE
+dialogue production: NOT COMPLETE
+runtime J07–J21: NOT IMPLEMENTED
+visual assets: NOT PROVIDED
 ```
 
-All interactive dialogue is delivered through text messaging.
-
-Physical events may occur off-phone, but their result returns through text, images, time, and state.
-
-The text-only canon supersedes older assumptions that a future call or audio scene could be produced.
-
 ---
 
-## 5. Full season structure
+## 9. Runtime scope
 
 ```text
-J01–J04  opening
-J05–J08  private lines and first superposition
-J09–J12  parallel lives and convergence
-J13–J16  consequence and collision
-J17–J21  resolution and final image
-```
-
-### Key anchors
-
-- J09 Marie social visibility ;
-- J10 one external line becomes real ;
-- J11 intention, withdrawal, or eligible adult passage ;
-- J12 La Verrière / L'Annexe convergence ;
-- J13 highest-priority aftermath ;
-- J14 existing trace seen in the wrong context ;
-- J15 incompatible commitments ;
-- J16 consequence-only day ;
-- J17 Mathilde end-of-stay and couple definition ;
-- J18 Sandra resolution ;
-- J19 Pauline / Raphaëlle resolution ;
-- J20 Nico / network resolution ;
-- J21 recontextualized final image.
-
----
-
-## 6. Character coverage
-
-### Marie
-
-Central throughout the season as partner, professional, social woman, and autonomous agent.
-
-### Sandra
-
-Selected representation, trusted audience, consequence, and final control over what remains.
-
-### Mathilde
-
-Temporary stay, domestic familiarity, possible intent, consequence, and departure.
-
-### Pauline
-
-Official life, audience difference, compartment or refusal, and final direction.
-
-### Raphaëlle
-
-Work, craft, process, chosen version, and after-role or boundary.
-
-### Nico
-
-Friendship, confidence, social gaze, alibi or rivalry, and final position.
-
-Nico remains heterosexual with no romantic or sexual route involving Player.
-
----
-
-## 7. Visual status
-
-Narrative slots are defined for every day.
-
-Ludovic will provide final images later through ComfyUI.
-
-Detailed plans do not specify:
-
-- prompts ;
-- poses ;
-- framing ;
-- outfits ;
-- environments ;
-- workflows.
-
-A day may be narratively approved while remaining visually incomplete.
-
----
-
-## 8. Consequence coverage
-
-The season contains explicit windows for:
-
-- adult aftermath ;
-- image withdrawal or deletion ;
-- promise payment ;
-- discovery ;
-- alibi collision ;
-- couple return ;
-- domestic debt ;
-- professional consequence ;
-- route resolution.
-
-No major explicit scene is structurally left without aftermath.
-
----
-
-## 9. Open production risks
-
-```text
-R1 J03–J04 chronology migration
-R2 Sandra J01 rewrite
-R3 J06 candidate-pool reconciliation
-R4 state-count minimization
-R5 text-only handling of off-phone events
-R6 missing visual assets
-R7 accidental double-route dominance
+J01–J06 playable, subject to reconciliation
+J07–J21 documented only
 ```
 
 ---
@@ -215,27 +213,24 @@ R7 accidental double-route dominance
 Correct production order:
 
 ```text
-1. reconcile J01–J04
-2. adapt J05–J06
-3. write and integrate J07–J08
-4. continue in validated slices
-5. integrate user-provided images later
+1. rewrite Sandra J01 using the voice bible
+2. reconcile J03–J04 chronology and voices
+3. adapt J05–J06
+4. write and integrate J07–J08
+5. continue in validated slices
+6. integrate user-provided images later
 ```
 
-The next immediate narrative slice is:
-
-```text
-Sandra J01 rewrite
-+ J03–J04 chronology reconciliation
-```
+Each scene must receive a voice card and pass the distinction tests before runtime integration.
 
 ---
 
 ## 11. Final status rule
 
 ```text
-The whole season is now planned.
-The next task is production, not further macro-architecture.
+The whole season is planned.
+The cast voice contract is operational.
+The next task is dialogue production by validated slice.
 Dialogue remains text-only.
 Runtime changes remain incremental.
 ```

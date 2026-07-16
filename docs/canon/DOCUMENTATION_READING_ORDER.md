@@ -1,8 +1,10 @@
 # Documentation Reading Order — Bible Narrative Current
 
-> **Phase : Bible Narrative complète / préparation de production**
+> **Phase : Bible Narrative complète / préparation de production dialoguée**
 
-La Bible couvre désormais l’architecture détaillée de J01 à J21.
+La Bible couvre l’architecture détaillée de J01 à J21.
+
+Le contrat opérationnel des voix est désormais documenté.
 
 Le runtime actif couvre J01 à J06.
 
@@ -18,14 +20,24 @@ docs/canon/bible/01_EXPERIENCE_JOUEUR.md
 docs/canon/bible/02_FANTASMES_CENTRAUX.md
 ```
 
-## Personnages
+## Personnages et voix
 
 ```text
 docs/canon/characters/CHARACTER_CANON_INDEX.md
 docs/canon/characters/*_CANON_FULL.md
 docs/canon/CHARACTER_VOICE_DISTINCTION_CANON.md
+docs/canon/bible/13_BIBLE_VOIX_MESSAGERIE_ET_TESTS_DISTINCTION.md
 docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
 cartes de réconciliation concernées
+```
+
+Ordre d’autorité :
+
+```text
+identité du personnage
+→ propriété lexicale et distinction
+→ exécution opérationnelle en messagerie
+→ dialogue précis
 ```
 
 ## Architecture
@@ -88,7 +100,9 @@ Lire ensuite seulement :
 
 ```text
 plans détaillés validés
-→ dialogues textuels
+→ carte de voix de la scène
+→ dialogue textuel
+→ tests de distinction
 → états minimaux
 → intégration runtime par tranche
 → images fournies par Ludovic via ComfyUI
@@ -100,7 +114,56 @@ Les images ne doivent pas être conçues dans les documents de dialogues.
 
 ---
 
-# 3. Statut J01–J21
+# 3. Contrat de voix avant écriture
+
+Avant chaque scène dialoguée, définir :
+
+```text
+principal_speaker
+voice_state
+public_or_private
+message_burst_shape
+humor_mode
+defense_mode
+punctuation_mode
+emoji_budget
+forbidden_leakage
+voice_change_at_choice
+voice_change_at_exit
+```
+
+Ces champs servent à l’écriture.
+
+Ils ne doivent pas devenir automatiquement des données runtime.
+
+---
+
+# 4. Tests de voix obligatoires
+
+Une scène doit passer :
+
+- test sans nom ;
+- test de substitution ;
+- test de silhouette ;
+- test banal ;
+- test sous stress ;
+- test public / privé ;
+- test anti-punchline ;
+- test de contamination professionnelle ;
+- test Player ;
+- test text-only.
+
+Règle :
+
+```text
+le lecteur doit reconnaître la personne
+avant le nom
+sans dépendre d’une catchphrase
+```
+
+---
+
+# 5. Statut J01–J21
 
 | Journées | Plans | Dialogues finaux | Runtime |
 |---|---|---|---|
@@ -112,7 +175,7 @@ Les images ne doivent pas être conçues dans les documents de dialogues.
 
 ---
 
-# 4. Règle text-only
+# 6. Règle text-only
 
 Tout dialogue jouable est :
 
@@ -135,7 +198,7 @@ Les événements hors téléphone restent possibles mais ne sont pas joués comm
 
 ---
 
-# 5. Visuels
+# 7. Visuels
 
 Les documents de plans indiquent :
 
@@ -157,7 +220,7 @@ Aucun plan détaillé ne fixe :
 
 ---
 
-# 6. Prochaine tranche
+# 8. Prochaine tranche
 
 ```text
 J01–J04 réconciliation narrative et runtime
@@ -165,19 +228,20 @@ J01–J04 réconciliation narrative et runtime
 
 Ordre recommandé :
 
-1. Sandra J01 ;
+1. Sandra J01 avec le document `13` ;
 2. déplacement du vernissage J03 ;
 3. nouvelle origine Pauline/Nico J04 ;
-4. tests ;
+4. tests de voix et de runtime ;
 5. J05–J08.
 
 ---
 
-# 7. Règle finale
+# 9. Règle finale
 
 ```text
 La saison est planifiée avant d’être dialoguée.
-Les dialogues sont textuels avant d’être intégrés.
+La voix est cadrée avant que la scène soit écrite.
+Le dialogue est testé avant d’être intégré.
 Les images sont fournies avant d’être finalisées.
 Le runtime évolue par petites tranches validées.
 ```
