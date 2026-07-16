@@ -300,11 +300,15 @@ Un acte concret doit établir :
 
 ## 6.1 Transformation centrale
 
-> **Une ancienne proximité revient jusqu’à ce que l’amitié ne suffise plus à expliquer ce qu’ils se donnent.**
+> **Une ancienne proximité revient jusqu’à ce que Sandra choisisse non seulement de parler à Player, mais de lui confier une représentation d’elle qu’elle a validée et dont elle attend qu’il respecte l’usage.**
 
 Sandra n’ouvre pas sa route parce que Player insiste.
 
-Elle choisit de montrer parce qu’elle se sent vue précisément et que la distance lui donne le courage d’oser.
+Elle choisit de montrer parce qu’elle se sent vue précisément, parce qu’elle contrôle ce qu’elle représente et parce que la distance lui donne le courage d’oser.
+
+La route ne consiste pas à lui faire abandonner le contrôle.
+
+Elle consiste à lui permettre d’en partager progressivement une partie.
 
 ## 6.2 État initial
 
@@ -316,6 +320,17 @@ Sandra vit avec Jeff depuis environ trois ans et est avec lui depuis environ six
 
 Le couple Sandra–Jeff est réel, stable en apparence et émotionnellement sous-alimenté, sans être un enfer ni une justification automatique.
 
+Sandra peut être gênée en public lorsqu’une autre personne décide de son image.
+
+Elle reste parfaitement capable de produire des selfies assurés lorsqu’elle choisit :
+
+- l’angle ;
+- la lumière ;
+- la pose ;
+- la sélection ;
+- l’audience ;
+- la permanence.
+
 ## 6.3 Monde propre
 
 La route doit utiliser :
@@ -324,22 +339,31 @@ La route doit utiliser :
 - les tickets fantômes ;
 - les horaires décalés ;
 - la fatigue de fin de poste ;
+- les selfies conservés ou supprimés ;
 - les photos imprimées ;
 - les cadres, livres, scrapbooking et objets ;
 - le chocolat chaud et le plaid ;
 - la maison des Tilleuls ;
 - Jeff ;
+- les rituels photographiques familiers ;
 - les traces d’une histoire antérieure à Marie.
+
+Les objets et environnements soutiennent la route.
+
+Ils ne doivent pas remplacer durablement Sandra comme sujet visuel.
 
 ## 6.4 Désirs et besoins
 
 Sandra veut :
 
-- être vue sans être envahie ;
+- être vue sans être capturée par une version qu’elle ne reconnaît pas ;
 - retrouver une complicité qui lui manque ;
 - choisir elle-même la distance ;
+- choisir la représentation ;
 - pouvoir être plus audacieuse sans perdre sa sécurité émotionnelle ;
-- savoir si Player protège encore la relation après avoir obtenu davantage.
+- savoir si Player protège encore la relation après avoir obtenu davantage ;
+- distinguer le droit de regarder du droit de garder ;
+- pouvoir vivre une intimité qui ne crée pas forcément de fichier.
 
 ## 6.5 Résistances
 
@@ -351,7 +375,12 @@ Sandra résiste lorsque Player :
 - exige une photo ;
 - minimise le risque ;
 - réclame immédiatement une nouvelle définition ;
-- se montre tendre uniquement lorsqu’il veut quelque chose.
+- se montre tendre uniquement lorsqu’il veut quelque chose ;
+- prend une photo sans lui laisser contrôler le résultat ;
+- répond `tu es bien sur toutes` au lieu de respecter son besoin de sélectionner ;
+- suppose qu’une image envoyée peut être sauvegardée ;
+- transfère ou recontextualise une image ;
+- traite sa gêne publique comme un manque de confiance enfantin.
 
 ## 6.6 Familles de transformation
 
@@ -363,6 +392,14 @@ La relation retrouve de la chaleur sans devenir explicitement amoureuse ou sexue
 
 Player devient celui à qui Sandra montre les traces qu’elle minimise devant les autres.
 
+### Représentation de confiance
+
+Sandra choisit une image, explique ou laisse comprendre pourquoi elle l’a retenue et observe si Player respecte l’audience et la permanence.
+
+### Contrôle partagé
+
+Sandra laisse Player participer à la sélection ou à la prise d’une photographie sous sa direction.
+
 ### Désir retenu
 
 L’attirance est reconnue mais volontairement contenue.
@@ -373,42 +410,99 @@ Une continuité émotionnelle et éventuellement physique se construit à côté
 
 ### Transgression suivie de recul
 
-Sandra traverse une limite puis cherche à préserver ce qui reste de leur ancienne relation.
+Sandra traverse une limite puis cherche à préserver ce qui reste de leur ancienne relation et de son contrôle.
 
 ### Retrait protecteur
 
 Elle ferme la ligne lorsque Player pousse, minimise ou utilise sa fragilité.
 
-## 6.7 Progression par traces
+### Rupture par violation d’audience
 
-1. ancienne photo imparfaite ;
-2. détail de SentryCore ou fin de poste ;
-3. photo imprimée, livre, table ou fenêtre ;
-4. trace pensée pour Player mais encore défendable ;
-5. image choisie et audience privée ;
-6. rencontre ou secret ;
-7. éventuelle intimité physique ;
-8. trace conservée, supprimée ou déplacée après la bascule.
+Une image est sauvegardée, montrée ou transférée contre la règle. La blessure porte à la fois sur l’image et sur la personne à qui Sandra avait confié son usage.
 
-## 6.8 Bascule de saison
+## 6.7 Progression visuelle et relationnelle
+
+1. image historique ou sociale que Sandra a revue et accepté de conserver ;
+2. selfie créé pour elle-même sans obligation d’envoi ;
+3. image sélectionnée pour Player ;
+4. image consciemment provocante avec audience privée ;
+5. autorisation séparée de regarder, garder ou prendre une photographie ;
+6. partage partiel du contrôle de représentation ;
+7. exposition adulte choisie ;
+8. intimité sexuelle pouvant rester sans caméra ;
+9. image ou souvenir conservé, supprimé, retiré ou recontextualisé après la bascule.
+
+La progression n’est pas :
+
+```text
+flou
+→ netteté
+→ nudité
+```
+
+Elle est :
+
+```text
+représentation tolérée
+→ représentation contrôlée
+→ représentation confiée
+→ contrôle partagé
+```
+
+## 6.8 Différenciation obligatoire
+
+### Sandra / Pauline
+
+```text
+Sandra = une représentation qu’elle reconnaît + une audience de confiance
+Pauline = plusieurs versions + plusieurs audiences + compartiment
+```
+
+### Sandra / Mathilde
+
+```text
+Sandra = ce que Player peut garder d’elle
+Mathilde = l’effet qu’elle choisit de produire sur lui
+```
+
+### Sandra / Raphaëlle
+
+```text
+Sandra = représentation continue avec son sentiment d’elle-même
+Raphaëlle = version, rôle et transformation construits
+```
+
+### Sandra / Marie
+
+```text
+Sandra = sécurité privée et contrôle d’image
+Marie = visibilité sociale et mouvement
+```
+
+## 6.9 Bascule de saison
 
 La bascule existe lorsque Sandra doit choisir :
 
 - quelle place Player occupe ;
 - ce qu’elle continue à montrer ;
 - ce qu’elle retire ;
+- ce qu’il peut conserver ;
+- si elle accepte qu’il participe à la représentation ;
 - si l’amitié peut survivre au désir ;
 - si le secret devient une relation ou une limite.
 
-## 6.9 États possibles de fin de saison
+## 6.10 États possibles de fin de saison
 
 - amitié renouvelée ;
 - confidence privilégiée ;
+- confiance visuelle limitée ;
 - désir reconnu ;
 - relation émotionnelle parallèle ;
 - relation sexuelle secrète ;
+- contrôle partagé sur une image précise ;
+- intimité vécue sans trace numérique ;
 - recul protecteur ;
-- rupture de confiance ;
+- rupture de confiance après violation d’audience ;
 - promesse liée à la maison des Tilleuls ou à une future rencontre.
 
 ---
@@ -974,6 +1068,8 @@ Une participation sexuelle directe n’est pas nécessaire en saison 1.
 
 La proximité émotionnelle avec Sandra peut révéler le manque du couple, accélérer une reconquête ou produire une double vie.
 
+La confiance visuelle accordée par Sandra ne doit pas être utilisée comme copie de la visibilité sociale de Marie.
+
 ## Marie et Mathilde
 
 La route Mathilde ne peut jamais rester sans conséquence sur Marie, car elle utilise son foyer et sa confiance familiale.
@@ -989,6 +1085,14 @@ Raphaëlle peut exiger une confirmation directe d’un cadre négocié. Sur une 
 ## Marie et Nico
 
 Marie peut aimer être vue par Nico, le choisir, le refuser ou utiliser son regard pour réveiller Player. Son désir ne peut jamais être négocié par Player à sa place.
+
+## Sandra et Pauline
+
+Leurs routes peuvent se croiser autour d’une image, mais leurs moteurs restent différents : Sandra protège une représentation confiée ; Pauline protège un compartiment entre plusieurs audiences.
+
+## Sandra et Nico
+
+Toute recontextualisation d’une image Sandra par Nico constitue un risque élevé. L’accord de Player ne suffit jamais à autoriser le partage.
 
 ## Mathilde et Nico
 
@@ -1051,6 +1155,8 @@ Toute voie sombre crée au moins une dette durable :
 - dépendance ;
 - future révélation.
 
+La violation d’une image Sandra doit être traitée comme une attaque contre le contrôle confié, pas seulement comme une erreur de transfert.
+
 ---
 
 # 14. Conditions de fin de saison
@@ -1058,7 +1164,7 @@ Toute voie sombre crée au moins une dette durable :
 À la fin de la saison :
 
 - Marie et Player possèdent une nouvelle définition ;
-- Sandra a choisi une place ;
+- Sandra a choisi une place et un niveau de confiance sur sa représentation ;
 - Mathilde a obtenu une règle, une distance ou un secret durable ;
 - Pauline possède un compartiment identifiable ou l’a refusé consciemment ;
 - Raphaëlle a ouvert un accès créatif ou un cadre futur concret ;
@@ -1083,6 +1189,8 @@ Avant de valider une route ou un état :
 8. La même route fonctionnerait-elle avec un autre personnage en changeant seulement les noms ?
 9. La progression sexuelle est-elle une conséquence plutôt qu’un substitut ?
 10. L’après-coup est-il prévu ?
+11. Pour Sandra, l’auteur, la sélection, l’audience et la permanence de l’image sont-ils distingués ?
+12. Pour Sandra, la scène reste-t-elle différente des moteurs Pauline, Mathilde et Raphaëlle ?
 
 ---
 
@@ -1090,7 +1198,7 @@ Avant de valider une route ou un état :
 
 Marie transforme l’habitude en choix actif.
 
-Sandra transforme une trace en confidence, puis éventuellement en relation parallèle.
+Sandra transforme une représentation qu’elle a validée en accès confié, puis éventuellement en contrôle partagé avec une personne qui a prouvé qu’elle respecterait l’image et la femme.
 
 Mathilde transforme une sensualité ordinaire en intention dans le foyer de Marie.
 

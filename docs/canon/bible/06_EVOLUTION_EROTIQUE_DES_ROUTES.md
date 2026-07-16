@@ -27,7 +27,7 @@ Ce document ne contient :
 - aucun quota de scènes explicites ;
 - aucune progression identique imposée à tous les personnages.
 
-Les profils individuels doivent être lus avec les fichiers `*_CANON_FULL.md`.
+Les profils individuels doivent être lus avec les fichiers `*_CANON_FULL.md` et avec `09_PROGRESSION_VISUELLE_ET_PHOTOGRAPHIQUE.md`.
 
 ---
 
@@ -137,7 +137,7 @@ Il mesure ce qui est montré :
 
 Les deux axes ne doivent jamais être confondus.
 
-Une photo habillée choisie pour Sandra peut représenter une évolution plus forte qu’une nudité accidentelle de Mathilde.
+Une photo habillée choisie et contrôlée par Sandra pour Player peut représenter une évolution plus forte qu’une nudité accidentelle de Mathilde.
 
 Une photographie de préparation de Raphaëlle peut être plus intime qu’une image finale publique en costume.
 
@@ -310,7 +310,7 @@ Ignorance, jalousie, excitation, vie de couple ou proximité ne sont jamais des 
 
 # 7. Progression des photos
 
-Les photos progressent par intention et audience, pas seulement par exposition corporelle.
+Les photos progressent par intention, contrôle et audience, pas seulement par exposition corporelle.
 
 ## Image ordinaire
 
@@ -360,6 +360,13 @@ Toute image importante possède :
 - une intention ;
 - une règle de conservation ;
 - une conséquence si elle quitte son cadre.
+
+Pour Sandra, ajouter :
+
+- qui a contrôlé la caméra ;
+- si elle a revu l’image ;
+- qui a choisi le cadre final ;
+- si Player peut seulement regarder ou également conserver.
 
 ---
 
@@ -441,41 +448,75 @@ Marie veut savoir si Player reste actif :
 
 ## Noyau
 
-> **Faire naître le désir dans une relation précieuse parce qu’elle existait avant l’ambiguïté.**
+> **Faire naître le désir dans une relation précieuse en transformant une représentation contrôlée en accès confié, puis éventuellement en contrôle partagé.**
+
+Sandra ne devient pas plus intime lorsqu’elle perd la main sur son image.
+
+Elle devient plus intime lorsqu’elle choisit :
+
+- l’image ;
+- l’audience ;
+- la permanence ;
+- et la part de contrôle qu’elle accepte de partager.
 
 ## Ancrages
 
-- photographie imparfaite ;
+- photographie de déjeuner précisément sourcée ;
 - SentryCore ;
 - horaires décalés ;
+- selfies gardés ou supprimés ;
 - photo imprimée ;
 - cadre déplacé ;
 - livre ;
 - plaid et chocolat chaud ;
 - Jeff ;
 - maison des Tilleuls ;
-- distance entre les rencontres.
+- gêne publique devant une caméra tenue par autrui ;
+- aisance plus grande lorsqu’elle produit elle-même son image.
 
 ## Progression spécifique
 
-1. une trace ancienne revient ;
-2. Player remarque un détail ;
-3. Sandra minimise ;
-4. une continuité privée s’installe ;
-5. le manque devient visible ;
-6. Sandra choisit une image ou une rencontre ;
-7. le désir est reconnu sans supprimer Jeff ni les limites ;
-8. une éventuelle intimité est suivie d’un recul, d’une tendresse ou d’une nouvelle règle ;
-9. une trace est conservée, déplacée, imprimée ou supprimée.
+1. une image historique ou sociale existe avec son accord ;
+2. Sandra l’a revue et choisie de la conserver ;
+3. une continuité privée s’installe ;
+4. elle produit des images pour elle-même sans les envoyer ;
+5. Player devient l’audience d’une image sélectionnée ;
+6. le désir est reconnu sans supprimer Jeff ni les limites ;
+7. voir, conserver et transférer sont distingués ;
+8. Sandra peut partager une partie du contrôle de prise de vue ou de sélection ;
+9. une éventuelle intimité est suivie d’un recul, d’une tendresse ou d’une nouvelle règle ;
+10. une image ou un souvenir est conservé, retiré, imprimé, supprimé ou rendu inaccessible.
 
 ## Modes possibles
 
 - intimité émotionnelle avant le corps ;
 - retenue érotique ;
-- audace privée fondée sur la confiance ;
+- selfie privé contrôlé ;
+- image choisie pour Player ;
+- confiance visuelle partagée ;
 - relation parallèle tendre ;
+- sexualité sans caméra ;
 - transgression suivie d’un recul ;
 - renoncement protecteur.
+
+## Public et privé
+
+Sandra peut manquer d’assurance dans :
+
+- une photo de groupe ;
+- une photographie prise sans temps de préparation ;
+- une publication qu’elle ne contrôle pas ;
+- un appareil tenu par une personne à qui elle ne fait pas totalement confiance.
+
+Elle peut être visuellement assurée dans :
+
+- un selfie ;
+- un miroir ;
+- une série de tentatives qu’elle peut supprimer ;
+- une photographie prise par Player sous sa direction ;
+- une image privée dont elle connaît l’audience.
+
+Le contraste est central.
 
 ## Conditions
 
@@ -483,11 +524,14 @@ Marie veut savoir si Player reste actif :
 - absence de pression ;
 - respect de l’amitié ;
 - situation non fondée uniquement sur une faiblesse momentanée ;
+- origine de caméra crédible ;
+- droit de sélection ;
+- sauvegarde distincte du visionnage ;
 - après-coup possible.
 
 ## Après-coup
 
-Sandra cherche à savoir si la relation existe encore après l’intimité.
+Sandra cherche à savoir si la relation existe encore après l’intimité et si son image reste dans le cadre promis.
 
 Elle peut :
 
@@ -495,14 +539,42 @@ Elle peut :
 - se réfugier dans une activité manuelle ;
 - demander du silence ;
 - déplacer une photo ;
+- retirer l’accès ;
+- vérifier la suppression ;
 - retarder une réponse ;
-- vérifier que Player ne réclame pas immédiatement davantage.
+- demander à Player ce qu’il a compris de l’image ;
+- vérifier qu’il ne réclame pas immédiatement davantage.
+
+## Différenciation
+
+### Sandra / Pauline
+
+```text
+Sandra = représentation reconnue + audience de confiance
+Pauline = versions multiples + compartiment entre audiences
+```
+
+### Sandra / Mathilde
+
+```text
+Sandra = ce que Player peut voir et garder d’elle
+Mathilde = l’effet qu’elle choisit de produire dans le foyer
+```
+
+### Sandra / Raphaëlle
+
+```text
+Sandra = continuité avec soi
+Raphaëlle = transformation et rôle
+```
 
 ## Plafond saison 1
 
 Une relation sexuelle complète est possible sur une route avancée, tardive et exigeante.
 
-Elle n’est ni obligatoire ni automatiquement optimale.
+Elle peut être représentée comme image de scène sans qu’une photo diégétique existe.
+
+Une photographie sexuelle diégétique exige une décision explicite de Sandra.
 
 ## Voies sombres
 
@@ -510,8 +582,13 @@ Elle n’est ni obligatoire ni automatiquement optimale.
 - utilisation de Jeff comme excuse ;
 - pression par la nostalgie ;
 - photo exigée ;
+- image prise sans contrôle ;
+- sauvegarde supposée ;
+- transfert ou recadrage ;
 - culpabilisation après un recul ;
-- confusion entre confidence et permission.
+- confusion entre confidence et permission ;
+- trivialisation de sa gêne publique ;
+- utilisation d’un compliment pour éviter sa demande de sélection.
 
 ---
 
@@ -763,7 +840,7 @@ Raphaëlle peut :
 - envoyer une image avant d’avoir perfectionné la légende ;
 - révéler son compte plus tôt ;
 - demander à Player de rester après l’heure définie ;
-- transformer « une photo » en « une de plus » ;
+- transformer `une photo` en `une de plus` ;
 - retirer un masque tout en continuant le rôle ;
 - demander s’il la veut sans le costume ;
 - regretter une règle qu’elle a elle-même formulée.
@@ -894,6 +971,8 @@ Une image légitime est recadrée, transférée ou sexualisée hors de son audie
 
 Cette voie peut être chargée, mais elle est une trahison et non une récompense propre.
 
+Pour une image Sandra, la violation porte aussi sur le contrôle de représentation qu’elle avait confié.
+
 ### Capture prohibée
 
 Caméra cachée, personne endormie, vol d’image ou contrainte ne constituent jamais le fonctionnement normal de Nico.
@@ -901,7 +980,7 @@ Caméra cachée, personne endormie, vol d’image ou contrainte ne constituent j
 ## Conditions
 
 - la femme choisit elle-même ;
-- Player ne peut pas la « donner » ;
+- Player ne peut pas la `donner` ;
 - Nico peut refuser ;
 - l’attirance de Nico est nommée ;
 - la jalousie de Player ne vaut pas permission ;
@@ -936,6 +1015,8 @@ Une participation sexuelle directe n’est pas nécessaire.
 
 La relation Sandra peut révéler ce qui manque au couple ou devenir une réalité concurrente.
 
+Le contraste visuel doit rester clair : Marie gagne de l’énergie par la visibilité sociale ; Sandra gagne de la sécurité par la représentation choisie.
+
 ## Marie et Mathilde
 
 Toute progression Mathilde affecte la sécurité du foyer et la confiance familiale.
@@ -951,6 +1032,14 @@ Un cadre informé exige la voix de Marie. Un secret clair reste une infidélité
 ## Marie et Nico
 
 Marie peut apprécier, refuser ou choisir le regard de Nico. Player n’est jamais son porte-parole de consentement.
+
+## Sandra et Pauline
+
+Sandra sélectionne une représentation qu’elle reconnaît. Pauline organise plusieurs versions. Une même mécanique de crop privé ne doit pas devenir leur langage commun par défaut.
+
+## Sandra et Nico
+
+Toute image Sandra partagée avec Nico exige son accord direct. L’accord de Player est insuffisant, même si Player était autorisé à conserver l’image.
 
 ## Mathilde et Nico
 
@@ -996,6 +1085,8 @@ Bascule conjugale et sexuelle complète possible.
 
 Bascule émotionnelle et sexuelle complète possible sur une route avancée.
 
+La photographie sexuelle diégétique n’est pas obligatoire. Une intimité sans fichier peut être plus cohérente.
+
 ## Mathilde
 
 Bascule domestique et sexuelle complète possible avec conséquences majeures.
@@ -1032,6 +1123,8 @@ Avant de valider une progression :
 12. Pourquoi la même scène ne fonctionnerait-elle pas avec un autre personnage ?
 13. La scène reste-t-elle utile à la route si son explicitation est réduite ?
 14. La représentation explicite est-elle une conséquence ou un substitut ?
+15. Pour Sandra, qui contrôle la prise, la sélection, la sauvegarde et le transfert ?
+16. Pour Sandra, l’image reste-t-elle distincte des moteurs Pauline, Mathilde et Raphaëlle ?
 
 ---
 
@@ -1039,7 +1132,7 @@ Avant de valider une progression :
 
 Marie redevient désirable parce qu’elle redevient activement visible et choisie.
 
-Sandra devient plus audacieuse parce qu’elle contrôle les traces et la distance.
+Sandra devient plus audacieuse parce qu’elle contrôle sa représentation, choisit son audience et peut progressivement confier une part de ce contrôle à Player.
 
 Mathilde transforme une sensualité déjà présente en intention reconnue dans le foyer de Marie.
 

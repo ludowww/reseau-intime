@@ -28,6 +28,12 @@ Global adult canon:
 docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
 ```
 
+Sandra visual compatibility map:
+
+```text
+docs/canon/characters/SANDRA_VISUAL_REPRESENTATION_RECONCILIATION.md
+```
+
 Bible Narrative:
 
 ```text
@@ -41,6 +47,7 @@ docs/canon/bible/05_ROUTES_MACRO_SAISON_1.md
 docs/canon/bible/06_EVOLUTION_EROTIQUE_DES_ROUTES.md
 docs/canon/bible/07_BIBLIOTHEQUE_DE_SEQUENCES_SAISON_1.md
 docs/canon/bible/08_REGLES_DES_SCENES_MODULAIRES.md
+docs/canon/bible/09_PROGRESSION_VISUELLE_ET_PHOTOGRAPHIQUE.md
 ```
 
 ---
@@ -52,7 +59,7 @@ Full character canon
 = identity, past, voice, body logic, desires, wounds, limits, concrete anchors
 
 Bible Narrative
-= promise, acts, routes, transformations, sequence functions, modular-scene rules
+= promise, acts, routes, transformations, sequences, scene rules, visual progression
 
 NSFW canon
 = adult escalation, image consent, explicit route rules, dark-route distinctions
@@ -80,18 +87,51 @@ Required direction:
 - black dress and visibility;
 - reconquest or reconfiguration through concrete action.
 
+Visual identity:
+
+```text
+social visibility
+→ active couple reconquest
+→ private continuation
+```
+
 ### Sandra
 
-Sandra is a woman of concrete traces.
+Sandra is a woman of chosen concrete traces and controlled self-representation.
+
+She does not dislike photographs as a category.
+
+She dislikes losing control over a version of herself that another person may select, keep, show, or reinterpret.
 
 Required direction:
 
 - SentryCore and horaires décalés;
+- selfies she may keep, delete, or select;
 - photos printed, moved, kept, or removed;
 - books, frames, scrapbook, hot chocolate, plaid;
 - Jeff as a real partner;
 - Maison des Tilleuls;
-- chosen distance and chosen showing.
+- public discomfort when another person controls the camera;
+- greater private confidence when she chooses the angle, pose, image, and audience;
+- viewing, saving, and forwarding treated as separate permissions.
+
+Visual identity:
+
+```text
+representation tolerated or kept
+→ self-image controlled for herself
+→ selected image entrusted to Player
+→ shared control over what the image becomes
+```
+
+Do not merge Sandra with:
+
+```text
+Pauline = multiple versions for multiple audiences
+Mathilde = deliberately chosen effect in the domestic taboo
+Raphaëlle = constructed version, role, and transformation
+Marie = social visibility and movement
+```
 
 ### Mathilde
 
@@ -105,6 +145,14 @@ Required direction:
 - naturally fitted clothing that is not consent;
 - image control, speed, bad faith;
 - Marie's family trust as the weight of the route.
+
+Visual identity:
+
+```text
+ordinary sensuality
+→ gaze noticed
+→ effect deliberately chosen
+```
 
 ### Pauline
 
@@ -121,6 +169,14 @@ Required direction:
 - public/private versions;
 - compartment, proof, and collision.
 
+Visual identity:
+
+```text
+public version
+→ alternate version
+→ double address and compartment
+```
+
 ### Raphaëlle
 
 Raphaëlle is Player's UX/accessibility peer and the character of chosen transformation.
@@ -133,6 +189,16 @@ Required direction:
 - chosen version and audience;
 - explicit frame;
 - role ending and responsibility remaining.
+
+Visual identity:
+
+```text
+office version
+→ process
+→ transformation
+→ role
+→ after the role
+```
 
 She must not be reduced to a colleague, a safe outside breath, or a cosplay gimmick.
 
@@ -168,7 +234,14 @@ Before authoring a scene, read:
 1. the relevant `*_CANON_FULL.md` files;
 2. `NSFW_CHARACTER_ROUTE_CANON.md` when adult or image rules are involved;
 3. the relevant Bible route and sequence;
-4. `08_REGLES_DES_SCENES_MODULAIRES.md`.
+4. `08_REGLES_DES_SCENES_MODULAIRES.md`;
+5. `09_PROGRESSION_VISUELLE_ET_PHOTOGRAPHIQUE.md` when a visual exists or is promised.
+
+For Sandra, also read:
+
+```text
+SANDRA_VISUAL_REPRESENTATION_RECONCILIATION.md
+```
 
 Every major scene must:
 
@@ -177,13 +250,34 @@ Every major scene must:
 - define one primary function and relationship;
 - preserve character agency;
 - define eligibility, mutation, exit state, and consequence;
-- respect time and communication realism.
-
-The historical `MODULAR_SCENE_AUTHORING_CONTRACT.md` remains a compatible technical reference. The Bible `08` prevails on narrative direction.
+- respect time and communication realism;
+- define camera origin, audience, saving, and forwarding when a photo exists.
 
 ---
 
-## 5. First-season depth
+## 5. Visual-first rule
+
+Every complete playable day must offer at least three distinct female-focused visual contents.
+
+The minimum does not require:
+
+- three different women;
+- nudity;
+- a route reward on every branch.
+
+The visual contract must preserve character differentiation.
+
+A day can remain visually satisfying after a refusal through:
+
+- public version;
+- autonomy image;
+- consequence image;
+- result without private access;
+- scene memory.
+
+---
+
+## 6. First-season depth
 
 ### Complete bascule possible
 
@@ -206,17 +300,17 @@ Nico must reach at least a meaningful position as guardrail, rival, confidant, a
 
 ---
 
-## 6. Runtime separation
+## 7. Runtime separation
 
 The current runtime may still expose only ordinary access.
 
-Do not confuse that ceiling with full canon or approved scene design.
+Do not confuse that ceiling with full canon or approved scene and visual design.
 
-Document `08` does not automatically validate or implement old scene cards, source packs, JSON conversations, or playable content.
+Documents `08` and `09` do not automatically validate or implement old scene cards, source packs, visual metadata, assets, JSON conversations, or playable content.
 
 ---
 
-## 7. Existing-scene audit
+## 8. Existing-scene and visual audit
 
 Old scenes must later be classified:
 
@@ -227,11 +321,20 @@ REWRITE
 ARCHIVE
 ```
 
-A technically functional scene can remain narratively obsolete.
+Old visual contents must later be classified:
+
+```text
+COMPATIBLE
+METADATA_REWORK
+REGENERATE
+ARCHIVE
+```
+
+A technically functional scene or image can remain narratively obsolete.
 
 ---
 
-## 8. Supporting characters
+## 9. Supporting characters
 
 - Jeff remains Sandra's real partner and consequence.
 - Bastien remains Pauline's real partner and is never a consent proxy.
@@ -241,21 +344,21 @@ A technically functional scene can remain narratively obsolete.
 
 ---
 
-## 9. Maintenance rule
+## 10. Maintenance rule
 
-When a character or scene decision changes:
+When a character, scene, or visual decision changes:
 
 - update the full canon if identity changes;
-- update the deprecation map;
+- update or create the deprecation / reconciliation map;
 - update the NSFW canon if adult rules change;
 - update the character index and this doorway;
-- update Bible routes, sequences, or scene rules when affected;
+- update Bible routes, sequences, scene rules, or visual rules when affected;
 - update reading order and narrative status;
-- audit affected scenes;
+- audit affected scenes and images;
 - validate before runtime planning.
 
 ```text
 The full character files define people.
-The Bible defines how those people transform and how scenes adapt.
+The Bible defines how those people transform and how scenes and images adapt.
 The runtime defines what is playable now.
 ```
