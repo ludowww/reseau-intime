@@ -6,8 +6,8 @@
   "display_label": "Samedi — Une heure",
   "day_start_time": "09:35",
   "title": "Samedi — Une heure",
-  "description": "Marie ouvre le week-end par une heure concrète. Player la rejoint, propose une alternative bornée ou la laisse profiter sans lui.",
-  "design_goal": "Tester une scène de couple positive et trois postures observables avant la première opportunité externe, sans faux chat pendant le temps partagé.",
+  "description": "Marie ouvre le week-end par une heure concrète. Player la rejoint, propose une alternative bornée ou la laisse profiter sans lui. Cette journée peut rester entièrement centrée sur le couple : aucune continuité extérieure n'est exigée ni offerte en compensation.",
+  "design_goal": "Tester une scène de couple positive et trois postures observables avant toute continuité extérieure éventuelle, avec zéro progression externe comme résultat parfaitement valide.",
   "window_range": "W9",
   "default_order": [
     "chapter_05_marie_shared_hour"
@@ -123,6 +123,7 @@
     "Marie a réellement utilisé son samedi, avec ou sans Player.",
     "L'heure partagée ou l'alternative est payée lorsqu'elle a été promise dans cette tranche.",
     "Un retour concret reste programmé si Player a laissé Marie agir seule.",
+    "Aucune relation extérieure n'est forcée pour compenser un refus, un retard ou une journée centrée sur Marie.",
     "Aucun mode de couple, secret dur ou cadre adulte ne change."
   ],
   "proof_content_files": [],
@@ -130,6 +131,7 @@
     "Friday completion unlocks Saturday.",
     "M2 has exactly three choices and no numeric effect.",
     "The shared-hour result remains off phone.",
+    "Zero external progression is valid on Saturday.",
     "Saturday completion unlocks Sunday."
   ]
 }

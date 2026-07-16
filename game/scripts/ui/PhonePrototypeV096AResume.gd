@@ -4,6 +4,13 @@ const CONTACT_PRIORITY_PENDING := 3
 const CONTACT_PRIORITY_ACTIONABLE := 2
 const CONTACT_PRIORITY_CURRENT_COMPLETE := 1
 
+const CANONICAL_FIRST_REPETITION_LEDGER_ID := "first_repetition"
+const CANONICAL_MATHILDE_SCENE_ID := "mathilde_morning_kitchen_afterglow_01"
+const CANONICAL_MATHILDE_CONVERSATION_ID := "chapter_06_mathilde_morning_afterglow"
+const CANONICAL_SUNDAY_CANDIDATE_PHASE_ID := "sunday_household_candidate"
+const CANONICAL_SUNDAY_MARIE_RETURN_PHASE_ID := "sunday_marie_return"
+const CANONICAL_MATHILDE_COOLDOWN_WINDOWS := 2
+
 func _render_contacts_view(day_value) -> void:
 	_add_label(conversation_list, "Contacts", 18)
 	var conversations := _collect_global_threads()
@@ -85,3 +92,47 @@ func _open_conversation(day_value, conversation: Dictionary) -> void:
 		_open_history_conversation(day_value, conversation)
 		return
 	super._open_conversation(day_value, conversation)
+
+# J06 canon reconciliation: Mathilde is a direct optional continuity rather than
+# a candidate-pool winner. Keep the historical scene lifecycle and Marie return
+# obligation, but never claim a charged owner or grant an automatic R2.
+func _advance_optional_phase(day_value, phase_id: String) -> void:
+	if phase_id == CANONICAL_SUNDAY_CANDIDATE_PHASE_ID:
+		var completed := TimelineState.is_episode_completed(day_value, CANONICAL_MATHILDE_CONVERSATION_ID)
+		var opened := TimelineState.is_optional_opened(day_value, CANONICAL_MATHILDE_CONVERSATION_ID)
+		if not completed and not opened:
+			GameState.set_scene_status(
+				CANONICAL_FIRST_REPETITION_LEDGER_ID,
+				CANONICAL_MATHILDE_SCENE_ID,
+				"EXPIRED"
+			)
+	await super._advance_optional_phase(day_value, phase_id)
+
+func _complete_mathilde_candidate() -> void:
+	var ledger := _ensure_first_repetition_ledger()
+	var ordinal := int(ledger.get("opportunity_window_ordinal", 0))
+	GameState.set_scene_status(
+		CANONICAL_FIRST_REPETITION_LEDGER_ID,
+		CANONICAL_MATHILDE_SCENE_ID,
+		"RESOLVED"
+	)
+	# The ledger record is retained for chronology and J07 closure only. It does
+	# not select a route or consume a player-facing ticket.
+	GameState.record_external_foreground(
+		CANONICAL_FIRST_REPETITION_LEDGER_ID,
+		CANONICAL_MATHILDE_SCENE_ID,
+		"mathilde"
+	)
+	GameState.set_scene_cooldown(
+		CANONICAL_FIRST_REPETITION_LEDGER_ID,
+		CANONICAL_MATHILDE_SCENE_ID,
+		ordinal + CANONICAL_MATHILDE_COOLDOWN_WINDOWS + 1
+	)
+	GameState.set_obligation_status(CANONICAL_FIRST_REPETITION_LEDGER_ID, "marie_return_after_external", {
+		"status": "SCHEDULED",
+		"owner": "player",
+		"expected_by": CANONICAL_SUNDAY_MARIE_RETURN_PHASE_ID,
+		"created_by": CANONICAL_MATHILDE_SCENE_ID,
+		"resolved_by": "",
+		"result": "",
+	})
