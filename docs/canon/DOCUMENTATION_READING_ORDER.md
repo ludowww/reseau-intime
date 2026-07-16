@@ -2,7 +2,7 @@
 
 > **Phase actuelle : Bible Narrative / North Star**
 >
-> La Bible Narrative est la source de vérité principale pour la promesse du jeu, l’expérience joueur, les fantasmes, la structure globale, les routes, l’évolution érotique, les actes et les séquences.
+> La Bible Narrative est la source de vérité principale pour la promesse du jeu, l’expérience joueur, les fantasmes, la structure globale, les routes, l’évolution érotique, les actes, les séquences et les règles des scènes modulaires.
 >
 > Les canons complets des personnages restent l’autorité première sur leur identité, leur voix, leur vie concrète, leurs désirs, leurs limites et leurs conséquences propres.
 >
@@ -20,7 +20,7 @@ Définir les routes macro.
 Définir l’évolution érotique.
 Définir les actes.
 Choisir les séquences concrètes.
-Adapter les scènes modulaires.
+Adapter les scènes modulaires à l’état réel de la partie.
 Écrire les dialogues et les photos.
 Découper en journées.
 Planifier le runtime en dernier.
@@ -28,7 +28,7 @@ Planifier le runtime en dernier.
 
 Les journées restent une couche de diffusion, de respiration et de rythme.
 
-Un ancien plan par journée ne peut pas contredire la Bible ou le canon complet d’un personnage.
+Un ancien plan, une ancienne carte de scène ou une implémentation existante ne peut pas contredire la Bible ou le canon complet d’un personnage.
 
 ---
 
@@ -117,9 +117,24 @@ Définit les événements concrets et mémorables de la première saison à part
 
 ## 11. Règles des scènes modulaires
 
-Futur document canonique.
+`docs/canon/bible/08_REGLES_DES_SCENES_MODULAIRES.md`
 
-Définira comment une séquence s’adapte à l’état réel de la partie sans créer une nouvelle route.
+Définit comment une séquence devient une scène compatible avec l’état réel de la partie.
+
+Le document fixe notamment :
+
+- une séquence source obligatoire ;
+- une fonction et une relation principales ;
+- au moins deux ancrages du canon complet ;
+- les conditions, exclusions, préférences et raisons de disponibilité ;
+- un noyau stable et des règles de mutation ;
+- le budget `1 foreground + 0–2 échos` ;
+- trois choix par nœud par défaut ;
+- la priorité aux conséquences ;
+- les contrats de temps, communication, images, connaissances et consentement ;
+- l’audit des anciennes scènes.
+
+Le document historique `docs/canon/MODULAR_SCENE_AUTHORING_CONTRACT.md` reste une référence technique compatible. En cas de contradiction narrative, le document `08` prévaut.
 
 ## 12. Progression visuelle et photographique
 
@@ -137,9 +152,15 @@ Définira ce qui circule entre les routes et ce qui doit être payé, révélé,
 
 Futur document canonique.
 
-Répartira les séquences, silences, respirations et photos après validation de l’architecture.
+Répartira les séquences, scènes, silences, respirations et photos après validation de l’architecture.
 
-## 15. Contrats narratifs
+## 15. Dialogues et plans de scènes
+
+Futurs documents canoniques.
+
+Ils rédigeront les cartes détaillées, dialogues et productions visuelles à partir des documents `07` et `08`.
+
+## 16. Contrats narratifs complémentaires
 
 Lire selon le besoin :
 
@@ -149,7 +170,9 @@ Lire selon le besoin :
 - `docs/canon/DIEGETIC_TIME_AND_COMMUNICATION_CANON.md` ;
 - `docs/canon/TEMPORAL_FLOW_AND_DAY_TRANSITION_CANON.md`.
 
-## 16. Runtime
+Ils fournissent des détails compatibles. Ils ne peuvent pas contredire le document `08` sur la direction des scènes.
+
+## 17. Runtime
 
 Lire les plans, rapports, index de chapitres, conversations actives, données visuelles, tests, ledgers et validations de la version concernée.
 
@@ -167,17 +190,17 @@ Il ne répond pas seul à :
 
 ```text
 North Star
--> Expérience joueur
--> Fantasmes centraux
--> Canon complet des personnages
--> Routes macro
--> Évolution érotique des routes
--> Actes
--> Séquences
--> Scènes modulaires
--> Dialogues et photos
--> Découpage en journées
--> Runtime
+→ Expérience joueur
+→ Fantasmes centraux
+→ Canon complet des personnages
+→ Routes macro
+→ Évolution érotique des routes
+→ Actes
+→ Séquences
+→ Scènes modulaires
+→ Dialogues et photos
+→ Découpage en journées
+→ Runtime
 ```
 
 Précisions :
@@ -189,9 +212,7 @@ Précisions :
 - les séquences accomplissent ces transformations par des événements concrets ;
 - les scènes adaptent les séquences à la partie ;
 - les scènes ne créent pas les routes ;
-- les journées sont construites après les séquences.
-
-La numérotation des fichiers conserve l’ordre historique de création. Elle ne remplace pas l’ordre conceptuel.
+- les journées sont construites après validation des séquences et des règles de scènes.
 
 ---
 
@@ -209,6 +230,7 @@ Autorité sur :
 - évolution érotique ;
 - actes ;
 - fonction et sélection des séquences ;
+- conception et adaptation des scènes ;
 - progression visuelle globale.
 
 ## Canon complet des personnages
@@ -241,9 +263,9 @@ Autorité sur :
 - voies sombres ;
 - après-coup explicite.
 
-## Contrats narratifs
+## Contrats narratifs complémentaires
 
-Autorité sur les règles d’écriture compatibles : choix, modularité, temps, communication et adaptation.
+Autorité sur les détails compatibles de choix, temps, communication et adaptation technique.
 
 ## Runtime
 
@@ -259,22 +281,34 @@ Contexte historique ou intention à requalifier, sans autorité en cas de contra
 
 > **Une fonction peut être partagée. Une séquence doit déjà être spécifique. Une scène doit rendre cette spécificité concrète.**
 
-Une séquence doit utiliser au moins deux ancrages du canon complet :
+Toute scène importante doit :
 
-- métier ;
-- lieu ;
-- objet ;
-- proche ;
-- pratique ;
-- blessure ;
-- contradiction ;
-- moteur érotique.
-
-Une scène ne devient pas spécifique parce que le nom du personnage a été remplacé.
+- pointer vers une séquence de `S01` à `S35` ou déclarer un candidat à la bibliothèque ;
+- employer au moins deux ancrages du canon complet ;
+- définir une relation principale ;
+- préserver l’agence du personnage ;
+- prévoir un état de sortie, un suivi, une expiration et une mutation.
 
 ---
 
-# 6. Décision Nico
+# 6. Audit des anciennes scènes
+
+Les anciennes cartes, source packs, conversations et scènes jouables ne deviennent pas automatiquement conformes.
+
+Elles doivent être classées :
+
+```text
+COMPATIBLE
+ADAPTABLE
+REWRITE
+ARCHIVE
+```
+
+L’audit narratif précède toute réutilisation ou planification runtime.
+
+---
+
+# 7. Décision Nico
 
 Le canon actuel fixe :
 
@@ -289,36 +323,6 @@ Conséquences :
 - aucune route de contact sexuel entre eux ;
 - aucun changement d’orientation déduit d’un trio ou d’une scène plus explicite ;
 - complicité masculine, rivalité, regard partagé, alibi et tiers invité restent possibles autour de femmes adultes consentantes.
-
-Lire :
-
-```text
-docs/canon/characters/NICO_CANON_FULL.md
-docs/canon/characters/NICO_CANON_DEPRECATION_MAP.md
-docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
-```
-
----
-
-# 7. Règle sur les anciens documents
-
-Les anciens source packs, plans de vagues, cartes de scènes, matrices de routes et plans par journée restent utiles pour :
-
-- comprendre le runtime existant ;
-- retrouver l’origine d’une décision ;
-- préserver un détail compatible ;
-- identifier une scène recyclable dans une séquence.
-
-Ils ne constituent plus l’architecture principale.
-
-Un ancien document peut être classé :
-
-- Canon ;
-- Runtime ;
-- Archive ;
-- À réécrire.
-
-Un document non classé ne peut pas prévaloir sur la Bible ou le canon complet.
 
 ---
 
@@ -338,7 +342,7 @@ Utiliser le canon complet pour savoir qui vit la transformation.
 Utiliser le NSFW canon pour savoir comment l’adulte peut progresser.
 Utiliser la grammaire pour identifier la fonction.
 Utiliser la bibliothèque pour choisir l’événement concret.
-Utiliser les contrats pour adapter la scène.
+Utiliser le document 08 pour concevoir et adapter la scène.
 Utiliser les journées pour distribuer le rythme.
 Utiliser le runtime pour décrire ce qui est jouable.
 

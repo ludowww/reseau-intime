@@ -9,23 +9,23 @@
 
 ```text
 North Star
--> Player experience
--> Central fantasies
--> Full character canon
--> Season macro routes
--> Erotic evolution of routes
--> Acts
--> Sequence library
--> Modular scenes
--> Dialogues and photos
--> Day distribution
--> Runtime
+→ Player experience
+→ Central fantasies
+→ Full character canon
+→ Season macro routes
+→ Erotic evolution of routes
+→ Acts
+→ Sequence library
+→ Modular scene rules
+→ Dialogues and photos
+→ Day distribution
+→ Runtime
 ```
 
 Clarification:
 
 - the full character canon defines identity, voice, concrete life, desire, wound, and limits;
-- the Bible defines season movement and transformation;
+- the Bible defines season movement, sequences, and modular-scene direction;
 - the NSFW canon defines adult escalation and consent / image rules;
 - runtime defines current access only.
 
@@ -43,6 +43,7 @@ docs/canon/bible/04_TRAME_PRINCIPALE_ET_ACTES_SAISON_1.md
 docs/canon/bible/05_ROUTES_MACRO_SAISON_1.md
 docs/canon/bible/06_EVOLUTION_EROTIQUE_DES_ROUTES.md
 docs/canon/bible/07_BIBLIOTHEQUE_DE_SEQUENCES_SAISON_1.md
+docs/canon/bible/08_REGLES_DES_SCENES_MODULAIRES.md
 ```
 
 The Bible now covers:
@@ -54,13 +55,36 @@ The Bible now covers:
 - first-season acts;
 - macro routes;
 - erotic, sexual, and pornographic progression;
-- a character-specific season sequence library.
+- a character-specific season sequence library;
+- rules for turning sequences into modular scenes.
 
 ---
 
-## 3. Character-canon reconciliation state
+## 3. Modular-scene authority
 
-The Bible and character canon are reconciled around the following mandatory embodiments.
+`08_REGLES_DES_SCENES_MODULAIRES.md` is now the primary narrative authority for scene conception and adaptation.
+
+It locks:
+
+- a source sequence for every major scene;
+- one primary function and relationship;
+- at least two full-canon anchors;
+- explicit eligibility, exclusions, preferences, and availability reasons;
+- a stable kernel and mutation rules;
+- limited state reads;
+- `1 foreground + 0–2 echoes` by default;
+- three choices per node by default;
+- one decision axis per node;
+- consequences and aftermath before new opportunities;
+- explicit time and communication modes;
+- image, knowledge, and consent contracts;
+- audit classification for older scenes.
+
+The historical `MODULAR_SCENE_AUTHORING_CONTRACT.md` remains a useful technical reference. The Bible `08` prevails on narrative direction when the two differ.
+
+---
+
+## 4. Character-canon reconciliation state
 
 ### Marie
 
@@ -112,7 +136,7 @@ The Bible and character canon are reconciled around the following mandatory embo
 
 ---
 
-## 4. First-season narrative depth
+## 5. First-season narrative depth
 
 ### Complete transformation possible
 
@@ -141,11 +165,11 @@ Nico must choose a meaningful friendship position: guardrail, rival, confidant, 
 
 ---
 
-## 5. Current runtime separation
+## 6. Current runtime separation
 
 The executable runtime remains the existing locked smartphone prototype and its already integrated narrative content.
 
-The Bible reconciliation is documentation-only.
+The Bible and scene-rule work is documentation-only.
 
 It does not make the following automatically playable:
 
@@ -155,7 +179,8 @@ It does not make the following automatically playable:
 - Pauline's private compartment;
 - Raphaëlle's creative-account, workshop, costume, or roleplay access;
 - Nico's shared-gaze, image-pact, rival, alibi, or invited-third routes;
-- the complete first season sequence library.
+- the complete first-season sequence library;
+- scene variants described by document `08`.
 
 ```text
 Documented is not implemented.
@@ -164,41 +189,66 @@ Current runtime access is not the full character ceiling.
 
 ---
 
-## 6. Current narrative decisions
+## 7. Existing-scene audit state
+
+The following are not automatically reconciled by document `08`:
+
+- old scene cards;
+- old source packs;
+- current conversation JSON;
+- playable scenes;
+- historical day plans.
+
+They must later be classified:
+
+```text
+COMPATIBLE
+ADAPTABLE
+REWRITE
+ARCHIVE
+```
+
+A technically working scene may still be narratively obsolete.
+
+---
+
+## 8. Current narrative decisions
 
 - the engine is considered acquired unless a narrative necessity is demonstrated;
 - the first release is a complete but extensible first season;
 - scenes serve routes and do not create them;
-- sequences are designed before days;
+- sequences are designed before scenes and days;
+- every major scene points to a sequence or declares a new sequence candidate;
+- every scene uses at least two character-canon anchors;
 - photos are traces of transformation rather than decorative rewards;
 - erotic and pornographic content remains character-specific;
+- consequences and aftermath outrank new opportunities when due;
 - dark routes may exist but must create instability and consequence;
 - no character's consent is granted by a partner, friend, costume, image, jealousy, or route score;
 - Nico is heterosexual and cannot acquire a Player route through scene escalation.
 
 ---
 
-## 7. Next documentation layers
+## 9. Next documentation layers
 
-After the sequence library, the recommended order is:
+After the modular-scene rules, the recommended order is:
 
 ```text
-08 — Modular scene rules
 09 — Visual and photographic progression
 10 — Consequence, debt, secret, and obligation map
 11 — Distribution into days
-12 — Detailed scene plans
+12 — Detailed scene plans and scene-card audit
 13 — Dialogues and photo production
 14 — Runtime integration plans when the narrative layer is validated
 ```
 
-No detailed day rewrite should precede validation of the sequence library and scene rules.
+No detailed day rewrite should precede validation of the visual and consequence layers.
 
 ---
 
-## 8. Maintenance rule
+## 10. Maintenance rule
 
-When a future decision changes a character or route:
+When a future decision changes a character, route, sequence, or scene rule:
 
 - update the full character canon if identity changes;
 - update the deprecation map;
@@ -206,17 +256,19 @@ When a future decision changes a character or route:
 - update the character index and current doorway;
 - update Bible documents affected by the change;
 - update this status and the reading order;
+- audit affected scene cards;
 - only then plan runtime integration.
 
 ---
 
-## 9. Final current rule
+## 11. Final current rule
 
 ```text
 Use the Bible to know what the game must make the player live.
 Use full character canon to know who is living it.
 Use the sequence library to know which concrete events can transform them.
+Use document 08 to know how those events become modular scenes.
 Use runtime documentation to know what is playable now.
 
-No abstractly correct route may erase the concrete person.
+No abstractly correct scene may erase the concrete person.
 ```

@@ -2,7 +2,7 @@
 
 > **Phase actuelle : Bible Narrative / North Star**  
 > The full principal-character files are the first source for identity, voice, body logic, erotic engine, consent, and route consequences.  
-> The Bible defines how those people transform during the season.  
+> The Bible defines how those people transform and how approved sequences become modular scenes.  
 > Runtime activation and documented future ceilings must always be read separately.
 
 ## 1. Core rule
@@ -11,12 +11,13 @@
 Write principal characters from their full canon files.
 Write adult escalation from NSFW_CHARACTER_ROUTE_CANON.md.
 Write season movement from the Bible Narrative.
+Write scene adaptation from 08_REGLES_DES_SCENES_MODULAIRES.md.
 Write current playable state from runtime documentation.
 Do not confuse documented access with current save state.
 Do not make every character deliver the same images, choices, voice, or fantasy.
 ```
 
-A route, act, or sequence is incomplete until it has been confronted with the relevant full character canon.
+A route, sequence, or scene is incomplete until it has been confronted with the relevant full character canon.
 
 ---
 
@@ -38,7 +39,7 @@ Supporting characters remain governed by `SUPPORTING_CHARACTER_CANON_POLICY.md` 
 
 ---
 
-## 3. Official reading order for character writing
+## 3. Official reading order for character and scene writing
 
 1. relevant `*_CANON_FULL.md`;
 2. `CHARACTER_VOICE_DISTINCTION_CANON.md`;
@@ -49,16 +50,39 @@ Supporting characters remain governed by `SUPPORTING_CHARACTER_CANON_POLICY.md` 
    - `05_ROUTES_MACRO_SAISON_1.md`;
    - `06_EVOLUTION_EROTIQUE_DES_ROUTES.md`;
    - `07_BIBLIOTHEQUE_DE_SEQUENCES_SAISON_1.md`;
-6. scene-authoring and temporal contracts;
+   - `08_REGLES_DES_SCENES_MODULAIRES.md`;
+6. choice and temporal contracts when relevant;
 7. runtime documentation for what is currently playable.
 
 The Bible does not replace a character's identity.
 
 The character canon does not replace season architecture.
 
+The runtime does not validate an old scene merely because it already exists.
+
 ---
 
-## 4. Character-specific season anchors
+## 4. Scene-authoring contract
+
+Every major scene must:
+
+- identify a source sequence from `S01` to `S35` or declare a new sequence candidate;
+- define one primary dramatic function;
+- define one primary relationship;
+- use at least two concrete anchors from the full canon;
+- state why the character is available now;
+- list hard requirements and exclusions;
+- read only the state that changes meaning;
+- preserve the character's independent agency;
+- define real Player messages or actions;
+- use three choices per node by default;
+- define trace, knowledge, consent, exit, expiry, mutation, and consequence where relevant.
+
+The historical `MODULAR_SCENE_AUTHORING_CONTRACT.md` remains useful for compatible technical detail. The Bible `08` prevails on narrative direction.
+
+---
+
+## 5. Character-specific season anchors
 
 ### Marie
 
@@ -74,16 +98,6 @@ Required recurring material:
 - playlist and movement;
 - active choice rather than passive jealousy.
 
-Adult direction:
-
-```text
-familiar life
--> social visibility
--> gaze consciously renewed
--> active reconquest or new couple frame
--> ordinary life after the erotic scene
-```
-
 ### Sandra
 
 Required recurring material:
@@ -95,27 +109,15 @@ Required recurring material:
 - frames, books, scrapbooking;
 - hot chocolate and plaid;
 - Jeff;
-- maison des Tilleuls;
+- Maison des Tilleuls;
 - distance and chosen showing.
-
-Adult direction:
-
-```text
-concrete trace
--> Player reads something
--> Sandra minimizes
--> private continuity
--> chosen image or meeting
--> desire, limit, or secret
--> trace kept, moved, or removed
-```
 
 ### Mathilde
 
 Required recurring material:
 
 - water damage;
-- temporary ten-to-fifteen-day stay;
+- temporary stay;
 - spare room;
 - suitcase and garment bag;
 - legal-protection work;
@@ -123,17 +125,6 @@ Required recurring material:
 - image control;
 - family history and Marie's trust;
 - end of stay.
-
-Adult direction:
-
-```text
-ordinary sensuality
--> gaze noticed
--> bad-faith denial
--> effect chosen
--> domestic intention
--> rule, secret, or rupture
-```
 
 ### Pauline
 
@@ -148,18 +139,6 @@ Required recurring material:
 - alternate crop;
 - proof, compartment, and collision.
 
-Adult direction:
-
-```text
-publicly reliable version
--> private difference
--> test of discretion
--> alternate version
--> reciprocal proof
--> compartment
--> collision with official life
-```
-
 ### Raphaëlle
 
 Required recurring material:
@@ -173,20 +152,6 @@ Required recurring material:
 - home workshop and dress form;
 - masks, bodices, gloves, boots, and chosen roles;
 - aftermath after the version ends.
-
-Adult direction:
-
-```text
-office version
--> craft detail
--> creative-account or process access
--> unfinished preparation
--> chosen audience
--> role and image rules
--> adult frame
--> role ends
--> responsibility remains
-```
 
 ### Nico
 
@@ -204,40 +169,21 @@ Required recurring material:
 - alibis, descriptions, images, and consent distinctions;
 - quiet private Nico after the room empties.
 
-Adult direction:
-
-```text
-ordinary friendship
--> desire for a woman named
--> Player's gaze reflected
--> request, description, image, or alibi
--> authorized pact or breach
--> woman acts through her own agency
--> friendship absorbs the consequence
-```
-
 There is no romantic or sexual route between Nico and Player.
 
 ---
 
-## 5. Current runtime separation
+## 6. Current runtime separation
 
 The runtime currently describes what is playable.
 
-The Bible and full canons describe what the complete first season and future arcs must be able to support.
+The Bible and full canons describe what the complete first season and future arcs must support.
 
-Do not infer current access from future canon.
-
-Examples:
-
-- Raphaëlle's cosplay and roleplay canon can be authoritative while the current runtime still exposes only ordinary work access;
-- Pauline's double-life engine can be authoritative while no private crop is currently unlocked;
-- Nico's attraction and image-pact routes can be authoritative while runtime remains ordinary friendship;
-- Marie, Sandra, and Mathilde may have adult ceilings that are not yet playable.
+Document `08` describes approved scene design rules, not current runtime implementation.
 
 ---
 
-## 6. Adult and image canon
+## 7. Adult and image canon
 
 Primary source:
 
@@ -257,15 +203,9 @@ Use it for:
 - NTR, cuckold, sharing, trio, quatuor, and group routes;
 - consequences and dark-route distinctions.
 
-```text
-Believability exists to make adult escalation stronger.
-It must not flatten the game into permanent caution.
-Pornographic does not mean generic.
-```
-
 ---
 
-## 7. Voice and differentiation reminders
+## 8. Voice and differentiation reminders
 
 ```text
 Marie      = movement, practical plans, visible life, reconquest
@@ -277,31 +217,36 @@ Nico       = rooms, bodies, direct desire, women, circulation of gaze, quiet aft
 Player     = short, dry, observant, desirous, responsible
 ```
 
-Do not repeat:
-
-```text
-character explains attraction
--> Player respects / jokes / withdraws
--> route stays safe
-```
-
-Choices must create different access, image, fantasy, obligation, and risk outcomes.
+Do not repeat the same scene pattern with different names.
 
 ---
 
-## 8. Supporting characters
+## 9. Existing-scene audit
+
+Old cards, source packs, JSON conversations, and playable scenes must later be classified:
+
+```text
+COMPATIBLE
+ADAPTABLE
+REWRITE
+ARCHIVE
+```
+
+A technically functional scene can remain narratively obsolete.
+
+---
+
+## 10. Supporting characters
 
 ### Jeff
 
 - Sandra's real partner;
-- mason;
 - not a monster used to justify her route;
 - remains part of emotional and discovery consequences.
 
 ### Bastien
 
 - Pauline's real current partner;
-- practical and ordinary;
 - present in legitimate social life;
 - not stupid because he trusts her;
 - ignorance is not cuckold consent.
@@ -309,8 +254,7 @@ Choices must create different access, image, fantasy, obligation, and risk outco
 ### Élodie
 
 - La Verrière work witness;
-- not a route;
-- makes Marie's professional world real.
+- not a route.
 
 ### Maud
 
@@ -318,35 +262,13 @@ Choices must create different access, image, fantasy, obligation, and risk outco
 - provides image origin and process;
 - never grants consent for Raphaëlle.
 
-### Other anchors
-
-Inès, Chloé, Léa, Amandine, Nora, Julie, Malik, Sophie, and others provide life texture and witnesses without omniscience.
+Other anchors provide texture and witnesses without omniscience.
 
 ---
 
-## 9. Deprecation maps
+## 11. Maintenance rule
 
-```text
-docs/canon/characters/MATHILDE_CANON_DEPRECATION_MAP.md
-docs/canon/characters/PAULINE_CANON_DEPRECATION_MAP.md
-docs/canon/characters/NICO_CANON_DEPRECATION_MAP.md
-docs/canon/characters/RAPHAELLE_CANON_DEPRECATION_MAP.md
-```
-
-Do not restore:
-
-- Mathilde's grey-sweater or canapé-selfie identity;
-- Pauline as single, innocent, or instant private-crop dispenser;
-- Nico as fake friend, automatic villain, magical archive, or bisexual route with Player;
-- Raphaëlle as only a calm colleague, therapist, or cosplay gimmick;
-- fixed old day ordering;
-- generic character interchangeability.
-
----
-
-## 10. Maintenance rule
-
-When identity or adult engine changes, update together:
+When identity, adult engine, sequence, or scene rules change, update together:
 
 - full character canon;
 - deprecation map;
@@ -355,9 +277,10 @@ When identity or adult engine changes, update together:
 - `CHARACTERS_CANON_CURRENT.md`;
 - documentation reading order;
 - narrative canon status;
-- Bible routes and sequences when affected.
+- Bible routes, sequences, or scene rules when affected;
+- affected scene audits.
 
 ```text
 A correction is incomplete
-while character canon and season architecture describe different people.
+while character canon and scene architecture describe different people.
 ```
