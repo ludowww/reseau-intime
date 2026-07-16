@@ -9,7 +9,7 @@
   "calendar_label": "Dimanche",
   "time_band": "MORNING",
   "communication_mode": "AFTERGLOW_REMOTE",
-  "foreground_role": "external_candidate",
+  "foreground_role": "optional_continuity",
   "physical_context": "Player et Mathilde ont brièvement partagé la cuisine pendant que Marie était sortie pour une raison réelle. Mathilde portait sa tenue domestique habituelle. Player a regardé un peu trop longtemps et Mathilde l'a remarqué. Elle écrit seulement après être partie déposer du linge à la laverie ; ils ne sont plus dans la même pièce.",
   "thread": {
     "id": "thread_mathilde_private",
@@ -25,7 +25,7 @@
     {
       "id": "segment_sunday_mathilde_opening_reply",
       "pattern": "guided_reply_pacing",
-      "function": "Laisser Player demander manuellement ce que Mathilde a remarqué avant MT1.",
+      "function": "Laisser Player demander manuellement ce que Mathilde a remarqué avant le choix principal.",
       "messages": [
         {
           "id": "msg_sun_mathilde_afterglow_001",
@@ -66,7 +66,7 @@
     {
       "id": "segment_sunday_mathilde_gaze_choice",
       "pattern": "three_posture_choice",
-      "function": "MT1 — décider comment Player assume le regard sans décider à la place de Mathilde ce qu'il signifie.",
+      "function": "Décider comment Player assume le regard sans décider à la place de Mathilde ce qu'il signifie.",
       "messages": [],
       "choices": [
         {
@@ -159,5 +159,5 @@
   "routes_nourished": [
     "mathilde"
   ],
-  "debug_notes": "V0.89 MT1. Le moment physique est terminé avant le chat. Chaque réplique Player passe par un bouton manuel. Mathilde nomme le regard, rappelle que sa tenue est ordinaire et conserve son agence ; le gate runtime décide seul d'un éventuel R2."
+  "debug_notes": "J06 Mathilde : le moment physique est terminé avant le chat. La scène peut être vue, expirée ou différée ; elle reconnaît une attention sans attribuer de ticket, propriétaire de route, accès chargé ou R2 automatique."
 }

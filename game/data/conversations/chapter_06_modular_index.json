@@ -3,11 +3,11 @@
   "chapter": 6,
   "day": 6,
   "calendar_label": "Dimanche",
-  "display_label": "Dimanche — Ce qu'on a vu",
+  "display_label": "Dimanche — La première attention répétée",
   "day_start_time": "10:25",
-  "title": "Dimanche — Ce qu'on a vu",
-  "description": "Une attention domestique peut devenir lisible avec Mathilde, ou rester silencieusement différée. La journée revient obligatoirement vers Marie.",
-  "design_goal": "Prouver un candidat déterministe ou aucun, une expiration sans ticket consommé, un plafond Mathilde R1/R2 et un retour Marie obligatoire.",
+  "title": "Dimanche — La première attention répétée",
+  "description": "Mathilde peut nommer un regard aperçu dans le foyer, être ignorée ou être différée. La scène ne désigne aucune propriétaire de route et la journée revient obligatoirement vers Marie.",
+  "design_goal": "Tester une continuité Mathilde optionnelle directe, son expiration naturelle et un retour Marie obligatoire, sans candidate pool, ticket, propriétaire ou accès R2 automatique.",
   "window_range": "W10-W11",
   "default_order": [
     "chapter_06_mathilde_morning_afterglow",
@@ -21,7 +21,7 @@
     {
       "moment_label": "matin",
       "time_label": "10:25",
-      "transition_text": "Dimanche matin — Une attention du foyer peut être reconnue ou différée.",
+      "transition_text": "Dimanche matin — Mathilde peut nommer ce qu'elle a remarqué, ou laisser le moment expirer.",
       "conversation_ids": [
         "chapter_06_mathilde_morning_afterglow"
       ]
@@ -40,7 +40,7 @@
     "initial_phase_id": "sunday_household_candidate",
     "day_start_card": {
       "eyebrow": "DIMANCHE — MATIN",
-      "title": "Ce qu'on a vu",
+      "title": "La première attention répétée",
       "subtitle": "10:25",
       "duration": 1.2,
       "min_time": 0.35
@@ -61,35 +61,12 @@
         "optional_conversation_ids": [
           "chapter_06_mathilde_morning_afterglow"
         ],
-        "candidate_pool": {
-          "id": "first_repeat_weekend_household_a",
-          "wave_id": "first_repetition",
-          "external_ticket_limit": 2,
-          "ordered_candidates": [
-            {
-              "scene_id": "mathilde_morning_kitchen_afterglow_01",
-              "conversation_id": "chapter_06_mathilde_morning_afterglow",
-              "character_id": "mathilde",
-              "requires_all_flags": [
-                "opening_band_complete",
-                "household_rhythm_confirmed",
-                "mathilde_stay_active"
-              ],
-              "excludes_any_flags": [
-                "mathilde_route_closed",
-                "mathilde_boundary_broken"
-              ],
-              "compatible_days": [
-                6
-              ],
-              "compatible_phase_ids": [
-                "sunday_household_candidate"
-              ],
-              "cooldown_windows": 2
-            }
-          ],
-          "fallback": "silent_defer"
-        }
+        "advance_label": "Continuer le dimanche",
+        "advance_label_completed": "Continuer le dimanche",
+        "advance_label_blocked": "Terminer Mathilde avant de continuer",
+        "skip_sets_flags": [
+          "mathilde_sunday_attention_deferred"
+        ]
       },
       {
         "id": "sunday_marie_return",
@@ -106,8 +83,8 @@
         "authored_beat": {
           "id": "sunday_first_repetition_slice_close",
           "time_label": "18:50",
-          "title": "Le week-end continue.",
-          "text": "La première répétition est enregistrée sans fermer toute la vague.",
+          "title": "Le dimanche se termine.",
+          "text": "Une attention a été reconnue, respectée ou laissée passer. Aucune route n'est désignée par cette seule journée.",
           "sets_flags": [
             "first_repetition_slice_01_complete"
           ]
@@ -147,21 +124,20 @@
     "marie",
     "mathilde"
   ],
-  "route_stage_ceiling": "MATHILDE_R2_MAX",
+  "route_stage_ceiling": "MATHILDE_R1_ATTENTION_ONLY",
   "end_of_day_player_knowledge": [
-    "Mathilde a été vue, expirée ou différée silencieusement.",
-    "Un foreground Mathilde consomme un ticket seulement après achèvement.",
-    "Mathilde reste R1 ou devient l'unique propriétaire R2 selon le gate.",
+    "Mathilde a été vue, expirée ou différée sans être transformée en propriétaire de route.",
+    "Son regard peut être reconnu, plaisanté ou remis à distance, sans accès R2 automatique.",
     "La journée revient toujours vers Marie.",
-    "Le couple reste en HABITUAL_WARMTH.",
+    "Le couple reste en HABITUAL_WARMTH ou porte une obligation concrète vers lundi.",
     "La vague complète n'est pas terminée."
   ],
   "proof_content_files": [],
   "debug_expected_outcomes": [
-    "Sunday offers Mathilde or silently defers her.",
-    "Ignoring Mathilde expires the exact scene without consuming a foreground ticket.",
+    "Sunday offers Mathilde directly as one optional continuity.",
+    "Ignoring Mathilde expires the scene without selecting another route.",
+    "No candidate pool, ticket, charged owner or automatic R2 is used on Sunday.",
     "Marie return is required after seen, expired or deferred Mathilde.",
-    "Sunday closes only the first runtime slice.",
-    "Monday unlocks after Sunday completion."
+    "Sunday preserves the legacy slice-complete flag required by Monday closure."
   ]
 }

@@ -1,10 +1,10 @@
 # Narrative Canon Status — Current
 
-> **Current phase: full-season planning complete / dialogue production contract complete**
+> **Current phase: full-season planning complete / opening and first-weekend runtime reconciliation in progress**
 
 The Bible Narrative covers J01–J21.
 
-The operational voice contract is now documented.
+The operational voice contract is documented.
 
 Runtime remains limited to J01–J06.
 
@@ -151,24 +151,25 @@ by two readers familiar with the Bible
 
 ---
 
-## 6. Runtime voice audit J01–J06
+## 6. Runtime reconciliation J01–J06
 
-### Strong foundations
+### Completed
 
-- Marie J01 and J05 ;
-- Mathilde J02 and J06 ;
-- Raphaëlle work entry ;
-- Pauline public image control ;
-- Player short-choice structure.
+- Sandra J01 now centers selected representation and image control instead of blur-poetry ;
+- J03 no longer contains the vernissage, first superposition, or exclusive topology ;
+- J03 keeps Raphaëlle work, a short Sandra echo, and an ordinary Marie return ;
+- J04 gives Pauline and Nico autonomous social origins ;
+- J05 remains a strong Marie-only day where zero external progression is valid ;
+- J06 keeps Mathilde as a direct optional continuity and removes candidate-pool ownership and automatic R2 ;
+- Marie remains the mandatory J06 return.
 
-### Required reconciliation
+### Continuing vigilance
 
-- Sandra J01 must move from blur-poetry toward selected representation and image control ;
-- J03–J04 chronology must be reconciled ;
 - Nico needs later quiet and vulnerable modes, not only provocation ;
 - Raphaëlle needs ordinary and imperfect messages between exact formulations ;
 - Mathilde legal vocabulary must remain seasoning ;
-- Pauline and Raphaëlle precision must remain distinct.
+- Pauline and Raphaëlle precision must remain distinct ;
+- full repository and Godot validation remains required for each runtime slice.
 
 ---
 
@@ -192,7 +193,7 @@ Voice distinction must therefore exist entirely through writing, pacing, context
 J01–J21 detailed architecture: COMPLETE
 global coherence audit: COMPLETE
 operational voice bible: COMPLETE
-dialogue production: NOT COMPLETE
+runtime dialogue reconciliation J01–J06: COMPLETE IN CURRENT SLICE
 runtime J07–J21: NOT IMPLEMENTED
 visual assets: NOT PROVIDED
 ```
@@ -202,23 +203,24 @@ visual assets: NOT PROVIDED
 ## 9. Runtime scope
 
 ```text
-J01–J06 playable, subject to reconciliation
+J01–J06 playable and reconciled through the first weekend
 J07–J21 documented only
 ```
+
+Visual-first completion remains pending because final images will be provided later by Ludovic through ComfyUI.
 
 ---
 
 ## 10. Next work
 
-Correct production order:
+Correct production order after the J05–J06 slice:
 
 ```text
-1. rewrite Sandra J01 using the voice bible
-2. reconcile J03–J04 chronology and voices
-3. adapt J05–J06
-4. write and integrate J07–J08
-5. continue in validated slices
-6. integrate user-provided images later
+1. validate and merge J05–J06 reconciliation
+2. write and integrate J07–J08
+3. validate the first-superposition handoff
+4. continue in validated slices
+5. integrate user-provided images later
 ```
 
 Each scene must receive a voice card and pass the distinction tests before runtime integration.
@@ -230,7 +232,8 @@ Each scene must receive a voice card and pass the distinction tests before runti
 ```text
 The whole season is planned.
 The cast voice contract is operational.
-The next task is dialogue production by validated slice.
+J01–J06 form the reconciled playable opening and first weekend.
+The next production slice is J07–J08.
 Dialogue remains text-only.
 Runtime changes remain incremental.
 ```
