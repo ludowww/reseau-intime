@@ -2,7 +2,7 @@
 
 > **Phase actuelle : Bible Narrative / North Star**
 >
-> La Bible Narrative est la source de vérité principale pour la promesse, les routes, les actes, les séquences, les scènes, les visuels et les conséquences de la première saison.
+> La Bible Narrative est la source de vérité principale pour la promesse, les routes, les actes, les séquences, les scènes, les visuels, les conséquences et le calendrier de la première saison.
 >
 > Les canons complets des personnages restent l’autorité première sur leur identité, leur voix, leur vie concrète, leurs désirs, leurs limites et leurs conséquences propres.
 >
@@ -24,14 +24,12 @@ North Star
 → Scènes modulaires
 → Progression visuelle
 → Conséquences, dettes, secrets et obligations
+→ Distribution en journées
 → Dialogues et production des images
-→ Journées
 → Runtime
 ```
 
-Les journées restent une couche de distribution et de rythme.
-
-Une ancienne scène, image, preuve ou variable ne peut pas contredire la Bible ou le canon complet d’un personnage.
+Une ancienne scène, image, preuve, journée ou variable ne peut pas contredire la Bible ou le canon complet d’un personnage.
 
 ---
 
@@ -95,62 +93,39 @@ docs/canon/characters/SANDRA_VISUAL_REPRESENTATION_RECONCILIATION.md
 
 `docs/canon/bible/08_REGLES_DES_SCENES_MODULAIRES.md`
 
-Chaque scène importante possède :
-
-- une séquence source ;
-- une fonction principale ;
-- des conditions ;
-- un état de sortie ;
-- une mutation ;
-- une conséquence.
-
 ## 12. Progression visuelle et photographique
 
 `docs/canon/bible/09_PROGRESSION_VISUELLE_ET_PHOTOGRAPHIQUE.md`
-
-Définit :
-
-- photos diégétiques ;
-- images de scène ;
-- niveaux V0–V5 ;
-- audiences ;
-- sauvegarde ;
-- transfert ;
-- galerie ;
-- minimum visuel ;
-- progressions propres aux personnages.
 
 ## 13. Carte des conséquences, dettes, secrets et obligations
 
 `docs/canon/bible/10_CARTE_CONSEQUENCES_DETTES_SECRETS_OBLIGATIONS.md`
 
-Définit :
+## 14. Distribution des séquences, scènes, images et conséquences en journées
 
-- vérité factuelle ;
-- états de connaissance ;
-- vie privée, omission, mensonge et secret ;
-- traces et preuves ;
-- promesses et obligations ;
-- dettes ;
-- alibis ;
-- priorité des conséquences ;
-- pression de collision ;
-- après-coups ;
-- retrait des états devenus historiques.
+`docs/canon/bible/11_DISTRIBUTION_SEQUENCES_SCENES_IMAGES_CONSEQUENCES_JOURNEES.md`
+
+Ce document fixe :
+
+- une saison de 21 journées narratives ;
+- J01 mardi à J21 lundi ;
+- la compatibilité fonctionnelle de J01–J04 avec l’ouverture runtime ;
+- un pivot principal par journée ;
+- au moins trois contenus visuels par journée ;
+- une route extérieure dominante maximum par défaut ;
+- la priorité des conséquences ;
+- les jours fixes et les slots variables ;
+- J12 comme convergence La Verrière / L’Annexe ;
+- J17 comme fin du séjour Mathilde et définition du couple ;
+- J21 comme dernière image recontextualisée.
 
 Le document historique :
 
-`docs/narrative/PROOF_AND_SECRET_MAP.md`
+`docs/narrative/DAILY_RHYTHM_AND_CONTENT_DENSITY.md`
 
-reste une archive de typologie. Le document `10` prévaut.
+reste une référence d’origine. Le document `11` prévaut.
 
-## 14. Découpage des journées
-
-Futur document canonique.
-
-Il distribuera les séquences, scènes, images, obligations, conséquences et respirations.
-
-## 15. Plans détaillés et audits
+## 15. Plans détaillés des scènes et audits
 
 Futurs documents canoniques.
 
@@ -162,7 +137,8 @@ Ils auditeront :
 - images ;
 - preuves ;
 - obligations ;
-- ledgers.
+- ledgers ;
+- anciennes journées.
 
 ## 16. Dialogues et production des images
 
@@ -178,7 +154,7 @@ Lire selon le besoin :
 - `docs/canon/DIEGETIC_TIME_AND_COMMUNICATION_CANON.md` ;
 - `docs/canon/TEMPORAL_FLOW_AND_DAY_TRANSITION_CANON.md`.
 
-Ils ne peuvent pas contredire les documents `08–10`.
+Ils ne peuvent pas contredire les documents `08–11`.
 
 ## 18. Runtime
 
@@ -209,7 +185,8 @@ Autorité sur :
 - conséquences ;
 - dettes ;
 - secrets ;
-- obligations.
+- obligations ;
+- distribution en journées.
 
 ## Canon complet des personnages
 
@@ -242,40 +219,55 @@ Autorité uniquement sur l’état effectivement implémenté.
 
 ---
 
-# 4. Contrat de conséquence
+# 4. Contrat d’une journée
 
-Avant de valider une conséquence, répondre à :
+Avant de valider une journée, répondre à :
 
 ```text
-quel fait l’a créée ?
-qui le connaît ?
-qui l’ignore ou se trompe ?
-quelle obligation est due ?
-qui doit agir ?
-à qui ?
-dans quelle fenêtre ?
-qu’est-ce qui arrive si elle est payée, amendée ou échoue ?
-quand cesse-t-elle d’être active ?
+quel acte accomplit-elle ?
+quel est son pivot principal ?
+quelle relation possède le premier plan ?
+quelles obligations sont dues ?
+qui peut être absent et pourquoi ?
+quels trois contenus visuels minimum sont prévus ?
+quelle conséquence ou mutation ferme la journée ?
 ```
 
-Une conséquence sans fait source ou sans personnes concernées doit être rejetée.
+Une journée qui fait progresser fortement plusieurs routes indépendantes doit être réécrite.
 
 ---
 
-# 5. Réconciliation Sandra
+# 5. Calendrier actuel
 
-Pour toute scène ou preuve Sandra :
+```text
+J01–J04 ouverture
+J05–J08 lignes privées
+J09–J11 vies parallèles
+J12 convergence charnière
+J13–J16 conséquences de convergence
+J17–J21 résolution
+```
+
+Une route extérieure dominante peut être Sandra, Mathilde ou aucune.
+
+Pauline, Raphaëlle et Nico reçoivent une ligne et un état final sans être forcés vers une bascule équivalente.
+
+---
+
+# 6. Réconciliation Sandra
+
+Pour toute journée Sandra :
 
 - distinguer regarder, sauvegarder et transférer ;
 - connaître l’auteur de l’image ;
-- savoir si Sandra l’a revue et sélectionnée ;
-- traiter une demande de suppression comme obligation ;
-- traiter une violation d’audience comme dette majeure ;
-- ne pas faire d’une image Sandra une monnaie de pacte sans son accord direct.
+- respecter la sélection ;
+- laisser exister des jours de silence ;
+- ne pas utiliser les objets pour remplacer durablement Sandra comme sujet ;
+- réserver J18 à sa décision finale principale.
 
 ---
 
-# 6. Audits futurs
+# 7. Audits futurs
 
 Scènes :
 
@@ -295,7 +287,7 @@ REGENERATE
 ARCHIVE
 ```
 
-États, preuves et obligations :
+États et ledgers :
 
 ```text
 ACTIVE_AND_USEFUL
@@ -304,9 +296,18 @@ HISTORICAL_ONLY
 REMOVE_OR_ARCHIVE
 ```
 
+Journées :
+
+```text
+COMPATIBLE
+ADAPTABLE
+REWRITE
+ARCHIVE
+```
+
 ---
 
-# 7. Règle finale
+# 8. Règle finale
 
 ```text
 Utiliser la Bible pour savoir ce que le jeu doit devenir.
@@ -314,8 +315,7 @@ Utiliser le canon complet pour savoir qui vit la transformation.
 Utiliser 07 pour choisir l’événement.
 Utiliser 08 pour concevoir la scène.
 Utiliser 09 pour concevoir l’image.
-Utiliser 10 pour savoir ce que la scène crée,
-ce que chacun sait, ce qui reste dû et comment cela revient.
-Utiliser les journées pour distribuer le rythme.
+Utiliser 10 pour savoir ce qui reste dû.
+Utiliser 11 pour distribuer le temps, les absences et les conséquences.
 Utiliser le runtime pour décrire ce qui est jouable.
 ```
