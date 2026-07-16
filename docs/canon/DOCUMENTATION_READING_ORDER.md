@@ -1,193 +1,183 @@
 # Documentation Reading Order — Bible Narrative Current
 
-> **Phase actuelle : Bible Narrative / North Star**
->
-> La Bible Narrative est la source principale pour la promesse, les routes, les scènes, les visuels, les conséquences, le calendrier et les plans de production de la première saison.
->
-> Les canons complets restent l’autorité première sur les personnes.
->
-> Le runtime décrit ce qui est implémenté.
+> **Phase : Bible Narrative complète / préparation de production**
+
+La Bible couvre désormais l’architecture détaillée de J01 à J21.
+
+Le runtime actif couvre J01 à J06.
 
 ---
 
-# 1. Ordre de conception
+# 1. Ordre de lecture officiel
 
-```text
-North Star
-→ Expérience joueur
-→ Fantasmes
-→ Canons complets
-→ Routes
-→ Évolution érotique
-→ Actes
-→ Séquences
-→ Scènes
-→ Visuels
-→ Conséquences
-→ Journées
-→ Audits et plans détaillés
-→ Dialogues / images
-→ Runtime
-```
-
----
-
-# 2. Ordre de lecture officiel
-
-## 1–5 — Vision et personnages
+## Vision
 
 ```text
 docs/canon/bible/00_NORTH_STAR.md
 docs/canon/bible/01_EXPERIENCE_JOUEUR.md
 docs/canon/bible/02_FANTASMES_CENTRAUX.md
+```
+
+## Personnages
+
+```text
 docs/canon/characters/CHARACTER_CANON_INDEX.md
 docs/canon/characters/*_CANON_FULL.md
-```
-
-Ajouter selon le besoin :
-
-```text
 docs/canon/CHARACTER_VOICE_DISTINCTION_CANON.md
 docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
-cartes de dépréciation ou de réconciliation
+cartes de réconciliation concernées
 ```
 
-## 6 — Grammaire
+## Architecture
 
-`docs/canon/bible/03_GRAMMAIRE_NARRATIVE.md`
+```text
+docs/canon/bible/03_GRAMMAIRE_NARRATIVE.md
+docs/canon/bible/04_TRAME_PRINCIPALE_ET_ACTES_SAISON_1.md
+docs/canon/bible/05_ROUTES_MACRO_SAISON_1.md
+docs/canon/bible/06_EVOLUTION_EROTIQUE_DES_ROUTES.md
+docs/canon/bible/07_BIBLIOTHEQUE_DE_SEQUENCES_SAISON_1.md
+```
 
-## 7 — Trame et actes
+## Scènes, images et conséquences
 
-`docs/canon/bible/04_TRAME_PRINCIPALE_ET_ACTES_SAISON_1.md`
+```text
+docs/canon/bible/08_REGLES_DES_SCENES_MODULAIRES.md
+docs/canon/bible/09_PROGRESSION_VISUELLE_ET_PHOTOGRAPHIQUE.md
+docs/canon/bible/10_CARTE_CONSEQUENCES_DETTES_SECRETS_OBLIGATIONS.md
+```
 
-## 8 — Routes
+## Calendrier
 
-`docs/canon/bible/05_ROUTES_MACRO_SAISON_1.md`
+```text
+docs/canon/bible/11_DISTRIBUTION_SEQUENCES_SCENES_IMAGES_CONSEQUENCES_JOURNEES.md
+```
 
-## 9 — Évolution érotique
+## Plans détaillés complets
 
-`docs/canon/bible/06_EVOLUTION_EROTIQUE_DES_ROUTES.md`
+```text
+docs/canon/bible/12_PLANS_SCENES_AUDIT_RUNTIME_J01_J08.md
+docs/canon/bible/12B_PLANS_SCENES_J09_J12.md
+docs/canon/bible/12C_PLANS_SCENES_J13_J16.md
+docs/canon/bible/12D_PLANS_SCENES_J17_J21.md
+docs/canon/bible/12E_AUDIT_GLOBAL_COHERENCE_J01_J21.md
+```
 
-## 10 — Séquences
+## Communication
 
-`docs/canon/bible/07_BIBLIOTHEQUE_DE_SEQUENCES_SAISON_1.md`
+```text
+docs/canon/DIEGETIC_TIME_AND_COMMUNICATION_CANON.md
+docs/canon/TEXT_ONLY_MESSAGING_CANON.md
+```
 
-## 11 — Règles des scènes
+Le canon text-only prévaut sur toute ancienne hypothèse d’appel, de vocal ou de scène audio.
 
-`docs/canon/bible/08_REGLES_DES_SCENES_MODULAIRES.md`
+## Runtime
 
-## 12 — Progression visuelle
+Lire ensuite seulement :
 
-`docs/canon/bible/09_PROGRESSION_VISUELLE_ET_PHOTOGRAPHIQUE.md`
-
-## 13 — Conséquences
-
-`docs/canon/bible/10_CARTE_CONSEQUENCES_DETTES_SECRETS_OBLIGATIONS.md`
-
-## 14 — Distribution en journées
-
-`docs/canon/bible/11_DISTRIBUTION_SEQUENCES_SCENES_IMAGES_CONSEQUENCES_JOURNEES.md`
-
-Ce document fixe les 21 journées et leurs fonctions.
-
-## 15 — Plans détaillés et audit runtime
-
-`docs/canon/bible/12_PLANS_SCENES_AUDIT_RUNTIME_J01_J08.md`
-
-Ce document :
-
-- corrige le périmètre actif à J01–J06 ;
-- audite les scènes et visuels actuels ;
-- classe les scènes en `COMPATIBLE`, `ADAPTABLE`, `RELOCATE`, `REWRITE` ou `ARCHIVE` ;
-- définit les cartes J05–J08 ;
-- ne conçoit aucune image ;
-- réserve les assets à une production ultérieure par Ludovic via ComfyUI.
-
-## 16 — Dialogues
-
-Futurs documents de rédaction.
-
-## 17 — Production et intégration des images
-
-Future couche après fourniture des assets.
-
-## 18 — Runtime
-
-Plans, index, conversations, tests et données effectivement actifs.
+- index actifs ;
+- conversations JSON ;
+- visual content ;
+- ledgers ;
+- tests ;
+- rapports de version.
 
 ---
 
-# 3. Runtime actuel
-
-Le `DataLoader` actif charge :
+# 2. Chaîne de production
 
 ```text
-chapter_01_modular_index.json
-chapter_02_modular_index.json
-chapter_03_modular_index.json
-chapter_04_modular_index.json
-chapter_05_modular_index.json
-chapter_06_modular_index.json
+plans détaillés validés
+→ dialogues textuels
+→ états minimaux
+→ intégration runtime par tranche
+→ images fournies par Ludovic via ComfyUI
+→ métadonnées et galerie
+→ tests
 ```
 
-Donc :
-
-```text
-J01–J06 sont jouables
-J07–J21 ne sont pas jouables
-```
-
-Le document `12` corrige les anciennes mentions limitées à J01–J04.
+Les images ne doivent pas être conçues dans les documents de dialogues.
 
 ---
 
-# 4. Audit actuel J01–J06
+# 3. Statut J01–J21
 
-```text
-J01 ADAPTABLE
-J02 COMPATIBLE avec déficit visuel
-J03 RESTRUCTURE / RELOCATE
-J04 ADAPTABLE
-J05 COMPATIBLE FOUNDATION
-J06 ADAPTABLE
-```
+| Journées | Plans | Dialogues finaux | Runtime |
+|---|---|---|---|
+| J01–J06 | complets / audit | existants à réconcilier | actif |
+| J07–J08 | complets | à produire | non |
+| J09–J12 | complets | à produire | non |
+| J13–J16 | complets | à produire | non |
+| J17–J21 | complets | à produire | non |
 
-Aucune scène active n’est automatiquement archivée.
+---
+
+# 4. Règle text-only
+
+Tout dialogue jouable est :
+
+- message texte ;
+- réponse textuelle ;
+- notification ;
+- commentaire d’image ;
+- message de groupe.
+
+Sont exclus :
+
+- appels joués ;
+- messages vocaux ;
+- notes vocales ;
+- scènes audio ;
+- choix de dialogue oral ;
+- transcriptions d’appels utilisées comme gameplay.
+
+Les événements hors téléphone restent possibles mais ne sont pas joués comme dialogues.
 
 ---
 
 # 5. Visuels
 
-Le document `09` reste l’autorité sur la fonction, l’audience et les métadonnées.
+Les documents de plans indiquent :
 
-Le document `12` ne définit que des slots fonctionnels.
+- nombre de slots ;
+- fonction narrative ;
+- audience ;
+- permanence.
 
-La conception et la génération sont différées à Ludovic via ComfyUI.
+Ludovic fournit les images plus tard via ComfyUI.
+
+Aucun plan détaillé ne fixe :
+
+- pose ;
+- cadrage ;
+- tenue ;
+- décor ;
+- prompt ;
+- workflow.
 
 ---
 
-# 6. Contrats complémentaires
+# 6. Prochaine tranche
 
-Lire selon le besoin :
+```text
+J01–J04 réconciliation narrative et runtime
+```
 
-- `docs/canon/CHOICE_DESIGN_CANON.md` ;
-- `docs/canon/MODULAR_NARRATIVE_ARC_BLUEPRINT.md` ;
-- `docs/canon/MODULAR_SCENE_AUTHORING_CONTRACT.md` ;
-- `docs/canon/DIEGETIC_TIME_AND_COMMUNICATION_CANON.md` ;
-- `docs/canon/TEMPORAL_FLOW_AND_DAY_TRANSITION_CANON.md`.
+Ordre recommandé :
 
-Ils ne peuvent pas contredire les documents `08–12`.
+1. Sandra J01 ;
+2. déplacement du vernissage J03 ;
+3. nouvelle origine Pauline/Nico J04 ;
+4. tests ;
+5. J05–J08.
 
 ---
 
 # 7. Règle finale
 
 ```text
-07 choisit l’événement.
-08 adapte la scène.
-09 gouverne l’image.
-10 gouverne la mémoire et la dette.
-11 distribue la saison.
-12 décide ce qui est conservé, déplacé ou réécrit.
-Le runtime décrit ce qui est jouable.
+La saison est planifiée avant d’être dialoguée.
+Les dialogues sont textuels avant d’être intégrés.
+Les images sont fournies avant d’être finalisées.
+Le runtime évolue par petites tranches validées.
 ```

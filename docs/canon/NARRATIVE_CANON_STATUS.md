@@ -1,11 +1,14 @@
 # Narrative Canon Status — Current
 
-> **Current phase: Bible Narrative / North Star**  
-> The Bible defines the target season.  
-> Full character canon defines the people.  
-> Runtime documentation defines current playable content.
+> **Current phase: full-season detailed planning complete**
 
-## 1. Current hierarchy
+The Bible Narrative now covers the complete first season from J01 to J21.
+
+Runtime remains limited to J01–J06.
+
+---
+
+## 1. Current authority chain
 
 ```text
 North Star
@@ -16,40 +19,42 @@ North Star
 → Erotic evolution
 → Acts
 → Sequences
-→ Modular scenes
-→ Visual progression
-→ Consequences and obligations
-→ Distribution into days
-→ Detailed plans and audits
-→ Dialogues / image integration
+→ Scene rules
+→ Visual rules
+→ Consequences
+→ 21-day calendar
+→ Detailed plans J01–J21
+→ Dialogues
 → Runtime
 ```
 
 ---
 
-## 2. Current Bible documents
+## 2. Detailed-plan documents
 
 ```text
-docs/canon/bible/00_NORTH_STAR.md
-docs/canon/bible/01_EXPERIENCE_JOUEUR.md
-docs/canon/bible/02_FANTASMES_CENTRAUX.md
-docs/canon/bible/03_GRAMMAIRE_NARRATIVE.md
-docs/canon/bible/04_TRAME_PRINCIPALE_ET_ACTES_SAISON_1.md
-docs/canon/bible/05_ROUTES_MACRO_SAISON_1.md
-docs/canon/bible/06_EVOLUTION_EROTIQUE_DES_ROUTES.md
-docs/canon/bible/07_BIBLIOTHEQUE_DE_SEQUENCES_SAISON_1.md
-docs/canon/bible/08_REGLES_DES_SCENES_MODULAIRES.md
-docs/canon/bible/09_PROGRESSION_VISUELLE_ET_PHOTOGRAPHIQUE.md
-docs/canon/bible/10_CARTE_CONSEQUENCES_DETTES_SECRETS_OBLIGATIONS.md
-docs/canon/bible/11_DISTRIBUTION_SEQUENCES_SCENES_IMAGES_CONSEQUENCES_JOURNEES.md
 docs/canon/bible/12_PLANS_SCENES_AUDIT_RUNTIME_J01_J08.md
+docs/canon/bible/12B_PLANS_SCENES_J09_J12.md
+docs/canon/bible/12C_PLANS_SCENES_J13_J16.md
+docs/canon/bible/12D_PLANS_SCENES_J17_J21.md
+docs/canon/bible/12E_AUDIT_GLOBAL_COHERENCE_J01_J21.md
+```
+
+Status:
+
+```text
+J01–J21 detailed architecture: COMPLETE
+global coherence audit: COMPLETE
+dialogue production: NOT COMPLETE
+runtime J07–J21: NOT IMPLEMENTED
+visual assets: NOT PROVIDED
 ```
 
 ---
 
-## 3. Runtime scope correction
+## 3. Runtime scope
 
-The active `DataLoader` loads modular indexes for:
+The active runtime loads:
 
 ```text
 J01
@@ -63,174 +68,174 @@ J06
 Therefore:
 
 ```text
-J01–J06 are currently playable
-J07–J21 are not playable
+J01–J06 playable, subject to reconciliation
+J07–J21 documented only
 ```
 
-Previous status text limiting active runtime to J01–J04 is superseded by document `12`.
-
 ---
 
-## 4. Audit authority
+## 4. Text-only product rule
 
-`12_PLANS_SCENES_AUDIT_RUNTIME_J01_J08.md` is the current authority for the first runtime slice audit and J05–J08 scene planning.
-
-It locks:
-
-- J01–J06 as the active audit perimeter ;
-- no automatic deletion of existing active scenes ;
-- targeted rewrite of Sandra J01 ;
-- preservation of J02 ;
-- restructuring of J03 ;
-- chronology correction for J04 ;
-- preservation of the J05 Marie shared-hour scene ;
-- conversion of J06 Mathilde from automatic owner to eligible candidate ;
-- new non-playable plans for J07 and J08 ;
-- no visual asset design in this layer.
-
----
-
-## 5. Current audit summary
+Current source:
 
 ```text
-J01 ADAPTABLE
-J02 COMPATIBLE with visual deficit
-J03 RESTRUCTURE / RELOCATE
-J04 ADAPTABLE
-J05 COMPATIBLE FOUNDATION
-J06 ADAPTABLE
-J07 PLANNED, NOT IMPLEMENTED
-J08 PLANNED, NOT IMPLEMENTED
+docs/canon/TEXT_ONLY_MESSAGING_CANON.md
 ```
 
-Scene-level decisions preserve strong existing material and move premature functions rather than discarding the whole opening.
+The game contains:
+
+```text
+no playable audio scenes
+no voice calls
+no voice notes
+no audio messages
+no voiced dialogue choices
+no audio sexual scenes
+```
+
+All interactive dialogue is delivered through text messaging.
+
+Physical events may occur off-phone, but their result returns through text, images, time, and state.
+
+The text-only canon supersedes older assumptions that a future call or audio scene could be produced.
 
 ---
 
-## 6. Key scene decisions
+## 5. Full season structure
 
-### Preserve
+```text
+J01–J04  opening
+J05–J08  private lines and first superposition
+J09–J12  parallel lives and convergence
+J13–J16  consequence and collision
+J17–J21  resolution and final image
+```
 
-- J01 Marie opening and offline return ;
-- J02 Marie / Mathilde arrival chain ;
-- J03 Raphaëlle work introduction ;
-- J03 Sandra work echo ;
-- J04 household echoes and close ;
-- J05 Marie shared hour ;
-- J06 Marie concrete return.
+### Key anchors
 
-### Adapt
+- J09 Marie social visibility ;
+- J10 one external line becomes real ;
+- J11 intention, withdrawal, or eligible adult passage ;
+- J12 La Verrière / L'Annexe convergence ;
+- J13 highest-priority aftermath ;
+- J14 existing trace seen in the wrong context ;
+- J15 incompatible commitments ;
+- J16 consequence-only day ;
+- J17 Mathilde end-of-stay and couple definition ;
+- J18 Sandra resolution ;
+- J19 Pauline / Raphaëlle resolution ;
+- J20 Nico / network resolution ;
+- J21 recontextualized final image.
 
-- J01 Sandra trace around selected representation rather than blur ;
-- J04 Pauline and Nico chronology ;
-- J06 Mathilde as one candidate among several.
+---
 
-### Relocate
+## 6. Character coverage
 
-- J03 La Verrière event to J09 ;
-- J03 Mathilde charger to J05 or J06 ;
-- J03 Raphaëlle late review to J08 ;
-- J03 Marie consequence variants to J06, J08, or J09 according to function.
+### Marie
+
+Central throughout the season as partner, professional, social woman, and autonomous agent.
+
+### Sandra
+
+Selected representation, trusted audience, consequence, and final control over what remains.
+
+### Mathilde
+
+Temporary stay, domestic familiarity, possible intent, consequence, and departure.
+
+### Pauline
+
+Official life, audience difference, compartment or refusal, and final direction.
+
+### Raphaëlle
+
+Work, craft, process, chosen version, and after-role or boundary.
+
+### Nico
+
+Friendship, confidence, social gaze, alibi or rivalry, and final position.
+
+Nico remains heterosexual with no romantic or sexual route involving Player.
 
 ---
 
 ## 7. Visual status
 
-Current active visual counts against the canonical minimum:
+Narrative slots are defined for every day.
+
+Ludovic will provide final images later through ComfyUI.
+
+Detailed plans do not specify:
+
+- prompts ;
+- poses ;
+- framing ;
+- outfits ;
+- environments ;
+- workflows.
+
+A day may be narratively approved while remaining visually incomplete.
+
+---
+
+## 8. Consequence coverage
+
+The season contains explicit windows for:
+
+- adult aftermath ;
+- image withdrawal or deletion ;
+- promise payment ;
+- discovery ;
+- alibi collision ;
+- couple return ;
+- domestic debt ;
+- professional consequence ;
+- route resolution.
+
+No major explicit scene is structurally left without aftermath.
+
+---
+
+## 9. Open production risks
 
 ```text
-J01 1 / 3
-J02 1 / 3
-J03 0 or 1 / 3
-J04 1 / 3
-J05 0 / 3
-J06 0 / 3
+R1 J03–J04 chronology migration
+R2 Sandra J01 rewrite
+R3 J06 candidate-pool reconciliation
+R4 state-count minimization
+R5 text-only handling of off-phone events
+R6 missing visual assets
+R7 accidental double-route dominance
 ```
 
-The document `12` does not design replacements.
-
-Ludovic will provide images later through ComfyUI.
-
-Narrative plans may be validated before final visual assets, but no day is visual-first complete until three distinct contents are integrated.
-
 ---
 
-## 8. J05–J08 plan
+## 10. Next work
+
+Correct production order:
 
 ```text
-J05 Marie shared hour + zero or one first external continuity
-J06 one eligible continuity + mandatory Marie return
-J07 Nico confidence + optional Pauline/Raphaëlle secondary access
-J08 two real obligations collide through S14
+1. reconcile J01–J04
+2. adapt J05–J06
+3. write and integrate J07–J08
+4. continue in validated slices
+5. integrate user-provided images later
 ```
 
-At the end of J08:
-
-- at least two expectations exist ;
-- time has become a relational choice ;
-- no external route is definitively locked ;
-- no complete adult route is open ;
-- at least one consequence is active.
-
----
-
-## 9. Candidate-pool status
-
-The active J06 candidate system is marked:
+The next immediate narrative slice is:
 
 ```text
-NEEDS_RECONCILIATION
+Sandra J01 rewrite
++ J03–J04 chronology reconciliation
 ```
 
-Terms such as `external_ticket_limit`, `wave_id`, and automatic R2 ownership do not become narrative canon.
-
-They may remain technical internals only if later proven necessary and invisible.
-
 ---
 
-## 10. Current narrative decisions
-
-- 21-day complete season ;
-- J01–J06 active runtime ;
-- J07–J21 documented only ;
-- Marie central ;
-- one external dominant route by default ;
-- existing strong scenes reused ;
-- premature convergence relocated ;
-- no route menu ;
-- no automatic replacement after refusal ;
-- no visible route ticket or owner ;
-- no visual design in document `12` ;
-- images supplied later by Ludovic ;
-- Nico remains heterosexual with no Player route.
-
----
-
-## 11. Next work
-
-Recommended order after validation of document `12`:
+## 11. Final status rule
 
 ```text
-13A — J01 Sandra rewrite plan / dialogue
-13B — J03–J04 chronology reconciliation
-13C — J05–J06 runtime adaptation
-13D — J07–J08 dialogue and data authoring
-14  — Visual metadata and integration after user-provided images
-15  — Runtime patch and migration plan
-```
-
-No runtime change should begin before the selected narrative slice is validated.
-
----
-
-## 12. Final rule
-
-```text
-Use 07 to choose the event.
-Use 08 to design the scene.
-Use 09 to govern the image.
-Use 10 to govern memory and debt.
-Use 11 to distribute the season.
-Use 12 to audit and prepare production.
-Use runtime files to describe what is playable now.
+The whole season is now planned.
+The next task is production, not further macro-architecture.
+Dialogue remains text-only.
+Runtime changes remain incremental.
 ```
