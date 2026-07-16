@@ -40,6 +40,7 @@ docs/canon/bible/04_TRAME_PRINCIPALE_ET_ACTES_SAISON_1.md
 docs/canon/bible/05_ROUTES_MACRO_SAISON_1.md
 docs/canon/bible/06_EVOLUTION_EROTIQUE_DES_ROUTES.md
 docs/canon/bible/07_BIBLIOTHEQUE_DE_SEQUENCES_SAISON_1.md
+docs/canon/bible/08_REGLES_DES_SCENES_MODULAIRES.md
 ```
 
 ---
@@ -51,7 +52,7 @@ Full character canon
 = identity, past, voice, body logic, desires, wounds, limits, concrete anchors
 
 Bible Narrative
-= promise, acts, routes, transformations, sequence functions, season completion
+= promise, acts, routes, transformations, sequence functions, modular-scene rules
 
 NSFW canon
 = adult escalation, image consent, explicit route rules, dark-route distinctions
@@ -69,8 +70,6 @@ A scene must satisfy all relevant layers.
 ### Marie
 
 Marie is the living center of the couple.
-
-She is not only what Player may lose.
 
 Required direction:
 
@@ -162,7 +161,29 @@ His gaze becomes an act through what he notices, asks, saves, hides, refuses, fo
 
 ---
 
-## 4. First-season depth
+## 4. Scene-authoring rule
+
+Before authoring a scene, read:
+
+1. the relevant `*_CANON_FULL.md` files;
+2. `NSFW_CHARACTER_ROUTE_CANON.md` when adult or image rules are involved;
+3. the relevant Bible route and sequence;
+4. `08_REGLES_DES_SCENES_MODULAIRES.md`.
+
+Every major scene must:
+
+- identify a source sequence from `S01` to `S35` or declare a new candidate;
+- use at least two full-canon anchors;
+- define one primary function and relationship;
+- preserve character agency;
+- define eligibility, mutation, exit state, and consequence;
+- respect time and communication realism.
+
+The historical `MODULAR_SCENE_AUTHORING_CONTRACT.md` remains a compatible technical reference. The Bible `08` prevails on narrative direction.
+
+---
+
+## 5. First-season depth
 
 ### Complete bascule possible
 
@@ -185,42 +206,32 @@ Nico must reach at least a meaningful position as guardrail, rival, confidant, a
 
 ---
 
-## 5. Nico orientation correction
-
-Current canon:
-
-```text
-Nico is heterosexual.
-```
-
-Therefore:
-
-- no attraction to Player;
-- no male-male sexual tension;
-- no direct contact route;
-- no bisexual reveal through trio content;
-- no orientation treated as a player-variable.
-
-A future group route may include Nico and women who choose him, with Player present according to the negotiated frame.
-
----
-
 ## 6. Runtime separation
 
 The current runtime may still expose only ordinary access.
 
-Do not confuse that ceiling with full canon.
+Do not confuse that ceiling with full canon or approved scene design.
 
-Examples:
-
-- Raphaëlle's cosplay canon exists before it is playable;
-- Pauline's double-life engine exists before the private compartment is playable;
-- Nico's attraction and shared-gaze engine exist before a pact is playable;
-- Marie, Sandra, and Mathilde have adult route ceilings beyond the current runtime.
+Document `08` does not automatically validate or implement old scene cards, source packs, JSON conversations, or playable content.
 
 ---
 
-## 7. Supporting characters
+## 7. Existing-scene audit
+
+Old scenes must later be classified:
+
+```text
+COMPATIBLE
+ADAPTABLE
+REWRITE
+ARCHIVE
+```
+
+A technically functional scene can remain narratively obsolete.
+
+---
+
+## 8. Supporting characters
 
 - Jeff remains Sandra's real partner and consequence.
 - Bastien remains Pauline's real partner and is never a consent proxy.
@@ -230,20 +241,21 @@ Examples:
 
 ---
 
-## 8. Maintenance rule
+## 9. Maintenance rule
 
-When a character decision changes:
+When a character or scene decision changes:
 
 - update the full canon if identity changes;
 - update the deprecation map;
 - update the NSFW canon if adult rules change;
 - update the character index and this doorway;
-- update Bible documents when acts, routes, or sequences are affected;
+- update Bible routes, sequences, or scene rules when affected;
 - update reading order and narrative status;
+- audit affected scenes;
 - validate before runtime planning.
 
 ```text
 The full character files define people.
-The Bible defines how those people transform.
+The Bible defines how those people transform and how scenes adapt.
 The runtime defines what is playable now.
 ```
