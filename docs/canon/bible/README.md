@@ -2,9 +2,7 @@
 
 > **Statut : Canon — source de vérité narrative principale**
 >
-> La Bible définit la promesse du jeu, les transformations, les actes, les séquences, les scènes, les images, les conséquences, le calendrier et les plans de production narrative de la première saison.
->
-> Les canons complets des personnages restent l’autorité première sur leur identité, leur voix, leur vie concrète, leurs désirs et leurs limites.
+> La Bible définit la promesse, les personnages, les routes, les actes, les séquences, les scènes, les visuels, les conséquences, le calendrier et les plans détaillés de la première saison.
 >
 > Le runtime décrit ce qui est effectivement implémenté et jouable.
 
@@ -16,192 +14,171 @@
 
 ---
 
-# 2. Hiérarchie officielle
+# 2. Hiérarchie actuelle
 
 ```text
 North Star
 → Expérience joueur
-→ Fantasmes centraux
-→ Canon complet des personnages
+→ Fantasmes
+→ Canons complets des personnages
 → Routes macro
 → Évolution érotique
 → Actes
 → Séquences
 → Scènes modulaires
 → Progression visuelle
-→ Conséquences, dettes, secrets et obligations
+→ Conséquences et obligations
 → Distribution en journées
-→ Plans détaillés et audits
-→ Dialogues et production des images
+→ Plans détaillés J01–J21
+→ Dialogues
+→ Intégration des images
 → Runtime
 ```
 
-Le canon complet des personnages est une autorité transversale.
+Les canons complets restent transversaux à toutes les couches.
 
 ---
 
-# 3. Ordre de lecture actuel
+# 3. Ordre de lecture
 
-1. [`00_NORTH_STAR.md`](00_NORTH_STAR.md) ;
-2. [`01_EXPERIENCE_JOUEUR.md`](01_EXPERIENCE_JOUEUR.md) ;
-3. [`02_FANTASMES_CENTRAUX.md`](02_FANTASMES_CENTRAUX.md) ;
-4. [`../characters/CHARACTER_CANON_INDEX.md`](../characters/CHARACTER_CANON_INDEX.md) ;
+1. `00_NORTH_STAR.md` ;
+2. `01_EXPERIENCE_JOUEUR.md` ;
+3. `02_FANTASMES_CENTRAUX.md` ;
+4. `../characters/CHARACTER_CANON_INDEX.md` ;
 5. les fichiers `*_CANON_FULL.md` concernés ;
-6. les cartes de dépréciation ou de réconciliation ;
-7. [`../characters/NSFW_CHARACTER_ROUTE_CANON.md`](../characters/NSFW_CHARACTER_ROUTE_CANON.md) ;
-8. [`03_GRAMMAIRE_NARRATIVE.md`](03_GRAMMAIRE_NARRATIVE.md) ;
-9. [`04_TRAME_PRINCIPALE_ET_ACTES_SAISON_1.md`](04_TRAME_PRINCIPALE_ET_ACTES_SAISON_1.md) ;
-10. [`05_ROUTES_MACRO_SAISON_1.md`](05_ROUTES_MACRO_SAISON_1.md) ;
-11. [`06_EVOLUTION_EROTIQUE_DES_ROUTES.md`](06_EVOLUTION_EROTIQUE_DES_ROUTES.md) ;
-12. [`07_BIBLIOTHEQUE_DE_SEQUENCES_SAISON_1.md`](07_BIBLIOTHEQUE_DE_SEQUENCES_SAISON_1.md) ;
-13. [`08_REGLES_DES_SCENES_MODULAIRES.md`](08_REGLES_DES_SCENES_MODULAIRES.md) ;
-14. [`09_PROGRESSION_VISUELLE_ET_PHOTOGRAPHIQUE.md`](09_PROGRESSION_VISUELLE_ET_PHOTOGRAPHIQUE.md) ;
-15. [`10_CARTE_CONSEQUENCES_DETTES_SECRETS_OBLIGATIONS.md`](10_CARTE_CONSEQUENCES_DETTES_SECRETS_OBLIGATIONS.md) ;
-16. [`11_DISTRIBUTION_SEQUENCES_SCENES_IMAGES_CONSEQUENCES_JOURNEES.md`](11_DISTRIBUTION_SEQUENCES_SCENES_IMAGES_CONSEQUENCES_JOURNEES.md) ;
-17. [`12_PLANS_SCENES_AUDIT_RUNTIME_J01_J08.md`](12_PLANS_SCENES_AUDIT_RUNTIME_J01_J08.md) ;
-18. futurs documents :
-    - dialogues ;
-    - production et intégration des images ;
-    - plans d’intégration runtime.
+6. les cartes de réconciliation ;
+7. `../characters/NSFW_CHARACTER_ROUTE_CANON.md` ;
+8. `03_GRAMMAIRE_NARRATIVE.md` ;
+9. `04_TRAME_PRINCIPALE_ET_ACTES_SAISON_1.md` ;
+10. `05_ROUTES_MACRO_SAISON_1.md` ;
+11. `06_EVOLUTION_EROTIQUE_DES_ROUTES.md` ;
+12. `07_BIBLIOTHEQUE_DE_SEQUENCES_SAISON_1.md` ;
+13. `08_REGLES_DES_SCENES_MODULAIRES.md` ;
+14. `09_PROGRESSION_VISUELLE_ET_PHOTOGRAPHIQUE.md` ;
+15. `10_CARTE_CONSEQUENCES_DETTES_SECRETS_OBLIGATIONS.md` ;
+16. `11_DISTRIBUTION_SEQUENCES_SCENES_IMAGES_CONSEQUENCES_JOURNEES.md` ;
+17. `12_PLANS_SCENES_AUDIT_RUNTIME_J01_J08.md` ;
+18. `12B_PLANS_SCENES_J09_J12.md` ;
+19. `12C_PLANS_SCENES_J13_J16.md` ;
+20. `12D_PLANS_SCENES_J17_J21.md` ;
+21. `12E_AUDIT_GLOBAL_COHERENCE_J01_J21.md` ;
+22. `../TEXT_ONLY_MESSAGING_CANON.md` ;
+23. futurs dialogues et plans runtime.
 
 ---
 
-# 4. Différence entre les couches
-
-## Canon personnage
-
-Qui vit la transformation.
-
-## Route
-
-Ce que la relation peut devenir.
-
-## Séquence
-
-Quel événement produit le changement.
-
-## Scène
-
-Comment l’événement s’adapte à la partie.
-
-## Progression visuelle
-
-Ce que l’image signifie, qui la possède et à quelle audience elle appartient.
-
-## Conséquence
-
-Ce qui devient vrai, connu, dû ou dangereux.
-
-## Journée
-
-Comment le temps distribue opportunités, absences et retours.
-
-## Plan détaillé et audit
-
-Ce qui est conservé, déplacé, adapté ou réécrit avant production.
-
-## Runtime
-
-Ce qui est actuellement jouable.
-
----
-
-# 5. Calendrier et runtime actif
-
-La saison canonique utilise :
+# 4. Saison complète
 
 ```text
-21 journées narratives
-J01 mardi → J21 lundi
+J01–J04  ouverture
+J05–J08  lignes privées
+J09–J12  vies parallèles et convergence
+J13–J16  conséquences
+J17–J21  résolutions
 ```
 
-Le runtime actif charge actuellement :
+Les plans détaillés couvrent désormais toute la saison.
+
+## Runtime actuel
 
 ```text
-J01 à J06
+J01–J06 jouables
+J07–J21 non jouables
 ```
 
-Répartition actuelle :
+## Images
+
+Les slots et fonctions narratives sont définis.
+
+Les images seront fournies plus tard par Ludovic via ComfyUI.
+
+Aucun document de plans détaillés ne fixe prompts, poses, cadrages ou workflows.
+
+---
+
+# 5. Communication textuelle
+
+Décision canonique :
 
 ```text
-J01–J04 : ouverture active
-J05–J06 : première tranche active de l’acte II
-J07–J21 : non jouables
+aucune scène audio
+aucun appel joué
+aucun message vocal
+aucune note vocale
+aucune scène doublée
 ```
 
-Le document `12` prévaut sur les anciennes formulations qui décrivaient seulement J01–J04 comme runtime actif.
+Tout dialogue interactif passe par la messagerie texte.
+
+Les événements hors téléphone peuvent exister, mais leur résultat revient par :
+
+- messages ;
+- images ;
+- temps ;
+- états ;
+- conséquences.
+
+Lire :
+
+`docs/canon/TEXT_ONLY_MESSAGING_CANON.md`
+
+Ce document prévaut sur toute ancienne hypothèse audio.
 
 ---
 
-# 6. Audit actuel
-
-Le document `12` fixe :
-
-- J01 Marie compatible ;
-- J01 Sandra adaptable autour de la représentation choisie ;
-- J02 compatible ;
-- J03 à restructurer et plusieurs scènes à déplacer ;
-- J04 adaptable après déplacement du vernissage ;
-- J05 fondation compatible ;
-- J06 candidat Mathilde adaptable et retour Marie compatible ;
-- J07–J08 comme cartes canoniques non implémentées.
-
-Aucune scène active J01–J06 n’est automatiquement supprimée.
-
----
-
-# 7. Responsabilité visuelle
-
-Les images seront fournies ultérieurement par Ludovic via ComfyUI.
-
-La Bible définit :
-
-- nombre de contenus ;
-- fonction narrative ;
-- audience ;
-- permanence ;
-- métadonnées nécessaires.
-
-Elle ne définit pas dans le document `12` :
-
-- prompts ;
-- poses ;
-- cadrages ;
-- tenues ;
-- workflows ComfyUI.
-
----
-
-# 8. Règles conservées
+# 6. Règles de production
 
 - un pivot principal par journée ;
-- trois contenus visuels minimum avant validation visual-first finale ;
+- Marie reste centrale ;
 - une route extérieure dominante maximum par défaut ;
-- Marie centrale ;
-- conséquences dues avant nouvelles opportunités ;
-- refus sans remplacement automatique ;
+- conséquences avant nouvelles opportunités lorsqu’elles sont dues ;
+- trois slots visuels minimum par journée complète ;
+- refus sans récompense de substitution ;
 - arrêt du chat à la co-présence ;
-- Nico hétérosexuel sans route Player ;
-- regarder, sauvegarder et transférer une image Sandra restent des droits distincts.
+- aucune route choisie dans un menu ;
+- Nico reste hétérosexuel sans route avec Player.
 
 ---
 
-# 9. Moteur considéré comme acquis
+# 7. Statut des plans
 
-Le téléphone, les conversations persistantes, la galerie, les notifications, les ledgers, les obligations, les scènes modulaires et les tests restent acquis sauf nécessité narrative démontrée.
-
-Le document `12` n’autorise aucune modification runtime à lui seul.
+| Périmètre | Plan détaillé | Runtime | Images finales |
+|---|---|---|---|
+| J01–J06 | oui | actif, à réconcilier | incomplet |
+| J07–J08 | oui | non | non fournies |
+| J09–J12 | oui | non | non fournies |
+| J13–J16 | oui | non | non fournies |
+| J17–J21 | oui | non | non fournies |
 
 ---
 
-# 10. Règle finale
+# 8. Prochaine étape
+
+La direction de la saison est complète.
+
+La production commence par :
 
 ```text
-Utiliser 07 pour choisir l’événement.
-Utiliser 08 pour concevoir la scène.
-Utiliser 09 pour gouverner l’image.
-Utiliser 10 pour savoir ce qui reste dû.
-Utiliser 11 pour distribuer la saison.
-Utiliser 12 pour auditer l’existant et préparer la production.
-Utiliser le runtime pour décrire ce qui est jouable.
+1. réécriture Sandra J01
+2. réconciliation J03–J04
+3. adaptation J05–J06
+4. écriture J07–J08
+5. puis tranches suivantes
+```
+
+Les images seront intégrées après fourniture par Ludovic.
+
+---
+
+# 9. Règle finale
+
+```text
+07 choisit l’événement.
+08 adapte la scène.
+09 gouverne l’image.
+10 gouverne la mémoire et la dette.
+11 distribue le calendrier.
+12–12E détaillent et valident toute la saison.
+Le canon text-only gouverne la surface jouable.
+Le runtime décrit ce qui existe maintenant.
 ```
