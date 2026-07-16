@@ -1,7 +1,7 @@
 {
   "id": "chapter_01_proof_placeholders",
   "version": 1,
-  "notes": "V0.85 : seul j1_sandra_lunch_memory_soft est référencé par le J1 actif. Les visuels Marie cuisine et Mathilde bagages restent des métadonnées legacy non référencées pour rollback/historique.",
+  "notes": "Seul j1_sandra_lunch_memory_soft est référencé par le J1 actif. Les visuels Marie cuisine et Mathilde bagages restent des métadonnées legacy non référencées pour rollback/historique.",
   "items": [
     {
       "id": "j1_marie_kitchen_soft",
@@ -10,7 +10,7 @@
       "type": "photo",
       "source_app": "messages",
       "asset_path": "res://assets/placeholders/j1_marie_kitchen_soft.png",
-      "context": "Visuel legacy non référencé par le J1 actif V0.85.",
+      "context": "Visuel legacy non référencé par le J1 actif.",
       "tags": [
         "marie",
         "kitchen",
@@ -57,13 +57,26 @@
       "type": "photo",
       "source_app": "messages",
       "asset_path": "res://assets/placeholders/j1_sandra_lunch_memory_soft.png",
-      "context": "Ancienne photo imparfaite d'un déjeuner : deux verres, un coin de table et Sandra floue sur le bord. Sandra choisit de l'envoyer uniquement à Player ; aucune fonction adulte.",
+      "context": "Photo du dernier déjeuner prise sur le téléphone de Sandra avec son accord. Elle l'a revue, gardée sans la publier, puis a choisi et recadré la version envoyée uniquement à Player. Le cadrage peut rester imparfait, mais l'enjeu est son choix de représentation, pas le flou. Aucune fonction adulte.",
+      "camera_origin": "Téléphone de Sandra ; Player peut avoir déclenché ou tenu l'appareil à sa demande.",
+      "reviewed_by": [
+        "sandra"
+      ],
+      "intended_audience": [
+        "player"
+      ],
+      "saving_rule": "La réception dans le fil n'accorde aucun droit narratif de conservation hors de la conversation.",
+      "forwarding_rule": "Aucun transfert sans nouveau consentement explicite de Sandra.",
       "tags": [
         "sandra",
         "lunch",
         "table",
         "two_glasses",
-        "blurred_edge",
+        "imperfect_framing",
+        "reviewed",
+        "kept",
+        "selected_crop",
+        "controlled_audience",
         "ordinary",
         "private_trace",
         "day1"

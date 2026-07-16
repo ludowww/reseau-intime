@@ -6,7 +6,7 @@
   "display_label": "Mardi — Les choses qu'on remarque",
   "day_start_time": "18:12",
   "title": "Mardi — Les choses qu'on remarque",
-  "description": "Une soirée ordinaire : Marie demande une présence concrète, Sandra partage une ancienne trace, puis Player revient vers la vie commune.",
+  "description": "Une soirée ordinaire : Marie demande une présence concrète, Sandra choisit de renvoyer une ancienne photographie, puis Player revient vers la vie commune.",
   "design_goal": "Remplacer le J1 legacy par deux conversations concises, deux vrais nœuds à trois choix et deux conséquences hors ligne, sans score de route.",
   "default_order": [
     "chapter_01_marie_opening",
@@ -28,7 +28,7 @@
     {
       "moment_label": "nuit",
       "time_label": "22:57",
-      "transition_text": "Mardi nuit — Sandra retrouve une ancienne photographie.",
+      "transition_text": "Mardi nuit — Sandra choisit de renvoyer une ancienne photographie.",
       "conversation_ids": [
         "chapter_01_sandra_trace"
       ]
@@ -193,7 +193,7 @@
   "end_of_day_player_knowledge": [
     "Marie et Player restent ensemble dans une chaleur habituelle.",
     "Player a réellement rejoint le dîner et la marche, avec une présence plus ou moins active.",
-    "Sandra a choisi de partager une ancienne photo floue puis de fermer doucement l'échange.",
+    "Sandra a choisi de partager une ancienne photo qu'elle avait revue, gardée et recadrée, puis de fermer doucement l'échange.",
     "Mathilde reste indirecte et ne séjourne pas encore au foyer.",
     "Aucune route, aucun secret dur et aucun cadre adulte ne sont actifs."
   ],
@@ -203,7 +203,7 @@
   "debug_expected_outcomes": [
     "Tuesday contains two meaningful three-choice nodes only.",
     "The dinner/walk and final Marie return are authored offline timeline phases.",
-    "Sandra remains one soft trace with no route score.",
+    "Sandra remains one selected soft trace with no route score.",
     "Tuesday completes only after the final Marie/shared-life beat.",
     "Wednesday unlocks through the V0.84 day transition."
   ]
