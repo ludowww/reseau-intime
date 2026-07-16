@@ -1,396 +1,222 @@
 # Narrative Canon Status — Current
 
-> Current narrative and implementation status after locked V0.93 and the V0.94 runtime-integration planning pass.
-> Runtime is playable from Tuesday through Monday at locked V0.92.
-> V0.93 and V0.94 are documentation-only and define the next visual-first adult wave and its implementation order.
+> **Current phase: Bible Narrative / North Star**  
+> The Bible Narrative is the main authority for what the game must become.  
+> The full character files remain the first authority for who the characters are.  
+> Runtime documentation remains the authority for what is currently implemented and playable.
 
-## 1. Version authority
+## 1. Current authority hierarchy
 
 ```text
-V0.78 = modular story architecture
-V0.79 / V0.83 = opening narrative and reconciled J1
-V0.84–V0.86a = authoritative day flow, opening runtime, and phone-time UX
-V0.87 = first post-opening repetition narrative source
-V0.88 = first-repetition integration plan
-V0.89 = Saturday/Sunday first slice runtime
-V0.90 = Monday Sandra second slice runtime
-V0.91 = first-repetition closure blueprint
-V0.92 = locked first-repetition wave closure runtime
-V0.93 = locked next visual-first wave source pack
-V0.94 = current runtime-integration plan for V0.95–V0.98
+North Star
+-> Player experience
+-> Central fantasies
+-> Full character canon
+-> Season macro routes
+-> Erotic evolution of routes
+-> Acts
+-> Sequence library
+-> Modular scenes
+-> Dialogues and photos
+-> Day distribution
+-> Runtime
 ```
 
-Legacy runtime is not automatic canon.
-Documented scenes are not playable until integrated.
+Clarification:
+
+- the full character canon defines identity, voice, concrete life, desire, wound, and limits;
+- the Bible defines season movement and transformation;
+- the NSFW canon defines adult escalation and consent / image rules;
+- runtime defines current access only.
 
 ---
 
-## 2. Locked baseline
+## 2. Current Bible documents
 
 ```text
-version: V0.93 — Visual-First Next Act I Wave Source Pack
-main / origin/main: d84e07ce4c7a93b8e27b2cda35936e7f0ed9c106
-tag: v0.93-visual-first-next-act-i-wave-source-pack
-engine: Godot 4.6.x
+docs/canon/bible/README.md
+docs/canon/bible/00_NORTH_STAR.md
+docs/canon/bible/01_EXPERIENCE_JOUEUR.md
+docs/canon/bible/02_FANTASMES_CENTRAUX.md
+docs/canon/bible/03_GRAMMAIRE_NARRATIVE.md
+docs/canon/bible/04_TRAME_PRINCIPALE_ET_ACTES_SAISON_1.md
+docs/canon/bible/05_ROUTES_MACRO_SAISON_1.md
+docs/canon/bible/06_EVOLUTION_EROTIQUE_DES_ROUTES.md
+docs/canon/bible/07_BIBLIOTHEQUE_DE_SEQUENCES_SAISON_1.md
 ```
 
-V0.93 changes documentation only.
-The current executable runtime remains the locked V0.92 behavior contained by that baseline.
+The Bible now covers:
+
+- identity and promise;
+- player responsibility and causal experience;
+- transversal fantasies;
+- narrative grammar;
+- first-season acts;
+- macro routes;
+- erotic, sexual, and pornographic progression;
+- a character-specific season sequence library.
 
 ---
 
-## 3. Current playable chronology
+## 3. Character-canon reconciliation state
 
-```text
-day 1 Tuesday — Marie / Sandra opening
-day 2 Wednesday — Mathilde enters the household
-day 3 Thursday — Raphaëlle, Sandra, Marie topology and return
-day 4 Friday — Pauline public trace, Nico friendship, opening close
-day 5 Saturday — Marie shared hour
-day 6 Sunday — Mathilde opportunity and Marie return
-day 7 Monday — Sandra opportunity, Marie return, wave closure
-```
-
-Current endpoint:
-
-```text
-Monday evening
-chapter_07_modular_index.json next_day = null
-opening_band_complete = true
-first_repetition_slice_01_complete = true
-first_repetition_slice_02_complete = true
-first_repetition_wave_complete = true
-```
-
-Completed days remain read-only archives.
-
----
-
-## 4. Current runtime relationship state
-
-```text
-Marie / Player = HABITUAL_WARMTH
-relationship frame = ASSUMED_EXCLUSIVE
-
-Mathilde = R1 or R2 Charged Access
-Sandra = R1
-Pauline = R1 Legitimate Social Access
-Nico = R1 Ordinary Friendship / Social Access
-Raphaëlle = R1 Ordinary Work Access
-
-hard secrets = none
-adult frames = none
-adult images = none
-routes R3+ = none
-```
-
-Historical first-repetition state remains in:
-
-```text
-story_ledgers.first_repetition
-```
-
-It is not reset by the next wave.
-
----
-
-## 5. Current runtime capabilities and gaps
-
-Already implemented:
-
-```text
-persistent character threads
-guided and three-choice replies
-day and phase chronology
-optional expiry and silent defer
-compact cross-thread notifications
-same-thread continuation
-structured first-repetition ledger
-individual content unlock IDs
-placeholder visual cards
-read-only day archives
-```
-
-Not yet implemented:
-
-```text
-actual photo texture rendering from asset_path
-player-facing photo gallery
-three-photo daily contract
-named-boundaries ledger
-primary visual route claim
-secondary visual-risk claim
-Tuesday day 8
-Wednesday day 9
-Thursday day 10
-```
-
----
-
-## 6. V0.93 next-wave product truth
-
-Act placement:
-
-```text
-Act I S5 — A boundary becomes explicit
-```
-
-Revised dramatic question:
-
-```text
-Which woman deliberately changes what she shows,
-which fantasy does Player encourage,
-and what risk is he willing to create?
-```
-
-The wave covers:
-
-```text
-next Tuesday through Thursday evening
-```
-
-Hard visual contract:
-
-```text
-3 female-focused photos minimum per day
-9 images minimum across the wave
-12–18 target including route variants
-one primary female visual progression maximum
-one secondary Pauline/Nico risk maximum
-at least one V3 provocative set or first V4 erotic teaser
-```
-
-Pornographic content is the visible destination of routes.
-V0.93 need not contain full V5 intercourse, but every major route must clearly signal its future adult payoff.
-
----
-
-## 7. Character route promises documented by V0.93
+The Bible and character canon are reconciled around the following mandatory embodiments.
 
 ### Marie
 
-```text
-black-dress visibility
-public desirability
-private couple continuation
-lingerie / erotic reconquest
-future couple porn or shared-gaze fantasy
-```
-
-### Mathilde
-
-```text
-domestic sexy presentation
-deliberate pose for Player
-underwear / lingerie in Marie's apartment
-hidden taboo, discovery, confession, or future shared-home sex
-```
+- La Verrière;
+- shared domestic life;
+- active social movement;
+- black-dress visibility;
+- desire to be actively chosen.
 
 ### Sandra
 
-```text
-elegant private image
-hesitant mirror image
-chosen extra exposure
-satin / lingerie / later private nudity and secret sex
-```
+- SentryCore and horaires décalés;
+- concrete traces and printed photos;
+- Jeff;
+- refuges and Maison des Tilleuls;
+- chosen showing through distance.
+
+### Mathilde
+
+- water damage;
+- temporary stay in Marie and Player's home;
+- legal-protection work;
+- naturally fitted clothing without automatic intent;
+- Marie's family trust as the central weight.
 
 ### Pauline
 
-```text
-public green-dress version
-private alternate crop
-double-addressed image
-future secret proof, alibi, and double-life pornography
-```
-
-### Nico
-
-```text
-sexualized selection of legitimate images
-male complicity
-shared-gaze opportunity
-unapproved recontextualization risk
-future consented sharing, cuckold/NTR fantasy, or betrayal
-```
+- real current relationship with Bastien;
+- previous hidden infidelity;
+- Marie's partial knowledge;
+- bank, choir, public image, alternate versions, and compartment logic.
 
 ### Raphaëlle
 
-```text
-elegant office version
-fitted workshop version
-partial costume transformation
-future roleplay and power-exchange pornography
-```
+- UX and accessibility work;
+- serious cosplay and craft practice;
+- Maud and the creative account;
+- workshop, preparation, chosen version, role, and aftermath;
+- local clarity distinguished from global accountability.
 
-These are documented future accesses, not current runtime unlocks.
+### Nico
+
+- heterosexual orientation;
+- no romantic or sexual route with Player;
+- real attraction to Marie;
+- real sexual attraction to Mathilde;
+- L'Annexe;
+- shared gaze, rivalry, image pact, alibi, and friendship consequence.
 
 ---
 
-## 8. V0.94 implementation authority
+## 4. First-season narrative depth
 
-Approved sequence:
+### Complete transformation possible
 
 ```text
-V0.95 — Tuesday Marie Visual Opening + Gallery MVP
-V0.96 — Wednesday Carry-Over Route + Guaranteed Social Set
-V0.97 — Pauline/Nico Visual Risk Continuation
-V0.98 — Thursday Dominant Payoff + Guarded Wave Closure
+Marie
+Sandra
+Mathilde
 ```
 
-### V0.95 boundary
-
-Must implement only:
+### Strong extension promise
 
 ```text
-day 8 Tuesday
-three distinct real Marie black-dress images
-actual inline texture rendering
-Gallery MVP reading GameState.unlocked_content
-M4 action/fantasy choice
-one structured obligation
-story_ledgers.named_boundaries_wave
-VisualDayContract three-slot gate
-named_boundaries_slice_01_complete
+Pauline
 ```
 
-V0.95 local endpoint:
+### Structural seeds with real first-season consequence
 
 ```text
-chapter_08_modular_index.json next_day = null
+Raphaëlle
+Nico
 ```
 
-V0.96 later unlocks Wednesday.
+Raphaëlle must obtain a chosen creative access or concrete future frame.
 
-### V0.96 boundary
+Nico must choose a meaningful friendship position: guardrail, rival, confidant, accomplice, authorized gaze partner, compromised witness, or withdrawal.
 
-```text
-historical Mathilde/Sandra selector
-three-image Mathilde or Sandra route set when eligible
-three guaranteed Marie/Pauline social images
-Mathilde repair date
-L'Annexe table/seat incident
-one primary visual route claim maximum
-```
+---
 
-### V0.97 boundary
+## 5. Current runtime separation
 
-```text
-Pauline private-alternate opportunity
-Nico erotic selection from credible already-unlocked images
-one secondary risk maximum
-Thursday unlock after terminal phases
-```
+The executable runtime remains the existing locked smartphone prototype and its already integrated narrative content.
 
-### V0.98 boundary
+The Bible reconciliation is documentation-only.
+
+It does not make the following automatically playable:
+
+- complete Marie reconquest route;
+- Sandra adult route;
+- Mathilde adult domestic route;
+- Pauline's private compartment;
+- Raphaëlle's creative-account, workshop, costume, or roleplay access;
+- Nico's shared-gaze, image-pact, rival, alibi, or invited-third routes;
+- the complete first season sequence library.
 
 ```text
-one dominant three-image female payoff
-Marie fallback if no external primary route
-Marie obligation paid / amended / failed
-pure guarded closure
-named_boundaries_wave_complete
-Friday remains unavailable
+Documented is not implemented.
+Current runtime access is not the full character ceiling.
 ```
 
 ---
 
-## 9. State ownership
+## 6. Current narrative decisions
 
-```text
-TimelineState = chronology
-GameState = flags, unlocked content, story ledgers
-EffectApplier = authored flags and unlocks
-visual-content data = image identity, audience, intensity, route and risk metadata
-```
-
-New ledger:
-
-```text
-story_ledgers.named_boundaries_wave
-```
-
-Owns:
-
-```text
-primary_carryover_source
-primary_visual_route
-secondary_risk_seed
-scene lifecycle
-obligations
-social hub status
-Nico cycle status
-```
-
-Does not duplicate:
-
-```text
-image unlock IDs
-image metadata
-first-repetition history
-Mathilde charged owner
-```
+- the engine is considered acquired unless a narrative necessity is demonstrated;
+- the first release is a complete but extensible first season;
+- scenes serve routes and do not create them;
+- sequences are designed before days;
+- photos are traces of transformation rather than decorative rewards;
+- erotic and pornographic content remains character-specific;
+- dark routes may exist but must create instability and consequence;
+- no character's consent is granted by a partner, friend, costume, image, jealousy, or route score;
+- Nico is heterosexual and cannot acquire a Player route through scene escalation.
 
 ---
 
-## 10. Visual runtime contract
+## 7. Next documentation layers
 
-Each new day index uses:
-
-```text
-daily_visual_contract
-```
-
-Rules:
+After the sequence library, the recommended order is:
 
 ```text
-three explicit visual slots minimum
-one unlocked content ID satisfies one slot
-branch alternatives listed explicitly
-duplicate IDs cannot satisfy several slots
-unknown or non-photo content blocks completion
-fallback metadata cards do not count as product-valid photography
+08 — Modular scene rules
+09 — Visual and photographic progression
+10 — Consequence, debt, secret, and obligation map
+11 — Distribution into days
+12 — Detailed scene plans
+13 — Dialogues and photo production
+14 — Runtime integration plans when the narrative layer is validated
 ```
 
-V0.95 adds:
-
-```text
-ConversationViewV095.gd
-PhotoGalleryView.gd
-PhotoGalleryView.tscn
-VisualDayContract.gd
-PhonePrototypeV095.gd
-```
-
-The gallery reads `GameState.unlocked_content`; it does not maintain a second collection state.
+No detailed day rewrite should precede validation of the sequence library and scene rules.
 
 ---
 
-## 11. Current exclusions
+## 8. Maintenance rule
 
-V0.94 does not authorize:
+When a future decision changes a character or route:
 
-- runtime changes on the planning branch;
-- all three new days in one patch;
-- Wednesday content in V0.95;
-- Pauline or Nico risk in V0.95;
-- Thursday payoff in V0.95;
-- a full smartphone redesign;
-- a global `DataLoader` refactor;
-- a `TimelineState` rewrite;
-- save-system work;
-- duplicate images used to inflate the daily count;
-- placeholders treated as final visual QA;
-- Friday after the new wave;
-- multiple dominant female payoff routes in one run.
+- update the full character canon if identity changes;
+- update the deprecation map;
+- update the global NSFW canon for adult-rule changes;
+- update the character index and current doorway;
+- update Bible documents affected by the change;
+- update this status and the reading order;
+- only then plan runtime integration.
 
 ---
 
-## 12. Final current rule
+## 9. Final current rule
 
 ```text
-V0.92 answers what is playable.
-V0.93 answers what the next adult visual wave must deliver.
-V0.94 answers how to integrate it safely.
-V0.95 is the next authorized runtime target after V0.94 locks.
+Use the Bible to know what the game must make the player live.
+Use full character canon to know who is living it.
+Use the sequence library to know which concrete events can transform them.
+Use runtime documentation to know what is playable now.
+
+No abstractly correct route may erase the concrete person.
 ```

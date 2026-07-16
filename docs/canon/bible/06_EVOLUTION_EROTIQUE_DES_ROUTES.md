@@ -6,11 +6,11 @@
 
 **Niveau : Architecture érotique, sexuelle et pornographique des relations**
 
-Ce document définit comment les relations de Réseau Intime peuvent devenir progressivement érotiques, sexuelles, puis éventuellement pornographiques sans perdre leur crédibilité narrative.
+Ce document définit comment les relations de Réseau Intime peuvent devenir progressivement érotiques, sexuelles, puis éventuellement pornographiques sans perdre leur crédibilité.
 
 Il complète les routes macro.
 
-Les routes macro définissent :
+Les routes définissent :
 
 > **Pourquoi et comment la nature d’une relation change.**
 
@@ -21,13 +21,13 @@ L’évolution érotique définit :
 Ce document ne contient :
 
 - aucun dialogue définitif ;
-- aucune scène prête à intégrer ;
+- aucune scène directement intégrable ;
 - aucun découpage en journées ;
-- aucune liste obligatoire de pratiques sexuelles ;
+- aucune liste obligatoire de pratiques ;
 - aucun quota de scènes explicites ;
 - aucune progression identique imposée à tous les personnages.
 
-Les futures séquences doivent servir simultanément la route relationnelle et l’évolution érotique.
+Les profils individuels doivent être lus avec les fichiers `*_CANON_FULL.md`.
 
 ---
 
@@ -35,17 +35,15 @@ Les futures séquences doivent servir simultanément la route relationnelle et l
 
 > **Comment une relation devient-elle progressivement érotique, sexuelle, puis éventuellement pornographique, sans que les personnages cessent d’être crédibles ?**
 
-Une scène explicite ne devient pas crédible uniquement parce que le joueur a accumulé suffisamment de proximité.
-
-Elle devient crédible lorsque le joueur comprend :
+Une scène explicite devient crédible lorsque le joueur comprend :
 
 1. pourquoi le désir existe ;
 2. pourquoi il devient possible maintenant ;
-3. pourquoi le personnage accepte cette situation précise ;
+3. pourquoi ce personnage accepte cette situation précise ;
 4. ce qu’il pense être en train d’accepter ;
 5. ce qu’il espère obtenir émotionnellement ;
 6. ce qu’il risque de perdre ;
-7. ce qui changera ensuite.
+7. ce qui changera après.
 
 Le contenu adulte doit être la conséquence d’une évolution.
 
@@ -57,36 +55,29 @@ Il ne doit jamais remplacer cette évolution.
 
 ## Érotique
 
-Une relation devient érotique lorsque le désir modifie la perception, l’attention ou le comportement.
+Une relation devient érotique lorsque le désir modifie :
 
-L’érotisme peut apparaître dans :
-
-- la conscience d’un regard ;
-- une anticipation ;
-- une proximité corporelle inhabituelle ;
-- une image consciemment destinée ;
-- une plaisanterie dont le sens a changé ;
-- une hésitation ;
-- une tenue choisie pour produire une réaction ;
-- une situation quotidienne devenue chargée ;
-- un silence où chacun comprend qu’une possibilité existe.
+- la perception ;
+- l’attention ;
+- le comportement ;
+- le choix d’une image ;
+- le silence ;
+- la manière d’occuper un lieu ;
+- la manière de revenir après une absence.
 
 Une relation peut être fortement érotique sans acte sexuel.
 
 ## Sexuel
 
-Une relation devient sexuelle lorsque le désir physique est reconnu, négocié ou concrètement incarné.
+Une relation devient sexuelle lorsque le désir physique est :
 
-La sexualité peut prendre la forme :
+- reconnu ;
+- proposé ;
+- négocié ;
+- incarné par un geste ou une rencontre ;
+- intégré comme dimension réelle de la relation.
 
-- d’une proposition ;
-- d’un geste accepté ;
-- d’une exploration ;
-- d’une rencontre intime ;
-- d’un accord sur une situation future ;
-- d’une relation sexuelle assumée ou secrète.
-
-Le passage à une relation sexuelle ne garantit ni la stabilité, ni l’amour, ni la progression optimale de la route.
+Le passage à une relation sexuelle ne garantit ni stabilité, ni amour, ni progression optimale.
 
 ## Pornographique
 
@@ -94,36 +85,29 @@ Le contenu devient pornographique lorsque la représentation sexuelle devient fr
 
 Pornographique ne signifie pas :
 
-- déconnecté du récit ;
 - interchangeable ;
 - sans émotion ;
 - sans consentement ;
-- sans conséquences ;
-- automatiquement supérieur à un contenu plus retenu.
+- sans contexte ;
+- sans partenaires réels ;
+- sans lendemain ;
+- automatiquement supérieur à une scène plus retenue.
 
-Une représentation pornographique réussie doit encore répondre à la route du personnage.
-
-Elle doit rester spécifique par :
+Une représentation pornographique réussie reste spécifique par :
 
 - le rapport au corps ;
+- le rôle du regard ;
 - le niveau de contrôle ;
 - le cadre accepté ;
 - la manière de prendre l’initiative ;
-- le rôle du regard ;
 - les limites encore actives ;
-- le risque ;
-- la place du secret ;
-- la manière dont les personnages se comportent après.
+- le secret ;
+- les objets et lieux ;
+- l’après-coup.
 
 ---
 
 # 3. Deux progressions indépendantes
-
-L’évolution relationnelle et le degré d’explicitation visuelle sont deux axes différents.
-
-Une relation peut être profondément transformée avec peu de nudité.
-
-Une image explicite peut au contraire exister dans une relation fragile, manipulée ou peu intime.
 
 ## Axe relationnel
 
@@ -135,7 +119,7 @@ Il mesure ce que la relation permet et signifie :
 - réciprocité soupçonnée ;
 - intention reconnue ;
 - disponibilité conditionnelle ;
-- intimité vécue ;
+- expérimentation ;
 - sexualité assumée ;
 - nouvel état relationnel.
 
@@ -153,98 +137,55 @@ Il mesure ce qui est montré :
 
 Les deux axes ne doivent jamais être confondus.
 
-Une photo habillée spécifiquement destinée à Sandra peut représenter une évolution plus forte qu’une nudité accidentelle de Mathilde.
+Une photo habillée choisie pour Sandra peut représenter une évolution plus forte qu’une nudité accidentelle de Mathilde.
 
-Une image provocante de Pauline peut être socialement légère, tandis qu’une image très simple envoyée sans son personnage public peut être profondément intime.
+Une photographie de préparation de Raphaëlle peut être plus intime qu’une image finale publique en costume.
+
+Une version privée de Pauline peut être plus dangereuse qu’une tenue publiquement plus exposée.
 
 ---
 
 # 4. Modèle transversal d’évolution du désir
 
-Les étapes suivantes constituent une grammaire interne.
-
-Elles ne sont pas affichées au joueur et ne forment pas une échelle obligatoire.
-
 ## 4.1 Neutralité crédible
 
 La relation possède encore un cadre clair.
 
-Une interaction corporelle ou visuelle peut exister sans être érotique.
-
-Cette neutralité doit être crédible pour que sa transformation soit perceptible.
+L’ordinaire doit être établi avant sa réinterprétation.
 
 ## 4.2 Conscience du regard
 
-Une personne comprend qu’elle est observée ou qu’elle observe différemment.
-
-Le désir n’est pas encore reconnu, mais la neutralité devient moins confortable.
+Une personne comprend qu’elle regarde ou qu’elle est regardée autrement.
 
 ## 4.3 Désir possible
 
-Le personnage envisage qu’une attirance existe.
-
-Il peut :
-
-- la nier ;
-- la rationaliser ;
-- l’utiliser comme plaisanterie ;
-- créer de la distance ;
-- chercher une confirmation ;
-- provoquer légèrement.
+L’attirance est envisagée, niée, rationalisée ou transformée en plaisanterie.
 
 ## 4.4 Réciprocité soupçonnée
 
 Le personnage pense que le désir pourrait être partagé.
 
-Cette étape modifie :
-
-- les initiatives ;
-- les images ;
-- les silences ;
-- la manière de tester une limite ;
-- le sens des situations ordinaires.
+Les initiatives, images et silences changent de sens.
 
 ## 4.5 Intention reconnue
 
 Au moins une personne agit en sachant que son comportement possède une signification érotique.
 
-Cela peut être :
-
-- une photo destinée ;
-- une invitation ;
-- une question ;
-- une présence prolongée ;
-- un geste ;
-- une provocation ;
-- une limite formulée.
-
 ## 4.6 Disponibilité conditionnelle
 
-Le désir est réel, mais l’intimité dépend encore de conditions.
+Le désir existe, mais dépend encore :
 
-Ces conditions peuvent concerner :
-
-- la confiance ;
-- le lieu ;
-- le secret ;
-- la sécurité ;
-- le temps ;
-- la relation avec Marie ;
-- la possibilité de se retirer ;
-- l’usage futur des images ;
-- l’état émotionnel du personnage.
+- d’un lieu ;
+- d’une audience ;
+- d’une règle ;
+- d’une vérité ;
+- d’un niveau de confiance ;
+- de la relation avec Marie, Jeff ou Bastien ;
+- de la possibilité de se retirer.
 
 ## 4.7 Expérimentation
 
-Les personnages explorent une nouvelle proximité sans nécessairement savoir encore ce qu’elle deviendra.
-
-Cette étape peut contenir :
-
-- une première intimité ;
-- une proposition partielle ;
-- une situation interrompue ;
-- un acte accepté mais non répété ;
-- une expérience dont le sens reste à discuter.
+Les personnages explorent une proximité sans savoir encore ce qu’elle deviendra.
 
 ## 4.8 Sexualité assumée
 
@@ -252,543 +193,380 @@ La sexualité devient une dimension reconnue de la relation.
 
 Elle peut rester :
 
+- conjugale ;
 - secrète ;
 - occasionnelle ;
 - affective ;
 - conflictuelle ;
 - négociée ;
-- parallèle ;
-- intégrée à une reconfiguration du couple.
+- intégrée à un cadre plus large.
 
 ## 4.9 Expression pornographique propre à la route
 
-Le contenu explicite peut devenir une forme cohérente de la relation.
+Le contenu explicite devient une incarnation spécifique de la relation.
 
-Il ne doit jamais être produit seulement parce que la route a atteint un niveau technique suffisant.
+## 4.10 Après-coup
 
-## 4.10 Après-coup et nouvel état
+Toute évolution significative produit :
 
-Toute évolution érotique significative doit créer un après.
-
-Le personnage peut rechercher :
-
-- de la tendresse ;
-- une clarification ;
 - une nouvelle règle ;
+- une attente ;
+- une dette ;
+- un besoin de clarification ;
 - une répétition ;
-- de la distance ;
-- le secret ;
+- une distance ;
 - une réparation ;
-- une protection contre la circulation ;
-- une redéfinition de la relation.
+- une conséquence sur une autre relation.
 
 Une scène sans après-coup ne constitue pas une véritable progression.
 
 ---
 
-# 5. Conditions nécessaires à une progression crédible
+# 5. Conditions nécessaires
 
-Une progression importante doit réunir plusieurs conditions.
+## État de route
 
-## État relationnel
-
-La route macro doit avoir rendu cette proximité possible.
+La route macro doit rendre la proximité possible.
 
 ## Désir personnel
 
-Le personnage doit posséder une raison propre de désirer cette situation.
+Le personnage doit posséder une raison propre d’accepter la situation.
 
-Il ne doit pas agir uniquement pour récompenser Player.
+Il ne récompense pas Player pour un bon comportement.
 
 ## Occasion crédible
 
-Le lieu, le temps, les contraintes et les personnes présentes doivent permettre la situation.
+Le lieu, le temps et les personnes présentes doivent permettre la situation.
 
 ## Disponibilité émotionnelle
 
-Un personnage attiré peut ne pas être disponible :
-
-- après une dispute ;
-- pendant une période de peur ;
-- lorsqu’il se sent utilisé ;
-- s’il doute du cadre ;
-- si une autre obligation est prioritaire.
+Une attirance ne signifie pas une disponibilité permanente.
 
 ## Consentement actif
 
-Le consentement doit correspondre à la situation réelle.
-
 Accepter :
 
-- une photo ;
 - un regard ;
-- une proximité ;
+- une photo ;
+- une tenue ;
+- un rôle ;
 - une première expérience ;
-- une image privée ;
 
-ne signifie pas accepter automatiquement :
+ne signifie pas accepter :
 
 - davantage ;
 - une répétition ;
 - une conservation ;
 - une diffusion ;
-- la présence d’un tiers ;
-- une nouvelle pratique ;
+- un tiers ;
+- une autre pratique ;
 - une relation durable.
-
-## Conséquences acceptables
-
-Le personnage doit avoir une lecture, même imparfaite, du risque qu’il prend.
-
-Une scène peut néanmoins basculer vers une conséquence qu’il n’avait pas anticipée.
 
 ## Initiative cohérente
 
 La manière d’avancer doit correspondre au personnage.
 
-Une même proposition ne doit pas fonctionner avec tout le monde.
+## Conséquence lisible
+
+La scène doit changer la relation ou le réseau.
 
 ---
 
-# 6. Consentement, limites et capacité de retrait
+# 6. Consentement, limites et retrait
 
-## Le désir ne supprime pas les limites
+Le désir ne supprime pas les limites.
 
-Un personnage peut :
-
-- désirer Player ;
-- accepter une image ;
-- initier une proximité ;
-- avoir déjà vécu une relation sexuelle avec lui ;
-
-et refuser une situation suivante.
-
-## Une limite respectée fait progresser la relation
-
-Respecter une limite peut produire :
+Une limite respectée peut produire :
 
 - confiance ;
 - désir différé ;
-- initiative future du personnage ;
+- initiative future ;
 - meilleure compréhension ;
-- possibilité d’un cadre plus explicite ;
-- intimité non sexuelle ;
-- réparation.
+- réparation ;
+- accès plus clair.
 
-Le jeu ne doit jamais apprendre que l’insistance est la méthode optimale.
-
-## Une limite poussée crée une dette
-
-Pousser une hésitation ou profiter d’une ambiguïté peut produire une progression apparente, mais doit également créer :
+Pousser une hésitation peut produire une progression apparente, mais crée :
 
 - malaise ;
-- perte de confiance ;
-- peur ;
 - recul ;
-- dépendance ;
+- dette ;
+- peur ;
 - colère ;
-- conséquence différée.
+- dépendance ;
+- future révélation.
 
-## Capacité de retrait
-
-Une situation négociée exige que le personnage puisse :
+Une situation négociée exige la possibilité de :
 
 - arrêter ;
 - changer d’avis ;
 - modifier le cadre ;
-- demander du temps ;
 - retirer une image ;
-- limiter son audience ;
+- limiter une audience ;
 - refuser une répétition.
+
+Ignorance, jalousie, excitation, vie de couple ou proximité ne sont jamais des permissions par procuration.
 
 ---
 
 # 7. Progression des photos
 
-Les photos sont un des principaux vecteurs de l’évolution érotique.
-
-Elles ne doivent pas être une simple gradation d’exposition corporelle.
+Les photos progressent par intention et audience, pas seulement par exposition corporelle.
 
 ## Image ordinaire
 
-La photo établit une présence, un contexte ou une habitude.
-
-Elle n’est pas nécessairement destinée à produire du désir.
+Présence ou contexte sans intention érotique nécessaire.
 
 ## Image partagée naturellement
 
-Le personnage accepte que Player entre davantage dans son quotidien.
-
-La signification vient de la continuité, pas encore de la provocation.
+Entrée plus profonde dans le quotidien.
 
 ## Image destinée
 
-Le personnage pense spécifiquement au regard de Player.
-
-Le cadrage, le commentaire ou le moment de l’envoi crée une audience privilégiée.
+Le personnage pense spécifiquement au regard du destinataire.
 
 ## Image érotique consciente
 
-Le personnage sait que l’image peut provoquer du désir et accepte ou recherche cette réaction.
+Le personnage sait que l’image peut provoquer du désir.
 
 ## Image intime négociée
 
 L’audience, la conservation et la signification sont suffisamment claires.
 
-L’intimité vient autant du cadre que de l’exposition.
+## Image explicite
 
-## Image sexuellement explicite
-
-L’image manifeste directement la dimension sexuelle de la relation.
-
-Elle doit encore posséder :
-
-- une intention ;
-- une audience ;
-- une conséquence ;
-- un après-coup.
+La dimension sexuelle est directement manifestée.
 
 ## Image pornographique de route
 
-L’image ou la série d’images représente une expression sexuelle spécifique à la relation.
-
-Elle ne doit pas être interchangeable avec celle d’un autre personnage.
+L’image représente une expression sexuelle spécifique à la relation.
 
 ## Image dangereuse
 
-Toute image peut devenir dangereuse si :
+L’image change de fonction par :
 
-- elle circule ;
-- elle est recadrée ;
-- elle est montrée à un tiers ;
-- elle contredit une version ;
-- elle est conservée contre une attente ;
-- son audience devient incertaine.
+- transfert ;
+- recadrage ;
+- sauvegarde ;
+- découverte ;
+- mauvaise audience ;
+- commentaire ;
+- sexualisation non autorisée.
 
----
+Toute image importante possède :
 
-# 8. Règles des séquences sexuelles et pornographiques
-
-Avant de valider une séquence explicite, répondre à ces questions :
-
-1. Pourquoi ce personnage désire-t-il cette situation ?
-2. Pourquoi maintenant ?
-3. Quel changement de route la rend possible ?
-4. Qui prend l’initiative ?
-5. Qu’est-ce que cette personne pense accepter ?
-6. Quelle capacité de retrait conserve-t-elle ?
-7. Quel risque est présent ?
-8. Quelle forme de confiance ou de fragilité est exposée ?
-9. Pourquoi cette séquence ne fonctionnerait-elle pas avec un autre personnage ?
-10. Quel nouvel état existe après ?
-
-Une séquence explicite doit être rejetée si elle ne fait qu’augmenter le degré de représentation sans transformer la relation.
+- une origine ;
+- un auteur ;
+- une audience ;
+- une intention ;
+- une règle de conservation ;
+- une conséquence si elle quitte son cadre.
 
 ---
 
-# 9. Marie — Évolution érotique
+# 8. Marie — Évolution érotique
 
 ## Noyau
 
 > **Transformer une familiarité conjugale en désir de nouveau conscient, sans effacer l’histoire, la routine ni les blessures du couple.**
 
-Marie possède une vie érotique intérieure qui ne dépend pas uniquement de Player.
+## Ancrages
 
-Elle peut désirer :
+- cuisine, canapé, repas et promenades ;
+- La Verrière ;
+- robe noire ;
+- boucles dorées ;
+- miroir d’entrée ;
+- playlist ;
+- sortie et regard social ;
+- retour dans l’appartement.
 
-- être regardée autrement ;
-- retrouver une curiosité ;
-- se sentir libre dans son propre corps ;
-- expérimenter ;
-- vérifier qu’elle n’est pas acquise ;
-- être désirée hors du seul cadre conjugal ;
-- reprendre le contrôle de sa vie après une fracture.
+## Progression spécifique
 
-## Déclencheurs crédibles
-
-- attention précise ;
-- initiative inhabituelle ;
-- autonomie sociale retrouvée ;
-- regard extérieur ;
-- jalousie reconnue sans contrôle ;
-- vérité sur les frustrations du couple ;
-- sentiment d’être choisie plutôt que simplement conservée.
-
-## Reconnaissance du désir
-
-Marie peut reconnaître assez directement son désir, mais hésiter sur ce qu’elle veut en faire.
-
-Elle peut distinguer :
-
-- le désir pour Player ;
-- le plaisir d’être désirée ;
-- la volonté de sauver le couple ;
-- une curiosité personnelle indépendante.
+1. vie commune encore tendre mais automatique ;
+2. Marie se prépare ou bouge pour elle-même ;
+3. Player remarque une version qui ne lui est pas garantie ;
+4. Marie observe s’il rejoint, désire ou contrôle ;
+5. une version privée ou une initiative de couple apparaît ;
+6. le désir extérieur est nommé sans devenir automatiquement une faute ;
+7. le couple expérimente une reconquête ou une nouvelle règle ;
+8. l’intimité explicite produit un changement dans le quotidien.
 
 ## Modes possibles
 
-### Reconquête joueuse
+- reconquête joueuse ;
+- désir ravivé par le regard extérieur ;
+- sexualité de réparation ;
+- exploration négociée ;
+- autonomie après fracture ;
+- double vie et jalousie non résolue.
 
-Le couple transforme sa connaissance mutuelle en nouveauté.
+## Conditions
 
-### Désir ravivé par le regard extérieur
+- Marie agit pour elle-même ;
+- le couple reconnaît un problème réel ;
+- la sexualité ne remplace pas la présence ;
+- la jalousie n’est pas une contrainte ;
+- les nouvelles règles sont concrètes.
 
-Marie retrouve une autonomie érotique et Player la redécouvre comme personne visible par d’autres.
+## Après-coup
 
-### Exploration négociée
+Marie veut savoir si Player reste actif :
 
-Le couple reconnaît que son ancien cadre ne suffit plus et explore une transformation limitée ou progressive.
+- le matin suivant ;
+- dans les courses ;
+- à La Verrière ;
+- lorsqu’elle n’est pas en robe noire ;
+- quand personne d’autre ne regarde.
 
-### Sexualité de réparation
+## Plafond saison 1
 
-L’intimité accompagne une réparation réelle, sans prétendre effacer instantanément la faute.
+- reconquête érotique complète ;
+- sexualité conjugale explicite ;
+- première expérimentation négociée ;
+- autonomie sexuelle affirmée ;
+- rupture où son désir ne dépend plus du couple.
 
-### Autonomie après fracture
+## Voies sombres
 
-Marie reprend possession de son désir sans chercher prioritairement à rassurer Player.
-
-## Rapport au regard et aux images
-
-Marie peut utiliser les images pour :
-
-- retrouver son propre regard sur elle-même ;
-- rendre Player attentif ;
-- partager une nouvelle intention ;
-- se présenter au monde extérieur ;
-- tester une nouvelle règle du couple ;
-- marquer une autonomie.
-
-## Conditions d’une sexualité crédible
-
-- Marie agit pour elle-même autant que pour Player ;
-- le couple a reconnu un changement ;
-- la sexualité ne remplace pas une conversation nécessaire ;
-- la jalousie n’est pas utilisée comme contrainte ;
-- les nouvelles règles sont réelles, même si elles sont provisoires.
-
-## Après-coup spécifique
-
-Marie veut savoir si la transformation existe encore dans le quotidien.
-
-La relation doit changer dans :
-
-- les initiatives ;
-- les attentions ;
-- les règles ;
-- la manière de parler du désir ;
-- la place du regard extérieur.
-
-## Plafond possible en saison 1
-
-Marie peut atteindre :
-
-- une sexualité conjugale redécouverte ;
-- une scène explicite cohérente avec la reconquête ;
-- une première expérimentation négociée ;
-- une autonomie sexuelle clairement affirmée ;
-- une rupture où son désir ne dépend plus du couple.
-
-Une ouverture stable et parfaitement organisée n’est pas nécessaire en saison 1. Une possibilité, une expérience ou un accord provisoire suffit.
-
-## Voie sombre
-
-- utilisation de la jalousie ;
-- sexualité employée pour retenir l’autre ;
+- jalousie utilisée comme arme ;
 - surveillance ;
-- demande de transparence asymétrique ;
-- exposition ou comparaison humiliante.
+- exposition ;
+- comparaison humiliante ;
+- sexe utilisé pour retenir l’autre ;
+- transparence asymétrique.
 
 ---
 
-# 10. Sandra — Évolution érotique
+# 9. Sandra — Évolution érotique
 
 ## Noyau
 
-> **Faire naître le désir dans une relation précieuse dont la valeur initiale reposait sur l’amitié, la confiance et l’histoire partagée.**
+> **Faire naître le désir dans une relation précieuse parce qu’elle existait avant l’ambiguïté.**
 
-Sandra peut être plus audacieuse en privé que son comportement initial ne le suggère.
+## Ancrages
 
-Cette audace vient de la confiance.
+- photographie imparfaite ;
+- SentryCore ;
+- horaires décalés ;
+- photo imprimée ;
+- cadre déplacé ;
+- livre ;
+- plaid et chocolat chaud ;
+- Jeff ;
+- maison des Tilleuls ;
+- distance entre les rencontres.
 
-Elle ne constitue pas une personnalité secrète totalement opposée.
+## Progression spécifique
 
-## Déclencheurs crédibles
-
-- présence fiable ;
-- mémoire ;
-- manque ;
-- sentiment d’être comprise ;
-- respect du rythme ;
-- proximité émotionnelle ;
-- certitude que Player ne transforme pas chaque signe en droit.
-
-## Reconnaissance du désir
-
-Sandra peut :
-
-- le minimiser ;
-- plaisanter ;
-- changer de sujet ;
-- créer de la distance ;
-- revenir plus tard ;
-- tester si Player a compris sans l’obliger à se justifier.
+1. une trace ancienne revient ;
+2. Player remarque un détail ;
+3. Sandra minimise ;
+4. une continuité privée s’installe ;
+5. le manque devient visible ;
+6. Sandra choisit une image ou une rencontre ;
+7. le désir est reconnu sans supprimer Jeff ni les limites ;
+8. une éventuelle intimité est suivie d’un recul, d’une tendresse ou d’une nouvelle règle ;
+9. une trace est conservée, déplacée, imprimée ou supprimée.
 
 ## Modes possibles
 
-### Intimité émotionnelle avant le corps
+- intimité émotionnelle avant le corps ;
+- retenue érotique ;
+- audace privée fondée sur la confiance ;
+- relation parallèle tendre ;
+- transgression suivie d’un recul ;
+- renoncement protecteur.
 
-Le désir s’installe dans la continuité privée.
+## Conditions
 
-### Retenue érotique
+- continuité déjà construite ;
+- absence de pression ;
+- respect de l’amitié ;
+- situation non fondée uniquement sur une faiblesse momentanée ;
+- après-coup possible.
 
-Sandra reconnaît le désir mais choisit de le maintenir dans un cadre limité.
+## Après-coup
 
-### Intensité après accumulation
+Sandra cherche à savoir si la relation existe encore après l’intimité.
 
-Une longue retenue peut conduire à une initiative plus claire ou plus intense.
+Elle peut :
 
-### Relation parallèle tendre
+- faire de l’humour ;
+- se réfugier dans une activité manuelle ;
+- demander du silence ;
+- déplacer une photo ;
+- retarder une réponse ;
+- vérifier que Player ne réclame pas immédiatement davantage.
 
-La sexualité prolonge un lien émotionnel déjà structuré.
-
-### Transgression suivie d’un recul
-
-Sandra peut accepter une bascule puis avoir besoin de distance pour comprendre ce qu’elle a fait.
-
-## Rapport au regard et aux images
-
-Sandra privilégie :
-
-- la destination privée ;
-- la confiance ;
-- la signification du destinataire ;
-- une progression retenue ;
-- des images qui deviennent plus intentionnelles plutôt que simplement plus exposées.
-
-Une image choisie pour Player doit rester rare et significative.
-
-## Conditions d’une sexualité crédible
-
-- la relation possède déjà une continuité ;
-- Sandra ne se sent pas poussée ;
-- Player respecte l’amitié qu’ils risquent d’abîmer ;
-- la situation ne repose pas uniquement sur une faiblesse momentanée ;
-- l’après est possible.
-
-## Après-coup spécifique
-
-Sandra cherche à savoir si le lien existe encore après la bascule.
-
-Elle peut ressentir :
-
-- tendresse ;
-- peur ;
-- humour défensif ;
-- besoin de silence ;
-- désir de normalité ;
-- crainte d’avoir détruit leur amitié ;
-- besoin que Player n’exige pas immédiatement davantage.
-
-## Plafond possible en saison 1
+## Plafond saison 1
 
 Une relation sexuelle complète est possible sur une route avancée, tardive et exigeante.
 
-Elle ne constitue pas l’issue normale ou automatiquement optimale.
+Elle n’est ni obligatoire ni automatiquement optimale.
 
-Les autres fins crédibles comprennent :
-
-- désir reconnu ;
-- première intimité ;
-- bascule interrompue ;
-- relation émotionnelle parallèle ;
-- renoncement explicite ;
-- recul protecteur.
-
-## Voie sombre
+## Voies sombres
 
 - exploitation du manque ;
-- utilisation de son couple comme point faible ;
+- utilisation de Jeff comme excuse ;
 - pression par la nostalgie ;
-- confusion entre confidence et permission ;
-- culpabilisation lorsqu’elle demande du temps.
+- photo exigée ;
+- culpabilisation après un recul ;
+- confusion entre confidence et permission.
 
 ---
 
-# 11. Mathilde — Évolution érotique
+# 10. Mathilde — Évolution érotique
 
 ## Noyau
 
-> **Transformer le fait d’être observée dans un espace proche en un désir qu’elle choisit, contrôle, négocie ou refuse.**
+> **Transformer une sensualité ordinaire dans le foyer de Marie en effet consciemment choisi.**
 
-Le moteur principal de Mathilde est la reprise de contrôle.
+## Ancrages
 
-L’interdit domestique amplifie le désir, mais ne suffit pas à le créer.
+- séjour temporaire après dégât des eaux ;
+- chambre d’appoint ;
+- cuisine du matin ;
+- salle de bains ;
+- mini-short noir ;
+- crop top ;
+- atomiseur de parfum ;
+- garment bag ;
+- trousse ouverte ;
+- tote bag juridique ;
+- histoire familiale avec Marie ;
+- fin du séjour.
 
-## Déclencheurs crédibles
+## Progression spécifique
 
-- conscience du regard ;
-- gêne devenue question ;
-- confiance pratique ;
-- désir de contrôler l’interprétation ;
-- plaisir de vérifier son effet ;
-- besoin d’exister autrement que comme présence liée à Marie ;
-- tension entre loyauté et curiosité.
-
-## Reconnaissance du désir
-
-Mathilde peut reconnaître d’abord :
-
-- le regard de Player ;
-- le pouvoir qu’elle possède sur ce regard ;
-- son propre plaisir à le provoquer ;
-- la peur des conséquences.
-
-Elle peut comprendre son désir en agissant plutôt qu’en le formulant.
+1. vêtements et proximité ordinaires ;
+2. Player remarque ;
+3. Mathilde comprend qu’il regarde ;
+4. elle plaisante, corrige ou nie ;
+5. elle demande un avis ;
+6. elle choisit le vêtement, le cadrage ou le moment ;
+7. la provocation devient reconnue ;
+8. une limite est posée ou traversée ;
+9. le foyer obtient une règle, un secret ou une fracture.
 
 ## Modes possibles
 
-### Reprise de contrôle
+- reprise de contrôle ;
+- jeu de regard ;
+- provocation domestique ;
+- comparaison avec Marie ;
+- désir et panique ;
+- vulnérabilité après l’initiative ;
+- refus et médiation.
 
-Mathilde choisit le moment, le cadrage et la limite.
+## Conditions
 
-### Jeu de regard négocié
+- capacité réelle d’arrêter ;
+- Marie reste une responsabilité ;
+- le logement temporaire n’est pas traité comme accès ;
+- Player ne réduit pas Mathilde à sa tenue ;
+- le secret et sa conséquence sont reconnus.
 
-Le plaisir vient d’une audience claire et d’une possibilité réelle d’arrêter.
-
-### Provocation domestique consciente
-
-Elle utilise volontairement l’espace familier pour créer une tension.
-
-### Rivalité ou comparaison
-
-Le désir est amplifié par la place de Marie, sans réduire Mathilde à une concurrente.
-
-### Vulnérabilité après l’initiative
-
-Mathilde peut sembler contrôler la situation tout en craignant profondément son interprétation et sa circulation.
-
-## Rapport au regard et aux images
-
-Mathilde doit pouvoir distinguer :
-
-- exposition accidentelle ;
-- visibilité tolérée ;
-- provocation choisie ;
-- image destinée ;
-- image intime négociée ;
-- image utilisée contre son attente.
-
-Sa progression la plus forte est le passage du subi au choisi.
-
-## Conditions d’une sexualité crédible
-
-- Mathilde contrôle ou accepte réellement le cadre ;
-- la proximité domestique n’est pas traitée comme un droit ;
-- la loyauté envers Marie reste une tension vivante ;
-- Player ne la réduit pas à une comparaison ;
-- le secret et ses conséquences sont reconnus.
-
-## Après-coup spécifique
+## Après-coup
 
 Mathilde veut savoir :
 
@@ -796,443 +574,409 @@ Mathilde veut savoir :
 - ce qui restera privé ;
 - comment il agira devant Marie ;
 - si elle possède encore le contrôle ;
-- si la situation était un jeu, une bascule ou une erreur.
+- si elle peut rester dans l’appartement sans jouer une version permanente.
 
-## Plafond possible en saison 1
+## Plafond saison 1
 
-Mathilde peut atteindre :
+- jeu intentionnel ;
+- image destinée ;
+- intimité physique ;
+- relation sexuelle secrète ;
+- scène explicite propre à l’interdit domestique ;
+- révélation ou rupture de confiance.
 
-- un jeu érotique clairement intentionnel ;
-- une intimité physique ;
-- une relation sexuelle secrète ;
-- une scène explicite propre à l’interdit domestique ;
-- une rupture de confiance majeure.
+Une configuration à trois peut être préparée, jamais obtenue automatiquement par une progression cachée avec Mathilde.
 
-Une configuration négociée à trois peut être préparée, mais elle ne doit pas devenir une résolution facile ou centrale de la première saison.
-
-## Voie sombre
+## Voies sombres
 
 - observation non consentie ;
-- image conservée ou diffusée ;
+- diffusion ;
 - utilisation de la proximité forcée ;
 - comparaison entretenue avec Marie ;
-- situation sans capacité réelle de retrait ;
-- exposition sociale.
+- toucher pendant le sommeil ;
+- alcool utilisé comme permission ;
+- exploitation de la dépendance au logement.
 
 ---
 
-# 12. Pauline — Évolution érotique
+# 11. Pauline — Évolution érotique
 
 ## Noyau
 
-> **Transformer la maîtrise sociale des audiences en une ligne privée où Pauline choisit qui voit quoi, puis découvre ce qu’elle ne peut pas entièrement contrôler.**
+> **Transformer une maîtrise légitime des audiences en compartiment privé où le désir peut exister à côté de la vie officielle.**
 
-Le personnage social de Pauline est sincère, mais incomplet.
+## Ancrages
 
-Elle apprécie réellement :
+- Bastien ;
+- appartement partagé ;
+- repas et accueil ;
+- ancienne infidélité ;
+- notification presque découverte ;
+- habitudes de suppression et de contrôle ;
+- banque et confidentialité ;
+- chorale ;
+- robe portefeuille verte ;
+- photo publique et cadrage privé ;
+- Marie comme amie ayant déjà porté une partie du secret.
 
-- le jeu ;
-- l’attention ;
-- la mise en scène ;
-- les doubles lectures ;
-- le contrôle de son image.
+## Progression spécifique
 
-Cette aisance protège également ses zones plus vulnérables.
-
-## Déclencheurs crédibles
-
-- réaction intelligente ;
-- capacité de Player à comprendre une double adresse ;
-- protection d’une information ;
-- réponse qui ne cherche pas immédiatement un accès sexuel ;
-- curiosité envers les limites du couple ;
-- désir d’être vue hors de sa performance sociale.
-
-## Reconnaissance du désir
-
-Pauline peut reconnaître rapidement la tension, mais rester plus incertaine sur l’attachement.
-
-Elle peut longtemps présenter une proximité réelle comme un jeu.
+1. version publique fiable ;
+2. double lecture ;
+3. commentaire ou cadrage privé ;
+4. test de discrétion ;
+5. version alternative ;
+6. preuve réciproque ;
+7. compartiment érotique ;
+8. sexualité possible ;
+9. collision avec Bastien, Marie ou l’image publique.
 
 ## Modes possibles
 
-### Jeu d’audiences
+- jeu d’audiences ;
+- ligne privée pratique ;
+- performance choisie ;
+- double vie ;
+- vulnérabilité sans version préparée ;
+- perte du contrôle du récit ;
+- fermeture protectrice.
 
-Elle crée plusieurs versions d’une situation.
+## Conditions
 
-### Performance choisie
+- Player comprend audience et permission ;
+- Bastien reste réel ;
+- Marie n’est pas une autorisation ;
+- la relation existe aussi hors des images ;
+- la réciprocité du risque est lisible.
 
-L’organisation du regard fait partie de son plaisir.
+## Après-coup
 
-### Ligne privée
+Pauline tente de :
 
-Elle réserve à Player un ton, une image ou une interprétation.
-
-### Vulnérabilité non performée
-
-Elle accepte d’être vue sans maîtriser totalement l’effet.
-
-### Perte de contrôle
-
-Une audience, une image ou une émotion échappe à son récit.
-
-## Rapport au regard et aux images
-
-Pauline est particulièrement sensible à :
-
-- la destination ;
-- la version ;
-- le commentaire ;
-- le recadrage ;
-- la différence entre public et privé ;
-- la capacité de Player à ne pas révéler le jeu.
-
-## Conditions d’une sexualité crédible
-
-- Player a prouvé qu’il comprend audience et permission ;
-- Pauline ne devient pas une simple distributrice d’images ;
-- la relation existe aussi hors de sa performance ;
-- son lien avec Marie reste une conséquence réelle ;
-- la situation possède un intérêt pour Pauline elle-même.
-
-## Après-coup spécifique
-
-Pauline cherche à reprendre ou redéfinir le contrôle du récit.
-
-Elle peut :
-
-- plaisanter ;
+- restaurer la surface ;
 - imposer une règle ;
-- vérifier ce que Player dira ;
-- envoyer une autre version ;
-- se retirer ;
-- révéler une vulnérabilité inattendue.
+- vérifier ce qui a été conservé ;
+- contrôler une nouvelle version ;
+- éviter de regarder le problème central ;
+- ou enfin reconnaître qu’elle répète l’ancien schéma.
 
-## Plafond possible en saison 1
+## Plafond saison 1
 
-La saison 1 doit surtout accomplir :
+- ligne privée autonome ;
+- différence d’audience ;
+- première preuve ;
+- compartiment érotique identifiable ;
+- risque concret envers Marie ou Bastien.
 
-- une ligne privée autonome ;
-- une première différence d’audience significative ;
-- un test de fiabilité ;
-- une promesse érotique forte ;
-- un risque futur concret.
+Une relation sexuelle complète n’est pas nécessaire pour rendre sa progression forte.
 
-Une sexualité explicite complète n’est pas nécessaire pour valider sa progression pendant cette saison.
-
-## Voie sombre
+## Voies sombres
 
 - diffusion ;
-- exposition ;
-- jeu utilisé comme pression ;
-- manipulation de la jalousie ;
-- exploitation de sa perte de contrôle ;
-- trahison envers Marie ou par Marie.
+- chantage par preuve ;
+- exploitation de l’ancienne infidélité ;
+- utilisation de Marie comme couverture ;
+- tromperie présentée comme choix neutre ;
+- trahison de Bastien ou de Marie sans coût.
 
 ---
 
-# 13. Raphaëlle — Évolution érotique
+# 12. Raphaëlle — Évolution érotique
 
 ## Noyau
 
-> **Faire apparaître le désir à partir de l’admiration, de la compétence et de la découverte d’une autre version de soi hors du foyer.**
+> **Faire passer Player du résultat visible au processus d’une version choisie, puis vérifier qu’il reconnaît encore Raphaëlle lorsque le rôle prend fin.**
 
-Raphaëlle est célibataire, autonome et sortie depuis quelque temps d’une relation longue qui occupait trop de place dans sa vie.
+Le cosplay n’est ni un gadget ni automatiquement sexuel.
 
-Elle ne cherche pas à être sauvée et ne considère pas son célibat comme une disponibilité automatique.
+Il devient érotique lorsque Raphaëlle utilise délibérément :
 
-## Déclencheurs crédibles
+- la transformation ;
+- l’audience ;
+- le rôle ;
+- la permission ;
+- le processus ;
+- la fin du cadre.
 
-- compétence ;
-- calme ;
-- attention professionnelle réelle ;
-- humour discret ;
-- capacité de Player à ne pas chercher constamment à impressionner ;
-- facette de Player peu visible dans son foyer ;
-- transition crédible du professionnel vers le personnel.
+## Ancrages
 
-## Reconnaissance du désir
+- version bureau ;
+- carnet bleu-vert ;
+- garment bag ;
+- atelier ;
+- machine à coudre ;
+- mannequin ;
+- découd-vite rouge ;
+- dé à coudre ;
+- tissus et patrons ;
+- Maud ;
+- compte créatif ;
+- essayage partiel ;
+- masque ;
+- bustier ;
+- gants ;
+- bottes ;
+- perruque ;
+- maquillage incomplet ;
+- silence après avoir retiré le costume.
 
-Raphaëlle peut reconnaître une attirance tout en décidant qu’elle n’est pas suffisamment importante pour justifier les conséquences.
+## Progression spécifique
 
-Elle sépare fortement :
-
-- intérêt ;
-- disponibilité ;
-- décision.
+1. version bureau crédible ;
+2. détail de fabrication remarqué ;
+3. conversation sur le travail créatif ;
+4. accès au compte ou au processus ;
+5. Player voit une préparation inachevée ;
+6. Raphaëlle choisit une audience ;
+7. une version est destinée ;
+8. le rôle et les limites sont nommés ;
+9. désir ou roleplay explicite ;
+10. le rôle se termine ;
+11. la relation doit exister dans l’ordinaire ou reconnaître sa limite.
 
 ## Modes possibles
 
-### Admiration devenue curiosité
+- admiration devenue curiosité ;
+- confiance créative ;
+- transformation choisie ;
+- photographie délibérée ;
+- roleplay ;
+- échange de pouvoir flexible ;
+- relation informée ;
+- rencontre secrète clairement nommée ;
+- frontière renforcée.
 
-Le désir naît de la manière dont Player agit.
+## Conditions
 
-### Version extérieure
+- séparation claire entre travail et intimité ;
+- intérêt pour le processus ;
+- absence de pression professionnelle ;
+- audience et règles d’image explicites ;
+- reconnaissance de Marie ou de son exclusion ;
+- droit de modifier le rôle ;
+- responsabilité après la scène.
 
-Le contexte professionnel ou le déplacement révèle une autre facette des personnages.
+## Perte de contrôle spécifique
 
-### Transformation choisie
+Raphaëlle peut :
 
-Raphaëlle décide d’être vue hors de son rôle professionnel.
+- envoyer une image avant d’avoir perfectionné la légende ;
+- révéler son compte plus tôt ;
+- demander à Player de rester après l’heure définie ;
+- transformer « une photo » en « une de plus » ;
+- retirer un masque tout en continuant le rôle ;
+- demander s’il la veut sans le costume ;
+- regretter une règle qu’elle a elle-même formulée.
 
-### Parenthèse consciente
+Elle ne perd jamais le droit de changer le cadre.
 
-Une occasion extérieure existe, mais doit ensuite revenir frapper le réseau principal.
+## Après-coup
 
-### Frontière renforcée
+La question n’est pas seulement :
 
-L’attirance est reconnue et contenue.
+> « Le rôle était-il réussi ? »
 
-## Rapport au regard et aux images
+La question est :
 
-Ses images doivent d’abord traduire :
+> **« Que reste-t-il entre eux lorsque rien n’est mis en scène ? »**
 
-- une compétence ;
-- un contexte ;
-- un choix de présentation ;
-- une différence entre version professionnelle et privée.
+## Plafond saison 1
 
-La progression sexuelle ne doit pas commencer par une exposition rapide.
-
-## Conditions d’une sexualité crédible
-
-- confiance professionnelle préservée ;
-- absence de pression liée au travail ;
-- pouvoir relationnel suffisamment équilibré ;
-- réelle connaissance personnelle ;
-- conséquences du retour reconnues ;
-- désir de Raphaëlle indépendant de l’effet de nouveauté.
-
-## Après-coup spécifique
-
-Raphaëlle cherche à savoir si la parenthèse peut être intégrée à la réalité.
-
-Elle peut refuser :
-
-- le mensonge permanent ;
-- l’improvisation irresponsable ;
-- le fait d’être cachée sans avoir choisi ce rôle ;
-- la dégradation de son espace professionnel.
-
-## Plafond possible en saison 1
-
-La première saison peut atteindre :
-
+- compte créatif révélé ;
+- accès à la préparation ;
+- image choisie ;
+- essayage ou teaser de costume ;
 - attirance reconnue ;
-- échange personnel ;
-- invitation ;
-- image qui change le regard ;
-- occasion extérieure concrète ;
-- proximité interrompue ou éventuellement premier baiser sur une variante avancée.
+- invitation future concrète ;
+- éventuellement premier baiser ou proposition de cadre sur une variante avancée.
 
-La véritable bascule sexuelle est prioritairement conservée pour un arc ultérieur.
+La bascule sexuelle complète reste prioritairement un futur arc.
 
-## Voie sombre
+## Voies sombres
 
-- abus du contexte professionnel ;
-- utilisation du travail comme faux alibi ;
-- pression ;
-- conséquence sur sa réputation ;
-- promesse privée incompatible avec le comportement public de Player.
+- costume traité comme permission ;
+- image quittant le cadre ;
+- travail utilisé comme levier ;
+- secret clair utilisé comme absolution ;
+- rôle continué après retrait ;
+- désir du costume sans respect du craft ;
+- exclusion de Marie niée ou euphémisée.
 
 ---
 
-# 14. Nico — Fonction dans l’évolution érotique
+# 13. Nico — Fonction dans l’évolution érotique
 
 ## Noyau
 
-> **Un ami hétérosexuel devient la personne qui connaît progressivement les désirs et contradictions de Player, puis décide jusqu’où il accepte de les comprendre, de les encourager ou de les couvrir.**
+> **Un ami hétérosexuel fait circuler le regard entre les espaces sociaux et domestiques, avec un désir réel pour Marie et Mathilde, puis découvre que nommer le désir ne suffit pas à rendre les actes responsables.**
 
 Nico est hétérosexuel.
 
 Il n’existe :
 
-- aucune attirance sexuelle de Nico envers Player ;
-- aucune route romantique entre eux ;
+- aucune attirance romantique envers Player ;
+- aucune attirance sexuelle envers Player ;
 - aucune ambiguïté homosexuelle cachée ;
-- aucune exploration physique directe entre Nico et Player.
+- aucune exploration physique directe entre eux.
 
-Leur intimité repose sur :
+## Attirances
 
-- la confiance ;
-- la confidence ;
-- la loyauté ;
-- le regard partagé ;
-- le secret ;
-- la compromission.
+### Marie
 
-## Déclencheurs de son implication
+Attirance émotionnelle, sociale et sexuelle réelle.
 
-- Player lui confie une attirance ;
-- Nico remarque une contradiction ;
-- une image ou une situation devient significative ;
-- Player lui demande conseil ;
-- Nico est sollicité pour une couverture ;
-- il développe lui-même un intérêt pour une femme impliquée dans le réseau.
+### Mathilde
+
+Attirance sexuelle réelle et curiosité pour la version domestique que Nico ne voit pas directement.
+
+### Pauline
+
+Attraction contextuelle possible, surtout autour des versions publique et privée, mais aucune route romantique par défaut.
+
+### Raphaëlle
+
+Aucune route par défaut. Toute future interaction adulte exige sa propre construction et son cadre.
+
+## Ancrages
+
+- L’Annexe ;
+- tablier noir ;
+- terrasse ;
+- salle qui se vide ;
+- photographies sociales d’origine crédible ;
+- descriptions du foyer ;
+- regard de l’intérieur contre regard de l’extérieur ;
+- alibis ;
+- jalousie ;
+- dette ;
+- silence après les plaisanteries.
+
+## Progression spécifique
+
+1. amitié ordinaire ;
+2. Nico remarque une femme ou une dynamique ;
+3. Player reconnaît son propre regard ;
+4. une confidence ou une description apparaît ;
+5. Nico nomme son intérêt ;
+6. une demande d’image, d’avis ou d’alibi est formulée ;
+7. les règles d’audience sont acceptées ou violées ;
+8. Nico devient garde-fou, rival, complice ou témoin ;
+9. la femme concernée agit selon son propre désir ;
+10. l’amitié doit absorber la conséquence.
 
 ## Modes possibles
 
-### Confident
+- confident ;
+- garde-fou ;
+- tentateur ;
+- rival ;
+- complice ;
+- partenaire d’un regard partagé autorisé ;
+- auteur d’une circulation sombre ;
+- tiers invité dans un futur cadre hétérosexuel impliquant une ou plusieurs femmes ;
+- témoin compromis.
 
-Il écoute sans participer directement.
+## Image et regard
 
-### Garde-fou
+### Regard autorisé
 
-Il distingue désir, imprudence, manipulation et abus.
+La femme concernée sait :
 
-### Tentateur
+- que l’image existe ;
+- qui la reçoit ;
+- pourquoi ;
+- si elle peut être conservée ;
+- si elle peut être montrée à une autre personne nommée.
 
-Il encourage Player à reconnaître ou poursuivre certains désirs.
+### Recontextualisation non autorisée
 
-### Complice
+Une image légitime est recadrée, transférée ou sexualisée hors de son audience.
 
-Il fournit un alibi, un espace, une information ou une aide.
+Cette voie peut être chargée, mais elle est une trahison et non une récompense propre.
 
-### Regard partagé
+### Capture prohibée
 
-Il participe à une situation visuelle ou érotique clairement consentie.
+Caméra cachée, personne endormie, vol d’image ou contrainte ne constituent jamais le fonctionnement normal de Nico.
 
-### Témoin compromis
+## Conditions
 
-Il sait suffisamment de choses pour être impliqué malgré lui.
+- la femme choisit elle-même ;
+- Player ne peut pas la « donner » ;
+- Nico peut refuser ;
+- l’attirance de Nico est nommée ;
+- la jalousie de Player ne vaut pas permission ;
+- un trio n’implique aucune sexualité entre les deux hommes ;
+- l’après-coup de l’amitié est obligatoire.
 
-## Rapport aux femmes et aux configurations adultes
+## Plafond saison 1
 
-Nico peut avoir ses propres désirs hétérosexuels.
+- désir pour Marie ou Mathilde rendu lisible ;
+- confidence ;
+- proposition de regard ou d’alibi ;
+- pacte autorisé ou risque de circulation ;
+- position morale et relationnelle claire.
 
-Une future participation à une situation adulte impliquant une ou plusieurs femmes est possible uniquement si :
+Une participation sexuelle directe n’est pas nécessaire.
 
-- son désir est établi ;
-- la situation est consentie par toutes les personnes ;
-- sa présence sert sa propre route ;
-- il n’est pas utilisé comme accessoire destiné à rendre une scène plus explicite ;
-- Player et Nico ont construit une confiance compatible avec cette participation.
+## Voies sombres
 
-La première saison n’a pas besoin d’atteindre cette étape.
-
-## Limites fortes
-
-Nico ne doit pas :
-
-- diffuser une image intime sans consentement ;
-- profiter d’une personne incapable de choisir ;
-- mentir sur le consentement d’un tiers ;
-- couvrir une situation qu’il considère réellement abusive.
-
-Il peut être permissif, imprudent ou compromis sans être moralement vide.
-
-## Après-coup spécifique
-
-Nico évalue :
-
-- jusqu’où il est désormais impliqué ;
-- ce que Player attend de lui ;
-- si sa loyauté est exploitée ;
-- si une femme ou une relation a été réellement respectée ;
-- s’il doit continuer, prévenir ou se retirer.
-
-## Plafond possible en saison 1
-
-La saison établit :
-
-- ce qu’il sait ;
-- ce qu’il accepte de regarder ou commenter ;
-- ce qu’il couvre ;
-- ce qu’il refuse ;
-- son rôle de confident, garde-fou, tentateur ou complice.
-
-Une participation sexuelle directe n’est pas nécessaire en saison 1.
+- diffusion ;
+- recadrage ;
+- alibi servant une violation ;
+- pression sur une femme ;
+- utilisation de l’amitié comme dette ;
+- rivalité cachée derrière un conseil ;
+- comportement opportuniste rationalisé comme franchise.
 
 ---
 
-# 15. Interactions entre les évolutions érotiques
-
-Les progressions ne sont pas isolées.
+# 14. Interactions entre évolutions
 
 ## Marie et Sandra
 
-Une intimité émotionnelle avec Sandra peut :
-
-- accélérer la reconquête de Marie ;
-- révéler le manque du couple ;
-- créer une concurrence émotionnelle ;
-- rendre une transparence future nécessaire ;
-- produire une double vie.
+La relation Sandra peut révéler ce qui manque au couple ou devenir une réalité concurrente.
 
 ## Marie et Mathilde
 
-Le désir pour Mathilde modifie la signification du foyer.
-
-Une progression avec Mathilde ne peut pas rester sans conséquence sur la route de Marie.
+Toute progression Mathilde affecte la sécurité du foyer et la confiance familiale.
 
 ## Marie et Pauline
 
-Pauline peut :
+Pauline peut aider Marie à redevenir visible tout en ouvrant un compartiment qui trahit cette amitié.
 
-- renforcer l’autonomie sociale de Marie ;
-- provoquer une jalousie ;
-- devenir un canal privé ;
-- révéler une différence entre image publique et privée.
+## Marie et Raphaëlle
 
-## Sandra et Mathilde
+Un cadre informé exige la voix de Marie. Un secret clair reste une infidélité si elle est exclue.
 
-Leur coexistence oppose :
+## Marie et Nico
 
-- l’histoire émotionnelle ;
-- la proximité concrète ;
-- le manque ;
-- l’interdit domestique.
+Marie peut apprécier, refuser ou choisir le regard de Nico. Player n’est jamais son porte-parole de consentement.
 
-Player peut difficilement maintenir indéfiniment les deux relations dans leur meilleur état sans conflit.
+## Mathilde et Nico
 
-## Raphaëlle et le réseau principal
+Une attraction autonome est possible si Mathilde choisit une situation réelle. Son image domestique ne doit pas lui être transmise comme substitut.
 
-Raphaëlle permet une parenthèse extérieure.
+## Pauline et Nico
 
-Sa route devient réellement importante lorsque cette parenthèse produit :
+Le contrôle des audiences de Pauline rend toute circulation par Nico particulièrement significative.
 
-- une absence ;
-- une comparaison ;
-- un secret ;
-- un changement visible au retour.
+## Raphaëlle et le groupe
 
-## Nico et toutes les routes
-
-Nico peut :
-
-- renforcer une prise de conscience ;
-- fournir un langage au désir ;
-- encourager une transgression ;
-- refuser une manipulation ;
-- devenir gardien d’une image ou d’un secret ;
-- augmenter le coût d’un mensonge.
+Raphaëlle peut participer à des cadres complexes, mais elle n’est ni médiatrice obligatoire ni secrétaire du consentement collectif.
 
 ---
 
-# 16. Voies sombres
+# 15. Voies sombres
 
-Une progression sombre peut être sexuellement plus rapide sans être relationnellement meilleure.
+Une progression sombre peut être plus rapide sexuellement sans être meilleure relationnellement.
 
-Elle peut reposer sur :
-
-- exploitation d’une vulnérabilité ;
-- pression ;
-- mauvaise audience ;
-- image détournée ;
-- jalousie provoquée ;
-- alibi imposé ;
-- dépendance ;
-- mensonge ;
-- capacité de retrait réduite ;
-- conséquence cachée à une personne.
-
-Une voie sombre doit produire au moins une dette durable :
+Elle doit produire au moins une dette durable :
 
 - peur ;
 - perte de confiance ;
+- exposition ;
 - pouvoir asymétrique ;
 - culpabilité ;
-- exposition ;
 - rupture ;
 - témoin compromis ;
 - dépendance ;
@@ -1242,83 +986,71 @@ Le jeu ne doit pas récompenser systématiquement ces voies par davantage de con
 
 ---
 
-# 17. Plafonds narratifs de la saison 1
+# 16. Plafonds de la saison 1
 
 ## Marie
 
-Bascule sexuelle et contenu explicite possibles.
+Bascule conjugale et sexuelle complète possible.
 
 ## Sandra
 
-Bascule sexuelle complète possible sur une route avancée, mais non obligatoire.
+Bascule émotionnelle et sexuelle complète possible sur une route avancée.
 
 ## Mathilde
 
-Bascule sexuelle et explicite possible, avec conséquences domestiques majeures.
+Bascule domestique et sexuelle complète possible avec conséquences majeures.
 
 ## Pauline
 
-Forte progression érotique et privée. La route sexuelle complète peut rester une promesse d’extension.
+Forte progression érotique, compartiment privé et preuve. Sexualité complète non nécessaire.
 
 ## Raphaëlle
 
-Attirance reconnue et occasion concrète. Bascule sexuelle principalement réservée aux arcs futurs.
+Accès au processus créatif, version choisie, attirance et cadre futur concret. Bascule sexuelle principale différée.
 
 ## Nico
 
-Progression de confidence, regard et compromission. Pas de route sexuelle avec Player. Participation adulte directe non nécessaire en saison 1.
-
-Ces plafonds ne sont pas des quotas.
-
-Une partie peut progresser moins loin tout en restant narrativement complète.
+Confidence, rivalité, regard partagé, alibi et compromission. Aucun désir ou contact sexuel avec Player.
 
 ---
 
-# 18. Critères d’acceptation d’une évolution érotique
+# 17. Critères d’acceptation d’une séquence adulte
 
-Avant de valider une progression, vérifier :
+Avant de valider une progression :
 
-1. Le désir appartient-il réellement au personnage ?
-2. L’état de la route le rend-il crédible ?
-3. La situation est-elle concrète ?
-4. Le personnage dispose-t-il d’une capacité de retrait ?
-5. L’initiative correspond-elle à sa voix ?
-6. La progression dépend-elle d’autre chose que d’un degré de nudité ?
-7. L’image ou la scène possède-t-elle une audience claire ?
-8. Une limite est-elle encore active ?
-9. Quel après-coup est produit ?
-10. Quelle autre relation peut être affectée ?
-11. La même progression fonctionnerait-elle avec un autre personnage sans modification importante ?
-12. La scène reste-t-elle utile à la route après suppression de son caractère explicite ?
-
-Si la scène ne possède aucune valeur sans son contenu explicite, elle doit être réévaluée.
+1. Pourquoi ce personnage désire-t-il cette situation ?
+2. Quel élément de son canon complet est actif ?
+3. Pourquoi maintenant ?
+4. Quel état de route la rend possible ?
+5. Qui prend l’initiative ?
+6. Qu’est-ce que chacun pense accepter ?
+7. Quelle capacité de retrait subsiste ?
+8. Quelle audience est concernée ?
+9. Quel partenaire ou tiers réel reste affecté ?
+10. Quelle trace sera créée ?
+11. Quel après-coup est prévu ?
+12. Pourquoi la même scène ne fonctionnerait-elle pas avec un autre personnage ?
+13. La scène reste-t-elle utile à la route si son explicitation est réduite ?
+14. La représentation explicite est-elle une conséquence ou un substitut ?
 
 ---
 
-# 19. Résumé canonique
+# 18. Résumé canonique
 
-Réseau Intime ne traite pas la sexualité comme une récompense extérieure aux relations.
+Marie redevient désirable parce qu’elle redevient activement visible et choisie.
 
-Le désir apparaît dans le regard, les images, les silences, les initiatives, les limites et les occasions.
+Sandra devient plus audacieuse parce qu’elle contrôle les traces et la distance.
 
-La sexualité devient possible lorsque la route, la confiance, le contexte et la disponibilité convergent.
+Mathilde transforme une sensualité déjà présente en intention reconnue dans le foyer de Marie.
 
-Le contenu pornographique est une forme de représentation explicite.
+Pauline crée une seconde destination à l’intérieur d’une vie officielle qu’elle ne veut pas abandonner.
 
-Il ne constitue pas une route à lui seul.
+Raphaëlle fait du processus, du costume, du rôle et de leur fin un langage de désir choisi.
 
-Marie, Sandra et Mathilde peuvent atteindre une véritable bascule sexuelle pendant la première saison.
-
-Pauline développe une ligne érotique autonome et une promesse forte d’extension.
-
-Raphaëlle ouvre une possibilité extérieure dont la bascule principale reste différée.
-
-Nico est hétérosexuel. Sa fonction repose sur la confidence, le regard partagé, les femmes, la loyauté et la compromission, sans attirance sexuelle ou romantique envers Player.
+Nico, hétérosexuel, transforme l’amitié masculine en circulation du regard, rivalité et complicité autour de Marie et Mathilde, sans aucune route sexuelle ou romantique avec Player.
 
 Chaque personnage peut exprimer son désir de plusieurs manières.
 
 Son noyau reste cohérent.
-
-Ses expressions dépendent de l’état de la relation.
 
 Toute intimité doit produire un nouvel état, une nouvelle attente ou une nouvelle conséquence.

@@ -1,8 +1,12 @@
 # Documentation Reading Order — Bible Narrative Current
 
-> **Phase actuelle : Bible Narrative / Routes macro et évolution érotique**
+> **Phase actuelle : Bible Narrative / North Star**
 >
-> La Bible Narrative est la source de vérité principale pour la promesse du jeu, l’expérience joueur, les fantasmes, la structure globale, les routes, leur évolution érotique et les transformations. Le canon complet des personnages reste l’autorité sur leur identité et leur voix. Le runtime décrit ce qui est implémenté et jouable.
+> La Bible Narrative est la source de vérité principale pour la promesse du jeu, l’expérience joueur, les fantasmes, la structure globale, les routes, l’évolution érotique, les actes et les séquences.
+>
+> Les canons complets des personnages restent l’autorité première sur leur identité, leur voix, leur vie concrète, leurs désirs, leurs limites et leurs conséquences propres.
+>
+> Le runtime décrit ce qui est implémenté et jouable.
 
 ---
 
@@ -10,18 +14,21 @@
 
 ```text
 Commencer par la North Star et l’expérience joueur.
-Définir les fantasmes avant les routes.
-Définir les routes avant leur évolution érotique.
-Définir les routes et leur évolution avant les actes et les séquences.
-Définir les actes avant les séquences.
-Définir les séquences avant les scènes.
-Écrire les dialogues et les photos après la fonction relationnelle.
-Découper en journées après la validation des séquences.
-Utiliser le runtime pour savoir ce qui est jouable.
-Un ancien plan par journée ne peut pas contredire la Bible.
+Définir les fantasmes transversaux.
+Relire les canons complets des personnages.
+Définir les routes macro.
+Définir l’évolution érotique.
+Définir les actes.
+Choisir les séquences concrètes.
+Adapter les scènes modulaires.
+Écrire les dialogues et les photos.
+Découper en journées.
+Planifier le runtime en dernier.
 ```
 
 Les journées restent une couche de diffusion, de respiration et de rythme.
+
+Un ancien plan par journée ne peut pas contredire la Bible ou le canon complet d’un personnage.
 
 ---
 
@@ -31,7 +38,7 @@ Les journées restent une couche de diffusion, de respiration et de rythme.
 
 `docs/canon/bible/README.md`
 
-Définit la gouvernance, la hiérarchie, les différences entre les couches et les règles de réutilisation.
+Définit la gouvernance, la hiérarchie, les différences entre les couches et les règles de spécificité.
 
 ## 2. North Star
 
@@ -43,91 +50,96 @@ Définit l’identité du jeu, la promesse centrale et les principes non négoci
 
 `docs/canon/bible/01_EXPERIENCE_JOUEUR.md`
 
-Définit ce que le joueur doit ressentir, comprendre et attribuer à ses propres actes.
+Définit responsabilité, causalité, limites, opportunités, dettes et conséquences.
 
 ## 4. Fantasmes centraux
 
 `docs/canon/bible/02_FANTASMES_CENTRAUX.md`
 
-Définit les promesses transversales, leurs formes négociées, leurs formes sombres, leurs limites et les personnages capables de les incarner différemment.
+Définit les promesses transversales, leurs formes négociées et leurs formes risquées.
 
-## 5. Routes macro de la saison 1
+## 5. Canon complet des personnages
 
-`docs/canon/bible/05_ROUTES_MACRO_SAISON_1.md`
+Lire :
 
-Définit les transformations durables des relations de Marie, Sandra, Mathilde, Pauline, Raphaëlle et Nico, leurs résistances, bascules, conséquences, états de sortie et plafonds de saison.
+- `docs/canon/characters/CHARACTER_CANON_INDEX.md` ;
+- le ou les fichiers `*_CANON_FULL.md` concernés ;
+- `docs/canon/CHARACTER_VOICE_DISTINCTION_CANON.md` ;
+- `docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md` lorsque désir, images, risques ou conséquences adultes sont impliqués ;
+- la carte de dépréciation correspondante lorsqu’elle existe ;
+- `docs/canon/SUPPORTING_CHARACTER_CANON_POLICY.md` pour les personnages secondaires.
 
-Nico y est défini comme hétérosexuel, sans route romantique ou sexuelle avec Player.
+Le canon complet est l’autorité sur :
 
-## 6. Évolution érotique des routes
+- identité ;
+- passé ;
+- proximité initiale ;
+- métier ;
+- lieux ;
+- objets ;
+- proches ;
+- voix ;
+- contradictions ;
+- limites ;
+- désirs ;
+- rapport au corps et aux images ;
+- continuité individuelle.
 
-`docs/canon/bible/06_EVOLUTION_EROTIQUE_DES_ROUTES.md`
-
-Définit comment le trouble devient désir, disponibilité, intimité, sexualité puis éventuellement représentation pornographique sans perdre la crédibilité du personnage ou de la relation.
-
-Distingue la progression relationnelle du degré d’explicitation visuelle et définit les conditions de consentement, d’initiative, d’après-coup et de conséquence.
-
-## 7. Grammaire narrative
+## 6. Grammaire narrative
 
 `docs/canon/bible/03_GRAMMAIRE_NARRATIVE.md`
 
-Définit les fonctions réutilisables des séquences sans fournir de scènes interchangeables.
+Définit les fonctions réutilisables des séquences.
 
-## 8. Trame principale et actes de saison
+## 7. Trame principale et actes
 
 `docs/canon/bible/04_TRAME_PRINCIPALE_ET_ACTES_SAISON_1.md`
 
-Définit la crise commune, les transformations globales, les fantasmes activés, les types de séquences utiles, les états de sortie et les hooks d’extension.
+Définit la crise commune, les cinq actes et le contrat d’incarnation des personnages.
 
-La numérotation des fichiers reflète leur ordre historique de création. L’ordre de lecture place désormais les routes macro et leur évolution érotique avant la grammaire appliquée aux actes.
+## 8. Routes macro
 
-## 9. Bibliothèque de séquences
+`docs/canon/bible/05_ROUTES_MACRO_SAISON_1.md`
 
-Futur document canonique.
+Définit les transformations durables de Marie, Sandra, Mathilde, Pauline, Raphaëlle et Nico.
 
-Déclinera la grammaire en séquences mémorables servant les routes, leur évolution érotique et les actes.
+## 9. Évolution érotique des routes
 
-## 10. Règles des scènes modulaires
+`docs/canon/bible/06_EVOLUTION_EROTIQUE_DES_ROUTES.md`
+
+Définit comment le désir devient intention, disponibilité, sexualité et éventuellement représentation pornographique spécifique.
+
+## 10. Bibliothèque de séquences
+
+`docs/canon/bible/07_BIBLIOTHEQUE_DE_SEQUENCES_SAISON_1.md`
+
+Définit les événements concrets et mémorables de la première saison à partir des actes, routes et canons complets.
+
+## 11. Règles des scènes modulaires
 
 Futur document canonique.
 
 Définira comment une séquence s’adapte à l’état réel de la partie sans créer une nouvelle route.
 
-## 11. Progression visuelle détaillée
+## 12. Progression visuelle et photographique
 
 Futur document canonique.
 
-Définira les étapes, audiences, intentions, limites, risques et conséquences des photos en cohérence avec `06_EVOLUTION_EROTIQUE_DES_ROUTES.md`.
+Définira les étapes, audiences, intentions, limites, risques et conséquences des photos.
 
-## 12. Découpage des journées
+## 13. Carte des conséquences, dettes, secrets et obligations
 
 Futur document canonique.
 
-Répartira les séquences, silences, respirations et photos une fois l’architecture relationnelle validée.
+Définira ce qui circule entre les routes et ce qui doit être payé, révélé, réparé ou porté.
 
-## 13. Canon complet des personnages
+## 14. Découpage des journées
 
-Lire :
+Futur document canonique.
 
-- `docs/canon/characters/CHARACTER_CANON_INDEX.md` ;
-- le fichier canon complet du personnage concerné ;
-- `docs/canon/CHARACTER_VOICE_DISTINCTION_CANON.md` ;
-- `docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md` lorsque les moteurs adultes, les images, les risques ou les conséquences sont impliqués ;
-- la carte de dépréciation correspondante lorsqu’elle existe ;
-- `docs/canon/SUPPORTING_CHARACTER_CANON_POLICY.md` pour Jeff, Bastien et les autres personnages secondaires.
+Répartira les séquences, silences, respirations et photos après validation de l’architecture.
 
-Le canon complet des personnages reste l’autorité sur :
-
-- l’identité ;
-- le passé ;
-- la proximité initiale ;
-- la voix ;
-- les contradictions ;
-- les limites personnelles ;
-- les désirs spécifiques ;
-- la continuité individuelle.
-
-## 14. Contrats narratifs
+## 15. Contrats narratifs
 
 Lire selon le besoin :
 
@@ -137,9 +149,7 @@ Lire selon le besoin :
 - `docs/canon/DIEGETIC_TIME_AND_COMMUNICATION_CANON.md` ;
 - `docs/canon/TEMPORAL_FLOW_AND_DAY_TRANSITION_CANON.md`.
 
-Ces documents définissent les règles de choix, de modularité, de communication et de temporalité compatibles avec la Bible.
-
-## 15. Runtime
+## 16. Runtime
 
 Lire les plans, rapports, index de chapitres, conversations actives, données visuelles, tests, ledgers et validations de la version concernée.
 
@@ -159,6 +169,7 @@ Il ne répond pas seul à :
 North Star
 -> Expérience joueur
 -> Fantasmes centraux
+-> Canon complet des personnages
 -> Routes macro
 -> Évolution érotique des routes
 -> Actes
@@ -171,14 +182,16 @@ North Star
 
 Précisions :
 
-- la grammaire narrative fournit le vocabulaire des séquences ;
-- les routes macro donnent une direction aux actes ;
-- l’évolution érotique précise comment le désir devient crédible et incarné ;
+- le canon complet est une autorité transversale ;
+- la grammaire fournit le vocabulaire des fonctions ;
+- les routes donnent une direction aux actes ;
 - les actes expriment des transformations globales ;
-- les séquences accomplissent des fonctions ;
-- les scènes adaptent ces fonctions à la partie ;
+- les séquences accomplissent ces transformations par des événements concrets ;
+- les scènes adaptent les séquences à la partie ;
 - les scènes ne créent pas les routes ;
 - les journées sont construites après les séquences.
+
+La numérotation des fichiers conserve l’ordre historique de création. Elle ne remplace pas l’ordre conceptuel.
 
 ---
 
@@ -188,37 +201,49 @@ Précisions :
 
 Autorité sur :
 
-- la promesse du jeu ;
-- l’expérience joueur ;
-- les fantasmes ;
-- la structure globale ;
-- les routes et transformations ;
-- l’évolution érotique, sexuelle et pornographique ;
-- les actes ;
-- la progression visuelle ;
-- la fonction des séquences.
+- promesse ;
+- expérience joueur ;
+- fantasmes ;
+- structure globale ;
+- routes et transformations ;
+- évolution érotique ;
+- actes ;
+- fonction et sélection des séquences ;
+- progression visuelle globale.
 
 ## Canon complet des personnages
 
 Autorité sur :
 
-- l’identité ;
-- la voix ;
-- l’histoire ;
-- les responsabilités ;
-- les limites ;
-- les réactions propres ;
-- la continuité individuelle.
+- identité ;
+- voix ;
+- histoire ;
+- métier ;
+- lieux ;
+- objets ;
+- proches ;
+- responsabilités ;
+- limites ;
+- désirs ;
+- réactions propres ;
+- continuité individuelle.
+
+## NSFW canon
+
+Autorité sur :
+
+- progression adulte ;
+- consentement ;
+- images et audiences ;
+- secrets et trahisons ;
+- roleplay ;
+- partage ;
+- voies sombres ;
+- après-coup explicite.
 
 ## Contrats narratifs
 
-Autorité sur les règles techniques d’écriture compatibles :
-
-- choix ;
-- modularité ;
-- temps ;
-- communication ;
-- adaptation des scènes.
+Autorité sur les règles d’écriture compatibles : choix, modularité, temps, communication et adaptation.
 
 ## Runtime
 
@@ -232,24 +257,57 @@ Contexte historique ou intention à requalifier, sans autorité en cas de contra
 
 # 5. Règle de spécificité
 
-La grammaire peut être partagée.
+> **Une fonction peut être partagée. Une séquence doit déjà être spécifique. Une scène doit rendre cette spécificité concrète.**
 
-> **Les fonctions de scène peuvent être réutilisées. Les dialogues, les réactions, les risques et les conséquences doivent rester propres au personnage.**
+Une séquence doit utiliser au moins deux ancrages du canon complet :
+
+- métier ;
+- lieu ;
+- objet ;
+- proche ;
+- pratique ;
+- blessure ;
+- contradiction ;
+- moteur érotique.
 
 Une scène ne devient pas spécifique parce que le nom du personnage a été remplacé.
 
-Le canon complet et l’évolution érotique de la route doivent être relus avant toute écriture de dialogue, de photo intime ou de séquence explicite.
+---
+
+# 6. Décision Nico
+
+Le canon actuel fixe :
+
+```text
+Nico est hétérosexuel.
+```
+
+Conséquences :
+
+- aucune attirance romantique ou sexuelle envers Player ;
+- aucune ambiguïté homosexuelle cachée ;
+- aucune route de contact sexuel entre eux ;
+- aucun changement d’orientation déduit d’un trio ou d’une scène plus explicite ;
+- complicité masculine, rivalité, regard partagé, alibi et tiers invité restent possibles autour de femmes adultes consentantes.
+
+Lire :
+
+```text
+docs/canon/characters/NICO_CANON_FULL.md
+docs/canon/characters/NICO_CANON_DEPRECATION_MAP.md
+docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
+```
 
 ---
 
-# 6. Règle sur les anciens documents
+# 7. Règle sur les anciens documents
 
 Les anciens source packs, plans de vagues, cartes de scènes, matrices de routes et plans par journée restent utiles pour :
 
 - comprendre le runtime existant ;
 - retrouver l’origine d’une décision ;
 - préserver un détail compatible ;
-- identifier une scène réutilisable dans une séquence.
+- identifier une scène recyclable dans une séquence.
 
 Ils ne constituent plus l’architecture principale.
 
@@ -260,11 +318,11 @@ Un ancien document peut être classé :
 - Archive ;
 - À réécrire.
 
-Un document non classé ne peut pas prévaloir sur la Bible.
+Un document non classé ne peut pas prévaloir sur la Bible ou le canon complet.
 
 ---
 
-# 7. Règle sur le moteur
+# 8. Règle sur le moteur
 
 Le moteur narratif est considéré comme acquis.
 
@@ -272,15 +330,17 @@ Sauf nécessité narrative exceptionnelle, la Bible se construit au-dessus du t�
 
 ---
 
-# 8. Règle finale
+# 9. Règle finale
 
 ```text
-Utiliser la Bible pour savoir ce que le jeu doit faire ressentir et devenir.
-Utiliser les routes macro pour savoir comment les relations peuvent changer.
-Utiliser l’évolution érotique pour savoir comment le désir devient crédible et incarné.
-Utiliser le canon complet pour écrire une personne précise.
-Utiliser la grammaire pour identifier la fonction d’une séquence.
-Utiliser les contrats narratifs pour adapter la scène.
+Utiliser la Bible pour savoir ce que le jeu doit devenir.
+Utiliser le canon complet pour savoir qui vit la transformation.
+Utiliser le NSFW canon pour savoir comment l’adulte peut progresser.
+Utiliser la grammaire pour identifier la fonction.
+Utiliser la bibliothèque pour choisir l’événement concret.
+Utiliser les contrats pour adapter la scène.
 Utiliser les journées pour distribuer le rythme.
 Utiliser le runtime pour décrire ce qui est jouable.
+
+Aucune architecture abstraite ne doit remplacer la personne concrète.
 ```

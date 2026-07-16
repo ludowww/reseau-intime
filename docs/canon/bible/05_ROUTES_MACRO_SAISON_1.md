@@ -10,16 +10,16 @@ Ce document définit les transformations durables que les relations principales 
 
 Il ne contient :
 
-- aucun dialogue ;
-- aucune scène prête à écrire ;
+- aucun dialogue définitif ;
+- aucune scène directement intégrable ;
 - aucun découpage en journées ;
 - aucun calendrier ;
-- aucun choix joueur détaillé ;
+- aucun choix joueur rédigé ;
 - aucune spécification runtime.
 
-Les futures séquences et scènes devront servir les routes décrites ici.
+Les routes doivent être écrites à partir des canons complets des personnages.
 
-**Les scènes ne créent pas les routes.**
+> **Une route macro correcte doit transformer une personne concrète, pas seulement remplir une fonction dramatique abstraite.**
 
 ---
 
@@ -27,33 +27,31 @@ Les futures séquences et scènes devront servir les routes décrites ici.
 
 Une route macro est la transformation durable de la nature d’une relation.
 
-Elle ne correspond pas à une succession fixe de scènes et n’est jamais présentée au joueur comme un menu.
+Elle ne correspond pas à :
 
-Le joueur ne choisit pas :
+- un score ;
+- une barre d’affection ;
+- une succession fixe de scènes ;
+- un menu de personnage ;
+- une récompense sexuelle automatique.
 
-- « route Marie » ;
-- « route Sandra » ;
-- « route sombre » ;
-- « route fidèle » ;
-- « route Mathilde ».
-
-Il accomplit des actions concrètes.
+Le joueur agit concrètement.
 
 Il peut :
 
 - être présent ;
-- se dérober ;
-- tenir une promesse ;
-- relancer une personne ;
-- respecter une limite ;
-- pousser une ambiguïté ;
-- conserver une photo ;
-- cacher une information ;
-- offrir un alibi ;
-- refuser d’en fournir un ;
-- réparer une faute ;
+- tenir ou rompre une promesse ;
+- respecter ou pousser une limite ;
+- remarquer un détail ;
+- demander une autre version ;
+- conserver, supprimer ou montrer une image ;
+- dire la vérité ;
+- organiser un mensonge ;
+- fournir ou refuser un alibi ;
+- rejoindre une personne dans son monde ;
 - profiter d’une vulnérabilité ;
-- assumer ou nier une proximité.
+- réparer une faute ;
+- assumer ou nier un désir.
 
 L’accumulation de ces actes transforme progressivement la relation.
 
@@ -65,20 +63,18 @@ Une route devient lisible après coup.
 
 Une relation atteint une vraie bascule lorsque son ancienne définition ne suffit plus à expliquer ce que vivent les personnages.
 
-Une vraie bascule peut être :
+Une bascule peut être :
 
+- conjugale ;
 - émotionnelle ;
-- amoureuse ;
+- romantique ;
 - sexuelle ;
 - domestique ;
 - sociale ;
-- conjugale ;
-- conflictuelle ;
+- professionnelle ;
+- fondée sur une règle ;
 - fondée sur un secret ;
-- fondée sur une nouvelle règle ;
 - fondée sur une fracture.
-
-Une bascule ne nécessite pas obligatoirement une relation sexuelle.
 
 Elle exige au minimum :
 
@@ -88,27 +84,21 @@ Elle exige au minimum :
 4. une trace durable ;
 5. une conséquence possible sur le réseau.
 
-Une relation n’a pas basculé uniquement parce qu’une image suggestive a été envoyée ou qu’une phrase ambiguë a été prononcée.
+Une photo suggestive ou une phrase ambiguë ne suffit pas.
 
-Elle a basculé lorsque les personnages ne peuvent plus agir exactement comme avant sans sentir qu’ils évitent quelque chose.
+La relation a basculé lorsque les personnages ne peuvent plus agir exactement comme avant sans sentir qu’ils évitent quelque chose.
 
 ---
 
 # 3. Modèle commun de progression
 
-Les routes ne suivent pas obligatoirement une progression linéaire, mais elles utilisent une grammaire commune.
-
 ## État initial
 
 La relation possède une définition relativement stable.
 
-Le personnage et Player croient savoir ce qu’ils représentent l’un pour l’autre.
-
 ## Réactivation
 
-Une présence, un besoin, un souvenir ou une nouvelle circonstance rend la relation de nouveau active.
-
-Aucune bascule n’est encore nécessaire.
+Une présence, un besoin, un souvenir ou une circonstance rend la relation de nouveau active.
 
 ## Ligne privée
 
@@ -116,35 +106,28 @@ Une continuité propre apparaît :
 
 - rituel ;
 - conversation ;
-- secret ;
+- service ;
 - photo ;
 - invitation ;
+- objet ;
 - dette ;
-- service ;
 - attente.
-
-La relation commence à exister indépendamment du reste du réseau.
 
 ## Réinterprétation
 
 Un comportement auparavant neutre devient difficile à considérer comme neutre.
 
-Le personnage ou Player commence à se demander ce que signifie réellement la relation.
-
 ## Reconnaissance
 
-Une personne admet, directement ou indirectement, que le cadre a changé.
+Une personne admet que le cadre a changé par :
 
-Cette reconnaissance peut prendre la forme :
-
-- d’une initiative ;
-- d’une jalousie ;
-- d’une limite ;
-- d’une demande ;
-- d’un recul ;
-- d’un aveu partiel ;
-- d’une photo consciemment destinée ;
-- d’un risque accepté.
+- une initiative ;
+- une limite ;
+- une jalousie ;
+- une demande ;
+- une image destinée ;
+- un recul ;
+- un risque accepté.
 
 ## Bascule
 
@@ -152,1580 +135,971 @@ Une action rend le retour à l’ancienne définition impossible ou artificiel.
 
 ## Conséquence
 
-La relation doit désormais vivre avec ce qui a changé.
+La relation doit vivre avec ce qui a changé.
 
-Elle peut :
-
-- se renforcer ;
-- être négociée ;
-- devenir secrète ;
-- se refroidir ;
-- se fracturer ;
-- rester suspendue ;
-- créer une dette ;
-- affecter une autre relation.
-
-Ces étapes sont des outils de conception internes.
-
-Elles ne doivent pas apparaître comme des statuts techniques à l’écran.
+Ces étapes sont des outils internes. Elles ne doivent pas apparaître comme des statuts techniques à l’écran.
 
 ---
 
 # 4. Profondeur attendue pendant la première saison
 
-Toutes les relations ne doivent pas atteindre le même degré de transformation pendant la première saison.
-
-## Routes capables d’une vraie bascule complète
+## Bascule complète possible
 
 - Marie ;
 - Sandra ;
 - Mathilde.
 
-Ces relations peuvent atteindre un nouvel état durable et clairement différent de leur situation initiale.
-
 ## Promesse forte d’extension
 
 - Pauline.
 
-Pauline doit obtenir une ligne autonome et une transformation identifiable, mais sa route la plus avancée n’a pas besoin d’être accomplie pendant la première saison.
-
-## Graines structurantes
+## Graines structurantes avec conséquences réelles
 
 - Raphaëlle ;
 - Nico.
 
-Leur position dans le réseau doit changer et produire des conséquences réelles.
-
-La première saison doit cependant préserver une réserve narrative importante pour leurs futurs arcs.
-
-## Personnages secondaires structurants
-
-- Jeff ;
-- Bastien.
-
-Ils ne possèdent pas de route macro principale pendant la première saison.
-
-Ils participent aux réalités sociales, aux couples, aux invitations, aux regards, aux témoignages et aux conséquences.
+Toutes les relations doivent changer. Elles ne doivent pas toutes atteindre le même degré.
 
 ---
 
-# 5. Matrice globale des routes
+# 5. Route macro de Marie
 
-| Personnage | Définition initiale | Transformation centrale | Profondeur saison 1 |
-|---|---|---|---|
-| Marie | Compagne familière dans un couple réel mais routinier | Le couple redevient un choix actif, se redéfinit ou se fracture | Bascule complète possible |
-| Sandra | Amie ancienne dont la proximité s’est distendue | La relation retrouvée devient une intimité difficile à considérer comme seulement amicale | Bascule complète possible |
-| Mathilde | Présence familière proche du foyer et de Marie | La proximité domestique cesse d’être accidentelle et devient intentionnelle, négociée ou dangereuse | Bascule complète possible |
-| Pauline | Présence sociale liée au réseau de Marie | Le jeu public des audiences ouvre une ligne privée contrôlée par Pauline | Promesse forte d’extension |
-| Raphaëlle | Présence professionnelle extérieure | Player découvre une autre version de lui-même hors du foyer | Graine structurante |
-| Nico | Ami et confident potentiel | Il devient garde-fou, complice, miroir ou personne compromise | Graine structurante |
+## 5.1 Transformation centrale
 
----
+> **Une relation acquise redevient un choix vivant, risqué et visible.**
 
-# 6. Route macro de Marie
+Marie ne doit jamais être réduite à la partenaire jalouse ou à l’obstacle moral aux autres routes.
 
-## 6.1 Transformation centrale
+Sa route demande si Player sait encore :
 
-> **Une relation considérée comme acquise redevient un choix actif, risqué et vivant.**
+- rejoindre sa vie ;
+- voir son énergie ;
+- agir sans attendre une crise ;
+- désirer la femme qu’il connaît déjà ;
+- accepter qu’elle soit également vue par d’autres ;
+- négocier un nouveau cadre plutôt que réclamer l’ancien par défaut.
 
-Marie est le centre de gravité initial du jeu.
+## 5.2 État initial
 
-Sa route ne consiste pas seulement à préserver ou perdre le couple.
+Marie et Player vivent ensemble depuis environ trois ans et sont en couple depuis environ cinq ans.
 
-Elle explore ce que devient une relation installée lorsque ses deux membres ne peuvent plus éviter leurs frustrations, leurs désirs, leur autonomie et les effets du réseau.
+Leur vie commune contient encore :
 
----
+- affection ;
+- humour ;
+- habitudes ;
+- repas ;
+- courses ;
+- canapé ;
+- promenades ;
+- projets ;
+- fatigue partagée.
 
-## 6.2 État initial
+La blessure de Marie est d’être aimée comme une habitude plutôt qu’activement choisie.
 
-Marie et Player forment un couple réel.
+## 5.3 Monde propre
 
-Leur affection et leur histoire ne sont pas fictives.
+La route doit utiliser :
 
-Ils partagent :
+- La Verrière ;
+- les événements culturels et associatifs ;
+- les affiches, newsletters, prestataires et imprévus ;
+- Élodie comme témoin professionnel proportionné ;
+- Pauline comme amie réelle ;
+- la robe noire ;
+- les boucles dorées ;
+- le miroir d’entrée ;
+- la playlist de préparation ;
+- les chaussures près de la porte ;
+- les gestes domestiques du couple.
 
-- un quotidien ;
-- des habitudes ;
-- une intimité passée et présente ;
-- des responsabilités ;
-- une connaissance mutuelle ;
-- une forme de loyauté.
+## 5.4 Désirs et besoins
 
-Le problème initial n’est pas l’absence totale d’amour.
+Marie veut :
 
-Leur quotidien fonctionne mieux qu’il ne les rapproche.
+- être désirée dans la vie réelle ;
+- être rejointe sans devoir supplier ;
+- retrouver une spontanéité ;
+- posséder une autonomie érotique ;
+- être visible ailleurs sans devenir automatiquement coupable ;
+- savoir si Player choisit sa vie ou seulement sa sécurité.
 
-Player peut croire qu’il connaît Marie et que sa place dans le couple est stable.
+## 5.5 Résistances
 
-Marie peut sentir qu’elle est davantage intégrée à la vie de Player que réellement regardée par lui.
+Marie résiste lorsque Player :
 
----
+- rassure sans agir ;
+- devient possessif seulement lorsqu’un autre regard apparaît ;
+- traite ses sorties comme une stratégie destinée à le provoquer ;
+- lui demande de rester la version domestique rassurante ;
+- utilise le sexe pour éviter une conversation ;
+- demande une transparence qu’il ne pratique pas lui-même.
 
-## 6.3 Fantasmes combinés
-
-La route de Marie peut mobiliser :
-
-- reconquête du couple ;
-- proximité quotidienne ;
-- exhibition choisie ;
-- jalousie ;
-- regard des autres ;
-- double vie ;
-- confiance et réparation ;
-- transgression ;
-- perte de contrôle ;
-- nouvelle définition du couple.
-
-Marie ne doit jamais être réduite à un unique fantasme de reconquête.
-
-Elle peut également devenir la personne qui surprend, dissimule, provoque, expérimente ou impose une transformation.
-
----
-
-## 6.4 Désirs et besoins
-
-Marie peut chercher :
-
-- à être regardée comme une personne encore désirable ;
-- à ne plus être considérée comme acquise ;
-- à retrouver de la curiosité dans le couple ;
-- à disposer d’une vie sociale et intime propre ;
-- à comprendre ce que Player lui cache ;
-- à obtenir une vérité supportable ;
-- à faire reconnaître ses propres désirs ;
-- à ne pas être la seule personne responsable de la stabilité du couple.
-
-Elle ne veut pas nécessairement retrouver exactement le couple du début.
-
-Elle peut vouloir le transformer.
-
----
-
-## 6.5 Résistances
-
-Marie résiste lorsque :
-
-- Player utilise la jalousie uniquement pour la contrôler ;
-- il demande de la transparence sans en offrir ;
-- il la traite comme un obstacle entre lui et les autres femmes ;
-- il suppose qu’une histoire commune garantit son pardon ;
-- il instrumentalise ses insécurités pour obtenir du désir ;
-- il nie les changements visibles ;
-- il maintient trop longtemps plusieurs versions incompatibles.
-
-Marie peut pardonner une faute.
-
-Elle ne doit pas oublier instantanément un système de mensonges.
-
----
-
-## 6.6 Familles de transformation
+## 5.6 Familles de transformation
 
 ### Reconquête active
 
-Marie et Player réapprennent à se choisir.
+Player rejoint Marie dans son monde, remarque avant la crise et transforme les habitudes en choix.
 
-Le couple développe :
+### Autonomie visible
 
-- de nouvelles initiatives ;
-- une curiosité renouvelée ;
-- une meilleure écoute ;
-- une intimité moins automatique ;
-- une capacité à reconnaître la jalousie ou le manque sans les utiliser comme armes.
-
-Cette route ne ramène pas le couple à son état initial.
-
-Elle crée une version plus consciente de leur relation.
+Marie cesse d’attendre et développe une vie sociale et érotique qui ne dépend pas de Player.
 
 ### Reconfiguration négociée
 
-Le couple reconnaît que son ancien cadre ne correspond plus complètement à ses désirs.
-
-Marie et Player peuvent établir :
-
-- de nouvelles limites ;
-- une transparence partielle ;
-- un droit à certains espaces personnels ;
-- des formes d’expérimentation ;
-- un accord encore imparfait mais réel.
-
-Cette reconfiguration ne supprime ni la jalousie ni les conséquences.
-
-Elle les rend nommables.
+Le couple nomme ses désirs, ses jalousies et ses limites, puis expérimente un cadre nouveau.
 
 ### Accord incomplet
 
-Marie et Player reconnaissent que quelque chose doit changer, mais n’atteignent pas encore un cadre stable.
-
-Ils continuent ensemble avec :
-
-- des questions ouvertes ;
-- une confiance conditionnelle ;
-- des secrets partiellement révélés ;
-- une règle provisoire ;
-- une réparation encore en cours.
+Le couple reconnaît le problème sans parvenir encore à une solution stable.
 
 ### Double vie fragile
 
-Le couple reste officiellement intact, mais Player maintient des relations ou des versions incompatibles.
+Player conserve Marie tout en vivant ailleurs des lignes qu’il ne lui raconte pas complètement.
 
-Marie peut :
+### Fracture
 
-- soupçonner ;
-- tolérer provisoirement ;
-- choisir de ne pas tout confronter ;
-- préparer sa propre autonomie ;
-- conserver une information comme levier futur.
+Marie refuse de continuer à porter seule la vitalité du couple.
 
-Cette voie doit rester instable.
+## 5.7 Progression visuelle
 
-### Fracture et nouvelle forme
+1. vie quotidienne partagée ;
+2. préparation visible ;
+3. robe noire et sortie ;
+4. image publique où Marie est réellement regardée ;
+5. version privée adressée à Player ou volontairement non adressée ;
+6. reconquête érotique du couple ;
+7. éventuelle exploration ou nouvelle règle ;
+8. nouvelle image du couple ou image d’autonomie après fracture.
 
-La définition initiale du couple ne tient plus.
+## 5.8 Bascule de saison
 
-La fracture ne signifie pas nécessairement la disparition de Marie du récit.
+La bascule existe lorsque Marie et Player ne peuvent plus définir leur relation par la seule continuité de leur histoire.
 
-Leur relation peut devenir :
+Un acte concret doit établir :
 
-- séparation conflictuelle ;
-- séparation lucide ;
-- proximité encore affective ;
-- coprésence domestique ;
-- tentative de reconstruction ultérieure ;
-- alliance instable ;
-- relation débarrassée de son ancien cadre mais pas de son histoire.
-
----
-
-## 6.7 Vraie bascule de saison 1
-
-La route de Marie atteint une vraie bascule lorsque Marie et Player reconnaissent, par leurs actes, que leur couple ne peut plus fonctionner comme une évidence silencieuse.
-
-La bascule peut être :
-
-- une reconquête assumée ;
-- une nouvelle règle ;
-- une vérité partielle acceptée ;
-- une expérience négociée ;
-- une perte de confiance durable ;
+- une reconquête ;
+- une règle ;
+- une vérité ;
 - une séparation ;
-- une décision de continuer autrement.
+- une nouvelle forme du couple.
 
-Le couple doit être objectivement différent à la fin de la saison.
-
----
-
-## 6.8 Points de non-retour possibles
-
-Un point de non-retour peut être créé par :
-
-- un mensonge délibéré découvert après plusieurs occasions d’être honnête ;
-- une photo ou une preuve dont la signification ne peut plus être minimisée ;
-- une règle explicitement négociée ;
-- une transgression assumée ;
-- une décision de séparation ;
-- une humiliation sociale ;
-- l’utilisation répétée de la jalousie comme manipulation ;
-- une réparation suffisamment forte pour engager les deux personnages.
-
-Aucun point de non-retour ne doit dépendre d’une phrase isolée.
-
----
-
-## 6.9 Progression visuelle
-
-La progression visuelle de Marie peut aller de :
-
-1. **familiarité quotidienne** — Marie dans la vie ordinaire du couple ;
-2. **autonomie visible** — image de Marie destinée au social ou à elle-même, pas prioritairement à Player ;
-3. **regard retrouvé** — Marie choisit que Player la voie autrement ;
-4. **intention consciente** — l’image porte une attente ou une nouvelle règle ;
-5. **nouvel état du couple** — photo de reconquête, de distance, de secret partagé ou de transformation négociée.
-
-Une photo de Marie destinée au monde extérieur peut faire davantage progresser sa route qu’une image intime envoyée mécaniquement.
-
----
-
-## 6.10 Conséquences sur le réseau
-
-La route de Marie modifie la lecture de toutes les autres routes.
-
-Elle détermine notamment si une proximité extérieure apparaît comme :
-
-- une tentation ;
-- une trahison ;
-- un refuge ;
-- une exploration autorisée ;
-- un symptôme ;
-- un miroir ;
-- une occasion de reconquête ;
-- une preuve que le couple a déjà changé.
-
----
-
-## 6.11 États possibles de fin de saison
-
-Marie et Player peuvent finir la saison dans un état de :
+## 5.9 États possibles de fin de saison
 
 - couple reconquis ;
-- couple reconfiguré ;
-- accord incomplet ;
-- confiance fragile ;
-- double vie maintenue provisoirement ;
-- fracture ;
-- séparation avec possibilité de nouvel arc.
+- couple réérotisé mais encore fragile ;
+- accord provisoire ;
+- reconfiguration négociée ;
+- double vie consciente ou suspectée ;
+- séparation ;
+- coexistence encore affectueuse mais sans ancien contrat intact.
 
 ---
 
-# 7. Route macro de Sandra
+# 6. Route macro de Sandra
 
-## 7.1 Transformation centrale
+## 6.1 Transformation centrale
 
-> **Une ancienne proximité revient avec assez de force pour que l’amitié ne suffise plus à expliquer ce que ressentent les personnages.**
+> **Une ancienne proximité revient jusqu’à ce que l’amitié ne suffise plus à expliquer ce qu’ils se donnent.**
 
-Sandra connaît Player depuis avant sa relation avec Marie.
+Sandra n’ouvre pas sa route parce que Player insiste.
 
-Leur amitié s’est distendue parce que chacun a sa vie de couple, ses obligations et ses habitudes.
+Elle choisit de montrer parce qu’elle se sent vue précisément et que la distance lui donne le courage d’oser.
 
-La relation n’a cependant pas disparu.
+## 6.2 État initial
 
-Sa réactivation révèle un manque.
+Sandra connaît Player depuis avant Marie.
 
----
+Ils ont laissé leur amitié s’éloigner parce que chacun a construit sa vie de couple.
 
-## 7.2 État initial
+Sandra vit avec Jeff depuis environ trois ans et est avec lui depuis environ six ans.
 
-Sandra et Player :
+Le couple Sandra–Jeff est réel, stable en apparence et émotionnellement sous-alimenté, sans être un enfer ni une justification automatique.
 
-- possèdent une histoire commune ;
-- s’apprécient sincèrement ;
-- ne sont plus aussi proches qu’autrefois ;
-- sont chacun engagés dans une vie de couple ;
-- conservent une facilité relationnelle ;
-- hésitent à donner trop de sens à cette facilité.
+## 6.3 Monde propre
 
-Player est intrigué par Sandra et ressent le manque de leur ancienne proximité.
+La route doit utiliser :
 
-Sandra apprécie la reconnexion, mais reste attentive au risque de confusion.
+- SentryCore ;
+- les tickets fantômes ;
+- les horaires décalés ;
+- la fatigue de fin de poste ;
+- les photos imprimées ;
+- les cadres, livres, scrapbooking et objets ;
+- le chocolat chaud et le plaid ;
+- la maison des Tilleuls ;
+- Jeff ;
+- les traces d’une histoire antérieure à Marie.
 
----
+## 6.4 Désirs et besoins
 
-## 7.3 Fantasmes combinés
+Sandra veut :
 
-La route de Sandra peut mobiliser :
+- être vue sans être envahie ;
+- retrouver une complicité qui lui manque ;
+- choisir elle-même la distance ;
+- pouvoir être plus audacieuse sans perdre sa sécurité émotionnelle ;
+- savoir si Player protège encore la relation après avoir obtenu davantage.
 
-- relation retrouvée ;
-- complicité ;
-- secret partagé ;
-- destinataire privilégié ;
-- relation parallèle ;
-- confiance ;
-- manque ;
-- jalousie ;
-- transgression ;
-- réparation ;
-- distance protectrice.
+## 6.5 Résistances
 
-Le cœur de sa route n’est pas une séduction directe.
+Sandra résiste lorsque Player :
 
-Il est la difficulté à déterminer quand une tendresse ancienne devient autre chose.
+- transforme une confidence en permission ;
+- pousse après une hésitation ;
+- utilise Jeff comme excuse ;
+- exige une photo ;
+- minimise le risque ;
+- réclame immédiatement une nouvelle définition ;
+- se montre tendre uniquement lorsqu’il veut quelque chose.
 
----
+## 6.6 Familles de transformation
 
-## 7.4 Désirs et besoins
+### Amitié retrouvée
 
-Sandra peut chercher :
-
-- à retrouver quelqu’un qui la connaît depuis longtemps ;
-- à se sentir comprise sans devoir construire une nouvelle identité ;
-- à conserver un espace qui lui appartient ;
-- à vérifier si elle manque réellement à Player ;
-- à être choisie sans être pressée ;
-- à pouvoir hésiter sans perdre la relation ;
-- à sentir que Player respecte ce qui rend leur proximité précieuse.
-
-Elle peut désirer la proximité tout en craignant sa définition.
-
----
-
-## 7.5 Résistances
-
-Sandra résiste lorsque :
-
-- Player accélère brutalement ;
-- il transforme immédiatement chaque geste en preuve de désir ;
-- il utilise leur passé comme un droit ;
-- il critique son couple pour créer une ouverture ;
-- il exige qu’elle nomme ce qu’elle n’est pas prête à nommer ;
-- il exploite un moment de fragilité ;
-- il utilise l’humour comme pression répétée.
-
-Lorsqu’elle est gênée, Sandra peut :
-
-- plaisanter ;
-- changer de sujet ;
-- minimiser ;
-- reporter ;
-- laisser un message sans réponse immédiate ;
-- rappeler indirectement le cadre amical.
-
-Ces réactions ne sont pas automatiquement des refus définitifs.
-
-Elles sont des demandes de rythme et de sécurité.
-
----
-
-## 7.6 Familles de transformation
-
-### Amitié retrouvée et renforcée
-
-Sandra et Player redeviennent proches sans transformer immédiatement cette proximité en relation amoureuse ou sexuelle.
-
-Ils développent :
-
-- une nouvelle régularité ;
-- une confiance plus profonde ;
-- un espace de confidence ;
-- une tendresse assumée mais cadrée.
-
-Cette voie doit être riche narrativement.
-
-Elle ne constitue pas une route ratée.
+La relation retrouve de la chaleur sans devenir explicitement amoureuse ou sexuelle.
 
 ### Confidence privilégiée
 
-Sandra devient la personne à laquelle Player parle de choses qu’il ne partage pas ailleurs.
+Player devient celui à qui Sandra montre les traces qu’elle minimise devant les autres.
 
-La relation acquiert :
+### Désir retenu
 
-- des secrets ;
-- des habitudes privées ;
-- une responsabilité mutuelle ;
-- une loyauté émotionnelle qui peut déjà concurrencer le couple.
+L’attirance est reconnue mais volontairement contenue.
 
-La bascule peut d’abord être émotionnelle.
+### Relation parallèle tendre
 
-### Ambiguïté reconnue
+Une continuité émotionnelle et éventuellement physique se construit à côté des couples officiels.
 
-Sandra et Player savent qu’une attirance ou un désir existe.
+### Transgression suivie de recul
 
-Ils peuvent :
+Sandra traverse une limite puis cherche à préserver ce qui reste de leur ancienne relation.
 
-- choisir de ne pas agir immédiatement ;
-- maintenir une tension ;
-- poser des limites ;
-- reconnaître que la relation n’est plus purement amicale.
+### Retrait protecteur
 
-Cette reconnaissance transforme définitivement la relation, même sans passage à l’acte.
+Elle ferme la ligne lorsque Player pousse, minimise ou utilise sa fragilité.
 
-### Relation parallèle
+## 6.7 Progression par traces
 
-Sandra et Player construisent un espace intime dissimulé ou partiellement dissimulé.
+1. ancienne photo imparfaite ;
+2. détail de SentryCore ou fin de poste ;
+3. photo imprimée, livre, table ou fenêtre ;
+4. trace pensée pour Player mais encore défendable ;
+5. image choisie et audience privée ;
+6. rencontre ou secret ;
+7. éventuelle intimité physique ;
+8. trace conservée, supprimée ou déplacée après la bascule.
 
-Cette relation peut être :
+## 6.8 Bascule de saison
 
-- émotionnelle ;
-- amoureuse ;
-- physique ;
-- discontinue ;
-- assumée entre eux mais non dans le réseau.
+La bascule existe lorsque Sandra doit choisir :
 
-Elle doit créer :
+- quelle place Player occupe ;
+- ce qu’elle continue à montrer ;
+- ce qu’elle retire ;
+- si l’amitié peut survivre au désir ;
+- si le secret devient une relation ou une limite.
 
-- des obligations ;
-- des choix de priorité ;
-- des absences ;
-- des risques pour leurs couples respectifs ;
-- une peur d’abîmer leur ancienne amitié.
-
-### Recul protecteur
-
-Sandra estime que la relation menace trop de choses.
-
-Elle peut créer une distance afin de protéger :
-
-- son couple ;
-- celui de Player ;
-- leur amitié ;
-- sa propre stabilité ;
-- Marie ;
-- l’image qu’elle a d’elle-même.
-
-Ce recul peut fermer une occasion précise sans supprimer tout futur.
-
----
-
-## 7.7 Voie sombre
-
-La voie sombre de Sandra apparaît si Player utilise :
-
-- sa nostalgie ;
-- son manque ;
-- une crise personnelle ;
-- une faiblesse dans son couple ;
-- sa peur de perdre leur lien ;
-- une confidence privée.
-
-Cette voie peut accélérer une proximité, mais elle doit produire :
-
-- culpabilité ;
-- instabilité ;
-- méfiance ;
-- retrait ;
-- dépendance ;
-- risque de rupture plus brutal.
-
-Elle ne doit jamais être la version optimale de sa route.
-
----
-
-## 7.8 Vraie bascule de saison 1
-
-La route de Sandra atteint une vraie bascule lorsque leur relation ne peut plus être honnêtement décrite comme une simple reprise de contact entre amis.
-
-La bascule peut être :
-
-- une priorité émotionnelle nouvelle ;
-- une attirance reconnue ;
-- une promesse privée ;
-- une rencontre consciemment ambiguë ;
-- une image choisie spécifiquement pour Player ;
-- une transgression ;
-- un recul explicitement motivé par le danger de la relation.
-
----
-
-## 7.9 Progression visuelle
-
-La progression visuelle de Sandra peut aller de :
-
-1. **image naturelle** — photo liée à un souvenir, un déjeuner ou une situation concrète ;
-2. **image de reconnexion** — Sandra partage davantage parce qu’elle retrouve confiance ;
-3. **destination consciente** — l’image existe spécifiquement pour Player ;
-4. **vulnérabilité ou trouble** — la photo expose une intention que Sandra ne formule pas complètement ;
-5. **trace de bascule** — image qui n’aurait pas été possible dans leur ancienne amitié.
-
-Sa progression doit rester plus retenue et plus personnelle que celle de Pauline.
-
----
-
-## 7.10 Conséquences sur le réseau
-
-La route de Sandra affecte particulièrement :
-
-- Marie, par la concurrence émotionnelle ;
-- le couple de Sandra ;
-- Nico, si Player lui confie ce qui se passe ;
-- Pauline, si elle perçoit une différence d’audience ou de comportement ;
-- les événements sociaux où Sandra et Marie sont présentes ou évoquées.
-
-Le danger principal n’est pas seulement d’être surpris.
-
-Il est que Player commence à réserver à Sandra une part de lui-même qui appartenait auparavant au couple.
-
----
-
-## 7.11 États possibles de fin de saison
-
-Sandra et Player peuvent finir la saison dans un état de :
+## 6.9 États possibles de fin de saison
 
 - amitié renouvelée ;
 - confidence privilégiée ;
-- ambiguïté reconnue mais contenue ;
-- relation parallèle fragile ;
-- rapprochement consommé mais non résolu ;
+- désir reconnu ;
+- relation émotionnelle parallèle ;
+- relation sexuelle secrète ;
 - recul protecteur ;
-- relation refroidie après perte de confiance.
+- rupture de confiance ;
+- promesse liée à la maison des Tilleuls ou à une future rencontre.
 
 ---
 
-# 8. Route macro de Mathilde
+# 7. Route macro de Mathilde
 
-## 8.1 Transformation centrale
+## 7.1 Transformation centrale
 
-> **Une proximité domestique ou familière cesse d’être accidentelle et devient une intention que les personnages doivent reconnaître, négocier ou craindre.**
+> **Une proximité familiale et domestique devient un désir intentionnel dans un foyer construit sur la confiance de Marie.**
 
-Mathilde appartient à l’espace proche de Marie et du foyer.
+Mathilde est déjà naturellement sensuelle.
 
-Sa route repose moins sur un passé partagé avec Player que sur la répétition des présences, l’observation et la transformation de situations ordinaires.
+La route ne commence pas lorsque ses vêtements deviennent sexy. Elle commence lorsqu’elle choisit l’effet produit sur Player.
 
----
+## 7.2 État initial
 
-## 8.2 État initial
+Mathilde est la cousine de Marie.
 
-Mathilde possède une place crédible dans le réseau.
+Un dégât des eaux rend sa chambre et une partie de sa salle de bains inutilisables.
 
-Sa présence peut être :
+Marie lui propose le bureau ou la petite chambre d’appoint pendant environ dix à quinze jours.
 
-- familière ;
-- pratique ;
-- sociale ;
-- liée à Marie ;
-- liée au foyer ;
-- suffisamment régulière pour créer des habitudes.
+Mathilde arrive avec :
 
-Player peut la voir dans des situations qui ne sont pas initialement conçues comme séduisantes.
+- une valise trop pleine ;
+- un garment bag ;
+- son ordinateur ;
+- sa trousse ;
+- trop de chaussures ;
+- un tote bag de dossiers ;
+- un chargeur qu’elle perd régulièrement.
 
-La tension naît lorsque ces situations cessent d’être neutres.
+Marie l’héberge précisément parce qu’elle lui fait confiance.
 
----
+## 7.3 Monde propre
 
-## 8.3 Fantasmes combinés
+La route doit utiliser :
 
-La route de Mathilde peut mobiliser :
+- le séjour temporaire ;
+- la cuisine du matin ;
+- la chambre d’appoint ;
+- la salle de bains ;
+- le retour tardif ;
+- la fin du séjour ;
+- son métier en protection juridique ;
+- Inès et Chloé comme ancrages ;
+- ses vêtements ajustés habituels ;
+- le mini-short noir, le crop top, l’atomiseur de parfum, la trousse ouverte et le porte-clés coloré ;
+- les souvenirs familiaux partagés avec Marie.
 
-- interdit domestique ;
-- proximité quotidienne ;
-- regard ;
-- gêne ;
-- exhibition choisie ;
-- secret ;
-- jalousie ;
-- rivalité ;
-- transgression ;
-- confiance ;
-- perte de contrôle.
+## 7.4 Désirs et besoins
 
-Mathilde ne doit pas être une version plus directe de Sandra.
+Mathilde veut :
 
-Sandra repose principalement sur l’histoire et la confidence.
+- être désirée et prise au sérieux ;
+- contrôler l’image sans être réduite à elle ;
+- pouvoir reconnaître qu’elle aime être regardée ;
+- préserver son lien avec Marie ;
+- ne pas être traitée comme une cousine naïve ou une simple tentation.
 
-Mathilde repose sur l’espace, la présence, le corps dans le quotidien et la loyauté envers Marie.
+## 7.5 Résistances
 
----
+Mathilde résiste lorsque Player :
 
-## 8.4 Désirs et besoins
+- considère sa tenue comme une permission ;
+- la traite comme un accident permanent ;
+- se sert d’elle contre Marie ;
+- nie ensuite son propre rôle ;
+- diffuse une image ;
+- accélère avant qu’elle ait choisi ;
+- réduit sa compétence à une plaisanterie.
 
-Mathilde peut chercher :
+## 7.6 Familles de transformation
 
-- à contrôler la manière dont Player la regarde ;
-- à ne pas être réduite à une présence secondaire dans la vie de Marie ;
-- à comprendre si le trouble est réciproque ;
-- à tester une limite sans perdre sa capacité de retrait ;
-- à être désirée sans être objectifiée ;
-- à conserver une forme de loyauté ;
-- à reprendre le contrôle après une gêne ou un incident.
+### Confiance domestique
 
----
+La proximité reste familiale mais devient plus personnelle et plus adulte.
 
-## 8.5 Résistances
+### Regard reconnu
 
-Mathilde résiste lorsque :
+Mathilde admet qu’elle sait quand Player la regarde et qu’elle ne déteste pas toujours cela.
 
-- Player traite une proximité involontaire comme une permission ;
-- il profite d’un espace domestique ;
-- il observe ou conserve une image sans cadre ;
-- il l’expose à Marie ;
-- il la compare à Marie ;
-- il suppose que sa gêne équivaut à un consentement ;
-- il lui laisse porter seule la responsabilité d’une ambiguïté partagée.
+### Provocation choisie
 
-La route de Mathilde doit clairement distinguer :
+Elle répète ou construit volontairement une situation.
 
-- ce qui est vu accidentellement ;
-- ce qui est laissé visible ;
-- ce qui est consciemment montré ;
-- ce qui est destiné à Player ;
-- ce qui peut circuler.
+### Interdit secret
 
----
+Le foyer devient le cadre d’une relation cachée.
 
-## 8.6 Familles de transformation
+### Médiatrice ou témoin
 
-### Proximité domestique de confiance
-
-Mathilde et Player deviennent plus à l’aise dans l’espace partagé.
-
-Ils développent :
-
-- une confiance pratique ;
-- des habitudes ;
-- une capacité à reconnaître les gênes sans les exploiter ;
-- une complicité limitée mais réelle.
-
-Cette voie peut rester non sexuelle tout en changeant profondément leur relation.
-
-### Jeu de regard négocié
-
-Mathilde comprend qu’elle est regardée et choisit progressivement comment répondre à ce regard.
-
-Elle peut :
-
-- contrôler une tenue ;
-- choisir une audience ;
-- demander un avis ;
-- provoquer consciemment une réaction ;
-- retirer son accord lorsque le cadre change.
-
-Le plaisir vient du contrôle repris, pas de l’exposition subie.
-
-### Interdit domestique intentionnel
-
-Mathilde et Player créent volontairement des situations dont ils savent qu’elles dépassent la neutralité.
-
-La proximité devient :
-
-- attendue ;
-- recherchée ;
-- organisée ;
-- gardée secrète ;
-- chargée par la présence réelle ou symbolique de Marie.
-
-Cette route peut atteindre une vraie bascule pendant la première saison.
-
-### Alliance ou tension à trois
-
-Mathilde n’existe pas uniquement dans un face-à-face avec Player.
-
-Sa relation avec Marie doit conserver une réalité.
-
-Selon la partie, Mathilde peut :
-
-- protéger Marie ;
-- chercher son attention ;
-- se sentir comparée ;
-- provoquer le couple ;
-- aider à une reconfiguration ;
-- créer une rivalité ;
-- refuser d’être utilisée contre elle.
-
-Cette famille de transformation prépare des configurations futures sans imposer immédiatement une route à trois.
+Mathilde refuse la route sexuelle et utilise ce qu’elle a vu pour obliger le couple à parler.
 
 ### Rupture de confiance
 
-Mathilde peut prendre de la distance si Player :
+Marie découvre que son accueil a produit une réalité qu’elle n’avait pas consentie à porter.
 
-- exploite une situation ;
-- diffuse ou conserve une image contre son attente ;
-- ment sur ce qui s’est passé ;
-- la transforme en objet de comparaison ;
-- la place seule face aux conséquences.
+## 7.7 Progression visuelle
 
----
+1. tenue domestique ordinaire ;
+2. version non préparée ;
+3. tenue de sortie et demande d’avis ;
+4. choix conscient de la tenue que Player remarque ;
+5. photo ou pose destinée ;
+6. lingerie ou intimité dans le foyer, uniquement après intention reconnue ;
+7. éventuelle relation sexuelle ou scène explicite ;
+8. objet rendu, clé retirée ou nouvelle règle après la bascule.
 
-## 8.7 Voie sombre
+## 7.8 Bascule de saison
 
-La voie sombre de Mathilde concerne particulièrement :
+La bascule existe lorsque Mathilde et Player savent que la proximité n’est plus accidentelle et qu’une conséquence doit être assumée envers Marie ou le foyer.
 
-- l’observation non consentie ;
-- la conservation d’une image ;
-- la circulation d’une photo ;
-- l’exploitation de la proximité domestique ;
-- la mise en concurrence avec Marie ;
-- une situation où Mathilde ne dispose pas d’une vraie capacité de retrait.
+## 7.9 États possibles de fin de saison
 
-Cette voie doit créer des conséquences majeures :
-
-- peur ;
-- colère ;
-- perte d’accès au foyer ;
-- rupture de confiance ;
-- conflit avec Marie ;
-- preuve dangereuse ;
-- pouvoir détenu par un tiers ;
-- route durablement assombrie.
+- retour à une confiance familiale plus lucide ;
+- jeu de regard limité ;
+- désir reconnu mais arrêté ;
+- relation secrète ;
+- intimité sexuelle ;
+- départ anticipé ;
+- révélation ;
+- rupture avec Player ;
+- tension ouverte entre les trois ;
+- possibilité future d’une configuration négociée, jamais automatique.
 
 ---
 
-## 8.8 Vraie bascule de saison 1
+# 8. Route macro de Pauline
 
-La relation atteint une vraie bascule lorsque Mathilde et Player savent tous deux que la proximité n’est plus seulement imposée par les circonstances.
+## 8.1 Transformation centrale
 
-La bascule peut être :
+> **Une amie publiquement fiable ouvre un compartiment privé où elle tente de préserver simultanément Bastien, Marie, son image et son désir.**
 
-- une initiative consciente de Mathilde ;
-- une demande ou une limite explicitement liée au désir ;
-- une situation domestique volontairement répétée ;
-- une photo destinée à Player ;
-- un secret commun ;
-- une transgression ;
-- une rupture causée par la manière dont Player a regardé ou utilisé la situation.
+Pauline n’offre pas à Player une nouvelle vie.
+
+Elle lui offre la possibilité séduisante de ne pas choisir tout de suite.
+
+## 8.2 État initial
+
+Pauline est l’une des plus proches amies de Marie et vit avec Bastien.
+
+Elle a déjà trompé Bastien environ quatorze mois avant le jeu.
+
+L’épisode est terminé, mais :
+
+- Bastien ne sait pas ;
+- Marie sait que la limite physique a été franchie ;
+- Pauline n’a pas résolu ce qui rendait le compartiment désirable ;
+- elle a appris à mieux contrôler les traces.
+
+## 8.3 Monde propre
+
+La route doit utiliser :
+
+- Bastien et leur appartement réel ;
+- les repas et invitations ;
+- la banque mutualiste ;
+- les documents manquants et versions incomplètes ;
+- la chorale ;
+- les engagements communautaires ;
+- Léa, Amandine et Lucie ;
+- la robe portefeuille verte ;
+- les images publiques et leurs cadrages alternatifs ;
+- les preuves réciproques ;
+- les habitudes téléphoniques héritées de l’ancienne infidélité.
+
+## 8.4 Désirs et besoins
+
+Pauline veut :
+
+- être choisie hors du rôle de partenaire fiable ;
+- garder le contrôle de la version reçue par chaque audience ;
+- vivre un désir sans démolir immédiatement la vie stable ;
+- rencontrer quelqu’un qui comprend le compartiment sans la réduire à lui ;
+- éviter qu’une version privée efface la personne entière.
+
+## 8.5 Résistances
+
+Pauline résiste lorsque Player :
+
+- traite l’accès privé comme une permission illimitée ;
+- oublie Bastien ;
+- utilise Marie comme couverture ;
+- demande une confession qu’il ne pratique pas lui-même ;
+- montre une version privée ;
+- la pousse à perdre le contrôle de l’audience ;
+- transforme sa culpabilité en pouvoir sur elle.
+
+## 8.6 Familles de transformation
+
+### Ligne privée de confiance
+
+Pauline teste la discrétion et la capacité de Player à comprendre une double adresse.
+
+### Compartiment érotique
+
+Un canal privé devient une réalité désirée à côté des vies officielles.
+
+### Pacte de preuves
+
+Pauline et Player détiennent chacun une trace qui rend la relation réciproquement risquée.
+
+### Reproduction de l’ancien schéma
+
+Pauline recommence à vivre deux versions de la même journée.
+
+### Protectrice de Marie
+
+Elle reconnaît le danger et ferme la ligne avant de répéter la structure.
+
+### Collision
+
+Bastien, Marie ou le réseau découvre qu’une version privée existe.
+
+## 8.7 Progression visuelle
+
+1. image publique légitime ;
+2. détail à double sens ;
+3. cadrage alternatif ;
+4. version privée ;
+5. seconde destination ou timing secret ;
+6. preuve réciproque ;
+7. image adulte choisie dans un compartiment explicite ;
+8. circulation, découverte ou suppression.
+
+## 8.8 Bascule attendue pendant la saison 1
+
+Pauline n’a pas besoin d’atteindre une relation sexuelle complète.
+
+La saison doit toutefois établir :
+
+- une ligne autonome ;
+- une différence d’audience ;
+- un test de fiabilité ;
+- une conséquence liée à Marie ou Bastien ;
+- une promesse adulte précise.
+
+## 8.9 États possibles de fin de saison
+
+- amie de Marie ayant refusé le compartiment ;
+- ligne privée protégée ;
+- pacte de preuves ;
+- compartiment érotique ouvert ;
+- première trahison envers Marie ;
+- suspicion de Bastien ;
+- contrôle repris ;
+- perte d’une audience ;
+- hook d’extension vers une double vie plus profonde.
 
 ---
 
-## 8.9 Progression visuelle
-
-La progression visuelle de Mathilde peut aller de :
-
-1. **présence familière** — image liée au quotidien ou à une situation pratique ;
-2. **gêne consciente** — Mathilde comprend qu’elle est vue ;
-3. **contrôle de l’image** — elle choisit le cadrage, le moment ou la destination ;
-4. **intention domestique** — l’image utilise consciemment l’espace du foyer ou la proximité avec le couple ;
-5. **trace dangereuse** — la photo représente un secret, une limite franchie ou un nouvel accord.
-
-Une image plus exposée mais subie ne doit jamais être traitée comme une meilleure progression qu’une image moins explicite réellement choisie.
-
----
-
-## 8.10 Conséquences sur le réseau
-
-La route de Mathilde affecte directement :
-
-- Marie ;
-- la sécurité et la signification du foyer ;
-- les habitudes domestiques ;
-- Pauline, par les audiences sociales ;
-- Nico, si Player lui montre ou lui raconte quelque chose ;
-- Jeff ou Bastien s’ils appartiennent à une situation sociale convergente.
-
-La maison doit changer de signification lorsque la route de Mathilde progresse.
-
----
-
-## 8.11 États possibles de fin de saison
-
-Mathilde et Player peuvent finir la saison dans un état de :
-
-- confiance domestique renforcée ;
-- tension reconnue mais cadrée ;
-- jeu privé négocié ;
-- interdit domestique devenu intentionnel ;
-- secret dangereux ;
-- rivalité avec Marie ;
-- retrait protecteur ;
-- rupture de confiance.
-
----
-
-# 9. Route macro de Pauline
+# 9. Route macro de Raphaëlle
 
 ## 9.1 Transformation centrale
 
-> **Une présence sociale qui maîtrise son image et ses audiences choisit d’ouvrir une ligne privée avec Player.**
+> **Player passe de la version bureau de Raphaëlle au processus d’une transformation qu’elle a choisie, puis doit prouver qu’il reconnaît encore la personne lorsque le rôle prend fin.**
 
-Pauline doit devenir davantage que l’amie de Marie ou une source de photos.
+Le travail est le point de départ de la route. Il n’est pas sa totalité.
 
-Elle comprend les groupes, les versions, les commentaires et les différences entre ce qui est public, adressé ou caché.
-
----
+Raphaëlle n’est pas une collègue froide, un refuge sain ou un gimmick cosplay.
 
 ## 9.2 État initial
 
-Pauline existe d’abord à travers le réseau.
+Raphaëlle est une collègue directe de Player depuis environ trois ans.
 
-Elle peut apparaître dans :
+Ils sont pairs.
 
-- les conversations de Marie ;
-- les groupes ;
-- les sorties ;
-- les photos publiques ;
-- les plaisanteries ;
-- les événements sociaux.
+Ils ont construit une confiance à travers :
 
-Player ne sait pas immédiatement si Pauline :
+- les revues de prototypes ;
+- l’accessibilité ;
+- les dossiers imprécis ;
+- les cafés froids ;
+- les marches de midi ;
+- l’humour sec ;
+- la capacité de Player à remarquer un détail.
 
-- le teste ;
-- joue simplement ;
-- a remarqué quelque chose ;
-- cherche une réaction ;
-- protège Marie ;
-- s’amuse avec l’ambiguïté.
+Raphaëlle est célibataire et sait que Player est en couple avec Marie.
 
----
+Elle trouve Player attirant, mais l’attirance reste contenue dans le cadre professionnel.
 
-## 9.3 Fantasmes combinés
+## 9.3 Monde propre
 
-La route de Pauline peut mobiliser :
+La route doit utiliser :
 
-- regard des autres ;
-- exhibition choisie ;
-- double destination ;
-- double vie ;
-- complicité ;
-- voyeurisme négocié ;
-- jalousie ;
-- contrôle ;
-- conséquences sociales ;
-- perte de contrôle.
-
-Pauline ne possède pas exclusivement ces fantasmes.
-
-Elle les incarne cependant avec une conscience particulièrement forte des audiences.
-
----
+- l’UX et l’accessibilité ;
+- les prototypes, ateliers et dossiers ;
+- le carnet bleu-vert ;
+- le garment bag ;
+- le découd-vite rouge ;
+- le dé à coudre de Mireille ;
+- les tissus, patrons, épingles et essais ;
+- le compte créatif sous pseudonyme ;
+- Maud comme amie et photographe occasionnelle ;
+- Nora comme témoin professionnel ;
+- l’appartement-atelier, le mannequin, le miroir et les boîtes de tissus ;
+- les conventions et événements photo ;
+- les masques, bustiers, gants, bottes, perruques et rôles originaux ;
+- le silence après avoir retiré le costume.
 
 ## 9.4 Désirs et besoins
 
-Pauline peut chercher :
+Raphaëlle veut :
 
-- à garder le contrôle du jeu ;
-- à vérifier l’intelligence relationnelle de Player ;
-- à être distinguée de son personnage social ;
-- à décider qui voit quelle version ;
-- à observer les limites du couple ;
-- à créer une curiosité sans promettre immédiatement une relation ;
-- à trouver quelqu’un capable de comprendre ses doubles adresses.
+- être désirée sans être simplifiée ;
+- que la préparation compte autant que le résultat ;
+- pouvoir choisir une version sans que les autres deviennent fausses ;
+- nommer le cadre ;
+- garder le droit de modifier ou terminer le rôle ;
+- être reconnue le lendemain ;
+- éviter de devenir la cachette propre et bien formulée de Player.
 
----
+## 9.5 Blessure et contradiction
 
-## 9.5 Résistances
+Raphaëlle a vécu :
 
-Pauline résiste lorsque :
+- l’indécision prolongée de ses parents ;
+- une demande de « liberté » rétroactive dans sa relation avec Étienne.
 
-- Player considère toute provocation comme une permission ;
-- il révèle qu’il ne comprend pas les audiences ;
-- il transfère ou commente une image au mauvais endroit ;
-- il cherche à la posséder trop rapidement ;
-- il la réduit à une personnalité audacieuse sans vulnérabilité ;
-- il croit que contrôler l’image signifie ne jamais pouvoir être blessée.
+Elle croit que nommer un cadre évite la mauvaise foi.
 
-Pauline peut fermer une ligne brutalement si Player montre qu’il n’est pas fiable.
+Son angle mort est qu’une clarté entre deux personnes peut toujours exclure une troisième personne réelle.
 
----
+## 9.6 Résistances
 
-## 9.6 Transformation attendue pendant la saison 1
+Raphaëlle résiste lorsque Player :
 
-La première saison doit accomplir les étapes suivantes :
+- utilise le travail comme prétexte ;
+- considère le costume comme une permission ;
+- ne s’intéresse qu’au résultat ;
+- confond précision et absolution ;
+- lui demande de résoudre la crise de son couple ;
+- invente l’accord de Marie ;
+- transforme le rôle en identité permanente ;
+- néglige le lendemain.
 
-1. Pauline devient identifiable comme personne autonome.
-2. Elle remarque ou teste Player.
-3. Une interaction collective acquiert un second sens.
-4. Une ligne privée est ouverte.
-5. Une première différence d’audience devient significative.
-6. Player prouve ou non qu’il comprend le cadre.
-7. Une promesse forte est laissée pour l’extension.
+## 9.7 Familles de transformation
 
-Sa route la plus avancée n’a pas besoin d’être accomplie.
+### Confiance professionnelle approfondie
 
----
+La relation reste professionnelle mais devient plus personnelle et plus honnête.
 
-## 9.7 Familles d’état de fin de saison
+### Accès créatif
 
-### Curiosité réciproque
+Raphaëlle montre son compte, une fabrication, une réparation ou une préparation.
 
-Pauline et Player savent qu’une attention particulière existe, sans avoir encore créé de secret majeur.
+### Version choisie
 
-### Ligne privée contrôlée
+Player devient le destinataire nommé d’une version ou d’une image construite.
 
-Pauline possède un canal, un ton ou une version qu’elle réserve à Player.
+### Cadre futur explicite
 
-### Première complicité d’audience
+Raphaëlle propose une invitation, un essayage, un événement ou un rôle avec des conditions claires.
 
-Player comprend une double adresse ou protège correctement une image ou une information.
+### Relation informée
 
-### Test échoué
+Une future relation peut exister dans un cadre explicitement accepté par les personnes directement concernées.
 
-Pauline considère Player comme imprudent, trop direct ou incapable de respecter un cadre.
+### Secret clair mais infidèle
 
-Elle peut conserver sa curiosité tout en réduisant son accès.
+Raphaëlle et Player savent exactement qu’ils excluent Marie. La précision rend la faute lisible, pas propre.
 
-### Risque ouvert
+### Frontière renforcée
 
-Une image, une version ou un secret crée une possibilité future plus dangereuse.
-
----
+Raphaëlle constate que Player désire la version mais refuse d’assumer la personne ou les conséquences.
 
 ## 9.8 Progression visuelle
 
-La progression visuelle de Pauline peut aller de :
+1. version bureau élégante ;
+2. détail de fabrication aperçu ;
+3. tenue d’atelier ;
+4. compte créatif ou photo de processus ;
+5. essayage partiel ;
+6. masque, bustier, gants ou silhouette choisie ;
+7. image destinée avec audience et règles ;
+8. roleplay ou échange de pouvoir dans un cadre adulte ;
+9. fin du rôle et retour à l’ordinaire ;
+10. trace ou conséquence professionnelle et relationnelle.
 
-1. **version publique** ;
-2. **détail ou commentaire à double sens** ;
-3. **version alternative** ;
-4. **cadrage destiné à Player** ;
-5. **image ou version conditionnelle promise pour plus tard**.
-
-La différence entre deux versions est souvent plus importante que leur degré d’exposition.
-
----
-
-## 9.9 Conséquences sur le réseau
-
-Pauline peut devenir :
-
-- révélatrice des incohérences de Player ;
-- protectrice de Marie ;
-- provocatrice ;
-- gardienne d’une image ;
-- source d’une mauvaise audience ;
-- alliée temporaire ;
-- future porteuse d’une route sociale plus risquée.
-
-Sa proximité avec Marie rend toute ligne privée potentiellement importante.
-
----
-
-## 9.10 Hooks d’extension
-
-La saison suivante peut développer :
-
-- une invitation privée ;
-- un pacte d’image ;
-- une double destination plus dangereuse ;
-- une rivalité ou complicité avec Mathilde ;
-- une lecture plus lucide du couple ;
-- une situation où Pauline perd partiellement le contrôle de sa propre version ;
-- une relation où Player devient participant plutôt que simple audience.
-
----
-
-# 10. Route macro de Raphaëlle
-
-## 10.1 Transformation centrale
-
-> **Une relation professionnelle permet à Player de découvrir une version de lui-même qui n’existe pas de la même manière dans son foyer.**
-
-Raphaëlle représente l’extérieur.
-
-Elle ne doit pas perturber trop tôt le centre émotionnel de la saison.
-
-Sa présence commence légèrement et gagne progressivement en signification.
-
----
-
-## 10.2 État initial
-
-Raphaëlle appartient principalement à un contexte :
-
-- professionnel ;
-- extérieur au foyer ;
-- structuré par des horaires et responsabilités ;
-- moins chargé par l’histoire personnelle de Player.
-
-Elle peut d’abord servir à montrer :
-
-- la compétence ;
-- le rythme professionnel ;
-- les contraintes de Player ;
-- une vie qui ne passe pas par Marie ou le cercle proche.
-
----
-
-## 10.3 Fantasmes combinés
-
-La route de Raphaëlle peut mobiliser :
-
-- vie extérieure ;
-- admiration ;
-- double vie ;
-- transformation choisie ;
-- complicité professionnelle ;
-- relation parallèle ;
-- séjour hors du foyer ;
-- version alternative de soi.
-
----
-
-## 10.4 Désirs et besoins
-
-Raphaëlle peut chercher :
-
-- une reconnaissance professionnelle réelle ;
-- une personne capable de respecter les frontières ;
-- une conversation qui dépasse progressivement le travail sans nier son origine ;
-- une attention portée à ses choix et non uniquement à son apparence ;
-- la possibilité d’exister hors du regard du réseau principal.
-
----
-
-## 10.5 Résistances
-
-Raphaëlle résiste lorsque :
-
-- le travail devient un simple prétexte de séduction ;
-- Player utilise un déplacement comme permission automatique ;
-- il néglige les conséquences professionnelles ;
-- il confond admiration et disponibilité ;
-- il cherche à créer une intimité sans construire de confiance.
-
----
-
-## 10.6 Transformation attendue pendant la saison 1
+## 9.9 Progression attendue pendant la saison 1
 
 La première saison doit permettre :
 
-1. une présence professionnelle identifiable ;
-2. une reconnaissance mutuelle de compétence ou de personnalité ;
-3. un échange qui déborde légèrement du cadre ;
-4. une première image ou situation révélant une version extérieure ;
-5. une possibilité future concrète : sortie, séminaire, déplacement ou invitation.
+1. une confiance professionnelle identifiable ;
+2. un débordement personnel ;
+3. l’existence de sa pratique créative ;
+4. un accès choisi au processus ou au compte ;
+5. une image, une préparation ou une invitation qui change le regard ;
+6. un cadre futur concret.
 
-La saison ne doit pas obligatoirement produire une bascule romantique ou sexuelle.
+Une bascule sexuelle complète reste prioritairement un hook d’extension, mais un premier baiser, une invitation explicite ou un teaser de rôle peut exister sur une variante avancée.
 
----
-
-## 10.7 États possibles de fin de saison
-
-Raphaëlle et Player peuvent finir la saison dans un état de :
+## 9.10 États possibles de fin de saison
 
 - respect professionnel ;
-- curiosité personnelle ;
-- complicité légère ;
-- invitation différée ;
-- opportunité extérieure concrète ;
+- confiance personnelle ;
+- accès au compte créatif ;
+- participation à une réparation ou préparation ;
+- destinataire d’une version choisie ;
+- invitation à une convention, un atelier ou un essayage ;
+- attirance reconnue mais contenue ;
+- secret clair préparé ;
 - frontière professionnelle renforcée ;
-- intérêt refroidi par imprudence.
+- intérêt refroidi par irresponsabilité.
 
 ---
 
-## 10.8 Progression visuelle
+# 10. Route macro de Nico
 
-La progression visuelle peut aller de :
+## 10.1 Transformation centrale
 
-1. **présence professionnelle** ;
-2. **version choisie pour un événement ou un contexte extérieur** ;
-3. **image moins officielle mais encore justifiable** ;
-4. **aperçu d’une autre version de Raphaëlle ou de Player** ;
-5. **promesse visuelle liée à un futur déplacement**.
-
-Raphaëlle ne doit pas commencer par des images fortement suggestives.
-
-Son attrait vient du contraste entre les contextes.
-
----
-
-## 10.9 Conséquences sur le réseau
-
-Pendant la première saison, Raphaëlle peut :
-
-- fournir un alibi réel sans être un alibi fictif ;
-- créer un retard ou une absence ;
-- révéler que Player agit différemment hors du foyer ;
-- devenir un sujet de confidence auprès de Nico ;
-- produire une comparaison silencieuse avec Marie ;
-- préparer un futur séjour ou déplacement.
-
----
-
-# 11. Route macro de Nico
-
-## 11.1 Transformation centrale
-
-> **Un ami devient la personne qui connaît les contradictions de Player et doit décider ce qu’il accepte d’en faire.**
-
-La route de Nico n’est pas romantique ou sexuelle avec Player.
-
-Sa fonction centrale est la complicité, la permission, le miroir et le risque de compromission.
+> **Un ami hétérosexuel qui désire réellement Marie et Mathilde échange avec Player le regard social contre le regard domestique, puis doit décider jusqu’où leur amitié peut porter cette circulation.**
 
 Nico est hétérosexuel.
 
----
+Il n’existe :
 
-## 11.2 État initial
+- aucune attirance romantique envers Player ;
+- aucune attirance sexuelle envers Player ;
+- aucune ambiguïté homosexuelle cachée ;
+- aucune route de contact sexuel direct entre eux.
 
-Nico peut être :
+Leur charge adulte peut venir de la rivalité, de la jalousie, du regard partagé et de la compromission autour de femmes adultes qui gardent leur propre agence.
 
-- un ami ;
-- un interlocuteur pratique ;
-- une présence sociale ;
-- quelqu’un avec qui Player peut parler plus directement ;
-- une personne extérieure à certaines sensibilités du couple.
+## 10.2 État initial
 
-Il ne connaît pas encore nécessairement la profondeur des contradictions de Player.
+Nico est un ami réel de Player et le responsable de salle de L’Annexe.
 
----
+Il connaît Marie socialement et la désire réellement.
 
-## 11.3 Fantasmes combinés
+Il est également sexuellement attiré par Mathilde et intrigué par la version domestique à laquelle Player a temporairement accès.
 
-La route de Nico peut mobiliser :
+Il ne possède :
 
-- complicité ;
-- secret partagé ;
-- regard partagé ;
-- permission ;
-- double vie ;
-- voyeurisme négocié ou risqué ;
-- alibi ;
-- loyauté ;
-- perte de contrôle ;
-- dette.
+- aucun droit sur Marie ou Mathilde ;
+- aucune archive magique ;
+- aucun accord préalable de partage ;
+- aucune permission d’image.
 
----
+## 10.3 Monde propre
 
-## 11.4 Désirs et besoins
+La route doit utiliser :
 
-Nico peut chercher :
+- L’Annexe ;
+- la terrasse ;
+- la petite salle ;
+- les tables ;
+- les fins de service ;
+- le tablier noir ;
+- les clients et événements ;
+- les moments où la salle se vide ;
+- son appartement et sa vie ordinaire ;
+- son ancienne relation avec Clara ;
+- Julie et sa famille ;
+- les photos sociales d’origine crédible ;
+- les différences entre le regard de l’intérieur et celui de l’extérieur.
 
-- à être traité comme un véritable ami ;
-- à connaître la vérité plutôt qu’une version utile ;
-- à participer à une expérience ou une complicité impliquant des femmes, lorsque son désir et le cadre le justifient ;
-- à protéger Player sans devenir un outil ;
-- à sentir que son avis compte ;
-- à comprendre jusqu’où Player veut réellement aller.
+## 10.4 Désirs et besoins
 
-Selon son évolution, Nico peut apprécier :
+Nico veut :
 
-- le rôle de confident ;
-- le sentiment d’être dans le secret ;
-- le risque ;
-- le pouvoir que lui donne une information ;
-- la possibilité de participer à certaines configurations futures avec des femmes.
+- être traité comme un vrai ami ;
+- entendre une vérité plutôt qu’une version utile ;
+- être désiré par les femmes qui l’intéressent ;
+- obtenir un accès qu’il envie sans prétendre qu’il lui est dû ;
+- savoir si Player veut une confidence, une permission ou un complice ;
+- sentir que son propre désir est nommé ;
+- ne pas devenir uniquement l’instrument d’un fantasme de Player.
 
----
-
-## 11.5 Résistances
+## 10.5 Résistances
 
 Nico résiste lorsque :
 
-- Player lui demande un alibi sans lui dire ce qu’il couvre ;
-- il devient responsable de mensonges qu’il n’a pas choisis ;
-- Player ignore ses avertissements puis lui demande de réparer ;
-- une femme est traitée comme une image ou un objectif ;
-- sa loyauté est considérée comme automatique.
+- Player lui demande un alibi sans dire ce qu’il couvre ;
+- une femme est traitée comme une monnaie d’échange ;
+- son attirance est utilisée sans considérer son intérêt ;
+- Player veut être excité mais refuse toute conséquence ;
+- une image est transmise sans audience autorisée ;
+- on lui demande de couvrir une situation qu’il estime abusive.
 
----
+## 10.6 Familles de transformation
 
-## 11.6 Familles de transformation
+### Ami garde-fou
 
-### Garde-fou
-
-Nico écoute Player mais l’oblige à regarder les conséquences.
-
-Il peut :
-
-- déconseiller une action ;
-- refuser un alibi ;
-- rappeler une limite ;
-- aider à réparer ;
-- protéger une personne vulnérable.
+Nico nomme le désir mais rappelle les conséquences.
 
 ### Confident permissif
 
-Nico accepte les ambiguïtés de Player et les normalise partiellement.
+Il écoute, plaisante et normalise partiellement les contradictions de Player.
 
-Il offre :
+### Rival pour Marie
 
-- écoute ;
-- humour ;
-- validation ;
-- conseils ;
-- discrétion.
+Nico cesse de cacher son attirance et Marie choisit elle-même ce qu’elle en fait.
 
-Il ne participe pas encore activement aux transgressions.
+### Attraction Mathilde
 
-### Complice
+Nico reçoit une vraie occasion sociale avec Mathilde, indépendante du fantasme de Player.
 
-Nico fournit :
+### Pacte de regard autorisé
 
-- un alibi ;
-- une couverture ;
-- un espace ;
-- une information ;
-- une aide liée à une photo ;
-- une lecture du comportement d’un tiers.
+Une femme adulte sait qui regarde, pourquoi et ce qui peut être conservé ou montré.
 
-Cette implication crée une dette.
+### Circulation non autorisée
 
-### Amplificateur
+Player et Nico recontextualisent ou transfèrent une image sans permission. Cette voie est sombre et crée une dette durable.
 
-Nico encourage Player à prendre davantage de risques.
+### Complice et alibi
 
-Il peut transformer :
+Nico couvre Player ou reçoit une couverture en retour.
 
-- une curiosité en action ;
-- une image en objet partagé ;
-- une jalousie en provocation ;
-- une occasion en test.
+### Tiers invité
 
-Cette voie doit pouvoir devenir dangereuse.
+Une future configuration adulte avec une ou plusieurs femmes est explicitement négociée. Elle n’implique aucune attraction ou contact sexuel entre Nico et Player.
 
 ### Témoin compromis
 
-Nico sait suffisamment de choses pour être impliqué, même s’il refuse d’aller plus loin.
+Nico sait trop de choses pour rester extérieur, mais refuse de continuer.
 
-Il peut :
-
-- craindre une révélation ;
-- protéger sa propre position ;
-- demander à Player d’arrêter ;
-- utiliser son savoir comme levier ;
-- prendre ses distances.
-
----
-
-## 11.7 Transformation attendue pendant la saison 1
+## 10.7 Progression attendue pendant la saison 1
 
 La saison doit déterminer :
 
 - ce que Nico sait ;
-- ce que Player croit qu’il sait ;
+- ce qu’il désire réellement ;
+- ce que Player lui montre ou décrit ;
 - ce qu’il accepte de couvrir ;
 - ce qu’il refuse ;
-- s’il protège Player ou les personnes affectées ;
-- s’il devient garde-fou, complice ou personne compromise.
+- si son attirance pour Marie ou Mathilde devient lisible ;
+- s’il devient garde-fou, rival, complice ou témoin compromis.
 
-Son rôle final doit modifier réellement les possibilités des futurs arcs.
+Une participation sexuelle directe n’est pas nécessaire en saison 1.
 
----
+## 10.8 Progression visuelle
 
-## 11.8 Progression visuelle
+1. image sociale publique ;
+2. Nico attire l’attention sur un détail ;
+3. contraste entre ce qu’il voit dehors et ce que Player voit chez lui ;
+4. description ou image légitime ;
+5. demande ou offre ;
+6. règles d’audience ;
+7. pacte autorisé ou circulation sombre ;
+8. conséquence dans l’amitié et les relations avec les femmes concernées.
 
-La progression visuelle de Nico ne repose pas principalement sur son exposition corporelle.
+## 10.9 États possibles de fin de saison
 
-Elle peut passer par :
-
-1. une photo de groupe ou de contexte ;
-2. une image qu’il commente ;
-3. une trace qu’il aide à interpréter ;
-4. une photo qu’il reçoit, conserve, protège ou fait circuler ;
-5. une situation visuelle dont il devient témoin ou participant avec une ou plusieurs femmes, dans un cadre consenti.
-
-Le rôle de Nico est souvent lié à l’audience et à la circulation plutôt qu’au fait d’être le sujet principal de l’image.
-
----
-
-## 11.9 États possibles de fin de saison
-
-Nico peut finir la saison comme :
-
-- ami fiable ;
-- garde-fou ;
+- ami garde-fou ;
 - confident ;
+- rival pour Marie ;
+- possibilité autonome avec Mathilde ;
 - complice ;
-- tentateur ;
-- détenteur d’une dette ;
-- témoin compromis ;
-- personne prenant ses distances.
+- partenaire d’un regard partagé autorisé ;
+- auteur ou témoin d’une circulation problématique ;
+- alibi réciproque ;
+- ami prenant ses distances ;
+- hook de tiers invité pour un futur arc.
 
 ---
 
-# 12. Compatibilités entre routes
+# 11. Compatibilité entre les routes
 
-Les routes peuvent progresser simultanément, mais pas indéfiniment sans conflit.
+## Marie et Sandra
 
-## Compatibilités temporaires
+La proximité émotionnelle avec Sandra peut révéler le manque du couple, accélérer une reconquête ou produire une double vie.
 
-Au début de la saison, Player peut :
+## Marie et Mathilde
 
-- tenter une reconquête avec Marie ;
-- retrouver Sandra ;
-- remarquer Mathilde ;
-- répondre aux tests de Pauline ;
-- développer une curiosité professionnelle pour Raphaëlle ;
-- se confier à Nico.
+La route Mathilde ne peut jamais rester sans conséquence sur Marie, car elle utilise son foyer et sa confiance familiale.
 
-Cette simultanéité est nécessaire pour créer la sensation de réseau.
+## Marie et Pauline
 
----
+Pauline connaît déjà la capacité de Marie à porter une vérité imparfaite. Utiliser cette compassion comme couverture transforme qualitativement la trahison.
 
-## Compatibilités durables possibles
+## Marie et Raphaëlle
 
-Certaines transformations peuvent coexister si un nouveau cadre est réellement négocié :
+Raphaëlle peut exiger une confirmation directe d’un cadre négocié. Sur une route secrète, elle doit nommer que Marie reste exclue.
 
-- reconquête de Marie et amitié profonde avec Sandra ;
-- reconfiguration du couple et tension reconnue avec Mathilde ;
-- couple plus transparent et ligne Pauline ;
-- relation extérieure avec Raphaëlle intégrée à une nouvelle règle ;
-- Nico comme confident d’un couple reconfiguré.
+## Marie et Nico
 
----
+Marie peut aimer être vue par Nico, le choisir, le refuser ou utiliser son regard pour réveiller Player. Son désir ne peut jamais être négocié par Player à sa place.
 
-## Contradictions majeures
+## Mathilde et Nico
 
-Certaines configurations deviennent instables :
+Nico est réellement attiré par Mathilde. Une route autonome entre eux doit passer par une rencontre réelle et son choix, pas par la transmission de son image domestique.
 
-- reconstruction exclusive avec Marie et relation secrète durable avec Sandra ;
-- transparence négociée et mensonges systématiques ;
-- protection de Mathilde et circulation non consentie de ses images ;
-- confiance de Pauline et mauvaise gestion répétée des audiences ;
-- Nico garde-fou et Nico utilisé comme alibi permanent ;
-- promesse à Sandra et priorité donnée systématiquement à une autre relation ;
-- foyer présenté comme sûr alors que Player exploite la proximité de Mathilde.
+## Pauline et Nico
 
-Le jeu ne doit pas maintenir artificiellement toutes les routes dans leur meilleur état.
+Pauline contrôle ses audiences. Nico peut devenir un regard nommé ou un auteur de violation ; il ne peut pas déduire une permission d’une image publique.
+
+## Raphaëlle et Nico
+
+Raphaëlle peut participer à un cadre adulte partagé uniquement si elle en choisit les rôles et les destinataires. Nico n’est pas autorisé par la seule précision de Player.
 
 ---
 
-# 13. Règles de verrouillage
+# 12. Points de non-retour
 
-## Pas de verrouillage précoce
+Un point de non-retour peut être créé par :
 
-Les premiers actes colorent les relations.
+- une image intime diffusée ;
+- une relation sexuelle ;
+- un mensonge directement découvert ;
+- un alibi réciproque ;
+- une règle du couple explicitement rompue ;
+- une confession ;
+- un départ ;
+- une personne extérieure rendue complice ;
+- une violation grave de l’audience d’une image.
 
-Ils ne doivent pas fermer brutalement toutes les autres possibilités.
+Les routes ne doivent généralement pas devenir irréversibles trop tôt.
 
-## Pas de choix unique
-
-Une route ne doit jamais être définitivement verrouillée par une seule réponse, sauf lorsque cette réponse accomplit une action majeure déjà préparée.
-
-## Verrouillage par cohérence
-
-Une transformation devient durable lorsque plusieurs actes convergent :
-
-- comportement répété ;
-- promesse ;
-- trace ;
-- reconnaissance ;
-- conséquence acceptée.
-
-## Verrouillage par contradiction
-
-Une route peut également se fermer lorsque Player adopte durablement une attitude incompatible :
-
-- mensonges répétés ;
-- limite ignorée ;
-- absence chronique ;
-- exposition ;
-- manipulation ;
-- promesse contradictoire ;
-- refus de réparer.
-
-## Possibilité de réparation
-
-Avant un point de non-retour, une route doit généralement pouvoir être :
-
-- réparée ;
-- ralentie ;
-- réorientée ;
-- transformée en relation non sexuelle ;
-- suspendue.
-
-Une réparation ne restaure pas automatiquement l’état précédent.
-
-Elle crée un nouvel état.
+Avant le point de non-retour, une réparation reste possible si elle exige un coût réel.
 
 ---
 
-# 14. Règles de progression visuelle des routes
+# 13. Voies sombres
 
-Chaque route doit définir une progression propre.
+Les voies sombres peuvent progresser plus vite sexuellement sans devenir meilleures relationnellement.
 
-La progression ne se mesure pas uniquement par le degré de nudité.
+Elles peuvent reposer sur :
 
-Une image progresse lorsqu’elle modifie :
+- pression ;
+- exploitation d’une vulnérabilité ;
+- image recontextualisée ;
+- audience non autorisée ;
+- jalousie provoquée ;
+- secret organisé ;
+- alibi ;
+- capacité de retrait réduite ;
+- vérité volontairement incomplète.
 
-- son audience ;
-- son intention ;
-- son contexte ;
-- sa destination ;
-- la connaissance que le personnage possède du désir de Player ;
-- la confiance ;
-- le risque ;
-- la possibilité de circulation ;
-- la manière dont la relation doit être interprétée ensuite.
+Toute voie sombre crée au moins une dette durable :
 
-## Question obligatoire
-
-Avant toute photo importante :
-
-> **Pourquoi cette image est-elle possible dans cet état de la route alors qu’elle ne l’était pas auparavant ?**
-
-## Différenciation attendue
-
-- Marie : familiarité transformée et redécouverte.
-- Sandra : destination privée, retenue et confiance.
-- Mathilde : présence domestique, conscience du regard et contrôle.
-- Pauline : versions, audiences et double adresse.
-- Raphaëlle : contraste entre contexte professionnel et version extérieure.
-- Nico : circulation, complicité, preuve et regard partagé.
-
----
-
-# 15. Règles des voies sombres
-
-Les voies sombres peuvent exister dans toutes les routes.
-
-Elles ne doivent pas être :
-
-- des raccourcis propres ;
-- les chemins produisant automatiquement le plus de contenu ;
-- sans conséquence ;
-- équivalentes à une progression négociée.
-
-Une voie sombre peut naître de :
-
-- l’exploitation d’une vulnérabilité ;
-- une limite poussée ;
-- un mensonge ;
-- une image détournée ;
-- une audience non consentie ;
-- une jalousie provoquée ;
-- un alibi imposé ;
-- une dépendance créée ;
-- une promesse utilisée comme pression.
-
-Elle doit produire au moins une conséquence durable :
-
-- perte de confiance ;
 - peur ;
-- dette ;
-- dépendance ;
-- colère ;
+- pouvoir asymétrique ;
+- culpabilité ;
 - exposition ;
 - rupture ;
-- pouvoir asymétrique ;
 - témoin compromis ;
+- dépendance ;
 - future révélation.
 
 ---
 
-# 16. Configuration attendue à la fin de la saison 1
+# 14. Conditions de fin de saison
 
-À la fin de la première saison :
+À la fin de la saison :
 
-## Marie
-
-Le couple possède une nouvelle définition, même provisoire.
-
-## Sandra
-
-La relation a retrouvé une importance réelle et sa nature est devenue significative.
-
-## Mathilde
-
-La proximité domestique a acquis un cadre, une intention, un danger ou une nouvelle limite.
-
-## Pauline
-
-Une ligne autonome existe et porte une promesse forte d’extension.
-
-## Raphaëlle
-
-Une possibilité extérieure concrète a été ouverte ou refusée de manière significative.
-
-## Nico
-
-Sa position comme garde-fou, confident, complice ou témoin compromis est établie.
-
-## Réseau
-
-Au moins une conséquence circule entre plusieurs relations.
-
-La saison ne doit pas se terminer avec six relations indépendantes simplement placées côte à côte.
+- Marie et Player possèdent une nouvelle définition ;
+- Sandra a choisi une place ;
+- Mathilde a obtenu une règle, une distance ou un secret durable ;
+- Pauline possède un compartiment identifiable ou l’a refusé consciemment ;
+- Raphaëlle a ouvert un accès créatif ou un cadre futur concret ;
+- Nico a choisi ce que leur amitié peut couvrir ;
+- Jeff et Bastien restent des personnes réelles ;
+- au moins une conséquence circule d’une route à une autre ;
+- une dernière trace visuelle rend le retour à l’état initial impossible.
 
 ---
 
-# 17. Critères d’acceptation d’une future séquence
+# 15. Critères d’acceptation
 
-Avant de rattacher une séquence à une route, vérifier :
+Avant de valider une route ou un état :
 
-1. Quelle transformation macro sert-elle ?
-2. Quel est l’état de la relation avant la séquence ?
-3. Quel état devient possible après ?
-4. Quelle résistance propre au personnage est impliquée ?
-5. Quelle limite est entendue, poussée ou franchie ?
-6. Quelle trace reste ?
-7. Quelle autre relation peut être affectée ?
-8. Pourquoi cette séquence appartient-elle à ce personnage précis ?
-9. La fonction pourrait-elle être réutilisée sans réutiliser les réactions et conséquences ?
-10. La séquence reste-t-elle utile sans être encore placée dans une journée ?
-
-Si une scène peut être déplacée d’un personnage à un autre en changeant seulement les noms, elle ne sert pas correctement les routes macro.
+1. Le canon complet du personnage est-il utilisé ?
+2. Son métier, ses lieux, ses objets et ses proches sont-ils présents à bon escient ?
+3. Son désir lui appartient-il ?
+4. Son partenaire ou sa responsabilité réelle reste-t-il visible ?
+5. La route produit-elle une nouvelle attente ou limite ?
+6. Une trace durable existe-t-elle ?
+7. Une conséquence peut-elle circuler ?
+8. La même route fonctionnerait-elle avec un autre personnage en changeant seulement les noms ?
+9. La progression sexuelle est-elle une conséquence plutôt qu’un substitut ?
+10. L’après-coup est-il prévu ?
 
 ---
 
-# 18. Résumé canonique
+# 16. Résumé canonique
 
-Marie, Sandra et Mathilde peuvent atteindre une vraie bascule pendant la première saison.
+Marie transforme l’habitude en choix actif.
 
-Marie transforme la définition du couple.
+Sandra transforme une trace en confidence, puis éventuellement en relation parallèle.
 
-Sandra transforme une ancienne amitié en proximité devenue difficile à nier.
+Mathilde transforme une sensualité ordinaire en intention dans le foyer de Marie.
 
-Mathilde transforme une présence domestique en intention, secret, règle ou rupture.
+Pauline transforme une différence d’audience en compartiment capable de préserver et de menacer plusieurs vies à la fois.
 
-Pauline ouvre une ligne privée fondée sur les audiences et les versions.
+Raphaëlle transforme l’accès professionnel en accès au processus, puis la version choisie en cadre dont il faut répondre après la fin du rôle.
 
-Raphaëlle ouvre une vie extérieure et une autre version de Player.
+Nico, hétérosexuel, transforme l’amitié en circulation du regard entre l’espace social et l’espace domestique, avec une attirance réelle pour Marie et Mathilde et sans aucune route sexuelle ou romantique avec Player.
 
-Nico, hétérosexuel, devient celui qui connaît, protège, encourage, refuse ou compromet, sans route romantique ou sexuelle avec Player.
+Les routes ne sont pas des menus.
 
-Les routes progressent simultanément.
-
-Elles ne sont jamais présentées comme un menu.
-
-Elles naissent de la cohérence des actes du joueur.
-
-Elles produisent des conséquences dans le réseau.
-
-Les futures séquences devront être conçues pour accomplir ces transformations avant d’être réparties en scènes, dialogues, photos et journées.
+Elles sont les formes durables prises par les actes, les silences, les images, les limites et les conséquences.
