@@ -2,14 +2,14 @@
   "id": "chapter_04_pauline_public_photo_relay",
   "chapter": 4,
   "day": 4,
-  "title": "Vendredi matin — Trois versions publiques",
+  "title": "Vendredi matin — Trois versions du dimanche",
   "app": "messages",
-  "window_id": "O7_PAULINE",
+  "window_id": "O5_PAULINE",
   "calendar_label": "Vendredi",
   "time_band": "MORNING",
-  "communication_mode": "TRACE_DELIVERY_REMOTE_ASYNC",
+  "communication_mode": "TRACE_DELIVERY",
   "foreground_role": "ordinary_access_trace",
-  "physical_context": "Pauline est chez elle, en trajet ou au début de sa journée à la banque. Player est ailleurs. Marie conduit ou travaille et lui a demandé de relayer le set autorisé.",
+  "physical_context": "Pauline est chez elle, en trajet ou au début de sa journée à la banque. Player est ailleurs. Marie lui a demandé de relayer un set social autorisé pris lors d'un récent dîner chez Pauline et Bastien.",
   "thread": {
     "id": "thread_pauline_private",
     "type": "private",
@@ -24,19 +24,19 @@
     {
       "id": "segment_friday_pauline_relay_entry",
       "pattern": "guided_reply_pacing",
-      "function": "Établir l'origine publique et autorisée du set avant le choix de sélection.",
+      "function": "Établir Pauline, Bastien et l'origine sociale autorisée du set sans dépendre d'un événement J03.",
       "messages": [
         {
           "id": "msg_friday_pauline_001",
           "sender": "pauline",
           "time_label": "08:35",
-          "text": "Marie m'a demandé de t'envoyer les trois versions."
+          "text": "Marie m'a demandé de t'envoyer les trois versions de dimanche."
         },
         {
           "id": "msg_friday_pauline_002",
           "sender": "pauline",
           "time_label": "08:35",
-          "text": "Elle conduit."
+          "text": "Bastien insiste pour que je précise qu'il n'a pas choisi la lumière."
         },
         {
           "id": "msg_friday_pauline_003",
@@ -68,19 +68,19 @@
               "id": "msg_friday_pauline_005",
               "sender": "pauline",
               "time_label": "08:37",
-              "text": "C'est la méthode La Verrière."
+              "text": "C'est pour ça que ça avance."
             },
             {
               "id": "msg_friday_pauline_006",
               "sender": "pauline",
               "time_label": "08:38",
-              "text": "La 2 pour le public."
+              "text": "La 2 pour le groupe."
             },
             {
               "id": "msg_friday_pauline_007",
               "sender": "pauline",
               "time_label": "08:38",
-              "text": "La 3 si on veut prouver que Nico ferme les yeux sur commande."
+              "text": "La 3 si on veut garder Bastien au moment exact où il comprend que la télécommande n'est pas magique."
             }
           ]
         }
@@ -89,18 +89,18 @@
     {
       "id": "segment_friday_pauline_public_selection",
       "pattern": "three_posture_choice",
-      "function": "P0 — définir comment Player participe à une sélection publique légitime sans ouvrir de version privée.",
+      "function": "P0 — définir comment Player participe à une sélection sociale légitime sans ouvrir de version privée.",
       "messages": [],
       "choices": [
         {
           "id": "choice_friday_pauline_practical",
-          "text": "La 2. On voit mieux l'affiche et personne n'a l'air otage.",
+          "text": "La 2. Tout le monde a l'air réveillé.",
           "tone": "practical",
           "sets_flags": [
             "pauline_public_selection_practical",
             "pauline_r1_established",
-            "laverriere_public_group_photo_trace_exists",
-            "laverriere_public_photo_2_selected"
+            "recent_group_photo_trace_exists",
+            "recent_group_photo_2_selected"
           ],
           "next_messages": [
             {
@@ -119,13 +119,13 @@
         },
         {
           "id": "choice_friday_pauline_dry",
-          "text": "La 3. La vérité sur Nico doit sortir.",
+          "text": "La 3. Bastien mérite cette vérité.",
           "tone": "dry_joke",
           "sets_flags": [
             "pauline_public_selection_dry",
             "pauline_r1_established",
-            "laverriere_public_group_photo_trace_exists",
-            "laverriere_public_photo_2_selected"
+            "recent_group_photo_trace_exists",
+            "recent_group_photo_2_selected"
           ],
           "next_messages": [
             {
@@ -138,7 +138,7 @@
               "id": "msg_friday_pauline_009b",
               "sender": "pauline",
               "time_label": "08:40",
-              "text": "Mais Marie me tuerait avec un mail poli."
+              "text": "Mais il vit avec moi. J'ai besoin qu'il continue à ouvrir les placards sans peur."
             },
             {
               "id": "msg_friday_pauline_010b",
@@ -150,13 +150,13 @@
         },
         {
           "id": "choice_friday_pauline_defer",
-          "text": "Demande à Marie. C'est son événement.",
+          "text": "Demande à Marie. Elle est dessus aussi.",
           "tone": "defer_to_marie",
           "sets_flags": [
             "pauline_public_selection_deferred_to_marie",
             "pauline_r1_established",
-            "laverriere_public_group_photo_trace_exists",
-            "marie_remains_event_decision_owner"
+            "recent_group_photo_trace_exists",
+            "marie_remains_group_decision_owner"
           ],
           "next_messages": [
             {
@@ -185,5 +185,5 @@
   "routes_nourished": [
     "pauline"
   ],
-  "debug_notes": "V0.86 O7. Pauline atteint R1 par une compétence d'image légitime. Bastien reste visible dans le set ; aucun crop privé, secret ou double adresse n'est ouvert."
+  "debug_notes": "J04 Pauline : accès R1 par une compétence d'audience légitime issue d'un récent dîner chez elle et Bastien. Aucun événement J03, crop privé, secret ou double adresse."
 }

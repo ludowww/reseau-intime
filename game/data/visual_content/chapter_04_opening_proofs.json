@@ -1,7 +1,7 @@
 {
   "id": "chapter_04_opening_visuals",
   "version": 1,
-  "notes": "V0.86 Friday opening completion. One authorized public/social set only; no private crop, adult function, or forwarding breach.",
+  "notes": "J04 réconcilié : un seul set social autorisé issu d'un récent dîner chez Pauline et Bastien. L'identifiant et le placeholder legacy sont conservés pour compatibilité jusqu'à la fourniture d'une image ComfyUI ; aucune fonction privée ou adulte.",
   "items": [
     {
       "id": "laverriere_public_group_photo_set_01",
@@ -10,26 +10,24 @@
       "type": "photo_set",
       "source_app": "messages",
       "asset_path": "res://assets/placeholders/laverriere_public_group_photo_set_01.png",
-      "context": "Trois versions autorisées d'une photo de groupe prise par Pauline avec sa télécommande compacte près de la fin du vernissage. Marie, Pauline, Bastien et Élodie sont visibles ; Nico peut apparaître avant son passage à L'Annexe. Player apparaît seulement s'il a rejoint le groupe avant la prise. Mathilde est absente parce qu'elle est restée au foyer. Le set appartient au groupe photographié et à l'archive/publication de La Verrière ; aucun recadrage privé ou corporel n'existe.",
-      "origin": "Pauline remote shutter at La Verrière",
+      "context": "Trois versions autorisées d'une photo de groupe prise par Pauline avec sa télécommande compacte lors d'un récent dîner chez elle et Bastien. Marie, Pauline, Bastien et Player peuvent être visibles. Le set appartient au groupe photographié et peut être partagé dans leur fil social avec l'accord des personnes présentes. Aucun recadrage privé, corporel ou adulte n'existe. L'identifiant technique historique est conservé temporairement mais le set ne provient plus d'un événement J03 à La Verrière.",
+      "origin": "Télécommande compacte de Pauline, appartement partagé de Pauline et Bastien, dîner social récent.",
       "intended_audience": [
         "photographed_group",
-        "laverriere_archive",
-        "laverriere_public_post"
+        "friends_group_chat",
+        "approved_social_share"
       ],
       "tags": [
         "pauline",
         "marie",
         "bastien_visible",
-        "elodie",
-        "nico_possible",
         "player_contextual",
-        "mathilde_absent",
-        "group_photo",
+        "recent_group_dinner",
         "authorized",
-        "public_event",
+        "public_social",
         "ordinary",
-        "friday"
+        "friday",
+        "legacy_id_retained"
       ],
       "is_proof": false,
       "risk_level": 0,
@@ -40,8 +38,7 @@
         "marie",
         "pauline",
         "bastien",
-        "nico",
-        "elodie"
+        "player"
       ]
     }
   ]

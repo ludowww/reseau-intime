@@ -1,0 +1,144 @@
+{
+  "id": "chapter_03_marie_evening_return",
+  "chapter": 3,
+  "day": 3,
+  "title": "Jeudi fin de journée — La soupe n'attend pas demain",
+  "app": "messages",
+  "window_id": "O4_MARIE_RETURN",
+  "calendar_label": "Jeudi",
+  "time_band": "LATE_AFTERNOON",
+  "communication_mode": "REMOTE_ASYNC",
+  "foreground_role": "couple_return",
+  "physical_context": "Marie termine sa journée à La Verrière ou rentre. Player est encore au travail ou en trajet. Mathilde est déjà au foyer. La demande porte sur une heure et un repas réel.",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "marie"
+    ],
+    "display_name": "Marie",
+    "profile_content_id": "profile_marie_placeholder"
+  },
+  "segments": [
+    {
+      "id": "segment_j3_marie_evening_context",
+      "pattern": "guided_reply_pacing",
+      "function": "Ramener la journée vers une présence domestique concrète sans événement social ni diagnostic du couple.",
+      "messages": [
+        {
+          "id": "msg_j3_marie_evening_001",
+          "sender": "marie",
+          "time_label": "18:20",
+          "text": "Tu rentres vers quelle heure ?"
+        },
+        {
+          "id": "msg_j3_marie_evening_002",
+          "sender": "marie",
+          "time_label": "18:20",
+          "text": "Mathilde a retrouvé son chargeur. Enfin un chargeur."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_j3_marie_evening_why_guided",
+          "text": "Vers 19 h. Pourquoi ?",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "next_messages": [
+            {
+              "id": "msg_j3_marie_evening_003",
+              "sender": "marie",
+              "time_label": "18:21",
+              "text": "J'ai laissé une soupe au frigo."
+            },
+            {
+              "id": "msg_j3_marie_evening_004",
+              "sender": "marie",
+              "time_label": "18:21",
+              "text": "Et j'aimerais bien qu'on mange ensemble sans déplacer ça à demain."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_j3_marie_evening_choice",
+      "pattern": "three_posture_choice",
+      "function": "Définir si Player rejoint le foyer, donne une heure bornée ou laisse la soirée continuer sans lui.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "choice_j3_marie_return_active",
+          "text": "Je rentre à 19 h. Je prends quelque chose avec la soupe.",
+          "tone": "active_presence",
+          "sets_flags": [
+            "marie_j3_return_active"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_j3_marie_evening_005a",
+              "sender": "marie",
+              "time_label": "18:22",
+              "text": "Parfait."
+            },
+            {
+              "id": "msg_j3_marie_evening_006a",
+              "sender": "marie",
+              "time_label": "18:22",
+              "text": "Prends un truc qui croque. Cette soupe a besoin d'aide."
+            }
+          ]
+        },
+        {
+          "id": "choice_j3_marie_return_bounded",
+          "text": "Je finis ça et je rentre à 19 h 30.",
+          "tone": "bounded_delay",
+          "sets_flags": [
+            "marie_j3_return_bounded"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_j3_marie_evening_005b",
+              "sender": "marie",
+              "time_label": "18:22",
+              "text": "19 h 30."
+            },
+            {
+              "id": "msg_j3_marie_evening_006b",
+              "sender": "marie",
+              "time_label": "18:22",
+              "text": "Je lance la soupe à 19 h 25. C'est de la confiance très concrète."
+            }
+          ]
+        },
+        {
+          "id": "choice_j3_marie_return_drift",
+          "text": "Je sais pas encore. Commencez sans moi.",
+          "tone": "honest_drift",
+          "sets_flags": [
+            "marie_j3_return_drift"
+          ],
+          "next_messages": [
+            {
+              "id": "msg_j3_marie_evening_005c",
+              "sender": "marie",
+              "time_label": "18:22",
+              "text": "D'accord."
+            },
+            {
+              "id": "msg_j3_marie_evening_006c",
+              "sender": "marie",
+              "time_label": "18:23",
+              "text": "Mais ne m'écris pas à 21 h que tu aurais aimé être là."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "routes_nourished": [
+    "marie"
+  ],
+  "debug_notes": "J03 Marie : retour domestique concret, trois postures, aucune visibilité sociale, aucun vernissage et aucune topologie de route."
+}

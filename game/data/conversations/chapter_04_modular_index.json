@@ -3,12 +3,12 @@
   "chapter": 4,
   "day": 4,
   "calendar_label": "Vendredi",
-  "display_label": "Vendredi — Le lendemain",
+  "display_label": "Vendredi — Le réseau devient concret",
   "day_start_time": "08:35",
-  "title": "Vendredi — Le lendemain",
-  "description": "Les traces publiques de la soirée circulent, Nico reprend le fil de l'amitié et le nouveau foyer trouve un premier rythme ordinaire.",
-  "design_goal": "Établir Pauline et Nico en R1, préserver l'origine et le public des images, puis clore l'ouverture V0.79 sur la vie du foyer sans ouvrir de route adulte.",
-  "window_range": "O7-O8",
+  "title": "Vendredi — Le réseau devient concret",
+  "description": "Pauline et Bastien existent dans une vie sociale légitime, Nico réouvre une amitié ordinaire depuis L'Annexe, puis le nouveau foyer confirme son premier rythme.",
+  "design_goal": "Établir Pauline et Nico en R1 avec des origines autonomes, préserver l'audience des images et fermer l'ouverture sur la vie du foyer sans dépendre d'un vernissage J03.",
+  "window_range": "O5-O7",
   "default_order": [
     "chapter_04_pauline_public_photo_relay",
     "chapter_04_nico_saved_seat_followup",
@@ -25,7 +25,7 @@
     {
       "moment_label": "matin",
       "time_label": "08:35",
-      "transition_text": "Vendredi matin — Pauline relaie les versions autorisées de la photo de groupe.",
+      "transition_text": "Vendredi matin — Pauline relaie un set autorisé d'un récent dîner chez elle et Bastien.",
       "conversation_ids": [
         "chapter_04_pauline_public_photo_relay"
       ]
@@ -33,7 +33,7 @@
     {
       "moment_label": "après-midi",
       "time_label": "14:05",
-      "transition_text": "Vendredi après-midi — Nico reprend la plaisanterie de la place gardée.",
+      "transition_text": "Vendredi après-midi — Nico écrit avant son service à L'Annexe.",
       "conversation_ids": [
         "chapter_04_nico_saved_seat_followup"
       ]
@@ -53,7 +53,7 @@
     "initial_phase_id": "friday_pauline_public_relay",
     "day_start_card": {
       "eyebrow": "VENDREDI — MATIN",
-      "title": "Le lendemain",
+      "title": "Le réseau devient concret",
       "subtitle": "08:35",
       "duration": 1.35,
       "min_time": 0.35
@@ -142,7 +142,7 @@
         "pending": true,
         "notification": {
           "title": "Nico",
-          "body": "La chaise avait de meilleurs horaires que toi."
+          "body": "La chaise qui ne penche pas est encore libre."
         }
       },
       "chapter_04_marie_household_report": {
@@ -173,21 +173,21 @@
   ],
   "route_stage_ceiling": "R1",
   "end_of_day_player_knowledge": [
-    "Pauline a relayé un set de groupe autorisé dont l'origine et le public sont connus.",
-    "Bastien reste visible dans le contexte social de Pauline.",
-    "Nico dispose d'un accès d'amitié ordinaire R1 et connaît le séjour temporaire de Mathilde sans le sexualiser.",
+    "Pauline a relayé un set social autorisé dont l'origine et le public sont connus.",
+    "Bastien reste visible dans la vie officielle de Pauline.",
+    "Nico dispose d'un accès d'amitié ordinaire R1 et connaît le séjour temporaire de Mathilde par Marie, sans le sexualiser.",
     "Le nouveau rythme du foyer est confirmé.",
-    "L'ouverture V0.79 est complète sans route R2, secret dur ou cadre adulte."
+    "L'ouverture est complète sans route R2, secret dur, événement de convergence ou cadre adulte."
   ],
   "proof_content_files": [
     "res://data/visual_content/chapter_04_opening_proofs.json"
   ],
   "debug_expected_outcomes": [
-    "Friday is hidden until the mandatory Thursday Marie return and day completion.",
-    "Pauline opens Friday with one authorized public group-photo set and P0.",
-    "Nico follows in the afternoon with one topology-aware friendship scene and N0.",
-    "Marie and Mathilde unlock together in separate household threads at 18:05.",
-    "The final authored household beat writes opening_band_complete.",
-    "Friday completion unlocks Saturday without changing the R1 opening content."
+    "Friday is hidden until the ordinary Thursday household return completes.",
+    "Pauline opens Friday with one authorized recent group-photo set and P0.",
+    "Nico follows with an autonomous friendship invitation and N0.",
+    "No J04 line depends on an event or topology from J03.",
+    "Marie and Mathilde unlock together in separate household threads.",
+    "The final authored household beat writes opening_band_complete."
   ]
 }
