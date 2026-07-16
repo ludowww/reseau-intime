@@ -3,29 +3,21 @@
   "chapter": 3,
   "day": 3,
   "calendar_label": "Jeudi",
-  "display_label": "Jeudi — Être là",
+  "display_label": "Jeudi — Les vies ailleurs",
   "day_start_time": "09:10",
-  "title": "Jeudi — Être là",
-  "description": "Raphaëlle ouvre la journée au travail. Sandra devient ensuite une fenêtre optionnelle avant que Marie propose le vernissage et que Player ouvre une seule soirée possible.",
-  "design_goal": "Valider les phases temporelles, l'expiration d'une scène optionnelle, une topologie exclusive et la conséquence Marie sans dépasser R1.",
-  "window_range": "O3-O6",
+  "title": "Jeudi — Les vies ailleurs",
+  "description": "Raphaëlle existe dans le quotidien professionnel de Player, Sandra peut laisser un écho bref, puis la journée revient vers Marie et le foyer sans événement social ni première superposition.",
+  "design_goal": "Préserver Raphaëlle R1, un écho Sandra optionnel et un retour Marie concret, tout en retirant le vernissage et la topologie exclusive de l'acte I.",
+  "window_range": "O3-O4",
   "default_order": [
     "chapter_03_raphaelle_blue_folder",
     "chapter_03_sandra_continuity",
-    "chapter_03_marie_event_offer",
-    "chapter_03_marie_event_joined",
-    "chapter_03_mathilde_home_charger",
-    "chapter_03_raphaelle_late_review",
-    "chapter_03_marie_event_return"
+    "chapter_03_marie_evening_return"
   ],
   "conversation_files": [
     "res://data/conversations/chapter_03_raphaelle_blue_folder.json",
     "res://data/conversations/chapter_03_sandra_continuity.json",
-    "res://data/conversations/chapter_03_marie_event_offer.json",
-    "res://data/conversations/chapter_03_marie_event_joined.json",
-    "res://data/conversations/chapter_03_mathilde_home_charger.json",
-    "res://data/conversations/chapter_03_raphaelle_late_review.json",
-    "res://data/conversations/chapter_03_marie_event_return.json"
+    "res://data/conversations/chapter_03_marie_evening_return.json"
   ],
   "moment_flow": [
     {
@@ -45,43 +37,11 @@
       ]
     },
     {
-      "moment_label": "fin d'après-midi",
-      "time_label": "16:05",
-      "transition_text": "Jeudi fin d'après-midi — Marie demande une réponse concrète avant le vernissage.",
-      "conversation_ids": [
-        "chapter_03_marie_event_offer"
-      ]
-    },
-    {
       "moment_label": "fin de journée",
-      "time_label": "17:45",
-      "transition_text": "Jeudi fin de journée — Le travail peut encore retenir Player.",
-      "conversation_ids": [
-        "chapter_03_raphaelle_late_review"
-      ]
-    },
-    {
-      "moment_label": "soir",
-      "time_label": "17:55",
-      "transition_text": "Jeudi soir — La Verrière ouvre ses portes.",
-      "conversation_ids": [
-        "chapter_03_marie_event_joined"
-      ]
-    },
-    {
-      "moment_label": "soir",
       "time_label": "18:20",
-      "transition_text": "Jeudi soir — Le foyer reste calme pendant que Marie est à La Verrière.",
+      "transition_text": "Jeudi fin de journée — Marie ramène la journée vers le foyer.",
       "conversation_ids": [
-        "chapter_03_mathilde_home_charger"
-      ]
-    },
-    {
-      "moment_label": "nuit",
-      "time_label": "22:10",
-      "transition_text": "Jeudi nuit — La soirée revient vers Marie et la vie commune.",
-      "conversation_ids": [
-        "chapter_03_marie_event_return"
+        "chapter_03_marie_evening_return"
       ]
     }
   ],
@@ -90,7 +50,7 @@
     "initial_phase_id": "thursday_raphaelle_work",
     "day_start_card": {
       "eyebrow": "JEUDI — MATIN",
-      "title": "Être là",
+      "title": "Les vies ailleurs",
       "subtitle": "09:10",
       "duration": 1.35,
       "min_time": 0.35
@@ -131,61 +91,78 @@
         }
       },
       {
-        "id": "thursday_marie_offer",
-        "moment_label": "fin d'après-midi",
-        "time_label": "16:05",
+        "id": "thursday_marie_evening_return",
+        "moment_label": "fin de journée",
+        "time_label": "18:20",
         "required_conversation_ids": [
-          "chapter_03_marie_event_offer"
+          "chapter_03_marie_evening_return"
         ],
         "transition_card": {
-          "eyebrow": "JEUDI — FIN D'APRÈS-MIDI",
-          "title": "16:05",
+          "eyebrow": "JEUDI — FIN DE JOURNÉE",
+          "title": "18:20",
           "duration": 0.9,
           "min_time": 0.35
         }
       },
       {
-        "id": "thursday_selected_topology",
+        "id": "thursday_shared_evening",
         "moment_label": "soir",
-        "required_any_conversation_ids": [
-          "chapter_03_marie_event_joined",
-          "chapter_03_mathilde_home_charger",
-          "chapter_03_raphaelle_late_review"
-        ],
-        "transition_cards_by_conversation": {
-          "chapter_03_raphaelle_late_review": {
-            "eyebrow": "JEUDI — FIN DE JOURNÉE",
-            "title": "17:45",
-            "duration": 0.9,
-            "min_time": 0.35
-          },
-          "chapter_03_marie_event_joined": {
+        "authored_beat_variants": [
+          {
+            "id": "j3_shared_evening_active",
+            "conditions": [
+              "marie_j3_return_active"
+            ],
             "eyebrow": "JEUDI — SOIR",
-            "title": "17:55",
-            "duration": 0.9,
-            "min_time": 0.35
+            "title": "La soupe a eu de l'aide.",
+            "subtitle": "Player rentre à l'heure. Marie et Mathilde ont déjà sorti trois bols pour deux personnes.",
+            "text": "Player rentre à l'heure avec quelque chose de croustillant pour sauver la soupe. Marie et Mathilde ont sorti trois bols pour deux personnes, puis prétendent toutes les deux que c'est normal. Ils mangent ensemble. Le téléphone reste posé.",
+            "time_label": "19:05",
+            "duration": 2.8,
+            "min_time": 0.55,
+            "show_landing": false,
+            "sets_flags": [
+              "marie_j3_return_paid",
+              "j3_day_complete"
+            ]
           },
-          "chapter_03_mathilde_home_charger": {
+          {
+            "id": "j3_shared_evening_bounded",
+            "conditions": [
+              "marie_j3_return_bounded"
+            ],
             "eyebrow": "JEUDI — SOIR",
-            "title": "18:20",
-            "duration": 0.9,
-            "min_time": 0.35
+            "title": "19 h 30 reste 19 h 30.",
+            "subtitle": "Player rentre plus tard, mais à l'heure qu'il a donnée.",
+            "text": "Player rentre à 19 h 30 comme annoncé. Marie a attendu avant de réchauffer la soupe. Mathilde a mangé un morceau de pain en prétendant que cela ne comptait pas. Le retard existe. La parole tenue aussi.",
+            "time_label": "19:35",
+            "duration": 2.8,
+            "min_time": 0.55,
+            "show_landing": false,
+            "sets_flags": [
+              "marie_j3_return_paid",
+              "j3_day_complete"
+            ]
+          },
+          {
+            "id": "j3_shared_evening_drift",
+            "conditions": [
+              "marie_j3_return_drift"
+            ],
+            "eyebrow": "JEUDI — SOIR",
+            "title": "Elles ont commencé sans lui.",
+            "subtitle": "Marie et Mathilde mangent. Player rentre plus tard dans un foyer qui a continué.",
+            "text": "Marie et Mathilde mangent sans attendre davantage. Quand Player rentre, la soupe est encore au frigo pour lui et les deux bols sont dans l'évier. Personne ne transforme cela en grande scène. La soirée a simplement continué sans lui.",
+            "time_label": "20:30",
+            "duration": 2.8,
+            "min_time": 0.55,
+            "show_landing": false,
+            "sets_flags": [
+              "marie_j3_return_missed",
+              "j3_day_complete"
+            ]
           }
-        }
-      },
-      {
-        "id": "thursday_marie_return",
-        "moment_label": "nuit",
-        "time_label": "22:10",
-        "required_conversation_ids": [
-          "chapter_03_marie_event_return"
-        ],
-        "transition_card": {
-          "eyebrow": "JEUDI — NUIT",
-          "title": "22:10",
-          "duration": 0.9,
-          "min_time": 0.35
-        }
+        ]
       }
     ]
   },
@@ -195,11 +172,7 @@
     ],
     "locked_conversation_ids": [
       "chapter_03_sandra_continuity",
-      "chapter_03_marie_event_offer",
-      "chapter_03_marie_event_joined",
-      "chapter_03_mathilde_home_charger",
-      "chapter_03_raphaelle_late_review",
-      "chapter_03_marie_event_return"
+      "chapter_03_marie_evening_return"
     ],
     "unlocks": {
       "chapter_03_sandra_continuity": {
@@ -208,62 +181,13 @@
         "pending": true,
         "notify": false
       },
-      "chapter_03_marie_event_offer": {
+      "chapter_03_marie_evening_return": {
         "after_conversation_completed": "chapter_03_raphaelle_blue_folder",
-        "time_label": "16:05",
-        "pending": true,
-        "notification": {
-          "title": "Marie",
-          "body": "J'ai besoin de deux bras à 18h. Et j'ai envie que tu viennes."
-        }
-      },
-      "chapter_03_marie_event_joined": {
-        "after_conversation_completed": "chapter_03_marie_event_offer",
-        "conditions": [
-          "opening_topology_join_marie"
-        ],
-        "time_label": "17:55",
-        "pending": true,
-        "notification": {
-          "title": "Marie",
-          "body": "Tu es où ?"
-        }
-      },
-      "chapter_03_mathilde_home_charger": {
-        "after_conversation_completed": "chapter_03_marie_event_offer",
-        "conditions": [
-          "opening_topology_stay_home"
-        ],
         "time_label": "18:20",
         "pending": true,
         "notification": {
-          "title": "Mathilde",
-          "body": "Question urgente. Enfin juridiquement discutable."
-        }
-      },
-      "chapter_03_raphaelle_late_review": {
-        "after_conversation_completed": "chapter_03_marie_event_offer",
-        "conditions": [
-          "opening_topology_work_then_join"
-        ],
-        "time_label": "17:45",
-        "pending": true,
-        "notification": {
-          "title": "Raphaëlle",
-          "body": "Nous avons deux options."
-        }
-      },
-      "chapter_03_marie_event_return": {
-        "after_any_conversation_completed": [
-          "chapter_03_marie_event_joined",
-          "chapter_03_mathilde_home_charger",
-          "chapter_03_raphaelle_late_review"
-        ],
-        "time_label": "22:10",
-        "pending": true,
-        "notification": {
           "title": "Marie",
-          "body": "Je rentre."
+          "body": "Tu rentres vers quelle heure ?"
         }
       }
     }
@@ -274,26 +198,25 @@
   "routes_available": [
     "marie",
     "sandra",
-    "mathilde",
-    "raphaelle"
+    "raphaelle",
+    "mathilde_seed"
   ],
   "route_stage_ceiling": "R1",
   "end_of_day_player_knowledge": [
     "Raphaëlle dispose d'un accès professionnel ordinaire R1.",
-    "Sandra est vue ou expirée avant le passage à 16:05.",
-    "Player a choisi une seule topologie pour la soirée de Marie.",
-    "La conséquence de la soirée est revenue vers Marie.",
-    "Aucune route R2, secret dur ou cadre adulte n'existe."
+    "Sandra est vue ou expirée avant le retour du soir.",
+    "Marie a demandé une heure et un acte concret plutôt qu'une grande explication.",
+    "Le foyer a continué avec ou sans Player.",
+    "Aucun vernissage, topologie exclusive, route R2, secret dur ou cadre adulte n'existe."
   ],
   "proof_content_files": [
     "res://data/visual_content/chapter_03_proofs.json"
   ],
   "debug_expected_outcomes": [
     "Thursday is hidden until Wednesday completes.",
-    "Raphaëlle completion activates only the optional Sandra phase at 13:50.",
-    "Marie remains hidden until Sandra is completed or explicitly expired.",
-    "M1 unlocks exactly one of three topology branches.",
-    "Any completed branch unlocks the mandatory Marie return at 22:10.",
-    "Thursday completion transitions to the locked Friday start card."
+    "Raphaëlle completion activates the optional Sandra phase.",
+    "Marie returns the day to the household at 18:20.",
+    "No event offer or exclusive topology is active on J03.",
+    "The authored evening beat writes j3_day_complete and unlocks Friday."
   ]
 }

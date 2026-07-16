@@ -2,6 +2,7 @@
   "chapter": 3,
   "day": 3,
   "bundle": "chapter_03_modular_visuals",
+  "notes": "Aucun contenu visuel n'est actuellement référencé par le J03 actif réconcilié. Le placeholder La Verrière est conservé comme matériau legacy destiné à une future fenêtre J09, sans concevoir ni remplacer l'image.",
   "items": [
     {
       "id": "marie_laverriere_setup_01",
@@ -10,14 +11,13 @@
       "type": "photo",
       "source_app": "messages",
       "asset_path": "res://assets/placeholders/marie_laverriere_setup_01.png",
-      "context": "Photo autorisée de Marie pendant les préparatifs du vernissage : affiche, table ou matériel visibles, Marie active dans son travail, sans cadrage érotique.",
+      "context": "Placeholder legacy non référencé par le J03 actif. Sa fonction de visibilité sociale de Marie est déplacée vers une future intégration J09.",
       "tags": [
         "marie",
         "laverriere",
-        "event",
-        "setup",
-        "ordinary",
-        "thursday"
+        "legacy",
+        "relocated_to_j09",
+        "not_active_j3"
       ],
       "is_proof": false,
       "risk_level": 0,
