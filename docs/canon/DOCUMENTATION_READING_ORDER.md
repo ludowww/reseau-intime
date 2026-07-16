@@ -2,7 +2,7 @@
 
 > **Phase actuelle : Bible Narrative / North Star**
 >
-> La Bible Narrative est la source de vérité principale pour la promesse du jeu, l’expérience joueur, les fantasmes, la structure globale, les routes, l’évolution érotique, les actes, les séquences, les règles des scènes modulaires et la progression visuelle.
+> La Bible Narrative est la source de vérité principale pour la promesse, les routes, les actes, les séquences, les scènes, les visuels et les conséquences de la première saison.
 >
 > Les canons complets des personnages restent l’autorité première sur leur identité, leur voix, leur vie concrète, leurs désirs, leurs limites et leurs conséquences propres.
 >
@@ -10,26 +10,28 @@
 
 ---
 
-# 1. Règles fondamentales
+# 1. Ordre de conception
 
 ```text
-Commencer par la North Star et l’expérience joueur.
-Définir les fantasmes transversaux.
-Relire les canons complets des personnages.
-Définir les routes macro.
-Définir l’évolution érotique.
-Définir les actes.
-Choisir les séquences concrètes.
-Adapter les scènes modulaires à l’état réel de la partie.
-Définir la progression visuelle, les audiences et la galerie.
-Écrire les dialogues et produire les images.
-Découper en journées.
-Planifier le runtime en dernier.
+North Star
+→ Expérience joueur
+→ Fantasmes centraux
+→ Canon complet des personnages
+→ Routes macro
+→ Évolution érotique
+→ Actes
+→ Séquences
+→ Scènes modulaires
+→ Progression visuelle
+→ Conséquences, dettes, secrets et obligations
+→ Dialogues et production des images
+→ Journées
+→ Runtime
 ```
 
-Les journées restent une couche de diffusion, de respiration et de rythme.
+Les journées restent une couche de distribution et de rythme.
 
-Un ancien plan, une ancienne carte de scène, une ancienne image ou une implémentation existante ne peut pas contredire la Bible ou le canon complet d’un personnage.
+Une ancienne scène, image, preuve ou variable ne peut pas contredire la Bible ou le canon complet d’un personnage.
 
 ---
 
@@ -39,54 +41,30 @@ Un ancien plan, une ancienne carte de scène, une ancienne image ou une impléme
 
 `docs/canon/bible/README.md`
 
-Définit la gouvernance, la hiérarchie, les différences entre les couches et les règles de spécificité.
-
 ## 2. North Star
 
 `docs/canon/bible/00_NORTH_STAR.md`
-
-Définit l’identité du jeu, la promesse centrale et les principes non négociables.
 
 ## 3. Expérience joueur
 
 `docs/canon/bible/01_EXPERIENCE_JOUEUR.md`
 
-Définit responsabilité, causalité, limites, opportunités, dettes et conséquences.
-
 ## 4. Fantasmes centraux
 
 `docs/canon/bible/02_FANTASMES_CENTRAUX.md`
-
-Définit les promesses transversales, leurs formes négociées et leurs formes risquées.
 
 ## 5. Canon complet des personnages
 
 Lire :
 
 - `docs/canon/characters/CHARACTER_CANON_INDEX.md` ;
-- le ou les fichiers `*_CANON_FULL.md` concernés ;
+- les fichiers `*_CANON_FULL.md` concernés ;
 - `docs/canon/CHARACTER_VOICE_DISTINCTION_CANON.md` ;
-- la carte de dépréciation ou de réconciliation correspondante lorsqu’elle existe ;
-- `docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md` lorsque désir, images, risques ou conséquences adultes sont impliqués ;
-- `docs/canon/SUPPORTING_CHARACTER_CANON_POLICY.md` pour les personnages secondaires.
+- les cartes de dépréciation ou de réconciliation ;
+- `docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md` ;
+- `docs/canon/SUPPORTING_CHARACTER_CANON_POLICY.md` lorsque nécessaire.
 
-Le canon complet est l’autorité sur :
-
-- identité ;
-- passé ;
-- proximité initiale ;
-- métier ;
-- lieux ;
-- objets ;
-- proches ;
-- voix ;
-- contradictions ;
-- limites ;
-- désirs ;
-- rapport au corps et aux images ;
-- continuité individuelle.
-
-Pour Sandra, lire obligatoirement :
+Pour Sandra :
 
 ```text
 docs/canon/characters/SANDRA_CANON_FULL.md
@@ -97,62 +75,34 @@ docs/canon/characters/SANDRA_VISUAL_REPRESENTATION_RECONCILIATION.md
 
 `docs/canon/bible/03_GRAMMAIRE_NARRATIVE.md`
 
-Définit les fonctions réutilisables des séquences.
-
 ## 7. Trame principale et actes
 
 `docs/canon/bible/04_TRAME_PRINCIPALE_ET_ACTES_SAISON_1.md`
-
-Définit la crise commune, les cinq actes et le contrat d’incarnation des personnages.
 
 ## 8. Routes macro
 
 `docs/canon/bible/05_ROUTES_MACRO_SAISON_1.md`
 
-Définit les transformations durables de Marie, Sandra, Mathilde, Pauline, Raphaëlle et Nico.
-
-La route Sandra y est désormais définie par :
-
-```text
-représentation validée
-→ audience de confiance
-→ distinction voir / garder / transférer
-→ contrôle partagé ou retrait
-```
-
-## 9. Évolution érotique des routes
+## 9. Évolution érotique
 
 `docs/canon/bible/06_EVOLUTION_EROTIQUE_DES_ROUTES.md`
-
-Définit comment le désir devient intention, disponibilité, sexualité et éventuellement représentation pornographique spécifique.
-
-La progression Sandra n’y repose plus sur `flou → netteté → nudité`, mais sur le partage progressif du contrôle de représentation.
 
 ## 10. Bibliothèque de séquences
 
 `docs/canon/bible/07_BIBLIOTHEQUE_DE_SEQUENCES_SAISON_1.md`
 
-Définit les événements concrets et mémorables de la première saison à partir des actes, routes et canons complets.
-
-Pour les séquences Sandra `S03`, `S09`, `S16`, `S19`, `S30` et `S35`, appliquer la carte de réconciliation visuelle Sandra.
-
 ## 11. Règles des scènes modulaires
 
 `docs/canon/bible/08_REGLES_DES_SCENES_MODULAIRES.md`
 
-Définit comment une séquence devient une scène compatible avec l’état réel de la partie.
+Chaque scène importante possède :
 
-Pour une scène visuelle Sandra, la carte doit préciser :
-
-- qui contrôle la caméra ;
-- si Sandra revoit l’image ;
-- qui sélectionne le cadre final ;
-- qui peut voir ;
-- qui peut garder ;
-- qui peut transférer ;
-- ce qui arrive si Sandra retire son accord.
-
-Le document historique `docs/canon/MODULAR_SCENE_AUTHORING_CONTRACT.md` reste une référence technique compatible. En cas de contradiction narrative, les documents `08`, `09` et le canon complet prévalent.
+- une séquence source ;
+- une fonction principale ;
+- des conditions ;
+- un état de sortie ;
+- une mutation ;
+- une conséquence.
 
 ## 12. Progression visuelle et photographique
 
@@ -160,37 +110,65 @@ Le document historique `docs/canon/MODULAR_SCENE_AUTHORING_CONTRACT.md` reste un
 
 Définit :
 
-- les contenus visuels et photos diégétiques ;
-- les images de scène ;
-- les niveaux V0–V5 ;
-- le minimum de trois contenus visuels par journée ;
-- les sets visuels ;
-- la logique de caméra ;
-- les audiences ;
-- la sauvegarde et le transfert ;
-- la galerie ;
-- les progressions propres aux personnages ;
-- les audits d’images et métadonnées.
+- photos diégétiques ;
+- images de scène ;
+- niveaux V0–V5 ;
+- audiences ;
+- sauvegarde ;
+- transfert ;
+- galerie ;
+- minimum visuel ;
+- progressions propres aux personnages.
 
 ## 13. Carte des conséquences, dettes, secrets et obligations
 
-Futur document canonique.
+`docs/canon/bible/10_CARTE_CONSEQUENCES_DETTES_SECRETS_OBLIGATIONS.md`
 
-Définira ce qui circule entre les routes et ce qui doit être payé, révélé, réparé ou porté.
+Définit :
+
+- vérité factuelle ;
+- états de connaissance ;
+- vie privée, omission, mensonge et secret ;
+- traces et preuves ;
+- promesses et obligations ;
+- dettes ;
+- alibis ;
+- priorité des conséquences ;
+- pression de collision ;
+- après-coups ;
+- retrait des états devenus historiques.
+
+Le document historique :
+
+`docs/narrative/PROOF_AND_SECRET_MAP.md`
+
+reste une archive de typologie. Le document `10` prévaut.
 
 ## 14. Découpage des journées
 
 Futur document canonique.
 
-Répartira les séquences, scènes, silences, respirations et images après validation de l’architecture.
+Il distribuera les séquences, scènes, images, obligations, conséquences et respirations.
 
-## 15. Dialogues et plans de scènes
+## 15. Plans détaillés et audits
 
 Futurs documents canoniques.
 
-Ils rédigeront les cartes détaillées, dialogues et productions visuelles à partir des documents `07`, `08` et `09`.
+Ils auditeront :
 
-## 16. Contrats narratifs complémentaires
+- scènes ;
+- source packs ;
+- conversations ;
+- images ;
+- preuves ;
+- obligations ;
+- ledgers.
+
+## 16. Dialogues et production des images
+
+Futurs documents de rédaction et production.
+
+## 17. Contrats complémentaires
 
 Lire selon le besoin :
 
@@ -200,9 +178,9 @@ Lire selon le besoin :
 - `docs/canon/DIEGETIC_TIME_AND_COMMUNICATION_CANON.md` ;
 - `docs/canon/TEMPORAL_FLOW_AND_DAY_TRANSITION_CANON.md`.
 
-Ils fournissent des détails compatibles. Ils ne peuvent pas contredire les documents `08` et `09` sur la direction des scènes et images.
+Ils ne peuvent pas contredire les documents `08–10`.
 
-## 17. Runtime
+## 18. Runtime
 
 Lire les plans, rapports, index de chapitres, conversations actives, données visuelles, tests, ledgers et validations de la version concernée.
 
@@ -210,45 +188,11 @@ Le runtime répond à :
 
 > « Qu’est-ce qui est effectivement implémenté et jouable ? »
 
-Il ne répond pas seul à :
-
-> « Quelle doit être la vision définitive du jeu ? »
+Il ne définit pas seul la vision finale.
 
 ---
 
-# 3. Hiérarchie de conception officielle
-
-```text
-North Star
-→ Expérience joueur
-→ Fantasmes centraux
-→ Canon complet des personnages
-→ Routes macro
-→ Évolution érotique des routes
-→ Actes
-→ Séquences
-→ Scènes modulaires
-→ Progression visuelle et photographique
-→ Dialogues et production des images
-→ Découpage en journées
-→ Runtime
-```
-
-Précisions :
-
-- le canon complet est une autorité transversale ;
-- la grammaire fournit le vocabulaire des fonctions ;
-- les routes donnent une direction aux actes ;
-- les actes expriment des transformations globales ;
-- les séquences accomplissent ces transformations par des événements concrets ;
-- les scènes adaptent les séquences à la partie ;
-- les images rendent les transformations visibles et mémorables ;
-- les scènes ne créent pas les routes ;
-- les journées sont construites après validation des séquences, scènes et progressions visuelles.
-
----
-
-# 4. Hiérarchie d’autorité
+# 3. Hiérarchie d’autorité
 
 ## Bible Narrative
 
@@ -257,14 +201,15 @@ Autorité sur :
 - promesse ;
 - expérience joueur ;
 - fantasmes ;
-- structure globale ;
-- routes et transformations ;
-- évolution érotique ;
+- routes ;
 - actes ;
-- fonction et sélection des séquences ;
-- conception et adaptation des scènes ;
-- progression visuelle ;
-- audiences et galerie.
+- séquences ;
+- scènes ;
+- visuels ;
+- conséquences ;
+- dettes ;
+- secrets ;
+- obligations.
 
 ## Canon complet des personnages
 
@@ -277,93 +222,62 @@ Autorité sur :
 - lieux ;
 - objets ;
 - proches ;
-- responsabilités ;
-- limites ;
 - désirs ;
-- réactions propres ;
-- rapport personnel à l’image ;
-- continuité individuelle.
+- limites ;
+- réactions ;
+- rapport à l’image ;
+- conséquences propres.
 
 ## Cartes de dépréciation / réconciliation
 
-Autorité sur la lecture correcte des formulations anciennes restées compatibles.
-
-Elles ne remplacent pas le canon complet.
+Définissent la lecture correcte d’anciennes formulations encore utilisables.
 
 ## NSFW canon
 
-Autorité sur :
-
-- progression adulte ;
-- consentement ;
-- images et audiences ;
-- secrets et trahisons ;
-- roleplay ;
-- partage ;
-- voies sombres ;
-- après-coup explicite.
-
-## Contrats narratifs complémentaires
-
-Autorité sur les détails compatibles de choix, temps, communication et adaptation technique.
+Autorité sur les règles adultes générales, les images, le consentement, le partage et les voies sombres.
 
 ## Runtime
 
-Autorité uniquement sur l’état effectivement implémenté et validé.
-
-## Archive et À réécrire
-
-Contexte historique ou intention à requalifier, sans autorité en cas de contradiction.
+Autorité uniquement sur l’état effectivement implémenté.
 
 ---
 
-# 5. Règle de spécificité
+# 4. Contrat de conséquence
 
-> **Une fonction peut être partagée. Une séquence doit déjà être spécifique. Une scène et une image doivent rendre cette spécificité concrète.**
-
-Toute scène importante doit :
-
-- pointer vers une séquence de `S01` à `S35` ou déclarer un candidat à la bibliothèque ;
-- employer au moins deux ancrages du canon complet ;
-- définir une relation principale ;
-- préserver l’agence du personnage ;
-- prévoir un état de sortie, un suivi, une expiration et une mutation.
-
-Toute image importante doit :
-
-- posséder une origine ou être identifiée comme image de scène ;
-- définir son audience ;
-- définir sa permanence ;
-- appartenir au moteur visuel propre du personnage ;
-- ne pas être interchangeable avec une autre route.
-
----
-
-# 6. Réconciliation Sandra
-
-Le terme `trace imparfaite` reste autorisé uniquement pour une image historique ou contextuelle précise.
-
-Il ne signifie plus :
-
-- esthétique générale floue ;
-- peur absolue des photographies ;
-- incapacité à produire un selfie assuré ;
-- progression par objets et environnements uniquement.
-
-Le moteur actuel est :
+Avant de valider une conséquence, répondre à :
 
 ```text
-Sandra choisit une représentation qu’elle reconnaît
-→ décide qui peut la recevoir
-→ distingue regarder, garder et transférer
-→ partage éventuellement une partie du contrôle
+quel fait l’a créée ?
+qui le connaît ?
+qui l’ignore ou se trompe ?
+quelle obligation est due ?
+qui doit agir ?
+à qui ?
+dans quelle fenêtre ?
+qu’est-ce qui arrive si elle est payée, amendée ou échoue ?
+quand cesse-t-elle d’être active ?
 ```
+
+Une conséquence sans fait source ou sans personnes concernées doit être rejetée.
 
 ---
 
-# 7. Audits futurs
+# 5. Réconciliation Sandra
 
-Les anciennes cartes, source packs, conversations et scènes jouables doivent être classés :
+Pour toute scène ou preuve Sandra :
+
+- distinguer regarder, sauvegarder et transférer ;
+- connaître l’auteur de l’image ;
+- savoir si Sandra l’a revue et sélectionnée ;
+- traiter une demande de suppression comme obligation ;
+- traiter une violation d’audience comme dette majeure ;
+- ne pas faire d’une image Sandra une monnaie de pacte sans son accord direct.
+
+---
+
+# 6. Audits futurs
+
+Scènes :
 
 ```text
 COMPATIBLE
@@ -372,7 +286,7 @@ REWRITE
 ARCHIVE
 ```
 
-Les anciens visuels et métadonnées doivent être classés :
+Visuels :
 
 ```text
 COMPATIBLE
@@ -381,30 +295,27 @@ REGENERATE
 ARCHIVE
 ```
 
-L’audit narratif et visuel précède toute réutilisation ou planification runtime.
+États, preuves et obligations :
+
+```text
+ACTIVE_AND_USEFUL
+NEEDS_RECONCILIATION
+HISTORICAL_ONLY
+REMOVE_OR_ARCHIVE
+```
 
 ---
 
-# 8. Règle sur le moteur
-
-Le moteur narratif est considéré comme acquis.
-
-Sauf nécessité narrative exceptionnelle, la Bible se construit au-dessus du téléphone, des conversations persistantes, de la galerie, des notifications, des photos, des ledgers, des obligations, des scènes modulaires, des tests et de l’architecture générale.
-
----
-
-# 9. Règle finale
+# 7. Règle finale
 
 ```text
 Utiliser la Bible pour savoir ce que le jeu doit devenir.
 Utiliser le canon complet pour savoir qui vit la transformation.
-Utiliser le NSFW canon pour savoir comment l’adulte peut progresser.
-Utiliser la grammaire pour identifier la fonction.
-Utiliser la bibliothèque pour choisir l’événement concret.
-Utiliser le document 08 pour concevoir et adapter la scène.
-Utiliser le document 09 pour concevoir l’image, son audience et sa progression.
+Utiliser 07 pour choisir l’événement.
+Utiliser 08 pour concevoir la scène.
+Utiliser 09 pour concevoir l’image.
+Utiliser 10 pour savoir ce que la scène crée,
+ce que chacun sait, ce qui reste dû et comment cela revient.
 Utiliser les journées pour distribuer le rythme.
 Utiliser le runtime pour décrire ce qui est jouable.
-
-Aucune architecture abstraite ne doit remplacer la personne concrète.
 ```

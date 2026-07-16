@@ -2,7 +2,7 @@
 
 > **Statut : Canon — source de vérité narrative principale**
 >
-> La Bible définit la promesse du jeu, l’expérience joueur, les fantasmes, les transformations, les actes, les séquences, les règles des scènes modulaires et la progression visuelle de la première saison.
+> La Bible définit la promesse du jeu, l’expérience joueur, les fantasmes, les transformations, les actes, les séquences, les scènes modulaires, la progression visuelle et la mémoire des conséquences de la première saison.
 >
 > Les canons complets des personnages restent l’autorité première sur leur identité, leur voix, leur vie concrète, leurs désirs et leurs limites.
 >
@@ -31,6 +31,7 @@ North Star
 → Séquences
 → Scènes modulaires
 → Progression visuelle et photographique
+→ Conséquences, dettes, secrets et obligations
 → Dialogues et production des images
 → Découpage en journées
 → Runtime
@@ -43,8 +44,9 @@ Il doit être relu :
 - avant de définir une route ;
 - avant d’ajouter une séquence ;
 - avant d’écrire une scène ;
-- avant de rédiger un dialogue ;
-- avant de concevoir une image ou une progression adulte.
+- avant de concevoir une image ;
+- avant de créer une dette, un secret ou une conséquence ;
+- avant de rédiger un dialogue.
 
 Les journées restent une couche de diffusion, de respiration et de rythme. Elles ne sont jamais la couche principale de conception.
 
@@ -59,17 +61,17 @@ Les journées restent une couche de diffusion, de respiration et de rythme. Elle
 5. le ou les fichiers `*_CANON_FULL.md` concernés ;
 6. la carte de dépréciation ou de réconciliation correspondante lorsqu’elle existe ;
 7. [`../characters/NSFW_CHARACTER_ROUTE_CANON.md`](../characters/NSFW_CHARACTER_ROUTE_CANON.md) lorsque désir, image, secret ou contenu adulte sont impliqués ;
-8. [`03_GRAMMAIRE_NARRATIVE.md`](03_GRAMMAIRE_NARRATIVE.md) — fonctions réutilisables des séquences ;
+8. [`03_GRAMMAIRE_NARRATIVE.md`](03_GRAMMAIRE_NARRATIVE.md) — fonctions réutilisables ;
 9. [`04_TRAME_PRINCIPALE_ET_ACTES_SAISON_1.md`](04_TRAME_PRINCIPALE_ET_ACTES_SAISON_1.md) — crise commune et cinq actes ;
-10. [`05_ROUTES_MACRO_SAISON_1.md`](05_ROUTES_MACRO_SAISON_1.md) — transformations durables de chaque relation ;
-11. [`06_EVOLUTION_EROTIQUE_DES_ROUTES.md`](06_EVOLUTION_EROTIQUE_DES_ROUTES.md) — progression du désir, du sexuel et du pornographique ;
-12. [`07_BIBLIOTHEQUE_DE_SEQUENCES_SAISON_1.md`](07_BIBLIOTHEQUE_DE_SEQUENCES_SAISON_1.md) — événements concrets de la saison ;
-13. [`08_REGLES_DES_SCENES_MODULAIRES.md`](08_REGLES_DES_SCENES_MODULAIRES.md) — adaptation d’une séquence à l’état réel de la partie ;
-14. [`09_PROGRESSION_VISUELLE_ET_PHOTOGRAPHIQUE.md`](09_PROGRESSION_VISUELLE_ET_PHOTOGRAPHIQUE.md) — rythme visuel, images, galerie, audiences et progressions propres ;
-15. futurs documents, dans cet ordre :
-    - carte des conséquences, dettes, secrets et obligations ;
+10. [`05_ROUTES_MACRO_SAISON_1.md`](05_ROUTES_MACRO_SAISON_1.md) — transformations durables ;
+11. [`06_EVOLUTION_EROTIQUE_DES_ROUTES.md`](06_EVOLUTION_EROTIQUE_DES_ROUTES.md) — progression du désir et de l’explicite ;
+12. [`07_BIBLIOTHEQUE_DE_SEQUENCES_SAISON_1.md`](07_BIBLIOTHEQUE_DE_SEQUENCES_SAISON_1.md) — événements concrets ;
+13. [`08_REGLES_DES_SCENES_MODULAIRES.md`](08_REGLES_DES_SCENES_MODULAIRES.md) — adaptation à l’état réel de la partie ;
+14. [`09_PROGRESSION_VISUELLE_ET_PHOTOGRAPHIQUE.md`](09_PROGRESSION_VISUELLE_ET_PHOTOGRAPHIQUE.md) — rythme visuel, images, audiences et galerie ;
+15. [`10_CARTE_CONSEQUENCES_DETTES_SECRETS_OBLIGATIONS.md`](10_CARTE_CONSEQUENCES_DETTES_SECRETS_OBLIGATIONS.md) — vérités, connaissances, engagements, preuves, dettes et conséquences ;
+16. futurs documents :
     - découpage des journées ;
-    - plans détaillés des scènes ;
+    - plans détaillés des scènes et audits ;
     - dialogues et production des images ;
     - plans d’intégration runtime.
 
@@ -81,9 +83,8 @@ Pour Sandra, lire ensemble :
 05_ROUTES_MACRO_SAISON_1.md
 06_EVOLUTION_EROTIQUE_DES_ROUTES.md
 09_PROGRESSION_VISUELLE_ET_PHOTOGRAPHIQUE.md
+10_CARTE_CONSEQUENCES_DETTES_SECRETS_OBLIGATIONS.md
 ```
-
-La numérotation conserve l’ordre historique de création. L’ordre d’autorité conceptuelle reste : routes → actes → séquences → scènes → visuels.
 
 ---
 
@@ -99,7 +100,7 @@ Définit responsabilité, causalité, simultanéité, risque, limites, conséque
 
 ## Fantasme
 
-Promesse émotionnelle transversale pouvant être incarnée différemment par plusieurs personnages.
+Promesse émotionnelle transversale.
 
 ## Canon complet du personnage
 
@@ -111,7 +112,7 @@ Transformation durable d’une relation.
 
 ## Évolution érotique
 
-Décrit comment le désir apparaît, devient intention, trouve un cadre, s’incarne et produit un nouvel état.
+Décrit comment le désir devient intention, cadre, sexualité et nouvel état.
 
 ## Acte
 
@@ -119,7 +120,7 @@ Transformation dramatique globale de la saison.
 
 ## Séquence
 
-Événement concret accomplissant une fonction et transformant un état.
+Événement concret accomplissant une fonction.
 
 ## Scène modulaire
 
@@ -127,23 +128,27 @@ Incarnation précise d’une séquence dans une fenêtre compatible.
 
 ## Progression visuelle
 
-Définit :
+Définit ce qui est montré, par qui, à quelle audience, avec quelle permanence et quel moteur propre au personnage.
 
-- ce qui peut être montré ;
-- sous quelle forme ;
-- par qui ;
-- à quelle audience ;
-- avec quelle permanence ;
-- avec quelle évolution propre au personnage ;
-- comment la galerie matérialise ce changement.
+## Carte des conséquences
+
+Distingue :
+
+- ce qui est vrai ;
+- ce que chacun sait ;
+- ce qui est dû ;
+- ce qui est caché ;
+- ce qui constitue une dette ;
+- quand une conséquence doit revenir ;
+- quand un état doit cesser d’être actif.
 
 ## Dialogues et production des images
 
-Incarnent la personne et matérialisent audience, confiance, limite, désir ou risque.
+Incarnent les choix, les personnes, les audiences, les engagements et leurs conséquences.
 
 ## Journée
 
-Distribue les séquences, scènes, silences, respirations et images.
+Distribue les séquences, scènes, images, respirations, obligations et retours.
 
 ## Runtime
 
@@ -153,19 +158,17 @@ Décrit ce qui est techniquement implémenté et jouable.
 
 # 5. Règle de spécificité
 
-> **Une fonction peut être partagée. Une séquence doit déjà être spécifique. Une scène et un set visuel doivent rendre cette spécificité concrète.**
+> **Une fonction peut être partagée. Une scène, une image, une dette et une conséquence doivent rester propres aux personnes concernées.**
 
-Une scène doit utiliser au minimum deux ancrages concrets du canon complet.
+Une conséquence doit utiliser :
 
-Un set visuel doit également préserver :
+- un fait source précis ;
+- une connaissance crédible ;
+- un engagement réel ;
+- les responsabilités du personnage ;
+- une transformation observable.
 
-- l’identité corporelle ;
-- le rapport au regard ;
-- la logique de caméra ;
-- l’audience ;
-- le moteur propre du personnage.
-
-Une image n’est pas spécifique parce que le nom du personnage ou la couleur du vêtement a été remplacé.
+Elle ne doit pas être interchangeable parce qu’elle utilise le mot `secret`, `jalousie` ou `preuve`.
 
 ---
 
@@ -178,28 +181,48 @@ Toute journée entièrement jouable doit proposer au minimum :
 centrés principalement sur une ou plusieurs femmes adultes principales
 ```
 
-Les images :
+Les images conservent :
 
-- sont déverrouillées individuellement ;
-- ne peuvent pas être des doublons ;
-- doivent raconter une progression ;
-- restent disponibles ou non selon leur règle de conservation ;
-- ne doivent pas toutes progresser vers davantage de nudité ;
-- peuvent être des photos diégétiques ou des images de scène.
+- origine ;
+- audience ;
+- permanence ;
+- règles de sauvegarde et de transfert ;
+- conséquence lorsqu’elles changent de cadre.
 
 Le refus d’une route ne doit pas créer une journée visuellement vide.
 
-Il peut modifier :
+---
 
-- l’image ;
-- l’audience ;
-- l’intensité ;
-- la permanence ;
-- la progression future.
+# 7. Contrat de mémoire narrative
+
+Toute progression importante doit pouvoir répondre à :
+
+```text
+qu’est-ce qui est vrai ?
+qui le sait ?
+qui le soupçonne ?
+qui se trompe ?
+qu’est-ce qui a été promis ?
+qu’est-ce qui reste dû ?
+quel secret exclut qui ?
+quelle preuve peut changer une décision ?
+quelle conséquence doit revenir ?
+quand cet état cesse-t-il d’être actif ?
+```
+
+Règles :
+
+- conséquences dues avant nouvelles opportunités intenses ;
+- confession distincte de réparation ;
+- suppression distincte de l’effacement du souvenir ;
+- vie privée distincte du secret ;
+- consentement mutuel distinct du consentement d’un tiers exclu ;
+- dette distincte d’une monnaie ou d’un score moral ;
+- preuve distincte de la vérité complète.
 
 ---
 
-# 7. Réconciliation Sandra
+# 8. Réconciliation Sandra
 
 Le canon actuel fixe :
 
@@ -209,81 +232,66 @@ Elle rejette la perte de contrôle sur une représentation
 que quelqu’un d’autre peut sélectionner, conserver, montrer ou réinterpréter.
 ```
 
-Conséquences :
+Le document `10` ajoute les conséquences propres à cette confiance :
 
-- Sandra peut faire des selfies techniquement assurés ;
-- elle peut être plus audacieuse en privé qu’en public ;
-- sa gêne publique vient notamment du contrôle de la caméra et de la circulation ;
-- une trace imparfaite reste possible, mais seulement avec une origine et une sélection précises ;
-- sa progression va de la représentation validée vers l’audience de confiance et le contrôle partagé ;
-- voir, sauvegarder et transférer sont des permissions distinctes.
-
-Différenciation :
-
-```text
-Sandra = représentation reconnue et confiée
-Pauline = versions multiples et compartiment
-Mathilde = effet délibérément produit dans le foyer
-Raphaëlle = version, rôle et transformation
-Marie = visibilité sociale et mouvement
-```
-
-Les séquences `S03`, `S09`, `S16`, `S19`, `S30` et `S35` doivent être interprétées selon la carte de réconciliation Sandra.
+- regarder, sauvegarder et transférer sont des droits distincts ;
+- une demande de suppression crée une obligation réelle ;
+- une violation d’audience peut fermer la route ;
+- une image Sandra ne peut pas devenir une monnaie dans un pacte Nico sans son accord direct.
 
 ---
 
-# 8. Décisions conservées pour la première saison
+# 9. Décisions conservées pour la première saison
 
 - la première version est une saison complète mais extensible ;
 - Marie, Sandra et Mathilde peuvent atteindre une vraie bascule ;
-- Pauline porte une promesse forte d’extension et doit obtenir une ligne autonome ;
-- Raphaëlle et Nico sont des graines structurantes qui produisent déjà des conséquences ;
+- Pauline porte une promesse forte d’extension ;
+- Raphaëlle et Nico produisent déjà des conséquences ;
 - Jeff et Bastien restent des partenaires réels ;
-- les photos sont des traces d’évolution et des récompenses visuelles, pas des décorations ;
+- les photos sont des traces d’évolution et des récompenses visuelles ;
 - le moteur est considéré comme acquis sauf nécessité narrative exceptionnelle ;
 - les scènes servent les routes et ne les créent pas ;
-- les séquences sont conçues avant les scènes et les journées ;
+- les conséquences et après-coups priment sur les nouvelles opportunités lorsqu’ils sont dus ;
 - une scène extérieure importante ne fait pas disparaître Marie ;
 - les voies sombres créent des dettes et conséquences ;
 - Nico est hétérosexuel et ne possède aucune route romantique ou sexuelle avec Player.
 
 ---
 
-# 9. Contrat d’incarnation actuel
+# 10. Contrat d’incarnation actuel
 
 ## Marie
 
-La Verrière, vie domestique, mouvement, robe noire, visibilité et choix actif.
+La Verrière, vie domestique, mouvement, visibilité, présence promise et définition du couple.
 
 ## Sandra
 
-SentryCore, selfies sélectionnés, photos imprimées, Jeff, refuges, Maison des Tilleuls, gêne publique, représentation contrôlée et audience de confiance.
+SentryCore, selfies sélectionnés, représentation contrôlée, audience de confiance, suppression et permanence.
 
 ## Mathilde
 
-Dégât des eaux, séjour temporaire, travail juridique, vêtements ajustés ordinaires, effet choisi et confiance de Marie.
+Dégât des eaux, séjour temporaire, foyer, effet choisi et dette familiale envers Marie.
 
 ## Pauline
 
-Bastien, infidélité passée, banque, chorale, versions publiques et privées, preuve et compartiment.
+Bastien, infidélité passée, versions, compartiment, preuve réciproque et collision.
 
 ## Raphaëlle
 
-UX, craft, cosplay, compte créatif, Maud, atelier, version choisie, rôle et après du rôle.
+UX, craft, rôle, règles d’image, cadre nommé et dette d’après-rôle.
 
 ## Nico
 
-L’Annexe, amitié, attirance pour Marie et Mathilde, regard social contre regard domestique, alibi, pacte et conséquence. Nico est hétérosexuel.
+L’Annexe, amitié, désir pour Marie et Mathilde, alibi, regard partagé, rivalité et dette de complicité.
 
 ---
 
-# 10. Hiérarchie d’autorité
+# 11. Hiérarchie d’autorité
 
 ```text
 Bible Narrative
-= promesse, expérience joueur, fantasmes, structure globale,
-  routes, évolution érotique, actes, séquences,
-  règles des scènes et progression visuelle
+= promesse, routes, actes, séquences, scènes, visuels,
+  conséquences, dettes, secrets et obligations
 
 Canon complet des personnages
 = identité, passé, voix, vie concrète, désir, limites,
@@ -293,26 +301,20 @@ Cartes de dépréciation / réconciliation
 = lecture correcte des anciennes formulations compatibles
 
 Contrats narratifs historiques
-= choix, temporalité, communication et détails techniques compatibles
+= choix, temporalité, communication et détails compatibles
 
 Runtime
 = état jouable, données actives et validations
 
 Archive / À réécrire
-= historique ou matériau sans autorité en cas de contradiction
+= historique sans autorité en cas de contradiction
 ```
 
-En cas de conflit :
-
-- la Bible prévaut sur la direction de la saison, des scènes et des images ;
-- le canon complet prévaut sur l’identité et la singularité du personnage ;
-- le NSFW canon prévaut sur les règles adultes générales ;
-- une carte de réconciliation précise comment lire une ancienne formulation ;
-- le runtime prévaut uniquement sur la description de ce qui est implémenté.
+Le document historique `docs/narrative/PROOF_AND_SECRET_MAP.md` ne prévaut plus sur le document `10`.
 
 ---
 
-# 11. Moteur considéré comme acquis
+# 12. Moteur considéré comme acquis
 
 Sauf nécessité narrative exceptionnelle démontrée, nous ne revenons pas sur :
 
@@ -327,39 +329,35 @@ Sauf nécessité narrative exceptionnelle démontrée, nous ne revenons pas sur 
 - les tests ;
 - l’architecture générale.
 
-La narration est construite au-dessus de ce moteur.
+La Bible définit ce que le moteur devra porter lorsque les scènes seront validées.
 
 ---
 
-# 12. Gouvernance documentaire
+# 13. Gouvernance documentaire
 
 Les documents sont classés en quatre catégories :
 
-- **Canon** — référence officielle ;
-- **Runtime** — technique et état jouable ;
-- **Archive** — historique ;
-- **À réécrire** — intention utile devenue incompatible.
+- **Canon** ;
+- **Runtime** ;
+- **Archive** ;
+- **À réécrire**.
 
-Aucun nouveau document ne doit créer une seconde source de vérité sur un sujet déjà couvert.
-
-Une carte de réconciliation ne remplace pas le canon complet. Elle empêche une ancienne formulation compatible d’être interprétée de manière contradictoire.
-
-Les anciennes scènes et images doivent être auditées avant réutilisation.
+Les anciens plans, preuves, scènes et ledgers peuvent fournir des détails compatibles. Ils doivent être audités avant réutilisation.
 
 ---
 
-# 13. Règle finale
+# 14. Règle finale
 
 ```text
 Utiliser la Bible pour savoir ce que le jeu doit faire ressentir et devenir.
-Utiliser le canon complet pour savoir qui vit cette transformation.
-Utiliser la grammaire pour identifier la fonction.
+Utiliser le canon complet pour savoir qui vit la transformation.
 Utiliser la bibliothèque pour choisir l’événement concret.
-Utiliser le document 08 pour adapter la scène à l’état réel de la partie.
-Utiliser le document 09 pour concevoir l’image, son audience et sa progression.
-Utiliser les dialogues et images pour l’incarner.
+Utiliser le document 08 pour adapter la scène.
+Utiliser le document 09 pour concevoir l’image.
+Utiliser le document 10 pour savoir ce que la scène crée,
+ce qui reste dû et comment cela doit revenir.
 Utiliser les journées pour distribuer le rythme.
 Utiliser le runtime pour décrire ce qui est jouable.
 
-Aucune architecture abstraitement correcte ne doit effacer la personne concrète.
+Aucune architecture abstraite ne doit remplacer la personne concrète.
 ```
