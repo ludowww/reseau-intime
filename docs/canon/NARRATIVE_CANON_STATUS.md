@@ -1,14 +1,14 @@
 # Narrative Canon Status — Current
 
-> **Current phase: complete-season dialogue audit next / J07–J21 validated**
+> **Current phase: blocking narrative corrections — lot A**
 
 The Bible Narrative covers J01–J21.
 
-J01–J09 have an initial conformity audit.
-
 J07–J21 have complete validated narrative scripts.
 
-The next phase is the complete-season dialogue and continuity audit before any new runtime adaptation.
+The complete-season dialogue and continuity audit is validated.
+
+The next phase is a targeted documentary correction pass before any runtime adaptation.
 
 ---
 
@@ -18,16 +18,16 @@ The next phase is the complete-season dialogue and continuity audit before any n
 North Star
 → Player experience
 → Character canon and voice
-→ Erotic evolution and consent canon
 → Routes and sequences
 → Full narrative scripts
-→ Complete-season dialogue audit
-→ Ludovic validation of corrections
+→ Validated complete-season dialogue audit
+→ Blocking correction lots A–D
+→ Ludovic validation
 → Explicit technical-resumption decision
 → Runtime adaptation
 ```
 
-Runtime does not define future narrative authority.
+Runtime does not define narrative authority.
 
 ---
 
@@ -35,11 +35,11 @@ Runtime does not define future narrative authority.
 
 No new technical integration for J07–J21 before:
 
-1. the complete-season dialogue audit ;
-2. validation of any narrative corrections ;
-3. an explicit decision to resume technical work.
-
-The J05–J06 technical draft remains separate and non-authoritative.
+1. correction lot A is applied and validated ;
+2. trace, promise and knowledge registries exist ;
+3. narrative states and reachability are normalized ;
+4. the long-form voice polish is validated ;
+5. an explicit decision resumes technical work.
 
 The active J06 runtime remains historically non-compliant through:
 
@@ -82,223 +82,134 @@ docs/canon/dialogues/J18_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J19_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J20_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J21_SCRIPT_NARRATIF_COMPLET.md
+docs/canon/dialogues/J01_J21_AUDIT_GLOBAL_DIALOGUES_CONTINUITE.md
 ```
 
 Status:
 
 ```text
-J01–J05: narratively sound, visuals incomplete
-J06: canonical intention identified, active runtime non-compliant
-J07–J21: validated narratively
-J01–J21 complete-season dialogue audit: next
+Architecture J01–J21: validated
+Scripts J07–J21: validated under targeted corrections
+Global dialogue audit: validated
+Correction lot A: next
+Runtime J07–J21: frozen
 ```
 
 ---
 
-## 4. Resolution architecture J17–J20
+## 4. Validated audit verdict
 
-J17 transforms the household and gives the Marie / Player couple a provisional state.
+The season is coherent and complete at the level of plot, routes and resolutions.
 
-J18 gives Sandra an active decision over her traces, audience, friendship and desire.
+No new route, act, character or finale is required.
 
-J19 gives Pauline and Raphaëlle precise directions while developing only one main private relation.
+The dialogue corpus is not yet ready for direct runtime adaptation because it still contains bounded continuity and governance issues.
 
-J20 gives Nico one active position over friendship, attraction, alibis, confidences and images.
-
-No resolution creates automatic permission for another route.
-
-Partners and affected adults remain real.
-
----
-
-## 5. J21 decision — the last photograph changes meaning
-
-J21 is:
+The validated blocking areas are:
 
 ```text
-Lundi — La dernière photo change de sens
-```
-
-It does not summarize the season and does not introduce a final revelation.
-
-It combines:
-
-```text
-transformed ordinary life
-+ existing trace
-+ current behavior
-```
-
-The principal trace is selected by accumulated state, not by a gallery or character menu.
-
-An inaccessible or removed image may function as the final trace.
-
-A deleted file never returns for emotional convenience.
-
----
-
-## 6. Final choice
-
-The last choice never selects a woman or route.
-
-It expresses one posture:
-
-```text
-act according to the new rule
-recognize a loss or debt
-consciously maintain an existing contradiction
-```
-
-Accumulation from J01–J20 outweighs the final wording.
-
-One correct final answer cannot erase repeated lies, violated audiences or refused consequences.
-
-One imperfect answer cannot erase prior presence, respected withdrawals or accepted responsibility.
-
----
-
-## 7. Final character states
-
-At season end:
-
-### Marie
-
-Has a defined couple state, household organization, rule and autonomous ordinary life.
-
-### Mathilde
-
-Lives outside the household with a family, distant, suspended or closed relationship state.
-
-### Sandra
-
-Controls her traces and has a clear friendship, desire, withdrawal or trust state. Jeff remains real.
-
-### Pauline
-
-Has a real official surface and a defined compartment, closure or debt. Bastien and Marie remain affected adults.
-
-### Raphaëlle
-
-Has a precise access, invitation or boundary. Work, process and Maud remain real.
-
-### Nico
-
-Has an active role and explicit limits on alibis, confidences and images.
-
----
-
-## 8. Images, audience and knowledge
-
-J21 preserves:
-
-```text
-existing trace only
-no surprise image
-no restored deleted content
-no new audience
-no new saving right
-no automatic circulation
-absence can carry meaning
-knowledge remains limited to legitimate sources
-```
-
-The final trace may be:
-
-- preserved ;
-- printed ;
-- removed ;
-- inaccessible ;
-- a memory ;
-- evidence ;
-- or a symbol of a new rule.
-
-It never becomes a route trophy.
-
----
-
-## 9. Season completeness
-
-Season 1 is narratively complete and extensible.
-
-It contains:
-
-- a provisional resolution of the principal crisis ;
-- visible transformation of all major relationships ;
-- concrete household and couple consequences ;
-- explicit image and audience states ;
-- future promises already prepared rather than added as empty hooks ;
-- dark continuities that remain consciously unstable ;
-- no definitive closure preventing later arcs or premium extensions.
-
----
-
-## 10. Complete-season audit scope
-
-The next audit must verify:
-
-- chronology and schedule coherence J01–J21 ;
-- voice distinction ;
-- knowledge attribution ;
-- image origin, audience, saving and deletion ;
-- promise creation and refusal closure ;
-- consequence and aftermath payment ;
-- partner and witness credibility ;
-- absence of consolation routes ;
-- compatibility of J21 with all major outputs ;
-- visual slot coverage ;
-- text-only compliance ;
-- unresolved contradictions that require correction before runtime work.
-
-The audit may recommend targeted narrative corrections.
-
-It must not silently modify runtime or create new routes.
-
----
-
-## 11. Visual compliance
-
-J21 reserves at least three visual functions:
-
-1. transformed ordinary life ;
-2. an existing recontextualized trace ;
-3. the dominant relationship continuing after the final posture.
-
-Optional functions include:
-
-- network state ;
-- a previously prepared future promise.
-
-No pose, framing or ComfyUI prompt is defined.
-
----
-
-## 12. Runtime scope
-
-```text
-J01–J06 playable
-J06 active runtime still non-compliant
-J07–J21 validated narratively
-complete-season dialogue audit required before technical resumption
-```
-
-No runtime, JSON, test, tool, asset or gallery modification is authorized by the J21 narrative merge.
-
----
-
-## 13. Next work
-
-```text
-1. run the complete-season dialogue and continuity audit J01–J21
-2. draft targeted narrative corrections if required
-3. obtain Ludovic validation
-4. decide separately whether and how to resume technical integration
+calendar and future checkpoints
+one unpaid Sandra promise
+interactive messaging during physical co-presence
+final dark posture not sufficiently gated
+missing trace / promise / knowledge registries
+unnormalized narrative states
+J01–J09 corrections not consolidated in source files
+voice naturalness polish
 ```
 
 ---
 
-## 14. Final rule
+## 5. Lot A — immediate next work
 
 ```text
-The last photograph does not change.
-Permissions, absences, debts and lives around it finally give it another meaning.
+A1 correct J17 / J21 calendar references
+A2 pay the rescheduled Sandra café through a conditional J12 prelude
+A3 remove interactive direct messages during co-presence in J12, J14, J17 and J21
+A4 expose J21 posture C only when an existing contradiction is already active
+```
+
+Lot A is documentary only.
+
+It must preserve all validated route decisions and final character states.
+
+---
+
+## 6. Later correction lots
+
+### Lot B — narrative data contracts
+
+- trace registry ;
+- promise registry ;
+- knowledge registry ;
+- bounded state contract ;
+- J01–J21 reachability matrix.
+
+### Lot C — source consolidation
+
+- integrate J01–J09 corrections into their source authority ;
+- source Pauline's knowledge of Marie ;
+- resolve exact image creators ;
+- strengthen Mathilde adult-branch independence ;
+- mark architecture audit `12E` as historical for production status.
+
+### Lot D — voice polish
+
+- more banal messages ;
+- partial answers ;
+- fewer symmetrical aphorisms ;
+- less design-language spoken by characters ;
+- preserve one strong line per beat rather than several.
+
+---
+
+## 7. Season state
+
+Season 1 remains narratively complete and extensible.
+
+The audit does not revoke:
+
+- the couple outcomes ;
+- Mathilde's departure ;
+- Sandra's control of traces ;
+- Pauline's compartment outcomes ;
+- Raphaëlle's process and boundary outcomes ;
+- Nico's active friendship position ;
+- the recontextualized-image finale.
+
+It makes their implementation conditions explicit.
+
+---
+
+## 8. Runtime scope
+
+```text
+J01–J06 playable but requiring reconciliation
+J06 active runtime non-compliant
+J07–J21 narrative only
+technical resumption prohibited before validated correction contracts
+```
+
+No runtime, JSON, test, tool, asset or gallery modification is authorized by the audit merge.
+
+---
+
+## 9. Next work
+
+```text
+1. apply documentary correction lot A
+2. validate lot A
+3. create narrative registries and reachability contracts
+4. consolidate sources and voice polish
+5. decide separately whether to resume technical integration
+```
+
+---
+
+## 10. Final rule
+
+```text
+The season works.
+The remaining task is not to invent more,
+but to make every promise, trace and line as exact as the architecture carrying it.
 ```
