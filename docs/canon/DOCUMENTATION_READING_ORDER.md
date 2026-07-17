@@ -1,6 +1,6 @@
 # Documentation Reading Order — Bible Narrative Current
 
-> **Phase : validation narrative complète J07–J21 — J11 candidat**
+> **Phase : validation narrative complète J07–J21 — J12 candidat**
 
 La Bible couvre l’architecture détaillée de J01 à J21.
 
@@ -8,7 +8,7 @@ J01–J09 possèdent un audit transversal.
 
 J10 est validé.
 
-J11 possède un script complet candidat.
+J11 et J12 possèdent des scripts complets candidats.
 
 ---
 
@@ -70,6 +70,7 @@ docs/canon/dialogues/J08_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J09_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J10_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J11_SCRIPT_NARRATIF_COMPLET.md
+docs/canon/dialogues/J12_SCRIPT_NARRATIF_COMPLET.md
 ```
 
 ## Communication
@@ -117,10 +118,12 @@ Une journée doit passer :
 - connaissance limitée ;
 - fallback ;
 - audience visuelle ;
-- trois contenus principalement féminins ;
+- contenus principalement féminins ;
 - consentement actuel ;
 - retrait possible ;
-- après-coup obligatoire après une progression adulte.
+- après-coup obligatoire après une progression adulte ;
+- convergence sans omniscience ;
+- conséquence prioritaire pour le jour suivant.
 
 ---
 
@@ -133,21 +136,21 @@ Une journée doit passer :
 | J09 | script + audit | validé |
 | J10 | script complet | validé |
 | J11 | script complet | candidat |
-| J12 | plan complet | prochaine tranche |
+| J12 | script complet | candidat empilé sur J11 |
 | J13–J21 | plans complets | à écrire |
 
 ---
 
-# 6. Principes consolidés J11
+# 6. Principes consolidés J12
 
 ```text
-J11 continue uniquement J10
-une intention peut exister sans sexualité
-une limite peut renforcer la relation
-un passage adulte remplace le pivot normal
-consentement écrit et révocable
-aucune dette utilisée comme levier
-J12 porte obligatoirement l’après-coup
+Marie reste pivot de réseau
+une seule conséquence J11 modifie la soirée
+les participants ont des raisons réelles d’être présents
+les images publiques ont plusieurs sens sans révélation automatique
+les messages en co-présence restent logistiques
+une seule conséquence finale devient foreground
+J13 commence par la payer
 ```
 
 ---
@@ -155,9 +158,9 @@ J12 porte obligatoirement l’après-coup
 # 7. Prochaine tranche
 
 ```text
-validation J11
-→ écriture J12 convergence
-→ J13–J16
+validation J11 puis J12
+→ écriture J13 conséquence prioritaire
+→ J14–J16
 → J17–J21
 → audit global des dialogues
 ```
@@ -167,6 +170,6 @@ validation J11
 # 8. Règle finale
 
 ```text
-Le désir n’est adulte que lorsqu’il accepte une règle,
-une conséquence et un lendemain.
+La convergence ne révèle pas tout.
+Elle rend seulement les versions privées observables par leurs conséquences.
 ```
