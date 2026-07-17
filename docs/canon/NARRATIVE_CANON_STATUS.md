@@ -1,14 +1,14 @@
 # Narrative Canon Status — Current
 
-> **Current phase: J13 candidate / J14 next**
+> **Current phase: J14 candidate / J15 next**
 
 The Bible Narrative covers J01–J21.
 
 J01–J09 have a conformity audit.
 
-J07–J12 are validated and merged.
+J07–J13 are validated and merged.
 
-J13 has a complete narrative candidate.
+J14 has a complete narrative candidate.
 
 ---
 
@@ -49,6 +49,7 @@ docs/canon/dialogues/J10_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J11_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J12_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J13_SCRIPT_NARRATIF_COMPLET.md
+docs/canon/dialogues/J14_SCRIPT_NARRATIF_COMPLET.md
 ```
 
 Status:
@@ -56,192 +57,200 @@ Status:
 ```text
 J01–J05: narratively sound, visuals incomplete
 J06: canonical intention identified, active runtime non-compliant
-J07–J12: validated narratively
-J13: candidate for Ludovic validation
-J14–J21: not yet scripted
+J07–J13: validated narratively
+J14: candidate for Ludovic validation
+J15–J21: not yet scripted
 ```
 
 ---
 
-## 4. J13 decision
+## 4. J14 decision
 
-J13 becomes:
+J14 becomes:
 
 ```text
-Dimanche — Ce qui réclame une réponse
+Lundi — La photo au mauvais écran
 ```
 
-Only one consequence becomes foreground.
+It changes one knowledge state using a trace that already survived J13.
 
-Priority:
-
-1. safety or consent ;
-2. compromised image or uncertain audience ;
-3. adult aftermath ;
-4. missed promise or presence ;
-5. private line made socially visible ;
-6. respiration if nothing is due.
-
-No new route becomes dominant.
+No image, message, witness or transfer is invented solely to create drama.
 
 ---
 
-## 5. J13 Pauline
+## 5. Witness rule
 
-Pauline may send a non-public fourth version of a J12 image only when:
+The witness must:
 
-- the image genuinely comes from J12 ;
-- Player respected the public audience ;
-- Pauline chooses the private recipient ;
-- Bastien remains real ;
-- no more urgent debt exists.
+- be physically present ;
+- have an ordinary reason to be near the screen ;
+- see only what the interface actually displays ;
+- understand only part of the context ;
+- have a real relationship to the trace.
+
+If no credible witness exists, J14 mutates into a no-discovery respiration.
+
+---
+
+## 6. Player reactions
 
 Player may:
 
-- ask the audience rule ;
-- consciously recognize the double address ;
-- refuse the private compartment.
+1. give a limited truth ;
+2. minimize or lie ;
+3. protect the represented person and promise a precise clarification time.
 
-The public version remains authentic in every branch.
+Protecting an audience is legitimate only when the person is warned and the clarification does not become indefinite.
 
----
-
-## 6. J13 Raphaëlle
-
-Raphaëlle may send one masked/posture image selected with Maud after Player respected the public frame.
-
-Player may:
-
-- notice the process ;
-- recognize attraction without extending the role ;
-- reduce the version to a sexier product and lose private access.
-
-If Player pressured the public frame in J12, no private image is sent.
+Closing the screen is visible behavior but not complete proof.
 
 ---
 
-## 7. J13 Nico
+## 7. J14 Pauline
 
-Nico may become the source of the real departure time from L'Annexe.
+Marie may see a private Pauline version while looking for the official J12 group image.
 
-Player may:
+Marie correctly understands that a second audience exists, but not the exact intimacy or Bastien's knowledge.
 
-- accept the limited truth ;
-- ask Nico for an alibi and be refused ;
-- close Nico's role as cover while preserving the confidence.
+Player may explain the double address, lie about a discarded group image, or protect Pauline's audience while warning her.
 
-Nico receives no private image and cannot speak for Marie or Mathilde.
+The public Pauline/Bastien surface remains authentic.
 
 ---
 
-## 8. J13 Sandra
+## 8. J14 Sandra
 
-Sandra verifies whether her image remains in the agreed audience and whether a promised reply was delivered.
+Mathilde may accidentally see Sandra's selected private image on Player's phone.
 
-Player may:
+She understands that the image was not public and not intended for her.
 
-- confirm precisely ;
-- offer Sandra the ability to withdraw the image ;
-- ask for more and trigger removal.
+She does not know the saving rule, Jeff's knowledge, or the exact relationship.
 
-Sandra controls maintenance or withdrawal.
+Sandra must be informed that her audience changed, even accidentally.
 
 ---
 
-## 9. J13 Mathilde
+## 9. J14 Mathilde
 
-Mathilde requires a household rule after proximity, secrecy or visible tension.
+Marie may see one exact Mathilde notification about repetition, a household rule or distance.
 
-Player may:
+Marie knows only the displayed sentence and that Player holds its context.
 
-- establish no immediate repetition ;
-- recognize desire and the debt toward Marie ;
-- minimize and push Mathilde toward distance or an earlier departure.
+Safety and housing take priority over couple explanation when a limit or stop may be involved.
 
-A consent or stop violation replaces the normal route consequence with immediate safety and distance.
+Mathilde must be able to speak to Marie without Player controlling her version.
 
 ---
 
-## 10. J13 Marie
+## 10. J14 Raphaëlle
 
-Marie asks whether the public image of the couple corresponded to their private reality.
+Marie may see the masked Raphaëlle image selected after J13.
 
-Player may:
+She correctly understands that Player became a chosen audience, but not whether a meeting, kiss or explicit proposal occurred.
 
-- answer truthfully ;
-- propose one concrete ordinary act ;
-- use the photograph as proof and deepen the private debt.
+Player may explain the process, lie that it is only a work file, or warn Raphaëlle before answering about his own acts.
 
-An adult J11 reconquest creates ordinary-life aftercare, not a new sexual scene.
+Raphaëlle keeps control of the image and her own version.
 
 ---
 
-## 11. Fallback
+## 11. J14 Nico
 
-If nothing is due, J13 remains a calm Sunday around Marie, Mathilde, public photo selection and ordinary life.
+Marie may read an exact Nico preview about the real time, a lie or refusal of an alibi.
 
-No external route appears as compensation.
+She knows Nico holds a different version of events.
 
----
+Player may accept the limited truth, lie and be contradicted by Nico, or preserve the confidence while answering for the fact that affects Marie.
 
-## 12. J14 trace rule
-
-J13 does not create the J14 discovery.
-
-It identifies one trace that already exists in the actual playthrough:
-
-- Pauline private version ;
-- Raphaëlle masked image ;
-- Nico time/alibi message ;
-- Sandra selected image ;
-- Mathilde notification or existing outfit image ;
-- Marie public couple image next to a private notification.
-
-J14 may use only a trace that genuinely survived J13.
+Nico never becomes an omniscient witness or automatic cover.
 
 ---
 
-## 13. Visual compliance
+## 12. Composite couple variant
 
-Each configuration reserves at least three visual functions:
+The public J12 couple image may remain open while a real private notification appears above it.
 
-1. an existing trace recontextualized ;
-2. the main relationship consequence ;
-3. ordinary life, couple or autonomous partner reality.
+Marie sees two versions of the same period without receiving the full private trace.
 
-Final images remain unproduced and will be supplied later through ComfyUI.
+The official couple image becomes insufficient, not false.
 
 ---
 
-## 14. Runtime scope
+## 13. Deletion and knowledge
+
+J14 distinguishes:
+
+```text
+content deleted
+witness knowledge active
+material proof available
+trust affected
+```
+
+Deleting a trace never erases what the witness saw.
+
+The represented person must be warned whenever a private audience changes.
+
+---
+
+## 14. J15 handoff
+
+J14 creates at least two incompatible obligations among:
+
+- explain to Marie ;
+- warn or protect the represented person ;
+- delete or confirm an image ;
+- preserve a confidence ;
+- guarantee household safety ;
+- meet a professional obligation ;
+- keep a precise time promise.
+
+J15 turns these obligations into an actual schedule conflict.
+
+---
+
+## 15. Visual compliance
+
+Every J14 configuration reserves at least three functions:
+
+1. the existing trace ;
+2. the witness and discovery ;
+3. the consequence, withdrawal or ordinary affected relationship.
+
+No new image replaces the trace that was actually discovered.
+
+Final assets remain unproduced and will be supplied later through ComfyUI.
+
+---
+
+## 16. Runtime scope
 
 ```text
 J01–J06 playable
 J06 active runtime still non-compliant
-J07–J12 validated narratively
-J13 candidate narratively
-J14–J21 narrative validation first
+J07–J13 validated narratively
+J14 candidate narratively
+J15–J21 narrative validation first
 ```
 
 ---
 
-## 15. Next work
+## 17. Next work
 
 ```text
-1. validate J13
-2. write J14 wrong-screen discovery using an existing trace
-3. write J15 incompatible commitments
-4. write J16 payment day
-5. continue J17–J21
-6. run complete-season dialogue audit
-7. resume technical integration
+1. validate J14
+2. write J15 incompatible commitments
+3. write J16 payment day
+4. continue J17–J21
+5. run complete-season dialogue audit
+6. resume technical integration
 ```
 
 ---
 
-## 16. Final rule
+## 18. Final rule
 
 ```text
-An aftermath becomes real when it requires
-a rule, deletion, truth or action.
+The screen does not reveal the whole truth.
+It reveals that a truth exists and Player knew where it was hidden.
 ```
