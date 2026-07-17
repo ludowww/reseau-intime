@@ -1,14 +1,14 @@
 # Narrative Canon Status — Current
 
-> **Current phase: J21 next / J07–J20 validated**
+> **Current phase: complete-season dialogue audit next / J07–J21 validated**
 
 The Bible Narrative covers J01–J21.
 
-J01–J09 have a conformity audit.
+J01–J09 have an initial conformity audit.
 
-J07–J20 have complete validated narrative scripts.
+J07–J21 have complete validated narrative scripts.
 
-J21 remains to be scripted before any new runtime adaptation.
+The next phase is the complete-season dialogue and continuity audit before any new runtime adaptation.
 
 ---
 
@@ -21,8 +21,9 @@ North Star
 → Erotic evolution and consent canon
 → Routes and sequences
 → Full narrative scripts
-→ Conformity audit
-→ Ludovic validation
+→ Complete-season dialogue audit
+→ Ludovic validation of corrections
+→ Explicit technical-resumption decision
 → Runtime adaptation
 ```
 
@@ -32,7 +33,11 @@ Runtime does not define future narrative authority.
 
 ## 2. Technical freeze
 
-No new technical integration for J07–J21 before complete narrative validation through J21.
+No new technical integration for J07–J21 before:
+
+1. the complete-season dialogue audit ;
+2. validation of any narrative corrections ;
+3. an explicit decision to resume technical work.
 
 The J05–J06 technical draft remains separate and non-authoritative.
 
@@ -76,6 +81,7 @@ docs/canon/dialogues/J17_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J18_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J19_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J20_SCRIPT_NARRATIF_COMPLET.md
+docs/canon/dialogues/J21_SCRIPT_NARRATIF_COMPLET.md
 ```
 
 Status:
@@ -83,13 +89,13 @@ Status:
 ```text
 J01–J05: narratively sound, visuals incomplete
 J06: canonical intention identified, active runtime non-compliant
-J07–J20: validated narratively
-J21: not yet scripted
+J07–J21: validated narratively
+J01–J21 complete-season dialogue audit: next
 ```
 
 ---
 
-## 4. J17–J19 resolution state
+## 4. Resolution architecture J17–J20
 
 J17 transforms the household and gives the Marie / Player couple a provisional state.
 
@@ -97,120 +103,15 @@ J18 gives Sandra an active decision over her traces, audience, friendship and de
 
 J19 gives Pauline and Raphaëlle precise directions while developing only one main private relation.
 
-No day creates automatic permission for another route.
+J20 gives Nico one active position over friendship, attraction, alibis, confidences and images.
+
+No resolution creates automatic permission for another route.
 
 Partners and affected adults remain real.
 
 ---
 
-## 5. J20 decision — what friendship can carry
-
-J20 is:
-
-```text
-Dimanche — Ce que l’amitié peut porter
-```
-
-It gives Nico one active future position:
-
-```text
-guardrail
-limited confidant
-honest rival
-conscious accomplice
-participant in an authorized gaze
-compromised witness
-friend taking distance
-```
-
-Nico is no longer only a source of jokes, alibis, images or uncomfortable truths.
-
-He decides what he accepts to know, say, cover, refuse or carry.
-
----
-
-## 6. Friendship, attraction and agency
-
-Nico may acknowledge attraction toward Marie or Mathilde.
-
-That attraction never creates permission.
-
-Player cannot grant either woman to Nico.
-
-Marie and Mathilde speak for themselves in any future continuation.
-
-Nico remains heterosexual and has no romantic or sexual route with Player.
-
-The charge between the men may contain friendship, rivalry, jealousy, debt and shared gaze without becoming a hidden male route.
-
----
-
-## 7. Alibi and confidence outcomes
-
-J20 separates:
-
-```text
-confidence
-fact witnessed directly
-alibi
-shared lie
-private image
-authorized gaze
-```
-
-Possible friendship rules include:
-
-- Player may discuss his own desire without forwarding private material ;
-- Nico answers direct factual questions when he was present ;
-- Nico refuses false hours and false places ;
-- one fact may remain a conscious shared debt on a dark route ;
-- Nico may close confidences while preserving ordinary social contact.
-
-An alibi never becomes innocence.
-
-It becomes either a closed function or a reciprocal debt.
-
----
-
-## 8. Images and audience
-
-Nico does not become an archive.
-
-J20 preserves:
-
-```text
-public image does not imply private forwarding
-female consent must name Nico as audience
-saving requires a separate rule
-unauthorized content must be deleted
-knowledge remains after deletion
-the represented person must be informed when audience changed
-```
-
-No new intimate image is created to resolve friendship.
-
-An authorized future gaze remains only a possibility requiring direct consent from the woman involved.
-
----
-
-## 9. Network consequence
-
-J20 develops at most one strong secondary network consequence among:
-
-- an alibi or exact hour ;
-- a reciprocal Pauline trace ;
-- a limited Bastien question ;
-- a Sandra / Jeff aftermath ;
-- a Raphaëlle / Maud or work fact ;
-- an unauthorized copy.
-
-Nico never receives every route's secrets.
-
-Partners and witnesses receive only facts available through legitimate sources.
-
----
-
-## 10. J21 handoff
+## 5. J21 decision — the last photograph changes meaning
 
 J21 is:
 
@@ -218,35 +119,154 @@ J21 is:
 Lundi — La dernière photo change de sens
 ```
 
-It begins with:
+It does not summarize the season and does not introduce a final revelation.
 
-- a provisional couple state ;
-- Mathilde outside the household ;
-- a clear Sandra state ;
-- a Pauline direction ;
-- a Raphaëlle direction ;
-- a Nico position ;
-- credible partner and witness states ;
-- no unresolved urgent audience issue ;
-- no new revelation required.
+It combines:
 
-J21 must reuse an existing trace rather than create a surprise image.
+```text
+transformed ordinary life
++ existing trace
++ current behavior
+```
 
-The final choice expresses a posture toward the new rule, a loss or debt, or a contradiction consciously maintained.
+The principal trace is selected by accumulated state, not by a gallery or character menu.
 
-It does not select a woman or route.
+An inaccessible or removed image may function as the final trace.
+
+A deleted file never returns for emotional convenience.
+
+---
+
+## 6. Final choice
+
+The last choice never selects a woman or route.
+
+It expresses one posture:
+
+```text
+act according to the new rule
+recognize a loss or debt
+consciously maintain an existing contradiction
+```
+
+Accumulation from J01–J20 outweighs the final wording.
+
+One correct final answer cannot erase repeated lies, violated audiences or refused consequences.
+
+One imperfect answer cannot erase prior presence, respected withdrawals or accepted responsibility.
+
+---
+
+## 7. Final character states
+
+At season end:
+
+### Marie
+
+Has a defined couple state, household organization, rule and autonomous ordinary life.
+
+### Mathilde
+
+Lives outside the household with a family, distant, suspended or closed relationship state.
+
+### Sandra
+
+Controls her traces and has a clear friendship, desire, withdrawal or trust state. Jeff remains real.
+
+### Pauline
+
+Has a real official surface and a defined compartment, closure or debt. Bastien and Marie remain affected adults.
+
+### Raphaëlle
+
+Has a precise access, invitation or boundary. Work, process and Maud remain real.
+
+### Nico
+
+Has an active role and explicit limits on alibis, confidences and images.
+
+---
+
+## 8. Images, audience and knowledge
+
+J21 preserves:
+
+```text
+existing trace only
+no surprise image
+no restored deleted content
+no new audience
+no new saving right
+no automatic circulation
+absence can carry meaning
+knowledge remains limited to legitimate sources
+```
+
+The final trace may be:
+
+- preserved ;
+- printed ;
+- removed ;
+- inaccessible ;
+- a memory ;
+- evidence ;
+- or a symbol of a new rule.
+
+It never becomes a route trophy.
+
+---
+
+## 9. Season completeness
+
+Season 1 is narratively complete and extensible.
+
+It contains:
+
+- a provisional resolution of the principal crisis ;
+- visible transformation of all major relationships ;
+- concrete household and couple consequences ;
+- explicit image and audience states ;
+- future promises already prepared rather than added as empty hooks ;
+- dark continuities that remain consciously unstable ;
+- no definitive closure preventing later arcs or premium extensions.
+
+---
+
+## 10. Complete-season audit scope
+
+The next audit must verify:
+
+- chronology and schedule coherence J01–J21 ;
+- voice distinction ;
+- knowledge attribution ;
+- image origin, audience, saving and deletion ;
+- promise creation and refusal closure ;
+- consequence and aftermath payment ;
+- partner and witness credibility ;
+- absence of consolation routes ;
+- compatibility of J21 with all major outputs ;
+- visual slot coverage ;
+- text-only compliance ;
+- unresolved contradictions that require correction before runtime work.
+
+The audit may recommend targeted narrative corrections.
+
+It must not silently modify runtime or create new routes.
 
 ---
 
 ## 11. Visual compliance
 
-J20 reserves at least three visual functions:
+J21 reserves at least three visual functions:
 
-1. Nico in his own world ;
-2. the woman or existing trace concerned by the branch ;
-3. the single network consequence.
+1. transformed ordinary life ;
+2. an existing recontextualized trace ;
+3. the dominant relationship continuing after the final posture.
 
-An optional fourth visual may show ordinary life after Nico's decision.
+Optional functions include:
+
+- network state ;
+- a previously prepared future promise.
 
 No pose, framing or ComfyUI prompt is defined.
 
@@ -257,20 +277,21 @@ No pose, framing or ComfyUI prompt is defined.
 ```text
 J01–J06 playable
 J06 active runtime still non-compliant
-J07–J20 validated narratively
-J21 narrative validation first
+J07–J21 validated narratively
+complete-season dialogue audit required before technical resumption
 ```
 
-No runtime, JSON, test, tool, asset or gallery modification is authorized by the J20 narrative merge.
+No runtime, JSON, test, tool, asset or gallery modification is authorized by the J21 narrative merge.
 
 ---
 
 ## 13. Next work
 
 ```text
-1. write J21 final recontextualized image
-2. run complete-season dialogue audit
-3. resume technical integration only after approval
+1. run the complete-season dialogue and continuity audit J01–J21
+2. draft targeted narrative corrections if required
+3. obtain Ludovic validation
+4. decide separately whether and how to resume technical integration
 ```
 
 ---
@@ -278,6 +299,6 @@ No runtime, JSON, test, tool, asset or gallery modification is authorized by the
 ## 14. Final rule
 
 ```text
-Friendship may carry truth, desire or debt.
-It stops being intact when it is asked to carry someone else's permission, lie or responsibility.
+The last photograph does not change.
+Permissions, absences, debts and lives around it finally give it another meaning.
 ```
