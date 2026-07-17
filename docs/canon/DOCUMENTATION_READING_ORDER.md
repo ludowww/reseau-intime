@@ -1,14 +1,14 @@
 # Documentation Reading Order — Bible Narrative Current
 
-> **Phase : validation narrative complète J07–J21 — J17 prochain**
+> **Phase : validation narrative complète J07–J21 — J18 prochain**
 
 La Bible couvre l’architecture détaillée de J01 à J21.
 
 J01–J09 possèdent un audit transversal.
 
-J07–J16 sont validés narrativement.
+J07–J17 sont validés narrativement.
 
-J17–J21 restent à écrire.
+J18–J21 restent à écrire.
 
 ---
 
@@ -75,6 +75,7 @@ docs/canon/dialogues/J13_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J14_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J15_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J16_SCRIPT_NARRATIF_COMPLET.md
+docs/canon/dialogues/J17_SCRIPT_NARRATIF_COMPLET.md
 ```
 
 ## Communication
@@ -140,17 +141,18 @@ Une journée doit passer :
 | Journées | Scripts / audit | Statut |
 |---|---|---|
 | J01–J06 | audit et runtime provisoire | J06 runtime non conforme |
-| J07–J16 | scripts complets | validés narrativement |
-| J17–J21 | plans complets | à écrire |
+| J07–J17 | scripts complets | validés narrativement |
+| J18–J21 | plans complets | à écrire |
 
 ---
 
-# 6. Principes consolidés J14–J16
+# 6. Principes consolidés J14–J17
 
 ```text
 J14 : aucune trace inventée ; connaissance limitée ; personne représentée prévenue.
 J15 : deux obligations antérieures minimum ; horaires incompatibles ; priorité visible par l’acte.
 J16 : sécurité, audience et paiement avant résolution ; départ Mathilde préparé ; heure J17 réellement choisie.
+J17 : départ Mathilde accompli ; foyer transformé ; définition provisoire du couple ; aucune route de consolation.
 ```
 
 ---
@@ -158,8 +160,7 @@ J16 : sécurité, audience et paiement avant résolution ; départ Mathilde pré
 # 7. Prochaine tranche
 
 ```text
-J17 — foyer + définition provisoire du couple
-→ J18 — Sandra choisit ce qu’elle garde
+J18 — Sandra choisit ce qu’elle garde
 → J19 — Pauline ou Raphaëlle obtient une direction
 → J20 — Nico et le réseau obtiennent une position
 → J21 — une image ancienne clôt la saison
