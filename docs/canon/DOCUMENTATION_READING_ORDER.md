@@ -74,6 +74,7 @@ docs/canon/bible/12E_AUDIT_GLOBAL_COHERENCE_J01_J21.md
 ```text
 docs/canon/dialogues/README.md
 docs/canon/dialogues/J07_SCRIPT_NARRATIF_COMPLET.md
+docs/canon/dialogues/J08_SCRIPT_NARRATIF_COMPLET.md
 ```
 
 Ces scripts sont validés narrativement avant toute production JSON ou runtime.
@@ -144,15 +145,36 @@ Une scène doit passer :
 | Journées | Plans | Scripts narratifs | Runtime |
 |---|---|---|---|
 | J01–J06 | complets | dialogues existants / audit en cours | actif |
-| J07 | complet | candidat à validation | legacy non canonique |
-| J08 | complet | prochain script à produire | legacy non canonique |
-| J09–J12 | complets | à produire | non canonique / partiel historique |
+| J07 | complet | validé par Ludovic | legacy non canonique |
+| J08 | complet | candidat à validation | legacy non canonique |
+| J09–J12 | complets | prochaine tranche | non canonique / partiel historique |
 | J13–J16 | complets | à produire | non |
 | J17–J21 | complets | à produire | non |
 
 ---
 
-# 6. Règle text-only
+# 6. Continuité validée J07→J08
+
+```text
+J07 crée :
+- Raphaëlle avant mardi 19 h
+- Nico mardi 18 h 45
+- foyer mardi 19 h 15, alternative ou refus
+
+J08 paie :
+- anticipation
+- priorité
+- amendement
+- conséquence
+```
+
+Le refus honnête ferme réellement une obligation.
+
+L’alternative précise peut réellement réduire la collision.
+
+---
+
+# 7. Règle text-only
 
 Tout dialogue jouable est :
 
@@ -173,7 +195,7 @@ Sont exclus :
 
 ---
 
-# 7. Visuels
+# 8. Visuels
 
 Les scripts indiquent uniquement :
 
@@ -186,12 +208,12 @@ Ludovic fournit les images plus tard via ComfyUI.
 
 ---
 
-# 8. Prochaine tranche
+# 9. Prochaine tranche
 
 ```text
-validation J07
-→ écriture J08
-→ J09–J12
+validation J08
+→ écriture J09
+→ J10–J12
 → J13–J16
 → J17–J21
 → audit global des dialogues
@@ -199,7 +221,7 @@ validation J07
 
 ---
 
-# 9. Règle finale
+# 10. Règle finale
 
 ```text
 La saison est planifiée avant d’être dialoguée.
