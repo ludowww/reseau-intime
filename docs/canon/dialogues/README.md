@@ -2,7 +2,7 @@
 
 ## Statut
 
-Ce dossier contient les scripts narratifs complets à valider avant toute intégration runtime.
+Ce dossier contient les scripts narratifs complets validés avant toute intégration runtime.
 
 Ordre obligatoire :
 
@@ -58,6 +58,7 @@ J17_SCRIPT_NARRATIF_COMPLET.md
 J18_SCRIPT_NARRATIF_COMPLET.md
 J19_SCRIPT_NARRATIF_COMPLET.md
 J20_SCRIPT_NARRATIF_COMPLET.md
+J21_SCRIPT_NARRATIF_COMPLET.md
 J01_J09_AUDIT_CONFORMITE_NARRATIVE.md
 ```
 
@@ -66,8 +67,8 @@ Statut :
 ```text
 J01–J05 — noyaux narratifs conformes, visuels à produire
 J06 — intention narrative conforme, runtime actif non conforme
-J07–J20 — validés narrativement
-J21 — à produire
+J07–J21 — validés narrativement
+prochaine étape — audit global des dialogues et de la continuité
 ```
 
 ## Continuité
@@ -82,11 +83,15 @@ J17 ferme le séjour de Mathilde, transforme le foyer et donne au couple une dé
 J18 donne à Sandra une décision active sur la trace, l’audience et sa place future avec Player.
 J19 donne une direction précise à Pauline et Raphaëlle avec un seul premier plan développé.
 J20 fixe ce que Nico et l’amitié peuvent encore porter.
-J21 recontextualise une image déjà existante sans ajouter de nouveau twist.
+J21 recontextualise une image déjà existante et clôt provisoirement la saison sans nouveau twist.
 ```
 
 ## Règle de gel technique
 
-Aucune nouvelle intégration J07–J21 ne doit commencer avant validation narrative complète de J07–J21.
+Aucune nouvelle intégration J07–J21 ne doit commencer avant :
+
+1. l’audit global des dialogues J01–J21 ;
+2. la validation explicite de ses corrections éventuelles ;
+3. une décision séparée de reprise technique.
 
 La PR technique J05–J06 existante reste séparée et non autoritative.
