@@ -57,6 +57,7 @@ J16_SCRIPT_NARRATIF_COMPLET.md
 J17_SCRIPT_NARRATIF_COMPLET.md
 J18_SCRIPT_NARRATIF_COMPLET.md
 J19_SCRIPT_NARRATIF_COMPLET.md
+J20_SCRIPT_NARRATIF_COMPLET.md
 J01_J09_AUDIT_CONFORMITE_NARRATIVE.md
 ```
 
@@ -65,8 +66,8 @@ Statut :
 ```text
 J01–J05 — noyaux narratifs conformes, visuels à produire
 J06 — intention narrative conforme, runtime actif non conforme
-J07–J19 — validés narrativement
-J20–J21 — à produire
+J07–J20 — validés narrativement
+J21 — à produire
 ```
 
 ## Continuité
@@ -81,6 +82,7 @@ J17 ferme le séjour de Mathilde, transforme le foyer et donne au couple une dé
 J18 donne à Sandra une décision active sur la trace, l’audience et sa place future avec Player.
 J19 donne une direction précise à Pauline et Raphaëlle avec un seul premier plan développé.
 J20 fixe ce que Nico et l’amitié peuvent encore porter.
+J21 recontextualise une image déjà existante sans ajouter de nouveau twist.
 ```
 
 ## Règle de gel technique

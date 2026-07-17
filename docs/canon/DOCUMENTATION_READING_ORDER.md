@@ -1,14 +1,14 @@
 # Documentation Reading Order — Bible Narrative Current
 
-> **Phase : validation narrative complète J07–J21 — J20 prochain**
+> **Phase : validation narrative complète J07–J21 — J21 prochain**
 
 La Bible couvre l’architecture détaillée de J01 à J21.
 
 J01–J09 possèdent un audit transversal.
 
-J07–J19 sont validés narrativement.
+J07–J20 sont validés narrativement.
 
-J20–J21 restent à écrire.
+J21 reste à écrire.
 
 ---
 
@@ -78,6 +78,7 @@ docs/canon/dialogues/J16_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J17_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J18_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J19_SCRIPT_NARRATIF_COMPLET.md
+docs/canon/dialogues/J20_SCRIPT_NARRATIF_COMPLET.md
 ```
 
 ## Communication
@@ -143,12 +144,12 @@ Une journée doit passer :
 | Journées | Scripts / audit | Statut |
 |---|---|---|
 | J01–J06 | audit et runtime provisoire | J06 runtime non conforme |
-| J07–J19 | scripts complets | validés narrativement |
-| J20–J21 | plans complets | à écrire |
+| J07–J20 | scripts complets | validés narrativement |
+| J21 | plan complet | à écrire |
 
 ---
 
-# 6. Principes consolidés J14–J19
+# 6. Principes consolidés J14–J20
 
 ```text
 J14 : aucune trace inventée ; connaissance limitée ; personne représentée prévenue.
@@ -157,6 +158,7 @@ J16 : sécurité, audience et paiement avant résolution ; départ Mathilde pré
 J17 : départ Mathilde accompli ; foyer transformé ; définition provisoire du couple ; aucune route de consolation.
 J18 : Sandra contrôle ce qu’elle conserve, retire ou ferme ; Jeff reste réel ; aucune permission permanente.
 J19 : un seul premier plan ; Pauline et Raphaëlle obtiennent chacune une direction précise ; aucun accès ambigu.
+J20 : Nico obtient une position active ; alibis, confidences et regards possèdent des règles distinctes.
 ```
 
 ---
@@ -164,8 +166,7 @@ J19 : un seul premier plan ; Pauline et Raphaëlle obtiennent chacune une direct
 # 7. Prochaine tranche
 
 ```text
-J20 — Nico et le réseau obtiennent une position
-→ J21 — une image ancienne clôt la saison
+J21 — une image ancienne clôt la saison
 → audit global des dialogues
 ```
 
