@@ -6,7 +6,9 @@ La Bible couvre l’architecture détaillée de J01 à J21.
 
 Le contrat opérationnel des voix est documenté.
 
-J01–J09 possèdent désormais un audit transversal qui distingue conformité narrative, conformité visual-first et conformité runtime.
+J01–J09 possèdent un audit transversal.
+
+J10 possède un script complet candidat.
 
 ---
 
@@ -29,15 +31,6 @@ docs/canon/CHARACTER_VOICE_DISTINCTION_CANON.md
 docs/canon/bible/13_BIBLE_VOIX_MESSAGERIE_ET_TESTS_DISTINCTION.md
 docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
 cartes de réconciliation concernées
-```
-
-Ordre d’autorité :
-
-```text
-identité du personnage
-→ propriété lexicale et distinction
-→ exécution opérationnelle en messagerie
-→ dialogue précis
 ```
 
 ## Architecture
@@ -76,6 +69,7 @@ docs/canon/dialogues/README.md
 docs/canon/dialogues/J07_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J08_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J09_SCRIPT_NARRATIF_COMPLET.md
+docs/canon/dialogues/J10_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J01_J09_AUDIT_CONFORMITE_NARRATIVE.md
 ```
 
@@ -83,11 +77,9 @@ Ordre interne :
 
 ```text
 script de journée
-→ audit J01–J09
+→ audit transversal applicable
 → correction canonique ciblée
 ```
-
-En cas de contradiction précise sur J07–J09, l’audit prévaut jusqu’à consolidation des scripts.
 
 ## Communication
 
@@ -96,17 +88,11 @@ docs/canon/DIEGETIC_TIME_AND_COMMUNICATION_CANON.md
 docs/canon/TEXT_ONLY_MESSAGING_CANON.md
 ```
 
-Le canon text-only prévaut sur toute ancienne hypothèse d’appel, de vocal ou de scène audio.
-
 ## Runtime
 
-Lire les index, conversations JSON, ledgers et tests uniquement pour :
+Le runtime sert uniquement à auditer l’existant et préparer la future migration.
 
-- auditer l’existant ;
-- préparer une future migration ;
-- vérifier la compatibilité après validation narrative.
-
-Le runtime ne dirige plus l’écriture J07–J21.
+Il ne dirige pas l’écriture J07–J21.
 
 ---
 
@@ -118,7 +104,7 @@ plan détaillé validé
 → script narratif complet
 → audit de conformité
 → validation de Ludovic
-→ audit continuité / conséquences
+→ continuité vers le jour suivant
 → validation narrative J01–J21
 → seulement ensuite adaptation technique
 → images fournies par Ludovic via ComfyUI
@@ -130,9 +116,7 @@ plan détaillé validé
 
 Aucune nouvelle modification technique J07–J21 avant validation narrative complète de la saison.
 
-La PR technique J05–J06 ouverte avant cette décision reste séparée et ne devient pas une autorité narrative.
-
-J06 reste techniquement non conforme tant que sa logique de candidate pool et de propriétaire R2 n’est pas remplacée lors de la future migration.
+J06 reste techniquement non conforme tant que la future migration n’a pas retiré la propriété R2 automatique.
 
 ---
 
@@ -140,20 +124,17 @@ J06 reste techniquement non conforme tant que sa logique de candidate pool et de
 
 Une journée doit passer :
 
-- test North Star ;
-- test de route invisible ;
-- test de fonction unique ;
-- test d’agence ;
-- test de conséquence attribuable ;
-- test sans nom ;
-- test de substitution ;
-- test de silhouette ;
-- test banal ;
-- test public / privé ;
-- test text-only ;
-- test d’audience visuelle ;
-- test de fallback ;
-- test des trois contenus principalement féminins.
+- North Star ;
+- route invisible ;
+- fonction principale ;
+- agence ;
+- conséquence attribuable ;
+- voix ;
+- text-only ;
+- connaissance limitée ;
+- fallback ;
+- audience visuelle ;
+- trois contenus principalement féminins.
 
 ---
 
@@ -166,70 +147,42 @@ Une journée doit passer :
 | J07 | complet | validé avec corrections de l’audit | legacy non canonique |
 | J08 | complet | validé avec corrections de l’audit | legacy non canonique |
 | J09 | complet | candidat + corrections de l’audit | legacy non canonique |
-| J10–J12 | complets | prochaine tranche | non canonique / historique partiel |
+| J10 | complet | candidat à validation | non |
+| J11–J12 | complets | prochaine tranche | non |
 | J13–J16 | complets | à produire | non |
 | J17–J21 | complets | à produire | non |
 
 ---
 
-# 6. Principes consolidés J01–J09
+# 6. Principes consolidés J10
 
 ```text
-une promesse importante doit être un vrai choix
-un refus clair ferme réellement l’attente
-une alternative précise peut réduire une collision
-un fallback existe si les conditions disparaissent
-regarder Marie et rejoindre sa vie ne sont pas le même acte
-les trois contenus minimum restent principalement centrés sur les femmes
-un visuel précise type, origine, auteur, audience et permanence
+une seule continuité extérieure visible
+conséquences dues avant opportunité
+promesses importantes choisies
+fallback si aucune route n’est légitime
+variantes non sélectionnées invisibles et non punies
+J11 continue uniquement la variante vécue
 ```
 
 ---
 
-# 7. Règle text-only
+# 7. Visuels
 
-Tout dialogue jouable est :
+Chaque configuration J10 prévoit trois contenus principalement féminins.
 
-- message texte ;
-- réponse textuelle ;
-- notification ;
-- commentaire d’image ;
-- message de groupe.
+Type, créateur, origine, audience et circulation sont précisés.
 
-Sont exclus :
-
-- appels joués ;
-- messages vocaux ;
-- notes vocales ;
-- scènes audio ;
-- choix de dialogue oral ;
-- transcriptions d’appels utilisées comme gameplay.
-
-Corrections futures identifiées :
-
-- J01 : narration indirecte dans les beats hors téléphone ;
-- J02 : `Marie écrit`, pas `Marie appelle`, dans la transition.
+Les images finales restent à produire par Ludovic via ComfyUI.
 
 ---
 
-# 8. Visuels
-
-Le contrat narratif de trois slots est désormais défini pour J01–J09.
-
-Les images finales ne sont pas produites.
-
-Ludovic les fournira plus tard via ComfyUI.
-
-La conformité produit visual-first ne sera acquise qu’après production, métadonnées et intégration.
-
----
-
-# 9. Prochaine tranche
+# 8. Prochaine tranche
 
 ```text
-validation de l’audit et de J09 corrigé
-→ écriture J10
-→ J11–J12
+validation J09 / audit / J10
+→ écriture J11
+→ J12
 → J13–J16
 → J17–J21
 → audit global des dialogues
@@ -237,12 +190,11 @@ validation de l’audit et de J09 corrigé
 
 ---
 
-# 10. Règle finale
+# 9. Règle finale
 
 ```text
-La saison est planifiée avant d’être dialoguée.
-Les scripts sont audités avant validation.
-Les promesses importantes ne sont pas forcées.
-Les images ont une fonction et une audience.
+Une route ne devient réelle que si l’histoire l’a construite.
+Une promesse n’existe que si Player l’a choisie.
+Une variante non retenue ne réclame pas de compensation.
 La technique ne décide pas de la narration.
 ```
