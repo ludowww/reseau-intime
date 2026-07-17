@@ -1,14 +1,14 @@
 # Documentation Reading Order — Bible Narrative Current
 
-> **Phase : validation narrative complète J07–J21 — J21 prochain**
+> **Phase : audit global des dialogues J01–J21**
 
 La Bible couvre l’architecture détaillée de J01 à J21.
 
-J01–J09 possèdent un audit transversal.
+J01–J09 possèdent un audit transversal initial.
 
-J07–J20 sont validés narrativement.
+J07–J21 sont validés narrativement.
 
-J21 reste à écrire.
+La prochaine étape est l’audit global de la saison complète avant toute reprise technique.
 
 ---
 
@@ -79,6 +79,7 @@ docs/canon/dialogues/J17_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J18_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J19_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J20_SCRIPT_NARRATIF_COMPLET.md
+docs/canon/dialogues/J21_SCRIPT_NARRATIF_COMPLET.md
 ```
 
 ## Communication
@@ -96,9 +97,10 @@ plan détaillé
 → script complet
 → audit de conformité
 → validation Ludovic
-→ continuité suivante
-→ validation J01–J21
-→ adaptation technique
+→ audit global voix / continuité / audiences / conséquences
+→ validation des corrections éventuelles
+→ décision de reprise technique
+→ adaptation JSON/runtime
 → images ComfyUI
 ```
 
@@ -106,7 +108,11 @@ plan détaillé
 
 # 3. Gel technique
 
-Aucune nouvelle modification technique J07–J21 avant validation narrative complète.
+Aucune nouvelle modification technique J07–J21 avant :
+
+- l’audit global de la saison complète ;
+- la validation des corrections éventuelles ;
+- une décision explicite de reprise technique.
 
 J06 reste techniquement non conforme jusqu’à la future migration.
 
@@ -137,6 +143,16 @@ Une journée doit passer :
 - personnages autonomes ;
 - préparation de la conséquence suivante.
 
+L’audit global doit également tester :
+
+- la cohérence des heures J01–J21 ;
+- la circulation réelle des connaissances ;
+- les audiences et suppressions d’images ;
+- la distinction des voix ;
+- l’absence de consolation automatique ;
+- l’état final de chaque relation ;
+- la compatibilité de la finale avec toutes les sorties majeures.
+
 ---
 
 # 5. Statut J01–J21
@@ -144,12 +160,12 @@ Une journée doit passer :
 | Journées | Scripts / audit | Statut |
 |---|---|---|
 | J01–J06 | audit et runtime provisoire | J06 runtime non conforme |
-| J07–J20 | scripts complets | validés narrativement |
-| J21 | plan complet | à écrire |
+| J07–J21 | scripts complets | validés narrativement |
+| J01–J21 | audit global de saison | prochaine étape |
 
 ---
 
-# 6. Principes consolidés J14–J20
+# 6. Principes consolidés J14–J21
 
 ```text
 J14 : aucune trace inventée ; connaissance limitée ; personne représentée prévenue.
@@ -159,6 +175,7 @@ J17 : départ Mathilde accompli ; foyer transformé ; définition provisoire du 
 J18 : Sandra contrôle ce qu’elle conserve, retire ou ferme ; Jeff reste réel ; aucune permission permanente.
 J19 : un seul premier plan ; Pauline et Raphaëlle obtiennent chacune une direction précise ; aucun accès ambigu.
 J20 : Nico obtient une position active ; alibis, confidences et regards possèdent des règles distinctes.
+J21 : une trace existante change de sens ; le dernier choix exprime une posture et ne sélectionne aucune route.
 ```
 
 ---
@@ -166,8 +183,10 @@ J20 : Nico obtient une position active ; alibis, confidences et regards possède
 # 7. Prochaine tranche
 
 ```text
-J21 — une image ancienne clôt la saison
-→ audit global des dialogues
+audit global des dialogues et de la continuité J01–J21
+→ corrections narratives éventuelles
+→ validation Ludovic
+→ décision séparée de reprise technique
 ```
 
 ---
@@ -175,6 +194,7 @@ J21 — une image ancienne clôt la saison
 # 8. Règle finale
 
 ```text
-Les conséquences ne désignent pas une route.
-Elles rendent visibles les actes que les personnages doivent désormais intégrer à leur vie ordinaire.
+La saison est complète lorsque chaque relation possède un état,
+chaque dette majeure possède une conséquence lisible
+et la finale montre une vie transformée sans ajouter de nouveau twist.
 ```
