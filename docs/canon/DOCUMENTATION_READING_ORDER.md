@@ -1,14 +1,14 @@
 # Documentation Reading Order — Bible Narrative Current
 
-> **Phase : validation narrative complète J07–J21 — J13 candidat**
+> **Phase : validation narrative complète J07–J21 — J14 candidat**
 
 La Bible couvre l’architecture détaillée de J01 à J21.
 
 J01–J09 possèdent un audit transversal.
 
-J07–J12 sont validés narrativement.
+J07–J13 sont validés narrativement.
 
-J13 possède un script complet candidat.
+J14 possède un script complet candidat.
 
 ---
 
@@ -72,6 +72,7 @@ docs/canon/dialogues/J10_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J11_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J12_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J13_SCRIPT_NARRATIF_COMPLET.md
+docs/canon/dialogues/J14_SCRIPT_NARRATIF_COMPLET.md
 ```
 
 ## Communication
@@ -123,7 +124,9 @@ Une journée doit passer :
 - retrait possible ;
 - après-coup obligatoire ;
 - trace déjà existante avant découverte ;
-- conséquence prioritaire pour le jour suivant.
+- témoin réellement présent ;
+- séparation entre contenu supprimé et connaissance acquise ;
+- engagements incompatibles pour le jour suivant.
 
 ---
 
@@ -132,23 +135,24 @@ Une journée doit passer :
 | Journées | Scripts / audit | Statut |
 |---|---|---|
 | J01–J06 | audit et runtime provisoire | J06 runtime non conforme |
-| J07–J12 | scripts complets | validés |
-| J13 | script complet | candidat |
-| J14–J16 | plans complets | prochaine tranche |
+| J07–J13 | scripts complets | validés |
+| J14 | script complet | candidat |
+| J15–J16 | plans complets | prochaine tranche |
 | J17–J21 | plans complets | à écrire |
 
 ---
 
-# 6. Principes consolidés J13
+# 6. Principes consolidés J14
 
 ```text
-une seule dette réclame une réponse
-sécurité et consentement avant relation
-image compromise avant attraction
-après-coup adulte avant nouvelle scène
-aucune nouvelle route dominante
-une trace J14 doit déjà exister
-Marie reste présente ou affectée
+aucune trace inventée
+le témoin ne voit que l’écran réel
+fermer l’écran est une information, pas une preuve complète
+vérité limitée, mensonge ou protection avec délai précis
+la personne représentée est prévenue si son audience change
+supprimer ne retire pas la connaissance
+aucun accident si la situation serait artificielle
+J15 reçoit au moins deux obligations incompatibles
 ```
 
 ---
@@ -156,9 +160,9 @@ Marie reste présente ou affectée
 # 7. Prochaine tranche
 
 ```text
-validation J13
-→ écriture J14 photo au mauvais écran
-→ J15–J16
+validation J14
+→ écriture J15 horaires incompatibles
+→ J16 journée de paiement
 → J17–J21
 → audit global des dialogues
 ```
@@ -168,6 +172,6 @@ validation J13
 # 8. Règle finale
 
 ```text
-Une conséquence devient sérieuse lorsqu’elle exige
-une règle, une suppression, une vérité ou un acte.
+L’écran ne révèle pas toute la vérité.
+Il révèle qu’une vérité existe et que Player connaissait son cadre.
 ```
