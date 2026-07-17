@@ -1,14 +1,14 @@
 # Narrative Canon Status — Current
 
-> **Current phase: J10 candidate / J11 next**
+> **Current phase: J11 candidate / J12 next**
 
 The Bible Narrative covers J01–J21.
 
-The operational voice contract is complete.
-
 J01–J09 have a conformity audit.
 
-J10 has a complete narrative candidate.
+J10 is validated and merged.
+
+J11 has a complete narrative candidate.
 
 ---
 
@@ -18,16 +18,15 @@ J10 has a complete narrative candidate.
 North Star
 → Player experience
 → Character canon and voice
-→ Routes and acts
-→ Sequence library
-→ Detailed day plans
+→ Erotic evolution and consent canon
+→ Routes and sequences
 → Full narrative scripts
 → Conformity audit
 → Ludovic validation
 → Runtime adaptation
 ```
 
-Runtime files do not define future narrative authority.
+Runtime does not define future narrative authority.
 
 ---
 
@@ -35,211 +34,219 @@ Runtime files do not define future narrative authority.
 
 No new technical integration for J07–J21 before complete narrative validation through J21.
 
-Existing technical drafts remain separate and non-authoritative.
+The J05–J06 technical draft remains separate and non-authoritative.
 
 ---
 
 ## 3. Current narrative files
 
 ```text
+docs/canon/dialogues/J01_J09_AUDIT_CONFORMITE_NARRATIVE.md
 docs/canon/dialogues/J07_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J08_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J09_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J10_SCRIPT_NARRATIF_COMPLET.md
-docs/canon/dialogues/J01_J09_AUDIT_CONFORMITE_NARRATIVE.md
+docs/canon/dialogues/J11_SCRIPT_NARRATIF_COMPLET.md
 ```
 
 Status:
 
 ```text
-J01–J05: narratively sound, visual production incomplete
+J01–J05: narratively sound, visuals incomplete
 J06: canonical intention identified, active runtime non-compliant
-J07: validated with audit corrections
-J08: validated with audit corrections
-J09: candidate with audit corrections
-J10: candidate for Ludovic validation
-J11–J21: not yet scripted
+J07–J10: validated narratively
+J11: candidate for Ludovic validation
+J12–J21: not yet scripted
 ```
 
 ---
 
-## 4. J10 decision
+## 4. J11 decision
 
-J10 becomes:
+J11 becomes:
 
 ```text
-Jeudi — Une ligne devient réelle
+Vendredi — Ce qui était encore défendable
 ```
 
-Only one external continuity may become foreground:
+It continues only the relationship actually foregrounded in J10, its limit, its refusal, or Marie if no external route became dominant.
 
-- Sandra / S16 ;
-- Mathilde / S17 ;
-- Raphaëlle / S21 ;
-- Nico / S22 ;
-- or no external continuity.
-
-The player never sees this list.
-
-### Invisible selection
-
-Priority:
-
-1. due consequence ;
-2. explicit promise due today ;
-3. direct initiative with an expiring window ;
-4. specific unresolved relational question ;
-5. fallback if selection would be arbitrary.
-
-Unselected variants remain invisible and are not punished.
+No catalogue is shown.
 
 ---
 
-## 5. J10 Sandra
+## 5. Adult eligibility
 
-Sandra may finally hold the coffee, offer one precise reschedule, or close the opportunity.
+A physical adult passage may replace the normal pivot only when all conditions are true:
 
-If the coffee happens, Player may:
+- route genuinely built ;
+- reciprocal intention recognized ;
+- character-specific initiative ;
+- credible time and place ;
+- current written consent ;
+- ability to stop or change the frame ;
+- no intoxication ;
+- no dependency exploited ;
+- no priority consequence unpaid ;
+- visual audience defined ;
+- mandatory J12 aftermath.
 
-- name calm benefit ;
-- name the missing carefully ;
-- maintain a simple friendship boundary.
-
-No photo is mandatory.
-
-S19 becomes eligible only when the intention has actually been recognized.
+A fantasy, costume, image, housing situation, jealousy or prior scene never creates permanent access.
 
 ---
 
-## 6. J10 Mathilde
+## 6. J11 Sandra
 
-Mathilde sends a chosen outfit image for a real social reason.
+Sandra chooses one image and defines its rule.
 
 Player may:
 
-- give a precise non-appropriating opinion ;
-- recognize the intended effect ;
-- return to practical context.
+- ask whether it is view-only or saveable ;
+- recognize desire without assuming possession ;
+- ask for more and trigger withdrawal.
 
-Mathilde explicitly states that effect is not general permission.
+Possible results:
 
-S20 becomes possible only on compatible branches.
+- view-only ;
+- one-image-in-thread permission ;
+- image removed ;
+- future trust ;
+- no transfer.
+
+No physical sexual scene is available by default.
 
 ---
 
-## 7. J10 Raphaëlle
+## 7. J11 Mathilde
 
-A real costume fastener problem opens limited process access.
+Mathilde returns to the room with intentional effect.
 
 Player may:
 
-- help the process ;
-- request only the final result ;
-- preserve the professional boundary.
+- name the effect without acting ;
+- accept conditional proximity ;
+- restore distance.
 
-A workshop visit is time-bounded and optional.
+A very advanced eligible branch may include a first kiss and bounded consensual physical intimacy after written negotiation.
 
-Help never becomes bodily permission.
+Temporary housing, clothing and Marie's absence never create access.
+
+J12 must reflect the secret and aftermath.
 
 ---
 
-## 8. J10 Nico
+## 8. J11 Raphaëlle
 
-Nico compares a public social version of Marie and Mathilde with what Player knows at home.
+Raphaëlle sends one selected result image and asks whether Player sees the work, the role, and the person.
 
 Player may:
 
-- acknowledge difference without image ;
-- ask what Nico actually saw ;
-- close the comparison.
+- recognize attraction ;
+- keep the frame on the work ;
+- acknowledge attractiveness without assuming permission ;
+- refuse becoming the private audience.
 
-Nico receives no private image and gains no rights concerning either woman.
+A very advanced branch may allow a first kiss after the role ends.
 
----
-
-## 9. J10 fallback
-
-If no external continuity is legitimate, J10 becomes a Marie consequence or household respiration.
-
-No route appears as compensation.
-
-The day may still pay a dinner, amend it, or let Marie and Mathilde continue without Player.
+Full sexual escalation remains deferred.
 
 ---
 
-## 10. Promise compliance
+## 9. J11 Nico
 
-All important J10 commitments are real choices:
+Nico defines his role before J12:
 
-- Marie dinner maintained, moved, or cancelled ;
-- Sandra coffee accepted, reprogrammed once, or closed ;
-- Raphaëlle workshop visit accepted or refused ;
-- Nico meeting confirmed or cancelled.
+- reciprocal guardrail ;
+- recognized rival ;
+- or closed shared gaze.
 
-No guided reply creates a major future debt.
+He receives no private image and no authority concerning Marie or Mathilde.
 
----
-
-## 11. Visual compliance
-
-Each J10 configuration reserves three mainly female-centered visual functions.
-
-Nico may receive an additional image, but never replaces the female minimum.
-
-Visual contracts specify:
-
-- type ;
-- creator ;
-- origin ;
-- audience ;
-- saving ;
-- transfer.
-
-Final images remain unproduced and will be supplied later by Ludovic through ComfyUI.
+There is no sexual or romantic route between Nico and Player.
 
 ---
 
-## 12. J11 handoff
+## 10. J11 Marie
 
-J11 continues only:
+If no external route is dominant, Marie becomes the pivot.
 
-- the actual J10 foreground relation ;
-- its limit or refusal consequence ;
-- or Marie when no external route became dominant.
+Player may:
 
-J11 never displays a catalogue.
+- accept reconquest desire without treating sex as a solution ;
+- refuse sex as a bandage while choosing closeness ;
+- honestly decline.
+
+An eligible advanced branch may include consensual conjugal sex off-phone.
+
+The next morning remains ordinary and mandatory: no magical reset.
 
 ---
 
-## 13. Runtime scope
+## 11. Pauline
+
+Pauline is not injected into J11 because no private Pauline continuity was foregrounded in J10.
+
+She may appear only as a social echo preparing J12.
+
+No compensatory crop, compartment or secret is created.
+
+---
+
+## 12. Visual compliance
+
+Every J11 configuration reserves three mainly female-centered visual functions.
+
+Adult physical scenes use scene images when no diegetic camera exists.
+
+Every important diegetic image specifies creator, origin, audience, saving and transfer.
+
+Final images remain unproduced and will be supplied later through ComfyUI.
+
+---
+
+## 13. J12 handoff
+
+J12 must visibly preserve J11:
+
+- Sandra image trust or withdrawal ;
+- Mathilde proximity, secret or distance ;
+- Raphaëlle attraction, kiss or boundary ;
+- Nico guardrail, rivalry or silence ;
+- Marie reconquest, trust or distance.
+
+No J11 consequence disappears at convergence.
+
+---
+
+## 14. Runtime scope
 
 ```text
 J01–J06 playable
 J06 active runtime still non-compliant
-J07–J08 validated narratively
-J09–J10 candidate narratively
-J11–J21 narrative validation first
+J07–J10 validated narratively
+J11 candidate narratively
+J12–J21 narrative validation first
 ```
 
 ---
 
-## 14. Next work
+## 15. Next work
 
 ```text
-1. validate J09 audit and J10
-2. write J11 intention / limit / withdrawal
-3. write J12 convergence
-4. continue J13–J16
-5. continue J17–J21
-6. run complete-season dialogue audit
-7. resume technical integration
+1. validate J11
+2. write J12 convergence
+3. continue J13–J16
+4. continue J17–J21
+5. run complete-season dialogue audit
+6. resume technical integration
 ```
 
 ---
 
-## 15. Final rule
+## 16. Final rule
 
 ```text
-J10 does not reward availability.
-It materializes the continuity that prior actions actually built.
+Desire becomes adult only when it accepts a rule,
+a consequence,
+and a next morning.
 ```
