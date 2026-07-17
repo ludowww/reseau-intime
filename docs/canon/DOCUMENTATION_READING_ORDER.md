@@ -1,14 +1,14 @@
 # Documentation Reading Order — Bible Narrative Current
 
-> **Phase : validation narrative complète J07–J21 — J14 candidat**
+> **Phase : validation narrative complète J07–J21 — J17 prochain**
 
 La Bible couvre l’architecture détaillée de J01 à J21.
 
 J01–J09 possèdent un audit transversal.
 
-J07–J13 sont validés narrativement.
+J07–J16 sont validés narrativement.
 
-J14 possède un script complet candidat.
+J17–J21 restent à écrire.
 
 ---
 
@@ -73,6 +73,8 @@ docs/canon/dialogues/J11_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J12_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J13_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J14_SCRIPT_NARRATIF_COMPLET.md
+docs/canon/dialogues/J15_SCRIPT_NARRATIF_COMPLET.md
+docs/canon/dialogues/J16_SCRIPT_NARRATIF_COMPLET.md
 ```
 
 ## Communication
@@ -126,7 +128,10 @@ Une journée doit passer :
 - trace déjà existante avant découverte ;
 - témoin réellement présent ;
 - séparation entre contenu supprimé et connaissance acquise ;
-- engagements incompatibles pour le jour suivant.
+- promesse réellement choisie ;
+- refus qui ferme l’attente ;
+- personnages autonomes ;
+- préparation de la conséquence suivante.
 
 ---
 
@@ -135,24 +140,17 @@ Une journée doit passer :
 | Journées | Scripts / audit | Statut |
 |---|---|---|
 | J01–J06 | audit et runtime provisoire | J06 runtime non conforme |
-| J07–J13 | scripts complets | validés |
-| J14 | script complet | candidat |
-| J15–J16 | plans complets | prochaine tranche |
+| J07–J16 | scripts complets | validés narrativement |
 | J17–J21 | plans complets | à écrire |
 
 ---
 
-# 6. Principes consolidés J14
+# 6. Principes consolidés J14–J16
 
 ```text
-aucune trace inventée
-le témoin ne voit que l’écran réel
-fermer l’écran est une information, pas une preuve complète
-vérité limitée, mensonge ou protection avec délai précis
-la personne représentée est prévenue si son audience change
-supprimer ne retire pas la connaissance
-aucun accident si la situation serait artificielle
-J15 reçoit au moins deux obligations incompatibles
+J14 : aucune trace inventée ; connaissance limitée ; personne représentée prévenue.
+J15 : deux obligations antérieures minimum ; horaires incompatibles ; priorité visible par l’acte.
+J16 : sécurité, audience et paiement avant résolution ; départ Mathilde préparé ; heure J17 réellement choisie.
 ```
 
 ---
@@ -160,10 +158,11 @@ J15 reçoit au moins deux obligations incompatibles
 # 7. Prochaine tranche
 
 ```text
-validation J14
-→ écriture J15 horaires incompatibles
-→ J16 journée de paiement
-→ J17–J21
+J17 — foyer + définition provisoire du couple
+→ J18 — Sandra choisit ce qu’elle garde
+→ J19 — Pauline ou Raphaëlle obtient une direction
+→ J20 — Nico et le réseau obtiennent une position
+→ J21 — une image ancienne clôt la saison
 → audit global des dialogues
 ```
 
@@ -172,6 +171,6 @@ validation J14
 # 8. Règle finale
 
 ```text
-L’écran ne révèle pas toute la vérité.
-Il révèle qu’une vérité existe et que Player connaissait son cadre.
+Les conséquences ne désignent pas une route.
+Elles rendent visibles les actes que les personnages doivent désormais intégrer à leur vie ordinaire.
 ```

@@ -1,14 +1,14 @@
 # Narrative Canon Status — Current
 
-> **Current phase: J14 candidate / J15 next**
+> **Current phase: J17 next / J07–J16 validated**
 
 The Bible Narrative covers J01–J21.
 
 J01–J09 have a conformity audit.
 
-J07–J13 are validated and merged.
+J07–J16 have complete validated narrative scripts.
 
-J14 has a complete narrative candidate.
+J17–J21 remain to be scripted before any new runtime adaptation.
 
 ---
 
@@ -36,6 +36,26 @@ No new technical integration for J07–J21 before complete narrative validation 
 
 The J05–J06 technical draft remains separate and non-authoritative.
 
+The active J06 runtime remains historically non-compliant through:
+
+```text
+candidate_pool
+external_ticket_limit
+wave_id
+unique R2 owner
+MATHILDE_R2_MAX
+```
+
+The canonical J06 intention remains:
+
+```text
+optional direct Mathilde continuity
+no ticket
+no automatic owner
+no automatic R2
+mandatory Marie return
+```
+
 ---
 
 ## 3. Current narrative files
@@ -50,6 +70,8 @@ docs/canon/dialogues/J11_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J12_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J13_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J14_SCRIPT_NARRATIF_COMPLET.md
+docs/canon/dialogues/J15_SCRIPT_NARRATIF_COMPLET.md
+docs/canon/dialogues/J16_SCRIPT_NARRATIF_COMPLET.md
 ```
 
 Status:
@@ -57,16 +79,15 @@ Status:
 ```text
 J01–J05: narratively sound, visuals incomplete
 J06: canonical intention identified, active runtime non-compliant
-J07–J13: validated narratively
-J14: candidate for Ludovic validation
-J15–J21: not yet scripted
+J07–J16: validated narratively
+J17–J21: not yet scripted
 ```
 
 ---
 
-## 4. J14 decision
+## 4. J14 decision — knowledge changes
 
-J14 becomes:
+J14 is:
 
 ```text
 Lundi — La photo au mauvais écran
@@ -74,183 +95,200 @@ Lundi — La photo au mauvais écran
 
 It changes one knowledge state using a trace that already survived J13.
 
-No image, message, witness or transfer is invented solely to create drama.
+The witness sees only what the interface actually displays.
+
+The script distinguishes:
+
+```text
+what was seen
+what was understood correctly
+what may be misinterpreted
+what the witness knows Player knows
+```
+
+Deleting a trace never erases acquired knowledge.
+
+A represented person must be warned whenever a private audience changes.
 
 ---
 
-## 5. Witness rule
+## 5. J15 decision — incompatible commitments
 
-The witness must:
+J15 is:
 
-- be physically present ;
-- have an ordinary reason to be near the screen ;
-- see only what the interface actually displays ;
-- understand only part of the context ;
-- have a real relationship to the trace.
+```text
+Mardi — Les horaires ne tiennent plus
+```
 
-If no credible witness exists, J14 mutates into a no-discovery respiration.
+It requires at least two obligations created before the day:
 
----
+- one direct consequence or clarification from J14 ;
+- one previously chosen commitment that is still active.
 
-## 6. Player reactions
+J15 does not present a character menu.
+
+Priority becomes visible through:
+
+- the time actually kept ;
+- the place Player actually occupies ;
+- the person honestly warned ;
+- the person left waiting ;
+- the autonomous act performed without Player.
 
 Player may:
 
-1. give a limited truth ;
-2. minimize or lie ;
-3. protect the represented person and promise a precise clarification time.
+1. state that the commitments no longer fit ;
+2. keep one commitment and amend the other precisely ;
+3. maintain incompatible versions and create a lie, debt and proof.
 
-Protecting an audience is legitimate only when the person is warned and the clarification does not become indefinite.
+A refusal closes the waiting window.
 
-Closing the screen is visible behavior but not complete proof.
-
----
-
-## 7. J14 Pauline
-
-Marie may see a private Pauline version while looking for the official J12 group image.
-
-Marie correctly understands that a second audience exists, but not the exact intimacy or Bastien's knowledge.
-
-Player may explain the double address, lie about a discarded group image, or protect Pauline's audience while warning her.
-
-The public Pauline/Bastien surface remains authentic.
+No new adult progression or consolation route is allowed.
 
 ---
 
-## 8. J14 Sandra
+## 6. J16 decision — payment before resolution
 
-Mathilde may accidentally see Sandra's selected private image on Player's phone.
-
-She understands that the image was not public and not intended for her.
-
-She does not know the saving rule, Jeff's knowledge, or the exact relationship.
-
-Sandra must be informed that her audience changed, even accidentally.
-
----
-
-## 9. J14 Mathilde
-
-Marie may see one exact Mathilde notification about repetition, a household rule or distance.
-
-Marie knows only the displayed sentence and that Player holds its context.
-
-Safety and housing take priority over couple explanation when a limit or stop may be involved.
-
-Mathilde must be able to speak to Marie without Player controlling her version.
-
----
-
-## 10. J14 Raphaëlle
-
-Marie may see the masked Raphaëlle image selected after J13.
-
-She correctly understands that Player became a chosen audience, but not whether a meeting, kiss or explicit proposal occurred.
-
-Player may explain the process, lie that it is only a work file, or warn Raphaëlle before answering about his own acts.
-
-Raphaëlle keeps control of the image and her own version.
-
----
-
-## 11. J14 Nico
-
-Marie may read an exact Nico preview about the real time, a lie or refusal of an alibi.
-
-She knows Nico holds a different version of events.
-
-Player may accept the limited truth, lie and be contradicted by Nico, or preserve the confidence while answering for the fact that affects Marie.
-
-Nico never becomes an omniscient witness or automatic cover.
-
----
-
-## 12. Composite couple variant
-
-The public J12 couple image may remain open while a real private notification appears above it.
-
-Marie sees two versions of the same period without receiving the full private trace.
-
-The official couple image becomes insufficient, not false.
-
----
-
-## 13. Deletion and knowledge
-
-J14 distinguishes:
+J16 is:
 
 ```text
-content deleted
-witness knowledge active
-material proof available
-trust affected
+Mercredi — Ce qui doit revenir avant la vérité
 ```
 
-Deleting a trace never erases what the witness saw.
+Its priority order is:
 
-The represented person must be warned whenever a private audience changes.
+```text
+safety or consent
+→ compromised audience or deletion
+→ unpaid adult aftermath
+→ professional responsibility
+→ household and housing
+→ alibi, time or promise
+→ couple clarification
+```
 
----
+J16 pays or explicitly fails the most urgent remaining state.
 
-## 14. J15 handoff
+It may:
 
-J14 creates at least two incompatible obligations among:
+- return objects or keys ;
+- restore distance ;
+- confirm an image withdrawal ;
+- return control to the represented person ;
+- finish or lose a professional task ;
+- remove Nico from an alibi ;
+- recognize one practicable truth to Marie.
 
-- explain to Marie ;
-- warn or protect the represented person ;
-- delete or confirm an image ;
-- preserve a confidence ;
-- guarantee household safety ;
-- meet a professional obligation ;
-- keep a precise time promise.
+It does not resolve every relationship.
 
-J15 turns these obligations into an actual schedule conflict.
-
----
-
-## 15. Visual compliance
-
-Every J14 configuration reserves at least three functions:
-
-1. the existing trace ;
-2. the witness and discovery ;
-3. the consequence, withdrawal or ordinary affected relationship.
-
-No new image replaces the trace that was actually discovered.
-
-Final assets remain unproduced and will be supplied later through ComfyUI.
+It creates the conditions required for resolution.
 
 ---
 
-## 16. Runtime scope
+## 7. Mathilde and the household handoff
+
+In every J16 branch, Mathilde receives a concrete departure state:
+
+```text
+ordinary departure
+departure with distance
+accelerated departure
+departure without Player
+departure with practical help possible
+```
+
+Her stay is never prolonged to preserve a route.
+
+The household receives a concrete state:
+
+```text
+ordinary access
+temporary access restriction
+separate rooms
+Marie elsewhere
+Player elsewhere
+intermediary organization
+```
+
+J17 must begin from this real material transformation.
+
+---
+
+## 8. Marie and J17
+
+A J17 couple discussion exists only when its time is actually chosen.
+
+Marie may:
+
+- offer a precise hour ;
+- refuse an alternative ;
+- stop holding the evening open ;
+- organize the household without Player ;
+- request space ;
+- prepare a fracture or negotiated reconfiguration.
+
+J17 will define a provisional couple state without using a menu such as:
+
+```text
+stay with Marie
+choose another woman
+```
+
+---
+
+## 9. Visual compliance
+
+Every J15 and J16 configuration reserves at least three visual functions, mainly centered on the principal adult women.
+
+J15 functions:
+
+1. the active commitment ;
+2. the person acting without Player ;
+3. the time, proof or return to the household.
+
+J16 functions:
+
+1. the priority consequence ;
+2. the returned object, withdrawn content or completed work ;
+3. Mathilde’s coming departure and the transformed household.
+
+No pose, framing or ComfyUI prompt is defined.
+
+Final assets remain unproduced.
+
+---
+
+## 10. Runtime scope
 
 ```text
 J01–J06 playable
 J06 active runtime still non-compliant
-J07–J13 validated narratively
-J14 candidate narratively
-J15–J21 narrative validation first
+J07–J16 validated narratively
+J17–J21 narrative validation first
+```
+
+No runtime, JSON, test or asset modification is authorized by the J15–J16 narrative merge.
+
+---
+
+## 11. Next work
+
+```text
+1. write J17 household and provisional couple definition
+2. write J18 Sandra resolution
+3. write J19 Pauline or Raphaëlle resolution
+4. write J20 Nico and network position
+5. write J21 final recontextualized image
+6. run complete-season dialogue audit
+7. resume technical integration only after approval
 ```
 
 ---
 
-## 17. Next work
+## 12. Final rule
 
 ```text
-1. validate J14
-2. write J15 incompatible commitments
-3. write J16 payment day
-4. continue J17–J21
-5. run complete-season dialogue audit
-6. resume technical integration
-```
-
----
-
-## 18. Final rule
-
-```text
-The screen does not reveal the whole truth.
-It reveals that a truth exists and Player knew where it was hidden.
+Before a relationship can be resolved,
+the story must return the space, audience, truth or responsibility
+that a previous act displaced.
 ```
