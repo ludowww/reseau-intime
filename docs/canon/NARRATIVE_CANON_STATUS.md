@@ -1,14 +1,14 @@
 # Narrative Canon Status — Current
 
-> **Current phase: J18 next / J07–J17 validated**
+> **Current phase: J19 next / J07–J18 validated**
 
 The Bible Narrative covers J01–J21.
 
 J01–J09 have a conformity audit.
 
-J07–J17 have complete validated narrative scripts.
+J07–J18 have complete validated narrative scripts.
 
-J18–J21 remain to be scripted before any new runtime adaptation.
+J19–J21 remain to be scripted before any new runtime adaptation.
 
 ---
 
@@ -73,6 +73,7 @@ docs/canon/dialogues/J14_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J15_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J16_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J17_SCRIPT_NARRATIF_COMPLET.md
+docs/canon/dialogues/J18_SCRIPT_NARRATIF_COMPLET.md
 ```
 
 Status:
@@ -80,118 +81,15 @@ Status:
 ```text
 J01–J05: narratively sound, visuals incomplete
 J06: canonical intention identified, active runtime non-compliant
-J07–J17: validated narratively
-J18–J21: not yet scripted
+J07–J18: validated narratively
+J19–J21: not yet scripted
 ```
 
 ---
 
-## 4. J14–J16 convergence and payment
+## 4. J17 decision — household and couple
 
-J14 changes a knowledge state using a trace that already existed.
-
-J15 turns at least two prior obligations into a real schedule conflict.
-
-J16 pays or explicitly fails the most urgent remaining consequence before resolution.
-
-These days preserve:
-
-- limited knowledge ;
-- real audiences ;
-- autonomous characters ;
-- safety before opportunity ;
-- no consolation route ;
-- no adult progression replacing aftermath.
-
----
-
-## 5. J17 decision — the household cannot remain the same
-
-J17 is:
-
-```text
-Jeudi — Le foyer ne peut plus rester le même
-```
-
-It combines:
-
-1. Mathilde’s concrete departure ;
-2. the material transformation of the household ;
-3. a provisional definition of the Marie / Player couple.
-
-Mathilde’s departure mode must come directly from J16:
-
-```text
-ordinary departure
-departure with distance
-accelerated departure
-departure without Player
-departure with practical help possible
-```
-
-Player may help only when that presence is allowed.
-
-A safety or distance condition cannot be renegotiated because Marie is present.
-
-An object left behind remains practical and never creates a new private opportunity.
-
----
-
-## 6. Mathilde outcome
-
-J17 gives Mathilde one readable state:
-
-```text
-family preserved
-conscious loyalty
-secret suspended
-protective distance
-trust broken
-```
-
-Her stay never continues to preserve her route.
-
-She does not arbitrate the couple and does not provide Player with a full report of her conversation with Marie.
-
----
-
-## 7. Household outcome
-
-The spare room and shared apartment receive a new concrete meaning.
-
-Possible household states include:
-
-```text
-ordinary access
-temporary access restriction
-separate rooms
-Marie elsewhere
-Player elsewhere
-practical separation organization
-```
-
-Mathilde leaving frees a room.
-
-It does not restore the previous couple automatically.
-
----
-
-## 8. Couple outcome
-
-A Marie / Player discussion exists only if its time was actually chosen.
-
-Player does not choose between characters.
-
-He must answer what he wants to hold now through:
-
-- a concrete behavior ;
-- a rule ;
-- a time ;
-- a pause ;
-- an accepted distance ;
-- or practical separation.
-
-J17 produces one provisional couple state:
+J17 completes Mathilde’s departure, transforms the household and gives the Marie / Player couple one provisional state:
 
 ```text
 active repair
@@ -202,13 +100,13 @@ fracture
 separation
 ```
 
-The accumulation from J01–J16 weighs more than the final wording chosen in J17.
+Mathilde does not arbitrate the couple.
 
-No route receives retroactive permission.
+No external route becomes a consolation after the household decision.
 
 ---
 
-## 9. J18 handoff
+## 5. J18 decision — Sandra chooses what she keeps
 
 J18 is:
 
@@ -216,74 +114,183 @@ J18 is:
 Vendredi — Sandra choisit ce qu’elle garde
 ```
 
-It begins with:
+It returns to the J01 lunch photograph and gives Sandra an active decision over:
 
-- Mathilde outside the household ;
-- a provisional couple state ;
-- Sandra’s image and audience status fixed ;
-- Jeff still real ;
-- no urgent household debt preceding Sandra ;
-- no external-route consolation after Marie.
-
-J18 must give Sandra an active decision over:
-
-- the image or trace ;
+- the old trace ;
+- the recent selected or withdrawn image ;
+- Player’s remaining audience ;
 - the old friendship ;
 - the recognized desire ;
 - a future meeting ;
 - protective withdrawal ;
 - or trust closure.
 
+Keeping a photograph does not automatically preserve Player as its audience.
+
+Removing an image does not deny that desire existed.
+
 ---
 
-## 10. Visual compliance
+## 6. Sandra outcome
 
-J17 reserves at least three visual functions:
+J18 produces one readable Sandra state:
 
-1. Mathilde’s return to her own home ;
-2. the real departure and removal of her belongings ;
-3. Marie and the transformed household.
+```text
+renewed friendship
+privileged confidence
+recognized and contained desire
+tender parallel relationship
+late intimacy
+protective withdrawal
+trust rupture
+```
 
-Optional functions include:
+The result depends on:
 
-- a genuinely forgotten practical object ;
-- the provisional couple state.
+- the actual image state ;
+- audience respect ;
+- copies and deletion truth ;
+- Sandra’s initiative ;
+- Jeff’s continued reality ;
+- the actual Marie / Player status ;
+- the accumulation before J18.
+
+A separation of Player does not make Sandra automatically available.
+
+A couple reconfiguration does not commit Sandra in advance.
+
+---
+
+## 7. Image and audience rules
+
+J18 preserves:
+
+```text
+one selected image can remain without creating a general right
+viewing does not imply keeping
+keeping does not imply transferring
+one permission does not cover a future image
+withdrawal remains controlled by Sandra
+```
+
+A deleted file never returns for emotional convenience.
+
+An uncertain copy blocks tender or adult resolution until the material state is addressed.
+
+No new screenshot is created merely to prove deletion.
+
+---
+
+## 8. Jeff and route consequence
+
+Jeff remains Sandra’s real partner.
+
+He is not:
+
+- a monster used as permission ;
+- erased by Player’s separation ;
+- informed automatically ;
+- spoken for by Player.
+
+Sandra decides what she tells him about her own actions.
+
+A secret continuation carries debt and is never presented as a clean outcome.
+
+---
+
+## 9. Late adult variant
+
+Late Sandra intimacy is rare and replaces the standard resolution.
+
+It requires:
+
+- no earlier Sandra intimacy ;
+- advanced and dominant Sandra continuity ;
+- respected audiences ;
+- no uncertain copy ;
+- Sandra initiative ;
+- current written consent ;
+- withdrawal possible ;
+- no intoxication ;
+- no automatic sexual file ;
+- mandatory aftermath.
+
+The physical encounter remains outside the messaging surface.
+
+No adult permission becomes permanent.
+
+---
+
+## 10. J19 handoff
+
+J19 is:
+
+```text
+Samedi — Ce que les versions privées deviennent
+```
+
+It gives the developed foreground to exactly one relation:
+
+```text
+Pauline
+or
+Raphaëlle
+```
+
+The other receives a short autonomous state, not a competing full resolution.
+
+J19 begins with:
+
+- a provisional couple state from J17 ;
+- a clear Sandra state from J18 ;
+- no Sandra thread left artificially open ;
+- Bastien and Maud still real ;
+- no private version offered as consolation.
+
+---
+
+## 11. Visual compliance
+
+J18 reserves at least three visual functions:
+
+1. the old lunch photograph or its physical print ;
+2. Sandra actively choosing what she stores, removes or closes ;
+3. Sandra’s ordinary life after the decision.
+
+A rare late-intimacy branch may use a non-diegetic scene image without an in-story camera.
 
 No pose, framing or ComfyUI prompt is defined.
 
-No image creates adult permission.
-
 ---
 
-## 11. Runtime scope
+## 12. Runtime scope
 
 ```text
 J01–J06 playable
 J06 active runtime still non-compliant
-J07–J17 validated narratively
-J18–J21 narrative validation first
+J07–J18 validated narratively
+J19–J21 narrative validation first
 ```
 
-No runtime, JSON, test, tool, asset or gallery modification is authorized by the J17 narrative merge.
+No runtime, JSON, test, tool, asset or gallery modification is authorized by the J18 narrative merge.
 
 ---
 
-## 12. Next work
+## 13. Next work
 
 ```text
-1. write J18 Sandra resolution
-2. write J19 Pauline or Raphaëlle resolution
-3. write J20 Nico and network position
-4. write J21 final recontextualized image
-5. run complete-season dialogue audit
-6. resume technical integration only after approval
+1. write J19 Pauline or Raphaëlle resolution
+2. write J20 Nico and network position
+3. write J21 final recontextualized image
+4. run complete-season dialogue audit
+5. resume technical integration only after approval
 ```
 
 ---
 
-## 13. Final rule
+## 14. Final rule
 
 ```text
-Mathilde leaves a room.
-What happened inside the household cannot be packed with her belongings.
+Sandra may preserve a trace without preserving access.
+She may remove an image without denying the desire that produced it.
 ```
