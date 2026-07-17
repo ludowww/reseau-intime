@@ -1,12 +1,12 @@
 # Documentation Reading Order — Bible Narrative Current
 
-> **Phase : validation narrative complète J07–J21**
+> **Phase : validation narrative complète J07–J21 avec audit de conformité J01–J09**
 
 La Bible couvre l’architecture détaillée de J01 à J21.
 
 Le contrat opérationnel des voix est documenté.
 
-La priorité actuelle est d’écrire et valider tous les scripts narratifs jusqu’à J21 avant toute nouvelle intégration technique.
+J01–J09 possèdent désormais un audit transversal qui distingue conformité narrative, conformité visual-first et conformité runtime.
 
 ---
 
@@ -69,15 +69,25 @@ docs/canon/bible/12D_PLANS_SCENES_J17_J21.md
 docs/canon/bible/12E_AUDIT_GLOBAL_COHERENCE_J01_J21.md
 ```
 
-## Scripts narratifs candidats
+## Scripts narratifs et audit
 
 ```text
 docs/canon/dialogues/README.md
 docs/canon/dialogues/J07_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J08_SCRIPT_NARRATIF_COMPLET.md
+docs/canon/dialogues/J09_SCRIPT_NARRATIF_COMPLET.md
+docs/canon/dialogues/J01_J09_AUDIT_CONFORMITE_NARRATIVE.md
 ```
 
-Ces scripts sont validés narrativement avant toute production JSON ou runtime.
+Ordre interne :
+
+```text
+script de journée
+→ audit J01–J09
+→ correction canonique ciblée
+```
+
+En cas de contradiction précise sur J07–J09, l’audit prévaut jusqu’à consolidation des scripts.
 
 ## Communication
 
@@ -106,8 +116,9 @@ Le runtime ne dirige plus l’écriture J07–J21.
 plan détaillé validé
 → carte de voix
 → script narratif complet
+→ audit de conformité
 → validation de Ludovic
-→ audit continuité / voix / conséquences
+→ audit continuité / conséquences
 → validation narrative J01–J21
 → seulement ensuite adaptation technique
 → images fournies par Ludovic via ComfyUI
@@ -121,56 +132,57 @@ Aucune nouvelle modification technique J07–J21 avant validation narrative comp
 
 La PR technique J05–J06 ouverte avant cette décision reste séparée et ne devient pas une autorité narrative.
 
+J06 reste techniquement non conforme tant que sa logique de candidate pool et de propriétaire R2 n’est pas remplacée lors de la future migration.
+
 ---
 
-# 4. Tests de voix obligatoires
+# 4. Tests obligatoires
 
-Une scène doit passer :
+Une journée doit passer :
 
+- test North Star ;
+- test de route invisible ;
+- test de fonction unique ;
+- test d’agence ;
+- test de conséquence attribuable ;
 - test sans nom ;
 - test de substitution ;
 - test de silhouette ;
 - test banal ;
-- test sous stress ;
 - test public / privé ;
-- test anti-punchline ;
-- test de contamination professionnelle ;
-- test Player ;
-- test text-only.
+- test text-only ;
+- test d’audience visuelle ;
+- test de fallback ;
+- test des trois contenus principalement féminins.
 
 ---
 
 # 5. Statut J01–J21
 
-| Journées | Plans | Scripts narratifs | Runtime |
+| Journées | Plans | Scripts / audit | Runtime |
 |---|---|---|---|
-| J01–J06 | complets | dialogues existants / audit en cours | actif |
-| J07 | complet | validé par Ludovic | legacy non canonique |
-| J08 | complet | candidat à validation | legacy non canonique |
-| J09–J12 | complets | prochaine tranche | non canonique / partiel historique |
+| J01–J05 | complets | noyaux conformes, corrections et slots dans l’audit | actif partiel |
+| J06 | complet | intention conforme dans l’audit | actif non conforme |
+| J07 | complet | validé avec corrections de l’audit | legacy non canonique |
+| J08 | complet | validé avec corrections de l’audit | legacy non canonique |
+| J09 | complet | candidat + corrections de l’audit | legacy non canonique |
+| J10–J12 | complets | prochaine tranche | non canonique / historique partiel |
 | J13–J16 | complets | à produire | non |
 | J17–J21 | complets | à produire | non |
 
 ---
 
-# 6. Continuité validée J07→J08
+# 6. Principes consolidés J01–J09
 
 ```text
-J07 crée :
-- Raphaëlle avant mardi 19 h
-- Nico mardi 18 h 45
-- foyer mardi 19 h 15, alternative ou refus
-
-J08 paie :
-- anticipation
-- priorité
-- amendement
-- conséquence
+une promesse importante doit être un vrai choix
+un refus clair ferme réellement l’attente
+une alternative précise peut réduire une collision
+un fallback existe si les conditions disparaissent
+regarder Marie et rejoindre sa vie ne sont pas le même acte
+les trois contenus minimum restent principalement centrés sur les femmes
+un visuel précise type, origine, auteur, audience et permanence
 ```
-
-Le refus honnête ferme réellement une obligation.
-
-L’alternative précise peut réellement réduire la collision.
 
 ---
 
@@ -193,27 +205,31 @@ Sont exclus :
 - choix de dialogue oral ;
 - transcriptions d’appels utilisées comme gameplay.
 
+Corrections futures identifiées :
+
+- J01 : narration indirecte dans les beats hors téléphone ;
+- J02 : `Marie écrit`, pas `Marie appelle`, dans la transition.
+
 ---
 
 # 8. Visuels
 
-Les scripts indiquent uniquement :
+Le contrat narratif de trois slots est désormais défini pour J01–J09.
 
-- nombre de slots ;
-- fonction narrative ;
-- audience ;
-- permanence.
+Les images finales ne sont pas produites.
 
-Ludovic fournit les images plus tard via ComfyUI.
+Ludovic les fournira plus tard via ComfyUI.
+
+La conformité produit visual-first ne sera acquise qu’après production, métadonnées et intégration.
 
 ---
 
 # 9. Prochaine tranche
 
 ```text
-validation J08
-→ écriture J09
-→ J10–J12
+validation de l’audit et de J09 corrigé
+→ écriture J10
+→ J11–J12
 → J13–J16
 → J17–J21
 → audit global des dialogues
@@ -225,7 +241,8 @@ validation J08
 
 ```text
 La saison est planifiée avant d’être dialoguée.
-Les dialogues J07–J21 sont validés avant toute intégration.
-La voix est testée avant le runtime.
+Les scripts sont audités avant validation.
+Les promesses importantes ne sont pas forcées.
+Les images ont une fonction et une audience.
 La technique ne décide pas de la narration.
 ```
