@@ -29,13 +29,23 @@ plan détaillé de journée
 
 ```text
 J07_SCRIPT_NARRATIF_COMPLET.md
+J08_SCRIPT_NARRATIF_COMPLET.md
 ```
 
 Statut :
 
 ```text
-J07 — candidat à validation narrative
-J08–J21 — à produire
+J07 — validé par Ludovic
+J08 — candidat à validation narrative
+J09–J21 — à produire
+```
+
+## Continuité
+
+```text
+J07 crée les attentes.
+J08 les paie, les amende ou les fait échouer.
+J09 remet Marie au centre par sa visibilité sociale.
 ```
 
 ## Règle de gel technique

@@ -1,12 +1,14 @@
 # Narrative Canon Status — Current
 
-> **Current phase: narrative validation J07–J21 before technical integration**
+> **Current phase: narrative validation J08–J21 before technical integration**
 
 The Bible Narrative covers J01–J21.
 
 The operational voice contract is complete.
 
-The current priority is to write and validate the complete narrative scripts through J21.
+J07 is validated and merged.
+
+J08 is the current narrative candidate.
 
 ---
 
@@ -52,128 +54,161 @@ Existing technical drafts remain separate and non-authoritative.
 
 ```text
 docs/canon/dialogues/J07_SCRIPT_NARRATIF_COMPLET.md
+docs/canon/dialogues/J08_SCRIPT_NARRATIF_COMPLET.md
 ```
 
 Status:
 
 ```text
-J07 narrative script: CANDIDATE FOR LUDOVIC VALIDATION
-J08 narrative script: NEXT
+J07 narrative script: VALIDATED BY LUDOVIC
+J08 narrative script: CANDIDATE FOR LUDOVIC VALIDATION
 J09–J21 narrative scripts: NOT YET PRODUCED
 ```
 
 ---
 
-## 4. J07 candidate decision
+## 4. J07 validated decision
 
-J07 is no longer a Sandra-led day.
+J07 is Nico-led.
 
-Canonical candidate structure:
-
-```text
-09:30  Marie obligation paid off-phone if due
-11:04  Raphaëlle work obligation
-22:46  Nico confidence pivot
-23:16  Marie / Mathilde household request
-```
-
-J07 creates expectations for J08 without selecting a route.
-
-### Nico
-
-Nico knows only one limited contradiction depending on Player's choice.
-
-He explicitly states:
-
-- Marie attracts him ;
-- Mathilde attracts him differently ;
-- this gives him no rights ;
-- his advice is not neutral ;
-- he will not become an automatic alibi.
-
-### J08 handoff
-
-Possible expectations:
+It creates three possible expectations for Tuesday:
 
 ```text
-Raphaëlle review before Tuesday 19:00
-Nico meeting Tuesday 18:45
-household presence Tuesday 19:15 or amended consequence
+Raphaëlle review before 19:00
+Nico meeting at 18:45
+household presence at 19:15, amended slot, or honest refusal
 ```
+
+Nico knows one limited contradiction only.
+
+He states that Marie and Mathilde attract him, that this gives him no rights, and that his advice is not neutral.
 
 ---
 
-## 5. Legacy J07 material
+## 5. J08 candidate decision
 
-The historical Sandra twenty-minute scene is not deleted.
-
-It is reclassified as possible J10 material for S16:
+J08 becomes:
 
 ```text
-Le café enfin tenu
+Mardi — Ce qui ne tient pas ensemble
 ```
+
+Its principal function is the first real superposition.
+
+The player chooses:
+
+- the oldest commitment ;
+- the most immediate physical presence ;
+- or vagueness.
+
+The player does not select a person or route.
+
+### Household variants
+
+```text
+A — 19:15 confirmed: triple superposition
+B — 18:30 amendment accepted: household paid before remaining collision
+C — honest refusal: no Tuesday household obligation
+```
+
+A precise alternative therefore has a real benefit.
+
+An honest refusal really closes an obligation.
+
+### Raphaëlle preparation
+
+Player may:
+
+- anticipate the review ;
+- schedule it at 18:20 ;
+- answer vaguely.
+
+Anticipation reduces the later collision.
+
+### Consequence logic
+
+Every person continues acting without Player:
+
+- Raphaëlle may complete the work ;
+- Nico may give away the chair and start service ;
+- Marie and Mathilde may handle the owner with a neighbor ;
+- no route replaces a refused commitment.
+
+---
+
+## 6. Legacy J08 material
+
+The historical black-dress scene is not deleted.
+
+It is reclassified as possible J09 opening material.
 
 Before reuse it must remove:
 
-- blur language ;
-- ticket logic ;
-- wave ownership ;
-- any contradiction with the selected-representation Sandra canon.
+- the old visual-contract dependency ;
+- premature route-like choice structure ;
+- any image-production assumption ;
+- any contradiction with J08 consequences.
+
+Marie social visibility remains the future J09 pivot.
 
 ---
 
-## 6. Voice status
+## 7. Voice status
 
-J07 candidate applies the operational voice bible:
+J08 candidate applies the operational voice bible:
 
-- Raphaëlle precise and professional ;
-- Nico oral, concrete, then quiet and self-interested ;
-- Marie practical and action-centered ;
-- Player short, imperfect, and non-omniscient.
+- Marie practical, time-bound, and non-jealous ;
+- Raphaëlle exact, professional, and non-romantic ;
+- Nico concrete, brief, and able to accept a clear cancellation ;
+- Player short, imperfect, capable of precise amendment or vagueness.
 
-Mandatory tests are included in the J07 document.
+Mandatory voice tests are included in the J08 document.
 
 ---
 
-## 7. Text-only rule
+## 8. Text-only rule
 
 No playable audio scenes, calls, voice notes, or spoken-choice sequences.
 
-Physical meetings may happen later off-phone, but the player-facing narrative remains text, images, time, and consequences.
+Physical meetings and the household inspection happen off-phone.
+
+The player-facing narrative remains text, time, images supplied later, and consequences.
 
 ---
 
-## 8. Visual status
+## 9. Visual status
 
-No image is designed in the J07 script.
+No image is designed in the J08 script.
 
 Only three narrative functions are reserved:
 
-- Raphaëlle at work ;
-- Nico after closing L'Annexe ;
-- Marie / household documents.
+- Raphaëlle work responsibility ;
+- Nico / L'Annexe or unused chair ;
+- household inspection or Mathilde autonomy.
 
 Final images will be supplied later by Ludovic through ComfyUI.
 
 ---
 
-## 9. Runtime scope
+## 10. Runtime scope
 
 ```text
 J01–J06 playable
-J07–J21 narrative validation first
+J07 validated narratively
+J08 candidate narratively
+J09–J21 narrative validation first
 ```
 
 The current legacy J07–J09 runtime is audit material, not future canon.
 
 ---
 
-## 10. Next work
+## 11. Next work
 
 ```text
-1. validate J07 narrative script
-2. write J08 first superposition
-3. continue J09–J12
+1. validate J08 narrative script
+2. write J09 Marie social visibility
+3. continue J10–J12
 4. continue J13–J16
 5. continue J17–J21
 6. run full narrative coherence audit
@@ -182,11 +217,12 @@ The current legacy J07–J09 runtime is audit material, not future canon.
 
 ---
 
-## 11. Final rule
+## 12. Final rule
 
 ```text
 The season is planned.
-J07–J21 must now be written and approved.
+J07 is validated.
+J08–J21 must now be written and approved.
 Technical implementation waits.
 Narrative authority stays above runtime convenience.
 ```
