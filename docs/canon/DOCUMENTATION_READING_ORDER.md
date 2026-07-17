@@ -1,14 +1,14 @@
 # Documentation Reading Order — Bible Narrative Current
 
-> **Phase : validation narrative complète J07–J21 — J19 prochain**
+> **Phase : validation narrative complète J07–J21 — J20 prochain**
 
 La Bible couvre l’architecture détaillée de J01 à J21.
 
 J01–J09 possèdent un audit transversal.
 
-J07–J18 sont validés narrativement.
+J07–J19 sont validés narrativement.
 
-J19–J21 restent à écrire.
+J20–J21 restent à écrire.
 
 ---
 
@@ -77,6 +77,7 @@ docs/canon/dialogues/J15_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J16_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J17_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J18_SCRIPT_NARRATIF_COMPLET.md
+docs/canon/dialogues/J19_SCRIPT_NARRATIF_COMPLET.md
 ```
 
 ## Communication
@@ -142,12 +143,12 @@ Une journée doit passer :
 | Journées | Scripts / audit | Statut |
 |---|---|---|
 | J01–J06 | audit et runtime provisoire | J06 runtime non conforme |
-| J07–J18 | scripts complets | validés narrativement |
-| J19–J21 | plans complets | à écrire |
+| J07–J19 | scripts complets | validés narrativement |
+| J20–J21 | plans complets | à écrire |
 
 ---
 
-# 6. Principes consolidés J14–J18
+# 6. Principes consolidés J14–J19
 
 ```text
 J14 : aucune trace inventée ; connaissance limitée ; personne représentée prévenue.
@@ -155,6 +156,7 @@ J15 : deux obligations antérieures minimum ; horaires incompatibles ; priorité
 J16 : sécurité, audience et paiement avant résolution ; départ Mathilde préparé ; heure J17 réellement choisie.
 J17 : départ Mathilde accompli ; foyer transformé ; définition provisoire du couple ; aucune route de consolation.
 J18 : Sandra contrôle ce qu’elle conserve, retire ou ferme ; Jeff reste réel ; aucune permission permanente.
+J19 : un seul premier plan ; Pauline et Raphaëlle obtiennent chacune une direction précise ; aucun accès ambigu.
 ```
 
 ---
@@ -162,8 +164,7 @@ J18 : Sandra contrôle ce qu’elle conserve, retire ou ferme ; Jeff reste réel
 # 7. Prochaine tranche
 
 ```text
-J19 — Pauline ou Raphaëlle obtient une direction
-→ J20 — Nico et le réseau obtiennent une position
+J20 — Nico et le réseau obtiennent une position
 → J21 — une image ancienne clôt la saison
 → audit global des dialogues
 ```
