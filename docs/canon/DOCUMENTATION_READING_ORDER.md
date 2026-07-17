@@ -1,14 +1,14 @@
 # Documentation Reading Order — Bible Narrative Current
 
-> **Phase : audit global des dialogues J01–J21**
+> **Phase : corrections bloquantes du corpus J01–J21 — lot A**
 
 La Bible couvre l’architecture détaillée de J01 à J21.
 
-J01–J09 possèdent un audit transversal initial.
-
 J07–J21 sont validés narrativement.
 
-La prochaine étape est l’audit global de la saison complète avant toute reprise technique.
+L’audit global des dialogues et de la continuité J01–J21 est validé.
+
+La prochaine étape est une correction documentaire ciblée avant toute reprise technique.
 
 ---
 
@@ -61,7 +61,9 @@ docs/canon/bible/12D_PLANS_SCENES_J17_J21.md
 docs/canon/bible/12E_AUDIT_GLOBAL_COHERENCE_J01_J21.md
 ```
 
-## Scripts et audit
+`12E` reste une archive canonique d’architecture. Son ancien statut de production est supersédé par l’audit global des dialogues.
+
+## Scripts et audits
 
 ```text
 docs/canon/dialogues/J01_J09_AUDIT_CONFORMITE_NARRATIVE.md
@@ -80,6 +82,7 @@ docs/canon/dialogues/J18_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J19_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J20_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J21_SCRIPT_NARRATIF_COMPLET.md
+docs/canon/dialogues/J01_J21_AUDIT_GLOBAL_DIALOGUES_CONTINUITE.md
 ```
 
 ## Communication
@@ -95,10 +98,12 @@ docs/canon/TEXT_ONLY_MESSAGING_CANON.md
 ```text
 plan détaillé
 → script complet
-→ audit de conformité
+→ audit global validé
+→ lot A : continuité bloquante
+→ lot B : registres et contrats d’état
+→ lot C : consolidation des sources et statuts
+→ lot D : polish des voix
 → validation Ludovic
-→ audit global voix / continuité / audiences / conséquences
-→ validation des corrections éventuelles
 → décision de reprise technique
 → adaptation JSON/runtime
 → images ComfyUI
@@ -110,91 +115,62 @@ plan détaillé
 
 Aucune nouvelle modification technique J07–J21 avant :
 
-- l’audit global de la saison complète ;
-- la validation des corrections éventuelles ;
-- une décision explicite de reprise technique.
+- validation du lot A ;
+- registres de traces, promesses et connaissances ;
+- contrat d’état et matrice de reachability ;
+- passe de naturel ;
+- décision explicite de reprise technique.
 
 J06 reste techniquement non conforme jusqu’à la future migration.
 
 ---
 
-# 4. Tests obligatoires
-
-Une journée doit passer :
-
-- North Star ;
-- route invisible ;
-- fonction principale ;
-- agence ;
-- conséquence attribuable ;
-- priorité sécurité / consentement / image ;
-- voix ;
-- text-only ;
-- connaissance limitée ;
-- fallback ;
-- audience visuelle ;
-- retrait possible ;
-- après-coup obligatoire ;
-- trace déjà existante avant découverte ;
-- témoin réellement présent ;
-- séparation entre contenu supprimé et connaissance acquise ;
-- promesse réellement choisie ;
-- refus qui ferme l’attente ;
-- personnages autonomes ;
-- préparation de la conséquence suivante.
-
-L’audit global doit également tester :
-
-- la cohérence des heures J01–J21 ;
-- la circulation réelle des connaissances ;
-- les audiences et suppressions d’images ;
-- la distinction des voix ;
-- l’absence de consolation automatique ;
-- l’état final de chaque relation ;
-- la compatibilité de la finale avec toutes les sorties majeures.
-
----
-
-# 5. Statut J01–J21
-
-| Journées | Scripts / audit | Statut |
-|---|---|---|
-| J01–J06 | audit et runtime provisoire | J06 runtime non conforme |
-| J07–J21 | scripts complets | validés narrativement |
-| J01–J21 | audit global de saison | prochaine étape |
-
----
-
-# 6. Principes consolidés J14–J21
+# 4. Lot A — prochaine tranche
 
 ```text
-J14 : aucune trace inventée ; connaissance limitée ; personne représentée prévenue.
-J15 : deux obligations antérieures minimum ; horaires incompatibles ; priorité visible par l’acte.
-J16 : sécurité, audience et paiement avant résolution ; départ Mathilde préparé ; heure J17 réellement choisie.
-J17 : départ Mathilde accompli ; foyer transformé ; définition provisoire du couple ; aucune route de consolation.
-J18 : Sandra contrôle ce qu’elle conserve, retire ou ferme ; Jeff reste réel ; aucune permission permanente.
-J19 : un seul premier plan ; Pauline et Raphaëlle obtiennent chacune une direction précise ; aucun accès ambigu.
-J20 : Nico obtient une position active ; alibis, confidences et regards possèdent des règles distinctes.
-J21 : une trace existante change de sens ; le dernier choix exprime une posture et ne sélectionne aucune route.
+A1 corriger le calendrier J17 / J21
+A2 payer la promesse Sandra déplacée de J10 en J12
+A3 retirer les conversations interactives en co-présence J12 / J14 / J17 / J21
+A4 conditionner la posture finale C à une contradiction déjà active
 ```
 
----
+Le lot A reste documentaire.
 
-# 7. Prochaine tranche
-
-```text
-audit global des dialogues et de la continuité J01–J21
-→ corrections narratives éventuelles
-→ validation Ludovic
-→ décision séparée de reprise technique
-```
+Il ne crée aucune route, aucun asset et aucun système runtime.
 
 ---
 
-# 8. Règle finale
+# 5. Tests obligatoires après lot A
+
+- aucune référence future à un jour déjà passé ;
+- toute promesse créée possède un paiement, un amendement ou une fermeture ;
+- aucun échange interactif direct en co-présence ;
+- aucune nouvelle violation créée par le dernier choix ;
+- J21 reste compatible avec chaque état de couple ;
+- aucune image supprimée ne revient ;
+- aucune route fermée ne se rouvre ;
+- les voix et décisions initiales restent intactes.
+
+---
+
+# 6. Statut J01–J21
+
+| Périmètre | Statut |
+|---|---|
+| Architecture J01–J21 | validée |
+| Scripts J07–J21 | validés sous corrections ciblées |
+| Audit global des dialogues | validé |
+| Lot A | prochaine étape |
+| Runtime J07–J21 | gelé |
+| Runtime J06 | non conforme |
+| Images finales | à produire |
+
+---
+
+# 7. Règle finale
 
 ```text
-La saison est complète lorsque chaque relation possède un état,
-chaque dette majeure possède une conséquence lisible
-et la finale montre une vie transformée sans ajouter de nouveau twist.
+La saison ne doit pas être enrichie avant d’avoir payé
+chaque promesse, chaque audience et chaque contradiction
+qu’elle a déjà créées.
 ```
