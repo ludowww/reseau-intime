@@ -1,14 +1,14 @@
 # Documentation Reading Order — Bible Narrative Current
 
-> **Phase : validation narrative complète J07–J21 avec audit de conformité J01–J09**
+> **Phase : validation narrative complète J07–J21 — J11 candidat**
 
 La Bible couvre l’architecture détaillée de J01 à J21.
 
-Le contrat opérationnel des voix est documenté.
-
 J01–J09 possèdent un audit transversal.
 
-J10 possède un script complet candidat.
+J10 est validé.
+
+J11 possède un script complet candidat.
 
 ---
 
@@ -22,7 +22,7 @@ docs/canon/bible/01_EXPERIENCE_JOUEUR.md
 docs/canon/bible/02_FANTASMES_CENTRAUX.md
 ```
 
-## Personnages et voix
+## Personnages, voix et adulte
 
 ```text
 docs/canon/characters/CHARACTER_CANON_INDEX.md
@@ -30,7 +30,6 @@ docs/canon/characters/*_CANON_FULL.md
 docs/canon/CHARACTER_VOICE_DISTINCTION_CANON.md
 docs/canon/bible/13_BIBLE_VOIX_MESSAGERIE_ET_TESTS_DISTINCTION.md
 docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
-cartes de réconciliation concernées
 ```
 
 ## Architecture
@@ -51,7 +50,7 @@ docs/canon/bible/09_PROGRESSION_VISUELLE_ET_PHOTOGRAPHIQUE.md
 docs/canon/bible/10_CARTE_CONSEQUENCES_DETTES_SECRETS_OBLIGATIONS.md
 ```
 
-## Calendrier et plans détaillés
+## Plans détaillés
 
 ```text
 docs/canon/bible/11_DISTRIBUTION_SEQUENCES_SCENES_IMAGES_CONSEQUENCES_JOURNEES.md
@@ -62,61 +61,45 @@ docs/canon/bible/12D_PLANS_SCENES_J17_J21.md
 docs/canon/bible/12E_AUDIT_GLOBAL_COHERENCE_J01_J21.md
 ```
 
-## Scripts narratifs et audit
+## Scripts et audit
 
 ```text
-docs/canon/dialogues/README.md
+docs/canon/dialogues/J01_J09_AUDIT_CONFORMITE_NARRATIVE.md
 docs/canon/dialogues/J07_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J08_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J09_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J10_SCRIPT_NARRATIF_COMPLET.md
-docs/canon/dialogues/J01_J09_AUDIT_CONFORMITE_NARRATIVE.md
-```
-
-Ordre interne :
-
-```text
-script de journée
-→ audit transversal applicable
-→ correction canonique ciblée
+docs/canon/dialogues/J11_SCRIPT_NARRATIF_COMPLET.md
 ```
 
 ## Communication
 
 ```text
-docs/canon/DIEGETIC_TIME_AND_COMMUNICATION_CANON.md
 docs/canon/TEXT_ONLY_MESSAGING_CANON.md
 ```
 
-## Runtime
-
-Le runtime sert uniquement à auditer l’existant et préparer la future migration.
-
-Il ne dirige pas l’écriture J07–J21.
-
 ---
 
-# 2. Chaîne de production actuelle
+# 2. Chaîne de production
 
 ```text
-plan détaillé validé
-→ carte de voix
-→ script narratif complet
+plan détaillé
+→ script complet
 → audit de conformité
-→ validation de Ludovic
-→ continuité vers le jour suivant
-→ validation narrative J01–J21
-→ seulement ensuite adaptation technique
-→ images fournies par Ludovic via ComfyUI
+→ validation Ludovic
+→ continuité suivante
+→ validation J01–J21
+→ adaptation technique
+→ images ComfyUI
 ```
 
 ---
 
 # 3. Gel technique
 
-Aucune nouvelle modification technique J07–J21 avant validation narrative complète de la saison.
+Aucune nouvelle modification technique J07–J21 avant validation narrative complète.
 
-J06 reste techniquement non conforme tant que la future migration n’a pas retiré la propriété R2 automatique.
+J06 reste techniquement non conforme jusqu’à la future migration.
 
 ---
 
@@ -134,55 +117,46 @@ Une journée doit passer :
 - connaissance limitée ;
 - fallback ;
 - audience visuelle ;
-- trois contenus principalement féminins.
+- trois contenus principalement féminins ;
+- consentement actuel ;
+- retrait possible ;
+- après-coup obligatoire après une progression adulte.
 
 ---
 
 # 5. Statut J01–J21
 
-| Journées | Plans | Scripts / audit | Runtime |
-|---|---|---|---|
-| J01–J05 | complets | noyaux conformes, corrections et slots dans l’audit | actif partiel |
-| J06 | complet | intention conforme dans l’audit | actif non conforme |
-| J07 | complet | validé avec corrections de l’audit | legacy non canonique |
-| J08 | complet | validé avec corrections de l’audit | legacy non canonique |
-| J09 | complet | candidat + corrections de l’audit | legacy non canonique |
-| J10 | complet | candidat à validation | non |
-| J11–J12 | complets | prochaine tranche | non |
-| J13–J16 | complets | à produire | non |
-| J17–J21 | complets | à produire | non |
+| Journées | Scripts / audit | Statut |
+|---|---|---|
+| J01–J06 | audit et runtime provisoire | J06 runtime non conforme |
+| J07–J08 | scripts validés + audit | validés |
+| J09 | script + audit | validé |
+| J10 | script complet | validé |
+| J11 | script complet | candidat |
+| J12 | plan complet | prochaine tranche |
+| J13–J21 | plans complets | à écrire |
 
 ---
 
-# 6. Principes consolidés J10
+# 6. Principes consolidés J11
 
 ```text
-une seule continuité extérieure visible
-conséquences dues avant opportunité
-promesses importantes choisies
-fallback si aucune route n’est légitime
-variantes non sélectionnées invisibles et non punies
-J11 continue uniquement la variante vécue
+J11 continue uniquement J10
+une intention peut exister sans sexualité
+une limite peut renforcer la relation
+un passage adulte remplace le pivot normal
+consentement écrit et révocable
+aucune dette utilisée comme levier
+J12 porte obligatoirement l’après-coup
 ```
 
 ---
 
-# 7. Visuels
-
-Chaque configuration J10 prévoit trois contenus principalement féminins.
-
-Type, créateur, origine, audience et circulation sont précisés.
-
-Les images finales restent à produire par Ludovic via ComfyUI.
-
----
-
-# 8. Prochaine tranche
+# 7. Prochaine tranche
 
 ```text
-validation J09 / audit / J10
-→ écriture J11
-→ J12
+validation J11
+→ écriture J12 convergence
 → J13–J16
 → J17–J21
 → audit global des dialogues
@@ -190,11 +164,9 @@ validation J09 / audit / J10
 
 ---
 
-# 9. Règle finale
+# 8. Règle finale
 
 ```text
-Une route ne devient réelle que si l’histoire l’a construite.
-Une promesse n’existe que si Player l’a choisie.
-Une variante non retenue ne réclame pas de compensation.
-La technique ne décide pas de la narration.
+Le désir n’est adulte que lorsqu’il accepte une règle,
+une conséquence et un lendemain.
 ```

@@ -17,15 +17,11 @@ plan détaillé de journée
 
 ## Autorité corrective
 
-Le document :
-
 ```text
 J01_J09_AUDIT_CONFORMITE_NARRATIVE.md
 ```
 
 corrige les écarts identifiés dans J01–J09.
-
-En cas de contradiction ciblée avec les scripts J07–J09, ses corrections prévalent jusqu’à consolidation future.
 
 ## Règles
 
@@ -36,12 +32,12 @@ En cas de contradiction ciblée avec les scripts J07–J09, ses corrections pré
 - aucun asset conçu ;
 - aucune mécanique créée dans cette couche ;
 - les événements physiques restent hors téléphone ;
-- les voix suivent `13_BIBLE_VOIX_MESSAGERIE_ET_TESTS_DISTINCTION.md` ;
-- toute promesse importante doit être un vrai choix ;
-- toute journée prévoit trois contenus principalement centrés sur les femmes adultes principales ;
-- toute scène principale précise sa séquence source ;
+- les voix suivent la Bible opérationnelle ;
+- toute promesse importante est un vrai choix ;
 - une seule relation reçoit le pivot majeur ;
-- un fallback existe si aucune continuité n’est légitime.
+- un fallback existe si aucune continuité n’est légitime ;
+- tout passage adulte est négocié, révocable et suivi d’un après-coup ;
+- toute journée prévoit trois contenus principalement centrés sur les femmes adultes principales.
 
 ## Scripts
 
@@ -50,6 +46,7 @@ J07_SCRIPT_NARRATIF_COMPLET.md
 J08_SCRIPT_NARRATIF_COMPLET.md
 J09_SCRIPT_NARRATIF_COMPLET.md
 J10_SCRIPT_NARRATIF_COMPLET.md
+J11_SCRIPT_NARRATIF_COMPLET.md
 J01_J09_AUDIT_CONFORMITE_NARRATIVE.md
 ```
 
@@ -58,25 +55,24 @@ Statut :
 ```text
 J01–J05 — noyaux narratifs conformes, visuels à produire
 J06 — intention narrative conforme, runtime actif non conforme
-J07 — validé avec corrections d’agency et de visuels
-J08 — validé avec fallback et corrections visuelles
-J09 — candidat corrigé par l’audit
-J10 — candidat à validation narrative
-J11–J21 — à produire
+J07 — validé avec corrections de l’audit
+J08 — validé avec corrections de l’audit
+J09 — validé avec audit de conformité
+J10 — validé par Ludovic
+J11 — candidat à validation narrative
+J12–J21 — à produire
 ```
 
 ## Continuité
 
 ```text
-J07 crée ou ferme des attentes réelles.
-J08 paie uniquement les attentes réellement actives.
-J09 remet Marie au centre par sa visibilité sociale.
-J10 donne une forme réelle à une seule continuité extérieure.
-J11 continue uniquement la relation réellement vécue en J10 ou paie son refus.
+J10 rend une seule continuité réelle.
+J11 la nomme, la limite, l’incarne ou la retire.
+J12 rend son après-coup visible dans le réseau.
 ```
 
 ## Règle de gel technique
 
 Aucune nouvelle intégration J07–J21 ne doit commencer avant validation narrative complète de J07–J21.
 
-La PR technique J05–J06 existante reste séparée et ne constitue pas une autorité sur les futurs scripts.
+La PR technique J05–J06 existante reste séparée et non autoritative.
