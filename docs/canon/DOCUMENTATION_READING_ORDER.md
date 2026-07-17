@@ -1,14 +1,14 @@
 # Documentation Reading Order — Bible Narrative Current
 
-> **Phase : validation narrative complète J07–J21 — J12 candidat**
+> **Phase : validation narrative complète J07–J21 — J13 candidat**
 
 La Bible couvre l’architecture détaillée de J01 à J21.
 
 J01–J09 possèdent un audit transversal.
 
-J10 est validé.
+J07–J12 sont validés narrativement.
 
-J11 et J12 possèdent des scripts complets candidats.
+J13 possède un script complet candidat.
 
 ---
 
@@ -71,6 +71,7 @@ docs/canon/dialogues/J09_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J10_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J11_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J12_SCRIPT_NARRATIF_COMPLET.md
+docs/canon/dialogues/J13_SCRIPT_NARRATIF_COMPLET.md
 ```
 
 ## Communication
@@ -113,16 +114,15 @@ Une journée doit passer :
 - fonction principale ;
 - agence ;
 - conséquence attribuable ;
+- priorité sécurité / consentement / image ;
 - voix ;
 - text-only ;
 - connaissance limitée ;
 - fallback ;
 - audience visuelle ;
-- contenus principalement féminins ;
-- consentement actuel ;
 - retrait possible ;
-- après-coup obligatoire après une progression adulte ;
-- convergence sans omniscience ;
+- après-coup obligatoire ;
+- trace déjà existante avant découverte ;
 - conséquence prioritaire pour le jour suivant.
 
 ---
@@ -132,25 +132,23 @@ Une journée doit passer :
 | Journées | Scripts / audit | Statut |
 |---|---|---|
 | J01–J06 | audit et runtime provisoire | J06 runtime non conforme |
-| J07–J08 | scripts validés + audit | validés |
-| J09 | script + audit | validé |
-| J10 | script complet | validé |
-| J11 | script complet | candidat |
-| J12 | script complet | candidat empilé sur J11 |
-| J13–J21 | plans complets | à écrire |
+| J07–J12 | scripts complets | validés |
+| J13 | script complet | candidat |
+| J14–J16 | plans complets | prochaine tranche |
+| J17–J21 | plans complets | à écrire |
 
 ---
 
-# 6. Principes consolidés J12
+# 6. Principes consolidés J13
 
 ```text
-Marie reste pivot de réseau
-une seule conséquence J11 modifie la soirée
-les participants ont des raisons réelles d’être présents
-les images publiques ont plusieurs sens sans révélation automatique
-les messages en co-présence restent logistiques
-une seule conséquence finale devient foreground
-J13 commence par la payer
+une seule dette réclame une réponse
+sécurité et consentement avant relation
+image compromise avant attraction
+après-coup adulte avant nouvelle scène
+aucune nouvelle route dominante
+une trace J14 doit déjà exister
+Marie reste présente ou affectée
 ```
 
 ---
@@ -158,9 +156,9 @@ J13 commence par la payer
 # 7. Prochaine tranche
 
 ```text
-validation J11 puis J12
-→ écriture J13 conséquence prioritaire
-→ J14–J16
+validation J13
+→ écriture J14 photo au mauvais écran
+→ J15–J16
 → J17–J21
 → audit global des dialogues
 ```
@@ -170,6 +168,6 @@ validation J11 puis J12
 # 8. Règle finale
 
 ```text
-La convergence ne révèle pas tout.
-Elle rend seulement les versions privées observables par leurs conséquences.
+Une conséquence devient sérieuse lorsqu’elle exige
+une règle, une suppression, une vérité ou un acte.
 ```

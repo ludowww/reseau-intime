@@ -32,12 +32,12 @@ corrige les écarts identifiés dans J01–J09.
 - aucun asset conçu ;
 - aucune mécanique créée dans cette couche ;
 - les événements physiques restent hors téléphone ;
-- les voix suivent la Bible opérationnelle ;
 - toute promesse importante est un vrai choix ;
-- une seule relation reçoit le pivot majeur ;
-- un fallback existe si aucune continuité n’est légitime ;
+- une seule relation ou conséquence reçoit le pivot majeur ;
+- les conséquences prioritaires passent avant les nouvelles occasions ;
+- toute trace utilisée pour une découverte doit déjà exister ;
 - tout passage adulte est négocié, révocable et suivi d’un après-coup ;
-- toute journée prévoit des contenus visuels principalement centrés sur les femmes adultes principales ;
+- les images possèdent origine, auteur, audience et circulation ;
 - une convergence crée des connaissances partielles, jamais une omniscience collective.
 
 ## Scripts
@@ -49,6 +49,7 @@ J09_SCRIPT_NARRATIF_COMPLET.md
 J10_SCRIPT_NARRATIF_COMPLET.md
 J11_SCRIPT_NARRATIF_COMPLET.md
 J12_SCRIPT_NARRATIF_COMPLET.md
+J13_SCRIPT_NARRATIF_COMPLET.md
 J01_J09_AUDIT_CONFORMITE_NARRATIVE.md
 ```
 
@@ -57,19 +58,18 @@ Statut :
 ```text
 J01–J05 — noyaux narratifs conformes, visuels à produire
 J06 — intention narrative conforme, runtime actif non conforme
-J07–J10 — validés narrativement
-J11 — candidat à validation narrative
-J12 — candidat à validation narrative, empilé sur J11
-J13–J21 — à produire
+J07–J12 — validés narrativement
+J13 — candidat à validation narrative
+J14–J21 — à produire
 ```
 
 ## Continuité
 
 ```text
-J10 rend une seule continuité réelle.
-J11 la nomme, la limite, l’incarne ou la retire.
-J12 rend son après-coup visible dans le réseau sans tout révéler.
-J13 paie une conséquence prioritaire issue de la convergence.
+J11 nomme, limite ou incarne une intention.
+J12 rend son après-coup visible dans le réseau.
+J13 paie une seule conséquence prioritaire.
+J14 recontextualise uniquement une trace déjà existante.
 ```
 
 ## Règle de gel technique
