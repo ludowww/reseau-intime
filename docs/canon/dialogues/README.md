@@ -54,6 +54,7 @@ J13_SCRIPT_NARRATIF_COMPLET.md
 J14_SCRIPT_NARRATIF_COMPLET.md
 J15_SCRIPT_NARRATIF_COMPLET.md
 J16_SCRIPT_NARRATIF_COMPLET.md
+J17_SCRIPT_NARRATIF_COMPLET.md
 J01_J09_AUDIT_CONFORMITE_NARRATIVE.md
 ```
 
@@ -62,8 +63,8 @@ Statut :
 ```text
 J01–J05 — noyaux narratifs conformes, visuels à produire
 J06 — intention narrative conforme, runtime actif non conforme
-J07–J16 — validés narrativement
-J17–J21 — à produire
+J07–J17 — validés narrativement
+J18–J21 — à produire
 ```
 
 ## Continuité
@@ -74,7 +75,8 @@ J13 paie une seule conséquence prioritaire.
 J14 change un état de connaissance par une trace existante.
 J15 rend les obligations désormais incompatibles.
 J16 paie ou constate l’échec de la dette la plus urgente.
-J17 transforme le foyer et donne au couple une définition provisoire.
+J17 ferme le séjour de Mathilde, transforme le foyer et donne au couple une définition provisoire.
+J18 donne à Sandra une décision active sur ce qu’elle conserve, retire ou ferme.
 ```
 
 ## Règle de gel technique
