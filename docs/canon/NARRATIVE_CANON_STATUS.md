@@ -1,14 +1,14 @@
 # Narrative Canon Status — Current
 
-> **Current phase: J17 next / J07–J16 validated**
+> **Current phase: J18 next / J07–J17 validated**
 
 The Bible Narrative covers J01–J21.
 
 J01–J09 have a conformity audit.
 
-J07–J16 have complete validated narrative scripts.
+J07–J17 have complete validated narrative scripts.
 
-J17–J21 remain to be scripted before any new runtime adaptation.
+J18–J21 remain to be scripted before any new runtime adaptation.
 
 ---
 
@@ -72,6 +72,7 @@ docs/canon/dialogues/J13_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J14_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J15_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J16_SCRIPT_NARRATIF_COMPLET.md
+docs/canon/dialogues/J17_SCRIPT_NARRATIF_COMPLET.md
 ```
 
 Status:
@@ -79,115 +80,46 @@ Status:
 ```text
 J01–J05: narratively sound, visuals incomplete
 J06: canonical intention identified, active runtime non-compliant
-J07–J16: validated narratively
-J17–J21: not yet scripted
+J07–J17: validated narratively
+J18–J21: not yet scripted
 ```
 
 ---
 
-## 4. J14 decision — knowledge changes
+## 4. J14–J16 convergence and payment
 
-J14 is:
+J14 changes a knowledge state using a trace that already existed.
 
-```text
-Lundi — La photo au mauvais écran
-```
+J15 turns at least two prior obligations into a real schedule conflict.
 
-It changes one knowledge state using a trace that already survived J13.
+J16 pays or explicitly fails the most urgent remaining consequence before resolution.
 
-The witness sees only what the interface actually displays.
+These days preserve:
 
-The script distinguishes:
-
-```text
-what was seen
-what was understood correctly
-what may be misinterpreted
-what the witness knows Player knows
-```
-
-Deleting a trace never erases acquired knowledge.
-
-A represented person must be warned whenever a private audience changes.
+- limited knowledge ;
+- real audiences ;
+- autonomous characters ;
+- safety before opportunity ;
+- no consolation route ;
+- no adult progression replacing aftermath.
 
 ---
 
-## 5. J15 decision — incompatible commitments
+## 5. J17 decision — the household cannot remain the same
 
-J15 is:
-
-```text
-Mardi — Les horaires ne tiennent plus
-```
-
-It requires at least two obligations created before the day:
-
-- one direct consequence or clarification from J14 ;
-- one previously chosen commitment that is still active.
-
-J15 does not present a character menu.
-
-Priority becomes visible through:
-
-- the time actually kept ;
-- the place Player actually occupies ;
-- the person honestly warned ;
-- the person left waiting ;
-- the autonomous act performed without Player.
-
-Player may:
-
-1. state that the commitments no longer fit ;
-2. keep one commitment and amend the other precisely ;
-3. maintain incompatible versions and create a lie, debt and proof.
-
-A refusal closes the waiting window.
-
-No new adult progression or consolation route is allowed.
-
----
-
-## 6. J16 decision — payment before resolution
-
-J16 is:
+J17 is:
 
 ```text
-Mercredi — Ce qui doit revenir avant la vérité
+Jeudi — Le foyer ne peut plus rester le même
 ```
 
-Its priority order is:
+It combines:
 
-```text
-safety or consent
-→ compromised audience or deletion
-→ unpaid adult aftermath
-→ professional responsibility
-→ household and housing
-→ alibi, time or promise
-→ couple clarification
-```
+1. Mathilde’s concrete departure ;
+2. the material transformation of the household ;
+3. a provisional definition of the Marie / Player couple.
 
-J16 pays or explicitly fails the most urgent remaining state.
-
-It may:
-
-- return objects or keys ;
-- restore distance ;
-- confirm an image withdrawal ;
-- return control to the represented person ;
-- finish or lose a professional task ;
-- remove Nico from an alibi ;
-- recognize one practicable truth to Marie.
-
-It does not resolve every relationship.
-
-It creates the conditions required for resolution.
-
----
-
-## 7. Mathilde and the household handoff
-
-In every J16 branch, Mathilde receives a concrete departure state:
+Mathilde’s departure mode must come directly from J16:
 
 ```text
 ordinary departure
@@ -197,9 +129,37 @@ departure without Player
 departure with practical help possible
 ```
 
-Her stay is never prolonged to preserve a route.
+Player may help only when that presence is allowed.
 
-The household receives a concrete state:
+A safety or distance condition cannot be renegotiated because Marie is present.
+
+An object left behind remains practical and never creates a new private opportunity.
+
+---
+
+## 6. Mathilde outcome
+
+J17 gives Mathilde one readable state:
+
+```text
+family preserved
+conscious loyalty
+secret suspended
+protective distance
+trust broken
+```
+
+Her stay never continues to preserve her route.
+
+She does not arbitrate the couple and does not provide Player with a full report of her conversation with Marie.
+
+---
+
+## 7. Household outcome
+
+The spare room and shared apartment receive a new concrete meaning.
+
+Possible household states include:
 
 ```text
 ordinary access
@@ -207,88 +167,123 @@ temporary access restriction
 separate rooms
 Marie elsewhere
 Player elsewhere
-intermediary organization
+practical separation organization
 ```
 
-J17 must begin from this real material transformation.
+Mathilde leaving frees a room.
+
+It does not restore the previous couple automatically.
 
 ---
 
-## 8. Marie and J17
+## 8. Couple outcome
 
-A J17 couple discussion exists only when its time is actually chosen.
+A Marie / Player discussion exists only if its time was actually chosen.
 
-Marie may:
+Player does not choose between characters.
 
-- offer a precise hour ;
-- refuse an alternative ;
-- stop holding the evening open ;
-- organize the household without Player ;
-- request space ;
-- prepare a fracture or negotiated reconfiguration.
+He must answer what he wants to hold now through:
 
-J17 will define a provisional couple state without using a menu such as:
+- a concrete behavior ;
+- a rule ;
+- a time ;
+- a pause ;
+- an accepted distance ;
+- or practical separation.
+
+J17 produces one provisional couple state:
 
 ```text
-stay with Marie
-choose another woman
+active repair
+provisional agreement
+reconfiguration under negotiation
+fragile double life
+fracture
+separation
 ```
+
+The accumulation from J01–J16 weighs more than the final wording chosen in J17.
+
+No route receives retroactive permission.
 
 ---
 
-## 9. Visual compliance
+## 9. J18 handoff
 
-Every J15 and J16 configuration reserves at least three visual functions, mainly centered on the principal adult women.
+J18 is:
 
-J15 functions:
+```text
+Vendredi — Sandra choisit ce qu’elle garde
+```
 
-1. the active commitment ;
-2. the person acting without Player ;
-3. the time, proof or return to the household.
+It begins with:
 
-J16 functions:
+- Mathilde outside the household ;
+- a provisional couple state ;
+- Sandra’s image and audience status fixed ;
+- Jeff still real ;
+- no urgent household debt preceding Sandra ;
+- no external-route consolation after Marie.
 
-1. the priority consequence ;
-2. the returned object, withdrawn content or completed work ;
-3. Mathilde’s coming departure and the transformed household.
+J18 must give Sandra an active decision over:
+
+- the image or trace ;
+- the old friendship ;
+- the recognized desire ;
+- a future meeting ;
+- protective withdrawal ;
+- or trust closure.
+
+---
+
+## 10. Visual compliance
+
+J17 reserves at least three visual functions:
+
+1. Mathilde’s return to her own home ;
+2. the real departure and removal of her belongings ;
+3. Marie and the transformed household.
+
+Optional functions include:
+
+- a genuinely forgotten practical object ;
+- the provisional couple state.
 
 No pose, framing or ComfyUI prompt is defined.
 
-Final assets remain unproduced.
+No image creates adult permission.
 
 ---
 
-## 10. Runtime scope
+## 11. Runtime scope
 
 ```text
 J01–J06 playable
 J06 active runtime still non-compliant
-J07–J16 validated narratively
-J17–J21 narrative validation first
+J07–J17 validated narratively
+J18–J21 narrative validation first
 ```
 
-No runtime, JSON, test or asset modification is authorized by the J15–J16 narrative merge.
+No runtime, JSON, test, tool, asset or gallery modification is authorized by the J17 narrative merge.
 
 ---
 
-## 11. Next work
+## 12. Next work
 
 ```text
-1. write J17 household and provisional couple definition
-2. write J18 Sandra resolution
-3. write J19 Pauline or Raphaëlle resolution
-4. write J20 Nico and network position
-5. write J21 final recontextualized image
-6. run complete-season dialogue audit
-7. resume technical integration only after approval
+1. write J18 Sandra resolution
+2. write J19 Pauline or Raphaëlle resolution
+3. write J20 Nico and network position
+4. write J21 final recontextualized image
+5. run complete-season dialogue audit
+6. resume technical integration only after approval
 ```
 
 ---
 
-## 12. Final rule
+## 13. Final rule
 
 ```text
-Before a relationship can be resolved,
-the story must return the space, audience, truth or responsibility
-that a previous act displaced.
+Mathilde leaves a room.
+What happened inside the household cannot be packed with her belongings.
 ```
