@@ -37,7 +37,8 @@ corrige les écarts identifiés dans J01–J09.
 - une seule relation reçoit le pivot majeur ;
 - un fallback existe si aucune continuité n’est légitime ;
 - tout passage adulte est négocié, révocable et suivi d’un après-coup ;
-- toute journée prévoit trois contenus principalement centrés sur les femmes adultes principales.
+- toute journée prévoit des contenus visuels principalement centrés sur les femmes adultes principales ;
+- une convergence crée des connaissances partielles, jamais une omniscience collective.
 
 ## Scripts
 
@@ -47,6 +48,7 @@ J08_SCRIPT_NARRATIF_COMPLET.md
 J09_SCRIPT_NARRATIF_COMPLET.md
 J10_SCRIPT_NARRATIF_COMPLET.md
 J11_SCRIPT_NARRATIF_COMPLET.md
+J12_SCRIPT_NARRATIF_COMPLET.md
 J01_J09_AUDIT_CONFORMITE_NARRATIVE.md
 ```
 
@@ -55,12 +57,10 @@ Statut :
 ```text
 J01–J05 — noyaux narratifs conformes, visuels à produire
 J06 — intention narrative conforme, runtime actif non conforme
-J07 — validé avec corrections de l’audit
-J08 — validé avec corrections de l’audit
-J09 — validé avec audit de conformité
-J10 — validé par Ludovic
+J07–J10 — validés narrativement
 J11 — candidat à validation narrative
-J12–J21 — à produire
+J12 — candidat à validation narrative, empilé sur J11
+J13–J21 — à produire
 ```
 
 ## Continuité
@@ -68,7 +68,8 @@ J12–J21 — à produire
 ```text
 J10 rend une seule continuité réelle.
 J11 la nomme, la limite, l’incarne ou la retire.
-J12 rend son après-coup visible dans le réseau.
+J12 rend son après-coup visible dans le réseau sans tout révéler.
+J13 paie une conséquence prioritaire issue de la convergence.
 ```
 
 ## Règle de gel technique
