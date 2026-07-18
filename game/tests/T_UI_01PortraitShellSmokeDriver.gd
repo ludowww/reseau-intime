@@ -140,6 +140,10 @@ func _validate_layout(shell, expected_demo_size: Vector2i, expected_safe_padding
 	_expect(visible_bounds == expected_bounds, "Visible bounds must equal viewport minus safe padding and visual padding")
 	_expect(visible_bounds.position.x >= 0 and visible_bounds.position.y >= 0, "Visible bounds must not be negative")
 	_expect(visible_bounds.end.x <= viewport_size.x and visible_bounds.end.y <= viewport_size.y, "Visible bounds must not exceed viewport")
+	var nav_bottom_edge: float = max(messages_rect.end.y, gallery_rect.end.y)
+	var nav_bottom_gap: float = float(visible_bounds.end.y) - nav_bottom_edge
+	_expect(nav_bottom_gap >= 0.0, "Navigation buttons must stay inside the useful bottom edge")
+	_expect(nav_bottom_gap <= 72.0, "Navigation must remain close to the useful bottom edge")
 
 func _expected_safe_padding(preset: String) -> Rect2i:
 	match preset:
