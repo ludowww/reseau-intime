@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - agent/lot-c-source-consolidation
+  pull_request:
+    branches:
+      - main
 
 permissions:
   contents: write
@@ -43,5 +46,3 @@ jobs:
           git diff --cached --check
           git commit -m 'docs: remove remaining J09 co-presence chat'
           git push origin HEAD:agent/lot-c-source-consolidation
-
-# Triggered after workflow registration on branch.
