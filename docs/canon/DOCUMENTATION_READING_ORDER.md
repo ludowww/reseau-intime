@@ -1,14 +1,14 @@
 # Documentation Reading Order — Bible Narrative Current
 
-> **Phase : registres narratifs et contrats d’état — lot B**
+> **Phase : consolidation des sources et statuts — lot C**
 
 La Bible couvre l’architecture détaillée de J01 à J21.
 
 J07–J21 sont validés narrativement sous autorités correctives.
 
-L’audit global J01–J21 et le lot A de corrections bloquantes sont validés.
+L’audit global, le lot A et le lot B sont validés.
 
-La prochaine étape est la formalisation des traces, promesses, connaissances, états et chemins accessibles.
+La prochaine étape est d’intégrer physiquement les corrections et identifiants dans les scripts sources afin de supprimer les overlays documentaires.
 
 ---
 
@@ -61,7 +61,7 @@ docs/canon/bible/12D_PLANS_SCENES_J17_J21.md
 docs/canon/bible/12E_AUDIT_GLOBAL_COHERENCE_J01_J21.md
 ```
 
-`12E` reste une archive canonique d’architecture. Son ancien statut de production est supersédé par l’audit global des dialogues.
+`12E` reste une archive canonique d’architecture. Son ancien statut de production est supersédé par les audits et contrats actuels.
 
 ## Scripts, audits et corrections
 
@@ -86,13 +86,27 @@ docs/canon/dialogues/J01_J21_AUDIT_GLOBAL_DIALOGUES_CONTINUITE.md
 docs/canon/dialogues/J01_J21_LOT_A_CORRECTIONS_BLOQUANTES.md
 ```
 
+## Contrats pré-runtime
+
+```text
+docs/canon/dialogues/J01_J21_TRACE_REGISTRY.md
+docs/canon/dialogues/J01_J21_PROMISE_REGISTRY.md
+docs/canon/dialogues/J01_J21_KNOWLEDGE_REGISTRY.md
+docs/canon/runtime/SEASON_1_NARRATIVE_STATE_CONTRACT.md
+docs/canon/dialogues/J01_J21_REACHABILITY_MATRIX.md
+```
+
 Ordre d’autorité actuel :
 
 ```text
 script source
 → lot A lorsque concerné
+→ registres et contrat d’état
+→ reachability matrix
 → audit global
 ```
+
+Le lot C doit supprimer progressivement la nécessité de l’overlay lot A en intégrant les corrections dans les scripts.
 
 ## Communication
 
@@ -109,7 +123,7 @@ plan détaillé
 → script complet
 → audit global validé
 → lot A : continuité bloquante validée
-→ lot B : registres et contrats d’état
+→ lot B : registres et contrats d’état validés
 → lot C : consolidation des sources et statuts
 → lot D : polish des voix
 → validation Ludovic
@@ -124,9 +138,9 @@ plan détaillé
 
 Aucune nouvelle modification technique J07–J21 avant :
 
-- registres de traces, promesses et connaissances ;
-- contrat d’état et matrice de reachability ;
-- consolidation des sources ;
+- consolidation des scripts sources ;
+- résolution des créateurs et traces encore ouverts ;
+- consolidation J01–J09 ;
 - passe de naturel ;
 - décision explicite de reprise technique.
 
@@ -134,51 +148,54 @@ J06 reste techniquement non conforme jusqu’à la future migration.
 
 ---
 
-# 4. Lot A — état validé
+# 4. Lot B — état validé
 
 ```text
-A1 calendrier J17 / J21 corrigé
-A2 promesse Sandra payée ou fermée en J12
-A3 co-présence rendue conforme text-only
-A4 posture finale C strictement conditionnelle
+28 traces de branche avec audience et retrait
+24 promesses avec dates et statuts
+44 faits de connaissance avec sources et certitudes
+contrat d’état borné sans scores
+reachability de chaque sortie J17 vers J21
 ```
 
-Les corrections vivent temporairement dans une autorité corrective dédiée jusqu’au lot C.
+Décisions structurantes :
+
+- aucune image de scène ne devient preuve ;
+- aucune promesse ne repose sur un booléen vague ;
+- aucune connaissance forte n’existe sans source ;
+- aucun score de route ou propriétaire de vague ;
+- la finale lit `final_trace_id` et les contradictions déjà actives.
 
 ---
 
-# 5. Lot B — prochaine tranche
+# 5. Lot C — prochaine tranche
 
-Documents à produire :
+Travaux documentaires :
 
 ```text
-J01_J21_TRACE_REGISTRY.md
-J01_J21_PROMISE_REGISTRY.md
-J01_J21_KNOWLEDGE_REGISTRY.md
-SEASON_1_NARRATIVE_STATE_CONTRACT.md
-J01_J21_REACHABILITY_MATRIX.md
+C1 intégrer les corrections J01–J09 dans les sources autoritatives
+C2 intégrer le lot A dans J10, J12, J14, J17 et J21
+C3 remplacer les formulations génériques par trace_id / promise_id / fact_id
+C4 fixer les créateurs d’image encore non résolus
+C5 sourcer ou réduire la connaissance Pauline / Marie en J19
+C6 renforcer dans J11 l’indépendance matérielle Mathilde
+C7 marquer clairement les documents historiques supersédés
 ```
 
-Objectifs :
-
-- donner un identifiant à chaque trace réutilisable ;
-- garantir que chaque promesse possède un statut ;
-- attribuer chaque connaissance à une source ;
-- borner les états relationnels ;
-- prouver que chaque sortie majeure atteint une finale cohérente.
+Le lot C ne modifie toujours pas le runtime.
 
 ---
 
-# 6. Tests obligatoires après lot B
+# 6. Tests obligatoires après lot C
 
-- aucune trace J14/J21 sans identifiant ;
-- aucune promesse sans date et statut ;
-- aucune connaissance forte sans source ;
-- aucun état synonyme non normalisé ;
-- aucune branche fermée rouverte sans événement ;
-- chaque aftercare possède un paiement ;
-- chaque état J17 possède une variante J21 atteignable ;
-- aucune explosion de centaines de flags.
+- aucun passage contradictoire avec le lot A ne reste dans les scripts ;
+- chaque trace citée possède un `trace_id` ;
+- chaque promesse importante possède un `promise_id` ;
+- chaque affirmation de connaissance forte possède un `fact_id` ;
+- les créateurs d’images diégétiques sont exacts ;
+- la branche physique Mathilde exige une indépendance matérielle réelle ;
+- les anciens audits servent d’historique, pas de patch mental ;
+- aucun runtime ou asset modifié.
 
 ---
 
@@ -190,7 +207,8 @@ Objectifs :
 | Scripts J07–J21 | validés sous autorités correctives |
 | Audit global des dialogues | validé |
 | Lot A | validé |
-| Lot B | prochaine étape |
+| Lot B | validé |
+| Lot C | prochaine étape |
 | Runtime J07–J21 | gelé |
 | Runtime J06 | non conforme |
 | Images finales | à produire |
@@ -200,7 +218,7 @@ Objectifs :
 # 8. Règle finale
 
 ```text
-Une histoire complexe devient implémentable
-lorsque ses traces, ses promesses et ses connaissances
-possèdent des identifiants aussi précis que ses dialogues.
+Les contrats définissent maintenant la vérité narrative.
+Le lot C doit faire en sorte que chaque script la dise directement,
+sans dépendre d’un correctif lu à côté.
 ```
