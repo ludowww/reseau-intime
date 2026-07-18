@@ -2,7 +2,7 @@
 
 ## Statut
 
-**Catégorie : Canon candidat à validation narrative**
+**Catégorie : Canon validé narrativement — source pré-runtime consolidée**
 
 **Périmètre : J10 uniquement**
 
@@ -352,8 +352,10 @@ Le résultat revient après séparation.
 État :
 
 ```text
-rencontre J10 non tenue
-une seule alternative conditionnelle
+promise_id: sandra_cafe_saturday_1100
+status: CONDITIONAL
+confirmation_deadline: J11 vendredi 18 h
+possible_due_at: J12 samedi 11 h
 aucune escalade J11
 ```
 
@@ -1774,3 +1776,16 @@ Aucune promesse n’est forcée.
 Aucune route non sélectionnée n’est punie.
 
 > **J10 ne récompense pas la personne la plus disponible. Elle donne une forme réelle à la continuité que les actes précédents ont effectivement construite.**
+
+---
+
+# Annexe canonique — Handoff lot C
+
+La branche Sandra alternative est payée, refusée ou expirée dans le préambule J12.
+
+```text
+promise_id: sandra_cafe_saturday_1100
+trace_id: j10_mathilde_outfit_choice_01
+```
+
+Une alternative conditionnelle ne devient jamais une progression J11.

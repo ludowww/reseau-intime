@@ -2,7 +2,7 @@
 
 ## Statut
 
-**Catégorie : Canon candidat à validation narrative**
+**Catégorie : Canon validé narrativement — source pré-runtime consolidée**
 
 **Périmètre : J07 uniquement**
 
@@ -79,7 +79,7 @@ qui n’est ni neutre ni omniscient.
 - Nico connaît une contradiction limitée et précisément sourcée ;
 - Nico a nommé son propre intérêt pour Marie et Mathilde ;
 - il a explicitement refusé la position de conseiller neutre ;
-- Player et Nico ont prévu une continuation mardi à 18 h 45 ;
+- Player peut avoir accepté, amendé ou refusé une continuation Nico ;
 - une obligation professionnelle Raphaëlle existe avant mardi 19 h ;
 - une demande domestique Marie/Mathilde existe, est amendée ou refusée ;
 - J08 dispose d’au moins deux attentes capables de se superposer ;
@@ -603,7 +603,11 @@ Après les trois branches :
 
 > Passe à 18 h 45 si tu veux qu’on termine ça sans le faire tenir dans des bulles.
 
-**Réponse Player guidée**
+Player reçoit un vrai choix.
+
+## N1 — Accepter mardi
+
+**Player**
 
 > je passe. 18 h 45
 
@@ -619,25 +623,50 @@ Après les trois branches :
 
 > Ne me fais pas garder une chaise pour une philosophie.
 
-## Conséquence
-
-Une attente réelle existe :
-
 ```text
-mardi 18 h 45
-Player doit passer avant le service de Nico
-ou prévenir clairement qu’il ne vient pas
+promise_id: nico_j07_tuesday_1845
+status: ACTIVE
 ```
 
-Cette attente n’est pas :
+## N2 — Proposer jeudi conditionnel
 
-- une route Nico–Player ;
-- une permission concernant Marie ;
-- une permission concernant Mathilde ;
-- un alibi ;
-- une promesse de partage d’images.
+**Player**
 
----
+> mardi non. jeudi avant ton service si on confirme avant midi
+
+**23:01 — Nico**
+
+> Conditionnel, alors.
+
+**23:02 — Nico**
+
+> Sans confirmation, je ne garde rien.
+
+```text
+promise_id: nico_j07_thursday_conditional
+status: CONDITIONAL
+```
+
+## N3 — Fermer la continuation
+
+**Player**
+
+> pas besoin de remettre. merci d’avoir parlé
+
+**23:01 — Nico**
+
+> D’accord.
+
+**23:02 — Nico**
+
+> On garde le reste normal.
+
+```text
+promise_id: nico_j07_tuesday_1845
+status: REFUSED
+```
+
+Cette continuation n’est jamais une route Nico–Player, un alibi, une permission concernant Marie ou Mathilde, ni une promesse d’image.
 
 # 10. Fenêtre D — 23:16 — Marie et le constat
 
@@ -1174,3 +1203,18 @@ travail
 en attentes capables d’entrer en conflit pendant J08.
 
 > **La journée ne demande pas à Player quelle femme il veut. Elle lui demande quelle part de lui-même il accepte de montrer à un ami qui a lui aussi quelque chose à gagner.**
+
+---
+
+# Annexe canonique — Identifiants consolidés
+
+```text
+promise_id: raphaelle_j07_mobile_review
+promise_id: nico_j07_tuesday_1845
+promise_id: nico_j07_thursday_conditional
+promise_id: marie_j07_household_request
+trace_id: j07_nico_confidence_01
+fact_id: fact_nico_received_player_confidence
+```
+
+Seuls les choix réellement acceptés deviennent des promesses actives.

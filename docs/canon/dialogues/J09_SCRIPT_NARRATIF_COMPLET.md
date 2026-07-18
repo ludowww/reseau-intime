@@ -2,7 +2,7 @@
 
 ## Statut
 
-**Catégorie : Canon candidat à validation narrative**
+**Catégorie : Canon validé narrativement — source pré-runtime consolidée**
 
 **Périmètre : J09 uniquement**
 
@@ -407,46 +407,23 @@ Ce choix n’est pas formulé comme :
 
 # 8. Branche A — Player arrive à 18 h
 
-## 8.1 Co-présence et messagerie limitée
+## 8.1 Co-présence hors téléphone
 
 Player et Marie sont dans le même lieu.
 
-Les messages sont uniquement :
-
-- logistiques ;
-- courts ;
-- justifiés par la salle, le bruit ou la distance ;
-- jamais une conversation de couple complète.
-
-Mode :
+Le chat direct s’arrête.
 
 ```text
-SAME_VENUE_LOGISTICS
+17:57–ouverture
+montage hors téléphone
+aucun dialogue oral transcrit
+Player prend les tâches déjà annoncées
+Marie et Élodie poursuivent leur travail
 ```
 
-## Script d’arrivée
+Les anciennes lignes logistiques `Tu es où ?`, `derrière les chaises` et `rallonge noire côté scène` deviennent un état de scène non dialogué.
 
-**17:57 — Marie**
-
-> Tu es où ?
-
-**Réponse Player guidée**
-
-> derrière les chaises
-
-**17:58 — Marie**
-
-> Réponse inquiétante.
-
-**17:58 — Marie**
-
-> Rallonge noire côté scène.
-
-**17:58 — Marie**
-
-> Pas la grise. Elle a déjà fait tomber un projecteur et une vocation.
-
----
+Le prochain échange direct a lieu après une séparation réelle.
 
 # 9. Choix secondaire A — Qualité de la présence au montage
 
@@ -1069,22 +1046,59 @@ Cette branche est importante :
 
 > Demain 20 h 30, tu peux ?
 
-**Réponse Player guidée**
+Player reçoit un vrai choix.
 
-> oui
+### M1 — Accepter
 
-**23:09 — Marie**
+**Player**
+
+> oui. 20 h 30
+
+**Marie**
 
 > Alors je bloque.
+
+```text
+promise_id: marie_j09_dinner_j10_2030
+status: ACTIVE
+```
+
+### M2 — Proposer vendredi
+
+**Player**
+
+> demain non. vendredi 20 h 30 si tu peux
+
+**Marie**
+
+> Vendredi, oui.
+
+```text
+promise_id: marie_j09_dinner_friday_2030
+status: ACTIVE
+```
+
+### M3 — Refuser
+
+**Player**
+
+> non. ne bloque pas pour moi
+
+**Marie**
+
+> D’accord.
+
+```text
+promise_id: marie_j09_dinner_j10_2030
+status: REFUSED
+```
 
 ### État de sortie
 
 ```text
 présence limitée mais fiable
-retour couple J10 à 20 h 30
+retour couple conditionnel au choix réel
 ```
-
----
 
 # 21. Retour après branche C — Absence honnête
 
@@ -1120,30 +1134,19 @@ retour couple J10 à 20 h 30
 
 > Demain 20 h 30, tu es là ?
 
-**Réponse Player guidée**
+Player accepte, propose vendredi ou refuse exactement comme dans la branche B3.
 
-> oui. je bloque
-
-**23:10 — Marie**
-
-> D’accord.
+Aucune réponse guidée ne crée automatiquement le dîner.
 
 ### État de sortie
 
 ```text
 absence honnête correctement absorbée
 Marie autonome
-retour couple J10 à 20 h 30
+retour couple conditionnel au choix réel
 ```
 
-Le jeu ne traduit pas cette branche par :
-
-- Marie plus froide par principe ;
-- une soirée ratée ;
-- une autre personne qui remplace Player ;
-- une punition de route.
-
----
+Le jeu ne traduit pas cette branche par une soirée ratée, une autre personne qui remplace Player ou une punition de route.
 
 # 22. Effets de la qualité J08 sur le ton J09
 
@@ -1224,10 +1227,10 @@ Elle crée seulement un état de couple secondaire.
 ## États possibles Marie
 
 ```text
-M1 présence active + dîner J10 20 h 30
-M2 présence tardive fiable + dîner J10 20 h 30
-M3 présence bornée + dîner J10 20 h 30
-M4 absence honnête + dîner J10 20 h 30
+M1 présence active + dîner J10 possible selon choix
+M2 présence tardive fiable + dîner J10 possible selon choix
+M3 présence bornée + dîner J10 accepté, amendé ou refusé
+M4 absence honnête + dîner J10 accepté, amendé ou refusé
 M5 présence distraite + retour à confirmer
 M6 présence de spectateur + désir vu mais action insuffisante
 ```
@@ -1267,7 +1270,7 @@ fournissent une bonne base fonctionnelle.
 - envie personnelle distincte ;
 - rallonge noire ;
 - salle bruyante ;
-- messages logistiques en co-présence ;
+- montage hors téléphone pendant la co-présence ;
 - différence entre présence et attention ;
 - retour après séparation.
 
@@ -1524,3 +1527,19 @@ J09 ne verrouille aucune route extérieure.
 Elle donne seulement au couple une nouvelle vérité : Marie est désirable parce qu’elle possède une vie à rejoindre, pas parce qu’elle menace de partir.
 
 > **Player peut regarder Marie vivre. Il peut aussi entrer dans cette vie. J09 montre que ce ne sont pas les mêmes actes.**
+
+---
+
+# Annexe canonique — Identifiants consolidés
+
+```text
+trace_id: j09_marie_black_dress_private_01
+trace_id: j09_marie_laverriere_public_01
+trace_id: j09_marie_laverriere_after_01
+promise_id: marie_j09_dinner_j10_2030
+promise_id: marie_j09_dinner_friday_2030
+fact_id: fact_player_received_marie_black_dress_image
+fact_id: fact_marie_public_professional_version_visible
+```
+
+Créateurs : Marie pour la trace privée ; Élodie pour les traces La Verrière.

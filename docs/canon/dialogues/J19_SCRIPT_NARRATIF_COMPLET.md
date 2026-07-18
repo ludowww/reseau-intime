@@ -2,7 +2,7 @@
 
 ## Statut
 
-**Catégorie : Canon candidat à validation narrative**
+**Catégorie : Canon validé narrativement — source pré-runtime consolidée**
 
 **Périmètre : J19 uniquement**
 
@@ -1083,7 +1083,7 @@ Silence.
 
 **17:06 — Pauline**
 
-> Moi je sais ce qu’elle m’a déjà confié sur votre couple.
+> Je suis son amie. Je sais que ce qu’on fait la concerne maintenant.
 
 **17:06 — Pauline**
 
@@ -2297,3 +2297,18 @@ Raphaëlle possède une direction.
 Aucune n’est réduite à un hook vide.
 
 > **Une version privée ne reste jamais seulement une image. Avec le temps, elle devient une règle, une dette, une place — ou une porte que son autrice décide de fermer.**
+
+---
+
+# Annexe canonique — Identifiants consolidés
+
+```text
+trace_id: j19_pauline_reciprocal_message_01
+trace_id: j19_raphaelle_creative_access_01
+fact_id: fact_pauline_private_state_defined
+fact_id: fact_raphaelle_access_state_defined
+fact_id: fact_pauline_knows_marie_couple_fragility = NOT_CREATED tant qu’aucune source n’est écrite
+promise_id: raphaelle_future_atelier_saturday_1500
+```
+
+Pauline connaît que ses actes concernent Marie parce que Marie et Player forment un couple public. Elle ne connaît aucune confidence précise de Marie sans source antérieure.

@@ -1,5 +1,8 @@
 # Réseau Intime — 12E Audit global de cohérence J01–J21
 
+> **STATUT HISTORIQUE / SUPERSÉDÉ** — Archive canonique d’architecture. Son ancien statut de production est supersédé par les scripts consolidés, les registres et le contrat d’état.
+
+
 ## Statut
 
 **Catégorie : Canon**

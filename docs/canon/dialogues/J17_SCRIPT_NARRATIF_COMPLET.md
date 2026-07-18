@@ -2,7 +2,7 @@
 
 ## Statut
 
-**Catégorie : Canon candidat à validation narrative**
+**Catégorie : Canon validé narrativement — source pré-runtime consolidée**
 
 **Périmètre : J17 uniquement**
 
@@ -1209,6 +1209,12 @@ Elle agit sans Player.
 
 ---
 
+# 17 bis. Garde text-only consolidée
+
+La conversation ne peut commencer par messages que lorsque Marie et Player se trouvent dans des lieux distincts.
+
+Changer de pièce ne suffit pas. Si aucune séparation réelle n’existe, la conversation hors téléphone est payée à l’heure choisie et le prochain message n’intervient qu’après un départ, un trajet séparé ou un retour dans deux logements distincts.
+
 # 18. Ouverture Marie — La conversation qui ne peut plus être repoussée
 
 Lorsque la discussion existe, elle commence par messages alors que Marie et Player sont séparés.
@@ -1217,7 +1223,7 @@ Marie peut être :
 
 - encore à La Verrière ;
 - en trajet ;
-- dans une autre pièce avec une demande d’espace ;
+- dans un lieu distinct après une séparation physique réelle ;
 - dehors après le départ de Mathilde.
 
 **19:18 — Marie**
@@ -1295,33 +1301,30 @@ selon l’histoire antérieure.
 
 **Player**
 
-> je veux reprendre une vraie place dans notre vie. pas seulement revenir quand ça casse
+> jeudi prochain 20 h 30 pour notre point. et si on décide encore d’essayer, je bloque le dimanche d’après avec toi
 
-**19:25 — Marie**
+**Marie**
 
-> C’est joli.
+> Jeudi 20 h 30.
 
-**19:25 — Marie**
+**Marie**
 
-> Fais plus concret.
+> Une heure réelle.
 
-**Player**
+**Marie**
 
-> dimanche je bloque la journée avec toi. et cette fois je n’ajoute rien autour
+> Le dimanche d’après n’existe pas encore comme récompense.
 
-**19:26 — Marie**
+**Marie**
 
-> Dimanche.
+> On le confirme jeudi si on est toujours capables de tenir la même règle.
 
-**19:26 — Marie**
-
-> Une journée réelle.
-
-**19:27 — Marie**
-
-> Pas une preuve que tout est réparé.
-
-La journée future est créée seulement si elle ne contredit aucune obligation déjà établie.
+```text
+promise_id: couple_review_due_at
+status: ACTIVE
+possible_future_promise: couple_shared_day_due_at
+status: CONDITIONAL
+```
 
 ## C17-A3 — Promesse abstraite
 
@@ -1606,7 +1609,7 @@ Le résultat revient ensuite par texte lorsque les personnages sont de nouveau s
 - Marie sort marcher ;
 - Player quitte temporairement l’appartement ;
 - Marie retourne terminer une tâche ;
-- chacun se place dans une pièce différente avec une demande d’espace.
+- les personnages se séparent réellement avant toute reprise textuelle avec une demande d’espace.
 
 ---
 
@@ -1707,7 +1710,7 @@ Elle leur impose une conséquence et une limite actuelle.
 
 **21:49 — Marie**
 
-> Jusqu’à dimanche.
+> Jusqu’à jeudi prochain, 20 h 30.
 
 **21:49 — Marie**
 
@@ -1767,7 +1770,7 @@ Elle ne signifie pas automatiquement :
 
 **21:48 — Marie**
 
-> Jusqu’à dimanche : aucune nouvelle étape avec personne.
+> Jusqu’à jeudi prochain, 20 h 30 : aucune nouvelle étape avec personne.
 
 **21:48 — Marie**
 
@@ -2483,3 +2486,18 @@ Aucune route extérieure ne reçoit automatiquement la place libérée.
 J17 ferme le séjour de Mathilde et ouvre l’acte des résolutions personnelles.
 
 > **Mathilde quitte une pièce. Ce qui s’est produit dans le foyer, lui, ne peut plus être rangé avec ses affaires.**
+
+---
+
+# Annexe canonique — Identifiants consolidés
+
+```text
+promise_id: marie_j16_couple_conversation_j17
+promise_id: couple_review_due_at
+promise_id: couple_shared_day_due_at
+trace_id: j17_couple_definition_record_01
+fact_id: fact_couple_state_defined
+fact_id: fact_mathilde_left_household
+```
+
+Le checkpoint du couple se situe après J21. J20 ne paie aucune journée Marie promise en J17.

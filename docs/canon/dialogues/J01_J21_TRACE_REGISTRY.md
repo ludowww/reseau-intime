@@ -181,21 +181,21 @@ Règles :
 
 ```text
 trace_id: j02_mathilde_arrival_room_01
-trace_type: PHOTO ou FACT_RECORD selon production finale
+trace_type: FACT_RECORD
 source_day: J02
 source_scene: installation de Mathilde
-creator: à résoudre au lot C avant production
+creator: none
 subjects: [Mathilde, foyer]
-owner: Mathilde ou Marie selon créateur final
+owner: état narratif du foyer
 initial_audience: [Marie, Player, Mathilde] si photo familiale
 current_audience: identique sauf retrait
 storage_location: fil foyer ou archive de scène
 saving_rule: OWNER_ONLY ou SAME_AUDIENCE_ONLY
 transfer_rule: OWNER_CONFIRMATION_REQUIRED
-current_state: ACTIVE ou NOT_CREATED
+current_state: ACTIVE
 knowledge_created: fact_mathilde_stay_started
 eligible_for_j14: false par défaut
-eligible_for_j21: true seulement si PHOTO réellement produite
+eligible_for_j21: false
 legacy_runtime_alias: mathilde_arrival_room_01
 ```
 
@@ -208,7 +208,7 @@ trace_id: j03_marie_laverriere_setup_01
 trace_type: PHOTO ou FACT_RECORD
 source_day: J03 ou journée réconciliée future
 source_scene: vie professionnelle Marie
-creator: Élodie si photo ; sinon aucun créateur
+creator: Élodie si PHOTO ; none si FACT_RECORD
 subjects: [Marie]
 owner: Marie ou La Verrière
 initial_audience: audience professionnelle nommée
@@ -232,9 +232,9 @@ trace_id: j04_pauline_bastien_public_set_01
 trace_type: PHOTO_SET
 source_day: J04
 source_scene: réseau social Pauline / Bastien
-creator: Pauline ou tiers exact à résoudre au lot C
+creator: Pauline via retardateur
 subjects: [Pauline, Bastien, groupe nommé]
-owner: Pauline ou créateur final
+owner: Pauline
 initial_audience: groupe social nommé
 current_audience: groupe social nommé
 storage_location: fil de groupe / dossier social
@@ -328,7 +328,7 @@ trace_id: j09_marie_laverriere_public_01
 trace_type: PHOTO
 source_day: J09
 source_scene: événement La Verrière
-creator: Élodie ou tiers exact nommé
+creator: Élodie
 subjects: [Marie, participants visibles]
 owner: créateur ou La Verrière
 initial_audience: groupe photographié / canal social nommé
@@ -472,7 +472,7 @@ trace_id: j12_laverriere_public_group_set_01
 trace_type: PHOTO_SET
 source_day: J12
 source_scene: convergence La Verrière
-creator: Élodie ou tiers exact nommé
+creator: Élodie
 subjects: participants réellement présents
 owner: La Verrière ou créateur final
 initial_audience: groupe photographié / canal La Verrière nommé
@@ -494,9 +494,9 @@ trace_id: j12_annexe_public_group_set_01
 trace_type: PHOTO_SET
 source_day: J12
 source_scene: continuation sociale à L’Annexe
-creator: personne exacte présente et autorisée
+creator: Sophie
 subjects: participants réellement présents
-owner: créateur final ou groupe social
+owner: Sophie
 initial_audience: groupe photographié nommé
 current_audience: audience initiale
 storage_location: fil social / dossier L’Annexe
@@ -542,7 +542,7 @@ trace_id: j13_pauline_private_version_01
 trace_type: PHOTO
 source_day: J13
 source_scene: S24 les deux versions
-creator: créateur exact du set J12
+creator: Élodie, source j12_laverriere_public_group_set_01
 selected_by: Pauline
 subjects: [Pauline]
 owner: Pauline
@@ -911,13 +911,7 @@ mathilde_arrival_room_01
 marie_laverriere_setup_01
 ```
 
-Le mapping de :
-
-```text
-laverriere_public_group_photo_set_01
-```
-
-reste bloqué jusqu’à clarification de son jour, de son créateur et de son audience.
+Le legacy `laverriere_public_group_photo_set_01` se mappe vers `j12_laverriere_public_group_set_01`, créé par Élodie pour l’audience La Verrière nommée.
 
 Le lot C devra :
 

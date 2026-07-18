@@ -2,7 +2,7 @@
 
 ## Statut
 
-**Catégorie : Canon candidat à validation narrative**
+**Catégorie : Canon validé narrativement — source pré-runtime consolidée**
 
 **Périmètre : J14 uniquement**
 
@@ -83,12 +83,12 @@ J14 existe uniquement si une trace réelle a survécu J13.
 Traces possibles :
 
 ```text
-version privée Pauline
-image masquée Raphaëlle
-message d’heure ou d’alibi Nico
-image destinée Sandra
-notification ou image Mathilde
-photo publique Marie juxtaposée à une notification privée
+j13_pauline_private_version_01
+j13_raphaelle_masked_version_01
+j13_nico_alibi_or_hour_message_01
+j11_sandra_chosen_image_01
+j10_mathilde_outfit_choice_01 ou j11_mathilde_physical_aftercare_01
+j09_marie_black_dress_private_01 juxtaposée à j09_marie_laverriere_public_01
 ```
 
 Si aucune trace privée ou ambiguë n’existe réellement, J14 mute vers une journée de respiration et de préparation J15.
@@ -180,11 +180,12 @@ Le témoin ne sait pas laquelle sans explication.
 Le jeu mémorise donc séparément :
 
 ```text
-trace_vue
-réaction_player
-explication_player
-contexte_réel
-interprétation_témoin
+trace_id
+witness_id
+visible_fields
+player_reaction
+player_explanation
+knowledge_id: fact_witness_saw_limited_trace
 ```
 
 ---
@@ -199,7 +200,8 @@ Structure commune :
 situation ordinaire crédible
 → écran visible par accident
 → réaction immédiate Player
-→ échange textuel après séparation ou depuis des pièces distinctes
+→ séparation physique réelle
+→ échange textuel après que l’un des personnages a quitté le lieu
 → personne représentée prévenue si nécessaire
 → état de connaissance précis
 → obligation J15
@@ -1779,3 +1781,18 @@ Si aucune trace n’a réellement survécu, aucun accident n’est inventé.
 J14 se ferme sur au moins deux obligations que J15 rendra incompatibles.
 
 > **L’écran ne révèle pas la vérité entière. Il révèle qu’une vérité existe et que Player savait où elle était cachée.**
+
+---
+
+# Annexe canonique — Identifiants consolidés
+
+```text
+trace_id: j14_discovery_event_01
+fact_id: fact_witness_saw_limited_trace
+fact_id: fact_trace_controller_informed_of_audience_breach
+fact_id: fact_player_explanation_to_witness
+promise_id: j14_witness_clarification
+promise_id: j14_inform_trace_controller
+```
+
+Aucune variante J14 n’existe sans `discovered_trace_id` déjà créé et encore affichable.

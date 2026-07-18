@@ -2,7 +2,7 @@
 
 ## Statut
 
-**Catégorie : Canon candidat à validation narrative**
+**Catégorie : Canon validé narrativement — source pré-runtime consolidée**
 
 **Périmètre : J11 uniquement**
 
@@ -211,7 +211,19 @@ Possible uniquement sur une variante très avancée :
 - limite respectée ;
 - Marie absente pour une raison indépendante ;
 - Mathilde prend l’initiative ;
-- aucun usage du logement comme accès.
+- aucun usage du logement comme accès ;
+- Mathilde possède une solution indépendante pour dormir ;
+- son hébergement ne dépend pas de son oui ;
+- elle peut quitter le lieu avec ses affaires et sa sécurité intactes ;
+- l’absence de Marie n’a pas été organisée pour créer la fenêtre.
+
+```text
+mathilde_has_independent_sleep_option = true
+mathilde_can_leave_safely = true
+marie_absence_not_engineered = true
+```
+
+À défaut, le plafond est `PROXIMITY_CONSENTED` et aucun passage physique explicite n’est éligible.
 
 ### Marie
 
@@ -1920,3 +1932,19 @@ J11 ne demande pas si le joueur veut davantage de contenu.
 Elle demande si ce qui existait encore sous une excuse peut maintenant être nommé, limité, incarné ou abandonné.
 
 > **Le désir devient adulte lorsqu’il cesse d’être une interprétation confortable et accepte enfin une règle, une conséquence et un lendemain.**
+
+---
+
+# Annexe canonique — Identifiants consolidés
+
+```text
+trace_id: j11_sandra_chosen_image_01
+trace_id: j11_raphaelle_chosen_result_01
+trace_id: j11_mathilde_physical_aftercare_01
+fact_id: fact_sandra_chose_private_image_for_player
+fact_id: fact_raphaelle_chose_player_for_result_image
+fact_id: fact_mathilde_physical_event_occurred
+aftercare: aftercare_mathilde_j11
+```
+
+Sandra crée sa propre image. Maud crée le résultat Raphaëlle. Une branche physique Mathilde reste impossible sans indépendance matérielle réelle.

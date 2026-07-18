@@ -2,7 +2,7 @@
 
 ## Statut
 
-**Catégorie : Canon candidat à validation narrative**
+**Catégorie : Canon validé narrativement — source pré-runtime consolidée**
 
 **Périmètre : J21 uniquement**
 
@@ -436,25 +436,18 @@ Player doit répondre réellement :
 
 > Phrase toujours étrange.
 
-Silence.
+**07:44 — Marie**
+
+> Jeudi 20 h 30 tient toujours.
 
 **07:44 — Marie**
 
-> Dimanche tient toujours.
+> Jusqu’à jeudi, notre règle tient aussi.
 
-**07:44 — Marie**
-
-> Jusqu’à dimanche, notre règle tient aussi.
-
-Player peut répondre :
-
-> oui
-
-ou contester la règle avec conséquence.
-
-Le provisoire reste daté.
-
----
+```text
+promise_id: couple_review_due_at
+status: ACTIVE
+```
 
 # 11. Matin — Reconfiguration en négociation
 
@@ -470,11 +463,9 @@ Le provisoire reste daté.
 
 > On adore.
 
-Puis :
-
 **07:44 — Marie**
 
-> Pour nous : aucune nouvelle étape avant dimanche.
+> Pour nous : aucune nouvelle étape avant jeudi 20 h 30.
 
 **07:45 — Marie**
 
@@ -483,12 +474,6 @@ Puis :
 **07:45 — Marie**
 
 > Pas uniquement quand quelqu’un nous oblige à en parler.
-
-La reconfiguration reste en négociation.
-
-Elle ne devient pas une ouverture automatique.
-
----
 
 # 12. Matin — Double vie fragile
 
@@ -1209,6 +1194,22 @@ Le texte précis dépend de la trace.
 
 ---
 
+# 25 bis. Garde d’éligibilité du choix final
+
+```text
+final_trace_id doit référencer J01_J21_TRACE_REGISTRY.md
+```
+
+Les postures A et B sont toujours disponibles.
+
+La posture C apparaît uniquement si :
+
+```text
+existing_contradiction_id != null
+```
+
+et si cette contradiction était déjà active avant J21. Le jeu n’affiche aucune option C désactivée.
+
 # 26. Posture finale A — Agir selon la nouvelle règle
 
 Player accomplit un acte observable.
@@ -1349,80 +1350,37 @@ aucune fausse récompense
 
 ---
 
-# 28. Posture finale C — Maintenir la contradiction
+# 28. Posture finale C — Maintenir une contradiction déjà active
 
-Cette posture reste possible.
+Cette posture existe uniquement si `existing_contradiction_id` a été créé avant J21 et reste actif à la fin de J20.
 
-Elle ne crée pas une nouvelle route.
-
-Elle confirme qu’une contradiction déjà active sera emportée dans la suite.
-
-Exemples :
-
-- garder une copie interdite ;
-- mentir encore sur une heure ;
-- maintenir un compartiment ;
-- présenter une fracture comme une séparation ;
-- traiter une invitation limitée comme un futur accès ;
-- demander à Nico de conserver une version ;
-- faire croire à Marie qu’une ligne extérieure est fermée ;
-- prétendre qu’un retrait a effacé la dette.
-
-## 28.1 Réponse ou acte
-
-Le texte dépend de la branche.
-
-### Double vie
-
-**Player → Marie**
-
-> 19 h 30
-
-alors que Player sait qu’une autre obligation rend cette heure fausse.
-
-### Image
-
-Player conserve une copie que l’autrice croit supprimée.
-
-Aucun message ne doit décrire une technique de dissimulation.
-
-### Compartiment
-
-**Player → Pauline**
-
-> on garde la règle actuelle
-
-tout en maintenant une version différente auprès de Marie.
-
-### Alibi
-
-**Player → Nico**
-
-> si on te demande, ne corrige pas
-
-## 28.2 Réponse du réseau
-
-La contradiction n’est pas toujours découverte immédiatement.
-
-La finale montre néanmoins qu’elle possède déjà :
-
-- une trace ;
-- une heure ;
-- un témoin ;
-- une dette ;
-- une version contradictoire ;
-- ou un comportement répétitif.
-
-## 28.3 Sortie macro
+Contradictions éligibles :
 
 ```text
-contradiction consciemment maintenue
-future conséquence préparée
-saison provisoirement résolue mais instable
-aucune présentation comme victoire propre
+COUPLE_FALSE_HOUR
+COUPLE_FALSE_PLACE
+COUPLE_DOUBLE_LIFE
+SANDRA_COPY_RETAINED_SECRETLY
+PAULINE_COMPARTMENT
+PAULINE_RECIPROCAL_TRACE
+RAPHAELLE_CLEAR_SECRET
+NICO_SHARED_ALIBI
+NICO_ACCOMPLICE_DEBT
 ```
 
----
+J21 ne peut jamais créer :
+
+- la première copie non autorisée ;
+- le premier mensonge d’heure ;
+- le premier alibi ;
+- la première audience compromise ;
+- une nouvelle route sombre.
+
+La réponse finale maintient seulement la contradiction existante. Si J20 a fermé un alibi ou si une trace a été supprimée sans copie active, C est inéligible.
+
+```text
+final_posture: EXISTING_CONTRADICTION_MAINTAINED
+```
 
 # 29. Effet de l’accumulation sur le dernier choix
 
@@ -1491,77 +1449,79 @@ Le résultat revient uniquement si une séparation ultérieure le nécessite.
 
 # 31. Soir — Reconquête active
 
-Player tient l’heure.
+Le dernier échange direct a lieu avant la co-présence.
 
-La co-présence arrête le chat.
+**18:52 — Marie**
 
-Après un court moment où Marie s’éloigne ou repart chercher quelque chose :
+> Je pars de La Verrière dans dix minutes.
 
-**21:08 — Marie**
+**18:52 — Marie**
 
-> Le pain était bon.
+> Tu as pris du pain ?
 
-**Player guidé**
+**Player**
 
-> avis très romantique
+> oui
 
-**21:09 — Marie**
+**18:53 — Marie**
 
-> Je peux être drôle ET difficile à reconquérir.
+> Bien.
 
-Puis :
+**18:53 — Marie**
 
-**21:10 — Marie**
+> Et demain, ne me demande pas si ce soir a tout réparé.
 
-> Demain, ne me demande pas si ce soir a tout réparé.
-
-**21:10 — Marie**
+**18:54 — Marie**
 
 > Recommence juste à être là.
-
-La saison ne se termine pas sur un pardon total.
-
-Elle se termine sur un comportement à répéter.
-
----
-
-# 32. Soir — Accord provisoire
-
-**21:08 — Marie**
-
-> Je prends la chambre.
-
-**21:09 — Marie**
-
-> Dimanche tient.
-
-**21:09 — Marie**
-
-> Et ce soir n’a pas besoin de devenir plus tendre pour être honnête.
 
 **Player**
 
 > d’accord
 
-**21:10 — Marie**
+**18:54 — Marie**
 
-> Bonne nuit.
+> J’arrive.
 
-La brièveté constitue une fermeture de journée, pas une punition.
+La messagerie s’arrête. La soirée existe hors téléphone sans dialogue affiché.
 
----
+# 32. Soir — Accord provisoire
+
+Avant de rentrer, Marie écrit :
+
+**18:52 — Marie**
+
+> Je rentre vers 20 h 30.
+
+**18:53 — Marie**
+
+> Je prends la chambre ce soir.
+
+**18:53 — Marie**
+
+> Jeudi tient.
+
+**Player**
+
+> d’accord
+
+**Marie**
+
+> À tout à l’heure.
+
+La messagerie s’arrête lorsque Marie rentre. Aucun `Bonne nuit` interactif n’est nécessaire depuis deux chambres du même logement.
 
 # 33. Soir — Reconfiguration en négociation
 
-**21:08 — Marie**
+**18:52 — Marie**
 
 > La règle a tenu aujourd’hui.
 
-**21:08 — Marie**
+**18:52 — Marie**
 
 > Une journée.
 
-**21:09 — Marie**
+**18:53 — Marie**
 
 > Je préfère compter les actes plutôt que déclarer une nouvelle vie après vingt-quatre heures.
 
@@ -1569,13 +1529,11 @@ La brièveté constitue une fermeture de journée, pas une punition.
 
 > oui
 
-**21:10 — Marie**
+**18:54 — Marie**
 
-> Dimanche.
+> Jeudi 20 h 30.
 
-La promesse d’extension existe sans annuler le provisoire.
-
----
+La messagerie s’arrête à la co-présence.
 
 # 34. Soir — Double vie fragile
 
@@ -2171,3 +2129,19 @@ Les mêmes images existent.
 Les personnes qui les regardent ne sont plus les mêmes.
 
 > **La dernière photo ne change pas. Ce sont les permissions, les absences, les dettes et les vies autour d’elle qui lui donnent enfin un autre sens.**
+
+---
+
+# Annexe canonique — État final consolidé
+
+```text
+final_trace_id
+final_trace_state
+final_trace_controller
+final_trace_audience
+existing_contradiction_id
+final_posture_options
+final_posture
+```
+
+`final_trace_id` doit exister dans le registre des traces. Une image retirée peut revenir uniquement comme `ABSENCE_MARKER`, jamais comme fichier restauré.
