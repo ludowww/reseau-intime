@@ -1,14 +1,14 @@
 # Narrative Canon Status — Current
 
-> **Current phase: narrative registries and state contracts — lot B**
+> **Current phase: source and status consolidation — lot C**
 
 The Bible Narrative covers J01–J21.
 
-J07–J21 have complete validated narrative scripts under corrective authorities.
+J07–J21 have complete validated narrative scripts under corrective authorities and pre-runtime contracts.
 
-The complete-season dialogue audit and blocking correction lot A are validated.
+The complete-season dialogue audit, lot A and lot B are validated.
 
-The next phase is the formalization of traces, promises, knowledge, bounded states and reachability.
+The next phase is to consolidate corrections and canonical identifiers physically into the source scripts.
 
 ---
 
@@ -22,8 +22,9 @@ North Star
 → Full narrative scripts
 → Validated complete-season dialogue audit
 → Validated correction lot A
-→ Narrative registries and state contracts
-→ Source consolidation and voice polish
+→ Validated registries, state contract and reachability
+→ Source consolidation
+→ Voice polish
 → Ludovic validation
 → Explicit technical-resumption decision
 → Runtime adaptation
@@ -37,9 +38,9 @@ Runtime does not define narrative authority.
 
 No new technical integration for J07–J21 before:
 
-1. trace, promise and knowledge registries exist ;
-2. narrative states and reachability are normalized ;
-3. source files physically consolidate corrective overlays ;
+1. source files physically consolidate corrective overlays and canonical IDs ;
+2. unresolved diegetic image creators are fixed ;
+3. J01–J09 source authority is reconciled ;
 4. the long-form voice polish is validated ;
 5. an explicit decision resumes technical work.
 
@@ -67,6 +68,8 @@ mandatory Marie return
 
 ## 3. Current narrative files
 
+### Scripts and corrective authorities
+
 ```text
 docs/canon/dialogues/J01_J09_AUDIT_CONFORMITE_NARRATIVE.md
 docs/canon/dialogues/J07_SCRIPT_NARRATIF_COMPLET.md
@@ -88,6 +91,16 @@ docs/canon/dialogues/J01_J21_AUDIT_GLOBAL_DIALOGUES_CONTINUITE.md
 docs/canon/dialogues/J01_J21_LOT_A_CORRECTIONS_BLOQUANTES.md
 ```
 
+### Lot B contracts
+
+```text
+docs/canon/dialogues/J01_J21_TRACE_REGISTRY.md
+docs/canon/dialogues/J01_J21_PROMISE_REGISTRY.md
+docs/canon/dialogues/J01_J21_KNOWLEDGE_REGISTRY.md
+docs/canon/runtime/SEASON_1_NARRATIVE_STATE_CONTRACT.md
+docs/canon/dialogues/J01_J21_REACHABILITY_MATRIX.md
+```
+
 Status:
 
 ```text
@@ -95,111 +108,149 @@ Architecture J01–J21: validated
 Scripts J07–J21: validated under corrective authorities
 Global dialogue audit: validated
 Correction lot A: validated
-Correction lot B: next
+Narrative contract lot B: validated
+Source consolidation lot C: next
 Runtime J07–J21: frozen
 ```
 
 ---
 
-## 4. Lot A result
+## 4. Lot B result
 
-Correction lot A fixes four execution blockers without changing route outcomes.
+### Trace registry
 
-### Calendar
+The season now defines 28 branch-relevant trace entries.
 
-- J17 couple checkpoints are moved after J21 ;
-- the reference checkpoint is Thursday after J21 at 20:30 ;
-- an optional full shared day is confirmed only after that checkpoint ;
-- J20 no longer conflicts with a Marie day promised in J17.
+It separates:
 
-### Sandra promise
+```text
+diegetic trace
+scene image
+message
+access grant
+fact record
+physical print
+absence marker
+```
 
-- the J10 rescheduled Saturday café receives a real confirmation deadline ;
-- J12 contains a conditional morning prelude ;
-- the promise is paid, refused or expired before La Verrière ;
-- the café does not become a second J12 foreground route.
+A non-diegetic scene image can never become evidence.
 
-### Text-only co-presence
+J14 and J21 may use only registered traces.
 
-- interactive direct messaging stops at physical co-presence ;
-- different rooms in one home do not count as separation ;
-- J12 montage becomes a non-dialogued state ;
-- J14, J17 and J21 resume direct messages only after real separation.
+### Promise registry
 
-### Final dark posture
+The season defines 24 structured promises with:
 
-- J21 posture C requires an existing contradiction created before J21 ;
-- it cannot create a first copy, lie, alibi, secret or violated audience ;
-- when no contradiction exists, only postures A and B are available.
+```text
+creation
+acceptance
+due time
+confirmation deadline
+status
+payment or closure
+```
+
+A refusal closes an expectation.
+
+An amendment replaces the previous time instead of keeping both active.
+
+### Knowledge registry
+
+The season defines 44 branch-relevant facts.
+
+It separates:
+
+```text
+observed
+told directly
+confirmed
+inferred
+suspected
+unknown
+```
+
+Friendship or social proximity does not create a precise confidence retroactively.
+
+### Bounded state contract
+
+The state contract replaces route scores and owners with:
+
+- one bounded couple state ;
+- one household state ;
+- one bounded state for Sandra, Mathilde, Pauline, Raphaëlle and Nico ;
+- structured promises, obligations, traces and knowledge ;
+- a short set of active contradictions ;
+- a light foreground history.
+
+### Reachability
+
+The new matrix proves:
+
+- every J17 couple outcome reaches a coherent J21 variant ;
+- every critical promise can be paid, amended, refused or expired ;
+- aftercare blocks further adult progression until paid ;
+- closed routes do not reopen automatically ;
+- J21 posture C exists only for a contradiction already active ;
+- the finale is deterministic without scores.
 
 ---
 
-## 5. Corrective authority
+## 5. Superseded legacy concepts
 
-Until source consolidation lot C, the reading order for affected days is:
+The following concepts are no longer authoritative for J01–J21:
+
+```text
+lie_score
+truth_tendency
+attachment score
+route owner
+R2 owner
+candidate pool
+external ticket
+wave owner
+passive preference score
+```
+
+The historical `docs/16_ROUTE_REACHABILITY_MATRIX.md` remains an archive of earlier design thinking.
+
+The new state contract and J01–J21 matrix are authoritative for season 1.
+
+---
+
+## 6. Current reading order for affected days
+
+Until lot C is completed:
 
 ```text
 source script
-→ J01_J21_LOT_A_CORRECTIONS_BLOQUANTES.md
+→ lot A corrective authority
+→ trace / promise / knowledge registries
+→ narrative state contract
+→ reachability matrix
 → global audit
 ```
 
-Affected sources:
+This overlay is temporary.
 
-```text
-J10
-J12
-J14
-J17
-J21
-```
-
-No future runtime adaptation may use the superseded passages without applying lot A.
+Lot C must integrate the corrections and IDs directly into the scripts.
 
 ---
 
-## 6. Lot B — immediate next work
-
-Lot B must create:
+## 7. Lot C — immediate next work
 
 ```text
-trace registry
-promise registry
-knowledge registry
-bounded narrative state contract
-J01–J21 reachability matrix
+C1 integrate J01–J09 corrections into source authority
+C2 merge lot A replacements into J10, J12, J14, J17 and J21
+C3 replace generic references with trace_id / promise_id / fact_id
+C4 resolve exact creators of diegetic images
+C5 source or reduce Pauline's knowledge of Marie in J19
+C6 strengthen Mathilde's material independence gate in J11
+C7 mark historical production-status documents as superseded
 ```
 
-The registries must support the validated lot A identifiers, including:
+Lot C remains documentation only.
 
-```text
-couple_review_due_at
-couple_shared_day_due_at
-sandra_cafe_saturday_1100
-existing_contradiction_id
-final_trace_id
-```
-
----
-
-## 7. Later correction lots
-
-### Lot C — source consolidation
-
-- integrate J01–J09 corrections into source authority ;
-- merge lot A replacements into J10/J12/J14/J17/J21 ;
-- source Pauline's knowledge of Marie ;
-- resolve exact image creators ;
-- strengthen Mathilde adult-branch independence ;
-- mark architecture audit `12E` as historical for production status.
-
-### Lot D — voice polish
-
-- more banal messages ;
-- partial answers ;
-- fewer symmetrical aphorisms ;
-- less design-language spoken by characters ;
-- one strong line per beat rather than several.
+It must not change route outcomes or introduce runtime schemas beyond the validated narrative contracts.
 
 ---
 
@@ -207,17 +258,16 @@ final_trace_id
 
 Season 1 remains narratively complete and extensible.
 
-Lot A does not revoke:
+Lot B does not reduce the story to data.
 
-- the couple outcomes ;
-- Mathilde's departure ;
-- Sandra's control of traces ;
-- Pauline's compartment outcomes ;
-- Raphaëlle's process and boundary outcomes ;
-- Nico's active friendship position ;
-- the recontextualized-image finale.
+It records only what future scenes need to know:
 
-It makes their calendar and execution rules consistent.
+- what was promised ;
+- what exists ;
+- who knows ;
+- what state each relation reached ;
+- what obligation remains ;
+- which finale is coherent.
 
 ---
 
@@ -227,21 +277,21 @@ It makes their calendar and execution rules consistent.
 J01–J06 playable but requiring reconciliation
 J06 active runtime non-compliant
 J07–J21 narrative only
-lot A applied documentarily
-technical resumption prohibited before lots B–D and explicit approval
+lots A and B validated documentarily
+technical resumption prohibited before lots C–D and explicit approval
 ```
 
-No runtime, JSON, test, tool, asset or gallery modification is authorized by the lot A merge.
+No runtime, JSON, test, tool, asset or gallery modification is authorized by the lot B merge.
 
 ---
 
 ## 10. Next work
 
 ```text
-1. create narrative registries and bounded state contracts
-2. validate the reachability matrix
-3. consolidate corrective overlays into source scripts
-4. complete the voice polish
+1. consolidate corrective overlays and IDs into source scripts
+2. resolve remaining image creators and knowledge sources
+3. complete the voice polish
+4. validate the consolidated narrative corpus
 5. decide separately whether to resume technical integration
 ```
 
@@ -250,6 +300,7 @@ No runtime, JSON, test, tool, asset or gallery modification is authorized by the
 ## 11. Final rule
 
 ```text
-Lot A does not change the story.
-It removes the contradictions that prevented the story from being executed exactly.
+The contracts now define narrative truth.
+Lot C must make every source script express that truth directly,
+without requiring a parallel corrective document.
 ```
