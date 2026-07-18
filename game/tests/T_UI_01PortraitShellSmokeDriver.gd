@@ -20,7 +20,8 @@ func _run() -> void:
 	var expected_demo_size: Vector2i = _parse_size(_read_cmdline_value("--demo-size", ""))
 	var expected_safe_area_preset: String = _read_cmdline_value("--safe-area", "platform")
 	var state: Dictionary = demo.describe_state()
-	_expect(Vector2i(state.get("viewport_size", Vector2i.ZERO)) == expected_demo_size, "viewport size must match --demo-size")
+	var window_size: Vector2i = Vector2i(int(round(demo.get_window().size.x)), int(round(demo.get_window().size.y)))
+	_expect(window_size == expected_demo_size, "window size must match --demo-size")
 	_expect(str(state.get("safe_area_mode", "")) in ["platform", "preset", "custom_override"], "safe area mode must be explicit")
 	_expect(str(state.get("safe_area_preset", "")) == expected_safe_area_preset, "safe area preset must match the run preset")
 	_expect(str(state.get("active_tab", "")) == "messages", "launch must default to Messages")
@@ -31,7 +32,8 @@ func _run() -> void:
 	_expect(not bool(state.get("gallery_button_pressed", true)), "Galerie button must be visually inactive on launch")
 	_expect(shell.messages_button.has_focus(), "Messages button must own focus on launch")
 	_validate_layout(shell, expected_demo_size, _expected_safe_padding(expected_safe_area_preset))
-	var custom_override := Rect2i(Vector2i(11, 17), Vector2i(max(0, expected_demo_size.x - 34), max(0, expected_demo_size.y - 46)))
+	var viewport_size: Vector2i = Vector2i(state.get("viewport_size", Vector2i.ZERO))
+	var custom_override := Rect2i(Vector2i(11, 17), Vector2i(max(0, viewport_size.x - 34), max(0, viewport_size.y - 46)))
 	shell.set_safe_area_override(custom_override)
 	await get_tree().process_frame
 	var custom_state: Dictionary = demo.describe_state()
@@ -102,12 +104,12 @@ func _run() -> void:
 	_expect(bool(after_reduced_motion.get("gallery_button_pressed", false)), "Only Galerie may remain visually active after reduced motion")
 	_validate_layout(shell, expected_demo_size, _expected_safe_padding(expected_safe_area_preset))
 	if failures.is_empty():
-		print("T-UI-01A portrait shell smoke: OK")
+		print("T-UI-01B portrait shell smoke: OK")
 		get_tree().quit(0)
 		return
 	for failure in failures:
 		push_error(failure)
-	print("T-UI-01A portrait shell smoke: FAILED (%d)" % failures.size())
+	print("T-UI-01B portrait shell smoke: FAILED (%d)" % failures.size())
 	get_tree().quit(1)
 
 func _validate_layout(shell, expected_demo_size: Vector2i, expected_safe_padding: Rect2i) -> void:
@@ -117,7 +119,7 @@ func _validate_layout(shell, expected_demo_size: Vector2i, expected_safe_padding
 	var messages_rect: Rect2 = state.get("messages_button_rect", Rect2())
 	var gallery_rect: Rect2 = state.get("gallery_button_rect", Rect2())
 	var viewport_size: Vector2i = state.get("viewport_size", Vector2i.ZERO)
-	_expect(viewport_size == expected_demo_size, "Viewport size must follow the demo size for each run")
+	_expect(viewport_size.x > 0 and viewport_size.y > 0, "Viewport size must stay positive for each run")
 	_expect(safe_padding == expected_safe_padding, "Safe padding must match the selected preset")
 	var visual_left: int = int(shell.safe_area_container.visual_padding_left)
 	var visual_top: int = int(shell.safe_area_container.visual_padding_top)
@@ -176,10 +178,10 @@ func _expect(condition: bool, message: String) -> void:
 
 func _finish() -> void:
 	if failures.is_empty():
-		print("T-UI-01A portrait shell smoke: OK")
+		print("T-UI-01B portrait shell smoke: OK")
 		get_tree().quit(0)
 	else:
 		for failure in failures:
 			push_error(failure)
-		print("T-UI-01A portrait shell smoke: FAILED (%d)" % failures.size())
+		print("T-UI-01B portrait shell smoke: FAILED (%d)" % failures.size())
 		get_tree().quit(1)

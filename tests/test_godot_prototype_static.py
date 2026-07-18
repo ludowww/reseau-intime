@@ -26,9 +26,9 @@ class GodotPrototypeStaticTests(unittest.TestCase):
         missing = [path.relative_to(ROOT).as_posix() for path in required if not path.exists()]
         self.assertEqual(missing, [])
 
-    def test_project_boots_on_main_scene_and_registers_autoloads(self):
+    def test_project_boots_on_portrait_main_scene_and_registers_autoloads(self):
         project = (GAME / "project.godot").read_text(encoding="utf-8")
-        self.assertIn('run/main_scene="res://scenes/Main.tscn"', project)
+        self.assertIn('run/main_scene="res://scenes/portrait/PortraitMain.tscn"', project)
         self.assertIn('GameState="*res://scripts/core/GameState.gd"', project)
         self.assertIn('DataLoader="*res://scripts/core/DataLoader.gd"', project)
         self.assertIn('EffectApplier="*res://scripts/core/EffectApplier.gd"', project)
