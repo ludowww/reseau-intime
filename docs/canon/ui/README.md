@@ -4,11 +4,13 @@
 
 **Catégorie : Index canonique actif**
 
-**Phase : UI‑01 — système vertical et architecture documentaire**
+**Phase : UI‑FOUNDATION — système vertical et architecture documentaire**
 
 Ce dossier contient les décisions UX/UI actives du projet.
 
 Les maquettes générées pendant les échanges sont des références visuelles. Les décisions transférées ici sont les seules autorités produit.
+
+> Les préfixes `UI_01`, `UI_02` et `UI_03` indiquent l’ordre de lecture des documents. Ils ne désignent pas les lots de travail.
 
 ---
 
@@ -24,7 +26,7 @@ Lecture obligatoire dans cet ordre.
 
 ---
 
-# 2. Décisions verrouillées par UI‑01
+# 2. Décisions verrouillées par UI‑FOUNDATION
 
 ```text
 format cible : portrait smartphone
@@ -41,7 +43,7 @@ interface système : distincte du téléphone diégétique
 
 Le `game/project.godot` reste actuellement en `1280 × 720` horizontal.
 
-UI‑01 documente la cible ; il ne modifie pas encore le runtime.
+UI‑FOUNDATION documente la cible ; il ne modifie pas encore le runtime.
 
 ---
 
@@ -147,16 +149,16 @@ L’UI doit rendre visibles les conséquences par :
 
 # 8. Prochaine étape
 
-Après UI‑01 :
+Après UI‑FOUNDATION :
 
 ```text
-UI‑02 — spécifications détaillées et maquettes finales des écrans manquants
+UI‑SCREENS — spécifications détaillées et maquettes finales des écrans manquants
 ```
 
 Puis :
 
 ```text
-UI‑03 — contrat d’intégration final
+UI‑HANDOFF — contrat d’intégration final
 → décision explicite de reprise technique
 → migration verticale
 ```
