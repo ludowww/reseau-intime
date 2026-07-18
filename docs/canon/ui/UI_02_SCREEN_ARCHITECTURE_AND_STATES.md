@@ -1,12 +1,16 @@
-# Réseau Intime — UI‑02 — Architecture des écrans et états
+# Réseau Intime — UI_02 — Architecture finale des écrans et états
 
 ## Statut
 
 **Catégorie : Canon UX/UI actif**
 
+**Lot : UI‑SCREENS validé**
+
 **Périmètre : écrans narratifs, écrans système, navigation et états secondaires**
 
-**Autorité : inventaire fonctionnel des surfaces nécessaires au produit**
+**Autorité : inventaire fonctionnel final avant intégration**
+
+Les maquettes produites sont des références conceptuelles. Le présent document fait autorité sur leurs détails accidentels.
 
 ---
 
@@ -17,7 +21,7 @@
 Le téléphone utilisé dans l’histoire :
 
 - Messages ;
-- conversations ;
+- conversations privées et de groupe ;
 - images reçues ;
 - Galerie ;
 - notifications ;
@@ -29,19 +33,17 @@ Le jeu lui-même :
 
 - titre ;
 - pause ;
-- sauvegarde ;
-- chargement ;
+- sauvegarde et chargement ;
 - paramètres ;
+- première configuration ;
 - confirmations ;
-- crédits.
+- crédits et informations légales.
 
-Les deux couches partagent une direction visuelle.
-
-Elles ne doivent jamais être confondues narrativement.
+Les deux couches partagent la même direction sombre et anime-inspired, mais ne sont jamais confondues narrativement.
 
 ---
 
-# 2. Carte des écrans diégétiques
+# 2. Écrans diégétiques validés
 
 ## D01 — Liste des conversations
 
@@ -49,29 +51,26 @@ Elles ne doivent jamais être confondues narrativement.
 
 Donner accès aux fils actifs sans présenter de routes.
 
-### Contenu
+### Contenu minimum
 
 ```text
 header Messages
-marqueur de journée
 conversation cards
+aperçu du dernier message
+heure
 non-lus
-aperçus
-heures
 notification compacte
-navigation basse
+navigation Messages / Galerie
 ```
 
 ### Règles
 
-- une ligne par personnage ou groupe ;
-- les épisodes restent dans le même fil ;
-- couleur d’identité stable ;
-- ordre par activité utile, pas par valeur de route ;
-- un fil refusé ne reste pas artificiellement en attente ;
-- un groupe n’apparaît que s’il existe dans le canon du jour.
-
----
+- une ligne visible par personnage ou groupe ;
+- les épisodes internes restent dans le même fil ;
+- couleur, avatar et nom identifient ensemble l’auteur ;
+- l’ordre dépend de l’activité utile, jamais d’une valeur de route ;
+- un fil refusé ou expiré ne reste pas artificiellement en attente ;
+- un groupe n’apparaît que s’il existe réellement dans le canon.
 
 ## D02 — Conversation individuelle
 
@@ -79,32 +78,30 @@ navigation basse
 
 Surface principale du jeu.
 
-### Contenu
+### Contenu minimum
 
 ```text
 header personnage
-jour / moment
 transcript persistant
-bulles
+bulles entrantes colorées
+bulles Player constantes
 images intégrées
-système typing
+indicateur de saisie
 choix Player
+séparateurs de jour
 transition hors téléphone
 ```
 
 ### Règles
 
-- personnage à gauche ;
-- Player à droite ;
-- messages entrants colorés par personnage ;
-- Player conserve une couleur constante ;
+- personnage à gauche, Player à droite ;
 - avatar et nom restent disponibles ;
-- choix une à trois réponses par défaut ;
+- une à trois réponses par défaut ;
+- un choix produit exactement un message Player ;
+- aucun message Player important n’est automatique ;
 - historique long scrollable ;
-- retour exact à la dernière position ;
-- aucun message Player automatique important.
-
----
+- retour exact à la bonne position de lecture ;
+- aucune route, score ou raison technique visible.
 
 ## D03 — Conversation de groupe
 
@@ -112,105 +109,91 @@ transition hors téléphone
 
 Rendre le réseau social lisible sans homogénéiser les voix.
 
-### Contenu
-
-- nom du groupe ;
-- participants ;
-- auteur visible pour chaque message ;
-- couleur propre à chaque auteur ;
-- image partagée ;
-- séparateur de non-lus ;
-- réponse Player.
-
 ### Règles
 
-- aucune couleur neutre unique pour tous les participants ;
-- le nom reste visible même si l’avatar est affiché ;
-- les messages de groupe utilisent les mêmes voix que les fils privés ;
-- un personnage absent n’est pas ajouté pour remplir l’écran.
-
----
+- nom et avatar de l’auteur visibles ;
+- couleur propre à chaque participant ;
+- aucune couleur neutre unique pour tout le groupe ;
+- les voix restent identiques à celles des fils privés ;
+- image partagée et séparateur de non-lus possibles ;
+- aucun personnage absent n’est ajouté pour remplir l’écran.
 
 ## D04 — Transition hors téléphone
 
 ### Fonction
 
-Signaler qu’une rencontre ou activité physique commence sans rejouer un dialogue oral.
+Signaler une rencontre ou une activité physique sans rejouer un dialogue oral.
 
-### Forme
-
-Un séparateur intégré au fil :
+### Informations possibles
 
 ```text
+personne présente
 lieu
-heure ou intervalle
+heure de début
+temps écoulé si utile
 conversation suspendue
-```
-
-Exemple :
-
-```text
-Vous vous retrouvez à La Verrière.
-La conversation reprend après votre séparation.
 ```
 
 ### Règles
 
-- le chat direct s’arrête ;
+- le chat direct s’arrête automatiquement ;
+- aucun message ne peut être envoyé pendant la co-présence ;
 - aucun choix oral n’est affiché ;
-- aucun résumé exhaustif de la scène ;
-- l’événement reste porté par le canon et les conséquences ;
-- la reprise textuelle exige une séparation réelle.
+- aucune notification entrante n’est simulée dans le fil actif ;
+- aucune durée future n’est inventée ;
+- la reprise textuelle exige une séparation réelle ;
+- il n’existe aucun bouton permettant de forcer la fin de la rencontre.
 
-D04 n’est pas une page de rapport.
-
----
+La transition ne constitue ni une archive rejouable ni un rapport de scène.
 
 ## D05 — Photo ouverte
 
 ### Fonction
 
-Voir une image en grand depuis un fil ou la Galerie.
+Afficher une image en grand depuis un fil ou la Galerie.
 
-### Contenu
+### Contenu minimum
 
 ```text
 image
-retour
-personnage ou source
-jour
-état d’accès discret
-navigation précédente / suivante si galerie
+retour vers la provenance
+source ou personnage
+date et contexte discrets
+état d’accès
+navigation précédente / suivante si Galerie
+```
+
+### Actions conditionnelles
+
+```text
+consulter les informations
+ajouter à la Galerie si le runtime l’autorise
+retirer de la Galerie locale si le runtime l’autorise
+partager uniquement avec une permission narrative explicite
 ```
 
 ### Règles
 
-- les métadonnées narratives complexes restent internes ;
-- les actions sauvegarder / partager n’apparaissent que si le produit les autorise réellement ;
-- une image de scène peut être visible par le joueur sans être présentée comme fichier du téléphone ;
-- une image retirée ne peut pas être rouverte depuis un fil ;
-- le plein écran respecte la safe area et le ratio de l’image.
-
----
+- aucune action de partage permanente ou générique ;
+- une image de scène peut être visible sans devenir un fichier diégétique ;
+- une image retirée ne peut pas être rouverte ;
+- une image verrouillée ne possède aucune miniature spoiler ;
+- le plein écran respecte la safe area et le ratio de l’image ;
+- retirer une image n’efface jamais les messages, les faits vécus ou la connaissance déjà acquise.
 
 ## D06 — Galerie par personnage
-
-### Fonction
-
-Présenter une collection photo claire et motivante.
 
 ### Structure
 
 ```text
 header Galerie
-onglets personnages
-nom du personnage actif
-compteur débloqué / total
+onglets personnages scrollables
+compteur discret
 photo grid
 navigation basse
 ```
 
-### Onglets
+### Onglets principaux
 
 ```text
 Marie
@@ -218,57 +201,57 @@ Sandra
 Mathilde
 Pauline
 Raphaëlle
-Nico si contenu réel
+Nico seulement si une collection cohérente existe
 ```
-
-Les onglets sont scrollables horizontalement.
 
 ### États de tuile
 
 ```text
 UNLOCKED  image visible
-NEW       image visible avec indicateur discret
-LOCKED    silhouette / blur non révélateur + cadenas
-REMOVED   emplacement connu mais accès perdu, seulement si utile produit
+NEW       image visible + indicateur discret
+LOCKED    visuel neutre non révélateur + cadenas
+REMOVED   emplacement connu, accès perdu, seulement si utile
 ```
 
 ### Règles
 
 - organisation principale par personnage ;
-- pas d’onglets `Privé / Public / Souvenir` comme navigation primaire ;
+- aucun onglet primaire `Privé / Public / Souvenir` ;
 - aucune rareté ;
 - aucune récompense de route affichée ;
-- une tuile verrouillée ne révèle ni nudité, ni scène, ni branche manquée ;
-- le compteur ne doit pas imposer une complétion parfaite comme seule bonne manière de jouer ;
-- les images de Nico peuvent être classées dans son onglet uniquement si le canon prévoit réellement une collection cohérente.
-
----
+- aucun contenu exact révélé avant déblocage ;
+- le compteur n’impose pas la complétion parfaite comme seule bonne manière de jouer ;
+- un contenu retiré ne redevient jamais accessible par la Galerie ;
+- les messages liés à un contenu retiré restent présents selon le canon du fil.
 
 ## D07 — Transition de journée
 
 ### Fonction
 
-Rendre le temps lisible sans écran récapitulatif lourd.
+Rendre le temps lisible sans récapitulatif technique.
 
-### Forme
+### Contenu possible
 
-- date ou jour ;
-- ambiance visuelle courte ;
-- changement d’heure ;
-- notifications qui apparaissent ensuite ;
-- durée brève ou désactivable.
+```text
+nouveau jour
+nom ou numéro du jour
+date narrative
+ambiance visuelle courte
+notifications arrivées pendant l’absence
+```
 
-### Interdits
+### Règles
 
-- résumé des routes ;
-- liste des conséquences ;
-- score ;
-- écran vide nécessitant un bouton `Continuer` ;
-- replay automatique de la journée.
+- aucun résumé de route, score ou conséquence interne ;
+- aucune notification ne révèle un contenu sensible ;
+- l’ordre d’ouverture reste choisi par le joueur ;
+- l’écran reste bref et compatible avec animations réduites ;
+- une action `Continuer` est autorisée comme simple validation d’écran, jamais comme bouton de progression ou de planification ;
+- l’écran peut se fermer automatiquement selon le réglage d’accessibilité.
 
 ---
 
-# 3. Carte des écrans système
+# 3. Écrans système validés
 
 ## S01 — Écran titre
 
@@ -283,11 +266,12 @@ Crédits
 Quitter
 ```
 
-`Continuer` charge la dernière sauvegarde valide.
+Règles :
 
-L’écran ne révèle aucune branche.
-
----
+- `Continuer` charge la dernière sauvegarde valide ;
+- `Continuer` est masqué ou désactivé sans sauvegarde valide ;
+- aucune branche ou progression intime n’est révélée ;
+- l’avertissement adulte reste accessible sans encombrer l’écran principal.
 
 ## S02 — Menu pause
 
@@ -301,37 +285,31 @@ Paramètres
 Retour au titre
 ```
 
-Le menu peut être un panneau superposé.
+Règles :
 
-Il ne doit pas ressembler à une application du téléphone.
-
----
+- panneau système distinct du téléphone ;
+- le jeu et les notifications sont figés ;
+- une sauvegarde manuelle peut être indisponible pendant une écriture critique, une transition ou une co-présence ;
+- la reprise d’une rencontre ne peut pas être forcée depuis le menu pause.
 
 ## S03 — Sauvegarde / chargement
 
 ### Slots MVP
 
 ```text
-1 sauvegarde automatique
+1 sauvegarde automatique contrôlée
 3 à 5 sauvegardes manuelles
 ```
 
-### Résumé d’un slot
+### Résumé sûr
 
 ```text
 jour narratif
 heure ou moment
-lieu / scène non révélatrice
+description de lieu non révélatrice
 date réelle de sauvegarde
 vignette sûre
-```
-
-Exemple :
-
-```text
-J09 — Mercredi
-La Verrière
-18 juillet 2026 — 21:42
+état valide / corrompu
 ```
 
 ### Interdits
@@ -340,25 +318,24 @@ La Verrière
 - pourcentage ;
 - secret actif ;
 - finale préparée ;
-- image spoiler ;
+- contenu intime spoiler ;
 - état interne brut.
 
-### Actions
+### Règles
 
-- charger ;
-- écraser ;
-- supprimer ;
-- revenir ;
-- confirmation obligatoire pour action destructive.
-
----
+- l’autosave n’est pas déclenché au milieu d’une écriture critique ;
+- un autosave peut être remplacé selon une politique runtime explicitement testée ;
+- les sauvegardes manuelles restent distinctes ;
+- écraser et supprimer exigent une confirmation ;
+- une sauvegarde corrompue n’empêche pas l’accès aux autres slots ;
+- l’erreur indique le slot concerné sans exposer de donnée sensible.
 
 ## S04 — Paramètres
 
 ### Texte et rythme
 
 - vitesse d’apparition ;
-- instantané ;
+- affichage instantané ;
 - taille du texte ;
 - défilement automatique ;
 - indicateur de saisie ;
@@ -371,6 +348,7 @@ La Verrière
 - luminosité ;
 - contraste ;
 - réduction des animations ;
+- réduction des flashes ;
 - effets de fond.
 
 ### Audio
@@ -387,41 +365,60 @@ Aucune voix jouée n’est prévue.
 
 - texte agrandi ;
 - contraste renforcé ;
-- réduction des flashes ;
-- animations instantanées ;
+- animations réduites ou instantanées ;
 - maintien de bouton pour confirmer ;
+- navigation clavier complète ;
+- palettes alternatives pour daltonisme ;
 - couleur jamais utilisée seule ;
-- durées non limitées.
+- aucune limite de temps imposée.
 
----
+### Plateforme
+
+- vibration et économie d’énergie sont conditionnelles à une future version Android ;
+- elles ne sont pas obligatoires pour le MVP PC ;
+- tout réglage nécessitant un redémarrage nomme précisément la conséquence.
 
 ## S05 — Première configuration Player
 
-MVP possible :
+MVP :
 
 ```text
 prénom affiché
-pronoms si réellement utilisés
-avertissement de contenu
+pronoms optionnels seulement s’ils sont réellement utilisés
 confirmation
 ```
 
-Un éditeur d’avatar est différé.
+Règles :
 
-Le jeu ne doit pas demander des informations qui ne seront jamais utilisées.
+- le prénom remplace `Player` dans les textes prévus ;
+- le prénom peut être modifié plus tard ;
+- caractères invalides et longueur maximale sont explicités ;
+- aucun éditeur d’avatar au MVP ;
+- aucune information inutilisée n’est demandée.
 
----
+## S05B — Avertissement de contenu
 
-## S06 — Modales de confirmation
+Écran distinct ou étape du premier lancement :
 
-Cas :
+- fiction réservée aux adultes ;
+- liste courte des thèmes matures ;
+- déclaration locale `J’ai 18 ans ou plus` ;
+- refus permettant de quitter proprement ;
+- accès aux paramètres d’accessibilité avant l’entrée dans le jeu.
 
-- écraser ;
-- supprimer ;
+Cette déclaration n’est pas présentée comme une vérification légale d’identité.
+
+## S06 — Confirmations système
+
+Cas minimum :
+
+- écraser une sauvegarde ;
+- supprimer une sauvegarde ;
 - nouvelle partie ;
+- recommencer ;
 - retour au titre ;
 - quitter sans sauvegarder ;
-- confirmer un choix si option activée.
+- confirmer un choix si l’option est activée.
 
 Toujours :
 
@@ -430,11 +427,10 @@ action claire
 conséquence claire
 bouton annuler visible
 action destructive différenciée
+aucune validation automatique
 ```
 
----
-
-## S07 — Crédits et informations
+## S07 — Crédits et informations légales
 
 - crédits ;
 - version ;
@@ -442,13 +438,11 @@ action destructive différenciée
 - avertissements ;
 - politique de contenu si nécessaire.
 
-Peut être différé après le premier vertical slice, mais doit exister avant distribution publique.
+Peut suivre le premier build vertical mais doit exister avant distribution publique.
 
 ---
 
 # 4. États transversaux obligatoires
-
-Chaque écran concerné doit prévoir :
 
 ```text
 LOADING
@@ -462,6 +456,9 @@ READ_ONLY
 LONG_TEXT
 LARGE_TEXT
 REDUCED_MOTION
+HIGH_CONTRAST
+KEYBOARD_NAVIGATION
+CORRUPTED_SAVE
 ```
 
 ## Cas critiques
@@ -476,20 +473,27 @@ REDUCED_MOTION
 
 - zone de choix absente ;
 - aucun panneau vide ;
-- attente ou transition visible par le comportement du fil.
+- attente ou transition expliquée par le comportement du fil.
 
 ### Texte agrandi
 
 - choix empilés ;
-- galerie passe à deux colonnes ;
-- header peut gagner en hauteur ;
+- Galerie à deux colonnes ;
+- header plus haut si nécessaire ;
 - aucune troncature des décisions.
 
 ### Contenu retiré
 
-- le fil peut conserver un emplacement ou message de retrait si narrativement nécessaire ;
+- le fil peut conserver un message de retrait ;
 - la Galerie ne restaure pas l’image ;
-- la connaissance n’est pas affichée comme fichier.
+- les messages, faits vécus et connaissances ne sont jamais supprimés automatiquement ;
+- seule l’accessibilité au fichier change.
+
+### Chargement et erreur
+
+- écran discret et non bloquant ;
+- possibilité de réessayer ou revenir ;
+- aucune donnée sensible dans le message d’erreur.
 
 ---
 
@@ -504,10 +508,10 @@ Galerie
 
 ## Accès système
 
-- bouton menu depuis D01 ;
-- pause depuis tout écran narratif ;
+- menu depuis D01 ;
+- pause depuis tout écran narratif hors transition critique ;
 - retour cohérent ;
-- pas d’onglet Profil vide.
+- aucun onglet Profil vide.
 
 ## Navigation photo
 
@@ -526,29 +530,37 @@ La provenance est mémorisée.
 
 ```text
 D01 D02 D03 D04 D05 D06 D07
-S01 S02 S03 S04 S05 S06
+S01 S02 S03 S04 S05 S05B S06
 ```
 
-## Peut suivre le premier build vertical
+## Après le premier build vertical
 
 ```text
 S07 final
 animations avancées
-filtres secondaires de galerie
+filtres secondaires de Galerie
 personnalisation cosmétique
+fonctionnalités Android spécifiques
 ```
 
 ---
 
-# 7. Critères de validation
+# 7. Validation UI‑SCREENS
 
-- [ ] toutes les surfaces narratives nécessaires ont un écran ;
-- [ ] tous les écrans système nécessaires à un test fiable existent ;
-- [ ] la galerie est organisée par personnage ;
-- [ ] les verrouillages ne spoilent pas ;
-- [ ] les choix et messages longs restent lisibles ;
-- [ ] le mode texte agrandi est prévu ;
-- [ ] aucune surface n’expose les routes ;
-- [ ] la sauvegarde ne révèle pas les états internes ;
-- [ ] les rencontres physiques respectent text-only ;
-- [ ] la navigation revient à la bonne provenance.
+- [x] toutes les surfaces narratives nécessaires possèdent un écran ;
+- [x] tous les écrans système nécessaires à un test fiable sont cadrés ;
+- [x] la Galerie est organisée par personnage ;
+- [x] les verrouillages ne spoilent pas ;
+- [x] les choix et messages longs restent lisibles ;
+- [x] le mode texte agrandi est prévu ;
+- [x] aucune surface n’expose les routes ;
+- [x] la sauvegarde ne révèle pas les états internes ;
+- [x] les rencontres physiques respectent text-only ;
+- [x] la navigation revient à la bonne provenance ;
+- [x] retirer une image n’efface ni les messages ni la connaissance ;
+- [x] les maquettes restent des références conceptuelles.
+
+```text
+UI‑SCREENS : VALIDÉ
+PROCHAINE PHASE : UI‑HANDOFF
+```
