@@ -1,12 +1,12 @@
 # Documentation Reading Order — Bible Narrative Current
 
-> **Phase : polish des voix et naturel — lot D**
+> **Phase : validation finale du corpus narratif**
 
 La Bible couvre l’architecture détaillée de J01 à J21.
 
 J07–J21 sont validés narrativement sous autorités correctives.
 
-L’audit global et les lots A, B et C sont validés.
+L’audit global et les lots A, B, C et D sont validés.
 
 La prochaine étape est la validation finale du corpus narratif avant toute reprise technique.
 
@@ -85,6 +85,7 @@ docs/canon/dialogues/J20_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J21_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J01_J21_AUDIT_GLOBAL_DIALOGUES_CONTINUITE.md
 docs/canon/dialogues/J01_J21_LOT_A_CORRECTIONS_BLOQUANTES.md
+docs/canon/dialogues/J07_J21_LOT_D_POLISH_VOIX_NATUREL.md
 ```
 
 ## Contrats pré-runtime
@@ -100,14 +101,14 @@ docs/canon/dialogues/J01_J21_REACHABILITY_MATRIX.md
 Ordre d’autorité actuel :
 
 ```text
-script source
-→ lot A lorsque concerné
+scripts consolidés
 → registres et contrat d’état
 → reachability matrix
-→ audit global
+→ audits historiques
+→ guide lot D pour les critères de voix
 ```
 
-Le lot C doit supprimer progressivement la nécessité de l’overlay lot A en intégrant les corrections dans les scripts.
+Les overlays A–C sont consolidés dans les scripts ; ils restent des archives de décision.
 
 ## Communication
 
@@ -139,11 +140,8 @@ plan détaillé
 
 Aucune nouvelle modification technique J07–J21 avant :
 
-- consolidation des scripts sources ;
-- résolution des créateurs et traces encore ouverts ;
-- consolidation J01–J09 ;
-- passe de naturel ;
-- décision explicite de reprise technique.
+- validation finale explicite du corpus narratif ;
+- décision explicite et séparée de reprise technique.
 
 J06 reste techniquement non conforme jusqu’à la future migration.
 
@@ -187,16 +185,14 @@ Le lot C a consolidé les corrections et identifiants dans les sources documenta
 
 ---
 
-# 6. Tests obligatoires après lot C
+# 6. Validation finale après lot D
 
-- aucun passage contradictoire avec le lot A ne reste dans les scripts ;
-- chaque trace citée possède un `trace_id` ;
-- chaque promesse importante possède un `promise_id` ;
-- chaque affirmation de connaissance forte possède un `fact_id` ;
-- les créateurs d’images diégétiques sont exacts ;
-- la branche physique Mathilde exige une indépendance matérielle réelle ;
-- les anciens audits servent d’historique, pas de patch mental ;
-- aucun runtime ou asset modifié.
+- chaque voix reste identifiable sans nom ;
+- les formulations trop parfaites ont été réduites ;
+- les identifiants `trace_id`, `promise_id` et `fact_id` sont inchangés ;
+- aucune co-présence n’est rejouée par chat direct ;
+- les limites, promesses et conséquences restent lisibles ;
+- aucun runtime, JSON, test ou asset n’a été modifié.
 
 ---
 
@@ -222,5 +218,6 @@ Le lot C a consolidé les corrections et identifiants dans les sources documenta
 ```text
 Les contrats définissent maintenant la vérité narrative.
 Les scripts disent maintenant directement la vérité des contrats.
-Le lot D doit leur rendre une voix plus humaine sans changer cette vérité.
+Le lot D a rendu les voix plus humaines sans modifier cette vérité.
+La prochaine décision est technique et séparée.
 ```

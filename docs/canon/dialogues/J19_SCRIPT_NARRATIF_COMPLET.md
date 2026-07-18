@@ -997,7 +997,7 @@ Player peut :
 
 **Player**
 
-> on supprime tout les deux
+> on supprime tous les deux
 
 **Pauline**
 
