@@ -1,14 +1,14 @@
 # Documentation Reading Order — Bible Narrative Current
 
-> **Phase : validation finale du corpus narratif**
+> **Phase : corpus narratif signé — décision technique requise**
 
 La Bible couvre l’architecture détaillée de J01 à J21.
 
-J07–J21 sont validés narrativement sous autorités correctives.
+J01–J21 constituent un corpus narratif finalisé et signé.
 
-L’audit global et les lots A, B, C et D sont validés.
+L’audit global, les lots A–D et le sign-off final sont validés.
 
-La prochaine étape est la validation finale du corpus narratif avant toute reprise technique.
+La prochaine étape est une décision explicite et séparée concernant la reprise technique.
 
 ---
 
@@ -86,6 +86,7 @@ docs/canon/dialogues/J21_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J01_J21_AUDIT_GLOBAL_DIALOGUES_CONTINUITE.md
 docs/canon/dialogues/J01_J21_LOT_A_CORRECTIONS_BLOQUANTES.md
 docs/canon/dialogues/J07_J21_LOT_D_POLISH_VOIX_NATUREL.md
+docs/canon/dialogues/J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md
 ```
 
 ## Contrats pré-runtime
@@ -104,6 +105,7 @@ Ordre d’autorité actuel :
 scripts consolidés
 → registres et contrat d’état
 → reachability matrix
+→ sign-off final du corpus
 → audits historiques
 → guide lot D pour les critères de voix
 ```
@@ -128,7 +130,7 @@ plan détaillé
 → lot B : registres et contrats d’état validés
 → lot C : consolidation des sources et statuts validée
 → lot D : polish des voix validé
-→ validation Ludovic
+→ validation finale Ludovic signée
 → décision de reprise technique
 → adaptation JSON/runtime
 → images ComfyUI
@@ -138,10 +140,9 @@ plan détaillé
 
 # 3. Gel technique
 
-Aucune nouvelle modification technique J07–J21 avant :
+Aucune nouvelle modification technique J07–J21 avant une décision explicite et séparée de reprise technique.
 
-- validation finale explicite du corpus narratif ;
-- décision explicite et séparée de reprise technique.
+La validation finale du corpus narratif est terminée.
 
 J06 reste techniquement non conforme jusqu’à la future migration.
 
@@ -185,7 +186,9 @@ Le lot C a consolidé les corrections et identifiants dans les sources documenta
 
 ---
 
-# 6. Validation finale après lot D
+# 6. Validation finale signée
+
+Le document `J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md` confirme qu’aucun blocage narratif ne subsiste.
 
 - chaque voix reste identifiable sans nom ;
 - les formulations trop parfaites ont été réduites ;
@@ -207,7 +210,8 @@ Le lot C a consolidé les corrections et identifiants dans les sources documenta
 | Lot B | validé |
 | Lot C | validé |
 | Lot D | validé |
-| Runtime J07–J21 | gelé |
+| Validation finale du corpus | signée |
+| Runtime J07–J21 | gelé jusqu’à décision séparée |
 | Runtime J06 | non conforme |
 | Images finales | à produire |
 
@@ -219,5 +223,5 @@ Le lot C a consolidé les corrections et identifiants dans les sources documenta
 Les contrats définissent maintenant la vérité narrative.
 Les scripts disent maintenant directement la vérité des contrats.
 Le lot D a rendu les voix plus humaines sans modifier cette vérité.
-La prochaine décision est technique et séparée.
+Le corpus narratif est signé. La prochaine décision est uniquement technique et séparée.
 ```

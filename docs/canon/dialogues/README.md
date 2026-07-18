@@ -100,6 +100,7 @@ J01_J21_PROMISE_REGISTRY.md
 J01_J21_KNOWLEDGE_REGISTRY.md
 J01_J21_REACHABILITY_MATRIX.md
 J07_J21_LOT_D_POLISH_VOIX_NATUREL.md
+J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md
 ```
 
 Statut :
@@ -113,7 +114,8 @@ Lot A — validé
 Lot B — validé
 Lot C — validé
 Lot D — validé
-Prochaine étape — validation finale du corpus puis décision explicite de reprise technique
+Validation finale J01–J21 — signée
+Prochaine étape — décision explicite et séparée de reprise technique
 ```
 
 ## Résultat du lot B
@@ -129,9 +131,8 @@ posture finale déterministe
 
 ## Règle de gel technique
 
-Aucune nouvelle intégration J07–J21 ne doit commencer avant :
+Aucune nouvelle intégration J07–J21 ne doit commencer avant une décision explicite et séparée de reprise technique.
 
-1. validation finale explicite du corpus narratif ;
-2. décision séparée de reprise technique.
+La validation finale du corpus narratif est signée.
 
 La PR technique J05–J06 existante reste séparée et non autoritative.
