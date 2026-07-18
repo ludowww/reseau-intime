@@ -4,7 +4,9 @@
 
 **Catégorie : Index canonique actif**
 
-**Phase : UI‑FOUNDATION — système vertical et architecture documentaire**
+**Phase active : UI‑SCREENS — spécifications et maquettes finales**
+
+**UI‑FOUNDATION : validé**
 
 Ce dossier contient les décisions UX/UI actives du projet.
 
@@ -43,7 +45,7 @@ interface système : distincte du téléphone diégétique
 
 Le `game/project.godot` reste actuellement en `1280 × 720` horizontal.
 
-UI‑FOUNDATION documente la cible ; il ne modifie pas encore le runtime.
+UI‑FOUNDATION définit la cible ; il ne modifie pas encore le runtime.
 
 ---
 
@@ -147,9 +149,7 @@ L’UI doit rendre visibles les conséquences par :
 
 ---
 
-# 8. Prochaine étape
-
-Après UI‑FOUNDATION :
+# 8. Travail actif
 
 ```text
 UI‑SCREENS — spécifications détaillées et maquettes finales des écrans manquants
@@ -163,4 +163,4 @@ UI‑HANDOFF — contrat d’intégration final
 → migration verticale
 ```
 
-Aucun changement technique n’est autorisé par le présent lot.
+Aucun changement technique n’est autorisé par UI‑FOUNDATION seul.
