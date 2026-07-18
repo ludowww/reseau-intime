@@ -1,14 +1,14 @@
 # Narrative Canon Status — Current
 
-> **Current phase: source and status consolidation — lot C**
+> **Current phase: long-form voice polish — lot D**
 
 The Bible Narrative covers J01–J21.
 
 J07–J21 have complete validated narrative scripts under corrective authorities and pre-runtime contracts.
 
-The complete-season dialogue audit, lot A and lot B are validated.
+The complete-season dialogue audit and lots A, B and C are validated.
 
-The next phase is to consolidate corrections and canonical identifiers physically into the source scripts.
+The next phase is the long-form naturalness and voice-distinction polish on the consolidated corpus.
 
 ---
 
@@ -109,7 +109,8 @@ Scripts J07–J21: validated under corrective authorities
 Global dialogue audit: validated
 Correction lot A: validated
 Narrative contract lot B: validated
-Source consolidation lot C: next
+Source consolidation lot C: validated
+Voice polish lot D: next
 Runtime J07–J21: frozen
 ```
 
@@ -236,7 +237,7 @@ Lot C must integrate the corrections and IDs directly into the scripts.
 
 ---
 
-## 7. Lot C — immediate next work
+## 7. Lot C — completed
 
 ```text
 C1 integrate J01–J09 corrections into source authority
@@ -248,9 +249,7 @@ C6 strengthen Mathilde's material independence gate in J11
 C7 mark historical production-status documents as superseded
 ```
 
-Lot C remains documentation only.
-
-It must not change route outcomes or introduce runtime schemas beyond the validated narrative contracts.
+Lot C remained documentation only. It integrated the validated corrections and canonical IDs without changing route outcomes or runtime schemas.
 
 ---
 
@@ -288,11 +287,9 @@ No runtime, JSON, test, tool, asset or gallery modification is authorized by the
 ## 10. Next work
 
 ```text
-1. consolidate corrective overlays and IDs into source scripts
-2. resolve remaining image creators and knowledge sources
-3. complete the voice polish
-4. validate the consolidated narrative corpus
-5. decide separately whether to resume technical integration
+1. complete the long-form voice and naturalness polish
+2. validate the consolidated narrative corpus
+3. decide separately whether to resume technical integration
 ```
 
 ---
@@ -300,7 +297,6 @@ No runtime, JSON, test, tool, asset or gallery modification is authorized by the
 ## 11. Final rule
 
 ```text
-The contracts now define narrative truth.
-Lot C must make every source script express that truth directly,
-without requiring a parallel corrective document.
+The source scripts now express the narrative contracts directly.
+Lot D may change rhythm and wording, but not promises, knowledge, audiences or state transitions.
 ```

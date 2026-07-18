@@ -2,7 +2,7 @@
 
 ## Statut
 
-Ce dossier contient les scripts narratifs complets de la saison 1, leurs audits, leurs autorités correctives et leurs contrats pré-runtime.
+Ce dossier contient les sources narratives consolidées de la saison 1, leurs archives d’audit et leurs contrats pré-runtime.
 
 Ordre obligatoire :
 
@@ -21,6 +21,7 @@ plan détaillé de journée
 ## Autorités correctives
 
 ```text
+J01_J06_SOURCE_CANON_CONSOLIDE.md
 J01_J09_AUDIT_CONFORMITE_NARRATIVE.md
 J01_J21_AUDIT_GLOBAL_DIALOGUES_CONTINUITE.md
 J01_J21_LOT_A_CORRECTIONS_BLOQUANTES.md
@@ -109,7 +110,8 @@ J07–J21 — validés narrativement sous autorités correctives
 Audit global J01–J21 — validé
 Lot A — validé
 Lot B — validé
-Prochaine étape — lot C : consolidation physique des sources
+Lot C — validé
+Prochaine étape — lot D : polish des voix
 ```
 
 ## Résultat du lot B
@@ -127,10 +129,8 @@ posture finale déterministe
 
 Aucune nouvelle intégration J07–J21 ne doit commencer avant :
 
-1. consolidation physique des corrections et identifiants dans les scripts sources ;
-2. résolution des créateurs d’image encore ouverts ;
-3. consolidation J01–J09 ;
-4. passe de naturel des voix ;
-5. décision séparée de reprise technique.
+1. passe de naturel des voix ;
+2. validation du corpus consolidé ;
+3. décision séparée de reprise technique.
 
 La PR technique J05–J06 existante reste séparée et non autoritative.

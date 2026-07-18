@@ -1,14 +1,14 @@
 # Documentation Reading Order — Bible Narrative Current
 
-> **Phase : consolidation des sources et statuts — lot C**
+> **Phase : polish des voix et naturel — lot D**
 
 La Bible couvre l’architecture détaillée de J01 à J21.
 
 J07–J21 sont validés narrativement sous autorités correctives.
 
-L’audit global, le lot A et le lot B sont validés.
+L’audit global et les lots A, B et C sont validés.
 
-La prochaine étape est d’intégrer physiquement les corrections et identifiants dans les scripts sources afin de supprimer les overlays documentaires.
+La prochaine étape est la passe de naturel et de distinction des voix sur le corpus consolidé.
 
 ---
 
@@ -66,6 +66,7 @@ docs/canon/bible/12E_AUDIT_GLOBAL_COHERENCE_J01_J21.md
 ## Scripts, audits et corrections
 
 ```text
+docs/canon/dialogues/J01_J06_SOURCE_CANON_CONSOLIDE.md
 docs/canon/dialogues/J01_J09_AUDIT_CONFORMITE_NARRATIVE.md
 docs/canon/dialogues/J07_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J08_SCRIPT_NARRATIF_COMPLET.md
@@ -124,7 +125,7 @@ plan détaillé
 → audit global validé
 → lot A : continuité bloquante validée
 → lot B : registres et contrats d’état validés
-→ lot C : consolidation des sources et statuts
+→ lot C : consolidation des sources et statuts validée
 → lot D : polish des voix
 → validation Ludovic
 → décision de reprise technique
@@ -168,7 +169,7 @@ Décisions structurantes :
 
 ---
 
-# 5. Lot C — prochaine tranche
+# 5. Lot C — état validé
 
 Travaux documentaires :
 
@@ -182,7 +183,7 @@ C6 renforcer dans J11 l’indépendance matérielle Mathilde
 C7 marquer clairement les documents historiques supersédés
 ```
 
-Le lot C ne modifie toujours pas le runtime.
+Le lot C a consolidé les corrections et identifiants dans les sources documentaires sans modifier le runtime.
 
 ---
 
@@ -208,7 +209,8 @@ Le lot C ne modifie toujours pas le runtime.
 | Audit global des dialogues | validé |
 | Lot A | validé |
 | Lot B | validé |
-| Lot C | prochaine étape |
+| Lot C | validé |
+| Lot D | prochaine étape |
 | Runtime J07–J21 | gelé |
 | Runtime J06 | non conforme |
 | Images finales | à produire |
@@ -219,6 +221,6 @@ Le lot C ne modifie toujours pas le runtime.
 
 ```text
 Les contrats définissent maintenant la vérité narrative.
-Le lot C doit faire en sorte que chaque script la dise directement,
-sans dépendre d’un correctif lu à côté.
+Les scripts disent maintenant directement la vérité des contrats.
+Le lot D doit leur rendre une voix plus humaine sans changer cette vérité.
 ```

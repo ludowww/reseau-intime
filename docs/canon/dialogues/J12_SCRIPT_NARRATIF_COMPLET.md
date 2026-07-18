@@ -2,7 +2,7 @@
 
 ## Statut
 
-**Catégorie : Canon candidat à validation narrative**
+**Catégorie : Canon validé narrativement — source pré-runtime consolidée**
 
 **Périmètre : J12 uniquement**
 
@@ -188,6 +188,51 @@ Il ne connaît aucune image privée.
 
 ---
 
+# 5 bis. Préambule conditionnel Sandra — 11 h
+
+Cette fenêtre existe uniquement si :
+
+```text
+promise_id: sandra_cafe_saturday_1100
+status: ACTIVE
+```
+
+**09:18 — Sandra**
+
+> 11 h tient toujours.
+
+**09:19 — Sandra**
+
+> Je pars à 10 h 34.
+
+**09:19 — Sandra**
+
+> Information très utile pour éviter les réponses à 10 h 57.
+
+Player confirme ou ferme avant le déplacement.
+
+Si le café est maintenu :
+
+```text
+11:00–11:30
+rencontre hors téléphone
+aucun dialogue oral transcrit
+aucune nouvelle image
+aucune progression adulte
+```
+
+Après séparation :
+
+**11:44 — Sandra**
+
+> Train attrapé.
+
+**11:45 — Sandra**
+
+> Cette fois sans performance athlétique contestable.
+
+La promesse devient `PAID`. Si Player ne confirme pas avant 9 h 30, elle devient `EXPIRED` et Sandra ne se déplace pas.
+
 # 6. Fenêtre A — 14:42 — Marie donne les heures
 
 ## Fonction
@@ -352,51 +397,21 @@ Il prépare L’Annexe et reçoit ensuite le groupe.
 
 ---
 
-# 9. Fenêtre B — Montage La Verrière
+# 9. Fenêtre B — Montage La Verrière hors téléphone
 
 Cette fenêtre existe pour L-A.
 
-Les messages sont uniquement logistiques car Player et Marie sont dans le même lieu.
-
-Mode :
-
 ```text
-SAME_VENUE_LOGISTICS
+17:45–19:00
+Player rejoint Marie à La Verrière.
+Le chat direct s’arrête.
+Player prend les tables du fond et la rallonge noire.
+Marie et Élodie poursuivent le montage.
+Aucun dialogue oral n’est transcrit.
+Aucun choix Player n’est demandé pendant la co-présence.
 ```
 
-## Script
-
-**17:52 — Marie**
-
-> Tu es côté scène ?
-
-**Player guidé**
-
-> tables du fond
-
-**17:52 — Marie**
-
-> Parfait.
-
-**17:53 — Marie**
-
-> Élodie cherche les pinces noires.
-
-**Player guidé**
-
-> dans la caisse sous le vestiaire
-
-**17:53 — Marie**
-
-> Tu apprends dangereusement vite.
-
-**17:54 — Marie**
-
-> Rallonge noire après.
-
-Aucun échange émotionnel complet n’a lieu en co-présence.
-
----
+Les anciennes lignes logistiques deviennent un état de scène ou une notification passive d’équipe. Le prochain échange direct Marie / Player intervient après une séparation réelle.
 
 # 10. Fenêtre C — Arrivée publique
 
@@ -2040,3 +2055,20 @@ Mais au moins deux personnages comprennent que la version officielle ne suffit p
 Après séparation, une seule conséquence principale devient foreground et doit être payée en J13.
 
 > **J12 ne fait pas exploser le réseau. Elle lui retire simplement la possibilité de prétendre que toutes ses lignes restent parallèles.**
+
+---
+
+# Annexe canonique — Identifiants consolidés
+
+```text
+promise_id: sandra_cafe_saturday_1100
+promise_id: marie_j12_laverriere_presence
+promise_id: j12_annexe_continuation
+trace_id: j12_laverriere_public_group_set_01
+trace_id: j12_annexe_public_group_set_01
+trace_id: j12_sandra_public_context_view_01
+fact_id: fact_j12_laverriere_participants
+fact_id: fact_j12_annexe_participants
+```
+
+Élodie crée le set public La Verrière. Sophie crée le set public L’Annexe lorsque cette branche existe.

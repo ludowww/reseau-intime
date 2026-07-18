@@ -1,5 +1,8 @@
 # 16 — Matrice d’atteignabilité des routes
 
+> **STATUT HISTORIQUE / SUPERSÉDÉ** — Archive de conception antérieure. Pour J01–J21, `J01_J21_REACHABILITY_MATRIX.md` et `SEASON_1_NARRATIVE_STATE_CONTRACT.md` sont autoritaires.
+
+
 > V0.57 (`docs/V0_57_Route_Character_Rework_Blueprint.md`) est la référence de hiérarchie route/personnage.
 > Ce tableau reste utile pour l’atteignabilité, mais ses routes doivent être lues dans un cadre Marie-centrique et non comme un panel égalitaire.
 

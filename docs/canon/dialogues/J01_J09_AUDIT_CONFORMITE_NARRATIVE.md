@@ -1,5 +1,8 @@
 # Réseau Intime — Audit de conformité narrative J01–J09
 
+> **STATUT HISTORIQUE / SUPERSÉDÉ** — Les corrections J01–J06 sont consolidées dans `J01_J06_SOURCE_CANON_CONSOLIDE.md`; J07–J09 sont consolidés dans leurs scripts sources.
+
+
 ## Statut
 
 **Catégorie : Canon**

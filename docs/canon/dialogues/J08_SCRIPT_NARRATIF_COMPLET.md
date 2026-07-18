@@ -2,7 +2,7 @@
 
 ## Statut
 
-**Catégorie : Canon candidat à validation narrative**
+**Catégorie : Canon validé narrativement — source pré-runtime consolidée**
 
 **Périmètre : J08 uniquement**
 
@@ -63,7 +63,7 @@ Il choisit :
 
 ## État d’entrée depuis J07
 
-J07 a créé trois attentes possibles :
+J07 peut avoir créé jusqu’à trois attentes, chacune lue uniquement si son `promise_id` est actif :
 
 ```text
 Raphaëlle : relecture mobile avant mardi 19 h
@@ -455,6 +455,17 @@ Raphaëlle ne transforme pas cela en conflit sentimental.
 
 ---
 
+# 8 bis. Garde d’éligibilité Nico
+
+La fenêtre Nico existe uniquement si :
+
+```text
+promise_id: nico_j07_tuesday_1845
+status: ACTIVE
+```
+
+Si la promesse a été refusée, amendée vers jeudi ou expirée, Nico ne garde aucune chaise et n’envoie aucun rappel mardi.
+
 # 9. Fenêtre C — 18:21 — Nico rappelle la chaise
 
 ## Fonction
@@ -538,13 +549,13 @@ Le moment exact varie selon l’état domestique.
 
 > Tu es bien en route après ton travail ?
 
-Nico attend à 18 h 45.
+Si `nico_j07_tuesday_1845` est `ACTIVE`, Nico attend à 18 h 45.
 
 Raphaëlle attend avant 19 h.
 
 Marie et Mathilde comptent sur une présence à 19 h 05.
 
-Trois attentes sont réelles.
+Deux ou trois attentes sont réelles selon les `promise_id` actifs.
 
 ---
 
@@ -604,13 +615,25 @@ Aucun message domestique urgent n’apparaît.
 
 > Ta partie n’est pas encore relue.
 
-Nico attend à 18 h 45.
+Si `nico_j07_tuesday_1845` est `ACTIVE`, Nico attend à 18 h 45.
 
 Le foyer n’attend rien de Player mardi soir.
 
 Le refus honnête J07 a donc supprimé une obligation réelle.
 
 ---
+
+# 10 bis. Fallback sans superposition
+
+Si moins de deux obligations sont actives après lecture des registres :
+
+- Player paie l’unique obligation due ;
+- ou la ferme clairement ;
+- la journée ne fabrique aucun conflit ;
+- Marie ouvre J09 par une respiration ordinaire ;
+- aucun personnage absent n’est puni.
+
+La superposition n’existe que lorsque plusieurs personnes ont réellement organisé leur temps autour de réponses acceptées.
 
 # 11. Choix principal de superposition
 
@@ -872,7 +895,7 @@ travail transféré avec dette professionnelle
 
 ## 13.2 État B — Nico est la présence restante la plus immédiate
 
-Le foyer a déjà été payé à 18 h 30.
+Le foyer a déjà été payé à 18 h 30. Cette sous-branche existe uniquement si `nico_j07_tuesday_1845` est encore `ACTIVE`.
 
 À 18:47 :
 
@@ -1694,3 +1717,15 @@ Raphaëlle, Nico, Marie et Mathilde continuent tous d’agir lorsque Player ne v
 La journée se ferme sur Marie, qui annonce qu’elle terminera tard à La Verrière le lendemain.
 
 > **J08 ne demande pas qui compte le plus. Elle montre que les autres n’attendent pas de la même manière, et que leur temps continue lorsque Player refuse de choisir.**
+
+---
+
+# Annexe canonique — Identifiants consolidés
+
+```text
+promise_id: raphaelle_j07_mobile_review
+promise_id: nico_j07_tuesday_1845
+promise_id: marie_j07_household_request
+```
+
+Une fenêtre lit le statut de sa promesse ; elle ne suppose jamais que l’attente existe.
