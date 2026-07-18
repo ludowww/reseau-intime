@@ -1,0 +1,45 @@
+name: One-shot Lot C source consolidation
+
+on:
+  push:
+    branches:
+      - agent/lot-c-source-consolidation
+
+permissions:
+  contents: write
+
+jobs:
+  consolidate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+        with:
+          ref: agent/lot-c-source-consolidation
+          fetch-depth: 0
+
+      - name: Apply narrative source consolidation
+        run: python3 tools/_lot_c_consolidate_docs.py
+
+      - name: Validate documentation-only diff
+        run: |
+          git diff --check
+          if git diff --name-only | grep -Ev '^(docs/|tools/_lot_c_consolidate_docs.py$|\.github/workflows/lot-c-source-consolidation.yml$)' ; then
+            echo 'Unexpected non-documentary file changed.' >&2
+            exit 1
+          fi
+
+      - name: Remove temporary consolidator
+        run: |
+          rm tools/_lot_c_consolidate_docs.py
+          rm .github/workflows/lot-c-source-consolidation.yml
+
+      - name: Commit consolidated sources
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git diff --cached --check
+          git commit -m 'docs: consolidate season 1 narrative sources'
+          git push origin HEAD:agent/lot-c-source-consolidation
