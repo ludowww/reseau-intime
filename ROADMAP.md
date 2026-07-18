@@ -50,11 +50,7 @@ Limites :
 
 ---
 
-# 2. Phase active — UI‑FOUNDATION
-
-## Objectif
-
-Créer une source UI canonique stable avant toute migration technique.
+# 2. UI‑FOUNDATION — validé
 
 ## Livrables
 
@@ -68,7 +64,7 @@ docs/canon/ui/UI_03_INTEGRATION_HANDOFF_AND_MOCKUP_STATUS.md
 
 Les préfixes `UI_01–03` désignent l’ordre de lecture des documents, pas les lots de travail.
 
-## Décisions
+## Décisions acquises
 
 - portrait 720 × 1280 de référence ;
 - 9:16 ;
@@ -77,11 +73,12 @@ Les préfixes `UI_01–03` désignent l’ordre de lecture des documents, pas le
 - Messages / Galerie au MVP ;
 - galerie en grille avec onglets personnages ;
 - écrans système séparés ;
-- maquettes conceptuelles non considérées comme assets.
+- maquettes conceptuelles non considérées comme assets ;
+- gouvernance documentaire et autorités explicites.
 
 ---
 
-# 3. UI‑SCREENS — Spécifications et maquettes finales
+# 3. Phase active — UI‑SCREENS
 
 ## Écrans déjà suffisamment orientés
 
