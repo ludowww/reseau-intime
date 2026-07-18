@@ -300,7 +300,7 @@ Player reçoit trois réponses.
 
 **11:22 — Pauline**
 
-> Et ne transforme pas Bastien en personne absente parce qu’il n’est pas dans le cadre.
+> Bastien était là. Ne l’efface pas parce qu’il n’est pas sur la photo.
 
 **Player guidé**
 
@@ -337,11 +337,11 @@ compartiment non encore autonome
 
 **11:22 — Pauline**
 
-> Ce n’est pas une invitation à improviser le reste.
+> Ça ne va pas plus loin tout seul.
 
 **11:22 — Pauline**
 
-> C’est une information privée.
+> Je te l’envoie, c’est tout.
 
 **Player**
 
@@ -382,11 +382,11 @@ Le contenu devient inaccessible.
 
 **11:23 — Pauline**
 
-> La version publique reste vraie.
+> La photo du groupe reste.
 
 **11:23 — Pauline**
 
-> Je ne vais pas la punir parce que l’autre n’existe pas entre nous.
+> Elle n’a rien fait.
 
 ### Sortie
 
@@ -416,7 +416,7 @@ Pauline écrit :
 
 **11:28 — Pauline**
 
-> Tu viens de déplacer l’image hors de la raison pour laquelle je l’ai envoyée.
+> Ce n’était pas pour ça.
 
 **11:29 — Pauline**
 
@@ -511,7 +511,7 @@ communication_mode: TRACE_DELIVERY → REMOTE_ASYNC
 
 **12:37 — Raphaëlle**
 
-> Je te l’envoie parce que tu as respecté le cadre public hier.
+> Je te l’envoie parce qu’hier tu n’as pas insisté.
 
 **VISUEL R1 — À PRODUIRE PLUS TARD**
 
@@ -552,11 +552,11 @@ role_status: actif dans l’image, terminé dans la conversation
 
 **12:39 — Raphaëlle**
 
-> C’est pour cela que j’ai gardé celle-ci plutôt que la plus spectaculaire.
+> C’est pour ça que j’ai gardé celle-là.
 
 **12:40 — Raphaëlle**
 
-> Tu vois encore le travail quand l’effet fonctionne.
+> La plus spectaculaire cachait le travail.
 
 ### Sortie
 
@@ -636,11 +636,11 @@ Aucune image n’est envoyée.
 
 **12:36 — Raphaëlle**
 
-> Hier, tu as essayé d’obtenir une définition pendant que je maintenais un cadre public.
+> Hier, tu m’as demandé de trancher alors qu’on était en public.
 
 **12:37 — Raphaëlle**
 
-> Je ne vais pas répondre aujourd’hui avec une image plus privée.
+> Je ne vais pas répondre avec une photo plus privée.
 
 Player peut :
 

@@ -516,7 +516,7 @@ Cette séquence apparaît après N20-A ou N20-B lorsque l’amitié possède suf
 
 **18:42 — Nico**
 
-> Je vais te dire le morceau moins noble.
+> Je vais te dire le truc moins joli.
 
 Silence.
 
@@ -568,19 +568,15 @@ Cette reconnaissance ne révèle :
 
 **18:48 — Nico**
 
-> Voilà ce que je peux faire.
-
-**18:48 — Nico**
-
 > Si tu me demandes si tu déconnes, je réponds.
 
 **18:49 — Nico**
 
-> Si tu me dis que tu as peur, je reste.
+> Si tu as peur, je reste.
 
 **18:49 — Nico**
 
-> Si tu me demandes de rendre un mensonge crédible, je sors du fil.
+> Mais pas d’alibi.
 
 **Player**
 
@@ -588,19 +584,11 @@ Cette reconnaissance ne révèle :
 
 **18:50 — Nico**
 
-> Et si quelqu’un me demande un fait auquel j’étais présent, je donne le fait.
-
-**18:50 — Nico**
-
-> Pas ton résumé.
+> Et si on me demande une heure où j’étais là, je donne l’heure.
 
 **18:51 — Nico**
 
-> Pas le mien.
-
-**18:51 — Nico**
-
-> Le fait.
+> Pas ton histoire autour.
 
 ## 12.3 Règle
 
@@ -637,27 +625,15 @@ confiance limitée mais réelle
 
 **18:48 — Nico**
 
-> Tu peux me dire que tu la veux.
-
-**18:49 — Nico**
-
-> Tu peux me dire que tu as menti.
-
-**18:49 — Nico**
-
-> Tu peux me dire que tu ne sais pas ce que tu veux.
+> Tu peux me dire que tu la veux, que tu as menti ou que tu ne sais pas.
 
 **18:50 — Nico**
 
-> Tu ne m’envoies pas ses photos pour m’expliquer.
-
-**18:50 — Nico**
-
-> Tu ne me donnes pas ses messages comme pièces à conviction.
+> Mais tu ne m’envoies pas ses photos ou ses messages pour plaider ton dossier.
 
 **18:51 — Nico**
 
-> Et tu ne me demandes pas de parler à une femme ou à son mec à ta place.
+> Et tu ne me demandes pas de parler à quelqu’un à ta place.
 
 **Player**
 
@@ -675,7 +651,7 @@ confiance limitée mais réelle
 
 > Si on me pose une question sur une heure ou un lieu où j’étais là, je ne mens pas.
 
-> Le reste n’appartient pas à celui qui demande juste parce qu’il demande fort.
+> Le reste, je le garde pour moi.
 
 ## 13.4 Sortie
 
@@ -706,27 +682,23 @@ confidence centrée sur Player
 
 > Marie me plaît.
 
-**18:49 — Nico**
+**18:50 — Nico**
 
-> Pas uniquement quand elle porte la robe noire.
+> Pas seulement avec la robe noire ou quand elle t’en veut.
 
 **18:50 — Nico**
 
-> Pas uniquement quand elle est en colère contre toi.
-
-**18:50 — Nico**
-
-> Elle me plaît aussi quand elle déplace six chaises et insulte poliment un prestataire.
+> Même quand elle déplace six chaises et engueule poliment un prestataire.
 
 Silence.
 
 **18:51 — Nico**
 
-> Je ne vais pas lui parler derrière ton dos pendant que votre règle est encore active.
+> Je ne vais pas lui parler derrière ton dos pendant que vous êtes encore ensemble.
 
 **18:52 — Nico**
 
-> Mais je ne vais pas non plus prétendre que je ne veux rien pour rendre notre amitié plus confortable.
+> Mais je ne vais pas faire comme si je ne voulais rien juste pour te rassurer.
 
 Player répond.
 

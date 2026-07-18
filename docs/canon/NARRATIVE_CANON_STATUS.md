@@ -1,14 +1,14 @@
 # Narrative Canon Status — Current
 
-> **Current phase: long-form voice polish — lot D**
+> **Current phase: final narrative sign-off before technical resumption**
 
 The Bible Narrative covers J01–J21.
 
 J07–J21 have complete validated narrative scripts under corrective authorities and pre-runtime contracts.
 
-The complete-season dialogue audit and lots A, B and C are validated.
+The complete-season dialogue audit and lots A, B, C and D are validated.
 
-The next phase is the long-form naturalness and voice-distinction polish on the consolidated corpus.
+The next phase is final narrative sign-off before any technical resumption.
 
 ---
 
@@ -38,11 +38,8 @@ Runtime does not define narrative authority.
 
 No new technical integration for J07–J21 before:
 
-1. source files physically consolidate corrective overlays and canonical IDs ;
-2. unresolved diegetic image creators are fixed ;
-3. J01–J09 source authority is reconciled ;
-4. the long-form voice polish is validated ;
-5. an explicit decision resumes technical work.
+1. Ludovic explicitly signs off the final consolidated narrative corpus ;
+2. an explicit and separate decision resumes technical work.
 
 The active J06 runtime remains historically non-compliant through:
 
@@ -71,6 +68,7 @@ mandatory Marie return
 ### Scripts and corrective authorities
 
 ```text
+docs/canon/dialogues/J01_J06_SOURCE_CANON_CONSOLIDE.md
 docs/canon/dialogues/J01_J09_AUDIT_CONFORMITE_NARRATIVE.md
 docs/canon/dialogues/J07_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J08_SCRIPT_NARRATIF_COMPLET.md
@@ -89,6 +87,7 @@ docs/canon/dialogues/J20_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J21_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J01_J21_AUDIT_GLOBAL_DIALOGUES_CONTINUITE.md
 docs/canon/dialogues/J01_J21_LOT_A_CORRECTIONS_BLOQUANTES.md
+docs/canon/dialogues/J07_J21_LOT_D_POLISH_VOIX_NATUREL.md
 ```
 
 ### Lot B contracts
@@ -110,7 +109,7 @@ Global dialogue audit: validated
 Correction lot A: validated
 Narrative contract lot B: validated
 Source consolidation lot C: validated
-Voice polish lot D: next
+Voice polish lot D: validated
 Runtime J07–J21: frozen
 ```
 
@@ -220,20 +219,18 @@ The new state contract and J01–J21 matrix are authoritative for season 1.
 
 ## 6. Current reading order for affected days
 
-Until lot C is completed:
+Current authority order:
 
 ```text
-source script
-→ lot A corrective authority
+consolidated source scripts
 → trace / promise / knowledge registries
 → narrative state contract
 → reachability matrix
-→ global audit
+→ historical audits
+→ lot D voice guide
 ```
 
-This overlay is temporary.
-
-Lot C must integrate the corrections and IDs directly into the scripts.
+Lots A–C are fully consolidated in source. Their documents remain historical decision records.
 
 ---
 
@@ -276,20 +273,19 @@ It records only what future scenes need to know:
 J01–J06 playable but requiring reconciliation
 J06 active runtime non-compliant
 J07–J21 narrative only
-lots A and B validated documentarily
-technical resumption prohibited before lots C–D and explicit approval
+lots A–D validated documentarily
+technical resumption prohibited before final narrative sign-off and explicit approval
 ```
 
-No runtime, JSON, test, tool, asset or gallery modification is authorized by the lot B merge.
+No runtime, JSON, test, tool, asset or gallery modification is authorized by lots A–D.
 
 ---
 
 ## 10. Next work
 
 ```text
-1. complete the long-form voice and naturalness polish
-2. validate the consolidated narrative corpus
-3. decide separately whether to resume technical integration
+1. obtain final Ludovic sign-off on the consolidated narrative corpus
+2. decide separately whether to resume technical integration
 ```
 
 ---
@@ -298,5 +294,6 @@ No runtime, JSON, test, tool, asset or gallery modification is authorized by the
 
 ```text
 The source scripts now express the narrative contracts directly.
-Lot D may change rhythm and wording, but not promises, knowledge, audiences or state transitions.
+Lot D changed rhythm and wording without changing promises, knowledge, audiences or state transitions.
+Technical resumption remains a separate decision.
 ```

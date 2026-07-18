@@ -404,7 +404,7 @@ Il montre une habitude devenue différente.
 
 **07:44 — Marie**
 
-> Une décision exploitable.
+> C’est déjà mieux.
 
 Puis :
 
@@ -475,11 +475,11 @@ status: ACTIVE
 
 **07:45 — Marie**
 
-> Je préfère le réécrire un matin normal.
+> Je te le redis maintenant, pendant qu’on parle juste d’une réunion.
 
 **07:45 — Marie**
 
-> Pas uniquement quand quelqu’un nous oblige à en parler.
+> Pas après un nouveau problème.
 
 # 12. Matin — Double vie fragile
 
@@ -678,13 +678,13 @@ Ce module devient prioritaire si :
 
 **11:20 — Marie**
 
-> Je l’avais regardée au début en me demandant si tu voyais encore quelque chose quand tu me regardais.
+> Au début, je la regardais surtout pour voir si tu me voyais encore.
 
 Silence.
 
 **11:21 — Marie**
 
-> Maintenant je me demande surtout si tu rejoins la vie qui est sur la photo.
+> Maintenant je regarde si tu viens.
 
 La photographie n’est pas nécessairement renvoyée si Player la possède déjà.
 
@@ -712,9 +712,9 @@ La photographie n’est pas nécessairement renvoyée si Player la possède déj
 
 ### Reconfiguration
 
-> Cette image n’autorise rien.
+> La photo ne décide rien pour nous.
 
-> Elle me rappelle seulement que notre vie existe aussi hors de nos règles écrites.
+> Elle me rappelle juste qu’on a aussi une vie en dehors de nos discussions.
 
 ### Fracture ou séparation
 
@@ -776,11 +776,11 @@ Le café n’est pas recréé par J21.
 
 **Sandra**
 
-> Je sais maintenant qu’elle ne raconte pas seulement ça pour moi.
+> Moi, je ne la vois plus seulement comme ça.
 
 **Sandra**
 
-> Je la garde quand même.
+> Je la garde.
 
 Elle ne renvoie rien.
 
@@ -852,9 +852,9 @@ Cette formulation ferme l’interprétation privée.
 
 **Mathilde**
 
-> Je ne supprime pas ce qui existait avant.
+> Je ne vais pas effacer ce qui était vrai.
 
-> Je ne le transforme pas non plus en permission pour après.
+> Mais ça ne veut pas dire qu’on recommence.
 
 ## 19.4 Distance ou rupture de confiance
 
@@ -989,11 +989,9 @@ Une image choisie peut rester inaccessible ou rangée.
 
 **Raphaëlle**
 
-> Je garde la version.
+> Je garde l’image.
 
-> Je garde aussi la limite.
-
-> Ce ne sont pas deux décisions opposées.
+> La limite aussi.
 
 ## 21.4 Secret clair
 

@@ -27,7 +27,7 @@ J01_J21_AUDIT_GLOBAL_DIALOGUES_CONTINUITE.md
 J01_J21_LOT_A_CORRECTIONS_BLOQUANTES.md
 ```
 
-Le lot A prévaut sur les passages contradictoires de J10, J12, J14, J17 et J21 jusqu’à leur consolidation physique au lot C.
+Les corrections A–C sont consolidées dans les sources. Les audits restent des archives de décision et les contrats pré-runtime restent autoritatifs.
 
 ## Contrats pré-runtime
 
@@ -99,6 +99,7 @@ J01_J21_TRACE_REGISTRY.md
 J01_J21_PROMISE_REGISTRY.md
 J01_J21_KNOWLEDGE_REGISTRY.md
 J01_J21_REACHABILITY_MATRIX.md
+J07_J21_LOT_D_POLISH_VOIX_NATUREL.md
 ```
 
 Statut :
@@ -111,7 +112,8 @@ Audit global J01–J21 — validé
 Lot A — validé
 Lot B — validé
 Lot C — validé
-Prochaine étape — lot D : polish des voix
+Lot D — validé
+Prochaine étape — validation finale du corpus puis décision explicite de reprise technique
 ```
 
 ## Résultat du lot B
@@ -129,8 +131,7 @@ posture finale déterministe
 
 Aucune nouvelle intégration J07–J21 ne doit commencer avant :
 
-1. passe de naturel des voix ;
-2. validation du corpus consolidé ;
-3. décision séparée de reprise technique.
+1. validation finale explicite du corpus narratif ;
+2. décision séparée de reprise technique.
 
 La PR technique J05–J06 existante reste séparée et non autoritative.

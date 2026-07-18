@@ -391,7 +391,7 @@ Si Player a systématiquement respecté les audiences :
 
 **21:28 — Sandra**
 
-> Une image précise. Pas une règle générale.
+> Celle-là seulement.
 
 Sortie :
 
@@ -577,20 +577,20 @@ scene_class: ROUTE_CONTINUATION_OR_ADULT_OPTION
 primary_function: rendre la proximité volontaire et négocier sa limite
 principal_character: Mathilde
 primary_relationship: Player / Mathilde
-communication_mode: SEPARATE_ROOMS_PING → OFF_PHONE → AFTERGLOW_REMOTE
+communication_mode: REMOTE_ASYNC → OFF_PHONE → AFTERGLOW_REMOTE
 ```
 
 ## 10.2 Contexte
 
-Mathilde est au foyer.
+Mathilde revient de sa sortie avec Inès et se trouve encore dehors, devant l’immeuble.
 
 Marie est retenue à La Verrière ou chez Pauline pour une raison indépendante de la route.
 
 Elle a donné une heure de retour réaliste.
 
-Player et Mathilde sont dans des pièces séparées.
+Player est au foyer.
 
-Le chat est utilisé parce que Mathilde préfère formuler avant de revenir dans le salon.
+Le chat est utilisé avant que Mathilde entre dans l’appartement.
 
 ## 10.3 Carte de voix
 
@@ -606,7 +606,11 @@ forbidden_leakage: aucune dépendance au logement, aucune permission supposée, 
 
 **21:06 — Mathilde**
 
-> Je vais revenir dans le salon.
+> Je suis en bas.
+
+**21:06 — Mathilde**
+
+> Je remonte dans deux minutes.
 
 **21:06 — Mathilde**
 
@@ -614,11 +618,11 @@ forbidden_leakage: aucune dépendance au logement, aucune permission supposée, 
 
 **21:07 — Mathilde**
 
-> Ce n’est pas un accident logistique.
+> Oui, exprès.
 
 **21:07 — Mathilde**
 
-> Je préfère le préciser avant que ton visage fasse le travail à ta place.
+> Je préfère te prévenir avant de voir ta tête.
 
 **Player guidé**
 
@@ -626,15 +630,15 @@ forbidden_leakage: aucune dépendance au logement, aucune permission supposée, 
 
 **21:08 — Mathilde**
 
-> Non.
+> Tu as compris une partie.
 
 **21:08 — Mathilde**
 
-> Tu as compris que je veux produire un effet.
+> Je veux que tu regardes.
 
 **21:09 — Mathilde**
 
-> Tu n’as pas encore compris ce que j’accepte avec.
+> Le reste, je ne l’ai pas décidé.
 
 Le choix principal apparaît.
 
@@ -646,7 +650,7 @@ Le choix principal apparaît.
 
 **Player**
 
-> j’ai compris que tu veux que je regarde. je regarde. je ne fais rien de plus
+> j’ai compris. tu veux que je regarde. je garde mes mains
 
 **21:10 — Mathilde**
 
@@ -671,6 +675,7 @@ Player regarde mais ne touche pas
 proximité volontaire
 aucun dialogue oral joué
 Mathilde peut repartir à tout moment
+Mathilde ressort quelques minutes avant le retour textuel
 ```
 
 ### Après séparation
@@ -689,7 +694,7 @@ Mathilde peut repartir à tout moment
 
 **21:43 — Mathilde**
 
-> Et maintenant je dois vivre avec le fait que c’était quand même excitant.
+> Et c’était quand même... enfin. oui. excitant.
 
 ### Sortie
 
@@ -722,7 +727,7 @@ confiance renforcée
 
 **21:11 — Mathilde**
 
-> Et tu ne transformes pas demain matin en procès ou en victoire.
+> Et demain tu ne me fais pas un débrief de trois pages.
 
 **Player**
 
@@ -742,7 +747,7 @@ Si l’éligibilité physique complète n’est pas atteinte :
 
 **21:12 — Mathilde**
 
-> Près. Pas dessus. Je précise pour le dossier.
+> Près. Pas collé. Voilà.
 
 La messagerie s’arrête.
 
@@ -753,6 +758,7 @@ proximité sur le canapé
 aucun baiser
 aucun toucher intime
 Mathilde arrête la scène la première
+Mathilde quitte ensuite le logement quelques minutes avant le retour textuel
 ```
 
 Après séparation :
@@ -829,7 +835,7 @@ un toucher plus intime peut être accepté seulement après une demande claire
 aucune pénétration
 aucun acte imposé
 aucune photo diégétique
-Mathilde peut arrêter et retourne dans sa chambre avant le retour de Marie
+Mathilde peut arrêter et rejoint sa solution de couchage indépendante avant le retour de Marie
 ```
 
 L’image de scène éventuelle représente la proximité consentie sans inventer de caméra.
@@ -838,7 +844,7 @@ L’image de scène éventuelle représente la proximité consentie sans invente
 
 **21:51 — Mathilde**
 
-> Je suis dans ma chambre.
+> Je suis arrivée.
 
 **21:51 — Mathilde**
 
@@ -1066,7 +1072,7 @@ Player reçoit un vrai choix.
 
 **Raphaëlle**
 
-> Je ne vais pas transformer ce message en permission générale.
+> Je ne vais pas décider la suite dans ce message.
 
 **Raphaëlle**
 
@@ -1117,7 +1123,7 @@ confiance créative maintenue
 
 **Raphaëlle**
 
-> Et parce que je voulais vérifier si tu savais t’arrêter à cette information.
+> Et je voulais voir si tu savais t’arrêter là.
 
 ### Sortie
 
@@ -1191,7 +1197,7 @@ Après séparation :
 
 **Raphaëlle**
 
-> Samedi, il faudra agir comme des personnes qui savent ça.
+> Samedi, on ne fera pas comme si ça n’avait pas eu lieu.
 
 #### RB2 — Refuser
 
@@ -1337,7 +1343,7 @@ Il veut définir ce qu’il accepte avant cette convergence.
 
 **Nico**
 
-> Garde-fou réciproque. Pas confession permanente.
+> On se le dit quand ça dérape. Pas besoin d’un rapport quotidien.
 
 ### Sortie
 
@@ -1359,11 +1365,11 @@ règle réciproque
 
 **Nico**
 
-> Mais elles ne sont pas le terrain sur lequel on règle ça.
+> Mais on ne règle rien entre nous avec elles.
 
 **Nico**
 
-> Samedi, je parle pour moi. Pas contre toi.
+> Samedi, je parle pour moi. C’est tout.
 
 ### Sortie
 
@@ -1385,7 +1391,7 @@ aucune permission
 
 **Nico**
 
-> Je garde la confidence. Je ferme le commentaire.
+> Ce que tu m’as dit reste ici. Le commentaire, j’arrête.
 
 **Nico**
 
