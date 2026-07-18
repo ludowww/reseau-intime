@@ -1,6 +1,6 @@
 # Documentation Reading Order — Réseau Intime
 
-> **Phase active : UI‑01 — système vertical et architecture documentaire**
+> **Phase active : UI‑FOUNDATION — système vertical et architecture documentaire**
 
 Le corpus narratif J01–J21 est finalisé et signé.
 
@@ -138,6 +138,8 @@ docs/canon/ui/UI_02_SCREEN_ARCHITECTURE_AND_STATES.md
 docs/canon/ui/UI_03_INTEGRATION_HANDOFF_AND_MOCKUP_STATUS.md
 ```
 
+Les préfixes `UI_01–03` désignent l’ordre de lecture des documents.
+
 Ordre d’autorité UI :
 
 ```text
@@ -167,9 +169,9 @@ Les anciens plans V0.xx sont historiques sauf référence explicite depuis un no
 
 ```text
 corpus narratif signé
-→ UI‑01 charte et architecture
-→ UI‑02 écrans finaux
-→ UI‑03 contrat d’intégration
+→ UI‑FOUNDATION charte et architecture
+→ UI‑SCREENS écrans finaux
+→ UI‑HANDOFF contrat d’intégration
 → décision de reprise technique
 → coque portrait
 → réconciliation J01–J06
