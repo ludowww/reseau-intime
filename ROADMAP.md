@@ -50,7 +50,7 @@ Limites :
 
 ---
 
-# 2. Phase active — UI‑01
+# 2. Phase active — UI‑FOUNDATION
 
 ## Objectif
 
@@ -66,6 +66,8 @@ docs/canon/ui/UI_02_SCREEN_ARCHITECTURE_AND_STATES.md
 docs/canon/ui/UI_03_INTEGRATION_HANDOFF_AND_MOCKUP_STATUS.md
 ```
 
+Les préfixes `UI_01–03` désignent l’ordre de lecture des documents, pas les lots de travail.
+
 ## Décisions
 
 - portrait 720 × 1280 de référence ;
@@ -79,7 +81,7 @@ docs/canon/ui/UI_03_INTEGRATION_HANDOFF_AND_MOCKUP_STATUS.md
 
 ---
 
-# 3. UI‑02 — Spécifications et maquettes finales
+# 3. UI‑SCREENS — Spécifications et maquettes finales
 
 ## Écrans déjà suffisamment orientés
 
@@ -117,7 +119,7 @@ priorité MVP
 
 ---
 
-# 4. UI‑03 — Contrat d’intégration final
+# 4. UI‑HANDOFF — Contrat d’intégration final
 
 Objectifs :
 
