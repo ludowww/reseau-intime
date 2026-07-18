@@ -187,11 +187,11 @@ source_scene: installation de Mathilde
 creator: none
 subjects: [Mathilde, foyer]
 owner: état narratif du foyer
-initial_audience: [Marie, Player, Mathilde] si photo familiale
-current_audience: identique sauf retrait
-storage_location: fil foyer ou archive de scène
-saving_rule: OWNER_ONLY ou SAME_AUDIENCE_ONLY
-transfer_rule: OWNER_CONFIRMATION_REQUIRED
+initial_audience: non applicable
+current_audience: non applicable
+storage_location: état narratif du foyer
+saving_rule: NONE
+transfer_rule: FORBIDDEN
 current_state: ACTIVE
 knowledge_created: fact_mathilde_stay_started
 eligible_for_j14: false par défaut
@@ -205,21 +205,21 @@ Si aucun créateur exact n’est choisi, cette entrée reste `FACT_RECORD` et ne
 
 ```text
 trace_id: j03_marie_laverriere_setup_01
-trace_type: PHOTO ou FACT_RECORD
-source_day: J03 ou journée réconciliée future
-source_scene: vie professionnelle Marie
-creator: Élodie si PHOTO ; none si FACT_RECORD
+trace_type: FACT_RECORD
+source_day: J03
+source_scene: vie professionnelle Marie établie
+creator: none
 subjects: [Marie]
-owner: Marie ou La Verrière
-initial_audience: audience professionnelle nommée
-current_audience: audience professionnelle nommée
-storage_location: fil professionnel ou dossier La Verrière
-saving_rule: PUBLIC_SOURCE_RULES
-transfer_rule: PUBLIC_SOURCE_RULES
-current_state: ACTIVE, SUPERSEDED ou NOT_CREATED
-knowledge_created: fact_player_knows_marie_laverriere_world
+owner: état narratif La Verrière
+initial_audience: non applicable
+current_audience: non applicable
+storage_location: registre de connaissances
+saving_rule: NONE
+transfer_rule: FORBIDDEN
+current_state: ACTIVE
+knowledge_created: fact_marie_laverriere_world_exists
 eligible_for_j14: false
-eligible_for_j21: true si source et audience résolues
+eligible_for_j21: false
 legacy_runtime_alias: marie_laverriere_setup_01
 ```
 

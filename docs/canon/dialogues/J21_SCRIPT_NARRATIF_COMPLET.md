@@ -286,55 +286,61 @@ Elle ne devient pas un prétexte pour la restaurer.
 
 ---
 
-# 6. Traces éligibles
+# 6. Traces éligibles — registre canonique
 
-## 6.1 Marie / La Verrière / vie commune
+J21 sélectionne uniquement un `trace_id` existant dans `J01_J21_TRACE_REGISTRY.md`.
 
-- image Marie à La Verrière déjà établie ;
-- photographie sociale existante ;
-- trace de couple ou de foyer ;
-- image où Marie existe hors du regard passif de Player.
+## 6.1 Marie
+
+```text
+j09_marie_black_dress_private_01
+j09_marie_laverriere_public_01
+j09_marie_laverriere_after_01
+j12_laverriere_public_group_set_01
+```
 
 ## 6.2 Sandra
 
-- photographie du dernier déjeuner ;
-- impression réalisée en J18 ;
-- état inaccessible d’une image retirée ;
-- message confirmant que la photographie est conservée pour elle.
+```text
+j01_sandra_lunch_memory_soft
+j11_sandra_chosen_image_01
+j18_sandra_lunch_print_01
+```
 
 ## 6.3 Mathilde
 
-- image du foyer déjà établie ;
-- photographie familiale ou domestique autorisée ;
-- trace du départ ;
-- absence laissée par la fin du séjour ;
-- contenu retiré selon une limite.
+```text
+j10_mathilde_outfit_choice_01
+```
+
+Si aucune photographie familiale réellement produite et autorisée n’existe, le foyer vide reste une `IMAGE_DE_SCÈNE` et ne devient pas une trace diégétique.
 
 ## 6.4 Pauline
 
-- photographie publique avec Bastien ou le groupe ;
-- version privée toujours présente dans son audience ;
-- contenu retiré ;
-- état du compartiment ;
-- trace réciproque déjà existante.
+```text
+j04_pauline_bastien_public_set_01
+j13_pauline_private_version_01
+j19_pauline_reciprocal_message_01
+```
 
 ## 6.5 Raphaëlle
 
-- image choisie ;
-- accès au compte créatif ;
-- photographie du processus ;
-- contenu privé devenu inaccessible ;
-- trace du retour à l’ordinaire après le rôle.
+```text
+j11_raphaelle_chosen_result_01
+j13_raphaelle_masked_version_01
+j19_raphaelle_creative_access_01
+```
 
 ## 6.6 Nico et le réseau
 
-- photographie sociale de L’Annexe ;
-- image de groupe déjà autorisée ;
-- fil d’alibi fermé ;
-- horaire devenu preuve ;
-- absence d’une image que Nico a refusé de recevoir.
+```text
+j12_annexe_public_group_set_01
+j13_nico_alibi_or_hour_message_01
+j20_nico_exact_hour_record_01
+j20_nico_unauthorized_copy_deleted_01
+```
 
----
+Une entrée `REMOVED`, `DELETED` ou `INACCESSIBLE` peut porter la finale uniquement par son état ou son absence. Son fichier n’est jamais restauré.
 
 # 7. Architecture générale
 

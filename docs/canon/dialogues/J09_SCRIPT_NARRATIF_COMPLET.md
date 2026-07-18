@@ -425,92 +425,38 @@ Les anciennes lignes logistiques `Tu es où ?`, `derrière les chaises` et `rall
 
 Le prochain échange direct a lieu après une séparation réelle.
 
-# 9. Choix secondaire A — Qualité de la présence au montage
+# 9. Qualité de la présence au montage — état hors téléphone
+
+La qualité de présence n’est pas choisie par un échange de messages pendant la co-présence.
+
+Elle est déterminée par les actes observables.
 
 ## A1 — Initiative réelle
 
-**Player**
-
-> je l’ai. et j’ai déjà déplacé les deux tables du fond
-
-**18:00 — Marie**
-
-> Très bien.
-
-**18:00 — Marie**
-
-> Je retire provisoirement mes remarques sur ta vitesse de réaction.
-
-**18:01 — Marie**
-
-> Provisoirement.
-
-### Effet
-
 ```text
+Player prend les tables du fond et la rallonge noire sans attendre une relance.
+Marie n’a pas besoin de guider chaque geste.
 présence active
-Marie n’a pas besoin de guider chaque geste
 ```
-
----
 
 ## A2 — Humour mais action réelle
 
-**Player**
-
-> la rallonge demande une pause et une revalorisation salariale mais je l’apporte
-
-**18:00 — Marie**
-
-> Refuse.
-
-**18:00 — Marie**
-
-> Elle a déjà de meilleurs horaires que nous.
-
-**18:01 — Marie**
-
-> Et apporte-la, s’il te plaît.
-
-### Effet
-
 ```text
-présence joueuse mais utile
+Player plaisante brièvement mais accomplit les tâches annoncées.
+présence joueuse et utile
 ```
-
----
 
 ## A3 — Présence distraite
 
-**Player**
-
-> deux minutes. je finis un message
-
-**18:00 — Marie**
-
-> D’accord.
-
-**18:01 — Marie**
-
-> Mais tu es venu pour être là.
-
-**18:01 — Marie**
-
-> Pas pour déplacer ton absence dans une autre pièce.
-
-### Effet
-
 ```text
+Player reste physiquement présent mais consulte plusieurs fois un autre fil.
+Marie observe seulement l’attention déplacée.
 présence physique
 attention insuffisante
 conséquence de couple active
 ```
 
-Marie ne demande pas qui reçoit le message.
-
-Elle lit seulement la qualité de présence.
-
----
+Aucun dialogue oral n’est transcrit. Marie ne demande pas qui reçoit les messages.
 
 # 10. Événement branche A
 
@@ -867,24 +813,24 @@ La fonction du troisième visuel varie :
 
 > Demain, 20 h 30, on mange ensemble ?
 
-**Réponse Player guidée**
+Player reçoit trois choix :
 
-> oui. 20 h 30
+```text
+M1 accepter → marie_j09_dinner_j10_2030 ACTIVE
+M2 proposer vendredi → marie_j09_dinner_friday_2030 ACTIVE
+M3 refuser → marie_j09_dinner_j10_2030 REFUSED
+```
 
-**23:09 — Marie**
-
-> Parfait.
+Aucune réponse guidée ne crée automatiquement le dîner.
 
 ### État de sortie
 
 ```text
 présence active mémorisée
-retour couple J10 à 20 h 30
+retour couple J10 conditionnel au choix réel
 ```
 
 Aucune récompense sexuelle automatique.
-
----
 
 # 17. Retour après branche A3 — Présence distraite
 
@@ -956,22 +902,14 @@ retour domestique à confirmer
 
 > Demain 20 h 30 ?
 
-**Réponse Player guidée**
-
-> oui
-
-**23:10 — Marie**
-
-> Très bien.
+Player accepte, propose vendredi ou refuse selon les choix M1–M3 définis en section 16.
 
 ### État de sortie
 
 ```text
 présence tardive fiable
-retour couple J10 à 20 h 30
+retour couple J10 conditionnel au choix réel
 ```
-
----
 
 # 19. Retour après branche B2 — Player est venu regarder
 

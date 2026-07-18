@@ -549,13 +549,13 @@ Le moment exact varie selon l’état domestique.
 
 > Tu es bien en route après ton travail ?
 
-Nico attend à 18 h 45.
+Si `nico_j07_tuesday_1845` est `ACTIVE`, Nico attend à 18 h 45.
 
 Raphaëlle attend avant 19 h.
 
 Marie et Mathilde comptent sur une présence à 19 h 05.
 
-Trois attentes sont réelles.
+Deux ou trois attentes sont réelles selon les `promise_id` actifs.
 
 ---
 
@@ -615,7 +615,7 @@ Aucun message domestique urgent n’apparaît.
 
 > Ta partie n’est pas encore relue.
 
-Nico attend à 18 h 45.
+Si `nico_j07_tuesday_1845` est `ACTIVE`, Nico attend à 18 h 45.
 
 Le foyer n’attend rien de Player mardi soir.
 
@@ -895,7 +895,7 @@ travail transféré avec dette professionnelle
 
 ## 13.2 État B — Nico est la présence restante la plus immédiate
 
-Le foyer a déjà été payé à 18 h 30.
+Le foyer a déjà été payé à 18 h 30. Cette sous-branche existe uniquement si `nico_j07_tuesday_1845` est encore `ACTIVE`.
 
 À 18:47 :
 

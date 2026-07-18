@@ -1397,7 +1397,12 @@ les images privées restent dans leur audience
 les conversations privées ne sont pas dues
 tant qu’elles ne changent pas l’accord du couple
 
-nouveau point à une date précise
+nouveau point : jeudi suivant J21, 20 h 30
+```
+
+```text
+promise_id: couple_review_due_at
+status: ACTIVE
 ```
 
 **19:27 — Marie**
