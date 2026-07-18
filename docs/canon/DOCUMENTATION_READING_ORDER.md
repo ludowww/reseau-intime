@@ -1,20 +1,31 @@
-# Documentation Reading Order — Bible Narrative Current
+# Documentation Reading Order — Réseau Intime
 
-> **Phase : corpus narratif signé — décision technique requise**
+> **Phase active : UI‑01 — système vertical et architecture documentaire**
 
-La Bible couvre l’architecture détaillée de J01 à J21.
+Le corpus narratif J01–J21 est finalisé et signé.
 
-J01–J21 constituent un corpus narratif finalisé et signé.
-
-L’audit global, les lots A–D et le sign-off final sont validés.
-
-La prochaine étape est une décision explicite et séparée concernant la reprise technique.
+La prochaine décision produit concerne l’UX/UI verticale, puis une reprise technique séparée.
 
 ---
 
-# 1. Ordre de lecture officiel
+# 0. Gouvernance
 
-## Vision
+Lire avant toute modification :
+
+```text
+docs/canon/PROJECT_DOCUMENTATION_GOVERNANCE.md
+```
+
+Ce document définit :
+
+- les sources autoritatives ;
+- les statuts actifs / historiques ;
+- la séparation Canon / UI / Runtime ;
+- la règle anti-dispersion.
+
+---
+
+# 1. Vision produit
 
 ```text
 docs/canon/bible/00_NORTH_STAR.md
@@ -22,7 +33,9 @@ docs/canon/bible/01_EXPERIENCE_JOUEUR.md
 docs/canon/bible/02_FANTASMES_CENTRAUX.md
 ```
 
-## Personnages, voix et adulte
+---
+
+# 2. Personnages et voix
 
 ```text
 docs/canon/characters/CHARACTER_CANON_INDEX.md
@@ -32,7 +45,9 @@ docs/canon/bible/13_BIBLE_VOIX_MESSAGERIE_ET_TESTS_DISTINCTION.md
 docs/canon/characters/NSFW_CHARACTER_ROUTE_CANON.md
 ```
 
-## Architecture
+---
+
+# 3. Architecture narrative
 
 ```text
 docs/canon/bible/03_GRAMMAIRE_NARRATIVE.md
@@ -40,34 +55,33 @@ docs/canon/bible/04_TRAME_PRINCIPALE_ET_ACTES_SAISON_1.md
 docs/canon/bible/05_ROUTES_MACRO_SAISON_1.md
 docs/canon/bible/06_EVOLUTION_EROTIQUE_DES_ROUTES.md
 docs/canon/bible/07_BIBLIOTHEQUE_DE_SEQUENCES_SAISON_1.md
-```
-
-## Scènes, images et conséquences
-
-```text
 docs/canon/bible/08_REGLES_DES_SCENES_MODULAIRES.md
 docs/canon/bible/09_PROGRESSION_VISUELLE_ET_PHOTOGRAPHIQUE.md
 docs/canon/bible/10_CARTE_CONSEQUENCES_DETTES_SECRETS_OBLIGATIONS.md
+docs/canon/bible/11_DISTRIBUTION_SEQUENCES_SCENES_IMAGES_CONSEQUENCES_JOURNEES.md
 ```
 
-## Plans détaillés
+---
+
+# 4. Plans détaillés et communication
 
 ```text
-docs/canon/bible/11_DISTRIBUTION_SEQUENCES_SCENES_IMAGES_CONSEQUENCES_JOURNEES.md
 docs/canon/bible/12_PLANS_SCENES_AUDIT_RUNTIME_J01_J08.md
 docs/canon/bible/12B_PLANS_SCENES_J09_J12.md
 docs/canon/bible/12C_PLANS_SCENES_J13_J16.md
 docs/canon/bible/12D_PLANS_SCENES_J17_J21.md
 docs/canon/bible/12E_AUDIT_GLOBAL_COHERENCE_J01_J21.md
+docs/canon/TEXT_ONLY_MESSAGING_CANON.md
 ```
 
-`12E` reste une archive canonique d’architecture. Son ancien statut de production est supersédé par les audits et contrats actuels.
+`12E` reste une archive canonique d’architecture. Le sign-off final et les scripts consolidés ont autorité sur son ancien statut de production.
 
-## Scripts, audits et corrections
+---
+
+# 5. Sources narratives consolidées
 
 ```text
 docs/canon/dialogues/J01_J06_SOURCE_CANON_CONSOLIDE.md
-docs/canon/dialogues/J01_J09_AUDIT_CONFORMITE_NARRATIVE.md
 docs/canon/dialogues/J07_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J08_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J09_SCRIPT_NARRATIF_COMPLET.md
@@ -83,13 +97,11 @@ docs/canon/dialogues/J18_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J19_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J20_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J21_SCRIPT_NARRATIF_COMPLET.md
-docs/canon/dialogues/J01_J21_AUDIT_GLOBAL_DIALOGUES_CONTINUITE.md
-docs/canon/dialogues/J01_J21_LOT_A_CORRECTIONS_BLOQUANTES.md
-docs/canon/dialogues/J07_J21_LOT_D_POLISH_VOIX_NATUREL.md
-docs/canon/dialogues/J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md
 ```
 
-## Contrats pré-runtime
+---
+
+# 6. Contrats pré-runtime
 
 ```text
 docs/canon/dialogues/J01_J21_TRACE_REGISTRY.md
@@ -99,129 +111,84 @@ docs/canon/runtime/SEASON_1_NARRATIVE_STATE_CONTRACT.md
 docs/canon/dialogues/J01_J21_REACHABILITY_MATRIX.md
 ```
 
-Ordre d’autorité actuel :
+---
+
+# 7. Audits et sign-off
 
 ```text
-scripts consolidés
-→ registres et contrat d’état
-→ reachability matrix
-→ sign-off final du corpus
-→ audits historiques
-→ guide lot D pour les critères de voix
+docs/canon/dialogues/J01_J09_AUDIT_CONFORMITE_NARRATIVE.md
+docs/canon/dialogues/J01_J21_AUDIT_GLOBAL_DIALOGUES_CONTINUITE.md
+docs/canon/dialogues/J01_J21_LOT_A_CORRECTIONS_BLOQUANTES.md
+docs/canon/dialogues/J07_J21_LOT_D_POLISH_VOIX_NATUREL.md
+docs/canon/dialogues/J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md
 ```
 
-Les overlays A–C sont consolidés dans les scripts ; ils restent des archives de décision.
+Les lots A–C sont consolidés dans les scripts.
 
-## Communication
-
-```text
-docs/canon/TEXT_ONLY_MESSAGING_CANON.md
-```
+Les audits restent des archives de décision.
 
 ---
 
-# 2. Chaîne de production
+# 8. UX/UI active
 
 ```text
-plan détaillé
-→ script complet
-→ audit global validé
-→ lot A : continuité bloquante validée
-→ lot B : registres et contrats d’état validés
-→ lot C : consolidation des sources et statuts validée
-→ lot D : polish des voix validé
-→ validation finale Ludovic signée
+docs/canon/ui/README.md
+docs/canon/ui/UI_01_VERTICAL_SMARTPHONE_SYSTEM.md
+docs/canon/ui/UI_02_SCREEN_ARCHITECTURE_AND_STATES.md
+docs/canon/ui/UI_03_INTEGRATION_HANDOFF_AND_MOCKUP_STATUS.md
+```
+
+Ordre d’autorité UI :
+
+```text
+UI_01 système visuel et responsive
+→ UI_02 écrans et états
+→ UI_03 handoff et frontière technique
+```
+
+Les maquettes conceptuelles ne sont pas des assets finaux.
+
+---
+
+# 9. Runtime
+
+Après lecture du canon et de l’UI :
+
+```text
+docs/runtime/README.md
+code + données + tests sur main
+```
+
+Les anciens plans V0.xx sont historiques sauf référence explicite depuis un nouveau plan actif.
+
+---
+
+# 10. Ordre de production actuel
+
+```text
+corpus narratif signé
+→ UI‑01 charte et architecture
+→ UI‑02 écrans finaux
+→ UI‑03 contrat d’intégration
 → décision de reprise technique
-→ adaptation JSON/runtime
-→ images ComfyUI
+→ coque portrait
+→ réconciliation J01–J06
+→ J07–J09
+→ J10–J12
+→ J13–J16
+→ J17–J21
 ```
 
 ---
 
-# 3. Gel technique
-
-Aucune nouvelle modification technique J07–J21 avant une décision explicite et séparée de reprise technique.
-
-La validation finale du corpus narratif est terminée.
-
-J06 reste techniquement non conforme jusqu’à la future migration.
-
----
-
-# 4. Lot B — état validé
+# 11. Autorité synthétique
 
 ```text
-28 traces de branche avec audience et retrait
-24 promesses avec dates et statuts
-44 faits de connaissance avec sources et certitudes
-contrat d’état borné sans scores
-reachability de chaque sortie J17 vers J21
+Narration : scripts consolidés + contrats + sign-off
+UI/UX : docs/canon/ui
+Runtime réel : code, données et tests sur main
+Statut : README.md + ROADMAP.md
+Historique : anciens rapports, audits et plans V0.xx
 ```
 
-Décisions structurantes :
-
-- aucune image de scène ne devient preuve ;
-- aucune promesse ne repose sur un booléen vague ;
-- aucune connaissance forte n’existe sans source ;
-- aucun score de route ou propriétaire de vague ;
-- la finale lit `final_trace_id` et les contradictions déjà actives.
-
----
-
-# 5. Lot C — état validé
-
-Travaux documentaires :
-
-```text
-C1 intégrer les corrections J01–J09 dans les sources autoritatives
-C2 intégrer le lot A dans J10, J12, J14, J17 et J21
-C3 remplacer les formulations génériques par trace_id / promise_id / fact_id
-C4 fixer les créateurs d’image encore non résolus
-C5 sourcer ou réduire la connaissance Pauline / Marie en J19
-C6 renforcer dans J11 l’indépendance matérielle Mathilde
-C7 marquer clairement les documents historiques supersédés
-```
-
-Le lot C a consolidé les corrections et identifiants dans les sources documentaires sans modifier le runtime.
-
----
-
-# 6. Validation finale signée
-
-Le document `J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md` confirme qu’aucun blocage narratif ne subsiste.
-
-- chaque voix reste identifiable sans nom ;
-- les formulations trop parfaites ont été réduites ;
-- les identifiants `trace_id`, `promise_id` et `fact_id` sont inchangés ;
-- aucune co-présence n’est rejouée par chat direct ;
-- les limites, promesses et conséquences restent lisibles ;
-- aucun runtime, JSON, test ou asset n’a été modifié.
-
----
-
-# 7. Statut J01–J21
-
-| Périmètre | Statut |
-|---|---|
-| Architecture J01–J21 | validée |
-| Scripts J07–J21 | validés sous autorités correctives |
-| Audit global des dialogues | validé |
-| Lot A | validé |
-| Lot B | validé |
-| Lot C | validé |
-| Lot D | validé |
-| Validation finale du corpus | signée |
-| Runtime J07–J21 | gelé jusqu’à décision séparée |
-| Runtime J06 | non conforme |
-| Images finales | à produire |
-
----
-
-# 8. Règle finale
-
-```text
-Les contrats définissent maintenant la vérité narrative.
-Les scripts disent maintenant directement la vérité des contrats.
-Le lot D a rendu les voix plus humaines sans modifier cette vérité.
-Le corpus narratif est signé. La prochaine décision est uniquement technique et séparée.
-```
+Aucun résumé ne doit redéfinir la source de son domaine.
