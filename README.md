@@ -30,7 +30,7 @@ docs/canon/dialogues/J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md
 ## UX/UI
 
 ```text
-Phase active : UI‑01
+Phase active : UI‑FOUNDATION
 Cible future : smartphone vertical 720 × 1280, ratio 9:16
 Style : sombre, anime-inspired, couleurs par personnage
 Galerie : collection photo organisée par personnage
@@ -135,11 +135,11 @@ Les anciens plans et rapports V0.xx sont historiques sauf référence explicite 
 # Prochaine séquence de travail
 
 ```text
-UI‑01  charte verticale et architecture documentaire
-UI‑02  spécifications / maquettes des écrans restants
-UI‑03  contrat d’intégration final
-T‑UI‑01 migration portrait et composants
-T‑NAR‑01 réconciliation J01–J06
+UI‑FOUNDATION  charte verticale et architecture documentaire
+UI‑SCREENS     spécifications / maquettes des écrans restants
+UI‑HANDOFF     contrat d’intégration final
+T‑UI‑01        migration portrait et composants
+T‑NAR‑01       réconciliation J01–J06
 T‑NAR suivants : J07–J09 → J10–J12 → J13–J16 → J17–J21
 ```
 
