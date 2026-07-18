@@ -142,3 +142,35 @@ Après la passe :
 # 5. Règle finale
 
 > **Le naturel ne consiste pas à rendre les personnages confus. Il consiste à leur laisser une vie, une gêne et un rythme autour des décisions qu’ils ont réellement prises.**
+
+
+---
+
+# 6. Résultat appliqué
+
+La passe modifie directement les scripts suivants :
+
+```text
+J10
+J11
+J13
+J14
+J17
+J18
+J19
+J20
+J21
+```
+
+J07–J09, J12, J15 et J16 ont été relus mais conservés : leur rythme actuel ne nécessitait pas une nouvelle modification après la consolidation du lot C.
+
+Les changements concernent uniquement la formulation des messages. Les identifiants canoniques ont été comparés avant et après chaque remplacement et sont inchangés.
+
+Statut final :
+
+```text
+LOT D APPLIQUÉ
+CORPUS NARRATIF CONSOLIDÉ
+AUCUNE MODIFICATION RUNTIME
+PROCHAINE ÉTAPE : VALIDATION FINALE AVANT REPRISE TECHNIQUE
+```

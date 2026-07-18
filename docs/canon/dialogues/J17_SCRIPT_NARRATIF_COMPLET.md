@@ -1228,7 +1228,7 @@ Marie peut être :
 
 **19:18 — Marie**
 
-> Je ne veux pas un inventaire de tous tes messages.
+> Je ne veux pas lire tes fils.
 
 **19:18 — Marie**
 
@@ -1236,11 +1236,11 @@ Marie peut être :
 
 **19:19 — Marie**
 
-> Je ne veux pas non plus une phrase où tu me dis que tu m’aimes et où tout le reste devient un problème de formulation.
+> Et je ne veux pas qu’on résume tout à `je t’aime`.
 
 **19:20 — Marie**
 
-> Je veux savoir ce que tu veux réellement tenir maintenant.
+> Je veux savoir ce qui change demain.
 
 Player ne reçoit pas un menu de personnes.
 
@@ -1282,11 +1282,11 @@ Player doit donner un acte ou une règle.
 
 **19:25 — Marie**
 
-> Ça ne veut pas dire que tu dois me transmettre la vie privée des autres.
+> Je ne te demande pas la vie privée des autres.
 
 **19:26 — Marie**
 
-> Ça veut dire que tu ne décides plus seul quand une chose qui change notre accord devient assez importante pour exister.
+> Je te demande de ne plus me laisser apprendre après.
 
 Cette réponse peut produire :
 
@@ -1309,15 +1309,11 @@ selon l’histoire antérieure.
 
 **Marie**
 
-> Une heure réelle.
+> Le dimanche, on en parle jeudi.
 
 **Marie**
 
-> Le dimanche d’après n’existe pas encore comme récompense.
-
-**Marie**
-
-> On le confirme jeudi si on est toujours capables de tenir la même règle.
+> Je ne bloque pas une journée maintenant pour me rassurer.
 
 ```text
 promise_id: couple_review_due_at
@@ -1338,11 +1334,11 @@ status: CONDITIONAL
 
 **19:24 — Marie**
 
-> Cette phrase n’a pas d’heure, pas de lieu et pas de comportement.
+> Ça ne me dit pas ce que tu fais demain.
 
 **19:25 — Marie**
 
-> Je ne peux pas vivre dans `mieux`.
+> `Mieux`, je ne sais pas quoi en faire.
 
 Player doit préciser ou la posture échoue.
 
@@ -1364,7 +1360,7 @@ Player doit préciser ou la posture échoue.
 
 **19:23 — Marie**
 
-> Est-ce que tu veux construire une autre règle avec moi, ou garder toutes les portes ouvertes sans que j’aie de prise dessus ?
+> Est-ce que tu veux qu’on essaie autrement ? Ou tu veux garder toutes les portes ouvertes ?
 
 Player doit préciser.
 
@@ -1407,11 +1403,11 @@ status: ACTIVE
 
 **19:27 — Marie**
 
-> Ça ne veut pas dire que j’accepte rétroactivement ce qui a déjà été caché.
+> Ça ne rend pas le passé acceptable.
 
 **19:27 — Marie**
 
-> Ça veut dire que je refuse de décider sous la menace de la prochaine découverte.
+> Je ne vais juste pas attendre le prochain truc pour savoir où on en est.
 
 Cette branche peut produire :
 
@@ -1445,7 +1441,7 @@ La reconfiguration est éligible uniquement si :
 
 **19:26 — Marie**
 
-> Je ne maintiens pas notre ancien accord pendant que tu décides tranquillement ce qu’il t’empêche de faire.
+> Je ne vais pas continuer comme avant pendant que tu réfléchis à ce que tu veux garder.
 
 Cette branche produit :
 
@@ -1489,15 +1485,15 @@ Player reçoit une dernière précision :
 
 **19:24 — Marie**
 
-> C’est une réponse.
+> D’accord.
 
 **19:25 — Marie**
 
-> Pas une solution.
+> Ce n’est pas réglé.
 
 **19:25 — Marie**
 
-> On peut partir de là si tu acceptes qu’entre-temps rien ne redevienne automatique.
+> Mais au moins je sais que tu es encore là. Jusqu’à notre point, rien ne redevient automatique.
 
 Cette branche peut produire un accord provisoire fragile.
 
@@ -1531,7 +1527,7 @@ Silence.
 
 **19:26 — Marie**
 
-> Je ne vais pas rendre la phrase plus grande pour te faire changer d’avis.
+> Je ne vais pas te faire répéter pour que ça fasse moins mal.
 
 **19:26 — Marie**
 
@@ -1565,9 +1561,9 @@ Si Player écrit :
 
 Marie répond :
 
-> Ce ne sont pas `quelques horaires`.
+> Ce n’étaient pas juste des heures.
 
-> Ce sont les moments où tu as décidé ce que j’avais le droit de savoir pour continuer à t’attendre.
+> C’était chaque fois où j’attendais avec une version incomplète.
 
 Si Player écrit :
 

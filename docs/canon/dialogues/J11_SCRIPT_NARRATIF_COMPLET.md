@@ -391,7 +391,7 @@ Si Player a systématiquement respecté les audiences :
 
 **21:28 — Sandra**
 
-> Une image précise. Pas une règle générale.
+> Celle-là seulement.
 
 Sortie :
 
@@ -614,11 +614,11 @@ forbidden_leakage: aucune dépendance au logement, aucune permission supposée, 
 
 **21:07 — Mathilde**
 
-> Ce n’est pas un accident logistique.
+> Oui, exprès.
 
 **21:07 — Mathilde**
 
-> Je préfère le préciser avant que ton visage fasse le travail à ta place.
+> Je préfère te prévenir avant de voir ta tête.
 
 **Player guidé**
 
@@ -626,15 +626,15 @@ forbidden_leakage: aucune dépendance au logement, aucune permission supposée, 
 
 **21:08 — Mathilde**
 
-> Non.
+> Tu as compris une partie.
 
 **21:08 — Mathilde**
 
-> Tu as compris que je veux produire un effet.
+> Je veux que tu regardes.
 
 **21:09 — Mathilde**
 
-> Tu n’as pas encore compris ce que j’accepte avec.
+> Le reste, je ne l’ai pas décidé.
 
 Le choix principal apparaît.
 
@@ -646,7 +646,7 @@ Le choix principal apparaît.
 
 **Player**
 
-> j’ai compris que tu veux que je regarde. je regarde. je ne fais rien de plus
+> j’ai compris. tu veux que je regarde. je garde mes mains
 
 **21:10 — Mathilde**
 
@@ -689,7 +689,7 @@ Mathilde peut repartir à tout moment
 
 **21:43 — Mathilde**
 
-> Et maintenant je dois vivre avec le fait que c’était quand même excitant.
+> Et c’était quand même... enfin. oui. excitant.
 
 ### Sortie
 
@@ -722,7 +722,7 @@ confiance renforcée
 
 **21:11 — Mathilde**
 
-> Et tu ne transformes pas demain matin en procès ou en victoire.
+> Et demain tu ne me fais pas un débrief de trois pages.
 
 **Player**
 
@@ -742,7 +742,7 @@ Si l’éligibilité physique complète n’est pas atteinte :
 
 **21:12 — Mathilde**
 
-> Près. Pas dessus. Je précise pour le dossier.
+> Près. Pas collé. Voilà.
 
 La messagerie s’arrête.
 
@@ -1066,7 +1066,7 @@ Player reçoit un vrai choix.
 
 **Raphaëlle**
 
-> Je ne vais pas transformer ce message en permission générale.
+> Je ne vais pas décider la suite dans ce message.
 
 **Raphaëlle**
 
@@ -1117,7 +1117,7 @@ confiance créative maintenue
 
 **Raphaëlle**
 
-> Et parce que je voulais vérifier si tu savais t’arrêter à cette information.
+> Et je voulais voir si tu savais t’arrêter là.
 
 ### Sortie
 
@@ -1191,7 +1191,7 @@ Après séparation :
 
 **Raphaëlle**
 
-> Samedi, il faudra agir comme des personnes qui savent ça.
+> Samedi, on ne fera pas comme si ça n’avait pas eu lieu.
 
 #### RB2 — Refuser
 
@@ -1337,7 +1337,7 @@ Il veut définir ce qu’il accepte avant cette convergence.
 
 **Nico**
 
-> Garde-fou réciproque. Pas confession permanente.
+> On se le dit quand ça dérape. Pas besoin d’un rapport quotidien.
 
 ### Sortie
 
@@ -1359,11 +1359,11 @@ règle réciproque
 
 **Nico**
 
-> Mais elles ne sont pas le terrain sur lequel on règle ça.
+> Mais on ne règle rien entre nous avec elles.
 
 **Nico**
 
-> Samedi, je parle pour moi. Pas contre toi.
+> Samedi, je parle pour moi. C’est tout.
 
 ### Sortie
 
@@ -1385,7 +1385,7 @@ aucune permission
 
 **Nico**
 
-> Je garde la confidence. Je ferme le commentaire.
+> Ce que tu m’as dit reste ici. Le commentaire, j’arrête.
 
 **Nico**
 

@@ -730,25 +730,25 @@ Bastien ne doit pas être réduit à un détail hors champ sans existence narrat
 
 **16:45 — Pauline**
 
-> La version publique est vraie.
+> La photo du groupe était vraie.
 
 **16:45 — Pauline**
 
-> La version privée l’était aussi.
+> L’autre aussi.
 
 **16:46 — Pauline**
 
-> Mon problème est que j’ai traité leur séparation comme une solution.
+> Et j’ai fait comme si les séparer réglait le reste.
 
 Silence.
 
 **16:47 — Pauline**
 
-> Je dois décider si je ferme le compartiment.
+> Je dois décider si je ferme ce fil.
 
 **16:47 — Pauline**
 
-> Ou si j’arrête de prétendre qu’il est sans conséquence.
+> Ou si j’arrête de dire que ce n’est rien.
 
 Player reçoit trois postures.
 
@@ -806,7 +806,7 @@ Silence.
 
 **16:53 — Pauline**
 
-> Le réflexe de t’écrire une phrase différente de celle que je peux assumer dans la pièce où je suis.
+> J’arrête de t’écrire des choses que je ne pourrais pas assumer si Bastien entrait dans la pièce.
 
 **Player**
 
@@ -814,15 +814,11 @@ Silence.
 
 **16:54 — Pauline**
 
-> La version publique ne devient pas plus vraie grâce à ça.
-
-**16:54 — Pauline**
-
-> Elle était déjà vraie.
+> La photo du groupe était déjà vraie.
 
 **16:55 — Pauline**
 
-> Je vais simplement arrêter de lui construire une pièce cachée à côté.
+> J’arrête juste de lui construire une pièce cachée à côté.
 
 ## 18.2 Ce que Pauline conserve
 
@@ -877,15 +873,11 @@ Silence prolongé.
 
 **16:52 — Pauline**
 
-> Alors on enlève le mot `test`.
-
-**16:52 — Pauline**
-
-> Et le mot `accident`.
+> Alors on arrête de dire que c’était un test.
 
 **16:53 — Pauline**
 
-> Ce fil existe parce qu’on veut qu’il existe.
+> Ce fil existe parce qu’on l’ouvre.
 
 **Player**
 
@@ -921,15 +913,15 @@ fermeture immédiate possible
 
 **16:57 — Pauline**
 
-> Je ne vais pas appeler ça un cadre propre.
+> Je ne vais pas appeler ça propre.
 
 **16:57 — Pauline**
 
-> C’est un compartiment conscient.
+> On sait ce qu’on fait.
 
 **16:58 — Pauline**
 
-> Le risque est justement qu’il fonctionne.
+> Le pire, c’est que ça peut marcher.
 
 ## 19.4 Sortie
 
@@ -970,7 +962,7 @@ Cette branche est séduisante mais instable.
 
 **16:57 — Pauline**
 
-> Le mot `preuve` donne une impression de sécurité que nous n’avons pas.
+> `Preuve` ferait croire qu’on est protégés.
 
 **16:58 — Pauline**
 
@@ -978,7 +970,7 @@ Cette branche est séduisante mais instable.
 
 **16:58 — Pauline**
 
-> Voilà notre très mauvaise égalité.
+> Voilà notre mauvaise idée.
 
 Player peut :
 
@@ -999,7 +991,7 @@ Player peut :
 
 > Tu acceptes.
 
-> Ce n’est pas tout à fait pareil.
+> C’est pas pareil.
 
 ## 20.4 Demander une suppression mutuelle
 
@@ -1013,7 +1005,7 @@ Player peut :
 
 > On ne peut pas supprimer ce qu’on sait.
 
-> Et je ne te donnerai pas une attestation d’oubli.
+> Et je ne vais pas te promettre d’oublier.
 
 ## 20.5 Menace ou pression
 
@@ -1025,7 +1017,7 @@ Player peut :
 
 > Non.
 
-> Là tu viens de transformer une dette en menace.
+> Là, tu viens de me menacer.
 
 Pauline ferme la ligne et conserve uniquement les traces nécessaires à sa protection.
 
@@ -1087,7 +1079,7 @@ Silence.
 
 **17:06 — Pauline**
 
-> Et je continue quand même à créer un endroit privé avec toi.
+> Et je continue quand même à t’écrire ici.
 
 Pauline ne révèle aucune confidence de Marie.
 

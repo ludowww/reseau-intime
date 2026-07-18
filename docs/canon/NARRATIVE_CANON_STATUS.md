@@ -1,6 +1,6 @@
 # Narrative Canon Status — Current
 
-> **Current phase: long-form voice polish — lot D**
+> **Current phase: final narrative sign-off before technical resumption**
 
 The Bible Narrative covers J01–J21.
 
@@ -8,7 +8,7 @@ J07–J21 have complete validated narrative scripts under corrective authorities
 
 The complete-season dialogue audit and lots A, B and C are validated.
 
-The next phase is the long-form naturalness and voice-distinction polish on the consolidated corpus.
+The next phase is final narrative sign-off before any technical resumption.
 
 ---
 
@@ -110,7 +110,7 @@ Global dialogue audit: validated
 Correction lot A: validated
 Narrative contract lot B: validated
 Source consolidation lot C: validated
-Voice polish lot D: next
+Voice polish lot D: validated
 Runtime J07–J21: frozen
 ```
 

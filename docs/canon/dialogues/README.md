@@ -111,7 +111,8 @@ Audit global J01–J21 — validé
 Lot A — validé
 Lot B — validé
 Lot C — validé
-Prochaine étape — lot D : polish des voix
+Lot D — validé
+Prochaine étape — validation finale avant reprise technique validé
 ```
 
 ## Résultat du lot B

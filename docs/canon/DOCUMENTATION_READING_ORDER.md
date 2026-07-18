@@ -8,7 +8,7 @@ J07–J21 sont validés narrativement sous autorités correctives.
 
 L’audit global et les lots A, B et C sont validés.
 
-La prochaine étape est la passe de naturel et de distinction des voix sur le corpus consolidé.
+La prochaine étape est la validation finale du corpus narratif avant toute reprise technique.
 
 ---
 
@@ -126,7 +126,7 @@ plan détaillé
 → lot A : continuité bloquante validée
 → lot B : registres et contrats d’état validés
 → lot C : consolidation des sources et statuts validée
-→ lot D : polish des voix
+→ lot D : polish des voix validé
 → validation Ludovic
 → décision de reprise technique
 → adaptation JSON/runtime
@@ -210,7 +210,7 @@ Le lot C a consolidé les corrections et identifiants dans les sources documenta
 | Lot A | validé |
 | Lot B | validé |
 | Lot C | validé |
-| Lot D | prochaine étape |
+| Lot D | validé |
 | Runtime J07–J21 | gelé |
 | Runtime J06 | non conforme |
 | Images finales | à produire |

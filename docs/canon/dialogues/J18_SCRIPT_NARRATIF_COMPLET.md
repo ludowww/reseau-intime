@@ -321,7 +321,7 @@ Silence.
 
 **18:52 — Sandra**
 
-> C’est précisément le problème.
+> Voilà.
 
 **18:53 — Sandra**
 
@@ -329,7 +329,7 @@ Silence.
 
 **18:54 — Sandra**
 
-> Maintenant je dois décider si je la mets dans le livre avec les autres ou si je la laisse dans l’enveloppe.
+> Je ne sais pas si je la mets dans le livre ou si je la laisse dans l’enveloppe.
 
 Silence.
 
@@ -399,7 +399,7 @@ Silence.
 
 **18:52 — Sandra**
 
-> Je veux décider si je garde encore une place pour toi autour de celle-ci.
+> Je veux savoir si je te laisse encore une place là-dedans.
 
 ## 7.4 Amitié simple sans image privée active
 
@@ -578,11 +578,11 @@ Silence.
 
 **19:06 — Sandra**
 
-> Pas parce qu’elle annonce quelque chose.
+> Pas pour annoncer quoi que ce soit.
 
 **19:06 — Sandra**
 
-> Parce que ce déjeuner a existé et qu’il était bien.
+> Juste parce que ce déjeuner était bien.
 
 **Player**
 
@@ -656,11 +656,11 @@ Jeff et Marie restent réels
 
 **19:02 — Sandra**
 
-> Une image précise.
+> Celle-là.
 
 **19:03 — Sandra**
 
-> Pas une règle générale.
+> Pas les suivantes.
 
 **Player**
 
@@ -686,15 +686,15 @@ Puis :
 
 **19:07 — Sandra**
 
-> Ce que je garde surtout, c’est que tu as demandé avant.
+> J’ai surtout remarqué que tu as demandé avant.
 
 **19:08 — Sandra**
 
-> Ça semble très bas comme standard quand je l’écris.
+> C’est peu, dit comme ça.
 
 **19:08 — Sandra**
 
-> Et pourtant ça change tout.
+> Mais je l’ai remarqué.
 
 ## 11.3 Règle
 
@@ -731,7 +731,7 @@ aucune progression physique automatique
 
 **19:01 — Sandra**
 
-> Je ne vais pas faire semblant que la photo récente était seulement une expérience raisonnable.
+> La photo récente n’était pas très raisonnable.
 
 Silence.
 

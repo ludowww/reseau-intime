@@ -376,27 +376,23 @@ Player reçoit un choix réel :
 
 **Marie**
 
-> Alors ne me présente pas ça comme un cadre propre.
+> Alors ne me dis pas que tout est clair.
 
 ### Réponse `non`
 
 **Marie**
 
-> Donc ce n’est pas seulement une photo.
-
-**Marie**
-
-> C’est une place secrète que vous êtes en train de fabriquer.
+> Alors vous avez commencé quelque chose derrière nous.
 
 ### Réponse `je n’ai pas demandé`
 
 **Marie**
 
-> Tu as demandé la règle de l’image.
+> Tu as demandé ce que tu pouvais faire de la photo.
 
 **Marie**
 
-> Tu n’as pas demandé la règle de la relation.
+> Pas ce que ça faisait à votre relation.
 
 ### Sortie
 
@@ -430,11 +426,11 @@ conversation couple J15 due
 
 **20:19 — Marie**
 
-> Ce n’est pas une preuve de ce qu’elle voulait.
+> Je ne sais pas ce qu’elle voulait.
 
 **20:19 — Marie**
 
-> C’est une information sur ce que toi tu savais.
+> Je sais que toi, tu savais assez pour fermer l’écran.
 
 ### Sortie
 
@@ -449,7 +445,7 @@ Pauline n’est pas encore prévenue
 
 **Player**
 
-> je ne peux pas te montrer ni raconter son image sans son accord. mais je ne vais pas faire comme si tu n’avais rien vu. je te réponds ce soir à 21 h 30 après l’avoir prévenue
+> je ne peux pas raconter sa photo sans lui demander. mais je te réponds à 21 h 30, après l’avoir prévenue
 
 **20:17 — Marie**
 
@@ -481,11 +477,11 @@ Player doit prévenir Pauline.
 
 **Pauline**
 
-> Dis-lui que je l’ai choisie pour une autre audience.
+> Dis-lui que je l’ai envoyée pour toi, pas pour le groupe.
 
 **Pauline**
 
-> Et que Bastien ne le sait pas si tu décides de lui dire la vérité complète.
+> Et que Bastien ne le sait pas, si tu choisis de lui dire.
 
 Le choix de Player à 21 h 30 détermine s’il protège une audience ou maintient un secret trompeur.
 
@@ -598,7 +594,7 @@ Elle ne sait pas :
 
 **18:40 — Mathilde**
 
-> Pas pour me dénoncer. Pour qu’elle sache que son audience a changé pendant trois secondes.
+> Pas pour me citer. Juste pour qu’elle sache que j’ai vu.
 
 Player doit prévenir Sandra.
 
@@ -665,7 +661,7 @@ J15 peut utiliser le foyer comme pression
 
 **18:39 — Mathilde**
 
-> Je te demande de ne pas me transformer en personne qui couvre sans savoir.
+> Je veux juste pas me retrouver à couvrir un truc que je connais pas.
 
 Player prévient Sandra.
 
@@ -757,7 +753,7 @@ Puis la ligne exacte :
 
 **19:03 — Marie**
 
-> Mais je ne vais pas faire semblant que cette phrase est ordinaire.
+> Mais cette phrase n’est pas normale.
 
 Marie sait exactement :
 
