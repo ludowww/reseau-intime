@@ -1,29 +1,30 @@
-# Réseau Intime — UI‑03 — Handoff d’intégration et statut des maquettes
+# Réseau Intime — UI_03 — Handoff d’intégration et statut des maquettes
 
 ## Statut
 
 **Catégorie : Canon UX/UI actif — frontière pré-runtime**
 
-**Périmètre : responsabilités des données, statut des maquettes, ordre d’implémentation et critères de reprise technique**
+**Périmètre : responsabilités, données de présentation, persistance, ordre technique et critères de reprise**
 
-**Autorité : empêche que la future intégration mélange contenu narratif, présentation et état technique**
+**Autorité : définit comment intégrer l’UI sans mélanger narration, présentation et runtime**
+
+Le préfixe `UI_03` indique l’ordre de lecture du document. Le lot de travail correspondant est `UI‑HANDOFF`.
 
 ---
 
-# 1. Statut des maquettes produites
+# 1. Statut des maquettes
 
-Les écrans conceptuels validés pendant les échanges ont établi :
+Les concepts validés ont établi :
 
-- le format portrait ;
-- la direction anime-inspired ;
-- le thème sombre nocturne ;
-- les couleurs d’identité ;
-- les conversations privées et de groupe ;
-- la Galerie sous forme de collection photo ;
-- les onglets par personnage ;
-- les tuiles verrouillées.
+- portrait smartphone ;
+- style sombre anime-inspired ;
+- couleurs par personnage ;
+- conversations privées et de groupe ;
+- Galerie en collection photo ;
+- onglets par personnage ;
+- tuiles verrouillées.
 
-Ils restent :
+Statut :
 
 ```text
 CONCEPT_REFERENCES
@@ -31,14 +32,14 @@ CONCEPT_REFERENCES
 
 Ils ne sont pas :
 
-- des assets de production ;
-- des captures du jeu ;
-- le design définitif des personnages ;
-- des textes narratifs canoniques ;
+- des assets finaux ;
+- des captures du runtime ;
+- des designs personnages canoniques ;
+- des textes narratifs ;
 - des mesures pixel-perfect ;
-- des licences d’utilisation finale.
+- une autorisation de copier les images en production.
 
-La future production doit utiliser les décisions des documents UI, pas copier aveuglément les images conceptuelles.
+La production suit les documents UI actifs, pas les détails accidentels d’une maquette.
 
 ---
 
@@ -46,7 +47,7 @@ La future production doit utiliser les décisions des documents UI, pas copier a
 
 ## Narration
 
-Source :
+Sources :
 
 ```text
 docs/canon/dialogues/
@@ -60,16 +61,11 @@ Fournit :
 - auteur ;
 - heure ;
 - choix ;
-- image ou trace attendue ;
-- conditions narratives ;
+- trace attendue ;
+- conditions ;
 - conséquence.
 
-Ne fournit pas :
-
-- largeur de bulle ;
-- couleur de surface ;
-- animation ;
-- structure de scène Godot.
+Ne fournit pas la mise en page ou les scènes Godot.
 
 ## UI/UX
 
@@ -87,42 +83,35 @@ Fournit :
 - couleurs ;
 - états visuels ;
 - responsive ;
-- accessibilité ;
-- hiérarchie de présentation.
+- accessibilité.
 
-Ne fournit pas :
-
-- route ;
-- permission narrative ;
-- nouvelle trace ;
-- nouveau message ;
-- connaissance d’un personnage.
+Ne crée aucune route, permission, trace, connaissance ou ligne de dialogue.
 
 ## Runtime
 
-Source :
+Sources :
 
 ```text
 code + données + tests sur main
-docs/runtime/ pour les plans actifs
+docs/runtime/ pour un plan de branche actif
 ```
 
 Fournit :
 
 - chargement ;
-- persistance ;
-- calcul d’éligibilité ;
 - ordre ;
+- éligibilité ;
+- persistance ;
 - sauvegarde ;
-- adaptation des données vers les composants.
+- adaptation des données vers l’UI.
 
-Ne redéfinit pas le canon ou le design produit.
+Il ne redéfinit pas le canon ou la cible visuelle.
 
 ---
 
-# 3. Contrats sémantiques de données
+# 3. Contrats sémantiques de présentation
 
-Ces structures décrivent des besoins, pas des classes imposées.
+Ces formes décrivent les besoins de l’UI. Elles n’imposent pas des classes ou un format JSON définitif.
 
 ## `CharacterPresentation`
 
@@ -134,7 +123,7 @@ avatar_ref
 gallery_enabled
 ```
 
-Les valeurs de couleur viennent de UI‑01.
+Les couleurs viennent de `UI_01_VERTICAL_SMARTPHONE_SYSTEM.md`.
 
 ## `ConversationThreadPresentation`
 
@@ -149,7 +138,7 @@ availability_state
 is_group
 ```
 
-`availability_state` ne doit jamais contenir un nom de route visible.
+`availability_state` ne contient jamais un nom de route visible.
 
 ## `MessagePresentation`
 
@@ -183,7 +172,7 @@ enabled
 confirmation_required
 ```
 
-Une raison technique d’indisponibilité n’est pas montrée sauf décision produit explicite.
+Une raison interne d’indisponibilité ne devient pas automatiquement un texte joueur.
 
 ## `GalleryItemPresentation`
 
@@ -205,7 +194,7 @@ LOCKED
 REMOVED
 ```
 
-Le runtime ne doit pas générer une miniature spoiler pour `LOCKED`.
+Une tuile `LOCKED` ne possède pas de miniature spoiler.
 
 ## `SaveSlotPresentation`
 
@@ -220,7 +209,7 @@ safe_thumbnail_ref
 is_valid
 ```
 
-Aucun état de route.
+Aucun score, secret ou état de route n’est affiché.
 
 ## `UISettings`
 
@@ -240,9 +229,7 @@ notification_volume
 
 ---
 
-# 4. Persistance UI
-
-La future sauvegarde doit distinguer :
+# 4. Persistance
 
 ## État narratif
 
@@ -251,59 +238,58 @@ La future sauvegarde doit distinguer :
 - traces ;
 - connaissances ;
 - promesses ;
-- relations.
+- états relationnels.
 
 ## État de présentation utile
 
 - dernier fil ouvert ;
-- position de scroll si raisonnable ;
-- nouveaux contenus de Galerie déjà vus ;
+- nouveaux contenus de Galerie déjà consultés ;
 - paramètres ;
-- sauvegardes manuelles.
+- slots manuels ;
+- position de lecture seulement si elle améliore réellement la reprise.
 
-## État éphémère non nécessaire
+## État éphémère à ne pas sauvegarder
 
 - animation en cours ;
-- hover ;
+- hover ou focus temporaire ;
 - particules ;
-- message temporairement sélectionné ;
-- taille calculée d’un composant.
+- taille calculée ;
+- message temporairement sélectionné.
 
 ---
 
-# 5. Ordre d’implémentation recommandé
+# 5. Ordre technique recommandé
 
-## T‑UI‑01 — Coque portrait
+## `T‑UI‑01` — Coque portrait
 
 - `project.godot` portrait ;
 - viewport de référence ;
 - safe areas ;
 - scaling ;
-- navigation basse ;
-- thèmes et tokens ;
-- aucune migration narrative dans le même patch si possible.
+- tokens de thème ;
+- navigation Messages / Galerie ;
+- scène de démonstration ou fausses données ;
+- aucune migration narrative massive.
 
-## T‑UI‑02 — Composants narratifs
+## `T‑UI‑02` — Composants narratifs
 
-- ConversationCard ;
-- MessageBubble ;
-- ChoiceBar ;
-- DayDivider ;
-- OffPhoneTransition ;
+- `ConversationCard` ;
+- `MessageBubble` ;
+- `ChoiceBar` ;
+- `DayDivider` ;
+- `OffPhoneTransition` ;
 - notification ;
 - typing.
 
-Utiliser de fausses données ou une scène de démonstration contrôlée.
+## `T‑UI‑03` — Galerie
 
-## T‑UI‑03 — Galerie
+- `CharacterTab` ;
+- `GalleryGrid` ;
+- `GalleryTile` ;
+- `PhotoViewer` ;
+- états verrouillé, nouveau et retiré.
 
-- CharacterTab ;
-- GalleryGrid ;
-- GalleryTile ;
-- PhotoViewer ;
-- états verrouillé / nouveau / retiré.
-
-## T‑UI‑04 — Écrans système
+## `T‑UI‑04` — Écrans système
 
 - titre ;
 - pause ;
@@ -312,11 +298,11 @@ Utiliser de fausses données ou une scène de démonstration contrôlée.
 - première configuration ;
 - confirmations.
 
-## T‑NAR‑01 — Réconciliation J01–J06
+## `T‑NAR‑01` — Réconciliation J01–J06
 
-Seulement après validation de la coque et des composants.
+Commence seulement après validation de la coque et des composants.
 
-## T‑NAR suivants
+Puis :
 
 ```text
 J07–J09
@@ -329,27 +315,27 @@ J07–J09
 
 # 6. Frontière des branches
 
-Une PR ne doit pas mélanger par défaut :
+Une PR ne mélange pas par défaut :
 
 ```text
-refonte globale UI
-+ migration de quinze journées
+refonte UI globale
++ migration de nombreuses journées
 + changement de sauvegarde
 + production d’assets
 ```
 
 Préférer :
 
-- un écran ou un groupe de composants ;
+- un écran ou groupe de composants ;
 - une migration de format ;
 - un bloc narratif court ;
-- un changement de sauvegarde explicitement testé.
+- une modification de sauvegarde explicitement testée.
 
 ---
 
-# 7. Validation technique attendue
+# 7. Validation attendue
 
-Lors de la reprise :
+Base :
 
 ```bash
 python3 tools/validate_game_data.py
@@ -359,15 +345,16 @@ git diff --check
 godot --headless --path game --quit
 ```
 
-Tests portrait futurs :
+Résolutions portrait futures :
 
 ```text
 720 × 1280
 1080 × 1920
 1080 × 2340
+fenêtre PC portrait
 ```
 
-Le test historique `1280 × 720` peut être conservé temporairement pour détecter les régressions avant suppression explicite de l’ancien layout.
+Le test historique `1280 × 720` peut rester temporairement pour détecter les régressions avant retrait explicite de l’ancien layout.
 
 ---
 
@@ -375,25 +362,26 @@ Le test historique `1280 × 720` peut être conservé temporairement pour détec
 
 La reprise technique peut être autorisée lorsque :
 
-- [ ] UI‑01 est validé ;
-- [ ] les écrans manquants ont des spécifications détaillées ou maquettes suffisantes ;
-- [ ] l’écran sauvegarde / chargement est cadré ;
-- [ ] les paramètres et l’accessibilité sont cadrés ;
-- [ ] le mode portrait est accepté comme cible ;
+- [ ] `UI‑FOUNDATION` est validé ;
+- [ ] `UI‑SCREENS` spécifie ou maquette suffisamment les écrans manquants ;
+- [ ] sauvegarde / chargement est cadré ;
+- [ ] paramètres et accessibilité sont cadrés ;
+- [ ] portrait est accepté comme cible ;
 - [ ] les composants MVP sont identifiés ;
+- [ ] `UI‑HANDOFF` est validé ;
 - [ ] la première branche technique possède un périmètre court ;
-- [ ] les documents runtime anciens sont traités comme historiques ;
-- [ ] aucun asset conceptuel n’est considéré final par erreur.
+- [ ] les documents V0.xx sont traités comme historiques ;
+- [ ] aucun concept visuel n’est pris pour un asset final.
 
 ---
 
-# 9. Prochaine tranche UI
+# 9. Prochaine phase
 
 ```text
-UI‑02 — spécifications et maquettes finales
+UI‑SCREENS — spécifications et maquettes finales
 ```
 
-Priorité :
+Priorités :
 
 1. photo plein écran ;
 2. transition hors téléphone ;
@@ -402,7 +390,8 @@ Priorité :
 5. pause ;
 6. sauvegarde / chargement ;
 7. paramètres ;
-8. première configuration et confirmations.
+8. première configuration et confirmations ;
+9. états vides, erreur et texte agrandi.
 
 La liste Messages, la conversation individuelle, la conversation de groupe et la Galerie par personnage disposent déjà d’une direction conceptuelle validée.
 
@@ -412,8 +401,8 @@ La liste Messages, la conversation individuelle, la conversation de groupe et la
 
 ```text
 NARRATION : signée
-DIRECTION UI : cadrée
+UI‑FOUNDATION : cadré
 MAQUETTES : références conceptuelles
-RUNTIME HORIZONTAL : historique à réconcilier
-REPRISE TECHNIQUE : encore séparée et non autorisée par UI‑01
+RUNTIME HORIZONTAL : prototype à réconcilier
+REPRISE TECHNIQUE : encore séparée et non autorisée
 ```
