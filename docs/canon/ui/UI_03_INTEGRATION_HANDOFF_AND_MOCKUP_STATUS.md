@@ -362,20 +362,22 @@ Le test historique `1280 × 720` peut rester temporairement pour détecter les r
 
 La reprise technique peut être autorisée lorsque :
 
-- [ ] `UI‑FOUNDATION` est validé ;
+- [x] `UI‑FOUNDATION` est validé ;
 - [ ] `UI‑SCREENS` spécifie ou maquette suffisamment les écrans manquants ;
 - [ ] sauvegarde / chargement est cadré ;
 - [ ] paramètres et accessibilité sont cadrés ;
-- [ ] portrait est accepté comme cible ;
+- [ ] le mode portrait est accepté comme cible ;
 - [ ] les composants MVP sont identifiés ;
 - [ ] `UI‑HANDOFF` est validé ;
 - [ ] la première branche technique possède un périmètre court ;
 - [ ] les documents V0.xx sont traités comme historiques ;
 - [ ] aucun concept visuel n’est pris pour un asset final.
 
+Le mode portrait et les composants sont définis dans UI‑FOUNDATION, mais leur validation finale de production intervient avec UI‑SCREENS et UI‑HANDOFF.
+
 ---
 
-# 9. Prochaine phase
+# 9. Phase active
 
 ```text
 UI‑SCREENS — spécifications et maquettes finales
@@ -401,7 +403,8 @@ La liste Messages, la conversation individuelle, la conversation de groupe et la
 
 ```text
 NARRATION : signée
-UI‑FOUNDATION : cadré
+UI‑FOUNDATION : validé
+UI‑SCREENS : actif
 MAQUETTES : références conceptuelles
 RUNTIME HORIZONTAL : prototype à réconcilier
 REPRISE TECHNIQUE : encore séparée et non autorisée
