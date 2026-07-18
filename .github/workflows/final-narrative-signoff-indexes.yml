@@ -1,0 +1,45 @@
+name: One-shot final narrative sign-off indexes
+
+on:
+  push:
+    branches:
+      - agent/final-narrative-corpus-signoff
+
+permissions:
+  contents: write
+
+jobs:
+  update-indexes:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+        with:
+          ref: agent/final-narrative-corpus-signoff
+          fetch-depth: 0
+
+      - name: Update sign-off indexes
+        run: python3 tools/_final_narrative_signoff_indexes.py
+
+      - name: Validate documentary scope
+        run: |
+          git diff --check
+          if git diff --name-only | grep -Ev '^(docs/|tools/_final_narrative_signoff_indexes.py$|\.github/workflows/final-narrative-signoff-indexes.yml$)' ; then
+            echo 'Unexpected non-documentary file changed.' >&2
+            exit 1
+          fi
+
+      - name: Remove temporary files
+        run: |
+          rm tools/_final_narrative_signoff_indexes.py
+          rm .github/workflows/final-narrative-signoff-indexes.yml
+
+      - name: Commit sign-off indexes
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git diff --cached --check
+          git commit -m 'docs: finalize narrative corpus sign-off'
+          git push origin HEAD:agent/final-narrative-corpus-signoff
