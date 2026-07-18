@@ -577,20 +577,20 @@ scene_class: ROUTE_CONTINUATION_OR_ADULT_OPTION
 primary_function: rendre la proximité volontaire et négocier sa limite
 principal_character: Mathilde
 primary_relationship: Player / Mathilde
-communication_mode: SEPARATE_ROOMS_PING → OFF_PHONE → AFTERGLOW_REMOTE
+communication_mode: REMOTE_ASYNC → OFF_PHONE → AFTERGLOW_REMOTE
 ```
 
 ## 10.2 Contexte
 
-Mathilde est au foyer.
+Mathilde revient de sa sortie avec Inès et se trouve encore dehors, devant l’immeuble.
 
 Marie est retenue à La Verrière ou chez Pauline pour une raison indépendante de la route.
 
 Elle a donné une heure de retour réaliste.
 
-Player et Mathilde sont dans des pièces séparées.
+Player est au foyer.
 
-Le chat est utilisé parce que Mathilde préfère formuler avant de revenir dans le salon.
+Le chat est utilisé avant que Mathilde entre dans l’appartement.
 
 ## 10.3 Carte de voix
 
@@ -606,7 +606,11 @@ forbidden_leakage: aucune dépendance au logement, aucune permission supposée, 
 
 **21:06 — Mathilde**
 
-> Je vais revenir dans le salon.
+> Je suis en bas.
+
+**21:06 — Mathilde**
+
+> Je remonte dans deux minutes.
 
 **21:06 — Mathilde**
 
@@ -671,6 +675,7 @@ Player regarde mais ne touche pas
 proximité volontaire
 aucun dialogue oral joué
 Mathilde peut repartir à tout moment
+Mathilde ressort quelques minutes avant le retour textuel
 ```
 
 ### Après séparation
@@ -753,6 +758,7 @@ proximité sur le canapé
 aucun baiser
 aucun toucher intime
 Mathilde arrête la scène la première
+Mathilde quitte ensuite le logement quelques minutes avant le retour textuel
 ```
 
 Après séparation :
@@ -829,7 +835,7 @@ un toucher plus intime peut être accepté seulement après une demande claire
 aucune pénétration
 aucun acte imposé
 aucune photo diégétique
-Mathilde peut arrêter et retourne dans sa chambre avant le retour de Marie
+Mathilde peut arrêter et rejoint sa solution de couchage indépendante avant le retour de Marie
 ```
 
 L’image de scène éventuelle représente la proximité consentie sans inventer de caméra.
@@ -838,7 +844,7 @@ L’image de scène éventuelle représente la proximité consentie sans invente
 
 **21:51 — Mathilde**
 
-> Je suis dans ma chambre.
+> Je suis arrivée.
 
 **21:51 — Mathilde**
 

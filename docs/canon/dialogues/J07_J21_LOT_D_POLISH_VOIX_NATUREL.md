@@ -166,6 +166,8 @@ J07–J09, J12, J15 et J16 ont été relus mais conservés : leur rythme actuel 
 
 Les changements concernent uniquement la formulation des messages. Les identifiants canoniques ont été comparés avant et après chaque remplacement et sont inchangés.
 
+Le contrôle final a également supprimé deux reprises de chat depuis des pièces différentes du même logement : J11 commence désormais avant l’entrée de Mathilde, et J14 reprend après sa sortie réelle.
+
 Statut final :
 
 ```text

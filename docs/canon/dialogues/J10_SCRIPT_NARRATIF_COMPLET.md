@@ -397,10 +397,6 @@ aucune compensation
 
 **Sandra**
 
-> J’ai eu le train.
-
-**Sandra**
-
 > On ne va pas en faire un événement.
 
 **Player guidé**

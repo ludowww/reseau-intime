@@ -530,9 +530,9 @@ Player reprend le téléphone.
 
 Mathilde ne tente pas de le récupérer.
 
-Elle quitte la cuisine ou termine ce qu’elle faisait.
+Elle quitte l’appartement pour prendre l’air quelques minutes ou terminer une course déjà prévue.
 
-À 18:36, elle écrit depuis une autre pièce.
+À 18:36, elle écrit depuis dehors.
 
 ## 11.4 Ouverture Mathilde
 
