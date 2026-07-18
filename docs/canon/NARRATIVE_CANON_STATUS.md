@@ -1,12 +1,12 @@
 # Narrative Canon Status — Current
 
-> **Current phase: UI‑FOUNDATION — vertical smartphone system and documentation architecture**
+> **Current phase: UI‑SCREENS — final screen specifications and concepts**
 
 The Season 1 narrative corpus J01–J21 is signed off.
 
 There is no remaining narrative blocker.
 
-The current product work is UX/UI definition before a separate technical-resumption decision.
+UI‑FOUNDATION is validated. The current product work is completing the missing UX/UI screens before a separate technical-resumption decision.
 
 ---
 
@@ -54,7 +54,7 @@ docs/canon/dialogues/J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md
 
 ## 3. UI status
 
-UI‑FOUNDATION defines:
+UI‑FOUNDATION validates:
 
 ```text
 portrait target: 720 × 1280
@@ -104,10 +104,9 @@ A future branch must start from current `main` and cite the active narrative and
 
 No global runtime migration may begin until:
 
-1. UI‑FOUNDATION is validated ;
-2. UI‑SCREENS completes the missing screen specifications ;
-3. UI‑HANDOFF confirms the integration contract ;
-4. Ludovic explicitly authorizes technical resumption.
+1. UI‑SCREENS completes the missing screen specifications ;
+2. UI‑HANDOFF confirms the integration contract ;
+3. Ludovic explicitly authorizes technical resumption.
 
 Small documentary or visual-concept work remains allowed.
 
@@ -178,11 +177,10 @@ S07 credits / legal
 ## 9. Next work
 
 ```text
-1. validate UI‑FOUNDATION documentation
-2. produce UI‑SCREENS specifications and final concepts for missing screens
-3. finalize UI‑HANDOFF integration contract
-4. decide explicitly whether to resume technical work
-5. if approved, implement portrait shell before narrative migration
+1. produce UI‑SCREENS specifications and final concepts for missing screens
+2. validate UI‑HANDOFF integration contract
+3. decide explicitly whether to resume technical work
+4. if approved, implement portrait shell before narrative migration
 ```
 
 ---
@@ -191,7 +189,7 @@ S07 credits / legal
 
 ```text
 The narrative corpus is signed.
-The UI target is now defined in one canonical location.
+UI‑FOUNDATION defines one canonical UI target.
 The horizontal runtime is a prototype to reconcile, not a product specification.
 No new document may create a second active truth.
 ```
