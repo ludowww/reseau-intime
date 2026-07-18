@@ -1,171 +1,223 @@
-# Runtime Documentation Index
+# Réseau Intime — Index runtime actif
 
-Read the canonical entry point first:
+## Statut
+
+**Catégorie : Portail technique actif**
+
+Ce document décrit comment lire le runtime existant après la signature du corpus narratif et avant sa migration verticale.
+
+Lire d’abord :
 
 ```text
 docs/canon/DOCUMENTATION_READING_ORDER.md
+docs/canon/PROJECT_DOCUMENTATION_GOVERNANCE.md
+docs/canon/ui/README.md
 ```
 
-## Current implemented runtime documents
+---
+
+# 1. État réel du runtime
+
+Le code sur `main` est un prototype construit par couches V0.xx.
+
+Il comprend notamment :
+
+- chronologie et jours ;
+- phases et expirations ;
+- fils persistants ;
+- messages et choix ;
+- notifications ;
+- non-lus ;
+- archives ;
+- activités hors téléphone internes ;
+- ouverture et premières répétitions partielles ;
+- tests statiques et outils de validation.
+
+Le projet Godot reste configuré en :
 
 ```text
-V0_80_RUNTIME_AUDIT_AND_GAP_MAP.md
-V0_81_WEDNESDAY_VERTICAL_SLICE_IMPLEMENTATION_PLAN.md
-V0_82_THURSDAY_TOPOLOGY_IMPLEMENTATION_PLAN.md
-V0_84_DAY_AND_MOMENT_FLOW_IMPLEMENTATION_PLAN.md
-V0_85_J1_CANON_RUNTIME_RECONCILIATION_PLAN.md
-V0_86_FRIDAY_PUBLIC_TRACES_IMPLEMENTATION_PLAN.md
-V0_86_VALIDATION_CHECKLIST.md
-V0_86A_TEMPORAL_UX_NOTIFICATION_POLISH_PLAN.md
+1280 × 720 horizontal
 ```
 
-Related implementation reports:
+La cible produit future est documentée en :
 
 ```text
-docs/V0_86_Friday_Public_Traces_And_Opening_Completion_Report.md
-docs/V0_86A_Temporal_UX_Notification_Polish_Report.md
+720 × 1280 portrait
 ```
 
-## Current documentation-only progression
+---
 
-V0.87 authored sources:
+# 2. Frontière d’autorité
+
+Le runtime existant ne doit pas être utilisé pour déduire :
+
+- l’architecture finale de la saison ;
+- la cible UI ;
+- les routes ;
+- les couleurs ;
+- la Galerie ;
+- les permissions d’image ;
+- les états finaux.
+
+Sources autoritatives :
 
 ```text
-docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_SOURCE_PACK.md
-docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_SCENE_CARDS.md
-docs/canon/ACT_I_FIRST_REPETITION_WINDOWS_TEMPORAL_DELIVERY_MAP.md
-docs/V0_87_Next_Act_I_Windows_Source_Pack_Report.md
+narration  → docs/canon/dialogues/
+état       → registres J01–J21 + SEASON_1_NARRATIVE_STATE_CONTRACT.md
+UI         → docs/canon/ui/
+runtime    → code, données et tests sur main
 ```
 
-Voice distinction:
+---
+
+# 3. Lecture des anciens documents V0.xx
+
+Les documents suivants restent utiles comme historique d’implémentation :
+
+- audits runtime ;
+- plans de slices ;
+- rapports V0.80–V0.90 ;
+- checklists de validation ;
+- notes sur TimelineState, notifications et archives.
+
+Ils sont classés :
 
 ```text
-docs/canon/CHARACTER_VOICE_DISTINCTION_CANON.md
+HISTORICAL
 ```
 
-Fulfilled V0.88 boundary note:
+sauf lorsqu’un futur plan actif les cite explicitement.
+
+Ils ne doivent pas remplacer :
+
+- le corpus signé J01–J21 ;
+- le contrat d’état borné ;
+- la charte UI portrait ;
+- l’architecture des écrans.
+
+---
+
+# 4. État narratif du prototype
+
+Le prototype contient des matériaux jouables antérieurs et plusieurs réconciliations ciblées.
+
+État prudent à retenir :
 
 ```text
-V0_88_FIRST_REPETITION_RUNTIME_PREPARATION_NOTE.md
+J01        partiellement réconcilié
+J02        fondation utile
+J03–J04    réconciliés dans leurs index actifs
+J05–J06    runtime historique encore à réauditer depuis le canon signé
+J07+       couches historiques possibles, non autoritatives pour le corpus final
 ```
 
-Current integration plan:
+La PR technique historique #54 reste ouverte en draft et n’est pas une base automatique de reprise.
+
+Toute reprise J05–J06 doit repartir de `main`, relire les index actifs et comparer au corpus signé.
+
+---
+
+# 5. Fondations à préserver si compatibles
+
+- `TimelineState` pour la chronologie ;
+- fils persistants ;
+- stockage des transcripts ;
+- notification inter-fil ;
+- non-lus ;
+- choix manuels Player ;
+- lecture seule des archives ;
+- séparation des activités hors téléphone ;
+- outils de validation de données ;
+- tests statiques.
+
+Ces fondations peuvent être adaptées ou remplacées si la migration portrait le justifie.
+
+Elles ne sont pas sacrées par leur ancien numéro de version.
+
+---
+
+# 6. Concepts à ne pas réintroduire
+
+Le futur runtime ne doit pas restaurer comme vérité produit :
 
 ```text
-V0_88_FIRST_REPETITION_RUNTIME_INTEGRATION_PLAN.md
-docs/V0_88_First_Repetition_Runtime_Integration_Plan_Report.md
+route owner
+wave owner
+candidate pool générique
+external ticket comme sélection de femme
+score d’attachement
+score de mensonge
+propriétaire R2 automatique
 ```
 
-## Runtime status after V0.86 + V0.86a
+Le contrat futur utilise :
+
+- états bornés ;
+- promesses ;
+- obligations ;
+- traces ;
+- connaissances ;
+- contradictions actives ;
+- historique de foreground léger.
+
+---
+
+# 7. Prochaine reprise technique
+
+Aucune reprise technique n’est autorisée par ce document seul.
+
+Ordre recommandé après validation UI :
 
 ```text
-Tuesday–Friday opening implemented
-conversation-side fixed time / Wi-Fi / battery strip
-2-second pause + 4-second accelerated clock
-compact 10-character notification shortcut for another thread
-same-thread episodes resume directly without a notification banner
-external notifications preserve transcript bottom and use insertion flash
-strong unread-contact styling
-no explanatory empty-choice hint
-no active text-only timeline landing pages
-no visible or archived Moments hors ligne section
-opening_band_complete = true
-runtime route ceiling = R1
+T‑UI‑01  coque portrait et composants
+T‑UI‑02  Galerie et écrans système
+T‑NAR‑01 réconciliation J01–J06
 ```
 
-Offline phases may still apply internal continuity flags and records, but their explanatory text is not player-facing.
-
-No Saturday, Sunday, or Monday content is currently loaded.
-
-## V0.87 documented wave
+Chaque plan technique actif doit citer :
 
 ```text
-W9  Marie shared hour
-W10 weekend external opportunity
-W11 mandatory Marie return
-W12 first-workday external opportunity
-W13 wave close / couple balance
+docs/canon/ui/UI_01_VERTICAL_SMARTPHONE_SYSTEM.md
+docs/canon/ui/UI_02_SCREEN_ARCHITECTURE_AND_STATES.md
+docs/canon/ui/UI_03_INTEGRATION_HANDOFF_AND_MOCKUP_STATUS.md
+docs/canon/dialogues/J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md
+docs/canon/runtime/SEASON_1_NARRATIVE_STATE_CONTRACT.md
 ```
 
-Budget:
+---
 
-```text
-maximum 2 external foreground tickets
-maximum 1 charged-access owner
-Pauline remains R1
-Nico remains R1
-Mathilde / Sandra / Raphaëlle may reach R2 at most after future integration
-```
-
-V0.87 does not change runtime.
-
-## V0.88 planning result
-
-The first planned runtime slice is:
-
-```text
-Saturday W9 Marie shared hour
--> Sunday Mathilde morning candidate or silent defer
--> Sunday W11 Marie concrete return
-```
-
-The plan chooses Mathilde because the household state and persistent thread already exist and because the scene tests candidate selection, expiry, R1/R2 gating, and Marie consequence without a new image or social hub.
-
-Planned state structure:
-
-```text
-story_ledgers.first_repetition
-```
-
-It will hold:
-
-- external foreground history;
-- one charged-access owner;
-- scene lifecycle;
-- cooldowns;
-- structured obligations.
-
-Chronology remains in `TimelineState`.
-
-Observable branch facts remain flat flags.
-
-## Next milestone
-
-```text
-V0.89 — First Repetition Vertical Slice
-```
-
-V0.89 may implement only:
-
-```text
-W9 Marie
-+ Mathilde candidate
-+ W11 Marie return
-```
-
-It must not add Sandra, Raphaëlle, Pauline, Nico, the second external ticket, or the complete wave in the same PR.
-
-## V0.89 validation boundary
-
-Expected executable validation:
+# 8. Validation de base
 
 ```bash
 python3 tools/validate_game_data.py
-python3 -m unittest \
-  tests.test_godot_prototype_static \
-  tests.test_v081_wednesday_static \
-  tests.test_v082_thursday_static \
-  tests.test_v084_temporal_flow_static \
-  tests.test_v085_j1_reconciliation_static \
-  tests.test_v086_friday_opening_static \
-  tests.test_v086a_temporal_ux_static \
-  tests.test_v089_first_repetition_static \
-  -v
+python3 tools/simulate_route_paths.py
+python3 -m unittest discover -s tests -v
 git diff --check
 godot --headless --path game --quit
-godot --headless --path game --resolution 1280x720 --quit
 ```
 
-The implementation must also run the Player-choice and Player-presence tools on the three new conversation files.
+Pendant la migration :
 
-Older runtime plans remain historical evidence of the phased integration path and must not override current canon/status files.
+```text
+conserver temporairement 1280 × 720
++ ajouter 720 × 1280
++ ajouter 1080 × 1920
++ ajouter un format portrait allongé
+```
+
+Le test horizontal pourra être supprimé seulement avec une décision explicite et des tests portrait équivalents.
+
+---
+
+# 9. Règle de plan runtime
+
+Un nouveau document sous `docs/runtime/` doit être :
+
+- lié à une branche concrète ;
+- court ;
+- daté par son contexte Git ;
+- explicite sur les fichiers visés ;
+- explicite sur les autorités canoniques ;
+- marqué historique après intégration ou abandon.
+
+Aucun nouveau plan général ne doit dupliquer la Roadmap active.
