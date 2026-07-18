@@ -1,12 +1,17 @@
 # Narrative Canon Status — Current
 
-> **Current phase: UI‑SCREENS — final screen specifications and concepts**
+> **Current phase: technical-resumption decision**
 
 The Season 1 narrative corpus J01–J21 is signed off.
 
 There is no remaining narrative blocker.
 
-UI‑FOUNDATION is validated. The current product work is completing the missing UX/UI screens before a separate technical-resumption decision.
+```text
+UI‑FOUNDATION: validated
+UI‑SCREENS: validated
+UI‑HANDOFF: validated
+Technical resumption: ready but not yet explicitly authorized
+```
 
 ---
 
@@ -54,7 +59,7 @@ docs/canon/dialogues/J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md
 
 ## 3. UI status
 
-UI‑FOUNDATION validates:
+The UI canon validates:
 
 ```text
 portrait target: 720 × 1280
@@ -64,6 +69,8 @@ character identity: color + avatar + name + position
 MVP navigation: Messages / Galerie
 Gallery: classic photo grid organized by character tabs
 system screens: separate from the diegetic phone
+screen inventory: complete
+integration handoff: complete
 ```
 
 Sources:
@@ -78,6 +85,15 @@ docs/canon/ui/UI_03_INTEGRATION_HANDOFF_AND_MOCKUP_STATUS.md
 The `UI_01–03` prefixes define document reading order, not work phases.
 
 Concept mockups are references, not final assets or canonical character designs.
+
+Critical UI rules:
+
+- direct chat stops during physical co-presence ;
+- text resumes only after real separation ;
+- image actions are permission-gated ;
+- removing an image does not erase messages or knowledge ;
+- locked gallery content never exposes a spoiler ;
+- routes, scores and internal IDs remain invisible.
 
 ---
 
@@ -100,15 +116,28 @@ A future branch must start from current `main` and cite the active narrative and
 
 ---
 
-## 5. Technical freeze
+## 5. Technical-resumption boundary
 
-No global runtime migration may begin until:
+No global runtime migration begins until Ludovic explicitly authorizes `T‑UI‑01`.
 
-1. UI‑SCREENS completes the missing screen specifications ;
-2. UI‑HANDOFF confirms the integration contract ;
-3. Ludovic explicitly authorizes technical resumption.
+The first technical step must be:
 
-Small documentary or visual-concept work remains allowed.
+```text
+short documentation-first T‑UI‑01 plan
+→ current main
+→ portrait shell only
+→ no narrative migration
+→ Hermes local Godot validation
+```
+
+The plan must cite:
+
+```text
+docs/canon/ui/UI_01_VERTICAL_SMARTPHONE_SYSTEM.md
+docs/canon/ui/UI_02_SCREEN_ARCHITECTURE_AND_STATES.md
+docs/canon/ui/UI_03_INTEGRATION_HANDOFF_AND_MOCKUP_STATUS.md
+docs/runtime/README.md
+```
 
 ---
 
@@ -168,7 +197,8 @@ S02 pause
 S03 save / load
 S04 settings
 S05 first Player configuration
-S06 confirmations
+S05B adult content warning
+S06 confirmations and errors
 S07 credits / legal
 ```
 
@@ -177,10 +207,11 @@ S07 credits / legal
 ## 9. Next work
 
 ```text
-1. produce UI‑SCREENS specifications and final concepts for missing screens
-2. validate UI‑HANDOFF integration contract
-3. decide explicitly whether to resume technical work
-4. if approved, implement portrait shell before narrative migration
+1. Ludovic explicitly authorizes or rejects technical resumption
+2. if authorized, Hermes writes a short T‑UI‑01 plan from current main
+3. validate the plan
+4. implement the portrait shell before narrative migration
+5. continue with Messages, Gallery, system screens, then J01–J06
 ```
 
 ---
@@ -189,7 +220,8 @@ S07 credits / legal
 
 ```text
 The narrative corpus is signed.
-UI‑FOUNDATION defines one canonical UI target.
+The UI target and handoff are complete.
 The horizontal runtime is a prototype to reconcile, not a product specification.
 No new document may create a second active truth.
+No technical migration begins without explicit authorization.
 ```

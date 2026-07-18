@@ -1,10 +1,15 @@
 # Documentation Reading Order — Réseau Intime
 
-> **Phase active : UI‑SCREENS — spécifications et maquettes finales**
+> **Phase active : décision de reprise technique**
 
 Le corpus narratif J01–J21 est finalisé et signé.
 
-UI‑FOUNDATION est validé. Le travail actif concerne les écrans manquants, puis un handoff technique séparé.
+```text
+UI‑FOUNDATION : validé
+UI‑SCREENS : validé
+UI‑HANDOFF : validé
+Reprise technique : prête mais non encore autorisée explicitement
+```
 
 ---
 
@@ -123,9 +128,7 @@ docs/canon/dialogues/J07_J21_LOT_D_POLISH_VOIX_NATUREL.md
 docs/canon/dialogues/J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md
 ```
 
-Les lots A–C sont consolidés dans les scripts.
-
-Les audits restent des archives de décision.
+Les lots A–C sont consolidés dans les scripts. Les audits restent des archives de décision.
 
 ---
 
@@ -138,14 +141,12 @@ docs/canon/ui/UI_02_SCREEN_ARCHITECTURE_AND_STATES.md
 docs/canon/ui/UI_03_INTEGRATION_HANDOFF_AND_MOCKUP_STATUS.md
 ```
 
-Les préfixes `UI_01–03` désignent l’ordre de lecture des documents.
-
 Ordre d’autorité UI :
 
 ```text
 UI_01 système visuel et responsive
-→ UI_02 écrans et états
-→ UI_03 handoff et frontière technique
+→ UI_02 écrans et états validés
+→ UI_03 contrat d’intégration final
 ```
 
 Les maquettes conceptuelles ne sont pas des assets finaux.
@@ -163,6 +164,8 @@ code + données + tests sur main
 
 Les anciens plans V0.xx sont historiques sauf référence explicite depuis un nouveau plan actif.
 
+La PR draft #54 n’est pas une base automatique.
+
 ---
 
 # 10. Ordre de production actuel
@@ -170,10 +173,14 @@ Les anciens plans V0.xx sont historiques sauf référence explicite depuis un no
 ```text
 corpus narratif signé
 → UI‑FOUNDATION validé
-→ UI‑SCREENS actif
-→ UI‑HANDOFF contrat d’intégration
-→ décision de reprise technique
+→ UI‑SCREENS validé
+→ UI‑HANDOFF validé
+→ décision explicite de reprise technique
+→ plan T‑UI‑01 depuis main courant
 → coque portrait
+→ composants Messages
+→ Galerie et Photo
+→ écrans système
 → réconciliation J01–J06
 → J07–J09
 → J10–J12

@@ -4,9 +4,7 @@
 
 **Catégorie : Portail projet actif**
 
-Cette roadmap résume l’ordre des lots.
-
-Elle ne remplace pas les sources canoniques.
+Cette roadmap résume l’ordre des lots. Elle ne remplace pas les sources canoniques.
 
 ---
 
@@ -27,9 +25,30 @@ Sign-off final : signé
 
 Aucun nouveau travail narratif structurel n’est requis avant adaptation.
 
+## UX/UI — cadré
+
+```text
+UI‑FOUNDATION : validé
+UI‑SCREENS : validé
+UI‑HANDOFF : validé
+```
+
+Acquis :
+
+- portrait 720 × 1280 de référence ;
+- ratio 9:16 ;
+- style sombre anime-inspired ;
+- couleurs par personnage ;
+- navigation Messages / Galerie ;
+- Galerie à onglets personnages ;
+- écrans narratifs et système cadrés ;
+- sauvegarde, paramètres et accessibilité cadrés ;
+- composants et contrats de présentation définis ;
+- critères de test portrait définis.
+
 ## Runtime — prototype historique disponible
 
-Acquis utiles :
+Acquis potentiellement réutilisables :
 
 - Godot 4.6.x ;
 - fils persistants ;
@@ -38,7 +57,6 @@ Acquis utiles :
 - notifications ;
 - non-lus ;
 - archives ;
-- quelques journées et répétitions jouables ;
 - tests statiques et outils de validation.
 
 Limites :
@@ -46,97 +64,30 @@ Limites :
 - interface 1280 × 720 horizontale ;
 - couches V0.xx partiellement incompatibles avec le corpus signé ;
 - J07–J21 non intégrés conformément au canon ;
-- sauvegarde et galerie à reprendre pour la cible finale.
+- sauvegarde et Galerie à reprendre pour la cible finale.
 
 ---
 
-# 2. UI‑FOUNDATION — validé
-
-## Livrables
+# 2. Décision active
 
 ```text
-docs/canon/PROJECT_DOCUMENTATION_GOVERNANCE.md
-docs/canon/ui/README.md
-docs/canon/ui/UI_01_VERTICAL_SMARTPHONE_SYSTEM.md
-docs/canon/ui/UI_02_SCREEN_ARCHITECTURE_AND_STATES.md
-docs/canon/ui/UI_03_INTEGRATION_HANDOFF_AND_MOCKUP_STATUS.md
+Reprise technique : prête mais non encore autorisée explicitement
 ```
 
-Les préfixes `UI_01–03` désignent l’ordre de lecture des documents, pas les lots de travail.
+Avant tout code :
 
-## Décisions acquises
-
-- portrait 720 × 1280 de référence ;
-- 9:16 ;
-- anime-inspired sombre ;
-- couleurs par personnage ;
-- Messages / Galerie au MVP ;
-- galerie en grille avec onglets personnages ;
-- écrans système séparés ;
-- maquettes conceptuelles non considérées comme assets ;
-- gouvernance documentaire et autorités explicites.
+1. Ludovic autorise explicitement le démarrage de `T‑UI‑01` ;
+2. Hermes repart de `main` courant ;
+3. Hermes rédige un plan court et borné ;
+4. le plan est validé avant modification du runtime.
 
 ---
 
-# 3. Phase active — UI‑SCREENS
+# 3. T‑UI‑01 — Coque portrait
 
-## Écrans déjà suffisamment orientés
+## Objectif
 
-- liste des conversations ;
-- conversation individuelle ;
-- conversation de groupe ;
-- galerie par personnage.
-
-## Écrans à finaliser
-
-1. photo plein écran ;
-2. transition hors téléphone ;
-3. transition de journée ;
-4. écran titre ;
-5. menu pause ;
-6. sauvegarde / chargement ;
-7. paramètres ;
-8. première configuration Player ;
-9. modales de confirmation ;
-10. états vides, erreur, verrouillé et texte agrandi.
-
-## Critère de sortie
-
-Chaque écran possède :
-
-```text
-fonction
-données nécessaires
-états
-navigation
-actions
-priorité MVP
-éléments différés
-```
-
----
-
-# 4. UI‑HANDOFF — Contrat d’intégration final
-
-Objectifs :
-
-- composants réutilisables ;
-- mapping données → présentation ;
-- persistance UI ;
-- règles responsive ;
-- plan de migration ;
-- critères d’acceptation ;
-- limites de branche.
-
-Sortie :
-
-```text
-décision explicite de reprise technique
-```
-
----
-
-# 5. T‑UI‑01 — Migration portrait
+Construire la fondation portrait sans migrer la narration.
 
 ## Périmètre recommandé
 
@@ -144,36 +95,70 @@ décision explicite de reprise technique
 - viewport de référence ;
 - stretch et safe areas ;
 - thème et tokens ;
+- couches système / diégétique ;
 - navigation Messages / Galerie ;
 - composants démonstrateurs ;
 - fausses données ou scène de test ;
-- aucune migration massive de narration.
+- aucune migration massive de journées.
 
 ## Validation
 
 ```text
 720 × 1280
 1080 × 1920
-1080 × 2340
+1080 × 2340 environ
 fenêtre PC portrait
+texte agrandi
+navigation clavier
+animations réduites
 ```
 
 Le layout horizontal historique reste temporairement testable jusqu’à retrait explicite.
 
 ---
 
-# 6. T‑UI‑02 — Écrans système et Galerie
+# 4. T‑UI‑02 — Composants Messages
+
+- liste des conversations ;
+- cartes de fil ;
+- bulles ;
+- choix ;
+- typing ;
+- non-lus ;
+- notifications ;
+- transition hors téléphone ;
+- transition de journée.
+
+Une seule famille de composants ou un seul parcours peut être traité par PR.
+
+---
+
+# 5. T‑UI‑03 — Galerie et Photo
+
+- onglets personnages ;
+- grille ;
+- tuiles ;
+- photo plein écran ;
+- provenance ;
+- permissions sauvegarder / retirer / partager ;
+- états verrouillé / nouveau / retiré.
+
+Règle : retirer une image ne supprime jamais les messages ni la connaissance acquise.
+
+---
+
+# 6. T‑UI‑04 — Écrans système
 
 - titre ;
 - pause ;
 - sauvegarde / chargement ;
 - paramètres ;
-- premières modales ;
-- galerie à onglets personnages ;
-- photo plein écran ;
-- états verrouillé / nouveau / retiré.
+- première configuration ;
+- avertissement adulte ;
+- confirmations ;
+- erreurs et chargements.
 
-Cette étape peut être divisée en plusieurs PR courtes.
+La sauvegarde reste une branche explicitement testée, séparée des migrations narratives.
 
 ---
 
@@ -181,11 +166,11 @@ Cette étape peut être divisée en plusieurs PR courtes.
 
 Objectifs :
 
-- comparer données actives et sources signées ;
+- comparer les données actives aux sources signées ;
 - retirer les concepts legacy incompatibles ;
-- adapter les textes et choix ;
-- intégrer les nouveaux contrats d’état minimaux ;
-- conserver les conséquences et promesses ;
+- adapter textes et choix ;
+- intégrer les contrats d’état minimaux ;
+- conserver conséquences, promesses, traces et connaissances ;
 - tester l’ouverture en portrait.
 
 La PR technique historique #54 reste non autoritative et doit être réauditée depuis `main` au moment de la reprise.
@@ -205,9 +190,8 @@ Chaque bloc doit :
 
 - être jouable ;
 - respecter les registres ;
-- vérifier les promesses ;
-- vérifier les connaissances ;
-- vérifier text-only ;
+- vérifier promesses et connaissances ;
+- respecter text-only et co-présence ;
 - utiliser des placeholders visuels si nécessaire ;
 - passer les tests avant le bloc suivant.
 
@@ -215,25 +199,19 @@ Chaque bloc doit :
 
 # 9. Production visuelle
 
-Les images peuvent être produites parallèlement après validation de la charte et des personnages visuels.
+Les images peuvent être produites parallèlement après validation de la charte des personnages visuels.
 
 Ordre recommandé :
 
 ```text
 avatars cohérents
-→ placeholders de galerie
+→ placeholders de Galerie
 → images J01–J06
 → images par blocs narratifs
 → polish final
 ```
 
-Les images ne doivent pas modifier :
-
-- l’origine ;
-- l’audience ;
-- la permanence ;
-- le consentement ;
-- la fonction narrative.
+Les images ne modifient jamais l’origine, l’audience, la permanence, le consentement ou la fonction narrative.
 
 ---
 
@@ -242,7 +220,7 @@ Les images ne doivent pas modifier :
 Après J01–J21 jouables :
 
 - QA complète ;
-- sauvegardes et migrations ;
+- migrations de sauvegarde ;
 - accessibilité ;
 - performances ;
 - contrôles clavier / souris / tactile ;
@@ -250,7 +228,7 @@ Après J01–J21 jouables :
 - avertissements ;
 - packaging ;
 - tests de reprise ;
-- préparation des mises à jour narratives.
+- préparation des extensions narratives.
 
 ---
 
@@ -264,7 +242,8 @@ Après J01–J21 jouables :
 - scores et routes visibles ;
 - succès ;
 - réseau social générique ;
-- animations coûteuses non nécessaires au récit.
+- animations coûteuses non nécessaires au récit ;
+- fonctionnalités Android spécifiques.
 
 ---
 
@@ -278,11 +257,11 @@ Après J01–J21 jouables :
 + index synchronisés
 ```
 
-Aucun lot ne doit mélanger par défaut :
+Aucun lot ne mélange par défaut :
 
 ```text
-refonte UI globale
-+ migration de quinze jours
+migration portrait
++ migration de nombreuses journées
 + nouveau système de sauvegarde
 + production d’assets
 ```
