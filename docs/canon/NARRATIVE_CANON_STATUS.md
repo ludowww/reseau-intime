@@ -1,14 +1,14 @@
 # Narrative Canon Status — Current
 
-> **Current phase: final narrative sign-off before technical resumption**
+> **Current phase: narrative corpus signed off — awaiting technical decision**
 
 The Bible Narrative covers J01–J21.
 
 J07–J21 have complete validated narrative scripts under corrective authorities and pre-runtime contracts.
 
-The complete-season dialogue audit and lots A, B, C and D are validated.
+The complete-season dialogue audit, lots A–D and the final narrative sign-off are validated.
 
-The next phase is final narrative sign-off before any technical resumption.
+The only next step is an explicit and separate technical-resumption decision.
 
 ---
 
@@ -25,7 +25,7 @@ North Star
 → Validated registries, state contract and reachability
 → Source consolidation
 → Voice polish
-→ Ludovic validation
+→ Final narrative corpus sign-off
 → Explicit technical-resumption decision
 → Runtime adaptation
 ```
@@ -36,10 +36,9 @@ Runtime does not define narrative authority.
 
 ## 2. Technical freeze
 
-No new technical integration for J07–J21 before:
+No new technical integration for J07–J21 may begin until an explicit and separate decision resumes technical work.
 
-1. Ludovic explicitly signs off the final consolidated narrative corpus ;
-2. an explicit and separate decision resumes technical work.
+The final consolidated narrative corpus is signed off.
 
 The active J06 runtime remains historically non-compliant through:
 
@@ -88,6 +87,7 @@ docs/canon/dialogues/J21_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J01_J21_AUDIT_GLOBAL_DIALOGUES_CONTINUITE.md
 docs/canon/dialogues/J01_J21_LOT_A_CORRECTIONS_BLOQUANTES.md
 docs/canon/dialogues/J07_J21_LOT_D_POLISH_VOIX_NATUREL.md
+docs/canon/dialogues/J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md
 ```
 
 ### Lot B contracts
@@ -110,7 +110,8 @@ Correction lot A: validated
 Narrative contract lot B: validated
 Source consolidation lot C: validated
 Voice polish lot D: validated
-Runtime J07–J21: frozen
+Final narrative corpus sign-off: validated
+Runtime J07–J21: frozen pending a separate technical decision
 ```
 
 ---
@@ -226,6 +227,7 @@ consolidated source scripts
 → trace / promise / knowledge registries
 → narrative state contract
 → reachability matrix
+→ final narrative corpus sign-off
 → historical audits
 → lot D voice guide
 ```
@@ -273,8 +275,8 @@ It records only what future scenes need to know:
 J01–J06 playable but requiring reconciliation
 J06 active runtime non-compliant
 J07–J21 narrative only
-lots A–D validated documentarily
-technical resumption prohibited before final narrative sign-off and explicit approval
+lots A–D and final narrative sign-off validated documentarily
+technical resumption prohibited until explicit and separate approval
 ```
 
 No runtime, JSON, test, tool, asset or gallery modification is authorized by lots A–D.
@@ -284,8 +286,8 @@ No runtime, JSON, test, tool, asset or gallery modification is authorized by lot
 ## 10. Next work
 
 ```text
-1. obtain final Ludovic sign-off on the consolidated narrative corpus
-2. decide separately whether to resume technical integration
+1. decide explicitly whether to resume technical integration
+2. if approved, scope the first technical reconciliation branch separately
 ```
 
 ---
@@ -295,5 +297,5 @@ No runtime, JSON, test, tool, asset or gallery modification is authorized by lot
 ```text
 The source scripts now express the narrative contracts directly.
 Lot D changed rhythm and wording without changing promises, knowledge, audiences or state transitions.
-Technical resumption remains a separate decision.
+The narrative corpus is signed off. Technical resumption remains a separate decision.
 ```
