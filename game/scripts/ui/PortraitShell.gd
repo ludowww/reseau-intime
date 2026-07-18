@@ -127,7 +127,7 @@ func _build_shell() -> void:
 
 	var content_stack := VBoxContainer.new()
 	content_stack.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	content_stack.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	content_stack.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 	content_stack.add_theme_constant_override("separation", 12)
 	content_scroll.add_child(content_stack)
 
