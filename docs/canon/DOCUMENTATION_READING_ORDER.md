@@ -1,10 +1,10 @@
 # Documentation Reading Order — Réseau Intime
 
-> **Phase active : UI‑FOUNDATION — système vertical et architecture documentaire**
+> **Phase active : UI‑SCREENS — spécifications et maquettes finales**
 
 Le corpus narratif J01–J21 est finalisé et signé.
 
-La prochaine décision produit concerne l’UX/UI verticale, puis une reprise technique séparée.
+UI‑FOUNDATION est validé. Le travail actif concerne les écrans manquants, puis un handoff technique séparé.
 
 ---
 
@@ -169,8 +169,8 @@ Les anciens plans V0.xx sont historiques sauf référence explicite depuis un no
 
 ```text
 corpus narratif signé
-→ UI‑FOUNDATION charte et architecture
-→ UI‑SCREENS écrans finaux
+→ UI‑FOUNDATION validé
+→ UI‑SCREENS actif
 → UI‑HANDOFF contrat d’intégration
 → décision de reprise technique
 → coque portrait
