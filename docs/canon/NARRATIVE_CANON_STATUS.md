@@ -1,6 +1,6 @@
 # Narrative Canon Status — Current
 
-> **Current phase: UI‑01 — vertical smartphone system and screen architecture**
+> **Current phase: UI‑FOUNDATION — vertical smartphone system and documentation architecture**
 
 The Season 1 narrative corpus J01–J21 is signed off.
 
@@ -54,7 +54,7 @@ docs/canon/dialogues/J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md
 
 ## 3. UI status
 
-UI‑01 defines:
+UI‑FOUNDATION defines:
 
 ```text
 portrait target: 720 × 1280
@@ -74,6 +74,8 @@ docs/canon/ui/UI_01_VERTICAL_SMARTPHONE_SYSTEM.md
 docs/canon/ui/UI_02_SCREEN_ARCHITECTURE_AND_STATES.md
 docs/canon/ui/UI_03_INTEGRATION_HANDOFF_AND_MOCKUP_STATUS.md
 ```
+
+The `UI_01–03` prefixes define document reading order, not work phases.
 
 Concept mockups are references, not final assets or canonical character designs.
 
@@ -102,9 +104,9 @@ A future branch must start from current `main` and cite the active narrative and
 
 No global runtime migration may begin until:
 
-1. UI‑01 is validated ;
-2. UI‑02 completes the missing screen specifications ;
-3. UI‑03 confirms the integration contract ;
+1. UI‑FOUNDATION is validated ;
+2. UI‑SCREENS completes the missing screen specifications ;
+3. UI‑HANDOFF confirms the integration contract ;
 4. Ludovic explicitly authorizes technical resumption.
 
 Small documentary or visual-concept work remains allowed.
@@ -176,9 +178,9 @@ S07 credits / legal
 ## 9. Next work
 
 ```text
-1. validate UI‑01 documentation
-2. produce UI‑02 specifications and final concepts for missing screens
-3. finalize UI‑03 integration contract
+1. validate UI‑FOUNDATION documentation
+2. produce UI‑SCREENS specifications and final concepts for missing screens
+3. finalize UI‑HANDOFF integration contract
 4. decide explicitly whether to resume technical work
 5. if approved, implement portrait shell before narrative migration
 ```
