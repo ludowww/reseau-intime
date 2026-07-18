@@ -2,7 +2,7 @@
 
 ## Statut
 
-Ce dossier contient les scripts narratifs complets de la saison 1, leurs audits et leurs autorités correctives.
+Ce dossier contient les scripts narratifs complets de la saison 1, leurs audits, leurs autorités correctives et leurs contrats pré-runtime.
 
 Ordre obligatoire :
 
@@ -12,8 +12,9 @@ plan détaillé de journée
 → audit de conformité
 → validation de Ludovic
 → corrections documentaires validées
-→ contrat d’état et de traçabilité
+→ registres et contrat d’état
 → consolidation des sources
+→ polish des voix
 → seulement ensuite adaptation JSON/runtime
 ```
 
@@ -26,6 +27,33 @@ J01_J21_LOT_A_CORRECTIONS_BLOQUANTES.md
 ```
 
 Le lot A prévaut sur les passages contradictoires de J10, J12, J14, J17 et J21 jusqu’à leur consolidation physique au lot C.
+
+## Contrats pré-runtime
+
+```text
+J01_J21_TRACE_REGISTRY.md
+J01_J21_PROMISE_REGISTRY.md
+J01_J21_KNOWLEDGE_REGISTRY.md
+J01_J21_REACHABILITY_MATRIX.md
+../runtime/SEASON_1_NARRATIVE_STATE_CONTRACT.md
+```
+
+Ces contrats fixent :
+
+- les identifiants des traces réutilisables ;
+- les statuts des promesses ;
+- les sources de connaissance ;
+- les états relationnels bornés ;
+- les chemins atteignables ;
+- les incompatibilités ;
+- les conditions de finale.
+
+Ils remplacent pour J01–J21 :
+
+- les scores de route ;
+- les propriétaires de vague ;
+- les tickets ;
+- les centaines de flags synonymes.
 
 ## Règles
 
@@ -45,7 +73,7 @@ Le lot A prévaut sur les passages contradictoires de J10, J12, J14, J17 et J21 
 - tout passage adulte est négocié, révocable et suivi d’un après-coup ;
 - les images possèdent origine, auteur, audience et circulation.
 
-## Scripts et audits
+## Scripts, audits et contrats
 
 ```text
 J01_J09_AUDIT_CONFORMITE_NARRATIVE.md
@@ -66,6 +94,10 @@ J20_SCRIPT_NARRATIF_COMPLET.md
 J21_SCRIPT_NARRATIF_COMPLET.md
 J01_J21_AUDIT_GLOBAL_DIALOGUES_CONTINUITE.md
 J01_J21_LOT_A_CORRECTIONS_BLOQUANTES.md
+J01_J21_TRACE_REGISTRY.md
+J01_J21_PROMISE_REGISTRY.md
+J01_J21_KNOWLEDGE_REGISTRY.md
+J01_J21_REACHABILITY_MATRIX.md
 ```
 
 Statut :
@@ -75,26 +107,29 @@ J01–J05 — noyaux narratifs conformes, visuels à produire
 J06 — intention narrative conforme, runtime actif non conforme
 J07–J21 — validés narrativement sous autorités correctives
 Audit global J01–J21 — validé
-Lot A — appliqué documentairement
-Prochaine étape — lot B : registres et contrats d’état
+Lot A — validé
+Lot B — validé
+Prochaine étape — lot C : consolidation physique des sources
 ```
 
-## Lot A appliqué
+## Résultat du lot B
 
 ```text
-A1 calendrier J17 / J21 corrigé
-A2 promesse Sandra J10 → J12 payée ou fermée
-A3 conversations en co-présence supprimées par autorité corrective
-A4 posture finale C limitée aux contradictions déjà actives
+28 traces de branche enregistrées
+24 promesses structurées
+44 faits de connaissance bornés
+états relationnels sans scores
+reachability J17 → J21 vérifiée
+posture finale déterministe
 ```
 
 ## Règle de gel technique
 
 Aucune nouvelle intégration J07–J21 ne doit commencer avant :
 
-1. création des registres de traces, promesses et connaissances ;
-2. normalisation des états et validation de la reachability ;
-3. consolidation physique des corrections dans les scripts sources ;
+1. consolidation physique des corrections et identifiants dans les scripts sources ;
+2. résolution des créateurs d’image encore ouverts ;
+3. consolidation J01–J09 ;
 4. passe de naturel des voix ;
 5. décision séparée de reprise technique.
 
