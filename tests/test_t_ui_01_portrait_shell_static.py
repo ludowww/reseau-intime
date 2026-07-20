@@ -55,9 +55,6 @@ class TUI01PortraitShellStaticTests(unittest.TestCase):
             "PortraitShellTheme",
             "describe_layout",
             "_refresh_nav_button_styles",
-            'accent_for("Marie")',
-            'accent_for("Sandra")',
-            'accent_for("Mathilde")',
         ]:
             self.assertIn(token, shell)
         for forbidden in [

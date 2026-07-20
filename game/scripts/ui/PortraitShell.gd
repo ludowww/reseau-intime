@@ -4,6 +4,7 @@ class_name PortraitShell
 
 var PORTRAIT_THEME = preload("res://scripts/ui/PortraitShellTheme.gd").new()
 const SAFE_AREA_SCRIPT := preload("res://scripts/ui/SafeAreaContainer.gd")
+const MESSAGES_SCREEN_SCENE := preload("res://scenes/portrait/messages/MessagesScreen.tscn")
 const TAG_MESSAGES := "messages"
 const TAG_GALLERY := "gallery"
 
@@ -12,6 +13,7 @@ var header_label: Label
 var header_subtitle: Label
 var mode_label: Label
 var messages_panel: PanelContainer
+var messages_screen
 var gallery_panel: PanelContainer
 var messages_button: Button
 var gallery_button: Button
@@ -120,16 +122,11 @@ func _build_shell() -> void:
 	content.add_theme_stylebox_override("panel", PORTRAIT_THEME.panel_style(PORTRAIT_THEME.SURFACE, 1, 22))
 	shell_column.add_child(content)
 
-	var content_scroll := ScrollContainer.new()
-	content_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	content_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	content.add_child(content_scroll)
-
-	var content_stack := VBoxContainer.new()
+	var content_stack := Control.new()
+	content_stack.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	content_stack.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	content_stack.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
-	content_stack.add_theme_constant_override("separation", 12)
-	content_scroll.add_child(content_stack)
+	content_stack.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	content.add_child(content_stack)
 
 	messages_panel = _build_messages_panel()
 	content_stack.add_child(messages_panel)
@@ -197,24 +194,19 @@ func _make_nav_button(text: String, _accent: Color) -> Button:
 func _build_messages_panel() -> PanelContainer:
 	var panel := PanelContainer.new()
 	panel.name = "MessagesPanel"
+	panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	panel.add_theme_stylebox_override("panel", PORTRAIT_THEME.panel_style(PORTRAIT_THEME.SURFACE_RAISED, 1, 18))
-	var box := VBoxContainer.new()
-	box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	box.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	box.add_theme_constant_override("separation", 10)
-	panel.add_child(box)
-	box.add_child(_make_label("Messages", 22, PORTRAIT_THEME.MESSAGE_ACCENT))
-	box.add_child(_make_label("Hors-récit : carte de conversation factice et espace de lecture.", 16, PORTRAIT_THEME.TEXT_SECONDARY))
-	box.add_child(_make_thread_row("Marie", "Dernier message factice — aperçu court.", PORTRAIT_THEME.accent_for("Marie")))
-	box.add_child(_make_thread_row("Sandra", "Retour réservé au prototype portrait.", PORTRAIT_THEME.accent_for("Sandra")))
-	box.add_child(_make_thread_row("Mathilde", "Choix visuel sans donnée narrative.", PORTRAIT_THEME.accent_for("Mathilde")))
+	messages_screen = MESSAGES_SCREEN_SCENE.instantiate()
+	messages_screen.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	panel.add_child(messages_screen)
 	return panel
 
 func _build_gallery_panel() -> PanelContainer:
 	var panel := PanelContainer.new()
 	panel.name = "GalleryPanel"
+	panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	panel.add_theme_stylebox_override("panel", PORTRAIT_THEME.panel_style(PORTRAIT_THEME.SURFACE_RAISED, 1, 18))
@@ -254,26 +246,6 @@ func _build_gallery_panel() -> PanelContainer:
 		tile_box.add_child(_make_label("placeholder", 13, PORTRAIT_THEME.TEXT_MUTED))
 		grid.add_child(tile)
 	return panel
-
-func _make_thread_row(name: String, preview: String, accent: Color) -> PanelContainer:
-	var row := PanelContainer.new()
-	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	row.add_theme_stylebox_override("panel", PORTRAIT_THEME.item_style(Color(0.10, 0.12, 0.20)))
-	var row_box := HBoxContainer.new()
-	row_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	row_box.add_theme_constant_override("separation", 10)
-	row.add_child(row_box)
-	var marker := PanelContainer.new()
-	marker.custom_minimum_size = Vector2(10, 46)
-	marker.add_theme_stylebox_override("panel", PORTRAIT_THEME.item_style(accent))
-	row_box.add_child(marker)
-	var text_box := VBoxContainer.new()
-	text_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	text_box.add_theme_constant_override("separation", 2)
-	row_box.add_child(text_box)
-	text_box.add_child(_make_label(name, 17, PORTRAIT_THEME.TEXT_PRIMARY))
-	text_box.add_child(_make_label(preview, 14, PORTRAIT_THEME.TEXT_SECONDARY))
-	return row
 
 func _set_active_tab(tab: String, use_animation := true) -> void:
 	active_tab = tab
