@@ -4,7 +4,7 @@ class_name MessagesDemoData
 
 # Local presentation-only fixtures. Every visible line is fictional and non-canonical.
 # CharacterPresentation, ConversationThreadPresentation, MessagePresentation,
-# and ChoicePresentation follow docs/canon/ui/UI_03_INTEGRATION_HANDOFF_AND_MOCKUP_STATUS.md.
+# and ChoicePresentation follow the active UI handoff contracts.
 
 static func build() -> Dictionary:
 	var characters := {
@@ -18,8 +18,8 @@ static func build() -> Dictionary:
 			"thread_id": "demo_private_marie",
 			"title": "Marie",
 			"participant_ids": ["marie", "player"],
-			"last_preview": "Un aperçu fictif assez long pour vérifier son retour à la ligne sans couper le texte.",
-			"last_timestamp": "21:14",
+			"last_preview": "Deuxième message factice encore à lire.",
+			"last_timestamp": "21:30",
 			"unread_count": 2,
 			"availability_state": "AVAILABLE",
 			"is_group": false,
@@ -33,7 +33,7 @@ static func build() -> Dictionary:
 			"participant_ids": ["marie", "sandra", "player"],
 			"last_preview": "Échange collectif fictif pour tester des auteurs distincts.",
 			"last_timestamp": "20:48",
-			"unread_count": 1,
+			"unread_count": 0,
 			"availability_state": "AVAILABLE",
 			"is_group": true,
 			"is_archived": false,
@@ -62,6 +62,12 @@ static func build() -> Dictionary:
 				index % 2 != 0,
 			)
 		)
+	messages_by_thread["demo_private_marie"].append(
+		_message("demo_m_11", "marie", "21:28", "Premier message factice encore à lire.", false, false)
+	)
+	messages_by_thread["demo_private_marie"].append(
+		_message("demo_m_12", "marie", "21:30", "Deuxième message factice encore à lire.", false, false)
+	)
 	var choices_by_thread := {
 		"demo_private_marie": [
 			_choice("demo_choice_01", "Réponse factice courte."),
@@ -72,11 +78,26 @@ static func build() -> Dictionary:
 			_choice("demo_choice_group_01", "Réponse collective factice."),
 		],
 	}
+	var incoming_by_thread := {
+		"demo_private_marie": {
+			"author_id": "marie",
+			"text": "Nouveau message privé factice.",
+			"hour": 22,
+			"minute": 10,
+		},
+		"demo_group_verriere": {
+			"author_id": "sandra",
+			"text": "Nouveau message collectif factice.",
+			"hour": 22,
+			"minute": 20,
+		},
+	}
 	return {
 		"characters": characters,
 		"threads": threads,
 		"messages_by_thread": messages_by_thread,
 		"choices_by_thread": choices_by_thread,
+		"incoming_by_thread": incoming_by_thread,
 	}
 
 static func _character(character_id: String, display_name: String, accent_color: String, avatar_ref: String) -> Dictionary:
@@ -88,7 +109,7 @@ static func _character(character_id: String, display_name: String, accent_color:
 		"gallery_enabled": false,
 	}
 
-static func _message(message_id: String, author_id: String, timestamp: String, text: String, is_player: bool) -> Dictionary:
+static func _message(message_id: String, author_id: String, timestamp: String, text: String, is_player: bool, is_read: bool = true) -> Dictionary:
 	return {
 		"message_id": message_id,
 		"author_id": author_id,
@@ -97,7 +118,7 @@ static func _message(message_id: String, author_id: String, timestamp: String, t
 		"text": text,
 		"media_ref": "",
 		"is_player": is_player,
-		"is_read": true,
+		"is_read": is_read,
 		"source_day": 0,
 	}
 

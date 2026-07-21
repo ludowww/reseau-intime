@@ -17,16 +17,19 @@ var title_label: Label
 var avatar_label: Label
 var back_button: Button
 
-func configure(thread_presentation: Dictionary, message_presentations: Array[Dictionary], choice_presentations: Array[Dictionary], character_presentations: Dictionary, portrait_theme, reading_position := -1) -> void:
+func configure(thread_presentation: Dictionary, message_presentations: Array[Dictionary], choice_presentations: Array[Dictionary], character_presentations: Dictionary, portrait_theme, reading_position := -1, first_unread_message_id := "") -> void:
 	thread = thread_presentation
 	characters = character_presentations
 	PORTRAIT_THEME = portrait_theme
-	_build(message_presentations, choice_presentations, reading_position)
+	_build(message_presentations, choice_presentations, reading_position, first_unread_message_id)
 
 func append_player_choice(choice: Dictionary) -> void:
 	timeline.append_player_choice(choice)
 	choice_bar.clear_choices()
 	back_button.call_deferred("grab_focus")
+
+func append_incoming_message(message: Dictionary) -> void:
+	timeline.append_incoming_message(message)
 
 func activate_first_choice() -> void:
 	choice_bar.activate_first_choice()
@@ -50,6 +53,7 @@ func describe_state() -> Dictionary:
 		"message_count": message_count(),
 		"player_message_count": player_message_count(),
 		"choice_count": choice_count(),
+		"unread_divider_count": timeline.unread_divider_count(),
 		"last_message_visible": timeline.is_last_message_visible(),
 		"reading_position_coherent": timeline.reading_position_coherent(),
 		"group_author_visible": timeline.group_author_visible(),
@@ -59,7 +63,7 @@ func describe_state() -> Dictionary:
 		"has_horizontal_crop": timeline.has_horizontal_crop() or choice_bar.has_horizontal_crop(),
 	}
 
-func _build(message_presentations: Array[Dictionary], choice_presentations: Array[Dictionary], reading_position: int) -> void:
+func _build(message_presentations: Array[Dictionary], choice_presentations: Array[Dictionary], reading_position: int, first_unread_message_id: String) -> void:
 	for child in get_children():
 		child.queue_free()
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -100,7 +104,7 @@ func _build(message_presentations: Array[Dictionary], choice_presentations: Arra
 	timeline = TIMELINE_SCRIPT.new()
 	timeline.name = "MessageTimeline"
 	add_child(timeline)
-	timeline.configure(message_presentations, characters, bool(thread.get("is_group", false)), PORTRAIT_THEME, reading_position)
+	timeline.configure(message_presentations, characters, bool(thread.get("is_group", false)), PORTRAIT_THEME, reading_position, first_unread_message_id)
 	choice_bar = CHOICE_BAR_SCRIPT.new()
 	choice_bar.name = "ChoiceBar"
 	add_child(choice_bar)
