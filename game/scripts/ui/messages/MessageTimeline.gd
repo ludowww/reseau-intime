@@ -2,21 +2,26 @@ extends ScrollContainer
 
 class_name MessageTimeline
 
+const UNREAD_DIVIDER_SCRIPT := preload("res://scripts/ui/messages/UnreadDivider.gd")
+
 var PORTRAIT_THEME
 var characters: Dictionary = {}
 var is_group := false
 var messages: Array[Dictionary] = []
+var first_unread_message_id := ""
 var message_box: VBoxContainer
 var wrapped_labels: Array[Label] = []
 var group_author_labels: Array[Label] = []
 var group_author_avatars: Array[Label] = []
 var incoming_accents: Array[Color] = []
+var divider_count := 0
 
-func configure(message_presentations: Array[Dictionary], character_presentations: Dictionary, group_conversation: bool, portrait_theme, reading_position := -1) -> void:
+func configure(message_presentations: Array[Dictionary], character_presentations: Dictionary, group_conversation: bool, portrait_theme, reading_position := -1, first_unread_id := "") -> void:
 	messages = message_presentations
 	characters = character_presentations
 	is_group = group_conversation
 	PORTRAIT_THEME = portrait_theme
+	first_unread_message_id = first_unread_id
 	_build()
 	if reading_position >= 0:
 		call_deferred("set_reading_position", reading_position)
@@ -38,6 +43,11 @@ func append_player_choice(choice: Dictionary) -> void:
 	message_box.add_child(_build_message_bubble(messages[-1]))
 	call_deferred("scroll_to_last_message")
 
+func append_incoming_message(message: Dictionary) -> void:
+	messages.append(message.duplicate(true))
+	message_box.add_child(_build_message_bubble(messages[-1]))
+	call_deferred("scroll_to_last_message")
+
 func player_message_count() -> int:
 	var count := 0
 	for message in messages:
@@ -47,6 +57,9 @@ func player_message_count() -> int:
 
 func message_count() -> int:
 	return messages.size()
+
+func unread_divider_count() -> int:
+	return divider_count
 
 func get_reading_position() -> int:
 	return scroll_vertical
@@ -86,6 +99,7 @@ func _build() -> void:
 	group_author_labels.clear()
 	group_author_avatars.clear()
 	incoming_accents.clear()
+	divider_count = 0
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	size_flags_vertical = Control.SIZE_EXPAND_FILL
 	horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
@@ -95,6 +109,11 @@ func _build() -> void:
 	message_box.add_theme_constant_override("separation", 10)
 	add_child(message_box)
 	for message in messages:
+		if divider_count == 0 and first_unread_message_id != "" and str(message.get("message_id", "")) == first_unread_message_id:
+			var divider = UNREAD_DIVIDER_SCRIPT.new()
+			divider.configure(PORTRAIT_THEME)
+			message_box.add_child(divider)
+			divider_count = 1
 		message_box.add_child(_build_message_bubble(message))
 
 # MessageBubble keeps Player on the right and interlocutors on the left.

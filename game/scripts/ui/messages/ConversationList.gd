@@ -8,6 +8,7 @@ var PORTRAIT_THEME
 var characters: Dictionary = {}
 var threads: Array[Dictionary] = []
 var cards: Array[Button] = []
+var card_views: Dictionary = {}
 var wrapped_labels: Array[Label] = []
 var list_box: VBoxContainer
 
@@ -16,6 +17,24 @@ func configure(thread_presentations: Array[Dictionary], character_presentations:
 	characters = character_presentations
 	PORTRAIT_THEME = portrait_theme
 	_build()
+
+func update_thread_presentation(thread: Dictionary) -> void:
+	var thread_id := str(thread.get("thread_id", ""))
+	if thread_id == "" or not card_views.has(thread_id):
+		return
+	for index in range(threads.size()):
+		if str(threads[index].get("thread_id", "")) == thread_id:
+			threads[index] = thread.duplicate(true)
+			break
+	var view: Dictionary = card_views[thread_id]
+	var preview: Label = view.get("preview")
+	var timestamp: Label = view.get("timestamp")
+	var unread: Label = view.get("unread")
+	preview.text = str(thread.get("last_preview", ""))
+	timestamp.text = str(thread.get("last_timestamp", ""))
+	var unread_count := int(thread.get("unread_count", 0))
+	unread.text = str(unread_count)
+	unread.visible = unread_count > 0
 
 func focus_first_card() -> void:
 	if not cards.is_empty():
@@ -27,6 +46,12 @@ func focus_thread(thread_id: String) -> void:
 			cards[index].grab_focus()
 			return
 	focus_first_card()
+
+func focused_thread_id() -> String:
+	for index in range(cards.size()):
+		if cards[index].has_focus() and index < threads.size():
+			return str(threads[index].get("thread_id", ""))
+	return ""
 
 func first_card_has_focus() -> bool:
 	return not cards.is_empty() and cards[0].has_focus()
@@ -41,6 +66,7 @@ func _build() -> void:
 	for child in get_children():
 		child.queue_free()
 	cards.clear()
+	card_views.clear()
 	wrapped_labels.clear()
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -65,8 +91,9 @@ func _build() -> void:
 
 # ConversationCard is a semantic panel with one focusable action and complete metadata.
 func _build_conversation_card(thread: Dictionary) -> PanelContainer:
+	var thread_id := str(thread.get("thread_id", "demo"))
 	var card := PanelContainer.new()
-	card.name = "ConversationCard_%s" % str(thread.get("thread_id", "demo"))
+	card.name = "ConversationCard_%s" % thread_id
 	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	card.add_theme_stylebox_override("panel", PORTRAIT_THEME.item_style(Color(0.08, 0.10, 0.17)))
 	var button := Button.new()
@@ -76,7 +103,7 @@ func _build_conversation_card(thread: Dictionary) -> PanelContainer:
 	button.custom_minimum_size = Vector2(0, 108)
 	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	button.add_theme_stylebox_override("focus", PORTRAIT_THEME.focus_style())
-	button.pressed.connect(func(): thread_selected.emit(str(thread.get("thread_id", ""))))
+	button.pressed.connect(func(): thread_selected.emit(thread_id))
 	card.add_child(button)
 	cards.append(button)
 	var row := HBoxContainer.new()
@@ -121,6 +148,12 @@ func _build_conversation_card(thread: Dictionary) -> PanelContainer:
 	unread.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	unread.add_theme_stylebox_override("normal", PORTRAIT_THEME.button_style(accent.darkened(0.45), accent, 14))
 	metadata.add_child(unread)
+	card_views[thread_id] = {
+		"button": button,
+		"preview": last_preview,
+		"timestamp": last_timestamp,
+		"unread": unread,
+	}
 	return card
 
 func _label(value: String, font_size: int, color: Color) -> Label:
