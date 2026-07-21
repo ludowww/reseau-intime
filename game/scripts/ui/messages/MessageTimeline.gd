@@ -3,6 +3,7 @@ extends ScrollContainer
 class_name MessageTimeline
 
 const UNREAD_DIVIDER_SCRIPT := preload("res://scripts/ui/messages/UnreadDivider.gd")
+const TYPING_INDICATOR_SCRIPT := preload("res://scripts/ui/messages/TypingIndicator.gd")
 
 var PORTRAIT_THEME
 var characters: Dictionary = {}
@@ -15,6 +16,10 @@ var group_author_labels: Array[Label] = []
 var group_author_avatars: Array[Label] = []
 var incoming_accents: Array[Color] = []
 var divider_count := 0
+var typing_indicator
+var reading_position_restore_pending := false
+var reading_restore_request_id := 0
+var typing_follow_request_id := 0
 
 func configure(message_presentations: Array[Dictionary], character_presentations: Dictionary, group_conversation: bool, portrait_theme, reading_position := -1, first_unread_id := "") -> void:
 	messages = message_presentations
@@ -22,11 +27,24 @@ func configure(message_presentations: Array[Dictionary], character_presentations
 	is_group = group_conversation
 	PORTRAIT_THEME = portrait_theme
 	first_unread_message_id = first_unread_id
+	reading_restore_request_id += 1
+	typing_follow_request_id += 1
+	reading_position_restore_pending = reading_position >= 0
 	_build()
 	if reading_position >= 0:
-		call_deferred("set_reading_position", reading_position)
+		_restore_reading_position_after_layout(reading_position, reading_restore_request_id)
 	else:
+		reading_position_restore_pending = false
 		call_deferred("scroll_to_last_message")
+
+func _restore_reading_position_after_layout(value: int, request_id: int) -> void:
+	await get_tree().process_frame
+	if request_id != reading_restore_request_id or not is_inside_tree():
+		return
+	if message_box == null or not is_instance_valid(message_box):
+		return
+	set_reading_position(value)
+	reading_position_restore_pending = false
 
 func append_player_choice(choice: Dictionary) -> void:
 	messages.append({
@@ -46,7 +64,79 @@ func append_player_choice(choice: Dictionary) -> void:
 func append_incoming_message(message: Dictionary) -> void:
 	messages.append(message.duplicate(true))
 	message_box.add_child(_build_message_bubble(messages[-1]))
+	if typing_indicator != null and is_instance_valid(typing_indicator):
+		message_box.move_child(typing_indicator, message_box.get_child_count() - 1)
 	call_deferred("scroll_to_last_message")
+
+func show_typing(author: Dictionary, reduced_motion: bool) -> void:
+	var should_follow_bottom := not reading_position_restore_pending and is_last_message_visible()
+	typing_follow_request_id += 1
+	var request_id := typing_follow_request_id
+	if typing_indicator == null or not is_instance_valid(typing_indicator):
+		typing_indicator = TYPING_INDICATOR_SCRIPT.new()
+		message_box.add_child(typing_indicator)
+	typing_indicator.configure(author, is_group, PORTRAIT_THEME, reduced_motion)
+	message_box.move_child(typing_indicator, message_box.get_child_count() - 1)
+	_follow_typing_after_layout(should_follow_bottom, request_id, typing_indicator)
+
+func _follow_typing_after_layout(should_follow_bottom: bool, request_id: int, expected_indicator) -> void:
+	await get_tree().process_frame
+	if not should_follow_bottom or reading_position_restore_pending:
+		return
+	if request_id != typing_follow_request_id or not is_inside_tree():
+		return
+	if message_box == null or not is_instance_valid(message_box):
+		return
+	if expected_indicator != typing_indicator or not is_instance_valid(expected_indicator):
+		return
+	if expected_indicator.get_parent() != message_box:
+		return
+	scroll_to_last_message()
+
+func hide_typing() -> void:
+	typing_follow_request_id += 1
+	if typing_indicator == null or not is_instance_valid(typing_indicator):
+		typing_indicator = null
+		return
+	typing_indicator.stop_animation()
+	if typing_indicator.get_parent() != null:
+		typing_indicator.get_parent().remove_child(typing_indicator)
+	typing_indicator.queue_free()
+	typing_indicator = null
+
+func typing_visible() -> bool:
+	return typing_indicator != null and is_instance_valid(typing_indicator) and typing_indicator.is_visible_in_tree()
+
+func typing_instance_count() -> int:
+	if message_box == null:
+		return 0
+	var count := 0
+	for child in message_box.get_children():
+		if child == typing_indicator:
+			count += 1
+	return count
+
+func typing_animation_running() -> bool:
+	return typing_indicator != null and is_instance_valid(typing_indicator) and bool(typing_indicator.animation_running())
+
+func advance_typing_phase() -> void:
+	if typing_indicator != null and is_instance_valid(typing_indicator):
+		typing_indicator.advance_typing_phase()
+
+func typing_text() -> String:
+	return str(typing_indicator.indicator_text()) if typing_indicator != null and is_instance_valid(typing_indicator) else ""
+
+func typing_avatar() -> String:
+	return str(typing_indicator.avatar_text()) if typing_indicator != null and is_instance_valid(typing_indicator) else ""
+
+func typing_accent_visible() -> bool:
+	return typing_indicator != null and is_instance_valid(typing_indicator) and bool(typing_indicator.accent_is_visible())
+
+func typing_has_timestamp() -> bool:
+	return typing_indicator != null and is_instance_valid(typing_indicator) and bool(typing_indicator.has_time_label())
+
+func typing_is_last_item() -> bool:
+	return typing_indicator != null and is_instance_valid(typing_indicator) and typing_indicator.get_index() == message_box.get_child_count() - 1
 
 func player_message_count() -> int:
 	var count := 0
@@ -93,6 +183,9 @@ func has_horizontal_crop() -> bool:
 	return false
 
 func _build() -> void:
+	if typing_indicator != null and is_instance_valid(typing_indicator):
+		typing_indicator.stop_animation()
+	typing_indicator = null
 	for child in get_children():
 		child.queue_free()
 	wrapped_labels.clear()

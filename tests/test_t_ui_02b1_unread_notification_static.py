@@ -30,7 +30,7 @@ class TUI02B1UnreadNotificationStaticTests(unittest.TestCase):
             "game/scripts/ui/messages/NotificationBanner.gd",
         ]
         forbidden = [
-            "TypingIndicator", "GameState", "DataLoader", "TimelineState",
+            "GameState", "DataLoader", "TimelineState",
             "PhonePrototype", "ConversationView", "LegacyMain", "res://data/", ".json",
         ]
         offenders = []
