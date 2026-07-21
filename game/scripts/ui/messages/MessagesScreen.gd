@@ -15,6 +15,7 @@ var available_choices: Dictionary = {}
 var reading_positions: Dictionary = {}
 var incoming_by_thread: Dictionary = {}
 var incoming_sequence_by_thread: Dictionary = {}
+var typing_states_by_thread: Dictionary = {}
 var conversation_list
 var conversation_screen
 var notification_banner
@@ -28,6 +29,7 @@ func _ready() -> void:
 	size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_load_demo_data()
 	_build()
+	visibility_changed.connect(_on_visibility_changed)
 
 func focus_first_conversation() -> void:
 	if conversation_list != null and screen_mode == "list":
@@ -50,9 +52,11 @@ func open_thread(thread_id: String) -> void:
 	var choices := _dictionary_array(available_choices.get(thread_id, []))
 	var position := int(reading_positions.get(thread_id, -1))
 	conversation_screen.configure(selected, messages, choices, characters, PORTRAIT_THEME, position, first_unread_message_id)
+	_sync_active_typing()
 
 func return_to_list() -> void:
 	_save_reading_position()
+	conversation_screen.hide_typing()
 	screen_mode = "list"
 	conversation_screen.visible = false
 	conversation_list.visible = true
@@ -62,6 +66,34 @@ func activate_first_choice() -> void:
 	if screen_mode == "conversation":
 		conversation_screen.activate_first_choice()
 
+func start_typing(thread_id: String, author_id: String) -> void:
+	var thread := _thread_for(thread_id)
+	if thread.is_empty():
+		return
+	var author: Dictionary = characters.get(author_id, {})
+	if author.is_empty():
+		return
+	if author_id.to_lower() == "player" or not _thread_accepts_author(thread, author_id):
+		return
+	typing_states_by_thread[thread_id] = {
+		"thread_id": thread_id,
+		"author_id": author_id,
+		"active": true,
+	}
+	if screen_mode == "conversation" and active_thread_id == thread_id and is_visible_in_tree():
+		conversation_screen.show_typing(author, _reduced_motion_enabled())
+
+func stop_typing(thread_id: String) -> void:
+	if not typing_states_by_thread.has(thread_id):
+		return
+	typing_states_by_thread.erase(thread_id)
+	if screen_mode == "conversation" and active_thread_id == thread_id:
+		conversation_screen.hide_typing()
+
+func is_thread_typing(thread_id: String) -> bool:
+	var state: Dictionary = typing_states_by_thread.get(thread_id, {})
+	return bool(state.get("active", false))
+
 func simulate_incoming_message(thread_id: String) -> void:
 	var thread := _thread_for(thread_id)
 	if thread.is_empty():
@@ -69,6 +101,7 @@ func simulate_incoming_message(thread_id: String) -> void:
 	var source: Dictionary = incoming_by_thread.get(thread_id, {})
 	if source.is_empty():
 		return
+	stop_typing(thread_id)
 	var sequence := int(incoming_sequence_by_thread.get(thread_id, 0)) + 1
 	incoming_sequence_by_thread[thread_id] = sequence
 	var timestamp := _simulation_timestamp(source, sequence)
@@ -286,6 +319,31 @@ func _reduced_motion_enabled() -> bool:
 			return bool(ancestor.get("reduced_motion_enabled"))
 		ancestor = ancestor.get_parent()
 	return true
+
+func _sync_active_typing() -> void:
+	if conversation_screen == null or screen_mode != "conversation" or not is_visible_in_tree():
+		return
+	var state: Dictionary = typing_states_by_thread.get(active_thread_id, {})
+	if not bool(state.get("active", false)):
+		conversation_screen.hide_typing()
+		return
+	var author: Dictionary = characters.get(str(state.get("author_id", "")), {})
+	if author.is_empty():
+		conversation_screen.hide_typing()
+		return
+	conversation_screen.show_typing(author, _reduced_motion_enabled())
+
+func _on_visibility_changed() -> void:
+	if conversation_screen == null:
+		return
+	if not is_visible_in_tree():
+		conversation_screen.hide_typing()
+	else:
+		_sync_active_typing()
+
+func _thread_accepts_author(thread: Dictionary, author_id: String) -> bool:
+	var participants: Variant = thread.get("participant_ids", [])
+	return participants is Array and participants.has(author_id)
 
 func _simulation_timestamp(source: Dictionary, sequence: int) -> String:
 	var hour := int(source.get("hour", 22))

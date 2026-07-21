@@ -31,6 +31,26 @@ func append_player_choice(choice: Dictionary) -> void:
 func append_incoming_message(message: Dictionary) -> void:
 	timeline.append_incoming_message(message)
 
+func show_typing(author: Dictionary, reduced_motion: bool) -> void:
+	timeline.show_typing(author, reduced_motion)
+
+func hide_typing() -> void:
+	if timeline != null:
+		timeline.hide_typing()
+
+func typing_visible() -> bool:
+	return timeline != null and timeline.typing_visible()
+
+func typing_instance_count() -> int:
+	return timeline.typing_instance_count() if timeline != null else 0
+
+func typing_animation_running() -> bool:
+	return timeline != null and timeline.typing_animation_running()
+
+func advance_typing_phase() -> void:
+	if timeline != null:
+		timeline.advance_typing_phase()
+
 func activate_first_choice() -> void:
 	choice_bar.activate_first_choice()
 
@@ -60,6 +80,14 @@ func describe_state() -> Dictionary:
 		"group_author_avatar_visible": timeline.group_author_avatar_visible(),
 		"group_author_accent_visible": timeline.group_author_accent_visible(),
 		"choice_has_focus": choice_bar.first_choice_has_focus(),
+		"typing_visible": timeline.typing_visible(),
+		"typing_instance_count": timeline.typing_instance_count(),
+		"typing_animation_running": timeline.typing_animation_running(),
+		"typing_text": timeline.typing_text(),
+		"typing_avatar": timeline.typing_avatar(),
+		"typing_accent_visible": timeline.typing_accent_visible(),
+		"typing_has_timestamp": timeline.typing_has_timestamp(),
+		"typing_last_item": timeline.typing_is_last_item(),
 		"has_horizontal_crop": timeline.has_horizontal_crop() or choice_bar.has_horizontal_crop(),
 	}
 
