@@ -43,11 +43,13 @@ static func build() -> Dictionary:
 	]
 	var messages_by_thread := {
 		"demo_private_marie": [
+			_day_divider("demo_day_private_01", "Mardi", 2),
 			_message("demo_m_01", "marie", "21:08", "Texte de démonstration non canonique : ce fil sert uniquement à vérifier la lecture d’une bulle courte.", false),
 			_message("demo_m_02", "player", "21:10", "Réponse fictive déjà présente pour vérifier l’alignement constant du Player à droite.", true),
 			_message("demo_m_03", "marie", "21:14", "Long message de démonstration hors récit : il doit s’envelopper naturellement, rester entièrement lisible et ne jamais passer sous la zone fixe des choix, même dans une fenêtre portrait étroite.", false),
 		],
 		"demo_group_verriere": [
+			_day_divider("demo_day_group_01", "Mercredi", 3),
 			_message("demo_g_01", "sandra", "20:45", "Message collectif fictif de Sandra pour vérifier le nom et l’accent de l’autrice.", false),
 			_message("demo_g_02", "marie", "20:48", "Second message de groupe non canonique avec une autrice différente.", false),
 		],
@@ -62,6 +64,9 @@ static func build() -> Dictionary:
 				index % 2 != 0,
 			)
 		)
+	messages_by_thread["demo_private_marie"].append(
+		_day_divider("demo_day_private_02", "Plus tard ce soir", 2)
+	)
 	messages_by_thread["demo_private_marie"].append(
 		_message("demo_m_11", "marie", "21:28", "Premier message factice encore à lire.", false, false)
 	)
@@ -120,6 +125,19 @@ static func _message(message_id: String, author_id: String, timestamp: String, t
 		"is_player": is_player,
 		"is_read": is_read,
 		"source_day": 0,
+	}
+
+static func _day_divider(message_id: String, text: String, source_day: int) -> Dictionary:
+	return {
+		"message_id": message_id,
+		"author_id": "system",
+		"timestamp": "",
+		"content_type": "SYSTEM_DAY_DIVIDER",
+		"text": text,
+		"media_ref": "",
+		"is_player": false,
+		"is_read": true,
+		"source_day": source_day,
 	}
 
 static func _choice(choice_id: String, text: String) -> Dictionary:

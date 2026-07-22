@@ -4,6 +4,7 @@ class_name MessageTimeline
 
 const UNREAD_DIVIDER_SCRIPT := preload("res://scripts/ui/messages/UnreadDivider.gd")
 const TYPING_INDICATOR_SCRIPT := preload("res://scripts/ui/messages/TypingIndicator.gd")
+const DAY_DIVIDER_SCRIPT := preload("res://scripts/ui/messages/DayDivider.gd")
 
 var PORTRAIT_THEME
 var characters: Dictionary = {}
@@ -148,6 +149,53 @@ func player_message_count() -> int:
 func message_count() -> int:
 	return messages.size()
 
+func day_divider_count() -> int:
+	var count := 0
+	if message_box == null:
+		return count
+	for child in message_box.get_children():
+		if _is_day_divider(child):
+			count += 1
+	return count
+
+func day_divider_labels() -> Array[String]:
+	var labels: Array[String] = []
+	if message_box == null:
+		return labels
+	for child in message_box.get_children():
+		if _is_day_divider(child):
+			labels.append(str(child.display_text()))
+	return labels
+
+func message_bubble_count() -> int:
+	var count := 0
+	if message_box == null:
+		return count
+	for child in message_box.get_children():
+		if _is_message_bubble(child):
+			count += 1
+	return count
+
+func day_divider_has_timestamp() -> bool:
+	return _day_divider_has_named_descendant("Timestamp")
+
+func day_divider_has_author() -> bool:
+	return _day_divider_has_named_descendant("Author")
+
+func day_divider_precedes_unread_divider() -> bool:
+	if message_box == null:
+		return false
+	var children := message_box.get_children()
+	for index in range(children.size()):
+		if children[index].get_script() == UNREAD_DIVIDER_SCRIPT:
+			return (
+				index > 0
+				and index + 1 < children.size()
+				and _is_day_divider(children[index - 1])
+				and _is_message_bubble(children[index + 1])
+			)
+	return false
+
 func unread_divider_count() -> int:
 	return divider_count
 
@@ -180,7 +228,25 @@ func has_horizontal_crop() -> bool:
 	for label in wrapped_labels:
 		if label.size.x > 0.0 and label.get_minimum_size().x > label.size.x + 1.0:
 			return true
+	if message_box != null:
+		for child in message_box.get_children():
+			if _is_day_divider(child) and bool(child.has_horizontal_crop()):
+				return true
 	return false
+
+func _day_divider_has_named_descendant(node_name: String) -> bool:
+	if message_box == null:
+		return false
+	for child in message_box.get_children():
+		if _is_day_divider(child) and child.find_child(node_name, true, false) != null:
+			return true
+	return false
+
+func _is_day_divider(node: Node) -> bool:
+	return node.get_script() == DAY_DIVIDER_SCRIPT
+
+func _is_message_bubble(node: Node) -> bool:
+	return bool(node.get_meta("message_bubble", false))
 
 func _build() -> void:
 	if typing_indicator != null and is_instance_valid(typing_indicator):
@@ -202,6 +268,11 @@ func _build() -> void:
 	message_box.add_theme_constant_override("separation", 10)
 	add_child(message_box)
 	for message in messages:
+		if str(message.get("content_type", "")) == "SYSTEM_DAY_DIVIDER":
+			var day_divider = DAY_DIVIDER_SCRIPT.new()
+			day_divider.configure(str(message.get("text", "")), PORTRAIT_THEME)
+			message_box.add_child(day_divider)
+			continue
 		if divider_count == 0 and first_unread_message_id != "" and str(message.get("message_id", "")) == first_unread_message_id:
 			var divider = UNREAD_DIVIDER_SCRIPT.new()
 			divider.configure(PORTRAIT_THEME)
@@ -213,6 +284,7 @@ func _build() -> void:
 func _build_message_bubble(message: Dictionary) -> HBoxContainer:
 	var row := HBoxContainer.new()
 	row.name = "MessageBubble"
+	row.set_meta("message_bubble", true)
 	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var is_player := bool(message.get("is_player", false))
 	var author_id := str(message.get("author_id", ""))
