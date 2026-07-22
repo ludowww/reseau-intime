@@ -64,6 +64,7 @@ func has_horizontal_crop() -> bool:
 
 func _build() -> void:
 	for child in get_children():
+		remove_child(child)
 		child.queue_free()
 	cards.clear()
 	card_views.clear()
