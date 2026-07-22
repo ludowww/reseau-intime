@@ -48,7 +48,7 @@ func _run() -> void:
 	_expect(not bool(private_initial.get("day_divider_has_timestamp", true)), "day dividers must have no timestamp")
 	_expect(not bool(private_initial.get("day_divider_has_author", true)), "day dividers must have no author")
 	_expect(int(private_initial.get("message_count", -1)) == private_data_count, "render must preserve message_count")
-	_expect(int(private_initial.get("message_bubble_count", -1)) == private_data_count - 2, "visual bubbles must exclude day dividers")
+	_expect(int(private_initial.get("message_bubble_count", -1)) == private_data_count - 3, "visual bubbles must exclude day dividers and off-phone presentation")
 	_expect(int(private_initial.get("unread_divider_count", 0)) == 1, "first open must render exactly one unread divider")
 	_expect(bool(private_initial.get("day_divider_precedes_unread", false)), "order must be DayDivider then UnreadDivider then unread MessageBubble")
 	_expect(messages.all_messages_read(private_id), "opening must mark all private presentations read")
@@ -108,7 +108,7 @@ func _run() -> void:
 	_expect(messages.thread_message_count(private_id) == before_incoming + 1, "incoming simulation must add exactly one message")
 	_expect(int(after_incoming.get("day_divider_count", 0)) == 2, "incoming message must preserve day dividers")
 	_expect(after_incoming.get("day_divider_labels", []) == day_labels_before_typing, "incoming message must preserve day labels")
-	_expect(int(after_incoming.get("message_bubble_count", -1)) == int(after_incoming.get("message_count", 0)) - 2, "incoming text must add one bubble only")
+	_expect(int(after_incoming.get("message_bubble_count", -1)) == int(after_incoming.get("message_count", 0)) - 3, "incoming text must add one bubble only")
 
 	# Group fixture keeps its one day marker and existing authors.
 	messages.return_to_list()

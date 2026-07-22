@@ -273,6 +273,8 @@ func _build() -> void:
 			day_divider.configure(str(message.get("text", "")), PORTRAIT_THEME)
 			message_box.add_child(day_divider)
 			continue
+		if str(message.get("content_type", "")) == "OFF_PHONE_TRANSITION":
+			continue
 		if divider_count == 0 and first_unread_message_id != "" and str(message.get("message_id", "")) == first_unread_message_id:
 			var divider = UNREAD_DIVIDER_SCRIPT.new()
 			divider.configure(PORTRAIT_THEME)
