@@ -7,6 +7,7 @@ const CONVERSATION_LIST_SCRIPT := preload("res://scripts/ui/messages/Conversatio
 const CONVERSATION_SCREEN_SCENE := preload("res://scenes/portrait/messages/PortraitConversationScreen.tscn")
 const NOTIFICATION_BANNER_SCRIPT := preload("res://scripts/ui/messages/NotificationBanner.gd")
 const OFF_PHONE_TRANSITION_SCRIPT := preload("res://scripts/ui/messages/OffPhoneTransition.gd")
+const DAY_TRANSITION_SCRIPT := preload("res://scripts/ui/messages/DayTransition.gd")
 
 var PORTRAIT_THEME = preload("res://scripts/ui/PortraitShellTheme.gd").new()
 var characters: Dictionary = {}
@@ -18,10 +19,15 @@ var incoming_by_thread: Dictionary = {}
 var incoming_sequence_by_thread: Dictionary = {}
 var typing_states_by_thread: Dictionary = {}
 var off_phone_state: Dictionary = {}
+var day_transition_state: Dictionary = {}
+var applied_demo_day_transitions: Dictionary = {}
+var day_transition_deltas: Dictionary = {}
+var current_demo_day_value := 0
 var conversation_list
 var conversation_screen
 var notification_banner
 var off_phone_transition
+var day_transition
 var notification_focus_origin: Control
 var active_thread_id := ""
 var screen_mode := "list"
@@ -39,7 +45,7 @@ func focus_first_conversation() -> void:
 		conversation_list.focus_first_card()
 
 func open_thread(thread_id: String) -> void:
-	if is_off_phone_transition_active():
+	if is_off_phone_transition_active() or is_day_transition_active():
 		return
 	var selected := _thread_for(thread_id)
 	if selected.is_empty():
@@ -60,7 +66,7 @@ func open_thread(thread_id: String) -> void:
 	_sync_active_typing()
 
 func return_to_list() -> void:
-	if is_off_phone_transition_active():
+	if is_off_phone_transition_active() or is_day_transition_active():
 		return
 	_save_reading_position()
 	conversation_screen.hide_typing()
@@ -70,13 +76,13 @@ func return_to_list() -> void:
 	conversation_list.call_deferred("focus_thread", active_thread_id)
 
 func activate_first_choice() -> void:
-	if is_off_phone_transition_active():
+	if is_off_phone_transition_active() or is_day_transition_active():
 		return
 	if screen_mode == "conversation":
 		conversation_screen.activate_first_choice()
 
 func start_typing(thread_id: String, author_id: String) -> void:
-	if is_off_phone_transition_active():
+	if is_off_phone_transition_active() or is_day_transition_active():
 		return
 	var thread := _thread_for(thread_id)
 	if thread.is_empty():
@@ -95,7 +101,7 @@ func start_typing(thread_id: String, author_id: String) -> void:
 		conversation_screen.show_typing(author, _reduced_motion_enabled())
 
 func stop_typing(thread_id: String) -> void:
-	if is_off_phone_transition_active():
+	if is_off_phone_transition_active() or is_day_transition_active():
 		return
 	if not typing_states_by_thread.has(thread_id):
 		return
@@ -108,7 +114,7 @@ func is_thread_typing(thread_id: String) -> bool:
 	return bool(state.get("active", false))
 
 func simulate_incoming_message(thread_id: String) -> void:
-	if is_off_phone_transition_active():
+	if is_off_phone_transition_active() or is_day_transition_active():
 		return
 	var thread := _thread_for(thread_id)
 	if thread.is_empty():
@@ -151,6 +157,8 @@ func simulate_incoming_message(thread_id: String) -> void:
 	conversation_list.update_thread_presentation(thread)
 
 func start_off_phone_transition(thread_id: String) -> void:
+	if is_day_transition_active():
+		return
 	if is_off_phone_transition_active():
 		return
 	var thread := _thread_for(thread_id)
@@ -187,6 +195,8 @@ func start_off_phone_transition(thread_id: String) -> void:
 	off_phone_transition.configure(str(off_phone_state.get("label", "")), PORTRAIT_THEME, _reduced_motion_enabled())
 
 func finish_off_phone_transition() -> void:
+	if is_day_transition_active():
+		return
 	if not is_off_phone_transition_active():
 		return
 	var saved_state := off_phone_state.duplicate(false)
@@ -210,6 +220,76 @@ func finish_off_phone_transition() -> void:
 
 func is_off_phone_transition_active() -> bool:
 	return bool(off_phone_state.get("active", false))
+
+func start_day_transition(from_day: int, to_day: int) -> void:
+	if from_day <= 0 or to_day <= from_day:
+		return
+	if is_day_transition_active() or is_off_phone_transition_active():
+		return
+	var delta: Dictionary = day_transition_deltas.get(to_day, {})
+	if delta.is_empty():
+		return
+	_save_reading_position()
+	var focus_owner := get_viewport().gui_get_focus_owner()
+	var shell: Node = _portrait_shell()
+	var notification_snapshot := {
+		"visible": notification_banner != null and notification_banner.visible,
+		"presentation": notification_banner.notification.duplicate(true) if notification_banner != null else {},
+	}
+	day_transition_state = {
+		"active": true,
+		"from_day": from_day,
+		"to_day": to_day,
+		"title": str(delta.get("title", "La journée se termine")),
+		"subtitle": str(delta.get("subtitle", "")),
+		"previous_screen": screen_mode,
+		"previous_thread_id": active_thread_id,
+		"resume_focus_target": focus_owner if focus_owner is Control else null,
+		"typing_snapshot": typing_states_by_thread.duplicate(true),
+		"notification_snapshot": notification_snapshot,
+		"updated_thread_id": str(delta.get("thread_id", "")),
+		"shell_was_processing_unhandled_input": shell.is_processing_unhandled_input() if shell != null else false,
+	}
+	conversation_screen.hide_typing()
+	conversation_screen.visible = false
+	conversation_list.visible = false
+	if notification_banner != null:
+		notification_banner.visible = false
+	_set_content_banner_spacing(false)
+	off_phone_transition.visible = false
+	screen_mode = "day_transition"
+	_set_gallery_navigation_blocked(true)
+	day_transition.configure(
+		str(day_transition_state.get("title", "La journée se termine")),
+		str(day_transition_state.get("subtitle", "")),
+		str(delta.get("body", "")),
+		PORTRAIT_THEME,
+		_reduced_motion_enabled(),
+	)
+
+func finish_day_transition() -> void:
+	if not is_day_transition_active():
+		return
+	var saved_state := day_transition_state.duplicate(false)
+	var to_day := int(saved_state.get("to_day", current_demo_day_value))
+	var previous_thread_id := str(saved_state.get("previous_thread_id", ""))
+	day_transition.reset_surface()
+	var updated_thread_id := _apply_demo_day_delta(to_day)
+	current_demo_day_value = to_day
+	if previous_thread_id != "":
+		typing_states_by_thread.erase(previous_thread_id)
+	_hide_notification()
+	screen_mode = "list"
+	conversation_screen.visible = false
+	conversation_list.visible = true
+	conversation_list.configure(threads, characters, PORTRAIT_THEME)
+	day_transition_state = {}
+	_set_gallery_navigation_blocked(false, bool(saved_state.get("shell_was_processing_unhandled_input", false)))
+	var focus_thread_id := updated_thread_id if updated_thread_id != "" else previous_thread_id
+	conversation_list.call_deferred("focus_thread", focus_thread_id)
+
+func is_day_transition_active() -> bool:
+	return bool(day_transition_state.get("active", false))
 
 func _restore_off_phone_reading_position(thread_id: String, value: int) -> void:
 	if is_off_phone_transition_active() or active_thread_id != thread_id or conversation_screen == null:
@@ -251,8 +331,16 @@ func describe_state() -> Dictionary:
 		"off_phone_action_height": off_phone_transition.action_height() if off_phone_transition != null else 0.0,
 		"off_phone_animation_running": off_phone_transition != null and off_phone_transition.animation_running(),
 		"off_phone_presentation_count": _off_phone_presentation_count(active_thread_id),
+		"day_transition_visible": day_transition != null and day_transition.visible,
+		"day_transition_surface_count": day_transition_surface_count(),
+		"day_transition_action_count": day_transition_action_count(),
+		"day_transition_action_focus": day_transition != null and day_transition.action_has_focus(),
+		"day_transition_action_height": day_transition.action_height() if day_transition != null else 0.0,
+		"day_transition_animation_running": day_transition != null and day_transition.animation_running(),
+		"day_transition_title": day_transition.display_title() if day_transition != null else "",
+		"day_transition_subtitle": day_transition.display_subtitle() if day_transition != null else "",
 		"typing_instance_count": conversation_screen.typing_instance_count() if conversation_screen != null else 0,
-		"has_horizontal_crop": (conversation_list != null and conversation_list.has_horizontal_crop()) or (off_phone_transition != null and off_phone_transition.has_horizontal_crop()),
+		"has_horizontal_crop": (conversation_list != null and conversation_list.has_horizontal_crop()) or (off_phone_transition != null and off_phone_transition.has_horizontal_crop()) or (day_transition != null and day_transition.has_horizontal_crop()),
 	}
 	if conversation_screen != null and screen_mode == "conversation":
 		state.merge(conversation_screen.describe_state(), true)
@@ -290,6 +378,39 @@ func all_messages_read(thread_id: String) -> bool:
 func notification_banner_count() -> int:
 	return 1 if notification_banner != null and is_instance_valid(notification_banner) else 0
 
+func current_demo_day() -> int:
+	return current_demo_day_value
+
+func day_transition_surface_count() -> int:
+	return 1 if day_transition != null and is_instance_valid(day_transition) else 0
+
+func day_transition_action_count() -> int:
+	return day_transition.action_count() if day_transition != null else 0
+
+func day_transition_applied_count(to_day: int) -> int:
+	return int(applied_demo_day_transitions.get(to_day, 0))
+
+func presentation_count_by_id(message_id: String) -> int:
+	var count := 0
+	for thread_id in transcripts:
+		for message in _dictionary_array(transcripts[thread_id]):
+			if str(message.get("message_id", "")) == message_id:
+				count += 1
+	return count
+
+func presentation_count_by_content_type(thread_id: String, content_type: String) -> int:
+	var count := 0
+	for message in _dictionary_array(transcripts.get(thread_id, [])):
+		if str(message.get("content_type", "")) == content_type:
+			count += 1
+	return count
+
+func total_presentation_count() -> int:
+	var count := 0
+	for thread_id in transcripts:
+		count += _dictionary_array(transcripts[thread_id]).size()
+	return count
+
 func _load_demo_data() -> void:
 	var demo: Dictionary = DEMO_DATA.build()
 	characters = demo.get("characters", {}).duplicate(true)
@@ -301,6 +422,30 @@ func _load_demo_data() -> void:
 	for thread_id in source_choices:
 		available_choices[str(thread_id)] = _dictionary_array(source_choices[thread_id]).duplicate(true)
 	incoming_by_thread = demo.get("incoming_by_thread", {}).duplicate(true)
+	current_demo_day_value = int(demo.get("current_demo_day", 2))
+	day_transition_deltas = demo.get("day_transition_deltas", {}).duplicate(true)
+
+func _apply_demo_day_delta(to_day: int) -> String:
+	var delta: Dictionary = day_transition_deltas.get(to_day, {})
+	if delta.is_empty():
+		return ""
+	var thread_id := str(delta.get("thread_id", ""))
+	if applied_demo_day_transitions.has(to_day):
+		return thread_id
+	var thread := _thread_for(thread_id)
+	var divider: Dictionary = delta.get("divider", {})
+	var message: Dictionary = delta.get("message", {})
+	if thread.is_empty() or divider.is_empty() or message.is_empty():
+		return ""
+	var thread_messages := _dictionary_array(transcripts.get(thread_id, []))
+	thread_messages.append(divider.duplicate(true))
+	thread_messages.append(message.duplicate(true))
+	transcripts[thread_id] = thread_messages
+	thread["last_preview"] = str(message.get("text", ""))
+	thread["last_timestamp"] = str(message.get("timestamp", ""))
+	thread["unread_count"] = int(thread.get("unread_count", 0)) + 1
+	applied_demo_day_transitions[to_day] = 1
+	return thread_id
 
 func _build() -> void:
 	for child in get_children():
@@ -324,6 +469,12 @@ func _build() -> void:
 	off_phone_transition.z_index = 5
 	off_phone_transition.resume_requested.connect(finish_off_phone_transition)
 	add_child(off_phone_transition)
+	day_transition = DAY_TRANSITION_SCRIPT.new()
+	day_transition.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	day_transition.visible = false
+	day_transition.z_index = 6
+	day_transition.continue_requested.connect(finish_day_transition)
+	add_child(day_transition)
 	notification_banner = NOTIFICATION_BANNER_SCRIPT.new()
 	notification_banner.set_anchors_preset(Control.PRESET_TOP_WIDE)
 	notification_banner.offset_left = 12.0
@@ -337,7 +488,7 @@ func _build() -> void:
 	add_child(notification_banner)
 
 func _on_choice_selected(choice: Dictionary) -> void:
-	if is_off_phone_transition_active():
+	if is_off_phone_transition_active() or is_day_transition_active():
 		return
 	if active_thread_id == "" or screen_mode != "conversation":
 		return
@@ -361,6 +512,8 @@ func _on_choice_selected(choice: Dictionary) -> void:
 	reading_positions[active_thread_id] = conversation_screen.get_reading_position()
 
 func _on_notification_open_requested(thread_id: String) -> void:
+	if is_day_transition_active():
+		return
 	_hide_notification()
 	open_thread(thread_id)
 
@@ -450,17 +603,19 @@ func _on_visibility_changed() -> void:
 		return
 	if not is_visible_in_tree():
 		conversation_screen.hide_typing()
-		if is_off_phone_transition_active():
+		if is_off_phone_transition_active() or is_day_transition_active():
 			call_deferred("_restore_messages_tab_during_off_phone")
 	else:
 		_sync_active_typing()
 
 func _restore_messages_tab_during_off_phone() -> void:
-	if not is_off_phone_transition_active() or is_visible_in_tree():
+	if (not is_off_phone_transition_active() and not is_day_transition_active()) or is_visible_in_tree():
 		return
 	var shell: Node = _portrait_shell()
 	if shell != null:
 		shell.call("activate_messages", false)
+		if is_day_transition_active() and day_transition != null and day_transition.continue_button != null:
+			day_transition.continue_button.call_deferred("grab_focus")
 
 func _set_gallery_navigation_blocked(blocked: bool, restore_unhandled := true) -> void:
 	var shell: Node = _portrait_shell()

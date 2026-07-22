@@ -85,7 +85,7 @@ class TUI02C1OffPhoneTransitionStaticTests(unittest.TestCase):
         ]:
             self.assertNotIn(forbidden, surface)
 
-    def test_lot_has_no_day_transition_runtime_dependency_historical_sha_or_path_obfuscation(self):
+    def test_lot_has_no_runtime_dependency_historical_sha_or_path_obfuscation(self):
         paths = [
             "game/scripts/ui/messages/OffPhoneTransition.gd",
             "game/scripts/ui/messages/MessagesScreen.gd",
@@ -95,7 +95,7 @@ class TUI02C1OffPhoneTransitionStaticTests(unittest.TestCase):
         ]
         forbidden = [
             "GameState", "DataLoader", "TimelineState", "PhonePrototype", "ConversationView",
-            "LegacyMain", "res://data/", ".json", "change_day", "next_day", "DayTransition",
+            "LegacyMain", "res://data/", ".json", "change_day", "next_day",
         ]
         sha = re.compile(r"\b[0-9a-f]{40}\b", re.IGNORECASE)
         offenders = []

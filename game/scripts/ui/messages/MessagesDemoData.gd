@@ -104,6 +104,43 @@ static func build() -> Dictionary:
 		"messages_by_thread": messages_by_thread,
 		"choices_by_thread": choices_by_thread,
 		"incoming_by_thread": incoming_by_thread,
+		"current_demo_day": 2,
+		"next_demo_day": 3,
+		"day_transition_deltas": {
+			3: day_transition_delta(3),
+		},
+	}
+
+static func day_transition_delta(to_day: int) -> Dictionary:
+	if to_day != 3:
+		return {}
+	return {
+		"thread_id": "demo_private_marie",
+		"title": "La journée se termine",
+		"subtitle": "Mercredi",
+		"body": "Les conversations restent disponibles quand vous êtes prêt.",
+		"divider": {
+			"message_id": "demo_day_private_03",
+			"author_id": "system",
+			"timestamp": "",
+			"content_type": "SYSTEM_DAY_DIVIDER",
+			"text": "Mercredi",
+			"media_ref": "",
+			"is_player": false,
+			"is_read": true,
+			"source_day": 3,
+		},
+		"message": {
+			"message_id": "demo_day3_marie_01",
+			"author_id": "marie",
+			"timestamp": "08:12",
+			"content_type": "TEXT",
+			"text": "Petit message factice pour mercredi.",
+			"media_ref": "",
+			"is_player": false,
+			"is_read": false,
+			"source_day": 3,
+		},
 	}
 
 static func _character(character_id: String, display_name: String, accent_color: String, avatar_ref: String) -> Dictionary:
