@@ -47,6 +47,7 @@ static func build() -> Dictionary:
 			_message("demo_m_01", "marie", "21:08", "Texte de démonstration non canonique : ce fil sert uniquement à vérifier la lecture d’une bulle courte.", false),
 			_message("demo_m_02", "player", "21:10", "Réponse fictive déjà présente pour vérifier l’alignement constant du Player à droite.", true),
 			_message("demo_m_03", "marie", "21:14", "Long message de démonstration hors récit : il doit s’envelopper naturellement, rester entièrement lisible et ne jamais passer sous la zone fixe des choix, même dans une fenêtre portrait étroite.", false),
+			_off_phone_transition("demo_off_phone_private_01", "Vous vous retrouvez hors du téléphone.", 2),
 		],
 		"demo_group_verriere": [
 			_day_divider("demo_day_group_01", "Mercredi", 3),
@@ -133,6 +134,19 @@ static func _day_divider(message_id: String, text: String, source_day: int) -> D
 		"author_id": "system",
 		"timestamp": "",
 		"content_type": "SYSTEM_DAY_DIVIDER",
+		"text": text,
+		"media_ref": "",
+		"is_player": false,
+		"is_read": true,
+		"source_day": source_day,
+	}
+
+static func _off_phone_transition(message_id: String, text: String, source_day: int) -> Dictionary:
+	return {
+		"message_id": message_id,
+		"author_id": "system",
+		"timestamp": "",
+		"content_type": "OFF_PHONE_TRANSITION",
 		"text": text,
 		"media_ref": "",
 		"is_player": false,

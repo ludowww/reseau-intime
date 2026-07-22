@@ -6,6 +6,7 @@ const DEMO_DATA := preload("res://scripts/ui/messages/MessagesDemoData.gd")
 const CONVERSATION_LIST_SCRIPT := preload("res://scripts/ui/messages/ConversationList.gd")
 const CONVERSATION_SCREEN_SCENE := preload("res://scenes/portrait/messages/PortraitConversationScreen.tscn")
 const NOTIFICATION_BANNER_SCRIPT := preload("res://scripts/ui/messages/NotificationBanner.gd")
+const OFF_PHONE_TRANSITION_SCRIPT := preload("res://scripts/ui/messages/OffPhoneTransition.gd")
 
 var PORTRAIT_THEME = preload("res://scripts/ui/PortraitShellTheme.gd").new()
 var characters: Dictionary = {}
@@ -16,9 +17,11 @@ var reading_positions: Dictionary = {}
 var incoming_by_thread: Dictionary = {}
 var incoming_sequence_by_thread: Dictionary = {}
 var typing_states_by_thread: Dictionary = {}
+var off_phone_state: Dictionary = {}
 var conversation_list
 var conversation_screen
 var notification_banner
+var off_phone_transition
 var notification_focus_origin: Control
 var active_thread_id := ""
 var screen_mode := "list"
@@ -36,6 +39,8 @@ func focus_first_conversation() -> void:
 		conversation_list.focus_first_card()
 
 func open_thread(thread_id: String) -> void:
+	if is_off_phone_transition_active():
+		return
 	var selected := _thread_for(thread_id)
 	if selected.is_empty():
 		return
@@ -55,6 +60,8 @@ func open_thread(thread_id: String) -> void:
 	_sync_active_typing()
 
 func return_to_list() -> void:
+	if is_off_phone_transition_active():
+		return
 	_save_reading_position()
 	conversation_screen.hide_typing()
 	screen_mode = "list"
@@ -63,10 +70,14 @@ func return_to_list() -> void:
 	conversation_list.call_deferred("focus_thread", active_thread_id)
 
 func activate_first_choice() -> void:
+	if is_off_phone_transition_active():
+		return
 	if screen_mode == "conversation":
 		conversation_screen.activate_first_choice()
 
 func start_typing(thread_id: String, author_id: String) -> void:
+	if is_off_phone_transition_active():
+		return
 	var thread := _thread_for(thread_id)
 	if thread.is_empty():
 		return
@@ -84,6 +95,8 @@ func start_typing(thread_id: String, author_id: String) -> void:
 		conversation_screen.show_typing(author, _reduced_motion_enabled())
 
 func stop_typing(thread_id: String) -> void:
+	if is_off_phone_transition_active():
+		return
 	if not typing_states_by_thread.has(thread_id):
 		return
 	typing_states_by_thread.erase(thread_id)
@@ -95,6 +108,8 @@ func is_thread_typing(thread_id: String) -> bool:
 	return bool(state.get("active", false))
 
 func simulate_incoming_message(thread_id: String) -> void:
+	if is_off_phone_transition_active():
+		return
 	var thread := _thread_for(thread_id)
 	if thread.is_empty():
 		return
@@ -135,12 +150,92 @@ func simulate_incoming_message(thread_id: String) -> void:
 		_show_notification(thread, preview, timestamp)
 	conversation_list.update_thread_presentation(thread)
 
+func start_off_phone_transition(thread_id: String) -> void:
+	if is_off_phone_transition_active():
+		return
+	var thread := _thread_for(thread_id)
+	if thread.is_empty():
+		return
+	if screen_mode != "conversation" or active_thread_id != thread_id:
+		return
+	var presentation := _off_phone_presentation_for(thread_id)
+	if presentation.is_empty():
+		return
+	_save_reading_position()
+	var focus_owner := get_viewport().gui_get_focus_owner()
+	var shell: Node = _portrait_shell()
+	off_phone_state = {
+		"active": true,
+		"thread_id": thread_id,
+		"transition_message_id": str(presentation.get("message_id", "")),
+		"label": str(presentation.get("text", "")),
+		"resume_focus_target": focus_owner if focus_owner is Control else null,
+		"reading_position": int(reading_positions.get(thread_id, 0)),
+		"typing_was_active": is_thread_typing(thread_id),
+		"notification_was_visible": notification_banner != null and notification_banner.visible,
+		"notification_thread_id": str(notification_banner.notification.get("thread_id", "")) if notification_banner != null else "",
+		"shell_was_processing_unhandled_input": shell.is_processing_unhandled_input() if shell != null else false,
+	}
+	conversation_screen.hide_typing()
+	conversation_screen.visible = false
+	conversation_list.visible = false
+	if notification_banner != null:
+		notification_banner.visible = false
+	_set_content_banner_spacing(false)
+	screen_mode = "off_phone"
+	_set_gallery_navigation_blocked(true)
+	off_phone_transition.configure(str(off_phone_state.get("label", "")), PORTRAIT_THEME, _reduced_motion_enabled())
+
+func finish_off_phone_transition() -> void:
+	if not is_off_phone_transition_active():
+		return
+	var saved_state := off_phone_state.duplicate(false)
+	var thread_id := str(saved_state.get("thread_id", ""))
+	off_phone_transition.dismiss()
+	screen_mode = "conversation"
+	active_thread_id = thread_id
+	conversation_list.visible = false
+	conversation_screen.visible = true
+	reading_positions[thread_id] = int(saved_state.get("reading_position", 0))
+	conversation_screen.timeline.set_reading_position(int(saved_state.get("reading_position", 0)))
+	if bool(saved_state.get("notification_was_visible", false)) and notification_banner != null:
+		notification_banner.visible = true
+		_set_content_banner_spacing(true)
+	off_phone_state = {}
+	_set_gallery_navigation_blocked(false, bool(saved_state.get("shell_was_processing_unhandled_input", false)))
+	if bool(saved_state.get("typing_was_active", false)):
+		_sync_active_typing()
+	call_deferred("_restore_off_phone_focus", saved_state.get("resume_focus_target"))
+	call_deferred("_restore_off_phone_reading_position", thread_id, int(saved_state.get("reading_position", 0)))
+
+func is_off_phone_transition_active() -> bool:
+	return bool(off_phone_state.get("active", false))
+
+func _restore_off_phone_reading_position(thread_id: String, value: int) -> void:
+	if is_off_phone_transition_active() or active_thread_id != thread_id or conversation_screen == null:
+		return
+	conversation_screen.timeline.set_reading_position(value)
+	reading_positions[thread_id] = conversation_screen.get_reading_position()
+
+func _restore_off_phone_focus(previous_focus: Variant) -> void:
+	if is_off_phone_transition_active() or screen_mode != "conversation":
+		return
+	if previous_focus is Control and is_instance_valid(previous_focus) and previous_focus.is_visible_in_tree() and previous_focus.focus_mode != Control.FOCUS_NONE:
+		previous_focus.grab_focus()
+		return
+	if conversation_screen.choice_bar != null and conversation_screen.choice_bar.choice_count() > 0:
+		conversation_screen.choice_bar.focus_first_choice()
+		return
+	if conversation_screen.back_button != null:
+		conversation_screen.back_button.grab_focus()
+
 func describe_state() -> Dictionary:
 	var state := {
 		"screen": screen_mode,
 		"active_thread_id": active_thread_id,
 		"thread_count": threads.size(),
 		"list_visible": conversation_list != null and conversation_list.visible,
+		"conversation_visible": conversation_screen != null and conversation_screen.visible,
 		"list_has_focus": conversation_list != null and conversation_list.first_card_has_focus(),
 		"private_thread_id": _first_thread_id(false),
 		"group_thread_id": _first_thread_id(true),
@@ -148,7 +243,16 @@ func describe_state() -> Dictionary:
 		"read_thread_id": _first_thread_by_unread(false),
 		"notification_visible": notification_banner != null and notification_banner.visible,
 		"notification_thread_id": str(notification_banner.notification.get("thread_id", "")) if notification_banner != null and notification_banner.visible else "",
-		"has_horizontal_crop": conversation_list != null and conversation_list.has_horizontal_crop(),
+		"off_phone_visible": off_phone_transition != null and off_phone_transition.visible,
+		"off_phone_surface_count": 1 if off_phone_transition != null and is_instance_valid(off_phone_transition) else 0,
+		"off_phone_thread_id": str(off_phone_state.get("thread_id", "")),
+		"off_phone_action_focus": off_phone_transition != null and off_phone_transition.action_has_focus(),
+		"off_phone_action_count": off_phone_transition.action_count() if off_phone_transition != null else 0,
+		"off_phone_action_height": off_phone_transition.action_height() if off_phone_transition != null else 0.0,
+		"off_phone_animation_running": off_phone_transition != null and off_phone_transition.animation_running(),
+		"off_phone_presentation_count": _off_phone_presentation_count(active_thread_id),
+		"typing_instance_count": conversation_screen.typing_instance_count() if conversation_screen != null else 0,
+		"has_horizontal_crop": (conversation_list != null and conversation_list.has_horizontal_crop()) or (off_phone_transition != null and off_phone_transition.has_horizontal_crop()),
 	}
 	if conversation_screen != null and screen_mode == "conversation":
 		state.merge(conversation_screen.describe_state(), true)
@@ -214,6 +318,12 @@ func _build() -> void:
 	conversation_screen.back_requested.connect(return_to_list)
 	conversation_screen.choice_selected.connect(_on_choice_selected)
 	add_child(conversation_screen)
+	off_phone_transition = OFF_PHONE_TRANSITION_SCRIPT.new()
+	off_phone_transition.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	off_phone_transition.visible = false
+	off_phone_transition.z_index = 5
+	off_phone_transition.resume_requested.connect(finish_off_phone_transition)
+	add_child(off_phone_transition)
 	notification_banner = NOTIFICATION_BANNER_SCRIPT.new()
 	notification_banner.set_anchors_preset(Control.PRESET_TOP_WIDE)
 	notification_banner.offset_left = 12.0
@@ -227,6 +337,8 @@ func _build() -> void:
 	add_child(notification_banner)
 
 func _on_choice_selected(choice: Dictionary) -> void:
+	if is_off_phone_transition_active():
+		return
 	if active_thread_id == "" or screen_mode != "conversation":
 		return
 	var choice_id := str(choice.get("choice_id", ""))
@@ -338,8 +450,50 @@ func _on_visibility_changed() -> void:
 		return
 	if not is_visible_in_tree():
 		conversation_screen.hide_typing()
+		if is_off_phone_transition_active():
+			call_deferred("_restore_messages_tab_during_off_phone")
 	else:
 		_sync_active_typing()
+
+func _restore_messages_tab_during_off_phone() -> void:
+	if not is_off_phone_transition_active() or is_visible_in_tree():
+		return
+	var shell: Node = _portrait_shell()
+	if shell != null:
+		shell.call("activate_messages", false)
+
+func _set_gallery_navigation_blocked(blocked: bool, restore_unhandled := true) -> void:
+	var shell: Node = _portrait_shell()
+	if shell == null:
+		return
+	var gallery_control: Variant = shell.get("gallery_button")
+	if gallery_control is Button:
+		gallery_control.disabled = blocked
+	if blocked:
+		shell.set_process_unhandled_input(false)
+	else:
+		shell.set_process_unhandled_input(restore_unhandled)
+
+func _portrait_shell():
+	var ancestor := get_parent()
+	while ancestor != null:
+		if ancestor.has_method("activate_gallery") and ancestor.has_method("activate_messages"):
+			return ancestor
+		ancestor = ancestor.get_parent()
+	return null
+
+func _off_phone_presentation_for(thread_id: String) -> Dictionary:
+	for message in _dictionary_array(transcripts.get(thread_id, [])):
+		if str(message.get("content_type", "")) == "OFF_PHONE_TRANSITION":
+			return message
+	return {}
+
+func _off_phone_presentation_count(thread_id: String) -> int:
+	var count := 0
+	for message in _dictionary_array(transcripts.get(thread_id, [])):
+		if str(message.get("content_type", "")) == "OFF_PHONE_TRANSITION":
+			count += 1
+	return count
 
 func _thread_accepts_author(thread: Dictionary, author_id: String) -> bool:
 	var participants: Variant = thread.get("participant_ids", [])
