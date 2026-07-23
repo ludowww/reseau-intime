@@ -23,6 +23,7 @@ var grid: GridContainer
 var empty_state: CenterContainer
 var tile_buttons: Array[Button] = []
 var photo_request_count := 0
+var last_photo_restore_origin_scroll := -1
 
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -57,6 +58,61 @@ func focus_tile(index: int) -> void:
 func activate_first_tile() -> void:
 	if not tile_buttons.is_empty():
 		tile_buttons[0].emit_signal("pressed")
+
+func viewer_sequence_for_selected_character() -> Array[Dictionary]:
+	var sequence: Array[Dictionary] = []
+	var character: Dictionary = fixtures.get(selected_character_id, {})
+	var items: Array = character.get("items", []).duplicate(true)
+	items.sort_custom(func(a: Dictionary, b: Dictionary): return int(a.get("sort_key", 0)) < int(b.get("sort_key", 0)))
+	for item in items:
+		sequence.append({
+			"photo_id": str(item.get("item_id", "")),
+			"visual_ref": str(item.get("full_ref", "")),
+			"source_kind": "gallery",
+			"character_id": selected_character_id,
+			"display_name": str(character.get("display_name", "")),
+			"accent_color": character.get("accent_color", PORTRAIT_THEME.GALLERY_ACCENT),
+			"context_label": "Galerie · %s" % str(item.get("thumbnail_label", "Photo démo")),
+			"timestamp": "",
+			"caption": "",
+		})
+	return sequence
+
+func viewer_index_for_item(item_id: String) -> int:
+	var sequence := viewer_sequence_for_selected_character()
+	for index in range(sequence.size()):
+		if str(sequence[index].get("photo_id", "")) == item_id:
+			return index
+	return -1
+
+func viewer_origin_for_item(item_id: String) -> Dictionary:
+	return {
+		"source_kind": "gallery",
+		"selected_character_id": selected_character_id,
+		"item_id": item_id,
+		"grid_scroll_position": grid_scroll.scroll_vertical,
+	}
+
+func focus_item(item_id: String, ensure_visible: bool) -> bool:
+	for tile in tile_buttons:
+		if str(tile.item_id) == item_id:
+			tile.grab_focus()
+			if ensure_visible:
+				grid_scroll.ensure_control_visible(tile)
+			return true
+	return false
+
+func restore_after_photo_viewer(provenance: Dictionary, current_photo_id: String, focus_target: Variant) -> void:
+	if str(provenance.get("selected_character_id", "")) != selected_character_id:
+		return
+	await get_tree().process_frame
+	grid_scroll.scroll_vertical = int(provenance.get("grid_scroll_position", 0))
+	await get_tree().process_frame
+	last_photo_restore_origin_scroll = grid_scroll.scroll_vertical
+	var photo_changed := current_photo_id != str(provenance.get("item_id", ""))
+	if not focus_item(current_photo_id, photo_changed):
+		if focus_target is Control and is_instance_valid(focus_target) and focus_target.is_visible_in_tree():
+			focus_target.grab_focus()
 
 func column_count_for_width(width: float) -> int:
 	if width < NARROW_WIDTH_THRESHOLD:

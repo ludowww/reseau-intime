@@ -91,26 +91,38 @@ class TUI03BImageMessageStaticTests(unittest.TestCase):
             self.assertIn(signature, timeline)
         self.assertRegex(timeline, r"func message_count\(\) -> int:\s+return messages\.size\(\)")
 
-    def test_conversation_forwards_locally_without_messages_runtime_connection(self):
+    def test_conversation_forwards_to_validated_local_photo_gateway(self):
         conversation = self._read("game/scripts/ui/messages/PortraitConversationScreen.gd")
         messages = self._read("game/scripts/ui/messages/MessagesScreen.gd")
         self.assertRegex(conversation, r"signal image_requested\(message_id: String, media_ref: String\)")
         self.assertIn("timeline.image_requested.connect", conversation)
         self.assertIn("image_requested.emit", conversation)
-        self.assertNotIn("image_requested.connect", messages)
+        self.assertIn("conversation_screen.image_requested.connect(_on_image_requested)", messages)
+        gateway = messages.split("func _on_image_requested", 1)[1].split("\nfunc ", 1)[0]
+        self.assertIn('content_type", "")) != "IMAGE"', gateway)
+        self.assertIn('media_ref", "")) != media_ref', gateway)
+        self.assertIn("photo_requested.emit", gateway)
+        for forbidden in ["GameState", "DataLoader", "TimelineState", "save_game", "autosave"]:
+            self.assertNotIn(forbidden, gateway)
+        self.assertNotIn("PhotoViewer.tscn", messages)
+        self.assertNotIn("PHOTO_VIEWER_SCENE", messages)
+        self.assertNotIn("PhotoViewer.new", messages)
+        self.assertNotIn("PhotoViewer.instantiate", messages)
         for token in ['"image_message_count"', '"image_message_ids"', '"image_request_count"']:
             self.assertIn(token, conversation)
 
     def test_lot_has_no_viewer_assets_runtime_state_or_historical_sha(self):
-        paths = [
+        production_paths = [
             "game/scripts/ui/messages/ImageMessage.gd",
             "game/scripts/ui/messages/MessageTimeline.gd",
             "game/scripts/ui/messages/PortraitConversationScreen.gd",
             "game/scripts/ui/messages/MessagesDemoData.gd",
+        ]
+        paths = production_paths + [
             "game/tests/T_UI_03BImageMessageSmokeDriver.gd",
         ]
         forbidden = [
-            "PhotoViewer", "GameState", "DataLoader", "TimelineState", "PhonePrototype",
+            "GameState", "DataLoader", "TimelineState", "PhonePrototype",
             "ConversationView", "save_game", "autosave", "res://data/", ".json",
             '"NEW"', '"VIEWED"', '"LOCKED"', '"REMOVED"',
         ]
@@ -127,6 +139,16 @@ class TUI03BImageMessageStaticTests(unittest.TestCase):
                 if token in content:
                     offenders.append(f"{relative}: {token}")
         self.assertEqual(offenders, [])
+        production_contents = "\n".join(self._read(relative) for relative in production_paths)
+        for token in [
+            "PhotoViewer", "PhotoViewer.tscn", "PHOTO_VIEWER_SCENE", "PhotoViewer.new",
+            "PhotoViewer.instantiate", "PHOTO_VIEWER_SCENE.instantiate()",
+        ]:
+            self.assertNotIn(token, production_contents)
+        self.assertNotRegex(production_contents, r'preload\([^\n]*PhotoViewer')
+        smoke = self._read("game/tests/T_UI_03BImageMessageSmokeDriver.gd")
+        self.assertIn("shell.is_photo_viewer_active()", smoke)
+        self.assertIn("shell._close_photo_viewer()", smoke)
 
     def test_no_repository_image_asset_is_added(self):
         changed_images = []

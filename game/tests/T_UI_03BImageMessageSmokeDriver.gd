@@ -64,6 +64,12 @@ func _run() -> void:
 	_expect(messages.conversation_screen.get_reading_position() == scroll_before_activation, "activation must not change reading position")
 	_expect(_state_snapshot(messages, shell) == private_before, "private activation must not mutate messages, choices, unread, typing, day, or surfaces")
 	_expect(not bool(private_after.get("image_animation_running", true)), "ImageMessage must never animate")
+	_expect(shell.is_photo_viewer_active(), "private activation must open the unique PhotoViewer")
+	_expect(shell.photo_viewer.current_photo_id() == "demo_image_private_marie_01", "private viewer must preserve the photo id")
+	_expect(shell.photo_viewer.source_kind() == "messages", "private viewer must use Messages source")
+	shell._close_photo_viewer()
+	await _settle(false)
+	_expect(messages.conversation_screen.timeline.focused_image_message_id() == "demo_image_private_marie_01", "private viewer return must restore image focus")
 
 	var bar: VScrollBar = messages.conversation_screen.timeline.get_v_scroll_bar()
 	var scroll_limit := int(bar.max_value - bar.page)
@@ -121,6 +127,11 @@ func _run() -> void:
 	_expect(forwarded_message_id == "demo_image_group_marie_01" and forwarded_media_ref == "demo_group_photo", "group signal must preserve internal identifiers")
 	_expect(_state_snapshot(messages, shell) == group_before, "group activation must not mutate runtime state")
 	_expect(not bool(group_after.get("image_animation_running", true)), "reduced-motion mode must not alter image structure")
+	_expect(shell.is_photo_viewer_active(), "group activation must open the unique PhotoViewer")
+	_expect(shell.photo_viewer.current_photo_id() == "demo_image_group_marie_01", "group viewer must preserve the photo id")
+	shell._close_photo_viewer()
+	await _settle(false)
+	_expect(messages.conversation_screen.timeline.focused_image_message_id() == "demo_image_group_marie_01", "group viewer return must restore image focus")
 
 	var capture_path := _arg("--capture", "")
 	if capture_path != "":

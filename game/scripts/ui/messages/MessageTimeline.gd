@@ -215,6 +215,13 @@ func focus_first_image() -> void:
 	if not image_messages.is_empty():
 		image_messages[0].focus_image()
 
+func focus_image_message(message_id: String) -> bool:
+	for image_message in image_messages:
+		if str(image_message.message_id) == message_id:
+			image_message.focus_image()
+			return true
+	return false
+
 func activate_first_image() -> void:
 	if not image_messages.is_empty():
 		image_messages[0].image_button.emit_signal("pressed")

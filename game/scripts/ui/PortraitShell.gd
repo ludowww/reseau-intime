@@ -6,10 +6,16 @@ var PORTRAIT_THEME = preload("res://scripts/ui/PortraitShellTheme.gd").new()
 const SAFE_AREA_SCRIPT := preload("res://scripts/ui/SafeAreaContainer.gd")
 const MESSAGES_SCREEN_SCENE := preload("res://scenes/portrait/messages/MessagesScreen.tscn")
 const GALLERY_SCREEN_SCENE := preload("res://scenes/portrait/gallery/GalleryScreen.tscn")
+const PHOTO_VIEWER_SCENE := preload("res://scenes/portrait/gallery/PhotoViewer.tscn")
 const TAG_MESSAGES := "messages"
 const TAG_GALLERY := "gallery"
 
 var safe_area_container
+var shell_column: VBoxContainer
+var header_panel: PanelContainer
+var bottom_navigation: HBoxContainer
+var photo_viewer
+var photo_viewer_state: Dictionary = {}
 var header_label: Label
 var header_subtitle: Label
 var mode_label: Label
@@ -32,6 +38,9 @@ func _ready() -> void:
 
 func set_reduced_motion_enabled(enabled: bool) -> void:
 	reduced_motion_enabled = enabled
+	if is_photo_viewer_active():
+		photo_viewer.focus_back()
+		return
 	if reduced_motion_enabled:
 		if current_tween != null and current_tween.is_running():
 			current_tween.kill()
@@ -48,12 +57,18 @@ func set_safe_area_override(rect: Rect2i) -> void:
 		safe_area_container.set_test_safe_area_override(rect)
 
 func activate_messages(use_animation := true) -> void:
+	if is_photo_viewer_active():
+		return
 	_set_active_tab(TAG_MESSAGES, use_animation)
 
 func activate_gallery(use_animation := true) -> void:
+	if is_photo_viewer_active():
+		return
 	_set_active_tab(TAG_GALLERY, use_animation)
 
 func _unhandled_input(event: InputEvent) -> void:
+	if is_photo_viewer_active():
+		return
 	if event is InputEventKey and event.pressed and not event.echo and _focus_belongs_to_bottom_navigation():
 		if event.keycode == KEY_RIGHT:
 			activate_gallery()
@@ -91,6 +106,23 @@ func describe_layout() -> Dictionary:
 		"messages_button_rect": messages_button.get_global_rect(),
 		"gallery_button_rect": gallery_button.get_global_rect(),
 		"viewport_size": Vector2i(int(round(get_viewport_rect().size.x)), int(round(get_viewport_rect().size.y))),
+		"shell_column_visible": shell_column.visible,
+		"header_visible": header_panel.visible and shell_column.visible,
+		"bottom_navigation_visible": bottom_navigation.visible and shell_column.visible,
+		"photo_viewer_visible": is_photo_viewer_active(),
+		"photo_viewer_source": photo_viewer.source_kind() if is_photo_viewer_active() else "",
+		"photo_viewer_current_id": photo_viewer.current_photo_id() if is_photo_viewer_active() else "",
+		"photo_viewer_back_focus": photo_viewer.back_has_focus() if is_photo_viewer_active() else false,
+		"photo_viewer_previous_visible": photo_viewer.previous_visible() if is_photo_viewer_active() else false,
+		"photo_viewer_next_visible": photo_viewer.next_visible() if is_photo_viewer_active() else false,
+		"photo_viewer_previous_enabled": photo_viewer.previous_enabled() if is_photo_viewer_active() else false,
+		"photo_viewer_next_enabled": photo_viewer.next_enabled() if is_photo_viewer_active() else false,
+		"photo_viewer_action_count": photo_viewer.action_count() if is_photo_viewer_active() else 0,
+		"photo_viewer_ratio": photo_viewer.visual_ratio() if is_photo_viewer_active() else 0.0,
+		"photo_viewer_rect": photo_viewer.viewer_global_rect() if is_photo_viewer_active() else Rect2(),
+		"photo_visual_rect": photo_viewer.visual_global_rect() if is_photo_viewer_active() else Rect2(),
+		"photo_viewer_has_horizontal_crop": photo_viewer.has_horizontal_crop() if is_photo_viewer_active() else false,
+		"photo_viewer_has_vertical_crop": photo_viewer.has_vertical_crop() if is_photo_viewer_active() else false,
 	}
 
 func _build_shell() -> void:
@@ -106,22 +138,24 @@ func _build_shell() -> void:
 	safe_area_container.add_theme_stylebox_override("panel", PORTRAIT_THEME.panel_style(PORTRAIT_THEME.BACKGROUND, 1, 30))
 	background.add_child(safe_area_container)
 
-	var shell_column := VBoxContainer.new()
+	shell_column = VBoxContainer.new()
+	shell_column.name = "ShellColumn"
 	shell_column.set_anchors_preset(Control.PRESET_FULL_RECT)
 	shell_column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	shell_column.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	shell_column.add_theme_constant_override("separation", 14)
 	safe_area_container.add_child(shell_column)
 
-	var header := PanelContainer.new()
-	header.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	header.add_theme_stylebox_override("panel", PORTRAIT_THEME.panel_style(PORTRAIT_THEME.SURFACE_RAISED, 1, 22))
-	shell_column.add_child(header)
+	header_panel = PanelContainer.new()
+	header_panel.name = "HeaderPanel"
+	header_panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	header_panel.add_theme_stylebox_override("panel", PORTRAIT_THEME.panel_style(PORTRAIT_THEME.SURFACE_RAISED, 1, 22))
+	shell_column.add_child(header_panel)
 
 	var header_box := VBoxContainer.new()
 	header_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	header_box.add_theme_constant_override("separation", 6)
-	header.add_child(header_box)
+	header_panel.add_child(header_box)
 
 	header_label = _make_label("Réseau Intime", 30, PORTRAIT_THEME.TEXT_PRIMARY)
 	header_box.add_child(header_label)
@@ -150,29 +184,98 @@ func _build_shell() -> void:
 	gallery_panel = _build_gallery_panel()
 	content_stack.add_child(gallery_panel)
 
-	var bottom_nav := HBoxContainer.new()
-	bottom_nav.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	bottom_nav.add_theme_constant_override("separation", 12)
-	shell_column.add_child(bottom_nav)
+	bottom_navigation = HBoxContainer.new()
+	bottom_navigation.name = "BottomNavigation"
+	bottom_navigation.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	bottom_navigation.add_theme_constant_override("separation", 12)
+	shell_column.add_child(bottom_navigation)
 
 	messages_button = _make_nav_button("Messages", PORTRAIT_THEME.MESSAGE_ACCENT)
 	messages_button.pressed.connect(func(): activate_messages())
 	messages_button.gui_input.connect(_on_bottom_nav_gui_input.bind(TAG_MESSAGES))
-	bottom_nav.add_child(messages_button)
+	bottom_navigation.add_child(messages_button)
 
 	gallery_button = _make_nav_button("Galerie", PORTRAIT_THEME.GALLERY_ACCENT)
 	gallery_button.pressed.connect(func(): activate_gallery())
 	gallery_button.gui_input.connect(_on_bottom_nav_gui_input.bind(TAG_GALLERY))
-	bottom_nav.add_child(gallery_button)
+	bottom_navigation.add_child(gallery_button)
 
 	var flex := Control.new()
 	flex.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	bottom_nav.add_child(flex)
+	bottom_navigation.add_child(flex)
 
 	var reduced_motion_tag := _make_label("Animations réduites", 13, PORTRAIT_THEME.TEXT_MUTED)
 	reduced_motion_tag.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	reduced_motion_tag.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	bottom_nav.add_child(reduced_motion_tag)
+	bottom_navigation.add_child(reduced_motion_tag)
+
+	photo_viewer = PHOTO_VIEWER_SCENE.instantiate()
+	photo_viewer.visible = false
+	safe_area_container.add_child(photo_viewer)
+	photo_viewer.close_requested.connect(_close_photo_viewer)
+	messages_screen.photo_requested.connect(_on_message_photo_requested)
+	gallery_screen.photo_requested.connect(_on_gallery_photo_requested)
+
+func is_photo_viewer_active() -> bool:
+	return photo_viewer != null and photo_viewer.visible and not photo_viewer_state.is_empty()
+
+func _on_message_photo_requested(presentation: Dictionary, provenance: Dictionary) -> void:
+	if active_tab != TAG_MESSAGES or str(provenance.get("source_kind", "")) != TAG_MESSAGES or str(presentation.get("source_kind", "")) != TAG_MESSAGES:
+		return
+	var sequence: Array[Dictionary] = [presentation]
+	_open_photo_viewer(sequence, 0, provenance)
+
+func _on_gallery_photo_requested(item_id: String) -> void:
+	if active_tab != TAG_GALLERY:
+		return
+	var sequence: Array[Dictionary] = gallery_screen.viewer_sequence_for_selected_character()
+	var index: int = gallery_screen.viewer_index_for_item(item_id)
+	_open_photo_viewer(sequence, index, gallery_screen.viewer_origin_for_item(item_id))
+
+func _open_photo_viewer(sequence: Array[Dictionary], start_index: int, provenance: Dictionary) -> void:
+	if is_photo_viewer_active() or provenance.is_empty():
+		return
+	var requested_source := str(provenance.get("source_kind", ""))
+	if requested_source != TAG_MESSAGES and requested_source != TAG_GALLERY:
+		return
+	if active_tab != requested_source:
+		return
+	if sequence.is_empty() or str(sequence[0].get("source_kind", "")) != requested_source:
+		return
+	if not photo_viewer.configure(sequence, start_index, PORTRAIT_THEME):
+		return
+	var focus_owner := get_viewport().gui_get_focus_owner()
+	photo_viewer_state = {
+		"active_tab": active_tab,
+		"source_kind": str(provenance.get("source_kind", "")),
+		"provenance": provenance.duplicate(true),
+		"focus_target": focus_owner if focus_owner is Control else null,
+	}
+	if current_tween != null and current_tween.is_running():
+		current_tween.kill()
+	current_tween = null
+	_messages_set_visible(active_tab == TAG_MESSAGES)
+	_gallery_set_visible(active_tab == TAG_GALLERY)
+	shell_column.visible = false
+	photo_viewer.visible = true
+	photo_viewer.focus_back()
+
+func _close_photo_viewer() -> void:
+	if not is_photo_viewer_active():
+		return
+	var saved_state := photo_viewer_state.duplicate(false)
+	var current_photo_id: String = photo_viewer.current_photo_id()
+	photo_viewer.visible = false
+	photo_viewer.reset_viewer()
+	shell_column.visible = true
+	photo_viewer_state = {}
+	var source := str(saved_state.get("source_kind", ""))
+	var provenance: Dictionary = saved_state.get("provenance", {})
+	var focus_target: Variant = saved_state.get("focus_target")
+	if source == "messages":
+		messages_screen.call_deferred("restore_after_photo_viewer", provenance, focus_target)
+	elif source == "gallery":
+		gallery_screen.call_deferred("restore_after_photo_viewer", provenance, current_photo_id, focus_target)
 
 func _make_label(text: String, font_size: int, color: Color) -> Label:
 	var label := Label.new()

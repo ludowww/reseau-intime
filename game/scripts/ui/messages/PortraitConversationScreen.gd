@@ -67,6 +67,9 @@ func choice_count() -> int:
 func get_reading_position() -> int:
 	return timeline.get_reading_position()
 
+func focus_image_message(message_id: String) -> bool:
+	return timeline.focus_image_message(message_id)
+
 func describe_state() -> Dictionary:
 	return {
 		"conversation_title": title_label.text,

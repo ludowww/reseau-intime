@@ -2,6 +2,8 @@ extends Control
 
 class_name MessagesScreen
 
+signal photo_requested(presentation: Dictionary, provenance: Dictionary)
+
 const DEMO_DATA := preload("res://scripts/ui/messages/MessagesDemoData.gd")
 const CONVERSATION_LIST_SCRIPT := preload("res://scripts/ui/messages/ConversationList.gd")
 const CONVERSATION_SCREEN_SCENE := preload("res://scenes/portrait/messages/PortraitConversationScreen.tscn")
@@ -462,6 +464,7 @@ func _build() -> void:
 	conversation_screen.visible = false
 	conversation_screen.back_requested.connect(return_to_list)
 	conversation_screen.choice_selected.connect(_on_choice_selected)
+	conversation_screen.image_requested.connect(_on_image_requested)
 	add_child(conversation_screen)
 	off_phone_transition = OFF_PHONE_TRANSITION_SCRIPT.new()
 	off_phone_transition.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -486,6 +489,63 @@ func _build() -> void:
 	notification_banner.open_requested.connect(_on_notification_open_requested)
 	notification_banner.dismiss_requested.connect(_on_notification_dismiss_requested)
 	add_child(notification_banner)
+
+func _on_image_requested(message_id: String, media_ref: String) -> void:
+	if screen_mode != "conversation" or is_off_phone_transition_active() or is_day_transition_active():
+		return
+	if active_thread_id == "" or media_ref == "" or _thread_for(active_thread_id).is_empty():
+		return
+	var accepted: Dictionary = {}
+	for message in _dictionary_array(transcripts.get(active_thread_id, [])):
+		if str(message.get("message_id", "")) == message_id:
+			accepted = message
+			break
+	if accepted.is_empty() or str(accepted.get("content_type", "")) != "IMAGE":
+		return
+	if str(accepted.get("media_ref", "")) != media_ref or bool(accepted.get("is_player", false)):
+		return
+	var author: Dictionary = characters.get(str(accepted.get("author_id", "")), {})
+	if author.is_empty():
+		return
+	var presentation := {
+		"photo_id": message_id,
+		"visual_ref": media_ref,
+		"source_kind": "messages",
+		"character_id": str(accepted.get("author_id", "")),
+		"display_name": str(author.get("display_name", "")),
+		"accent_color": Color.from_string(str(author.get("accent_color", "#8D63E6")), PORTRAIT_THEME.MESSAGE_ACCENT),
+		"context_label": "Conversation",
+		"timestamp": str(accepted.get("timestamp", "")),
+		"caption": str(accepted.get("text", "")),
+	}
+	var provenance := {
+		"source_kind": "messages",
+		"thread_id": active_thread_id,
+		"message_id": message_id,
+		"reading_position": conversation_screen.get_reading_position(),
+	}
+	photo_requested.emit(presentation, provenance)
+
+func restore_after_photo_viewer(provenance: Dictionary, focus_target: Variant) -> void:
+	var thread_id := str(provenance.get("thread_id", ""))
+	if screen_mode != "conversation" or active_thread_id != thread_id:
+		return
+	await get_tree().process_frame
+	await get_tree().process_frame
+	var value := int(provenance.get("reading_position", 0))
+	conversation_screen.timeline.set_reading_position(value)
+	reading_positions[thread_id] = conversation_screen.get_reading_position()
+	if focus_target is Control and is_instance_valid(focus_target) and focus_target.is_visible_in_tree() and focus_target.focus_mode != Control.FOCUS_NONE and (not focus_target is BaseButton or not focus_target.disabled):
+		focus_target.grab_focus()
+	elif not conversation_screen.focus_image_message(str(provenance.get("message_id", ""))):
+		conversation_screen.back_button.grab_focus()
+	call_deferred("_restore_photo_reading_position", thread_id, value)
+
+func _restore_photo_reading_position(thread_id: String, value: int) -> void:
+	if screen_mode != "conversation" or active_thread_id != thread_id:
+		return
+	conversation_screen.timeline.set_reading_position(value)
+	reading_positions[thread_id] = conversation_screen.get_reading_position()
 
 func _on_choice_selected(choice: Dictionary) -> void:
 	if is_off_phone_transition_active() or is_day_transition_active():

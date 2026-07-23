@@ -72,5 +72,6 @@ static func _item(item_id: String, character_id: String, thumbnail_label: String
 		"item_id": item_id,
 		"character_id": character_id,
 		"thumbnail_label": thumbnail_label,
+		"full_ref": "demo_gallery_%s" % item_id,
 		"sort_key": sort_key,
 	}

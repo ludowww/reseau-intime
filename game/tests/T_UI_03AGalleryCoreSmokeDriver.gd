@@ -111,7 +111,15 @@ func _run() -> void:
 	await get_tree().process_frame
 	var after_request: Dictionary = gallery.describe_state()
 	_expect(int(after_request.get("photo_request_count", 0)) == requests_before + 1, "one tile activation must emit exactly one local request")
-	_expect(_visible_diegetic_surface_count(shell) == surface_count_before, "tile activation must not create a new surface")
+	_expect(shell.is_photo_viewer_active(), "tile activation must open the unique PhotoViewer")
+	_expect(shell.photo_viewer.source_kind() == "gallery", "tile activation must preserve Gallery provenance")
+	_expect(_visible_diegetic_surface_count(shell) == surface_count_before, "PhotoViewer must not duplicate tab surfaces")
+	shell._close_photo_viewer()
+	for frame in range(5):
+		await get_tree().process_frame
+	_expect(not shell.is_photo_viewer_active(), "Retour must close PhotoViewer")
+	_expect(shell.active_tab == shell.TAG_GALLERY, "Retour must restore Galerie")
+	_expect(str(gallery.describe_state().get("focused_tile_id", "")) == "raphaelle_01", "Retour must focus the opened tile")
 	_expect(_messages_snapshot(messages) == baseline, "Gallery interactions must not mutate Messages, unread, typing, or day state")
 
 	var capture_path := _arg("--capture", "")

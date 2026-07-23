@@ -7,12 +7,14 @@ GAME = ROOT / "game"
 
 
 class TUI03AGalleryCoreStaticTests(unittest.TestCase):
-    COMPONENTS = [
+    PRODUCTION_COMPONENTS = [
         "game/scripts/ui/gallery/GalleryScreen.gd",
         "game/scripts/ui/gallery/GalleryDemoData.gd",
         "game/scripts/ui/gallery/CharacterTabs.gd",
         "game/scripts/ui/gallery/GalleryTile.gd",
         "game/scenes/portrait/gallery/GalleryScreen.tscn",
+    ]
+    COMPONENTS = PRODUCTION_COMPONENTS + [
         "game/tests/T_UI_03AGalleryCoreSmokeDriver.gd",
         "game/tests/T_UI_03AGalleryCoreSmokeTest.tscn",
         "tools/test_t_ui_03a_gallery_core.sh",
@@ -87,8 +89,9 @@ class TUI03AGalleryCoreStaticTests(unittest.TestCase):
 
     def test_gallery_components_have_no_animation_runtime_or_future_photo_states(self):
         contents = "\n".join(self._read(path) for path in self.COMPONENTS if path.endswith((".gd", ".tscn")))
+        production_contents = "\n".join(self._read(path) for path in self.PRODUCTION_COMPONENTS)
         forbidden = [
-            "Tween", "Timer", "PhotoViewer", "ImageMessage", "GameState", "DataLoader",
+            "Tween", "Timer", "ImageMessage", "GameState", "DataLoader",
             "TimelineState", "PhonePrototype", "ConversationView", "save_game", "autosave",
             "res://data/", ".json", "LOCKED", "UNSEEN", "VIEWED", "REMOVED",
             "can_share", "can_remove_local", "premium", "ad835a0",
@@ -97,6 +100,18 @@ class TUI03AGalleryCoreStaticTests(unittest.TestCase):
         self.assertEqual(offenders, [])
         self.assertNotRegex(contents, r'load\([^\n]*\+')
         self.assertNotRegex(contents, r'preload\([^\n]*\+')
+        for token in [
+            "PhotoViewer", "PhotoViewer.tscn", "PHOTO_VIEWER_SCENE", "PhotoViewer.new",
+            "PhotoViewer.instantiate", "PHOTO_VIEWER_SCENE.instantiate()",
+        ]:
+            self.assertNotIn(token, production_contents)
+        self.assertNotRegex(production_contents, r'preload\([^\n]*PhotoViewer')
+        smoke = self._read("game/tests/T_UI_03AGalleryCoreSmokeDriver.gd")
+        self.assertIn("shell.is_photo_viewer_active()", smoke)
+        self.assertIn('photo_viewer.source_kind() == "gallery"', smoke)
+        self.assertIn("shell._close_photo_viewer()", smoke)
+        self.assertIn("shell.active_tab == shell.TAG_GALLERY", smoke)
+        self.assertIn('focused_tile_id\", \"\")) == \"raphaelle_01\"', smoke)
 
     def test_visible_gallery_copy_exposes_no_progression_mechanics_or_ids(self):
         paths = [
