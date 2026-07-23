@@ -4,7 +4,7 @@
 
 **Catégorie : Portail technique actif**
 
-Ce document décrit comment lire le runtime existant après la signature du corpus narratif et avant sa migration verticale.
+Ce document décrit l’état réellement présent sur `main`. Il distingue le runtime narratif historique du cœur UI portrait additif.
 
 Lire d’abord :
 
@@ -16,11 +16,11 @@ docs/canon/ui/README.md
 
 ---
 
-# 1. État réel du runtime
+# 1. État réel de `main`
 
-Le code sur `main` est un prototype construit par couches V0.xx.
+## Runtime narratif historique
 
-Il comprend notamment :
+Le dépôt conserve un prototype construit par couches V0.xx comprenant notamment :
 
 - chronologie et jours ;
 - phases et expirations ;
@@ -30,20 +30,38 @@ Il comprend notamment :
 - non-lus ;
 - archives ;
 - activités hors téléphone internes ;
-- ouverture et premières répétitions partielles ;
+- matériaux narratifs partiellement réconciliés ;
 - tests statiques et outils de validation.
 
-Le projet Godot reste configuré en :
+## Cœur UI portrait additif
+
+Les lots T‑UI‑01 à T‑UI‑03D ont ajouté et validé :
+
+- coque portrait ;
+- safe areas ;
+- navigation Messages / Galerie ;
+- famille Messages ;
+- ImageMessage ;
+- Galerie responsive ;
+- PhotoViewer partagé ;
+- états locaux `NEW / VIEWED / LOCKED` ;
+- matrices portrait, reduced motion et clavier.
+
+Le projet conserve encore un contrôle historique :
 
 ```text
-1280 × 720 horizontal
+1280 × 720
 ```
 
-La cible produit future est documentée en :
+Le cœur portrait est testé à :
 
 ```text
-720 × 1280 portrait
+720 × 1280
+1080 × 1920
+1080 × 2340
 ```
+
+Cette coexistence ne signifie pas que le runtime narratif complet, la persistance, les vrais assets ou les écrans système ont été migrés.
 
 ---
 
@@ -51,17 +69,18 @@ La cible produit future est documentée en :
 
 Le runtime existant ne doit pas être utilisé pour déduire :
 
-- l’architecture finale de la saison ;
-- la cible UI ;
+- l’architecture narrative finale ;
 - les routes ;
-- les couleurs ;
-- la Galerie ;
-- les permissions d’image ;
-- les états finaux.
+- les voix ;
+- les fonctions relationnelles des photos ;
+- les permissions Galerie ;
+- les écrans système finaux.
 
 Sources autoritatives :
 
 ```text
+vision     → docs/canon/bible/
+personnages→ docs/canon/characters/
 narration  → docs/canon/dialogues/
 état       → registres J01–J21 + SEASON_1_NARRATIVE_STATE_CONTRACT.md
 UI         → docs/canon/ui/
@@ -70,30 +89,24 @@ runtime    → code, données et tests sur main
 
 ---
 
-# 3. Lecture des anciens documents V0.xx
+# 3. Documents historiques
 
-Les documents suivants restent utiles comme historique d’implémentation :
+Sont historiques sauf lien explicite depuis un plan actif :
 
-- audits runtime ;
-- plans de slices ;
-- rapports V0.80–V0.90 ;
-- checklists de validation ;
-- notes sur TimelineState, notifications et archives.
+- rapports et plans V0.xx ;
+- anciens audits runtime ;
+- fichiers numérotés à la racine de `docs/` ;
+- `docs/narrative/` ;
+- `docs/story_state/` ;
+- anciennes checklists de branche.
 
-Ils sont classés :
+Ils ne remplacent pas :
 
-```text
-HISTORICAL
-```
-
-sauf lorsqu’un futur plan actif les cite explicitement.
-
-Ils ne doivent pas remplacer :
-
+- la Bible Narrative ;
 - le corpus signé J01–J21 ;
 - le contrat d’état borné ;
 - la charte UI portrait ;
-- l’architecture des écrans.
+- le checkpoint UI implémenté.
 
 ---
 
@@ -101,87 +114,78 @@ Ils ne doivent pas remplacer :
 
 Le prototype contient des matériaux jouables antérieurs et plusieurs réconciliations ciblées.
 
-État prudent à retenir :
+État prudent :
 
 ```text
-J01        partiellement réconcilié
-J02        fondation utile
-J03–J04    réconciliés dans leurs index actifs
-J05–J06    runtime historique encore à réauditer depuis le canon signé
-J07+       couches historiques possibles, non autoritatives pour le corpus final
+J01–J06   matériaux historiques et réconciliations partielles
+J07+      couches possibles, non autoritatives pour le corpus final
+UI        cœur portrait additif disponible
 ```
 
-La PR technique historique #54 reste ouverte en draft et n’est pas une base automatique de reprise.
+Le corpus canonique J01–J21 ne doit pas être inféré depuis les JSON ou scènes historiques.
 
-Toute reprise J05–J06 doit repartir de `main`, relire les index actifs et comparer au corpus signé.
+Toute adaptation runtime future repart de `main`, relit l’ordre canonique et définit un bloc court.
 
 ---
 
 # 5. Fondations à préserver si compatibles
 
-- `TimelineState` pour la chronologie ;
+- chronologie ;
 - fils persistants ;
 - stockage des transcripts ;
 - notification inter-fil ;
 - non-lus ;
 - choix manuels Player ;
-- lecture seule des archives ;
+- archives en lecture seule ;
 - séparation des activités hors téléphone ;
-- outils de validation de données ;
-- tests statiques.
+- outils de validation ;
+- tests statiques ;
+- composants portrait validés.
 
-Ces fondations peuvent être adaptées ou remplacées si la migration portrait le justifie.
-
-Elles ne sont pas sacrées par leur ancien numéro de version.
+Ces fondations peuvent être adaptées ou remplacées si un besoin canonique le démontre. Elles ne sont pas sacrées par leur ancien numéro de version.
 
 ---
 
 # 6. Concepts à ne pas réintroduire
 
-Le futur runtime ne doit pas restaurer comme vérité produit :
-
 ```text
 route owner
 wave owner
 candidate pool générique
-external ticket comme sélection de femme
+external ticket comme sélection de personnage
 score d’attachement
 score de mensonge
-propriétaire R2 automatique
+propriétaire automatique d’une route
 ```
 
-Le contrat futur utilise :
-
-- états bornés ;
-- promesses ;
-- obligations ;
-- traces ;
-- connaissances ;
-- contradictions actives ;
-- historique de foreground léger.
+Le contrat futur utilise des états bornés, promesses, obligations, traces, connaissances, contradictions actives et historique léger.
 
 ---
 
-# 7. Prochaine reprise technique
+# 7. Gel et réouverture technique
 
-Aucune reprise technique n’est autorisée par ce document seul.
+Le cœur UI est gelé par défaut après T‑UI‑03D.
 
-Ordre recommandé après validation UI :
+Un nouveau lot technique ne s’ouvre que pour :
+
+- un besoin narratif bloquant ;
+- l’intégration future des vrais assets ;
+- la persistance ou la sauvegarde ;
+- les écrans système explicitement décidés ;
+- une régression avérée ;
+- l’adaptation runtime d’un bloc narratif clairement cadré.
+
+Aucun ancien `T‑UI‑01` ou `T‑NAR‑01` n’est automatiquement réactivé.
+
+Chaque plan actif cite :
 
 ```text
-T‑UI‑01  coque portrait et composants
-T‑UI‑02  Galerie et écrans système
-T‑NAR‑01 réconciliation J01–J06
-```
-
-Chaque plan technique actif doit citer :
-
-```text
-docs/canon/ui/UI_01_VERTICAL_SMARTPHONE_SYSTEM.md
-docs/canon/ui/UI_02_SCREEN_ARCHITECTURE_AND_STATES.md
+docs/canon/bible/00_NORTH_STAR.md
 docs/canon/ui/UI_03_INTEGRATION_HANDOFF_AND_MOCKUP_STATUS.md
 docs/canon/dialogues/J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md
 docs/canon/runtime/SEASON_1_NARRATIVE_STATE_CONTRACT.md
+besoin produit et fichiers visés
+tests d’acceptation
 ```
 
 ---
@@ -191,21 +195,14 @@ docs/canon/runtime/SEASON_1_NARRATIVE_STATE_CONTRACT.md
 ```bash
 python3 tools/validate_game_data.py
 python3 tools/simulate_route_paths.py
-python3 -m unittest discover -s tests -v
+python3 -m unittest discover -s tests -p 'test_*.py' -v
 git diff --check
 godot --headless --path game --quit
 ```
 
-Pendant la migration :
+Les lots UI ajoutent leurs matrices portrait. La gate globale compare les échecs historiques par identité exacte.
 
-```text
-conserver temporairement 1280 × 720
-+ ajouter 720 × 1280
-+ ajouter 1080 × 1920
-+ ajouter un format portrait allongé
-```
-
-Le test horizontal pourra être supprimé seulement avec une décision explicite et des tests portrait équivalents.
+Le test horizontal ne sera retiré qu’après une décision explicite et une couverture portrait équivalente du flux concerné.
 
 ---
 
@@ -213,11 +210,10 @@ Le test horizontal pourra être supprimé seulement avec une décision explicite
 
 Un nouveau document sous `docs/runtime/` doit être :
 
-- lié à une branche concrète ;
+- lié à une branche ou un objectif concret ;
 - court ;
-- daté par son contexte Git ;
 - explicite sur les fichiers visés ;
 - explicite sur les autorités canoniques ;
 - marqué historique après intégration ou abandon.
 
-Aucun nouveau plan général ne doit dupliquer la Roadmap active.
+Aucun nouveau plan général ne duplique `ROADMAP.md`.
