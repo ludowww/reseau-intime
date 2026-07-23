@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://tests/T_UI_03AGalleryCoreSmokeDriver.gd" id="1"]
+
+[node name="T_UI_03AGalleryCoreSmokeTest" type="Node"]
+script = ExtResource("1")

@@ -5,6 +5,7 @@ class_name PortraitShell
 var PORTRAIT_THEME = preload("res://scripts/ui/PortraitShellTheme.gd").new()
 const SAFE_AREA_SCRIPT := preload("res://scripts/ui/SafeAreaContainer.gd")
 const MESSAGES_SCREEN_SCENE := preload("res://scenes/portrait/messages/MessagesScreen.tscn")
+const GALLERY_SCREEN_SCENE := preload("res://scenes/portrait/gallery/GalleryScreen.tscn")
 const TAG_MESSAGES := "messages"
 const TAG_GALLERY := "gallery"
 
@@ -15,6 +16,7 @@ var mode_label: Label
 var messages_panel: PanelContainer
 var messages_screen
 var gallery_panel: PanelContainer
+var gallery_screen
 var messages_button: Button
 var gallery_button: Button
 var reduced_motion_enabled := true
@@ -52,11 +54,25 @@ func activate_gallery(use_animation := true) -> void:
 	_set_active_tab(TAG_GALLERY, use_animation)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventKey and event.pressed and not event.echo:
+	if event is InputEventKey and event.pressed and not event.echo and _focus_belongs_to_bottom_navigation():
 		if event.keycode == KEY_RIGHT:
 			activate_gallery()
 		elif event.keycode == KEY_LEFT:
 			activate_messages()
+
+func _focus_belongs_to_bottom_navigation() -> bool:
+	var focus_owner := get_viewport().gui_get_focus_owner()
+	return focus_owner == messages_button or focus_owner == gallery_button
+
+func _on_bottom_nav_gui_input(event: InputEvent, source_tab: String) -> void:
+	if not event is InputEventKey or not event.pressed or event.echo:
+		return
+	if event.keycode == KEY_RIGHT and source_tab == TAG_MESSAGES:
+		activate_gallery()
+		accept_event()
+	elif event.keycode == KEY_LEFT and source_tab == TAG_GALLERY:
+		activate_messages()
+		accept_event()
 
 func describe_layout() -> Dictionary:
 	return {
@@ -141,10 +157,12 @@ func _build_shell() -> void:
 
 	messages_button = _make_nav_button("Messages", PORTRAIT_THEME.MESSAGE_ACCENT)
 	messages_button.pressed.connect(func(): activate_messages())
+	messages_button.gui_input.connect(_on_bottom_nav_gui_input.bind(TAG_MESSAGES))
 	bottom_nav.add_child(messages_button)
 
 	gallery_button = _make_nav_button("Galerie", PORTRAIT_THEME.GALLERY_ACCENT)
 	gallery_button.pressed.connect(func(): activate_gallery())
+	gallery_button.gui_input.connect(_on_bottom_nav_gui_input.bind(TAG_GALLERY))
 	bottom_nav.add_child(gallery_button)
 
 	var flex := Control.new()
@@ -210,41 +228,9 @@ func _build_gallery_panel() -> PanelContainer:
 	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	panel.add_theme_stylebox_override("panel", PORTRAIT_THEME.panel_style(PORTRAIT_THEME.SURFACE_RAISED, 1, 18))
-	var box := VBoxContainer.new()
-	box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	box.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	box.add_theme_constant_override("separation", 10)
-	panel.add_child(box)
-	box.add_child(_make_label("Galerie", 22, PORTRAIT_THEME.GALLERY_ACCENT))
-	box.add_child(_make_label("Maquette factice : onglets personnages et grille sans asset narratif.", 16, PORTRAIT_THEME.TEXT_SECONDARY))
-	var tabs := HBoxContainer.new()
-	tabs.add_theme_constant_override("separation", 8)
-	box.add_child(tabs)
-	for tab_name in ["Marie", "Sandra", "Mathilde"]:
-		var chip := _make_button(tab_name, PORTRAIT_THEME.GALLERY_ACCENT, false)
-		chip.add_theme_font_size_override("font_size", 14)
-		chip.focus_mode = Control.FOCUS_NONE
-		tabs.add_child(chip)
-	var grid := GridContainer.new()
-	grid.columns = 3
-	grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	grid.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	grid.add_theme_constant_override("h_separation", 8)
-	grid.add_theme_constant_override("v_separation", 8)
-	box.add_child(grid)
-	for i in range(6):
-		var tile := PanelContainer.new()
-		tile.custom_minimum_size = Vector2(0, 104)
-		tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		tile.add_theme_stylebox_override("panel", PORTRAIT_THEME.item_style(Color(0.11, 0.14, 0.22)))
-		var tile_box := VBoxContainer.new()
-		tile_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		tile_box.size_flags_vertical = Control.SIZE_EXPAND_FILL
-		tile_box.add_theme_constant_override("separation", 4)
-		tile.add_child(tile_box)
-		tile_box.add_child(_make_label("Photo %d" % (i + 1), 15, PORTRAIT_THEME.TEXT_PRIMARY))
-		tile_box.add_child(_make_label("placeholder", 13, PORTRAIT_THEME.TEXT_MUTED))
-		grid.add_child(tile)
+	gallery_screen = GALLERY_SCREEN_SCENE.instantiate()
+	gallery_screen.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	panel.add_child(gallery_screen)
 	return panel
 
 func _set_active_tab(tab: String, use_animation := true) -> void:
