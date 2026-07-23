@@ -107,7 +107,9 @@ func _run() -> void:
 
 	var surface_count_before := _visible_diegetic_surface_count(shell)
 	var requests_before := int(gallery.describe_state().get("photo_request_count", 0))
-	gallery.activate_first_tile()
+	_expect(gallery.display_state_for_item("raphaelle_01") == "VIEWED", "03A opening fixture must remain accessible")
+	gallery.focus_item("raphaelle_01", false)
+	gallery.tile_buttons[0].emit_signal("pressed")
 	await get_tree().process_frame
 	var after_request: Dictionary = gallery.describe_state()
 	_expect(int(after_request.get("photo_request_count", 0)) == requests_before + 1, "one tile activation must emit exactly one local request")

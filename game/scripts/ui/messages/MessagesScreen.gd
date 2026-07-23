@@ -510,6 +510,7 @@ func _on_image_requested(message_id: String, media_ref: String) -> void:
 	var presentation := {
 		"photo_id": message_id,
 		"visual_ref": media_ref,
+		"access_state": "UNLOCKED",
 		"source_kind": "messages",
 		"character_id": str(accepted.get("author_id", "")),
 		"display_name": str(author.get("display_name", "")),

@@ -14,11 +14,11 @@ static func fixtures() -> Dictionary:
 			"avatar_ref": "M",
 			"items": [
 				_item("marie_01", "marie", "Photo démo 01", 1),
-				_item("marie_02", "marie", "Photo démo 02", 2),
-				_item("marie_03", "marie", "Photo démo 03", 3),
+				_item("marie_02", "marie", "Photo démo 02", 2, "UNLOCKED", true),
+				_item("marie_03", "marie", "", 3, "LOCKED"),
 				_item("marie_04", "marie", "Photo démo 04", 4),
 				_item("marie_05", "marie", "Photo démo 05", 5),
-				_item("marie_06", "marie", "Photo démo 06", 6),
+				_item("marie_06", "marie", "Photo démo 06", 6, "UNLOCKED", true),
 				_item("marie_07", "marie", "Photo démo 07", 7),
 			],
 		},
@@ -29,9 +29,9 @@ static func fixtures() -> Dictionary:
 			"avatar_ref": "S",
 			"items": [
 				_item("sandra_01", "sandra", "Photo démo 01", 1),
-				_item("sandra_02", "sandra", "Photo démo 02", 2),
+				_item("sandra_02", "sandra", "Photo démo 02", 2, "UNLOCKED", true),
 				_item("sandra_03", "sandra", "Photo démo 03", 3),
-				_item("sandra_04", "sandra", "Photo démo 04", 4),
+				_item("sandra_04", "sandra", "", 4, "LOCKED"),
 			],
 		},
 		"mathilde": {
@@ -40,9 +40,9 @@ static func fixtures() -> Dictionary:
 			"accent_color": Color8(245, 163, 59),
 			"avatar_ref": "M",
 			"items": [
-				_item("mathilde_01", "mathilde", "Photo démo 01", 1),
+				_item("mathilde_01", "mathilde", "Photo démo 01", 1, "UNLOCKED", true),
 				_item("mathilde_02", "mathilde", "Photo démo 02", 2),
-				_item("mathilde_03", "mathilde", "Photo démo 03", 3),
+				_item("mathilde_03", "mathilde", "", 3, "LOCKED"),
 			],
 		},
 		"pauline": {
@@ -59,7 +59,7 @@ static func fixtures() -> Dictionary:
 			"avatar_ref": "R",
 			"items": [
 				_item("raphaelle_01", "raphaelle", "Photo démo 01", 1),
-				_item("raphaelle_02", "raphaelle", "Photo démo 02", 2),
+				_item("raphaelle_02", "raphaelle", "", 2, "LOCKED"),
 			],
 		},
 	}
@@ -67,11 +67,15 @@ static func fixtures() -> Dictionary:
 static func character_order() -> Array[String]:
 	return ["marie", "sandra", "mathilde", "pauline", "raphaelle"]
 
-static func _item(item_id: String, character_id: String, thumbnail_label: String, sort_key: int) -> Dictionary:
+static func _item(item_id: String, character_id: String, thumbnail_label: String, sort_key: int, state := "UNLOCKED", is_new := false) -> Dictionary:
+	var normalized_state := "LOCKED" if state == "LOCKED" else "UNLOCKED"
+	var locked := normalized_state == "LOCKED"
 	return {
 		"item_id": item_id,
 		"character_id": character_id,
-		"thumbnail_label": thumbnail_label,
-		"full_ref": "demo_gallery_%s" % item_id,
+		"thumbnail_label": "" if locked else thumbnail_label,
+		"full_ref": "" if locked else "demo_gallery_%s" % item_id,
+		"state": normalized_state,
+		"is_new": false if locked else bool(is_new),
 		"sort_key": sort_key,
 	}

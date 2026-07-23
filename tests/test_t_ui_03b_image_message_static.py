@@ -102,6 +102,10 @@ class TUI03BImageMessageStaticTests(unittest.TestCase):
         self.assertIn('content_type", "")) != "IMAGE"', gateway)
         self.assertIn('media_ref", "")) != media_ref', gateway)
         self.assertIn("photo_requested.emit", gateway)
+        self.assertIn('"access_state": "UNLOCKED"', gateway)
+        self.assertEqual(gateway.count('"UNLOCKED"'), 1)
+        for token in ['"NEW"', '"VIEWED"', '"LOCKED"', "GalleryDemoData", "GalleryScreen"]:
+            self.assertNotIn(token, messages)
         for forbidden in ["GameState", "DataLoader", "TimelineState", "save_game", "autosave"]:
             self.assertNotIn(forbidden, gateway)
         self.assertNotIn("PhotoViewer.tscn", messages)

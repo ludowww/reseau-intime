@@ -213,6 +213,7 @@ func _build_shell() -> void:
 	photo_viewer.visible = false
 	safe_area_container.add_child(photo_viewer)
 	photo_viewer.close_requested.connect(_close_photo_viewer)
+	photo_viewer.current_photo_changed.connect(_on_photo_viewer_current_photo_changed)
 	messages_screen.photo_requested.connect(_on_message_photo_requested)
 	gallery_screen.photo_requested.connect(_on_gallery_photo_requested)
 
@@ -230,20 +231,22 @@ func _on_gallery_photo_requested(item_id: String) -> void:
 		return
 	var sequence: Array[Dictionary] = gallery_screen.viewer_sequence_for_selected_character()
 	var index: int = gallery_screen.viewer_index_for_item(item_id)
-	_open_photo_viewer(sequence, index, gallery_screen.viewer_origin_for_item(item_id))
+	var provenance: Dictionary = gallery_screen.viewer_origin_for_item(item_id)
+	if _open_photo_viewer(sequence, index, provenance):
+		gallery_screen.mark_viewed(item_id)
 
-func _open_photo_viewer(sequence: Array[Dictionary], start_index: int, provenance: Dictionary) -> void:
+func _open_photo_viewer(sequence: Array[Dictionary], start_index: int, provenance: Dictionary) -> bool:
 	if is_photo_viewer_active() or provenance.is_empty():
-		return
+		return false
 	var requested_source := str(provenance.get("source_kind", ""))
 	if requested_source != TAG_MESSAGES and requested_source != TAG_GALLERY:
-		return
+		return false
 	if active_tab != requested_source:
-		return
+		return false
 	if sequence.is_empty() or str(sequence[0].get("source_kind", "")) != requested_source:
-		return
+		return false
 	if not photo_viewer.configure(sequence, start_index, PORTRAIT_THEME):
-		return
+		return false
 	var focus_owner := get_viewport().gui_get_focus_owner()
 	photo_viewer_state = {
 		"active_tab": active_tab,
@@ -259,6 +262,16 @@ func _open_photo_viewer(sequence: Array[Dictionary], start_index: int, provenanc
 	shell_column.visible = false
 	photo_viewer.visible = true
 	photo_viewer.focus_back()
+	return true
+
+func _on_photo_viewer_current_photo_changed(photo_id: String) -> void:
+	if not is_photo_viewer_active():
+		return
+	if str(photo_viewer_state.get("source_kind", "")) != TAG_GALLERY:
+		return
+	if photo_viewer.source_kind() != TAG_GALLERY:
+		return
+	gallery_screen.mark_viewed(photo_id)
 
 func _close_photo_viewer() -> void:
 	if not is_photo_viewer_active():

@@ -18,6 +18,7 @@ var visual_panel: PanelContainer
 var visual_label: Label
 var name_label: Label
 var context_label: Label
+var access_label: Label
 var caption_label: Label
 var actions: HBoxContainer
 var previous_button: Button
@@ -40,6 +41,8 @@ func configure(sequence: Array[Dictionary], start_index: int, portrait_theme) ->
 		var source := str(presentation.get("source_kind", ""))
 		if photo_id == "" or source != expected_source:
 			return false
+		if str(presentation.get("access_state", "")) != "UNLOCKED":
+			return false
 		if expected_source == "gallery" and str(presentation.get("character_id", "")) != expected_character:
 			return false
 	if expected_source == "messages" and sequence.size() != 1:
@@ -60,6 +63,7 @@ func reset_viewer() -> void:
 		remove_child(child)
 		child.queue_free()
 	back_button = null
+	access_label = null
 	previous_button = null
 	next_button = null
 
@@ -138,6 +142,9 @@ func displayed_context() -> String:
 func displayed_caption() -> String:
 	return caption_label.text if caption_label != null else ""
 
+func displayed_access_state() -> String:
+	return access_label.text if access_label != null else ""
+
 func focus_back() -> void:
 	if back_button != null:
 		back_button.grab_focus()
@@ -182,6 +189,9 @@ func _build() -> void:
 	context_label = _label("", 16, PORTRAIT_THEME.TEXT_SECONDARY)
 	context_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	column.add_child(context_label)
+	access_label = _label("Accessible", 14, PORTRAIT_THEME.TEXT_SECONDARY)
+	access_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	column.add_child(access_label)
 	visual_center = CenterContainer.new()
 	visual_center.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	visual_center.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -216,6 +226,7 @@ func _refresh() -> void:
 	context_label.text = context + (" · " + timestamp if timestamp != "" else "")
 	caption_label.text = str(presentation.get("caption", ""))
 	caption_label.visible = caption_label.text != ""
+	access_label.text = "Accessible"
 	visual_panel.add_theme_stylebox_override("panel", PORTRAIT_THEME.button_style(Color(0.045, 0.06, 0.12), accent, 18))
 	var gallery_source := source_kind() == "gallery"
 	previous_button.visible = gallery_source
@@ -236,7 +247,7 @@ func _update_visual_size() -> void:
 	if visual_panel == null or not is_instance_valid(visual_panel):
 		return
 	var available_width := maxf(180.0, size.x - 32.0)
-	var available_height := maxf(240.0, size.y - 250.0)
+	var available_height := maxf(240.0, size.y - 280.0)
 	var width := minf(MAX_VISUAL_WIDTH, minf(available_width, available_height * IMAGE_RATIO))
 	visual_panel.custom_minimum_size = Vector2(width, width / IMAGE_RATIO)
 

@@ -93,7 +93,7 @@ class TUI03AGalleryCoreStaticTests(unittest.TestCase):
         forbidden = [
             "Tween", "Timer", "ImageMessage", "GameState", "DataLoader",
             "TimelineState", "PhonePrototype", "ConversationView", "save_game", "autosave",
-            "res://data/", ".json", "LOCKED", "UNSEEN", "VIEWED", "REMOVED",
+            "res://data/", ".json", "UNSEEN", "REMOVED",
             "can_share", "can_remove_local", "premium", "ad835a0",
         ]
         offenders = [token for token in forbidden if token in contents]

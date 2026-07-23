@@ -67,6 +67,7 @@ func _run() -> void:
 	_expect(shell.is_photo_viewer_active(), "private activation must open the unique PhotoViewer")
 	_expect(shell.photo_viewer.current_photo_id() == "demo_image_private_marie_01", "private viewer must preserve the photo id")
 	_expect(shell.photo_viewer.source_kind() == "messages", "private viewer must use Messages source")
+	_expect(shell.photo_viewer.displayed_access_state() == "Accessible", "private viewer must display Accessible")
 	shell._close_photo_viewer()
 	await _settle(false)
 	_expect(messages.conversation_screen.timeline.focused_image_message_id() == "demo_image_private_marie_01", "private viewer return must restore image focus")
@@ -129,6 +130,7 @@ func _run() -> void:
 	_expect(not bool(group_after.get("image_animation_running", true)), "reduced-motion mode must not alter image structure")
 	_expect(shell.is_photo_viewer_active(), "group activation must open the unique PhotoViewer")
 	_expect(shell.photo_viewer.current_photo_id() == "demo_image_group_marie_01", "group viewer must preserve the photo id")
+	_expect(shell.photo_viewer.displayed_access_state() == "Accessible", "group viewer must display Accessible")
 	shell._close_photo_viewer()
 	await _settle(false)
 	_expect(messages.conversation_screen.timeline.focused_image_message_id() == "demo_image_group_marie_01", "group viewer return must restore image focus")
@@ -202,6 +204,7 @@ func _state_snapshot(messages, shell) -> Dictionary:
 		"typing": messages.typing_states_by_thread.duplicate(true),
 		"day": messages.current_demo_day(),
 		"surfaces": int(shell.messages_panel.visible) + int(shell.gallery_panel.visible),
+		"gallery_fixtures": shell.gallery_screen.fixtures.duplicate(true),
 	}
 
 func _on_forwarded_image_requested(message_id: String, media_ref: String) -> void:

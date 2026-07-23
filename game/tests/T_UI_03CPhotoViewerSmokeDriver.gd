@@ -32,7 +32,7 @@ func _run() -> void:
 			valid_message = candidate
 			break
 	var valid_presentation := {
-		"photo_id": "bounded_test", "visual_ref": "bounded_ref", "source_kind": "gallery",
+		"photo_id": "bounded_test", "visual_ref": "bounded_ref", "access_state": "UNLOCKED", "source_kind": "gallery",
 		"character_id": "marie", "display_name": "Marie", "accent_color": Color.WHITE,
 		"context_label": "Galerie", "timestamp": "", "caption": "",
 	}
@@ -50,6 +50,11 @@ func _run() -> void:
 	missing_photo[0].erase("photo_id")
 	shell._open_photo_viewer(missing_photo, 0, {"source_kind": "gallery"})
 	shell._open_photo_viewer(one_valid, 0, {"source_kind": "unknown"})
+	var locked_presentation := valid_presentation.duplicate(true)
+	locked_presentation["access_state"] = "LOCKED"
+	var locked_sequence: Array[Dictionary] = [locked_presentation]
+	shell._open_photo_viewer(locked_sequence, 0, {"source_kind": "gallery"})
+	_expect(not shell.is_photo_viewer_active(), "viewer must reject non-UNLOCKED presentation")
 	shell.activate_messages(false)
 	messages._on_image_requested(str(valid_message.get("message_id", "")), "wrong_media_ref")
 	messages._on_image_requested("demo_image_group_marie_01", "demo_media_group_marie_01")
@@ -110,6 +115,7 @@ func _run() -> void:
 	_expect(shell.photo_viewer.displayed_name() == "Marie", "private author must be Marie")
 	_expect(shell.photo_viewer.displayed_context() == "Conversation · 21:16", "private context mismatch")
 	_expect(shell.photo_viewer.displayed_caption() == "Une photo de démonstration envoyée dans ce fil.", "private caption mismatch")
+	_expect(shell.photo_viewer.displayed_access_state() == "Accessible", "private access label mismatch")
 	_expect(absf(float(opened.get("photo_viewer_ratio", 0.0)) - 0.75) < 0.01, "viewer ratio mismatch")
 	_expect(not bool(opened.get("shell_column_visible", true)), "shell column must hide")
 	_expect(not bool(opened.get("header_visible", true)), "header must hide")
@@ -158,6 +164,7 @@ func _run() -> void:
 	_expect(shell.photo_viewer.displayed_name() == "Marie", "group image author must be Marie")
 	_expect(shell.photo_viewer.displayed_context() == "Conversation · 20:46", "group context mismatch")
 	_expect(shell.photo_viewer.displayed_caption() == "", "group caption must be absent")
+	_expect(shell.photo_viewer.displayed_access_state() == "Accessible", "group access label mismatch")
 	_expect(shell.photo_viewer.caption_label != null and not shell.photo_viewer.caption_label.visible, "group caption must reserve no visible space")
 	shell._close_photo_viewer()
 	await _frames(4)
@@ -179,8 +186,10 @@ func _run() -> void:
 	await _frames(2)
 	opened = shell.describe_layout()
 	_expect(str(opened.get("photo_viewer_source", "")) == "gallery", "gallery source mismatch")
-	_expect(shell.photo_viewer.presentations.size() == 7, "Marie sequence must contain seven photos")
+	_expect(shell.photo_viewer.presentations.size() == 6, "Marie sequence must contain six accessible photos")
+	_expect(_viewer_ids(shell.photo_viewer) == ["marie_01", "marie_02", "marie_04", "marie_05", "marie_06", "marie_07"], "Marie LOCKED photo must be filtered and order preserved")
 	_expect(shell.photo_viewer.displayed_context() == "Galerie · Photo démo 04", "gallery context mismatch")
+	_expect(shell.photo_viewer.displayed_access_state() == "Accessible", "gallery access label mismatch")
 	shell._close_photo_viewer()
 	await _frames(5)
 	_expect(gallery.grid_scroll.scroll_vertical == unchanged_scroll, "gallery unchanged scroll must restore exactly")
@@ -195,13 +204,13 @@ func _run() -> void:
 	gallery.tile_buttons[6].emit_signal("pressed")
 	await _frames(2)
 	shell.photo_viewer.previous_button.grab_focus()
-	for index in range(6):
+	while shell.photo_viewer.previous_enabled():
 		shell.photo_viewer.show_previous()
 	_expect(shell.photo_viewer.current_photo_id() == "marie_01", "first photo mismatch")
 	_expect(not shell.photo_viewer.previous_enabled() and shell.photo_viewer.next_button.has_focus(), "focus must transfer when previous becomes disabled")
 	shell.photo_viewer.show_previous()
 	_expect(shell.photo_viewer.current_photo_id() == "marie_01", "navigation must not loop")
-	for index in range(3):
+	while shell.photo_viewer.current_photo_id() != "marie_04" and shell.photo_viewer.next_enabled():
 		shell.photo_viewer.show_next()
 	_expect(shell.photo_viewer.current_photo_id() == "marie_04", "changed close photo mismatch")
 	shell._close_photo_viewer()
@@ -264,8 +273,21 @@ func _snapshot(messages, gallery) -> Dictionary:
 		"day_dividers_group": _content_count(messages.transcripts.get("demo_group_verriere", []), "SYSTEM_DAY_DIVIDER"),
 		"selected_character": gallery.selected_character_id,
 		"gallery_counter": gallery.count_label.text,
-		"gallery_fixtures": gallery.fixtures.duplicate(true),
+		"gallery_fixtures_immutable": _gallery_immutable_snapshot(gallery),
 	}
+
+func _viewer_ids(viewer) -> Array[String]:
+	var result: Array[String] = []
+	for presentation in viewer.presentations:
+		result.append(str(presentation.get("photo_id", "")))
+	return result
+
+func _gallery_immutable_snapshot(gallery) -> Dictionary:
+	var result: Dictionary = gallery.fixtures.duplicate(true)
+	for character_id in result:
+		for item in result[character_id].get("items", []):
+			item.erase("is_new")
+	return result
 
 func _content_count(items: Array, content_type: String) -> int:
 	var count := 0

@@ -21,7 +21,7 @@ var character_tabs
 var grid_scroll: ScrollContainer
 var grid: GridContainer
 var empty_state: CenterContainer
-var tile_buttons: Array[Button] = []
+var tile_buttons: Array = []
 var photo_request_count := 0
 var last_photo_restore_origin_scroll := -1
 
@@ -59,15 +59,51 @@ func activate_first_tile() -> void:
 	if not tile_buttons.is_empty():
 		tile_buttons[0].emit_signal("pressed")
 
+func display_state_for_item(item_id: String) -> String:
+	var item := _item_for_id(item_id)
+	if item.is_empty():
+		return ""
+	var state := str(item.get("state", ""))
+	if state == "LOCKED":
+		return "LOCKED"
+	if state != "UNLOCKED":
+		return ""
+	return "NEW" if bool(item.get("is_new", false)) else "VIEWED"
+
+func mark_viewed(item_id: String) -> bool:
+	var item := _item_for_id(item_id)
+	if item.is_empty() or str(item.get("state", "")) != "UNLOCKED":
+		return false
+	if not bool(item.get("is_new", false)):
+		return false
+	item["is_new"] = false
+	for tile in tile_buttons:
+		if str(tile.item_id) == item_id:
+			tile.mark_viewed()
+			break
+	return true
+
+func unlocked_item_count(character_id := "") -> int:
+	return _item_count(character_id, "UNLOCKED", false)
+
+func new_item_count(character_id := "") -> int:
+	return _item_count(character_id, "UNLOCKED", true)
+
+func locked_item_count(character_id := "") -> int:
+	return _item_count(character_id, "LOCKED", false)
+
 func viewer_sequence_for_selected_character() -> Array[Dictionary]:
 	var sequence: Array[Dictionary] = []
 	var character: Dictionary = fixtures.get(selected_character_id, {})
 	var items: Array = character.get("items", []).duplicate(true)
 	items.sort_custom(func(a: Dictionary, b: Dictionary): return int(a.get("sort_key", 0)) < int(b.get("sort_key", 0)))
 	for item in items:
+		if str(item.get("state", "")) != "UNLOCKED":
+			continue
 		sequence.append({
 			"photo_id": str(item.get("item_id", "")),
 			"visual_ref": str(item.get("full_ref", "")),
+			"access_state": "UNLOCKED",
 			"source_kind": "gallery",
 			"character_id": selected_character_id,
 			"display_name": str(character.get("display_name", "")),
@@ -86,6 +122,8 @@ func viewer_index_for_item(item_id: String) -> int:
 	return -1
 
 func viewer_origin_for_item(item_id: String) -> Dictionary:
+	if viewer_index_for_item(item_id) < 0:
+		return {}
 	return {
 		"source_kind": "gallery",
 		"selected_character_id": selected_character_id,
@@ -122,10 +160,17 @@ func column_count_for_width(width: float) -> int:
 func describe_state() -> Dictionary:
 	var presentation: Dictionary = fixtures.get(selected_character_id, {})
 	var focused_tile_id := ""
+	var focused_tile_state := ""
+	var visible_new_badge_count := 0
+	var visible_locked_tile_count := 0
 	for tile in tile_buttons:
+		if tile.new_badge_visible():
+			visible_new_badge_count += 1
+		if tile.locked_copy_visible():
+			visible_locked_tile_count += 1
 		if tile.has_focus():
 			focused_tile_id = str(tile.item_id)
-			break
+			focused_tile_state = tile.display_state()
 	return {
 		"selected_character_id": selected_character_id,
 		"selected_character_name": str(presentation.get("display_name", "")),
@@ -145,6 +190,12 @@ func describe_state() -> Dictionary:
 		"minimum_tile_target": _minimum_tile_target(),
 		"tile_ratios_consistent": _tile_ratios_consistent(),
 		"photo_request_count": photo_request_count,
+		"unlocked_item_count": unlocked_item_count(),
+		"new_item_count": new_item_count(),
+		"locked_item_count": locked_item_count(),
+		"focused_tile_state": focused_tile_state,
+		"visible_new_badge_count": visible_new_badge_count,
+		"visible_locked_tile_count": visible_locked_tile_count,
 	}
 
 func _build() -> void:
@@ -253,8 +304,35 @@ func _on_tile_navigation_requested(index: int, horizontal_step: int, vertical_st
 	focus_tile(target)
 
 func _on_photo_requested(item_id: String) -> void:
+	var item := _item_for_id(item_id)
+	if item.is_empty() or str(item.get("character_id", "")) != selected_character_id:
+		return
+	if str(item.get("state", "")) != "UNLOCKED":
+		return
 	photo_request_count += 1
 	photo_requested.emit(item_id)
+
+func _item_for_id(item_id: String) -> Dictionary:
+	if item_id == "":
+		return {}
+	for character_id in character_order:
+		var character: Dictionary = fixtures.get(character_id, {})
+		for item in character.get("items", []):
+			if item is Dictionary and str(item.get("item_id", "")) == item_id:
+				return item
+	return {}
+
+func _item_count(character_id: String, state: String, new_only: bool) -> int:
+	var target := selected_character_id if character_id == "" else character_id
+	var character: Dictionary = fixtures.get(target, {})
+	var count := 0
+	for item in character.get("items", []):
+		if str(item.get("state", "")) != state:
+			continue
+		if new_only and not bool(item.get("is_new", false)):
+			continue
+		count += 1
+	return count
 
 func _label(text: String, font_size: int, color: Color) -> Label:
 	var label := Label.new()
@@ -280,9 +358,9 @@ func _tile_ratios_consistent() -> bool:
 func _has_horizontal_crop() -> bool:
 	if not grid_scroll.visible:
 		return false
-	var bounds := grid_scroll.get_global_rect()
+	var bounds: Rect2 = grid_scroll.get_global_rect()
 	for tile in tile_buttons:
-		var rect := tile.get_global_rect()
+		var rect: Rect2 = tile.get_global_rect()
 		if rect.position.x < bounds.position.x - 1.0 or rect.end.x > bounds.end.x + 1.0:
 			return true
 	return false

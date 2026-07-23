@@ -84,7 +84,7 @@ class TUI03CPhotoViewerStaticTests(unittest.TestCase):
         gateway = messages.split("func _on_image_requested", 1)[1].split("\nfunc ", 1)[0]
         for token in [
             'screen_mode != "conversation"', "is_off_phone_transition_active()", "is_day_transition_active()",
-            "_thread_for(active_thread_id).is_empty()",
+            "_thread_for(active_thread_id).is_empty()", '"access_state": "UNLOCKED"',
             'content_type", "")) != "IMAGE"', 'media_ref", "")) != media_ref', 'is_player", false)',
             '"source_kind": "messages"', '"reading_position"', "photo_requested.emit",
         ]:
@@ -120,6 +120,8 @@ class TUI03CPhotoViewerStaticTests(unittest.TestCase):
         self.assertIn('fixtures.get(selected_character_id', sequence)
         self.assertIn("sort_key", sequence)
         self.assertIn('"source_kind": "gallery"', sequence)
+        self.assertIn('"access_state": "UNLOCKED"', sequence)
+        self.assertIn("continue", sequence)
         restore = gallery.split("func restore_after_photo_viewer", 1)[1].split("\nfunc ", 1)[0]
         self.assertIn("grid_scroll.scroll_vertical", restore)
         self.assertIn("focus_item", restore)
@@ -127,19 +129,24 @@ class TUI03CPhotoViewerStaticTests(unittest.TestCase):
         self.assertIn('"full_ref"', data)
         self.assertIn('"demo_gallery_%s"', data)
 
-    def test_no_assets_runtime_future_states_or_historical_sha(self):
-        paths = [
-            "game/scripts/ui/gallery/PhotoViewer.gd", "game/scenes/portrait/gallery/PhotoViewer.tscn",
+    def test_viewer_access_contract_has_no_gallery_display_states(self):
+        viewer = self.read("game/scripts/ui/gallery/PhotoViewer.gd")
+        configure = viewer.split("func configure", 1)[1].split("\nfunc ", 1)[0]
+        self.assertIn('presentation.get("access_state", "")', configure)
+        self.assertIn('"UNLOCKED"', configure)
+        self.assertIn('"Accessible"', viewer)
+        for token in ["GameState", "DataLoader", "TimelineState", "save_game", "autosave",
+                      "res://data/", ".json", '"NEW"', '"VIEWED"', '"LOCKED"', '"REMOVED"']:
+            self.assertNotIn(token, viewer)
+        integration = "\n".join(self.read(p) for p in [
             "game/scripts/ui/PortraitShell.gd", "game/scripts/ui/messages/MessagesScreen.gd",
             "game/scripts/ui/gallery/GalleryScreen.gd", "game/scripts/ui/gallery/GalleryDemoData.gd",
-        ]
-        contents = "\n".join(self.read(p) for p in paths)
+        ])
         for token in ["GameState", "DataLoader", "TimelineState", "PhonePrototype", "ConversationView",
-                      "save_game", "autosave", "res://data/", ".json", '"NEW"', '"VIEWED"',
-                      '"LOCKED"', '"REMOVED"']:
-            self.assertNotIn(token, contents)
-        self.assertIsNone(re.search(r"\b[0-9a-f]{40}\b", contents, re.I))
-        self.assertNotRegex(contents, r"\.(png|jpe?g|webp)")
+                      "save_game", "autosave", "res://data/", ".json", '"REMOVED"']:
+            self.assertNotIn(token, integration)
+        self.assertIsNone(re.search(r"\b[0-9a-f]{40}\b", viewer + integration, re.I))
+        self.assertNotRegex(viewer + integration, r"res://.*\.(png|jpe?g|webp)")
 
     def test_smoke_declares_exact_matrix_and_capture_support(self):
         runner = self.read("tools/test_t_ui_03c_photo_viewer.sh")
