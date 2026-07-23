@@ -2,9 +2,12 @@ extends ScrollContainer
 
 class_name MessageTimeline
 
+signal image_requested(message_id: String, media_ref: String)
+
 const UNREAD_DIVIDER_SCRIPT := preload("res://scripts/ui/messages/UnreadDivider.gd")
 const TYPING_INDICATOR_SCRIPT := preload("res://scripts/ui/messages/TypingIndicator.gd")
 const DAY_DIVIDER_SCRIPT := preload("res://scripts/ui/messages/DayDivider.gd")
+const IMAGE_MESSAGE_SCRIPT := preload("res://scripts/ui/messages/ImageMessage.gd")
 
 var PORTRAIT_THEME
 var characters: Dictionary = {}
@@ -16,6 +19,10 @@ var wrapped_labels: Array[Label] = []
 var group_author_labels: Array[Label] = []
 var group_author_avatars: Array[Label] = []
 var incoming_accents: Array[Color] = []
+var image_messages: Array = []
+var image_request_total := 0
+var last_requested_message_id := ""
+var last_requested_media_ref := ""
 var divider_count := 0
 var typing_indicator
 var reading_position_restore_pending := false
@@ -176,6 +183,63 @@ func message_bubble_count() -> int:
 			count += 1
 	return count
 
+func image_message_count() -> int:
+	return image_messages.size()
+
+func image_message_ids() -> Array[String]:
+	var ids: Array[String] = []
+	for image_message in image_messages:
+		ids.append(str(image_message.message_id))
+	return ids
+
+func image_message_with_caption_count() -> int:
+	var count := 0
+	for image_message in image_messages:
+		if bool(image_message.has_caption()):
+			count += 1
+	return count
+
+func image_message_without_caption_count() -> int:
+	return image_message_count() - image_message_with_caption_count()
+
+func focused_image_message_id() -> String:
+	for image_message in image_messages:
+		if bool(image_message.image_has_focus()):
+			return str(image_message.message_id)
+	return ""
+
+func image_request_count() -> int:
+	return image_request_total
+
+func focus_first_image() -> void:
+	if not image_messages.is_empty():
+		image_messages[0].focus_image()
+
+func activate_first_image() -> void:
+	if not image_messages.is_empty():
+		image_messages[0].image_button.emit_signal("pressed")
+
+func image_ratio() -> float:
+	return float(image_messages[0].image_ratio()) if not image_messages.is_empty() else 0.0
+
+func minimum_image_target() -> Vector2:
+	return Vector2(image_messages[0].minimum_target()) if not image_messages.is_empty() else Vector2.ZERO
+
+func image_has_caption() -> bool:
+	return not image_messages.is_empty() and bool(image_messages[0].has_caption())
+
+func image_caption() -> String:
+	return str(image_messages[0].displayed_caption()) if not image_messages.is_empty() else ""
+
+func image_animation_running() -> bool:
+	return image_messages.any(func(image_message): return bool(image_message.animation_running()))
+
+func last_image_request() -> Dictionary:
+	return {
+		"message_id": last_requested_message_id,
+		"media_ref": last_requested_media_ref,
+	}
+
 func day_divider_has_timestamp() -> bool:
 	return _day_divider_has_named_descendant("Timestamp")
 
@@ -228,6 +292,9 @@ func has_horizontal_crop() -> bool:
 	for label in wrapped_labels:
 		if label.size.x > 0.0 and label.get_minimum_size().x > label.size.x + 1.0:
 			return true
+	for image_message in image_messages:
+		if bool(image_message.has_horizontal_crop()):
+			return true
 	if message_box != null:
 		for child in message_box.get_children():
 			if _is_day_divider(child) and bool(child.has_horizontal_crop()):
@@ -258,6 +325,7 @@ func _build() -> void:
 	group_author_labels.clear()
 	group_author_avatars.clear()
 	incoming_accents.clear()
+	image_messages.clear()
 	divider_count = 0
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -287,7 +355,10 @@ func _build_message_bubble(message: Dictionary) -> HBoxContainer:
 	var row := HBoxContainer.new()
 	row.name = "MessageBubble"
 	row.set_meta("message_bubble", true)
+	row.set_meta("message_id", str(message.get("message_id", "")))
+	row.set_meta("content_type", str(message.get("content_type", "")))
 	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var content_type := str(message.get("content_type", ""))
 	var is_player := bool(message.get("is_player", false))
 	var author_id := str(message.get("author_id", ""))
 	var author: Dictionary = characters.get(author_id, {})
@@ -326,10 +397,29 @@ func _build_message_bubble(message: Dictionary) -> HBoxContainer:
 		column.add_child(author_row)
 	else:
 		column.add_child(author_label)
-	var body := _label(str(message.get("text", "")), 18, PORTRAIT_THEME.TEXT_PRIMARY)
-	body.name = "Body"
-	body.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT if is_player else HORIZONTAL_ALIGNMENT_LEFT
-	column.add_child(body)
+	if content_type == "IMAGE":
+		var image_message = IMAGE_MESSAGE_SCRIPT.new()
+		image_message.name = "ImageMessage"
+		image_message.configure(
+			str(message.get("message_id", "")),
+			str(message.get("media_ref", "")),
+			str(message.get("text", "")),
+			accent,
+			PORTRAIT_THEME,
+		)
+		image_message.image_requested.connect(func(requested_message_id: String, requested_media_ref: String):
+			image_request_total += 1
+			last_requested_message_id = requested_message_id
+			last_requested_media_ref = requested_media_ref
+			image_requested.emit(requested_message_id, requested_media_ref)
+		)
+		image_messages.append(image_message)
+		column.add_child(image_message)
+	else:
+		var body := _label(str(message.get("text", "")), 18, PORTRAIT_THEME.TEXT_PRIMARY)
+		body.name = "Body"
+		body.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT if is_player else HORIZONTAL_ALIGNMENT_LEFT
+		column.add_child(body)
 	var timestamp := _label(str(message.get("timestamp", "")), 13, PORTRAIT_THEME.TEXT_MUTED)
 	timestamp.name = "Timestamp"
 	timestamp.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT if is_player else HORIZONTAL_ALIGNMENT_LEFT

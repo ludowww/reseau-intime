@@ -4,6 +4,7 @@ class_name PortraitConversationScreen
 
 signal back_requested
 signal choice_selected(choice: Dictionary)
+signal image_requested(message_id: String, media_ref: String)
 
 const TIMELINE_SCRIPT := preload("res://scripts/ui/messages/MessageTimeline.gd")
 const CHOICE_BAR_SCRIPT := preload("res://scripts/ui/messages/ChoiceBar.gd")
@@ -77,6 +78,18 @@ func describe_state() -> Dictionary:
 		"day_divider_count": timeline.day_divider_count(),
 		"day_divider_labels": timeline.day_divider_labels(),
 		"message_bubble_count": timeline.message_bubble_count(),
+		"image_message_count": timeline.image_message_count(),
+		"image_message_ids": timeline.image_message_ids(),
+		"image_with_caption_count": timeline.image_message_with_caption_count(),
+		"image_without_caption_count": timeline.image_message_without_caption_count(),
+		"focused_image_message_id": timeline.focused_image_message_id(),
+		"image_request_count": timeline.image_request_count(),
+		"image_last_request": timeline.last_image_request(),
+		"image_ratio": timeline.image_ratio(),
+		"minimum_image_target": timeline.minimum_image_target(),
+		"image_has_caption": timeline.image_has_caption(),
+		"image_caption": timeline.image_caption(),
+		"image_animation_running": timeline.image_animation_running(),
 		"day_divider_has_timestamp": timeline.day_divider_has_timestamp(),
 		"day_divider_has_author": timeline.day_divider_has_author(),
 		"day_divider_precedes_unread": timeline.day_divider_precedes_unread_divider(),
@@ -138,6 +151,7 @@ func _build(message_presentations: Array[Dictionary], choice_presentations: Arra
 	timeline = TIMELINE_SCRIPT.new()
 	timeline.name = "MessageTimeline"
 	add_child(timeline)
+	timeline.image_requested.connect(func(message_id: String, media_ref: String): image_requested.emit(message_id, media_ref))
 	timeline.configure(message_presentations, characters, bool(thread.get("is_group", false)), PORTRAIT_THEME, reading_position, first_unread_message_id)
 	choice_bar = CHOICE_BAR_SCRIPT.new()
 	choice_bar.name = "ChoiceBar"

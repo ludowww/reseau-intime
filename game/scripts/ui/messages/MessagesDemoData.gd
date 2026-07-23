@@ -47,11 +47,13 @@ static func build() -> Dictionary:
 			_message("demo_m_01", "marie", "21:08", "Texte de démonstration non canonique : ce fil sert uniquement à vérifier la lecture d’une bulle courte.", false),
 			_message("demo_m_02", "player", "21:10", "Réponse fictive déjà présente pour vérifier l’alignement constant du Player à droite.", true),
 			_message("demo_m_03", "marie", "21:14", "Long message de démonstration hors récit : il doit s’envelopper naturellement, rester entièrement lisible et ne jamais passer sous la zone fixe des choix, même dans une fenêtre portrait étroite.", false),
+			_image_message("demo_image_private_marie_01", "marie", "21:16", "demo_private_marie_photo", "Une photo de démonstration envoyée dans ce fil.", 2),
 			_off_phone_transition("demo_off_phone_private_01", "Vous vous retrouvez hors du téléphone.", 2),
 		],
 		"demo_group_verriere": [
 			_day_divider("demo_day_group_01", "Mercredi", 3),
 			_message("demo_g_01", "sandra", "20:45", "Message collectif fictif de Sandra pour vérifier le nom et l’accent de l’autrice.", false),
+			_image_message("demo_image_group_marie_01", "marie", "20:46", "demo_group_photo", "", 3),
 			_message("demo_g_02", "marie", "20:48", "Second message de groupe non canonique avec une autrice différente.", false),
 		],
 	}
@@ -163,6 +165,19 @@ static func _message(message_id: String, author_id: String, timestamp: String, t
 		"is_player": is_player,
 		"is_read": is_read,
 		"source_day": 0,
+	}
+
+static func _image_message(message_id: String, author_id: String, timestamp: String, media_ref: String, text: String, source_day: int) -> Dictionary:
+	return {
+		"message_id": message_id,
+		"author_id": author_id,
+		"timestamp": timestamp,
+		"content_type": "IMAGE",
+		"text": text,
+		"media_ref": media_ref,
+		"is_player": false,
+		"is_read": true,
+		"source_day": source_day,
 	}
 
 static func _day_divider(message_id: String, text: String, source_day: int) -> Dictionary:
