@@ -1,31 +1,35 @@
-# Réseau Intime — UI_03 — Handoff d’intégration final
+# Réseau Intime — UI_03 — Handoff d’intégration et checkpoint implémenté
 
 ## Statut
 
-**Catégorie : Canon UX/UI actif — frontière pré-runtime**
+**Catégorie : Canon UX/UI actif — checkpoint d’implémentation après T‑UI‑03D**
 
-**Lot : UI‑HANDOFF validé**
+**Lot : UI‑HANDOFF validé — UI CORE PROTOTYPE implémenté et gelé**
 
-**Périmètre : composants, données de présentation, navigation, persistance, responsive, tests et découpage technique**
+**Baseline verrouillée : `25928abf9149b5305fea2c08dfae9a47cdbf775c`**
 
-**Autorité : contrat final permettant de préparer la reprise technique sans mélanger narration, UI et runtime**
+**Périmètre : composants, données de présentation, navigation, persistance cible, responsive, tests et frontière avec la production narrative**
+
+**Autorité : contrat canonique distinguant la cible UX/UI, les surfaces déjà implémentées et les fonctions volontairement différées**
 
 Le préfixe `UI_03` indique l’ordre de lecture du document. Il ne désigne pas une version runtime.
+
+Ce document ne transforme pas le prototype local en runtime narratif final. Il fixe ce qui est déjà disponible pour soutenir la production narrative et ce qui devra être rouvert plus tard dans un lot explicitement décidé.
 
 ---
 
 # 1. Statut des concepts
 
-Les concepts validés couvrent désormais :
+Les concepts validés couvrent :
 
 - charte portrait ;
 - liste des conversations ;
 - conversation individuelle ;
 - conversation de groupe ;
 - transition hors téléphone ;
+- transition de journée ;
 - photo plein écran ;
 - Galerie par personnage ;
-- transition de journée ;
 - titre ;
 - pause ;
 - sauvegarde et chargement ;
@@ -35,22 +39,22 @@ Les concepts validés couvrent désormais :
 - confirmations ;
 - erreurs, chargements et accessibilité.
 
-Statut :
+Statut général :
 
 ```text
-CONCEPT_REFERENCES
+CANON_UX_UI_ACTIF
 ```
 
-Ils ne sont pas :
+Ces concepts ne sont pas :
 
 - des assets finaux ;
-- des captures du runtime ;
+- des captures du runtime narratif définitif ;
 - des designs personnages canoniques ;
 - des textes narratifs ;
 - des mesures pixel-perfect ;
-- une autorisation d’intégrer leurs images au dépôt.
+- une autorisation d’intégrer automatiquement des images dans le dépôt.
 
-La production suit `docs/canon/ui/`, pas les détails accidentels des planches.
+La production suit `docs/canon/ui/`, pas les détails accidentels des planches ou prototypes.
 
 ---
 
@@ -79,7 +83,7 @@ Fournit :
 - condition ;
 - conséquence.
 
-Ne fournit pas la mise en page ou les scènes Godot.
+La narration ne fournit pas la mise en page ni les scènes Godot.
 
 ## UI/UX
 
@@ -100,7 +104,7 @@ Fournit :
 - accessibilité ;
 - hiérarchie de présentation.
 
-Ne crée aucune route, permission, trace, connaissance ou ligne de dialogue.
+L’UI ne crée aucune route, permission narrative, trace, connaissance ou ligne de dialogue.
 
 ## Runtime
 
@@ -120,11 +124,13 @@ Fournit :
 - sauvegarde ;
 - adaptation des données vers l’UI.
 
-Il ne redéfinit ni le canon ni la cible visuelle.
+Le runtime ne redéfinit ni le canon narratif ni la cible visuelle.
 
 ---
 
 # 3. Inventaire des composants MVP
+
+Les noms sont sémantiques. Ils n’imposent pas une arborescence Godot définitive.
 
 ## Coque
 
@@ -154,9 +160,10 @@ UnreadDivider
 DayDivider
 NotificationBanner
 OffPhoneTransition
+DayTransition
 ```
 
-## Galerie
+## Galerie et photo
 
 ```text
 CharacterTabs
@@ -184,13 +191,13 @@ LoadingState
 ErrorState
 ```
 
-Les noms sont sémantiques. Ils n’imposent pas une arborescence Godot définitive.
+Les composants Coque, Messages, Galerie et Photo sont disponibles dans le prototype local validé. Les écrans Système restent des cibles canoniques différées.
 
 ---
 
 # 4. Contrats sémantiques de présentation
 
-Ces structures expriment les besoins de l’UI, sans imposer un nouveau format JSON global.
+Ces structures expriment les besoins de l’UI sans imposer un nouveau format JSON global.
 
 ## `CharacterPresentation`
 
@@ -268,7 +275,7 @@ can_remove_local
 can_share
 ```
 
-États :
+États d’accès canoniques :
 
 ```text
 UNLOCKED
@@ -281,7 +288,42 @@ Règles :
 - `LOCKED` ne possède aucune miniature spoiler ;
 - `REMOVED` ne restaure jamais le fichier ;
 - retirer l’accès ne supprime ni le message source ni la connaissance acquise ;
-- `can_share` vient d’une permission narrative explicite.
+- `can_share` vient d’une permission narrative explicite ;
+- `is_new` décrit la découverte de présentation, pas un fait narratif.
+
+Dans le prototype local verrouillé après T‑UI‑03D :
+
+```text
+state = UNLOCKED | LOCKED
+is_new = true | false
+```
+
+L’état visible `VIEWED` est dérivé de `UNLOCKED + is_new == false`. Il n’est pas stocké comme état d’accès.
+
+`REMOVED`, les permissions d’action et leur persistance restent canoniques mais différés.
+
+## `PhotoPresentation`
+
+```text
+photo_id
+visual_ref
+access_state
+source_kind
+character_id
+display_name
+accent_color
+context_label
+timestamp
+caption
+```
+
+Règles :
+
+- le viewer n’accepte qu’un contenu accessible ;
+- `source_kind` distingue au minimum Messages et Galerie ;
+- le retour conserve la provenance ;
+- aucune référence interne n’est affichée au joueur ;
+- une photo ouverte depuis Messages ne devient pas automatiquement un item Galerie.
 
 ## `OffPhonePresentation`
 
@@ -373,22 +415,23 @@ Les réglages Android restent conditionnels à la plateforme.
 
 # 5. Propriété des états
 
-| État | Propriétaire | Persisté |
-|---|---|---|
-| progression narrative | runtime narratif | oui |
-| traces / connaissances / promesses | runtime narratif | oui |
-| historique des messages | runtime | oui |
-| non-lus | runtime / présentation | oui |
-| dernier fil ouvert | présentation | facultatif |
-| éléments Galerie déjà vus | présentation | oui |
-| réglages | système | oui |
-| animation en cours | UI | non |
-| hover / focus temporaire | UI | non |
-| particules | UI | non |
-| taille calculée | UI | non |
-| rencontre hors téléphone active | runtime | oui si sauvegarde autorisée |
+| État | Propriétaire cible | Persisté cible | Prototype local actuel |
+|---|---|---:|---|
+| progression narrative | runtime narratif | oui | non concerné |
+| traces / connaissances / promesses | runtime narratif | oui | non concerné |
+| historique des messages | runtime | oui | fixtures locales |
+| non-lus | runtime / présentation | oui | local |
+| dernier fil ouvert | présentation | facultatif | local |
+| éléments Galerie déjà vus | présentation | oui | local, non persisté |
+| réglages | système | oui | partiel / local |
+| animation en cours | UI | non | local |
+| hover / focus temporaire | UI | non | local |
+| taille calculée | UI | non | local |
+| rencontre hors téléphone active | runtime | oui si sauvegarde autorisée | local |
 
 Aucun composant visuel ne devient propriétaire d’un fait narratif.
+
+Le passage local `NEW → VIEWED` du prototype sert uniquement à valider le comportement d’interface. Sa persistance réelle sera définie dans un lot runtime ou sauvegarde dédié.
 
 ---
 
@@ -429,6 +472,8 @@ Il ne se déclenche pas :
 
 La politique exacte de checkpoint doit être définie et testée dans une branche sauvegarde dédiée.
 
+Le checkpoint UI actuel n’ajoute aucune persistance.
+
 ---
 
 # 7. Navigation canonique
@@ -467,6 +512,8 @@ Interdits :
 - perdre la provenance d’une photo ;
 - empiler plusieurs modales destructives.
 
+Le prototype verrouillé valide la navigation Messages ↔ Galerie et les retours Photo → provenance. La navigation système complète reste différée.
+
 ---
 
 # 8. Responsive et accessibilité
@@ -478,15 +525,14 @@ Interdits :
 9:16 portrait
 ```
 
-## Tests supplémentaires
+## Matrice validée pour le cœur UI
 
 ```text
+720 × 1280
 1080 × 1920
-1080 × 2340 ou format portrait allongé
-fenêtre PC portrait
-texte agrandi
-contraste renforcé
-animations réduites
+1080 × 2340
+safe areas : none / tall-portrait
+reduce motion : true / false
 navigation clavier
 ```
 
@@ -495,14 +541,14 @@ navigation clavier
 - safe areas en haut et en bas ;
 - aucune action sous la barre système ;
 - choix empilés avec texte agrandi ;
-- Galerie à deux colonnes en grand texte ;
+- Galerie à deux colonnes en largeur étroite ;
 - zones tactiles minimales cohérentes ;
 - aucune information portée uniquement par la couleur ;
 - focus clavier visible ;
 - défilement toujours possible ;
 - aucune décision chronométrée par défaut.
 
-Le test historique `1280 × 720` peut rester temporairement jusqu’au retrait explicite de l’ancien layout.
+Le test historique `1280 × 720` peut rester comme contrôle de non-régression tant que l’ancien layout n’est pas retiré explicitement.
 
 ---
 
@@ -513,24 +559,32 @@ Le test historique `1280 × 720` peut rester temporairement jusqu’au retrait e
 - portrait stable ;
 - safe areas respectées ;
 - navigation Messages / Galerie fonctionnelle ;
-- système et diégétique séparés.
+- système et diégétique séparés ;
+- reduced motion respecté ;
+- focus clavier visible.
 
 ## Messages
 
-- fils persistants ;
 - une ligne par personnage ou groupe ;
 - auteur lisible par couleur, nom et avatar ;
 - un choix égale un message Player ;
 - scroll et reprise corrects ;
-- aucun message pendant co-présence.
+- typing isolé par conversation ;
+- transitions hors téléphone et de journée cohérentes ;
+- ImageMessage ouvrable sans mutation narrative ;
+- retour du viewer vers le même fil.
 
-## Galerie
+## Galerie et photo
 
 - onglets personnages ;
+- grille responsive ;
 - verrouillage non révélateur ;
-- contenu retiré inaccessible ;
-- permissions d’action respectées ;
-- provenance photo conservée.
+- indicateur `Nouveau` textuel ;
+- état déjà vu dérivé sans libellé intrusif ;
+- PhotoViewer partagé ;
+- contenu verrouillé absent du viewer ;
+- provenance photo conservée ;
+- permissions futures respectées lorsqu’elles seront fournies par le runtime.
 
 ## Système
 
@@ -539,6 +593,8 @@ Le test historique `1280 × 720` peut rester temporairement jusqu’au retrait e
 - erreur et corruption isolées ;
 - réglages appliqués ou explicitement différés ;
 - confirmations destructives explicites.
+
+Ces critères restent canoniques, même si les écrans système ne sont pas encore implémentés.
 
 ## Accessibilité
 
@@ -550,68 +606,152 @@ Le test historique `1280 × 720` peut rester temporairement jusqu’au retrait e
 
 ---
 
-# 10. Ordre technique recommandé
+# 10. Checkpoint d’implémentation verrouillé
 
-## `T‑UI‑01` — Coque portrait
+## Baseline
 
-Périmètre :
+```text
+25928abf9149b5305fea2c08dfae9a47cdbf775c
+```
+
+## Lots terminés
+
+```text
+T‑UI‑01   Coque portrait
+T‑UI‑02   Famille Messages
+T‑UI‑03A  Gallery Core
+T‑UI‑03B  ImageMessage
+T‑UI‑03C  PhotoViewer
+T‑UI‑03D  Gallery States
+```
+
+## Implémenté et validé
+
+### Coque
 
 - viewport portrait ;
 - safe areas ;
-- thème et tokens ;
-- couches système / diégétique ;
-- navigation basse ;
+- thème et tokens locaux ;
+- navigation basse Messages / Galerie ;
 - scène démonstratrice ;
-- aucune migration narrative.
+- reduced motion ;
+- focus clavier ;
+- responsive sur les trois résolutions de référence.
 
-## `T‑UI‑02` — Composants Messages
+### Messages
 
 - liste des conversations ;
-- bulles ;
+- fils privé et groupe ;
+- bulles Player et personnages ;
 - choix ;
 - non-lus ;
-- notifications ;
+- notification ;
 - typing ;
+- DayDivider ;
 - transition hors téléphone ;
-- transition de journée.
+- transition de journée ;
+- ImageMessage ;
+- ouverture PhotoViewer ;
+- restauration du scroll, du focus et du typing.
 
-## `T‑UI‑03` — Galerie et Photo
+### Galerie et photo
 
 - onglets personnages ;
-- grille ;
-- tuiles ;
-- photo plein écran ;
-- permissions ;
-- verrouillé / nouveau / retiré.
+- grille responsive ;
+- états locaux `NEW / VIEWED / LOCKED` ;
+- verrouillage non révélateur ;
+- PhotoViewer partagé ;
+- provenance Messages / Galerie ;
+- précédente / suivante depuis Galerie ;
+- retour exact ;
+- placeholders générés par l’UI.
 
-## `T‑UI‑04` — Écrans système
+### Tests
 
-- titre ;
-- pause ;
-- sauvegarde / chargement ;
-- paramètres ;
-- première configuration ;
-- avertissement ;
-- confirmations et erreurs.
+- matrices portrait ;
+- safe areas ;
+- reduced motion ;
+- clavier et focus ;
+- non-régression T‑UI ;
+- gate globale historique contrôlée.
 
-## `T‑NAR‑01` — Réconciliation J01–J06
+## Implémenté uniquement comme prototype local
 
-Commence seulement après validation de la coque et des composants nécessaires.
+- données Galerie factices ;
+- photos factices générées par l’UI ;
+- `NEW / VIEWED` conservés seulement dans l’instance locale ;
+- aucune persistance Galerie ;
+- aucun lien automatique entre ImageMessage et Galerie ;
+- aucune intégration des vraies photos narratives ;
+- aucune permission narrative réelle d’ajout, retrait ou partage.
 
-Puis :
+## Différé sans être abandonné
 
-```text
-J07–J09
-→ J10–J12
-→ J13–J16
-→ J17–J21
-```
+- vrais assets photo ;
+- liaison au runtime narratif ;
+- persistance Galerie ;
+- état `REMOVED` ;
+- permissions ajouter / retirer / partager ;
+- écrans Titre, Pause, Sauvegarde / Chargement, Paramètres, Configuration et Avertissement ;
+- production et intégration des assets finaux ;
+- polissage visuel global non bloquant.
 
 ---
 
-# 11. Frontière des branches
+# 11. Ordre technique mis à jour
 
-Une PR ne mélange pas par défaut :
+## `T‑UI‑01` — Coque portrait
+
+```text
+TERMINÉ
+```
+
+## `T‑UI‑02` — Composants Messages
+
+```text
+TERMINÉ
+```
+
+## `T‑UI‑03` — Galerie et Photo
+
+```text
+TERMINÉ POUR LE PÉRIMÈTRE PROTOTYPE VALIDÉ
+```
+
+Inclus :
+
+- Gallery Core ;
+- ImageMessage ;
+- PhotoViewer ;
+- états locaux `NEW / VIEWED / LOCKED`.
+
+Différé :
+
+- `REMOVED` ;
+- permissions runtime ;
+- persistance ;
+- vrais assets.
+
+## `T‑UI‑04` — Écrans système
+
+```text
+DIFFÉRÉ
+```
+
+Il sera ouvert seulement lorsque l’un des besoins suivants le justifie :
+
+- vertical slice système ;
+- sauvegarde et chargement ;
+- flux de démarrage de saison ;
+- besoin bloquant découvert pendant la production narrative.
+
+Il n’est pas la prochaine étape automatique.
+
+---
+
+# 12. Frontière des branches
+
+Une branche ne mélange pas par défaut :
 
 ```text
 migration portrait
@@ -625,13 +765,14 @@ Préférer :
 - un shell ou groupe de composants ;
 - une famille d’écrans ;
 - une modification de sauvegarde explicitement testée ;
-- un bloc narratif court.
+- un bloc narratif court ;
+- un lot documentation-only distinct lorsqu’un checkpoint doit être formalisé.
 
 La PR technique historique #54 reste non autoritative et n’est pas une base automatique.
 
 ---
 
-# 12. Validation technique attendue
+# 13. Validation technique attendue
 
 Base :
 
@@ -645,28 +786,80 @@ godot --headless --path game --quit
 
 Les branches UI ajoutent leurs smoke tests portrait et leurs contrôles de navigation.
 
-Aucun résultat n’est déclaré tant que la commande n’a pas réellement été exécutée dans l’environnement Hermes.
+La gate globale historique est comparée par identité exacte afin de détecter toute nouvelle régression sans confondre les échecs déjà connus avec ceux du lot courant.
+
+Aucun résultat n’est déclaré tant que la commande n’a pas réellement été exécutée dans l’environnement d’intégration.
 
 ---
 
-# 13. Décision de reprise technique
+# 14. Gel de l’extension UI
+
+Après ce checkpoint :
+
+```text
+UI CORE PROTOTYPE : IMPLÉMENTÉ ET VALIDÉ
+CHECKPOINT UI : VERROUILLÉ
+EXTENSION UI PAR DÉFAUT : GELÉE
+```
+
+Un nouveau lot UI ne doit être ouvert que pour :
+
+1. un besoin bloquant découvert pendant la production narrative ;
+2. l’intégration future des vrais assets ;
+3. la persistance ou la sauvegarde ;
+4. le lot explicitement décidé des écrans système ;
+5. une régression avérée.
+
+Les préférences esthétiques non bloquantes restent dans un backlog et ne justifient pas seules la réouverture du chantier UI.
+
+---
+
+# 15. Reprise de la production narrative
+
+La priorité retourne à la Bible Narrative / North Star.
+
+L’architecture de conception reste :
+
+```text
+trame principale
+→ routes macro
+→ actes narratifs
+→ séquences
+→ scènes modulaires
+→ dialogues
+→ photos attendues
+→ découpage des journées
+```
+
+Les scènes servent des routes et des séquences définies en amont. Les journées ne redeviennent pas la couche principale de conception.
+
+Le présent document ne fixe pas le prochain lot narratif détaillé. Il constate uniquement que le cœur UI nécessaire n’est plus un obstacle à la reprise narrative.
+
+---
+
+# 16. Décision finale
 
 Critères :
 
 - [x] `UI‑FOUNDATION` validé ;
-- [x] `UI‑SCREENS` validé ;
-- [x] sauvegarde et chargement cadrés ;
-- [x] paramètres et accessibilité cadrés ;
+- [x] `UI‑SCREENS` cadré ;
 - [x] mode portrait accepté comme cible ;
 - [x] composants MVP identifiés ;
-- [x] `UI‑HANDOFF` validé ;
-- [x] documents V0.xx traités comme historiques ;
-- [x] maquettes traitées comme références conceptuelles ;
-- [ ] autorisation explicite de Ludovic pour commencer `T‑UI‑01` ;
-- [ ] plan court `T‑UI‑01` rédigé depuis `main` courant.
+- [x] `T‑UI‑01` terminé ;
+- [x] `T‑UI‑02` terminé ;
+- [x] `T‑UI‑03A` terminé ;
+- [x] `T‑UI‑03B` terminé ;
+- [x] `T‑UI‑03C` terminé ;
+- [x] `T‑UI‑03D` terminé ;
+- [x] responsive, safe areas, reduced motion et navigation clavier validés ;
+- [x] limites du prototype local documentées ;
+- [x] extensions futures conservées comme cibles différées ;
+- [x] reprise narrative autorisée.
 
 ```text
 UI‑HANDOFF : VALIDÉ
-REPRISE TECHNIQUE : PRÊTE MAIS NON ENCORE AUTORISÉE
-PROCHAINE ACTION : décision explicite puis plan T‑UI‑01
+UI CORE PROTOTYPE : IMPLÉMENTÉ ET VALIDÉ
+CHECKPOINT UI : VERROUILLÉ
+EXTENSION UI PAR DÉFAUT : GELÉE
+PROCHAINE PRIORITÉ : BIBLE NARRATIVE ET PRODUCTION DES ROUTES / SÉQUENCES
 ```
