@@ -1,14 +1,13 @@
 # Documentation Reading Order — Réseau Intime
 
-> **Phase active : décision de reprise technique**
-
-Le corpus narratif J01–J21 est finalisé et signé.
+> **Phase active : checkpoint UI verrouillé, priorité narrative**
 
 ```text
-UI‑FOUNDATION : validé
-UI‑SCREENS : validé
-UI‑HANDOFF : validé
-Reprise technique : prête mais non encore autorisée explicitement
+Bible Narrative / North Star : autorité active
+Corpus J01–J21 : consolidé et signé
+T‑UI‑01 à T‑UI‑03D : implémentés et validés
+Extension UI par défaut : gelée
+Prochaine décision : choisir le prochain lot narratif
 ```
 
 ---
@@ -64,6 +63,19 @@ docs/canon/bible/08_REGLES_DES_SCENES_MODULAIRES.md
 docs/canon/bible/09_PROGRESSION_VISUELLE_ET_PHOTOGRAPHIQUE.md
 docs/canon/bible/10_CARTE_CONSEQUENCES_DETTES_SECRETS_OBLIGATIONS.md
 docs/canon/bible/11_DISTRIBUTION_SEQUENCES_SCENES_IMAGES_CONSEQUENCES_JOURNEES.md
+```
+
+La hiérarchie de conception est :
+
+```text
+North Star
+→ routes macro
+→ actes
+→ séquences
+→ scènes modulaires
+→ dialogues et photos
+→ journées
+→ runtime
 ```
 
 ---
@@ -128,7 +140,7 @@ docs/canon/dialogues/J07_J21_LOT_D_POLISH_VOIX_NATUREL.md
 docs/canon/dialogues/J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md
 ```
 
-Les lots A–C sont consolidés dans les scripts. Les audits restent des archives de décision.
+Les audits restent des archives de décision. Les scripts consolidés et le sign-off final ont autorité.
 
 ---
 
@@ -145,11 +157,11 @@ Ordre d’autorité UI :
 
 ```text
 UI_01 système visuel et responsive
-→ UI_02 écrans et états validés
-→ UI_03 contrat d’intégration final
+→ UI_02 écrans et états canoniques
+→ UI_03 intégration, état implémenté et différé
 ```
 
-Les maquettes conceptuelles ne sont pas des assets finaux.
+Le cœur UI prototype est implémenté et gelé. Les maquettes conceptuelles ne sont pas des assets finaux.
 
 ---
 
@@ -162,42 +174,59 @@ docs/runtime/README.md
 code + données + tests sur main
 ```
 
-Les anciens plans V0.xx sont historiques sauf référence explicite depuis un nouveau plan actif.
-
-La PR draft #54 n’est pas une base automatique.
+Le runtime historique et le cœur UI portrait additif coexistent actuellement. Aucun des deux ne redéfinit le canon produit.
 
 ---
 
-# 10. Ordre de production actuel
+# 10. Documents historiques
+
+Sont `HISTORICAL` sauf lien explicite depuis un index actif :
+
+```text
+docs/V0_*.md
+docs/NN_*.md à la racine de docs/
+docs/narrative/
+docs/story_state/
+anciens rapports et plans de branche
+```
+
+En particulier :
+
+```text
+docs/01_NARRATIVE_BIBLE.md
+docs/03_ROUTE_ARCHITECTURE.md
+```
+
+ne sont pas des sources actuelles. Ils sont supersédés par `docs/canon/bible/` et les contrats J01–J21.
+
+---
+
+# 11. Ordre de production actuel
 
 ```text
 corpus narratif signé
-→ UI‑FOUNDATION validé
-→ UI‑SCREENS validé
-→ UI‑HANDOFF validé
-→ décision explicite de reprise technique
-→ plan T‑UI‑01 depuis main courant
-→ coque portrait
-→ composants Messages
-→ Galerie et Photo
-→ écrans système
-→ réconciliation J01–J06
-→ J07–J09
-→ J10–J12
-→ J13–J16
-→ J17–J21
+→ cœur UI portrait implémenté
+→ checkpoint UI verrouillé
+→ extension UI gelée
+→ choix explicite du prochain lot narratif
+→ conception depuis la Bible Narrative
+→ adaptation runtime seulement lorsque nécessaire
 ```
+
+Aucun ancien lot `T‑UI‑01`, `T‑UI‑02`, `T‑UI‑03` ou `T‑NAR‑01` n’est automatiquement la prochaine action.
 
 ---
 
-# 11. Autorité synthétique
+# 12. Autorité synthétique
 
 ```text
-Narration : scripts consolidés + contrats + sign-off
-UI/UX : docs/canon/ui
+Vision et structure : docs/canon/bible/
+Personnages : docs/canon/characters/
+Narration J01–J21 : scripts consolidés + registres + sign-off
+UI/UX : docs/canon/ui/
 Runtime réel : code, données et tests sur main
-Statut : README.md + ROADMAP.md
-Historique : anciens rapports, audits et plans V0.xx
+Statut et priorité : README.md + ROADMAP.md
+Historique : anciens rapports, plans V0.xx et fichiers racine non indexés
 ```
 
 Aucun résumé ne doit redéfinir la source de son domaine.
