@@ -27,13 +27,14 @@ class TUI02AMessagesStaticTests(unittest.TestCase):
         missing = [path for path in required if not (ROOT / path).exists()]
         self.assertEqual(missing, [])
 
-    def test_portrait_shell_hosts_messages_screen_and_keeps_gallery_placeholder(self):
+    def test_portrait_shell_hosts_messages_screen_and_dedicated_gallery_screen(self):
         shell = self._read("game/scripts/ui/PortraitShell.gd")
         self.assertIn('preload("res://scenes/portrait/messages/MessagesScreen.tscn")', shell)
         self.assertIn("messages_screen", shell)
         self.assertIn("MESSAGES_SCREEN_SCENE.instantiate()", shell)
         self.assertIn("_build_gallery_panel", shell)
-        self.assertIn("Maquette factice", shell)
+        self.assertIn('preload("res://scenes/portrait/gallery/GalleryScreen.tscn")', shell)
+        self.assertIn("GALLERY_SCREEN_SCENE.instantiate()", shell)
         self.assertNotIn("_make_thread_row", shell)
 
     def test_demo_data_is_separate_and_implements_presentation_contracts(self):
