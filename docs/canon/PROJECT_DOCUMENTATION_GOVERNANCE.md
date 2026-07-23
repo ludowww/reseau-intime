@@ -8,12 +8,12 @@
 
 **Autorité : définit où réside chaque vérité du projet et comment un document devient actif, historique ou obsolète**
 
-Ce document existe pour garantir qu’une personne reprenant le projet puisse répondre sans ambiguïté à quatre questions :
+Ce document garantit qu’une personne reprenant le projet puisse répondre sans ambiguïté à quatre questions :
 
 ```text
 Que raconte actuellement le jeu ?
 Que fait réellement le runtime ?
-Quelle interface doit être produite ?
+Quelle interface est canonique et laquelle est déjà implémentée ?
 Quel document a autorité en cas de contradiction ?
 ```
 
@@ -92,7 +92,7 @@ Un document `TO_REWRITE` ne peut pas bloquer une implémentation conforme au can
 | Communication text-only | `docs/canon/TEXT_ONLY_MESSAGING_CANON.md` | documents UI/runtime |
 | UX/UI produit | `docs/canon/ui/` | README, ROADMAP, plans techniques |
 | Runtime réellement actif | code, données et tests sur `main` | `docs/runtime/README.md` |
-| Plan d’une branche technique | document ciblé sous `docs/runtime/` | PR correspondante |
+| Plan d’une branche technique | document ciblé sous `docs/runtime/` | branche ou PR correspondante |
 | Statut projet synthétique | `README.md` et `ROADMAP.md` | aucun détail canonique nouveau |
 
 ---
@@ -110,20 +110,26 @@ docs/canon/dialogues/
     sources narratives J01–J21, registres et sign-off
 
 docs/canon/ui/
-    système visuel, écrans, états et handoff UI
+    système visuel, écrans, états, implémentation et différé
 
 docs/canon/runtime/
     contrat d’état narratif pré-runtime
 
 docs/runtime/
     état technique, audits et plans d’implémentation
-
-docs/story_state/
-    historique et support runtime ; non autoritaire sauf lien explicite depuis un index actif
-
-docs/narrative/
-    principalement historique ; non autoritaire sauf lien explicite depuis un index actif
 ```
+
+Sont historiques par défaut, sauf lien explicite depuis un index actif :
+
+```text
+docs/V0_*.md
+docs/NN_*.md à la racine de docs/
+docs/narrative/
+docs/story_state/
+anciens rapports de branche
+```
+
+Leur présence dans le dépôt ne leur donne aucune autorité actuelle.
 
 ---
 
@@ -137,16 +143,14 @@ README.md
 → docs/canon/PROJECT_DOCUMENTATION_GOVERNANCE.md
 → autorité du domaine concerné
 → docs/runtime/README.md si travail technique
-→ ROADMAP.md pour l’ordre des lots
+→ ROADMAP.md pour la priorité courante
 ```
 
-Les portails doivent rester courts.
-
-Ils pointent vers les sources ; ils ne les recopient pas intégralement.
+Les portails doivent rester synthétiques. Ils pointent vers les sources ; ils ne les recopient pas intégralement.
 
 ---
 
-# 6. En-tête recommandé pour les nouveaux documents
+# 6. En-tête recommandé
 
 Tout nouveau document important doit préciser :
 
@@ -166,16 +170,18 @@ Les champs inutiles peuvent être omis, mais le statut et le périmètre sont ob
 
 # 7. Règles anti-dispersion
 
-1. Une nouvelle décision produit d’abord une modification de sa source autoritative.
-2. Les index et résumés sont mis à jour dans la même PR.
-3. Un rapport de PR ne devient jamais une source produit.
+1. Une nouvelle décision produit modifie d’abord sa source autoritative.
+2. Les index et portails concernés sont mis à jour dans le même lot.
+3. Un rapport de branche ou de PR ne devient jamais une source produit.
 4. Un numéro de version historique ne doit pas rester présenté comme l’état courant.
 5. Un document runtime ne réécrit pas la narration.
-6. Un document UI ne définit pas une nouvelle route, trace ou permission.
+6. Un document UI ne définit pas une nouvelle route, trace ou permission narrative.
 7. Une maquette ne devient pas automatiquement une spécification.
-8. Les choix abandonnés restent dans Git ; ils ne nécessitent pas un second document actif.
-9. Toute duplication nécessaire doit contenir un lien vers l’autorité.
-10. Une information contradictoire doit être supprimée ou explicitement marquée historique, jamais laissée à l’interprétation.
+8. Les choix abandonnés restent disponibles dans Git ; ils n’ont pas besoin d’un second document actif.
+9. Toute duplication nécessaire contient un lien vers l’autorité.
+10. Une contradiction est supprimée ou explicitement classée historique, jamais laissée à l’interprétation.
+11. Un document racine ancien ne concurrence jamais `docs/canon/`.
+12. Un statut d’implémentation distingue toujours cible canonique, prototype local et runtime final.
 
 ---
 
@@ -189,54 +195,67 @@ Ils ne sont pas :
 - des designs personnages canoniques ;
 - des contrats de texte ;
 - des dimensions exactes de composants ;
-- des captures du runtime.
+- des captures du runtime final.
 
-Les décisions validées issues des maquettes sont transférées dans `docs/canon/ui/`.
-
-Seuls ces documents ont autorité.
+Les décisions validées sont transférées dans `docs/canon/ui/`. Seuls ces documents ont autorité.
 
 ---
 
-# 9. Statut du runtime historique
+# 9. État technique actuel
 
-Le runtime sur `main` reste un prototype horizontal construit par couches V0.xx.
+`main` contient désormais deux couches à distinguer :
 
-Il contient des fondations utiles :
+## Runtime narratif historique
 
+- chronologie et jours ;
 - fils persistants ;
-- chronologie ;
-- notifications ;
-- non-lus ;
-- choix ;
+- messages et choix ;
+- notifications et non-lus ;
 - archives ;
-- quelques journées et répétitions jouables.
+- matériaux narratifs issus de couches V0.xx.
 
-Il ne définit plus :
+## Cœur UI portrait additif validé
 
-- l’architecture narrative finale ;
-- la résolution cible ;
-- la structure UI cible ;
-- les routes et états finaux.
+- coque portrait ;
+- Messages ;
+- Galerie ;
+- ImageMessage ;
+- PhotoViewer ;
+- états locaux `NEW / VIEWED / LOCKED` ;
+- matrices responsive, safe areas, reduced motion et clavier.
 
-Les anciens plans V0.xx restent des preuves historiques d’implémentation.
+Le projet conserve un contrôle historique `1280 × 720`. Le cœur portrait n’est pas encore une migration complète du runtime narratif, de la persistance, des vrais assets ou des écrans système.
+
+Les anciens plans V0.xx restent des preuves historiques d’implémentation. Ils ne définissent plus l’architecture narrative ou UI.
 
 ---
 
-# 10. Reprise technique future
+# 10. Réouverture technique
 
-Toute reprise technique doit commencer par un document de branche qui cite explicitement :
+L’extension UI est gelée par défaut après le checkpoint T‑UI‑03D.
+
+Un nouveau lot technique doit citer explicitement :
 
 ```text
 source narrative
 source UI
 contrat d’état
+besoin bloquant ou objectif produit
 périmètre de données
 fichiers runtime visés
 fichiers historiques non autoritaires
 tests d’acceptation
 ```
 
-Une branche technique ne doit jamais commencer depuis un ancien rapport V0.xx seul.
+Un lot UI ne se rouvre que pour :
+
+- un besoin narratif bloquant ;
+- les vrais assets ;
+- la persistance ou la sauvegarde ;
+- les écrans système explicitement décidés ;
+- une régression avérée.
+
+Une branche technique ne commence jamais depuis un ancien rapport V0.xx seul.
 
 ---
 
@@ -250,19 +269,20 @@ Avant toute modification :
 - [ ] vérifier l’état réel du code sur `main` ;
 - [ ] séparer décision produit et contrainte technique ;
 - [ ] définir un lot court ;
-- [ ] mettre à jour les index dans la même PR ;
+- [ ] synchroniser les portails concernés ;
 - [ ] ne pas créer une seconde vérité pour contourner une contradiction.
 
 ---
 
-# 12. Verdict
+# 12. Verdict actuel
 
 ```text
-NARRATION : source canonique signée
-UI/UX : source canonique sous docs/canon/ui
-RUNTIME : prototype historique à réconcilier
-README / ROADMAP : portails synthétiques
-ANCIENS DOCUMENTS V0.xx : historiques sauf référence explicite
+NARRATION : Bible active + corpus J01–J21 signé
+UI/UX : cœur portrait implémenté et canon sous docs/canon/ui
+RUNTIME : historique narratif + prototype portrait additif sur main
+EXTENSION UI : gelée par défaut
+PRIORITÉ : prochain lot narratif à cadrer depuis la Bible
+ANCIENS DOCUMENTS : historiques sauf référence explicite
 ```
 
 > **Une reprise fiable ne dépend pas de connaître l’histoire du dépôt. Elle dépend de savoir immédiatement quel document a autorité aujourd’hui.**

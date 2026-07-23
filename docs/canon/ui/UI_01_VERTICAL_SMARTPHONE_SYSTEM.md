@@ -6,7 +6,9 @@
 
 **Périmètre : résolution, responsive, langage visuel, couleurs et composants communs**
 
-**Autorité : cible visuelle et ergonomique de la future interface portrait**
+**Autorité : cible visuelle et ergonomique du téléphone narratif**
+
+**Implémentation : cœur portrait validé sur `main`, flux final encore partiel**
 
 ---
 
@@ -18,49 +20,32 @@ un téléphone intime, élégant et vivant,
 pas de naviguer dans un menu de routes.
 ```
 
-L’interface doit être :
-
-- verticale ;
-- lisible ;
-- immersive ;
-- discrètement anime-inspired ;
-- centrée sur les messages et les images ;
-- expressive sans devenir décorative au détriment du texte.
+L’interface est verticale, lisible, immersive, sombre, centrée sur les messages et les images, sans exposer les mécanismes internes.
 
 ---
 
-# 2. Format cible
-
-## Viewport de référence futur
+# 2. Format cible et état implémenté
 
 ```text
-720 × 1280
-ratio 9:16
-orientation portrait verrouillée
+référence : 720 × 1280
+ratio : 9:16
+orientation : portrait
 ```
 
-Ce viewport sert d’unité de conception.
-
-Les assets finaux peuvent être produits à une résolution supérieure.
-
-## Résolutions de validation
+Matrice validée :
 
 ```text
 720 × 1280
 1080 × 1920
-1080 × 2340 environ
-fenêtre PC portrait redimensionnable
+1080 × 2340
+safe areas : none / tall-portrait
+reduced motion : true / false
+navigation clavier
 ```
 
-## État actuel
+Le cœur UI portrait est implémenté de manière additive dans des scènes dédiées. Le dépôt conserve encore un contrôle historique `1280 × 720`, un runtime narratif non entièrement migré et des écrans système différés.
 
-Le projet Godot utilise encore :
-
-```text
-1280 × 720 horizontal
-```
-
-Le passage en portrait est un futur lot technique explicite.
+Le portrait n’est plus un futur lot à démarrer. Il est un prototype validé à préserver pendant la reprise narrative.
 
 ---
 
@@ -80,14 +65,12 @@ Règles :
 - aucun bouton essentiel sous une encoche ou barre système ;
 - la navigation basse suit la safe area ;
 - les choix ne masquent jamais le dernier message ;
-- les images peuvent être bord à bord uniquement dans une zone prévue ;
-- un écran plus haut ajoute de l’espace ou du contenu visible, jamais des composants étirés arbitrairement.
+- les images ne dépassent jamais leur zone utile ;
+- un écran plus haut ajoute de l’espace visible sans étirement arbitraire.
 
 ---
 
 # 4. Responsive
-
-## Principe
 
 ```text
 largeur gouverne les composants
@@ -98,25 +81,31 @@ hauteur gouverne la quantité visible
 
 - header fixe ;
 - liste centrale scrollable ;
-- zone de choix ou de saisie fixe ;
+- zone de choix fixe ;
 - retour exact à la position précédente ;
-- image redimensionnée sans dépasser la largeur utile ;
-- longs messages enveloppés ;
-- aucune largeur fixe dépendant d’un appareil précis.
+- images contenues dans la largeur utile ;
+- longs messages enveloppés.
 
 ## Galerie
 
-- trois colonnes à la largeur de référence si les miniatures restent lisibles ;
-- deux colonnes en mode accessibilité ou fenêtre étroite ;
-- onglets personnages horizontalement scrollables ;
-- aucune miniature étirée ;
-- ratio de tuile stable par collection.
+- trois colonnes lorsque la largeur le permet ;
+- deux colonnes en fenêtre étroite ;
+- onglets personnages scrollables ;
+- ratio de tuile stable ;
+- état verrouillé non révélateur ;
+- indicateur `Nouveau` textuel.
+
+## PhotoViewer
+
+- plein espace utile dans la safe area ;
+- image 3:4 sans crop ;
+- retour vers la provenance ;
+- précédente / suivante uniquement depuis Galerie ;
+- contrôles sous-jacents masqués pendant l’ouverture.
 
 ---
 
 # 5. Direction visuelle
-
-## Style
 
 ```text
 anime-inspired
@@ -131,23 +120,10 @@ Interdits :
 - photoréalisme obligatoire ;
 - néons saturés partout ;
 - surcharge de particules ;
-- effets qui réduisent la lisibilité ;
+- effets réduisant la lisibilité ;
 - esthétique RPG ;
 - écran de score ;
-- badges de rareté de type gacha.
-
-## Fonds
-
-Les fonds peuvent utiliser :
-
-- bleu nuit ;
-- violet très sombre ;
-- silhouettes de ville ;
-- végétation discrète ;
-- lumière de La Verrière ;
-- motifs propres à un lieu ou personnage.
-
-Le fond ne doit jamais concurrencer le texte.
+- badges de rareté.
 
 ---
 
@@ -169,7 +145,7 @@ Warning          #F1A34A
 Danger           #E56278
 ```
 
-Ces valeurs servent de cible de conception et devront être vérifiées dans Godot sur les écrans réels.
+Ces valeurs sont la cible canonique. Les variations locales du prototype ne créent pas une seconde palette produit.
 
 ---
 
@@ -186,42 +162,11 @@ Groupes    #B274F4  violet
 Player     #8D63E6  violet désaturé
 ```
 
-## Usage
-
-La couleur peut apparaître dans :
-
-- anneau d’avatar ;
-- point d’état ;
-- filet de carte ;
-- nom dans un groupe ;
-- bulle entrante ;
-- badge non-lu ;
-- focus clavier/manette.
-
-Elle ne doit pas remplir toute la page.
-
-## Accessibilité
-
-La couleur n’est jamais le seul identifiant.
-
-Toujours conserver au moins deux éléments parmi :
-
-- avatar ;
-- nom ;
-- position gauche/droite ;
-- forme ou filet ;
-- icône.
+La couleur n’est jamais le seul identifiant. Toujours conserver au moins deux éléments parmi avatar, nom, position, forme et icône.
 
 ---
 
 # 8. Typographie
-
-La direction peut combiner :
-
-- une police de titre élégante ;
-- une police sans-serif très lisible pour messages et contrôles.
-
-À l’échelle de référence :
 
 ```text
 Titre écran       36–44
@@ -233,20 +178,16 @@ Métadonnée         14–17
 
 Règles :
 
-- taille de texte réglable ;
 - aucune information critique sous 14 unités ;
 - hauteur de ligne généreuse ;
-- contraste renforcé disponible ;
-- éviter l’italique pour les longs textes ;
-- les timestamps restent secondaires mais lisibles.
+- contraste renforcé prévu ;
+- timestamps secondaires mais lisibles.
 
 ---
 
 # 9. Composants principaux
 
 ## `ConversationCard`
-
-Contient :
 
 ```text
 avatar
@@ -261,45 +202,34 @@ Aucun résumé de route.
 
 ## `MessageBubble`
 
-Contient :
-
 ```text
 auteur
 texte ou média
 heure
-état d’envoi Player si utile
 accent d’identité
 ```
 
-En conversation individuelle :
-
-```text
-personnage à gauche
-Player à droite
-```
-
-En groupe : nom et couleur restent visibles.
+Personnage à gauche, Player à droite. En groupe, nom et couleur restent visibles.
 
 ## `ChoiceBar`
 
 - une à trois réponses par défaut ;
 - boutons empilés si texte long ;
-- confirmation optionnelle via paramètres ;
 - aucune limite de temps par défaut ;
 - ne masque pas le transcript.
 
 ## `GalleryTile`
 
-États :
+États canoniques :
 
 ```text
-unlocked
-new
-locked
-removed
+UNLOCKED
+NEW
+LOCKED
+REMOVED
 ```
 
-Une tuile verrouillée ne révèle pas le contenu exact.
+Dans le prototype local, `VIEWED` est dérivé de `UNLOCKED + is_new == false`. Une tuile verrouillée ne révèle pas le contenu exact.
 
 ## `CharacterTab`
 
@@ -308,21 +238,11 @@ Une tuile verrouillée ne révèle pas le contenu exact.
 - couleur ;
 - compteur facultatif ;
 - scroll horizontal ;
-- Nico inclus seulement pour ses contenus réellement prévus.
-
-## `SystemModal`
-
-Utilisée pour :
-
-- écrasement de sauvegarde ;
-- suppression ;
-- nouvelle partie ;
-- retour au titre ;
-- quitter sans sauvegarder.
+- Nico seulement si une collection cohérente existe.
 
 ---
 
-# 10. Navigation MVP
+# 10. Navigation
 
 Navigation diégétique principale :
 
@@ -331,15 +251,7 @@ Messages
 Galerie
 ```
 
-Le menu système est accessible par :
-
-- un bouton menu ;
-- la touche pause ;
-- un geste ou bouton retour selon plateforme.
-
-L’onglet `Profil` est différé.
-
-Il ne doit pas être implémenté comme placeholder vide.
+Le menu système reste une cible distincte. L’onglet `Profil` est différé et ne doit pas apparaître comme placeholder vide.
 
 ---
 
@@ -350,30 +262,38 @@ Animations autorisées :
 - apparition de message ;
 - indicateur de saisie ;
 - notification ;
-- déverrouillage de photo ;
 - transition de journée ;
 - changement d’onglet ;
 - focus.
 
-Règles :
-
-- durée courte ;
-- aucune animation bloquante ;
-- mode réduit ;
-- possibilité d’affichage instantané ;
-- pas de vibration ou flash obligatoire.
+Règles : durée courte, aucune animation bloquante, mode réduit, pas de vibration ou flash obligatoire.
 
 ---
 
-# 12. Critères d’acceptation UI‑01
+# 12. Checkpoint UI‑01
 
-- [ ] le système est conçu en portrait ;
-- [ ] la largeur ne dépend pas de 1280 × 720 ;
-- [ ] chaque personnage possède un accent stable ;
-- [ ] la couleur n’est pas le seul identifiant ;
-- [ ] la galerie est une grille par personnage ;
-- [ ] Messages / Galerie suffisent au MVP ;
-- [ ] les écrans système sont séparés du téléphone ;
-- [ ] les choix restent visibles sans couvrir le fil ;
-- [ ] les tailles et zones tactiles sont accessibles ;
-- [ ] aucun mécanisme narratif interne n’est exposé.
+## Implémenté et validé
+
+- [x] système conçu en portrait ;
+- [x] résolutions portrait testées ;
+- [x] accents personnages stables ;
+- [x] couleur accompagnée d’autres identifiants ;
+- [x] Galerie en grille par personnage ;
+- [x] Messages / Galerie fonctionnels ;
+- [x] choix visibles sans couvrir le fil ;
+- [x] zones tactiles cohérentes ;
+- [x] aucun mécanisme interne exposé ;
+- [x] safe areas, reduced motion et clavier testés.
+
+## Canonique mais différé
+
+- [ ] écrans système complets ;
+- [ ] paramètres de texte et contraste dans le flux final ;
+- [ ] intégration des vrais assets ;
+- [ ] persistance Galerie et sauvegarde.
+
+```text
+UI‑01 : CIBLE CANONIQUE ACTIVE
+CŒUR PORTRAIT : IMPLÉMENTÉ ET VALIDÉ
+EXTENSION UI : GELÉE PAR DÉFAUT
+```

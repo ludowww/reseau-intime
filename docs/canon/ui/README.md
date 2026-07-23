@@ -8,7 +8,9 @@
 UI‑FOUNDATION : validé
 UI‑SCREENS : validé
 UI‑HANDOFF : validé
-Reprise technique : prête mais en attente d’autorisation explicite
+T‑UI‑01 à T‑UI‑03D : implémentés et validés
+UI CORE PROTOTYPE : verrouillé
+Extension UI par défaut : gelée
 ```
 
 Ce dossier contient les décisions UX/UI actives du projet.
@@ -31,8 +33,8 @@ Ordre d’autorité :
 
 ```text
 UI_01 système visuel et responsive
-→ UI_02 écrans et états finaux
-→ UI_03 contrat d’intégration
+→ UI_02 écrans et états canoniques
+→ UI_03 intégration, état implémenté et différé
 ```
 
 ---
@@ -47,40 +49,60 @@ support initial : PC en fenêtre portrait
 Android : plus tard
 style : sombre, anime-inspired, premium et lisible
 identification : couleur + avatar + nom + position
-navigation MVP : Messages / Galerie
-Galerie : collection classique organisée par personnage
+navigation diégétique : Messages / Galerie
+Galerie : collection organisée par personnage
 Profil : différé tant qu’aucune fonction produit n’est validée
 interface système : distincte du téléphone diégétique
 ```
 
-Le `game/project.godot` reste actuellement en `1280 × 720` horizontal. Le canon UI définit la cible future ; aucune migration technique n’est impliquée par ces documents seuls.
+Le cœur UI portrait est implémenté de manière additive. Le projet conserve encore un contrôle historique `1280 × 720` et n’a pas terminé la migration du runtime narratif, de la persistance ou des écrans système.
 
 ---
 
-# 3. Écrans narratifs validés
+# 3. Surfaces implémentées et validées
 
-```text
-D01 liste des conversations
-D02 conversation individuelle
-D03 conversation de groupe
-D04 transition hors téléphone
-D05 photo ouverte
-D06 Galerie par personnage
-D07 transition de journée
-```
+## Coque
 
-Règles centrales :
+- safe areas ;
+- navigation Messages / Galerie ;
+- thème local ;
+- responsive portrait ;
+- reduced motion ;
+- navigation clavier ;
+- focus visible.
 
-- une ligne Messages par personnage ou groupe ;
-- un choix égale un message Player ;
-- aucun message direct pendant la co-présence ;
-- la reprise exige une séparation réelle ;
-- partager, sauvegarder ou retirer une image dépend des permissions narratives ;
-- retirer une image n’efface jamais les messages ni la connaissance déjà acquise.
+## Messages
+
+- liste des conversations ;
+- conversations privées et de groupe ;
+- bulles Player et personnages ;
+- choix ;
+- non-lus ;
+- notification ;
+- typing ;
+- DayDivider ;
+- transition hors téléphone ;
+- transition de journée ;
+- ImageMessage ;
+- ouverture PhotoViewer ;
+- restauration du scroll, du focus et du typing.
+
+## Galerie et photo
+
+- onglets personnages ;
+- grille responsive ;
+- états locaux `NEW / VIEWED / LOCKED` ;
+- verrouillage non révélateur ;
+- PhotoViewer partagé ;
+- provenance Messages / Galerie ;
+- précédente / suivante depuis Galerie ;
+- placeholders générés par l’UI.
 
 ---
 
-# 4. Écrans système validés
+# 4. Écrans canoniques différés
+
+Les contrats restent actifs pour :
 
 ```text
 S01 écran titre
@@ -93,19 +115,33 @@ S06 confirmations et erreurs
 S07 crédits / informations légales
 ```
 
-MVP avant le premier playtest vertical fiable :
-
-- D01 à D07 ;
-- S01 à S06 ;
-- sauvegarde automatique contrôlée + slots manuels ;
-- paramètres et accessibilité ;
-- états vide, chargement, erreur, verrouillé et retiré.
-
-S07 peut suivre le premier build vertical mais doit exister avant distribution publique.
+Ils ne sont pas encore implémentés comme flux final. Leur absence actuelle ne les rend pas abandonnés.
 
 ---
 
-# 5. Palette d’identité
+# 5. Frontière prototype / runtime final
+
+Le prototype local utilise :
+
+- données Galerie factices ;
+- photos factices générées par l’UI ;
+- `NEW / VIEWED` conservés seulement dans l’instance ;
+- aucun lien automatique entre ImageMessage et Galerie ;
+- aucune permission narrative réelle d’ajout, retrait ou partage.
+
+Restent différés :
+
+- vrais assets ;
+- liaison au runtime narratif ;
+- persistance Galerie ;
+- `REMOVED` ;
+- permissions ajouter / retirer / partager ;
+- écrans système ;
+- polish visuel global non bloquant.
+
+---
+
+# 6. Palette d’identité
 
 ```text
 Marie      bleu
@@ -122,7 +158,7 @@ La couleur n’est jamais utilisée seule.
 
 ---
 
-# 6. Règles narratives protégées
+# 7. Règles narratives protégées
 
 L’UI ne doit jamais afficher :
 
@@ -146,41 +182,20 @@ L’UI rend les conséquences visibles par :
 
 ---
 
-# 7. Frontière MVP et différé
+# 8. Réouverture du chantier UI
 
-## MVP
+Un nouveau lot UI ne s’ouvre que pour :
 
-- shell portrait ;
-- Messages ;
-- Galerie ;
-- photo plein écran ;
-- transitions ;
-- titre, pause, sauvegarde, paramètres ;
-- première configuration et avertissement ;
-- navigation clavier et texte agrandi.
+1. un besoin bloquant découvert pendant la production narrative ;
+2. l’intégration future des vrais assets ;
+3. la persistance ou la sauvegarde ;
+4. les écrans système explicitement décidés ;
+5. une régression avérée.
 
-## Différé
-
-- éditeur d’avatar ;
-- thèmes multiples ;
-- personnalisation du téléphone ;
-- statistiques ;
-- pourcentages de Galerie ;
-- routes visibles ;
-- succès ;
-- réseau social générique ;
-- onglet Profil sans fonction ;
-- fonctionnalités Android spécifiques.
-
----
-
-# 8. Prochaine action
+Les préférences esthétiques non bloquantes restent en backlog.
 
 ```text
-décision explicite de reprise technique
-→ plan court T‑UI‑01 depuis main courant
-→ validation du plan
-→ implémentation Hermes avec Godot
+PROCHAINE PRIORITÉ : BIBLE NARRATIVE ET PRODUCTION DES ROUTES / SÉQUENCES
 ```
 
-`UI_03_INTEGRATION_HANDOFF_AND_MOCKUP_STATUS.md` définit le périmètre exact de `T‑UI‑01` et les critères de test.
+`UI_03_INTEGRATION_HANDOFF_AND_MOCKUP_STATUS.md` décrit le checkpoint implémenté, les limites locales et les fonctions différées.

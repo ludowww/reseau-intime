@@ -1,4 +1,4 @@
-# Réseau Intime — UI_02 — Architecture finale des écrans et états
+# Réseau Intime — UI_02 — Architecture des écrans et états
 
 ## Statut
 
@@ -8,9 +8,11 @@
 
 **Périmètre : écrans narratifs, écrans système, navigation et états secondaires**
 
-**Autorité : inventaire fonctionnel final avant intégration**
+**Autorité : inventaire fonctionnel des surfaces et comportements**
 
-Les maquettes produites sont des références conceptuelles. Le présent document fait autorité sur leurs détails accidentels.
+**Implémentation actuelle : cœur diégétique D01–D07 disponible en prototype local ; écrans système différés**
+
+Les maquettes restent des références conceptuelles. Le présent document fait autorité sur leurs détails accidentels.
 
 ---
 
@@ -39,19 +41,15 @@ Le jeu lui-même :
 - confirmations ;
 - crédits et informations légales.
 
-Les deux couches partagent la même direction sombre et anime-inspired, mais ne sont jamais confondues narrativement.
+Les deux couches partagent une même direction visuelle, mais ne sont jamais confondues narrativement.
 
 ---
 
-# 2. Écrans diégétiques validés
+# 2. Écrans diégétiques
 
 ## D01 — Liste des conversations
 
-### Fonction
-
-Donner accès aux fils actifs sans présenter de routes.
-
-### Contenu minimum
+Fonction : donner accès aux fils actifs sans présenter de routes.
 
 ```text
 header Messages
@@ -63,22 +61,17 @@ notification compacte
 navigation Messages / Galerie
 ```
 
-### Règles
+Règles :
 
-- une ligne visible par personnage ou groupe ;
+- une ligne par personnage ou groupe ;
 - les épisodes internes restent dans le même fil ;
 - couleur, avatar et nom identifient ensemble l’auteur ;
 - l’ordre dépend de l’activité utile, jamais d’une valeur de route ;
-- un fil refusé ou expiré ne reste pas artificiellement en attente ;
 - un groupe n’apparaît que s’il existe réellement dans le canon.
 
 ## D02 — Conversation individuelle
 
-### Fonction
-
 Surface principale du jeu.
-
-### Contenu minimum
 
 ```text
 header personnage
@@ -92,39 +85,29 @@ séparateurs de jour
 transition hors téléphone
 ```
 
-### Règles
+Règles :
 
 - personnage à gauche, Player à droite ;
-- avatar et nom restent disponibles ;
+- avatar et nom disponibles ;
 - une à trois réponses par défaut ;
 - un choix produit exactement un message Player ;
-- aucun message Player important n’est automatique ;
 - historique long scrollable ;
-- retour exact à la bonne position de lecture ;
+- retour exact à la position de lecture ;
 - aucune route, score ou raison technique visible.
 
 ## D03 — Conversation de groupe
 
-### Fonction
-
-Rendre le réseau social lisible sans homogénéiser les voix.
-
-### Règles
+Règles :
 
 - nom et avatar de l’auteur visibles ;
 - couleur propre à chaque participant ;
-- aucune couleur neutre unique pour tout le groupe ;
-- les voix restent identiques à celles des fils privés ;
+- voix identiques à celles des fils privés ;
 - image partagée et séparateur de non-lus possibles ;
-- aucun personnage absent n’est ajouté pour remplir l’écran.
+- aucun personnage absent ajouté pour remplir l’écran.
 
 ## D04 — Transition hors téléphone
 
-### Fonction
-
-Signaler une rencontre ou une activité physique sans rejouer un dialogue oral.
-
-### Informations possibles
+Fonction : signaler une rencontre ou activité physique sans rejouer un dialogue oral.
 
 ```text
 personne présente
@@ -134,25 +117,18 @@ temps écoulé si utile
 conversation suspendue
 ```
 
-### Règles
+Règles :
 
 - le chat direct s’arrête automatiquement ;
-- aucun message ne peut être envoyé pendant la co-présence ;
-- aucun choix oral n’est affiché ;
-- aucune notification entrante n’est simulée dans le fil actif ;
-- aucune durée future n’est inventée ;
+- aucun message ou choix oral pendant la co-présence ;
+- aucune durée future inventée ;
 - la reprise textuelle exige une séparation réelle ;
-- il n’existe aucun bouton permettant de forcer la fin de la rencontre.
-
-La transition ne constitue ni une archive rejouable ni un rapport de scène.
+- aucun bouton ne force la fin de la rencontre ;
+- la transition n’est ni une archive rejouable ni un rapport de scène.
 
 ## D05 — Photo ouverte
 
-### Fonction
-
-Afficher une image en grand depuis un fil ou la Galerie.
-
-### Contenu minimum
+Fonction : afficher une image en grand depuis un fil ou la Galerie.
 
 ```text
 image
@@ -163,37 +139,35 @@ date et contexte discrets
 navigation précédente / suivante si Galerie
 ```
 
-### Actions conditionnelles
+Actions conditionnelles futures :
 
 ```text
 consulter les informations
 ajouter à la Galerie si le runtime l’autorise
 retirer de la Galerie locale si le runtime l’autorise
-partager uniquement avec une permission narrative explicite
+partager uniquement avec une permission explicite
 ```
 
-### Règles
+Règles :
 
 - aucune action de partage permanente ou générique ;
-- une image de scène peut être visible sans devenir un fichier diégétique ;
+- une image peut être visible sans devenir un fichier diégétique ;
 - une image retirée ne peut pas être rouverte ;
-- une image verrouillée ne possède aucune miniature spoiler ;
-- le plein écran respecte la safe area et le ratio de l’image ;
-- retirer une image n’efface jamais les messages, les faits vécus ou la connaissance déjà acquise.
+- une image verrouillée ne possède aucune miniature révélatrice ;
+- le plein écran respecte la safe area et le ratio ;
+- retirer une image n’efface jamais messages, faits vécus ou connaissances.
 
 ## D06 — Galerie par personnage
-
-### Structure
 
 ```text
 header Galerie
 onglets personnages scrollables
 compteur discret
-photo grid
+grille photo
 navigation basse
 ```
 
-### Onglets principaux
+Onglets principaux :
 
 ```text
 Marie
@@ -204,33 +178,35 @@ Raphaëlle
 Nico seulement si une collection cohérente existe
 ```
 
-### États de tuile
+États canoniques :
 
 ```text
-UNLOCKED  image visible
-NEW       image visible + indicateur discret
-LOCKED    visuel neutre non révélateur + cadenas
+UNLOCKED  image accessible
+NEW       image accessible + indicateur textuel
+LOCKED    visuel neutre non révélateur
 REMOVED   emplacement connu, accès perdu, seulement si utile
 ```
 
-### Règles
+Dans le prototype local :
+
+```text
+state = UNLOCKED | LOCKED
+is_new = true | false
+VIEWED = UNLOCKED + is_new == false
+```
+
+Règles :
 
 - organisation principale par personnage ;
-- aucun onglet primaire `Privé / Public / Souvenir` ;
-- aucune rareté ;
-- aucune récompense de route affichée ;
+- aucune rareté ou récompense de route ;
 - aucun contenu exact révélé avant déblocage ;
-- le compteur n’impose pas la complétion parfaite comme seule bonne manière de jouer ;
-- un contenu retiré ne redevient jamais accessible par la Galerie ;
-- les messages liés à un contenu retiré restent présents selon le canon du fil.
+- le compteur ne présente pas la complétion parfaite comme seule réussite ;
+- un contenu retiré ne redevient pas accessible ;
+- les messages liés restent présents selon le canon.
 
 ## D07 — Transition de journée
 
-### Fonction
-
-Rendre le temps lisible sans récapitulatif technique.
-
-### Contenu possible
+Fonction : rendre le temps lisible sans récapitulatif technique.
 
 ```text
 nouveau jour
@@ -240,22 +216,19 @@ ambiance visuelle courte
 notifications arrivées pendant l’absence
 ```
 
-### Règles
+Règles :
 
 - aucun résumé de route, score ou conséquence interne ;
-- aucune notification ne révèle un contenu sensible ;
-- l’ordre d’ouverture reste choisi par le joueur ;
-- l’écran reste bref et compatible avec animations réduites ;
-- une action `Continuer` est autorisée comme simple validation d’écran, jamais comme bouton de progression ou de planification ;
-- l’écran peut se fermer automatiquement selon le réglage d’accessibilité.
+- aucune notification sensible ;
+- ordre d’ouverture choisi par le joueur ;
+- écran bref et compatible reduced motion ;
+- `Continuer` reste une validation d’écran, pas une décision narrative.
 
 ---
 
-# 3. Écrans système validés
+# 3. Écrans système canoniques différés
 
-## S01 — Écran titre
-
-Actions MVP :
+## S01 — Titre
 
 ```text
 Continuer
@@ -266,16 +239,9 @@ Crédits
 Quitter
 ```
 
-Règles :
+`Continuer` dépend d’une sauvegarde valide et ne révèle aucune progression sensible.
 
-- `Continuer` charge la dernière sauvegarde valide ;
-- `Continuer` est masqué ou désactivé sans sauvegarde valide ;
-- aucune branche ou progression intime n’est révélée ;
-- l’avertissement adulte reste accessible sans encombrer l’écran principal.
-
-## S02 — Menu pause
-
-Actions :
+## S02 — Pause
 
 ```text
 Reprendre
@@ -285,164 +251,67 @@ Paramètres
 Retour au titre
 ```
 
-Règles :
-
-- panneau système distinct du téléphone ;
-- le jeu et les notifications sont figés ;
-- une sauvegarde manuelle peut être indisponible pendant une écriture critique, une transition ou une co-présence ;
-- la reprise d’une rencontre ne peut pas être forcée depuis le menu pause.
+Le téléphone narratif et les notifications sont figés. Une rencontre ne peut pas être forcée à se terminer depuis Pause.
 
 ## S03 — Sauvegarde / chargement
 
-### Slots MVP
+Cible :
 
 ```text
-1 sauvegarde automatique contrôlée
+1 autosave contrôlé
 3 à 5 sauvegardes manuelles
 ```
 
-### Résumé sûr
+Résumé sûr : jour, heure, lieu non révélateur, date réelle, vignette sûre, état du slot.
 
-```text
-jour narratif
-heure ou moment
-description de lieu non révélatrice
-date réelle de sauvegarde
-vignette sûre
-état valide / corrompu
-```
-
-### Interdits
-
-- nom de route ;
-- pourcentage ;
-- secret actif ;
-- finale préparée ;
-- contenu intime spoiler ;
-- état interne brut.
-
-### Règles
-
-- l’autosave n’est pas déclenché au milieu d’une écriture critique ;
-- un autosave peut être remplacé selon une politique runtime explicitement testée ;
-- les sauvegardes manuelles restent distinctes ;
-- écraser et supprimer exigent une confirmation ;
-- une sauvegarde corrompue n’empêche pas l’accès aux autres slots ;
-- l’erreur indique le slot concerné sans exposer de donnée sensible.
+Interdits : nom de route, pourcentage, secret actif, finale préparée ou état interne brut.
 
 ## S04 — Paramètres
 
-### Texte et rythme
+Cibles :
 
-- vitesse d’apparition ;
-- affichage instantané ;
-- taille du texte ;
+- vitesse et affichage instantané ;
+- taille de texte ;
 - défilement automatique ;
-- indicateur de saisie ;
-- confirmation avant choix.
-
-### Affichage
-
-- plein écran / fenêtré ;
+- confirmation avant choix ;
 - échelle UI ;
-- luminosité ;
-- contraste ;
-- réduction des animations ;
-- réduction des flashes ;
-- effets de fond.
-
-### Audio
-
-- volume général ;
-- musique ;
-- ambiance ;
-- notifications ;
-- sons UI.
-
-Aucune voix jouée n’est prévue.
-
-### Accessibilité
-
-- texte agrandi ;
-- contraste renforcé ;
-- animations réduites ou instantanées ;
-- maintien de bouton pour confirmer ;
-- navigation clavier complète ;
-- palettes alternatives pour daltonisme ;
-- couleur jamais utilisée seule ;
+- contraste et réduction des effets ;
+- audio ;
+- navigation clavier ;
+- palettes alternatives ;
 - aucune limite de temps imposée.
-
-### Plateforme
-
-- vibration et économie d’énergie sont conditionnelles à une future version Android ;
-- elles ne sont pas obligatoires pour le MVP PC ;
-- tout réglage nécessitant un redémarrage nomme précisément la conséquence.
 
 ## S05 — Première configuration Player
 
-MVP :
-
 ```text
 prénom affiché
-pronoms optionnels seulement s’ils sont réellement utilisés
+pronoms optionnels s’ils sont utilisés
 confirmation
 ```
 
-Règles :
-
-- le prénom remplace `Player` dans les textes prévus ;
-- le prénom peut être modifié plus tard ;
-- caractères invalides et longueur maximale sont explicités ;
-- aucun éditeur d’avatar au MVP ;
-- aucune information inutilisée n’est demandée.
+Aucun éditeur d’avatar au MVP.
 
 ## S05B — Avertissement de contenu
 
-Écran distinct ou étape du premier lancement :
-
 - fiction réservée aux adultes ;
 - liste courte des thèmes matures ;
-- déclaration locale `J’ai 18 ans ou plus` ;
-- refus permettant de quitter proprement ;
-- accès aux paramètres d’accessibilité avant l’entrée dans le jeu.
+- déclaration locale d’âge ;
+- refus permettant de quitter ;
+- accès aux paramètres d’accessibilité.
 
-Cette déclaration n’est pas présentée comme une vérification légale d’identité.
+## S06 — Confirmations
 
-## S06 — Confirmations système
+Cas minimum : sauvegarde, nouvelle partie, retour au titre, quitter et confirmation de choix si activée.
 
-Cas minimum :
-
-- écraser une sauvegarde ;
-- supprimer une sauvegarde ;
-- nouvelle partie ;
-- recommencer ;
-- retour au titre ;
-- quitter sans sauvegarder ;
-- confirmer un choix si l’option est activée.
-
-Toujours :
-
-```text
-action claire
-conséquence claire
-bouton annuler visible
-action destructive différenciée
-aucune validation automatique
-```
+Toujours : action et conséquence claires, annulation visible, action destructive différenciée.
 
 ## S07 — Crédits et informations légales
 
-- crédits ;
-- version ;
-- licences ;
-- avertissements ;
-- politique de contenu si nécessaire.
-
-Peut suivre le premier build vertical mais doit exister avant distribution publique.
+Crédits, version, licences, avertissements et politique de contenu si nécessaire.
 
 ---
 
-# 4. États transversaux obligatoires
+# 4. États transversaux
 
 ```text
 LOADING
@@ -461,106 +330,79 @@ KEYBOARD_NAVIGATION
 CORRUPTED_SAVE
 ```
 
-## Cas critiques
+Cas critiques :
 
-### Fil très long
-
-- chargement sans perdre la position ;
-- historique paginé ou virtualisé si nécessaire ;
-- dernier message toujours atteignable.
-
-### Aucun choix
-
-- zone de choix absente ;
-- aucun panneau vide ;
-- attente ou transition expliquée par le comportement du fil.
-
-### Texte agrandi
-
-- choix empilés ;
-- Galerie à deux colonnes ;
-- header plus haut si nécessaire ;
-- aucune troncature des décisions.
-
-### Contenu retiré
-
-- le fil peut conserver un message de retrait ;
-- la Galerie ne restaure pas l’image ;
-- les messages, faits vécus et connaissances ne sont jamais supprimés automatiquement ;
-- seule l’accessibilité au fichier change.
-
-### Chargement et erreur
-
-- écran discret et non bloquant ;
-- possibilité de réessayer ou revenir ;
-- aucune donnée sensible dans le message d’erreur.
+- fil très long sans perte de position ;
+- absence de choix sans panneau vide ;
+- texte agrandi avec choix empilés et Galerie à deux colonnes ;
+- contenu retiré inaccessible sans effacer les faits vécus ;
+- erreur non révélatrice avec retour ou nouvel essai.
 
 ---
 
 # 5. Navigation
 
-## Barre diégétique MVP
+Barre diégétique :
 
 ```text
 Messages
 Galerie
 ```
 
-## Accès système
-
-- menu depuis D01 ;
-- pause depuis tout écran narratif hors transition critique ;
-- retour cohérent ;
-- aucun onglet Profil vide.
-
-## Navigation photo
+Navigation photo :
 
 ```text
-fil → photo → fil
-Galerie → photo → Galerie
+fil → photo → même fil
+Galerie → photo → même Galerie
 ```
 
-La provenance est mémorisée.
+La provenance, le scroll et le focus sont conservés.
+
+L’accès système complet est différé. Aucun onglet Profil vide.
 
 ---
 
-# 6. Priorités
+# 6. État d’implémentation
 
-## MVP critique
+## Implémenté et validé
 
 ```text
 D01 D02 D03 D04 D05 D06 D07
-S01 S02 S03 S04 S05 S05B S06
 ```
 
-## Après le premier build vertical
+Sous forme de cœur UI portrait additif avec données et images factices lorsque nécessaire.
+
+## Canonique mais différé
 
 ```text
-S07 final
-animations avancées
-filtres secondaires de Galerie
-personnalisation cosmétique
-fonctionnalités Android spécifiques
+S01 S02 S03 S04 S05 S05B S06 S07
+REMOVED
+permissions Galerie
+persistance Galerie
+vrais assets
+liaison runtime complète
 ```
 
 ---
 
 # 7. Validation UI‑SCREENS
 
-- [x] toutes les surfaces narratives nécessaires possèdent un écran ;
-- [x] tous les écrans système nécessaires à un test fiable sont cadrés ;
-- [x] la Galerie est organisée par personnage ;
-- [x] les verrouillages ne spoilent pas ;
-- [x] les choix et messages longs restent lisibles ;
-- [x] le mode texte agrandi est prévu ;
+- [x] surfaces narratives définies ;
+- [x] écrans système cadrés ;
+- [x] Galerie organisée par personnage ;
+- [x] verrouillages non révélateurs ;
+- [x] choix et messages longs lisibles ;
 - [x] aucune surface n’expose les routes ;
-- [x] la sauvegarde ne révèle pas les états internes ;
-- [x] les rencontres physiques respectent text-only ;
-- [x] la navigation revient à la bonne provenance ;
-- [x] retirer une image n’efface ni les messages ni la connaissance ;
-- [x] les maquettes restent des références conceptuelles.
+- [x] navigation vers la bonne provenance ;
+- [x] retirer une image ne supprime ni messages ni connaissance ;
+- [x] maquettes classées comme références conceptuelles ;
+- [x] cœur diégétique implémenté et testé en portrait ;
+- [ ] flux système final implémenté ;
+- [ ] persistance et vrais assets intégrés.
 
 ```text
-UI‑SCREENS : VALIDÉ
-PROCHAINE PHASE : UI‑HANDOFF
+UI‑SCREENS : CANON VALIDÉ
+CŒUR DIÉGÉTIQUE : IMPLÉMENTÉ ET VALIDÉ
+ÉCRANS SYSTÈME : DIFFÉRÉS
+PROCHAINE PRIORITÉ : PRODUCTION NARRATIVE
 ```

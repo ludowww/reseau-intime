@@ -17,65 +17,50 @@ le téléphone enregistre l’échange.
 ## Narration
 
 ```text
-Saison 1 J01–J21 : corpus finalisé et signé
-Blocage narratif restant : aucun
+Bible Narrative / North Star : autorité produit active
+Saison 1 J01–J21 : corpus consolidé et signé
+Priorité produit : production narrative sous l’autorité de la Bible
 ```
 
-Source :
+Le corpus signé reste la référence pour les scripts J01–J21. La prochaine décision narrative détaillée n’est pas imposée par ce portail : elle doit partir de la hiérarchie canonique `routes → actes → séquences → scènes → dialogues/photos → journées`.
+
+Sources :
 
 ```text
+docs/canon/bible/
 docs/canon/dialogues/J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md
 ```
 
 ## UX/UI
 
 ```text
-UI‑FOUNDATION : validé
-UI‑SCREENS : validé
-UI‑HANDOFF : validé
-Cible future : smartphone vertical 720 × 1280, ratio 9:16
-Style : sombre, anime-inspired, couleurs par personnage
-Galerie : collection photo organisée par personnage
+T‑UI‑01 à T‑UI‑03D : implémentés et validés
+UI CORE PROTOTYPE : verrouillé
+Extension UI par défaut : gelée
+Baseline UI documentée : 25928abf9149b5305fea2c08dfae9a47cdbf775c
 ```
+
+Le dépôt possède désormais un cœur UI portrait additif comprenant la coque, Messages, Galerie, ImageMessage, PhotoViewer et les états locaux `NEW / VIEWED / LOCKED`.
+
+Les vrais assets, la persistance Galerie, `REMOVED`, les permissions runtime et les écrans système restent des cibles canoniques différées.
 
 Source :
 
 ```text
 docs/canon/ui/README.md
+docs/canon/ui/UI_03_INTEGRATION_HANDOFF_AND_MOCKUP_STATUS.md
 ```
-
-## Reprise technique
-
-```text
-Prête à être planifiée
-Non encore autorisée explicitement
-```
-
-Le prochain lot possible est un plan court `T‑UI‑01` pour la coque portrait. Il doit repartir de `main` courant et être exécuté dans l’environnement Hermes avec Godot.
 
 ## Runtime actuel
 
-Le dépôt contient un prototype jouable construit par couches historiques V0.xx.
+`main` contient deux réalités à distinguer :
 
-Acquis potentiellement réutilisables :
+1. un runtime narratif historique construit par couches V0.xx ;
+2. un prototype UI portrait additif et validé.
 
-- fils persistants ;
-- choix ;
-- chronologie ;
-- notifications et non-lus ;
-- archives ;
-- outils de validation.
+Le cœur UI portrait ne constitue pas encore une migration complète du runtime narratif. Le contrôle historique `1280 × 720` reste présent, tandis que les scènes portrait sont testées à `720 × 1280`, `1080 × 1920` et `1080 × 2340`.
 
-Limites :
-
-```text
-résolution active : 1280 × 720 horizontal
-architecture narrative : antérieure au corpus final sur plusieurs journées
-UI : antérieure à la cible portrait
-J07–J21 : non intégrés conformément au corpus signé
-```
-
-L’ancien runtime ne définit ni le canon narratif ni la future interface.
+Le code, les données et les tests sur `main` décrivent ce qui est réellement implémenté. Ils ne redéfinissent ni la Bible Narrative ni la cible UI.
 
 ---
 
@@ -86,7 +71,7 @@ L’ancien runtime ne définit ni le canon narratif ni la future interface.
 2. docs/canon/PROJECT_DOCUMENTATION_GOVERNANCE.md
 3. source autoritative du domaine
 4. docs/runtime/README.md pour le code actif
-5. ROADMAP.md pour l’ordre des lots
+5. ROADMAP.md pour la priorité courante
 ```
 
 ---
@@ -124,40 +109,40 @@ code + données + tests sur main
 docs/runtime/README.md
 ```
 
-Les anciens plans et rapports V0.xx sont historiques sauf référence explicite depuis un index actif.
+Les documents `docs/V0_*.md`, les anciens fichiers numérotés à la racine de `docs/`, ainsi que `docs/narrative/` et `docs/story_state/`, sont historiques sauf référence explicite depuis l’ordre de lecture actif.
 
 ---
 
 # Décisions produit verrouillées
 
-- interface smartphone verticale future ;
-- messagerie texte uniquement ;
+- interface smartphone verticale ;
+- messagerie principalement textuelle ;
 - aucune route ou score visible ;
 - Player reste principalement représenté par ses messages ;
 - choix courts, naturels et non chronométrés par défaut ;
 - couleurs personnages accompagnées d’avatars et de noms ;
-- Galerie photo classique avec onglets par personnage ;
-- images visibles, nouvelles, verrouillées ou retirées ;
+- Galerie organisée par personnage ;
+- images accessibles, nouvelles, verrouillées ou retirées selon le contrat canonique ;
 - retirer une image n’efface ni les messages ni la connaissance acquise ;
 - écrans système distincts du téléphone narratif ;
-- narration complète avant migration runtime globale.
+- photos comme étapes relationnelles, pas comme récompenses détachées du récit.
 
 ---
 
-# Prochaine séquence de travail
+# Priorité de travail
 
 ```text
-UI‑FOUNDATION  validé
-UI‑SCREENS     validé
-UI‑HANDOFF     validé
-Décision       autoriser ou non la reprise technique
-T‑UI‑01        coque portrait, safe areas, thème et navigation
-T‑UI‑02        composants Messages
-T‑UI‑03        Galerie et Photo
-T‑UI‑04        écrans système
-T‑NAR‑01       réconciliation J01–J06
-T‑NAR suivants J07–J09 → J10–J12 → J13–J16 → J17–J21
+Bible Narrative / North Star
+→ choix du prochain lot narratif
+→ routes macro
+→ actes et séquences
+→ scènes modulaires
+→ dialogues et photos attendues
+→ découpage des journées
+→ adaptation runtime lorsque nécessaire
 ```
+
+Un nouveau lot UI ne s’ouvre que pour un besoin bloquant, l’intégration future des vrais assets, la persistance/sauvegarde, les écrans système explicitement décidés ou une régression avérée.
 
 Voir `ROADMAP.md`.
 
@@ -173,19 +158,7 @@ git diff --check
 godot --headless --path game --quit
 ```
 
-Les futures branches UI devront ajouter :
-
-```text
-720 × 1280
-1080 × 1920
-1080 × 2340 environ
-fenêtre PC portrait
-texte agrandi
-navigation clavier
-animations réduites
-```
-
-Le test `1280 × 720` reste temporairement utile tant que l’ancienne interface n’a pas été explicitement retirée.
+Les lots UI disposent en plus de matrices portrait, safe areas, reduced motion et navigation clavier. La gate globale compare les échecs historiques par identité exacte.
 
 ---
 
@@ -195,7 +168,7 @@ Le test `1280 × 720` reste temporairement utile tant que l’ancienne interface
 une source autoritative
 → un lot court
 → tests ciblés
-→ index synchronisés dans la même PR
+→ portails synchronisés
 ```
 
-Ne jamais créer un second document actif pour contourner une contradiction.
+Ne jamais créer une seconde vérité pour contourner une contradiction.

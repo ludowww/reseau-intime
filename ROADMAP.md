@@ -4,13 +4,13 @@
 
 **Catégorie : Portail projet actif**
 
-Cette roadmap résume l’ordre des lots. Elle ne remplace pas les sources canoniques.
+Cette roadmap résume la priorité courante. Elle ne remplace pas les sources canoniques.
 
 ---
 
 # 1. État acquis
 
-## Narration — terminé
+## Narration canonique
 
 ```text
 North Star : validée
@@ -19,135 +19,96 @@ Architecture Saison 1 : validée
 Scripts J01–J21 : consolidés
 Contrats de traces / promesses / connaissances : validés
 Reachability : validée
-Polish des voix : validé
 Sign-off final : signé
 ```
 
-Aucun nouveau travail narratif structurel n’est requis avant adaptation.
+Le corpus signé reste autoritaire pour J01–J21. La Bible Narrative reste autoritaire pour toute nouvelle production, révision structurelle ou extension.
 
-## UX/UI — cadré
+## UX/UI
 
 ```text
-UI‑FOUNDATION : validé
-UI‑SCREENS : validé
-UI‑HANDOFF : validé
+T‑UI‑01   Coque portrait                         TERMINÉ
+T‑UI‑02   Famille Messages                       TERMINÉ
+T‑UI‑03A  Gallery Core                           TERMINÉ
+T‑UI‑03B  ImageMessage                           TERMINÉ
+T‑UI‑03C  PhotoViewer                            TERMINÉ
+T‑UI‑03D  Gallery States                         TERMINÉ
 ```
 
 Acquis :
 
-- portrait 720 × 1280 de référence ;
-- ratio 9:16 ;
-- style sombre anime-inspired ;
-- couleurs par personnage ;
+- coque portrait additive ;
+- safe areas ;
 - navigation Messages / Galerie ;
-- Galerie à onglets personnages ;
-- écrans narratifs et système cadrés ;
-- sauvegarde, paramètres et accessibilité cadrés ;
-- composants et contrats de présentation définis ;
-- critères de test portrait définis.
+- conversations privées et de groupe ;
+- choix, non-lus, notifications et typing ;
+- transitions hors téléphone et de journée ;
+- ImageMessage ;
+- Galerie responsive par personnage ;
+- PhotoViewer partagé ;
+- états locaux `NEW / VIEWED / LOCKED` ;
+- matrices `720 × 1280`, `1080 × 1920`, `1080 × 2340` ;
+- reduced motion et navigation clavier.
 
-## Runtime — prototype historique disponible
+Le cœur UI prototype est verrouillé. Son extension est gelée par défaut.
 
-Acquis potentiellement réutilisables :
+## Runtime
 
-- Godot 4.6.x ;
-- fils persistants ;
-- choix ;
-- chronologie ;
-- notifications ;
-- non-lus ;
-- archives ;
-- tests statiques et outils de validation.
+`main` contient :
 
-Limites :
+- le runtime narratif historique V0.xx ;
+- des réconciliations ciblées ;
+- le cœur UI portrait additif validé ;
+- les tests statiques et outils de validation.
 
-- interface 1280 × 720 horizontale ;
-- couches V0.xx partiellement incompatibles avec le corpus signé ;
-- J07–J21 non intégrés conformément au canon ;
-- sauvegarde et Galerie à reprendre pour la cible finale.
+La migration narrative complète, la persistance Galerie, la sauvegarde cible, les vrais assets et les écrans système ne sont pas encore intégrés comme flux final.
 
 ---
 
-# 2. Décision active
+# 2. Priorité active
 
 ```text
-Reprise technique : prête mais non encore autorisée explicitement
+BIBLE NARRATIVE / NORTH STAR
+→ choisir le prochain lot narratif
+→ routes macro
+→ actes
+→ séquences
+→ scènes modulaires
+→ dialogues et photos attendues
+→ découpage des journées
 ```
 
-Avant tout code :
+La roadmap ne fixe pas encore si le prochain lot porte sur :
 
-1. Ludovic autorise explicitement le démarrage de `T‑UI‑01` ;
-2. Hermes repart de `main` courant ;
-3. Hermes rédige un plan court et borné ;
-4. le plan est validé avant modification du runtime.
+- une révision ou un approfondissement de la Saison 1 ;
+- une préparation d’arc suivant ;
+- une bibliothèque de séquences ;
+- une spécification de photos ;
+- une adaptation runtime d’un bloc déjà canonique.
+
+Cette décision produit doit être prise depuis `docs/canon/bible/`, pas depuis un ancien plan V0.xx.
 
 ---
 
-# 3. T‑UI‑01 — Coque portrait
+# 3. Gel UI
 
-## Objectif
+Un nouveau lot UI ne doit être ouvert que pour :
 
-Construire la fondation portrait sans migrer la narration.
+1. un besoin bloquant découvert pendant la production narrative ;
+2. l’intégration future des vrais assets ;
+3. la persistance ou la sauvegarde ;
+4. les écrans système explicitement décidés ;
+5. une régression avérée.
 
-## Périmètre recommandé
+Les préférences esthétiques non bloquantes restent en backlog.
 
-- `project.godot` portrait ;
-- viewport de référence ;
-- stretch et safe areas ;
-- thème et tokens ;
-- couches système / diégétique ;
-- navigation Messages / Galerie ;
-- composants démonstrateurs ;
-- fausses données ou scène de test ;
-- aucune migration massive de journées.
-
-## Validation
+## T‑UI‑04 — Écrans système
 
 ```text
-720 × 1280
-1080 × 1920
-1080 × 2340 environ
-fenêtre PC portrait
-texte agrandi
-navigation clavier
-animations réduites
+DIFFÉRÉ
 ```
 
-Le layout horizontal historique reste temporairement testable jusqu’à retrait explicite.
-
----
-
-# 4. T‑UI‑02 — Composants Messages
-
-- liste des conversations ;
-- cartes de fil ;
-- bulles ;
-- choix ;
-- typing ;
-- non-lus ;
-- notifications ;
-- transition hors téléphone ;
-- transition de journée.
-
-Une seule famille de composants ou un seul parcours peut être traité par PR.
-
----
-
-# 5. T‑UI‑03 — Galerie et Photo
-
-- onglets personnages ;
-- grille ;
-- tuiles ;
-- photo plein écran ;
-- provenance ;
-- permissions sauvegarder / retirer / partager ;
-- états verrouillé / nouveau / retiré.
-
-Règle : retirer une image ne supprime jamais les messages ni la connaissance acquise.
-
----
-
-# 6. T‑UI‑04 — Écrans système
+Cible canonique conservée :
 
 - titre ;
 - pause ;
@@ -158,81 +119,70 @@ Règle : retirer une image ne supprime jamais les messages ni la connaissance ac
 - confirmations ;
 - erreurs et chargements.
 
-La sauvegarde reste une branche explicitement testée, séparée des migrations narratives.
+Ce lot sera rouvert seulement lorsqu’un vertical slice système, la sauvegarde, le flux de démarrage ou un besoin narratif bloquant le justifie.
 
 ---
 
-# 7. T‑NAR‑01 — Réconciliation J01–J06
+# 4. Runtime narratif futur
 
-Objectifs :
+Aucun ancien lot `T‑NAR‑01` n’est automatiquement réactivé.
 
-- comparer les données actives aux sources signées ;
-- retirer les concepts legacy incompatibles ;
-- adapter textes et choix ;
-- intégrer les contrats d’état minimaux ;
-- conserver conséquences, promesses, traces et connaissances ;
-- tester l’ouverture en portrait.
+Toute adaptation runtime doit :
 
-La PR technique historique #54 reste non autoritative et doit être réauditée depuis `main` au moment de la reprise.
-
----
-
-# 8. Intégration narrative progressive
-
-```text
-T‑NAR‑02  J07–J09
-T‑NAR‑03  J10–J12
-T‑NAR‑04  J13–J16
-T‑NAR‑05  J17–J21
-```
-
-Chaque bloc doit :
-
-- être jouable ;
-- respecter les registres ;
-- vérifier promesses et connaissances ;
+- partir de `main` courant ;
+- citer la Bible, les scripts consolidés et le contrat d’état ;
+- définir un bloc narratif court ;
+- conserver promesses, traces, connaissances et conséquences ;
 - respecter text-only et co-présence ;
-- utiliser des placeholders visuels si nécessaire ;
-- passer les tests avant le bloc suivant.
+- utiliser les composants UI existants plutôt que les refondre ;
+- passer les tests avant publication.
+
+La granularité exacte du prochain bloc runtime reste à décider après le prochain cadrage narratif.
 
 ---
 
-# 9. Production visuelle
+# 5. Production visuelle
 
-Les images peuvent être produites parallèlement après validation de la charte des personnages visuels.
+Les vrais assets ne sont pas encore intégrables dans le lot courant.
 
-Ordre recommandé :
+Avant production ou intégration :
+
+1. chaque image doit avoir une fonction relationnelle précise ;
+2. son origine, son audience et son consentement doivent être définis ;
+3. sa place dans une séquence doit être validée ;
+4. ses variantes doivent être limitées au besoin narratif réel ;
+5. l’UI doit pouvoir remplacer le placeholder sans refonte architecturale.
+
+Ordre recommandé lorsque les assets deviennent possibles :
 
 ```text
-avatars cohérents
-→ placeholders de Galerie
-→ images J01–J06
-→ images par blocs narratifs
-→ polish final
+spécifications narratives des photos
+→ charte visuelle cohérente des personnages
+→ production par séquence
+→ intégration runtime
+→ QA Galerie / Messages / PhotoViewer
 ```
-
-Les images ne modifient jamais l’origine, l’audience, la permanence, le consentement ou la fonction narrative.
 
 ---
 
-# 10. Distribution et finition
+# 6. Distribution et finition
 
-Après J01–J21 jouables :
+Après une première saison entièrement jouable :
 
 - QA complète ;
-- migrations de sauvegarde ;
-- accessibilité ;
+- sauvegarde et migrations ;
+- accessibilité finale ;
 - performances ;
 - contrôles clavier / souris / tactile ;
-- crédits ;
-- avertissements ;
+- écrans système ;
+- crédits et avertissements ;
 - packaging ;
 - tests de reprise ;
 - préparation des extensions narratives.
 
 ---
 
-# 11. Différé
+# 7. Différé
 
 - onglet Profil sans fonction ;
 - éditeur d’avatar complet ;
@@ -243,25 +193,26 @@ Après J01–J21 jouables :
 - succès ;
 - réseau social générique ;
 - animations coûteuses non nécessaires au récit ;
-- fonctionnalités Android spécifiques.
+- fonctionnalités Android spécifiques ;
+- `REMOVED` et permissions Galerie tant que le runtime ne les fournit pas.
 
 ---
 
-# 12. Règle de lot
+# 8. Règle de lot
 
 ```text
 1 objectif produit
 + périmètre court
 + source canonique citée
 + tests ciblés
-+ index synchronisés
++ portails synchronisés
 ```
 
 Aucun lot ne mélange par défaut :
 
 ```text
-migration portrait
-+ migration de nombreuses journées
+refonte UI globale
++ migration narrative massive
 + nouveau système de sauvegarde
 + production d’assets
 ```
