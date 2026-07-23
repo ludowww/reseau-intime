@@ -16,10 +16,9 @@ Cette roadmap résume la priorité courante. Elle ne remplace pas les sources ca
 North Star : validée
 Personnages et voix : validés
 Architecture Saison 1 : validée
-Scripts J01–J21 : consolidés
+Scripts J01–J21 : consolidés et signés
 Contrats de traces / promesses / connaissances : validés
 Reachability : validée
-Sign-off final : signé
 ```
 
 Le corpus signé reste autoritaire pour J01–J21. La Bible Narrative reste autoritaire pour toute nouvelle production, révision structurelle ou extension.
@@ -65,154 +64,146 @@ La migration narrative complète, la persistance Galerie, la sauvegarde cible, l
 
 ---
 
-# 2. Priorité active
+# 2. Positionnement de production verrouillé
+
+## Saison 1
 
 ```text
-BIBLE NARRATIVE / NORTH STAR
-→ choisir le prochain lot narratif
-→ routes macro
-→ actes
-→ séquences
-→ scènes modulaires
-→ dialogues et photos attendues
-→ découpage des journées
+J01–J21 restent la Saison 1 de référence.
 ```
 
-La roadmap ne fixe pas encore si le prochain lot porte sur :
+Le corpus signé n’est pas rouvert comme chantier structurel général.
 
-- une révision ou un approfondissement de la Saison 1 ;
-- une préparation d’arc suivant ;
-- une bibliothèque de séquences ;
-- une spécification de photos ;
-- une adaptation runtime d’un bloc déjà canonique.
+Les corrections restent autorisées uniquement lorsqu’elles sont ciblées et justifiées par :
 
-Cette décision produit doit être prise depuis `docs/canon/bible/`, pas depuis un ancien plan V0.xx.
+- une contradiction avec la North Star ;
+- une contradiction avec un canon personnage ;
+- une rupture de continuité ou d’atteignabilité ;
+- un problème de consentement, d’audience ou de conséquence ;
+- une incohérence entre actes, séquences, dialogues, photos ou registres ;
+- un blocage de production clairement démontré.
 
----
+Une redistribution globale des actes, une nouvelle hiérarchie de routes ou une réécriture générale de J01–J21 exige une nouvelle décision produit explicite.
 
-# 3. Gel UI
-
-Un nouveau lot UI ne doit être ouvert que pour :
-
-1. un besoin bloquant découvert pendant la production narrative ;
-2. l’intégration future des vrais assets ;
-3. la persistance ou la sauvegarde ;
-4. les écrans système explicitement décidés ;
-5. une régression avérée.
-
-Les préférences esthétiques non bloquantes restent en backlog.
-
-## T‑UI‑04 — Écrans système
+## Hiérarchie relationnelle
 
 ```text
-DIFFÉRÉ
+Marie      centre dramatique obligatoire et transformation complète
+Sandra     bascule complète possible
+Mathilde   bascule complète possible
+Pauline    promesse forte d’extension avec ligne autonome en Saison 1
+Raphaëlle  graine structurante avec conséquence et futur concret
+Nico       graine structurante avec décision engageante et conséquence
 ```
 
-Cible canonique conservée :
+Cette hiérarchie ne signifie pas que Raphaëlle ou Nico sont décoratifs. Toutes les relations doivent changer, mais elles ne doivent pas toutes atteindre la même profondeur pendant la première saison.
 
-- titre ;
-- pause ;
-- sauvegarde / chargement ;
-- paramètres ;
-- première configuration ;
-- avertissement adulte ;
-- confirmations ;
-- erreurs et chargements.
+## Carte de production autoritative
 
-Ce lot sera rouvert seulement lorsqu’un vertical slice système, la sauvegarde, le flux de démarrage ou un besoin narratif bloquant le justifie.
-
----
-
-# 4. Runtime narratif futur
-
-Aucun ancien lot `T‑NAR‑01` n’est automatiquement réactivé.
-
-Toute adaptation runtime doit :
-
-- partir de `main` courant ;
-- citer la Bible, les scripts consolidés et le contrat d’état ;
-- définir un bloc narratif court ;
-- conserver promesses, traces, connaissances et conséquences ;
-- respecter text-only et co-présence ;
-- utiliser les composants UI existants plutôt que les refondre ;
-- passer les tests avant publication.
-
-La granularité exacte du prochain bloc runtime reste à décider après le prochain cadrage narratif.
-
----
-
-# 5. Production visuelle
-
-Les vrais assets ne sont pas encore intégrables dans le lot courant.
-
-Avant production ou intégration :
-
-1. chaque image doit avoir une fonction relationnelle précise ;
-2. son origine, son audience et son consentement doivent être définis ;
-3. sa place dans une séquence doit être validée ;
-4. ses variantes doivent être limitées au besoin narratif réel ;
-5. l’UI doit pouvoir remplacer le placeholder sans refonte architecturale.
-
-Ordre recommandé lorsque les assets deviennent possibles :
+La carte `actes → séquences → scènes → images → conséquences → journées` existe déjà dans :
 
 ```text
-spécifications narratives des photos
-→ charte visuelle cohérente des personnages
-→ production par séquence
-→ intégration runtime
-→ QA Galerie / Messages / PhotoViewer
+docs/canon/bible/11_DISTRIBUTION_SEQUENCES_SCENES_IMAGES_CONSEQUENCES_JOURNEES.md
 ```
 
----
+Elle doit être lue avec :
 
-# 6. Distribution et finition
+```text
+docs/canon/bible/04_TRAME_PRINCIPALE_ET_ACTES_SAISON_1.md
+docs/canon/bible/05_ROUTES_MACRO_SAISON_1.md
+docs/canon/bible/07_BIBLIOTHEQUE_DE_SEQUENCES_SAISON_1.md
+docs/canon/bible/09_PROGRESSION_VISUELLE_ET_PHOTOGRAPHIQUE.md
+docs/canon/bible/10_CARTE_CONSEQUENCES_DETTES_SECRETS_OBLIGATIONS.md
+docs/canon/dialogues/J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md
+```
 
-Après une première saison entièrement jouable :
-
-- QA complète ;
-- sauvegarde et migrations ;
-- accessibilité finale ;
-- performances ;
-- contrôles clavier / souris / tactile ;
-- écrans système ;
-- crédits et avertissements ;
-- packaging ;
-- tests de reprise ;
-- préparation des extensions narratives.
+Aucun second calendrier concurrent ne doit être créé.
 
 ---
 
-# 7. Différé
+# 3. Lot actif — NAR‑PROD‑01
 
-- onglet Profil sans fonction ;
-- éditeur d’avatar complet ;
-- thèmes multiples ;
-- personnalisation du téléphone ;
-- statistiques ;
-- scores et routes visibles ;
-- succès ;
-- réseau social générique ;
-- animations coûteuses non nécessaires au récit ;
-- fonctionnalités Android spécifiques ;
-- `REMOVED` et permissions Galerie tant que le runtime ne les fournit pas.
+## Audit de préparation à la production de la Saison 1
+
+Objectif : transformer le corpus signé et la carte du document `11` en un état de production immédiatement exploitable, sans rouvrir l’architecture générale.
+
+Pour chaque acte et chaque journée, l’audit doit vérifier :
+
+- fonction dramatique ;
+- séquences fixes et variables ;
+- personnages directs et absences justifiées ;
+- scènes obligatoires, variantes et mutations de refus ;
+- conséquences, dettes, promesses et connaissances ;
+- photos attendues, audience, permanence et fonction relationnelle ;
+- cohérence avec les scripts J01–J21 signés ;
+- statut de préparation.
+
+Statuts autorisés :
+
+```text
+READY                 exploitable sans correction narrative
+TARGETED_CORRECTION   correction locale nécessaire dans une source autoritative
+MISSING_SPEC          précision manquante avant production ou intégration
+```
+
+Le livrable principal doit compléter ou corriger les sources autoritatives existantes. Il ne crée pas une deuxième carte de saison.
+
+Hors périmètre de NAR‑PROD‑01 :
+
+- réécriture générale des dialogues ;
+- nouveau runtime ;
+- nouveau lot UI ;
+- production de vrais assets ;
+- intégration JSON ;
+- sauvegarde ou persistance Galerie ;
+- nouvelle saison ou extension.
 
 ---
 
-# 8. Règle de lot
+# 4. Gel technique pendant NAR‑PROD‑01
+
+Par défaut :
+
+```text
+UI       GELÉE
+RUNTIME  GELÉ
+ASSETS   NON PRODUITS
+```
+
+Une réouverture technique n’est autorisée que si l’audit identifie :
+
+1. un besoin narratif bloquant et concret ;
+2. une donnée indispensable absente du contrat ;
+3. une limite UI empêchant réellement une scène validée ;
+4. une régression ;
+5. un lot explicitement décidé après l’audit.
+
+Une préférence esthétique ou une possibilité technique intéressante ne suffit pas.
+
+---
+
+# 5. Étapes suivantes après l’audit
+
+L’ordre sera décidé à partir des résultats réels de NAR‑PROD‑01 :
+
+```text
+corrections narratives ciblées si nécessaires
+→ spécification des photos réellement manquantes
+→ choix d’un premier bloc d’adaptation runtime
+→ intégration courte et testée
+```
+
+T‑UI‑04, la sauvegarde cible, les vrais assets et la migration globale restent différés jusqu’à justification concrète.
+
+---
+
+# 6. Règle de lot
 
 ```text
 1 objectif produit
 + périmètre court
 + source canonique citée
-+ tests ciblés
-+ portails synchronisés
-```
-
-Aucun lot ne mélange par défaut :
-
-```text
-refonte UI globale
-+ migration narrative massive
-+ nouveau système de sauvegarde
-+ production d’assets
++ corrections dans la source autoritative
++ tests ou critères ciblés
++ aucun second document concurrent
 ```
