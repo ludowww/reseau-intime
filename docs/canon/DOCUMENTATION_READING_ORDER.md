@@ -1,13 +1,13 @@
 # Documentation Reading Order — Réseau Intime
 
-> **Phase active : paquet de production Acte I validé, préparation de l’Acte II**
+> **Phase active : paquets Actes I–II validés, préparation de l’Acte III**
 
 ```text
 Bible Narrative / North Star : autorité active
 Corpus J01–J21 : consolidé et signé
 NAR‑PROD‑01 : terminé et intégré
 NAR‑PROD‑02 : Acte I / J01–J04 READY
-Acte I : 13 contenus principaux / 15 fichiers sources / 0 variante
+NAR‑PROD‑03 : Acte II / J05–J08 READY
 UI, runtime et assets : gelés
 ```
 
@@ -145,11 +145,12 @@ Les anciens audits et lots correctifs restent des archives de décision. Les scr
 
 ```text
 docs/canon/dialogues/NAR_PROD_02_PAQUET_PRODUCTION_ACTE_I_J01_J04.md
+docs/canon/dialogues/NAR_PROD_03_PAQUET_PRODUCTION_ACTE_II_J05_J08.md
 ```
 
-NAR‑PROD‑02 est un paquet dérivé des sources autoritatives. Il ne constitue ni une seconde carte de saison, ni un nouveau canon de dialogues.
+Ces paquets sont dérivés des sources autoritatives. Ils ne constituent ni une seconde carte de saison, ni un nouveau canon concurrent.
 
-Il verrouille pour J01–J04 :
+## Acte I — NAR-PROD-02
 
 ```text
 13 contenus principaux
@@ -160,7 +161,28 @@ Il verrouille pour J01–J04 :
 J01–J04 : READY
 ```
 
-Les futurs paquets Actes II à V doivent appliquer la même méthode sans recopier ou concurrencer le document `11`.
+## Acte II — NAR-PROD-03
+
+```text
+12 beats servis par partie
+11 nouveaux contenus principaux
+6 contenus Acte I réutilisés
+14 nouveaux fichiers sources
+3 variantes conditionnelles J08
+J05–J08 : READY
+```
+
+Règles transversales :
+
+- Player reste non identifiable ;
+- un `FACT_RECORD` ne devient jamais une photo ;
+- une image de scène ne devient jamais preuve ou trace ;
+- les réutilisations conservent leur `asset_id`, audience et permanence ;
+- aucun onglet visible « Souvenir » ;
+- les comportements Galerie non spécifiés restent différés ;
+- aucun paquet n’autorise à lui seul une modification runtime ou une production d’asset.
+
+Les futurs paquets Actes III à V doivent appliquer la même méthode sans recopier ou concurrencer le document `11`.
 
 ---
 
@@ -221,8 +243,8 @@ corpus narratif signé
 → cœur UI portrait verrouillé
 → NAR‑PROD‑01 terminé
 → NAR‑PROD‑02 Acte I / J01–J04 READY
-→ NAR‑PROD‑03 Acte II / J05–J08
-→ paquet Acte III / J09–J12
+→ NAR‑PROD‑03 Acte II / J05–J08 READY
+→ NAR‑PROD‑04 Acte III / J09–J12
 → paquet Acte IV / J13–J16
 → paquet Acte V / J17–J21
 → production des assets validés
@@ -240,7 +262,7 @@ Vision et structure : docs/canon/bible/
 Personnages : docs/canon/characters/
 Narration J01–J21 : scripts consolidés + registres + sign-off
 Audit de préparation : NAR_PROD_01_AUDIT_PREPARATION_PRODUCTION_SAISON_1.md
-Paquets de production : NAR_PROD_02 puis paquets Actes II à V
+Paquets de production : NAR_PROD_02, NAR_PROD_03 puis Actes III à V
 UI/UX : docs/canon/ui/
 Runtime réel : code, données et tests sur main
 Statut et priorité : README.md + ROADMAP.md
