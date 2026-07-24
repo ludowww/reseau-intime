@@ -20,7 +20,8 @@ Scripts J01–J21 : consolidés et signés
 Contrats de traces / promesses / connaissances : validés
 Reachability : validée
 NAR‑PROD‑01 : audit terminé et intégré
-NAR‑PROD‑02 : paquet Acte I validé sur sa branche
+NAR‑PROD‑02 : paquet Acte I intégré
+NAR‑PROD‑03 : paquet Acte II validé sur sa branche
 ```
 
 Le corpus signé reste autoritaire pour J01–J21. La Bible Narrative reste autoritaire pour toute nouvelle production, révision structurelle ou extension.
@@ -107,24 +108,8 @@ Source :
 docs/canon/dialogues/NAR_PROD_02_PAQUET_PRODUCTION_ACTE_I_J01_J04.md
 ```
 
-Périmètre :
-
 ```text
-Acte I — J01 à J04
-```
-
-Verdict :
-
-```text
-J01–J04 NARRATION : READY
-J01–J04 BRIEFS VISUELS : READY
-SOURCE DIALOGUE : READY
-MISSING_SPEC : AUCUN
-```
-
-Budget verrouillé :
-
-```text
+J01–J04 : READY
 13 contenus principaux
 15 fichiers visuels sources
 2 PHOTO_DIÉGÉTIQUE
@@ -140,33 +125,63 @@ Décisions centrales :
 - les images de scène restent non transférables, non découvrables et sans catégorie visible « Souvenir » ;
 - aucune décision produit ne reste ouverte pour J01–J04.
 
+---
+
+# 5. NAR‑PROD‑03 — Acte II prêt
+
+Source :
+
+```text
+docs/canon/dialogues/NAR_PROD_03_PAQUET_PRODUCTION_ACTE_II_J05_J08.md
+```
+
+Verdict :
+
+```text
+J05–J08 : READY
+12 beats servis par partie
+11 nouveaux contenus principaux
+6 contenus Acte I réutilisés
+14 nouveaux fichiers sources
+3 variantes conditionnelles J08
+```
+
+Décisions centrales :
+
+- J05 conserve Marie comme pivot et Sandra comme seule continuité extérieure optionnelle ;
+- J06 conserve Mathilde comme seule continuité extérieure optionnelle, avec un chemin sans continuité pleinement valide ;
+- J07 donne le pivot à Nico, Raphaëlle en secondaire professionnel et le retour au foyer ;
+- J08 représente la première superposition par trois états locaux, jamais par paires théoriques ;
+- l’échange Sandra J05 est la seule nouvelle source dialoguée du paquet et réutilise T01 sans nouvel asset ;
+- Player reste non identifiable ;
+- aucun nouveau `PHOTO_DIÉGÉTIQUE` ;
+- le comportement Galerie conditionnel reste différé sans rouvrir l’UI.
+
 Ce paquet ne produit aucun asset et n’autorise aucune modification runtime par lui seul.
 
 ---
 
-# 5. Prochain lot recommandé
+# 6. Prochain lot recommandé
 
 ```text
-NAR‑PROD‑03 — Paquet de production Acte II / J05–J08
+NAR‑PROD‑04 — Paquet de production Acte III / J09–J12
 ```
 
-Objectif : appliquer la même méthode validée à l’Acte II :
+Objectif : appliquer la méthode validée aux vies parallèles, avec une vigilance particulière sur :
 
-- références exactes des dialogues ;
-- cartes de scènes finales ;
-- traces, promesses et connaissances ;
-- briefs visuels bornés ;
-- distinction image de scène / photo diégétique ;
-- audiences, permanence et réutilisations ;
-- variantes strictement nécessaires ;
-- aucune seconde carte de saison.
+- l’entrée J09 et la robe noire déplacée ;
+- les premières dominantes relationnelles sans verrou prématuré ;
+- les différences d’audience et de permanence ;
+- les variantes réellement nécessaires J10–J12 ;
+- le casting conditionnel de J12 ;
+- la séparation stricte image de scène / photo diégétique / trace.
 
 Ordre de production :
 
 ```text
 Acte I J01–J04          READY
-→ Acte II J05–J08       NAR‑PROD‑03
-→ Acte III J09–J12
+→ Acte II J05–J08       READY
+→ Acte III J09–J12      NAR‑PROD‑04
 → Acte IV J13–J16
 → Acte V J17–J21
 → production des assets validés
@@ -175,7 +190,7 @@ Acte I J01–J04          READY
 
 ---
 
-# 6. Gel technique
+# 7. Gel technique
 
 Par défaut :
 
@@ -189,7 +204,7 @@ Une réouverture technique exige un besoin narratif bloquant, une donnée indisp
 
 ---
 
-# 7. Règle de lot
+# 8. Règle de lot
 
 ```text
 1 objectif produit
