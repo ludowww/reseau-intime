@@ -1,13 +1,14 @@
 # Documentation Reading Order — Réseau Intime
 
-> **Phase active : checkpoint UI verrouillé, priorité narrative**
+> **Phase active : audit Saison 1 terminé, préparation du paquet de production Acte I**
 
 ```text
 Bible Narrative / North Star : autorité active
 Corpus J01–J21 : consolidé et signé
-T‑UI‑01 à T‑UI‑03D : implémentés et validés
-Extension UI par défaut : gelée
-Prochaine décision : choisir le prochain lot narratif
+NAR‑PROD‑01 : terminé
+Narration : 21 / 21 READY
+Visuels finaux : 21 / 21 MISSING_SPEC
+Extension UI et runtime : gelés
 ```
 
 ---
@@ -20,12 +21,7 @@ Lire avant toute modification :
 docs/canon/PROJECT_DOCUMENTATION_GOVERNANCE.md
 ```
 
-Ce document définit :
-
-- les sources autoritatives ;
-- les statuts actifs / historiques ;
-- la séparation Canon / UI / Runtime ;
-- la règle anti-dispersion.
+Ce document définit les sources autoritatives, les statuts actifs ou historiques, la séparation Canon / UI / Runtime et la règle anti-dispersion.
 
 ---
 
@@ -65,7 +61,7 @@ docs/canon/bible/10_CARTE_CONSEQUENCES_DETTES_SECRETS_OBLIGATIONS.md
 docs/canon/bible/11_DISTRIBUTION_SEQUENCES_SCENES_IMAGES_CONSEQUENCES_JOURNEES.md
 ```
 
-La hiérarchie de conception est :
+Hiérarchie :
 
 ```text
 North Star
@@ -91,7 +87,7 @@ docs/canon/bible/12E_AUDIT_GLOBAL_COHERENCE_J01_J21.md
 docs/canon/TEXT_ONLY_MESSAGING_CANON.md
 ```
 
-`12E` reste une archive canonique d’architecture. Le sign-off final et les scripts consolidés ont autorité sur son ancien statut de production.
+`12E` est historique. Le rapport NAR‑PROD‑01 signale également que certains diagnostics et cases d’acceptation de `12A–12D` précèdent le sign-off final. Les scripts consolidés, registres et sign-off prévalent.
 
 ---
 
@@ -130,7 +126,7 @@ docs/canon/dialogues/J01_J21_REACHABILITY_MATRIX.md
 
 ---
 
-# 7. Audits et sign-off
+# 7. Audits, corrections et sign-off
 
 ```text
 docs/canon/dialogues/J01_J09_AUDIT_CONFORMITE_NARRATIVE.md
@@ -138,9 +134,10 @@ docs/canon/dialogues/J01_J21_AUDIT_GLOBAL_DIALOGUES_CONTINUITE.md
 docs/canon/dialogues/J01_J21_LOT_A_CORRECTIONS_BLOQUANTES.md
 docs/canon/dialogues/J07_J21_LOT_D_POLISH_VOIX_NATUREL.md
 docs/canon/dialogues/J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md
+docs/canon/dialogues/NAR_PROD_01_AUDIT_PREPARATION_PRODUCTION_SAISON_1.md
 ```
 
-Les audits restent des archives de décision. Les scripts consolidés et le sign-off final ont autorité.
+Les anciens audits et lots correctifs restent des archives de décision. Les scripts consolidés et le sign-off final ont autorité. NAR‑PROD‑01 ne redéfinit pas le canon ; il classe sa préparation à la production.
 
 ---
 
@@ -153,7 +150,7 @@ docs/canon/ui/UI_02_SCREEN_ARCHITECTURE_AND_STATES.md
 docs/canon/ui/UI_03_INTEGRATION_HANDOFF_AND_MOCKUP_STATUS.md
 ```
 
-Ordre d’autorité UI :
+Ordre d’autorité :
 
 ```text
 UI_01 système visuel et responsive
@@ -174,7 +171,7 @@ docs/runtime/README.md
 code + données + tests sur main
 ```
 
-Le runtime historique et le cœur UI portrait additif coexistent actuellement. Aucun des deux ne redéfinit le canon produit.
+Le runtime historique et le cœur UI portrait additif coexistent. Aucun des deux ne redéfinit le canon produit.
 
 ---
 
@@ -190,14 +187,7 @@ docs/story_state/
 anciens rapports et plans de branche
 ```
 
-En particulier :
-
-```text
-docs/01_NARRATIVE_BIBLE.md
-docs/03_ROUTE_ARCHITECTURE.md
-```
-
-ne sont pas des sources actuelles. Ils sont supersédés par `docs/canon/bible/` et les contrats J01–J21.
+`docs/01_NARRATIVE_BIBLE.md` et `docs/03_ROUTE_ARCHITECTURE.md` ne sont pas des sources actuelles.
 
 ---
 
@@ -205,15 +195,16 @@ ne sont pas des sources actuelles. Ils sont supersédés par `docs/canon/bible/`
 
 ```text
 corpus narratif signé
-→ cœur UI portrait implémenté
-→ checkpoint UI verrouillé
-→ extension UI gelée
-→ choix explicite du prochain lot narratif
-→ conception depuis la Bible Narrative
+→ cœur UI portrait verrouillé
+→ NAR‑PROD‑01 terminé
+→ décisions de budget et granularité visuelle
+→ NAR‑PROD‑02 paquet Acte I / J01–J04
+→ paquets Actes II à V
+→ production des assets validés
 → adaptation runtime seulement lorsque nécessaire
 ```
 
-Aucun ancien lot `T‑UI‑01`, `T‑UI‑02`, `T‑UI‑03` ou `T‑NAR‑01` n’est automatiquement la prochaine action.
+Aucun ancien lot UI ou runtime n’est automatiquement la prochaine action.
 
 ---
 
@@ -223,6 +214,7 @@ Aucun ancien lot `T‑UI‑01`, `T‑UI‑02`, `T‑UI‑03` ou `T‑NAR‑01` n
 Vision et structure : docs/canon/bible/
 Personnages : docs/canon/characters/
 Narration J01–J21 : scripts consolidés + registres + sign-off
+Audit de préparation : NAR_PROD_01_AUDIT_PREPARATION_PRODUCTION_SAISON_1.md
 UI/UX : docs/canon/ui/
 Runtime réel : code, données et tests sur main
 Statut et priorité : README.md + ROADMAP.md
