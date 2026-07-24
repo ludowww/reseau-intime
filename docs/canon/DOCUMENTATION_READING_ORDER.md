@@ -1,14 +1,14 @@
 # Documentation Reading Order — Réseau Intime
 
-> **Phase active : audit Saison 1 terminé, préparation du paquet de production Acte I**
+> **Phase active : paquet de production Acte I validé, préparation de l’Acte II**
 
 ```text
 Bible Narrative / North Star : autorité active
 Corpus J01–J21 : consolidé et signé
-NAR‑PROD‑01 : terminé
-Narration : 21 / 21 READY
-Visuels finaux : 21 / 21 MISSING_SPEC
-Extension UI et runtime : gelés
+NAR‑PROD‑01 : terminé et intégré
+NAR‑PROD‑02 : Acte I / J01–J04 READY
+Acte I : 13 contenus principaux / 15 fichiers sources / 0 variante
+UI, runtime et assets : gelés
 ```
 
 ---
@@ -87,7 +87,7 @@ docs/canon/bible/12E_AUDIT_GLOBAL_COHERENCE_J01_J21.md
 docs/canon/TEXT_ONLY_MESSAGING_CANON.md
 ```
 
-`12E` est historique. Le rapport NAR‑PROD‑01 signale également que certains diagnostics et cases d’acceptation de `12A–12D` précèdent le sign-off final. Les scripts consolidés, registres et sign-off prévalent.
+`12E` est historique. Certains diagnostics et cases de `12A–12D` précèdent le sign-off final. Les scripts consolidés, registres et sign-off prévalent.
 
 ---
 
@@ -137,11 +137,34 @@ docs/canon/dialogues/J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md
 docs/canon/dialogues/NAR_PROD_01_AUDIT_PREPARATION_PRODUCTION_SAISON_1.md
 ```
 
-Les anciens audits et lots correctifs restent des archives de décision. Les scripts consolidés et le sign-off final ont autorité. NAR‑PROD‑01 ne redéfinit pas le canon ; il classe sa préparation à la production.
+Les anciens audits et lots correctifs restent des archives de décision. Les scripts consolidés et le sign-off final ont autorité. NAR‑PROD‑01 classe la préparation à la production sans redéfinir le canon.
 
 ---
 
-# 8. UX/UI active
+# 8. Paquets de production
+
+```text
+docs/canon/dialogues/NAR_PROD_02_PAQUET_PRODUCTION_ACTE_I_J01_J04.md
+```
+
+NAR‑PROD‑02 est un paquet dérivé des sources autoritatives. Il ne constitue ni une seconde carte de saison, ni un nouveau canon de dialogues.
+
+Il verrouille pour J01–J04 :
+
+```text
+13 contenus principaux
+15 fichiers visuels sources
+2 PHOTO_DIÉGÉTIQUE
+11 SOUVENIR_IMAGE_DE_SCÈNE
+0 variante conditionnelle
+J01–J04 : READY
+```
+
+Les futurs paquets Actes II à V doivent appliquer la même méthode sans recopier ou concurrencer le document `11`.
+
+---
+
+# 9. UX/UI active
 
 ```text
 docs/canon/ui/README.md
@@ -162,9 +185,9 @@ Le cœur UI prototype est implémenté et gelé. Les maquettes conceptuelles ne 
 
 ---
 
-# 9. Runtime
+# 10. Runtime
 
-Après lecture du canon et de l’UI :
+Après lecture du canon, des paquets de production et de l’UI :
 
 ```text
 docs/runtime/README.md
@@ -175,7 +198,7 @@ Le runtime historique et le cœur UI portrait additif coexistent. Aucun des deux
 
 ---
 
-# 10. Documents historiques
+# 11. Documents historiques
 
 Sont `HISTORICAL` sauf lien explicite depuis un index actif :
 
@@ -191,15 +214,17 @@ anciens rapports et plans de branche
 
 ---
 
-# 11. Ordre de production actuel
+# 12. Ordre de production actuel
 
 ```text
 corpus narratif signé
 → cœur UI portrait verrouillé
 → NAR‑PROD‑01 terminé
-→ décisions de budget et granularité visuelle
-→ NAR‑PROD‑02 paquet Acte I / J01–J04
-→ paquets Actes II à V
+→ NAR‑PROD‑02 Acte I / J01–J04 READY
+→ NAR‑PROD‑03 Acte II / J05–J08
+→ paquet Acte III / J09–J12
+→ paquet Acte IV / J13–J16
+→ paquet Acte V / J17–J21
 → production des assets validés
 → adaptation runtime seulement lorsque nécessaire
 ```
@@ -208,13 +233,14 @@ Aucun ancien lot UI ou runtime n’est automatiquement la prochaine action.
 
 ---
 
-# 12. Autorité synthétique
+# 13. Autorité synthétique
 
 ```text
 Vision et structure : docs/canon/bible/
 Personnages : docs/canon/characters/
 Narration J01–J21 : scripts consolidés + registres + sign-off
 Audit de préparation : NAR_PROD_01_AUDIT_PREPARATION_PRODUCTION_SAISON_1.md
+Paquets de production : NAR_PROD_02 puis paquets Actes II à V
 UI/UX : docs/canon/ui/
 Runtime réel : code, données et tests sur main
 Statut et priorité : README.md + ROADMAP.md
