@@ -1,6 +1,6 @@
 # Documentation Reading Order — Réseau Intime
 
-> **Phase active : paquets Actes I–II validés, préparation de l’Acte III**
+> **Phase active : paquets Actes I–III validés, préparation de l’Acte IV**
 
 ```text
 Bible Narrative / North Star : autorité active
@@ -8,6 +8,7 @@ Corpus J01–J21 : consolidé et signé
 NAR‑PROD‑01 : terminé et intégré
 NAR‑PROD‑02 : Acte I / J01–J04 READY
 NAR‑PROD‑03 : Acte II / J05–J08 READY
+NAR‑PROD‑04 : Acte III / J09–J12 READY
 UI, runtime et assets : gelés
 ```
 
@@ -146,6 +147,7 @@ Les anciens audits et lots correctifs restent des archives de décision. Les scr
 ```text
 docs/canon/dialogues/NAR_PROD_02_PAQUET_PRODUCTION_ACTE_I_J01_J04.md
 docs/canon/dialogues/NAR_PROD_03_PAQUET_PRODUCTION_ACTE_II_J05_J08.md
+docs/canon/dialogues/NAR_PROD_04_PAQUET_PRODUCTION_ACTE_III_J09_J12.md
 ```
 
 Ces paquets sont dérivés des sources autoritatives. Ils ne constituent ni une seconde carte de saison, ni un nouveau canon concurrent.
@@ -172,6 +174,28 @@ J01–J04 : READY
 J05–J08 : READY
 ```
 
+## Acte III — NAR-PROD-04
+
+```text
+14 beats servis par partie
+21 nouveaux contenus principaux
+8 réutilisations antérieures distinctes
+26 nouveaux fichiers sources
+2 variantes conditionnelles J11
+J09–J12 : READY
+```
+
+Décisions structurantes de l’Acte III :
+
+- J09 possède Marie comme pivot unique ; l’ancien prototype Sandra-only est non autoritatif ;
+- J10 ne foreground qu’une seule continuité extérieure ou aucune ;
+- J11 continue exclusivement le pivot actif ou Marie ;
+- J12 évite toute image de groupe all-cast universelle ;
+- Player reste non identifiable ;
+- C10-05 couvre uniquement la seconde comparaison Raphaëlle R-A ;
+- C10-06 et C10-07 sont créées par Sophie ;
+- C12-03 est créé et possédé par Pauline.
+
 Règles transversales :
 
 - Player reste non identifiable ;
@@ -182,7 +206,7 @@ Règles transversales :
 - les comportements Galerie non spécifiés restent différés ;
 - aucun paquet n’autorise à lui seul une modification runtime ou une production d’asset.
 
-Les futurs paquets Actes III à V doivent appliquer la même méthode sans recopier ou concurrencer le document `11`.
+Les futurs paquets Actes IV et V doivent appliquer la même méthode sans recopier ou concurrencer le document `11`.
 
 ---
 
@@ -244,8 +268,8 @@ corpus narratif signé
 → NAR‑PROD‑01 terminé
 → NAR‑PROD‑02 Acte I / J01–J04 READY
 → NAR‑PROD‑03 Acte II / J05–J08 READY
-→ NAR‑PROD‑04 Acte III / J09–J12
-→ paquet Acte IV / J13–J16
+→ NAR‑PROD‑04 Acte III / J09–J12 READY
+→ NAR‑PROD‑05 Acte IV / J13–J16
 → paquet Acte V / J17–J21
 → production des assets validés
 → adaptation runtime seulement lorsque nécessaire
@@ -262,7 +286,7 @@ Vision et structure : docs/canon/bible/
 Personnages : docs/canon/characters/
 Narration J01–J21 : scripts consolidés + registres + sign-off
 Audit de préparation : NAR_PROD_01_AUDIT_PREPARATION_PRODUCTION_SAISON_1.md
-Paquets de production : NAR_PROD_02, NAR_PROD_03 puis Actes III à V
+Paquets de production : NAR_PROD_02, NAR_PROD_03, NAR_PROD_04 puis Actes IV–V
 UI/UX : docs/canon/ui/
 Runtime réel : code, données et tests sur main
 Statut et priorité : README.md + ROADMAP.md
