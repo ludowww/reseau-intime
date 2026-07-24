@@ -21,7 +21,8 @@ Contrats de traces / promesses / connaissances : validés
 Reachability : validée
 NAR‑PROD‑01 : audit terminé et intégré
 NAR‑PROD‑02 : paquet Acte I intégré
-NAR‑PROD‑03 : paquet Acte II validé sur sa branche
+NAR‑PROD‑03 : paquet Acte II intégré
+NAR‑PROD‑04 : paquet Acte III validé sur sa branche
 ```
 
 Le corpus signé reste autoritaire pour J01–J21. La Bible Narrative reste autoritaire pour toute nouvelle production, révision structurelle ou extension.
@@ -161,28 +162,62 @@ Ce paquet ne produit aucun asset et n’autorise aucune modification runtime par
 
 ---
 
-# 6. Prochain lot recommandé
+# 6. NAR‑PROD‑04 — Acte III prêt
+
+Source :
 
 ```text
-NAR‑PROD‑04 — Paquet de production Acte III / J09–J12
+docs/canon/dialogues/NAR_PROD_04_PAQUET_PRODUCTION_ACTE_III_J09_J12.md
 ```
 
-Objectif : appliquer la méthode validée aux vies parallèles, avec une vigilance particulière sur :
+Verdict :
 
-- l’entrée J09 et la robe noire déplacée ;
-- les premières dominantes relationnelles sans verrou prématuré ;
-- les différences d’audience et de permanence ;
-- les variantes réellement nécessaires J10–J12 ;
-- le casting conditionnel de J12 ;
-- la séparation stricte image de scène / photo diégétique / trace.
+```text
+J09–J12 : READY
+14 beats servis par partie
+21 nouveaux contenus principaux
+8 réutilisations antérieures distinctes
+26 nouveaux fichiers sources
+2 variantes conditionnelles J11
+```
+
+Décisions centrales :
+
+- J09 possède Marie comme pivot unique ; l’ancien prototype Sandra-only est non autoritatif ;
+- J10 sélectionne invisiblement une seule continuité extérieure ou aucune ;
+- J11 continue exclusivement le pivot réellement actif ou Marie ;
+- J12 converge sans image de groupe all-cast universelle ;
+- Player reste non identifiable ;
+- `FACT_RECORD`, `PHOTO_DIÉGÉTIQUE` et `SOUVENIR_IMAGE_DE_SCÈNE` restent strictement séparés ;
+- les deux seules variantes couvrent Mathilde proximité/distance et Marie reconquête/limite ;
+- aucune décision produit ne reste ouverte pour J09–J12.
+
+Ce paquet ne produit aucun asset et n’autorise aucune modification runtime par lui seul.
+
+---
+
+# 7. Prochain lot recommandé
+
+```text
+NAR‑PROD‑05 — Paquet de production Acte IV / J13–J16
+```
+
+Vigilances principales :
+
+- découverte J14 limitée à une trace déjà existante ;
+- dettes et obligations prioritaires avant nouvelles occasions ;
+- aucune omniscience de Marie, Pauline, Nico ou des témoins ;
+- aucune restauration d’un fichier retiré ;
+- cohérence des engagements incompatibles J15 ;
+- paiement réel des conséquences J16.
 
 Ordre de production :
 
 ```text
 Acte I J01–J04          READY
 → Acte II J05–J08       READY
-→ Acte III J09–J12      NAR‑PROD‑04
-→ Acte IV J13–J16
+→ Acte III J09–J12      READY
+→ Acte IV J13–J16       NAR‑PROD‑05
 → Acte V J17–J21
 → production des assets validés
 → adaptation runtime seulement lorsque nécessaire
@@ -190,7 +225,7 @@ Acte I J01–J04          READY
 
 ---
 
-# 7. Gel technique
+# 8. Gel technique
 
 Par défaut :
 
@@ -204,7 +239,7 @@ Une réouverture technique exige un besoin narratif bloquant, une donnée indisp
 
 ---
 
-# 8. Règle de lot
+# 9. Règle de lot
 
 ```text
 1 objectif produit
