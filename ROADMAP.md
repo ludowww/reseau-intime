@@ -25,6 +25,7 @@ NAR‑PROD‑03 : paquet Acte II intégré
 NAR‑PROD‑04 : paquet Acte III intégré
 NAR‑CANON‑01 : correctif J14→J16 intégré
 NAR‑PROD‑05 : paquet Acte IV intégré
+NAR‑PROD‑06 : paquet Acte V intégré
 ```
 
 Le corpus signé reste autoritaire pour J01–J21. La Bible Narrative reste autoritaire pour toute nouvelle production, révision structurelle ou extension.
@@ -95,7 +96,7 @@ Verdict :
 ACTES I–V : READY
 J01–J21 NARRATIF : 21 / 21 READY
 RÉÉCRITURE STRUCTURELLE : NON REQUISE
-VISUELS FINAUX : 21 / 21 MISSING_SPEC avant extraction des paquets
+VISUELS FINAUX : remplacés par les paquets NAR‑PROD‑02 à NAR‑PROD‑06
 RUNTIME : GELÉ / HORS PÉRIMÈTRE
 ```
 
@@ -273,21 +274,63 @@ Le paquet corrige uniquement T17 et T18 dans le Trace Registry. Il ne produit au
 
 ---
 
-# 9. Prochain lot recommandé
+# 9. NAR‑PROD‑06 — Acte V prêt
+
+Source :
 
 ```text
-NAR‑PROD‑06 — Paquet de production Acte V / J17–J21
+docs/canon/dialogues/NAR_PROD_06_PAQUET_PRODUCTION_ACTE_V_J17_J21.md
 ```
 
-Vigilances principales :
+Verdict :
 
-- J17 définit provisoirement le couple sans résoudre magiquement les dettes ;
-- la fin du séjour Mathilde doit être concrète et cohérente avec le foyer ;
-- J18–J20 résolvent les relations sans ouvrir de nouvelle route tardive ;
-- J21 sélectionne uniquement une trace existante et admissible ;
-- une trace retirée peut être finale comme absence, jamais comme fichier restauré ;
-- les promesses post-J21 restent des hooks, pas des récompenses déjà acquises ;
-- les variantes de finale dépendent d’une contradiction préexistante, jamais créée par J21.
+```text
+J17–J21 : READY
+15 beats servis par partie
+8 nouveaux contenus principaux
+14 réutilisations historiques distinctes disponibles
+10 nouveaux fichiers sources
+0 fichier enfant
+2 variantes conditionnelles
+J21 : 0 nouveau contenu, 0 fichier, 0 trace, 0 photographie
+```
+
+Décisions centrales :
+
+- J17 mutualise visuellement les états du couple en deux familles sans fusionner les états narratifs ;
+- T23 reste un `FACT_RECORD` sans fichier ;
+- T24 est une impression physique contrôlée par Sandra qui réutilise T01 sans nouveau fichier photographique ;
+- C18-01 reste une image de scène distincte et ne devient jamais T24 ;
+- l’intimité tardive Sandra remplace la résolution standard et son aftercare J19 réutilise la variante J18 ;
+- J19 contient deux foregrounds de catalogue alternatifs, jamais deux foregrounds servis ensemble ;
+- T25 et T26 restent respectivement message et état d’accès, sans image ;
+- J20 donne une position active à Nico sans variante par état ;
+- P23 existe à la proposition précise et ne devient `ACTIVE` qu’après acceptation ;
+- T27 et T28 restent fait ou absence, jamais photographie ;
+- J21 fonctionne exclusivement par réutilisation, contexte ou absence sous `NO_NEW_ASSET` ;
+- aucun comportement Galerie ou onglet « Souvenir » n’est ajouté ;
+- aucune décision produit ne reste ouverte pour J17–J21.
+
+Le paquet ne modifie aucun registre, dialogue signé, runtime, JSON, test, UI ou asset.
+
+---
+
+# 10. Prochaine priorité recommandée
+
+```text
+Production des assets validés à partir de NAR‑PROD‑02 à NAR‑PROD‑06
+```
+
+La production doit :
+
+- suivre les `content_id`, `asset_id`, fichiers, variantes et réutilisations verrouillés ;
+- commencer par un périmètre court et représentatif ;
+- conserver Player non identifiable ;
+- respecter créateurs, propriétaires, audiences, sauvegarde, transfert et permanence ;
+- ne pas produire de variante non autorisée ;
+- ne pas restaurer de trace retirée ;
+- ne pas transformer une image de scène ou un `FACT_RECORD` en trace photographique ;
+- ne pas rouvrir le runtime ou l’UI tant qu’une limite réelle n’est pas démontrée.
 
 Ordre de production :
 
@@ -297,28 +340,28 @@ Acte I J01–J04          READY
 → Acte III J09–J12      READY
 → NAR‑CANON‑01          READY
 → Acte IV J13–J16       READY
-→ Acte V J17–J21        NAR‑PROD‑06
+→ Acte V J17–J21        READY
 → production des assets validés
 → adaptation runtime seulement lorsque nécessaire
 ```
 
 ---
 
-# 10. Gel technique
+# 11. Gel technique
 
 Par défaut :
 
 ```text
 UI       GELÉE
 RUNTIME  GELÉ
-ASSETS   NON PRODUITS
+ASSETS   SPÉCIFIÉS, NON PRODUITS
 ```
 
 Une réouverture technique exige un besoin narratif bloquant, une donnée indispensable absente, une limite UI avérée, une régression ou une décision produit explicite.
 
 ---
 
-# 11. Règle de lot
+# 12. Règle de lot
 
 ```text
 1 objectif produit
