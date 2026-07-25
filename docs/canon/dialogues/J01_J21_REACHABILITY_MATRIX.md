@@ -122,7 +122,8 @@ Objectifs :
 
 - conséquence prioritaire ;
 - découverte limitée ;
-- collision de promesses existantes ;
+- collision de promesses existantes lorsqu’elle est prouvée ;
+- mutation sans collision lorsque moins de deux promesses admissibles subsistent ;
 - paiement avant résolution.
 
 Aucune nouvelle route majeure.
@@ -256,6 +257,7 @@ PROXIMITY_CONSENTED maximum
 - `CLEAR_UNFAITHFUL_SECRET` active `RAPHAELLE_CLEAR_SECRET`.
 - `COLLEAGUE_ONLY` interdit une image privée active.
 - Maud ne crée aucune permission à la place de Raphaëlle.
+- aucune collision J15 complète Raphaëlle n’est atteignable sans seconde promesse antérieure réellement signée.
 
 ---
 
@@ -277,6 +279,7 @@ PROXIMITY_CONSENTED maximum
 - `TAKING_DISTANCE` interdit une nouvelle confidence obligatoire.
 - `CONSCIOUS_ACCOMPLICE` peut rendre C disponible en J21 seulement si la dette reste active.
 - aucune route Nico / Player romantique ou sexuelle.
+- Nico utilise `S28_MUTATION_NO_COLLISION` par défaut lorsqu’aucune seconde promesse antérieure incompatible n’est prouvée.
 
 ---
 
@@ -289,8 +292,10 @@ PROXIMITY_CONSENTED maximum
 | `marie_j09_dinner_friday_2030` | J09/J10 | J11 | conséquence couple |
 | `sandra_cafe_saturday_1100` | J10/J11 | préambule J12 | J12 non conforme |
 | `marie_j12_laverriere_presence` | J12 choix L | J12 | conséquence J13 |
-| `j14_witness_clarification` | J14 D-C | avant ou pendant J15 | dette prioritaire |
-| `j14_inform_trace_controller` | audience compromise | avant progression | sécurité prioritaire |
+| `j14_witness_clarification` | J14 D-C avec heure précise uniquement | heure promise, ou amendement/échec/annulation explicite | admissible J15 seulement si encore `ACTIVE` |
+| `j14_inform_trace_controller` | audience compromise | J14 avant progression | `PAID` ou `FAILED` avant J15 ; jamais maintenue artificiellement |
+| sept promesses NAR-CANON-01 | responsabilités ou engagements signés J14, activés par confirmation J15 | paiement, refus, amendement, échec ou fermeture attribuable | S28 les lit seulement si `ACTIVE` et compatible |
+| `j16_priority_consequence_payment` | fin J15 seulement si conséquence réelle due | J16 | absente après fermeture propre sans urgence |
 | `marie_j16_couple_conversation_j17` | J16 | J17 | définition couple unilatérale ou fracture |
 | `couple_review_due_at` | J17 | après J21 | hook futur, pas dette saison 1 |
 | `raphaelle_future_atelier_saturday_1500` | J19 | extension | reste conditionnelle |
@@ -330,7 +335,111 @@ interface peut réellement montrer les champs
 Sinon :
 
 ```text
-respiration / préparation J15
+S27_MUTATION_NO_DISCOVERY
+→ engagements réellement existants seulement
+→ aucune garantie de collision J15
+```
+
+## J15 — Validation NAR-CANON-01
+
+S28 complet est atteignable uniquement avec deux fiches distinctes :
+
+```text
+promise_id
+status = ACTIVE
+created_at = source signée J14
+activated_at < collision J15
+source signée exacte
+personne concernée
+action_due
+due_at ou fenêtre exacte
+accepted_by_player attribuable
+paid_or_closed_at = null
+```
+
+Les actions et les fenêtres doivent être distinctes. Les fenêtres doivent être objectivement incompatibles.
+
+| Branche | Promise A | Promise B | Source signée des deux | Collision complète ? | Mutation sinon |
+|---|---|---|---|---|---|
+| Pauline | `marie_j14_pauline_player_account_j15` | `pauline_j14_post_breach_return_j15` | sortie Pauline J14 + J15 §§10.3–10.6 | Oui si deux `ACTIVE` | `S28_MUTATION_NO_COLLISION` |
+| Sandra | `household_j14_sandra_rule_j15` | `sandra_j14_breach_account_j15` | J14 S14-C/§21/§25 + J15 §§11.3–11.4 | Oui si deux `ACTIVE` | `S28_MUTATION_NO_COLLISION` |
+| Mathilde | `mathilde_j14_household_safety_rule_j15` | obligation extérieure antérieure admissible | J14 M14 + J15 §12.3 + source extérieure antérieure | Oui seulement avec O2 réelle | `S28_MUTATION_NO_COLLISION` |
+| Raphaëlle | `marie_j14_raphaelle_position_j15` | aucune seconde fiche signée | J14 R14 + activation J15 de l’unique obligation Marie | Non ; collision complète `MISSING_SIGNED_SOURCE` | `S28_MUTATION_NO_COLLISION` |
+| Nico | `marie_j14_nico_hour_account_j15` | seconde fiche antérieure à prouver | J14 N14 + J15 §16.2 + seconde source signée | Non par défaut | `S28_MUTATION_NO_COLLISION` |
+| Composite | paire exacte du personnage identifié | seconde fiche de la paire | notification réelle + deux sources propres | Selon paire | `S28_MUTATION_NO_COLLISION` |
+
+Verdicts :
+
+```text
+Pauline: READY_WITH_REGISTRY_PATCH
+Sandra: READY_WITH_REGISTRY_PATCH
+Mathilde avec seconde obligation réelle: READY_WITH_REGISTRY_PATCH
+Mathilde sans seconde obligation réelle: S28_MUTATION_NO_COLLISION
+Raphaëlle: S28_MUTATION_NO_COLLISION
+Raphaëlle collision complète: MISSING_SIGNED_SOURCE
+Nico par défaut: S28_MUTATION_NO_COLLISION
+Composite avec paire exacte: READY_WITH_REGISTRY_PATCH
+Composite sans paire exacte: S28_MUTATION_NO_COLLISION
+```
+
+### `S28_MUTATION_NO_COLLISION`
+
+Éligible lorsque :
+
+- moins de deux promesses sont admissibles ;
+- les fenêtres ne sont pas incompatibles ;
+- la seconde obligation n’est pas signée ;
+- une bonne gestion antérieure a fermé les autres attentes.
+
+La mutation :
+
+- paie, amende, refuse ou ferme l’unique obligation réelle ;
+- ne fabrique aucune seconde obligation ;
+- montre les autres personnages continuant leur vie ;
+- conserve une conséquence Marie ou foyer seulement si elle existe ;
+- prépare J16 sans prétendre qu’une collision complète a eu lieu.
+
+T21 reste un `FACT_RECORD` avec :
+
+```text
+trace_id: j15_obligation_collision_record_01
+record_type: FACT_RECORD
+collision_mode: NO_COLLISION
+incompatible_windows_proven: false
+second_signed_obligation_present: false
+urgent_consequence_remaining: true | false
+current_state: ACTIVE
+visual_asset: none
+```
+
+Si aucun record n’est créé :
+
+```text
+trace_id: j15_obligation_collision_record_01
+current_state: NOT_CREATED
+```
+
+La mutation n’ouvre aucune route, ne crée aucune progression adulte et n’ajoute aucun fichier visuel.
+
+## J16 — Création conditionnelle de P17
+
+P17 `j16_priority_consequence_payment` est créée seulement lorsqu’une conséquence réelle reste due après J15.
+
+| Sortie J15 | P17 créé ? | T21 | Entrée J16 |
+|---|---|---|---|
+| obligation échouée, impayée ou mensonge avec conséquence | Oui | conséquence restante | priorité 1–7 |
+| refus avec conséquence signée | Oui | conséquence identifiée | paiement précis |
+| obligation payée | Non | aucune urgence | préparation Mathilde / Marie / J17 |
+| attente proprement fermée | Non | aucune urgence | priorité 8 |
+| aucune obligation admissible et aucune dette, aucun record nécessaire | Non | `current_state: NOT_CREATED` | passage direct vers préparation |
+
+T22 distingue :
+
+```text
+CONSEQUENCE_PAID
+CONSEQUENCE_FAILED
+NO_URGENT_CONSEQUENCE
+DIRECT_TO_MATHILDE_MARIE_J17_PREPARATION
 ```
 
 ## J21
@@ -374,7 +483,8 @@ C ne crée jamais une nouvelle violation.
 J01–J09 présence réelle
 → promesses payées
 → J14 vérité limitée ou aucune découverte grave
-→ J16 conséquence payée
+→ J15 collision prouvée ou mutation propre
+→ J16 conséquence payée ou priorité 8
 → J17 RECONQUEST_ACTIVE
 → J18–J20 limites extérieures respectées
 → J21 RULE_ACTED
@@ -507,6 +617,7 @@ SEPARATION couple → route extérieure disponible automatiquement
 RECONFIGURATION_NEGOTIATING → couple ouvert automatique
 trace REMOVED → trace ACTIVE sans contrôleur
 promise REFUSED → promise ACTIVE sans nouveau promise_id
+promise PAID | FAILED | EXPIRED | CANCELLED | CLOSED → promise ACTIVE sans nouveau promise_id
 ```
 
 ---
@@ -568,7 +679,7 @@ Attendu : Sandra ne se déplace pas.
 aucune trace privée accessible
 ```
 
-Attendu : aucun accident d’écran inventé.
+Attendu : aucun accident d’écran inventé ; `S27_MUTATION_NO_DISCOVERY`.
 
 ## T5 — Aftercare dû
 
@@ -598,6 +709,29 @@ Attendu : absence finale possible, fichier jamais restauré.
 
 Attendu : aucune relation extérieure auto-ouverte.
 
+## T11 — S28 complet
+
+```text
+deux promesses ACTIVE
+deux actions distinctes
+deux fenêtres incompatibles
+deux sources signées
+```
+
+Attendu : `collision_mode: FULL_COLLISION` admissible.
+
+## T12 — S28 sans seconde promesse
+
+Attendu : `S28_MUTATION_NO_COLLISION`, aucune dette de substitution.
+
+## T13 — Raphaëlle sans tâche signée
+
+Attendu : mutation ; collision complète `MISSING_SIGNED_SOURCE`.
+
+## T14 — P17 après fermeture propre
+
+Attendu : P17 absente ; J16 priorité 8.
+
 ---
 
 # 18. Relation au legacy
@@ -620,7 +754,9 @@ Les routes restent lisibles comme conséquences narratives, pas comme modes sél
 
 ```text
 ÉTATS J17 → J21 : TOUS ATTEIGNABLES
-PROMESSES CRITIQUES : TOUTES PAYABLES OU FERMABLES
+PROMESSES CRITIQUES : PAYABLES OU FERMABLES
+S28 COMPLET : RÉSERVÉ AUX PAIRES PROUVÉES
+S28 SANS PAIRE : MUTATION NO_COLLISION
 AFTERCARES : BLOQUANTS JUSQU’AU PAIEMENT
 TRACES J14 / J21 : SOURCÉES
 FERMETURES : NON ROUVERTES AUTOMATIQUEMENT
