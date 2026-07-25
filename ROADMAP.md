@@ -22,7 +22,8 @@ Reachability : validée
 NAR‑PROD‑01 : audit terminé et intégré
 NAR‑PROD‑02 : paquet Acte I intégré
 NAR‑PROD‑03 : paquet Acte II intégré
-NAR‑PROD‑04 : paquet Acte III validé sur sa branche
+NAR‑PROD‑04 : paquet Acte III intégré
+NAR‑CANON‑01 : correctif J14→J16 intégré
 ```
 
 Le corpus signé reste autoritaire pour J01–J21. La Bible Narrative reste autoritaire pour toute nouvelle production, révision structurelle ou extension.
@@ -196,20 +197,65 @@ Ce paquet ne produit aucun asset et n’autorise aucune modification runtime par
 
 ---
 
-# 7. Prochain lot recommandé
+# 7. NAR‑CANON‑01 — J14→J16 réparé
+
+Source :
 
 ```text
-NAR‑PROD‑05 — Paquet de production Acte IV / J13–J16
+docs/canon/dialogues/NAR_CANON_01_REPARATION_PROMESSES_ATTEIGNABILITE_J14_J16.md
 ```
 
-Vigilances principales :
+Sources autoritatives corrigées :
 
-- découverte J14 limitée à une trace déjà existante ;
-- dettes et obligations prioritaires avant nouvelles occasions ;
-- aucune omniscience de Marie, Pauline, Nico ou des témoins ;
-- aucune restauration d’un fichier retiré ;
-- cohérence des engagements incompatibles J15 ;
-- paiement réel des conséquences J16.
+```text
+docs/canon/dialogues/J01_J21_PROMISE_REGISTRY.md
+docs/canon/dialogues/J01_J21_REACHABILITY_MATRIX.md
+docs/canon/runtime/SEASON_1_NARRATIVE_STATE_CONTRACT.md
+```
+
+Verdict :
+
+```text
+7 nouvelles promesses conditionnelles J14→J15
+P14 : D-C avec heure précise uniquement
+P15 : PAID ou FAILED en J14
+S28 FULL_COLLISION : deux fiches prouvées requises
+S28 sans paire : S28_MUTATION_NO_COLLISION
+Raphaëlle : mutation, seconde obligation professionnelle MISSING_SIGNED_SOURCE
+Nico : mutation par défaut
+P17 : créée seulement si conséquence réelle restante
+J16 priorité 8 : atteignable après fermeture propre
+VALIDATION PRODUIT : PASS
+```
+
+Le correctif ne modifie aucun dialogue signé, aucun runtime, aucun JSON, aucun test, aucun asset et aucun comptage visuel de NAR‑PROD‑05.
+
+---
+
+# 8. Prochain lot recommandé
+
+```text
+NAR‑PROD‑05 — Finalisation du paquet Acte IV / J13–J16
+```
+
+Le paquet est désormais débloqué par NAR‑CANON‑01. La prochaine passe doit :
+
+- aligner ses verdicts sur `FULL_COLLISION | NO_COLLISION` ;
+- conserver les comptages validés ;
+- corriger les métadonnées T17/T18 déjà arbitrées ;
+- vérifier la reachability J14→J15 contre les sept promesses ;
+- ne rouvrir aucun dialogue signé.
+
+Comptages de travail à conserver :
+
+```text
+12 beats servis
+10 nouveaux contenus principaux
+12 réutilisations antérieures distinctes
+11 nouveaux fichiers sources
+1 fichier enfant
+1 variante conditionnelle
+```
 
 Ordre de production :
 
@@ -217,7 +263,8 @@ Ordre de production :
 Acte I J01–J04          READY
 → Acte II J05–J08       READY
 → Acte III J09–J12      READY
-→ Acte IV J13–J16       NAR‑PROD‑05
+→ NAR‑CANON‑01          READY
+→ Acte IV J13–J16       NAR‑PROD‑05 finalisation
 → Acte V J17–J21
 → production des assets validés
 → adaptation runtime seulement lorsque nécessaire
@@ -225,7 +272,7 @@ Acte I J01–J04          READY
 
 ---
 
-# 8. Gel technique
+# 9. Gel technique
 
 Par défaut :
 
@@ -239,7 +286,7 @@ Une réouverture technique exige un besoin narratif bloquant, une donnée indisp
 
 ---
 
-# 9. Règle de lot
+# 10. Règle de lot
 
 ```text
 1 objectif produit
