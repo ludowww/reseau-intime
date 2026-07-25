@@ -117,6 +117,19 @@ docs/canon/dialogues/J20_SCRIPT_NARRATIF_COMPLET.md
 docs/canon/dialogues/J21_SCRIPT_NARRATIF_COMPLET.md
 ```
 
+## Addenda adultes validés
+
+Lire ensuite, dans cet ordre :
+
+```text
+docs/canon/dialogues/NAR_PROD_07_ADULT_PAYOFF_AUDIT_SPECIFICATION.md
+docs/canon/dialogues/NAR_ADULT_01_PAYOFFS_J11_MARIE_MATHILDE.md
+docs/canon/dialogues/NAR_ADULT_02_PAYOFF_SANDRA_J18.md
+docs/canon/dialogues/NAR_ADULT_03_PAYOFFS_PAULINE_RAPHAELLE.md
+```
+
+Ces addenda ne remplacent pas les scripts complets. Ils imposent les amendements adultes à intégrer dans le prochain lot et font temporairement autorité sur les budgets visuels et les plafonds adultes concernés.
+
 ---
 
 # 6. Contrats pré-runtime

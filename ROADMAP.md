@@ -318,32 +318,15 @@ Le paquet ne modifie aucun registre, dialogue signé, runtime, JSON, test, UI ou
 # 10. Prochaine priorité recommandée
 
 ```text
-Production des assets validés à partir de NAR‑PROD‑02 à NAR‑PROD‑06
+Cycle de conception des payoffs adultes : validé
+Consolidation documentaire : lot courant
+Prochaine étape : amendements ciblés des scripts J11/J12/J13/J18/J19
+Puis : mise à jour NAR-PROD-04/05/06
+Puis : ASSET-01 final à 84 fichiers
+Production ComfyUI : toujours non autorisée
 ```
 
-La production doit :
-
-- suivre les `content_id`, `asset_id`, fichiers, variantes et réutilisations verrouillés ;
-- commencer par un périmètre court et représentatif ;
-- conserver Player non identifiable ;
-- respecter créateurs, propriétaires, audiences, sauvegarde, transfert et permanence ;
-- ne pas produire de variante non autorisée ;
-- ne pas restaurer de trace retirée ;
-- ne pas transformer une image de scène ou un `FACT_RECORD` en trace photographique ;
-- ne pas rouvrir le runtime ou l’UI tant qu’une limite réelle n’est pas démontrée.
-
-Ordre de production :
-
-```text
-Acte I J01–J04          READY
-→ Acte II J05–J08       READY
-→ Acte III J09–J12      READY
-→ NAR‑CANON‑01          READY
-→ Acte IV J13–J16       READY
-→ Acte V J17–J21        READY
-→ production des assets validés
-→ adaptation runtime seulement lorsque nécessaire
-```
+Les addenda adultes validés sont consolidés avant toute réécriture ciblée, révision des paquets de production ou finalisation de la liste d’assets.
 
 ---
 
