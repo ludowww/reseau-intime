@@ -25,10 +25,12 @@ Chaque promesse possède :
 promise_id
 promise_type
 created_at
+activated_at si activation différée
 created_by
 proposed_to
 accepted_at
 accepted_by_player
+action_due
 due_at
 confirmation_deadline
 status
@@ -74,16 +76,32 @@ PROPOSED → REFUSED
 PROPOSED → CONDITIONAL
 CONDITIONAL → ACTIVE
 CONDITIONAL → EXPIRED
+CONDITIONAL → REFUSED
 ACTIVE → PAID
 ACTIVE → AMENDED
 ACTIVE → CANCELLED
 ACTIVE → FAILED
+ACTIVE → CLOSED
 AMENDED → ACTIVE
 AMENDED → PAID
 AMENDED → REFUSED
+AMENDED → CANCELLED
+AMENDED → CLOSED
+FAILED → CLOSED
 ```
 
-Une promesse `REFUSED`, `EXPIRED`, `CANCELLED` ou `CLOSED` ne redevient pas active sans un nouveau `promise_id`.
+Une promesse dont le statut est `PAID`, `REFUSED`, `FAILED`, `EXPIRED`, `CANCELLED` ou `CLOSED` ne redevient jamais `ACTIVE` avec le même `promise_id`.
+
+Toute nouvelle proposition exige :
+
+```text
+une source signée nouvelle
++ une action future précise
++ une acceptation attribuable
++ un nouveau promise_id
+```
+
+Une phrase de disponibilité, une attirance, une photographie, une notification ou un silence ne constituent jamais une promesse.
 
 ---
 
@@ -95,7 +113,7 @@ Une promesse `REFUSED`, `EXPIRED`, `CANCELLED` ou `CLOSED` ne redevient pas acti
 4. Un refus doit fermer explicitement l’attente.
 5. Une personne ne se déplace pas sur une supposition.
 6. Toute promesse active apparaît dans la sélection des obligations avant une nouvelle opportunité.
-7. J15 utilise uniquement des promesses créées avant J15.
+7. J15 utilise uniquement des promesses dont la responsabilité est créée avant J15 et dont l’activation est attribuable.
 8. Une promesse peut être payée hors téléphone ; son résultat revient après séparation réelle.
 9. Une promesse échouée crée une conséquence attribuable à son `promise_id`.
 10. Aucun score relationnel ne remplace le statut d’une promesse.
@@ -398,20 +416,45 @@ related_trace_ids: [j12_annexe_public_group_set_01]
 ```text
 promise_id: j14_witness_clarification
 promise_type: CLARIFICATION
-created_at: J14 choix D-C uniquement
+created_at: J14 choix D-C uniquement, à l’instant où une heure précise est proposée
 created_by: Player
 proposed_to: témoin J14
-accepted_at: témoin accepte l’heure proposée
+accepted_at: lorsque le témoin accepte l’heure précise
 accepted_by_player: true
+action_due: clarification exacte promise au témoin
 due_at: heure précise dans la même journée ou J15 au plus tard
 confirmation_deadline: immédiate
 status: ACTIVE, AMENDED, PAID, FAILED ou CANCELLED
-paid_or_closed_by: vérité limitée, aveu du report ou refus du témoin
+paid_or_closed_at: null tant que la clarification reste due ; horodatage obligatoire à la sortie
+paid_or_closed_by: clarification tenue, amendement accepté, échec attribuable ou annulation du témoin
 related_scene: S27 photo au mauvais écran
 related_trace_ids: [j14_discovery_event_01]
 ```
 
-Une clarification sans heure ne crée pas une promesse valide.
+P14 est créée seulement par D-C avec heure précise acceptée.
+
+Transitions :
+
+```text
+ACTIVE → PAID | AMENDED | FAILED | CANCELLED
+AMENDED → ACTIVE | PAID | FAILED | CANCELLED
+```
+
+Une vérité limitée immédiatement donnée ne crée jamais P14.
+
+P14 reste `ACTIVE` uniquement tant que la clarification exacte reste réellement due.
+
+Avant toute nouvelle fiche Marie, comparer `action_due` :
+
+```text
+P14 ACTIVE + même action_due
+→ utiliser P14
+→ aucune nouvelle fiche
+
+P14 PAID | FAILED | CANCELLED + même action_due
+→ respecter la terminalité
+→ aucune recréation sous un nouveau promise_id
+```
 
 ## P15 — Information de la personne représentée
 
@@ -421,37 +464,278 @@ promise_type: CLARIFICATION
 created_at: J14 dès qu’une audience privée est compromise
 created_by: responsabilité narrative
 proposed_to: Player
-accepted_at: obligatoire, pas un choix de route
-accepted_by_player: action attendue
-due_at: avant toute nouvelle progression et avant J15
-confirmation_deadline: immédiate ou heure pratique la plus proche
+accepted_at: obligatoire par responsabilité signée
+accepted_by_player: action attribuable à Player
+due_at: J14, heure pratique la plus proche
+confirmation_deadline: avant toute nouvelle progression et avant J15
 status: ACTIVE, PAID ou FAILED
-paid_or_closed_by: message factuel à la personne représentée
+paid_or_closed_at: null à la création ; horodatage J14 obligatoire à la sortie
+paid_or_closed_by: message factuel à la personne représentée, ou refus/omission attribuable
 related_scene: conséquence audience J14
 related_trace_ids: [trace réellement vue]
 ```
 
-Le joueur peut refuser de payer ; cela produit `FAILED` et bloque la progression.
+Transitions :
 
-## P16 — Engagements incompatibles J15
+```text
+ACTIVE → PAID | FAILED
+FAILED → CLOSED
+```
+
+Si la personne représentée est informée en J14, P15 devient `PAID`.
+
+P15 ne reste jamais artificiellement `ACTIVE` jusqu’à J15.
+
+Un compte rendu, une confirmation d’audience ou une réponse ultérieure reçoit un `promise_id` distinct parmi les sept entrées NAR-CANON-01.
+
+## NAR-CANON-01 — Sept promesses conditionnelles J14→J15
+
+Les sept entrées suivantes n’existent que si leur source signée s’est réellement produite.
+
+Une entrée absente n’est jamais simulée par un objet `ACTIVE`.
+
+### `marie_j14_pauline_player_account_j15`
+
+```text
+promise_id: marie_j14_pauline_player_account_j15
+promise_type: COUPLE_REVIEW
+created_at: sortie Pauline J14 laissant la conversation Marie due
+activated_at: J15 08:09 après proposition de la fenêtre Marie et acceptation explicite de Player
+created_by: Marie
+proposed_to: Player
+accepted_at: J15 08:09, branche d’acceptation
+accepted_by_player: true uniquement pour une acceptation explicite telle que « oui. 19 h »
+action_due: répondre à Marie sur ce que Player a accepté
+due_at: J15 19:00–20:00, ou heure J14 précise reprise
+confirmation_deadline: J15 08:09
+status: CONDITIONAL
+activation_rule: CONDITIONAL → ACTIVE uniquement à activated_at
+transitions autorisées: CONDITIONAL → ACTIVE | REFUSED | EXPIRED ; ACTIVE → PAID | AMENDED | CANCELLED | FAILED | CLOSED ; AMENDED → ACTIVE | PAID | REFUSED | CANCELLED | CLOSED
+paid_or_closed_at: null à la création ; obligatoire à la sortie
+paid_or_closed_by: Marie et Player par présence, amendement, refus, annulation ou échec
+related_scene: J14 Pauline / J15 §§10.2–10.8
+related_trace_ids: [j14_discovery_event_01, j13_pauline_private_version_01]
+source signée exacte: J14 §10 « conversation couple J15 due » ; J15 §10.3 « Hier, tu as dit mardi », « J’ai 19 h à 20 h », Player « oui. 19 h »
+branche: Pauline
+collision possible avec: pauline_j14_post_breach_return_j15
+condition d’absence: variante Pauline absente, conversation déjà payée, heure refusée, ou P14 couvrant exactement la même action_due
+condition de fermeture: présence, amendement accepté, refus avant attente, annulation ou échec attribuable
+```
+
+### `pauline_j14_post_breach_return_j15`
+
+```text
+promise_id: pauline_j14_post_breach_return_j15
+promise_type: CLARIFICATION
+created_at: J14 après compromission, information de Pauline et naissance d’une responsabilité distincte de retour
+activated_at: J15 lorsque Pauline formule la demande précise et que Player accepte le retour avant la collision
+created_by: responsabilité distincte envers Pauline née en J14
+proposed_to: Player
+accepted_at: avant collision lorsque le retour est réellement accepté
+accepted_by_player: true uniquement si l’acceptation est enregistrée
+action_due: dire à Pauline ce qui a réellement été expliqué avant sa décision
+due_at: après l’échange Marie et avant J15 19:25
+confirmation_deadline: avant sélection S28, au plus tard J15 18:42
+status: CONDITIONAL
+activation_rule: CONDITIONAL → ACTIVE uniquement à activated_at
+transitions autorisées: CONDITIONAL → ACTIVE | REFUSED | EXPIRED ; ACTIVE → PAID | AMENDED | CANCELLED | FAILED | CLOSED ; AMENDED → ACTIVE | PAID | REFUSED | CANCELLED | CLOSED
+paid_or_closed_at: null à la création ; obligatoire à la sortie
+paid_or_closed_by: Pauline par décision autonome, ou Player par compte rendu, refus ou échec
+related_scene: J14 Pauline / J15 §§10.4–10.8
+related_trace_ids: [j14_discovery_event_01, j13_pauline_private_version_01]
+source signée exacte: J14 §§21/25/26, compromission, information de Pauline et responsabilité distincte laissée ouverte ; J15 §10.4 « Je veux savoir avant ce que tu auras réellement dit à Marie », « À 19 h 25, je décide sans toi » ; J15 §10.6 « j’ai accepté ton heure entière et son retour après »
+branche: Pauline
+collision possible avec: marie_j14_pauline_player_account_j15
+condition d’absence: P15 non PAID, aucune responsabilité distincte laissée par J14, aucun retour demandé, retour refusé, attente déjà fermée
+condition de fermeture: compte rendu exact, refus avant attente, décision autonome Pauline, compartiment fermé
+```
+
+### `household_j14_sandra_rule_j15`
+
+```text
+promise_id: household_j14_sandra_rule_j15
+promise_type: BOUNDARY_REVIEW
+created_at: J14 S14-C lorsque Player promet de répondre sur l’appartement et Marie
+activated_at: J15 08:20 lorsque la règle reste due et que la fenêtre est explicitement résolue
+created_by: Player envers Mathilde et le foyer
+proposed_to: Mathilde, Marie concernée
+accepted_at: J14 S14-C
+accepted_by_player: true uniquement par l’acte signé ou par responsabilité attribuable confirmée
+action_due: fixer la règle du foyer avec Mathilde et/ou Marie
+due_at: J15 19:00–19:15
+confirmation_deadline: J15 08:20
+status: CONDITIONAL
+activation_rule: CONDITIONAL → ACTIVE uniquement à activated_at
+transitions autorisées: CONDITIONAL → ACTIVE | EXPIRED | REFUSED ; ACTIVE → PAID | AMENDED | CANCELLED | FAILED | CLOSED ; AMENDED → ACTIVE | PAID | REFUSED | CANCELLED | CLOSED
+paid_or_closed_at: null à la création ; obligatoire à la sortie
+paid_or_closed_by: Mathilde/Marie par règle du foyer, ou Player par réponse, refus, amendement ou échec
+related_scene: J14 Sandra / J15 §§11.2–11.8
+related_trace_ids: [j14_discovery_event_01, j11_sandra_chosen_image_01]
+source signée exacte: J14 S14-C « après, je te réponds sur ce que ça change dans l’appartement et avec Marie » ; J15 §11.3 « À 19 h, je veux qu’on sache au moins si je vis ici en couvrant quelque chose ou non », « Je demande la règle »
+branche: Sandra
+collision possible avec: sandra_j14_breach_account_j15
+condition d’absence: Mathilde non témoin, aucune règle due, réponse déjà payée, attente fermée
+condition de fermeture: règle donnée, amendement accepté, refus/exclusion acté, foyer réorganisé sans Player
+```
+
+### `sandra_j14_breach_account_j15`
+
+```text
+promise_id: sandra_j14_breach_account_j15
+promise_type: CLARIFICATION
+created_at: J14 après compromission, information de Sandra et naissance d’une responsabilité distincte de compte rendu
+activated_at: J15 13:08–13:09 lorsque Sandra formule la demande précise et que la fenêtre est confirmée
+created_by: responsabilité d’audience signée, précisée par Sandra
+proposed_to: Player
+accepted_at: J14 par responsabilité ; fenêtre confirmée J15 13:08
+accepted_by_player: true uniquement si la compromission est attribuable et si le retour reste dû
+action_due: dire à Sandra exactement ce qui a été vu, dit et éventuellement transmis
+due_at: J15 19:00–19:15
+confirmation_deadline: J15 13:09
+status: CONDITIONAL
+activation_rule: CONDITIONAL → ACTIVE uniquement à activated_at
+transitions autorisées: CONDITIONAL → ACTIVE | EXPIRED | REFUSED ; ACTIVE → PAID | AMENDED | CANCELLED | FAILED | CLOSED ; AMENDED → ACTIVE | PAID | REFUSED | CANCELLED | CLOSED
+paid_or_closed_at: null à la création ; obligatoire à la sortie
+paid_or_closed_by: Sandra par retrait/fermeture, ou Player par compte rendu, refus ou échec
+related_scene: J14 §§21/25/26 Sandra / J15 §§11.4–11.8
+related_trace_ids: [j14_discovery_event_01, j11_sandra_chosen_image_01]
+source signée exacte: J14 §21 Sandra doit savoir ce que Player a dit ; J14 §25 « vérité à donner en J15 » ; J15 §11.4 « j’ai besoin de savoir qui sait quoi », « Entre 19 h et 19 h 15 »
+branche: Sandra
+collision possible avec: household_j14_sandra_rule_j15
+condition d’absence: aucune compromission Sandra, P15 non PAID, aucune responsabilité distincte laissée par J14, faits déjà rendus, retrait avec fermeture
+condition de fermeture: compte rendu payé, refus annoncé, retrait/fermeture Sandra, échec attribuable
+```
+
+### `mathilde_j14_household_safety_rule_j15`
+
+```text
+promise_id: mathilde_j14_household_safety_rule_j15
+promise_type: BOUNDARY_REVIEW
+created_at: J14 lorsqu’une règle de sécurité, distance ou foyer est signée
+activated_at: J15 08:05 lorsque la règle reste due et que sa fenêtre exacte est confirmée
+created_by: Mathilde ou Marie
+proposed_to: Player
+accepted_at: J14 par acceptation ou responsabilité signée
+accepted_by_player: true uniquement par acceptation explicite ou responsabilité attribuable
+action_due: garantir la sécurité, la distance ou la règle du foyer
+due_at: J15 18:00–20:00 pour sécurité, ou 18:30–19:15 pour entretien séparé
+confirmation_deadline: J15 08:05
+status: CONDITIONAL
+activation_rule: CONDITIONAL → ACTIVE uniquement à activated_at
+transitions autorisées: CONDITIONAL → ACTIVE | EXPIRED | REFUSED ; ACTIVE → PAID | AMENDED | CANCELLED | FAILED | CLOSED ; AMENDED → ACTIVE | PAID | REFUSED | CANCELLED | CLOSED
+paid_or_closed_at: null à la création ; obligatoire à la sortie
+paid_or_closed_by: Mathilde/Marie par règle et organisation, ou Player par respect, refus, contestation ou violation
+related_scene: J14 Mathilde / J15 §§12–14
+related_trace_ids: [j14_discovery_event_01, j10_mathilde_outfit_choice_01, j11_mathilde_physical_aftercare_01]
+source signée exacte: J14 M14-A « Tu ne restes pas seul avec elle ce soir » ; J14 M14-C « la phrase concerne une limite dans le foyer » ; J15 §12.3 « Mathilde veut me parler seule de 18 h 30 à 19 h 15 » ou « Tu ne rentres pas pendant cette fenêtre »
+branche: Mathilde
+collision possible avec: un autre promise_id antérieur, distinct, réellement signé et ACTIVE ; aucun exemple automatique
+condition d’absence: aucune règle, règle déjà payée/fermée, source non attribuable
+condition de fermeture: sécurité/distance respectée, entretien accompli, foyer réorganisé, refus/violation enregistré
+```
+
+### `marie_j14_raphaelle_position_j15`
+
+```text
+promise_id: marie_j14_raphaelle_position_j15
+promise_type: COUPLE_REVIEW
+created_at: sortie Raphaëlle J14 laissant la place réelle de Player à clarifier auprès de Marie
+activated_at: J15 08:28 après proposition de la fenêtre Marie et acceptation explicite de Player
+created_by: Marie
+proposed_to: Player
+accepted_at: J15 après 08:28, branche d’acceptation
+accepted_by_player: true uniquement si Player accepte la fenêtre
+action_due: répondre à Marie sur la place réelle de Player
+due_at: J15 19:45–20:30
+confirmation_deadline: J15 08:28
+status: CONDITIONAL
+activation_rule: CONDITIONAL → ACTIVE uniquement à activated_at
+transitions autorisées: CONDITIONAL → ACTIVE | REFUSED | EXPIRED ; ACTIVE → PAID | AMENDED | CANCELLED | FAILED | CLOSED ; AMENDED → ACTIVE | PAID | REFUSED | CANCELLED | CLOSED
+paid_or_closed_at: null à la création ; obligatoire à la sortie
+paid_or_closed_by: Marie et Player par présence, refus, amendement ou échec
+related_scene: J14 Raphaëlle / J15 §§15.2–15.8
+related_trace_ids: [j14_discovery_event_01, j13_raphaelle_masked_version_01, j11_raphaelle_chosen_result_01]
+source signée exacte: J14 R14-C « à 22 h je te réponds sur ma place dans cette histoire » si encore due ; J15 §15.3 « Hier tu as dit mardi », « J’ai 19 h 45 à 20 h 30 », acceptation réelle
+branche: Raphaëlle
+collision possible avec: uniquement un autre promise_id antérieur, distinct, réellement signé et ACTIVE
+condition d’absence: aucune découverte, clarification déjà payée, heure refusée, ou P14 couvrant exactement la même action_due
+condition de fermeture: présence/réponse, refus avant attente, amendement, annulation ou échec
+```
+
+Aucune seconde obligation professionnelle Raphaëlle/Maud n’est enregistrée : aucune source signée antérieure exacte ne la crée.
+
+### `marie_j14_nico_hour_account_j15`
+
+```text
+promise_id: marie_j14_nico_hour_account_j15
+promise_type: COUPLE_REVIEW
+created_at: sortie Nico J14 laissant l’heure réelle ou la vérité couple due
+activated_at: J15 08:12 après proposition de la fenêtre Marie et acceptation explicite de Player
+created_by: Marie
+proposed_to: Player
+accepted_at: J15 08:12 dans la branche d’acceptation
+accepted_by_player: true uniquement après acceptation explicite
+action_due: donner à Marie l’heure réelle et expliquer l’écart
+due_at: J15 18:45–19:30
+confirmation_deadline: J15 08:12
+status: CONDITIONAL
+activation_rule: CONDITIONAL → ACTIVE uniquement à activated_at
+transitions autorisées: CONDITIONAL → ACTIVE | REFUSED | EXPIRED ; ACTIVE → PAID | AMENDED | CANCELLED | FAILED | CLOSED ; AMENDED → ACTIVE | PAID | REFUSED | CANCELLED | CLOSED
+paid_or_closed_at: null à la création ; obligatoire à la sortie
+paid_or_closed_by: Marie/Player par vérité, refus, amendement ou échec ; Nico fournit éventuellement le fait sans devenir créancier
+related_scene: J14 Nico / J15 §§16.1–16.6
+related_trace_ids: [j14_discovery_event_01, j13_nico_alibi_or_hour_message_01]
+source signée exacte: J14 N14-A « conversation couple due » si encore impayée ; J15 §16.2 « Je veux l’heure réelle ce soir », « 18 h 45 à 19 h 30 », acceptation réelle
+branche: Nico
+collision possible avec: uniquement un second promise_id antérieur distinct, signé, accepté et incompatible
+condition d’absence: vérité donnée immédiatement en N14-A/N14-C, heure non due, fenêtre refusée, ou P14 couvrant exactement la même action_due
+condition de fermeture: heure donnée, refus avant attente, fait fourni par Nico, conséquence de mensonge transmise
+```
+
+## P16 — Validation des engagements J15
 
 J15 ne crée pas une promesse générique.
 
-Il référence deux ou plusieurs `promise_id` antérieurs dont :
+Une collision complète référence exactement deux fiches admissibles possédant chacune :
 
 ```text
+promise_id distinct
 status = ACTIVE
-fenêtres temporelles incompatibles
+created_at = source signée J14
+activated_at < début de la collision J15
+source signée exacte
+personne concernée
+action_due distincte
+due_at ou fenêtre exacte
+accepted_by_player attribuable
+paid_or_closed_at = null
 ```
+
+Les deux fenêtres doivent être objectivement incompatibles.
+
+Deux formulations de la même action ne comptent pas comme deux promesses.
+
+Une promesse `PAID`, `REFUSED`, `FAILED`, `EXPIRED`, `CANCELLED` ou `CLOSED` est inadmissible.
+
+Lorsque le validateur échoue :
+
+```text
+sequence_id: S28_MUTATION_NO_COLLISION
+```
+
+La mutation paie, amende, refuse ou ferme l’unique obligation réelle. Elle ne crée aucune seconde obligation.
 
 Le record J15 contient :
 
 ```text
 collision_id
-active_promise_ids
+collision_mode: FULL_COLLISION | NO_COLLISION
+eligible_active_promise_ids
 chosen_priority
 amended_promise_ids
 failed_promise_ids
+closed_promise_ids
+urgent_consequence_remaining
 ```
 
 ## P17 — Paiement prioritaire J16
@@ -459,7 +743,7 @@ failed_promise_ids
 ```text
 promise_id: j16_priority_consequence_payment
 promise_type: CLARIFICATION ou TASK
-created_at: J15 fin de collision
+created_at: fin J15 uniquement si une conséquence réelle reste due
 created_by: personne lésée ou conséquence
 proposed_to: Player
 accepted_at: choix J16
@@ -467,10 +751,22 @@ accepted_by_player: variable
 due_at: J16 fenêtre précise
 confirmation_deadline: avant toute nouvelle opportunité
 status: ACTIVE, AMENDED, REFUSED, PAID ou FAILED
-paid_or_closed_by: action de réparation, vérité limitée ou retrait
+paid_or_closed_at: null à la création ; obligatoire à la sortie
+paid_or_closed_by: action de réparation, vérité limitée, retrait, refus ou échec
 related_scene: paiement J16
 related_trace_ids: [j15_obligation_collision_record_01, j16_consequence_payment_record_01]
 ```
+
+P17 est créée après une collision complète ou `S28_MUTATION_NO_COLLISION` seulement si :
+
+- une obligation a échoué ;
+- une obligation a été refusée avec conséquence signée ;
+- une obligation reste impayée ;
+- un mensonge ou une violation laisse une action de réparation précise.
+
+P17 n’est pas créée si l’unique obligation a été proprement `PAID`, `CANCELLED` ou `CLOSED` et qu’aucune dette urgente ne subsiste.
+
+Dans ce cas, J16 utilise sa priorité 8 : fermeture propre.
 
 ## P18 — Conversation Marie J17
 
@@ -638,11 +934,12 @@ L’aftercare utilise un `obligation_id` dans le contrat d’état, pas une prop
 Avant chaque pivot :
 
 ```text
-1. promise ACTIVE dont due_at est aujourd’hui
-2. obligation de sécurité ou aftercare due
+1. obligation de sécurité ou audience due
+2. promise ACTIVE dont due_at est aujourd’hui
 3. promise ACTIVE avec confirmation_deadline aujourd’hui
-4. opportunité de route
-5. respiration
+4. conséquence réelle restante
+5. opportunité de route
+6. respiration
 ```
 
 En cas de plusieurs promesses actives :
@@ -666,11 +963,14 @@ Aucun score caché ne remplace cet ordre.
 3. Une personne ne reste pas en attente après un refus explicite.
 4. Une promesse expirée ne déclenche aucune scène de reproche automatique sans comportement attribuable.
 5. J15 ne fabrique pas d’obligation.
-6. J16 paie une conséquence avant toute nouvelle progression.
-7. Une rencontre hors téléphone arrête le chat.
-8. Les promesses futures post-J21 restent des hooks préparés, pas des scènes déjà gagnées.
-9. Le couple ne promet personne extérieure.
-10. La séparation ne transforme pas une invitation extérieure conditionnelle en promesse active.
+6. J15 complet exige deux fiches actives, deux actions distinctes et deux fenêtres incompatibles.
+7. `S28_MUTATION_NO_COLLISION` ne crée aucune dette compensatoire.
+8. J16 paie une conséquence avant toute nouvelle progression.
+9. P17 est absente après paiement ou fermeture propre sans urgence.
+10. Une rencontre hors téléphone arrête le chat.
+11. Les promesses futures post-J21 restent des hooks préparés, pas des scènes déjà gagnées.
+12. Le couple ne promet personne extérieure.
+13. La séparation ne transforme pas une invitation extérieure conditionnelle en promesse active.
 
 ---
 
@@ -706,7 +1006,10 @@ PROMESSES PRINCIPALES : IDENTIFIÉES
 PROMESSES FORCÉES : EXCLUES
 ALTERNATIVES : TRAITÉES COMME AMENDEMENTS
 REFUS : FERMENT L’ATTENTE
-PROMESSE SANDRA J10 : PAYABLE EN J12
+SEPT PROMESSES J14→J15 : CONTRACTUALISÉES
+S28 COMPLET : DEUX FICHES PROUVÉES REQUISES
+S28 SANS DEUX FICHES : MUTATION NO_COLLISION
+P17 : CONDITIONNELLE À UNE CONSÉQUENCE RÉELLE
 CHECKPOINT COUPLE : POSTÉRIEUR À J21
 ```
 
