@@ -1,6 +1,6 @@
 # Documentation Reading Order — Réseau Intime
 
-> **Phase active : Actes I–IV validés, préparation de l’Acte V**
+> **Phase active : Actes I–V validés, production des assets à préparer**
 
 ```text
 Bible Narrative / North Star : autorité active
@@ -11,7 +11,9 @@ NAR‑PROD‑03 : Acte II / J05–J08 READY
 NAR‑PROD‑04 : Acte III / J09–J12 READY
 NAR‑CANON‑01 : contrats J14→J16 réparés
 NAR‑PROD‑05 : Acte IV / J13–J16 READY
-UI, runtime et assets : gelés
+NAR‑PROD‑06 : Acte V / J17–J21 READY
+UI et runtime : gelés
+Assets : spécifiés, non produits
 ```
 
 ---
@@ -161,6 +163,10 @@ T17 : Pauline / L’Annexe / enfant de C12-03
 T18 : PHOTO autonome Maud / Raphaëlle
 T20 / T21 / T22 : FACT_RECORD sans asset
 P17 : conséquence réelle restante uniquement
+T23 / T25 / T27 : FACT_RECORD ou TEXT_MESSAGE sans asset
+T24 : PHYSICAL_PRINT Sandra réutilisant T01
+T26 : ACCESS_GRANT ou ACCESS_REVOCATION sans photo
+T28 : ABSENCE_MARKER, jamais fichier restauré
 ```
 
 ---
@@ -188,6 +194,7 @@ docs/canon/dialogues/NAR_PROD_02_PAQUET_PRODUCTION_ACTE_I_J01_J04.md
 docs/canon/dialogues/NAR_PROD_03_PAQUET_PRODUCTION_ACTE_II_J05_J08.md
 docs/canon/dialogues/NAR_PROD_04_PAQUET_PRODUCTION_ACTE_III_J09_J12.md
 docs/canon/dialogues/NAR_PROD_05_PAQUET_PRODUCTION_ACTE_IV_J13_J16.md
+docs/canon/dialogues/NAR_PROD_06_PAQUET_PRODUCTION_ACTE_V_J17_J21.md
 ```
 
 Ces paquets sont dérivés des sources autoritatives. Ils ne constituent ni une seconde carte de saison, ni un nouveau canon concurrent.
@@ -263,6 +270,35 @@ Décisions structurantes de l’Acte IV :
 - P17 est conditionnelle à une conséquence réelle ;
 - J16 peut atteindre la priorité 8 après fermeture propre.
 
+## Acte V — NAR-PROD-06
+
+```text
+15 beats servis par partie
+8 nouveaux contenus principaux
+14 réutilisations historiques distinctes disponibles
+10 nouveaux fichiers sources
+0 fichier enfant
+2 variantes conditionnelles
+J21 : 0 nouveau contenu, 0 fichier, 0 trace, 0 photographie
+J17–J21 : READY
+```
+
+Décisions structurantes de l’Acte V :
+
+- J17 utilise trois contenus et deux familles visuelles du couple sans fusionner les états narratifs ;
+- T23 reste un `FACT_RECORD` sans fichier ;
+- T24 est une impression physique contrôlée par Sandra et réutilise le fichier photographique T01 ;
+- C18-01 reste une image de scène non diégétique distincte de T24 ;
+- l’intimité tardive Sandra remplace la résolution standard et son aftercare réutilise C18-02 en J19 ;
+- J19 contient deux foregrounds de catalogue alternatifs, jamais servis ensemble comme deux foregrounds ;
+- T25 et T26 restent message ou état d’accès sans photographie ;
+- J20 ne produit qu’un contenu Nico, sans variante par état ;
+- P23 est créée à la proposition précise et activée seulement après acceptation ;
+- T27 et T28 restent fait ou absence ;
+- J21 est strictement `REFERENCE_ONLY` / `NO_NEW_ASSET` pour toute ancienne proposition de nouveau visuel ;
+- les traces non photographiques guident le sens mais ne deviennent jamais « la dernière photo » ;
+- aucune restauration, aucun onglet Galerie et aucun onglet « Souvenir ».
+
 Règles transversales :
 
 - Player reste non identifiable ;
@@ -273,7 +309,7 @@ Règles transversales :
 - les comportements Galerie non spécifiés restent différés ;
 - aucun paquet n’autorise à lui seul une modification runtime ou une production d’asset.
 
-Le futur paquet Acte V doit appliquer la même méthode sans recopier ou concurrencer le document `11`.
+Les cinq paquets constituent désormais la référence de production visuelle J01–J21, sans concurrencer le document `11`.
 
 ---
 
@@ -338,7 +374,7 @@ corpus narratif signé
 → NAR‑PROD‑04 Acte III / J09–J12 READY
 → NAR‑CANON‑01 J14→J16 READY
 → NAR‑PROD‑05 Acte IV / J13–J16 READY
-→ NAR‑PROD‑06 Acte V / J17–J21
+→ NAR‑PROD‑06 Acte V / J17–J21 READY
 → production des assets validés
 → adaptation runtime seulement lorsque nécessaire
 ```
@@ -355,7 +391,7 @@ Personnages : docs/canon/characters/
 Narration J01–J21 : scripts consolidés + registres + sign-off
 Audit de préparation : NAR_PROD_01_AUDIT_PREPARATION_PRODUCTION_SAISON_1.md
 Correctif J14→J16 : NAR_CANON_01_REPARATION_PROMESSES_ATTEIGNABILITE_J14_J16.md
-Paquets de production : NAR_PROD_02, NAR_PROD_03, NAR_PROD_04, NAR_PROD_05 puis Acte V
+Paquets de production : NAR_PROD_02, NAR_PROD_03, NAR_PROD_04, NAR_PROD_05, NAR_PROD_06
 UI/UX : docs/canon/ui/
 Runtime réel : code, données et tests sur main
 Statut et priorité : README.md + ROADMAP.md
