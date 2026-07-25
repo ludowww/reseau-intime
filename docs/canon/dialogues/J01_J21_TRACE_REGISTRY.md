@@ -541,45 +541,62 @@ legacy_runtime_alias: null
 trace_id: j13_pauline_private_version_01
 trace_type: PHOTO
 source_day: J13
-source_scene: S24 les deux versions
-creator: Élodie, source j12_laverriere_public_group_set_01
+source_scene: S24 — Les deux versions
+parent_content_id: C12-03
+parent_asset_id: S1_A3_J12_DPH_PAULINE_BASTIEN_ANNEXE_01
+origin: L’Annexe J12
+creator: Pauline
 selected_by: Pauline
 subjects: [Pauline]
 owner: Pauline
 initial_audience: [Pauline]
-current_audience: ajoute Player si envoi
-storage_location: fil Player / Pauline
+current_audience: [Pauline, Player] uniquement si Pauline envoie l’image
+storage_location: fil Player / Pauline si envoyée
 saving_rule: IN_THREAD_ONLY
 transfer_rule: FORBIDDEN
-current_state: PRIVATE_ACTIVE, REMOVED ou INACCESSIBLE
+current_state: PRIVATE_ACTIVE, REMOVED, INACCESSIBLE ou NOT_CREATED
+replaces_or_derives_from: C12-03, comme quatrième frame privée et nouveau fichier enfant
 knowledge_created: fact_pauline_created_private_double_address
-eligible_for_j14: true
-eligible_for_j21: true
+eligible_for_j14: true uniquement si encore accessible
+eligible_for_j21: true selon état canonique, jamais après restauration d’un fichier retiré
+production: 1 nouveau fichier enfant
 legacy_runtime_alias: null
 ```
 
-Le créateur ne peut plus rester `Pauline ou personne autorisée` au moment de l’intégration.
+T17 ne possède aucune source Élodie ou La Verrière.
 
-## T18 — Version masquée Raphaëlle
+## T18 — Masque et posture Raphaëlle J13
 
 ```text
 trace_id: j13_raphaelle_masked_version_01
-trace_type: PHOTO ou ACCESS_GRANT selon variante
+trace_type: PHOTO
 source_day: J13
-source_scene: S25 le masque change la posture
-creator: Maud ou créateur exact établi en J11
+source_scene: S25 — Le masque change la posture
+asset_id: S1_A4_J13_DPH_RAPHAELLE_MASKED_POSTURE_01
+creator: Maud
+selected_by: Raphaëlle
 subjects: [Raphaëlle]
 owner: Raphaëlle
 initial_audience: [Raphaëlle, Maud]
-current_audience: ajoute Player si Raphaëlle choisit
-storage_location: fil Player / Raphaëlle ou compte créatif
-saving_rule: IN_THREAD_ONLY ou OWNER_ONLY
+current_audience: [Raphaëlle, Maud, Player] uniquement si Raphaëlle envoie l’image
+storage_location: fil Player / Raphaëlle si envoyée
+saving_rule: IN_THREAD_ONLY
 transfer_rule: FORBIDDEN
-current_state: PRIVATE_ACTIVE, RESTRICTED, REMOVED ou NOT_CREATED
-knowledge_created: fact_raphaelle_private_role_version_exists
-eligible_for_j14: true
-eligible_for_j21: true
+current_state: PRIVATE_ACTIVE, REMOVED, INACCESSIBLE ou NOT_CREATED
+replaces_or_derives_from: null
+knowledge_created: fact_raphaelle_chose_player_for_masked_posture_image
+eligible_for_j14: true uniquement si encore accessible
+eligible_for_j21: true selon état canonique, jamais après restauration d’un fichier retiré
+production: 1 nouveau fichier source autonome
 legacy_runtime_alias: null
+```
+
+Si Raphaëlle refuse l’envoi ou si la prise distincte n’existe pas :
+
+```text
+trace_id: j13_raphaelle_masked_version_01
+current_state: NOT_CREATED
+production: NO_NEW_ASSET
 ```
 
 ## T19 — Message d’heure ou d’alibi Nico
