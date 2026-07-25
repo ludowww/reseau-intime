@@ -24,6 +24,7 @@ NAR‑PROD‑02 : paquet Acte I intégré
 NAR‑PROD‑03 : paquet Acte II intégré
 NAR‑PROD‑04 : paquet Acte III intégré
 NAR‑CANON‑01 : correctif J14→J16 intégré
+NAR‑PROD‑05 : paquet Acte IV intégré
 ```
 
 Le corpus signé reste autoritaire pour J01–J21. La Bible Narrative reste autoritaire pour toute nouvelle production, révision structurelle ou extension.
@@ -232,30 +233,61 @@ Le correctif ne modifie aucun dialogue signé, aucun runtime, aucun JSON, aucun 
 
 ---
 
-# 8. Prochain lot recommandé
+# 8. NAR‑PROD‑05 — Acte IV prêt
+
+Source :
 
 ```text
-NAR‑PROD‑05 — Finalisation du paquet Acte IV / J13–J16
+docs/canon/dialogues/NAR_PROD_05_PAQUET_PRODUCTION_ACTE_IV_J13_J16.md
 ```
 
-Le paquet est désormais débloqué par NAR‑CANON‑01. La prochaine passe doit :
-
-- aligner ses verdicts sur `FULL_COLLISION | NO_COLLISION` ;
-- conserver les comptages validés ;
-- corriger les métadonnées T17/T18 déjà arbitrées ;
-- vérifier la reachability J14→J15 contre les sept promesses ;
-- ne rouvrir aucun dialogue signé.
-
-Comptages de travail à conserver :
+Verdict :
 
 ```text
-12 beats servis
+J13–J16 : READY
+12 beats servis par partie
 10 nouveaux contenus principaux
 12 réutilisations antérieures distinctes
 11 nouveaux fichiers sources
 1 fichier enfant
 1 variante conditionnelle
+2 PHOTO_DIÉGÉTIQUE
+8 SOUVENIR_IMAGE_DE_SCÈNE
+0 FACT_RECORD visuel
 ```
+
+Décisions centrales :
+
+- J13 sert une seule conséquence et conserve un écho Marie ;
+- C13-01 Pauline et C13-02 Raphaëlle sont mutuellement exclusifs dans une partie ;
+- T17 est la quatrième frame privée Pauline issue de C12-03 à L’Annexe ;
+- T18 est une photographie autonome créée par Maud et sélectionnée par Raphaëlle ;
+- J14 ne découvre qu’une trace déjà accessible et utilise un fallback propre sinon ;
+- J15 joue `FULL_COLLISION` uniquement avec deux promesses prouvées, puis `S28_MUTATION_NO_COLLISION` sinon ;
+- Raphaëlle et Nico n’obtiennent aucune seconde obligation inventée ni fichier de substitution ;
+- P17 n’existe que si une conséquence réelle reste due ;
+- J16 peut atteindre la priorité 8 après fermeture propre ;
+- aucune décision produit ne reste ouverte pour J13–J16.
+
+Le paquet corrige uniquement T17 et T18 dans le Trace Registry. Il ne produit aucun asset et n’autorise aucune modification runtime par lui seul.
+
+---
+
+# 9. Prochain lot recommandé
+
+```text
+NAR‑PROD‑06 — Paquet de production Acte V / J17–J21
+```
+
+Vigilances principales :
+
+- J17 définit provisoirement le couple sans résoudre magiquement les dettes ;
+- la fin du séjour Mathilde doit être concrète et cohérente avec le foyer ;
+- J18–J20 résolvent les relations sans ouvrir de nouvelle route tardive ;
+- J21 sélectionne uniquement une trace existante et admissible ;
+- une trace retirée peut être finale comme absence, jamais comme fichier restauré ;
+- les promesses post-J21 restent des hooks, pas des récompenses déjà acquises ;
+- les variantes de finale dépendent d’une contradiction préexistante, jamais créée par J21.
 
 Ordre de production :
 
@@ -264,15 +296,15 @@ Acte I J01–J04          READY
 → Acte II J05–J08       READY
 → Acte III J09–J12      READY
 → NAR‑CANON‑01          READY
-→ Acte IV J13–J16       NAR‑PROD‑05 finalisation
-→ Acte V J17–J21
+→ Acte IV J13–J16       READY
+→ Acte V J17–J21        NAR‑PROD‑06
 → production des assets validés
 → adaptation runtime seulement lorsque nécessaire
 ```
 
 ---
 
-# 9. Gel technique
+# 10. Gel technique
 
 Par défaut :
 
@@ -286,7 +318,7 @@ Une réouverture technique exige un besoin narratif bloquant, une donnée indisp
 
 ---
 
-# 10. Règle de lot
+# 11. Règle de lot
 
 ```text
 1 objectif produit
