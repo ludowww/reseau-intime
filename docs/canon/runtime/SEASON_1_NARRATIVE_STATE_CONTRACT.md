@@ -508,6 +508,205 @@ aftercare_raphaelle si proximité physique antérieure
 
 ---
 
+# 12A. Contrat J14→J16 — promesses, collision et mutation
+
+## 12A.1 `PromiseState` minimal
+
+Toute promesse utilisée par S28 possède :
+
+```text
+promise_id
+promise_type
+created_at
+activated_at
+created_by
+proposed_to
+accepted_at
+accepted_by_player
+due_at
+confirmation_deadline
+status
+action_due
+concerned_person
+source_signed_ref
+paid_or_closed_at
+paid_or_closed_by
+related_scene
+related_trace_ids
+```
+
+Une promesse absente n’est pas représentée par un objet `ACTIVE`.
+
+Une promesse `PAID`, `REFUSED`, `FAILED`, `EXPIRED`, `CANCELLED` ou `CLOSED` ne redevient jamais `ACTIVE`.
+
+Une nouvelle proposition exige une nouvelle source signée et un nouveau `promise_id`.
+
+Une disponibilité, une attirance, une image, une notification ou un silence ne crée aucune `PromiseState`.
+
+Pour les sept fiches NAR-CANON-01 :
+
+```text
+created_at = sortie, responsabilité ou engagement signé de J14
+activated_at = confirmation explicite et résolution de la fenêtre en J15
+due_at = fenêtre exacte J15
+status = CONDITIONAL à la création
+activation_rule = CONDITIONAL → ACTIVE uniquement à activated_at
+```
+
+J15 peut confirmer, activer ou fixer l’heure. Il ne crée pas rétroactivement la responsabilité initiale.
+
+## 12A.2 P14 et P15
+
+P14 `j14_witness_clarification` :
+
+- est créée seulement par D-C avec heure précise acceptée ;
+- reste `ACTIVE` seulement tant que la clarification est due ;
+- devient `PAID`, `FAILED`, `AMENDED` ou `CANCELLED` selon l’issue ;
+- n’existe pas si la vérité est immédiatement donnée.
+
+P15 `j14_inform_trace_controller` :
+
+- naît immédiatement lorsqu’une audience privée est compromise ;
+- devient `PAID` si la personne représentée est informée en J14 ;
+- devient `FAILED` si Player refuse ou omet ;
+- ne reste jamais artificiellement `ACTIVE` jusqu’à J15.
+
+Tout retour ultérieur utilise un `promise_id` distinct du registre NAR-CANON-01.
+
+Avant toute création de `marie_j14_pauline_player_account_j15`, `marie_j14_raphaelle_position_j15` ou `marie_j14_nico_hour_account_j15` :
+
+```text
+si P14 ACTIVE couvre la même action_due
+→ utiliser P14
+
+si P14 PAID | FAILED | CANCELLED couvre la même action_due
+→ ne rien recréer
+```
+
+Une nouvelle fiche Marie exige une action distincte, une source J14 encore ouverte et une nouvelle fenêtre signée sans contournement de la terminalité de P14.
+
+## 12A.3 Validateur S28
+
+Avant `FULL_COLLISION`, le runtime narratif doit résoudre deux fiches distinctes :
+
+```text
+status == ACTIVE
+created_at < collision_start
+activated_at <= collision_start
+source_signed_ref != null
+concerned_person != null
+action_due != null
+due_at != null
+accepted_by_player attribuable
+paid_or_closed_at == null
+```
+
+La paire est rejetée si :
+
+- les `promise_id` sont identiques ;
+- les actions sont identiques ou reformulent le même dû ;
+- les fenêtres peuvent être honnêtement accomplies toutes les deux ;
+- une promesse est terminale ;
+- une action aurait déjà dû être payée en J14 ;
+- la seconde obligation a été créée le mardi pour provoquer S28.
+
+## 12A.4 `J15ObligationRecord`
+
+```text
+trace_id: j15_obligation_collision_record_01
+record_type: FACT_RECORD
+collision_mode: FULL_COLLISION | NO_COLLISION
+eligible_active_promise_ids
+selected_promise_id
+chosen_priority
+amended_promise_ids
+failed_promise_ids
+closed_promise_ids
+promise_outcome
+incompatible_windows_proven
+second_signed_obligation_present
+urgent_consequence_remaining
+current_state: ACTIVE
+visual_asset: none
+```
+
+Si aucun record T21 n’est créé :
+
+```text
+trace_id: j15_obligation_collision_record_01
+current_state: NOT_CREATED
+```
+
+`collision_mode: FULL_COLLISION` exige au minimum deux fiches admissibles et une paire de fenêtres incompatibles.
+
+`collision_mode: NO_COLLISION` correspond à :
+
+```text
+sequence_id: S28_MUTATION_NO_COLLISION
+```
+
+La mutation paie, amende, refuse ou ferme l’unique obligation réelle. Elle ne crée aucune seconde obligation, aucune dette compensatoire, aucune route, aucune progression adulte et aucun asset.
+
+## 12A.5 Sept entrées conditionnelles
+
+```text
+marie_j14_pauline_player_account_j15
+pauline_j14_post_breach_return_j15
+household_j14_sandra_rule_j15
+sandra_j14_breach_account_j15
+mathilde_j14_household_safety_rule_j15
+marie_j14_raphaelle_position_j15
+marie_j14_nico_hour_account_j15
+```
+
+Chaque entrée est créée uniquement par sa source signée.
+
+Aucune tâche professionnelle future Raphaëlle/Maud n’est déduite de l’accès créatif, de l’image choisie ou d’une affirmation J15 sans source antérieure.
+
+## 12A.6 P17 et T22
+
+P17 `j16_priority_consequence_payment` est créée uniquement si `urgent_consequence_remaining == true`.
+
+Après `NO_COLLISION`, P17 existe seulement si :
+
+- l’unique obligation a échoué ;
+- elle a été refusée avec conséquence signée ;
+- elle reste impayée ;
+- un mensonge ou une violation laisse une réparation précise.
+
+P17 est absente après paiement ou fermeture propre sans dette urgente.
+
+T22 :
+
+```text
+trace_id: j16_consequence_payment_record_01
+current_state: ACTIVE
+record_type: FACT_RECORD
+source_t21_id: j15_obligation_collision_record_01 | null si T21 est NOT_CREATED
+source_collision_mode: FULL_COLLISION | NO_COLLISION
+source_promise_ids
+p17_created
+consequence_outcome:
+  CONSEQUENCE_PAID
+  | CONSEQUENCE_FAILED
+  | NO_URGENT_CONSEQUENCE
+  | DIRECT_TO_MATHILDE_MARIE_J17_PREPARATION
+urgent_consequence_remaining
+next_priority: 1..8
+visual_asset: none
+```
+
+Si aucun T22 n’est instancié :
+
+```text
+trace_id: j16_consequence_payment_record_01
+current_state: NOT_CREATED
+```
+
+Lorsque `urgent_consequence_remaining == false`, J16 peut utiliser la priorité 8 et passer directement à la préparation Mathilde, Marie et J17.
+
+---
+
 # 13. Contradictions actives
 
 `active_contradictions` est un ensemble borné.
@@ -558,8 +757,10 @@ route_score
 La sélection d’un pivot utilise :
 
 ```text
-obligation due
-→ promesse due
+obligation de sécurité ou audience due
+→ promesse ACTIVE avec source et fenêtre résolues
+→ validation FULL_COLLISION ou NO_COLLISION
+→ conséquence réelle restante
 → scène éligible
 → relation la moins récemment foreground
 → ordre authored
@@ -618,10 +819,12 @@ Elle ajoute une interprétation de sortie.
 6. Un accès créatif n’est pas un accès privé général.
 7. Une connaissance n’est pas effacée avec une trace.
 8. Une promesse refusée ne reste pas en attente.
-9. Une personne continue sa vie si Player ne répond pas.
-10. Les partenaires et tiers restent capables d’agir.
-11. Aucun score numérique de relation n’est nécessaire pour J01–J21.
-12. Aucun état ne doit être créé uniquement pour produire une fin différente.
+9. Une promesse terminale ne redevient jamais active sans nouvelle source et nouvel identifiant.
+10. Une personne continue sa vie si Player ne répond pas.
+11. Les partenaires et tiers restent capables d’agir.
+12. Aucun score numérique de relation n’est nécessaire pour J01–J21.
+13. Aucun état ne doit être créé uniquement pour produire une fin différente.
+14. Une bonne gestion peut conduire à `NO_COLLISION` sans dette de substitution.
 
 ---
 
@@ -658,6 +861,10 @@ nico_state = TAKING_DISTANCE
 
 trace_state = REMOVED
 + audience Player active
+→ interdit
+
+promise terminale
++ status ACTIVE avec le même promise_id
 → interdit
 ```
 
@@ -726,6 +933,11 @@ Les décisions narratives validées sont exprimées par le présent contrat et l
 ```text
 ÉTATS RELATIONNELS : BORNÉS
 PROMESSES ET TRACES : STRUCTURÉES
+J14→J16 : CONTRACTUALISÉ
+S28 COMPLET : DEUX FICHES PROUVÉES
+S28 SANS PAIRE : MUTATION NO_COLLISION
+T21 / T22 : FACT_RECORD SANS ASSET
+P17 : CONDITIONNELLE À UNE CONSÉQUENCE RÉELLE
 CONTRADICTIONS : LISTE COURTE
 SCORES DE ROUTE : INUTILES
 PROPRIÉTAIRE DE ROUTE : INTERDIT
