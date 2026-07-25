@@ -1,6 +1,6 @@
 # Documentation Reading Order — Réseau Intime
 
-> **Phase active : Actes I–III validés, NAR-CANON-01 intégré, finalisation de l’Acte IV**
+> **Phase active : Actes I–IV validés, préparation de l’Acte V**
 
 ```text
 Bible Narrative / North Star : autorité active
@@ -10,7 +10,7 @@ NAR‑PROD‑02 : Acte I / J01–J04 READY
 NAR‑PROD‑03 : Acte II / J05–J08 READY
 NAR‑PROD‑04 : Acte III / J09–J12 READY
 NAR‑CANON‑01 : contrats J14→J16 réparés
-NAR‑PROD‑05 : débloqué, finalisation requise
+NAR‑PROD‑05 : Acte IV / J13–J16 READY
 UI, runtime et assets : gelés
 ```
 
@@ -129,18 +129,24 @@ docs/canon/runtime/SEASON_1_NARRATIVE_STATE_CONTRACT.md
 docs/canon/dialogues/J01_J21_REACHABILITY_MATRIX.md
 ```
 
-Pour J14→J16, lire d’abord le correctif suivant :
+Pour J14→J16, lire d’abord :
 
 ```text
 docs/canon/dialogues/NAR_CANON_01_REPARATION_PROMESSES_ATTEIGNABILITE_J14_J16.md
 ```
 
-NAR-CANON-01 a réellement corrigé les trois sources suivantes :
+NAR-CANON-01 a corrigé :
 
 ```text
 J01_J21_PROMISE_REGISTRY.md
 J01_J21_REACHABILITY_MATRIX.md
 SEASON_1_NARRATIVE_STATE_CONTRACT.md
+```
+
+NAR-PROD-05 a ensuite corrigé uniquement T17 et T18 dans :
+
+```text
+J01_J21_TRACE_REGISTRY.md
 ```
 
 Contrat synthétique :
@@ -151,7 +157,9 @@ P15 : PAID ou FAILED en J14
 7 promesses conditionnelles J14→J15
 S28 FULL_COLLISION : deux fiches prouvées
 S28 sans paire : S28_MUTATION_NO_COLLISION
-T21 / T22 : FACT_RECORD sans asset
+T17 : Pauline / L’Annexe / enfant de C12-03
+T18 : PHOTO autonome Maud / Raphaëlle
+T20 / T21 / T22 : FACT_RECORD sans asset
 P17 : conséquence réelle restante uniquement
 ```
 
@@ -179,6 +187,7 @@ Les anciens audits et lots correctifs restent des archives de décision. Les scr
 docs/canon/dialogues/NAR_PROD_02_PAQUET_PRODUCTION_ACTE_I_J01_J04.md
 docs/canon/dialogues/NAR_PROD_03_PAQUET_PRODUCTION_ACTE_II_J05_J08.md
 docs/canon/dialogues/NAR_PROD_04_PAQUET_PRODUCTION_ACTE_III_J09_J12.md
+docs/canon/dialogues/NAR_PROD_05_PAQUET_PRODUCTION_ACTE_IV_J13_J16.md
 ```
 
 Ces paquets sont dérivés des sources autoritatives. Ils ne constituent ni une seconde carte de saison, ni un nouveau canon concurrent.
@@ -227,27 +236,32 @@ Décisions structurantes de l’Acte III :
 - C10-06 et C10-07 sont créées par Sophie ;
 - C12-03 est créé et possédé par Pauline.
 
-## Acte IV — NAR-PROD-05 en finalisation
-
-Le paquet n’est pas encore intégré. NAR-CANON-01 a levé son blocage d’atteignabilité.
-
-Comptages validés à conserver :
+## Acte IV — NAR-PROD-05
 
 ```text
-12 beats servis
+12 beats servis par partie
 10 nouveaux contenus principaux
 12 réutilisations antérieures distinctes
 11 nouveaux fichiers sources
 1 fichier enfant
 1 variante conditionnelle
+2 PHOTO_DIÉGÉTIQUE
+8 SOUVENIR_IMAGE_DE_SCÈNE
+0 FACT_RECORD visuel
+J13–J16 : READY
 ```
 
-La finalisation doit aligner J15 sur :
+Décisions structurantes de l’Acte IV :
 
-```text
-FULL_COLLISION si deux promesses sont prouvées
-NO_COLLISION sinon
-```
+- J13 foreground une seule conséquence et conserve un écho Marie ;
+- C13-01 Pauline et C13-02 Raphaëlle sont mutuellement exclusifs ;
+- T17 est la quatrième frame privée Pauline issue de C12-03 à L’Annexe ;
+- T18 est une photographie autonome créée par Maud et sélectionnée par Raphaëlle ;
+- J14 n’invente aucune découverte ;
+- J15 utilise `FULL_COLLISION` avec deux fiches prouvées, puis `S28_MUTATION_NO_COLLISION` sinon ;
+- Raphaëlle et Nico ne reçoivent aucune seconde obligation inventée ;
+- P17 est conditionnelle à une conséquence réelle ;
+- J16 peut atteindre la priorité 8 après fermeture propre.
 
 Règles transversales :
 
@@ -259,7 +273,7 @@ Règles transversales :
 - les comportements Galerie non spécifiés restent différés ;
 - aucun paquet n’autorise à lui seul une modification runtime ou une production d’asset.
 
-Les futurs paquets Actes IV et V doivent appliquer la même méthode sans recopier ou concurrencer le document `11`.
+Le futur paquet Acte V doit appliquer la même méthode sans recopier ou concurrencer le document `11`.
 
 ---
 
@@ -323,8 +337,8 @@ corpus narratif signé
 → NAR‑PROD‑03 Acte II / J05–J08 READY
 → NAR‑PROD‑04 Acte III / J09–J12 READY
 → NAR‑CANON‑01 J14→J16 READY
-→ NAR‑PROD‑05 Acte IV / J13–J16 finalisation
-→ paquet Acte V / J17–J21
+→ NAR‑PROD‑05 Acte IV / J13–J16 READY
+→ NAR‑PROD‑06 Acte V / J17–J21
 → production des assets validés
 → adaptation runtime seulement lorsque nécessaire
 ```
@@ -341,7 +355,7 @@ Personnages : docs/canon/characters/
 Narration J01–J21 : scripts consolidés + registres + sign-off
 Audit de préparation : NAR_PROD_01_AUDIT_PREPARATION_PRODUCTION_SAISON_1.md
 Correctif J14→J16 : NAR_CANON_01_REPARATION_PROMESSES_ATTEIGNABILITE_J14_J16.md
-Paquets de production : NAR_PROD_02, NAR_PROD_03, NAR_PROD_04 puis Actes IV–V
+Paquets de production : NAR_PROD_02, NAR_PROD_03, NAR_PROD_04, NAR_PROD_05 puis Acte V
 UI/UX : docs/canon/ui/
 Runtime réel : code, données et tests sur main
 Statut et priorité : README.md + ROADMAP.md
