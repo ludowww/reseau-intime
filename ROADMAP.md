@@ -321,20 +321,19 @@ Le paquet ne modifie aucun registre, dialogue signé, runtime, JSON, test, UI ou
 Cycle adulte : intégré
 Scripts et registres : amendés
 NAR-PROD-04/05/06 : amendés
-ASSET-01 : manifeste final de 84 fichiers intégré
-Production effective : non commencée
-ComfyUI : non autorisé par ASSET-01 seul
+ASSET-01 : intégré
+ASSET-02 : intégré
+ASSET-03 : prochain lot
+Production visuelle réelle : non commencée
+ComfyUI : toujours non lancé en production
 ```
 
 Prochaine priorité :
 
 ```text
-ASSET-02
-verrouillage des références visuelles récurrentes
-et préparation du premier batch de production
+ASSET-03
+prochain lot de préproduction visuelle
 ```
-
-ASSET-02 n’est pas défini dans ce lot.
 
 ---
 
