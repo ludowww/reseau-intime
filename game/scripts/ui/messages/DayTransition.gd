@@ -10,12 +10,28 @@ var current_tween: Tween
 var title_text := "La journée se termine"
 var subtitle_text := ""
 var body_text := "Une nouvelle journée commence dans cette démonstration locale."
+var eyebrow_text := "NOUVELLE JOURNÉE"
+var action_label := "Continuer"
+
+func configure_presentation(presentation: Dictionary, portrait_theme, reduced_motion: bool) -> void:
+	eyebrow_text = str(presentation.get("eyebrow", ""))
+	title_text = str(presentation.get("title", ""))
+	subtitle_text = str(presentation.get("subtitle", ""))
+	body_text = str(presentation.get("body", ""))
+	action_label = str(presentation.get("action_label", "Continuer"))
+	PORTRAIT_THEME = portrait_theme
+	_show(reduced_motion)
 
 func configure(title: String, subtitle: String, body: String, portrait_theme, reduced_motion: bool) -> void:
 	PORTRAIT_THEME = portrait_theme
 	title_text = title
 	subtitle_text = subtitle
 	body_text = body
+	eyebrow_text = "NOUVELLE JOURNÉE"
+	action_label = "Continuer"
+	_show(reduced_motion)
+
+func _show(reduced_motion: bool) -> void:
 	_build()
 	visible = true
 	if reduced_motion:
@@ -98,7 +114,7 @@ func _build() -> void:
 	marker.add_theme_color_override("separator", PORTRAIT_THEME.FOCUS)
 	column.add_child(marker)
 
-	var eyebrow := _label("NOUVELLE JOURNÉE", 14, PORTRAIT_THEME.TEXT_MUTED)
+	var eyebrow := _label(eyebrow_text, 14, PORTRAIT_THEME.TEXT_MUTED)
 	eyebrow.name = "DayTransitionEyebrow"
 	eyebrow.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	column.add_child(eyebrow)
@@ -121,7 +137,8 @@ func _build() -> void:
 	continue_button = Button.new()
 	continue_button.name = "ContinueDay"
 	continue_button.text = "Continuer"
-	continue_button.tooltip_text = "Afficher la nouvelle journée de démonstration"
+	continue_button.text = action_label
+	continue_button.tooltip_text = "Valider cette transition"
 	continue_button.custom_minimum_size = Vector2(0, 48)
 	continue_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	continue_button.focus_mode = Control.FOCUS_ALL

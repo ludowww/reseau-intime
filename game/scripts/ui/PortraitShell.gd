@@ -7,8 +7,11 @@ const SAFE_AREA_SCRIPT := preload("res://scripts/ui/SafeAreaContainer.gd")
 const MESSAGES_SCREEN_SCENE := preload("res://scenes/portrait/messages/MessagesScreen.tscn")
 const GALLERY_SCREEN_SCENE := preload("res://scenes/portrait/gallery/GalleryScreen.tscn")
 const PHOTO_VIEWER_SCENE := preload("res://scenes/portrait/gallery/PhotoViewer.tscn")
+const J01_RUNTIME_PROVIDER_SCRIPT := preload("res://scripts/runtime/season_1/J01RuntimeProvider.gd")
 const TAG_MESSAGES := "messages"
 const TAG_GALLERY := "gallery"
+
+@export_enum("demo", "runtime_s1_j01") var content_mode := "demo"
 
 var safe_area_container
 var shell_column: VBoxContainer
@@ -28,6 +31,7 @@ var gallery_button: Button
 var reduced_motion_enabled := true
 var active_tab := TAG_MESSAGES
 var current_tween: Tween
+var runtime_provider
 
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -161,9 +165,11 @@ func _build_shell() -> void:
 	header_box.add_child(header_label)
 
 	header_subtitle = _make_label("Coque portrait additive — Messages / Galerie", 16, PORTRAIT_THEME.TEXT_SECONDARY)
+	header_subtitle.visible = content_mode == "demo"
 	header_box.add_child(header_subtitle)
 
 	mode_label = _make_label("Messages actif", 14, PORTRAIT_THEME.TEXT_MUTED)
+	mode_label.visible = content_mode == "demo"
 	header_box.add_child(mode_label)
 
 	var content := PanelContainer.new()
@@ -178,6 +184,12 @@ func _build_shell() -> void:
 	content_stack.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	content.add_child(content_stack)
 
+	if content_mode == "demo":
+		runtime_provider = null
+	elif content_mode == "runtime_s1_j01":
+		runtime_provider = J01_RUNTIME_PROVIDER_SCRIPT.new()
+		if not runtime_provider.initialize():
+			push_error("Unable to initialize J01 runtime provider")
 	messages_panel = _build_messages_panel()
 	content_stack.add_child(messages_panel)
 
@@ -205,6 +217,7 @@ func _build_shell() -> void:
 	bottom_navigation.add_child(flex)
 
 	var reduced_motion_tag := _make_label("Animations réduites", 13, PORTRAIT_THEME.TEXT_MUTED)
+	reduced_motion_tag.visible = content_mode == "demo"
 	reduced_motion_tag.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	reduced_motion_tag.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	bottom_navigation.add_child(reduced_motion_tag)
@@ -224,7 +237,8 @@ func _on_message_photo_requested(presentation: Dictionary, provenance: Dictionar
 	if active_tab != TAG_MESSAGES or str(provenance.get("source_kind", "")) != TAG_MESSAGES or str(presentation.get("source_kind", "")) != TAG_MESSAGES:
 		return
 	var sequence: Array[Dictionary] = [presentation]
-	_open_photo_viewer(sequence, 0, provenance)
+	if _open_photo_viewer(sequence, 0, provenance) and runtime_provider != null:
+		runtime_provider.mark_photo_opened()
 
 func _on_gallery_photo_requested(item_id: String) -> void:
 	if active_tab != TAG_GALLERY:
@@ -333,6 +347,8 @@ func _build_messages_panel() -> PanelContainer:
 	panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	panel.add_theme_stylebox_override("panel", PORTRAIT_THEME.panel_style(PORTRAIT_THEME.SURFACE_RAISED, 1, 18))
 	messages_screen = MESSAGES_SCREEN_SCENE.instantiate()
+	if content_mode == "runtime_s1_j01" and runtime_provider != null:
+		messages_screen.configure_content_source(runtime_provider.presentation_source(), runtime_provider)
 	messages_screen.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	panel.add_child(messages_screen)
 	return panel
@@ -345,6 +361,8 @@ func _build_gallery_panel() -> PanelContainer:
 	panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	panel.add_theme_stylebox_override("panel", PORTRAIT_THEME.panel_style(PORTRAIT_THEME.SURFACE_RAISED, 1, 18))
 	gallery_screen = GALLERY_SCREEN_SCENE.instantiate()
+	if content_mode == "runtime_s1_j01" and runtime_provider != null:
+		gallery_screen.configure_content_source(runtime_provider.gallery_source())
 	gallery_screen.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	panel.add_child(gallery_screen)
 	return panel

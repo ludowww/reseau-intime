@@ -23,6 +23,7 @@ var caption_label: Label
 var actions: HBoxContainer
 var previous_button: Button
 var next_button: Button
+var placeholder_label := "Photo de démonstration"
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -199,7 +200,7 @@ func _build() -> void:
 	visual_panel = PanelContainer.new()
 	visual_panel.name = "GeneratedPhoto"
 	visual_center.add_child(visual_panel)
-	visual_label = _label("◇\nPhoto de démonstration\n╱╲", 24, PORTRAIT_THEME.TEXT_PRIMARY)
+	visual_label = _label("", 24, PORTRAIT_THEME.TEXT_PRIMARY)
 	visual_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	visual_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	visual_panel.add_child(visual_label)
@@ -219,6 +220,8 @@ func _build() -> void:
 
 func _refresh() -> void:
 	var presentation := current_presentation()
+	placeholder_label = str(presentation.get("placeholder_label", "Photo de démonstration"))
+	visual_label.text = placeholder_label
 	var accent: Color = presentation.get("accent_color", PORTRAIT_THEME.GALLERY_ACCENT)
 	name_label.text = str(presentation.get("display_name", ""))
 	var context := str(presentation.get("context_label", ""))

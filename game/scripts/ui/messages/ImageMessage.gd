@@ -14,12 +14,14 @@ var caption := ""
 var accent := Color.WHITE
 var image_button: Button
 var caption_label: Label
+var placeholder_label := "Photo de démonstration"
 
-func configure(p_message_id: String, p_media_ref: String, p_caption: String, p_accent: Color, portrait_theme) -> void:
+func configure(p_message_id: String, p_media_ref: String, p_caption: String, p_accent: Color, portrait_theme, p_placeholder_label := "Photo de démonstration") -> void:
 	message_id = p_message_id
 	media_ref = p_media_ref
 	caption = p_caption
 	accent = p_accent
+	placeholder_label = p_placeholder_label
 	_build(portrait_theme)
 
 func focus_image() -> void:
@@ -58,7 +60,7 @@ func _build(portrait_theme) -> void:
 	add_theme_constant_override("separation", 8)
 	image_button = Button.new()
 	image_button.name = "ImageButton"
-	image_button.text = "◇\nPhoto de démonstration\n╱╲"
+	image_button.text = "◇\n%s\n╱╲" % placeholder_label
 	image_button.tooltip_text = "Activer la photo"
 	image_button.custom_minimum_size = Vector2(IMAGE_WIDTH, IMAGE_HEIGHT)
 	image_button.focus_mode = Control.FOCUS_ALL

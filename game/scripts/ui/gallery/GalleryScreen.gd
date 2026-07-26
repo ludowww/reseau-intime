@@ -24,13 +24,24 @@ var empty_state: CenterContainer
 var tile_buttons: Array = []
 var photo_request_count := 0
 var last_photo_restore_origin_scroll := -1
+var content_source: Dictionary = {}
+var empty_title_label: Label
+
+func configure_content_source(source: Dictionary) -> void:
+	content_source = source.duplicate(true)
 
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	size_flags_vertical = Control.SIZE_EXPAND_FILL
-	fixtures = DEMO_DATA.fixtures().duplicate(true)
-	character_order = DEMO_DATA.character_order()
+	if content_source.is_empty():
+		fixtures = DEMO_DATA.fixtures().duplicate(true)
+		character_order = DEMO_DATA.character_order()
+	else:
+		fixtures = content_source.get("fixtures", {}).duplicate(true)
+		character_order.assign(content_source.get("character_order", []))
+		if not character_order.is_empty():
+			selected_character_id = character_order[0]
 	_build()
 	select_character(selected_character_id)
 	resized.connect(_queue_layout_refresh)
@@ -44,6 +55,9 @@ func select_character(character_id: String) -> void:
 
 func focus_selected_tab() -> void:
 	character_tabs.focus_selected_tab()
+
+func empty_state_text() -> String:
+	return empty_title_label.text if empty_title_label != null else ""
 
 func focus_first_tile() -> void:
 	if not tile_buttons.is_empty():
@@ -254,10 +268,10 @@ func _build() -> void:
 	empty_box.alignment = BoxContainer.ALIGNMENT_CENTER
 	empty_box.add_theme_constant_override("separation", 8)
 	empty_panel.add_child(empty_box)
-	var empty_title := _label("Aucune photo disponible", 20, PORTRAIT_THEME.TEXT_PRIMARY)
-	empty_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	empty_box.add_child(empty_title)
-	var empty_hint := _label("Cette collection de démonstration est vide.", 14, PORTRAIT_THEME.TEXT_MUTED)
+	empty_title_label = _label(str(content_source.get("empty_label", "Aucune photo disponible")), 20, PORTRAIT_THEME.TEXT_PRIMARY)
+	empty_title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	empty_box.add_child(empty_title_label)
+	var empty_hint := _label("" if not content_source.is_empty() else "Cette collection de démonstration est vide.", 14, PORTRAIT_THEME.TEXT_MUTED)
 	empty_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	empty_box.add_child(empty_hint)
 

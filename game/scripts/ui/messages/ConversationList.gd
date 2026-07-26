@@ -11,11 +11,13 @@ var cards: Array[Button] = []
 var card_views: Dictionary = {}
 var wrapped_labels: Array[Label] = []
 var list_box: VBoxContainer
+var show_demo_subtitle := true
 
-func configure(thread_presentations: Array[Dictionary], character_presentations: Dictionary, portrait_theme) -> void:
+func configure(thread_presentations: Array[Dictionary], character_presentations: Dictionary, portrait_theme, display_demo_subtitle := true) -> void:
 	threads = thread_presentations
 	characters = character_presentations
 	PORTRAIT_THEME = portrait_theme
+	show_demo_subtitle = display_demo_subtitle
 	_build()
 
 func update_thread_presentation(thread: Dictionary) -> void:
@@ -74,8 +76,9 @@ func _build() -> void:
 	add_theme_constant_override("separation", 12)
 	var title := _label("Messages", 30, PORTRAIT_THEME.TEXT_PRIMARY)
 	add_child(title)
-	var subtitle := _label("Démonstration hors récit", 14, PORTRAIT_THEME.TEXT_MUTED)
-	add_child(subtitle)
+	if show_demo_subtitle:
+		var subtitle := _label("Démonstration hors récit", 14, PORTRAIT_THEME.TEXT_MUTED)
+		add_child(subtitle)
 	var scroll := ScrollContainer.new()
 	scroll.name = "ConversationScroll"
 	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL

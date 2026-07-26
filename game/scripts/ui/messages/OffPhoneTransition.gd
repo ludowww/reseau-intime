@@ -12,8 +12,9 @@ var display_label := ""
 func configure(label: String, portrait_theme, reduced_motion: bool) -> void:
 	PORTRAIT_THEME = portrait_theme
 	display_label = label
-	_build()
 	visible = true
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_build()
 	if reduced_motion:
 		modulate.a = 1.0
 	else:
@@ -95,18 +96,20 @@ func _build() -> void:
 
 	var body := _label(display_label, 19, PORTRAIT_THEME.TEXT_PRIMARY)
 	body.name = "OffPhoneLabel"
+	body.custom_minimum_size.x = 360.0
 	body.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	column.add_child(body)
 
 	var explanation := _label("La messagerie reste en pause pendant ce moment partagé.", 16, PORTRAIT_THEME.TEXT_SECONDARY)
 	explanation.name = "OffPhoneExplanation"
+	explanation.custom_minimum_size.x = 360.0
 	explanation.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	column.add_child(explanation)
 
 	resume_button = Button.new()
 	resume_button.name = "ResumeThread"
 	resume_button.text = "Reprendre le fil"
-	resume_button.tooltip_text = "Revenir à la conversation de démonstration"
+	resume_button.tooltip_text = "Revenir aux messages"
 	resume_button.custom_minimum_size = Vector2(0, 48)
 	resume_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	resume_button.focus_mode = Control.FOCUS_ALL

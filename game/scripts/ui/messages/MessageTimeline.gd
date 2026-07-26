@@ -364,6 +364,7 @@ func _build_message_bubble(message: Dictionary) -> HBoxContainer:
 	row.set_meta("message_bubble", true)
 	row.set_meta("message_id", str(message.get("message_id", "")))
 	row.set_meta("content_type", str(message.get("content_type", "")))
+	row.set_meta("is_player", bool(message.get("is_player", false)))
 	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var content_type := str(message.get("content_type", ""))
 	var is_player := bool(message.get("is_player", false))
@@ -386,7 +387,7 @@ func _build_message_bubble(message: Dictionary) -> HBoxContainer:
 	var author_label := _label(author_name, 14, accent)
 	author_label.name = "Author"
 	author_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT if is_player else HORIZONTAL_ALIGNMENT_LEFT
-	author_label.visible = is_player or is_group
+	author_label.visible = is_group and not is_player
 	if is_group and not is_player:
 		group_author_labels.append(author_label)
 	if is_group:
@@ -413,6 +414,7 @@ func _build_message_bubble(message: Dictionary) -> HBoxContainer:
 			str(message.get("text", "")),
 			accent,
 			PORTRAIT_THEME,
+			str(message.get("placeholder_label", "Photo de démonstration")),
 		)
 		image_message.image_requested.connect(func(requested_message_id: String, requested_media_ref: String):
 			image_request_total += 1
@@ -438,6 +440,18 @@ func _build_message_bubble(message: Dictionary) -> HBoxContainer:
 		row.add_child(bubble)
 		row.add_child(spacer)
 	return row
+
+func visible_player_author_count() -> int:
+	var count := 0
+	for row in message_box.get_children():
+		if not row.has_meta("message_bubble"):
+			continue
+		if not bool(row.get_meta("is_player", false)):
+			continue
+		var author_label := row.find_child("Author", true, false)
+		if author_label != null and author_label.visible:
+			count += 1
+	return count
 
 func _label(value: String, font_size: int, color: Color) -> Label:
 	var label := Label.new()

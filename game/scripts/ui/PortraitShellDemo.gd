@@ -15,6 +15,7 @@ func _build_demo() -> void:
 		if child != shell:
 			child.queue_free()
 	shell = SHELL_SCENE.instantiate()
+	shell.content_mode = "demo"
 	shell.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(shell)
 	call_deferred("_apply_cmdline_overrides")

@@ -1,0 +1,48 @@
+{
+  "conversation_paths": {
+    "chapter_01_marie_opening": "res://data/conversations/chapter_01_marie_opening.json",
+    "chapter_01_sandra_trace": "res://data/conversations/chapter_01_sandra_trace.json"
+  },
+  "conversation_threads": {
+    "chapter_01_marie_opening": "thread_marie_private",
+    "chapter_01_sandra_trace": "thread_sandra_private"
+  },
+  "initial_unlocked_threads": ["thread_marie_private"],
+  "sandra_image": {
+    "message_id": "j01_sandra_lunch_memory_soft",
+    "after_message_id": "msg_j1_sandra_trace_004",
+    "content_type": "IMAGE",
+    "media_ref": "S1_A1_J01_DPH_SANDRA_LUNCH_SELECTED_01",
+    "trace_id": "j01_sandra_lunch_memory_soft",
+    "source_kind": "messages",
+    "access_state": "UNLOCKED",
+    "author_id": "sandra",
+    "timestamp": "22:58",
+    "placeholder_label": "Visuel non produit",
+    "text": ""
+  },
+  "transitions": {
+    "marie": {
+      "message_id": "j01_transition_shared_evening",
+      "present": "Player rentre avec le pain.\nLe dîner et la marche se déroulent hors téléphone.",
+      "delayed": "Player arrive plus tard, avec le pain.\nLe dîner et la marche se déroulent hors téléphone.",
+      "action_label": "Continuer"
+    },
+    "sandra": {
+      "message_id": "j01_transition_final_return",
+      "text": "Player pose le téléphone et revient vers Marie.\nLa fin de soirée se déroule hors écran.",
+      "action_label": "Continuer"
+    }
+  },
+  "sandra_notification": {
+    "title": "Sandra",
+    "body": "J'ai retrouvé une photo."
+  },
+  "day_end": {
+    "eyebrow": "MARDI — FIN DE JOURNÉE",
+    "title": "J01 terminé",
+    "subtitle": "Les choses qu'on remarque",
+    "body": "Fin temporaire de cette version jouable.",
+    "action_label": "Terminer"
+  }
+}

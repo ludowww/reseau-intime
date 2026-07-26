@@ -33,12 +33,21 @@ var day_transition
 var notification_focus_origin: Control
 var active_thread_id := ""
 var screen_mode := "list"
+var content_source: Dictionary = {}
+var runtime_provider
+
+func configure_content_source(source: Dictionary, provider = null) -> void:
+	content_source = source.duplicate(true)
+	runtime_provider = provider
 
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	size_flags_vertical = Control.SIZE_EXPAND_FILL
-	_load_demo_data()
+	if content_source.is_empty():
+		_load_demo_data()
+	else:
+		_apply_content_source(content_source)
 	_build()
 	visibility_changed.connect(_on_visibility_changed)
 
@@ -201,6 +210,9 @@ func finish_off_phone_transition() -> void:
 		return
 	if not is_off_phone_transition_active():
 		return
+	if runtime_provider != null:
+		_finish_runtime_off_phone_transition()
+		return
 	var saved_state := off_phone_state.duplicate(false)
 	var thread_id := str(saved_state.get("thread_id", ""))
 	off_phone_transition.dismiss()
@@ -272,6 +284,14 @@ func start_day_transition(from_day: int, to_day: int) -> void:
 func finish_day_transition() -> void:
 	if not is_day_transition_active():
 		return
+	if runtime_provider != null:
+		day_transition.reset_surface()
+		day_transition_state = {}
+		screen_mode = "day_complete"
+		conversation_screen.visible = false
+		conversation_list.visible = false
+		_set_gallery_navigation_blocked(false)
+		return
 	var saved_state := day_transition_state.duplicate(false)
 	var to_day := int(saved_state.get("to_day", current_demo_day_value))
 	var previous_thread_id := str(saved_state.get("previous_thread_id", ""))
@@ -284,7 +304,7 @@ func finish_day_transition() -> void:
 	screen_mode = "list"
 	conversation_screen.visible = false
 	conversation_list.visible = true
-	conversation_list.configure(threads, characters, PORTRAIT_THEME)
+	conversation_list.configure(threads, characters, PORTRAIT_THEME, runtime_provider == null)
 	day_transition_state = {}
 	_set_gallery_navigation_blocked(false, bool(saved_state.get("shell_was_processing_unhandled_input", false)))
 	var focus_thread_id := updated_thread_id if updated_thread_id != "" else previous_thread_id
@@ -413,6 +433,94 @@ func total_presentation_count() -> int:
 		count += _dictionary_array(transcripts[thread_id]).size()
 	return count
 
+func refresh_from_runtime(source: Dictionary = {}) -> void:
+	if runtime_provider == null:
+		return
+	var next_source: Dictionary = runtime_provider.presentation_source() if source.is_empty() else source
+	_apply_content_source(next_source)
+	if conversation_list != null:
+		conversation_list.configure(threads, characters, PORTRAIT_THEME, runtime_provider == null)
+
+func append_runtime_messages(message_presentations: Array[Dictionary]) -> void:
+	if active_thread_id == "" or conversation_screen == null:
+		return
+	conversation_screen.append_messages(message_presentations)
+	transcripts[active_thread_id] = conversation_screen.timeline.messages.duplicate(true)
+	reading_positions[active_thread_id] = conversation_screen.get_reading_position()
+
+func replace_runtime_choices(choice_presentations: Array[Dictionary]) -> void:
+	available_choices[active_thread_id] = choice_presentations.duplicate(true)
+	if conversation_screen != null:
+		conversation_screen.replace_choices(choice_presentations)
+
+func unlock_runtime_thread(_thread_id: String) -> void:
+	refresh_from_runtime()
+
+func apply_runtime_choice(choice_id: String) -> bool:
+	if runtime_provider == null:
+		return false
+	var result: Dictionary = runtime_provider.apply_choice(active_thread_id, choice_id)
+	if not bool(result.get("accepted", false)):
+		return false
+	append_runtime_messages(_dictionary_array(result.get("new_messages", [])))
+	replace_runtime_choices(_dictionary_array(result.get("choices", [])))
+	var source: Dictionary = runtime_provider.presentation_source()
+	for source_thread in _dictionary_array(source.get("threads", [])):
+		var local_thread := _thread_for(str(source_thread.get("thread_id", "")))
+		if local_thread.is_empty():
+			continue
+		local_thread["last_preview"] = source_thread.get("last_preview", "")
+		local_thread["last_timestamp"] = source_thread.get("last_timestamp", "")
+		conversation_list.update_thread_presentation(local_thread)
+	var transition: Dictionary = result.get("transition", {})
+	if not transition.is_empty():
+		call_deferred("_start_runtime_transition_after_layout", active_thread_id)
+	return true
+
+func _start_runtime_transition_after_layout(thread_id: String) -> void:
+	await get_tree().process_frame
+	if active_thread_id == thread_id and runtime_provider != null:
+		start_off_phone_transition(thread_id)
+
+func _apply_content_source(source: Dictionary) -> void:
+	characters = source.get("characters", {}).duplicate(true)
+	threads = _dictionary_array(source.get("threads", []))
+	transcripts.clear()
+	for thread_id in source.get("messages_by_thread", {}):
+		transcripts[str(thread_id)] = _dictionary_array(source["messages_by_thread"][thread_id])
+	available_choices.clear()
+	for thread_id in source.get("choices_by_thread", {}):
+		available_choices[str(thread_id)] = _dictionary_array(source["choices_by_thread"][thread_id])
+
+func _finish_runtime_off_phone_transition() -> void:
+	var result: Dictionary = runtime_provider.confirm_transition()
+	if not bool(result.get("accepted", false)):
+		return
+	off_phone_transition.dismiss()
+	off_phone_state = {}
+	_set_gallery_navigation_blocked(false)
+	refresh_from_runtime()
+	if str(result.get("destination", "")) == "list":
+		screen_mode = "list"
+		conversation_screen.visible = false
+		conversation_list.visible = true
+		var unlocked_id := str(result.get("unlocked_thread_id", ""))
+		var notification: Dictionary = result.get("notification", {})
+		var unlocked_thread := _thread_for(unlocked_id)
+		if not unlocked_thread.is_empty():
+			_show_notification(unlocked_thread, str(notification.get("body", "")), "22:57")
+		conversation_list.call_deferred("focus_thread", unlocked_id)
+		return
+	_start_runtime_day_end(result.get("day_end", {}))
+
+func _start_runtime_day_end(presentation: Dictionary) -> void:
+	screen_mode = "day_transition"
+	conversation_screen.visible = false
+	conversation_list.visible = false
+	day_transition_state = {"active": true, "runtime": true}
+	_set_gallery_navigation_blocked(true)
+	day_transition.configure_presentation(presentation, PORTRAIT_THEME, _reduced_motion_enabled())
+
 func _load_demo_data() -> void:
 	var demo: Dictionary = DEMO_DATA.build()
 	characters = demo.get("characters", {}).duplicate(true)
@@ -457,7 +565,7 @@ func _build() -> void:
 	conversation_list.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	conversation_list.thread_selected.connect(open_thread)
 	add_child(conversation_list)
-	conversation_list.configure(threads, characters, PORTRAIT_THEME)
+	conversation_list.configure(threads, characters, PORTRAIT_THEME, runtime_provider == null)
 	conversation_screen = CONVERSATION_SCREEN_SCENE.instantiate()
 	conversation_screen.name = "PortraitConversationScreen"
 	conversation_screen.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -518,6 +626,7 @@ func _on_image_requested(message_id: String, media_ref: String) -> void:
 		"context_label": "Conversation",
 		"timestamp": str(accepted.get("timestamp", "")),
 		"caption": str(accepted.get("text", "")),
+		"placeholder_label": str(accepted.get("placeholder_label", "Photo de démonstration")),
 	}
 	var provenance := {
 		"source_kind": "messages",
@@ -536,7 +645,7 @@ func restore_after_photo_viewer(provenance: Dictionary, focus_target: Variant) -
 	var value := int(provenance.get("reading_position", 0))
 	conversation_screen.timeline.set_reading_position(value)
 	reading_positions[thread_id] = conversation_screen.get_reading_position()
-	if focus_target is Control and is_instance_valid(focus_target) and focus_target.is_visible_in_tree() and focus_target.focus_mode != Control.FOCUS_NONE and (not focus_target is BaseButton or not focus_target.disabled):
+	if is_instance_valid(focus_target) and focus_target is Control and focus_target.is_visible_in_tree() and focus_target.focus_mode != Control.FOCUS_NONE and (not focus_target is BaseButton or not focus_target.disabled):
 		focus_target.grab_focus()
 	elif not conversation_screen.focus_image_message(str(provenance.get("message_id", ""))):
 		conversation_screen.back_button.grab_focus()
@@ -562,6 +671,9 @@ func _on_choice_selected(choice: Dictionary) -> void:
 			accepted_choice = available_choice
 			break
 	if accepted_choice.is_empty():
+		return
+	if runtime_provider != null:
+		apply_runtime_choice(choice_id)
 		return
 	available_choices[active_thread_id] = []
 	var before: int = int(conversation_screen.player_message_count())

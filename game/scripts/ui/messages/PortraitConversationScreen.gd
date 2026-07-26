@@ -32,6 +32,13 @@ func append_player_choice(choice: Dictionary) -> void:
 func append_incoming_message(message: Dictionary) -> void:
 	timeline.append_incoming_message(message)
 
+func append_messages(message_presentations: Array[Dictionary]) -> void:
+	for message in message_presentations:
+		timeline.append_incoming_message(message)
+
+func replace_choices(choice_presentations: Array[Dictionary]) -> void:
+	choice_bar.set_choices(choice_presentations)
+
 func show_typing(author: Dictionary, reduced_motion: bool) -> void:
 	timeline.show_typing(author, reduced_motion)
 
