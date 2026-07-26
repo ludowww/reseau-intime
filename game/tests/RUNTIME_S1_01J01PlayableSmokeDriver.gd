@@ -9,6 +9,7 @@ func _ready() -> void:
 	call_deferred("_run")
 
 func _run() -> void:
+	_test_initial_contract_guards()
 	var expected_size := _parse_size(_arg("--runtime-size", "720x1280"))
 	get_window().size = expected_size
 	var main = MAIN_SCENE.instantiate()
@@ -56,6 +57,8 @@ func _run() -> void:
 	await _frames(3)
 	_expect(messages.screen_mode == "list", "first transition destination must be list")
 	_expect(provider.state.promises["marie_j01_shared_evening"]["status"] == "PAID", "Marie promise must be paid")
+	_expect(not provider.state.pay_marie_promise(), "paid Marie promise must reject a second payment")
+	_expect(provider.state.promises["marie_j01_shared_evening"]["status"] == "PAID", "rejected Marie payment must preserve PAID")
 	_expect(not messages._thread_for("thread_sandra_private").is_empty(), "Sandra must unlock")
 	_expect(messages.thread_unread_count("thread_sandra_private") > 0, "Sandra must be unread")
 	_expect(messages.notification_banner.visible and messages.notification_banner.notification.get("title", "") == "Sandra", "Sandra notification missing")
@@ -109,6 +112,19 @@ func _run() -> void:
 	_test_alternate_states()
 	_test_snapshot_round_trip()
 	_finish()
+
+func _test_initial_contract_guards() -> void:
+	var fresh = PROVIDER_SCRIPT.new()
+	_expect(fresh.initialize(), "fresh provider init failed")
+	_expect(not fresh.mark_photo_opened(), "Sandra photo must reject opening before trace activation")
+	_expect(not fresh.state.knowledge.has("fact_player_saw_sandra_lunch_photo"), "F08 must remain absent before trace activation")
+	_expect(fresh.state.activate_sandra_trace(), "fresh Sandra trace activation failed")
+	_expect(fresh.mark_photo_opened(), "active Sandra photo must create F08")
+	var knowledge_count: int = fresh.state.knowledge.size()
+	_expect(not fresh.mark_photo_opened(), "repeated Sandra photo opening must be rejected")
+	_expect(fresh.state.knowledge.size() == knowledge_count, "repeated Sandra photo opening must not duplicate F08")
+	_expect(not fresh.state.pay_marie_promise(), "PROPOSED Marie promise must reject payment")
+	_expect(fresh.state.promises["marie_j01_shared_evening"]["status"] == "PROPOSED", "rejected Marie payment must preserve PROPOSED")
 
 func _test_alternate_states() -> void:
 	var delayed = PROVIDER_SCRIPT.new()

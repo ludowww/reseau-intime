@@ -48,6 +48,19 @@ class RuntimeS101J01PlayableStaticTests(unittest.TestCase):
         ]:
             self.assertIn(token, state)
         self.assertIn("func restore_snapshot(value: Dictionary) -> bool", state)
+        self.assertNotIn("ESTAB" + "LISHED", state)
+        for fact_id in [
+            "fact_marie_player_couple_exists",
+            "fact_sandra_preexisting_friendship",
+        ]:
+            self.assertRegex(
+                state,
+                rf'(?s)"{fact_id}"\s*:\s*\{{[^}}]*"certainty"\s*:\s*"CONFIRMED"',
+            )
+        self.assertIn('not in ["ACTIVE", "AMENDED"]', state)
+        self.assertIn('traces.get("j01_sandra_lunch_memory_soft"', state)
+        self.assertIn('trace.get("current_state"', state)
+        self.assertIn('!= "ACTIVE"', state)
 
     def test_provider_loads_signed_json_and_exposes_progression_snapshot(self):
         provider = self.read("game/scripts/runtime/season_1/J01RuntimeProvider.gd")

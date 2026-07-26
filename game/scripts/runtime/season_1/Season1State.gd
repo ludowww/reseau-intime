@@ -36,11 +36,11 @@ func reset() -> void:
 	knowledge = {
 		"fact_marie_player_couple_exists": {
 			"fact_id": "fact_marie_player_couple_exists",
-			"certainty": "ESTABLISHED",
+			"certainty": "CONFIRMED",
 		},
 		"fact_sandra_preexisting_friendship": {
 			"fact_id": "fact_sandra_preexisting_friendship",
-			"certainty": "ESTABLISHED",
+			"certainty": "CONFIRMED",
 		},
 	}
 	completed_conversation_ids = []
@@ -90,6 +90,9 @@ func activate_sandra_trace() -> bool:
 func observe_sandra_photo() -> bool:
 	if knowledge.has("fact_player_saw_sandra_lunch_photo"):
 		return false
+	var trace: Dictionary = traces.get("j01_sandra_lunch_memory_soft", {})
+	if trace.is_empty() or str(trace.get("current_state", "")) != "ACTIVE":
+		return false
 	knowledge["fact_player_saw_sandra_lunch_photo"] = {
 		"fact_id": "fact_player_saw_sandra_lunch_photo",
 		"source_type": "PRIVATE_TRACE",
@@ -101,7 +104,7 @@ func observe_sandra_photo() -> bool:
 
 func pay_marie_promise() -> bool:
 	var promise: Dictionary = promises.get("marie_j01_shared_evening", {})
-	if promise.is_empty() or str(promise.get("status", "")) == "PAID":
+	if promise.is_empty() or str(promise.get("status", "")) not in ["ACTIVE", "AMENDED"]:
 		return false
 	promise["status"] = "PAID"
 	promises["marie_j01_shared_evening"] = promise
