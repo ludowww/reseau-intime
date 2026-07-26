@@ -254,7 +254,9 @@ Visage ovale aux contours nets, sourcils dessinés, bouche calme et expressive p
 
 ### Cheveux
 
-Châtain foncé profond, carré net entre la mâchoire et les épaules, texture lisse avec peu de volume. Cette couleur uniforme remplace définitivement l’ancienne piste blonde à racines brunes.
+Blond rosé cendré / rose gold désaturé, avec des racines châtain froid visibles et naturelles.
+
+Cheveux mi-longs à longs, souples et travaillés en vagues contrôlées. La coiffure reste nette et volontaire, jamais fantaisie, fluo ou pastel de personnage magique.
 
 ### Yeux / regard
 
@@ -283,19 +285,32 @@ Vert profond, marine, crème, bordeaux, noir structurant, accents argent ou bron
 
 ### Signes distinctifs
 
-- carré châtain foncé très net ;
-- lunettes fines bronze ou bordeaux ;
+- blond rosé désaturé avec racines châtain froid visibles ;
+- cheveux mi-longs à longs, plus longs et plus travaillés que ceux de Sandra ;
+- lunettes fines et élégantes, bronze ou bordeaux ;
 - silhouette compacte et pulpeuse ;
-- petites créoles et montre fine ;
-- tenue vérifiée jusque dans un détail discret.
+- style public très composé, avec bijoux et accessoires choisis avec intention ;
+- expression socialement maîtrisée.
+
+### Différenciation avec Sandra
+
+Sandra : carré blond beige court, sans lunettes, maquillage léger, féminité intime et retenue.
+
+Pauline : cheveux mi-longs à longs blond rosé cendré avec racines foncées, lunettes, finition plus travaillée, élégance publique et stratégique.
 
 ### À éviter
 
-Blonde à racines visibles, séductrice tapageuse, femme banale en tailleur générique, froide manipulatrice, dominatrice de catalogue, maquillage lourd, garde-robe interchangeable avec Raphaëlle.
+- carré châtain foncé générique ;
+- rose vif ou couleur fantasy ;
+- apparence adolescente ;
+- cheveux identiques à Sandra ;
+- blonde uniforme sans racines ;
+- coiffure négligée ;
+- esthétique influenceuse caricaturale.
 
 ### Variations autorisées
 
-Carré lisse ou légèrement assoupli, cheveux derrière les oreilles, registre banque, dîner, événement ou maison. Les lunettes peuvent être retirées pour une raison ordinaire, jamais comme code automatique de révélation sexuelle.
+Vagues plus ou moins marquées, cheveux lâchés, derrière les oreilles ou attachés bas avec soin ; registre banque, dîner, événement ou maison. Les lunettes peuvent être retirées pour une raison ordinaire, jamais comme code automatique de révélation sexuelle. La longueur, le blond rosé désaturé et les racines châtain froid restent stables.
 
 ## Raphaëlle
 
@@ -617,8 +632,8 @@ Cheveux lâchés, demi-attachés ou en chignon haut ; tenue de fabrication, shoo
 | Comparaison critique | Différence immédiate | Différence de silhouette | Différence de registre |
 |---|---|---|---|
 | Marie / Sandra | Marie châtain long et visage ouvert ; Sandra carré blond à frange et regard retenu | Marie naturelle et douce ; Sandra plus fine et mesurée | foyer chaleureux / intimité difficile à lire |
-| Sandra / Pauline | Sandra blonde sans lunettes ; Pauline carré châtain foncé avec lunettes fines | Sandra équilibrée et légère ; Pauline compacte et pulpeuse | féminité discrète / image publique composée |
-| Pauline / Raphaëlle | Pauline carré net et monture fine papillon ; Raphaëlle cheveux bruns attachés bas et écaille rectangulaire | Pauline compacte ; Raphaëlle plus longue et structurée | élégance sociale maîtrisée / compétence créative chaleureuse |
+| Sandra / Pauline | Sandra carré blond beige court sans lunettes ; Pauline cheveux mi-longs à longs blond rosé cendré, racines foncées et lunettes fines | Sandra équilibrée et légère ; Pauline compacte et pulpeuse | féminité intime et retenue / élégance publique et stratégique |
+| Pauline / Raphaëlle | Pauline blond rosé ondulé, racines foncées et monture fine papillon ; Raphaëlle cheveux bruns attachés bas et écaille rectangulaire | Pauline compacte ; Raphaëlle plus longue et structurée | élégance sociale maîtrisée / compétence créative chaleureuse |
 | Mathilde / ensemble | longs cheveux blonds lisses, regard clair, posture vive | silhouette la plus svelte et tonique | sportive chic, jeune-énergique, jamais sophistiquée par défaut |
 
 Contrôles complémentaires :
