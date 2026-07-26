@@ -212,6 +212,7 @@ docs/canon/dialogues/NAR_PROD_05_PAQUET_PRODUCTION_ACTE_IV_J13_J16.md
 docs/canon/dialogues/NAR_PROD_06_PAQUET_PRODUCTION_ACTE_V_J17_J21.md
 docs/canon/dialogues/ASSET_01_MANIFESTE_PRODUCTION_VISUELLE_SAISON_1_84_FICHIERS.md
 docs/canon/dialogues/ASSET_02_CHARACTER_REFERENCES.md
+docs/canon/dialogues/ASSET_03_LOCATION_REFERENCES_AND_PILOT_BATCH.md
 ```
 
 Ces paquets sont dérivés des sources autoritatives. Ils ne constituent ni une seconde carte de saison, ni un nouveau canon concurrent.
@@ -345,6 +346,12 @@ Les cinq paquets constituent désormais la référence de production visuelle J0
 ASSET-02 verrouille les références humaines récurrentes de Marie, Sandra, Mathilde, Pauline, Raphaëlle, Nico, Bastien, Jeff et Maud.
 
 Il se lit après ASSET-01 et avant toute préparation de planches, de prompts ou de lots de génération. Il ne crée aucun asset, ne modifie aucun comptage et ne remplace ni le canon personnage ni les briefs détaillés.
+
+## Référence des lieux et batch pilote — ASSET-03
+
+ASSET-03 verrouille les principales références de lieux et sélectionne PILOT-01, huit fichiers non générés.
+
+Il se lit après ASSET-01 et ASSET-02, avant tout workflow ou batch ComfyUI.
 
 ---
 

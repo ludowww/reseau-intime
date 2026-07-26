@@ -323,17 +323,21 @@ Scripts et registres : amendés
 NAR-PROD-04/05/06 : amendés
 ASSET-01 : intégré
 ASSET-02 : intégré
-ASSET-03 : prochain lot
+ASSET-03 : intégré
+PILOT-01 : sélectionné, non généré
 Production visuelle réelle : non commencée
-ComfyUI : toujours non lancé en production
+ComfyUI : non lancé en production
 ```
 
 Prochaine priorité :
 
 ```text
-ASSET-03
-prochain lot de préproduction visuelle
+ASSET-04
+workflow pilote Anima / ComfyUI
++ préparation technique de PILOT-01
 ```
+
+ASSET-04 n’est pas défini dans ce lot.
 
 ---
 
