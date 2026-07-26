@@ -17,6 +17,8 @@ Il s’appuie sur :
 - `S24 — Les deux versions de Pauline` ;
 - `S25 — Le masque change la posture` ;
 - `S26 — Nico demande un alibi ou une image` ;
+- `NAR_PROD_07_ADULT_PAYOFF_AUDIT_SPECIFICATION.md` ;
+- `NAR_ADULT_03_PAYOFFS_PAULINE_RAPHAELLE.md` ;
 - les canons de voix, d’image, de consentement, de conséquence et de communication text-only.
 
 Il ne contient :
@@ -596,6 +598,126 @@ clarification future possible
 
 ---
 
+## R-A / R-B — Seconde image adulte conditionnelle
+
+Après R-A ou R-B seulement, une seconde image peut être envoyée si :
+
+- la confiance professionnelle est intacte ;
+- le processus a été respecté ;
+- Maud a réellement créé la photographie ;
+- Raphaëlle a revu et sélectionné le fichier ;
+- l’audience Player est autorisée ;
+- aucune pression publique n’a eu lieu ;
+- Player ne réduit pas le choix au « plus sexy » ;
+- aucun compte ou dossier privé fermé n’est rouvert ;
+- aucune dette d’audience prioritaire n’existe.
+
+R-C bloque définitivement cet envoi pour cette fenêtre.
+
+Dialogue :
+
+**Raphaëlle**
+
+> Il y en avait une autre.
+
+**Raphaëlle**
+
+> Je ne l’avais pas gardée pour montrer davantage.
+
+**Raphaëlle**
+
+> Je l’ai gardée parce qu’elle change ce que le rôle fait au corps.
+
+**Raphaëlle**
+
+> Maud sait que je l’ai sélectionnée pour toi.
+
+**Raphaëlle**
+
+> Et je décide maintenant si tu la vois.
+
+**Player**
+
+> je sais que voir celle-ci ne prolonge ni le rôle ni le reste
+
+**ImageMessage**
+
+```text
+S1_A4_J13_DPH_RAPHAELLE_MASKED_ADULT_SELECTED_01
+```
+
+Contrat de la photographie :
+
+```text
+type: PHOTO_DIÉGÉTIQUE
+creator: Maud
+camera_control: Maud
+selected_by: Raphaëlle
+owner: Raphaëlle
+initial_audience: [Raphaëlle, Maud]
+current_audience: ajoute Player uniquement si envoi
+saving: IN_THREAD_ONLY
+transfer: FORBIDDEN
+withdrawal: Raphaëlle
+permission_future: NONE
+```
+
+Niveau :
+
+```text
+nudité explicite partielle ou exposition adulte équivalente
+aucun acte sexuel
+aucun Player
+```
+
+### Reconnaître rôle et personne
+
+**Player**
+
+> l’image est adulte et attirante. je sais que le rôle s’arrête ici et que toi tu restes après
+
+Sortie :
+
+```text
+image maintenue
+personne et rôle distingués
+aucune permission physique
+```
+
+### Reconnaître le processus
+
+**Player**
+
+> on voit que l’exposition est construite. ce n’est pas une image prise pendant que tu n’étais pas prête
+
+**Raphaëlle**
+
+> Exactement. C’est pour cela que celle-ci existe et que les autres essais ne t’appartiennent pas.
+
+### Réclamer une série ou une suite
+
+Toute formulation du type :
+
+```text
+tu devrais en faire d’autres
+tu peux aller plus loin
+on essaie ensemble
+```
+
+provoque :
+
+**Raphaëlle**
+
+> Non.
+
+**Raphaëlle**
+
+> Tu viens de convertir une image choisie en brief que je ne t’ai pas donné.
+
+La seule image adulte devient `REMOVED`. Le retrait de cette image ne retire pas automatiquement l’image masquée standard.
+
+---
+
 ## R-C — Traiter la version comme un produit fini
 
 **Player**
@@ -626,6 +748,7 @@ Le contenu devient inaccessible.
 accès privé refroidi
 processus réduit à tort au produit
 aucune nouvelle invitation
+seconde image adulte définitivement bloquée pour cette fenêtre
 ```
 
 ---
@@ -656,6 +779,15 @@ L’insistance ferme l’accès privé.
 
 # 13. Visuels Raphaëlle J13
 
+## C13-02 — Contrat de fichiers
+
+```text
+S1_A4_J13_DPH_RAPHAELLE_MASKED_POSTURE_01
+S1_A4_J13_DPH_RAPHAELLE_MASKED_ADULT_SELECTED_01
+```
+
+Le second fichier est un enfant conditionnel, pas une variante.
+
 ## V1 — Trace publique J12
 
 ```text
@@ -684,10 +816,11 @@ function: rappeler que la personne existe après la version
 ## Trace J14 possible
 
 ```text
-aperçu de l’image masquée dans une notification ou une galerie
+aperçu de l’image masquée standard ou de l’image adulte réellement affichée
+dans une notification ou une galerie
 ```
 
-Seulement si l’image est maintenue.
+Seulement si la trace concernée est maintenue et accessible.
 
 ---
 
@@ -1692,7 +1825,9 @@ aperçu de la version privée P1
 ## Raphaëlle
 
 ```text
-image masquée sélectionnée
+j13_raphaelle_masked_version_01
+ou j13_raphaelle_masked_adult_selected_01
+selon la trace réellement affichée et encore accessible
 ```
 
 ## Nico
@@ -1886,7 +2021,7 @@ J13 évite :
 - [ ] Sandra contrôle maintien ou retrait ;
 - [ ] Mathilde définit une règle du foyer ;
 - [ ] Marie distingue photo publique et couple privé ;
-- [ ] aucune scène adulte ;
+- [ ] aucune scène sexuelle ; la seconde photographie adulte Raphaëlle reste diégétique, conditionnelle et sans acte sexuel ;
 - [ ] toute co-présence arrête le chat ;
 - [ ] trois fonctions visuelles minimum ;
 - [ ] une trace J14 existe déjà dans la partie ;

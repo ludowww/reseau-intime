@@ -21,6 +21,9 @@ Il s’appuie sur :
 - la présence réelle de Maud ;
 - l’état des versions publiques, privées et retirées ;
 - les règles d’audience, de preuve, de consentement et de responsabilité ;
+- `NAR_PROD_07_ADULT_PAYOFF_AUDIT_SPECIFICATION.md` ;
+- `NAR_ADULT_02_PAYOFF_SANDRA_J18.md` ;
+- `NAR_ADULT_03_PAYOFFS_PAULINE_RAPHAELLE.md` ;
 - le canon text-only.
 
 Il ne contient :
@@ -105,7 +108,10 @@ Dans ce cas :
 - Sandra reçoit le premier plan ;
 - Pauline reçoit une direction courte ;
 - Raphaëlle reçoit une direction courte ;
+- J19 peut réutiliser uniquement `S1_A5_J18_SCN_SANDRA_FINAL_STATE_01_LATE_INTIMACY_AFTERCARE` ;
+- `S1_A5_J18_SCN_SANDRA_LATE_INTIMACY_ENTRY_01` et `S1_A5_J18_SCN_SANDRA_LATE_INTIMACY_CENTRAL_01` ne sont jamais rejoués ;
 - aucune nouvelle scène adulte n’est autorisée ;
+- aucune photo Pauline adulte n’est autorisée ;
 - aucun personnage ne vient compenser la difficulté Sandra.
 
 ## 2.2 Pivot Pauline
@@ -247,7 +253,9 @@ Dans une partie standard :
 0 nouvelle route
 0 permission rétroactive
 0 confession exhaustive
-0 image intime de récompense
+0 image intime de compensation
+0 nouvelle image adulte sauf Pauline foreground / P19-B / conditions complètes
+1 photographie adulte maximale dans la configuration Pauline éligible
 3 contenus visuels minimum
 ```
 
@@ -258,6 +266,7 @@ Dans une partie avec après-coup Sandra adulte :
 1 état court Pauline
 1 état court Raphaëlle
 0 nouvelle progression adulte
+0 photo Pauline adulte
 ```
 
 ---
@@ -934,6 +943,134 @@ aucun accès permanent
 ```
 
 Cette branche est séduisante mais instable.
+
+---
+
+# 19 bis. Pauline — Fenêtre adulte conditionnelle
+
+## Éligibilité
+
+La fenêtre existe seulement si :
+
+- Pauline est foreground ;
+- P19-B a été choisi ;
+- la version J13 a été gérée proprement ;
+- aucune sauvegarde ou circulation interdite n’a eu lieu ;
+- aucune exposition ne reste non réglée ;
+- aucune menace ou pression n’existe ;
+- aucune preuve n’est utilisée comme chantage ;
+- l’aftercare Sandra est absent ;
+- Bastien et Marie sont physiquement absents ;
+- Pauline initie ;
+- une fenêtre indépendante de Player existe.
+
+À **20:12**, seulement si Bastien a quitté le domicile pour une obligation personnelle déjà prévue et indépendante de Player :
+
+**Pauline**
+
+> Je suis seule un moment.
+
+**Pauline**
+
+> Je précise avant que tu répondes : ce n’est pas une invitation à demander la suivante.
+
+**Pauline**
+
+> J’en ai fait une.
+
+**Pauline**
+
+> Pas à partir d’une photo publique. Pas une version recadrée.
+
+**Pauline**
+
+> Celle-ci existe uniquement ici.
+
+**ImageMessage**
+
+```text
+S1_A5_J19_DPH_PAULINE_ADULT_COMPARTMENT_01
+```
+
+Si l’absence de Bastien n’est pas crédible dans la branche, la fenêtre n’existe pas.
+
+## Contrat photo Pauline
+
+```text
+type: PHOTO_DIÉGÉTIQUE
+creator: Pauline
+camera_control: Pauline
+selected_by: Pauline
+owner: Pauline
+initial_audience: [Pauline]
+current_audience: ajoute Player uniquement si envoi
+saving: IN_THREAD_ONLY
+external_saving: FORBIDDEN
+transfer: FORBIDDEN
+withdrawal: Pauline
+permission_future: NONE
+```
+
+Niveau :
+
+```text
+nudité explicite
+image adulte frontale
+aucun acte sexuel
+aucun tiers
+```
+
+## Réponses
+
+### Respecter la règle
+
+**Player**
+
+> elle reste ici. je ne la sauvegarde pas et je ne la montre pas
+
+### Reconnaître le seuil
+
+**Player**
+
+> je comprends que ce n’est plus une autre version de la soirée
+
+**Pauline**
+
+> Non. Celle-là, je l’ai faite en sachant pourquoi.
+
+### Réclamer davantage
+
+Toute demande de série, de photo suivante ou de rencontre immédiate provoque :
+
+**Pauline**
+
+> Non.
+
+**Pauline**
+
+> Tu viens de transformer une décision précise en série.
+
+**Pauline**
+
+> Je retire.
+
+Le fichier devient `REMOVED`.
+
+## Après-coup
+
+Après maintien :
+
+**Pauline**
+
+> Le fait de l’avoir décidée ne rend pas le reste moins vrai.
+
+La photographie ne remplace pas :
+
+- la dette Bastien ;
+- la dette Marie ;
+- une preuve réciproque ;
+- une collision crédible ;
+- le droit de fermeture Pauline.
 
 ---
 
@@ -1977,7 +2114,7 @@ Maximum recommandé : 5.
 ## Configuration Pauline foreground
 
 1. surface Pauline / Bastien réelle ;
-2. Pauline décidant du compartiment ;
+2. Pauline décidant du compartiment, avec `S1_A5_J19_DPH_PAULINE_ADULT_COMPARTMENT_01` comme enfant conditionnel uniquement si la fenêtre adulte est éligible ;
 3. Raphaëlle dans son état court et ordinaire ;
 4. preuve ou planner optionnel ;
 5. conséquence sociale optionnelle.
@@ -1997,6 +2134,8 @@ Maximum recommandé : 5.
 3. état court Raphaëlle ;
 4. vie officielle ou professionnelle ;
 5. retour ordinaire.
+
+Aucune nouvelle image adulte Raphaëlle n’est créée en J19. `S1_A5_J19_SCN_RAPHAELLE_AFTER_ROLE_PROCESS_01` reste la conséquence de personne et de processus.
 
 Aucune pose ou composition définitive n’est fixée.
 
@@ -2231,6 +2370,8 @@ J19 évite :
 - [ ] aucune séparation ne crée une permission automatique ;
 - [ ] aucune image supprimée ne revient ;
 - [ ] aucune image de consolation ;
+- [ ] la photo Pauline adulte existe seulement en Pauline foreground, après P19-B et sans aftercare Sandra ;
+- [ ] aucune nouvelle image adulte Raphaëlle en J19 ;
 - [ ] toute co-présence arrête le chat ;
 - [ ] aucun dialogue oral ;
 - [ ] trois contenus visuels minimum ;

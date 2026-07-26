@@ -19,6 +19,8 @@ Il s’appuie sur :
 - les règles d’audience, de sauvegarde, de retrait et de consentement ;
 - l’état provisoire du couple Marie / Player ;
 - la présence réelle de Jeff ;
+- `NAR_PROD_07_ADULT_PAYOFF_AUDIT_SPECIFICATION.md` ;
+- `NAR_ADULT_02_PAYOFF_SANDRA_J18.md` ;
 - le canon text-only.
 
 Il ne contient :
@@ -1501,7 +1503,7 @@ adultes capables de choisir
 aucune intoxication
 consentement écrit actuel
 retrait possible avant et pendant
-aucun fichier sexuel supposé
+aucun fichier sexuel diégétique supposé
 après-coup obligatoire
 ```
 
@@ -1625,19 +1627,52 @@ Le désir reste réel sans compensation.
 
 À 22 h, la messagerie s’arrête.
 
+Séquence exacte après l’acceptation du cadre :
+
 ```text
-22:00–heure de séparation
-rencontre physique hors téléphone
-aucun dialogue oral transcrit
-aucune caméra diégétique
-aucune photographie
-consentement révocable
-Sandra peut arrêter ou demander le départ
+conversation
+→ OffPhoneTransition
+→ S1_A5_J18_SCN_SANDRA_LATE_INTIMACY_ENTRY_01
+→ S1_A5_J18_SCN_SANDRA_LATE_INTIMACY_CENTRAL_01 si réellement atteint
+→ séparation
+→ S1_A5_J18_SCN_SANDRA_FINAL_STATE_01_LATE_INTIMACY_AFTERCARE
+→ reprise des messages
 ```
 
-La scène exacte n’est pas décrite dans le chat.
+Service conditionnel :
 
-Elle ne crée aucun droit futur.
+- proposition retirée avant rencontre : aucune image adulte ;
+- rencontre commencée puis arrêtée avant sexualité : `ENTRY` et `AFTERCARE` peuvent être servis si pertinents, `CENTRAL` est interdit ;
+- payoff complet : les trois images sont servies.
+
+Contrats :
+
+```text
+ENTRY
+IMAGE_DE_SCÈNE
+érotique forte
+Sandra active
+aucune caméra
+Player non identifiable
+
+CENTRAL
+IMAGE_DE_SCÈNE
+nudité explicite
+sexualité explicite complète
+rapport sexuel complet possible
+consentement révocable
+aucun droit futur
+aucune représentation triomphale de la double vie
+
+AFTERCARE
+IMAGE_DE_SCÈNE
+après-coup
+aucun nouvel acte
+Jeff reste une conséquence
+aucune répétition promise
+```
+
+La scène exacte n’est pas décrite dans le chat. Elle ne crée aucun droit futur.
 
 ---
 
@@ -1703,7 +1738,7 @@ Aucune frustration Player n’est récompensée.
 
 ```text
 intimité tardive vécue ou arrêt respecté
-aucun fichier
+aucun fichier sexuel diégétique
 aucun droit permanent
 Jeff reste une conséquence
 après-coup court obligatoire en J19 ou J20 avant leur pivot
@@ -1789,34 +1824,27 @@ aucune extension automatique
 
 ---
 
-# 26. Visuel adulte optionnel
+# 26. Séquence visuelle adulte conditionnelle
 
-Seulement si la variante d’intimité tardive a réellement lieu.
+Fichiers possibles :
 
 ```text
-type:
-IMAGE_DE_SCÈNE NON DIÉGÉTIQUE
-
-center:
-Sandra
-
-function:
-représenter le moment vécu ou son après-coup
-
-camera_in_story:
-false
-
-saving:
-non applicable
-
-circulation:
-false
-
-permission_future:
-none
+S1_A5_J18_SCN_SANDRA_LATE_INTIMACY_ENTRY_01
+S1_A5_J18_SCN_SANDRA_LATE_INTIMACY_CENTRAL_01
+S1_A5_J18_SCN_SANDRA_FINAL_STATE_01_LATE_INTIMACY_AFTERCARE
 ```
 
-Aucune photographie sexuelle diégétique n’est produite par défaut.
+Ils suivent strictement le service conditionnel du chapitre 22. Aucune photographie sexuelle diégétique n’est produite.
+
+Galerie :
+
+```text
+origine: Moment vécu
+content_id: C18-02
+branch: late_intimacy
+```
+
+Une seule tuile est créée et contient uniquement les images réellement servies.
 
 ---
 
@@ -1901,7 +1929,7 @@ Jeff et Marie restent réels
 
 ```text
 rencontre vécue ou arrêtée
-aucun fichier
+aucun fichier sexuel diégétique
 consentement actuel seulement
 après-coup actif
 ```
@@ -2163,7 +2191,7 @@ J18 évite :
 - [ ] l’intimité tardive reste rare et conditionnelle ;
 - [ ] la négociation adulte est écrite ;
 - [ ] la rencontre physique arrête le chat ;
-- [ ] aucun fichier sexuel n’est supposé ;
+- [ ] aucun fichier sexuel diégétique n’est supposé ;
 - [ ] l’après-coup est obligatoire ;
 - [ ] trois contenus visuels minimum sont définis ;
 - [ ] un état Sandra unique et lisible est produit ;
@@ -2213,7 +2241,7 @@ Une séparation de Player ne devient pas une permission.
 
 Une reconfiguration du couple ne devient pas un accord de Sandra.
 
-Si une intimité tardive existe, elle est négociée par écrit, révocable, vécue hors téléphone et ne produit aucun fichier automatique.
+Si une intimité tardive existe, elle est négociée par écrit, révocable, vécue hors téléphone et ne produit aucun fichier sexuel diégétique. Les images de scène sont servies uniquement selon la branche réellement atteinte.
 
 La résolution de Sandra ne consiste pas à donner davantage.
 

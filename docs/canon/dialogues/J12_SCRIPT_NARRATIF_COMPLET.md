@@ -17,6 +17,8 @@ Il s’appuie sur :
 - `J10_SCRIPT_NARRATIF_COMPLET.md` ;
 - `J11_SCRIPT_NARRATIF_COMPLET.md` ;
 - `J01_J09_AUDIT_CONFORMITE_NARRATIVE.md` ;
+- `NAR_PROD_07_ADULT_PAYOFF_AUDIT_SPECIFICATION.md` ;
+- `NAR_ADULT_01_PAYOFFS_J11_MARIE_MATHILDE.md` ;
 - les canons de voix, d’image, de consentement et de communication text-only.
 
 Il ne contient :
@@ -692,6 +694,31 @@ Aucune autre route ne remplace ce vide.
 
 > Et ton air parfaitement innocent est beaucoup trop travaillé.
 
+### Si J11 était M-B3
+
+Après le payoff adulte maximal, Mathilde peut :
+
+- éviter une place trop proche ;
+- parler normalement à Marie avec un effort visible ;
+- quitter plus tôt ;
+- ne pas accompagner le groupe ;
+- refuser un aparté ;
+- demander que Player cesse de vérifier sa position.
+
+Échange conditionnel :
+
+**Mathilde**
+
+> Ne me regarde pas comme si on avait décidé la suite.
+
+**Player guidé**
+
+> d’accord
+
+**Mathilde**
+
+> Merci.
+
 ### Si J11 était seulement une proximité
 
 **Mathilde**
@@ -777,6 +804,15 @@ Nico ou Pauline peut remarquer :
 - un silence inhabituel.
 
 Ils ne savent pas pourquoi.
+
+Dans toutes les sorties M-B3 :
+
+- aucune seconde scène ;
+- aucune clarification intime en public ;
+- aucune jalousie avec Nico ;
+- aucune punition si Mathilde ne vient pas ;
+- Marie reste moralement présente ;
+- le comportement ne révèle pas automatiquement le secret.
 
 ---
 
@@ -968,6 +1004,8 @@ Player choisit :
 > Je ne te tire pas dans l’image.
 
 La photo publique reflète la décision.
+
+La place de Player dans la photo publique est proposée et choisie par Marie. Elle ne représente ni possession après la sexualité de J11, ni preuve publique de réparation du couple.
 
 ## Si J11 était une proximité non sexuelle
 
@@ -1246,6 +1284,8 @@ Mathilde peut :
 - partir plus tôt ;
 - ne pas accompagner le groupe.
 
+Après M-B3, elle peut aussi parler normalement à Marie avec un effort visible, refuser un aparté et demander que Player cesse de vérifier sa position.
+
 Elle ne doit pas :
 
 - provoquer une deuxième scène ;
@@ -1264,7 +1304,7 @@ Elle ne doit pas :
 
 **Mathilde**
 
-> Merci.
+> On a décidé hier. Pas aujourd’hui.
 
 Nico peut seulement remarquer que quelque chose est calculé.
 

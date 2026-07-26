@@ -27,6 +27,10 @@ scripts J01–J21
 → audit J01–J09
 → audit global J01–J21
 → lot A
+→ NAR_PROD_07_ADULT_PAYOFF_AUDIT_SPECIFICATION.md
+→ NAR_ADULT_01_PAYOFFS_J11_MARIE_MATHILDE.md
+→ NAR_ADULT_02_PAYOFF_SANDRA_J18.md
+→ NAR_ADULT_03_PAYOFFS_PAULINE_RAPHAELLE.md
 → registres de traces / promesses / connaissances
 → contrat d’état borné
 → présente matrice
@@ -172,7 +176,7 @@ Aucune route tardive.
 | `PRIVILEGED_CONFIDENCE` | confiance répétée, aucune exigence de définition, audience respectée | usage de confidence comme alibi | photo déjeuner ou absence de nouvelle image | continuité de confidence |
 | `DESIRE_RECOGNIZED_CONTAINED` | manque ou désir reconnu, rythme Sandra respecté | demande de répétition ou ultimatum | photo choisie gardée ou inaccessible | rencontre future non promise |
 | `PARALLEL_TENDER_RELATION` | secret consciemment choisi, Jeff et Marie reconnus comme exclus | découverte, retrait Sandra, refus de dette | trace privée ou impression contrôlée | route sombre avec conséquence |
-| `LATE_INTIMACY` | progression longue, consentement actuel, contexte crédible | aftercare dû, pression future | impression ou message après-coup | aucune répétition automatique |
+| `LATE_INTIMACY` | progression longue, consentement actuel, contexte crédible | aftercare dû, pression future | séquence visuelle conditionnelle réellement servie, puis impression ou message après-coup | aucune répétition automatique |
 | `PROTECTIVE_WITHDRAWAL` | Sandra choisit espace ou fermeture | relance après fermeture | image inaccessible ou conservée pour elle | retour uniquement par initiative Sandra |
 | `TRUST_BROKEN` | audience violée, pression, comparaison, mensonge grave | aucune réouverture saison 1 | absence de trace / accès retiré | réparation future non garantie |
 
@@ -180,6 +184,8 @@ Aucune route tardive.
 
 - `sandra_cafe_saturday_1100 = ACTIVE` rend le préambule J12 obligatoire.
 - `LATE_INTIMACY` rend `aftercare_sandra_j18 = DUE` puis `PAID` avant J19.
+- `LATE_INTIMACY` ne crée aucun fichier sexuel diégétique.
+- la séquence visuelle J18 sert uniquement les fichiers réellement atteints et l’aftercare J19 reste dû.
 - une trace `REMOVED` ne peut pas être finale comme image visible ; son absence peut être finale.
 - `TRUST_BROKEN` interdit toute invitation J21.
 
@@ -193,13 +199,20 @@ Aucune route tardive.
 | `LOOK_ACKNOWLEDGED` | J06 regard reconnu sans pression | `INTENT_OPEN` possible | départ avec gêne ou limite | trace du foyer non sexualisée |
 | `INTENT_OPEN` | image J10 choisie, effet reconnu | proximité ou retrait | relation clarifiée au départ | photo de famille ou limite |
 | `PROXIMITY_CONSENTED` | consentement clair, aucune dépendance exploitée | pas de sexualité complète nécessaire | après-coup et départ | relation familiale, suspendue ou distante |
-| `PHYSICAL_SECRET` | indépendance matérielle vraie, consentement, aftercare | secret et conséquence Marie | départ obligatoire ; aucune continuation domestique | trace retirée, familiale ou dette reconnue |
+| `PHYSICAL_SECRET` | indépendance matérielle vraie, consentement, aftercare ; M-B2 ou M-B3 selon historique | secret et conséquence Marie | départ obligatoire ; aucune continuation domestique | trace retirée, familiale ou dette reconnue |
 | `SECRET_SUSPENDED` | événement reconnu mais non poursuivi | aucune répétition | fermeture ou attente non promise | absence / relation bornée |
 | `FAMILY_RELATION_PRESERVED` | limites respectées | pas de nouvel accès privé saison 1 | départ familial | photo de famille possible |
 | `DISTANCE` | retrait Mathilde ou Player | aucune compensation | départ autonome | silence ou trace retirée |
 | `TRUST_BROKEN` | pression, dépendance, audience violée | fermeture | départ protecteur | aucun accès Player |
 
 ## Branche physique
+
+Sous `PHYSICAL_SECRET` :
+
+```text
+M-B2: premier passage borné
+M-B3: payoff explicite sans pénétration
+```
 
 Atteignable seulement si :
 
@@ -210,6 +223,8 @@ marie_absence_not_engineered
 current_consent
 no_due_safety_obligation
 ```
+
+M-B3 exige en plus toutes les conditions de `NAR_ADULT_01_PAYOFFS_J11_MARIE_MATHILDE.md`, notamment l’initiative Mathilde, M-B2 déjà crédible dans le même état, le départ réel et l’absence de droit acquis.
 
 Sinon :
 
@@ -238,6 +253,17 @@ PROXIMITY_CONSENTED maximum
 - la version publique reste vraie dans tous les états.
 - Bastien ne devient pas omniscient par nécessité de finale.
 
+`COMPARTMENT_PROTECTED` peut produire T25B `j19_pauline_adult_compartment_01` seulement si :
+
+- P19-B a été choisi ;
+- une fenêtre privée crédible existe ;
+- aucune dette prioritaire n’est due ;
+- Pauline est foreground ;
+- aucune pression n’a eu lieu ;
+- aucune circulation n’est autorisée.
+
+T25B peut être trace J21 uniquement si elle reste accessible.
+
 ---
 
 # 8. Atteignabilité Raphaëlle
@@ -258,6 +284,16 @@ PROXIMITY_CONSENTED maximum
 - `COLLEAGUE_ONLY` interdit une image privée active.
 - Maud ne crée aucune permission à la place de Raphaëlle.
 - aucune collision J15 complète Raphaëlle n’est atteignable sans seconde promesse antérieure réellement signée.
+
+`CREATIVE_TRUST` ou `ATTRACTION_CONTAINED` peut produire T18B `j13_raphaelle_masked_adult_selected_01` seulement si :
+
+- T18 standard ou le processus antérieur est valide ;
+- R-A ou R-B a été choisi ;
+- Maud est créatrice ;
+- Raphaëlle sélectionne l’audience ;
+- aucun brief sexuel n’est imposé.
+
+T18B peut être trace J14 ou J21 selon son état.
 
 ---
 

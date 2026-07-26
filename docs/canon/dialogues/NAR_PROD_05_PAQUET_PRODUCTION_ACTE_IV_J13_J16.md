@@ -30,12 +30,13 @@ Ce document :
 En cas d’écart, l’ordre suivant s’applique :
 
 1. décisions explicites de Ludovic verrouillées pour la finalisation de NAR-PROD-05 ;
-2. scripts narratifs signés J13–J16 ;
-3. NAR-CANON-01 et les registres canoniques corrigés à la baseline stable ;
-4. Trace Registry avec les remplacements T17/T18 appliqués par le présent lot ;
-5. contrat d’état narratif et matrice d’atteignabilité ;
-6. bible narrative et canons complets des personnages ;
-7. NAR-PROD-02, NAR-PROD-03 et NAR-PROD-04 pour les contenus antérieurs.
+2. `NAR_PROD_07_ADULT_PAYOFF_AUDIT_SPECIFICATION.md` et `NAR_ADULT_03_PAYOFFS_PAULINE_RAPHAELLE.md` pour la photographie adulte Raphaëlle ;
+3. scripts narratifs signés J13–J16 ;
+4. NAR-CANON-01 et les registres canoniques corrigés à la baseline stable ;
+5. Trace Registry avec T17, T18 et T18B ;
+6. contrat d’état narratif et matrice d’atteignabilité ;
+7. bible narrative et canons complets des personnages ;
+8. NAR-PROD-02, NAR-PROD-03 et NAR-PROD-04 pour les contenus antérieurs.
 
 ### 1.3 Sources autoritatives relues
 
@@ -142,7 +143,7 @@ J16 : une conséquence réelle est payée, échoue ou ne subsiste plus, puis Mat
 - Marie reste directement présente ou structurellement affectée.
 - Aucun personnage non sélectionné ne reçoit une image de compensation.
 - Aucun visuel séduisant ne récompense une limite poussée ou une dette impayée.
-- Aucune progression adulte ni route nouvelle n’est créée.
+- Aucune scène sexuelle ni route nouvelle n’est créée ; seule la photographie adulte Raphaëlle validée peut être servie sous C13-02.
 - Les personnages continuent leur vie sans attente artificielle.
 - Une absence, un retrait, un silence ou un accès révoqué peut payer un beat avec zéro nouveau fichier.
 
@@ -152,28 +153,28 @@ J16 : une conséquence réelle est payée, échoue ou ne subsiste plus, puis Mat
 12 beats servis par partie
 10 nouveaux contenus principaux
 12 réutilisations antérieures distinctes
-11 nouveaux fichiers sources
-1 fichier enfant
+12 nouveaux fichiers sources
+2 fichiers enfants
 1 variante conditionnelle
 ```
 
 Répartition des fichiers :
 
 ```text
-J13 : 2
+J13 : 3
 J14 : 2
 J15 : 4
 J16 : 3
-total : 11
+total : 12
 ```
 
 Répartition par nature :
 
 ```text
 fichiers de base autonomes : 9
-fichier enfant : 1
+fichiers enfants : 2
 fichier de variante : 1
-total : 11
+total : 12
 ```
 
 ---
@@ -182,11 +183,11 @@ total : 11
 
 | Jour | Type | Beats servis | Contenus principaux | Nouveaux fichiers | Enfant | Variante | Verdict |
 |---|---|---:|---:|---:|---:|---:|---|
-| J13 | `CONSEQUENCE` | 3 | 2 photographies mutuellement exclusives | 2 | 1 | 0 | `READY` |
+| J13 | `CONSEQUENCE` | 3 | 2 photographies principales mutuellement exclusives | 3 | 2 | 0 | `READY` |
 | J14 | `DISCOVERY` ou fallback | 3 | 2 souvenirs mutuellement exclusifs | 2 | 0 | 0 | `READY` |
 | J15 | `FULL_COLLISION` ou `S28_MUTATION_NO_COLLISION` | 3 | 4 souvenirs conditionnels | 4 | 0 | 0 | `READY` |
 | J16 | `CONSEQUENCE_ONLY` ou fermeture propre | 3 | 2 souvenirs | 3 | 0 | 1 | `READY` |
-| **Total** |  | **12** | **10** | **11** | **1** | **1** | **READY** |
+| **Total** |  | **12** | **10** | **12** | **2** | **1** | **READY** |
 
 ### 4.1 Douze fonctions toujours servies
 
@@ -305,8 +306,8 @@ S1_A3_J12_DPH_PAULINE_BASTIEN_ANNEXE_01_FRAME_04_PRIVATE
 | Champ | Valeur |
 |---|---|
 | Code | C13-02 |
-| `asset_id` | `S1_A4_J13_DPH_RAPHAELLE_MASKED_POSTURE_01` |
-| `trace_id` | `j13_raphaelle_masked_version_01` |
+| `asset_ids` | `S1_A4_J13_DPH_RAPHAELLE_MASKED_POSTURE_01` ; `S1_A4_J13_DPH_RAPHAELLE_MASKED_ADULT_SELECTED_01` |
+| `trace_id` | `j13_raphaelle_masked_version_01` ; T18B `j13_raphaelle_masked_adult_selected_01` conditionnel |
 | Type | `PHOTO_DIÉGÉTIQUE` |
 | Source | `SIGNED_SOURCE` |
 | `source_day` | J13 |
@@ -320,7 +321,7 @@ S1_A3_J12_DPH_PAULINE_BASTIEN_ANNEXE_01_FRAME_04_PRIVATE
 | Sauvegarde | `IN_THREAD_ONLY` |
 | Transfert | `FORBIDDEN` |
 | Fonction | version choisie où le masque transforme visiblement la posture, sans permission corporelle future |
-| Fichier | 1 nouveau fichier source autonome |
+| Fichiers | 1 base autonome + 1 enfant conditionnel adulte |
 | Galerie | `conditional` / slot `deferred` |
 | J14 | oui seulement si encore accessible |
 | J21 | selon état canonique, jamais restaurée |
@@ -334,6 +335,19 @@ Cette photographie :
 - ne dérive d’aucun fichier antérieur ;
 - n’est ni un crop, ni un fichier enfant ;
 - n’est jamais créée dans la branche où Raphaëlle refuse l’envoi.
+
+Le fichier adulte conditionnel :
+
+```text
+S1_A4_J13_DPH_RAPHAELLE_MASKED_ADULT_SELECTED_01
+```
+
+- reste un enfant de C13-02, pas un nouveau contenu principal ni une variante ;
+- est créé par Maud, sélectionné et possédé par Raphaëlle ;
+- ajoute Player à l’audience seulement si Raphaëlle l’envoie après R-A ou R-B ;
+- peut montrer une nudité explicite partielle ou une exposition adulte équivalente ;
+- ne montre aucun acte sexuel ni Player ;
+- devient T18B et peut être retiré indépendamment de T18.
 
 Si le cadre J12 a été pressé ou si Raphaëlle refuse l’image :
 
@@ -359,7 +373,7 @@ Une seule conséquence J13 reste foreground.
 | Pivot | Support | Nouveau fichier dans la branche | Branche non choisie | Écho Marie |
 |---|---|---:|---|---|
 | Pauline | C13-01 / T17 | 1 enfant | `NOT_CREATED` / `NO_NEW_ASSET` | T14, C12-03 public ou foyer |
-| Raphaëlle | C13-02 / T18 | 1 autonome si envoi | `NOT_CREATED` / `NO_NEW_ASSET` | T14 ou foyer |
+| Raphaëlle | C13-02 / T18, avec T18B conditionnel | 1 base autonome + 1 enfant adulte si toutes les conditions sont réunies | `NOT_CREATED` / `NO_NEW_ASSET` | T14 ou foyer |
 | Nico | T19 message d’heure ou d’alibi | 0 | `NO_NEW_ASSET` | T14, T15 ou retour couple |
 | Sandra | T11, T01, retrait, silence ou inaccessibilité | 0 | `NO_NEW_ASSET` | T14 ou foyer |
 | Mathilde | T10, T13 textuelle, règle du foyer ou distance | 0 | `NO_NEW_ASSET` | foyer et Marie |
@@ -721,6 +735,7 @@ Règles :
 |---|---|---|---|---|
 | T17 / C13-01 | Marie | miniature ou dernier média déjà affiché | expéditeur, miniature si activée, heure | C14-01 |
 | T18 / C13-02 | Marie | image reçue ou miniature réellement accessible | fil, miniature si activée, heure ; aucune permission future | C14-01 |
+| T18B / C13-02 | Marie | image adulte reçue ou miniature réellement accessible | Raphaëlle, exposition corporelle adulte, fil ou fichier, réaction Player ; aucune règle d’audience déduite | C14-01 |
 | T19 Nico | Marie | notification textuelle | expéditeur, aperçu exact, heure | C14-01 |
 | T11 Sandra | Mathilde | mauvaise conversation déjà ouverte | fil, dernier média, lignes immédiatement visibles | C14-02 |
 | T13 Mathilde textuelle | Marie | aperçu verrouillé | expéditeur, aperçu exact, heure | C14-01 |
@@ -732,6 +747,8 @@ Règles :
 | T17 `REMOVED` ou `INACCESSIBLE` | aucun affichage ; connaissance antérieure conservée |
 | T18 `NOT_CREATED` | aucun substitut et aucun fichier créé |
 | T18 `REMOVED` ou `INACCESSIBLE` | aucune restauration |
+| T18B `NOT_CREATED` | aucun substitut et aucun fichier créé |
+| T18B `REMOVED` ou `INACCESSIBLE` | aucune restauration ; T18 standard n’est pas retirée automatiquement |
 | T11 retirée | aucune restauration |
 | aucune trace éligible | fallback sans incident, puis mutation si nécessaire |
 | écran complet dans C14-01/C14-02 | interdit |
@@ -841,7 +858,7 @@ T22 enregistre seulement un résultat factuel. Il n’a aucune audience photogra
 | # | Code | Jour | `asset_id` | Type | Fonction | Fichiers |
 |---:|---|---|---|---|---|---:|
 | 1 | C13-01 | J13 | `S1_A4_J13_DPH_PAULINE_PRIVATE_VERSION_01` | `PHOTO_DIÉGÉTIQUE` | quatrième frame privée L’Annexe | 1 enfant |
-| 2 | C13-02 | J13 | `S1_A4_J13_DPH_RAPHAELLE_MASKED_POSTURE_01` | `PHOTO_DIÉGÉTIQUE` | masque transformant la posture | 1 autonome |
+| 2 | C13-02 | J13 | `S1_A4_J13_DPH_RAPHAELLE_MASKED_POSTURE_01` | `PHOTO_DIÉGÉTIQUE` | masque transformant la posture, puis seconde image adulte conditionnelle | 1 base + 1 enfant |
 | 3 | C14-01 | J14 | `S1_A4_J14_SCN_MARIE_LIMITED_DISCOVERY_01` | `SOUVENIR_IMAGE_DE_SCÈNE` | connaissance limitée Marie | 1 |
 | 4 | C14-02 | J14 | `S1_A4_J14_SCN_MATHILDE_LIMITED_DISCOVERY_01` | `SOUVENIR_IMAGE_DE_SCÈNE` | connaissance limitée Mathilde | 1 |
 | 5 | C15-01 | J15 | `S1_A4_J15_SCN_MARIE_AUTONOMOUS_PRIORITY_01` | `SOUVENIR_IMAGE_DE_SCÈNE` | Marie agit sans Player | 1 |
@@ -850,7 +867,7 @@ T22 enregistre seulement un résultat factuel. Il n’a aucune audience photogra
 | 8 | C15-04 | J15 | `S1_A4_J15_SCN_PAULINE_AUTONOMOUS_VERSION_01` | `SOUVENIR_IMAGE_DE_SCÈNE` | Pauline reprend sa version | 1 |
 | 9 | C16-01 | J16 | `S1_A4_J16_SCN_MATHILDE_DEPARTURE_PREPARATION_01` | `SOUVENIR_IMAGE_DE_SCÈNE` | préparation du départ | 2 |
 | 10 | C16-02 | J16 | `S1_A4_J16_SCN_MARIE_J17_HANDOFF_01` | `SOUVENIR_IMAGE_DE_SCÈNE` | foyer transformé, handoff J17 | 1 |
-| **Total** |  |  |  |  | **10 contenus** | **11 fichiers** |
+| **Total** |  |  |  |  | **10 contenus** | **12 fichiers** |
 
 ### 14.1 Répartition par type
 
@@ -865,27 +882,28 @@ T19, T20, T21 et T22 conservent leur fonction narrative sans entrer dans le regi
 
 ---
 
-## 15. Manifeste final des onze fichiers
+## 15. Manifeste final des douze fichiers
 
 | # | Jour | Fichier source | Contenu | Nature |
 |---:|---|---|---|---|
 | 1 | J13 | `S1_A3_J12_DPH_PAULINE_BASTIEN_ANNEXE_01_FRAME_04_PRIVATE` | C13-01 | enfant de C12-03 |
 | 2 | J13 | `S1_A4_J13_DPH_RAPHAELLE_MASKED_POSTURE_01` | C13-02 | base autonome |
-| 3 | J14 | `S1_A4_J14_SCN_MARIE_LIMITED_DISCOVERY_01` | C14-01 | base |
-| 4 | J14 | `S1_A4_J14_SCN_MATHILDE_LIMITED_DISCOVERY_01` | C14-02 | base |
-| 5 | J15 | `S1_A4_J15_SCN_MARIE_AUTONOMOUS_PRIORITY_01` | C15-01 | base |
-| 6 | J15 | `S1_A4_J15_SCN_SANDRA_AUTONOMOUS_WINDOW_01` | C15-02 | base |
-| 7 | J15 | `S1_A4_J15_SCN_MATHILDE_AUTONOMOUS_HOUSEHOLD_01` | C15-03 | base |
-| 8 | J15 | `S1_A4_J15_SCN_PAULINE_AUTONOMOUS_VERSION_01` | C15-04 | base |
-| 9 | J16 | `S1_A4_J16_SCN_MATHILDE_DEPARTURE_PREPARATION_01_ORDINARY` | C16-01 | base |
-| 10 | J16 | `S1_A4_J16_SCN_MATHILDE_DEPARTURE_PREPARATION_01_PROTECTIVE` | C16-01 | variante conditionnelle |
-| 11 | J16 | `S1_A4_J16_SCN_MARIE_J17_HANDOFF_01` | C16-02 | base |
+| 3 | J13 | `S1_A4_J13_DPH_RAPHAELLE_MASKED_ADULT_SELECTED_01` | C13-02 | enfant conditionnel adulte |
+| 4 | J14 | `S1_A4_J14_SCN_MARIE_LIMITED_DISCOVERY_01` | C14-01 | base |
+| 5 | J14 | `S1_A4_J14_SCN_MATHILDE_LIMITED_DISCOVERY_01` | C14-02 | base |
+| 6 | J15 | `S1_A4_J15_SCN_MARIE_AUTONOMOUS_PRIORITY_01` | C15-01 | base |
+| 7 | J15 | `S1_A4_J15_SCN_SANDRA_AUTONOMOUS_WINDOW_01` | C15-02 | base |
+| 8 | J15 | `S1_A4_J15_SCN_MATHILDE_AUTONOMOUS_HOUSEHOLD_01` | C15-03 | base |
+| 9 | J15 | `S1_A4_J15_SCN_PAULINE_AUTONOMOUS_VERSION_01` | C15-04 | base |
+| 10 | J16 | `S1_A4_J16_SCN_MATHILDE_DEPARTURE_PREPARATION_01_ORDINARY` | C16-01 | base |
+| 11 | J16 | `S1_A4_J16_SCN_MATHILDE_DEPARTURE_PREPARATION_01_PROTECTIVE` | C16-01 | variante conditionnelle |
+| 12 | J16 | `S1_A4_J16_SCN_MARIE_J17_HANDOFF_01` | C16-02 | base |
 
 Contrôle :
 
 ```text
-J13 2 + J14 2 + J15 4 + J16 3 = 11
-9 bases + 1 enfant + 1 variante = 11
+J13 3 + J14 2 + J15 4 + J16 3 = 12
+9 bases + 2 enfants + 1 variante = 12
 ```
 
 ### 15.1 Éléments sans nouveau fichier
@@ -953,6 +971,7 @@ R09 :
 |---|---|---:|---|
 | T17 | `PHOTO` | 1 enfant | version privée Pauline |
 | T18 | `PHOTO` | 1 autonome ou 0 si `NOT_CREATED` | posture Raphaëlle choisie |
+| T18B | `PHOTO` | 1 enfant de C13-02 ou 0 si `NOT_CREATED` | seconde image adulte choisie Raphaëlle |
 | T19 | `TEXT_MESSAGE` | 0 | heure ou alibi |
 | T20 | `FACT_RECORD` | 0 | découverte limitée |
 | T21 | `FACT_RECORD` | 0 | collision ou mutation |
@@ -976,6 +995,7 @@ R09 :
 |---|---|---|---|---|---|---|---|
 | C13-01 / T17 | Pauline puis Player si envoi | `PRIVATE_ACTIVE`, `REMOVED`, `INACCESSIBLE`, `NOT_CREATED` | `IN_THREAD_ONLY` | `FORBIDDEN` | `conditional` | si accessible | selon état, jamais restaurée |
 | C13-02 / T18 | Raphaëlle, Maud puis Player si envoi | `PRIVATE_ACTIVE`, `REMOVED`, `INACCESSIBLE`, `NOT_CREATED` | `IN_THREAD_ONLY` | `FORBIDDEN` | `conditional` | si accessible | selon état, jamais restaurée |
+| C13-02 / T18B | Raphaëlle, Maud puis Player si envoi adulte | `PRIVATE_ACTIVE`, `REMOVED`, `INACCESSIBLE`, `NOT_CREATED` | `IN_THREAD_ONLY` | `FORBIDDEN` | `conditional` | si accessible | selon état, jamais restaurée |
 | C14-01 / C14-02 | joueur uniquement | scène vécue ou inaccessible | `NONE` | `FORBIDDEN` | `conditional` | non comme trace | non |
 | C15-01 à C15-04 | joueur uniquement | scène vécue ou inaccessible | `NONE` | `FORBIDDEN` | `conditional` | non | non |
 | C16-01 / C16-02 | joueur uniquement | scène vécue ou inaccessible | `NONE` | `FORBIDDEN` | `conditional` | non | non |
@@ -1002,14 +1022,15 @@ Une trace retirée n’est jamais restaurée pour remplir un slot.
 
 ---
 
-## 19. Matrices T17–T22 et P14–P18
+## 19. Matrices T17–T22, T18B et P14–P18
 
-### 19.1 T17–T22
+### 19.1 T17–T22 et T18B
 
 | ID | `trace_id` | Type | État | Nouveau fichier |
 |---|---|---|---|---:|
 | T17 | `j13_pauline_private_version_01` | `PHOTO` | `PRIVATE_ACTIVE`, `REMOVED`, `INACCESSIBLE`, `NOT_CREATED` | 1 enfant |
 | T18 | `j13_raphaelle_masked_version_01` | `PHOTO` | `PRIVATE_ACTIVE`, `REMOVED`, `INACCESSIBLE`, `NOT_CREATED` | 1 autonome ou 0 |
+| T18B | `j13_raphaelle_masked_adult_selected_01` | `PHOTO` | `PRIVATE_ACTIVE`, `REMOVED`, `INACCESSIBLE`, `NOT_CREATED` | 1 enfant ou 0 |
 | T19 | `j13_nico_alibi_or_hour_message_01` | `TEXT_MESSAGE` | état du fil | 0 |
 | T20 | `j14_discovery_event_01` | `FACT_RECORD` | `ACTIVE` ou `NOT_CREATED` | 0 |
 | T21 | `j15_obligation_collision_record_01` | `FACT_RECORD` | `ACTIVE` ou `NOT_CREATED` | 0 |
@@ -1122,7 +1143,20 @@ current_state: NOT_CREATED
 production: NO_NEW_ASSET
 ```
 
-Aucun autre `trace_id` n’est modifié.
+T18B complète C13-02 sans remplacer T18 :
+
+```text
+trace_id: j13_raphaelle_masked_adult_selected_01
+asset_id: S1_A4_J13_DPH_RAPHAELLE_MASKED_ADULT_SELECTED_01
+creator: Maud
+selected_by: Raphaëlle
+owner: Raphaëlle
+production: 1 fichier enfant C13-02
+eligible_for_j14: true uniquement si encore accessible
+eligible_for_j21: true selon état
+```
+
+Le retrait de T18B ne retire pas automatiquement T18.
 
 ---
 
@@ -1196,7 +1230,7 @@ obligation payée ou fermée, aucune urgence
 - T17 possède une origine, une parentalité et une créatrice exactes.
 - T18 est une prise autonome sans dérivation.
 - C13-01 et C13-02 sont mutuellement exclusifs dans une partie.
-- Le remplacement visuel J13/J15 conserve onze fichiers.
+- Le remplacement visuel J13/J15 et l’enfant T18B portent le total à douze fichiers.
 - Raphaëlle ne possède aucune seconde tâche professionnelle inventée.
 - Mathilde exige une O2 extérieure réellement signée pour une collision complète.
 - Nico utilise la mutation par défaut.
@@ -1229,8 +1263,8 @@ La collision complète Raphaëlle reste `MISSING_SIGNED_SOURCE`. Son chemin joua
 - [x] Exactement 12 beats.
 - [x] Exactement 10 contenus principaux.
 - [x] Exactement 12 réutilisations.
-- [x] Exactement 11 fichiers.
-- [x] Exactement 1 fichier enfant.
+- [x] Exactement 12 fichiers.
+- [x] Exactement 2 fichiers enfants.
 - [x] Exactement 1 variante.
 - [x] Exactement 2 `PHOTO_DIÉGÉTIQUE`.
 - [x] Exactement 8 `SOUVENIR_IMAGE_DE_SCÈNE`.
@@ -1243,6 +1277,7 @@ La collision complète Raphaëlle reste `MISSING_SIGNED_SOURCE`. Son chemin joua
 - [x] T17 : Pauline, L’Annexe, C12-03, quatrième frame privée.
 - [x] T18 : `PHOTO`, Maud créatrice, Raphaëlle propriétaire et sélectionneuse.
 - [x] T18 distincte de T12 et sans dérivation.
+- [x] T18B est un enfant conditionnel de C13-02, distinct de T18 et révocable indépendamment.
 - [x] R09 est une continuité antérieure distincte.
 - [x] T21 utilise `trace_id` et `current_state`.
 - [x] T22 utilise `trace_id` et `current_state`.
@@ -1272,12 +1307,30 @@ La collision complète Raphaëlle reste `MISSING_SIGNED_SOURCE`. Son chemin joua
 | J16 | **3** |
 | Nouveaux contenus principaux | **10** |
 | Réutilisations antérieures distinctes | **12** |
-| Nouveaux fichiers sources | **11** |
-| Fichiers enfants | **1** |
+| Nouveaux fichiers sources | **12** |
+| Fichiers enfants | **2** |
 | Variantes conditionnelles | **1** |
 | `PHOTO_DIÉGÉTIQUE` | **2** |
 | `SOUVENIR_IMAGE_DE_SCÈNE` | **8** |
 | `FACT_RECORD` visuel | **0** |
+
+Comptage Saison 1 consolidé :
+
+```text
+Acte I: 15
+Acte II: 14
+Acte III: 30
+Acte IV: 12
+Acte V: 13
+Total: 84
+
+contenus principaux: 63
+variantes: 8
+nouveaux fichiers adultes: 8
+images de scène adultes nouvelles: 6
+photos diégétiques adultes nouvelles: 2
+nouveau fichier J21: 0
+```
 
 ### 21.6 Verdicts finaux
 
@@ -1299,4 +1352,4 @@ VALIDATION PRODUIT: PASS
 Décisions restant à Ludovic: AUCUNE
 ```
 
-La validation est acquise parce qu’aucun chemin ne fabrique ou ne ressuscite une obligation, qu’aucune image retirée n’est restaurée et que le budget final reste strictement inchangé.
+La validation est acquise parce qu’aucun chemin ne fabrique ou ne ressuscite une obligation, qu’aucune image retirée n’est restaurée et que le budget final reste strictement borné à douze fichiers.

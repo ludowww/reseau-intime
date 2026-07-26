@@ -16,7 +16,9 @@ Il applique :
 - `J10_SCRIPT_NARRATIF_COMPLET.md` ;
 - `06_EVOLUTION_EROTIQUE_DES_ROUTES.md` ;
 - `NSFW_CHARACTER_ROUTE_CANON.md` ;
-- `TEXT_ONLY_MESSAGING_CANON.md`.
+- `TEXT_ONLY_MESSAGING_CANON.md` ;
+- `NAR_PROD_07_ADULT_PAYOFF_AUDIT_SPECIFICATION.md` ;
+- `NAR_ADULT_01_PAYOFFS_J11_MARIE_MATHILDE.md`.
 
 Il ne contient :
 
@@ -222,6 +224,40 @@ mathilde_has_independent_sleep_option = true
 mathilde_can_leave_safely = true
 marie_absence_not_engineered = true
 ```
+
+Le même état relationnel `PHYSICAL_SECRET` couvre trois niveaux de scène distincts :
+
+```text
+M-B1
+proximité non adulte
+
+M-B2
+premier passage physique borné
+baiser et toucher intime négocié
+nudité non obligatoire
+aucune pénétration
+
+M-B3
+payoff adulte maximal
+nudité explicite
+contact sexuel mutuel explicite
+aucune pénétration
+```
+
+M-B3 exige, en plus de toutes les conditions déjà énumérées :
+
+- que M-B2 soit déjà crédible dans le même état relationnel ;
+- une initiative de Mathilde ;
+- aucune comparaison avec Marie ;
+- aucun « droit » acquis par le respect antérieur ;
+- le secret envers Marie reconnu comme conséquence ;
+- une solution de couchage indépendante ;
+- un départ réel après la scène ;
+- les vêtements, le téléphone, le transport et les affaires de Mathilde accessibles ;
+- aucune photographie ;
+- aucune demande de répétition avant l’après-coup.
+
+M-B3 ne crée aucun état relationnel au-delà de `PHYSICAL_SECRET`.
 
 À défaut, le plafond est `PROXIMITY_CONSENTED` et aucun passage physique explicite n’est éligible.
 
@@ -789,11 +825,11 @@ future clarification possible
 
 ---
 
-# 13. Mathilde M-B — Premier passage physique adulte éligible
+# 13. Mathilde M-B2 — Premier passage physique borné
 
 Cette variante remplace la proximité simple seulement si toutes les conditions du chapitre 5 sont vraies.
 
-## Négociation écrite supplémentaire
+## Entrée commune M-B2 / M-B3
 
 **21:12 — Mathilde**
 
@@ -805,19 +841,15 @@ Cette variante remplace la proximité simple seulement si toutes les conditions 
 
 **Player**
 
-> compris
+> je t’embrasse seulement. si tu veux autre chose, tu me le dis. tu peux arrêter quand tu veux
 
 **21:13 — Mathilde**
 
-> Écris-le normalement.
-
-**Player**
-
-> je t’embrasse seulement. si tu veux autre chose, tu me le dis. tu peux arrêter quand tu veux
-
-**21:14 — Mathilde**
-
 > Oui.
+
+La branche M-B2 ou M-B3 est ensuite sélectionnée selon l’éligibilité réelle et l’initiative de Mathilde.
+
+## M-B2 — Premier passage physique borné
 
 **21:14 — Mathilde**
 
@@ -832,15 +864,73 @@ La messagerie s’arrête immédiatement.
 Mathilde et Player s’embrassent
 Mathilde initie ou confirme chaque changement de proximité
 un toucher plus intime peut être accepté seulement après une demande claire
+nudité non obligatoire
 aucune pénétration
 aucun acte imposé
 aucune photo diégétique
-Mathilde peut arrêter et rejoint sa solution de couchage indépendante avant le retour de Marie
+Mathilde peut arrêter
+Mathilde rejoint sa solution de couchage indépendante avant le retour de Marie
 ```
 
 L’image de scène éventuelle représente la proximité consentie sans inventer de caméra.
 
-## Après-coup
+## Mathilde M-B3 — Payoff adulte maximal
+
+M-B3 est disponible uniquement si M-B2 est déjà crédible dans le même état et si toutes les conditions supplémentaires du chapitre 5 sont vraies.
+
+**21:14 — Mathilde**
+
+> Je veux aller plus loin que ça.
+
+**21:14 — Mathilde**
+
+> Je te dis ce que j’accepte au fur et à mesure. Tu ne complètes pas le reste tout seul.
+
+**Player**
+
+> d’accord. tu décides chaque étape. si tu hésites, si tu changes d’avis ou si tu dis stop, on arrête
+
+**Mathilde**
+
+> Oui.
+
+**Mathilde**
+
+> Et après je dors ailleurs comme prévu.
+
+**Player**
+
+> compris
+
+**Mathilde**
+
+> Viens.
+
+La messagerie s’arrête immédiatement.
+
+Contrat hors téléphone :
+
+```text
+nudité explicite possible
+contact sexuel mutuel explicite
+aucune pénétration
+aucun acte imposé
+aucune caméra diégétique
+aucune photographie
+Mathilde initie ou confirme chaque changement de niveau
+arrêt immédiat possible
+Mathilde quitte réellement le foyer avant la reprise textuelle
+```
+
+Séquence de production :
+
+```text
+S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01_PROXIMITY
+→ S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_CENTRAL_01
+→ S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_AFTERCARE_01
+```
+
+## Après-coup commun M-B2 / M-B3
 
 **21:51 — Mathilde**
 
@@ -898,9 +988,9 @@ L’image de scène éventuelle représente la proximité consentie sans invente
 
 Sortie :
 
-- MA1 : intention physique reconnue, clarification due ;
-- MA2 : secret et responsabilité reconnus ;
-- MA3 : recul, répétition non autorisée.
+- MA1 : niveau M-B2 ou M-B3 réellement vécu consigné, intention physique reconnue, clarification due ;
+- MA2 : niveau M-B2 ou M-B3 réellement vécu consigné, secret et responsabilité reconnus ;
+- MA3 : niveau M-B2 ou M-B3 réellement vécu consigné, recul, répétition non autorisée.
 
 J12 doit obligatoirement refléter le comportement, la gêne et le secret.
 
@@ -944,6 +1034,22 @@ S20 physique fermée pour cette phase
 ---
 
 # 15. Visuels Mathilde J11
+
+## C11-03 — Contrat de fichiers
+
+```text
+S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01_PROXIMITY
+S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01_DISTANCE
+S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_CENTRAL_01
+S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_AFTERCARE_01
+```
+
+Règles :
+
+- `S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01_DISTANCE` reste la seule variante visuelle ;
+- `S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_CENTRAL_01` et `S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_AFTERCARE_01` sont des enfants conditionnels, pas des variantes ;
+- la séquence M-B3 forme une seule tuile Galerie `Moment vécu` ;
+- aucune image sexuelle diégétique n’est créée.
 
 ## V1 — Tenue choisie
 
@@ -1575,17 +1681,31 @@ La messagerie s’arrête à la co-présence.
 
 ## Événement hors téléphone
 
+Séquence exacte :
+
 ```text
-21:30–soir
-reconquête conjugale physique et sexuelle possible
-consentement actif et réversible
-aucune caméra diégétique nécessaire
-aucun acte imposé
-aucune jalousie utilisée comme contrainte
-aucune conversation orale transcrite
+messages de consentement
+→ OffPhoneTransition
+→ S1_A3_J11_SCN_MARIE_COUPLE_STATE_01_RECONNECTION
+→ S1_A3_J11_SCN_MARIE_RECONQUEST_ADULT_PAYOFF_01
+→ fin de la rencontre
+→ S1_A3_J11_SCN_MARIE_RECONQUEST_AFTERCARE_01
+→ reprise textuelle
 ```
 
-L’image de scène peut être explicite selon le contrat adulte, centrée sur Marie et la reconquête du couple.
+Contrat central :
+
+```text
+nudité explicite
+sexualité conjugale explicite
+rapport sexuel complet possible
+Marie initie ou co-initie
+consentement actif et révocable
+Player non identifiable
+aucune caméra diégétique
+aucune jalousie utilisée comme contrainte
+aucun reset magique
+```
 
 ## Après-coup
 
@@ -1673,6 +1793,20 @@ couple en distance lisible
 ---
 
 # 24. Visuels Marie J11
+
+## C11-06 — Contrat de fichiers
+
+```text
+S1_A3_J11_SCN_MARIE_COUPLE_STATE_01_RECONNECTION
+S1_A3_J11_SCN_MARIE_COUPLE_STATE_01_LIMIT
+S1_A3_J11_SCN_MARIE_RECONQUEST_ADULT_PAYOFF_01
+S1_A3_J11_SCN_MARIE_RECONQUEST_AFTERCARE_01
+```
+
+Règles :
+
+- `S1_A3_J11_SCN_MARIE_COUPLE_STATE_01_LIMIT` reste la seule variante visuelle ;
+- `S1_A3_J11_SCN_MARIE_RECONQUEST_ADULT_PAYOFF_01` et `S1_A3_J11_SCN_MARIE_RECONQUEST_AFTERCARE_01` sont des enfants conditionnels, pas des variantes.
 
 ## V1 — Retour privé
 

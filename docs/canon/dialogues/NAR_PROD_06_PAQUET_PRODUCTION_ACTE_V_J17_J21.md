@@ -20,9 +20,9 @@ Il fixe :
 
 - quinze beats servis par partie ;
 - huit nouveaux contenus visuels principaux ;
-- quatorze réutilisations antérieures distinctes disponibles à l’entrée de l’Acte V ;
-- dix nouveaux fichiers sources ;
-- zéro fichier enfant ;
+- quinze réutilisations antérieures distinctes disponibles à l’entrée de l’Acte V ;
+- treize nouveaux fichiers sources ;
+- trois fichiers enfants ;
 - deux variantes conditionnelles ;
 - zéro nouveau fichier, contenu, trace ou photographie en J21.
 
@@ -46,13 +46,14 @@ Il ne fournit aucun prompt ComfyUI définitif.
 Ordre de lecture :
 
 1. scripts narratifs complets signés J17–J21 ;
-2. `J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md` ;
-3. registres canoniques des traces, promesses, connaissances et atteignabilité ;
-4. contrat narratif de saison ;
-5. bibles canoniques et plan `12D_PLANS_SCENES_J17_J21.md` ;
-6. NAR-CANON-01 ;
-7. NAR-PROD-02 à NAR-PROD-05 comme méthode et continuité de production ;
-8. le présent paquet pour les identifiants, budgets, mutualisations et interdictions de production de l’Acte V.
+2. `NAR_PROD_07_ADULT_PAYOFF_AUDIT_SPECIFICATION.md`, `NAR_ADULT_01_PAYOFFS_J11_MARIE_MATHILDE.md`, `NAR_ADULT_02_PAYOFF_SANDRA_J18.md` et `NAR_ADULT_03_PAYOFFS_PAULINE_RAPHAELLE.md` ;
+3. `J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md` ;
+4. registres canoniques des traces, promesses, connaissances et atteignabilité ;
+5. contrat narratif de saison ;
+6. bibles canoniques et plan `12D_PLANS_SCENES_J17_J21.md` ;
+7. NAR-CANON-01 ;
+8. NAR-PROD-02 à NAR-PROD-05 comme méthode et continuité de production ;
+9. le présent paquet pour les identifiants, budgets, mutualisations et interdictions de production de l’Acte V.
 
 Les sources relues à la baseline sont :
 
@@ -88,9 +89,9 @@ Les sources relues à la baseline sont :
 ```text
 beats_served_per_playthrough: 15
 new_principal_contents: 8
-historical_reuse_pool: 14
-new_source_files: 10
-child_files: 0
+historical_reuse_pool: 15
+new_source_files: 13
+child_files: 3
 conditional_variants: 2
 new_j21_files: 0
 ```
@@ -100,11 +101,11 @@ new_j21_files: 0
 | Jour | Nouveaux fichiers |
 |---|---:|
 | J17 | 4 |
-| J18 | 3 |
-| J19 | 2 |
+| J18 | 5 |
+| J19 | 3 |
 | J20 | 1 |
 | J21 | 0 |
-| **Total** | **10** |
+| **Total** | **13** |
 
 ### 2.3 Variantes autorisées
 
@@ -138,8 +139,8 @@ Configuration J19 avec aftercare Sandra :
 Comptages fixes du catalogue :
 
 - 8 nouveaux contenus principaux ;
-- 14 réutilisations distinctes disponibles ;
-- 10 nouveaux fichiers ;
+- 15 réutilisations distinctes disponibles ;
+- 13 nouveaux fichiers ;
 - 2 variantes.
 
 Le nombre de beats reste constant. La proportion nouveaux/réutilisés peut changer selon la configuration J19.
@@ -150,7 +151,7 @@ Le nombre de beats reste constant. La proportion nouveaux/réutilisés peut chan
 | Standard — Raphaëlle foreground | 7 | 8 | 15 |
 | J19 avec aftercare Sandra | 6 | 9 | 15 |
 
-La reprise de C18-02 variante en J19 est une réutilisation intra-acte d’un contenu déjà compté parmi les huit nouveaux contenus. Elle ne crée ni neuvième contenu principal, ni onzième fichier, ni quinzième entrée dans le pool historique J01–J16.
+La reprise de C18-02 variante en J19 est une réutilisation intra-acte d’un contenu déjà compté parmi les huit nouveaux contenus. Elle ne crée ni neuvième contenu principal, ni quatorzième fichier. Le quinzième contenu du pool historique J01–J16 est `S1_A4_J13_DPH_RAPHAELLE_MASKED_ADULT_SELECTED_01`.
 
 ---
 
@@ -183,14 +184,14 @@ Les trois lignes alternatives J19 occupent les mêmes trois positions de service
 
 ## 4. Tableau exécutif J17–J21
 
-| Jour | Contenus catalogue | Fichiers | Variantes | Traces `NO_NEW_ASSET` |
+| Jour | Contenus catalogue | Fichiers | Variantes | Traces et états associés |
 |---|---:|---:|---:|---|
 | J17 | 3 | 4 | 1 | T23 |
-| J18 | 2 | 3 | 1 | T24 pour le fichier photographique ; représentation physique comprise dans C18-01 |
-| J19 | 2 foregrounds alternatifs | 2 | 0 | T25, T26 |
+| J18 | 2 | 5 | 1 | T24 pour le fichier photographique ; représentation physique comprise dans C18-01 |
+| J19 | 2 foregrounds alternatifs | 3 | 0 | T25, T25B, T26 |
 | J20 | 1 | 1 | 0 | T27, T28 |
 | J21 | 0 | 0 | 0 | aucune nouvelle trace |
-| **Total** | **8** | **10** | **2** | **T23–T28 : aucun fichier autonome supplémentaire** |
+| **Total** | **8** | **13** | **2** | **T23–T28 et T25B : seul T25B est le fichier enfant C19-01 explicitement budgété** |
 
 Les deux contenus J19 existent au catalogue, mais un seul est foreground et servi comme nouveau contenu dans une partie standard.
 
@@ -302,11 +303,11 @@ Les distinctions suivantes ne sont jamais fusionnées :
 
 ```text
 principal_contents: 2
-source_files: 3
+source_files: 5
 variants: 1
 historical_photo_reused: T01
 new_diegetic_photo_source: 0
-child_files: 0
+child_files: 2
 ```
 
 ### 6.3 T24
@@ -332,7 +333,7 @@ Règles de comptage :
 - nouveau `trace_id` ;
 - réutilisation du fichier photographique T01 ;
 - zéro nouveau fichier photographique source ;
-- zéro fichier enfant ;
+- deux fichiers enfants de scène pour C18-02 ;
 - zéro contenu principal supplémentaire ;
 - représentation physique de l’impression comprise dans C18-01 ;
 - aucun accès Player automatique ;
@@ -360,6 +361,7 @@ La variante intimité tardive / après-coup :
 
 - remplace C18-02 standard ;
 - ne s’y ajoute pas ;
+- peut servir `S1_A5_J18_SCN_SANDRA_LATE_INTIMACY_ENTRY_01` et `S1_A5_J18_SCN_SANDRA_LATE_INTIMACY_CENTRAL_01` comme enfants conditionnels ;
 - reste `IMAGE_DE_SCÈNE NON DIÉGÉTIQUE` ;
 - ne crée aucune photographie sexuelle ;
 - ne crée aucun droit futur ;
@@ -400,7 +402,7 @@ Le catalogue contient :
 
 ```text
 catalogue_contents: 2
-source_files: 2
+source_files: 3
 variants: 0
 new_foregrounds_served_per_standard_playthrough: 1
 ```
@@ -455,16 +457,18 @@ Si l’intimité tardive J18 a réellement eu lieu :
 - zéro nouveau fichier J19 spécifique Sandra ;
 - zéro nouvelle scène adulte ;
 - zéro image intime de consolation ;
+- zéro photo Pauline adulte ;
 - aucun aftercare n’est omis.
 
-### 7.6 T25 et T26
+### 7.6 T25, T25B et T26
 
 | Trace | Type | Règle |
 |---|---|---|
 | T25 `j19_pauline_reciprocal_message_01` | `TEXT_MESSAGE` | preuve ou contradiction textuelle ; zéro fichier visuel |
+| T25B `j19_pauline_adult_compartment_01` | `PHOTO` | enfant conditionnel C19-01 ; Pauline foreground, P19-B et fenêtre privée crédible seulement |
 | T26 `j19_raphaelle_creative_access_01` | `ACCESS_GRANT` ou `ACCESS_REVOCATION` | état d’accès ; zéro fichier visuel |
 
-T25 et T26 ne deviennent ni photographie, ni capture, ni miniature, ni asset de Galerie.
+T25 et T26 ne deviennent ni photographie, ni capture, ni miniature, ni asset de Galerie. T25B reste la photographie diégétique adulte contrôlée par Pauline ; elle n’existe jamais dans la configuration aftercare Sandra.
 
 ### 7.7 Verdict
 
@@ -701,7 +705,7 @@ J21: READY
 
 ## 10. Registre exact des huit nouveaux contenus principaux
 
-Tous les fichiers de ce registre sont des `SOUVENIR_IMAGE_DE_SCÈNE` non diégétiques. Aucun n’est une trace possédée par un personnage.
+Les huit contenus principaux restent les mêmes. Leurs fichiers parents sont des `SOUVENIR_IMAGE_DE_SCÈNE` non diégétiques ; seul l’enfant T25B de C19-01 est une `PHOTO_DIÉGÉTIQUE` possédée par Pauline.
 
 ### C17-01 — Mathilde et le départ réel
 
@@ -816,7 +820,7 @@ Tous les fichiers de ce registre sont des `SOUVENIR_IMAGE_DE_SCÈNE` non diégé
 | Champ | Valeur |
 |---|---|
 | `content_id` | `C18-02` |
-| `asset_ids` | `S1_A5_J18_SCN_SANDRA_FINAL_STATE_01_STANDARD`; `S1_A5_J18_SCN_SANDRA_FINAL_STATE_01_LATE_INTIMACY_AFTERCARE` |
+| `asset_ids` | `S1_A5_J18_SCN_SANDRA_FINAL_STATE_01_STANDARD`; `S1_A5_J18_SCN_SANDRA_LATE_INTIMACY_ENTRY_01`; `S1_A5_J18_SCN_SANDRA_LATE_INTIMACY_CENTRAL_01`; `S1_A5_J18_SCN_SANDRA_FINAL_STATE_01_LATE_INTIMACY_AFTERCARE` |
 | `day_id` | `J18` |
 | `beat_served` | `J18-B3`; variante réutilisée en `J19-B1` si aftercare |
 | `source_status` | `CONSOLIDATED_CANON` |
@@ -831,19 +835,29 @@ Tous les fichiers de ce registre sont des `SOUVENIR_IMAGE_DE_SCÈNE` non diégé
 | `transfer_rule` | `FORBIDDEN` |
 | `permanence` | une seule version selon la branche |
 | `trace_id` | aucun |
-| `files` | 2 |
-| `variant_rule` | standard remplacée par intimité tardive / après-coup ; jamais cumulées |
+| `files` | 4 |
+| `variant_rule` | `STANDARD` contre `AFTERCARE` reste l’unique variante ; `ENTRY` et `CENTRAL` sont des enfants conditionnels |
 | `gallery_eligibility` | `conditional` |
 | `gallery_slot_behavior` | `deferred`; aucun nouvel onglet |
 | `reuse_in_later_day` | variante aftercare en J19 ; version servie possible en J21 comme conséquence |
 | `forbidden_uses` | photographie sexuelle ; permission future ; récompense ; répétition promise |
+
+La branche `late_intimacy` utilise une seule tuile Galerie :
+
+```text
+origine: Moment vécu
+content_id: C18-02
+branch: late_intimacy
+```
+
+Elle contient uniquement les images réellement servies.
 
 ### C19-01 — Pauline foreground : surface / compartiment
 
 | Champ | Valeur |
 |---|---|
 | `content_id` | `C19-01` |
-| `asset_id` | `S1_A5_J19_SCN_PAULINE_SURFACE_COMPARTMENT_01` |
+| `asset_ids` | `S1_A5_J19_SCN_PAULINE_SURFACE_COMPARTMENT_01`; `S1_A5_J19_DPH_PAULINE_ADULT_COMPARTMENT_01` |
 | `day_id` | `J19` |
 | `beat_served` | `J19-B1`, configuration Pauline uniquement |
 | `source_status` | `CONSOLIDATED_CANON` |
@@ -857,13 +871,13 @@ Tous les fichiers de ce registre sont des `SOUVENIR_IMAGE_DE_SCÈNE` non diégé
 | `saving_rule` | `NONE` |
 | `transfer_rule` | `FORBIDDEN` |
 | `permanence` | servi uniquement si Pauline est foreground |
-| `trace_id` | aucun ; T25 reste textuelle |
-| `files` | 1 |
+| `trace_id` | T25 reste textuelle ; T25B `j19_pauline_adult_compartment_01` appartient uniquement à l’enfant adulte |
+| `files` | 2 |
 | `variant_rule` | aucune variante par sortie Pauline |
 | `gallery_eligibility` | `conditional` |
 | `gallery_slot_behavior` | `deferred`; aucun nouvel onglet |
 | `reuse_in_later_day` | J20 conséquence ; J21 comportement final |
-| `forbidden_uses` | Pauline sans Bastien ; nouvelle image intime ; T25 transformée en photo ; foreground conjoint C19-02 |
+| `forbidden_uses` | photo adulte si Sandra aftercare domine ; acte sexuel Pauline ; T25 transformée en photo ; foreground conjoint C19-02 |
 
 ### C19-02 — Raphaëlle foreground : personne / processus après le rôle
 
@@ -934,7 +948,7 @@ T24 ne reçoit pas un neuvième `content_id`.
 
 ---
 
-## 11. Manifeste exact des dix fichiers
+## 11. Manifeste exact des treize fichiers
 
 | # | `asset_id` | `content_id` | `day_id` | `variant_of` | `source_status` | `file_count` | Sujet principal | Fonction narrative | Statut diégétique | `trace_id` éventuel | Audience | Permanence | Réutilisation possible | Réutilisation interdite |
 |---:|---|---|---|---|---|---:|---|---|---|---|---|---|---|---|
@@ -944,10 +958,13 @@ T24 ne reçoit pas un neuvième `content_id`.
 | 4 | `S1_A5_J17_SCN_MARIE_COUPLE_STATE_01_FRACTURE_SEPARATION` | C17-03 | J17 | `S1_A5_J17_SCN_MARIE_COUPLE_STATE_01_HELD_NEGOTIATING` | `CONSOLIDATED_CANON` | 1 | Marie / couple | fracture ou séparation | non diégétique | aucun | joueur | variante servie | J21, conséquence | T23, états A, fausse réconciliation |
 | 5 | `S1_A5_J18_SCN_SANDRA_KEEPS_REMOVES_PRINT_01` | C18-01 | J18 | `null` | `CONSOLIDATED_CANON` | 1 | Sandra | décider avec l’impression ou le fil | non diégétique | aucun ; T24 reste distincte | joueur uniquement | scène vécue | J21 comme vie ordinaire ou contexte d’absence | affichage direct de T24 ; trace principale ; copie T01 ; extension d’audience |
 | 6 | `S1_A5_J18_SCN_SANDRA_FINAL_STATE_01_STANDARD` | C18-02 | J18 | `null` | `CONSOLIDATED_CANON` | 1 | Sandra | résolution standard | non diégétique | aucun | joueur | branche servie | J21 conséquence | cumul avec variante adulte |
-| 7 | `S1_A5_J18_SCN_SANDRA_FINAL_STATE_01_LATE_INTIMACY_AFTERCARE` | C18-02 | J18 | `S1_A5_J18_SCN_SANDRA_FINAL_STATE_01_STANDARD` | `CONSOLIDATED_CANON` | 1 | Sandra | intimité tardive / après-coup | non diégétique | aucun | joueur | branche servie | aftercare J19 ; J21 conséquence | photographie sexuelle, droit futur, consolation J19 nouvelle |
-| 8 | `S1_A5_J19_SCN_PAULINE_SURFACE_COMPARTMENT_01` | C19-01 | J19 | `null` | `CONSOLIDATED_CANON` | 1 | Pauline | surface / compartiment | non diégétique | aucun | joueur | foreground Pauline | J20/J21 | T25 photographique, foreground C19-02 conjoint |
-| 9 | `S1_A5_J19_SCN_RAPHAELLE_AFTER_ROLE_PROCESS_01` | C19-02 | J19 | `null` | `CONSOLIDATED_CANON` | 1 | Raphaëlle | personne / processus | non diégétique | aucun | joueur | foreground Raphaëlle | J20/J21 | T26 photographique, foreground C19-01 conjoint |
-| 10 | `S1_A5_J20_SCN_NICO_ACTIVE_POSITION_01` | C20-01 | J20 | `null` | `CONSOLIDATED_CANON` | 1 | Nico | position active | non diégétique | aucun | joueur | scène vécue | J21 réseau/comportement | variante Nico, T27/T28 visuels |
+| 7 | `S1_A5_J18_SCN_SANDRA_LATE_INTIMACY_ENTRY_01` | C18-02 | J18 | `null` | `CONSOLIDATED_CANON` | 1 | Sandra | entrée érotique forte | non diégétique | aucun | joueur | servi seulement si rencontre commencée | tuile C18-02 `late_intimacy` | photographie diégétique, Player identifiable |
+| 8 | `S1_A5_J18_SCN_SANDRA_LATE_INTIMACY_CENTRAL_01` | C18-02 | J18 | `null` | `CONSOLIDATED_CANON` | 1 | Sandra | payoff adulte central réellement atteint | non diégétique | aucun | joueur | servi seulement si sexualité atteinte | tuile C18-02 `late_intimacy` | arrêt avant sexualité, triomphe de double vie |
+| 9 | `S1_A5_J18_SCN_SANDRA_FINAL_STATE_01_LATE_INTIMACY_AFTERCARE` | C18-02 | J18 | `S1_A5_J18_SCN_SANDRA_FINAL_STATE_01_STANDARD` | `CONSOLIDATED_CANON` | 1 | Sandra | intimité tardive / après-coup | non diégétique | aucun | joueur | branche servie | aftercare J19 ; J21 conséquence | photographie sexuelle, droit futur, consolation J19 nouvelle |
+| 10 | `S1_A5_J19_SCN_PAULINE_SURFACE_COMPARTMENT_01` | C19-01 | J19 | `null` | `CONSOLIDATED_CANON` | 1 | Pauline | surface / compartiment | non diégétique | aucun | joueur | foreground Pauline | J20/J21 | T25 photographique, foreground C19-02 conjoint |
+| 11 | `S1_A5_J19_DPH_PAULINE_ADULT_COMPARTMENT_01` | C19-01 | J19 | `null` | `CONSOLIDATED_CANON` | 1 | Pauline | photo adulte du compartiment | diégétique | `j19_pauline_adult_compartment_01` | Pauline, puis Player si envoi | conditionnelle, révocable | J21 si encore accessible | aftercare Sandra, acte sexuel, transfert |
+| 12 | `S1_A5_J19_SCN_RAPHAELLE_AFTER_ROLE_PROCESS_01` | C19-02 | J19 | `null` | `CONSOLIDATED_CANON` | 1 | Raphaëlle | personne / processus | non diégétique | aucun | joueur | foreground Raphaëlle | J20/J21 | T26 photographique, foreground C19-01 conjoint |
+| 13 | `S1_A5_J20_SCN_NICO_ACTIVE_POSITION_01` | C20-01 | J20 | `null` | `CONSOLIDATED_CANON` | 1 | Nico | position active | non diégétique | aucun | joueur | scène vécue | J21 réseau/comportement | variante Nico, T27/T28 visuels |
 
 Contrat explicite du fichier 5 :
 
@@ -965,18 +982,18 @@ extension d’audience
 Contrôle :
 
 ```text
-J17 4 + J18 3 + J19 2 + J20 1 + J21 0 = 10
-child_files = 0
-variants = fichiers 4 et 7 = 2
+J17 4 + J18 5 + J19 3 + J20 1 + J21 0 = 13
+child_files = fichiers 7, 8 et 11 = 3
+variants = fichiers 4 et 9 = 2
 ```
 
 ---
 
-## 12. Pool exact des quatorze réutilisations antérieures
+## 12. Pool exact des quinze réutilisations antérieures
 
 ### 12.1 Règle de pool
 
-Le pool d’entrée contient exactement quatorze contenus distincts issus de J01–J16. Chaque entrée conserve son identifiant, son créateur, son propriétaire, son audience, sa sauvegarde, son transfert et son état.
+Le pool d’entrée contient exactement quinze contenus distincts issus de J01–J16. Chaque entrée conserve son identifiant, son créateur, son propriétaire, son audience, sa sauvegarde, son transfert et son état.
 
 Ce pool signifie « disponible sous conditions ». Il ne signifie pas « servi intégralement dans une partie ».
 
@@ -1000,6 +1017,7 @@ Les réutilisations servies sont choisies selon la configuration, les audiences,
 | 12 | R12 | `S1_A3_J12_DPH_PAULINE_BASTIEN_ANNEXE_01` | aucun ; parent de T17 | J12 | Pauline | Pauline | groupe photographié nommé | sélection collective | selon accord du groupe | `ACTIVE`, `INACCESSIBLE` | Pauline/Bastien, version publique et surface officielle | J19, J20, J21 vie ordinaire | 0 |
 | 13 | R13 | `C13-01` ; voir identification détaillée ci-dessous | `j13_pauline_private_version_01` | J13 | Pauline | Pauline | Pauline ; Player seulement si envoi | `IN_THREAD_ONLY` | `FORBIDDEN` | `PRIVATE_ACTIVE`, `REMOVED`, `INACCESSIBLE`, `NOT_CREATED` | état privé Pauline, audience ou trace finale | J19, J20, J21 | 0 |
 | 14 | R14 | `C13-02` / `S1_A4_J13_DPH_RAPHAELLE_MASKED_POSTURE_01` | `j13_raphaelle_masked_version_01` | J13 | Maud | Raphaëlle | Raphaëlle, Maud ; Player seulement si envoi | `IN_THREAD_ONLY` | `FORBIDDEN` | `PRIVATE_ACTIVE`, `REMOVED`, `INACCESSIBLE`, `NOT_CREATED` | posture antérieure, frontière ou trace finale Raphaëlle | J19, J20, J21 | 0 |
+| 15 | R15 | `S1_A4_J13_DPH_RAPHAELLE_MASKED_ADULT_SELECTED_01` | `j13_raphaelle_masked_adult_selected_01` | J13 | Maud | Raphaëlle | Raphaëlle, Maud ; Player seulement si envoi | `IN_THREAD_ONLY` | `FORBIDDEN` | `PRIVATE_ACTIVE`, `REMOVED`, `INACCESSIBLE`, `NOT_CREATED` | seconde image choisie, découverte réelle ou trace finale Raphaëlle | J19, J20, J21 | 0 |
 
 ### 12.3 Identification exacte de R13
 
@@ -1026,11 +1044,11 @@ pool disponible
 != trace finale sélectionnée
 ```
 
-Les quatorze ne sont jamais affirmés comme tous servis dans une partie.
+Les quinze ne sont jamais affirmés comme tous servis dans une partie.
 
 La variante C18-02 réutilisée en J19 est une reprise intra-acte d’un des huit contenus nouveaux. Elle ne modifie pas la cardinalité du pool historique.
 
-Les réutilisations intra-acte de C17-01 à C20-01 restent distinctes du pool historique R01–R14. Elles ne reçoivent aucun code R et ne remplacent aucune des quatorze entrées J01–J16.
+Les réutilisations intra-acte de C17-01 à C20-01 restent distinctes du pool historique R01–R15. Elles ne reçoivent aucun code R et ne remplacent aucune des quinze entrées J01–J16.
 
 ### 12.5 Réutilisations interdites
 
@@ -1040,25 +1058,26 @@ Les réutilisations intra-acte de C17-01 à C20-01 restent distinctes du pool hi
 - transformer un `FACT_RECORD` en image ;
 - faire de T24 une copie Player par défaut ;
 - faire de T26 une photographie ;
-- restaurer R06, R07, R08, R09, R13 ou R14 après retrait ;
+- restaurer R06, R07, R08, R09, R13, R14 ou R15 après retrait ;
 - dériver un nouveau crop, enfant ou fichier d’une entrée du pool ;
 - compter les frames d’un `PHOTO_SET` comme plusieurs contenus ;
 - modifier le sens de `saving_rule` ou `transfer_rule`.
 
 ---
 
-## 13. Matrice T23–T28
+## 13. Matrice T23–T28 et T25B
 
 | T23–T28 | Type | Fichier nouveau ? | Peut devenir image J21 ? | Fonction |
 |---|---|---:|---|---|
 | T23 `j17_couple_definition_record_01` | `FACT_RECORD` | non | non | état du couple, sélection et posture |
 | T24 `j18_sandra_lunch_print_01` | `PHYSICAL_PRINT` | non ; C18-01 reste un fichier de scène distinct | non | propriété Sandra ; sens par message, état ou signification et réutilisation T01 |
 | T25 `j19_pauline_reciprocal_message_01` | `TEXT_MESSAGE` | non | non | preuve ou contradiction textuelle |
+| T25B `j19_pauline_adult_compartment_01` | `PHOTO` | oui, enfant C19-01 déjà budgété | oui si encore accessible | photographie adulte contrôlée par Pauline, jamais compensation |
 | T26 `j19_raphaelle_creative_access_01` | `ACCESS_GRANT` ou `ACCESS_REVOCATION` | non | non | état d’accès créatif |
 | T27 `j20_nico_exact_hour_record_01` | `FACT_RECORD` | non | non | fait d’heure, dette ou fermeture d’alibi |
 | T28 `j20_nico_unauthorized_copy_deleted_01` | `ABSENCE_MARKER` | non | non | suppression ou non-création d’un fichier hors audience |
 
-T23, T25, T26, T27 et T28 créent exactement zéro fichier. T24 crée un nouvel objet narratif et un nouveau `trace_id`, mais réutilise le fichier photographique de T01.
+T23, T25, T26, T27 et T28 créent exactement zéro fichier. T24 crée un nouvel objet narratif et un nouveau `trace_id`, mais réutilise le fichier photographique de T01. T25B correspond exactement à l’enfant C19-01 déjà compté.
 
 ---
 
@@ -1094,6 +1113,8 @@ Une promesse future n’est jamais une scène déjà gagnée.
 | `j19_pauline_reciprocal_message_01` | `TEXT_MESSAGE` | `ACTIVE`, `RESTRICTED`, `NOT_CREATED` | oui selon le fil | sens seulement ; jamais image principale |
 | `j11_raphaelle_chosen_result_01` | `PHOTO` | `PRIVATE_ACTIVE`, `REMOVED`, `INACCESSIBLE` | oui seulement si envoi antérieur | direct si accessible ; sinon absence/sens |
 | `j13_raphaelle_masked_version_01` | `PHOTO` | `PRIVATE_ACTIVE`, `REMOVED`, `INACCESSIBLE`, `NOT_CREATED` | oui seulement si Raphaëlle l’a envoyée | direct si accessible ; sinon absence/sens |
+| `j13_raphaelle_masked_adult_selected_01` | `PHOTO` | `PRIVATE_ACTIVE`, `REMOVED`, `INACCESSIBLE`, `NOT_CREATED` | oui seulement si Raphaëlle l’a envoyée | direct si accessible ; sinon absence/sens |
+| `j19_pauline_adult_compartment_01` | `PHOTO` | `PRIVATE_ACTIVE`, `REMOVED`, `INACCESSIBLE`, `NOT_CREATED` | oui seulement si Pauline l’a envoyée | direct si accessible ; sinon absence/sens |
 | `j19_raphaelle_creative_access_01` | `ACCESS_GRANT` ou `ACCESS_REVOCATION` | `ACTIVE`, `RESTRICTED`, `REMOVED`, `NOT_CREATED` | oui pour l’état d’accès, pas pour une photo | sens seulement |
 | `j12_annexe_public_group_set_01` | `PHOTO_SET` | `PUBLIC_ACTIVE`, `NOT_CREATED` | selon groupe photographié nommé | direct selon règles de source ; sinon non-création |
 | `j13_nico_alibi_or_hour_message_01` | `TEXT_MESSAGE` | `ACTIVE`, `RESTRICTED`, `INACCESSIBLE`, `NOT_CREATED` | oui dans le fil Player/Nico | sens seulement |
@@ -1121,9 +1142,9 @@ Un type non photographique peut être `eligible_for_j21` dans le registre tout e
 
 | Configuration J19 | Foreground | Relation courte 1 | Relation courte 2 | Nouveau fichier servi |
 |---|---|---|---|---:|
-| Pauline | C19-01 | Raphaëlle par R04, R09 ou R14 selon état | R02, R10 ou R12 selon la surface réelle | 1 |
-| Raphaëlle | C19-02 | Pauline par R02, R12 ou R13 selon état | R04, R09, R10 ou R14 selon le processus réel | 1 |
-| Aftercare Sandra | C18-02 variante réutilisée | Pauline par R02, R12 ou R13 | Raphaëlle par R04, R09 ou R14 | 0 |
+| Pauline | C19-01 | Raphaëlle par R04, R09, R14 ou R15 selon état | R02, R10 ou R12 selon la surface réelle | 1 contenu ; enfant adulte conditionnel possible |
+| Raphaëlle | C19-02 | Pauline par R02, R12 ou R13 selon état | R04, R09, R10, R14 ou R15 selon le processus réel | 1 |
+| Aftercare Sandra | C18-02 variante réutilisée | Pauline par R02, R12 ou R13 | Raphaëlle par R04, R09, R14 ou R15 | 0 |
 
 Les options d’une cellule ne sont pas cumulatives. Une seule réutilisation sert chaque beat.
 
@@ -1160,6 +1181,8 @@ Règles :
 - aucune sélection visible de femme, de route ou de trace en J21 ;
 - les mêmes `asset_id` restent dédupliqués lorsqu’un contenu est réutilisé ;
 - vu, revu, possédé, sauvegardé et transférable restent cinq états distincts.
+
+La branche adulte C18-02 utilise une seule tuile Galerie `Moment vécu`, contenant uniquement `ENTRY`, `CENTRAL` et `AFTERCARE` réellement servis. T25B reste une photo diégétique conditionnelle ; son éligibilité Galerie ne modifie jamais son audience.
 
 ---
 
@@ -1284,7 +1307,7 @@ Si la trace prioritaire est absente, retirée ou inaccessible :
 
 - [x] quinze beats par partie ;
 - [x] huit nouveaux contenus principaux ;
-- [x] quatorze réutilisations historiques distinctes dans le pool ;
+- [x] quinze réutilisations historiques distinctes dans le pool ;
 - [x] C09-03 et C09-04 appartiennent au pool sous R03 et R05 ;
 - [x] l’ancienne R03 Mathilde J06 est retirée ;
 - [x] l’ancienne R05 foyer J08 est retirée ;
@@ -1295,13 +1318,13 @@ Si la trace prioritaire est absente, retirée ou inaccessible :
 
 ### 20.3 Fichiers
 
-- [x] dix nouveaux fichiers ;
+- [x] treize nouveaux fichiers ;
 - [x] J17 : quatre ;
-- [x] J18 : trois ;
-- [x] J19 : deux ;
+- [x] J18 : cinq ;
+- [x] J19 : trois ;
 - [x] J20 : un ;
 - [x] J21 : zéro ;
-- [x] zéro fichier enfant ;
+- [x] trois fichiers enfants ;
 - [x] deux variantes ;
 - [x] aucune autre variante de fichier.
 
@@ -1320,7 +1343,7 @@ Si la trace prioritaire est absente, retirée ou inaccessible :
 
 ### 20.5 Personnages et configurations
 
-- [x] aucune photographie sexuelle Sandra ;
+- [x] aucune photographie sexuelle diégétique Sandra ;
 - [x] aftercare Sandra servi sans nouveau fichier J19 ;
 - [x] aucune image intime de consolation ;
 - [x] C19-01 et C19-02 jamais servis ensemble comme deux foregrounds ;
@@ -1361,9 +1384,9 @@ Si la trace prioritaire est absente, retirée ou inaccessible :
 |---|---:|---:|---|
 | Beats servis par partie | 15 | 15 | PASS |
 | Nouveaux contenus principaux | 8 | 8 | PASS |
-| Réutilisations historiques distinctes disponibles | 14 | 14 | PASS |
-| Nouveaux fichiers sources | 10 | 10 | PASS |
-| Fichiers enfants | 0 | 0 | PASS |
+| Réutilisations historiques distinctes disponibles | 15 | 15 | PASS |
+| Nouveaux fichiers sources | 13 | 13 | PASS |
+| Fichiers enfants | 3 | 3 | PASS |
 | Variantes conditionnelles | 2 | 2 | PASS |
 | Nouveaux fichiers J21 | 0 | 0 | PASS |
 | Nouveau `content_id` pour T24 | 0 | 0 | PASS |
@@ -1374,9 +1397,9 @@ Si la trace prioritaire est absente, retirée ou inaccessible :
 ```text
 CATALOGUE
 8 nouveaux contenus principaux
-14 réutilisations historiques distinctes disponibles
-10 nouveaux fichiers
-0 fichier enfant
+15 réutilisations historiques distinctes disponibles
+13 nouveaux fichiers
+3 fichiers enfants
 2 variantes
 
 SERVICE STANDARD
@@ -1396,13 +1419,13 @@ J17
 
 J18
 2 contenus
-3 fichiers
+5 fichiers
 1 variante locale Sandra
 T24 réutilise T01
 
 J19
 2 contenus de catalogue
-2 fichiers
+3 fichiers
 1 seul foreground nouveau servi en standard
 0 nouveau foreground en aftercare
 
@@ -1418,6 +1441,24 @@ J21
 0 variante
 0 trace
 0 photographie
+```
+
+Comptage Saison 1 consolidé :
+
+```text
+Acte I: 15
+Acte II: 14
+Acte III: 30
+Acte IV: 12
+Acte V: 13
+Total: 84
+
+contenus principaux: 63
+variantes: 8
+nouveaux fichiers adultes: 8
+images de scène adultes nouvelles: 6
+photos diégétiques adultes nouvelles: 2
+nouveau fichier J21: 0
 ```
 
 ---

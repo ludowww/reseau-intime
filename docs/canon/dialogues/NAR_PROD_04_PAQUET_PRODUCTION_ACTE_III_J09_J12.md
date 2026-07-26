@@ -17,7 +17,7 @@ Il fixe :
 - les quatorze beats visuels servis par partie ;
 - les vingt-et-un nouveaux contenus principaux du registre ;
 - les huit contenus antérieurs réutilisables ;
-- les vingt-six nouveaux fichiers sources exactement justifiés ;
+- les trente nouveaux fichiers sources exactement justifiés ;
 - les deux variantes conditionnelles maximales ;
 - les conditions de service, d’audience, de permanence et de recontextualisation ;
 - les fallbacks qui permettent de ne jamais inventer une image, une présence ou une connaissance.
@@ -41,12 +41,13 @@ Il ne contient aucun prompt ComfyUI définitif.
 L’ordre d’autorité appliqué est :
 
 1. scripts narratifs signés J09, J10, J11 et J12 ;
-2. `J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md` ;
-3. registres canoniques des traces, promesses, connaissances et atteignabilités ;
-4. `12B_PLANS_SCENES_J09_J12.md` ;
-5. Bible Narrative et canons complets des personnages ;
-6. NAR-PROD-02 et NAR-PROD-03 pour la méthode de production ;
-7. anciens plans et ancien runtime, en `REFERENCE_ONLY`.
+2. `NAR_PROD_07_ADULT_PAYOFF_AUDIT_SPECIFICATION.md` et `NAR_ADULT_01_PAYOFFS_J11_MARIE_MATHILDE.md` pour les payoffs adultes J11 ;
+3. `J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md` ;
+4. registres canoniques des traces, promesses, connaissances et atteignabilités ;
+5. `12B_PLANS_SCENES_J09_J12.md` ;
+6. Bible Narrative et canons complets des personnages ;
+7. NAR-PROD-02 et NAR-PROD-03 pour la méthode de production ;
+8. anciens plans et ancien runtime, en `REFERENCE_ONLY`.
 
 Décision d’autorité verrouillée :
 
@@ -156,13 +157,22 @@ Le joueur ne voit :
 
 ### 3.4 Contrat de non-surproduction
 
-Le plafond de vingt-six fichiers n’est pas un quota.
+Le plafond de trente fichiers n’est pas un quota.
 
-Le manifeste atteint vingt-six uniquement parce que :
+Le manifeste atteint trente uniquement parce que :
 
 - les vingt-et-un contenus parents exigent chacun un fichier de base ;
-- deux états J11 réellement incompatibles exigent deux fichiers supplémentaires ;
-- le `PHOTO_SET` La Verrière J12 exige quatre fichiers enfants, soit trois fichiers au-delà de son parent logique.
+- les deux variantes J11 exigent deux fichiers supplémentaires ;
+- le `PHOTO_SET` La Verrière J12 exige quatre fichiers enfants, soit trois fichiers au-delà de son parent logique ;
+- les payoffs adultes J11 exigent quatre enfants conditionnels.
+
+```text
+21 fichiers parents de base
++ 2 variantes
++ 3 enfants supplémentaires du PHOTO_SET C12-02
++ 4 enfants adultes J11
+= 30 fichiers
+```
 
 Aucun autre fichier n’est produit.
 
@@ -174,9 +184,9 @@ Aucun autre fichier n’est produit.
 |---|---|---:|---:|---|---:|---:|
 | J09 | Marie visible dans son monde | 4 | 4 | aucune réutilisation obligatoire Actes I–II | 4 | 0 |
 | J10 | une continuité extérieure ou aucune | 3 | 7 mutuellement conditionnels | pool dédupliqué des 8 réutilisations | 7 | 0 |
-| J11 | continuation exclusive ou Marie | 3 | 6 mutuellement conditionnels | contenus J10 atteints + pool historique autorisé | 8 | 2 |
+| J11 | continuation exclusive ou Marie | 3 | 6 mutuellement conditionnels | contenus J10 atteints + pool historique autorisé | 12 | 2 |
 | J12 | convergence sociale conditionnelle | 4 | 4 | T04 et états déjà atteints si un visuel J12 n’est pas créé | 7 | 0 |
-| **Total** |  | **14** | **21** | **8 parents antérieurs distincts** | **26** | **2** |
+| **Total** |  | **14** | **21** | **8 parents antérieurs distincts** | **30** | **2** |
 
 Les réutilisations sont un pool dédupliqué sur l’ensemble de l’acte. Leur mention dans plusieurs journées ne les compte jamais plusieurs fois.
 
@@ -480,7 +490,7 @@ Une seule version existe dans une partie.
 |---|---:|
 | Beats servis par partie | 3 |
 | Nouveaux contenus parents | 6 |
-| Nouveaux fichiers | 8 |
+| Nouveaux fichiers | 12 |
 | Variantes | 2 |
 | Variante principale simultanée | 1 maximum |
 
@@ -521,8 +531,10 @@ Une seule version existe dans une partie.
 
 - aucune image sexuelle diégétique ;
 - le passage physique éventuel reste hors téléphone ;
-- le fichier de proximité reste non explicite ;
 - le retrait ou la distance utilise le fichier incompatible dédié ;
+- `S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01_DISTANCE` reste la seule variante ;
+- `S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_CENTRAL_01` et `S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_AFTERCARE_01` sont des enfants conditionnels ;
+- M-B3 sert une séquence de trois images de scène dans une seule tuile Galerie `Moment vécu` ;
 - T13 `j11_mathilde_physical_aftercare_01` reste une trace textuelle, jamais une photo.
 
 #### C11-04 — Raphaëlle
@@ -542,6 +554,8 @@ Une seule version existe dans une partie.
 - aucune sexualité conjugale ne sert de pansement ;
 - le refus ne produit aucune punition visuelle ;
 - une scène physique éligible remplace le pivot, elle ne s’ajoute pas en bonus ;
+- `S1_A3_J11_SCN_MARIE_COUPLE_STATE_01_LIMIT` reste la seule variante ;
+- `S1_A3_J11_SCN_MARIE_RECONQUEST_ADULT_PAYOFF_01` et `S1_A3_J11_SCN_MARIE_RECONQUEST_AFTERCARE_01` sont des enfants conditionnels ;
 - l’aftercare Marie est dû avant toute nouvelle progression.
 
 ### 8.6 Contenus mutuellement exclusifs et toujours servis
@@ -766,7 +780,7 @@ Les identifiants ci-dessous sont des stems de production. Le format final d’im
 | 10 | `S1_A3_J10_DPH_ANNEXE_MARIE_PUBLIC_01` | C10-06 |
 | 11 | `S1_A3_J10_DPH_ANNEXE_MATHILDE_PUBLIC_01` | C10-07 |
 
-### 13.3 J11 — 8 fichiers
+### 13.3 J11 — 12 fichiers
 
 | N° | Fichier source | Parent | Nature |
 |---:|---|---|---|
@@ -774,27 +788,31 @@ Les identifiants ci-dessous sont des stems de production. Le format final d’im
 | 13 | `S1_A3_J11_SCN_SANDRA_IMAGE_CONSEQUENCE_01` | C11-02 | base |
 | 14 | `S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01_PROXIMITY` | C11-03 | base |
 | 15 | `S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01_DISTANCE` | C11-03 | variante V11-M |
-| 16 | `S1_A3_J11_DPH_RAPHAELLE_CHOSEN_RESULT_01` | C11-04 | base |
-| 17 | `S1_A3_J11_SCN_NICO_PREPARE_J12_01` | C11-05 | base |
-| 18 | `S1_A3_J11_SCN_MARIE_COUPLE_STATE_01_RECONNECTION` | C11-06 | base |
-| 19 | `S1_A3_J11_SCN_MARIE_COUPLE_STATE_01_LIMIT` | C11-06 | variante V11-P |
+| 16 | `S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_CENTRAL_01` | C11-03 | enfant conditionnel adulte |
+| 17 | `S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_AFTERCARE_01` | C11-03 | enfant conditionnel adulte |
+| 18 | `S1_A3_J11_DPH_RAPHAELLE_CHOSEN_RESULT_01` | C11-04 | base |
+| 19 | `S1_A3_J11_SCN_NICO_PREPARE_J12_01` | C11-05 | base |
+| 20 | `S1_A3_J11_SCN_MARIE_COUPLE_STATE_01_RECONNECTION` | C11-06 | base |
+| 21 | `S1_A3_J11_SCN_MARIE_COUPLE_STATE_01_LIMIT` | C11-06 | variante V11-P |
+| 22 | `S1_A3_J11_SCN_MARIE_RECONQUEST_ADULT_PAYOFF_01` | C11-06 | enfant conditionnel adulte |
+| 23 | `S1_A3_J11_SCN_MARIE_RECONQUEST_AFTERCARE_01` | C11-06 | enfant conditionnel adulte |
 
 ### 13.4 J12 — 7 fichiers
 
 | N° | Fichier source | Parent | Nature |
 |---:|---|---|---|
-| 20 | `S1_A3_J12_DPH_MARIE_LAVERRIERE_PRO_01` | C12-01 | base |
-| 21 | `S1_A3_J12_DPH_LAVERRIERE_PUBLIC_GROUP_SET_01_FRAME_01` | C12-02 | enfant de set |
-| 22 | `S1_A3_J12_DPH_LAVERRIERE_PUBLIC_GROUP_SET_01_FRAME_02` | C12-02 | enfant de set |
-| 23 | `S1_A3_J12_DPH_LAVERRIERE_PUBLIC_GROUP_SET_01_FRAME_03` | C12-02 | enfant de set |
-| 24 | `S1_A3_J12_DPH_LAVERRIERE_PUBLIC_GROUP_SET_01_FRAME_04` | C12-02 | enfant de set |
-| 25 | `S1_A3_J12_DPH_PAULINE_BASTIEN_ANNEXE_01` | C12-03 | base |
-| 26 | `S1_A3_J12_DPH_ANNEXE_SOCIAL_POSITIONS_SET_01_FRAME_01` | C12-04 | composition principale conditionnelle |
+| 24 | `S1_A3_J12_DPH_MARIE_LAVERRIERE_PRO_01` | C12-01 | base |
+| 25 | `S1_A3_J12_DPH_LAVERRIERE_PUBLIC_GROUP_SET_01_FRAME_01` | C12-02 | enfant de set |
+| 26 | `S1_A3_J12_DPH_LAVERRIERE_PUBLIC_GROUP_SET_01_FRAME_02` | C12-02 | enfant de set |
+| 27 | `S1_A3_J12_DPH_LAVERRIERE_PUBLIC_GROUP_SET_01_FRAME_03` | C12-02 | enfant de set |
+| 28 | `S1_A3_J12_DPH_LAVERRIERE_PUBLIC_GROUP_SET_01_FRAME_04` | C12-02 | enfant de set |
+| 29 | `S1_A3_J12_DPH_PAULINE_BASTIEN_ANNEXE_01` | C12-03 | base |
+| 30 | `S1_A3_J12_DPH_ANNEXE_SOCIAL_POSITIONS_SET_01_FRAME_01` | C12-04 | composition principale conditionnelle |
 
 Contrôle :
 
 ```text
-4 + 7 + 8 + 7 = 26 fichiers sources
+4 + 7 + 12 + 7 = 30 fichiers sources
 ```
 
 Les quatre frames C12-02 et la composition C12-04 ne sont pas des variantes.
@@ -871,6 +889,8 @@ Les quatre frames C12-02 et la composition C12-04 ne sont pas des variantes.
 | C12-03 | groupe photographié nommé | sociale active si créée | sélection collective | selon accord du groupe | conditionnelle | non seule | non seule |
 | C12-04 / T15 | groupe réellement photographié | active ou `NOT_CREATED` | `PUBLIC_SOURCE_RULES` | même audience ou public selon canal | conditionnelle | oui | oui |
 
+Les quatre enfants adultes C11-03/C11-06 sont des `SOUVENIR_IMAGE_DE_SCÈNE`, joueur uniquement, sans sauvegarde ni transfert diégétique. Les séquences M-B3 et Marie adulte utilisent chacune une seule tuile Galerie `Moment vécu` contenant uniquement les images réellement servies.
+
 ### 16.1 Création, propriété et sujets ciblés
 
 | Contenu | Créatrice | Propriétaire | Sujets | Audience initiale |
@@ -901,7 +921,7 @@ Règles globales :
 | Variante | `..._DISTANCE` |
 | Coût | 1 fichier supplémentaire |
 | Justification | la proximité maintenue et la distance restaurée produisent des positions, distances et fonctions incompatibles |
-| Non-variantes | regard seul, proximité non sexuelle et passage physique éligible utilisent la composition non explicite de proximité ; les nuances restent textuelles |
+| Non-variantes | `...SECRET_INTIMACY_CENTRAL_01` et `...SECRET_INTIMACY_AFTERCARE_01` sont deux enfants conditionnels adultes, jamais des variantes |
 
 ### 17.2 Variante V11-P — Marie
 
@@ -912,7 +932,7 @@ Règles globales :
 | Variante | `..._LIMIT` |
 | Coût | 1 fichier supplémentaire |
 | Justification | reconquête/proximité et limite/distance ne peuvent partager honnêtement la même composition |
-| Non-variantes | qualité précise de la présence Player, posture de refus et degré de sexualité restent textuels ou hors téléphone |
+| Non-variantes | `...RECONQUEST_ADULT_PAYOFF_01` et `...RECONQUEST_AFTERCARE_01` sont deux enfants conditionnels adultes, jamais des variantes |
 
 ### 17.3 Éléments qui ne sont pas des variantes
 
@@ -920,6 +940,7 @@ Règles globales :
 - les sept contenus alternatifs J10 ;
 - les pivots J11 ;
 - les quatre enfants C12-02 ;
+- les quatre enfants adultes J11 ;
 - la présence ou l’absence d’un personnage conditionnel hors cadre ;
 - la création ou non de T15 ;
 - le choix de Player de continuer à L’Annexe ;
@@ -1059,7 +1080,8 @@ Principe :
 | casting J12 variable | aucun all-cast universel ; personnages conditionnels hors cadre commun par défaut |
 | quatre beats et sept fichiers J12 | quatre parents ; quatre enfants pour le set La Verrière ; un fichier pour chacun des trois autres parents |
 | T15 non créée | beat payé par absence ou réutilisation exacte, jamais par faux groupe |
-| plafond de vingt-six | total exact justifié, aucune production de remplissage |
+| quatre enfants adultes J11 | deux enfants Mathilde et deux enfants Marie, aucun nouveau parent ni variante |
+| plafond de trente | total exact justifié, aucune production de remplissage |
 
 ### 20.2 Décisions restantes à Ludovic
 
@@ -1084,7 +1106,7 @@ Les choix de cadrage, format, résolution, technique de génération et sélecti
 - [x] J12 sert quatre beats.
 - [x] Le registre contient vingt-et-un nouveaux parents.
 - [x] Le pool contient huit réutilisations dédupliquées.
-- [x] Le manifeste contient vingt-six fichiers exacts.
+- [x] Le manifeste contient trente fichiers exacts.
 - [x] Deux variantes J11 seulement.
 - [x] C10-05 couvre uniquement la seconde comparaison R-A.
 - [x] Raphaëlle R-B et R-C restent `NO_NEW_ASSET` en J10.
@@ -1098,7 +1120,7 @@ Les choix de cadrage, format, résolution, technique de génération et sélecti
 - [x] Aucune photo de groupe all-cast universelle.
 - [x] Les enfants de `PHOTO_SET` ne sont pas comptés comme variantes.
 - [x] La robe noire ne crée aucune permission sexuelle.
-- [x] Aucune scène adulte n’impose nudité ou sexe explicite.
+- [x] Les payoffs adultes explicites restent conditionnels, consentis et limités aux branches validées.
 
 #### Taxonomie et Galerie
 
@@ -1126,9 +1148,9 @@ Les choix de cadrage, format, résolution, technique de génération et sélecti
 | Beats servis par partie | **14** |
 | Nouveaux contenus principaux | **21** |
 | Réutilisations antérieures distinctes | **8** |
-| Nouveaux fichiers sources | **26** |
+| Nouveaux fichiers sources | **30** |
 | Variantes conditionnelles | **2** |
-| Plafond autorisé de fichiers | **26** |
+| Plafond autorisé de fichiers | **30** |
 | Écart avec le plafond | **0** |
 
 ### 20.5 Verdicts
@@ -1139,7 +1161,25 @@ Les choix de cadrage, format, résolution, technique de génération et sélecti
 | J10 | `READY` | pivot unique invisible, sept contenus conditionnels, branches Raphaëlle R-A/R-B/R-C explicites, trois beats servis |
 | J11 | `READY` | continuation exclusive, deux variantes justifiées, aftercare protégé |
 | J12 | `READY` | quatre beats, casting conditionnel, aucun groupe all-cast universel |
-| **NAR-PROD-04** | **`READY`** | **14 / 21 / 8 / 26 / 2, aucune décision produit restante** |
+| **NAR-PROD-04** | **`READY`** | **14 / 21 / 8 / 30 / 2, aucune décision produit restante** |
+
+Comptage Saison 1 consolidé :
+
+```text
+Acte I: 15
+Acte II: 14
+Acte III: 30
+Acte IV: 12
+Acte V: 13
+Total: 84
+
+contenus principaux: 63
+variantes: 8
+nouveaux fichiers adultes: 8
+images de scène adultes nouvelles: 6
+photos diégétiques adultes nouvelles: 2
+nouveau fichier J21: 0
+```
 
 ---
 
@@ -1156,4 +1196,4 @@ Ce paquet n’autorise pas encore :
 - une décision UI ou Galerie ;
 - une nouvelle signature narrative.
 
-Il autorise uniquement la préparation visuelle à partir des vingt-six fichiers sources manifestés, dans le respect strict des conditions, audiences, castings et fallbacks définis ci-dessus.
+Il autorise uniquement la préparation visuelle à partir des trente fichiers sources manifestés, dans le respect strict des conditions, audiences, castings et fallbacks définis ci-dessus.

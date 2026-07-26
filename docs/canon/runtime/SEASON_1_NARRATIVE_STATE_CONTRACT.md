@@ -16,6 +16,13 @@ Il ne définit pas encore :
 - les noms techniques définitifs ;
 - les performances ou l’interface de debug.
 
+Les amendements adultes autoritatifs pour ce périmètre sont :
+
+- `NAR_PROD_07_ADULT_PAYOFF_AUDIT_SPECIFICATION.md` ;
+- `NAR_ADULT_01_PAYOFFS_J11_MARIE_MATHILDE.md` ;
+- `NAR_ADULT_02_PAYOFF_SANDRA_J18.md` ;
+- `NAR_ADULT_03_PAYOFFS_PAULINE_RAPHAELLE.md`.
+
 ---
 
 # 1. Principe directeur
@@ -336,6 +343,8 @@ TRUST_BROKEN
 
 ## 7.2 `PHYSICAL_SECRET`
 
+`PHYSICAL_SECRET` couvre M-B2 et M-B3. L’historique de scène conserve le niveau réellement vécu. M-B3 reste sans pénétration.
+
 Éligible uniquement si :
 
 ```text
@@ -377,6 +386,8 @@ PRIVATE_CONTACT_LIMITED
 - Marie n’est directement trahie que si Pauline sait légitimement que le couple est affecté ;
 - fermer avec Player ne résout pas automatiquement ce que Pauline a caché à Bastien ou Marie.
 
+`COMPARTMENT_PROTECTED` peut exister avec ou sans T25B `j19_pauline_adult_compartment_01`. La photographie n’est jamais requise pour définir l’état. Son retrait ne ferme pas automatiquement le compartiment, mais peut le geler ou le fermer selon la réponse Pauline.
+
 ---
 
 # 9. `raphaelle_state`
@@ -401,6 +412,8 @@ COLLEAGUE_ONLY
 - `BOUNDED_FUTURE_INVITATION` ne grandit pas automatiquement ;
 - `CLEAR_UNFAITHFUL_SECRET` active une contradiction sombre ;
 - un baiser voulu ne crée aucune permission permanente.
+
+`CHOSEN_IMAGE_ACCESS` et `CREATIVE_TRUST` peuvent distinguer T18 `j13_raphaelle_masked_version_01` et T18B `j13_raphaelle_masked_adult_selected_01`. Voir T18B ne crée aucune permission physique. Le retrait de T18B ne retire pas automatiquement T18.
 
 ---
 
@@ -450,6 +463,15 @@ photo_still_visible
 ```
 
 Une seule entrée structurée porte l’état.
+
+Les traces contrôlées incluent désormais :
+
+```text
+T18B j13_raphaelle_masked_adult_selected_01
+T25B j19_pauline_adult_compartment_01
+```
+
+Le présent contrat ne fixe aucun nouveau champ JSON définitif et n’autorise aucune migration.
 
 ---
 

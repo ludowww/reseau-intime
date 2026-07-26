@@ -15,7 +15,10 @@ Il s’appuie sur :
 - `J13_SCRIPT_NARRATIF_COMPLET.md` ;
 - `S27 — La photo au mauvais écran` ;
 - les états de connaissance créés en J12 ;
+- `J01_J21_TRACE_REGISTRY.md` amendé ;
 - les règles d’audience, de conservation, de retrait et de consentement ;
+- `NAR_PROD_07_ADULT_PAYOFF_AUDIT_SPECIFICATION.md` ;
+- `NAR_ADULT_03_PAYOFFS_PAULINE_RAPHAELLE.md` ;
 - le canon text-only.
 
 Il ne contient :
@@ -85,6 +88,7 @@ Traces possibles :
 ```text
 j13_pauline_private_version_01
 j13_raphaelle_masked_version_01
+j13_raphaelle_masked_adult_selected_01
 j13_nico_alibi_or_hour_message_01
 j11_sandra_chosen_image_01
 j10_mathilde_outfit_choice_01 ou j11_mathilde_physical_aftercare_01
@@ -915,13 +919,13 @@ explication Player due à heure précise
 
 ---
 
-# 15. Variante Raphaëlle — Marie voit l’image masquée
+# 15. Variante Raphaëlle — Marie voit l’image Raphaëlle réellement affichée
 
 ## 15.1 Éligibilité
 
 Cette variante existe si :
 
-- l’image masquée R1 a survécu J13 ;
+- `j13_raphaelle_masked_version_01` ou `j13_raphaelle_masked_adult_selected_01` a survécu J13 ;
 - Marie est réellement près de l’écran ;
 - elle connaît Raphaëlle comme collègue ou relation professionnelle ;
 - l’écran affiche l’image ou sa miniature ;
@@ -933,13 +937,24 @@ Player cherche un document, une photo publique de J12 ou montre un élément de 
 
 Le téléphone ou l’ordinateur ouvre la dernière image consultée.
 
-Marie voit :
+Le script emploie toujours la trace réellement affichée. Marie voit :
 
-- Raphaëlle avec un masque ou une posture de rôle ;
+- Raphaëlle ;
 - un cadrage choisi ;
-- le nom du fil ou du fichier ;
-- aucune règle d’audience ;
-- aucune preuve de rencontre physique.
+- le fil ou le fichier ;
+- la réaction de Player ;
+- le caractère choisi de l’image ;
+- avec le masque seulement si les deux compositions, standard et adulte, le permettent ;
+- une exposition corporelle adulte si la photographie adulte est celle qui est affichée.
+
+Elle ne sait pas automatiquement :
+
+- la règle d’audience ;
+- si Maud connaît l’envoi ;
+- si un baiser existe ;
+- si une rencontre physique a eu lieu ;
+- si l’image crée une permission future ;
+- ce que Player a répondu.
 
 ## 15.3 Ouverture Marie
 
@@ -949,7 +964,7 @@ Marie voit :
 
 **21:08 — Marie**
 
-> Avec le masque.
+> Cette image-là.
 
 **21:09 — Marie**
 
@@ -968,7 +983,7 @@ Marie comprend correctement :
 Elle ne sait pas :
 
 - si Player et Raphaëlle se sont embrassés ;
-- si Maud est autrice ;
+- si Maud connaît l’envoi ;
 - si l’image peut être conservée ;
 - si Raphaëlle a nommé son attirance ;
 - si Player a respecté le rôle.
@@ -981,7 +996,7 @@ Elle ne sait pas :
 
 **Player**
 
-> Maud a pris la photo. Raphaëlle l’a choisie et me l’a envoyée parce que j’ai suivi le processus. elle a précisé que le rôle était dans l’image, pas dans la conversation
+> c’est la photo Raphaëlle qui était réellement ouverte. Raphaëlle l’a choisie et me l’a envoyée. je ne vais pas te montrer le fichier ni parler à sa place
 
 **21:11 — Marie**
 
@@ -1065,7 +1080,7 @@ Player prévient Raphaëlle.
 
 **Player → Raphaëlle**
 
-> Marie a vu l’image masquée quand mon écran s’est rouvert dessus. elle n’a rien parcouru. je lui ai dit que je te prévenais avant de parler de ma place dans le processus
+> Marie a vu l’image Raphaëlle réellement affichée quand mon écran s’est rouvert dessus. elle n’a rien parcouru. je lui ai dit que je te prévenais avant de parler de ma place dans le processus
 
 Raphaëlle :
 
@@ -1391,7 +1406,7 @@ Doit savoir :
 
 Doit savoir :
 
-- que Marie a vu l’image masquée ;
+- que Marie a vu l’image Raphaëlle réellement affichée ;
 - qu’aucun autre fichier n’a été montré ;
 - ce que Player a déclaré sur le processus.
 
@@ -1461,7 +1476,7 @@ sait_que_player_sait: contexte complet de la phrase
 ## Raphaëlle / Marie
 
 ```text
-vu: image masquée sélectionnée
+vu: image Raphaëlle réellement affichée, standard ou adulte selon la trace accessible
 compris_correctement: audience spécifique Player
 interprété_incorrectement_possible: rencontre physique ou rôle prolongé
 sait_que_player_sait: contexte du processus et de l’image
@@ -1750,7 +1765,7 @@ J14 évite :
 
 J14 utilise une trace qui existe déjà.
 
-Marie peut voir une version privée de Pauline, une image masquée de Raphaëlle, un message d’alibi de Nico ou une notification Mathilde.
+Marie peut voir une version privée de Pauline, l’image Raphaëlle réellement affichée, un message d’alibi de Nico ou une notification Mathilde.
 
 Mathilde peut voir l’image choisie de Sandra et comprendre qu’elle n’était pas destinée à son regard.
 

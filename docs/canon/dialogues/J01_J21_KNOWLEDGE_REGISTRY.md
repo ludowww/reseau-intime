@@ -308,6 +308,18 @@ shareability: PRIVATE_DO_NOT_SHARE
 
 Marie ne le connaît pas automatiquement.
 
+`fact_mathilde_physical_event_occurred` peut correspondre à :
+
+```text
+M-B2
+baiser / toucher intime borné
+
+M-B3
+nudité explicite / contact sexuel mutuel explicite / aucune pénétration
+```
+
+Marie ne connaît pas le niveau exact sans source.
+
 Le fait crée :
 
 ```text
@@ -420,6 +432,21 @@ initial_knowers: [Raphaëlle, Maud selon production, Player si accès]
 certainty: CONFIRMED
 shareability: PRIVATE_DO_NOT_SHARE
 ```
+
+## F23B — Image adulte Raphaëlle reçue
+
+```text
+fact_id: fact_raphaelle_adult_selected_image_received
+source_type: PRIVATE_TRACE
+source_ref: j13_raphaelle_masked_adult_selected_01
+initial_knowers: [Raphaëlle, Maud, Player si envoi]
+certainty: CONFIRMED
+shareability: PRIVATE_DO_NOT_SHARE
+```
+
+Maud connaît la production.
+
+Elle ne connaît pas automatiquement les messages Player / Raphaëlle.
 
 ## F24 — Nico connaît une heure ou une demande d’alibi précise
 
@@ -651,6 +678,21 @@ certainty: CONFIRMED
 shareability: PRIVATE_DO_NOT_SHARE
 ```
 
+## F37B — Image adulte Pauline reçue
+
+```text
+fact_id: fact_pauline_adult_compartment_image_received
+source_type: PRIVATE_TRACE
+source_ref: j19_pauline_adult_compartment_01
+initial_knowers: [Pauline, Player]
+certainty: CONFIRMED
+shareability: PRIVATE_DO_NOT_SHARE
+```
+
+Bastien et Marie ne connaissent rien automatiquement.
+
+Le retrait supprime l’accès, pas la connaissance.
+
 ## F38 — Raphaëlle a défini l’accès futur
 
 ```text
@@ -751,6 +793,8 @@ Ne connaît pas automatiquement :
 - intention Mathilde ;
 - messages Pauline ;
 - image Raphaëlle ;
+- image adulte Pauline ;
+- image adulte Raphaëlle, sauf affichage réel J14 ;
 - confidence Nico ;
 - décisions Jeff ou Bastien.
 
@@ -769,6 +813,8 @@ Ne connaît pas automatiquement :
 - route Mathilde ;
 - compartiment Pauline ;
 - image Raphaëlle ;
+- image adulte Pauline ;
+- image adulte Raphaëlle ;
 - alibi Nico.
 
 ## Mathilde
@@ -777,6 +823,7 @@ Connaît :
 
 - son séjour ;
 - ses échanges avec Player ;
+- le niveau M-B2 ou M-B3 réellement vécu avec Player ;
 - les conséquences domestiques observées ;
 - les limites ou décisions Marie qu’elle reçoit directement.
 
@@ -800,6 +847,7 @@ Ne connaît pas automatiquement :
 
 - toutes les lignes Player ;
 - les confidences Sandra ou Nico ;
+- l’image adulte Raphaëlle ;
 - le processus Raphaëlle.
 
 ## Raphaëlle
@@ -810,9 +858,10 @@ Connaît :
 - son processus ;
 - Maud ;
 - son image ;
+- sa seconde image adulte choisie et son audience réelle ;
 - ce que Player dit de Marie.
 
-Ne suppose jamais que Marie est informée sans source.
+Ne suppose jamais que Marie est informée sans source et ne connaît pas automatiquement l’image adulte Pauline.
 
 ## Nico
 

@@ -22,6 +22,11 @@ Il s’appuie sur :
 - les états crédibles de Jeff, Bastien, Maud, Élodie et des autres témoins ;
 - les images, traces et absences déjà établies ;
 - les règles d’audience, de conservation, de retrait et de connaissance limitée ;
+- `NAR_PROD_07_ADULT_PAYOFF_AUDIT_SPECIFICATION.md` ;
+- `NAR_ADULT_01_PAYOFFS_J11_MARIE_MATHILDE.md` ;
+- `NAR_ADULT_02_PAYOFF_SANDRA_J18.md` ;
+- `NAR_ADULT_03_PAYOFFS_PAULINE_RAPHAELLE.md` ;
+- `J01_J21_TRACE_REGISTRY.md` amendé ;
 - le canon text-only.
 
 J21 ne contient :
@@ -320,6 +325,7 @@ Si aucune photographie familiale réellement produite et autorisée n’existe, 
 ```text
 j04_pauline_bastien_public_set_01
 j13_pauline_private_version_01
+j19_pauline_adult_compartment_01
 j19_pauline_reciprocal_message_01
 ```
 
@@ -328,6 +334,7 @@ j19_pauline_reciprocal_message_01
 ```text
 j11_raphaelle_chosen_result_01
 j13_raphaelle_masked_version_01
+j13_raphaelle_masked_adult_selected_01
 j19_raphaelle_creative_access_01
 ```
 
@@ -341,6 +348,15 @@ j20_nico_unauthorized_copy_deleted_01
 ```
 
 Une entrée `REMOVED`, `DELETED` ou `INACCESSIBLE` peut porter la finale uniquement par son état ou son absence. Son fichier n’est jamais restauré.
+
+Les deux traces adultes ajoutées obéissent aux règles suivantes :
+
+- elles ne sont éligibles que si elles restent accessibles ;
+- elles ne restaurent jamais un fichier ;
+- elles n’étendent jamais une audience ;
+- elles ne sont jamais favorisées parce qu’elles sont plus sexuelles ;
+- J21 crée toujours zéro nouveau fichier ;
+- une trace `REMOVED` peut être représentée seulement par son absence ou son état.
 
 # 7. Architecture générale
 

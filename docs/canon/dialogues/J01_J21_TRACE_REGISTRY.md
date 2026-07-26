@@ -599,6 +599,35 @@ current_state: NOT_CREATED
 production: NO_NEW_ASSET
 ```
 
+## T18B — Image adulte choisie Raphaëlle J13
+
+```text
+trace_id: j13_raphaelle_masked_adult_selected_01
+trace_type: PHOTO
+source_day: J13
+source_scene: S25 — seconde image choisie
+asset_id: S1_A4_J13_DPH_RAPHAELLE_MASKED_ADULT_SELECTED_01
+creator: Maud
+selected_by: Raphaëlle
+subjects: [Raphaëlle]
+owner: Raphaëlle
+initial_audience: [Raphaëlle, Maud]
+current_audience: [Raphaëlle, Maud, Player] uniquement si envoi
+storage_location: fil Player / Raphaëlle si envoyée
+saving_rule: IN_THREAD_ONLY
+transfer_rule: FORBIDDEN
+current_state: PRIVATE_ACTIVE, REMOVED, INACCESSIBLE ou NOT_CREATED
+replaces_or_derives_from: même session que T18, fichier distinct
+discoverable_by: Player et témoin J14 uniquement selon affichage réel
+knowledge_created: fact_raphaelle_adult_selected_image_received
+eligible_for_j14: true uniquement si encore accessible
+eligible_for_j21: true selon état
+production: 1 fichier enfant C13-02
+legacy_runtime_alias: null
+```
+
+Le retrait de T18B ne retire pas automatiquement T18.
+
 ## T19 — Message d’heure ou d’alibi Nico
 
 ```text
@@ -763,6 +792,33 @@ eligible_for_j21: true
 legacy_runtime_alias: null
 ```
 
+## T25B — Photo adulte Pauline J19
+
+```text
+trace_id: j19_pauline_adult_compartment_01
+trace_type: PHOTO
+source_day: J19
+source_scene: Pauline — fenêtre adulte conditionnelle
+asset_id: S1_A5_J19_DPH_PAULINE_ADULT_COMPARTMENT_01
+creator: Pauline
+selected_by: Pauline
+subjects: [Pauline]
+owner: Pauline
+initial_audience: [Pauline]
+current_audience: [Pauline, Player] uniquement si envoi
+storage_location: fil Player / Pauline si envoyée
+saving_rule: IN_THREAD_ONLY
+transfer_rule: FORBIDDEN
+current_state: PRIVATE_ACTIVE, REMOVED, INACCESSIBLE ou NOT_CREATED
+replaces_or_derives_from: null
+discoverable_by: Player selon envoi ; aucun témoin automatique
+knowledge_created: fact_pauline_adult_compartment_image_received
+eligible_for_j14: false
+eligible_for_j21: true selon état
+production: 1 fichier enfant C19-01
+legacy_runtime_alias: null
+```
+
 ## T26 — Accès créatif Raphaëlle
 
 ```text
@@ -881,9 +937,11 @@ j12_laverriere_public_group_set_01
 j12_annexe_public_group_set_01
 j13_pauline_private_version_01
 j13_raphaelle_masked_version_01
+j13_raphaelle_masked_adult_selected_01
 j13_nico_alibi_or_hour_message_01
 j18_sandra_lunch_print_01
 j19_pauline_reciprocal_message_01
+j19_pauline_adult_compartment_01
 j19_raphaelle_creative_access_01
 j20_nico_exact_hour_record_01
 j20_nico_unauthorized_copy_deleted_01
