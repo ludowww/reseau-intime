@@ -128,7 +128,9 @@ docs/canon/dialogues/NAR_ADULT_02_PAYOFF_SANDRA_J18.md
 docs/canon/dialogues/NAR_ADULT_03_PAYOFFS_PAULINE_RAPHAELLE.md
 ```
 
-Ces addenda ne remplacent pas les scripts complets. Ils imposent les amendements adultes à intégrer dans le prochain lot et font temporairement autorité sur les budgets visuels et les plafonds adultes concernés.
+Les addenda adultes ont été intégrés aux scripts, registres et paquets NAR-PROD à la baseline `0820d87`.
+
+Ils restent des dossiers de décision actifs et ne remplacent pas les scripts consolidés.
 
 ---
 
@@ -208,6 +210,7 @@ docs/canon/dialogues/NAR_PROD_03_PAQUET_PRODUCTION_ACTE_II_J05_J08.md
 docs/canon/dialogues/NAR_PROD_04_PAQUET_PRODUCTION_ACTE_III_J09_J12.md
 docs/canon/dialogues/NAR_PROD_05_PAQUET_PRODUCTION_ACTE_IV_J13_J16.md
 docs/canon/dialogues/NAR_PROD_06_PAQUET_PRODUCTION_ACTE_V_J17_J21.md
+docs/canon/dialogues/ASSET_01_MANIFESTE_PRODUCTION_VISUELLE_SAISON_1_84_FICHIERS.md
 ```
 
 Ces paquets sont dérivés des sources autoritatives. Ils ne constituent ni une seconde carte de saison, ni un nouveau canon concurrent.
@@ -240,7 +243,7 @@ J05–J08 : READY
 14 beats servis par partie
 21 nouveaux contenus principaux
 8 réutilisations antérieures distinctes
-26 nouveaux fichiers sources
+30 nouveaux fichiers sources
 2 variantes conditionnelles J11
 J09–J12 : READY
 ```
@@ -262,8 +265,8 @@ Décisions structurantes de l’Acte III :
 12 beats servis par partie
 10 nouveaux contenus principaux
 12 réutilisations antérieures distinctes
-11 nouveaux fichiers sources
-1 fichier enfant
+12 nouveaux fichiers sources
+2 fichiers enfants
 1 variante conditionnelle
 2 PHOTO_DIÉGÉTIQUE
 8 SOUVENIR_IMAGE_DE_SCÈNE
@@ -289,8 +292,8 @@ Décisions structurantes de l’Acte IV :
 15 beats servis par partie
 8 nouveaux contenus principaux
 14 réutilisations historiques distinctes disponibles
-10 nouveaux fichiers sources
-0 fichier enfant
+13 nouveaux fichiers sources
+3 fichiers enfants
 2 variantes conditionnelles
 J21 : 0 nouveau contenu, 0 fichier, 0 trace, 0 photographie
 J17–J21 : READY
@@ -311,6 +314,18 @@ Décisions structurantes de l’Acte V :
 - J21 est strictement `REFERENCE_ONLY` / `NO_NEW_ASSET` pour toute ancienne proposition de nouveau visuel ;
 - les traces non photographiques guident le sens mais ne deviennent jamais « la dernière photo » ;
 - aucune restauration, aucun onglet Galerie et aucun onglet « Souvenir ».
+
+## Manifeste transversal — ASSET-01
+
+```text
+63 contenus principaux
+84 fichiers physiques
+8 variantes
+J21 = 0 nouveau fichier
+tous SPECIFIED_NOT_PRODUCED
+```
+
+ASSET-01 consolide l’identité, le comptage, l’ordre et le statut des fichiers physiques. Les briefs détaillés restent dans NAR-PROD-02 à NAR-PROD-06.
 
 Règles transversales :
 
@@ -388,7 +403,8 @@ corpus narratif signé
 → NAR‑CANON‑01 J14→J16 READY
 → NAR‑PROD‑05 Acte IV / J13–J16 READY
 → NAR‑PROD‑06 Acte V / J17–J21 READY
-→ production des assets validés
+→ ASSET‑01 manifeste final / 84 fichiers READY
+→ préparation des références avant production effective
 → adaptation runtime seulement lorsque nécessaire
 ```
 
@@ -405,6 +421,7 @@ Narration J01–J21 : scripts consolidés + registres + sign-off
 Audit de préparation : NAR_PROD_01_AUDIT_PREPARATION_PRODUCTION_SAISON_1.md
 Correctif J14→J16 : NAR_CANON_01_REPARATION_PROMESSES_ATTEIGNABILITE_J14_J16.md
 Paquets de production : NAR_PROD_02, NAR_PROD_03, NAR_PROD_04, NAR_PROD_05, NAR_PROD_06
+Manifeste physique global : ASSET_01_MANIFESTE_PRODUCTION_VISUELLE_SAISON_1_84_FICHIERS.md
 UI/UX : docs/canon/ui/
 Runtime réel : code, données et tests sur main
 Statut et priorité : README.md + ROADMAP.md

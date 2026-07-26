@@ -180,7 +180,7 @@ J09–J12 : READY
 14 beats servis par partie
 21 nouveaux contenus principaux
 8 réutilisations antérieures distinctes
-26 nouveaux fichiers sources
+30 nouveaux fichiers sources
 2 variantes conditionnelles J11
 ```
 
@@ -249,8 +249,8 @@ J13–J16 : READY
 12 beats servis par partie
 10 nouveaux contenus principaux
 12 réutilisations antérieures distinctes
-11 nouveaux fichiers sources
-1 fichier enfant
+12 nouveaux fichiers sources
+2 fichiers enfants
 1 variante conditionnelle
 2 PHOTO_DIÉGÉTIQUE
 8 SOUVENIR_IMAGE_DE_SCÈNE
@@ -289,8 +289,8 @@ J17–J21 : READY
 15 beats servis par partie
 8 nouveaux contenus principaux
 14 réutilisations historiques distinctes disponibles
-10 nouveaux fichiers sources
-0 fichier enfant
+13 nouveaux fichiers sources
+3 fichiers enfants
 2 variantes conditionnelles
 J21 : 0 nouveau contenu, 0 fichier, 0 trace, 0 photographie
 ```
@@ -318,15 +318,23 @@ Le paquet ne modifie aucun registre, dialogue signé, runtime, JSON, test, UI ou
 # 10. Prochaine priorité recommandée
 
 ```text
-Cycle de conception des payoffs adultes : validé
-Consolidation documentaire : lot courant
-Prochaine étape : amendements ciblés des scripts J11/J12/J13/J18/J19
-Puis : mise à jour NAR-PROD-04/05/06
-Puis : ASSET-01 final à 84 fichiers
-Production ComfyUI : toujours non autorisée
+Cycle adulte : intégré
+Scripts et registres : amendés
+NAR-PROD-04/05/06 : amendés
+ASSET-01 : manifeste final de 84 fichiers intégré
+Production effective : non commencée
+ComfyUI : non autorisé par ASSET-01 seul
 ```
 
-Les addenda adultes validés sont consolidés avant toute réécriture ciblée, révision des paquets de production ou finalisation de la liste d’assets.
+Prochaine priorité :
+
+```text
+ASSET-02
+verrouillage des références visuelles récurrentes
+et préparation du premier batch de production
+```
+
+ASSET-02 n’est pas défini dans ce lot.
 
 ---
 
