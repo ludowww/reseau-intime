@@ -84,6 +84,15 @@ class RuntimeS103J03PlayableStaticTests(unittest.TestCase):
         self.assertIn("state_restore_count", season)
         self.assertIn('phase not in ["day_start_pending", "raphaelle_work", "raphaelle_offline", "sandra_offer", "sandra_echo", "marie_time_card", "marie_return", "marie_offline", "complete"]', j03)
 
+    def test_thread_participants_use_explicit_unaccented_runtime_ids(self):
+        j03 = self.read("game/scripts/runtime/season_1/J03RuntimeProvider.gd")
+        self.assertIn('"thread_marie_private": "marie"', j03)
+        self.assertIn('"thread_sandra_private": "sandra"', j03)
+        self.assertIn('"thread_mathilde_private": "mathilde"', j03)
+        self.assertIn('"thread_raphaelle_private": "raphaelle"', j03)
+        self.assertNotIn('[title.to_lower(), "player"]', j03)
+        self.assertIn('[participant_id, "player"]', j03)
+
     def test_new_runtime_files_contain_no_forbidden_legacy_concepts(self):
         forbidden = ["sets_" + "flags", "routes_" + "nourished", "candidate_" + "pool",
                      "dominant_" + "route", "secondary_" + "route", "attachment_" + "score",

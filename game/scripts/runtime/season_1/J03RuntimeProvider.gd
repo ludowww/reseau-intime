@@ -231,11 +231,12 @@ func _current_segment(thread_id: String) -> Dictionary:
 	var segments := _segments(thread_id); var index := int(segment_index_by_thread.get(thread_id, 0)); return segments[index] if index >= 0 and index < segments.size() else {}
 func _thread_presentation(id: String) -> Dictionary:
 	var titles := {"thread_marie_private": "Marie", "thread_sandra_private": "Sandra", "thread_mathilde_private": "Mathilde", "thread_raphaelle_private": "Raphaëlle"}
+	var participant_ids := {"thread_marie_private": "marie", "thread_sandra_private": "sandra", "thread_mathilde_private": "mathilde", "thread_raphaelle_private": "raphaelle"}
 	var colors := {"thread_marie_private": "#4F8BFF", "thread_sandra_private": "#20C7C9", "thread_mathilde_private": "#E070A8", "thread_raphaelle_private": "#D69A42"}
-	var title := str(titles.get(id, "")); var transcript := transcript_for(id); var last: Dictionary = {}
+	var title := str(titles.get(id, "")); var participant_id := str(participant_ids.get(id, "")); var transcript := transcript_for(id); var last: Dictionary = {}
 	for item in transcript:
 		if str(item.get("content_type", "")) not in ["OFF_PHONE_TRANSITION", "SYSTEM_DAY_DIVIDER"]: last = item
-	return {"thread_id": id, "title": title, "participant_ids": [title.to_lower(), "player"], "last_preview": str(last.get("text", "")), "last_timestamp": str(last.get("timestamp", "")), "unread_count": 0, "availability_state": "AVAILABLE", "is_group": false, "is_archived": false, "avatar_ref": title.left(1), "accent_color": str(colors.get(id, "#8D63E6"))}
+	return {"thread_id": id, "title": title, "participant_ids": [participant_id, "player"], "last_preview": str(last.get("text", "")), "last_timestamp": str(last.get("timestamp", "")), "unread_count": 0, "availability_state": "AVAILABLE", "is_group": false, "is_archived": false, "avatar_ref": title.left(1), "accent_color": str(colors.get(id, "#8D63E6"))}
 func _character(id: String, title: String, accent: String, avatar: String) -> Dictionary: return {"character_id": id, "display_name": title, "accent_color": accent, "avatar_ref": avatar, "gallery_enabled": false}
 func _gallery_character(id: String, title: String, accent: String, avatar: String) -> Dictionary: return {"character_id": id, "display_name": title, "accent_color": Color.from_string(accent, Color.WHITE), "avatar_ref": avatar, "items": []}
 func _gallery_item(asset: Dictionary, character_id: String, index: int) -> Dictionary: return {"item_id": str(asset.get("asset_id", "")), "asset_id": str(asset.get("asset_id", "")), "character_id": character_id, "state": "UNLOCKED", "is_new": true, "sort_key": index, "thumbnail_ref": "", "full_ref": "", "thumbnail_label": str(asset.get("placeholder_label", "Visuel non produit")), "placeholder_label": str(asset.get("placeholder_label", "Visuel non produit")), "source_kind": "gallery", "content_type": "SCENE_IMAGE", "can_share": false, "transfer_rule": "FORBIDDEN", "is_diegetic": false}
