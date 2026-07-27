@@ -85,6 +85,10 @@ func return_to_list() -> void:
 	conversation_screen.visible = false
 	conversation_list.visible = true
 	conversation_list.call_deferred("focus_thread", active_thread_id)
+	if runtime_provider != null:
+		var transition: Dictionary = runtime_provider.on_thread_returned(active_thread_id)
+		if not transition.is_empty():
+			call_deferred("_start_runtime_day_card", transition.get("presentation", {}))
 
 func activate_first_choice() -> void:
 	if is_off_phone_transition_active() or is_day_transition_active():
@@ -285,12 +289,7 @@ func finish_day_transition() -> void:
 	if not is_day_transition_active():
 		return
 	if runtime_provider != null:
-		day_transition.reset_surface()
-		day_transition_state = {}
-		screen_mode = "day_complete"
-		conversation_screen.visible = false
-		conversation_list.visible = false
-		_set_gallery_navigation_blocked(false)
+		_finish_runtime_day_transition()
 		return
 	var saved_state := day_transition_state.duplicate(false)
 	var to_day := int(saved_state.get("to_day", current_demo_day_value))
@@ -309,6 +308,37 @@ func finish_day_transition() -> void:
 	_set_gallery_navigation_blocked(false, bool(saved_state.get("shell_was_processing_unhandled_input", false)))
 	var focus_thread_id := updated_thread_id if updated_thread_id != "" else previous_thread_id
 	conversation_list.call_deferred("focus_thread", focus_thread_id)
+
+func _finish_runtime_day_transition() -> void:
+	var result: Dictionary = runtime_provider.confirm_day_transition()
+	if not bool(result.get("accepted", false)):
+		day_transition.reset_surface()
+		day_transition_state = {}
+		screen_mode = "day_complete"
+		conversation_screen.visible = false
+		conversation_list.visible = false
+		_set_gallery_navigation_blocked(false)
+		return
+	var destination := str(result.get("destination", ""))
+	if destination == "day_transition":
+		day_transition_state = {"active": true, "runtime": true}
+		day_transition.configure_presentation(result.get("presentation", {}), PORTRAIT_THEME, _reduced_motion_enabled())
+		return
+	day_transition.reset_surface()
+	day_transition_state = {}
+	refresh_from_runtime()
+	_refresh_runtime_gallery()
+	_set_gallery_navigation_blocked(false)
+	if destination == "conversation":
+		screen_mode = "list"
+		conversation_screen.visible = false
+		conversation_list.visible = true
+		open_thread(str(result.get("thread_id", "")))
+		return
+	screen_mode = "list"
+	conversation_screen.visible = false
+	conversation_list.visible = true
+	conversation_list.call_deferred("focus_thread", str(result.get("focus_thread_id", "")))
 
 func is_day_transition_active() -> bool:
 	return bool(day_transition_state.get("active", false))
@@ -474,13 +504,28 @@ func apply_runtime_choice(choice_id: String) -> bool:
 		conversation_list.update_thread_presentation(local_thread)
 	var transition: Dictionary = result.get("transition", {})
 	if not transition.is_empty():
-		call_deferred("_start_runtime_transition_after_layout", active_thread_id)
+		call_deferred("_start_runtime_transition_after_layout", active_thread_id, transition)
 	return true
 
-func _start_runtime_transition_after_layout(thread_id: String) -> void:
+func _start_runtime_transition_after_layout(thread_id: String, transition: Dictionary) -> void:
 	await get_tree().process_frame
-	if active_thread_id == thread_id and runtime_provider != null:
+	if active_thread_id != thread_id or runtime_provider == null:
+		return
+	if str(transition.get("kind", "")) == "day_transition":
+		_start_runtime_day_card(transition.get("presentation", {}))
+	else:
 		start_off_phone_transition(thread_id)
+
+func _start_runtime_day_card(presentation: Dictionary) -> void:
+	if presentation.is_empty() or is_day_transition_active():
+		return
+	_save_reading_position()
+	screen_mode = "day_transition"
+	conversation_screen.visible = false
+	conversation_list.visible = false
+	day_transition_state = {"active": true, "runtime": true}
+	_set_gallery_navigation_blocked(true)
+	day_transition.configure_presentation(presentation, PORTRAIT_THEME, _reduced_motion_enabled())
 
 func _apply_content_source(source: Dictionary) -> void:
 	characters = source.get("characters", {}).duplicate(true)
@@ -500,6 +545,7 @@ func _finish_runtime_off_phone_transition() -> void:
 	off_phone_state = {}
 	_set_gallery_navigation_blocked(false)
 	refresh_from_runtime()
+	_refresh_runtime_gallery()
 	if str(result.get("destination", "")) == "list":
 		screen_mode = "list"
 		conversation_screen.visible = false
@@ -809,6 +855,13 @@ func _portrait_shell():
 			return ancestor
 		ancestor = ancestor.get_parent()
 	return null
+
+func _refresh_runtime_gallery() -> void:
+	if runtime_provider == null:
+		return
+	var shell = _portrait_shell()
+	if shell != null and shell.gallery_screen != null:
+		shell.gallery_screen.refresh_content_source(runtime_provider.gallery_source())
 
 func _off_phone_presentation_for(thread_id: String) -> Dictionary:
 	for message in _dictionary_array(transcripts.get(thread_id, [])):

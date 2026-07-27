@@ -14,6 +14,8 @@ var knowledge: Dictionary = {}
 var completed_conversation_ids: Array[String] = []
 var selected_choice_ids: Array[String] = []
 var foreground_history: Array[Dictionary] = []
+var marie_make_room_outcome := ""
+var mathilde_welcome_outcome := ""
 
 func _init() -> void:
 	reset()
@@ -46,6 +48,8 @@ func reset() -> void:
 	completed_conversation_ids = []
 	selected_choice_ids = []
 	foreground_history = []
+	marie_make_room_outcome = ""
+	mathilde_welcome_outcome = ""
 
 func apply_choice(choice_id: String) -> bool:
 	if choice_id == "" or selected_choice_ids.has(choice_id):
@@ -70,6 +74,72 @@ func apply_choice(choice_id: String) -> bool:
 		"choice_j1_sandra_cautious":
 			sandra_state = "DISTANT_FRIEND"
 	promises["marie_j01_shared_evening"] = promise
+	return true
+
+func open_j02_make_room_choice() -> bool:
+	if promises.has("mathilde_j02_arrival_help"):
+		return false
+	promises["mathilde_j02_arrival_help"] = {
+		"promise_id": "mathilde_j02_arrival_help", "promise_type": "DEPARTURE_SUPPORT",
+		"created_by": "Marie", "proposed_to": "Player", "status": "PROPOSED",
+		"accepted_by_player": false, "outcome": "",
+	}
+	return true
+
+func apply_j02_choice(choice_id: String) -> bool:
+	if choice_id == "" or selected_choice_ids.has(choice_id):
+		return false
+	selected_choice_ids.append(choice_id)
+	if choice_id == "choice_wed_marie_emergency_guided":
+		return true
+	var promise: Dictionary = promises.get("mathilde_j02_arrival_help", {})
+	match choice_id:
+		"choice_wed_make_room_proactive":
+			marie_make_room_outcome = "PROACTIVE"
+			promise["status"] = "ACTIVE"; promise["accepted_by_player"] = true; promise["outcome"] = "PROACTIVE"
+		"choice_wed_make_room_playful":
+			marie_make_room_outcome = "BOUNDED"
+			promise["status"] = "ACTIVE"; promise["accepted_by_player"] = true; promise["outcome"] = "BOUNDED"
+		"choice_wed_make_room_passive":
+			marie_make_room_outcome = "PASSIVE_ASSENT"
+			promise["accepted_by_player"] = false; promise["outcome"] = "PASSIVE_ASSENT"
+		"choice_wed_mathilde_practical":
+			mathilde_welcome_outcome = "PRACTICAL"; _settle_j02_promise(promise, false)
+		"choice_wed_mathilde_playful":
+			mathilde_welcome_outcome = "PLAYFUL"; _settle_j02_promise(promise, false)
+		"choice_wed_mathilde_distant":
+			mathilde_welcome_outcome = "DISTANT"; _settle_j02_promise(promise, true)
+	promises["mathilde_j02_arrival_help"] = promise
+	return true
+
+func _settle_j02_promise(promise: Dictionary, distant: bool) -> void:
+	var status := str(promise.get("status", ""))
+	if status in ["PAID", "FAILED", "REFUSED"]:
+		return
+	if distant:
+		promise["status"] = "FAILED" if status == "ACTIVE" else "REFUSED"
+		return
+	if status == "PROPOSED":
+		promise["status"] = "ACTIVE"
+		promise["accepted_by_player"] = true
+	promise["status"] = "PAID"
+
+func begin_j02() -> void:
+	current_day = "J02"
+	day_status = "ACTIVE"
+
+func install_mathilde() -> bool:
+	if traces.has("j02_mathilde_arrival_room_01"):
+		return false
+	traces["j02_mathilde_arrival_room_01"] = {
+		"trace_id": "j02_mathilde_arrival_room_01", "trace_type": "FACT_RECORD", "source_day": "J02",
+		"source_scene": "installation de Mathilde", "creator": "none", "subjects": ["Mathilde", "foyer"],
+		"owner": "état narratif du foyer", "saving_rule": "NONE", "transfer_rule": "FORBIDDEN", "current_state": "ACTIVE",
+	}
+	knowledge["fact_mathilde_stay_started"] = {
+		"fact_id": "fact_mathilde_stay_started", "source_ref": "j02_mathilde_arrival_room_01",
+		"certainty": "CONFIRMED", "initial_knowers": ["Marie", "Player", "Mathilde"],
+	}
 	return true
 
 func activate_sandra_trace() -> bool:
@@ -114,7 +184,7 @@ func complete_conversation(conversation_id: String, character_id: String) -> boo
 	if conversation_id == "" or completed_conversation_ids.has(conversation_id):
 		return false
 	completed_conversation_ids.append(conversation_id)
-	foreground_history.append({"day_id": "J01", "character_id": character_id, "function": "foreground"})
+	foreground_history.append({"day_id": current_day, "character_id": character_id, "function": "foreground"})
 	return true
 
 func complete_day() -> bool:
@@ -136,12 +206,14 @@ func snapshot() -> Dictionary:
 		"completed_conversation_ids": completed_conversation_ids.duplicate(),
 		"selected_choice_ids": selected_choice_ids.duplicate(),
 		"foreground_history": foreground_history.duplicate(true),
+		"marie_make_room_outcome": marie_make_room_outcome,
+		"mathilde_welcome_outcome": mathilde_welcome_outcome,
 	}
 
 func restore_snapshot(value: Dictionary) -> bool:
 	if int(value.get("version", -1)) != SNAPSHOT_VERSION:
 		return false
-	if str(value.get("current_day", "")) != "J01":
+	if str(value.get("current_day", "")) not in ["J01", "J02"]:
 		return false
 	if str(value.get("day_status", "")) not in ["ACTIVE", "COMPLETE"]:
 		return false
@@ -165,4 +237,6 @@ func restore_snapshot(value: Dictionary) -> bool:
 	completed_conversation_ids.assign(value["completed_conversation_ids"])
 	selected_choice_ids.assign(value["selected_choice_ids"])
 	foreground_history.assign(value["foreground_history"])
+	marie_make_room_outcome = str(value.get("marie_make_room_outcome", ""))
+	mathilde_welcome_outcome = str(value.get("mathilde_welcome_outcome", ""))
 	return true

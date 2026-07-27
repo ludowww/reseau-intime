@@ -7,11 +7,11 @@ const SAFE_AREA_SCRIPT := preload("res://scripts/ui/SafeAreaContainer.gd")
 const MESSAGES_SCREEN_SCENE := preload("res://scenes/portrait/messages/MessagesScreen.tscn")
 const GALLERY_SCREEN_SCENE := preload("res://scenes/portrait/gallery/GalleryScreen.tscn")
 const PHOTO_VIEWER_SCENE := preload("res://scenes/portrait/gallery/PhotoViewer.tscn")
-const J01_RUNTIME_PROVIDER_SCRIPT := preload("res://scripts/runtime/season_1/J01RuntimeProvider.gd")
+const SEASON_RUNTIME_PROVIDER_SCRIPT := preload("res://scripts/runtime/season_1/Season1RuntimeProvider.gd")
 const TAG_MESSAGES := "messages"
 const TAG_GALLERY := "gallery"
 
-@export_enum("demo", "runtime_s1_j01") var content_mode := "demo"
+@export_enum("demo", "runtime_s1") var content_mode := "demo"
 
 var safe_area_container
 var shell_column: VBoxContainer
@@ -186,10 +186,10 @@ func _build_shell() -> void:
 
 	if content_mode == "demo":
 		runtime_provider = null
-	elif content_mode == "runtime_s1_j01":
-		runtime_provider = J01_RUNTIME_PROVIDER_SCRIPT.new()
+	elif content_mode == "runtime_s1":
+		runtime_provider = SEASON_RUNTIME_PROVIDER_SCRIPT.new()
 		if not runtime_provider.initialize():
-			push_error("Unable to initialize J01 runtime provider")
+			push_error("Unable to initialize Season 1 runtime provider")
 	messages_panel = _build_messages_panel()
 	content_stack.add_child(messages_panel)
 
@@ -347,7 +347,7 @@ func _build_messages_panel() -> PanelContainer:
 	panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	panel.add_theme_stylebox_override("panel", PORTRAIT_THEME.panel_style(PORTRAIT_THEME.SURFACE_RAISED, 1, 18))
 	messages_screen = MESSAGES_SCREEN_SCENE.instantiate()
-	if content_mode == "runtime_s1_j01" and runtime_provider != null:
+	if content_mode == "runtime_s1" and runtime_provider != null:
 		messages_screen.configure_content_source(runtime_provider.presentation_source(), runtime_provider)
 	messages_screen.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	panel.add_child(messages_screen)
@@ -361,7 +361,7 @@ func _build_gallery_panel() -> PanelContainer:
 	panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	panel.add_theme_stylebox_override("panel", PORTRAIT_THEME.panel_style(PORTRAIT_THEME.SURFACE_RAISED, 1, 18))
 	gallery_screen = GALLERY_SCREEN_SCENE.instantiate()
-	if content_mode == "runtime_s1_j01" and runtime_provider != null:
+	if content_mode == "runtime_s1" and runtime_provider != null:
 		gallery_screen.configure_content_source(runtime_provider.gallery_source())
 	gallery_screen.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	panel.add_child(gallery_screen)

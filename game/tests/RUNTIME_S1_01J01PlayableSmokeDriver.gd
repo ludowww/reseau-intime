@@ -21,7 +21,7 @@ func _run() -> void:
 		_finish()
 		return
 	_expect(Vector2i(main.get_window().size) == expected_size, "runtime resolution mismatch")
-	_expect(shell.content_mode == "runtime_s1_j01", "main must use runtime_s1_j01")
+	_expect(shell.content_mode == "runtime_s1", "main must use runtime_s1")
 	var messages = shell.messages_screen
 	var gallery = shell.gallery_screen
 	var provider = shell.runtime_provider
@@ -107,7 +107,8 @@ func _run() -> void:
 	_expect(messages.is_day_transition_active(), "temporary J01 end must be visible")
 	_expect(messages.day_transition.display_title() == "J01 terminé", "J01 end title mismatch")
 	messages.day_transition.continue_button.emit_signal("pressed")
-	_expect(messages.screen_mode == "day_complete", "Terminer must leave stable state")
+	_expect(messages.is_day_transition_active(), "Terminer must hand off to J02")
+	_expect(messages.day_transition.display_title() == "Faire de la place", "J02 start card missing after J01")
 
 	_test_alternate_states()
 	_test_snapshot_round_trip()

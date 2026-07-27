@@ -18,8 +18,8 @@ var pending_transition: Dictionary = {}
 var day_end_visible := false
 var initialized := false
 
-func initialize() -> bool:
-	state = STATE_SCRIPT.new()
+func initialize(shared_state = null) -> bool:
+	state = shared_state if shared_state != null else STATE_SCRIPT.new()
 	runtime_map = DataLoader.load_json(RUNTIME_MAP_PATH)
 	if runtime_map.is_empty():
 		return false

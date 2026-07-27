@@ -30,6 +30,16 @@ var empty_title_label: Label
 func configure_content_source(source: Dictionary) -> void:
 	content_source = source.duplicate(true)
 
+func refresh_content_source(source: Dictionary) -> void:
+	content_source = source.duplicate(true)
+	fixtures = content_source.get("fixtures", {}).duplicate(true)
+	character_order.assign(content_source.get("character_order", []))
+	if not fixtures.has(selected_character_id) and not character_order.is_empty():
+		selected_character_id = character_order[0]
+	if character_tabs != null:
+		character_tabs.configure(fixtures, character_order, PORTRAIT_THEME)
+		select_character(selected_character_id)
+
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -125,6 +135,7 @@ func viewer_sequence_for_selected_character() -> Array[Dictionary]:
 			"context_label": "Galerie · %s" % str(item.get("thumbnail_label", "Photo démo")),
 			"timestamp": "",
 			"caption": "",
+			"placeholder_label": str(item.get("placeholder_label", "Photo de démonstration")),
 		})
 	return sequence
 
