@@ -15,6 +15,7 @@ func _run() -> void:
 	await _frames(4)
 	var shell = main.shell
 	var messages = shell.messages_screen
+	messages.runtime_delivery_time_scale = 0.01
 	var provider = shell.runtime_provider
 	_expect(shell.content_mode == "runtime_s1", "production must use runtime_s1")
 	_expect(provider.active_day == "J01", "J02 must not start before J01 completion")
@@ -30,9 +31,9 @@ func _run() -> void:
 	_expect(messages.screen_mode == "list", "Commencer must open cumulative list")
 	_expect(not messages._thread_for("thread_sandra_private").is_empty(), "Sandra must persist")
 	_open(messages, "thread_marie_private")
-	_choose(messages, "choice_wed_marie_emergency_guided")
+	await _choose(messages, "choice_wed_marie_emergency_guided")
 	_expect(messages.thread_choice_count("thread_marie_private") == 3, "Marie exact three choices unavailable")
-	_choose_twice(messages, "choice_wed_make_room_proactive")
+	await _choose_twice(messages, "choice_wed_make_room_proactive")
 	await _frames(2)
 	_expect(messages.day_transition.display_title() == "18:18", "18:18 transition missing")
 	messages.day_transition.continue_button.emit_signal("pressed")
@@ -49,7 +50,7 @@ func _run() -> void:
 	_expect(not messages.notification_banner.visible, "photo notification forbidden")
 	_open(messages, "thread_mathilde_private")
 	_expect(messages.thread_choice_count("thread_mathilde_private") == 3, "Mathilde must start with exact three choices")
-	_choose(messages, "choice_wed_mathilde_practical")
+	await _choose(messages, "choice_wed_mathilde_practical")
 	await _frames(2)
 	_expect(messages.is_off_phone_transition_active(), "Mathilde offline beat missing")
 	_expect(messages.off_phone_transition.display_label.begins_with("18:46"), "practical offline beat mismatch")
@@ -91,13 +92,13 @@ func _run() -> void:
 func _play_j01(messages) -> void:
 	_open(messages, "thread_marie_private")
 	for choice in ["choice_j1_marie_optimism_guided", "choice_j1_marie_crisis_guided", "choice_j1_marie_present", "choice_j1_marie_laverriere_guided", "choice_j1_marie_mathilde_guided"]:
-		_choose(messages, choice)
+		await _choose(messages, choice)
 	await _frames(2)
 	messages.off_phone_transition.resume_button.emit_signal("pressed")
 	await _frames(2)
 	_open(messages, "thread_sandra_private")
 	for choice in ["choice_j1_sandra_what_guided", "choice_j1_sandra_art_guided", "choice_j1_sandra_cautious", "choice_j1_sandra_thanks_guided", "choice_j1_sandra_goodnight_guided"]:
-		_choose(messages, choice)
+		await _choose(messages, choice)
 	await _frames(2)
 	messages.off_phone_transition.resume_button.emit_signal("pressed")
 	await _frames(2)
@@ -107,6 +108,7 @@ func _run_ui_outcome(marie_choice: String, mathilde_choice: String, expected_sta
 	add_child(alternate_main)
 	await _frames(4)
 	var messages = alternate_main.shell.messages_screen
+	messages.runtime_delivery_time_scale = 0.01
 	var provider = alternate_main.shell.runtime_provider
 	await _play_j01(messages)
 	_expect(provider.active_day == "J01", "alternate UI left J01 before Terminer")
@@ -116,9 +118,9 @@ func _run_ui_outcome(marie_choice: String, mathilde_choice: String, expected_sta
 	messages.day_transition.continue_button.emit_signal("pressed")
 	await _frames(2)
 	_open(messages, "thread_marie_private")
-	_choose(messages, "choice_wed_marie_emergency_guided")
+	await _choose(messages, "choice_wed_marie_emergency_guided")
 	_expect(_choice_text(messages, marie_choice) == _expected_choice_text(marie_choice), "Marie source choice text mismatch: %s" % marie_choice)
-	_choose(messages, marie_choice)
+	await _choose(messages, marie_choice)
 	await _frames(2)
 	_expect(_branch_response_present(messages, marie_choice), "Marie branch response mismatch: %s" % marie_choice)
 	messages.day_transition.continue_button.emit_signal("pressed")
@@ -129,7 +131,7 @@ func _run_ui_outcome(marie_choice: String, mathilde_choice: String, expected_sta
 	await _frames(2)
 	_open(messages, "thread_mathilde_private")
 	_expect(_choice_text(messages, mathilde_choice) == _expected_choice_text(mathilde_choice), "Mathilde source choice text mismatch: %s" % mathilde_choice)
-	_choose(messages, mathilde_choice)
+	await _choose(messages, mathilde_choice)
 	await _frames(2)
 	_expect(messages.is_off_phone_transition_active(), "alternate UI offline beat missing")
 	var offline_id := "offline_wednesday_mathilde_settling_playful" if mathilde_choice == "choice_wed_mathilde_playful" else "offline_wednesday_mathilde_settling_distant"
@@ -251,6 +253,7 @@ func _choose(messages, id: String) -> void:
 	for index in range(messages.available_choices.get(messages.active_thread_id, []).size()):
 		if messages.available_choices[messages.active_thread_id][index].get("choice_id", "") == id:
 			messages.conversation_screen.choice_bar.buttons[index].emit_signal("pressed")
+			await _wait_runtime_delivery_complete(messages)
 			return
 	_expect(false, "choice unavailable: %s" % id)
 
@@ -263,6 +266,14 @@ func _choose_twice(messages, id: String) -> void:
 			button.emit_signal("pressed")
 			break
 	_expect(messages.thread_player_message_count(messages.active_thread_id) == before + 1, "double activation duplicated Player bubble")
+	await _wait_runtime_delivery_complete(messages)
+
+func _wait_runtime_delivery_complete(messages) -> void:
+	for _index in range(600):
+		if not messages.runtime_delivery_active and messages.runtime_delivery_queue.is_empty() and not messages.conversation_screen.typing_visible():
+			return
+		await get_tree().create_timer(0.01).timeout
+	_expect(false, "runtime delivery timed out")
 
 func _open(messages, id: String) -> void:
 	for index in range(messages.conversation_list.threads.size()):

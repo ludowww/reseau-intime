@@ -104,17 +104,22 @@ func _run() -> void:
 	await get_tree().process_frame
 	_expect(int(messages.describe_state().get("typing_instance_count", 0)) == 1, "starting twice must not duplicate indicator")
 	_expect(get_viewport().gui_get_focus_owner() == focus_before, "repeated start must preserve focus")
+	var private_indicator = messages.conversation_screen.timeline.typing_indicator
+	_expect(private_indicator.dot_count() == 3, "typing must keep three dots present")
+	_expect(private_indicator.graphic_dot_count() == 3, "typing dots must be three graphic controls")
+	_expect(not private_indicator.has_dot_label(), "typing dots must not be a Label")
 	if expected_reduced_motion:
-		_expect(str(messages.describe_state().get("typing_text", "")) == "…", "reduced motion must show a static ellipsis")
+		_expect(private_indicator.dots_are_static(), "reduced motion must keep three static circles")
 		_expect(not bool(messages.describe_state().get("typing_animation_running", true)), "reduced motion must not animate")
 	else:
 		_expect(bool(messages.describe_state().get("typing_animation_running", false)), "standard motion must animate points")
-		var phase_one := str(messages.describe_state().get("typing_text", ""))
+		var phase_one: Array = private_indicator.dot_visual_phases()
 		messages.conversation_screen.advance_typing_phase()
-		var phase_two := str(messages.describe_state().get("typing_text", ""))
+		var phase_two: Array = private_indicator.dot_visual_phases()
 		messages.conversation_screen.advance_typing_phase()
-		var phase_three := str(messages.describe_state().get("typing_text", ""))
+		var phase_three: Array = private_indicator.dot_visual_phases()
 		_expect(phase_one != phase_two and phase_two != phase_three, "typing phases must evolve")
+		_expect(private_indicator.has_staggered_phases(), "at least two dots must have distinct visual phases")
 		_expect(get_viewport().gui_get_focus_owner() == focus_before, "phase changes must preserve focus")
 
 	messages.stop_typing(private_id)
@@ -147,26 +152,20 @@ func _run() -> void:
 	var group_focus_before_replace = get_viewport().gui_get_focus_owner()
 	if expected_reduced_motion:
 		messages.start_typing(group_id, "marie")
-		_expect(str(messages.describe_state().get("typing_text", "")) == "…", "reduced replacement must remain a static ellipsis")
+		_expect(messages.conversation_screen.timeline.typing_indicator.dots_are_static(), "reduced replacement must remain static circles")
 	else:
 		messages.start_typing(group_id, "sandra")
-		_expect(str(messages.describe_state().get("typing_text", "")) == ".", "Sandra cycle must restart at one point")
 		messages.conversation_screen.advance_typing_phase()
 		messages.conversation_screen.advance_typing_phase()
-		_expect(str(messages.describe_state().get("typing_text", "")) == "...", "Sandra cycle must reach three points")
 		messages.start_typing(group_id, "marie")
-		_expect(str(messages.describe_state().get("typing_text", "")) == ".", "Marie replacement must restart at one point")
 		messages.conversation_screen.advance_typing_phase()
-		_expect(str(messages.describe_state().get("typing_text", "")) == "..", "Marie cycle second phase must show two points")
 		messages.conversation_screen.advance_typing_phase()
-		_expect(str(messages.describe_state().get("typing_text", "")) == "...", "Marie cycle third phase must show three points")
+		_expect(messages.conversation_screen.timeline.typing_indicator.has_staggered_phases(), "Marie replacement must animate staggered dots")
 	await get_tree().process_frame
 	_expect(int(messages.describe_state().get("typing_instance_count", 0)) == 1, "author replacement must keep one indicator")
 	_expect(str(messages.describe_state().get("typing_avatar", "")) == "M", "author replacement must update compact identity")
 	_expect(get_viewport().gui_get_focus_owner() == group_focus_before_replace, "author replacement must preserve focus")
 	messages.start_typing(group_id, "sandra")
-	if not expected_reduced_motion:
-		_expect(str(messages.describe_state().get("typing_text", "")) == ".", "restored Sandra cycle must restart at one point")
 	await get_tree().process_frame
 	_expect(int(messages.describe_state().get("typing_instance_count", 0)) == 1, "restoring author must not duplicate indicator")
 	_expect(str(messages.describe_state().get("typing_avatar", "")) == "S", "restored author identity must be visible")

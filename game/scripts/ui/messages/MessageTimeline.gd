@@ -28,6 +28,7 @@ var typing_indicator
 var reading_position_restore_pending := false
 var reading_restore_request_id := 0
 var typing_follow_request_id := 0
+var layout_follow_request_id := 0
 
 func configure(message_presentations: Array[Dictionary], character_presentations: Dictionary, group_conversation: bool, portrait_theme, reading_position := -1, first_unread_id := "") -> void:
 	messages = message_presentations
@@ -69,15 +70,18 @@ func append_player_choice(choice: Dictionary) -> void:
 	message_box.add_child(_build_message_bubble(messages[-1]))
 	call_deferred("scroll_to_last_message")
 
-func append_incoming_message(message: Dictionary) -> void:
+func append_incoming_message(message: Dictionary, force_follow := false) -> void:
 	messages.append(message.duplicate(true))
 	message_box.add_child(_build_message_bubble(messages[-1]))
 	if typing_indicator != null and is_instance_valid(typing_indicator):
 		message_box.move_child(typing_indicator, message_box.get_child_count() - 1)
-	call_deferred("scroll_to_last_message")
+	if force_follow:
+		scroll_to_last_message_after_layout(true)
+	else:
+		call_deferred("scroll_to_last_message")
 
-func show_typing(author: Dictionary, reduced_motion: bool) -> void:
-	var should_follow_bottom := not reading_position_restore_pending and is_last_message_visible()
+func show_typing(author: Dictionary, reduced_motion: bool, force_follow := false) -> void:
+	var should_follow_bottom := force_follow or (not reading_position_restore_pending and is_last_message_visible())
 	typing_follow_request_id += 1
 	var request_id := typing_follow_request_id
 	if typing_indicator == null or not is_instance_valid(typing_indicator):
@@ -278,6 +282,30 @@ func set_reading_position(value: int) -> void:
 
 func scroll_to_last_message() -> void:
 	scroll_vertical = int(get_v_scroll_bar().max_value)
+
+func scroll_to_last_message_after_layout(force_follow := true) -> bool:
+	layout_follow_request_id += 1
+	return await _follow_last_message_after_layout(layout_follow_request_id, force_follow)
+
+func _follow_last_message_after_layout(request_id: int, force_follow: bool) -> bool:
+	if not force_follow or reading_position_restore_pending:
+		return false
+	await get_tree().process_frame
+	if request_id != layout_follow_request_id or not is_inside_tree():
+		return false
+	var first_max := get_v_scroll_bar().max_value
+	await get_tree().process_frame
+	if request_id != layout_follow_request_id or not is_inside_tree():
+		return false
+	var second_max := get_v_scroll_bar().max_value
+	if not is_equal_approx(first_max, second_max):
+		await get_tree().process_frame
+		if request_id != layout_follow_request_id or not is_inside_tree():
+			return false
+	scroll_to_last_message()
+	if not is_last_message_visible():
+		scroll_to_last_message()
+	return is_last_message_visible()
 
 func is_last_message_visible() -> bool:
 	var bar := get_v_scroll_bar()

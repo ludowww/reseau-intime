@@ -29,8 +29,8 @@ func append_player_choice(choice: Dictionary) -> void:
 	choice_bar.clear_choices()
 	back_button.call_deferred("grab_focus")
 
-func append_incoming_message(message: Dictionary) -> void:
-	timeline.append_incoming_message(message)
+func append_incoming_message(message: Dictionary, force_follow := false) -> void:
+	timeline.append_incoming_message(message, force_follow)
 
 func append_messages(message_presentations: Array[Dictionary]) -> void:
 	for message in message_presentations:
@@ -39,8 +39,8 @@ func append_messages(message_presentations: Array[Dictionary]) -> void:
 func replace_choices(choice_presentations: Array[Dictionary]) -> void:
 	choice_bar.set_choices(choice_presentations)
 
-func show_typing(author: Dictionary, reduced_motion: bool) -> void:
-	timeline.show_typing(author, reduced_motion)
+func show_typing(author: Dictionary, reduced_motion: bool, force_follow := false) -> void:
+	timeline.show_typing(author, reduced_motion, force_follow)
 
 func hide_typing() -> void:
 	if timeline != null:

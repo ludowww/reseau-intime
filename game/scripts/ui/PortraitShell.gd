@@ -28,7 +28,7 @@ var gallery_panel: PanelContainer
 var gallery_screen
 var messages_button: Button
 var gallery_button: Button
-var reduced_motion_enabled := true
+var reduced_motion_enabled := false
 var active_tab := TAG_MESSAGES
 var current_tween: Tween
 var runtime_provider

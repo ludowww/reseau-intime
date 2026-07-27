@@ -23,6 +23,7 @@ func _run() -> void:
 	_expect(Vector2i(main.get_window().size) == expected_size, "runtime resolution mismatch")
 	_expect(shell.content_mode == "runtime_s1", "main must use runtime_s1")
 	var messages = shell.messages_screen
+	messages.runtime_delivery_time_scale = 0.01
 	var gallery = shell.gallery_screen
 	var provider = shell.runtime_provider
 	_expect(messages.screen_mode == "list" and messages.visible, "Messages list must start visible")
@@ -41,14 +42,14 @@ func _run() -> void:
 	await _frames(2)
 	_expect(messages.thread_choice_count("thread_marie_private") == 1, "guided Marie reply must wait for click")
 	_expect(messages.thread_player_message_count("thread_marie_private") == 0, "Marie choice must not auto-click")
-	_choose_twice_and_expect_single(messages, "choice_j1_marie_optimism_guided")
+	await _choose_twice_and_expect_single(messages, "choice_j1_marie_optimism_guided")
 	_expect(messages.conversation_screen.timeline.visible_player_author_count() == 0, "Player must have no visible author label")
-	_choose(messages, "choice_j1_marie_crisis_guided")
+	await _choose(messages, "choice_j1_marie_crisis_guided")
 	_expect(messages.thread_choice_count("thread_marie_private") == 3, "Marie three-choice node unreachable")
-	_choose(messages, "choice_j1_marie_present")
+	await _choose(messages, "choice_j1_marie_present")
 	_expect(provider.state.promises["marie_j01_shared_evening"]["status"] == "ACTIVE", "Marie present must activate promise")
-	_choose(messages, "choice_j1_marie_laverriere_guided")
-	_choose(messages, "choice_j1_marie_mathilde_guided")
+	await _choose(messages, "choice_j1_marie_laverriere_guided")
+	await _choose(messages, "choice_j1_marie_mathilde_guided")
 	await _frames(2)
 	_expect(messages.is_off_phone_transition_active(), "first transition must open")
 	_expect(_transition_is_bounded(messages), "first transition must stay inside Messages bounds")
@@ -69,7 +70,7 @@ func _run() -> void:
 
 	_open_thread_from_card(messages, "thread_sandra_private")
 	await _frames(2)
-	_choose(messages, "choice_j1_sandra_what_guided")
+	await _choose(messages, "choice_j1_sandra_what_guided")
 	_expect(messages.presentation_count_by_content_type("thread_sandra_private", "IMAGE") == 1, "Sandra image must be inserted once")
 	_expect(messages.presentation_count_by_id("msg_j1_sandra_trace_004") == 1, "Sandra anchor message duplicated")
 	var image = _message(messages, "thread_sandra_private", "j01_sandra_lunch_memory_soft")
@@ -92,11 +93,11 @@ func _run() -> void:
 	_expect(provider.state.knowledge.size() == knowledge_count, "F08 must be idempotent")
 	shell.photo_viewer.back_button.emit_signal("pressed")
 	await _frames(2)
-	_choose(messages, "choice_j1_sandra_art_guided")
-	_choose(messages, "choice_j1_sandra_precise_observation")
+	await _choose(messages, "choice_j1_sandra_art_guided")
+	await _choose(messages, "choice_j1_sandra_precise_observation")
 	_expect(provider.state.sandra_state == "RECONNECTION_OPEN", "precise Sandra choice state mismatch")
-	_choose(messages, "choice_j1_sandra_thanks_guided")
-	_choose(messages, "choice_j1_sandra_goodnight_guided")
+	await _choose(messages, "choice_j1_sandra_thanks_guided")
+	await _choose(messages, "choice_j1_sandra_goodnight_guided")
 	await _frames(2)
 	_expect(messages.presentation_count_by_id("msg_j1_sandra_trace_017_precise") == 1, "precise conditional message missing")
 	_expect(messages.is_off_phone_transition_active(), "second transition must open")
@@ -174,6 +175,7 @@ func _choose(messages, choice_id: String) -> void:
 	_expect(found_index >= 0, "choice unavailable: %s" % choice_id)
 	if found_index >= 0 and found_index < messages.conversation_screen.choice_bar.buttons.size():
 		messages.conversation_screen.choice_bar.buttons[found_index].emit_signal("pressed")
+		await _wait_runtime_delivery_complete(messages)
 
 func _choose_twice_and_expect_single(messages, choice_id: String) -> void:
 	var before: int = messages.thread_player_message_count(messages.active_thread_id)
@@ -188,6 +190,14 @@ func _choose_twice_and_expect_single(messages, choice_id: String) -> void:
 		target_button.emit_signal("pressed")
 		target_button.emit_signal("pressed")
 	_expect(messages.thread_player_message_count(messages.active_thread_id) == before + 1, "double click must create exactly one Player bubble")
+	await _wait_runtime_delivery_complete(messages)
+
+func _wait_runtime_delivery_complete(messages) -> void:
+	for _index in range(600):
+		if not messages.runtime_delivery_active and messages.runtime_delivery_queue.is_empty() and not messages.conversation_screen.typing_visible():
+			return
+		await get_tree().create_timer(0.01).timeout
+	_expect(false, "runtime delivery timed out")
 
 func _open_thread_from_card(messages, thread_id: String) -> void:
 	for index in range(messages.conversation_list.threads.size()):

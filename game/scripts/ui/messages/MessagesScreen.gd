@@ -10,6 +10,8 @@ const CONVERSATION_SCREEN_SCENE := preload("res://scenes/portrait/messages/Portr
 const NOTIFICATION_BANNER_SCRIPT := preload("res://scripts/ui/messages/NotificationBanner.gd")
 const OFF_PHONE_TRANSITION_SCRIPT := preload("res://scripts/ui/messages/OffPhoneTransition.gd")
 const DAY_TRANSITION_SCRIPT := preload("res://scripts/ui/messages/DayTransition.gd")
+const INTER_MESSAGE_PAUSE_SECONDS := 0.25
+const IMAGE_TYPING_DURATION_SECONDS := 1.20
 
 var PORTRAIT_THEME = preload("res://scripts/ui/PortraitShellTheme.gd").new()
 var characters: Dictionary = {}
@@ -35,6 +37,15 @@ var active_thread_id := ""
 var screen_mode := "list"
 var content_source: Dictionary = {}
 var runtime_provider
+var runtime_delivery_active := false
+var runtime_delivery_thread_id := ""
+var runtime_delivery_request_id := 0
+var runtime_delivery_queue: Array[Dictionary] = []
+var runtime_delivery_pending_choices: Array[Dictionary] = []
+var runtime_delivery_pending_transition: Dictionary = {}
+var runtime_delivery_time_scale := 1.0
+var runtime_delivery_cancelled := false
+var runtime_delivery_shell_unhandled_before := true
 
 func configure_content_source(source: Dictionary, provider = null) -> void:
 	content_source = source.duplicate(true)
@@ -56,7 +67,7 @@ func focus_first_conversation() -> void:
 		conversation_list.focus_first_card()
 
 func open_thread(thread_id: String) -> void:
-	if is_off_phone_transition_active() or is_day_transition_active():
+	if runtime_delivery_active or is_off_phone_transition_active() or is_day_transition_active():
 		return
 	var selected := _thread_for(thread_id)
 	if selected.is_empty():
@@ -77,7 +88,7 @@ func open_thread(thread_id: String) -> void:
 	_sync_active_typing()
 
 func return_to_list() -> void:
-	if is_off_phone_transition_active() or is_day_transition_active():
+	if runtime_delivery_active or is_off_phone_transition_active() or is_day_transition_active():
 		return
 	_save_reading_position()
 	conversation_screen.hide_typing()
@@ -91,7 +102,7 @@ func return_to_list() -> void:
 			call_deferred("_start_runtime_day_card", transition.get("presentation", {}))
 
 func activate_first_choice() -> void:
-	if is_off_phone_transition_active() or is_day_transition_active():
+	if runtime_delivery_active or is_off_phone_transition_active() or is_day_transition_active():
 		return
 	if screen_mode == "conversation":
 		conversation_screen.activate_first_choice()
@@ -113,7 +124,7 @@ func start_typing(thread_id: String, author_id: String) -> void:
 		"active": true,
 	}
 	if screen_mode == "conversation" and active_thread_id == thread_id and is_visible_in_tree():
-		conversation_screen.show_typing(author, _reduced_motion_enabled())
+		conversation_screen.show_typing(author, _reduced_motion_enabled(), runtime_delivery_active and runtime_delivery_thread_id == thread_id)
 
 func stop_typing(thread_id: String) -> void:
 	if is_off_phone_transition_active() or is_day_transition_active():
@@ -473,7 +484,7 @@ func total_presentation_count() -> int:
 	return count
 
 func refresh_from_runtime(source: Dictionary = {}) -> void:
-	if runtime_provider == null:
+	if runtime_provider == null or runtime_delivery_active:
 		return
 	var next_source: Dictionary = runtime_provider.presentation_source() if source.is_empty() else source
 	_apply_content_source(next_source)
@@ -496,14 +507,166 @@ func unlock_runtime_thread(_thread_id: String) -> void:
 	refresh_from_runtime()
 
 func apply_runtime_choice(choice_id: String) -> bool:
-	if runtime_provider == null:
+	if runtime_provider == null or runtime_delivery_active:
 		return false
+	var thread_id := active_thread_id
+	var previous_choices := _dictionary_array(available_choices.get(thread_id, []))
+	_hide_runtime_choices_for_delivery()
 	var result: Dictionary = runtime_provider.apply_choice(active_thread_id, choice_id)
 	if not bool(result.get("accepted", false)):
+		replace_runtime_choices(previous_choices)
 		return false
-	append_runtime_messages(_dictionary_array(result.get("new_messages", [])))
-	replace_runtime_choices(_dictionary_array(result.get("choices", [])))
+	runtime_delivery_request_id += 1
+	runtime_delivery_active = true
+	runtime_delivery_cancelled = false
+	runtime_delivery_thread_id = thread_id
+	runtime_delivery_pending_choices = _dictionary_array(result.get("choices", []))
+	runtime_delivery_pending_transition = result.get("transition", {}).duplicate(true)
+	runtime_delivery_queue.clear()
+	var new_messages := _dictionary_array(result.get("new_messages", []))
+	var player_delivered := false
+	for message in new_messages:
+		if bool(message.get("is_player", false)) and not player_delivered:
+			_append_runtime_delivery_message(message)
+			player_delivered = true
+		else:
+			runtime_delivery_queue.append(message.duplicate(true))
+	_set_runtime_delivery_interactions_blocked(true)
+	_continue_runtime_delivery_after_player(runtime_delivery_request_id, thread_id)
+	return true
+
+func _continue_runtime_delivery_after_player(request_id: int, thread_id: String) -> void:
+	await get_tree().process_frame
+	if not _runtime_delivery_request_is_current(request_id, thread_id):
+		return
+	if not await _follow_runtime_delivery_after_layout(request_id, thread_id):
+		return
+	if not _runtime_delivery_request_is_current(request_id, thread_id):
+		return
+	await _run_runtime_delivery(request_id, thread_id)
+
+func _hide_runtime_choices_for_delivery() -> void:
+	if active_thread_id != "":
+		available_choices[active_thread_id] = []
+	if conversation_screen != null and conversation_screen.choice_bar != null:
+		var focus_owner := get_viewport().gui_get_focus_owner()
+		if focus_owner != null:
+			focus_owner.release_focus()
+		conversation_screen.choice_bar.clear_choices()
+
+func _run_runtime_delivery(request_id: int, thread_id: String) -> void:
+	while not runtime_delivery_queue.is_empty():
+		if not _runtime_delivery_request_is_current(request_id, thread_id):
+			return
+		var message: Dictionary = runtime_delivery_queue.pop_front()
+		var content_type := str(message.get("content_type", ""))
+		if content_type == "TEXT" or content_type == "IMAGE":
+			var author_id := str(message.get("author_id", ""))
+			start_typing(thread_id, author_id)
+			if not await _follow_runtime_delivery_after_layout(request_id, thread_id):
+				return
+			if not _runtime_delivery_request_is_current(request_id, thread_id):
+				return
+			await _runtime_delivery_delay(_typing_duration_seconds(message))
+			if not _runtime_delivery_request_is_current(request_id, thread_id):
+				return
+			stop_typing(thread_id)
+			await get_tree().process_frame
+			if not _runtime_delivery_request_is_current(request_id, thread_id):
+				return
+		_append_runtime_delivery_message(message)
+		if not await _follow_runtime_delivery_after_layout(request_id, thread_id):
+			return
+		if not _runtime_delivery_request_is_current(request_id, thread_id):
+			return
+		if not runtime_delivery_queue.is_empty():
+			await _runtime_delivery_delay(INTER_MESSAGE_PAUSE_SECONDS)
+			if not _runtime_delivery_request_is_current(request_id, thread_id):
+				return
+	await _finish_runtime_delivery(request_id, thread_id)
+
+func _typing_duration_seconds(message: Dictionary) -> float:
+	if str(message.get("content_type", "")) == "IMAGE":
+		return IMAGE_TYPING_DURATION_SECONDS
+	var text := str(message.get("text", ""))
+	return clampf(0.70 + float(text.length()) * 0.014, 1.00, 2.00)
+
+func _runtime_delivery_delay(seconds: float) -> void:
+	await get_tree().create_timer(seconds * maxf(runtime_delivery_time_scale, 0.001)).timeout
+
+func _append_runtime_delivery_message(message: Dictionary) -> void:
+	if conversation_screen == null:
+		return
+	if str(message.get("content_type", "")) == "OFF_PHONE_TRANSITION":
+		conversation_screen.timeline.messages.append(message.duplicate(true))
+	else:
+		conversation_screen.append_incoming_message(message, false)
+	transcripts[runtime_delivery_thread_id] = conversation_screen.timeline.messages.duplicate(true)
+
+func _follow_runtime_delivery_after_layout(request_id: int, thread_id: String) -> bool:
+	if not _runtime_delivery_request_is_current(request_id, thread_id) or conversation_screen == null:
+		return false
+	var followed: bool = await conversation_screen.timeline.scroll_to_last_message_after_layout(true)
+	if not _runtime_delivery_request_is_current(request_id, thread_id) or conversation_screen == null:
+		return false
+	if not followed or not conversation_screen.timeline.is_last_message_visible():
+		return false
+	reading_positions[thread_id] = conversation_screen.get_reading_position()
+	return true
+
+func _finish_runtime_delivery(request_id: int, thread_id: String) -> void:
+	if not _runtime_delivery_request_is_current(request_id, thread_id):
+		return
+	if not await _follow_runtime_delivery_after_layout(request_id, thread_id):
+		return
+	if not _runtime_delivery_request_is_current(request_id, thread_id):
+		return
+	if not _sync_runtime_delivery_provider(thread_id):
+		return
+	var pending_choices := runtime_delivery_pending_choices.duplicate(true)
+	var pending_transition := runtime_delivery_pending_transition.duplicate(true)
+	if not pending_transition.is_empty():
+		if not await _start_runtime_transition_after_layout(request_id, thread_id, pending_transition):
+			return
+		_complete_runtime_delivery(false)
+		return
+	replace_runtime_choices(pending_choices)
+	if not await _follow_runtime_delivery_after_layout(request_id, thread_id):
+		return
+	if not _runtime_delivery_request_is_current(request_id, thread_id):
+		return
+	if conversation_screen.choice_bar.choice_count() > 0:
+		conversation_screen.choice_bar.focus_first_choice()
+	_complete_runtime_delivery(true)
+
+func _complete_runtime_delivery(unblock_navigation: bool) -> void:
+	runtime_delivery_active = false
+	runtime_delivery_thread_id = ""
+	runtime_delivery_queue.clear()
+	runtime_delivery_pending_choices.clear()
+	runtime_delivery_pending_transition.clear()
+	runtime_delivery_cancelled = false
+	if unblock_navigation:
+		_set_runtime_delivery_interactions_blocked(false)
+	elif conversation_screen != null and conversation_screen.back_button != null:
+		conversation_screen.back_button.disabled = false
+
+func _runtime_delivery_request_is_current(request_id: int, thread_id: String) -> bool:
+	return is_inside_tree() and not runtime_delivery_cancelled and runtime_delivery_active and request_id == runtime_delivery_request_id and thread_id == runtime_delivery_thread_id and active_thread_id == thread_id
+
+func _sync_runtime_delivery_provider(thread_id: String) -> bool:
 	var source: Dictionary = runtime_provider.presentation_source()
+	var provider_messages := _normalized_runtime_transcript(_dictionary_array(source.get("messages_by_thread", {}).get(thread_id, [])))
+	var visual_messages := _normalized_runtime_transcript(conversation_screen.timeline.messages.duplicate(true))
+	if not _runtime_transcript_has_unique_ids(provider_messages, "provider"):
+		return false
+	if not _runtime_transcript_has_unique_ids(visual_messages, "visual"):
+		return false
+	if provider_messages != visual_messages:
+		push_error("Runtime visual transcript does not strictly match normalized provider transcript")
+		return false
+	transcripts[thread_id] = conversation_screen.timeline.messages.duplicate(true)
+	available_choices[thread_id] = runtime_delivery_pending_choices.duplicate(true)
 	for source_thread in _dictionary_array(source.get("threads", [])):
 		var local_thread := _thread_for(str(source_thread.get("thread_id", "")))
 		if local_thread.is_empty():
@@ -511,19 +674,54 @@ func apply_runtime_choice(choice_id: String) -> bool:
 		local_thread["last_preview"] = source_thread.get("last_preview", "")
 		local_thread["last_timestamp"] = source_thread.get("last_timestamp", "")
 		conversation_list.update_thread_presentation(local_thread)
-	var transition: Dictionary = result.get("transition", {})
-	if not transition.is_empty():
-		call_deferred("_start_runtime_transition_after_layout", active_thread_id, transition)
 	return true
 
-func _start_runtime_transition_after_layout(thread_id: String, transition: Dictionary) -> void:
+func _normalized_runtime_transcript(messages: Array[Dictionary]) -> Array[Dictionary]:
+	var normalized: Array[Dictionary] = []
+	for message in messages:
+		var item := message.duplicate(true)
+		# Read state is local presentation state; every narrative/presentation field remains strict.
+		item.erase("is_read")
+		normalized.append(item)
+	return normalized
+
+func _runtime_transcript_has_unique_ids(messages: Array[Dictionary], side: String) -> bool:
+	var ids: Dictionary = {}
+	for message in messages:
+		var message_id := str(message.get("message_id", ""))
+		if message_id == "" or ids.has(message_id):
+			push_error("Runtime %s transcript has a missing or duplicate message ID: %s" % [side, message_id])
+			return false
+		ids[message_id] = true
+	return true
+
+func _set_runtime_delivery_interactions_blocked(blocked: bool) -> void:
+	if conversation_screen != null and conversation_screen.back_button != null:
+		conversation_screen.back_button.disabled = blocked
+	var shell: Node = _portrait_shell()
+	if shell != null and blocked:
+		runtime_delivery_shell_unhandled_before = shell.is_processing_unhandled_input()
+	_set_gallery_navigation_blocked(blocked, runtime_delivery_shell_unhandled_before)
+
+func _exit_tree() -> void:
+	runtime_delivery_cancelled = true
+	runtime_delivery_active = false
+	runtime_delivery_request_id += 1
+	if conversation_screen != null:
+		conversation_screen.hide_typing()
+
+func _start_runtime_transition_after_layout(request_id: int, thread_id: String, transition: Dictionary) -> bool:
 	await get_tree().process_frame
-	if active_thread_id != thread_id or runtime_provider == null:
-		return
+	if not _runtime_delivery_request_is_current(request_id, thread_id) or runtime_provider == null:
+		return false
 	if str(transition.get("kind", "")) == "day_transition":
 		_start_runtime_day_card(transition.get("presentation", {}))
 	else:
 		start_off_phone_transition(thread_id)
+	await get_tree().process_frame
+	if not _runtime_delivery_request_is_current(request_id, thread_id):
+		return false
+	return is_day_transition_active() or is_off_phone_transition_active()
 
 func _start_runtime_day_card(presentation: Dictionary) -> void:
 	if presentation.is_empty() or is_day_transition_active():
@@ -663,7 +861,7 @@ func _build() -> void:
 	add_child(notification_banner)
 
 func _on_image_requested(message_id: String, media_ref: String) -> void:
-	if screen_mode != "conversation" or is_off_phone_transition_active() or is_day_transition_active():
+	if runtime_delivery_active or screen_mode != "conversation" or is_off_phone_transition_active() or is_day_transition_active():
 		return
 	if active_thread_id == "" or media_ref == "" or _thread_for(active_thread_id).is_empty():
 		return
@@ -722,7 +920,7 @@ func _restore_photo_reading_position(thread_id: String, value: int) -> void:
 	reading_positions[thread_id] = conversation_screen.get_reading_position()
 
 func _on_choice_selected(choice: Dictionary) -> void:
-	if is_off_phone_transition_active() or is_day_transition_active():
+	if runtime_delivery_active or is_off_phone_transition_active() or is_day_transition_active():
 		return
 	if active_thread_id == "" or screen_mode != "conversation":
 		return
@@ -820,7 +1018,7 @@ func _reduced_motion_enabled() -> bool:
 		if ancestor.has_method("set_reduced_motion_enabled"):
 			return bool(ancestor.get("reduced_motion_enabled"))
 		ancestor = ancestor.get_parent()
-	return true
+	return false
 
 func _sync_active_typing() -> void:
 	if conversation_screen == null or screen_mode != "conversation" or not is_visible_in_tree():

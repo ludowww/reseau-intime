@@ -79,9 +79,10 @@ class TUI02B1UnreadNotificationStaticTests(unittest.TestCase):
         self.assertIn("Vector2(72, 48)", banner)
         self.assertIn("Vector2(48, 48)", banner)
         self.assertNotIn("grab_focus", banner)
-        self.assertNotIn("Timer", screen)
-        self.assertNotIn("create_timer", screen)
-        self.assertIn("notification_banner", screen)
+        notification_methods = screen.split("func _show_notification", 1)[1].split("\nfunc _restore_notification_focus", 1)[0]
+        self.assertNotIn("Timer", notification_methods)
+        self.assertNotIn("create_timer", notification_methods)
+        self.assertIn("notification_banner", notification_methods)
 
     def test_open_thread_simulation_preserves_a_foreign_notification(self):
         screen = self._read("game/scripts/ui/messages/MessagesScreen.gd")

@@ -2,42 +2,59 @@ extends HBoxContainer
 
 class_name TypingIndicator
 
-const PHASES: Array[String] = [".", "..", "..."]
-const PHASE_SECONDS := 0.36
+const DOT_COUNT := 3
+const DOT_DIAMETER := 8.0
+const WAVE_CYCLE_SECONDS := 1.05
+const DOT_PHASE_OFFSET_SECONDS := 0.16
+
+class TypingDot extends Control:
+	var dot_color := Color.WHITE
+
+	func _init(color := Color.WHITE) -> void:
+		dot_color = color
+		custom_minimum_size = Vector2(DOT_DIAMETER, DOT_DIAMETER + 6.0)
+		focus_mode = Control.FOCUS_NONE
+		mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+	func _draw() -> void:
+		draw_circle(Vector2(size.x * 0.5, size.y * 0.5), DOT_DIAMETER * 0.5, dot_color)
 
 var PORTRAIT_THEME
-var phase_index := 0
-var phase_timer: Timer
-var dots_label: Label
+var animation_elapsed := 0.0
+var typing_dots: Array[Control] = []
 var avatar_label: Label
 var group_mode := false
 var author_accent := Color.WHITE
+var reduced_motion_enabled := false
 
 func configure(author: Dictionary, group_conversation: bool, portrait_theme, reduced_motion: bool) -> void:
 	PORTRAIT_THEME = portrait_theme
 	group_mode = group_conversation
+	reduced_motion_enabled = reduced_motion
 	author_accent = Color.from_string(str(author.get("accent_color", "#8D63E6")), PORTRAIT_THEME.PLAYER_ACCENT)
 	_build(author)
-	phase_index = 0
-	if reduced_motion:
-		dots_label.text = "…"
-	else:
-		dots_label.text = PHASES[0]
-		phase_timer.start(PHASE_SECONDS)
+	animation_elapsed = 0.0
+	set_process(not reduced_motion_enabled)
+	_apply_visual_wave()
 
 func stop_animation() -> void:
-	if phase_timer != null:
-		phase_timer.stop()
+	set_process(false)
+	_reset_dots()
 
 func animation_running() -> bool:
-	return phase_timer != null and not phase_timer.is_stopped()
+	return is_processing() and not reduced_motion_enabled
 
 func advance_typing_phase() -> void:
 	if animation_running():
-		_advance_visual_phase()
+		animation_elapsed = fmod(animation_elapsed + DOT_PHASE_OFFSET_SECONDS, WAVE_CYCLE_SECONDS)
+		_apply_visual_wave()
+
+func _process(delta: float) -> void:
+	animation_elapsed = fmod(animation_elapsed + delta, WAVE_CYCLE_SECONDS)
+	_apply_visual_wave()
 
 func indicator_text() -> String:
-	return dots_label.text if dots_label != null else ""
+	return ""
 
 func avatar_text() -> String:
 	return avatar_label.text if avatar_label != null and avatar_label.visible else ""
@@ -48,6 +65,28 @@ func accent_is_visible() -> bool:
 func has_time_label() -> bool:
 	return false
 
+func dot_count() -> int:
+	return typing_dots.size()
+
+func graphic_dot_count() -> int:
+	return typing_dots.filter(func(dot): return dot is Control and not dot is Label).size()
+
+func has_dot_label() -> bool:
+	return find_child("TypingDots", true, false) is Label
+
+func dots_are_static() -> bool:
+	return not animation_running() and typing_dots.all(func(dot): return is_equal_approx(dot.position.y, 0.0) and is_equal_approx(dot.scale.x, 1.0) and is_equal_approx(dot.modulate.a, 1.0))
+
+func dot_visual_phases() -> Array:
+	var phases: Array = []
+	for dot in typing_dots:
+		phases.append(Vector3(dot.position.y, dot.scale.x, dot.modulate.a))
+	return phases
+
+func has_staggered_phases() -> bool:
+	var phases := dot_visual_phases()
+	return phases.size() == DOT_COUNT and (phases[0] != phases[1] or phases[1] != phases[2])
+
 func _exit_tree() -> void:
 	stop_animation()
 
@@ -56,6 +95,7 @@ func _build(author: Dictionary) -> void:
 	for child in get_children():
 		remove_child(child)
 		child.queue_free()
+	typing_dots.clear()
 	name = "TypingIndicator"
 	focus_mode = Control.FOCUS_NONE
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -85,17 +125,22 @@ func _build(author: Dictionary) -> void:
 	bubble.add_theme_stylebox_override("panel", PORTRAIT_THEME.button_style(Color(0.12, 0.14, 0.23), author_accent, 18))
 	add_child(bubble)
 
-	dots_label = Label.new()
-	dots_label.name = "TypingDots"
-	dots_label.text = "…"
-	dots_label.custom_minimum_size = Vector2(52, 26)
-	dots_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	dots_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	dots_label.focus_mode = Control.FOCUS_NONE
-	dots_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	dots_label.add_theme_font_size_override("font_size", 18)
-	dots_label.add_theme_color_override("font_color", PORTRAIT_THEME.TEXT_PRIMARY)
-	bubble.add_child(dots_label)
+	var center := CenterContainer.new()
+	center.focus_mode = Control.FOCUS_NONE
+	center.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	bubble.add_child(center)
+	var dots_row := HBoxContainer.new()
+	dots_row.name = "TypingGraphicDots"
+	dots_row.add_theme_constant_override("separation", 7)
+	dots_row.focus_mode = Control.FOCUS_NONE
+	dots_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	center.add_child(dots_row)
+	var dot_color: Color = author_accent.lerp(PORTRAIT_THEME.TEXT_PRIMARY, 0.45)
+	for index in range(DOT_COUNT):
+		var dot := TypingDot.new(dot_color)
+		dot.name = "TypingDot%d" % (index + 1)
+		dots_row.add_child(dot)
+		typing_dots.append(dot)
 
 	var spacer := Control.new()
 	spacer.focus_mode = Control.FOCUS_NONE
@@ -103,14 +148,25 @@ func _build(author: Dictionary) -> void:
 	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	add_child(spacer)
 
-	phase_timer = Timer.new()
-	phase_timer.name = "VisualPhaseTimer"
-	phase_timer.one_shot = false
-	phase_timer.wait_time = PHASE_SECONDS
-	phase_timer.timeout.connect(_advance_visual_phase)
-	add_child(phase_timer)
+func _apply_visual_wave() -> void:
+	for index in range(typing_dots.size()):
+		var dot := typing_dots[index]
+		if reduced_motion_enabled:
+			dot.position.y = 0.0
+			dot.scale = Vector2.ONE
+			dot.modulate.a = 1.0
+		else:
+			var local_time := fposmod(animation_elapsed - float(index) * DOT_PHASE_OFFSET_SECONDS, WAVE_CYCLE_SECONDS)
+			var angle := local_time / WAVE_CYCLE_SECONDS * TAU
+			var pulse := 0.5 + 0.5 * sin(angle)
+			dot.position.y = -3.0 * pulse
+			var dot_scale := 1.0 + 0.15 * pulse
+			dot.scale = Vector2(dot_scale, dot_scale)
+			dot.modulate.a = 0.65 + 0.35 * pulse
 
-func _advance_visual_phase() -> void:
-	phase_index = (phase_index + 1) % PHASES.size()
-	if dots_label != null:
-		dots_label.text = PHASES[phase_index]
+func _reset_dots() -> void:
+	for dot in typing_dots:
+		if is_instance_valid(dot):
+			dot.position.y = 0.0
+			dot.scale = Vector2.ONE
+			dot.modulate.a = 1.0

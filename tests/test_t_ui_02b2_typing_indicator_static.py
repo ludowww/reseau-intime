@@ -34,17 +34,16 @@ class TUI02B2TypingIndicatorStaticTests(unittest.TestCase):
         self.assertIn("font_size", indicator)
         self.assertRegex(indicator, r"font_size[^\n]*1[4-9]")
 
-    def test_timer_is_visual_only_and_reduced_motion_never_starts_it(self):
+    def test_single_continuous_animation_and_reduced_motion_has_no_loop(self):
         indicator = self._read("game/scripts/ui/messages/TypingIndicator.gd")
-        self.assertIn("Timer.new()", indicator)
+        self.assertNotIn("Timer.new()", indicator)
+        self.assertNotIn("create_tween()", indicator)
+        self.assertIn("WAVE_CYCLE_SECONDS := 1.05", indicator)
+        self.assertIn("DOT_PHASE_OFFSET_SECONDS := 0.16", indicator)
+        self.assertIn("func _process(delta: float)", indicator)
         configure = indicator.split("func configure", 1)[1].split("\nfunc ", 1)[0]
-        self.assertIn("phase_index = 0", configure)
-        self.assertLess(configure.index("phase_index = 0"), configure.index("if reduced_motion:"))
-        self.assertIn("if reduced_motion:", configure)
-        reduced_branch = configure.split("if reduced_motion:", 1)[1].split("\telse:", 1)[0]
-        self.assertIn("…", reduced_branch)
-        self.assertNotIn("start(", reduced_branch)
-        self.assertIn("_advance_visual_phase", indicator)
+        self.assertIn("animation_elapsed = 0.0", configure)
+        self.assertIn("set_process(not reduced_motion_enabled)", configure)
         self.assertNotIn("emit_signal", indicator)
 
     def test_messages_screen_owns_bounded_thread_local_state(self):
@@ -67,7 +66,7 @@ class TUI02B2TypingIndicatorStaticTests(unittest.TestCase):
     def test_timeline_hosts_at_most_one_indicator_without_mutating_messages(self):
         timeline = self._read("game/scripts/ui/messages/MessageTimeline.gd")
         for signature in [
-            "func show_typing(author: Dictionary, reduced_motion: bool)",
+            "func show_typing(author: Dictionary, reduced_motion: bool, force_follow := false)",
             "func hide_typing()",
             "func typing_visible() -> bool",
             "func typing_instance_count() -> int",

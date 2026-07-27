@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource path="res://tests/RUNTIME_S1_03BMessageDeliverySmokeDriver.gd" type="Script" id="1"]
+
+[node name="RUNTIMES103BMessageDeliverySmokeTest" type="Node"]
+script = ExtResource("1")
