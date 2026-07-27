@@ -38,7 +38,7 @@ func _run() -> void:
 	_expect(not _visible_text_exists(shell, "Coque portrait additive — Messages / Galerie"), "production must hide prototype shell subtitle")
 	_expect(not _visible_text_exists(shell, "Animations réduites"), "production must hide debug motion label")
 
-	_open_thread_from_card(messages, "thread_marie_private")
+	await _open_thread_from_card(messages, "thread_marie_private")
 	await _frames(2)
 	_expect(messages.thread_choice_count("thread_marie_private") == 1, "guided Marie reply must wait for click")
 	_expect(messages.thread_player_message_count("thread_marie_private") == 0, "Marie choice must not auto-click")
@@ -64,11 +64,11 @@ func _run() -> void:
 	_expect(messages.thread_unread_count("thread_sandra_private") > 0, "Sandra must be unread")
 	_expect(messages.notification_banner.visible and messages.notification_banner.notification.get("title", "") == "Sandra", "Sandra notification missing")
 	var marie_count: int = messages.thread_message_count("thread_marie_private")
-	_open_thread_from_card(messages, "thread_marie_private")
+	await _open_thread_from_card(messages, "thread_marie_private")
 	messages.return_to_list()
 	_expect(messages.thread_message_count("thread_marie_private") == marie_count, "Marie transcript duplicated after reopen")
 
-	_open_thread_from_card(messages, "thread_sandra_private")
+	await _open_thread_from_card(messages, "thread_sandra_private")
 	await _frames(2)
 	await _choose(messages, "choice_j1_sandra_what_guided")
 	_expect(messages.presentation_count_by_content_type("thread_sandra_private", "IMAGE") == 1, "Sandra image must be inserted once")
@@ -193,6 +193,7 @@ func _choose_twice_and_expect_single(messages, choice_id: String) -> void:
 	await _wait_runtime_delivery_complete(messages)
 
 func _wait_runtime_delivery_complete(messages) -> void:
+	await get_tree().process_frame
 	for _index in range(600):
 		if not messages.runtime_delivery_active and messages.runtime_delivery_queue.is_empty() and not messages.conversation_screen.typing_visible():
 			return
@@ -203,6 +204,7 @@ func _open_thread_from_card(messages, thread_id: String) -> void:
 	for index in range(messages.conversation_list.threads.size()):
 		if str(messages.conversation_list.threads[index].get("thread_id", "")) == thread_id:
 			messages.conversation_list.cards[index].emit_signal("pressed")
+			await _wait_runtime_delivery_complete(messages)
 			return
 	_expect(false, "thread card unavailable: %s" % thread_id)
 

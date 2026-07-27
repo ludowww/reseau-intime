@@ -24,8 +24,8 @@ class RuntimeS103BMessageDeliveryStaticTests(unittest.TestCase):
             "runtime_delivery_request_id", "runtime_delivery_queue",
             "runtime_delivery_pending_choices", "runtime_delivery_pending_transition",
             "runtime_delivery_time_scale", "runtime_delivery_cancelled",
-            "INTER_MESSAGE_PAUSE_SECONDS := 0.25", "IMAGE_TYPING_DURATION_SECONDS := 1.20",
-            "clampf(0.70 + float(text.length()) * 0.014, 1.00, 2.00)",
+            "INTER_MESSAGE_PAUSE_SECONDS := 0.30", "IMAGE_TYPING_DURATION_SECONDS := 1.50",
+            "clampf(0.90 + float(text.length()) * 0.024, 1.20, 5.20)",
             "_run_runtime_delivery(", "request_id == runtime_delivery_request_id",
         ]:
             self.assertIn(token, source)
@@ -33,7 +33,7 @@ class RuntimeS103BMessageDeliveryStaticTests(unittest.TestCase):
 
     def test_typing_indicator_is_three_graphic_dots_not_text(self):
         source = self.read("game/scripts/ui/messages/TypingIndicator.gd")
-        for token in ["class TypingDot", "draw_circle", "typing_dots", "DOT_COUNT := 3", "WAVE_CYCLE_SECONDS := 1.05", "DOT_PHASE_OFFSET_SECONDS := 0.16", "func _process(delta: float)"]:
+        for token in ["class TypingDot", "draw_circle", "typing_dots", "DOT_COUNT := 3", "WAVE_CYCLE_NORMAL := 1.05", "DOT_PHASE_OFFSET_SECONDS := 0.16", "func _process(delta: float)"]:
             self.assertIn(token, source)
         for forbidden in ['[".", "..", "..."]', 'dots_label', 'text = "…"', "Timer.new()", "create_tween()"]:
             self.assertNotIn(forbidden, source)

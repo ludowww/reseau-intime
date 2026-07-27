@@ -10,6 +10,13 @@ const PHOTO_VIEWER_SCENE := preload("res://scenes/portrait/gallery/PhotoViewer.t
 const SEASON_RUNTIME_PROVIDER_SCRIPT := preload("res://scripts/runtime/season_1/Season1RuntimeProvider.gd")
 const TAG_MESSAGES := "messages"
 const TAG_GALLERY := "gallery"
+const READING_SPEEDS := [1.0, 3.0, 8.0]
+const READING_SPEED_LABELS := ["×1", "×3", "×8"]
+const READING_SPEED_TOOLTIPS := [
+	"Vitesse de lecture : normale",
+	"Vitesse de lecture : rapide",
+	"Vitesse de lecture : très rapide",
+]
 
 @export_enum("demo", "runtime_s1") var content_mode := "demo"
 
@@ -28,6 +35,9 @@ var gallery_panel: PanelContainer
 var gallery_screen
 var messages_button: Button
 var gallery_button: Button
+var reading_speed_button: Button
+var reading_speed_multiplier := 1.0
+var reading_speed_index := 0
 var reduced_motion_enabled := false
 var active_tab := TAG_MESSAGES
 var current_tween: Tween
@@ -42,6 +52,8 @@ func _ready() -> void:
 
 func set_reduced_motion_enabled(enabled: bool) -> void:
 	reduced_motion_enabled = enabled
+	if messages_screen != null:
+		messages_screen.reconfigure_active_typing()
 	if is_photo_viewer_active():
 		photo_viewer.focus_back()
 		return
@@ -161,8 +173,19 @@ func _build_shell() -> void:
 	header_box.add_theme_constant_override("separation", 6)
 	header_panel.add_child(header_box)
 
+	var title_row := HBoxContainer.new()
+	title_row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	title_row.add_theme_constant_override("separation", 8)
+	header_box.add_child(title_row)
 	header_label = _make_label("Réseau Intime", 30, PORTRAIT_THEME.TEXT_PRIMARY)
-	header_box.add_child(header_label)
+	title_row.add_child(header_label)
+	reading_speed_button = _make_button("×1", PORTRAIT_THEME.MESSAGE_ACCENT)
+	reading_speed_button.name = "ReadingSpeed"
+	reading_speed_button.toggle_mode = false
+	reading_speed_button.custom_minimum_size = Vector2(44, 44)
+	reading_speed_button.tooltip_text = READING_SPEED_TOOLTIPS[0]
+	reading_speed_button.pressed.connect(_cycle_reading_speed)
+	title_row.add_child(reading_speed_button)
 
 	header_subtitle = _make_label("Coque portrait additive — Messages / Galerie", 16, PORTRAIT_THEME.TEXT_SECONDARY)
 	header_subtitle.visible = content_mode == "demo"
@@ -369,6 +392,7 @@ func _build_gallery_panel() -> PanelContainer:
 
 func _set_active_tab(tab: String, use_animation := true) -> void:
 	active_tab = tab
+	reading_speed_button.visible = active_tab == TAG_MESSAGES
 	_refresh_nav_button_styles()
 	mode_label.text = "%s actif" % ("Messages" if active_tab == TAG_MESSAGES else "Galerie")
 	if active_tab == TAG_MESSAGES:
@@ -414,3 +438,12 @@ func _messages_set_visible(value: bool) -> void:
 func _gallery_set_visible(value: bool) -> void:
 	gallery_panel.visible = value
 	gallery_panel.modulate.a = 1.0 if value else 0.0
+
+func _cycle_reading_speed() -> void:
+	reading_speed_index = (reading_speed_index + 1) % READING_SPEEDS.size()
+	reading_speed_multiplier = READING_SPEEDS[reading_speed_index]
+	reading_speed_button.text = READING_SPEED_LABELS[reading_speed_index]
+	reading_speed_button.tooltip_text = READING_SPEED_TOOLTIPS[reading_speed_index]
+	if messages_screen != null:
+		messages_screen.reading_speed_multiplier = reading_speed_multiplier
+		messages_screen.update_active_typing_speed()

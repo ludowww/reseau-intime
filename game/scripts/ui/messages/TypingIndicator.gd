@@ -4,7 +4,9 @@ class_name TypingIndicator
 
 const DOT_COUNT := 3
 const DOT_DIAMETER := 8.0
-const WAVE_CYCLE_SECONDS := 1.05
+const WAVE_CYCLE_NORMAL := 1.05
+const WAVE_CYCLE_X3 := 0.70
+const WAVE_CYCLE_X8 := 0.45
 const DOT_PHASE_OFFSET_SECONDS := 0.16
 
 class TypingDot extends Control:
@@ -26,11 +28,15 @@ var avatar_label: Label
 var group_mode := false
 var author_accent := Color.WHITE
 var reduced_motion_enabled := false
+var reading_speed_multiplier := 1.0
+var wave_cycle_seconds := WAVE_CYCLE_NORMAL
 
-func configure(author: Dictionary, group_conversation: bool, portrait_theme, reduced_motion: bool) -> void:
+func configure(author: Dictionary, group_conversation: bool, portrait_theme, reduced_motion: bool, speed_multiplier := 1.0) -> void:
 	PORTRAIT_THEME = portrait_theme
 	group_mode = group_conversation
 	reduced_motion_enabled = reduced_motion
+	reading_speed_multiplier = speed_multiplier
+	wave_cycle_seconds = WAVE_CYCLE_X8 if reading_speed_multiplier >= 8.0 else (WAVE_CYCLE_X3 if reading_speed_multiplier >= 3.0 else WAVE_CYCLE_NORMAL)
 	author_accent = Color.from_string(str(author.get("accent_color", "#8D63E6")), PORTRAIT_THEME.PLAYER_ACCENT)
 	_build(author)
 	animation_elapsed = 0.0
@@ -46,11 +52,11 @@ func animation_running() -> bool:
 
 func advance_typing_phase() -> void:
 	if animation_running():
-		animation_elapsed = fmod(animation_elapsed + DOT_PHASE_OFFSET_SECONDS, WAVE_CYCLE_SECONDS)
+		animation_elapsed = fmod(animation_elapsed + DOT_PHASE_OFFSET_SECONDS, wave_cycle_seconds)
 		_apply_visual_wave()
 
 func _process(delta: float) -> void:
-	animation_elapsed = fmod(animation_elapsed + delta, WAVE_CYCLE_SECONDS)
+	animation_elapsed = fmod(animation_elapsed + delta, wave_cycle_seconds)
 	_apply_visual_wave()
 
 func indicator_text() -> String:
@@ -156,8 +162,8 @@ func _apply_visual_wave() -> void:
 			dot.scale = Vector2.ONE
 			dot.modulate.a = 1.0
 		else:
-			var local_time := fposmod(animation_elapsed - float(index) * DOT_PHASE_OFFSET_SECONDS, WAVE_CYCLE_SECONDS)
-			var angle := local_time / WAVE_CYCLE_SECONDS * TAU
+			var local_time := fposmod(animation_elapsed - float(index) * DOT_PHASE_OFFSET_SECONDS, wave_cycle_seconds)
+			var angle := local_time / wave_cycle_seconds * TAU
 			var pulse := 0.5 + 0.5 * sin(angle)
 			dot.position.y = -3.0 * pulse
 			var dot_scale := 1.0 + 0.15 * pulse

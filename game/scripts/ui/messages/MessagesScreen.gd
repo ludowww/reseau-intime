@@ -3,6 +3,8 @@ extends Control
 class_name MessagesScreen
 
 signal photo_requested(presentation: Dictionary, provenance: Dictionary)
+signal runtime_typing_started(thread_id: String, message_id: String, author_id: String)
+signal runtime_message_delivered(thread_id: String, message_id: String)
 
 const DEMO_DATA := preload("res://scripts/ui/messages/MessagesDemoData.gd")
 const CONVERSATION_LIST_SCRIPT := preload("res://scripts/ui/messages/ConversationList.gd")
@@ -10,8 +12,11 @@ const CONVERSATION_SCREEN_SCENE := preload("res://scenes/portrait/messages/Portr
 const NOTIFICATION_BANNER_SCRIPT := preload("res://scripts/ui/messages/NotificationBanner.gd")
 const OFF_PHONE_TRANSITION_SCRIPT := preload("res://scripts/ui/messages/OffPhoneTransition.gd")
 const DAY_TRANSITION_SCRIPT := preload("res://scripts/ui/messages/DayTransition.gd")
-const INTER_MESSAGE_PAUSE_SECONDS := 0.25
-const IMAGE_TYPING_DURATION_SECONDS := 1.20
+const INTER_MESSAGE_PAUSE_SECONDS := 0.30
+const IMAGE_TYPING_DURATION_SECONDS := 1.50
+const MIN_TYPING_SECONDS_X3 := 0.35
+const MIN_TYPING_SECONDS_X8 := 0.22
+const MIN_PAUSE_SECONDS := 0.04
 
 var PORTRAIT_THEME = preload("res://scripts/ui/PortraitShellTheme.gd").new()
 var characters: Dictionary = {}
@@ -46,6 +51,13 @@ var runtime_delivery_pending_transition: Dictionary = {}
 var runtime_delivery_time_scale := 1.0
 var runtime_delivery_cancelled := false
 var runtime_delivery_shell_unhandled_before := true
+var reading_speed_multiplier := 1.0
+# Provider transcript, visually presented IDs, and pending suffixes stay separate per thread.
+var runtime_provider_transcript_by_thread: Dictionary = {}
+var runtime_presented_message_ids_by_thread: Dictionary = {}
+var runtime_pending_messages_by_thread: Dictionary = {}
+var runtime_pending_choices_by_thread: Dictionary = {}
+var runtime_pending_transition_by_thread: Dictionary = {}
 
 func configure_content_source(source: Dictionary, provider = null) -> void:
 	content_source = source.duplicate(true)
@@ -57,6 +69,8 @@ func _ready() -> void:
 	size_flags_vertical = Control.SIZE_EXPAND_FILL
 	if content_source.is_empty():
 		_load_demo_data()
+	elif runtime_provider != null:
+		_initialize_runtime_source(content_source)
 	else:
 		_apply_content_source(content_source)
 	_build()
@@ -86,6 +100,8 @@ func open_thread(thread_id: String) -> void:
 	var position := int(reading_positions.get(thread_id, -1))
 	conversation_screen.configure(selected, messages, choices, characters, PORTRAIT_THEME, position, first_unread_message_id)
 	_sync_active_typing()
+	if runtime_provider != null:
+		call_deferred("_start_pending_delivery_for_thread", thread_id)
 
 func return_to_list() -> void:
 	if runtime_delivery_active or is_off_phone_transition_active() or is_day_transition_active():
@@ -124,7 +140,18 @@ func start_typing(thread_id: String, author_id: String) -> void:
 		"active": true,
 	}
 	if screen_mode == "conversation" and active_thread_id == thread_id and is_visible_in_tree():
-		conversation_screen.show_typing(author, _reduced_motion_enabled(), runtime_delivery_active and runtime_delivery_thread_id == thread_id)
+		conversation_screen.show_typing(author, _reduced_motion_enabled(), runtime_delivery_active and runtime_delivery_thread_id == thread_id, reading_speed_multiplier)
+
+func update_active_typing_speed() -> void:
+	if not runtime_delivery_active or not is_thread_typing(runtime_delivery_thread_id):
+		return
+	var state: Dictionary = typing_states_by_thread.get(runtime_delivery_thread_id, {})
+	var author: Dictionary = characters.get(str(state.get("author_id", "")), {})
+	if not author.is_empty() and conversation_screen != null:
+		conversation_screen.show_typing(author, _reduced_motion_enabled(), true, reading_speed_multiplier)
+
+func reconfigure_active_typing() -> void:
+	_sync_active_typing()
 
 func stop_typing(thread_id: String) -> void:
 	if is_off_phone_transition_active() or is_day_transition_active():
@@ -487,9 +514,88 @@ func refresh_from_runtime(source: Dictionary = {}) -> void:
 	if runtime_provider == null or runtime_delivery_active:
 		return
 	var next_source: Dictionary = runtime_provider.presentation_source() if source.is_empty() else source
-	_apply_content_source(next_source)
+	_reconcile_runtime_source(next_source)
 	if conversation_list != null:
 		conversation_list.configure(threads, characters, PORTRAIT_THEME, runtime_provider == null)
+	if screen_mode == "conversation":
+		_start_pending_delivery_for_thread(active_thread_id)
+
+func _initialize_runtime_source(source: Dictionary) -> void:
+	characters = source.get("characters", {}).duplicate(true)
+	threads = _dictionary_array(source.get("threads", []))
+	transcripts.clear()
+	available_choices.clear()
+	for raw_thread_id in source.get("messages_by_thread", {}):
+		var thread_id := str(raw_thread_id)
+		transcripts[thread_id] = []
+		runtime_presented_message_ids_by_thread[thread_id] = []
+	_reconcile_runtime_source(source)
+
+func _reconcile_runtime_source(source: Dictionary) -> bool:
+	characters = source.get("characters", {}).duplicate(true)
+	threads = _dictionary_array(source.get("threads", []))
+	var provider_by_thread: Dictionary = source.get("messages_by_thread", {})
+	var choices_by_thread: Dictionary = source.get("choices_by_thread", {})
+	for raw_thread_id in provider_by_thread:
+		var thread_id := str(raw_thread_id)
+		var provider_messages := _dictionary_array(provider_by_thread[raw_thread_id])
+		if not _runtime_transcript_has_unique_ids(provider_messages, "provider"):
+			return false
+		var visual_messages := _dictionary_array(transcripts.get(thread_id, []))
+		if not _runtime_transcript_has_unique_ids(visual_messages, "visual"):
+			return false
+		if not _runtime_presented_ids_match_visual_sequence(thread_id, visual_messages):
+			push_error("Runtime presented message ID sequence does not match visual transcript")
+			return false
+		if visual_messages.size() > provider_messages.size():
+			push_error("Runtime visual transcript is not a provider prefix")
+			return false
+		var normalized_visual := _normalized_runtime_transcript(visual_messages)
+		var normalized_provider := _normalized_runtime_transcript(provider_messages)
+		var normalized_provider_prefix := _normalized_runtime_transcript(provider_messages.slice(0, visual_messages.size()))
+		if normalized_visual != normalized_provider_prefix:
+			push_error("Runtime provider delta is not a strict normalized ordered suffix")
+			return false
+		var pending: Array[Dictionary] = []
+		for index in range(visual_messages.size(), provider_messages.size()):
+			pending.append(provider_messages[index].duplicate(true))
+		runtime_provider_transcript_by_thread[thread_id] = provider_messages
+		runtime_pending_messages_by_thread[thread_id] = pending
+		if pending.is_empty() and normalized_visual != normalized_provider:
+			push_error("Runtime transcript without pending messages must strictly equal provider")
+			return false
+		var pending_choices := _dictionary_array(choices_by_thread.get(raw_thread_id, choices_by_thread.get(thread_id, [])))
+		runtime_pending_choices_by_thread[thread_id] = pending_choices
+		available_choices[thread_id] = pending_choices if pending.is_empty() else []
+		if not transcripts.has(thread_id):
+			transcripts[thread_id] = []
+	return true
+
+func _runtime_presented_ids_match_visual_sequence(thread_id: String, visual_messages: Array[Dictionary]) -> bool:
+	var visual_ids: Array = []
+	for message in visual_messages:
+		visual_ids.append(str(message.get("message_id", "")))
+	var presented_ids: Array = runtime_presented_message_ids_by_thread.get(thread_id, [])
+	return presented_ids == visual_ids
+
+func _start_pending_delivery_for_thread(thread_id: String) -> void:
+	if runtime_provider == null or runtime_delivery_active or screen_mode != "conversation" or active_thread_id != thread_id:
+		return
+	var pending := _dictionary_array(runtime_pending_messages_by_thread.get(thread_id, []))
+	if pending.is_empty():
+		replace_runtime_choices(_dictionary_array(runtime_pending_choices_by_thread.get(thread_id, [])))
+		return
+	runtime_delivery_request_id += 1
+	runtime_delivery_active = true
+	runtime_delivery_cancelled = false
+	runtime_delivery_thread_id = thread_id
+	runtime_delivery_queue = pending
+	runtime_delivery_pending_choices = _dictionary_array(runtime_pending_choices_by_thread.get(thread_id, []))
+	runtime_delivery_pending_transition = runtime_pending_transition_by_thread.get(thread_id, {}).duplicate(true)
+	_hide_runtime_choices_for_delivery()
+	_set_runtime_delivery_interactions_blocked(true)
+	conversation_screen.timeline.reading_position_restore_pending = false
+	_run_runtime_delivery(runtime_delivery_request_id, thread_id)
 
 func append_runtime_messages(message_presentations: Array[Dictionary]) -> void:
 	if active_thread_id == "" or conversation_screen == null:
@@ -531,6 +637,9 @@ func apply_runtime_choice(choice_id: String) -> bool:
 			player_delivered = true
 		else:
 			runtime_delivery_queue.append(message.duplicate(true))
+	runtime_pending_messages_by_thread[thread_id] = runtime_delivery_queue.duplicate(true)
+	runtime_pending_choices_by_thread[thread_id] = runtime_delivery_pending_choices.duplicate(true)
+	runtime_pending_transition_by_thread[thread_id] = runtime_delivery_pending_transition.duplicate(true)
 	_set_runtime_delivery_interactions_blocked(true)
 	_continue_runtime_delivery_after_player(runtime_delivery_request_id, thread_id)
 	return true
@@ -559,28 +668,28 @@ func _run_runtime_delivery(request_id: int, thread_id: String) -> void:
 		if not _runtime_delivery_request_is_current(request_id, thread_id):
 			return
 		var message: Dictionary = runtime_delivery_queue.pop_front()
+		runtime_pending_messages_by_thread[thread_id] = runtime_delivery_queue.duplicate(true)
 		var content_type := str(message.get("content_type", ""))
-		if content_type == "TEXT" or content_type == "IMAGE":
+		if not bool(message.get("is_player", false)) and (content_type == "TEXT" or content_type == "IMAGE"):
 			var author_id := str(message.get("author_id", ""))
 			start_typing(thread_id, author_id)
+			runtime_typing_started.emit(thread_id, str(message.get("message_id", "")), author_id)
 			if not await _follow_runtime_delivery_after_layout(request_id, thread_id):
 				return
 			if not _runtime_delivery_request_is_current(request_id, thread_id):
 				return
-			await _runtime_delivery_delay(_typing_duration_seconds(message))
+			await _runtime_delivery_delay(_typing_duration_seconds(message), true)
 			if not _runtime_delivery_request_is_current(request_id, thread_id):
 				return
-			stop_typing(thread_id)
-			await get_tree().process_frame
-			if not _runtime_delivery_request_is_current(request_id, thread_id):
-				return
-		_append_runtime_delivery_message(message)
+			_replace_runtime_typing_with_message(message)
+		else:
+			_append_runtime_delivery_message(message)
 		if not await _follow_runtime_delivery_after_layout(request_id, thread_id):
 			return
 		if not _runtime_delivery_request_is_current(request_id, thread_id):
 			return
 		if not runtime_delivery_queue.is_empty():
-			await _runtime_delivery_delay(INTER_MESSAGE_PAUSE_SECONDS)
+			await _runtime_delivery_delay(INTER_MESSAGE_PAUSE_SECONDS, false)
 			if not _runtime_delivery_request_is_current(request_id, thread_id):
 				return
 	await _finish_runtime_delivery(request_id, thread_id)
@@ -589,19 +698,57 @@ func _typing_duration_seconds(message: Dictionary) -> float:
 	if str(message.get("content_type", "")) == "IMAGE":
 		return IMAGE_TYPING_DURATION_SECONDS
 	var text := str(message.get("text", ""))
-	return clampf(0.70 + float(text.length()) * 0.014, 1.00, 2.00)
+	return clampf(0.90 + float(text.length()) * 0.024, 1.20, 5.20)
 
-func _runtime_delivery_delay(seconds: float) -> void:
-	await get_tree().create_timer(seconds * maxf(runtime_delivery_time_scale, 0.001)).timeout
+func _runtime_delivery_delay(seconds: float, typing_delay := false) -> void:
+	var elapsed := 0.0
+	var progress := 0.0
+	while true:
+		await get_tree().process_frame
+		var delta := get_process_delta_time()
+		elapsed += delta
+		progress += delta * reading_speed_multiplier / maxf(runtime_delivery_time_scale, 0.001)
+		var minimum := 0.0
+		if typing_delay:
+			minimum = MIN_TYPING_SECONDS_X8 if reading_speed_multiplier >= 8.0 else (MIN_TYPING_SECONDS_X3 if reading_speed_multiplier >= 3.0 else 0.0)
+		else:
+			minimum = MIN_PAUSE_SECONDS
+		if progress >= seconds and elapsed >= minimum * maxf(runtime_delivery_time_scale, 0.001):
+			return
+
+func _replace_runtime_typing_with_message(message: Dictionary) -> void:
+	if conversation_screen == null:
+		return
+	typing_states_by_thread.erase(runtime_delivery_thread_id)
+	var visual_message := _runtime_message_for_visual_insertion(message, runtime_delivery_thread_id)
+	conversation_screen.timeline.replace_typing_with_message(visual_message, true)
+	transcripts[runtime_delivery_thread_id] = conversation_screen.timeline.messages.duplicate(true)
+	_mark_runtime_message_presented(runtime_delivery_thread_id, visual_message)
+
+func _runtime_message_for_visual_insertion(message: Dictionary, thread_id: String) -> Dictionary:
+	var visual_message := message.duplicate(true)
+	if screen_mode == "conversation" and active_thread_id == thread_id:
+		visual_message["is_read"] = true
+	return visual_message
+
+func _mark_runtime_message_presented(thread_id: String, message: Dictionary) -> void:
+	var ids: Array = runtime_presented_message_ids_by_thread.get(thread_id, []).duplicate()
+	var message_id := str(message.get("message_id", ""))
+	if message_id != "" and not ids.has(message_id):
+		ids.append(message_id)
+	runtime_presented_message_ids_by_thread[thread_id] = ids
+	runtime_message_delivered.emit(thread_id, message_id)
 
 func _append_runtime_delivery_message(message: Dictionary) -> void:
 	if conversation_screen == null:
 		return
-	if str(message.get("content_type", "")) == "OFF_PHONE_TRANSITION":
-		conversation_screen.timeline.messages.append(message.duplicate(true))
+	var visual_message := _runtime_message_for_visual_insertion(message, runtime_delivery_thread_id)
+	if str(visual_message.get("content_type", "")) == "OFF_PHONE_TRANSITION":
+		conversation_screen.timeline.messages.append(visual_message)
 	else:
-		conversation_screen.append_incoming_message(message, false)
+		conversation_screen.append_incoming_message(visual_message, false)
 	transcripts[runtime_delivery_thread_id] = conversation_screen.timeline.messages.duplicate(true)
+	_mark_runtime_message_presented(runtime_delivery_thread_id, visual_message)
 
 func _follow_runtime_delivery_after_layout(request_id: int, thread_id: String) -> bool:
 	if not _runtime_delivery_request_is_current(request_id, thread_id) or conversation_screen == null:
@@ -628,6 +775,7 @@ func _finish_runtime_delivery(request_id: int, thread_id: String) -> void:
 	if not pending_transition.is_empty():
 		if not await _start_runtime_transition_after_layout(request_id, thread_id, pending_transition):
 			return
+		runtime_pending_transition_by_thread[thread_id] = {}
 		_complete_runtime_delivery(false)
 		return
 	replace_runtime_choices(pending_choices)
@@ -1031,7 +1179,7 @@ func _sync_active_typing() -> void:
 	if author.is_empty():
 		conversation_screen.hide_typing()
 		return
-	conversation_screen.show_typing(author, _reduced_motion_enabled())
+	conversation_screen.show_typing(author, _reduced_motion_enabled(), false, reading_speed_multiplier)
 
 func _on_visibility_changed() -> void:
 	if conversation_screen == null:

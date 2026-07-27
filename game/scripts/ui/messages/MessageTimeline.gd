@@ -29,6 +29,11 @@ var reading_position_restore_pending := false
 var reading_restore_request_id := 0
 var typing_follow_request_id := 0
 var layout_follow_request_id := 0
+var replacement_spacer: Control
+var replacement_spacer_request_id := 0
+var replacement_layout_anchor_request_id := 0
+var replacement_spacer_created_total := 0
+var replacement_spacer_removed_total := 0
 
 func configure(message_presentations: Array[Dictionary], character_presentations: Dictionary, group_conversation: bool, portrait_theme, reading_position := -1, first_unread_id := "") -> void:
 	messages = message_presentations
@@ -80,14 +85,97 @@ func append_incoming_message(message: Dictionary, force_follow := false) -> void
 	else:
 		call_deferred("scroll_to_last_message")
 
-func show_typing(author: Dictionary, reduced_motion: bool, force_follow := false) -> void:
+func replace_typing_with_message(message: Dictionary, force_follow := true) -> void:
+	# Atomic exchange: no await occurs between inserting the bubble and removing typing.
+	if typing_indicator == null or not is_instance_valid(typing_indicator):
+		append_incoming_message(message, force_follow)
+		return
+	typing_follow_request_id += 1
+	var typing_index: int = typing_indicator.get_index()
+	var outgoing_indicator: Control = typing_indicator
+	var outgoing_height: float = outgoing_indicator.size.y
+	outgoing_indicator.stop_animation()
+	var stored_message := message.duplicate(true)
+	var message_bubble := _build_message_bubble(stored_message)
+	var message_height: float = message_bubble.get_combined_minimum_size().y
+	var preserve_first_layout: bool = force_follow and is_last_message_visible() and outgoing_height > message_height
+	if force_follow:
+		replacement_layout_anchor_request_id += 1
+		var anchor_request_id := replacement_layout_anchor_request_id
+		get_v_scroll_bar().changed.connect(_anchor_atomic_replacement_layout.bind(anchor_request_id), CONNECT_ONE_SHOT)
+	message_box.add_child(message_bubble)
+	message_box.move_child(message_bubble, typing_index)
+	messages.append(stored_message)
+	if preserve_first_layout:
+		_create_replacement_spacer(outgoing_height, typing_index + 1)
+	if outgoing_indicator.get_parent() == message_box:
+		message_box.remove_child(outgoing_indicator)
+	outgoing_indicator.queue_free()
+	typing_indicator = null
+	if force_follow:
+		scroll_to_last_message()
+
+func _anchor_atomic_replacement_layout(request_id: int) -> void:
+	if request_id != replacement_layout_anchor_request_id or reading_position_restore_pending or not is_inside_tree():
+		return
+	scroll_to_last_message()
+
+func _create_replacement_spacer(outgoing_height: float, insert_index: int) -> void:
+	_remove_replacement_spacer()
+	replacement_spacer_request_id += 1
+	var request_id := replacement_spacer_request_id
+	replacement_spacer = Control.new()
+	replacement_spacer.name = "ReplacementSpacer"
+	replacement_spacer.custom_minimum_size = Vector2(0.0, outgoing_height)
+	replacement_spacer.focus_mode = Control.FOCUS_NONE
+	replacement_spacer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	replacement_spacer_created_total += 1
+	message_box.add_child(replacement_spacer)
+	message_box.move_child(replacement_spacer, mini(insert_index, message_box.get_child_count() - 1))
+	_remove_replacement_spacer_after_stable_layout(request_id, replacement_spacer)
+
+func _remove_replacement_spacer_after_stable_layout(request_id: int, expected_spacer: Control) -> void:
+	await get_tree().process_frame
+	if request_id != replacement_spacer_request_id or expected_spacer != replacement_spacer:
+		return
+	await get_tree().process_frame
+	if request_id != replacement_spacer_request_id or expected_spacer != replacement_spacer:
+		return
+	_remove_replacement_spacer()
+
+func _remove_replacement_spacer() -> void:
+	if replacement_spacer == null or not is_instance_valid(replacement_spacer):
+		replacement_spacer = null
+		return
+	if replacement_spacer.get_parent() != null:
+		replacement_spacer.get_parent().remove_child(replacement_spacer)
+	replacement_spacer.queue_free()
+	replacement_spacer = null
+	replacement_spacer_removed_total += 1
+
+func replacement_spacer_active() -> bool:
+	return replacement_spacer != null and is_instance_valid(replacement_spacer)
+
+func replacement_spacer_count() -> int:
+	return 1 if replacement_spacer_active() else 0
+
+func replacement_spacer_height() -> float:
+	return replacement_spacer.custom_minimum_size.y if replacement_spacer_active() else 0.0
+
+func replacement_spacer_created_count() -> int:
+	return replacement_spacer_created_total
+
+func replacement_spacer_removed_count() -> int:
+	return replacement_spacer_removed_total
+
+func show_typing(author: Dictionary, reduced_motion: bool, force_follow := false, speed_multiplier := 1.0) -> void:
 	var should_follow_bottom := force_follow or (not reading_position_restore_pending and is_last_message_visible())
 	typing_follow_request_id += 1
 	var request_id := typing_follow_request_id
 	if typing_indicator == null or not is_instance_valid(typing_indicator):
 		typing_indicator = TYPING_INDICATOR_SCRIPT.new()
 		message_box.add_child(typing_indicator)
-	typing_indicator.configure(author, is_group, PORTRAIT_THEME, reduced_motion)
+	typing_indicator.configure(author, is_group, PORTRAIT_THEME, reduced_motion, speed_multiplier)
 	message_box.move_child(typing_indicator, message_box.get_child_count() - 1)
 	_follow_typing_after_layout(should_follow_bottom, request_id, typing_indicator)
 
@@ -311,6 +399,10 @@ func is_last_message_visible() -> bool:
 	var bar := get_v_scroll_bar()
 	return bar.max_value <= bar.page + 1.0 or scroll_vertical + bar.page >= bar.max_value - 2.0
 
+func bottom_gap() -> float:
+	var bar := get_v_scroll_bar()
+	return maxf(0.0, bar.max_value - bar.page - float(scroll_vertical))
+
 func reading_position_coherent() -> bool:
 	return scroll_vertical >= 0 and scroll_vertical <= int(get_v_scroll_bar().max_value)
 
@@ -351,6 +443,8 @@ func _is_message_bubble(node: Node) -> bool:
 	return bool(node.get_meta("message_bubble", false))
 
 func _build() -> void:
+	replacement_spacer_request_id += 1
+	_remove_replacement_spacer()
 	if typing_indicator != null and is_instance_valid(typing_indicator):
 		typing_indicator.stop_animation()
 	typing_indicator = null

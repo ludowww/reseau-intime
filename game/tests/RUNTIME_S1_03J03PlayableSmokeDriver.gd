@@ -66,7 +66,7 @@ func _test_real_ui() -> void:
 	_expect(not raphaelle_thread.is_empty(), "Raphaëlle thread missing")
 	_expect(raphaelle_thread.get("participant_ids", []) == ["raphaelle", "player"], "Raphaëlle participant IDs")
 	_expect(raphaelle_thread.get("title", "") == "Raphaëlle", "Raphaëlle visible title keeps accent")
-	_open(messages, "thread_raphaelle_private"); await _frames(2)
+	await _open(messages, "thread_raphaelle_private"); await _frames(2)
 	messages.start_typing("thread_raphaelle_private", "raphaelle"); await _frames(2)
 	_expect(messages.is_thread_typing("thread_raphaelle_private"), "Raphaëlle thread typing state")
 	_expect(messages.conversation_screen.typing_visible(), "Raphaëlle typing indicator visible")
@@ -85,11 +85,12 @@ func _test_real_ui() -> void:
 	_expect(messages.day_transition.continue_button.mouse_filter == Control.MOUSE_FILTER_STOP and messages.day_transition.secondary_button.mouse_filter == Control.MOUSE_FILTER_STOP and not messages.day_transition.continue_button.disabled and not messages.day_transition.secondary_button.disabled, "Sandra mouse actions available")
 	_expect(not _control_tree_cropped(messages.day_transition), "Sandra card actual crop")
 	await _keyboard_activate(messages.day_transition.continue_button)
+	await _wait_runtime_delivery_complete(messages)
 	_expect(messages.active_thread_id == "thread_sandra_private", "Sandra keyboard primary action")
 	_expect(_ui_choices(messages) == _source_choices(SANDRA_SOURCE, 0), "Sandra sole exact UI choice")
 	await _choose(messages, "choice_thu_sandra_day_saved"); await _frames(2)
 	_assert_card(messages, {"eyebrow": "JEUDI — FIN DE JOURNÉE", "title": "18:20", "subtitle": "", "body": "Marie ramène la journée vers le foyer.", "action_label": "Continuer"}, 1, "Marie time")
-	messages.day_transition.continue_button.emit_signal("pressed"); await _frames(2)
+	messages.day_transition.continue_button.emit_signal("pressed"); await _wait_runtime_delivery_complete(messages); await _frames(2)
 	_expect(messages.active_thread_id == "thread_marie_private", "Marie return did not open")
 	await _choose(messages, "choice_j3_marie_evening_why_guided")
 	_expect(_ui_choices(messages) == _source_choices(MARIE_SOURCE, 1), "Marie exact three UI choices")
@@ -113,7 +114,7 @@ func _test_sandra_secondary_real_button_ui() -> void:
 	await _play_j02_ui(messages)
 	messages.day_transition.continue_button.emit_signal("pressed"); await _frames(2)
 	messages.day_transition.continue_button.emit_signal("pressed"); await _frames(2)
-	_open(messages, "thread_raphaelle_private"); await _choose(messages, "choice_thu_raph_method_guided"); await _choose(messages, "choice_thu_raph_accountable"); await _frames(2)
+	await _open(messages, "thread_raphaelle_private"); await _choose(messages, "choice_thu_raph_method_guided"); await _choose(messages, "choice_thu_raph_accountable"); await _frames(2)
 	messages.off_phone_transition.resume_button.emit_signal("pressed"); await _frames(2)
 	_expect(messages.day_transition.secondary_button != null and messages.day_transition.secondary_button.mouse_filter == Control.MOUSE_FILTER_STOP, "Sandra real secondary mouse button")
 	messages.day_transition.secondary_button.emit_signal("pressed"); await _frames(2)
@@ -316,17 +317,17 @@ func _play_j02_provider(season) -> void:
 	season.confirm_day_transition(); season.on_thread_returned("thread_marie_private"); season.confirm_day_transition()
 	season.apply_choice("thread_mathilde_private", "choice_wed_mathilde_practical"); season.confirm_transition()
 func _play_j01_ui(messages) -> void:
-	_open(messages, "thread_marie_private")
+	await _open(messages, "thread_marie_private")
 	for id in ["choice_j1_marie_optimism_guided", "choice_j1_marie_crisis_guided", "choice_j1_marie_present", "choice_j1_marie_laverriere_guided", "choice_j1_marie_mathilde_guided"]: await _choose(messages, id)
 	await _frames(2); messages.off_phone_transition.resume_button.emit_signal("pressed"); await _frames(2)
-	_open(messages, "thread_sandra_private")
+	await _open(messages, "thread_sandra_private")
 	for id in ["choice_j1_sandra_what_guided", "choice_j1_sandra_art_guided", "choice_j1_sandra_safe_warmth", "choice_j1_sandra_thanks_guided", "choice_j1_sandra_goodnight_guided"]: await _choose(messages, id)
 	await _frames(2); messages.off_phone_transition.resume_button.emit_signal("pressed"); await _frames(2)
 func _play_j02_ui(messages) -> void:
-	_open(messages, "thread_marie_private"); await _choose(messages, "choice_wed_marie_emergency_guided"); await _choose(messages, "choice_wed_make_room_proactive")
-	await _frames(2); _assert_old_card(messages, "J02 18:18"); messages.day_transition.continue_button.emit_signal("pressed"); await _frames(2)
+	await _open(messages, "thread_marie_private"); await _choose(messages, "choice_wed_marie_emergency_guided"); await _choose(messages, "choice_wed_make_room_proactive")
+	await _frames(2); _assert_old_card(messages, "J02 18:18"); messages.day_transition.continue_button.emit_signal("pressed"); await _wait_runtime_delivery_complete(messages); await _frames(2)
 	messages.conversation_screen.back_button.emit_signal("pressed"); await _frames(2); _assert_old_card(messages, "J02 18:22"); messages.day_transition.continue_button.emit_signal("pressed"); await _frames(2)
-	_open(messages, "thread_mathilde_private"); await _choose(messages, "choice_wed_mathilde_practical"); await _frames(2); messages.off_phone_transition.resume_button.emit_signal("pressed"); await _frames(2)
+	await _open(messages, "thread_mathilde_private"); await _choose(messages, "choice_wed_mathilde_practical"); await _frames(2); messages.off_phone_transition.resume_button.emit_signal("pressed"); await _frames(2)
 
 func _source_choices(path: String, segment: int) -> Array:
 	var result: Array = []; var source: Dictionary = DataLoader.load_json(path)
@@ -354,6 +355,9 @@ func _transcript_sizes(transcripts: Dictionary) -> Dictionary:
 func _choose(messages, id: String) -> void:
 	for index in range(messages.available_choices.get(messages.active_thread_id, []).size()):
 		if messages.available_choices[messages.active_thread_id][index].get("choice_id", "") == id:
+			if index >= messages.conversation_screen.choice_bar.buttons.size():
+				_expect(false, "choice model/render mismatch: " + id)
+				return
 			messages.conversation_screen.choice_bar.buttons[index].emit_signal("pressed")
 			await _wait_runtime_delivery_complete(messages)
 			return
@@ -366,13 +370,17 @@ func _choose_twice(messages, id: String) -> void:
 	_expect(messages.thread_player_message_count(messages.active_thread_id) == before + 1, "double click duplicated Player bubble")
 	await _wait_runtime_delivery_complete(messages)
 func _wait_runtime_delivery_complete(messages) -> void:
+	await get_tree().process_frame
 	for _index in range(600):
 		if not messages.runtime_delivery_active and messages.runtime_delivery_queue.is_empty() and not messages.conversation_screen.typing_visible(): return
 		await get_tree().create_timer(0.01).timeout
 	_expect(false, "runtime delivery timed out")
 func _open(messages, id: String) -> void:
 	for index in range(messages.conversation_list.threads.size()):
-		if messages.conversation_list.threads[index].get("thread_id", "") == id: messages.conversation_list.cards[index].emit_signal("pressed"); return
+		if messages.conversation_list.threads[index].get("thread_id", "") == id:
+			messages.conversation_list.cards[index].emit_signal("pressed")
+			await _wait_runtime_delivery_complete(messages)
+			return
 	_expect(false, "thread unavailable: " + id)
 func _keyboard_activate(button: Button) -> void:
 	button.grab_focus(); await _frames(1)

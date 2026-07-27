@@ -38,7 +38,12 @@ class TUI02B2TypingIndicatorStaticTests(unittest.TestCase):
         indicator = self._read("game/scripts/ui/messages/TypingIndicator.gd")
         self.assertNotIn("Timer.new()", indicator)
         self.assertNotIn("create_tween()", indicator)
-        self.assertIn("WAVE_CYCLE_SECONDS := 1.05", indicator)
+        for cycle in [
+            "WAVE_CYCLE_NORMAL := 1.05",
+            "WAVE_CYCLE_X3 := 0.70",
+            "WAVE_CYCLE_X8 := 0.45",
+        ]:
+            self.assertIn(cycle, indicator)
         self.assertIn("DOT_PHASE_OFFSET_SECONDS := 0.16", indicator)
         self.assertIn("func _process(delta: float)", indicator)
         configure = indicator.split("func configure", 1)[1].split("\nfunc ", 1)[0]
@@ -66,7 +71,7 @@ class TUI02B2TypingIndicatorStaticTests(unittest.TestCase):
     def test_timeline_hosts_at_most_one_indicator_without_mutating_messages(self):
         timeline = self._read("game/scripts/ui/messages/MessageTimeline.gd")
         for signature in [
-            "func show_typing(author: Dictionary, reduced_motion: bool, force_follow := false)",
+            "func show_typing(author: Dictionary, reduced_motion: bool, force_follow := false, speed_multiplier := 1.0)",
             "func hide_typing()",
             "func typing_visible() -> bool",
             "func typing_instance_count() -> int",

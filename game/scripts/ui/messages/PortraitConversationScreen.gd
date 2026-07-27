@@ -39,8 +39,8 @@ func append_messages(message_presentations: Array[Dictionary]) -> void:
 func replace_choices(choice_presentations: Array[Dictionary]) -> void:
 	choice_bar.set_choices(choice_presentations)
 
-func show_typing(author: Dictionary, reduced_motion: bool, force_follow := false) -> void:
-	timeline.show_typing(author, reduced_motion, force_follow)
+func show_typing(author: Dictionary, reduced_motion: bool, force_follow := false, speed_multiplier := 1.0) -> void:
+	timeline.show_typing(author, reduced_motion, force_follow, speed_multiplier)
 
 func hide_typing() -> void:
 	if timeline != null:

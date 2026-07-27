@@ -20,10 +20,11 @@ func _run() -> void:
 	_expect(Vector2i(get_window().size) == size, "window must use requested portrait size")
 	_expect(not shell.reduced_motion_enabled, "production must start with standard motion")
 	messages.runtime_delivery_time_scale = 0.08
-	_expect(is_equal_approx(messages._typing_duration_seconds({"content_type": "TEXT", "text": "x".repeat(1000)}), 2.0), "long text typing duration must be capped at two seconds")
+	_expect(is_equal_approx(messages._typing_duration_seconds({"content_type": "TEXT", "text": "x".repeat(1000)}), 5.2), "long text typing duration must be capped at 5.2 seconds")
 
 	# Reach Marie's first runtime choice through the production card and button.
 	messages.conversation_list.cards[0].emit_signal("pressed")
+	await _wait_runtime_delivery_complete(messages)
 	await _frames(3)
 	var thread_id: String = messages.active_thread_id
 	var before: Array = messages.transcripts[thread_id].duplicate(true)
@@ -157,6 +158,7 @@ func _choice_button(messages, choice_id: String):
 	return null
 
 func _wait_runtime_delivery_complete(messages) -> void:
+	await get_tree().process_frame
 	for _index in range(900):
 		if not messages.runtime_delivery_active and messages.runtime_delivery_queue.is_empty() and not messages.conversation_screen.typing_visible():
 			return

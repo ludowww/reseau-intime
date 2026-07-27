@@ -21,6 +21,7 @@ func _run() -> void:
 	_expect(provider.active_day == "J01", "J02 must not start before J01 completion")
 	_expect(messages._thread_for("thread_mathilde_private").is_empty(), "Mathilde must be absent in J01")
 	await _play_j01(messages)
+	_expect(messages.runtime_pending_transition_by_thread.get("thread_marie_private", {}).is_empty(), "consumed J01 Marie transition must not leak into J02")
 	_expect(messages.day_transition.display_title() == "J01 terminé", "J01 end missing")
 	messages.day_transition.continue_button.emit_signal("pressed")
 	await _frames(2)
@@ -30,13 +31,14 @@ func _run() -> void:
 	await _frames(2)
 	_expect(messages.screen_mode == "list", "Commencer must open cumulative list")
 	_expect(not messages._thread_for("thread_sandra_private").is_empty(), "Sandra must persist")
-	_open(messages, "thread_marie_private")
+	await _open(messages, "thread_marie_private")
 	await _choose(messages, "choice_wed_marie_emergency_guided")
 	_expect(messages.thread_choice_count("thread_marie_private") == 3, "Marie exact three choices unavailable")
 	await _choose_twice(messages, "choice_wed_make_room_proactive")
 	await _frames(2)
 	_expect(messages.day_transition.display_title() == "18:18", "18:18 transition missing")
 	messages.day_transition.continue_button.emit_signal("pressed")
+	await _wait_runtime_delivery_complete(messages)
 	await _frames(2)
 	_expect(messages.screen_mode == "conversation" and messages.active_thread_id == "thread_marie_private", "18:18 must remain in Marie")
 	_expect(messages.presentation_count_by_id("msg_wed_marie_arrival_002") == 0, "removed photo message present")
@@ -48,7 +50,7 @@ func _run() -> void:
 	await _frames(2)
 	_expect(not messages._thread_for("thread_mathilde_private").is_empty(), "Mathilde did not unlock")
 	_expect(not messages.notification_banner.visible, "photo notification forbidden")
-	_open(messages, "thread_mathilde_private")
+	await _open(messages, "thread_mathilde_private")
 	_expect(messages.thread_choice_count("thread_mathilde_private") == 3, "Mathilde must start with exact three choices")
 	await _choose(messages, "choice_wed_mathilde_practical")
 	await _frames(2)
@@ -57,9 +59,9 @@ func _run() -> void:
 	_expect(provider.presentation_count_by_id("offline_wednesday_mathilde_settling_practical") == 1, "practical offline id mismatch")
 	messages.off_phone_transition.resume_button.emit_signal("pressed")
 	await _frames(2)
-	_expect(provider.state.promises["mathilde_j02_arrival_help"]["status"] == "PAID", "P02 practical must be PAID")
-	_expect(provider.state.traces["j02_mathilde_arrival_room_01"]["trace_type"] == "FACT_RECORD", "T02 type mismatch")
-	_expect(provider.state.knowledge["fact_mathilde_stay_started"]["initial_knowers"] == ["Marie", "Player", "Mathilde"], "F02 knowers mismatch")
+	_expect(provider.state.promises.get("mathilde_j02_arrival_help", {}).get("status", "") == "PAID", "P02 practical must be PAID")
+	_expect(provider.state.traces.get("j02_mathilde_arrival_room_01", {}).get("trace_type", "") == "FACT_RECORD", "T02 type mismatch")
+	_expect(provider.state.knowledge.get("fact_mathilde_stay_started", {}).get("initial_knowers", []) == ["Marie", "Player", "Mathilde"], "F02 knowers mismatch")
 	_expect(messages.day_transition.display_title() == "J02 terminé", "J02 end missing")
 	_expect(not messages.describe_state().get("has_horizontal_crop", true), "portrait crop")
 	_expect(_j02_image_count(messages) == 0, "J02 must contain no IMAGE presentation")
@@ -90,13 +92,13 @@ func _run() -> void:
 	_finish()
 
 func _play_j01(messages) -> void:
-	_open(messages, "thread_marie_private")
+	await _open(messages, "thread_marie_private")
 	for choice in ["choice_j1_marie_optimism_guided", "choice_j1_marie_crisis_guided", "choice_j1_marie_present", "choice_j1_marie_laverriere_guided", "choice_j1_marie_mathilde_guided"]:
 		await _choose(messages, choice)
 	await _frames(2)
 	messages.off_phone_transition.resume_button.emit_signal("pressed")
 	await _frames(2)
-	_open(messages, "thread_sandra_private")
+	await _open(messages, "thread_sandra_private")
 	for choice in ["choice_j1_sandra_what_guided", "choice_j1_sandra_art_guided", "choice_j1_sandra_cautious", "choice_j1_sandra_thanks_guided", "choice_j1_sandra_goodnight_guided"]:
 		await _choose(messages, choice)
 	await _frames(2)
@@ -117,19 +119,21 @@ func _run_ui_outcome(marie_choice: String, mathilde_choice: String, expected_sta
 	_expect(provider.active_day == "J02", "alternate UI did not legitimately complete J01")
 	messages.day_transition.continue_button.emit_signal("pressed")
 	await _frames(2)
-	_open(messages, "thread_marie_private")
+	await _open(messages, "thread_marie_private")
 	await _choose(messages, "choice_wed_marie_emergency_guided")
 	_expect(_choice_text(messages, marie_choice) == _expected_choice_text(marie_choice), "Marie source choice text mismatch: %s" % marie_choice)
 	await _choose(messages, marie_choice)
 	await _frames(2)
 	_expect(_branch_response_present(messages, marie_choice), "Marie branch response mismatch: %s" % marie_choice)
 	messages.day_transition.continue_button.emit_signal("pressed")
+	await _wait_runtime_delivery_complete(messages)
 	await _frames(2)
+	_expect(not messages.runtime_delivery_active and messages.screen_mode == "conversation" and messages.active_thread_id == "thread_marie_private", "18:18 Marie arrival must settle before return")
 	messages.conversation_screen.back_button.emit_signal("pressed")
 	await _frames(2)
 	messages.day_transition.continue_button.emit_signal("pressed")
 	await _frames(2)
-	_open(messages, "thread_mathilde_private")
+	await _open(messages, "thread_mathilde_private")
 	_expect(_choice_text(messages, mathilde_choice) == _expected_choice_text(mathilde_choice), "Mathilde source choice text mismatch: %s" % mathilde_choice)
 	await _choose(messages, mathilde_choice)
 	await _frames(2)
@@ -252,6 +256,9 @@ func _gallery_asset_count(source: Dictionary, asset_id: String) -> int:
 func _choose(messages, id: String) -> void:
 	for index in range(messages.available_choices.get(messages.active_thread_id, []).size()):
 		if messages.available_choices[messages.active_thread_id][index].get("choice_id", "") == id:
+			if index >= messages.conversation_screen.choice_bar.buttons.size():
+				_expect(false, "choice model/render mismatch: %s" % id)
+				return
 			messages.conversation_screen.choice_bar.buttons[index].emit_signal("pressed")
 			await _wait_runtime_delivery_complete(messages)
 			return
@@ -269,16 +276,19 @@ func _choose_twice(messages, id: String) -> void:
 	await _wait_runtime_delivery_complete(messages)
 
 func _wait_runtime_delivery_complete(messages) -> void:
+	await get_tree().process_frame
 	for _index in range(600):
 		if not messages.runtime_delivery_active and messages.runtime_delivery_queue.is_empty() and not messages.conversation_screen.typing_visible():
 			return
 		await get_tree().create_timer(0.01).timeout
+	print("DELIVERY TIMEOUT state=", messages.runtime_delivery_active, " thread=", messages.runtime_delivery_thread_id, " active=", messages.active_thread_id, " queue=", messages.runtime_delivery_queue.size(), " typing=", messages.conversation_screen.typing_visible(), " visual=", messages.thread_message_count(messages.active_thread_id), " provider=", messages.runtime_provider.presentation_source().get("messages_by_thread", {}).get(messages.active_thread_id, []).size())
 	_expect(false, "runtime delivery timed out")
 
 func _open(messages, id: String) -> void:
 	for index in range(messages.conversation_list.threads.size()):
 		if messages.conversation_list.threads[index].get("thread_id", "") == id:
 			messages.conversation_list.cards[index].emit_signal("pressed")
+			await _wait_runtime_delivery_complete(messages)
 			return
 	_expect(false, "thread unavailable: %s" % id)
 
