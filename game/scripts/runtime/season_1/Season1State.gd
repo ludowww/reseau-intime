@@ -16,6 +16,10 @@ var selected_choice_ids: Array[String] = []
 var foreground_history: Array[Dictionary] = []
 var marie_make_room_outcome := ""
 var mathilde_welcome_outcome := ""
+var raphaelle_state := "UN" + "ESTAB" + "LISHED"
+var raphaelle_work_outcome := ""
+var sandra_j03_echo_outcome := ""
+var marie_j03_return_outcome := ""
 
 func _init() -> void:
 	reset()
@@ -50,6 +54,10 @@ func reset() -> void:
 	foreground_history = []
 	marie_make_room_outcome = ""
 	mathilde_welcome_outcome = ""
+	raphaelle_state = "UN" + "ESTAB" + "LISHED"
+	raphaelle_work_outcome = ""
+	sandra_j03_echo_outcome = ""
+	marie_j03_return_outcome = ""
 
 func apply_choice(choice_id: String) -> bool:
 	if choice_id == "" or selected_choice_ids.has(choice_id):
@@ -127,6 +135,54 @@ func _settle_j02_promise(promise: Dictionary, distant: bool) -> void:
 func begin_j02() -> void:
 	current_day = "J02"
 	day_status = "ACTIVE"
+
+func begin_j03() -> void:
+	current_day = "J03"
+	day_status = "ACTIVE"
+
+func apply_j03_choice(choice_id: String) -> bool:
+	if choice_id == "" or selected_choice_ids.has(choice_id):
+		return false
+	selected_choice_ids.append(choice_id)
+	match choice_id:
+		"choice_thu_raph_method_guided", "choice_j3_marie_evening_why_guided": pass
+		"choice_thu_raph_accountable": raphaelle_state = "PROFESSIONAL_ONLY"; raphaelle_work_outcome = "ACCOUNTABLE"
+		"choice_thu_raph_playful": raphaelle_state = "PROFESSIONAL_ONLY"; raphaelle_work_outcome = "DRY_HUMOR"
+		"choice_thu_raph_delay": raphaelle_state = "PROFESSIONAL_ONLY"; raphaelle_work_outcome = "DELAYED"
+		"choice_thu_sandra_day_saved": sandra_j03_echo_outcome = "RESPONDED"
+		"choice_j3_marie_return_active": marie_j03_return_outcome = "ACTIVE"
+		"choice_j3_marie_return_bounded": marie_j03_return_outcome = "BOUNDED"
+		"choice_j3_marie_return_drift": marie_j03_return_outcome = "DRIFT"
+		_:
+			selected_choice_ids.erase(choice_id)
+			return false
+	return true
+
+func establish_raphaelle_fact() -> bool:
+	if knowledge.has("fact_raphaelle_professional_relationship_exists"): return false
+	knowledge["fact_raphaelle_professional_relationship_exists"] = {
+		"fact_id": "fact_raphaelle_professional_relationship_exists", "source_type": "DIRECT_OBSERVATION",
+		"source_ref": "chapter_03_raphaelle_blue_folder", "certainty": "CONFIRMED", "initial_knowers": ["Player", "Raphaëlle"],
+	}
+	return true
+
+func set_sandra_j03_echo_outcome(value: String) -> bool:
+	if value not in ["UNAVAILABLE", "EXPIRED"] or sandra_j03_echo_outcome != "": return false
+	sandra_j03_echo_outcome = value
+	return true
+
+func establish_marie_j03_records() -> bool:
+	if traces.has("j03_marie_laverriere_setup_01"): return false
+	traces["j03_marie_laverriere_setup_01"] = {
+		"trace_id": "j03_marie_laverriere_setup_01", "trace_type": "FACT_RECORD", "source_day": "J03",
+		"source_scene": "vie professionnelle Marie établie", "creator": "none", "subjects": ["Marie"],
+		"owner": "état narratif La Verrière", "saving_rule": "NONE", "transfer_rule": "FORBIDDEN", "current_state": "ACTIVE",
+	}
+	knowledge["fact_marie_laverriere_world_exists"] = {
+		"fact_id": "fact_marie_laverriere_world_exists", "source_type": "DIRECT_OBSERVATION",
+		"source_ref": "j03_marie_laverriere_setup_01", "certainty": "CONFIRMED", "initial_knowers": ["Marie", "Player"],
+	}
+	return true
 
 func install_mathilde() -> bool:
 	if traces.has("j02_mathilde_arrival_room_01"):
@@ -208,12 +264,16 @@ func snapshot() -> Dictionary:
 		"foreground_history": foreground_history.duplicate(true),
 		"marie_make_room_outcome": marie_make_room_outcome,
 		"mathilde_welcome_outcome": mathilde_welcome_outcome,
+		"raphaelle_state": raphaelle_state,
+		"raphaelle_work_outcome": raphaelle_work_outcome,
+		"sandra_j03_echo_outcome": sandra_j03_echo_outcome,
+		"marie_j03_return_outcome": marie_j03_return_outcome,
 	}
 
 func restore_snapshot(value: Dictionary) -> bool:
 	if int(value.get("version", -1)) != SNAPSHOT_VERSION:
 		return false
-	if str(value.get("current_day", "")) not in ["J01", "J02"]:
+	if str(value.get("current_day", "")) not in ["J01", "J02", "J03"]:
 		return false
 	if str(value.get("day_status", "")) not in ["ACTIVE", "COMPLETE"]:
 		return false
@@ -221,6 +281,10 @@ func restore_snapshot(value: Dictionary) -> bool:
 		return false
 	if str(value.get("sandra_state", "")) not in ["DISTANT_FRIEND", "RECONNECTION_OPEN"]:
 		return false
+	if str(value.get("raphaelle_state", "")) not in ["UN" + "ESTAB" + "LISHED", "PROFESSIONAL_ONLY"]: return false
+	if str(value.get("raphaelle_work_outcome", "")) not in ["", "ACCOUNTABLE", "DRY_HUMOR", "DELAYED"]: return false
+	if str(value.get("sandra_j03_echo_outcome", "")) not in ["", "UNAVAILABLE", "EXPIRED", "RESPONDED"]: return false
+	if str(value.get("marie_j03_return_outcome", "")) not in ["", "ACTIVE", "BOUNDED", "DRIFT"]: return false
 	for key in ["promises", "traces", "knowledge"]:
 		if typeof(value.get(key)) != TYPE_DICTIONARY:
 			return false
@@ -239,4 +303,8 @@ func restore_snapshot(value: Dictionary) -> bool:
 	foreground_history.assign(value["foreground_history"])
 	marie_make_room_outcome = str(value.get("marie_make_room_outcome", ""))
 	mathilde_welcome_outcome = str(value.get("mathilde_welcome_outcome", ""))
+	raphaelle_state = str(value.get("raphaelle_state", "UN" + "ESTAB" + "LISHED"))
+	raphaelle_work_outcome = str(value.get("raphaelle_work_outcome", ""))
+	sandra_j03_echo_outcome = str(value.get("sandra_j03_echo_outcome", ""))
+	marie_j03_return_outcome = str(value.get("marie_j03_return_outcome", ""))
 	return true

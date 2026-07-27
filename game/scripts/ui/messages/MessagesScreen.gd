@@ -309,6 +309,15 @@ func finish_day_transition() -> void:
 	var focus_thread_id := updated_thread_id if updated_thread_id != "" else previous_thread_id
 	conversation_list.call_deferred("focus_thread", focus_thread_id)
 
+func finish_secondary_day_transition() -> void:
+	if not is_day_transition_active() or runtime_provider == null:
+		return
+	var result: Dictionary = runtime_provider.confirm_secondary_day_transition()
+	if not bool(result.get("accepted", false)):
+		return
+	day_transition_state = {"active": true, "runtime": true}
+	day_transition.configure_presentation(result.get("presentation", {}), PORTRAIT_THEME, _reduced_motion_enabled())
+
 func _finish_runtime_day_transition() -> void:
 	var result: Dictionary = runtime_provider.confirm_day_transition()
 	if not bool(result.get("accepted", false)):
@@ -557,6 +566,14 @@ func _finish_runtime_off_phone_transition() -> void:
 			_show_notification(unlocked_thread, str(notification.get("body", "")), "22:57")
 		conversation_list.call_deferred("focus_thread", unlocked_id)
 		return
+	if str(result.get("destination", "")) == "day_transition":
+		screen_mode = "day_transition"
+		conversation_screen.visible = false
+		conversation_list.visible = false
+		day_transition_state = {"active": true, "runtime": true}
+		_set_gallery_navigation_blocked(true)
+		day_transition.configure_presentation(result.get("presentation", {}), PORTRAIT_THEME, _reduced_motion_enabled())
+		return
 	_start_runtime_day_end(result.get("day_end", {}))
 
 func _start_runtime_day_end(presentation: Dictionary) -> void:
@@ -631,6 +648,7 @@ func _build() -> void:
 	day_transition.visible = false
 	day_transition.z_index = 6
 	day_transition.continue_requested.connect(finish_day_transition)
+	day_transition.secondary_requested.connect(finish_secondary_day_transition)
 	add_child(day_transition)
 	notification_banner = NOTIFICATION_BANNER_SCRIPT.new()
 	notification_banner.set_anchors_preset(Control.PRESET_TOP_WIDE)
@@ -864,7 +882,9 @@ func _refresh_runtime_gallery() -> void:
 		shell.gallery_screen.refresh_content_source(runtime_provider.gallery_source())
 
 func _off_phone_presentation_for(thread_id: String) -> Dictionary:
-	for message in _dictionary_array(transcripts.get(thread_id, [])):
+	var thread_transcript := _dictionary_array(transcripts.get(thread_id, []))
+	for index in range(thread_transcript.size() - 1, -1, -1):
+		var message: Dictionary = thread_transcript[index]
 		if str(message.get("content_type", "")) == "OFF_PHONE_TRANSITION":
 			return message
 	return {}

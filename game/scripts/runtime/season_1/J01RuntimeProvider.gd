@@ -169,10 +169,9 @@ func confirm_transition() -> Dictionary:
 func mark_photo_opened() -> bool:
 	return state.observe_sandra_photo()
 
-func snapshot() -> Dictionary:
+func progress_snapshot() -> Dictionary:
 	return {
 		"version": SNAPSHOT_VERSION,
-		"state": state.snapshot(),
 		"segment_index_by_thread": segment_index_by_thread.duplicate(true),
 		"pending_choice_ids_by_thread": pending_choice_ids_by_thread.duplicate(true),
 		"transcripts_by_thread": transcripts_by_thread.duplicate(true),
@@ -182,16 +181,17 @@ func snapshot() -> Dictionary:
 		"day_end_visible": day_end_visible,
 	}
 
-func restore_snapshot(value: Dictionary) -> bool:
+func snapshot() -> Dictionary:
+	var value := progress_snapshot()
+	value["state"] = state.snapshot()
+	return value
+
+func restore_progress_snapshot(value: Dictionary) -> bool:
 	if not initialized or int(value.get("version", -1)) != SNAPSHOT_VERSION:
 		return false
-	for key in ["state", "segment_index_by_thread", "pending_choice_ids_by_thread", "transcripts_by_thread", "produced_message_ids", "pending_transition"]:
-		if typeof(value.get(key)) != TYPE_DICTIONARY:
-			return false
-	if typeof(value.get("unlocked_thread_ids")) != TYPE_ARRAY:
-		return false
-	if not state.restore_snapshot(value["state"]):
-		return false
+	for key in ["segment_index_by_thread", "pending_choice_ids_by_thread", "transcripts_by_thread", "produced_message_ids", "pending_transition"]:
+		if typeof(value.get(key)) != TYPE_DICTIONARY: return false
+	if typeof(value.get("unlocked_thread_ids")) != TYPE_ARRAY: return false
 	segment_index_by_thread = value["segment_index_by_thread"].duplicate(true)
 	pending_choice_ids_by_thread = value["pending_choice_ids_by_thread"].duplicate(true)
 	transcripts_by_thread = value["transcripts_by_thread"].duplicate(true)
@@ -200,6 +200,11 @@ func restore_snapshot(value: Dictionary) -> bool:
 	pending_transition = value["pending_transition"].duplicate(true)
 	day_end_visible = bool(value.get("day_end_visible", false))
 	return true
+
+func restore_snapshot(value: Dictionary) -> bool:
+	if typeof(value.get("state")) != TYPE_DICTIONARY or not state.restore_snapshot(value["state"]):
+		return false
+	return restore_progress_snapshot(value)
 
 func _enter_current_segment(thread_id: String) -> void:
 	var segment := _current_segment(thread_id)

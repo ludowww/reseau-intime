@@ -1,0 +1,87 @@
+{
+  "conversation_paths": {
+    "chapter_03_raphaelle_blue_folder": "res://data/conversations/chapter_03_raphaelle_blue_folder.json",
+    "chapter_03_sandra_continuity": "res://data/conversations/chapter_03_sandra_continuity.json",
+    "chapter_03_marie_evening_return": "res://data/conversations/chapter_03_marie_evening_return.json"
+  },
+  "day_start": {
+    "eyebrow": "JEUDI — MATIN",
+    "title": "Les vies qui existent ailleurs",
+    "subtitle": "09:10",
+    "body": "Un dossier à corriger. Des vies qui continuent ailleurs.",
+    "action_label": "Commencer"
+  },
+  "raphaelle_offline": {
+    "message_id": "j03_raphaelle_garment_bag_beat",
+    "content_type": "OFF_PHONE_TRANSITION",
+    "text": "À la fin du point, Raphaëlle referme le dossier bleu, range son carnet et récupère une housse à vêtements fermée près de son poste.\nElle n’en fait pas un sujet. Player remarque seulement que sa journée ne s’arrête pas au dossier."
+  },
+  "sandra_offer": {
+    "eyebrow": "JEUDI — DÉBUT D’APRÈS-MIDI",
+    "title": "13:50",
+    "subtitle": "Sandra vient de terminer son poste du matin.",
+    "body": "Un message bref attend dans son fil. Rien n’oblige Player à le rouvrir.",
+    "action_label": "Ouvrir Sandra",
+    "secondary_action_label": "Continuer la journée"
+  },
+  "marie_time_card": {
+    "eyebrow": "JEUDI — FIN DE JOURNÉE",
+    "title": "18:20",
+    "subtitle": "",
+    "body": "Marie ramène la journée vers le foyer.",
+    "action_label": "Continuer"
+  },
+  "marie_offline": {
+    "ACTIVE": {
+      "message_id": "j3_shared_evening_active",
+      "text": "19:05 — Player rentre à l'heure avec quelque chose de croustillant pour sauver la soupe. Marie et Mathilde ont sorti trois bols pour deux personnes, puis prétendent toutes les deux que c'est normal. Ils mangent ensemble. Le téléphone reste posé."
+    },
+    "BOUNDED": {
+      "message_id": "j3_shared_evening_bounded",
+      "text": "19:35 — Player rentre à 19 h 30 comme annoncé. Marie a attendu avant de réchauffer la soupe. Mathilde a mangé un morceau de pain en prétendant que cela ne comptait pas. Le retard existe. La parole tenue aussi."
+    },
+    "DRIFT": {
+      "message_id": "j3_shared_evening_drift",
+      "text": "20:30 — Marie et Mathilde mangent sans attendre davantage. Quand Player rentre, la soupe est encore au frigo pour lui et les deux bols sont dans l'évier. Personne ne transforme cela en grande scène. La soirée a simplement continué sans lui."
+    }
+  },
+  "day_end": {
+    "eyebrow": "JEUDI — FIN DE JOURNÉE",
+    "title": "J03 terminé",
+    "subtitle": "Les vies qui existent ailleurs",
+    "body": "Fin temporaire de cette version jouable.",
+    "action_label": "Terminer"
+  },
+  "gallery_presentations": [
+    {
+      "asset_id": "S1_A1_J03_SCN_RAPHAELLE_ACCESSIBILITY_REVIEW_01",
+      "character_ids": ["raphaelle"],
+      "placeholder_label": "Visuel non produit",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false
+    },
+    {
+      "asset_id": "S1_A1_J03_SCN_RAPHAELLE_GARMENT_BAG_01",
+      "character_ids": ["raphaelle"],
+      "placeholder_label": "Visuel non produit",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false
+    },
+    {
+      "asset_id": "S1_A1_J03_SCN_MARIE_HOME_FROM_LAVERRIERE_01",
+      "character_ids": ["marie"],
+      "placeholder_label": "Visuel non produit",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false
+    }
+  ]
+}

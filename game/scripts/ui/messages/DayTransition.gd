@@ -3,15 +3,18 @@ extends PanelContainer
 class_name DayTransition
 
 signal continue_requested
+signal secondary_requested
 
 var PORTRAIT_THEME
 var continue_button: Button
+var secondary_button: Button
 var current_tween: Tween
 var title_text := "La journée se termine"
 var subtitle_text := ""
 var body_text := "Une nouvelle journée commence dans cette démonstration locale."
 var eyebrow_text := "NOUVELLE JOURNÉE"
 var action_label := "Continuer"
+var secondary_action_label := ""
 
 func configure_presentation(presentation: Dictionary, portrait_theme, reduced_motion: bool) -> void:
 	eyebrow_text = str(presentation.get("eyebrow", ""))
@@ -19,6 +22,7 @@ func configure_presentation(presentation: Dictionary, portrait_theme, reduced_mo
 	subtitle_text = str(presentation.get("subtitle", ""))
 	body_text = str(presentation.get("body", ""))
 	action_label = str(presentation.get("action_label", "Continuer"))
+	secondary_action_label = str(presentation.get("secondary_action_label", ""))
 	PORTRAIT_THEME = portrait_theme
 	_show(reduced_motion)
 
@@ -29,6 +33,7 @@ func configure(title: String, subtitle: String, body: String, portrait_theme, re
 	body_text = body
 	eyebrow_text = "NOUVELLE JOURNÉE"
 	action_label = "Continuer"
+	secondary_action_label = ""
 	_show(reduced_motion)
 
 func _show(reduced_motion: bool) -> void:
@@ -56,6 +61,7 @@ func reset_surface() -> void:
 	title_text = "La journée se termine"
 	subtitle_text = ""
 	body_text = ""
+	secondary_action_label = ""
 
 func animation_running() -> bool:
 	return current_tween != null and current_tween.is_running()
@@ -64,7 +70,7 @@ func action_has_focus() -> bool:
 	return continue_button != null and continue_button.has_focus()
 
 func action_count() -> int:
-	return find_children("ContinueDay", "Button", true, false).size()
+	return find_children("*", "Button", true, false).size()
 
 func action_height() -> float:
 	return continue_button.custom_minimum_size.y if continue_button != null else 0.0
@@ -150,6 +156,23 @@ func _build() -> void:
 	continue_button.add_theme_stylebox_override("focus", PORTRAIT_THEME.focus_style())
 	continue_button.pressed.connect(func(): continue_requested.emit())
 	column.add_child(continue_button)
+	secondary_button = null
+	if secondary_action_label != "":
+		secondary_button = Button.new()
+		secondary_button.name = "SecondaryDayAction"
+		secondary_button.text = secondary_action_label
+		secondary_button.tooltip_text = "Continuer sans ouvrir"
+		secondary_button.custom_minimum_size = Vector2(0, 48)
+		secondary_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		secondary_button.focus_mode = Control.FOCUS_ALL
+		secondary_button.add_theme_font_size_override("font_size", 18)
+		secondary_button.add_theme_color_override("font_color", PORTRAIT_THEME.TEXT_PRIMARY)
+		secondary_button.add_theme_stylebox_override("normal", PORTRAIT_THEME.button_style(Color(0.12, 0.12, 0.18), PORTRAIT_THEME.TEXT_MUTED, 16))
+		secondary_button.add_theme_stylebox_override("hover", PORTRAIT_THEME.button_style(Color(0.18, 0.16, 0.24), PORTRAIT_THEME.FOCUS, 16))
+		secondary_button.add_theme_stylebox_override("pressed", PORTRAIT_THEME.button_style(Color(0.09, 0.09, 0.14), PORTRAIT_THEME.TEXT_MUTED, 16))
+		secondary_button.add_theme_stylebox_override("focus", PORTRAIT_THEME.focus_style())
+		secondary_button.pressed.connect(func(): secondary_requested.emit())
+		column.add_child(secondary_button)
 
 func _label(value: String, font_size: int, color: Color) -> Label:
 	var label := Label.new()
