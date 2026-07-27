@@ -15,6 +15,16 @@ var body_text := "Une nouvelle journée commence dans cette démonstration local
 var eyebrow_text := "NOUVELLE JOURNÉE"
 var action_label := "Continuer"
 var secondary_action_label := ""
+var compact_height_mode := false
+var content_column: VBoxContainer
+
+func set_compact_height_mode(enabled: bool) -> void:
+	compact_height_mode = enabled
+	if content_column != null:
+		content_column.add_theme_constant_override("separation", 10 if enabled else 22)
+
+func surface_rect() -> Rect2:
+	return get_global_rect() if visible else Rect2()
 
 func configure_presentation(presentation: Dictionary, portrait_theme, reduced_motion: bool) -> void:
 	eyebrow_text = str(presentation.get("eyebrow", ""))
@@ -108,37 +118,36 @@ func _build() -> void:
 	center.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	add_child(center)
 
-	var column := VBoxContainer.new()
-	column.custom_minimum_size = Vector2(380, 0)
-	column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	column.add_theme_constant_override("separation", 22)
-	center.add_child(column)
+	content_column = VBoxContainer.new()
+	content_column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	content_column.add_theme_constant_override("separation", 10 if compact_height_mode else 22)
+	center.add_child(content_column)
 
 	var marker := HSeparator.new()
 	marker.name = "DayTransitionMarker"
 	marker.custom_minimum_size = Vector2(0, 2)
 	marker.add_theme_color_override("separator", PORTRAIT_THEME.FOCUS)
-	column.add_child(marker)
+	content_column.add_child(marker)
 
 	var eyebrow := _label(eyebrow_text, 14, PORTRAIT_THEME.TEXT_MUTED)
 	eyebrow.name = "DayTransitionEyebrow"
 	eyebrow.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	column.add_child(eyebrow)
+	content_column.add_child(eyebrow)
 
 	var title := _label(title_text, 30, PORTRAIT_THEME.TEXT_PRIMARY)
 	title.name = "DayTransitionTitle"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	column.add_child(title)
+	content_column.add_child(title)
 
 	var subtitle := _label(subtitle_text, 24, PORTRAIT_THEME.FOCUS)
 	subtitle.name = "DayTransitionSubtitle"
 	subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	column.add_child(subtitle)
+	content_column.add_child(subtitle)
 
 	var body := _label(body_text, 18, PORTRAIT_THEME.TEXT_SECONDARY)
 	body.name = "DayTransitionBody"
 	body.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	column.add_child(body)
+	content_column.add_child(body)
 
 	continue_button = Button.new()
 	continue_button.name = "ContinueDay"
@@ -155,7 +164,7 @@ func _build() -> void:
 	continue_button.add_theme_stylebox_override("pressed", PORTRAIT_THEME.button_style(Color(0.12, 0.09, 0.22), PORTRAIT_THEME.PLAYER_ACCENT, 16))
 	continue_button.add_theme_stylebox_override("focus", PORTRAIT_THEME.focus_style())
 	continue_button.pressed.connect(func(): continue_requested.emit())
-	column.add_child(continue_button)
+	content_column.add_child(continue_button)
 	secondary_button = null
 	if secondary_action_label != "":
 		secondary_button = Button.new()
@@ -172,7 +181,7 @@ func _build() -> void:
 		secondary_button.add_theme_stylebox_override("pressed", PORTRAIT_THEME.button_style(Color(0.09, 0.09, 0.14), PORTRAIT_THEME.TEXT_MUTED, 16))
 		secondary_button.add_theme_stylebox_override("focus", PORTRAIT_THEME.focus_style())
 		secondary_button.pressed.connect(func(): secondary_requested.emit())
-		column.add_child(secondary_button)
+		content_column.add_child(secondary_button)
 
 func _label(value: String, font_size: int, color: Color) -> Label:
 	var label := Label.new()

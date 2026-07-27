@@ -17,6 +17,7 @@ const READING_SPEED_TOOLTIPS := [
 	"Vitesse de lecture : rapide",
 	"Vitesse de lecture : très rapide",
 ]
+const READING_SPEED_MINIMUM_SIZE := Vector2(44, 44)
 
 @export_enum("demo", "runtime_s1") var content_mode := "demo"
 
@@ -29,6 +30,7 @@ var photo_viewer_state: Dictionary = {}
 var header_label: Label
 var header_subtitle: Label
 var mode_label: Label
+var content_panel: PanelContainer
 var messages_panel: PanelContainer
 var messages_screen
 var gallery_panel: PanelContainer
@@ -38,6 +40,8 @@ var gallery_button: Button
 var reading_speed_button: Button
 var reading_speed_multiplier := 1.0
 var reading_speed_index := 0
+var messages_surface_mode := "list"
+var compact_height_mode := false
 var reduced_motion_enabled := false
 var active_tab := TAG_MESSAGES
 var current_tween: Tween
@@ -67,10 +71,16 @@ func set_reduced_motion_enabled(enabled: bool) -> void:
 func set_safe_area_preset(preset: String) -> void:
 	if safe_area_container != null:
 		safe_area_container.set_test_safe_area_preset(preset)
+		call_deferred("_refresh_compact_height_mode")
 
 func set_safe_area_override(rect: Rect2i) -> void:
 	if safe_area_container != null:
 		safe_area_container.set_test_safe_area_override(rect)
+		call_deferred("_refresh_compact_height_mode")
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_RESIZED and is_inside_tree():
+		call_deferred("_refresh_compact_height_mode")
 
 func activate_messages(use_animation := true) -> void:
 	if is_photo_viewer_active():
@@ -106,7 +116,7 @@ func _on_bottom_nav_gui_input(event: InputEvent, source_tab: String) -> void:
 		accept_event()
 
 func describe_layout() -> Dictionary:
-	return {
+	var state := {
 		"active_tab": active_tab,
 		"messages_visible": messages_panel.visible,
 		"gallery_visible": gallery_panel.visible,
@@ -124,6 +134,10 @@ func describe_layout() -> Dictionary:
 		"viewport_size": Vector2i(int(round(get_viewport_rect().size.x)), int(round(get_viewport_rect().size.y))),
 		"shell_column_visible": shell_column.visible,
 		"header_visible": header_panel.visible and shell_column.visible,
+		"screen_mode": messages_surface_mode if active_tab == TAG_MESSAGES else "gallery",
+		"compact_height_mode": compact_height_mode,
+		"content_rect": content_panel.get_global_rect(),
+		"bottom_navigation_rect": bottom_navigation.get_global_rect(),
 		"bottom_navigation_visible": bottom_navigation.visible and shell_column.visible,
 		"photo_viewer_visible": is_photo_viewer_active(),
 		"photo_viewer_source": photo_viewer.source_kind() if is_photo_viewer_active() else "",
@@ -140,6 +154,10 @@ func describe_layout() -> Dictionary:
 		"photo_viewer_has_horizontal_crop": photo_viewer.has_horizontal_crop() if is_photo_viewer_active() else false,
 		"photo_viewer_has_vertical_crop": photo_viewer.has_vertical_crop() if is_photo_viewer_active() else false,
 	}
+	if messages_screen != null:
+		state.merge(messages_screen.describe_state(), true)
+	state["has_vertical_crop"] = _has_vertical_crop()
+	return state
 
 func _build_shell() -> void:
 	for child in get_children():
@@ -161,6 +179,7 @@ func _build_shell() -> void:
 	shell_column.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	shell_column.add_theme_constant_override("separation", 14)
 	safe_area_container.add_child(shell_column)
+	safe_area_container.safe_area_updated.connect(func(_padding): call_deferred("_refresh_compact_height_mode"))
 
 	header_panel = PanelContainer.new()
 	header_panel.name = "HeaderPanel"
@@ -179,13 +198,6 @@ func _build_shell() -> void:
 	header_box.add_child(title_row)
 	header_label = _make_label("Réseau Intime", 30, PORTRAIT_THEME.TEXT_PRIMARY)
 	title_row.add_child(header_label)
-	reading_speed_button = _make_button("×1", PORTRAIT_THEME.MESSAGE_ACCENT)
-	reading_speed_button.name = "ReadingSpeed"
-	reading_speed_button.toggle_mode = false
-	reading_speed_button.custom_minimum_size = Vector2(44, 44)
-	reading_speed_button.tooltip_text = READING_SPEED_TOOLTIPS[0]
-	reading_speed_button.pressed.connect(_cycle_reading_speed)
-	title_row.add_child(reading_speed_button)
 
 	header_subtitle = _make_label("Coque portrait additive — Messages / Galerie", 16, PORTRAIT_THEME.TEXT_SECONDARY)
 	header_subtitle.visible = content_mode == "demo"
@@ -195,17 +207,17 @@ func _build_shell() -> void:
 	mode_label.visible = content_mode == "demo"
 	header_box.add_child(mode_label)
 
-	var content := PanelContainer.new()
-	content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	content.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	content.add_theme_stylebox_override("panel", PORTRAIT_THEME.panel_style(PORTRAIT_THEME.SURFACE, 1, 22))
-	shell_column.add_child(content)
+	content_panel = PanelContainer.new()
+	content_panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	content_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	content_panel.add_theme_stylebox_override("panel", PORTRAIT_THEME.panel_style(PORTRAIT_THEME.SURFACE, 1, 22))
+	shell_column.add_child(content_panel)
 
 	var content_stack := Control.new()
 	content_stack.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	content_stack.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	content_stack.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	content.add_child(content_stack)
+	content_panel.add_child(content_stack)
 
 	if content_mode == "demo":
 		runtime_provider = null
@@ -251,7 +263,10 @@ func _build_shell() -> void:
 	photo_viewer.close_requested.connect(_close_photo_viewer)
 	photo_viewer.current_photo_changed.connect(_on_photo_viewer_current_photo_changed)
 	messages_screen.photo_requested.connect(_on_message_photo_requested)
+	messages_screen.screen_mode_changed.connect(_set_messages_surface_mode)
+	messages_screen.reading_speed_requested.connect(_cycle_reading_speed)
 	gallery_screen.photo_requested.connect(_on_gallery_photo_requested)
+	_refresh_compact_height_mode()
 
 func is_photo_viewer_active() -> bool:
 	return photo_viewer != null and photo_viewer.visible and not photo_viewer_state.is_empty()
@@ -392,7 +407,7 @@ func _build_gallery_panel() -> PanelContainer:
 
 func _set_active_tab(tab: String, use_animation := true) -> void:
 	active_tab = tab
-	reading_speed_button.visible = active_tab == TAG_MESSAGES
+	header_panel.visible = active_tab == TAG_GALLERY or messages_surface_mode == "list"
 	_refresh_nav_button_styles()
 	mode_label.text = "%s actif" % ("Messages" if active_tab == TAG_MESSAGES else "Galerie")
 	if active_tab == TAG_MESSAGES:
@@ -442,8 +457,52 @@ func _gallery_set_visible(value: bool) -> void:
 func _cycle_reading_speed() -> void:
 	reading_speed_index = (reading_speed_index + 1) % READING_SPEEDS.size()
 	reading_speed_multiplier = READING_SPEEDS[reading_speed_index]
-	reading_speed_button.text = READING_SPEED_LABELS[reading_speed_index]
-	reading_speed_button.tooltip_text = READING_SPEED_TOOLTIPS[reading_speed_index]
+	_sync_reading_speed_visual()
 	if messages_screen != null:
 		messages_screen.reading_speed_multiplier = reading_speed_multiplier
 		messages_screen.update_active_typing_speed()
+
+func _set_messages_surface_mode(mode: String) -> void:
+	if messages_surface_mode == mode:
+		_sync_reading_speed_visual()
+		return
+	messages_surface_mode = mode
+	header_panel.visible = active_tab == TAG_GALLERY or mode == "list"
+	_sync_reading_speed_visual()
+
+func _sync_reading_speed_visual() -> void:
+	reading_speed_button = null
+	if messages_screen == null or messages_screen.conversation_screen == null:
+		return
+	var conversation = messages_screen.conversation_screen
+	conversation.set_reading_speed_state(READING_SPEED_LABELS[reading_speed_index], READING_SPEED_TOOLTIPS[reading_speed_index])
+	reading_speed_button = conversation.reading_speed_button
+
+func _refresh_compact_height_mode() -> void:
+	if safe_area_container == null:
+		return
+	var enabled: bool = safe_area_container.get_visible_bounds().size.y < 900
+	if compact_height_mode == enabled:
+		return
+	compact_height_mode = enabled
+	shell_column.add_theme_constant_override("separation", 6 if enabled else 14)
+	if messages_screen != null:
+		messages_screen.set_compact_height_mode(enabled)
+
+func _has_vertical_crop() -> bool:
+	if safe_area_container == null or not shell_column.visible:
+		return false
+	var bounds := Rect2(safe_area_container.get_visible_bounds())
+	var required: Array[Rect2] = [bottom_navigation.get_global_rect(), content_panel.get_global_rect()]
+	if messages_surface_mode == "conversation" and messages_screen.conversation_screen != null:
+		required.append(messages_screen.conversation_screen.conversation_header.get_global_rect())
+		if messages_screen.conversation_screen.choice_bar.visible:
+			required.append(messages_screen.conversation_screen.choice_bar.get_global_rect())
+	elif messages_surface_mode == "off_phone" and messages_screen.off_phone_transition.visible:
+		required.append(messages_screen.off_phone_transition.surface_rect())
+	elif messages_surface_mode == "day_transition" and messages_screen.day_transition.visible:
+		required.append(messages_screen.day_transition.surface_rect())
+	for rect in required:
+		if rect.size != Vector2.ZERO and not bounds.encloses(rect):
+			return true
+	return false

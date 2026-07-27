@@ -67,10 +67,13 @@ class TUI02C1OffPhoneTransitionStaticTests(unittest.TestCase):
         surface = self._read("game/scripts/ui/messages/OffPhoneTransition.gd")
         for token in [
             "class_name OffPhoneTransition", 'resume_requested.emit()', 'text = "Reprendre le fil"',
-            "custom_minimum_size = Vector2(0, 48)", "card.custom_minimum_size = Vector2(420, 330)", "Control.FOCUS_ALL",
+            "custom_minimum_size = Vector2(0, 48)",
+            "card.custom_minimum_size = Vector2(0, 250 if compact_height_mode else 330)",
+            "Control.FOCUS_ALL",
             'add_theme_stylebox_override("focus"', "autowrap_mode", "grab_focus",
         ]:
             self.assertIn(token, surface)
+        self.assertNotIn("Vector2(420, 330)", surface)
         reduced = surface.split("if reduced_motion:", 1)[1].split("\telse:", 1)[0]
         self.assertNotIn("Tween", reduced)
         self.assertNotIn("Timer", reduced)

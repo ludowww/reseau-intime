@@ -85,7 +85,8 @@ class TUI02C2DayTransitionStaticTests(unittest.TestCase):
     def test_finish_returns_to_list_without_reopening_or_restoring_typing(self):
         screen = self._read("game/scripts/ui/messages/MessagesScreen.gd")
         finish = self._method(screen, "finish_day_transition")
-        self.assertIn('screen_mode = "list"', finish)
+        self.assertIn('_set_screen_mode("list")', finish)
+        self.assertNotIn('screen_mode = "list"', finish)
         self.assertIn("conversation_list.visible = true", finish)
         self.assertIn("conversation_screen.visible = false", finish)
         self.assertIn("typing_states_by_thread.erase", finish)

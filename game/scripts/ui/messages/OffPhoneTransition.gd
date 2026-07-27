@@ -8,6 +8,16 @@ var PORTRAIT_THEME
 var resume_button: Button
 var current_tween: Tween
 var display_label := ""
+var compact_height_mode := false
+var card: PanelContainer
+
+func set_compact_height_mode(enabled: bool) -> void:
+	compact_height_mode = enabled
+	if card != null:
+		card.custom_minimum_size = Vector2(0, 250 if enabled else 330)
+
+func surface_rect() -> Rect2:
+	return get_global_rect() if visible else Rect2()
 
 func configure(label: String, portrait_theme, reduced_motion: bool) -> void:
 	PORTRAIT_THEME = portrait_theme
@@ -73,15 +83,15 @@ func _build() -> void:
 	center.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	add_child(center)
 
-	var card := PanelContainer.new()
-	card.custom_minimum_size = Vector2(420, 330)
+	card = PanelContainer.new()
+	card.custom_minimum_size = Vector2(0, 250 if compact_height_mode else 330)
 	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	card.add_theme_stylebox_override("panel", PORTRAIT_THEME.panel_style(PORTRAIT_THEME.SURFACE_RAISED, 1, 24))
 	center.add_child(card)
 
 	var column := VBoxContainer.new()
 	column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	column.add_theme_constant_override("separation", 18)
+	column.add_theme_constant_override("separation", 10 if compact_height_mode else 18)
 	card.add_child(column)
 
 	var icon := _label("◌", 38, PORTRAIT_THEME.FOCUS)
@@ -96,13 +106,11 @@ func _build() -> void:
 
 	var body := _label(display_label, 19, PORTRAIT_THEME.TEXT_PRIMARY)
 	body.name = "OffPhoneLabel"
-	body.custom_minimum_size.x = 360.0
 	body.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	column.add_child(body)
 
 	var explanation := _label("La messagerie reste en pause pendant ce moment partagé.", 16, PORTRAIT_THEME.TEXT_SECONDARY)
 	explanation.name = "OffPhoneExplanation"
-	explanation.custom_minimum_size.x = 360.0
 	explanation.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	column.add_child(explanation)
 

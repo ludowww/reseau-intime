@@ -5,6 +5,7 @@ class_name PortraitConversationScreen
 signal back_requested
 signal choice_selected(choice: Dictionary)
 signal image_requested(message_id: String, media_ref: String)
+signal reading_speed_requested
 
 const TIMELINE_SCRIPT := preload("res://scripts/ui/messages/MessageTimeline.gd")
 const CHOICE_BAR_SCRIPT := preload("res://scripts/ui/messages/ChoiceBar.gd")
@@ -14,15 +15,41 @@ var thread: Dictionary = {}
 var characters: Dictionary = {}
 var timeline
 var choice_bar
+var conversation_header: PanelContainer
 var title_label: Label
+var narrative_time_label: Label
 var avatar_label: Label
 var back_button: Button
+var reading_speed_button: Button
+var compact_height_mode := false
+var reading_speed_label := "×1"
+var reading_speed_tooltip := ""
 
 func configure(thread_presentation: Dictionary, message_presentations: Array[Dictionary], choice_presentations: Array[Dictionary], character_presentations: Dictionary, portrait_theme, reading_position := -1, first_unread_message_id := "") -> void:
 	thread = thread_presentation
 	characters = character_presentations
 	PORTRAIT_THEME = portrait_theme
 	_build(message_presentations, choice_presentations, reading_position, first_unread_message_id)
+
+func set_reading_speed_state(label: String, tooltip: String) -> void:
+	reading_speed_label = label
+	reading_speed_tooltip = tooltip
+	if reading_speed_button != null:
+		reading_speed_button.text = reading_speed_label
+		reading_speed_button.tooltip_text = reading_speed_tooltip
+
+func set_narrative_time(value: String) -> void:
+	if narrative_time_label == null:
+		return
+	var valid := _is_valid_narrative_time(value)
+	narrative_time_label.text = value if valid else ""
+	narrative_time_label.visible = valid
+
+func set_compact_height_mode(enabled: bool) -> void:
+	compact_height_mode = enabled
+	add_theme_constant_override("separation", 6 if enabled else 10)
+	if conversation_header != null:
+		conversation_header.add_theme_stylebox_override("panel", PORTRAIT_THEME.panel_style(PORTRAIT_THEME.SURFACE_RAISED, 1, 12 if enabled else 18))
 
 func append_player_choice(choice: Dictionary) -> void:
 	timeline.append_player_choice(choice)
@@ -117,47 +144,84 @@ func describe_state() -> Dictionary:
 		"typing_accent_visible": timeline.typing_accent_visible(),
 		"typing_has_timestamp": timeline.typing_has_timestamp(),
 		"typing_last_item": timeline.typing_is_last_item(),
+		"conversation_header_visible": conversation_header != null and conversation_header.is_visible_in_tree(),
+		"reading_speed_visible": reading_speed_button != null and reading_speed_button.is_visible_in_tree(),
+		"reading_speed_label": reading_speed_button.text if reading_speed_button != null else reading_speed_label,
+		"narrative_time_visible": narrative_time_label != null and narrative_time_label.visible,
+		"narrative_time_text": narrative_time_label.text if narrative_time_label != null else "",
+		"conversation_header_rect": conversation_header.get_global_rect() if conversation_header != null else Rect2(),
+		"timeline_rect": timeline.get_global_rect() if timeline != null else Rect2(),
+		"choice_bar_rect": choice_bar.get_global_rect() if choice_bar != null and choice_bar.visible else Rect2(),
 		"has_horizontal_crop": timeline.has_horizontal_crop() or choice_bar.has_horizontal_crop(),
 	}
 
 func _build(message_presentations: Array[Dictionary], choice_presentations: Array[Dictionary], reading_position: int, first_unread_message_id: String) -> void:
 	for child in get_children():
+		remove_child(child)
 		child.queue_free()
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	size_flags_vertical = Control.SIZE_EXPAND_FILL
-	add_theme_constant_override("separation", 10)
-	var header := PanelContainer.new()
-	header.name = "ConversationHeader"
-	header.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	header.add_theme_stylebox_override("panel", PORTRAIT_THEME.panel_style(PORTRAIT_THEME.SURFACE_RAISED, 1, 18))
-	add_child(header)
+	add_theme_constant_override("separation", 6 if compact_height_mode else 10)
+	conversation_header = PanelContainer.new()
+	conversation_header.name = "ConversationHeader"
+	conversation_header.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	conversation_header.add_theme_stylebox_override("panel", PORTRAIT_THEME.panel_style(PORTRAIT_THEME.SURFACE_RAISED, 1, 12 if compact_height_mode else 18))
+	add_child(conversation_header)
 	var header_row := HBoxContainer.new()
-	header_row.add_theme_constant_override("separation", 10)
-	header.add_child(header_row)
+	header_row.name = "HeaderRow"
+	header_row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	header_row.add_theme_constant_override("separation", 8)
+	conversation_header.add_child(header_row)
 	back_button = Button.new()
 	back_button.name = "Back"
 	back_button.text = "←"
 	back_button.tooltip_text = "Retour aux conversations"
-	back_button.custom_minimum_size = Vector2(52, 52)
+	back_button.custom_minimum_size = Vector2(48, 48)
 	back_button.focus_mode = Control.FOCUS_ALL
 	back_button.add_theme_font_size_override("font_size", 22)
-	back_button.add_theme_stylebox_override("normal", PORTRAIT_THEME.button_style(Color(0.08, 0.10, 0.17), PORTRAIT_THEME.BORDER, 18))
+	back_button.add_theme_stylebox_override("normal", PORTRAIT_THEME.button_style(Color(0.08, 0.10, 0.17), PORTRAIT_THEME.BORDER, 16))
 	back_button.add_theme_stylebox_override("focus", PORTRAIT_THEME.focus_style())
 	back_button.pressed.connect(func(): back_requested.emit())
 	header_row.add_child(back_button)
 	var accent := Color.from_string(str(thread.get("accent_color", "#8D63E6")), PORTRAIT_THEME.PLAYER_ACCENT)
 	avatar_label = _label(str(thread.get("avatar_ref", "?")), 20, accent)
 	avatar_label.name = "Avatar"
-	avatar_label.custom_minimum_size = Vector2(46, 46)
+	avatar_label.custom_minimum_size = Vector2(48, 48)
 	avatar_label.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	avatar_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	avatar_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	avatar_label.add_theme_stylebox_override("normal", PORTRAIT_THEME.button_style(Color(0.06, 0.08, 0.14), accent, 23))
 	header_row.add_child(avatar_label)
+	var identity_column := VBoxContainer.new()
+	identity_column.name = "IdentityColumn"
+	identity_column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	identity_column.add_theme_constant_override("separation", 0)
+	header_row.add_child(identity_column)
 	title_label = _label(str(thread.get("title", "Conversation")), 23, PORTRAIT_THEME.TEXT_PRIMARY)
 	title_label.name = "ConversationName"
+	title_label.autowrap_mode = TextServer.AUTOWRAP_OFF
+	title_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	title_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	header_row.add_child(title_label)
+	identity_column.add_child(title_label)
+	narrative_time_label = _label("", 14, PORTRAIT_THEME.TEXT_SECONDARY)
+	narrative_time_label.name = "NarrativeTime"
+	narrative_time_label.visible = false
+	identity_column.add_child(narrative_time_label)
+	reading_speed_button = Button.new()
+	reading_speed_button.name = "ReadingSpeed"
+	reading_speed_button.text = reading_speed_label
+	reading_speed_button.tooltip_text = reading_speed_tooltip
+	reading_speed_button.custom_minimum_size = Vector2(44, 44)
+	reading_speed_button.focus_mode = Control.FOCUS_ALL
+	reading_speed_button.size_flags_horizontal = Control.SIZE_SHRINK_END
+	reading_speed_button.add_theme_font_size_override("font_size", 17)
+	reading_speed_button.add_theme_color_override("font_color", PORTRAIT_THEME.TEXT_PRIMARY)
+	reading_speed_button.add_theme_stylebox_override("normal", PORTRAIT_THEME.button_style(Color(0.09, 0.11, 0.18), PORTRAIT_THEME.MESSAGE_ACCENT, 16))
+	reading_speed_button.add_theme_stylebox_override("hover", PORTRAIT_THEME.button_style(Color(0.13, 0.16, 0.24), PORTRAIT_THEME.MESSAGE_ACCENT, 16))
+	reading_speed_button.add_theme_stylebox_override("pressed", PORTRAIT_THEME.button_style(Color(0.17, 0.20, 0.30), PORTRAIT_THEME.MESSAGE_ACCENT, 16))
+	reading_speed_button.add_theme_stylebox_override("focus", PORTRAIT_THEME.focus_style())
+	reading_speed_button.pressed.connect(func(): reading_speed_requested.emit())
+	header_row.add_child(reading_speed_button)
 	timeline = TIMELINE_SCRIPT.new()
 	timeline.name = "MessageTimeline"
 	add_child(timeline)
@@ -168,6 +232,15 @@ func _build(message_presentations: Array[Dictionary], choice_presentations: Arra
 	add_child(choice_bar)
 	choice_bar.choice_selected.connect(func(choice: Dictionary): choice_selected.emit(choice))
 	choice_bar.configure(choice_presentations, PORTRAIT_THEME)
+
+func _is_valid_narrative_time(value: String) -> bool:
+	if value.length() != 5 or value[2] != ":":
+		return false
+	if not value.substr(0, 2).is_valid_int() or not value.substr(3, 2).is_valid_int():
+		return false
+	var hour := int(value.substr(0, 2))
+	var minute := int(value.substr(3, 2))
+	return hour >= 0 and hour <= 23 and minute >= 0 and minute <= 59
 
 func _label(value: String, font_size: int, color: Color) -> Label:
 	var label := Label.new()
