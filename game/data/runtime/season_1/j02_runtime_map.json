@@ -4,14 +4,19 @@
     "chapter_02_marie_arrival_trace": "res://data/conversations/chapter_02_marie_arrival_trace.json",
     "chapter_02_mathilde_arrival": "res://data/conversations/chapter_02_mathilde_arrival.json"
   },
-  "excluded_message_ids": ["msg_wed_marie_arrival_002"],
-  "excluded_segment_ids": ["segment_wednesday_mathilde_photo_defense"],
+  "excluded_message_ids": [
+    "msg_wed_marie_arrival_002"
+  ],
+  "excluded_segment_ids": [
+    "segment_wednesday_mathilde_photo_defense"
+  ],
   "day_start": {
     "eyebrow": "MERCREDI — MIDI",
     "title": "Faire de la place",
     "subtitle": "12:10",
     "body": "Mathilde doit quitter temporairement son appartement. Marie et Player font de la place avant son arrivée.",
-    "action_label": "Commencer"
+    "action_label": "Commencer",
+    "transition_mode": "day_boundary"
   },
   "phase_transitions": {
     "18:18": {
@@ -19,14 +24,21 @@
       "title": "18:18",
       "subtitle": "",
       "body": "",
-      "action_label": "Continuer"
+      "action_label": "Continuer",
+      "transition_mode": "clock_only",
+      "to_time": "18:18",
+      "duration_seconds": 4.0
     },
     "18:22": {
       "eyebrow": "MERCREDI — SOIR",
       "title": "18:22",
       "subtitle": "",
       "body": "",
-      "action_label": "Continuer"
+      "action_label": "Continuer",
+      "transition_mode": "clock_only",
+      "from_time": "18:18",
+      "to_time": "18:22",
+      "duration_seconds": 4.0
     }
   },
   "day_end": {
@@ -34,12 +46,15 @@
     "title": "J02 terminé",
     "subtitle": "La chambre qui change le foyer",
     "body": "Fin temporaire de cette version jouable.",
-    "action_label": "Terminer"
+    "action_label": "Terminer",
+    "transition_mode": "day_boundary"
   },
   "gallery_presentations": [
     {
       "asset_id": "S1_A1_J02_SCN_MATHILDE_FIRST_INSTALLED_VIEW_01",
-      "character_ids": ["mathilde"],
+      "character_ids": [
+        "mathilde"
+      ],
       "placeholder_label": "Visuel non produit",
       "source_kind": "gallery",
       "content_type": "SCENE_IMAGE",
@@ -49,7 +64,9 @@
     },
     {
       "asset_id": "S1_A1_J02_SCN_MARIE_HOLDS_HOUSEHOLD_01",
-      "character_ids": ["marie"],
+      "character_ids": [
+        "marie"
+      ],
       "placeholder_label": "Visuel non produit",
       "source_kind": "gallery",
       "content_type": "SCENE_IMAGE",
@@ -59,7 +76,10 @@
     },
     {
       "asset_id": "S1_A1_J02_SCN_FIRST_SHARED_EVENING_01",
-      "character_ids": ["marie", "mathilde"],
+      "character_ids": [
+        "marie",
+        "mathilde"
+      ],
       "placeholder_label": "Visuel non produit",
       "source_kind": "gallery",
       "content_type": "SCENE_IMAGE",
@@ -67,5 +87,6 @@
       "transfer_rule": "FORBIDDEN",
       "is_diegetic": false
     }
-  ]
+  ],
+  "initial_time": "12:10"
 }

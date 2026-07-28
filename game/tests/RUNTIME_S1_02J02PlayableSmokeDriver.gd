@@ -35,18 +35,16 @@ func _run() -> void:
 	await _choose(messages, "choice_wed_marie_emergency_guided")
 	_expect(messages.thread_choice_count("thread_marie_private") == 3, "Marie exact three choices unavailable")
 	await _choose_twice(messages, "choice_wed_make_room_proactive")
-	await _frames(2)
-	_expect(messages.day_transition.display_title() == "18:18", "18:18 transition missing")
-	messages.day_transition.continue_button.emit_signal("pressed")
-	await _wait_runtime_delivery_complete(messages)
+	_expect(not messages.day_transition.visible, "18:18 clock_only must not show DayTransition")
+	_expect(provider.current_narrative_time_minutes() >= 1098, "18:18 clock_only target missing")
 	await _frames(2)
 	_expect(messages.screen_mode == "conversation" and messages.active_thread_id == "thread_marie_private", "18:18 must remain in Marie")
 	_expect(messages.presentation_count_by_id("msg_wed_marie_arrival_002") == 0, "removed photo message present")
 	_expect(messages.presentation_count_by_content_type("thread_marie_private", "IMAGE") == 0, "J02 Marie image present")
 	messages.conversation_screen.back_button.emit_signal("pressed")
-	await _frames(2)
-	_expect(messages.day_transition.display_title() == "18:22", "18:22 transition missing after read/return")
-	messages.day_transition.continue_button.emit_signal("pressed")
+	await _wait_clock_transition(messages)
+	_expect(not messages.day_transition.visible, "18:22 clock_only must not show DayTransition")
+	_expect(provider.current_narrative_time_text() == "18:22", "18:22 clock_only target missing after read/return")
 	await _frames(2)
 	_expect(not messages._thread_for("thread_mathilde_private").is_empty(), "Mathilde did not unlock")
 	_expect(not messages.notification_banner.visible, "photo notification forbidden")
@@ -123,15 +121,13 @@ func _run_ui_outcome(marie_choice: String, mathilde_choice: String, expected_sta
 	await _choose(messages, "choice_wed_marie_emergency_guided")
 	_expect(_choice_text(messages, marie_choice) == _expected_choice_text(marie_choice), "Marie source choice text mismatch: %s" % marie_choice)
 	await _choose(messages, marie_choice)
-	await _frames(2)
 	_expect(_branch_response_present(messages, marie_choice), "Marie branch response mismatch: %s" % marie_choice)
-	messages.day_transition.continue_button.emit_signal("pressed")
-	await _wait_runtime_delivery_complete(messages)
+	_expect(not messages.day_transition.visible and provider.current_narrative_time_minutes() >= 1098, "18:18 clock_only alternate branch mismatch")
 	await _frames(2)
 	_expect(not messages.runtime_delivery_active and messages.screen_mode == "conversation" and messages.active_thread_id == "thread_marie_private", "18:18 Marie arrival must settle before return")
 	messages.conversation_screen.back_button.emit_signal("pressed")
-	await _frames(2)
-	messages.day_transition.continue_button.emit_signal("pressed")
+	await _wait_clock_transition(messages)
+	_expect(not messages.day_transition.visible and provider.current_narrative_time_text() == "18:22", "18:22 clock_only alternate branch mismatch")
 	await _frames(2)
 	await _open(messages, "thread_mathilde_private")
 	_expect(_choice_text(messages, mathilde_choice) == _expected_choice_text(mathilde_choice), "Mathilde source choice text mismatch: %s" % mathilde_choice)
@@ -283,6 +279,14 @@ func _wait_runtime_delivery_complete(messages) -> void:
 		await get_tree().create_timer(0.01).timeout
 	print("DELIVERY TIMEOUT state=", messages.runtime_delivery_active, " thread=", messages.runtime_delivery_thread_id, " active=", messages.active_thread_id, " queue=", messages.runtime_delivery_queue.size(), " typing=", messages.conversation_screen.typing_visible(), " visual=", messages.thread_message_count(messages.active_thread_id), " provider=", messages.runtime_provider.presentation_source().get("messages_by_thread", {}).get(messages.active_thread_id, []).size())
 	_expect(false, "runtime delivery timed out")
+
+func _wait_clock_transition(messages) -> void:
+	await get_tree().process_frame
+	for _index in range(600):
+		if not messages.narrative_clock_animation_active:
+			return
+		await get_tree().create_timer(0.01).timeout
+	_expect(false, "narrative clock transition timed out")
 
 func _open(messages, id: String) -> void:
 	for index in range(messages.conversation_list.threads.size()):

@@ -65,16 +65,13 @@ func _run() -> void:
 	_assert_segment(provider, messages, "thread_marie_private", marie_before_j02, "J02 Marie start mandatory initial/segment typing exactly once")
 	_expect(shell.reading_speed_multiplier == 3.0, "speed must persist between threads and days")
 	await _choose(messages, "choice_wed_marie_emergency_guided")
-	await _choose(messages, "choice_wed_make_room_proactive")
-	await _frames(2)
 	var marie_before_1818 := _provider_ids(provider, "thread_marie_private")
-	messages.day_transition.continue_button.emit_signal("pressed")
-	await _wait_delivery(messages)
+	await _choose(messages, "choice_wed_make_room_proactive")
+	_expect(not messages.day_transition.visible and provider.current_narrative_time_minutes() >= 1098, "J02 18:18 clock_only")
 	_assert_segment(provider, messages, "thread_marie_private", marie_before_1818, "J02 Marie 18:18 mandatory initial/segment typing exactly once")
 	messages.conversation_screen.back_button.emit_signal("pressed")
-	await _frames(2)
-	messages.day_transition.continue_button.emit_signal("pressed")
-	await _frames(2)
+	await _wait_clock_transition(messages)
+	_expect(not messages.day_transition.visible and provider.current_narrative_time_text() == "18:22", "J02 18:22 clock_only")
 	var mathilde_before: Array = []
 	await _open(messages, "thread_mathilde_private")
 	_assert_segment(provider, messages, "thread_mathilde_private", mathilde_before, "J02 Mathilde mandatory initial/segment typing exactly once")
@@ -95,7 +92,7 @@ func _run() -> void:
 	await _choose(messages, "choice_thu_raph_accountable")
 	await _frames(2)
 	messages.off_phone_transition.resume_button.emit_signal("pressed")
-	await _frames(2)
+	await _wait_clock_transition(messages)
 	var sandra_before_j03 := _provider_ids(provider, "thread_sandra_private")
 	messages.day_transition.continue_button.emit_signal("pressed")
 	await _wait_delivery(messages)
@@ -161,6 +158,9 @@ func _assert_relative_timings(messages) -> void:
 
 func _assert_speed_button_layout_and_focus(shell) -> void:
 	var button: Button = shell.reading_speed_button
+	if button == null:
+		_expect(shell.messages_surface_mode == "list", "speed button absent only on list")
+		return
 	var header_rect: Rect2 = shell.header_panel.get_global_rect()
 	var button_rect: Rect2 = button.get_global_rect()
 	button.grab_focus()
@@ -280,6 +280,13 @@ func _wait_delivery(messages) -> void:
 			return
 		await get_tree().process_frame
 	_expect(false, "delivery timed out")
+
+func _wait_clock_transition(messages) -> void:
+	await get_tree().process_frame
+	for _index in range(600):
+		if not messages.narrative_clock_animation_active: return
+		await get_tree().process_frame
+	_expect(false, "narrative clock transition timed out")
 
 func _frames(count: int) -> void:
 	for _index in range(count): await get_tree().process_frame

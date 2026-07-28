@@ -35,7 +35,9 @@ class RuntimeS102J02PlayableStaticTests(unittest.TestCase):
 
     def test_exact_transition_cards_and_gallery_contract(self):
         data = json.loads(self.read("game/data/runtime/season_1/j02_runtime_map.json"))
-        self.assertEqual(data["day_start"], {
+        day_start = data["day_start"].copy()
+        self.assertEqual(day_start.pop("transition_mode", None), "day_boundary")
+        self.assertEqual(day_start, {
             "eyebrow": "MERCREDI — MIDI", "title": "Faire de la place", "subtitle": "12:10",
             "body": "Mathilde doit quitter temporairement son appartement. Marie et Player font de la place avant son arrivée.",
             "action_label": "Commencer",

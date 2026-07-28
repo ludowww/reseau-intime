@@ -7,7 +7,9 @@
     "chapter_01_marie_opening": "thread_marie_private",
     "chapter_01_sandra_trace": "thread_sandra_private"
   },
-  "initial_unlocked_threads": ["thread_marie_private"],
+  "initial_unlocked_threads": [
+    "thread_marie_private"
+  ],
   "sandra_image": {
     "message_id": "j01_sandra_lunch_memory_soft",
     "after_message_id": "msg_j1_sandra_trace_004",
@@ -26,12 +28,14 @@
       "message_id": "j01_transition_shared_evening",
       "present": "Player rentre avec le pain.\nLe dîner et la marche se déroulent hors téléphone.",
       "delayed": "Player arrive plus tard, avec le pain.\nLe dîner et la marche se déroulent hors téléphone.",
-      "action_label": "Continuer"
+      "action_label": "Continuer",
+      "transition_mode": "offline"
     },
     "sandra": {
       "message_id": "j01_transition_final_return",
       "text": "Player pose le téléphone et revient vers Marie.\nLa fin de soirée se déroule hors écran.",
-      "action_label": "Continuer"
+      "action_label": "Continuer",
+      "transition_mode": "offline"
     }
   },
   "sandra_notification": {
@@ -43,6 +47,8 @@
     "title": "J01 terminé",
     "subtitle": "Les choses qu'on remarque",
     "body": "Fin temporaire de cette version jouable.",
-    "action_label": "Terminer"
-  }
+    "action_label": "Terminer",
+    "transition_mode": "day_boundary"
+  },
+  "initial_time": "18:12"
 }

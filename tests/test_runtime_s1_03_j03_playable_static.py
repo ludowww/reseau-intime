@@ -26,7 +26,9 @@ class RuntimeS103J03PlayableStaticTests(unittest.TestCase):
             "chapter_03_sandra_continuity": "res://data/conversations/chapter_03_sandra_continuity.json",
             "chapter_03_marie_evening_return": "res://data/conversations/chapter_03_marie_evening_return.json",
         })
-        self.assertEqual(data["day_start"], {
+        day_start = data["day_start"].copy()
+        self.assertEqual(day_start.pop("transition_mode", None), "day_boundary")
+        self.assertEqual(day_start, {
             "eyebrow": "JEUDI — MATIN", "title": "Les vies qui existent ailleurs", "subtitle": "09:10",
             "body": "Un dossier à corriger. Des vies qui continuent ailleurs.", "action_label": "Commencer",
         })

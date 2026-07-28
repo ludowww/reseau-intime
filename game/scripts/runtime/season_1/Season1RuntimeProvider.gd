@@ -30,6 +30,10 @@ func initialize() -> bool:
 	return true
 
 func presentation_source() -> Dictionary: return active_provider.presentation_source()
+func current_narrative_time_minutes() -> int: return active_provider.current_narrative_time_minutes()
+func current_narrative_time_text() -> String: return active_provider.current_narrative_time_text()
+func mark_message_presented(message_id: String) -> bool: return active_provider.mark_message_presented(message_id)
+func commit_narrative_time(minutes: int) -> bool: return active_provider.commit_narrative_time(minutes)
 func gallery_source() -> Dictionary: return active_provider.gallery_source()
 func apply_choice(thread_id: String, choice_id: String) -> Dictionary: return active_provider.apply_choice(thread_id, choice_id)
 func confirm_transition() -> Dictionary: return active_provider.confirm_transition()

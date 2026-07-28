@@ -3,6 +3,7 @@ extends RefCounted
 class_name J03RuntimeProvider
 
 const RUNTIME_MAP_PATH := "res://data/runtime/season_1/j03_runtime_map.json"
+const NARRATIVE_TIME := preload("res://scripts/runtime/season_1/NarrativeTime.gd")
 const SNAPSHOT_VERSION := 1
 
 var state
@@ -17,11 +18,16 @@ var pending_transition: Dictionary = {}
 var phase := "day_start_pending"
 var gallery_asset_ids: Array[String] = []
 var initialized := false
+var current_time_minutes := -1
+var presented_time_message_ids: Dictionary = {}
 
 func initialize(shared_state, cumulative_transcripts: Dictionary, cumulative_ids: Dictionary, cumulative_threads: Array, cumulative_gallery_ids: Array) -> bool:
 	state = shared_state
 	runtime_map = DataLoader.load_json(RUNTIME_MAP_PATH)
 	if state == null or runtime_map.is_empty(): return false
+	current_time_minutes = NARRATIVE_TIME.parse_narrative_time(str(runtime_map.get("initial_time", "")))
+	if current_time_minutes < 0: return false
+	presented_time_message_ids = {}
 	for conversation_id in runtime_map.get("conversation_paths", {}):
 		var value: Dictionary = DataLoader.load_json(str(runtime_map["conversation_paths"][conversation_id]))
 		if value.is_empty(): return false
@@ -51,7 +57,25 @@ func presentation_source() -> Dictionary:
 			"player": _character("player", "Player", "#8D63E6", ""),
 		},
 		"threads": threads, "messages_by_thread": transcripts, "choices_by_thread": choices,
+		"narrative_time": current_narrative_time_text(), "narrative_time_minutes": current_time_minutes,
 	}
+
+func current_narrative_time_minutes() -> int: return current_time_minutes
+func current_narrative_time_text() -> String: return NARRATIVE_TIME.format_narrative_time(current_time_minutes)
+func mark_message_presented(message_id: String) -> bool:
+	if message_id == "" or presented_time_message_ids.has(message_id): return false
+	var timestamp := ""
+	for thread_id in transcripts_by_thread:
+		for message in transcripts_by_thread[thread_id]:
+			if str(message.get("message_id", "")) == message_id: timestamp = str(message.get("timestamp", "")); break
+		if timestamp != "": break
+	presented_time_message_ids[message_id] = true
+	var candidate := NARRATIVE_TIME.parse_narrative_time(timestamp)
+	if candidate < current_time_minutes: return false
+	current_time_minutes = candidate; return candidate >= 0
+func commit_narrative_time(minutes: int) -> bool:
+	if minutes < current_time_minutes or NARRATIVE_TIME.format_narrative_time(minutes) == "": return false
+	current_time_minutes = minutes; return true
 
 func gallery_source() -> Dictionary:
 	var fixtures := {
@@ -113,7 +137,7 @@ func apply_choice(thread_id: String, choice_id: String) -> Dictionary:
 	elif thread_id == "thread_sandra_private":
 		state.complete_conversation("chapter_03_sandra_continuity", "sandra")
 		phase = "marie_time_card"
-		pending_transition = {"kind": "day_transition", "presentation": runtime_map["marie_time_card"].duplicate(true)}
+		pending_transition = _clock_transition(runtime_map["marie_time_card"])
 	else:
 		phase = "marie_offline"
 		var offline: Dictionary = runtime_map["marie_offline"].get(state.marie_j03_return_outcome, {})
@@ -141,8 +165,8 @@ func confirm_secondary_day_transition() -> Dictionary:
 	if phase != "sandra_offer" or str(pending_transition.get("kind", "")) != "day_transition": return {"accepted": false}
 	state.set_sandra_j03_echo_outcome("EXPIRED")
 	phase = "marie_time_card"
-	pending_transition = {"kind": "day_transition", "presentation": runtime_map["marie_time_card"].duplicate(true)}
-	return {"accepted": true, "destination": "day_transition", "presentation": pending_transition["presentation"]}
+	pending_transition = _clock_transition(runtime_map["marie_time_card"])
+	return {"accepted": true, "destination": "day_transition", "presentation": pending_transition["presentation"], "transition": pending_transition.duplicate(true)}
 
 func confirm_transition() -> Dictionary:
 	if str(pending_transition.get("kind", "")) != "offline": return {"accepted": false}
@@ -152,12 +176,12 @@ func confirm_transition() -> Dictionary:
 		_unlock_gallery_for("raphaelle")
 		if _sandra_available():
 			phase = "sandra_offer"
-			pending_transition = {"kind": "day_transition", "presentation": runtime_map["sandra_offer"].duplicate(true)}
+			pending_transition = _clock_transition(runtime_map["sandra_offer"])
 		else:
 			state.set_sandra_j03_echo_outcome("UNAVAILABLE")
 			phase = "marie_time_card"
-			pending_transition = {"kind": "day_transition", "presentation": runtime_map["marie_time_card"].duplicate(true)}
-		return {"accepted": true, "destination": "day_transition", "presentation": pending_transition["presentation"]}
+			pending_transition = _clock_transition(runtime_map["marie_time_card"])
+		return {"accepted": true, "destination": "day_transition", "presentation": pending_transition["presentation"], "transition": pending_transition.duplicate(true)}
 	if phase == "marie_offline":
 		state.complete_conversation("chapter_03_marie_evening_return", "marie")
 		state.establish_marie_j03_records()
@@ -171,12 +195,12 @@ func confirm_transition() -> Dictionary:
 func on_thread_returned(_thread_id: String) -> Dictionary: return {}
 
 func snapshot() -> Dictionary:
-	return {"version": SNAPSHOT_VERSION, "phase": phase, "transcripts_by_thread": transcripts_by_thread.duplicate(true), "produced_message_ids": produced_message_ids.duplicate(true), "unlocked_thread_ids": unlocked_thread_ids.duplicate(), "segment_index_by_thread": segment_index_by_thread.duplicate(true), "pending_choice_ids_by_thread": pending_choice_ids_by_thread.duplicate(true), "pending_transition": pending_transition.duplicate(true), "gallery_asset_ids": gallery_asset_ids.duplicate()}
+	return {"version": SNAPSHOT_VERSION, "phase": phase, "transcripts_by_thread": transcripts_by_thread.duplicate(true), "produced_message_ids": produced_message_ids.duplicate(true), "unlocked_thread_ids": unlocked_thread_ids.duplicate(), "segment_index_by_thread": segment_index_by_thread.duplicate(true), "pending_choice_ids_by_thread": pending_choice_ids_by_thread.duplicate(true), "pending_transition": pending_transition.duplicate(true), "gallery_asset_ids": gallery_asset_ids.duplicate(), "current_time_minutes": current_time_minutes, "presented_time_message_ids": presented_time_message_ids.duplicate(true)}
 func restore_snapshot(value: Dictionary) -> bool:
 	if int(value.get("version", -1)) != SNAPSHOT_VERSION: return false
 	var restored_phase := str(value.get("phase", ""))
 	if restored_phase not in ["day_start_pending", "raphaelle_work", "raphaelle_offline", "sandra_offer", "sandra_echo", "marie_time_card", "marie_return", "marie_offline", "complete"]: return false
-	for key in ["transcripts_by_thread", "produced_message_ids", "segment_index_by_thread", "pending_choice_ids_by_thread", "pending_transition"]:
+	for key in ["transcripts_by_thread", "produced_message_ids", "segment_index_by_thread", "pending_choice_ids_by_thread", "pending_transition", "presented_time_message_ids"]:
 		if typeof(value.get(key)) != TYPE_DICTIONARY: return false
 	for key in ["unlocked_thread_ids", "gallery_asset_ids"]:
 		if typeof(value.get(key)) != TYPE_ARRAY: return false
@@ -184,7 +208,12 @@ func restore_snapshot(value: Dictionary) -> bool:
 	phase = restored_phase; transcripts_by_thread = value["transcripts_by_thread"].duplicate(true); produced_message_ids = value["produced_message_ids"].duplicate(true)
 	unlocked_thread_ids.assign(value["unlocked_thread_ids"]); segment_index_by_thread = value["segment_index_by_thread"].duplicate(true); pending_choice_ids_by_thread = value["pending_choice_ids_by_thread"].duplicate(true)
 	pending_transition = value["pending_transition"].duplicate(true); gallery_asset_ids.assign(value["gallery_asset_ids"])
+	var restored_time := int(value.get("current_time_minutes", -1)); if NARRATIVE_TIME.format_narrative_time(restored_time) == "": return false
+	current_time_minutes = restored_time; presented_time_message_ids = value["presented_time_message_ids"].duplicate(true)
 	return true
+
+func _clock_transition(presentation: Dictionary) -> Dictionary:
+	return {"kind": "day_transition", "transition_mode": str(presentation.get("transition_mode", "")), "from_time": current_narrative_time_text(), "to_time": str(presentation.get("to_time", "")), "duration_seconds": float(presentation.get("duration_seconds", 4.0)), "presentation": presentation.duplicate(true)}
 
 func _restored_phase_is_consistent(restored_phase: String, transition: Dictionary) -> bool:
 	var transition_kind := str(transition.get("kind", ""))

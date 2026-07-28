@@ -3,6 +3,7 @@ extends RefCounted
 class_name J01RuntimeProvider
 
 const STATE_SCRIPT := preload("res://scripts/runtime/season_1/Season1State.gd")
+const NARRATIVE_TIME := preload("res://scripts/runtime/season_1/NarrativeTime.gd")
 const RUNTIME_MAP_PATH := "res://data/runtime/season_1/j01_runtime_map.json"
 const SNAPSHOT_VERSION := 1
 
@@ -17,12 +18,18 @@ var unlocked_thread_ids: Array[String] = []
 var pending_transition: Dictionary = {}
 var day_end_visible := false
 var initialized := false
+var current_time_minutes := -1
+var presented_time_message_ids: Dictionary = {}
 
 func initialize(shared_state = null) -> bool:
 	state = shared_state if shared_state != null else STATE_SCRIPT.new()
 	runtime_map = DataLoader.load_json(RUNTIME_MAP_PATH)
 	if runtime_map.is_empty():
 		return false
+	current_time_minutes = NARRATIVE_TIME.parse_narrative_time(str(runtime_map.get("initial_time", "")))
+	if current_time_minutes < 0:
+		return false
+	presented_time_message_ids = {}
 	conversations.clear()
 	for conversation_id in runtime_map.get("conversation_paths", {}):
 		var conversation: Dictionary = DataLoader.load_json(str(runtime_map["conversation_paths"][conversation_id]))
@@ -64,7 +71,36 @@ func presentation_source() -> Dictionary:
 		"threads": source_threads,
 		"messages_by_thread": source_transcripts,
 		"choices_by_thread": source_choices,
+		"narrative_time": current_narrative_time_text(),
+		"narrative_time_minutes": current_time_minutes,
 	}
+
+func current_narrative_time_minutes() -> int:
+	return current_time_minutes
+
+func current_narrative_time_text() -> String:
+	return NARRATIVE_TIME.format_narrative_time(current_time_minutes)
+
+func mark_message_presented(message_id: String) -> bool:
+	if message_id == "" or presented_time_message_ids.has(message_id):
+		return false
+	var timestamp := ""
+	for thread_id in transcripts_by_thread:
+		for message in transcripts_by_thread[thread_id]:
+			if str(message.get("message_id", "")) == message_id:
+				timestamp = str(message.get("timestamp", ""))
+				break
+		if timestamp != "": break
+	presented_time_message_ids[message_id] = true
+	var candidate := NARRATIVE_TIME.parse_narrative_time(timestamp)
+	if candidate < current_time_minutes: return false
+	current_time_minutes = candidate
+	return candidate >= 0
+
+func commit_narrative_time(minutes: int) -> bool:
+	if minutes < current_time_minutes or NARRATIVE_TIME.format_narrative_time(minutes) == "": return false
+	current_time_minutes = minutes
+	return true
 
 func gallery_source() -> Dictionary:
 	return {
@@ -179,6 +215,8 @@ func progress_snapshot() -> Dictionary:
 		"unlocked_thread_ids": unlocked_thread_ids.duplicate(),
 		"pending_transition": pending_transition.duplicate(true),
 		"day_end_visible": day_end_visible,
+		"current_time_minutes": current_time_minutes,
+		"presented_time_message_ids": presented_time_message_ids.duplicate(true),
 	}
 
 func snapshot() -> Dictionary:
@@ -189,7 +227,7 @@ func snapshot() -> Dictionary:
 func restore_progress_snapshot(value: Dictionary) -> bool:
 	if not initialized or int(value.get("version", -1)) != SNAPSHOT_VERSION:
 		return false
-	for key in ["segment_index_by_thread", "pending_choice_ids_by_thread", "transcripts_by_thread", "produced_message_ids", "pending_transition"]:
+	for key in ["segment_index_by_thread", "pending_choice_ids_by_thread", "transcripts_by_thread", "produced_message_ids", "pending_transition", "presented_time_message_ids"]:
 		if typeof(value.get(key)) != TYPE_DICTIONARY: return false
 	if typeof(value.get("unlocked_thread_ids")) != TYPE_ARRAY: return false
 	segment_index_by_thread = value["segment_index_by_thread"].duplicate(true)
@@ -199,6 +237,10 @@ func restore_progress_snapshot(value: Dictionary) -> bool:
 	unlocked_thread_ids.assign(value["unlocked_thread_ids"])
 	pending_transition = value["pending_transition"].duplicate(true)
 	day_end_visible = bool(value.get("day_end_visible", false))
+	var restored_time := int(value.get("current_time_minutes", -1))
+	if NARRATIVE_TIME.format_narrative_time(restored_time) == "": return false
+	current_time_minutes = restored_time
+	presented_time_message_ids = value["presented_time_message_ids"].duplicate(true)
 	return true
 
 func restore_snapshot(value: Dictionary) -> bool:

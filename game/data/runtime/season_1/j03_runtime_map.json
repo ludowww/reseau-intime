@@ -9,12 +9,14 @@
     "title": "Les vies qui existent ailleurs",
     "subtitle": "09:10",
     "body": "Un dossier à corriger. Des vies qui continuent ailleurs.",
-    "action_label": "Commencer"
+    "action_label": "Commencer",
+    "transition_mode": "day_boundary"
   },
   "raphaelle_offline": {
     "message_id": "j03_raphaelle_garment_bag_beat",
     "content_type": "OFF_PHONE_TRANSITION",
-    "text": "À la fin du point, Raphaëlle referme le dossier bleu, range son carnet et récupère une housse à vêtements fermée près de son poste.\nElle n’en fait pas un sujet. Player remarque seulement que sa journée ne s’arrête pas au dossier."
+    "text": "À la fin du point, Raphaëlle referme le dossier bleu, range son carnet et récupère une housse à vêtements fermée près de son poste.\nElle n’en fait pas un sujet. Player remarque seulement que sa journée ne s’arrête pas au dossier.",
+    "transition_mode": "offline"
   },
   "sandra_offer": {
     "eyebrow": "JEUDI — DÉBUT D’APRÈS-MIDI",
@@ -22,14 +24,20 @@
     "subtitle": "Sandra vient de terminer son poste du matin.",
     "body": "Un message bref attend dans son fil. Rien n’oblige Player à le rouvrir.",
     "action_label": "Ouvrir Sandra",
-    "secondary_action_label": "Continuer la journée"
+    "secondary_action_label": "Continuer la journée",
+    "transition_mode": "clock_then_card",
+    "to_time": "13:50",
+    "duration_seconds": 4.0
   },
   "marie_time_card": {
     "eyebrow": "JEUDI — FIN DE JOURNÉE",
     "title": "18:20",
     "subtitle": "",
     "body": "Marie ramène la journée vers le foyer.",
-    "action_label": "Continuer"
+    "action_label": "Continuer",
+    "transition_mode": "clock_then_card",
+    "to_time": "18:20",
+    "duration_seconds": 4.0
   },
   "marie_offline": {
     "ACTIVE": {
@@ -50,12 +58,15 @@
     "title": "J03 terminé",
     "subtitle": "Les vies qui existent ailleurs",
     "body": "Fin temporaire de cette version jouable.",
-    "action_label": "Terminer"
+    "action_label": "Terminer",
+    "transition_mode": "day_boundary"
   },
   "gallery_presentations": [
     {
       "asset_id": "S1_A1_J03_SCN_RAPHAELLE_ACCESSIBILITY_REVIEW_01",
-      "character_ids": ["raphaelle"],
+      "character_ids": [
+        "raphaelle"
+      ],
       "placeholder_label": "Visuel non produit",
       "source_kind": "gallery",
       "content_type": "SCENE_IMAGE",
@@ -65,7 +76,9 @@
     },
     {
       "asset_id": "S1_A1_J03_SCN_RAPHAELLE_GARMENT_BAG_01",
-      "character_ids": ["raphaelle"],
+      "character_ids": [
+        "raphaelle"
+      ],
       "placeholder_label": "Visuel non produit",
       "source_kind": "gallery",
       "content_type": "SCENE_IMAGE",
@@ -75,7 +88,9 @@
     },
     {
       "asset_id": "S1_A1_J03_SCN_MARIE_HOME_FROM_LAVERRIERE_01",
-      "character_ids": ["marie"],
+      "character_ids": [
+        "marie"
+      ],
       "placeholder_label": "Visuel non produit",
       "source_kind": "gallery",
       "content_type": "SCENE_IMAGE",
@@ -83,5 +98,6 @@
       "transfer_rule": "FORBIDDEN",
       "is_diegetic": false
     }
-  ]
+  ],
+  "initial_time": "09:10"
 }
