@@ -309,6 +309,7 @@ func _open_photo_viewer(sequence: Array[Dictionary], start_index: int, provenanc
 	if current_tween != null and current_tween.is_running():
 		current_tween.kill()
 	current_tween = null
+	messages_screen.set_notification_photo_viewer_blocked(true)
 	_messages_set_visible(active_tab == TAG_MESSAGES)
 	_gallery_set_visible(active_tab == TAG_GALLERY)
 	shell_column.visible = false
@@ -334,6 +335,7 @@ func _close_photo_viewer() -> void:
 	photo_viewer.reset_viewer()
 	shell_column.visible = true
 	photo_viewer_state = {}
+	messages_screen.set_notification_photo_viewer_blocked(false)
 	var source := str(saved_state.get("source_kind", ""))
 	var provenance: Dictionary = saved_state.get("provenance", {})
 	var focus_target: Variant = saved_state.get("focus_target")

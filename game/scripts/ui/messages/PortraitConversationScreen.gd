@@ -6,8 +6,8 @@ signal back_requested
 signal choice_selected(choice: Dictionary)
 signal image_requested(message_id: String, media_ref: String)
 signal reading_speed_requested
-signal header_notification_open_requested(thread_id: String)
-signal header_notification_dismiss_requested
+signal header_notification_open_requested(thread_id: String, generation: int)
+signal header_notification_dismiss_requested(generation: int)
 
 const TIMELINE_SCRIPT := preload("res://scripts/ui/messages/MessageTimeline.gd")
 const CHOICE_BAR_SCRIPT := preload("res://scripts/ui/messages/ChoiceBar.gd")
@@ -53,11 +53,11 @@ func set_narrative_day_short(value: String) -> void:
 	narrative_day_short = value if value in ["Mar.", "Mer.", "Jeu."] else ""
 	_update_narrative_context()
 
-func show_header_notification(notification: Dictionary, reduced_motion: bool) -> void:
+func show_header_notification(notification: Dictionary, reduced_motion: bool, duration_seconds: float = 3.5, generation := 0) -> void:
 	if header_notification == null:
 		return
 	header_notification_host.visible = true
-	header_notification.configure(notification, PORTRAIT_THEME, reduced_motion, true, header_notification.AUTO_DISMISS_SECONDS)
+	header_notification.configure(notification, PORTRAIT_THEME, reduced_motion, true, duration_seconds, generation)
 
 func hide_header_notification() -> void:
 	if header_notification != null:
@@ -258,7 +258,7 @@ func _build(message_presentations: Array[Dictionary], choice_presentations: Arra
 	conversation_header.add_child(header_notification_host)
 	header_notification = NOTIFICATION_BANNER_SCRIPT.new()
 	header_notification.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	header_notification.open_requested.connect(func(thread_id: String): header_notification_open_requested.emit(thread_id))
+	header_notification.open_requested.connect(func(thread_id: String, generation: int): header_notification_open_requested.emit(thread_id, generation))
 	header_notification.dismiss_requested.connect(_on_header_notification_dismiss_requested)
 	header_notification_host.add_child(header_notification)
 	timeline = TIMELINE_SCRIPT.new()
@@ -287,9 +287,9 @@ func _update_narrative_context() -> void:
 	narrative_time_label.text = narrative_day_short + " · " + narrative_time if narrative_day_short != "" and narrative_time != "" else narrative_time
 	narrative_time_label.visible = narrative_time != ""
 
-func _on_header_notification_dismiss_requested() -> void:
+func _on_header_notification_dismiss_requested(generation: int) -> void:
 	header_notification_host.visible = false
-	header_notification_dismiss_requested.emit()
+	header_notification_dismiss_requested.emit(generation)
 
 func _label(value: String, font_size: int, color: Color) -> Label:
 	var label := Label.new()

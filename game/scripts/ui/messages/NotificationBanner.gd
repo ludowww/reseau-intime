@@ -2,10 +2,11 @@ extends PanelContainer
 
 class_name NotificationBanner
 
-signal open_requested(thread_id: String)
-signal dismiss_requested
+signal open_requested(thread_id: String, generation: int)
+signal dismiss_requested(generation: int)
 
 const AUTO_DISMISS_SECONDS := 3.5
+const EXIT_SECONDS := 0.16
 
 var PORTRAIT_THEME
 var notification: Dictionary = {}
@@ -15,23 +16,32 @@ var current_tween: Tween
 var auto_dismiss_timer: Timer
 var compact_mode := false
 var reduced_motion_enabled := false
+var presentation_generation := 0
+var dismissed := false
+var resting_position_y := 0.0
+var resting_position_initialized := false
 
-func configure(notification_presentation: Dictionary, portrait_theme, reduced_motion: bool, compact := false, auto_dismiss_seconds := 0.0) -> void:
+func configure(notification_presentation: Dictionary, portrait_theme, reduced_motion: bool, compact := false, auto_dismiss_seconds := 0.0, generation := 0) -> void:
+	if not resting_position_initialized:
+		resting_position_y = position.y
+		resting_position_initialized = true
 	notification = notification_presentation.duplicate(true)
 	PORTRAIT_THEME = portrait_theme
 	compact_mode = compact
 	reduced_motion_enabled = reduced_motion
+	presentation_generation = generation
+	dismissed = false
 	_stop_transients()
 	_build()
 	visible = true
 	modulate.a = 1.0
-	position.y = 0.0
+	position.y = resting_position_y
 	if not reduced_motion:
 		current_tween = create_tween()
 		current_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 		if compact_mode:
-			position.y = -maxf(size.y, 64.0)
-			current_tween.tween_property(self, "position:y", 0.0, 0.20)
+			position.y = resting_position_y - 4.0
+			current_tween.tween_property(self, "position:y", resting_position_y, 0.20)
 		else:
 			modulate.a = 0.0
 			current_tween.tween_property(self, "modulate:a", 1.0, 0.16)
@@ -39,24 +49,24 @@ func configure(notification_presentation: Dictionary, portrait_theme, reduced_mo
 		auto_dismiss_timer = Timer.new()
 		auto_dismiss_timer.name = "AutoDismissTimer"
 		auto_dismiss_timer.one_shot = true
+		auto_dismiss_timer.ignore_time_scale = true
+		auto_dismiss_timer.process_callback = Timer.TIMER_PROCESS_IDLE
 		auto_dismiss_timer.wait_time = auto_dismiss_seconds
-		auto_dismiss_timer.timeout.connect(_on_auto_dismiss_timeout)
+		auto_dismiss_timer.timeout.connect(_on_auto_dismiss_timeout.bind(presentation_generation))
 		add_child(auto_dismiss_timer)
 		auto_dismiss_timer.start()
 
 func dismiss() -> void:
+	dismissed = true
+	presentation_generation += 1
 	_stop_transients()
 	visible = false
 	modulate.a = 1.0
-	position.y = 0.0
+	position.y = resting_position_y
 
 func activate_open_action() -> void:
-	if not visible:
-		return
-	if compact_mode:
-		_emit_open_requested()
-	elif open_button != null:
-		open_button.emit_signal("pressed")
+	if visible:
+		_emit_open_requested(presentation_generation)
 
 func is_transition_running() -> bool:
 	return current_tween != null and current_tween.is_running()
@@ -71,7 +81,8 @@ func _build() -> void:
 	focus_mode = Control.FOCUS_ALL if compact_mode else Control.FOCUS_NONE
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	custom_minimum_size = Vector2(0, 0 if compact_mode else 88)
-	tooltip_text = "Ouvrir la conversation" if compact_mode else ""
+	var title_text := str(notification.get("title", "Conversation"))
+	tooltip_text = "Ouvrir la conversation avec %s" % title_text if compact_mode else ""
 	var accent := Color.from_string(str(notification.get("accent_color", "#8D63E6")), PORTRAIT_THEME.PLAYER_ACCENT)
 	if compact_mode:
 		add_theme_stylebox_override("panel", PORTRAIT_THEME.button_style(Color(0.012, 0.02, 0.04, 0.98), accent, 12))
@@ -102,7 +113,7 @@ func _build() -> void:
 	copy.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	copy.add_theme_constant_override("separation", 0 if compact_mode else 2)
 	row.add_child(copy)
-	var title := _label(str(notification.get("title", "Conversation")), 16, PORTRAIT_THEME.TEXT_PRIMARY)
+	var title := _label(title_text, 16, PORTRAIT_THEME.TEXT_PRIMARY)
 	title.name = "NotificationTitle"
 	title.autowrap_mode = TextServer.AUTOWRAP_OFF
 	title.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
@@ -120,6 +131,7 @@ func _build() -> void:
 	row.add_child(timestamp)
 	if compact_mode:
 		return
+	# Historical wide-mode compatibility; normal runtime always uses compact mode.
 	open_button = Button.new()
 	open_button.name = "OpenNotification"
 	open_button.text = "Ouvrir"
@@ -129,7 +141,7 @@ func _build() -> void:
 	open_button.add_theme_color_override("font_color", PORTRAIT_THEME.TEXT_PRIMARY)
 	open_button.add_theme_stylebox_override("normal", PORTRAIT_THEME.button_style(Color(0.10, 0.12, 0.20), PORTRAIT_THEME.BORDER, 12))
 	open_button.add_theme_stylebox_override("focus", PORTRAIT_THEME.focus_style())
-	open_button.pressed.connect(_emit_open_requested)
+	open_button.pressed.connect(func(): _emit_open_requested(presentation_generation))
 	row.add_child(open_button)
 	close_button = Button.new()
 	close_button.name = "CloseNotification"
@@ -140,30 +152,52 @@ func _build() -> void:
 	close_button.add_theme_color_override("font_color", PORTRAIT_THEME.TEXT_PRIMARY)
 	close_button.add_theme_stylebox_override("normal", PORTRAIT_THEME.button_style(Color(0.10, 0.12, 0.20), PORTRAIT_THEME.BORDER, 12))
 	close_button.add_theme_stylebox_override("focus", PORTRAIT_THEME.focus_style())
-	close_button.pressed.connect(_on_close_pressed)
+	close_button.pressed.connect(func(): _on_close_pressed(presentation_generation))
 	row.add_child(close_button)
 
 func _on_gui_input(event: InputEvent) -> void:
-	if not compact_mode or not visible:
+	if not compact_mode or not visible or dismissed:
 		return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		_emit_open_requested()
+		_emit_open_requested(presentation_generation)
 		accept_event()
 	elif event.is_action_pressed("ui_accept"):
-		_emit_open_requested()
+		_emit_open_requested(presentation_generation)
 		accept_event()
 
-func _emit_open_requested() -> void:
-	if visible:
-		open_requested.emit(str(notification.get("thread_id", "")))
+func _emit_open_requested(generation: int) -> void:
+	if visible and not dismissed and generation == presentation_generation:
+		open_requested.emit(str(notification.get("thread_id", "")), generation)
 
-func _on_close_pressed() -> void:
+func _on_close_pressed(generation: int) -> void:
+	if generation != presentation_generation or dismissed:
+		return
 	dismiss()
-	dismiss_requested.emit()
+	dismiss_requested.emit(generation)
 
-func _on_auto_dismiss_timeout() -> void:
-	dismiss()
-	dismiss_requested.emit()
+func _on_auto_dismiss_timeout(generation: int = presentation_generation) -> void:
+	if generation != presentation_generation or dismissed or not visible:
+		return
+	dismissed = true
+	_stop_transients()
+	if reduced_motion_enabled:
+		visible = false
+		dismiss_requested.emit(generation)
+		return
+	current_tween = create_tween()
+	current_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+	current_tween.parallel().tween_property(self, "position:y", resting_position_y - 12.0, EXIT_SECONDS)
+	current_tween.parallel().tween_property(self, "modulate:a", 0.0, EXIT_SECONDS)
+	current_tween.finished.connect(_finish_auto_dismiss.bind(generation))
+
+func _finish_auto_dismiss(generation: int) -> void:
+	if generation != presentation_generation:
+		return
+	visible = false
+	modulate.a = 1.0
+	position.y = resting_position_y
+	current_tween = null
+	dismiss_requested.emit(generation)
 
 func _stop_transients() -> void:
 	if current_tween != null and current_tween.is_running():

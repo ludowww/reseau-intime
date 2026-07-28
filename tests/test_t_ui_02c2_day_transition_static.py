@@ -31,7 +31,7 @@ class TUI02C2DayTransitionStaticTests(unittest.TestCase):
             "func day_transition_action_count() -> int", "func day_transition_applied_count(to_day: int) -> int",
             "func presentation_count_by_id(message_id: String) -> int",
             '"previous_screen"', '"previous_thread_id"', '"resume_focus_target"',
-            '"typing_snapshot"', '"notification_snapshot"',
+            '"typing_snapshot"', "pending_notification", "_defer_active_notification",
         ]:
             self.assertIn(token, screen)
 

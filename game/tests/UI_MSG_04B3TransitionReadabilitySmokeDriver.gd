@@ -106,6 +106,7 @@ func _exercise_resume_and_header_notification(messages, provider) -> void:
 	messages.update_active_typing_speed()
 	var thread_before_dismiss: String = messages.active_thread_id
 	messages.conversation_screen.header_notification._on_auto_dismiss_timeout()
+	await get_tree().create_timer(0.20, true, false, true).timeout
 	await _frames(2)
 	_expect(not messages.conversation_screen.header_notification_visible(), "auto-dismiss hides notification")
 	_expect(messages.active_thread_id == thread_before_dismiss, "auto-dismiss does not change thread")

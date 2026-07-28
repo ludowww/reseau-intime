@@ -90,7 +90,8 @@ class TUI02B1UnreadNotificationStaticTests(unittest.TestCase):
         open_branch = method.split("if is_open:", 1)[1].split("\telse:", 1)[0]
         self.assertIn("_notification_targets(thread_id)", open_branch)
         self.assertNotIn("notification_banner != null", open_branch)
-        self.assertIn('notification_banner.notification.get("thread_id", "")', screen)
+        self.assertIn('active_notification.get("thread_id", "")', screen)
+        self.assertIn('pending_notification.get("thread_id", "")', screen)
 
     def test_invalid_thread_is_an_explicit_no_op(self):
         screen = self._read("game/scripts/ui/messages/MessagesScreen.gd")

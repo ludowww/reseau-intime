@@ -68,6 +68,7 @@ func _run() -> void:
 	messages.conversation_list.focus_thread(unread_id)
 	await get_tree().process_frame
 	var focus_before_banner := get_viewport().gui_get_focus_owner()
+	var list_rect_before_banner: Rect2 = messages.conversation_list.get_global_rect()
 	var other_messages_before: int = int(messages.thread_message_count(other_id))
 	var other_unread_before: int = int(messages.thread_unread_count(other_id))
 	var other_player_before: int = int(messages.thread_player_message_count(other_id))
@@ -91,14 +92,11 @@ func _run() -> void:
 	_expect(str(notified.get("notification_thread_id", "")) == other_id, "notification must target updated thread")
 	_expect(get_viewport().gui_get_focus_owner() == focus_before_banner, "banner must not steal focus")
 	_expect(messages.notification_banner_count() == 1, "only one banner instance may exist")
-	_expect(messages.notification_banner.focus_mode == Control.FOCUS_NONE, "banner container must remain outside keyboard focus")
-	_expect(messages.notification_banner.open_button.focus_mode == Control.FOCUS_ALL, "OpenNotification must accept keyboard focus")
-	_expect(messages.notification_banner.close_button.focus_mode == Control.FOCUS_ALL, "CloseNotification must accept keyboard focus")
-	_expect(messages.notification_banner.open_button.custom_minimum_size.y >= 48.0, "OpenNotification touch target must be at least 48 high")
-	_expect(messages.notification_banner.close_button.custom_minimum_size.x >= 48.0 and messages.notification_banner.close_button.custom_minimum_size.y >= 48.0, "CloseNotification touch target must be at least 48 by 48")
-	_expect(messages.notification_banner.open_button.has_theme_stylebox_override("focus"), "OpenNotification must expose a visible focus style")
-	_expect(messages.notification_banner.close_button.has_theme_stylebox_override("focus"), "CloseNotification must expose a visible focus style")
-	_expect(messages.conversation_list.offset_top > 0.0 and messages.conversation_screen.offset_top > 0.0, "visible banner must reserve content space")
+	_expect(messages.notification_banner.focus_mode == Control.FOCUS_ALL, "whole compact banner must accept keyboard focus")
+	_expect(messages.notification_banner.custom_minimum_size.y >= 0.0 and messages.notification_banner.get_global_rect().size.y >= 48.0, "compact banner touch target must be at least 48 high")
+	_expect(messages.notification_banner.has_theme_stylebox_override("focus"), "compact banner must expose a visible focus style")
+	_expect(messages.notification_banner.open_button == null and messages.notification_banner.close_button == null, "normal compact banner has no separate actions")
+	_expect(messages.conversation_list.offset_top == 0.0 and messages.conversation_screen.offset_top == 0.0, "overlay banner must not offset content")
 	var banner_rect: Rect2 = messages.notification_banner.get_global_rect()
 	var list_rect: Rect2 = messages.conversation_list.get_global_rect()
 	var messages_surface: Rect2 = messages.get_global_rect()
@@ -108,7 +106,7 @@ func _run() -> void:
 	_expect(banner_rect.end.x <= messages_surface.end.x and banner_rect.end.y <= messages_surface.end.y, "banner must end inside Messages surface")
 	_expect(banner_rect.position.x >= float(useful_bounds_for_banner.position.x) and banner_rect.position.y >= float(useful_bounds_for_banner.position.y), "banner must start inside useful safe bounds")
 	_expect(banner_rect.end.x <= float(useful_bounds_for_banner.end.x) and banner_rect.end.y <= float(useful_bounds_for_banner.end.y), "banner must end inside useful safe bounds")
-	_expect(list_rect.position.y >= banner_rect.end.y and not banner_rect.intersects(list_rect), "list content must begin below the banner without overlap")
+	_expect(list_rect.is_equal_approx(list_rect_before_banner), "overlay must not change list geometry")
 	if expected_reduced_motion:
 		_expect(not transition_started, "reduced motion must disable banner animation")
 	else:
@@ -116,16 +114,18 @@ func _run() -> void:
 		await get_tree().create_timer(0.25).timeout
 		_expect(not messages.notification_banner.is_transition_running(), "banner transition must terminate quickly")
 
-	messages.notification_banner.close_button.grab_focus()
+	messages.notification_banner.grab_focus()
 	await get_tree().process_frame
-	_expect(messages.notification_banner.close_button.has_focus(), "CloseNotification must receive intentional focus")
-	messages.notification_banner.close_button.emit_signal("pressed")
+	_expect(messages.notification_banner.has_focus(), "compact banner must receive intentional focus")
+	messages.notification_banner._on_auto_dismiss_timeout()
+	if not expected_reduced_motion:
+		await get_tree().create_timer(0.20, true, false, true).timeout
 	await get_tree().process_frame
 	await get_tree().process_frame
-	_expect(not messages.notification_banner.visible, "CloseNotification activation must hide the banner")
+	_expect(not messages.notification_banner.visible, "auto-dismiss must hide the banner")
 	_expect(get_viewport().gui_get_focus_owner() == focus_before_banner, "dismiss must restore the useful previous focus")
-	_expect(messages.conversation_list.offset_top == 0.0, "list offset must reset after dismiss")
-	_expect(messages.conversation_screen.offset_top == 0.0, "conversation offset must reset after dismiss")
+	_expect(messages.conversation_list.offset_top == 0.0, "list offset remains zero after dismiss")
+	_expect(messages.conversation_screen.offset_top == 0.0, "conversation offset remains zero after dismiss")
 
 	# A foreign banner must survive a direct open and an incoming message in thread B.
 	messages.simulate_incoming_message(other_id)

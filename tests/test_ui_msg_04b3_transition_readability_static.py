@@ -55,12 +55,11 @@ class UIMsg04B3TransitionReadabilityStaticTests(unittest.TestCase):
             "header_notification_visible", "header_notification_open_requested",
         ]:
             self.assertIn(token, conversation)
-        show_block = messages.split("func _show_notification", 1)[1].split("func _hide_notification", 1)[0]
-        self.assertIn('screen_mode == "conversation"', show_block)
-        local_branch = show_block.split('if screen_mode == "conversation"', 1)[1].split("\t\treturn", 1)[0]
-        self.assertIn("conversation_screen.show_header_notification", local_branch)
-        self.assertIn("_set_content_banner_spacing(false)", local_branch)
-        self.assertNotIn("_set_content_banner_spacing(true)", local_branch)
+        present_block = messages.split("func _present_notification", 1)[1].split("\nfunc ", 1)[0]
+        self.assertIn('screen_mode == "conversation"', present_block)
+        self.assertIn("conversation_screen.show_header_notification", present_block)
+        self.assertNotIn("offset_top", present_block)
+        self.assertNotIn("_set_content_banner_spacing", messages)
 
     def test_notification_surface_is_clickable_and_real_time_auto_dismissed(self):
         source = self.read("game/scripts/ui/messages/NotificationBanner.gd")

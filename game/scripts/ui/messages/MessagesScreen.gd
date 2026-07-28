@@ -41,11 +41,17 @@ var day_transition_deltas: Dictionary = {}
 var current_demo_day_value := 0
 var conversation_list
 var conversation_screen
+var list_notification_host: Control
 var notification_banner
+# Bounded presentation-only notification state; never serialized into providers.
+var active_notification: Dictionary = {}
+var active_notification_generation := 0
+var pending_notification: Dictionary = {}
+var notification_focus_origin: Control
+var notification_photo_viewer_blocked := false
 var off_phone_transition
 var day_transition
 var time_passage_overlay
-var notification_focus_origin: Control
 var active_thread_id := ""
 var screen_mode := "list"
 var content_source: Dictionary = {}
@@ -96,6 +102,7 @@ func _set_screen_mode(mode: String) -> void:
 		return
 	screen_mode = mode
 	screen_mode_changed.emit(screen_mode)
+	call_deferred("_present_notification", false)
 
 func set_compact_height_mode(enabled: bool) -> void:
 	if compact_height_mode == enabled:
@@ -260,7 +267,7 @@ func simulate_incoming_message(thread_id: String) -> void:
 			_hide_notification()
 	else:
 		thread["unread_count"] = int(thread.get("unread_count", 0)) + 1
-		_show_notification(thread, preview, timestamp)
+		_show_notification(thread, preview, timestamp, str(message.get("message_id", "")))
 	conversation_list.update_thread_presentation(thread)
 
 func start_off_phone_transition(thread_id: String) -> void:
@@ -287,16 +294,12 @@ func start_off_phone_transition(thread_id: String) -> void:
 		"resume_focus_target": focus_owner if focus_owner is Control else null,
 		"reading_position": int(reading_positions.get(thread_id, 0)),
 		"typing_was_active": is_thread_typing(thread_id),
-		"notification_was_visible": notification_banner != null and notification_banner.visible,
-		"notification_thread_id": str(notification_banner.notification.get("thread_id", "")) if notification_banner != null else "",
 		"shell_was_processing_unhandled_input": shell.is_processing_unhandled_input() if shell != null else false,
 	}
 	conversation_screen.hide_typing()
 	conversation_screen.visible = false
 	conversation_list.visible = false
-	if notification_banner != null:
-		notification_banner.visible = false
-	_set_content_banner_spacing(false)
+	_defer_active_notification()
 	_set_screen_mode("off_phone")
 	_set_gallery_navigation_blocked(true)
 	off_phone_transition.configure(str(off_phone_state.get("label", "")), PORTRAIT_THEME, _reduced_motion_enabled())
@@ -318,10 +321,8 @@ func finish_off_phone_transition() -> void:
 	conversation_screen.visible = true
 	reading_positions[thread_id] = int(saved_state.get("reading_position", 0))
 	conversation_screen.timeline.set_reading_position(int(saved_state.get("reading_position", 0)))
-	if bool(saved_state.get("notification_was_visible", false)) and notification_banner != null:
-		notification_banner.visible = true
-		_set_content_banner_spacing(true)
 	off_phone_state = {}
+	_resume_pending_notification()
 	_set_gallery_navigation_blocked(false, bool(saved_state.get("shell_was_processing_unhandled_input", false)))
 	if bool(saved_state.get("typing_was_active", false)):
 		_sync_active_typing()
@@ -342,10 +343,6 @@ func start_day_transition(from_day: int, to_day: int) -> void:
 	_save_reading_position()
 	var focus_owner := get_viewport().gui_get_focus_owner()
 	var shell: Node = _portrait_shell()
-	var notification_snapshot := {
-		"visible": notification_banner != null and notification_banner.visible,
-		"presentation": notification_banner.notification.duplicate(true) if notification_banner != null else {},
-	}
 	day_transition_state = {
 		"active": true,
 		"from_day": from_day,
@@ -356,16 +353,13 @@ func start_day_transition(from_day: int, to_day: int) -> void:
 		"previous_thread_id": active_thread_id,
 		"resume_focus_target": focus_owner if focus_owner is Control else null,
 		"typing_snapshot": typing_states_by_thread.duplicate(true),
-		"notification_snapshot": notification_snapshot,
 		"updated_thread_id": str(delta.get("thread_id", "")),
 		"shell_was_processing_unhandled_input": shell.is_processing_unhandled_input() if shell != null else false,
 	}
 	conversation_screen.hide_typing()
 	conversation_screen.visible = false
 	conversation_list.visible = false
-	if notification_banner != null:
-		notification_banner.visible = false
-	_set_content_banner_spacing(false)
+	_defer_active_notification()
 	off_phone_transition.visible = false
 	_set_screen_mode("day_transition")
 	_set_gallery_navigation_blocked(true)
@@ -391,12 +385,12 @@ func finish_day_transition() -> void:
 	current_demo_day_value = to_day
 	if previous_thread_id != "":
 		typing_states_by_thread.erase(previous_thread_id)
-	_hide_notification()
 	_set_screen_mode("list")
 	conversation_screen.visible = false
 	conversation_list.visible = true
 	conversation_list.configure(threads, characters, PORTRAIT_THEME, runtime_provider == null)
 	day_transition_state = {}
+	_resume_pending_notification()
 	_set_gallery_navigation_blocked(false, bool(saved_state.get("shell_was_processing_unhandled_input", false)))
 	var focus_thread_id := updated_thread_id if updated_thread_id != "" else previous_thread_id
 	conversation_list.call_deferred("focus_thread", focus_thread_id)
@@ -416,6 +410,7 @@ func _finish_runtime_day_transition() -> void:
 	if not bool(result.get("accepted", false)):
 		day_transition.reset_surface()
 		day_transition_state = {}
+		_clear_notification_state(false)
 		_set_screen_mode("day_complete")
 		conversation_screen.visible = false
 		conversation_list.visible = false
@@ -436,10 +431,12 @@ func _finish_runtime_day_transition() -> void:
 		conversation_screen.visible = false
 		conversation_list.visible = true
 		open_thread(str(result.get("thread_id", "")))
+		_resume_pending_notification()
 		return
 	_set_screen_mode("list")
 	conversation_screen.visible = false
 	conversation_list.visible = true
+	_resume_pending_notification()
 	conversation_list.call_deferred("focus_thread", str(result.get("focus_thread_id", "")))
 
 func is_day_transition_active() -> bool:
@@ -480,8 +477,15 @@ func describe_state() -> Dictionary:
 		"group_thread_id": _first_thread_id(true),
 		"unread_thread_id": _first_thread_by_unread(true),
 		"read_thread_id": _first_thread_by_unread(false),
-		"notification_visible": notification_banner != null and notification_banner.visible,
-		"notification_thread_id": str(notification_banner.notification.get("thread_id", "")) if notification_banner != null and notification_banner.visible else "",
+		"notification_visible": _notification_visible(),
+		"notification_thread_id": str(active_notification.get("thread_id", "")) if not active_notification.is_empty() else "",
+		"notification_id": str(active_notification.get("notification_id", "")) if not active_notification.is_empty() else "",
+		"notification_generation": active_notification_generation,
+		"notification_pending": not pending_notification.is_empty(),
+		"notification_pending_thread_id": str(pending_notification.get("thread_id", "")) if not pending_notification.is_empty() else "",
+		"list_notification_host_visible": list_notification_host != null and list_notification_host.visible,
+		"list_notification_rect": notification_banner.get_global_rect() if notification_banner != null and notification_banner.visible else Rect2(),
+		"visible_notification_count": _visible_notification_count(),
 		"off_phone_visible": off_phone_transition != null and off_phone_transition.visible,
 		"off_phone_surface_count": 1 if off_phone_transition != null and is_instance_valid(off_phone_transition) else 0,
 		"off_phone_thread_id": str(off_phone_state.get("thread_id", "")),
@@ -546,6 +550,14 @@ func all_messages_read(thread_id: String) -> bool:
 
 func notification_banner_count() -> int:
 	return 1 if notification_banner != null and is_instance_valid(notification_banner) else 0
+
+func _visible_notification_count() -> int:
+	var count := 0
+	if notification_banner != null and notification_banner.visible:
+		count += 1
+	if conversation_screen != null and conversation_screen.header_notification_visible():
+		count += 1
+	return count
 
 func current_demo_day() -> int:
 	return current_demo_day_value
@@ -1001,7 +1013,7 @@ func _start_time_passage_flow(transition: Dictionary) -> void:
 	narrative_clock_pending_transition = transition.duplicate(true)
 	_save_reading_position()
 	if conversation_screen != null: conversation_screen.hide_typing()
-	_hide_notification()
+	_defer_active_notification()
 	_set_clock_interactions_blocked(true)
 	var phases := _time_passage_phases(transition)
 	time_passage_overlay.z_index = 8
@@ -1011,6 +1023,7 @@ func _start_time_passage_flow(transition: Dictionary) -> void:
 	if not time_passage_overlay.play_flow(phases, request_id):
 		transition_flow_active = false
 		_set_clock_interactions_blocked(false)
+		_resume_pending_notification()
 		return
 	var completed_request_id: int = await time_passage_overlay.flow_finished
 	_on_time_passage_flow_finished(completed_request_id)
@@ -1068,6 +1081,7 @@ func _on_time_passage_flow_finished(request_id: int) -> void:
 
 func _apply_time_passage_result(result: Dictionary, transition: Dictionary) -> void:
 	if not bool(result.get("accepted", false)):
+		_resume_pending_notification()
 		return
 	refresh_from_runtime()
 	_refresh_runtime_gallery()
@@ -1081,6 +1095,7 @@ func _apply_time_passage_result(result: Dictionary, transition: Dictionary) -> v
 			_start_runtime_day_end(final_presentation)
 		return
 	_refresh_after_clock_only(result)
+	_resume_pending_notification()
 	if result.has("unlocked_thread_id"):
 		var unlocked_id := str(result.get("unlocked_thread_id", ""))
 		var notification: Dictionary = result.get("notification", {})
@@ -1127,6 +1142,7 @@ func _start_runtime_day_card(presentation: Dictionary) -> void:
 	if presentation.is_empty() or is_day_transition_active():
 		return
 	_save_reading_position()
+	_defer_active_notification()
 	_set_screen_mode("day_transition")
 	conversation_screen.visible = false
 	conversation_list.visible = false
@@ -1170,6 +1186,10 @@ func _finish_runtime_off_phone_transition() -> void:
 	_start_runtime_day_end(result.get("day_end", {}))
 
 func _start_runtime_day_end(presentation: Dictionary) -> void:
+	if str(presentation.get("transition_mode", "")) == TRANSITION_CARD_CONTENT_END:
+		_clear_notification_state(false)
+	else:
+		_defer_active_notification()
 	_set_screen_mode("day_transition")
 	conversation_screen.visible = false
 	conversation_list.visible = false
@@ -1222,6 +1242,13 @@ func _build() -> void:
 	conversation_list.thread_selected.connect(open_thread)
 	add_child(conversation_list)
 	conversation_list.configure(threads, characters, PORTRAIT_THEME, runtime_provider == null)
+	list_notification_host = Control.new()
+	list_notification_host.name = "ListNotificationHost"
+	list_notification_host.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	list_notification_host.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	list_notification_host.z_index = 4
+	list_notification_host.visible = false
+	add_child(list_notification_host)
 	conversation_screen = CONVERSATION_SCREEN_SCENE.instantiate()
 	conversation_screen.name = "PortraitConversationScreen"
 	conversation_screen.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -1257,14 +1284,16 @@ func _build() -> void:
 	notification_banner = NOTIFICATION_BANNER_SCRIPT.new()
 	notification_banner.set_anchors_preset(Control.PRESET_TOP_WIDE)
 	notification_banner.offset_left = 12.0
-	notification_banner.offset_top = 0.0
+	notification_banner.offset_top = 16.0
 	notification_banner.offset_right = -12.0
-	notification_banner.offset_bottom = 96.0
-	notification_banner.z_index = 10
+	notification_banner.offset_bottom = 88.0
+	notification_banner.resting_position_y = 16.0
+	notification_banner.resting_position_initialized = true
+	notification_banner.z_index = 1
 	notification_banner.visible = false
 	notification_banner.open_requested.connect(_on_notification_open_requested)
 	notification_banner.dismiss_requested.connect(_on_notification_dismiss_requested)
-	add_child(notification_banner)
+	list_notification_host.add_child(notification_banner)
 
 func _on_image_requested(message_id: String, media_ref: String) -> void:
 	if runtime_delivery_active or screen_mode != "conversation" or is_off_phone_transition_active() or is_day_transition_active() or is_time_passage_active():
@@ -1352,52 +1381,171 @@ func _on_choice_selected(choice: Dictionary) -> void:
 	transcripts[active_thread_id] = conversation_screen.timeline.messages.duplicate(true)
 	reading_positions[active_thread_id] = conversation_screen.get_reading_position()
 
-func _on_notification_open_requested(thread_id: String) -> void:
-	if is_day_transition_active():
+func _on_notification_open_requested(thread_id: String, generation: int) -> void:
+	if _notification_presentation_blocked() or active_notification.is_empty():
 		return
-	_hide_notification()
+	if int(active_notification.get("_generation", -1)) != generation:
+		return
+	if str(active_notification.get("thread_id", "")) != thread_id:
+		return
+	_clear_notification_state(false)
 	open_thread(thread_id)
 
-func _on_notification_dismiss_requested() -> void:
-	_set_content_banner_spacing(false)
+func _on_notification_dismiss_requested(generation: int) -> void:
+	if active_notification.is_empty():
+		return
+	if int(active_notification.get("_generation", -1)) != generation:
+		return
+	active_notification_generation += 1
+	active_notification = {}
+	_hide_notification_presenters()
 	call_deferred("_restore_notification_focus")
 
-func _show_notification(thread: Dictionary, preview: String, timestamp: String) -> void:
-	if not _notification_visible():
-		var focus_owner := get_viewport().gui_get_focus_owner()
-		notification_focus_origin = focus_owner if focus_owner is Control else null
+func _show_notification(thread: Dictionary, preview: String, timestamp: String, message_id := "") -> void:
+	var thread_id := str(thread.get("thread_id", ""))
+	if thread_id == "":
+		return
 	var notification := {
-		"thread_id": str(thread.get("thread_id", "")),
+		"notification_id": _notification_key(thread_id, message_id, timestamp, preview),
+		"thread_id": thread_id,
+		"message_id": message_id,
 		"title": str(thread.get("title", "Conversation")),
 		"preview": preview,
 		"timestamp": timestamp,
 		"avatar_ref": str(thread.get("avatar_ref", "?")),
 		"accent_color": str(thread.get("accent_color", "#8D63E6")),
 	}
-	if screen_mode == "conversation" and conversation_screen != null and conversation_screen.visible:
-		if notification_banner != null:
-			notification_banner.dismiss()
-		_set_content_banner_spacing(false)
-		conversation_screen.show_header_notification(notification, _reduced_motion_enabled())
+	_queue_notification(notification)
+
+func _queue_notification(notification: Dictionary) -> void:
+	var thread_id := str(notification.get("thread_id", ""))
+	if _thread_for(thread_id).is_empty():
 		return
-	_set_content_banner_spacing(true)
-	notification_banner.configure(notification, PORTRAIT_THEME, _reduced_motion_enabled())
+	if screen_mode == "conversation" and active_thread_id == thread_id:
+		if _notification_targets(thread_id):
+			_clear_notification_state(false)
+		_mark_thread_read(thread_id)
+		return
+	if active_notification.is_empty() and pending_notification.is_empty():
+		var focus_owner := get_viewport().gui_get_focus_owner()
+		notification_focus_origin = focus_owner if focus_owner is Control else null
+	active_notification_generation += 1
+	var next_notification := notification.duplicate(true)
+	next_notification["_generation"] = active_notification_generation
+	next_notification["_deadline_msec"] = 0
+	if _notification_presentation_blocked():
+		# latest pending wins; no queue is maintained.
+		pending_notification = next_notification
+		active_notification = {}
+		_hide_notification_presenters()
+		return
+	active_notification = next_notification
+	pending_notification = {}
+	_present_notification(true)
+
+func _present_notification(restart_timer := false) -> void:
+	_hide_notification_presenters()
+	if active_notification.is_empty():
+		return
+	if _notification_presentation_blocked():
+		_defer_active_notification()
+		return
+	var thread_id := str(active_notification.get("thread_id", ""))
+	if _thread_for(thread_id).is_empty() or (screen_mode == "conversation" and active_thread_id == thread_id):
+		_clear_notification_state(false)
+		return
+	var now_msec := Time.get_ticks_msec()
+	var deadline_msec := int(active_notification.get("_deadline_msec", 0))
+	if restart_timer or deadline_msec <= now_msec:
+		deadline_msec = now_msec + int(NOTIFICATION_BANNER_SCRIPT.AUTO_DISMISS_SECONDS * 1000.0)
+		active_notification["_deadline_msec"] = deadline_msec
+	var remaining_seconds := maxf(0.01, float(deadline_msec - now_msec) / 1000.0)
+	var generation := int(active_notification.get("_generation", active_notification_generation))
+	if screen_mode == "conversation" and conversation_screen != null and conversation_screen.visible:
+		conversation_screen.show_header_notification(active_notification, _reduced_motion_enabled(), remaining_seconds, generation)
+		return
+	if screen_mode == "list" and list_notification_host != null and conversation_list != null and conversation_list.visible:
+		list_notification_host.visible = true
+		notification_banner.configure(active_notification, PORTRAIT_THEME, _reduced_motion_enabled(), true, remaining_seconds, generation)
+
+func _defer_active_notification() -> void:
+	if not active_notification.is_empty():
+		# latest pending wins when a blocking surface starts.
+		pending_notification = active_notification.duplicate(true)
+		pending_notification["_deadline_msec"] = 0
+		active_notification = {}
+	_hide_notification_presenters()
+
+func _resume_pending_notification() -> void:
+	if pending_notification.is_empty() or _notification_presentation_blocked():
+		return
+	var thread_id := str(pending_notification.get("thread_id", ""))
+	if _thread_for(thread_id).is_empty() or (screen_mode == "conversation" and active_thread_id == thread_id) or thread_unread_count(thread_id) <= 0:
+		pending_notification = {}
+		return
+	active_notification_generation += 1
+	active_notification = pending_notification.duplicate(true)
+	active_notification["_generation"] = active_notification_generation
+	active_notification["_deadline_msec"] = 0
+	pending_notification = {}
+	_present_notification(true)
+
+func _notification_presentation_blocked() -> bool:
+	return (
+		notification_photo_viewer_blocked
+		or screen_mode not in ["list", "conversation"]
+		or transition_flow_active
+		or is_time_passage_active()
+		or is_off_phone_transition_active()
+		or is_day_transition_active()
+	)
+
+func set_notification_photo_viewer_blocked(blocked: bool) -> void:
+	if notification_photo_viewer_blocked == blocked:
+		return
+	notification_photo_viewer_blocked = blocked
+	if blocked:
+		_defer_active_notification()
+	else:
+		_resume_pending_notification()
+
+func _clear_notification_state(restore_focus: bool) -> void:
+	active_notification_generation += 1
+	active_notification = {}
+	pending_notification = {}
+	_hide_notification_presenters()
+	if restore_focus:
+		call_deferred("_restore_notification_focus")
+	else:
+		notification_focus_origin = null
 
 func _hide_notification() -> void:
+	_clear_notification_state(false)
+
+func _hide_notification_presenters() -> void:
 	if notification_banner != null:
 		notification_banner.dismiss()
+	if list_notification_host != null:
+		list_notification_host.visible = false
 	if conversation_screen != null:
 		conversation_screen.hide_header_notification()
-	_set_content_banner_spacing(false)
-	notification_focus_origin = null
 
 func _notification_visible() -> bool:
-	return (notification_banner != null and notification_banner.visible) or (conversation_screen != null and conversation_screen.header_notification_visible())
+	return (
+		(notification_banner != null and notification_banner.visible)
+		or (conversation_screen != null and conversation_screen.header_notification_visible())
+	)
 
 func _notification_targets(thread_id: String) -> bool:
-	var global_target: bool = notification_banner != null and notification_banner.visible and str(notification_banner.notification.get("thread_id", "")) == thread_id
-	var local_target: bool = conversation_screen != null and conversation_screen.header_notification_visible() and str(conversation_screen.header_notification.notification.get("thread_id", "")) == thread_id
-	return global_target or local_target
+	return (
+		(not active_notification.is_empty() and str(active_notification.get("thread_id", "")) == thread_id)
+		or (not pending_notification.is_empty() and str(pending_notification.get("thread_id", "")) == thread_id)
+	)
+
+func _notification_key(thread_id: String, message_id: String, timestamp: String, preview: String) -> String:
+	if message_id != "":
+		return "%s::%s" % [thread_id, message_id]
+	return "%s::%s::%s" % [thread_id, timestamp, preview]
 
 func _restore_notification_focus() -> void:
 	var previous_focus := notification_focus_origin
@@ -1419,13 +1567,6 @@ func _restore_notification_focus() -> void:
 			return
 		if conversation_screen.back_button != null:
 			conversation_screen.back_button.grab_focus()
-
-func _set_content_banner_spacing(banner_visible: bool) -> void:
-	var top_offset := 120.0 if banner_visible else 0.0
-	if conversation_list != null:
-		conversation_list.offset_top = top_offset
-	if conversation_screen != null:
-		conversation_screen.offset_top = top_offset
 
 func _reduced_motion_enabled() -> bool:
 	var ancestor := get_parent()
