@@ -188,7 +188,7 @@ func establish_j04_pauline_records() -> bool:
 func establish_j04_nico_records() -> bool:
 	if knowledge.has("fact_nico_friendship_exists"): return false
 	nico_state = "ORDINARY_FRIEND"
-	knowledge["fact_nico_friendship_exists"] = {"fact_id": "fact_nico_friendship_exists", "source_type": "DIRECT_CONVERSATION", "source_ref": "chapter_04_nico_saved_seat_followup", "certainty": "CONFIRMED", "initial_knowers": ["Nico", "Player"]}
+	knowledge["fact_nico_friendship_exists"] = {"fact_id": "fact_nico_friendship_exists", "source_type": "DIRECT_MESSAGE", "source_ref": "chapter_04_nico_saved_seat_followup", "certainty": "CONFIRMED", "initial_knowers": ["Nico", "Player"]}
 	var stay: Dictionary = knowledge.get("fact_mathilde_stay_started", {})
 	var current_knowers: Array = stay.get("current_knowers", stay.get("initial_knowers", [])).duplicate()
 	if not current_knowers.has("Nico"): current_knowers.append("Nico")

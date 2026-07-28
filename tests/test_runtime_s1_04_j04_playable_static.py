@@ -1,4 +1,5 @@
 import json
+import re
 import unittest
 from pathlib import Path
 
@@ -81,6 +82,22 @@ class RuntimeS104J04PlayableStaticTests(unittest.TestCase):
             self.assertIn(token, state)
         self.assertIn("SNAPSHOT_VERSION := 2", state)
         self.assertIn('version not in [1, SNAPSHOT_VERSION]', state)
+
+    def test_knowledge_source_types_stay_within_the_canonical_registry(self):
+        state = self.read("game/scripts/runtime/season_1/Season1State.gd")
+        allowed = {
+            "DIRECT_OBSERVATION",
+            "DIRECT_MESSAGE",
+            "DIRECT_STATEMENT",
+            "PUBLIC_TRACE",
+            "PRIVATE_TRACE",
+            "THIRD_PARTY_STATEMENT",
+            "INFERENCE",
+        }
+        source_types = set(re.findall(r'"source_type"\s*:\s*"([^"]+)"', state))
+        self.assertTrue(source_types, "Season1State must declare typed knowledge sources")
+        self.assertEqual(set(), source_types - allowed)
+        self.assertIn("DIRECT_MESSAGE", source_types)
 
     def test_season_handoff_snapshot_and_content_end_contract(self):
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
