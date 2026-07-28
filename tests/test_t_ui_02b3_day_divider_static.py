@@ -38,9 +38,13 @@ class TUI02B3DayDividerStaticTests(unittest.TestCase):
         self.assertIn('== "SYSTEM_DAY_DIVIDER"', timeline)
         self.assertIn('preload("res://scripts/ui/messages/DayDivider.gd")', timeline)
         build = timeline.split("func _build()", 1)[1].split("\nfunc ", 1)[0]
-        self.assertIn("DAY_DIVIDER_SCRIPT.new()", build)
+        renderer = timeline.split("func _append_presentation_node", 1)[1].split("\nfunc ", 1)[0]
+        append_day = timeline.split("func _append_day_divider", 1)[1].split("\nfunc ", 1)[0]
+        self.assertIn("_append_presentation_node", build)
+        self.assertIn("_append_day_divider", renderer)
+        self.assertIn("DAY_DIVIDER_SCRIPT.new()", append_day)
         self.assertNotIn("messages.append", build)
-        self.assertIn("message_box.add_child", build)
+        self.assertIn("_rendered_source_days.has(source_day)", append_day)
 
     def test_unread_and_typing_remain_distinct_and_ordered(self):
         timeline = self._read("game/scripts/ui/messages/MessageTimeline.gd")

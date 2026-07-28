@@ -47,8 +47,10 @@ class RuntimeS103CUniversalMessagePacingStaticTests(unittest.TestCase):
         timeline = self.read("game/scripts/ui/messages/MessageTimeline.gd")
         self.assertIn("func replace_typing_with_message(message: Dictionary, force_follow := true)", timeline)
         self.assertIn("var typing_index: int = typing_indicator.get_index()", timeline)
-        self.assertIn("message_box.add_child(message_bubble)", timeline)
-        self.assertIn("message_box.move_child(message_bubble, typing_index)", timeline)
+        self.assertIn("var rendered: Dictionary = _append_presentation_node(stored_message, typing_index)", timeline)
+        self.assertIn("func _mount_presentation_node(node: Control, insert_index: int)", timeline)
+        self.assertIn("message_box.add_child(node)", timeline)
+        self.assertIn("message_box.move_child(node, mini(insert_index, message_box.get_child_count() - 1))", timeline)
         self.assertIn("func bottom_gap() -> float", timeline)
         for token in [
             "ReplacementSpacer",

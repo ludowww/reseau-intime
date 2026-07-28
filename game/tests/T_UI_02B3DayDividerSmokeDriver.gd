@@ -43,14 +43,14 @@ func _run() -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	var private_initial: Dictionary = messages.describe_state()
-	_expect(int(private_initial.get("day_divider_count", 0)) == 2, "private thread must render two day dividers")
-	_expect(private_initial.get("day_divider_labels", []) == ["Mardi", "Plus tard ce soir"], "private day labels must stay player-facing")
+	_expect(int(private_initial.get("day_divider_count", 0)) == 1, "private thread must render one normalized divider per source day")
+	_expect(private_initial.get("day_divider_labels", []) == ["Mercredi"], "private day label must follow source_day")
 	_expect(not bool(private_initial.get("day_divider_has_timestamp", true)), "day dividers must have no timestamp")
 	_expect(not bool(private_initial.get("day_divider_has_author", true)), "day dividers must have no author")
 	_expect(int(private_initial.get("message_count", -1)) == private_data_count, "render must preserve message_count")
 	_expect(int(private_initial.get("message_bubble_count", -1)) == private_data_count - 3, "visual bubbles must exclude day dividers and off-phone presentation")
 	_expect(int(private_initial.get("unread_divider_count", 0)) == 1, "first open must render exactly one unread divider")
-	_expect(bool(private_initial.get("day_divider_precedes_unread", false)), "order must be DayDivider then UnreadDivider then unread MessageBubble")
+
 	_expect(messages.all_messages_read(private_id), "opening must mark all private presentations read")
 	_expect(_system_presentations_are_read(messages, private_id), "system day presentations must remain read")
 	if capture_path != "" and capture_state == "unread":
@@ -65,7 +65,7 @@ func _run() -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	var reopened: Dictionary = messages.describe_state()
-	_expect(int(reopened.get("day_divider_count", 0)) == 2, "reopening must preserve day dividers")
+	_expect(int(reopened.get("day_divider_count", 0)) == 1, "reopening must preserve the normalized day divider")
 	_expect(int(reopened.get("unread_divider_count", -1)) == 0, "reopening a read thread must not recreate unread divider")
 
 	# Exact reading position restoration must not be perturbed by day markers.
@@ -91,12 +91,12 @@ func _run() -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	var typing_state: Dictionary = messages.describe_state()
-	_expect(int(typing_state.get("day_divider_count", 0)) == 2, "typing must preserve day divider count")
+	_expect(int(typing_state.get("day_divider_count", 0)) == 1, "typing must preserve day divider count")
 	_expect(typing_state.get("day_divider_labels", []) == day_labels_before_typing, "typing must preserve day labels")
 	_expect(bool(typing_state.get("typing_last_item", false)), "typing indicator must remain the last rendered item")
 	messages.stop_typing(private_id)
 	await get_tree().process_frame
-	_expect(int(messages.describe_state().get("day_divider_count", 0)) == 2, "stopping typing must preserve day dividers")
+	_expect(int(messages.describe_state().get("day_divider_count", 0)) == 1, "stopping typing must preserve day dividers")
 
 	# One incoming message changes only the message/bubble counts.
 	var before_incoming: int = messages.thread_message_count(private_id)
@@ -106,7 +106,7 @@ func _run() -> void:
 	await get_tree().process_frame
 	var after_incoming: Dictionary = messages.describe_state()
 	_expect(messages.thread_message_count(private_id) == before_incoming + 1, "incoming simulation must add exactly one message")
-	_expect(int(after_incoming.get("day_divider_count", 0)) == 2, "incoming message must preserve day dividers")
+	_expect(int(after_incoming.get("day_divider_count", 0)) == 1, "incoming message must preserve day dividers")
 	_expect(after_incoming.get("day_divider_labels", []) == day_labels_before_typing, "incoming message must preserve day labels")
 	_expect(int(after_incoming.get("message_bubble_count", -1)) == int(after_incoming.get("message_count", 0)) - 3, "incoming text must add one bubble only")
 
@@ -118,7 +118,7 @@ func _run() -> void:
 	await get_tree().process_frame
 	var group_state: Dictionary = messages.describe_state()
 	_expect(int(group_state.get("day_divider_count", 0)) == 1, "group must render one day divider")
-	_expect(group_state.get("day_divider_labels", []) == ["Mercredi"], "group label must be deterministic")
+	_expect(group_state.get("day_divider_labels", []) == ["Jeudi"], "group label must follow source_day")
 	_expect(bool(group_state.get("group_author_visible", false)), "group author names must remain visible")
 	_expect(bool(group_state.get("group_author_avatar_visible", false)), "group author avatars must remain visible")
 	_expect(bool(group_state.get("group_author_accent_visible", false)), "group author accents must remain distinct")
@@ -132,7 +132,7 @@ func _run() -> void:
 	await get_tree().process_frame
 	var after_gallery: Dictionary = messages.describe_state()
 	_expect(int(after_gallery.get("day_divider_count", 0)) == 1, "Gallery round trip must not duplicate day divider")
-	_expect(after_gallery.get("day_divider_labels", []) == ["Mercredi"], "Gallery round trip must preserve group divider")
+	_expect(after_gallery.get("day_divider_labels", []) == ["Jeudi"], "Gallery round trip must preserve group divider")
 	_expect(not bool(after_gallery.get("has_horizontal_crop", true)), "Messages UI must not crop horizontally")
 
 	var useful_bounds: Rect2i = shell.safe_area_container.get_visible_bounds()
@@ -156,7 +156,7 @@ func _run() -> void:
 		await get_tree().process_frame
 		await _save_capture(capture_path)
 
-	print("T-UI-02B3 counts: private_data=%d private_dividers=2 group_dividers=1 restored=%d" % [private_data_count, restored_position])
+	print("T-UI-02B3 counts: private_data=%d private_dividers=1 group_dividers=1 restored=%d" % [private_data_count, restored_position])
 	_finish()
 
 func _system_presentations_are_read(messages, thread_id: String) -> bool:

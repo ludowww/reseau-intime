@@ -22,10 +22,10 @@ class UIMsg04B2UnifiedTimeTransitionStaticTests(unittest.TestCase):
         overlay = self.read(required[0])
         for token in [
             'PHASE_CLOCK', 'PHASE_OFF_PHONE', 'PHASE_NIGHT', 'PHASE_NEW_DAY',
-            'signal flow_finished', 'func play_flow', 'func set_speed_multiplier',
+            'signal flow_finished', 'func play_flow', 'real_elapsed += delta',
             'func set_reduced_motion', 'request_id', 'Zzz', '_unhandled_key_input',
             'KEY_ENTER', 'KEY_SPACE', 'MINIMUM_SKIP_DELAY_SECONDS',
-            'speed_scaled_elapsed += delta * speed_multiplier', 'MINIMUM_AUTOMATIC_VISIBLE_SECONDS',
+            'speed_button.visible = false', 'MINIMUM_AUTOMATIC_VISIBLE_SECONDS',
         ]:
             self.assertIn(token, overlay)
         forbidden = [".gif", "AnimatedTexture", "VideoStream", "Sprite2D"]
@@ -62,9 +62,9 @@ class UIMsg04B2UnifiedTimeTransitionStaticTests(unittest.TestCase):
             "transition_flow_request_id", "transition_flow_phase", "transition_flow_presentation",
             "transition_flow_from_minutes", "transition_flow_to_minutes",
             "_start_time_passage_flow", "_on_time_passage_flow_finished",
-            "set_speed_multiplier(reading_speed_multiplier)",
         ]:
             self.assertIn(token, source)
+        self.assertNotIn("time_passage_overlay.set_speed_multiplier", source)
         flow = source.split("func _start_time_passage_flow", 1)[1].split("func ", 1)[0]
         self.assertNotIn("conversation_screen.visible = false", flow)
         self.assertNotIn("conversation_list.visible = false", flow)
@@ -93,7 +93,8 @@ class UIMsg04B2UnifiedTimeTransitionStaticTests(unittest.TestCase):
             "clock from conversation", "phone remains mounted", "single overlay instance",
             "reduced motion", "snapshot", "CONTENT_END", "×1", "×3", "×8",
             "Input.parse_input_event", "clock skip is forbidden", "clock target is exact",
-            "speed change remains monotone", "Sandra notification focus",
+            "real-time clock remains monotone", "reading speed is hidden during the overlay",
+            "Sandra notification focus",
             "restored authoritative transition resumes exactly once",
         ]:
             self.assertIn(token, driver)

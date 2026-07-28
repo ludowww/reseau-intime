@@ -32,10 +32,10 @@ class TUI02C1OffPhoneTransitionStaticTests(unittest.TestCase):
 
     def test_timeline_detects_transition_without_rendering_a_message_bubble(self):
         timeline = self._read("game/scripts/ui/messages/MessageTimeline.gd")
-        build = timeline.split("func _build()", 1)[1].split("\nfunc ", 1)[0]
-        self.assertIn('== "OFF_PHONE_TRANSITION"', build)
-        self.assertIn("continue", build)
-        off_branch = build.split('== "OFF_PHONE_TRANSITION"', 1)[1].split("continue", 1)[0]
+        renderer = timeline.split("func _append_presentation_node", 1)[1].split("\nfunc ", 1)[0]
+        self.assertIn('== "OFF_PHONE_TRANSITION"', renderer)
+        self.assertIn("return rendered", renderer)
+        off_branch = renderer.split('== "OFF_PHONE_TRANSITION"', 1)[1].split("return rendered", 1)[0]
         self.assertNotIn("_build_message_bubble", off_branch)
 
     def test_messages_screen_owns_one_bounded_local_state_and_api(self):

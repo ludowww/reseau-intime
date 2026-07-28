@@ -4,7 +4,7 @@ class_name TimePassageOverlay
 
 signal flow_finished(request_id: int)
 signal phase_changed(phase: String)
-signal speed_requested
+
 
 const PHASE_CLOCK := "CLOCK"
 const PHASE_OFF_PHONE := "OFF_PHONE"
@@ -27,9 +27,7 @@ var request_id := 0
 var phases: Array[Dictionary] = []
 var phase_index := -1
 var real_elapsed := 0.0
-var speed_scaled_elapsed := 0.0
 var phase_duration := 1.0
-var speed_multiplier := 1.0
 var reduced_motion := false
 var active := false
 var skip_requested := false
@@ -52,7 +50,7 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	gui_input.connect(_on_gui_input)
 	set_process_unhandled_key_input(true)
-	speed_button.pressed.connect(func(): speed_requested.emit())
+	speed_button.visible = false
 	set_process(false)
 	visible = false
 
@@ -90,12 +88,6 @@ func dismiss() -> void:
 	set_process(false)
 	visible = false
 
-func set_speed_multiplier(value: float) -> void:
-	if value in [1.0, 3.0, 8.0]:
-		speed_multiplier = value
-		if speed_button != null:
-			speed_button.text = "×%d" % int(value)
-
 func set_reduced_motion(enabled: bool) -> void:
 	reduced_motion = enabled
 	if active:
@@ -122,16 +114,14 @@ func _process(delta: float) -> void:
 	if not active:
 		return
 	real_elapsed += delta
-	speed_scaled_elapsed += delta * speed_multiplier
 	var phase: Dictionary = phases[phase_index]
 	var kind := current_phase()
 	if kind == PHASE_CLOCK:
-		_update_clock(phase, speed_scaled_elapsed)
+		_update_clock(phase, real_elapsed)
 	elif kind == PHASE_NIGHT and not reduced_motion:
 		_update_sleep(real_elapsed)
 	var can_skip := kind == PHASE_OFF_PHONE and skip_requested and real_elapsed >= MINIMUM_SKIP_DELAY_SECONDS
-	var active_progress := real_elapsed if kind == PHASE_NIGHT else speed_scaled_elapsed
-	var automatic_finished := active_progress >= phase_duration and real_elapsed >= MINIMUM_AUTOMATIC_VISIBLE_SECONDS
+	var automatic_finished := real_elapsed >= phase_duration and real_elapsed >= MINIMUM_AUTOMATIC_VISIBLE_SECONDS
 	if can_skip or automatic_finished:
 		if kind == PHASE_CLOCK:
 			_update_clock(phase, phase_duration)
@@ -146,7 +136,6 @@ func _advance_phase() -> void:
 		flow_finished.emit(request_id)
 		return
 	real_elapsed = 0.0
-	speed_scaled_elapsed = 0.0
 	skip_requested = false
 	_apply_phase(phases[phase_index])
 	phase_changed.emit(current_phase())

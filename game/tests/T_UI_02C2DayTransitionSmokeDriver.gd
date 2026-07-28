@@ -45,6 +45,7 @@ func _run() -> void:
 	messages.open_thread(private_id)
 	await get_tree().process_frame
 	await get_tree().process_frame
+	var before_opened: Dictionary = messages.describe_state()
 	var before_focus = get_viewport().gui_get_focus_owner()
 	var before_total: int = messages.total_presentation_count()
 	var before_messages: int = messages.thread_message_count(private_id)
@@ -157,7 +158,7 @@ func _run() -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	var opened: Dictionary = messages.describe_state()
-	_expect(int(opened.get("day_divider_count", 0)) == before_dividers + 1, "new divider must render")
+	_expect(int(opened.get("day_divider_count", 0)) == int(before_opened.get("day_divider_count", 0)) + 1, "new divider must render")
 	_expect(int(opened.get("unread_divider_count", 0)) == 1, "first open must render one unread divider")
 	_expect(bool(opened.get("day_divider_precedes_unread", false)), "order must be DayDivider then UnreadDivider then new message")
 	_expect(messages.thread_unread_count(private_id) == 0, "opening must mark new message read")

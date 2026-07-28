@@ -22,11 +22,14 @@ class UIMsg04B3TransitionReadabilityStaticTests(unittest.TestCase):
         self.assertIn("title_label.visible = kind == PHASE_NEW_DAY", clock_block)
         self.assertNotIn("0.62", source)
 
-    def test_night_uses_real_elapsed_and_stable_native_labels(self):
+    def test_all_phases_use_real_elapsed_and_stable_native_labels(self):
         source = self.read("game/scripts/ui/messages/TimePassageOverlay.gd")
         scene = self.read("game/scenes/portrait/messages/TimePassageOverlay.tscn")
         self.assertIn("real_elapsed += delta", source)
-        self.assertIn("speed_scaled_elapsed += delta * speed_multiplier", source)
+        self.assertIn("_update_clock(phase, real_elapsed)", source)
+        self.assertNotIn("speed_scaled_elapsed", source)
+        self.assertNotIn("speed_multiplier", source)
+        self.assertIn("speed_button.visible = false", source)
         self.assertIn("_update_sleep(real_elapsed)", source)
         self.assertIn("NIGHT_DURATION_SECONDS := 2.6", source)
         self.assertNotIn("ping_pong", source.lower())

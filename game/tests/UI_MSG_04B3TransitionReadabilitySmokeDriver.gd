@@ -28,7 +28,6 @@ func _run() -> void:
 func _exercise_overlay(overlay) -> void:
 	overlay.set_process(false)
 	overlay.set_reduced_motion(false)
-	overlay.set_speed_multiplier(8.0)
 	var clock := [{
 		"phase": "CLOCK", "from_minutes": 1092, "to_minutes": 1098,
 		"from_time": "18:12", "to_time": "18:18", "duration_seconds": 4.0,
@@ -40,7 +39,9 @@ func _exercise_overlay(overlay) -> void:
 	_expect(not overlay.eyebrow_label.visible and not overlay.title_label.visible and not overlay.body_label.visible, "CLOCK hides map card copy")
 	_expect(overlay.eyebrow_label.text == "" and overlay.title_label.text == "" and overlay.body_label.text == "", "CLOCK ignores FIN DE JOURNEE copy")
 	overlay._process(0.50)
-	_expect(not overlay.active and overlay.clock_label.text == "18:18", "CLOCK remains speed-scaled")
+	_expect(overlay.active and overlay.clock_label.text != "18:18", "CLOCK remains active after 0.5 real seconds")
+	overlay._process(3.50)
+	_expect(not overlay.active and overlay.clock_label.text == "18:18", "CLOCK completes after 4 real seconds")
 	overlay.dismiss()
 
 	var night := [{"phase": "NIGHT", "duration_seconds": 2.6}]

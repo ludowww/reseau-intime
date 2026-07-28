@@ -202,8 +202,6 @@ func start_typing(thread_id: String, author_id: String) -> void:
 		conversation_screen.show_typing(author, _reduced_motion_enabled(), runtime_delivery_active and runtime_delivery_thread_id == thread_id, reading_speed_multiplier)
 
 func update_active_typing_speed() -> void:
-	if time_passage_overlay != null:
-		time_passage_overlay.set_speed_multiplier(reading_speed_multiplier)
 	if not runtime_delivery_active or not is_thread_typing(runtime_delivery_thread_id):
 		return
 	var state: Dictionary = typing_states_by_thread.get(runtime_delivery_thread_id, {})
@@ -1017,7 +1015,6 @@ func _start_time_passage_flow(transition: Dictionary) -> void:
 	_set_clock_interactions_blocked(true)
 	var phases := _time_passage_phases(transition)
 	time_passage_overlay.z_index = 8
-	time_passage_overlay.set_speed_multiplier(reading_speed_multiplier)
 	time_passage_overlay.set_reduced_motion(_reduced_motion_enabled())
 	time_passage_overlay.set_compact_height_mode(compact_height_mode)
 	if not time_passage_overlay.play_flow(phases, request_id):
@@ -1279,7 +1276,6 @@ func _build() -> void:
 	time_passage_overlay.z_index = 8
 	time_passage_overlay.visible = false
 	time_passage_overlay.phase_changed.connect(func(phase: String): transition_flow_phase = phase)
-	time_passage_overlay.speed_requested.connect(func(): reading_speed_requested.emit())
 	add_child(time_passage_overlay)
 	notification_banner = NOTIFICATION_BANNER_SCRIPT.new()
 	notification_banner.set_anchors_preset(Control.PRESET_TOP_WIDE)

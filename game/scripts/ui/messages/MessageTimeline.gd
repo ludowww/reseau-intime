@@ -8,6 +8,11 @@ const UNREAD_DIVIDER_SCRIPT := preload("res://scripts/ui/messages/UnreadDivider.
 const TYPING_INDICATOR_SCRIPT := preload("res://scripts/ui/messages/TypingIndicator.gd")
 const DAY_DIVIDER_SCRIPT := preload("res://scripts/ui/messages/DayDivider.gd")
 const IMAGE_MESSAGE_SCRIPT := preload("res://scripts/ui/messages/ImageMessage.gd")
+const DAY_LABELS := {
+	1: "Mardi",
+	2: "Mercredi",
+	3: "Jeudi",
+}
 
 var PORTRAIT_THEME
 var characters: Dictionary = {}
@@ -34,6 +39,7 @@ var replacement_spacer_request_id := 0
 var replacement_layout_anchor_request_id := 0
 var replacement_spacer_created_total := 0
 var replacement_spacer_removed_total := 0
+var _rendered_source_days: Dictionary = {}
 
 func configure(message_presentations: Array[Dictionary], character_presentations: Dictionary, group_conversation: bool, portrait_theme, reading_position := -1, first_unread_id := "") -> void:
 	messages = message_presentations
@@ -72,12 +78,12 @@ func append_player_choice(choice: Dictionary) -> void:
 		"is_read": true,
 		"source_day": 0,
 	})
-	message_box.add_child(_build_message_bubble(messages[-1]))
+	_append_presentation_node(messages[-1])
 	call_deferred("scroll_to_last_message")
 
 func append_incoming_message(message: Dictionary, force_follow := false) -> void:
 	messages.append(message.duplicate(true))
-	message_box.add_child(_build_message_bubble(messages[-1]))
+	_append_presentation_node(messages[-1])
 	if typing_indicator != null and is_instance_valid(typing_indicator):
 		message_box.move_child(typing_indicator, message_box.get_child_count() - 1)
 	if force_follow:
@@ -96,18 +102,17 @@ func replace_typing_with_message(message: Dictionary, force_follow := true) -> v
 	var outgoing_height: float = outgoing_indicator.size.y
 	outgoing_indicator.stop_animation()
 	var stored_message := message.duplicate(true)
-	var message_bubble := _build_message_bubble(stored_message)
-	var message_height: float = message_bubble.get_combined_minimum_size().y
-	var preserve_first_layout: bool = force_follow and is_last_message_visible() and outgoing_height > message_height
+	var rendered: Dictionary = _append_presentation_node(stored_message, typing_index)
+	var message_bubble: Control = rendered.get("bubble")
+	var message_height: float = message_bubble.get_combined_minimum_size().y if message_bubble != null else 0.0
+	var preserve_first_layout: bool = message_bubble != null and force_follow and is_last_message_visible() and outgoing_height > message_height
 	if force_follow:
 		replacement_layout_anchor_request_id += 1
 		var anchor_request_id := replacement_layout_anchor_request_id
 		get_v_scroll_bar().changed.connect(_anchor_atomic_replacement_layout.bind(anchor_request_id), CONNECT_ONE_SHOT)
-	message_box.add_child(message_bubble)
-	message_box.move_child(message_bubble, typing_index)
 	messages.append(stored_message)
 	if preserve_first_layout:
-		_create_replacement_spacer(outgoing_height, typing_index + 1)
+		_create_replacement_spacer(outgoing_height, typing_index + int(rendered.nodes.size()))
 	if outgoing_indicator.get_parent() == message_box:
 		message_box.remove_child(outgoing_indicator)
 	outgoing_indicator.queue_free()
@@ -456,6 +461,7 @@ func _build() -> void:
 	incoming_accents.clear()
 	image_messages.clear()
 	divider_count = 0
+	_rendered_source_days.clear()
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	size_flags_vertical = Control.SIZE_EXPAND_FILL
 	horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
@@ -465,22 +471,77 @@ func _build() -> void:
 	message_box.add_theme_constant_override("separation", 10)
 	add_child(message_box)
 	for message in messages:
-		if str(message.get("content_type", "")) == "SYSTEM_DAY_DIVIDER":
-			var day_divider = DAY_DIVIDER_SCRIPT.new()
-			day_divider.configure(str(message.get("text", "")), PORTRAIT_THEME)
-			message_box.add_child(day_divider)
-			continue
-		if str(message.get("content_type", "")) == "OFF_PHONE_TRANSITION":
-			continue
-		if divider_count == 0 and first_unread_message_id != "" and str(message.get("message_id", "")) == first_unread_message_id:
-			var divider = UNREAD_DIVIDER_SCRIPT.new()
-			divider.configure(PORTRAIT_THEME)
-			message_box.add_child(divider)
-			divider_count = 1
-		message_box.add_child(_build_message_bubble(message))
+		_append_presentation_node(message)
+
+func _append_presentation_node(message: Dictionary, insert_index := -1) -> Dictionary:
+	var rendered := {"nodes": [], "bubble": null}
+	var content_type := str(message.get("content_type", ""))
+	var source_day := _source_day_for(message)
+	if content_type == "SYSTEM_DAY_DIVIDER":
+		if source_day > 0:
+			_append_day_divider(source_day, insert_index, rendered)
+		elif not "FIN DE JOURNÉE" in str(message.get("text", "")).to_upper():
+			var compatible_divider = DAY_DIVIDER_SCRIPT.new()
+			compatible_divider.configure(str(message.get("text", "")), PORTRAIT_THEME)
+			_mount_presentation_node(compatible_divider, insert_index)
+			rendered.nodes.append(compatible_divider)
+		return rendered
+	if content_type == "OFF_PHONE_TRANSITION":
+		return rendered
+	if source_day > 0:
+		_append_day_divider(source_day, insert_index, rendered)
+		if insert_index >= 0:
+			insert_index += rendered.nodes.size()
+	if divider_count == 0 and first_unread_message_id != "" and str(message.get("message_id", "")) == first_unread_message_id:
+		var unread_divider = UNREAD_DIVIDER_SCRIPT.new()
+		unread_divider.configure(PORTRAIT_THEME)
+		_mount_presentation_node(unread_divider, insert_index)
+		rendered.nodes.append(unread_divider)
+		divider_count = 1
+		if insert_index >= 0:
+			insert_index += 1
+	var message_bubble := _build_message_bubble(message)
+	_mount_presentation_node(message_bubble, insert_index)
+	rendered.nodes.append(message_bubble)
+	rendered.bubble = message_bubble
+	return rendered
+
+func _append_day_divider(source_day: int, insert_index: int, rendered: Dictionary) -> void:
+	if _rendered_source_days.has(source_day):
+		return
+	var day_divider = DAY_DIVIDER_SCRIPT.new()
+	day_divider.configure(_day_label_for(source_day), PORTRAIT_THEME)
+	_mount_presentation_node(day_divider, insert_index)
+	rendered.nodes.append(day_divider)
+	_rendered_source_days[source_day] = true
+
+func _mount_presentation_node(node: Control, insert_index: int) -> void:
+	message_box.add_child(node)
+	if insert_index >= 0:
+		message_box.move_child(node, mini(insert_index, message_box.get_child_count() - 1))
+
+func _source_day_for(message: Dictionary) -> int:
+	var source_day := int(message.get("source_day", 0))
+	if DAY_LABELS.has(source_day):
+		return source_day
+	if str(message.get("content_type", "")) != "SYSTEM_DAY_DIVIDER":
+		return 0
+	var legacy_text := str(message.get("text", "")).to_upper()
+	if "MARDI" in legacy_text:
+		return 1
+	if "MERCREDI" in legacy_text:
+		return 2
+	if "JEUDI" in legacy_text:
+		return 3
+	return 0
+
+func _day_label_for(source_day: int) -> String:
+	return str(DAY_LABELS.get(source_day, ""))
 
 # MessageBubble keeps Player on the right and interlocutors on the left.
 func _build_message_bubble(message: Dictionary) -> HBoxContainer:
+	var content_type := str(message.get("content_type", ""))
+	assert(content_type != "SYSTEM_DAY_DIVIDER", "SYSTEM_DAY_DIVIDER must be rendered by DayDivider")
 	var row := HBoxContainer.new()
 	row.name = "MessageBubble"
 	row.set_meta("message_bubble", true)
@@ -488,7 +549,6 @@ func _build_message_bubble(message: Dictionary) -> HBoxContainer:
 	row.set_meta("content_type", str(message.get("content_type", "")))
 	row.set_meta("is_player", bool(message.get("is_player", false)))
 	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	var content_type := str(message.get("content_type", ""))
 	var is_player := bool(message.get("is_player", false))
 	var author_id := str(message.get("author_id", ""))
 	var author: Dictionary = characters.get(author_id, {})
