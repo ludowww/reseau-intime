@@ -179,17 +179,18 @@ Les transitions restent en temps réel. Aucun provider futur ne doit réintrodui
 
 ## 3.6 Transitions unifiées
 
-Les phases reconnues par le flux commun sont notamment :
+Les phases jouées par `TimePassageOverlay` sont exactement :
 
 ```text
 CLOCK
 OFF_PHONE
 NIGHT
 NEW_DAY
-CONTENT_END
 ```
 
-Le provider expose une transition ou `pending_transition_flow`. L’UI joue les phases, puis rappelle l’action de reprise autorisée.
+`DECISION` et `CONTENT_END` restent des flux de carte `DayTransition` hors overlay. Ils sont eux aussi indépendants de la vitesse de lecture.
+
+Le provider expose une transition ou `pending_transition_flow`. L’UI route les phases vers l’overlay ou la carte appropriée, puis rappelle l’action de reprise autorisée.
 
 Les journées futures doivent :
 
