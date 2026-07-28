@@ -31,7 +31,8 @@ class UIMsg04BNarrativeTimeStaticTests(unittest.TestCase):
         j03 = json.loads(self.read("game/data/runtime/season_1/j03_runtime_map.json"))
         self.assertEqual("clock_then_card", j03["sandra_offer"]["transition_mode"])
         self.assertEqual("13:50", j03["sandra_offer"]["to_time"])
-        self.assertEqual("clock_then_card", j03["marie_time_card"]["transition_mode"])
+        # UI-MSG-04B2 replaces the informational Marie card with an automatic CLOCK.
+        self.assertEqual("clock_only", j03["marie_time_card"]["transition_mode"])
         self.assertEqual("18:20", j03["marie_time_card"]["to_time"])
 
     def test_providers_own_time_and_snapshots(self):

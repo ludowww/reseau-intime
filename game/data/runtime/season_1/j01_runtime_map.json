@@ -29,13 +29,23 @@
       "present": "Player rentre avec le pain.\nLe dîner et la marche se déroulent hors téléphone.",
       "delayed": "Player arrive plus tard, avec le pain.\nLe dîner et la marche se déroulent hors téléphone.",
       "action_label": "Continuer",
-      "transition_mode": "offline"
+      "transition_mode": "offline",
+      "overlay_phase": "OFF_PHONE",
+      "flow_phases": ["OFF_PHONE"]
     },
     "sandra": {
       "message_id": "j01_transition_final_return",
       "text": "Player pose le téléphone et revient vers Marie.\nLa fin de soirée se déroule hors écran.",
       "action_label": "Continuer",
-      "transition_mode": "offline"
+      "transition_mode": "offline",
+      "overlay_phase": "OFF_PHONE",
+      "flow_phases": ["OFF_PHONE", "NIGHT", "NEW_DAY"],
+      "next_day_presentation": {
+        "eyebrow": "MERCREDI — MIDI",
+        "title": "Faire de la place",
+        "subtitle": "12:10",
+        "body": "Mathilde doit quitter temporairement son appartement. Marie et Player font de la place avant son arrivée."
+      }
     }
   },
   "sandra_notification": {

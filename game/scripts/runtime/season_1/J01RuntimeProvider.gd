@@ -150,7 +150,8 @@ func apply_choice(thread_id: String, choice_id: String) -> Dictionary:
 	_append_presentation(thread_id, {
 		"message_id": "%s_player" % choice_id,
 		"author_id": "player",
-		"timestamp": "maintenant",
+		# Captured from the provider authority when the choice is accepted.
+		"timestamp": current_narrative_time_text(),
 		"content_type": "TEXT",
 		"text": str(selected.get("text", "")),
 		"media_ref": "",
@@ -317,6 +318,7 @@ func _request_transition(thread_id: String) -> void:
 			"thread_id": thread_id,
 			"message_id": str(transition.get("message_id", "")),
 			"text": str(transition.get("delayed" if delayed else "present", "")),
+			"flow_phases": transition.get("flow_phases", ["OFF_PHONE"]).duplicate(),
 		}
 	else:
 		var transition: Dictionary = runtime_map.get("transitions", {}).get("sandra", {})
@@ -325,6 +327,8 @@ func _request_transition(thread_id: String) -> void:
 			"thread_id": thread_id,
 			"message_id": str(transition.get("message_id", "")),
 			"text": str(transition.get("text", "")),
+			"flow_phases": transition.get("flow_phases", ["OFF_PHONE", "NIGHT", "NEW_DAY"]).duplicate(),
+			"next_day_presentation": transition.get("next_day_presentation", {}).duplicate(true),
 		}
 	_append_presentation(thread_id, {
 		"message_id": str(pending_transition.get("message_id", "")),

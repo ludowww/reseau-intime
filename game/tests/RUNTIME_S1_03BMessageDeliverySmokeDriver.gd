@@ -118,8 +118,8 @@ func _run() -> void:
 	await _choose_id(messages, "choice_j1_marie_present")
 	await _choose_id(messages, "choice_j1_marie_laverriere_guided")
 	transition_visible_count = 0
-	messages.off_phone_transition.visibility_changed.connect(func():
-		if messages.off_phone_transition.visible:
+	messages.time_passage_overlay.visibility_changed.connect(func():
+		if messages.time_passage_overlay.visible:
 			transition_visible_count += 1
 	)
 	var final_button: Variant = _choice_button(messages, "choice_j1_marie_mathilde_guided")
@@ -129,7 +129,7 @@ func _run() -> void:
 		_expect(messages.runtime_delivery_active, "final delivery lock must engage immediately")
 		_expect(not messages.is_off_phone_transition_active(), "transition must not be premature")
 		await _wait_runtime_delivery_complete(messages)
-		_expect(messages.is_off_phone_transition_active(), "transition must appear after final message layout")
+		_expect(not messages.is_time_passage_active(), "automatic OFF_PHONE must dismiss after final message layout")
 		_expect(transition_visible_count == 1, "transition surface must be configured exactly once")
 		_expect(messages.presentation_count_by_content_type(thread_id, "OFF_PHONE_TRANSITION") == 1, "OFF_PHONE transition marker must be preserved once")
 		_expect(_bubble_count_by_content_type(messages.conversation_screen.timeline, "OFF_PHONE_TRANSITION") == 0, "OFF_PHONE_TRANSITION must never render as a bubble")
@@ -138,9 +138,9 @@ func _run() -> void:
 	var bounds: Rect2 = messages.get_global_rect()
 	timeline_rect = messages.conversation_screen.timeline.get_global_rect()
 	_expect(not bool(messages.describe_state().get("has_horizontal_crop", true)), "portrait layout must not crop")
-	_expect(bounds.encloses(timeline_rect) or messages.is_off_phone_transition_active(), "timeline rect must remain inside Messages bounds")
-	if messages.is_off_phone_transition_active():
-		var transition_rect: Rect2 = messages.off_phone_transition.get_global_rect()
+	_expect(bounds.encloses(timeline_rect) or not messages.conversation_screen.visible, "timeline rect must remain inside Messages bounds")
+	if messages.is_time_passage_active():
+		var transition_rect: Rect2 = messages.time_passage_overlay.get_global_rect()
 		_expect(bounds.encloses(transition_rect) and transition_rect.size.x > 0.0 and transition_rect.size.y > 0.0, "transition rect must remain inside Messages bounds")
 	_finish()
 

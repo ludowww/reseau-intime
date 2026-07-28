@@ -16,6 +16,7 @@ func _run() -> void:
 	add_child(main)
 	await _frames(4)
 	var shell = main.shell
+	shell.set_reduced_motion_enabled(true)
 	_expect(shell != null, "production shell missing")
 	if shell == null:
 		_finish()
@@ -51,11 +52,8 @@ func _run() -> void:
 	await _choose(messages, "choice_j1_marie_laverriere_guided")
 	await _choose(messages, "choice_j1_marie_mathilde_guided")
 	await _frames(2)
-	_expect(messages.is_off_phone_transition_active(), "first transition must open")
-	_expect(_transition_is_bounded(messages), "first transition must stay inside Messages bounds")
-	_expect(not messages.off_phone_transition.display_label.contains("«"), "first transition must contain no oral dialogue")
-	messages.off_phone_transition.resume_button.emit_signal("pressed")
-	await _frames(3)
+	_expect(messages.describe_state().get("time_passage_surface_count", 0) == 1, "unified overlay must remain a single instance")
+	await _wait_time_passage(messages)
 	_expect(messages.screen_mode == "list", "first transition destination must be list")
 	_expect(provider.state.promises["marie_j01_shared_evening"]["status"] == "PAID", "Marie promise must be paid")
 	_expect(not provider.state.pay_marie_promise(), "paid Marie promise must reject a second payment")
@@ -100,16 +98,11 @@ func _run() -> void:
 	await _choose(messages, "choice_j1_sandra_goodnight_guided")
 	await _frames(2)
 	_expect(messages.presentation_count_by_id("msg_j1_sandra_trace_017_precise") == 1, "precise conditional message missing")
-	_expect(messages.is_off_phone_transition_active(), "second transition must open")
-	_expect(_transition_is_bounded(messages), "second transition must stay inside Messages bounds")
-	messages.off_phone_transition.resume_button.emit_signal("pressed")
-	await _frames(2)
-	_expect(provider.state.day_status == "COMPLETE", "J01 must complete")
-	_expect(messages.is_day_transition_active(), "temporary J01 end must be visible")
-	_expect(messages.day_transition.display_title() == "J01 terminé", "J01 end title mismatch")
-	messages.day_transition.continue_button.emit_signal("pressed")
-	_expect(messages.is_day_transition_active(), "Terminer must hand off to J02")
-	_expect(messages.day_transition.display_title() == "Faire de la place", "J02 start card missing after J01")
+	_expect(messages.describe_state().get("time_passage_surface_count", 0) == 1, "J01 end must reuse the unified overlay")
+	await _wait_time_passage(messages)
+	_expect(provider.j01_provider.day_end_visible, "J01 must complete")
+	_expect(provider.active_day == "J02", "J01 must hand off automatically to J02")
+	_expect(not messages.is_day_transition_active(), "no J01/J02 informational cards may remain")
 
 	_test_alternate_states()
 	_test_snapshot_round_trip()
@@ -240,6 +233,14 @@ func _id_count(items: Array, message_id: String) -> int:
 func _frames(count: int) -> void:
 	for _index in range(count):
 		await get_tree().process_frame
+
+func _wait_time_passage(messages) -> void:
+	for _index in range(240):
+		if not messages.is_time_passage_active():
+			await _frames(3)
+			return
+		await get_tree().process_frame
+	_expect(false, "time passage did not finish")
 
 func _arg(prefix: String, fallback: String) -> String:
 	for arg in OS.get_cmdline_user_args():

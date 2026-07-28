@@ -14,6 +14,7 @@ const CONVERSATION_SCREEN_SCENE := preload("res://scenes/portrait/messages/Portr
 const NOTIFICATION_BANNER_SCRIPT := preload("res://scripts/ui/messages/NotificationBanner.gd")
 const OFF_PHONE_TRANSITION_SCRIPT := preload("res://scripts/ui/messages/OffPhoneTransition.gd")
 const DAY_TRANSITION_SCRIPT := preload("res://scripts/ui/messages/DayTransition.gd")
+const TIME_PASSAGE_OVERLAY_SCENE := preload("res://scenes/portrait/messages/TimePassageOverlay.tscn")
 const NARRATIVE_TIME := preload("res://scripts/runtime/season_1/NarrativeTime.gd")
 const INTER_MESSAGE_PAUSE_SECONDS := 0.30
 const IMAGE_TYPING_DURATION_SECONDS := 1.50
@@ -21,6 +22,8 @@ const MIN_TYPING_SECONDS_X3 := 0.35
 const MIN_TYPING_SECONDS_X8 := 0.22
 const MIN_PAUSE_SECONDS := 0.04
 const REDUCED_MOTION_CLOCK_DELAY_SECONDS := 0.15
+const TRANSITION_CARD_DECISION := "DECISION"
+const TRANSITION_CARD_CONTENT_END := "CONTENT_END"
 
 var PORTRAIT_THEME = preload("res://scripts/ui/PortraitShellTheme.gd").new()
 var characters: Dictionary = {}
@@ -41,6 +44,7 @@ var conversation_screen
 var notification_banner
 var off_phone_transition
 var day_transition
+var time_passage_overlay
 var notification_focus_origin: Control
 var active_thread_id := ""
 var screen_mode := "list"
@@ -64,6 +68,17 @@ var narrative_clock_base_duration := 4.0
 var narrative_clock_progress := 0.0
 var narrative_clock_pending_transition: Dictionary = {}
 var narrative_clock_completion_result: Dictionary = {}
+# Bounded, non-serialized presentation state. Providers remain authoritative.
+var transition_flow_active := false
+var transition_flow_request_id := 0
+var transition_flow_phase := ""
+var transition_flow_presentation: Dictionary = {}
+var transition_flow_progress := 0.0
+var transition_flow_from_minutes := -1
+var transition_flow_to_minutes := -1
+var transition_flow_pending_result: Dictionary = {}
+var transition_flow_next_day_presentation: Dictionary = {}
+var authoritative_resume_request_id := 0
 var compact_height_mode := false
 # Provider transcript, visually presented IDs, and pending suffixes stay separate per thread.
 var runtime_provider_transcript_by_thread: Dictionary = {}
@@ -92,6 +107,8 @@ func set_compact_height_mode(enabled: bool) -> void:
 		off_phone_transition.set_compact_height_mode(enabled)
 	if day_transition != null:
 		day_transition.set_compact_height_mode(enabled)
+	if time_passage_overlay != null:
+		time_passage_overlay.set_compact_height_mode(enabled)
 
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -105,13 +122,15 @@ func _ready() -> void:
 		_apply_content_source(content_source)
 	_build()
 	visibility_changed.connect(_on_visibility_changed)
+	if runtime_provider != null:
+		call_deferred("_resume_authoritative_transition_flow")
 
 func focus_first_conversation() -> void:
 	if conversation_list != null and screen_mode == "list":
 		conversation_list.focus_first_card()
 
 func open_thread(thread_id: String) -> void:
-	if runtime_delivery_active or is_off_phone_transition_active() or is_day_transition_active():
+	if runtime_delivery_active or is_off_phone_transition_active() or is_day_transition_active() or is_time_passage_active():
 		return
 	var selected := _thread_for(thread_id)
 	if selected.is_empty():
@@ -136,7 +155,7 @@ func open_thread(thread_id: String) -> void:
 		call_deferred("_start_pending_delivery_for_thread", thread_id)
 
 func return_to_list() -> void:
-	if runtime_delivery_active or is_off_phone_transition_active() or is_day_transition_active():
+	if runtime_delivery_active or is_off_phone_transition_active() or is_day_transition_active() or is_time_passage_active():
 		return
 	_save_reading_position()
 	conversation_screen.hide_typing()
@@ -150,13 +169,13 @@ func return_to_list() -> void:
 			call_deferred("_start_narrative_clock_transition", transition)
 
 func activate_first_choice() -> void:
-	if runtime_delivery_active or is_off_phone_transition_active() or is_day_transition_active():
+	if runtime_delivery_active or is_off_phone_transition_active() or is_day_transition_active() or is_time_passage_active():
 		return
 	if screen_mode == "conversation":
 		conversation_screen.activate_first_choice()
 
 func start_typing(thread_id: String, author_id: String) -> void:
-	if is_off_phone_transition_active() or is_day_transition_active():
+	if is_off_phone_transition_active() or is_day_transition_active() or is_time_passage_active():
 		return
 	var thread := _thread_for(thread_id)
 	if thread.is_empty():
@@ -175,6 +194,8 @@ func start_typing(thread_id: String, author_id: String) -> void:
 		conversation_screen.show_typing(author, _reduced_motion_enabled(), runtime_delivery_active and runtime_delivery_thread_id == thread_id, reading_speed_multiplier)
 
 func update_active_typing_speed() -> void:
+	if time_passage_overlay != null:
+		time_passage_overlay.set_speed_multiplier(reading_speed_multiplier)
 	if not runtime_delivery_active or not is_thread_typing(runtime_delivery_thread_id):
 		return
 	var state: Dictionary = typing_states_by_thread.get(runtime_delivery_thread_id, {})
@@ -186,7 +207,7 @@ func reconfigure_active_typing() -> void:
 	_sync_active_typing()
 
 func stop_typing(thread_id: String) -> void:
-	if is_off_phone_transition_active() or is_day_transition_active():
+	if is_off_phone_transition_active() or is_day_transition_active() or is_time_passage_active():
 		return
 	if not typing_states_by_thread.has(thread_id):
 		return
@@ -199,7 +220,7 @@ func is_thread_typing(thread_id: String) -> bool:
 	return bool(state.get("active", false))
 
 func simulate_incoming_message(thread_id: String) -> void:
-	if is_off_phone_transition_active() or is_day_transition_active():
+	if is_off_phone_transition_active() or is_day_transition_active() or is_time_passage_active():
 		return
 	var thread := _thread_for(thread_id)
 	if thread.is_empty():
@@ -423,6 +444,9 @@ func _finish_runtime_day_transition() -> void:
 func is_day_transition_active() -> bool:
 	return bool(day_transition_state.get("active", false))
 
+func is_time_passage_active() -> bool:
+	return transition_flow_active and time_passage_overlay != null and time_passage_overlay.visible
+
 func _restore_off_phone_reading_position(thread_id: String, value: int) -> void:
 	if is_off_phone_transition_active() or active_thread_id != thread_id or conversation_screen == null:
 		return
@@ -475,6 +499,11 @@ func describe_state() -> Dictionary:
 		"narrative_clock_animation_active": narrative_clock_animation_active,
 		"narrative_clock_from_minutes": narrative_clock_from_minutes,
 		"narrative_clock_to_minutes": narrative_clock_to_minutes,
+		"transition_flow_active": transition_flow_active,
+		"transition_flow_phase": transition_flow_phase,
+		"time_passage_visible": time_passage_overlay != null and time_passage_overlay.visible,
+		"time_passage_surface_count": 1 if time_passage_overlay != null and is_instance_valid(time_passage_overlay) else 0,
+		"phone_underlay_visible": (conversation_screen != null and conversation_screen.visible) or (conversation_list != null and conversation_list.visible),
 		"day_transition_subtitle": day_transition.display_subtitle() if day_transition != null else "",
 		"off_phone_transition_rect": off_phone_transition.surface_rect() if off_phone_transition != null else Rect2(),
 		"day_transition_rect": day_transition.surface_rect() if day_transition != null else Rect2(),
@@ -823,7 +852,11 @@ func _finish_runtime_delivery(request_id: int, thread_id: String) -> void:
 			return
 		runtime_pending_transition_by_thread[thread_id] = {}
 		_complete_runtime_delivery(false)
-		if str(pending_transition.get("transition_mode", "")) == "clock_only" and not narrative_clock_completion_result.is_empty():
+		if not transition_flow_pending_result.is_empty():
+			var flow_result := transition_flow_pending_result.duplicate(true)
+			transition_flow_pending_result = {}
+			_apply_time_passage_result(flow_result, pending_transition)
+		elif str(pending_transition.get("transition_mode", "")) == "clock_only" and not narrative_clock_completion_result.is_empty():
 			var clock_result := narrative_clock_completion_result.duplicate(true)
 			narrative_clock_completion_result = {}
 			_refresh_after_clock_only(clock_result)
@@ -909,6 +942,12 @@ func _exit_tree() -> void:
 	narrative_clock_request_id += 1
 	narrative_clock_pending_transition = {}
 	narrative_clock_completion_result = {}
+	transition_flow_active = false
+	transition_flow_request_id += 1
+	authoritative_resume_request_id += 1
+	transition_flow_pending_result = {}
+	if time_passage_overlay != null:
+		time_passage_overlay.cancel_flow()
 	if conversation_screen != null:
 		conversation_screen.hide_typing()
 
@@ -916,78 +955,134 @@ func _start_runtime_transition_after_layout(request_id: int, thread_id: String, 
 	await get_tree().process_frame
 	if not _runtime_delivery_request_is_current(request_id, thread_id) or runtime_provider == null:
 		return false
-	if str(transition.get("transition_mode", "")) in ["clock_only", "clock_then_card"]:
-		await _start_narrative_clock_transition(transition)
-	elif str(transition.get("kind", "")) == "day_transition":
-		_start_runtime_day_card(transition.get("presentation", {}))
-	else:
-		start_off_phone_transition(thread_id)
+	await _start_time_passage_flow(transition)
 	await get_tree().process_frame
 	if not _runtime_delivery_request_is_current(request_id, thread_id):
 		return false
-	return is_day_transition_active() or is_off_phone_transition_active() or str(transition.get("transition_mode", "")) == "clock_only"
+	return is_day_transition_active() or not transition_flow_pending_result.is_empty() or not transition.is_empty()
 
 func _start_narrative_clock_transition(transition: Dictionary) -> void:
-	if runtime_provider == null or narrative_clock_animation_active or transition.is_empty():
-		return
-	var mode: String = str(transition.get("transition_mode", ""))
-	if mode not in ["clock_only", "clock_then_card"]:
-		_start_runtime_day_card(transition.get("presentation", {}))
-		return
-	var target: int = NARRATIVE_TIME.parse_narrative_time(str(transition.get("to_time", "")))
-	var authoritative_from: int = int(runtime_provider.current_narrative_time_minutes())
-	if target < authoritative_from:
-		return
-	narrative_clock_request_id += 1
-	var request_id := narrative_clock_request_id
-	narrative_clock_animation_active = true
-	narrative_clock_from_minutes = authoritative_from
-	narrative_clock_to_minutes = target
-	narrative_clock_base_duration = maxf(float(transition.get("duration_seconds", 4.0)), 0.01)
-	narrative_clock_progress = 0.0
-	narrative_clock_pending_transition = transition.duplicate(true)
-	narrative_clock_completion_result = {}
-	_set_clock_interactions_blocked(true)
-	if conversation_screen != null:
-		conversation_screen.hide_typing()
-		conversation_screen.set_narrative_time(NARRATIVE_TIME.format_narrative_time(authoritative_from))
-	await _run_narrative_clock(request_id)
+	await _start_time_passage_flow(transition)
 
-func _run_narrative_clock(request_id: int) -> void:
-	var reduced_delay := REDUCED_MOTION_CLOCK_DELAY_SECONDS
-	while narrative_clock_animation_active and request_id == narrative_clock_request_id:
-		await get_tree().process_frame
-		if not is_inside_tree() or request_id != narrative_clock_request_id:
-			return
-		var delta := get_process_delta_time()
-		if _reduced_motion_enabled():
-			narrative_clock_progress += delta * reading_speed_multiplier / maxf(runtime_delivery_time_scale, 0.001)
-			if narrative_clock_progress < maxf(reduced_delay, 0.05): continue
-		else:
-			narrative_clock_progress += delta * reading_speed_multiplier / maxf(runtime_delivery_time_scale, 0.001)
-			var ratio := clampf(narrative_clock_progress / narrative_clock_base_duration, 0.0, 1.0)
-			var display_minutes := mini(narrative_clock_to_minutes, narrative_clock_from_minutes + int(floor(float(narrative_clock_to_minutes - narrative_clock_from_minutes) * ratio)))
-			if conversation_screen != null: conversation_screen.set_narrative_time(NARRATIVE_TIME.format_narrative_time(display_minutes))
-		if (_reduced_motion_enabled() and narrative_clock_progress >= maxf(reduced_delay, 0.05)) or narrative_clock_progress >= narrative_clock_base_duration:
-			break
-	if request_id != narrative_clock_request_id or not narrative_clock_animation_active:
+func _resume_authoritative_transition_flow() -> void:
+	if runtime_provider == null or transition_flow_active or not is_inside_tree():
 		return
-	var transition := narrative_clock_pending_transition.duplicate(true)
-	runtime_provider.commit_narrative_time(narrative_clock_to_minutes)
-	if conversation_screen != null: conversation_screen.set_narrative_time(runtime_provider.current_narrative_time_text())
+	authoritative_resume_request_id += 1
+	var request_id := authoritative_resume_request_id
+	await get_tree().process_frame
+	if request_id != authoritative_resume_request_id or transition_flow_active or not is_inside_tree():
+		return
+	var pending: Dictionary = runtime_provider.pending_transition_flow()
+	if not pending.is_empty():
+		await _start_time_passage_flow(pending)
+
+func _run_narrative_clock(_request_id: int) -> void:
+	# Compatibility shim: CLOCK is now rendered by TimePassageOverlay.
+	await get_tree().process_frame
+
+func _start_time_passage_flow(transition: Dictionary) -> void:
+	if runtime_provider == null or transition_flow_active or transition.is_empty():
+		return
+	transition_flow_request_id += 1
+	var request_id := transition_flow_request_id
+	transition_flow_active = true
+	transition_flow_presentation = transition.duplicate(true)
+	transition_flow_pending_result = {}
+	transition_flow_next_day_presentation = transition.get("next_day_presentation", {}).duplicate(true)
+	transition_flow_from_minutes = int(runtime_provider.current_narrative_time_minutes())
+	transition_flow_to_minutes = NARRATIVE_TIME.parse_narrative_time(str(transition.get("to_time", "")))
+	narrative_clock_animation_active = str(transition.get("transition_mode", "")) in ["clock_only", "clock_then_card"] or transition.get("flow_phases", []).has("CLOCK")
+	narrative_clock_request_id = request_id
+	narrative_clock_from_minutes = transition_flow_from_minutes
+	narrative_clock_to_minutes = transition_flow_to_minutes
+	narrative_clock_pending_transition = transition.duplicate(true)
+	_save_reading_position()
+	if conversation_screen != null: conversation_screen.hide_typing()
+	_hide_notification()
+	_set_clock_interactions_blocked(true)
+	var phases := _time_passage_phases(transition)
+	time_passage_overlay.z_index = 8
+	time_passage_overlay.set_speed_multiplier(reading_speed_multiplier)
+	time_passage_overlay.set_reduced_motion(_reduced_motion_enabled())
+	time_passage_overlay.set_compact_height_mode(compact_height_mode)
+	if not time_passage_overlay.play_flow(phases, request_id):
+		transition_flow_active = false
+		_set_clock_interactions_blocked(false)
+		return
+	var completed_request_id: int = await time_passage_overlay.flow_finished
+	_on_time_passage_flow_finished(completed_request_id)
+
+func _time_passage_phases(transition: Dictionary) -> Array[Dictionary]:
+	var requested: Array = transition.get("flow_phases", [])
+	if requested.is_empty():
+		requested = ["CLOCK"] if str(transition.get("transition_mode", "")) in ["clock_only", "clock_then_card"] else ["OFF_PHONE"]
+	var result: Array[Dictionary] = []
+	for phase_name in requested:
+		var phase := {"phase": str(phase_name)}
+		if str(phase_name) == "CLOCK":
+			phase.merge({"from_minutes": transition_flow_from_minutes, "to_minutes": transition_flow_to_minutes, "from_time": runtime_provider.current_narrative_time_text(), "to_time": str(transition.get("to_time", "")), "duration_seconds": float(transition.get("duration_seconds", 4.0))})
+		elif str(phase_name) == "OFF_PHONE":
+			phase["text"] = str(transition.get("text", _off_phone_presentation_for(active_thread_id).get("text", "")))
+		elif str(phase_name) == "NIGHT":
+			phase["time"] = runtime_provider.current_narrative_time_text()
+		elif str(phase_name) == "NEW_DAY":
+			var next_day: Dictionary = transition_flow_next_day_presentation
+			phase.merge({"eyebrow": str(next_day.get("eyebrow", "")), "title": str(next_day.get("title", "")), "time": str(next_day.get("subtitle", "")), "body": str(next_day.get("body", ""))})
+		result.append(phase)
+	return result
+
+func _on_time_passage_flow_finished(request_id: int) -> void:
+	if not transition_flow_active or request_id != transition_flow_request_id or not is_inside_tree():
+		return
+	var transition := transition_flow_presentation.duplicate(true)
+	if transition_flow_to_minutes >= transition_flow_from_minutes:
+		runtime_provider.commit_narrative_time(transition_flow_to_minutes)
+	transition_flow_active = false
+	transition_flow_phase = ""
 	narrative_clock_animation_active = false
 	narrative_clock_pending_transition = {}
 	_set_clock_interactions_blocked(false)
 	if str(transition.get("transition_mode", "")) == "clock_then_card":
+		time_passage_overlay.dismiss()
 		_start_runtime_day_card(transition.get("presentation", {}))
 		return
-	var result: Dictionary = runtime_provider.confirm_day_transition()
-	if bool(result.get("accepted", false)):
-		narrative_clock_completion_result = result.duplicate(true)
-		if not runtime_delivery_active:
-			var immediate_result := narrative_clock_completion_result.duplicate(true)
-			narrative_clock_completion_result = {}
-			_refresh_after_clock_only(immediate_result)
+	var result: Dictionary
+	var resume_action := str(transition.get("resume_action", ""))
+	if resume_action != "":
+		result = runtime_provider.complete_pending_transition_flow(resume_action)
+	elif str(transition.get("transition_mode", "")) == "clock_only":
+		result = runtime_provider.confirm_day_transition()
+	else:
+		result = runtime_provider.confirm_transition()
+	transition_flow_pending_result = result.duplicate(true)
+	if str(result.get("destination", "")) == "day_end" and transition.get("flow_phases", []).has("NEW_DAY"):
+		result = runtime_provider.automatic_day_handoff()
+		transition_flow_pending_result = result.duplicate(true)
+	time_passage_overlay.dismiss()
+	if runtime_delivery_active:
+		return
+	_apply_time_passage_result(result, transition)
+
+func _apply_time_passage_result(result: Dictionary, transition: Dictionary) -> void:
+	if not bool(result.get("accepted", false)):
+		return
+	refresh_from_runtime()
+	_refresh_runtime_gallery()
+	var destination := str(result.get("destination", ""))
+	if destination == "day_transition" and result.has("transition"):
+		call_deferred("_start_time_passage_flow", result.get("transition", {}))
+		return
+	if destination == "day_end":
+		var final_presentation: Dictionary = result.get("day_end", runtime_provider.content_end())
+		if str(final_presentation.get("transition_mode", "")) == "CONTENT_END" or bool(transition.get("content_end", false)):
+			_start_runtime_day_end(final_presentation)
+		return
+	_refresh_after_clock_only(result)
+	if destination == "list" and result.has("unlocked_thread_id"):
+		var unlocked_id := str(result.get("unlocked_thread_id", ""))
+		var notification: Dictionary = result.get("notification", {})
+		var unlocked_thread := _thread_for(unlocked_id)
+		if not unlocked_thread.is_empty(): _show_notification(unlocked_thread, str(notification.get("body", "")), runtime_provider.current_narrative_time_text())
 
 func _refresh_after_clock_only(result: Dictionary) -> void:
 	if narrative_clock_animation_active or runtime_provider == null:
@@ -1002,7 +1097,8 @@ func _refresh_after_clock_only(result: Dictionary) -> void:
 		_set_screen_mode("list")
 		conversation_screen.visible = false
 		conversation_list.visible = true
-		conversation_list.call_deferred("focus_thread", str(result.get("focus_thread_id", "")))
+		var focus_thread_id := str(result.get("focus_thread_id", result.get("unlocked_thread_id", "")))
+		conversation_list.call_deferred("focus_thread", focus_thread_id)
 
 func _set_clock_interactions_blocked(blocked: bool) -> void:
 	_set_runtime_delivery_interactions_blocked(blocked)
@@ -1139,6 +1235,14 @@ func _build() -> void:
 	day_transition.continue_requested.connect(finish_day_transition)
 	day_transition.secondary_requested.connect(finish_secondary_day_transition)
 	add_child(day_transition)
+	time_passage_overlay = TIME_PASSAGE_OVERLAY_SCENE.instantiate()
+	time_passage_overlay.name = "TimePassageOverlay"
+	time_passage_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	time_passage_overlay.z_index = 8
+	time_passage_overlay.visible = false
+	time_passage_overlay.phase_changed.connect(func(phase: String): transition_flow_phase = phase)
+	time_passage_overlay.speed_requested.connect(func(): reading_speed_requested.emit())
+	add_child(time_passage_overlay)
 	notification_banner = NOTIFICATION_BANNER_SCRIPT.new()
 	notification_banner.set_anchors_preset(Control.PRESET_TOP_WIDE)
 	notification_banner.offset_left = 12.0
@@ -1152,7 +1256,7 @@ func _build() -> void:
 	add_child(notification_banner)
 
 func _on_image_requested(message_id: String, media_ref: String) -> void:
-	if runtime_delivery_active or screen_mode != "conversation" or is_off_phone_transition_active() or is_day_transition_active():
+	if runtime_delivery_active or screen_mode != "conversation" or is_off_phone_transition_active() or is_day_transition_active() or is_time_passage_active():
 		return
 	if active_thread_id == "" or media_ref == "" or _thread_for(active_thread_id).is_empty():
 		return
@@ -1211,7 +1315,7 @@ func _restore_photo_reading_position(thread_id: String, value: int) -> void:
 	reading_positions[thread_id] = conversation_screen.get_reading_position()
 
 func _on_choice_selected(choice: Dictionary) -> void:
-	if runtime_delivery_active or is_off_phone_transition_active() or is_day_transition_active():
+	if runtime_delivery_active or is_off_phone_transition_active() or is_day_transition_active() or is_time_passage_active():
 		return
 	if active_thread_id == "" or screen_mode != "conversation":
 		return
@@ -1329,7 +1433,7 @@ func _on_visibility_changed() -> void:
 		return
 	if not is_visible_in_tree():
 		conversation_screen.hide_typing()
-		if is_off_phone_transition_active() or is_day_transition_active():
+		if is_off_phone_transition_active() or is_day_transition_active() or is_time_passage_active():
 			call_deferred("_restore_messages_tab_during_off_phone")
 	else:
 		_sync_active_typing()

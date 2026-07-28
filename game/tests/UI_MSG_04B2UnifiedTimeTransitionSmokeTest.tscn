@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource path="res://tests/UI_MSG_04B2UnifiedTimeTransitionSmokeDriver.gd" type="Script" id="1"]
+
+[node name="UI_MSG_04B2UnifiedTimeTransitionSmokeTest" type="Node"]
+script = ExtResource("1")

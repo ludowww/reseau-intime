@@ -35,21 +35,27 @@
     "subtitle": "",
     "body": "Marie ramène la journée vers le foyer.",
     "action_label": "Continuer",
-    "transition_mode": "clock_then_card",
+    "transition_mode": "clock_only",
     "to_time": "18:20",
     "duration_seconds": 4.0
   },
   "marie_offline": {
     "ACTIVE": {
       "message_id": "j3_shared_evening_active",
+      "time": "19:05",
+      "flow_phases": ["CLOCK", "OFF_PHONE", "NIGHT"],
       "text": "19:05 — Player rentre à l'heure avec quelque chose de croustillant pour sauver la soupe. Marie et Mathilde ont sorti trois bols pour deux personnes, puis prétendent toutes les deux que c'est normal. Ils mangent ensemble. Le téléphone reste posé."
     },
     "BOUNDED": {
       "message_id": "j3_shared_evening_bounded",
+      "time": "19:35",
+      "flow_phases": ["CLOCK", "OFF_PHONE", "NIGHT"],
       "text": "19:35 — Player rentre à 19 h 30 comme annoncé. Marie a attendu avant de réchauffer la soupe. Mathilde a mangé un morceau de pain en prétendant que cela ne comptait pas. Le retard existe. La parole tenue aussi."
     },
     "DRIFT": {
       "message_id": "j3_shared_evening_drift",
+      "time": "20:30",
+      "flow_phases": ["CLOCK", "OFF_PHONE", "NIGHT"],
       "text": "20:30 — Marie et Mathilde mangent sans attendre davantage. Quand Player rentre, la soupe est encore au frigo pour lui et les deux bols sont dans l'évier. Personne ne transforme cela en grande scène. La soirée a simplement continué sans lui."
     }
   },
@@ -59,7 +65,8 @@
     "subtitle": "Les vies qui existent ailleurs",
     "body": "Fin temporaire de cette version jouable.",
     "action_label": "Terminer",
-    "transition_mode": "day_boundary"
+    "transition_mode": "CONTENT_END",
+    "content_end": true
   },
   "gallery_presentations": [
     {

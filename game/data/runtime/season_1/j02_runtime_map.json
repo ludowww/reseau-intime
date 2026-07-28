@@ -47,7 +47,14 @@
     "subtitle": "La chambre qui change le foyer",
     "body": "Fin temporaire de cette version jouable.",
     "action_label": "Terminer",
-    "transition_mode": "day_boundary"
+    "transition_mode": "automatic_day_handoff",
+    "flow_phases": ["OFF_PHONE", "NIGHT", "NEW_DAY"],
+    "next_day_presentation": {
+      "eyebrow": "JEUDI — MATIN",
+      "title": "Les vies qui existent ailleurs",
+      "subtitle": "09:10",
+      "body": "Un dossier à corriger. Des vies qui continuent ailleurs."
+    }
   },
   "gallery_presentations": [
     {

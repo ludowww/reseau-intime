@@ -43,24 +43,16 @@ func _run() -> void:
 
 	for id in ["choice_j1_marie_optimism_guided", "choice_j1_marie_crisis_guided", "choice_j1_marie_present", "choice_j1_marie_laverriere_guided", "choice_j1_marie_mathilde_guided"]:
 		await _choose(messages, id)
-	await _frames(2)
-	messages.off_phone_transition.resume_button.emit_signal("pressed")
 	await _frames(3)
 	var sandra_j01_before: Array = []
 	await _open(messages, "thread_sandra_private")
 	_assert_segment(provider, messages, "thread_sandra_private", sandra_j01_before, "J01 Sandra mandatory initial/segment typing exactly once")
 	for id in ["choice_j1_sandra_what_guided", "choice_j1_sandra_art_guided", "choice_j1_sandra_safe_warmth", "choice_j1_sandra_thanks_guided", "choice_j1_sandra_goodnight_guided"]:
 		await _choose(messages, id)
-	await _frames(2)
-	messages.off_phone_transition.resume_button.emit_signal("pressed")
 	await _frames(3)
 
-	# J02 starts through the same real card/button flow used by the J01-J03 playable smokes.
-	messages.day_transition.continue_button.emit_signal("pressed")
-	await _frames(2)
-	var marie_before_j02 := _provider_ids(provider, "thread_marie_private")
-	messages.day_transition.continue_button.emit_signal("pressed")
-	await _frames(2)
+	# J02 starts automatically in the continuous NEW_DAY phase.
+	var marie_before_j02: Array = []
 	await _open(messages, "thread_marie_private")
 	_assert_segment(provider, messages, "thread_marie_private", marie_before_j02, "J02 Marie start mandatory initial/segment typing exactly once")
 	_expect(shell.reading_speed_multiplier == 3.0, "speed must persist between threads and days")
@@ -76,37 +68,27 @@ func _run() -> void:
 	await _open(messages, "thread_mathilde_private")
 	_assert_segment(provider, messages, "thread_mathilde_private", mathilde_before, "J02 Mathilde mandatory initial/segment typing exactly once")
 	await _choose(messages, "choice_wed_mathilde_practical")
-	await _frames(2)
-	messages.off_phone_transition.resume_button.emit_signal("pressed")
 	await _frames(3)
 
-	# J03 starts and all mandatory/optional incoming segments use real cards and choices.
-	messages.day_transition.continue_button.emit_signal("pressed")
-	await _frames(2)
+	# J03 starts automatically; all incoming segments still use real choices.
 	var raphaelle_before: Array = []
-	messages.day_transition.continue_button.emit_signal("pressed")
-	await _frames(2)
 	await _open(messages, "thread_raphaelle_private")
 	_assert_segment(provider, messages, "thread_raphaelle_private", raphaelle_before, "J03 Raphaelle mandatory initial/segment typing exactly once")
 	await _choose(messages, "choice_thu_raph_method_guided")
 	await _choose(messages, "choice_thu_raph_accountable")
 	await _frames(2)
-	messages.off_phone_transition.resume_button.emit_signal("pressed")
 	await _wait_clock_transition(messages)
 	var sandra_before_j03 := _provider_ids(provider, "thread_sandra_private")
 	messages.day_transition.continue_button.emit_signal("pressed")
 	await _wait_delivery(messages)
 	_assert_segment(provider, messages, "thread_sandra_private", sandra_before_j03, "J03 Sandra mandatory initial/segment typing exactly once")
+	var marie_before_j03 := _provider_ids(provider, "thread_marie_private")
 	await _choose(messages, "choice_thu_sandra_day_saved")
 	await _frames(2)
-	var marie_before_j03 := _provider_ids(provider, "thread_marie_private")
-	messages.day_transition.continue_button.emit_signal("pressed")
 	await _wait_delivery(messages)
 	_assert_segment(provider, messages, "thread_marie_private", marie_before_j03, "J03 Marie mandatory initial/segment typing exactly once")
 	await _choose(messages, "choice_j3_marie_evening_why_guided")
 	await _choose(messages, "choice_j3_marie_return_active")
-	await _frames(2)
-	messages.off_phone_transition.resume_button.emit_signal("pressed")
 	await _frames(2)
 
 	_assert_all_provider_orders(provider, messages)
@@ -262,6 +244,8 @@ func _wait_delivery(messages) -> void:
 	var previous_typing: bool = bool(timeline.typing_visible())
 	var previous_count: int = int(timeline.message_count())
 	for _index in range(2400):
+		if not is_instance_valid(timeline):
+			timeline = messages.conversation_screen.timeline
 		var current_typing: bool = bool(timeline.typing_visible())
 		var current_count: int = int(timeline.message_count())
 		if previous_typing and not current_typing:

@@ -112,6 +112,11 @@ class TUI02C1OffPhoneTransitionStaticTests(unittest.TestCase):
             if '"res://scripts/ui/messages/" + ' in content:
                 offenders.append(f"{relative}: composed resource path")
             for token in forbidden:
+                # UI-MSG-04B2 legitimately owns automatic next-day handoffs in
+                # MessagesScreen; the historical T-UI-02C1 component and smoke
+                # must remain free of that runtime responsibility.
+                if token == "next_day" and relative == "game/scripts/ui/messages/MessagesScreen.gd":
+                    continue
                 if token in content:
                     offenders.append(f"{relative}: {token}")
         self.assertEqual(offenders, [])

@@ -122,7 +122,8 @@ func apply_choice(thread_id: String, choice_id: String) -> Dictionary:
 	if selected.is_empty() or not state.apply_j02_choice(choice_id): return {"accepted": false}
 	pending_choice_ids_by_thread[thread_id] = []
 	var before := transcript_for(thread_id).size()
-	_append(thread_id, {"message_id": choice_id + "_player", "author_id": "player", "timestamp": "maintenant", "content_type": "TEXT", "text": str(selected.get("text", "")), "media_ref": "", "is_player": true, "is_read": true, "source_day": 2})
+	# Capture the provider's authoritative narrative time at acceptance.
+	_append(thread_id, {"message_id": choice_id + "_player", "author_id": "player", "timestamp": current_narrative_time_text(), "content_type": "TEXT", "text": str(selected.get("text", "")), "media_ref": "", "is_player": true, "is_read": true, "source_day": 2})
 	_append_messages(thread_id, selected.get("next_messages", []))
 	segment_index_by_thread[thread_id] = int(segment_index_by_thread.get(thread_id, 0)) + 1
 	if int(segment_index_by_thread[thread_id]) < _segments(thread_id).size():
@@ -133,7 +134,12 @@ func apply_choice(thread_id: String, choice_id: String) -> Dictionary:
 		pending_transition = _clock_transition(runtime_map["phase_transitions"]["18:18"])
 	else:
 		phase = "mathilde_offline"
-		pending_transition = {"kind": "offline", "thread_id": thread_id}
+		var day_end: Dictionary = runtime_map.get("day_end", {})
+		pending_transition = {
+			"kind": "offline", "thread_id": thread_id,
+			"flow_phases": day_end.get("flow_phases", ["OFF_PHONE", "NIGHT", "NEW_DAY"]).duplicate(),
+			"next_day_presentation": day_end.get("next_day_presentation", {}).duplicate(true),
+		}
 	return {"accepted": true, "new_messages": transcript_for(thread_id).slice(before), "choices": choices_for(thread_id), "transition": pending_transition.duplicate(true)}
 
 func confirm_day_transition() -> Dictionary:

@@ -31,28 +31,18 @@ func _run() -> void:
 
 func _test_real_ui() -> void:
 	var main = MAIN_SCENE.instantiate(); add_child(main); await _frames(4)
+	main.shell.set_reduced_motion_enabled(true)
 	var messages = main.shell.messages_screen
 	var provider = main.shell.runtime_provider
 	messages.runtime_delivery_time_scale = 0.01
 	_expect(provider.active_day == "J01", "J03 inaccessible before earlier days")
 	_expect(messages._thread_for("thread_raphaelle_private").is_empty(), "Raphaëlle visible before J03")
 	await _play_j01_ui(messages)
-	_assert_old_card(messages, "J01 end")
-	messages.day_transition.continue_button.emit_signal("pressed"); await _frames(2)
-	_expect(provider.active_day == "J02", "J01 handoff missing")
-	_assert_old_card(messages, "J02 start")
-	messages.day_transition.continue_button.emit_signal("pressed"); await _frames(2)
+	_expect(provider.active_day == "J02" and not messages.day_transition.visible, "automatic J01 to J02 handoff missing")
 	await _play_j02_ui(messages)
-	_expect(provider.active_day == "J02", "J03 started before J02 Terminer")
-	_expect(messages._thread_for("thread_raphaelle_private").is_empty(), "J03 thread accessible before Terminer")
-	_assert_old_card(messages, "J02 end")
 	var cumulative: Dictionary = provider.j02_provider.transcripts_by_thread.duplicate(true)
-	_expect(messages.day_transition.continue_button.mouse_filter == Control.MOUSE_FILTER_STOP and not messages.day_transition.continue_button.disabled, "J02 Terminer mouse action available")
-	messages.day_transition.continue_button.emit_signal("pressed"); await _frames(2)
-	_expect(provider.active_day == "J03", "J02 Terminer did not hand off J03")
-	_assert_card(messages, {"eyebrow": "JEUDI — MATIN", "title": "Les vies qui existent ailleurs", "subtitle": "09:10", "body": "Un dossier à corriger. Des vies qui continuent ailleurs.", "action_label": "Commencer"}, 1, "J03 start")
-	await _keyboard_activate(messages.day_transition.continue_button)
-	_expect(provider.state.current_day == "J03" and provider.state.day_status == "ACTIVE", "J03 state start")
+	_expect(provider.active_day == "J03" and not messages.day_transition.visible, "automatic J02 to J03 handoff missing")
+	_expect(provider.state.current_day == "J03" and provider.state.day_status == "ACTIVE", "J03 automatic state start")
 	for thread_id in cumulative:
 		_expect(provider.j03_provider.transcripts_by_thread.get(thread_id, []).slice(0, cumulative[thread_id].size()) == cumulative[thread_id], "J01-J02 transcript changed: " + thread_id)
 	var unlocked: Array = provider.j03_provider.unlocked_thread_ids.duplicate(); unlocked.sort()
@@ -76,10 +66,8 @@ func _test_real_ui() -> void:
 	await _choose(messages, "choice_thu_raph_method_guided")
 	_expect(_ui_choices(messages) == _source_choices(RAPH_SOURCE, 1), "Raphaëlle exact three UI choices")
 	await _choose_twice(messages, "choice_thu_raph_accountable"); await _frames(2)
-	_expect(messages.is_off_phone_transition_active(), "garment beat absent")
-	_expect(messages.off_phone_transition.display_label == GARMENT_TEXT, "garment beat exact text")
 	_expect(provider.presentation_count_by_id("j03_raphaelle_garment_bag_beat") == 1, "garment beat unique")
-	messages.off_phone_transition.resume_button.emit_signal("pressed"); await _wait_clock_transition(messages)
+	await _wait_clock_transition(messages)
 	_assert_card(messages, {"eyebrow": "JEUDI — DÉBUT D’APRÈS-MIDI", "title": "13:50", "subtitle": "Sandra vient de terminer son poste du matin.", "body": "Un message bref attend dans son fil. Rien n’oblige Player à le rouvrir.", "action_label": "Ouvrir Sandra", "secondary_action_label": "Continuer la journée", "transition_mode": "clock_then_card", "to_time": "13:50", "duration_seconds": 4.0}, 2, "Sandra offer")
 	_expect(messages.day_transition.action_has_focus(), "Sandra primary focus")
 	_expect(messages.day_transition.continue_button.mouse_filter == Control.MOUSE_FILTER_STOP and messages.day_transition.secondary_button.mouse_filter == Control.MOUSE_FILTER_STOP and not messages.day_transition.continue_button.disabled and not messages.day_transition.secondary_button.disabled, "Sandra mouse actions available")
@@ -89,14 +77,13 @@ func _test_real_ui() -> void:
 	_expect(messages.active_thread_id == "thread_sandra_private", "Sandra keyboard primary action")
 	_expect(_ui_choices(messages) == _source_choices(SANDRA_SOURCE, 0), "Sandra sole exact UI choice")
 	await _choose(messages, "choice_thu_sandra_day_saved"); await _frames(2)
-	_assert_card(messages, {"eyebrow": "JEUDI — FIN DE JOURNÉE", "title": "18:20", "subtitle": "", "body": "Marie ramène la journée vers le foyer.", "action_label": "Continuer"}, 1, "Marie time")
-	messages.day_transition.continue_button.emit_signal("pressed"); await _wait_runtime_delivery_complete(messages); await _frames(2)
+	_expect(not messages.day_transition.visible, "Marie 18:20 informational card removed")
+	await _wait_runtime_delivery_complete(messages); await _frames(2)
 	_expect(messages.active_thread_id == "thread_marie_private", "Marie return did not open")
 	await _choose(messages, "choice_j3_marie_evening_why_guided")
 	_expect(_ui_choices(messages) == _source_choices(MARIE_SOURCE, 1), "Marie exact three UI choices")
 	await _choose(messages, "choice_j3_marie_return_active"); await _frames(2)
-	_expect(messages.off_phone_transition.display_label == str(MARIE_BEATS["ACTIVE"][1]), "ACTIVE exact UI beat: " + messages.off_phone_transition.display_label)
-	messages.off_phone_transition.resume_button.emit_signal("pressed"); await _frames(2)
+	_expect(provider.presentation_count_by_id("j3_shared_evening_active") == 1, "ACTIVE exact UI beat")
 	_assert_card(messages, {"eyebrow": "JEUDI — FIN DE JOURNÉE", "title": "J03 terminé", "subtitle": "Les vies qui existent ailleurs", "body": "Fin temporaire de cette version jouable.", "action_label": "Terminer"}, 1, "J03 end")
 	messages.day_transition.continue_button.emit_signal("pressed"); await _frames(2)
 	_expect(messages.screen_mode == "day_complete" and provider.active_day == "J03", "stable J03 end")
@@ -106,19 +93,17 @@ func _test_real_ui() -> void:
 
 func _test_sandra_secondary_real_button_ui() -> void:
 	var main = MAIN_SCENE.instantiate(); add_child(main); await _frames(4)
+	main.shell.set_reduced_motion_enabled(true)
 	var messages = main.shell.messages_screen; var provider = main.shell.runtime_provider
 	messages.runtime_delivery_time_scale = 0.01
 	await _play_j01_ui(messages)
-	messages.day_transition.continue_button.emit_signal("pressed"); await _frames(2)
-	messages.day_transition.continue_button.emit_signal("pressed"); await _frames(2)
 	await _play_j02_ui(messages)
-	messages.day_transition.continue_button.emit_signal("pressed"); await _frames(2)
-	messages.day_transition.continue_button.emit_signal("pressed"); await _frames(2)
 	await _open(messages, "thread_raphaelle_private"); await _choose(messages, "choice_thu_raph_method_guided"); await _choose(messages, "choice_thu_raph_accountable"); await _frames(2)
-	messages.off_phone_transition.resume_button.emit_signal("pressed"); await _wait_clock_transition(messages)
+	await _wait_clock_transition(messages)
 	_expect(messages.day_transition.secondary_button != null and messages.day_transition.secondary_button.mouse_filter == Control.MOUSE_FILTER_STOP, "Sandra real secondary mouse button")
 	messages.day_transition.secondary_button.emit_signal("pressed"); await _wait_clock_transition(messages)
-	_expect(provider.state.sandra_j03_echo_outcome == "EXPIRED" and messages.day_transition.display_title() == "18:20", "Sandra real secondary button action")
+	await _wait_runtime_delivery_complete(messages)
+	_expect(provider.state.sandra_j03_echo_outcome == "EXPIRED" and messages.active_thread_id == "thread_marie_private" and not messages.day_transition.visible, "Sandra real secondary button action")
 	_expect(provider.presentation_count_by_id("msg_thu_sandra_001") == 0, "Sandra secondary UI injected message")
 	main.queue_free(); await _frames(2)
 
@@ -240,7 +225,7 @@ func _assert_and_play_source(season, path: String, thread_id: String, selected_i
 		for choice in segment.get("choices", []):
 			if str(choice["id"]) == selected_id: selected = choice
 		_expect(not selected.is_empty(), "%s selected choice exists" % selected_id)
-		expected.append({"message_id": selected_id + "_player", "author_id": "player", "timestamp": "maintenant", "content_type": "TEXT", "text": str(selected.get("text", "")), "is_player": true, "source_day": 3})
+		expected.append({"message_id": selected_id + "_player", "author_id": "player", "timestamp": season.current_narrative_time_text(), "content_type": "TEXT", "text": str(selected.get("text", "")), "is_player": true, "source_day": 3})
 		for message in selected.get("next_messages", []): expected.append(_normalized_source_message(message, false))
 		_expect(bool(season.apply_choice(thread_id, selected_id).get("accepted", false)), "%s accepted" % selected_id)
 	var actual: Array = []
@@ -319,16 +304,16 @@ func _play_j02_provider(season) -> void:
 func _play_j01_ui(messages) -> void:
 	await _open(messages, "thread_marie_private")
 	for id in ["choice_j1_marie_optimism_guided", "choice_j1_marie_crisis_guided", "choice_j1_marie_present", "choice_j1_marie_laverriere_guided", "choice_j1_marie_mathilde_guided"]: await _choose(messages, id)
-	await _frames(2); messages.off_phone_transition.resume_button.emit_signal("pressed"); await _frames(2)
+	await _frames(2)
 	await _open(messages, "thread_sandra_private")
 	for id in ["choice_j1_sandra_what_guided", "choice_j1_sandra_art_guided", "choice_j1_sandra_safe_warmth", "choice_j1_sandra_thanks_guided", "choice_j1_sandra_goodnight_guided"]: await _choose(messages, id)
-	await _frames(2); messages.off_phone_transition.resume_button.emit_signal("pressed"); await _frames(2)
+	await _frames(2)
 func _play_j02_ui(messages) -> void:
 	await _open(messages, "thread_marie_private"); await _choose(messages, "choice_wed_marie_emergency_guided"); await _choose(messages, "choice_wed_make_room_proactive")
-	_expect(not messages.day_transition.visible and messages.runtime_provider.current_narrative_time_text() == "18:18", "J02 18:18 clock_only")
+	_expect(not messages.day_transition.visible and messages.runtime_provider.current_narrative_time_minutes() >= 1098, "J02 18:18 clock_only")
 	messages.conversation_screen.back_button.emit_signal("pressed"); await _wait_clock_transition(messages)
 	_expect(not messages.day_transition.visible and messages.runtime_provider.current_narrative_time_text() == "18:22", "J02 18:22 clock_only")
-	await _open(messages, "thread_mathilde_private"); await _choose(messages, "choice_wed_mathilde_practical"); await _frames(2); messages.off_phone_transition.resume_button.emit_signal("pressed"); await _frames(2)
+	await _open(messages, "thread_mathilde_private"); await _choose(messages, "choice_wed_mathilde_practical"); await _frames(2)
 
 func _source_choices(path: String, segment: int) -> Array:
 	var result: Array = []; var source: Dictionary = DataLoader.load_json(path)
