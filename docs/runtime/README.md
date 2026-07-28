@@ -2,94 +2,156 @@
 
 ## Statut
 
-**Catégorie : Portail technique actif**
+**Catégorie : portail technique actif**
 
-Ce document décrit l’état réellement présent sur `main`. Il distingue le runtime narratif historique du cœur UI portrait additif.
+**Baseline stable décrite : `c27bd9331c01bed6c9a40c0c642d246cf26bb6cf`**
+
+**Tag : `ui-msg-04c-interactive-notifications`**
+
+Ce document décrit l’état réellement présent sur `main`. Il distingue le canon narratif, la nouvelle chaîne jouable J01→J03 et les matériaux runtime historiques encore conservés dans le dépôt.
 
 Lire d’abord :
 
 ```text
 docs/canon/DOCUMENTATION_READING_ORDER.md
 docs/canon/PROJECT_DOCUMENTATION_GOVERNANCE.md
-docs/canon/ui/README.md
+docs/runtime/SEASON_1_J01_J03_RUNTIME_BASELINE_AND_FORWARD_CONTRACT.md
 ```
 
 ---
 
 # 1. État réel de `main`
 
-## Runtime narratif historique
-
-Le dépôt conserve un prototype construit par couches V0.xx comprenant notamment :
-
-- chronologie et jours ;
-- phases et expirations ;
-- fils persistants ;
-- messages et choix ;
-- notifications ;
-- non-lus ;
-- archives ;
-- activités hors téléphone internes ;
-- matériaux narratifs partiellement réconciliés ;
-- tests statiques et outils de validation.
-
-## Cœur UI portrait additif
-
-Les lots T‑UI‑01 à T‑UI‑03D ont ajouté et validé :
-
-- coque portrait ;
-- safe areas ;
-- navigation Messages / Galerie ;
-- famille Messages ;
-- ImageMessage ;
-- Galerie responsive ;
-- PhotoViewer partagé ;
-- états locaux `NEW / VIEWED / LOCKED` ;
-- matrices portrait, reduced motion et clavier.
-
-Le projet conserve encore un contrôle historique :
+## Nouvelle chaîne Saison 1 jouable
 
 ```text
-1280 × 720
+J01 → intégré, jouable et validé
+J02 → intégré après J01, jouable et validé
+J03 → intégré après J02, jouable et validé
+J04–J21 → corpus canonique prêt, non intégré dans cette chaîne
 ```
 
-Le cœur portrait est testé à :
+La chaîne active repose sur :
 
 ```text
-720 × 1280
-1080 × 1920
-1080 × 2340
+game/scripts/runtime/season_1/Season1RuntimeProvider.gd
+game/scripts/runtime/season_1/Season1State.gd
+game/scripts/runtime/season_1/J01RuntimeProvider.gd
+game/scripts/runtime/season_1/J02RuntimeProvider.gd
+game/scripts/runtime/season_1/J03RuntimeProvider.gd
+game/data/runtime/season_1/j01_runtime_map.json
+game/data/runtime/season_1/j02_runtime_map.json
+game/data/runtime/season_1/j03_runtime_map.json
 ```
 
-Cette coexistence ne signifie pas que le runtime narratif complet, la persistance, les vrais assets ou les écrans système ont été migrés.
+Elle fournit :
+
+- un état de saison partagé ;
+- des providers bornés par journée ;
+- des transcripts persistants entre les jours ;
+- des identifiants de messages produits empêchant les doublons ;
+- des fils débloqués cumulatifs ;
+- un temps narratif autoritaire et monotone ;
+- des transitions de temps et de journée unifiées ;
+- des snapshots versionnés et une restauration J01–J03 ;
+- une présentation portrait intégrée à Messages et Galerie.
+
+## Couche UI/runtime validée
+
+La baseline inclut également :
+
+- bandeau de conversation compact avec jour et heure courants ;
+- livraison progressive de tous les messages ;
+- typing isolé par conversation ;
+- conservation du scroll et du focus ;
+- notifications interactives ouvrant le fil concerné ;
+- transitions `CLOCK`, `OFF_PHONE`, `NIGHT`, `NEW_DAY` et fin de contenu ;
+- séparateurs historiques normalisés par `source_day` ;
+- un seul séparateur par journée et par fil ;
+- impossibilité de rendre `SYSTEM_DAY_DIVIDER` comme bulle ;
+- vitesse `×1 / ×3 / ×8` limitée aux messages et au typing ;
+- transitions exécutées en temps réel ;
+- ImageMessage, Galerie et PhotoViewer partagés ;
+- matrices responsive portrait et contrôle historique `1280 × 720`.
+
+## Matériaux runtime historiques
+
+Le dépôt conserve des couches V0.xx et d’anciens index couvrant d’autres journées. Ils servent à :
+
+- comprendre l’historique ;
+- localiser d’anciens dialogues ou comportements ;
+- mesurer une migration ;
+- préserver des tests historiques encore utiles.
+
+Ils ne définissent plus :
+
+- la structure narrative J04–J21 ;
+- le prochain provider à intégrer ;
+- les états de route ;
+- les traces et permissions ;
+- les comportements UI communs ;
+- le contrat de sauvegarde cible.
 
 ---
 
 # 2. Frontière d’autorité
 
-Le runtime existant ne doit pas être utilisé pour déduire :
+```text
+vision et routes        → docs/canon/bible/
+personnages et voix     → docs/canon/characters/
+dialogues J01–J21       → docs/canon/dialogues/
+état narratif           → registres + SEASON_1_NARRATIVE_STATE_CONTRACT.md
+UX/UI produit           → docs/canon/ui/
+runtime réellement actif→ code + données + tests sur main
+continuité J01–J21      → SEASON_1_J01_J03_RUNTIME_BASELINE_AND_FORWARD_CONTRACT.md
+```
 
-- l’architecture narrative finale ;
-- les routes ;
-- les voix ;
-- les fonctions relationnelles des photos ;
-- les permissions Galerie ;
-- les écrans système finaux.
+Le runtime n’est jamais utilisé pour déduire une nouvelle vérité narrative. Le canon n’impose pas non plus une classe Godot ou un format JSON sans décision technique explicite.
 
-Sources autoritatives :
+---
+
+# 3. Statut J01–J21
+
+| Journées | Narration | Runtime portrait actuel |
+|---|---|---|
+| J01–J03 | consolidée et signée | intégré, jouable, validé |
+| J04 | consolidée et signée | prochaine intégration recommandée |
+| J05–J08 | consolidée et paquet Acte II READY | non intégré |
+| J09–J12 | consolidée et paquet Acte III READY | non intégré |
+| J13–J16 | consolidée et paquet Acte IV READY | non intégré |
+| J17–J21 | consolidée et paquet Acte V READY | non intégré |
+
+La présence d’anciens JSON ou chapitres ne change pas ce tableau.
+
+---
+
+# 4. Règles communes à toutes les prochaines journées
+
+Toute intégration J04+ doit conserver :
+
+- `Season1State` partagé ;
+- handoff cumulatif des transcripts, identifiants, fils et contenus Galerie ;
+- temps narratif fourni par le provider ;
+- timestamp Player capturé à l’acceptation du choix ;
+- `source_day` exact sur chaque présentation ;
+- livraison Messages commune ;
+- notification commune ;
+- transition unifiée ;
+- snapshot versionné ;
+- validation de cohérence à la restauration ;
+- absence de scores, owner, candidate pool ou route visible.
+
+Les corrections J01–J03 sont héritées automatiquement seulement si la nouvelle journée utilise les composants et contrats communs. Un provider ne doit pas fabriquer directement des bulles, des séparateurs, une horloge ou un système de notification parallèle.
+
+Source détaillée :
 
 ```text
-vision     → docs/canon/bible/
-personnages→ docs/canon/characters/
-narration  → docs/canon/dialogues/
-état       → registres J01–J21 + SEASON_1_NARRATIVE_STATE_CONTRACT.md
-UI         → docs/canon/ui/
-runtime    → code, données et tests sur main
+docs/runtime/SEASON_1_J01_J03_RUNTIME_BASELINE_AND_FORWARD_CONTRACT.md
 ```
 
 ---
 
-# 3. Documents historiques
+# 5. Documents historiques
 
 Sont historiques sauf lien explicite depuis un plan actif :
 
@@ -98,55 +160,33 @@ Sont historiques sauf lien explicite depuis un plan actif :
 - fichiers numérotés à la racine de `docs/` ;
 - `docs/narrative/` ;
 - `docs/story_state/` ;
-- anciennes checklists de branche.
+- anciennes checklists de branche ;
+- observations runtime du document `12_PLANS_SCENES_AUDIT_RUNTIME_J01_J08.md` antérieures à la nouvelle chaîne J01–J03.
 
-Ils ne remplacent pas :
-
-- la Bible Narrative ;
-- le corpus signé J01–J21 ;
-- le contrat d’état borné ;
-- la charte UI portrait ;
-- le checkpoint UI implémenté.
+Leurs diagnostics narratifs peuvent rester utiles lorsqu’ils ne contredisent pas les sources consolidées. Leurs descriptions de l’état technique ne prévalent jamais sur `main` et le présent portail.
 
 ---
 
-# 4. État narratif du prototype
+# 6. Fondations à préserver
 
-Le prototype contient des matériaux jouables antérieurs et plusieurs réconciliations ciblées.
-
-État prudent :
-
-```text
-J01–J06   matériaux historiques et réconciliations partielles
-J07+      couches possibles, non autoritatives pour le corpus final
-UI        cœur portrait additif disponible
-```
-
-Le corpus canonique J01–J21 ne doit pas être inféré depuis les JSON ou scènes historiques.
-
-Toute adaptation runtime future repart de `main`, relit l’ordre canonique et définit un bloc court.
-
----
-
-# 5. Fondations à préserver si compatibles
-
-- chronologie ;
+- chronologie canonique J01–J21 ;
 - fils persistants ;
-- stockage des transcripts ;
-- notification inter-fil ;
+- transcripts cumulés ;
+- choix Player comme messages ;
+- notifications inter-fil ;
 - non-lus ;
-- choix manuels Player ;
-- archives en lecture seule ;
-- séparation des activités hors téléphone ;
-- outils de validation ;
-- tests statiques ;
-- composants portrait validés.
+- activités hors téléphone représentées par transitions ;
+- temps narratif monotone ;
+- snapshots bornés ;
+- composants portrait validés ;
+- tests statiques et smokes jouables ;
+- comparaison de la gate globale par identité exacte.
 
-Ces fondations peuvent être adaptées ou remplacées si un besoin canonique le démontre. Elles ne sont pas sacrées par leur ancien numéro de version.
+Une fondation peut évoluer uniquement si un besoin canonique ou une limite technique est démontré et si la non-régression J01–J03 est protégée.
 
 ---
 
-# 6. Concepts à ne pas réintroduire
+# 7. Concepts à ne pas réintroduire
 
 ```text
 route owner
@@ -155,38 +195,13 @@ candidate pool générique
 external ticket comme sélection de personnage
 score d’attachement
 score de mensonge
-propriétaire automatique d’une route
+propriétaire automatique d’une relation
+horloge UI concurrente
+séparateur de journée fabriqué comme message visible
+transition accélérée par la vitesse de lecture
 ```
 
-Le contrat futur utilise des états bornés, promesses, obligations, traces, connaissances, contradictions actives et historique léger.
-
----
-
-# 7. Gel et réouverture technique
-
-Le cœur UI est gelé par défaut après T‑UI‑03D.
-
-Un nouveau lot technique ne s’ouvre que pour :
-
-- un besoin narratif bloquant ;
-- l’intégration future des vrais assets ;
-- la persistance ou la sauvegarde ;
-- les écrans système explicitement décidés ;
-- une régression avérée ;
-- l’adaptation runtime d’un bloc narratif clairement cadré.
-
-Aucun ancien `T‑UI‑01` ou `T‑NAR‑01` n’est automatiquement réactivé.
-
-Chaque plan actif cite :
-
-```text
-docs/canon/bible/00_NORTH_STAR.md
-docs/canon/ui/UI_03_INTEGRATION_HANDOFF_AND_MOCKUP_STATUS.md
-docs/canon/dialogues/J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md
-docs/canon/runtime/SEASON_1_NARRATIVE_STATE_CONTRACT.md
-besoin produit et fichiers visés
-tests d’acceptation
-```
+Le contrat actif utilise des actes observables, des états bornés, des promesses, des obligations, des traces, des connaissances et des conséquences dues.
 
 ---
 
@@ -200,20 +215,29 @@ git diff --check
 godot --headless --path game --quit
 ```
 
-Les lots UI ajoutent leurs matrices portrait. La gate globale compare les échecs historiques par identité exacte.
+Pour toute nouvelle journée, ajouter :
 
-Le test horizontal ne sera retiré qu’après une décision explicite et une couverture portrait équivalente du flux concerné.
+- test statique dédié ;
+- smoke jouable dédié ;
+- smoke de handoff depuis la journée précédente ;
+- snapshot/restore aux phases sensibles ;
+- contrôle des doublons, heures, `source_day`, notifications et non-lus ;
+- matrices portrait nécessaires ;
+- non-régression J01, J02, J03, 03B, 03C et UI-MSG-04A à 04C.
+
+À la baseline `c27bd933…`, la gate globale validée contient 388 tests avec les mêmes 17 `FAIL`, 2 `ERROR` et 19 identités historiques que la baseline de comparaison. Les smokes 04C/04C1 sont exempts de warnings `ObjectDB`, `leaked` et `orphan`.
 
 ---
 
-# 9. Règle de plan runtime
+# 9. Prochaine étape technique
 
-Un nouveau document sous `docs/runtime/` doit être :
+```text
+J04 seul
+→ adaptation du canon signé dans un provider borné
+→ handoff depuis J03
+→ non-régression complète J01–J03
+→ validation visuelle
+→ verrouillage
+```
 
-- lié à une branche ou un objectif concret ;
-- court ;
-- explicite sur les fichiers visés ;
-- explicite sur les autorités canoniques ;
-- marqué historique après intégration ou abandon.
-
-Aucun nouveau plan général ne duplique `ROADMAP.md`.
+J04 ne doit pas réactiver automatiquement les anciens index modulaires et ne doit pas ouvrir un nouveau chantier UI sans besoin bloquant démontré.
