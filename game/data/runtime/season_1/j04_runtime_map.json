@@ -1,0 +1,101 @@
+{
+  "narrative_day_short": "Ven.",
+  "initial_time": "08:35",
+  "conversation_paths": {
+    "chapter_04_pauline_public_photo_relay": "res://data/conversations/chapter_04_pauline_public_photo_relay.json",
+    "chapter_04_nico_saved_seat_followup": "res://data/conversations/chapter_04_nico_saved_seat_followup.json",
+    "chapter_04_marie_household_report": "res://data/conversations/chapter_04_marie_household_report.json",
+    "chapter_04_mathilde_bathroom_correction": "res://data/conversations/chapter_04_mathilde_bathroom_correction.json"
+  },
+  "day_start": {
+    "eyebrow": "VENDREDI — MATIN",
+    "title": "Trois versions du dimanche",
+    "subtitle": "08:35",
+    "body": "Pauline relaie un set public autorisé.",
+    "action_label": "Commencer",
+    "transition_mode": "day_boundary"
+  },
+  "photo_set": {
+    "asset_id": "S1_A1_J04_DPH_PAULINE_PUBLIC_GROUP_SET_01",
+    "trace_id": "j04_pauline_bastien_public_set_01",
+    "content_type": "PHOTO_SET",
+    "source_kind": "messages",
+    "access_state": "UNLOCKED",
+    "placeholder_label": "Visuel non produit",
+    "children": [
+      "S1_A1_J04_DPH_PAULINE_PUBLIC_GROUP_SET_01_FRAME_01",
+      "S1_A1_J04_DPH_PAULINE_PUBLIC_GROUP_SET_01_FRAME_02",
+      "S1_A1_J04_DPH_PAULINE_PUBLIC_GROUP_SET_01_FRAME_03"
+    ]
+  },
+  "nico_transition": {
+    "transition_mode": "clock_only",
+    "to_time": "14:05",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"]
+  },
+  "household_transition": {
+    "transition_mode": "clock_only",
+    "to_time": "18:05",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"]
+  },
+  "household_close": {
+    "transition_mode": "offline",
+    "to_time": "18:25",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK", "OFF_PHONE"],
+    "text": "Player retrouve Marie et Mathilde.\nLa salle de bain est libre.\nLe chargeur est retrouvé.\nLe bureau n’est plus tout à fait un bureau.\nLe nouveau rythme tient pour ce soir."
+  },
+  "day_end": {
+    "eyebrow": "VENDREDI — SOIR",
+    "title": "J04 terminé",
+    "subtitle": "Le nouveau rythme tient pour ce soir.",
+    "body": "Fin du contenu disponible.",
+    "action_label": "Terminer",
+    "transition_mode": "CONTENT_END",
+    "content_end": true
+  },
+  "gallery_presentations": [
+    {
+      "asset_id": "S1_A1_J04_DPH_PAULINE_PUBLIC_GROUP_SET_01",
+      "character_ids": ["pauline", "marie"],
+      "placeholder_label": "Visuel non produit",
+      "source_kind": "messages",
+      "content_type": "PHOTO_SET",
+      "can_share": true,
+      "transfer_rule": "PUBLIC_SOURCE_RULES",
+      "is_diegetic": true
+    },
+    {
+      "asset_id": "S1_A1_J04_SCN_MARIE_SOCIAL_MOTION_01",
+      "character_ids": ["marie", "pauline"],
+      "placeholder_label": "Visuel non produit",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false
+    },
+    {
+      "asset_id": "S1_A1_J04_SCN_NICO_SAVED_SEAT_01",
+      "character_ids": ["nico"],
+      "placeholder_label": "Visuel non produit",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false
+    },
+    {
+      "asset_id": "S1_A1_J04_SCN_HOUSEHOLD_THREE_RHYTHM_01",
+      "character_ids": ["marie", "mathilde"],
+      "placeholder_label": "Visuel non produit",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false
+    }
+  ]
+}

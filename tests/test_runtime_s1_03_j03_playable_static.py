@@ -35,7 +35,9 @@ class RuntimeS103J03PlayableStaticTests(unittest.TestCase):
         self.assertEqual(data["sandra_offer"]["secondary_action_label"], "Continuer la journée")
         self.assertEqual(data["sandra_offer"]["action_label"], "Ouvrir Sandra")
         self.assertEqual(data["marie_time_card"]["title"], "18:20")
-        self.assertEqual(data["day_end"]["title"], "J03 terminé")
+        self.assertEqual(data["day_end"]["transition_mode"], "day_handoff")
+        self.assertEqual(data["day_end"]["flow_phases"], ["CLOCK", "OFF_PHONE", "NIGHT"])
+        self.assertEqual(data["day_end"]["next_day_presentation"]["subtitle"], "08:35")
         serialized = json.dumps(data, ensure_ascii=False)
         for excluded in ["chapter_03_raphaelle_late_review", "chapter_03_marie_event_return",
                          "chapter_03_proofs", "mathilde_home_charger", "event_offer", "event_joined", "J04"]:
@@ -65,8 +67,9 @@ class RuntimeS103J03PlayableStaticTests(unittest.TestCase):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         day = self.read("game/scripts/ui/messages/DayTransition.gd")
         messages = self.read("game/scripts/ui/messages/MessagesScreen.gd")
-        self.assertIn("const SNAPSHOT_VERSION := 2", season)
-        for token in ['"state"', '"provider_snapshots"', '"J01"', '"J02"', '"J03"']:
+        self.assertIn("const SNAPSHOT_VERSION := 3", season)
+        self.assertIn("version not in [2, SNAPSHOT_VERSION]", season)
+        for token in ['"state"', '"provider_snapshots"', '"J01"', '"J02"', '"J03"', '"J04"']:
             self.assertIn(token, season)
         self.assertIn("progress_snapshot", j01)
         self.assertIn("restore_progress_snapshot", j01)

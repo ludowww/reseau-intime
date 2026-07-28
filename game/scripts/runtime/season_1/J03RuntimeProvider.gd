@@ -149,8 +149,10 @@ func apply_choice(thread_id: String, choice_id: String) -> Dictionary:
 			"kind": "offline", "thread_id": thread_id,
 			"to_time": str(offline.get("time", "")),
 			"flow_phases": offline.get("flow_phases", ["CLOCK", "OFF_PHONE", "NIGHT"]).duplicate(),
-			"content_end": true,
+			"content_end": false,
+			"next_day_presentation": runtime_map.get("day_end", {}).get("next_day_presentation", {}).duplicate(true),
 		}
+		pending_transition["flow_phases"].append("NEW_DAY")
 	return {"accepted": true, "new_messages": transcript_for(thread_id).slice(before), "choices": choices_for(thread_id), "transition": pending_transition.duplicate(true)}
 
 func confirm_day_transition() -> Dictionary:
@@ -227,8 +229,9 @@ func _restored_phase_is_consistent(restored_phase: String, transition: Dictionar
 	var transition_kind := str(transition.get("kind", ""))
 	if restored_phase == "day_start_pending":
 		return state.current_day == "J02" and state.day_status == "COMPLETE" and transition.is_empty()
+	if restored_phase == "complete":
+		return ((state.current_day == "J03" and state.day_status == "COMPLETE") or state.current_day == "J04") and transition.is_empty()
 	if state.current_day != "J03": return false
-	if restored_phase == "complete": return state.day_status == "COMPLETE" and transition.is_empty()
 	if state.day_status != "ACTIVE": return false
 	if restored_phase in ["raphaelle_offline", "marie_offline"]: return transition_kind == "offline"
 	if restored_phase in ["sandra_offer", "marie_time_card"]: return transition_kind == "day_transition"

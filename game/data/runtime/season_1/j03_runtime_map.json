@@ -61,13 +61,17 @@
     }
   },
   "day_end": {
-    "eyebrow": "JEUDI — FIN DE JOURNÉE",
-    "title": "J03 terminé",
-    "subtitle": "Les vies qui existent ailleurs",
-    "body": "Fin temporaire de cette version jouable.",
-    "action_label": "Terminer",
-    "transition_mode": "CONTENT_END",
-    "content_end": true
+    "flow_phases": ["CLOCK", "OFF_PHONE", "NIGHT"],
+    "next_day_presentation": {
+      "eyebrow": "VENDREDI — MATIN",
+      "title": "Trois versions du dimanche",
+      "subtitle": "08:35",
+      "body": "Pauline relaie un set public autorisé.",
+      "action_label": "Commencer",
+      "transition_mode": "day_boundary"
+    },
+    "transition_mode": "day_handoff",
+    "content_end": false
   },
   "gallery_presentations": [
     {

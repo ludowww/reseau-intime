@@ -33,7 +33,7 @@ class UIMsg04B2UnifiedTimeTransitionStaticTests(unittest.TestCase):
             self.assertNotIn(token, overlay)
 
     def test_player_timestamps_are_provider_authoritative(self):
-        for day in ["J01", "J02", "J03"]:
+        for day in ["J01", "J02", "J03", "J04"]:
             source = self.read(f"game/scripts/runtime/season_1/{day}RuntimeProvider.gd")
             self.assertIn('"timestamp": current_narrative_time_text()', source)
             self.assertNotIn('"timestamp": "maintenant"', source)
@@ -42,6 +42,7 @@ class UIMsg04B2UnifiedTimeTransitionStaticTests(unittest.TestCase):
         j01 = json.loads(self.read("game/data/runtime/season_1/j01_runtime_map.json"))
         j02 = json.loads(self.read("game/data/runtime/season_1/j02_runtime_map.json"))
         j03 = json.loads(self.read("game/data/runtime/season_1/j03_runtime_map.json"))
+        j04 = json.loads(self.read("game/data/runtime/season_1/j04_runtime_map.json"))
         self.assertEqual("OFF_PHONE", j01["transitions"]["marie"]["overlay_phase"])
         self.assertEqual(["OFF_PHONE", "NIGHT", "NEW_DAY"], j01["transitions"]["sandra"]["flow_phases"])
         self.assertEqual(["OFF_PHONE", "NIGHT", "NEW_DAY"], j02["day_end"]["flow_phases"])
@@ -49,8 +50,11 @@ class UIMsg04B2UnifiedTimeTransitionStaticTests(unittest.TestCase):
         self.assertEqual("clock_only", j02["phase_transitions"]["18:22"]["transition_mode"])
         self.assertEqual("clock_then_card", j03["sandra_offer"]["transition_mode"])
         self.assertEqual("clock_only", j03["marie_time_card"]["transition_mode"])
-        self.assertEqual("CONTENT_END", j03["day_end"]["transition_mode"])
-        self.assertNotIn("J04", json.dumps(j03))
+        self.assertEqual("day_handoff", j03["day_end"]["transition_mode"])
+        self.assertEqual(["CLOCK", "OFF_PHONE", "NIGHT"], j03["day_end"]["flow_phases"])
+        self.assertEqual("08:35", j03["day_end"]["next_day_presentation"]["subtitle"])
+        self.assertEqual("CONTENT_END", j04["day_end"]["transition_mode"])
+        self.assertTrue(j04["day_end"]["content_end"])
         self.assertEqual("19:05", j03["marie_offline"]["ACTIVE"]["time"])
         self.assertEqual("19:35", j03["marie_offline"]["BOUNDED"]["time"])
         self.assertEqual("20:30", j03["marie_offline"]["DRIFT"]["time"])

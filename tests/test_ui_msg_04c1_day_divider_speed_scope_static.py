@@ -10,7 +10,8 @@ class UIMsg04C1DayDividerAndSpeedScopeStaticTests(unittest.TestCase):
 
     def test_timeline_normalizes_days_and_never_bubbles_system_dividers(self):
         source = self.read("game/scripts/ui/messages/MessageTimeline.gd")
-        for token in ['1: "Mardi"', '2: "Mercredi"', '3: "Jeudi"',
+        for token in ['"Mardi"', '"Mercredi"', '"Jeudi"', '"Vendredi"',
+                      "(source_day - 1) % 7", "source_day <= 21",
                       "func _append_presentation_node", "func _day_label_for",
                       'content_type == "SYSTEM_DAY_DIVIDER"']:
             self.assertIn(token, source)

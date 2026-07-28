@@ -84,11 +84,10 @@ func _test_real_ui() -> void:
 	_expect(_ui_choices(messages) == _source_choices(MARIE_SOURCE, 1), "Marie exact three UI choices")
 	await _choose(messages, "choice_j3_marie_return_active"); await _frames(2)
 	_expect(provider.presentation_count_by_id("j3_shared_evening_active") == 1, "ACTIVE exact UI beat")
-	_assert_card(messages, {"eyebrow": "JEUDI — FIN DE JOURNÉE", "title": "J03 terminé", "subtitle": "Les vies qui existent ailleurs", "body": "Fin temporaire de cette version jouable.", "action_label": "Terminer"}, 1, "J03 end")
-	messages.day_transition.continue_button.emit_signal("pressed"); await _frames(2)
-	_expect(messages.screen_mode == "day_complete" and provider.active_day == "J03", "stable J03 end")
+	_expect(provider.active_day == "J04" and provider.state.current_day == "J04", "J03 hands off automatically to J04")
+	_expect(not messages.day_transition.visible and messages.screen_mode == "list", "no obsolete J03 CONTENT_END card")
 	_expect(not messages.describe_state().get("has_horizontal_crop", true), "portrait screen crop")
-	_expect(not JSON.stringify(provider.snapshot()).contains("J04"), "J04 content in final snapshot")
+	_expect(JSON.stringify(provider.snapshot()).contains("J04"), "J04 snapshot included after handoff")
 	main.queue_free(); await _frames(2)
 
 func _test_sandra_secondary_real_button_ui() -> void:
@@ -191,10 +190,9 @@ func _test_snapshots_with_continuation() -> void:
 	restored = _restore_exact(restored.snapshot(), "snapshot before Marie")
 	restored.confirm_day_transition(); restored.apply_choice("thread_marie_private", "choice_j3_marie_evening_why_guided"); restored.apply_choice("thread_marie_private", "choice_j3_marie_return_bounded"); restored.confirm_transition()
 	_expect(restored.presentation_count_by_id("j3_shared_evening_bounded") == 1 and restored.j03_provider.gallery_asset_ids.size() == 6, "Marie restore replay/duplication")
-	# Point 4: completed J03 remains exact and produces nothing on rejected continuation.
+	# Point 4: completed J03 remains exact and hands off once to J04.
 	var complete = _restore_exact(restored.snapshot(), "snapshot after J03")
-	var before: Dictionary = complete.snapshot()
-	_expect(not bool(complete.confirm_day_transition().get("accepted", false)) and complete.snapshot() == before, "completed restore replay/mutation")
+	_expect(bool(complete.confirm_day_transition().get("accepted", false)) and complete.active_day == "J04", "completed J03 restore handoff")
 
 func _test_invalid_j03_phase() -> void:
 	var season = _season_at_j03(true)
@@ -204,7 +202,7 @@ func _test_invalid_j03_phase() -> void:
 	_expect(not restored.restore_snapshot(snapshot), "unknown restored J03 phase accepted")
 
 func _restore_exact(snapshot: Dictionary, label: String):
-	_expect(int(snapshot.get("version", 0)) == 2 and snapshot.keys() == ["version", "active_day", "state", "provider_snapshots"], label + " v2 shape")
+	_expect(int(snapshot.get("version", 0)) == 3 and snapshot.keys() == ["version", "active_day", "state", "provider_snapshots"], label + " v3 shape")
 	var restored = SEASON_PROVIDER.new(); _expect(restored.initialize(), label + " initialize")
 	_expect(restored.restore_snapshot(snapshot), label + " restore")
 	_expect(restored.state_restore_count == 1, label + " Season1State restore count")

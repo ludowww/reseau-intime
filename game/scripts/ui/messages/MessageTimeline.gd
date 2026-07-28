@@ -8,11 +8,7 @@ const UNREAD_DIVIDER_SCRIPT := preload("res://scripts/ui/messages/UnreadDivider.
 const TYPING_INDICATOR_SCRIPT := preload("res://scripts/ui/messages/TypingIndicator.gd")
 const DAY_DIVIDER_SCRIPT := preload("res://scripts/ui/messages/DayDivider.gd")
 const IMAGE_MESSAGE_SCRIPT := preload("res://scripts/ui/messages/ImageMessage.gd")
-const DAY_LABELS := {
-	1: "Mardi",
-	2: "Mercredi",
-	3: "Jeudi",
-}
+const DAY_LABELS := ["Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche", "Lundi"]
 
 var PORTRAIT_THEME
 var characters: Dictionary = {}
@@ -522,7 +518,7 @@ func _mount_presentation_node(node: Control, insert_index: int) -> void:
 
 func _source_day_for(message: Dictionary) -> int:
 	var source_day := int(message.get("source_day", 0))
-	if DAY_LABELS.has(source_day):
+	if source_day >= 1 and source_day <= 21:
 		return source_day
 	if str(message.get("content_type", "")) != "SYSTEM_DAY_DIVIDER":
 		return 0
@@ -536,7 +532,8 @@ func _source_day_for(message: Dictionary) -> int:
 	return 0
 
 func _day_label_for(source_day: int) -> String:
-	return str(DAY_LABELS.get(source_day, ""))
+	if source_day < 1 or source_day > 21: return ""
+	return str(DAY_LABELS[(source_day - 1) % 7])
 
 # MessageBubble keeps Player on the right and interlocutors on the left.
 func _build_message_bubble(message: Dictionary) -> HBoxContainer:

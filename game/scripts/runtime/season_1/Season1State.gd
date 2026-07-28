@@ -2,7 +2,7 @@ extends RefCounted
 
 class_name Season1State
 
-const SNAPSHOT_VERSION := 1
+const SNAPSHOT_VERSION := 2
 
 var current_day := "J01"
 var day_status := "ACTIVE"
@@ -20,6 +20,13 @@ var raphaelle_state := "UN" + "ESTAB" + "LISHED"
 var raphaelle_work_outcome := ""
 var sandra_j03_echo_outcome := ""
 var marie_j03_return_outcome := ""
+var mathilde_state := "UNESTABLISHED"
+var pauline_state := "UNESTABLISHED"
+var nico_state := "UNESTABLISHED"
+var pauline_public_selection_outcome := "UNESTABLISHED"
+var nico_friendship_outcome := "UNESTABLISHED"
+var opening_band_complete := false
+var household_rhythm_confirmed := false
 
 func _init() -> void:
 	reset()
@@ -58,6 +65,13 @@ func reset() -> void:
 	raphaelle_work_outcome = ""
 	sandra_j03_echo_outcome = ""
 	marie_j03_return_outcome = ""
+	mathilde_state = "UNESTABLISHED"
+	pauline_state = "UNESTABLISHED"
+	nico_state = "UNESTABLISHED"
+	pauline_public_selection_outcome = "UNESTABLISHED"
+	nico_friendship_outcome = "UNESTABLISHED"
+	opening_band_complete = false
+	household_rhythm_confirmed = false
 
 func apply_choice(choice_id: String) -> bool:
 	if choice_id == "" or selected_choice_ids.has(choice_id):
@@ -140,6 +154,56 @@ func begin_j03() -> void:
 	current_day = "J03"
 	day_status = "ACTIVE"
 
+func begin_j04() -> void:
+	current_day = "J04"
+	day_status = "ACTIVE"
+
+func apply_j04_choice(choice_id: String) -> bool:
+	if choice_id == "" or selected_choice_ids.has(choice_id): return false
+	match choice_id:
+		"choice_friday_pauline_contract_guided", "choice_friday_nico_reservation_guided", "choice_friday_nico_mathilde_guided": pass
+		"choice_friday_pauline_practical": pauline_public_selection_outcome = "FRAME_02_SELECTED"
+		"choice_friday_pauline_dry": pauline_public_selection_outcome = "FRAME_03_REQUESTED"
+		"choice_friday_pauline_defer": pauline_public_selection_outcome = "DEFERRED_TO_MARIE"
+		"choice_friday_nico_playful": nico_friendship_outcome = "PLAYFUL"
+		"choice_friday_nico_honest": nico_friendship_outcome = "HONEST"
+		"choice_friday_nico_home": nico_friendship_outcome = "RETURN_TO_MARIE"
+		_: return false
+	selected_choice_ids.append(choice_id)
+	return true
+
+func establish_j04_pauline_records() -> bool:
+	if traces.has("j04_pauline_bastien_public_set_01"): return false
+	pauline_state = "PUBLIC_ONLY"
+	traces["j04_pauline_bastien_public_set_01"] = {
+		"trace_id": "j04_pauline_bastien_public_set_01", "trace_type": "PHOTO_SET", "source_day": "J04",
+		"creator": "Pauline via retardateur", "subjects": ["Pauline", "Bastien", "Marie"], "owner": "Pauline",
+		"initial_audience": ["Pauline", "Bastien", "Marie", "Player"], "current_audience": ["Pauline", "Bastien", "Marie", "Player"],
+		"saving_rule": "PUBLIC_SOURCE_RULES", "transfer_rule": "PUBLIC_SOURCE_RULES", "current_state": "PUBLIC_ACTIVE",
+		"eligible_for_j14": false, "eligible_for_j21": true,
+	}
+	knowledge["fact_pauline_bastien_couple_public"] = {"fact_id": "fact_pauline_bastien_couple_public", "source_type": "PUBLIC_TRACE", "source_ref": "j04_pauline_bastien_public_set_01", "certainty": "CONFIRMED", "initial_knowers": ["Pauline", "Bastien", "Marie", "Player"]}
+	return true
+
+func establish_j04_nico_records() -> bool:
+	if knowledge.has("fact_nico_friendship_exists"): return false
+	nico_state = "ORDINARY_FRIEND"
+	knowledge["fact_nico_friendship_exists"] = {"fact_id": "fact_nico_friendship_exists", "source_type": "DIRECT_CONVERSATION", "source_ref": "chapter_04_nico_saved_seat_followup", "certainty": "CONFIRMED", "initial_knowers": ["Nico", "Player"]}
+	var stay: Dictionary = knowledge.get("fact_mathilde_stay_started", {})
+	var current_knowers: Array = stay.get("current_knowers", stay.get("initial_knowers", [])).duplicate()
+	if not current_knowers.has("Nico"): current_knowers.append("Nico")
+	stay["current_knowers"] = current_knowers
+	var acquisitions: Dictionary = stay.get("knowledge_acquisitions", {}).duplicate(true)
+	acquisitions["Nico"] = {"source": "Marie", "source_day": "J04", "source_ref": "msg_friday_nico_mathilde_001"}
+	stay["knowledge_acquisitions"] = acquisitions
+	knowledge["fact_mathilde_stay_started"] = stay
+	return true
+
+func complete_j04_household() -> void:
+	mathilde_state = "FAMILY_GUEST"
+	opening_band_complete = true
+	household_rhythm_confirmed = true
+
 func apply_j03_choice(choice_id: String) -> bool:
 	if choice_id == "" or selected_choice_ids.has(choice_id):
 		return false
@@ -195,7 +259,9 @@ func install_mathilde() -> bool:
 	knowledge["fact_mathilde_stay_started"] = {
 		"fact_id": "fact_mathilde_stay_started", "source_ref": "j02_mathilde_arrival_room_01",
 		"certainty": "CONFIRMED", "initial_knowers": ["Marie", "Player", "Mathilde"],
+		"current_knowers": ["Marie", "Player", "Mathilde"], "knowledge_acquisitions": {},
 	}
+	mathilde_state = "FAMILY_GUEST"
 	return true
 
 func activate_sandra_trace() -> bool:
@@ -268,12 +334,20 @@ func snapshot() -> Dictionary:
 		"raphaelle_work_outcome": raphaelle_work_outcome,
 		"sandra_j03_echo_outcome": sandra_j03_echo_outcome,
 		"marie_j03_return_outcome": marie_j03_return_outcome,
+		"mathilde_state": mathilde_state,
+		"pauline_state": pauline_state,
+		"nico_state": nico_state,
+		"pauline_public_selection_outcome": pauline_public_selection_outcome,
+		"nico_friendship_outcome": nico_friendship_outcome,
+		"opening_band_complete": opening_band_complete,
+		"household_rhythm_confirmed": household_rhythm_confirmed,
 	}
 
 func restore_snapshot(value: Dictionary) -> bool:
-	if int(value.get("version", -1)) != SNAPSHOT_VERSION:
+	var version := int(value.get("version", -1))
+	if version not in [1, SNAPSHOT_VERSION]:
 		return false
-	if str(value.get("current_day", "")) not in ["J01", "J02", "J03"]:
+	if str(value.get("current_day", "")) not in ["J01", "J02", "J03", "J04"]:
 		return false
 	if str(value.get("day_status", "")) not in ["ACTIVE", "COMPLETE"]:
 		return false
@@ -285,6 +359,11 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if str(value.get("raphaelle_work_outcome", "")) not in ["", "ACCOUNTABLE", "DRY_HUMOR", "DELAYED"]: return false
 	if str(value.get("sandra_j03_echo_outcome", "")) not in ["", "UNAVAILABLE", "EXPIRED", "RESPONDED"]: return false
 	if str(value.get("marie_j03_return_outcome", "")) not in ["", "ACTIVE", "BOUNDED", "DRIFT"]: return false
+	if str(value.get("mathilde_state", "FAMILY_GUEST" if value.get("knowledge", {}).has("fact_mathilde_stay_started") else "UNESTABLISHED")) not in ["UNESTABLISHED", "FAMILY_GUEST"]: return false
+	if str(value.get("pauline_state", "UNESTABLISHED")) not in ["UNESTABLISHED", "PUBLIC_ONLY"]: return false
+	if str(value.get("nico_state", "UNESTABLISHED")) not in ["UNESTABLISHED", "ORDINARY_FRIEND"]: return false
+	if str(value.get("pauline_public_selection_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "FRAME_02_SELECTED", "FRAME_03_REQUESTED", "DEFERRED_TO_MARIE"]: return false
+	if str(value.get("nico_friendship_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "PLAYFUL", "HONEST", "RETURN_TO_MARIE"]: return false
 	for key in ["promises", "traces", "knowledge"]:
 		if typeof(value.get(key)) != TYPE_DICTIONARY:
 			return false
@@ -307,4 +386,11 @@ func restore_snapshot(value: Dictionary) -> bool:
 	raphaelle_work_outcome = str(value.get("raphaelle_work_outcome", ""))
 	sandra_j03_echo_outcome = str(value.get("sandra_j03_echo_outcome", ""))
 	marie_j03_return_outcome = str(value.get("marie_j03_return_outcome", ""))
+	mathilde_state = str(value.get("mathilde_state", "FAMILY_GUEST" if knowledge.has("fact_mathilde_stay_started") else "UNESTABLISHED"))
+	pauline_state = str(value.get("pauline_state", "UNESTABLISHED"))
+	nico_state = str(value.get("nico_state", "UNESTABLISHED"))
+	pauline_public_selection_outcome = str(value.get("pauline_public_selection_outcome", "UNESTABLISHED"))
+	nico_friendship_outcome = str(value.get("nico_friendship_outcome", "UNESTABLISHED"))
+	opening_band_complete = bool(value.get("opening_band_complete", false))
+	household_rhythm_confirmed = bool(value.get("household_rhythm_confirmed", false))
 	return true

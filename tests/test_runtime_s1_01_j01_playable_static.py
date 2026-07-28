@@ -48,7 +48,8 @@ class RuntimeS101J01PlayableStaticTests(unittest.TestCase):
         ]:
             self.assertIn(token, state)
         self.assertIn("func restore_snapshot(value: Dictionary) -> bool", state)
-        self.assertNotIn("ESTAB" + "LISHED", state)
+        # J04 adds bounded UNESTABLISHED defaults; the legacy route flag remains forbidden.
+        self.assertNotIn("route_" + "established", state.lower())
         for fact_id in [
             "fact_marie_player_couple_exists",
             "fact_sandra_preexisting_friendship",

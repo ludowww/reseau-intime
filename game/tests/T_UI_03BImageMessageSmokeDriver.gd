@@ -47,7 +47,11 @@ func _run() -> void:
 	_validate_image_geometry(messages)
 	_validate_image_bubble(messages, "demo_image_private_marie_01", "21:16", "", "")
 	_expect(int(private_state.get("message_count", 0)) == messages.thread_message_count(private_id), "private image must remain a normal presentation")
-	_expect(int(private_state.get("message_bubble_count", 0)) == int(private_state.get("message_count", 0)) - int(private_state.get("day_divider_count", 0)) - 1, "private image must count as one bubble while off-phone data stays non-visual")
+	var non_bubble_presentations := 0
+	for presentation in messages.transcripts.get(private_id, []):
+		if str(presentation.get("content_type", "")) in ["SYSTEM_DAY_DIVIDER", "OFF_PHONE_TRANSITION"]:
+			non_bubble_presentations += 1
+	_expect(int(private_state.get("message_bubble_count", 0)) == int(private_state.get("message_count", 0)) - non_bubble_presentations, "private image must count as one bubble while system dividers and off-phone data stay non-visual")
 
 	var private_before := _state_snapshot(messages, shell)
 	messages.conversation_screen.timeline.focus_first_image()
