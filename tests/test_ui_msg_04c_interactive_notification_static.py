@@ -68,6 +68,16 @@ class UIMsg04CInteractiveNotificationStaticTests(unittest.TestCase):
         driver = self.read(required[0])
         self.assertIn('res://scenes/portrait/PortraitMain.tscn', driver)
 
+    def test_smoke_performs_clean_shutdown_without_orphaned_async_states(self):
+        driver = self.read("game/tests/UI_MSG_04CInteractiveNotificationSmokeDriver.gd")
+        for token in [
+            "func _clean_shutdown", "runtime_delivery_cancelled = true",
+            "runtime_delivery_active = false", "runtime_delivery_request_id += 1",
+            "_clear_notification_state(false)", "tested_main.queue_free()",
+            'get_tree().call_deferred("quit", exit_code)',
+        ]:
+            self.assertIn(token, driver)
+
     def test_scope_excludes_narrative_gallery_and_project_settings(self):
         forbidden_roots = (
             "game/data/conversations/", "game/data/runtime/season_1/",

@@ -2,6 +2,7 @@ extends Node
 
 const MAIN_SCENE := preload("res://scenes/portrait/PortraitMain.tscn")
 var failures: Array[String] = []
+var tested_main: Node
 
 func _ready() -> void:
 	call_deferred("_run")
@@ -10,6 +11,7 @@ func _run() -> void:
 	var requested_size := _parse_size(_arg("--runtime-size", "720x1280"))
 	get_window().size = requested_size
 	var main = MAIN_SCENE.instantiate()
+	tested_main = main
 	add_child(main)
 	await _frames(6)
 	var shell = main.shell
@@ -183,8 +185,22 @@ func _expect(condition: bool, message: String) -> void:
 func _finish(size: Vector2i) -> void:
 	if failures.is_empty():
 		print("UI-MSG-04C interactive notification smoke %dx%d: OK" % [size.x, size.y])
-		get_tree().quit(0)
+		await _clean_shutdown(0)
 		return
 	for failure in failures:
 		push_error(failure)
-	get_tree().quit(1)
+	await _clean_shutdown(1)
+
+func _clean_shutdown(exit_code: int) -> void:
+	if tested_main != null and is_instance_valid(tested_main):
+		var messages = tested_main.shell.messages_screen
+		messages._clear_notification_state(false)
+		messages.runtime_delivery_cancelled = true
+		messages.runtime_delivery_active = false
+		messages.runtime_delivery_request_id += 1
+		for _index in range(8):
+			await get_tree().process_frame
+		tested_main.queue_free()
+	for _index in range(8):
+		await get_tree().process_frame
+	get_tree().call_deferred("quit", exit_code)
