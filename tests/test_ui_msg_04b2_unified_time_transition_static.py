@@ -25,7 +25,7 @@ class UIMsg04B2UnifiedTimeTransitionStaticTests(unittest.TestCase):
             'signal flow_finished', 'func play_flow', 'func set_speed_multiplier',
             'func set_reduced_motion', 'request_id', 'Zzz', '_unhandled_key_input',
             'KEY_ENTER', 'KEY_SPACE', 'MINIMUM_SKIP_DELAY_SECONDS',
-            'scaled_progress += delta * speed_multiplier', 'MINIMUM_AUTOMATIC_VISIBLE_SECONDS',
+            'speed_scaled_elapsed += delta * speed_multiplier', 'MINIMUM_AUTOMATIC_VISIBLE_SECONDS',
         ]:
             self.assertIn(token, overlay)
         forbidden = [".gif", "AnimatedTexture", "VideoStream", "Sprite2D"]

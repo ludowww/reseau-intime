@@ -57,7 +57,8 @@ class UIMsg04AConversationHeaderResponsiveStaticTests(unittest.TestCase):
         conversation = self.read("game/scripts/ui/messages/PortraitConversationScreen.gd")
         self.assertIn("var narrative_time_label: Label", conversation)
         self.assertIn("func set_narrative_time(value: String)", conversation)
-        self.assertIn("narrative_time_label.visible = valid", conversation)
+        self.assertIn('narrative_time = value if _is_valid_narrative_time(value) else ""', conversation)
+        self.assertIn('narrative_time_label.visible = narrative_time != ""', conversation)
         self.assertIn("func _is_valid_narrative_time(value: String)", conversation)
         self.assertNotIn("Time.get_time", conversation)
         self.assertNotIn("get_datetime", conversation)
@@ -96,7 +97,7 @@ class UIMsg04AConversationHeaderResponsiveStaticTests(unittest.TestCase):
             "speed persists across threads", "off-phone transition contained",
             "day transition contained", "no vertical crop", "no horizontal crop",
             "empty narrative time has no residual height",
-            "narrative time displays exactly 18:20",
+            "narrative time displays exactly Mar. · 18:20",
         ]:
             self.assertIn(phrase, driver)
         for resolution in ["540x960", "720x800", "720x960", "720x1280", "1080x1920"]:

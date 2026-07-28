@@ -57,9 +57,11 @@ func presentation_source() -> Dictionary:
 			"player": _character("player", "Player", "#8D63E6", ""),
 		},
 		"threads": threads, "messages_by_thread": transcripts, "choices_by_thread": choices,
+		"narrative_day_short": current_narrative_day_short(),
 		"narrative_time": current_narrative_time_text(), "narrative_time_minutes": current_time_minutes,
 	}
 
+func current_narrative_day_short() -> String: return str(runtime_map.get("narrative_day_short", ""))
 func current_narrative_time_minutes() -> int: return current_time_minutes
 func current_narrative_time_text() -> String: return NARRATIVE_TIME.format_narrative_time(current_time_minutes)
 func mark_message_presented(message_id: String) -> bool:

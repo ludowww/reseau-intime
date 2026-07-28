@@ -50,7 +50,7 @@ func _run() -> void:
 	conversation.set_narrative_time("")
 	_expect(not conversation.narrative_time_label.visible and conversation.narrative_time_label.custom_minimum_size.y == 0.0, "empty narrative time has no residual height")
 	conversation.set_narrative_time("18:20")
-	_expect(conversation.narrative_time_label.visible and conversation.narrative_time_label.text == "18:20", "narrative time displays exactly 18:20")
+	_expect(conversation.narrative_time_label.visible and conversation.narrative_time_label.text == "Mar. · 18:20", "narrative time displays exactly Mar. · 18:20")
 	conversation.set_narrative_time("")
 	await _wait_delivery(messages)
 	_expect(conversation.choice_bar.visible and conversation.choice_bar.choice_count() > 0, "choices remain accessible")

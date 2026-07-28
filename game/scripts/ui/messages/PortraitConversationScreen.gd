@@ -6,9 +6,12 @@ signal back_requested
 signal choice_selected(choice: Dictionary)
 signal image_requested(message_id: String, media_ref: String)
 signal reading_speed_requested
+signal header_notification_open_requested(thread_id: String)
+signal header_notification_dismiss_requested
 
 const TIMELINE_SCRIPT := preload("res://scripts/ui/messages/MessageTimeline.gd")
 const CHOICE_BAR_SCRIPT := preload("res://scripts/ui/messages/ChoiceBar.gd")
+const NOTIFICATION_BANNER_SCRIPT := preload("res://scripts/ui/messages/NotificationBanner.gd")
 
 var PORTRAIT_THEME
 var thread: Dictionary = {}
@@ -18,12 +21,16 @@ var choice_bar
 var conversation_header: PanelContainer
 var title_label: Label
 var narrative_time_label: Label
+var narrative_day_short := ""
+var narrative_time := ""
 var avatar_label: Label
 var back_button: Button
 var reading_speed_button: Button
 var compact_height_mode := false
 var reading_speed_label := "×1"
 var reading_speed_tooltip := ""
+var header_notification_host: Control
+var header_notification
 
 func configure(thread_presentation: Dictionary, message_presentations: Array[Dictionary], choice_presentations: Array[Dictionary], character_presentations: Dictionary, portrait_theme, reading_position := -1, first_unread_message_id := "") -> void:
 	thread = thread_presentation
@@ -39,11 +46,27 @@ func set_reading_speed_state(label: String, tooltip: String) -> void:
 		reading_speed_button.tooltip_text = reading_speed_tooltip
 
 func set_narrative_time(value: String) -> void:
-	if narrative_time_label == null:
+	narrative_time = value if _is_valid_narrative_time(value) else ""
+	_update_narrative_context()
+
+func set_narrative_day_short(value: String) -> void:
+	narrative_day_short = value if value in ["Mar.", "Mer.", "Jeu."] else ""
+	_update_narrative_context()
+
+func show_header_notification(notification: Dictionary, reduced_motion: bool) -> void:
+	if header_notification == null:
 		return
-	var valid := _is_valid_narrative_time(value)
-	narrative_time_label.text = value if valid else ""
-	narrative_time_label.visible = valid
+	header_notification_host.visible = true
+	header_notification.configure(notification, PORTRAIT_THEME, reduced_motion, true, header_notification.AUTO_DISMISS_SECONDS)
+
+func hide_header_notification() -> void:
+	if header_notification != null:
+		header_notification.dismiss()
+	if header_notification_host != null:
+		header_notification_host.visible = false
+
+func header_notification_visible() -> bool:
+	return header_notification_host != null and header_notification_host.visible and header_notification != null and header_notification.visible
 
 func set_compact_height_mode(enabled: bool) -> void:
 	compact_height_mode = enabled
@@ -149,6 +172,9 @@ func describe_state() -> Dictionary:
 		"reading_speed_label": reading_speed_button.text if reading_speed_button != null else reading_speed_label,
 		"narrative_time_visible": narrative_time_label != null and narrative_time_label.visible,
 		"narrative_time_text": narrative_time_label.text if narrative_time_label != null else "",
+		"header_notification_visible": header_notification_visible(),
+		"header_notification_rect": header_notification.get_global_rect() if header_notification_visible() else Rect2(),
+		"header_notification_host_rect": header_notification_host.get_global_rect() if header_notification_host != null else Rect2(),
 		"conversation_header_rect": conversation_header.get_global_rect() if conversation_header != null else Rect2(),
 		"timeline_rect": timeline.get_global_rect() if timeline != null else Rect2(),
 		"choice_bar_rect": choice_bar.get_global_rect() if choice_bar != null and choice_bar.visible else Rect2(),
@@ -222,6 +248,19 @@ func _build(message_presentations: Array[Dictionary], choice_presentations: Arra
 	reading_speed_button.add_theme_stylebox_override("focus", PORTRAIT_THEME.focus_style())
 	reading_speed_button.pressed.connect(func(): reading_speed_requested.emit())
 	header_row.add_child(reading_speed_button)
+	header_notification_host = Control.new()
+	header_notification_host.name = "HeaderNotificationHost"
+	header_notification_host.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	header_notification_host.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	header_notification_host.clip_contents = true
+	header_notification_host.z_index = 5
+	header_notification_host.visible = false
+	conversation_header.add_child(header_notification_host)
+	header_notification = NOTIFICATION_BANNER_SCRIPT.new()
+	header_notification.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	header_notification.open_requested.connect(func(thread_id: String): header_notification_open_requested.emit(thread_id))
+	header_notification.dismiss_requested.connect(_on_header_notification_dismiss_requested)
+	header_notification_host.add_child(header_notification)
 	timeline = TIMELINE_SCRIPT.new()
 	timeline.name = "MessageTimeline"
 	add_child(timeline)
@@ -241,6 +280,16 @@ func _is_valid_narrative_time(value: String) -> bool:
 	var hour := int(value.substr(0, 2))
 	var minute := int(value.substr(3, 2))
 	return hour >= 0 and hour <= 23 and minute >= 0 and minute <= 59
+
+func _update_narrative_context() -> void:
+	if narrative_time_label == null:
+		return
+	narrative_time_label.text = narrative_day_short + " · " + narrative_time if narrative_day_short != "" and narrative_time != "" else narrative_time
+	narrative_time_label.visible = narrative_time != ""
+
+func _on_header_notification_dismiss_requested() -> void:
+	header_notification_host.visible = false
+	header_notification_dismiss_requested.emit()
 
 func _label(value: String, font_size: int, color: Color) -> Label:
 	var label := Label.new()

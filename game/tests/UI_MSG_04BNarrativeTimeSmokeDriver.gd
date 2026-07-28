@@ -20,7 +20,7 @@ func _run() -> void:
 	await _frames(4)
 	_press_thread_card(messages, "thread_marie_private")
 	await _frames(3)
-	_expect(messages.conversation_screen.narrative_time_label.text == "18:12", "narrative time starts at 18:12")
+	_expect(messages.conversation_screen.narrative_time_label.text == "Mar. · 18:12", "narrative header starts at Mar. · 18:12")
 	_expect(TIME_SCRIPT.parse_narrative_time("18:20") == 1100, "strict parser accepts 18:20")
 	_expect(TIME_SCRIPT.parse_narrative_time("18:60") == -1, "strict parser rejects 18:60")
 	_expect(TIME_SCRIPT.format_narrative_time(1100) == "18:20", "formatter returns 18:20")

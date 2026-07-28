@@ -1,4 +1,5 @@
 {
+  "narrative_day_short": "Mar.",
   "conversation_paths": {
     "chapter_01_marie_opening": "res://data/conversations/chapter_01_marie_opening.json",
     "chapter_01_sandra_trace": "res://data/conversations/chapter_01_sandra_trace.json"
@@ -50,7 +51,7 @@
   },
   "sandra_notification": {
     "title": "Sandra",
-    "body": "J'ai retrouvé une photo."
+    "body": "J’ai retrouvé une photo."
   },
   "day_end": {
     "eyebrow": "MARDI — FIN DE JOURNÉE",

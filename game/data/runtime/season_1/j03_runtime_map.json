@@ -1,4 +1,5 @@
 {
+  "narrative_day_short": "Jeu.",
   "conversation_paths": {
     "chapter_03_raphaelle_blue_folder": "res://data/conversations/chapter_03_raphaelle_blue_folder.json",
     "chapter_03_sandra_continuity": "res://data/conversations/chapter_03_sandra_continuity.json",

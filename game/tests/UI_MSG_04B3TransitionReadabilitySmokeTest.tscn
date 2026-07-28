@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://tests/UI_MSG_04B3TransitionReadabilitySmokeDriver.gd" id="1_driver"]
+
+[node name="UI_MSG_04B3TransitionReadabilitySmokeTest" type="Node"]
+script = ExtResource("1_driver")

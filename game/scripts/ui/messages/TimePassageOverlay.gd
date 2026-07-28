@@ -16,14 +16,18 @@ const FLOW_CONTENT_END := "CONTENT_END"
 const MINIMUM_SKIP_DELAY_SECONDS := 0.35
 const MINIMUM_AUTOMATIC_VISIBLE_SECONDS := 0.25
 const CLOCK_DURATION_SECONDS := 4.0
-const NIGHT_DURATION_SECONDS := 2.2
+const NIGHT_DURATION_SECONDS := 2.6
 const NEW_DAY_DURATION_SECONDS := 2.4
+const CLOCK_BACKGROUND := Color(0.015, 0.02, 0.04, 0.96)
+const OFF_PHONE_BACKGROUND := Color(0.015, 0.02, 0.04, 0.97)
+const NIGHT_BACKGROUND := Color(0.005, 0.008, 0.018, 1.0)
+const NEW_DAY_BACKGROUND := Color(0.015, 0.02, 0.04, 1.0)
 
 var request_id := 0
 var phases: Array[Dictionary] = []
 var phase_index := -1
-var elapsed := 0.0
-var scaled_progress := 0.0
+var real_elapsed := 0.0
+var speed_scaled_elapsed := 0.0
 var phase_duration := 1.0
 var speed_multiplier := 1.0
 var reduced_motion := false
@@ -36,7 +40,12 @@ var skip_requested := false
 @onready var clock_label: Label = $Center/Content/Clock
 @onready var title_label: Label = $Center/Content/Title
 @onready var body_label: Label = $Center/Content/Body
-@onready var sleep_label: Label = $Center/Content/Sleep
+@onready var sleep_container: Control = $Center/Content/SleepContainer
+@onready var sleep_z: Label = $Center/Content/SleepContainer/SleepZ
+@onready var sleep_zz: Label = $Center/Content/SleepContainer/SleepZz
+@onready var sleep_zzz: Label = $Center/Content/SleepContainer/SleepZzz
+# Compatibility alias used by the previous smoke contract.
+@onready var sleep_label: Label = $Center/Content/SleepContainer/SleepZzz
 @onready var speed_button: Button = $SpeedButton
 
 func _ready() -> void:
@@ -73,7 +82,6 @@ func cancel_flow() -> void:
 	set_process(false)
 	visible = false
 	if was_active:
-		# Wake signal awaiters; their request-id guard rejects this cancellation.
 		flow_finished.emit(cancelled_request_id)
 
 func dismiss() -> void:
@@ -113,17 +121,19 @@ func has_horizontal_crop() -> bool:
 func _process(delta: float) -> void:
 	if not active:
 		return
-	elapsed += delta
-	scaled_progress += delta * speed_multiplier
+	real_elapsed += delta
+	speed_scaled_elapsed += delta * speed_multiplier
 	var phase: Dictionary = phases[phase_index]
-	if current_phase() == PHASE_CLOCK:
-		_update_clock(phase, scaled_progress)
-	elif current_phase() == PHASE_NIGHT and not reduced_motion:
-		_update_sleep(scaled_progress)
-	var can_skip := current_phase() == PHASE_OFF_PHONE and skip_requested and elapsed >= MINIMUM_SKIP_DELAY_SECONDS
-	var automatic_finished := scaled_progress >= phase_duration and elapsed >= MINIMUM_AUTOMATIC_VISIBLE_SECONDS
+	var kind := current_phase()
+	if kind == PHASE_CLOCK:
+		_update_clock(phase, speed_scaled_elapsed)
+	elif kind == PHASE_NIGHT and not reduced_motion:
+		_update_sleep(real_elapsed)
+	var can_skip := kind == PHASE_OFF_PHONE and skip_requested and real_elapsed >= MINIMUM_SKIP_DELAY_SECONDS
+	var active_progress := real_elapsed if kind == PHASE_NIGHT else speed_scaled_elapsed
+	var automatic_finished := active_progress >= phase_duration and real_elapsed >= MINIMUM_AUTOMATIC_VISIBLE_SECONDS
 	if can_skip or automatic_finished:
-		if current_phase() == PHASE_CLOCK:
+		if kind == PHASE_CLOCK:
 			_update_clock(phase, phase_duration)
 		skip_requested = false
 		_advance_phase()
@@ -135,25 +145,32 @@ func _advance_phase() -> void:
 		set_process(false)
 		flow_finished.emit(request_id)
 		return
-	elapsed = 0.0
-	scaled_progress = 0.0
+	real_elapsed = 0.0
+	speed_scaled_elapsed = 0.0
 	skip_requested = false
 	_apply_phase(phases[phase_index])
 	phase_changed.emit(current_phase())
 
 func _apply_phase(phase: Dictionary) -> void:
 	var kind := str(phase.get("phase", ""))
-	eyebrow_label.text = str(phase.get("eyebrow", ""))
-	title_label.text = str(phase.get("title", ""))
-	body_label.text = str(phase.get("body", phase.get("text", "")))
-	clock_label.text = str(phase.get("from_time", phase.get("time", "")))
-	sleep_label.text = "Zzz" if reduced_motion else "Z"
+	eyebrow_label.text = str(phase.get("eyebrow", "")) if kind == PHASE_NEW_DAY else ""
+	title_label.text = str(phase.get("title", "")) if kind == PHASE_NEW_DAY else ""
+	body_label.text = str(phase.get("body", phase.get("text", ""))) if kind in [PHASE_OFF_PHONE, PHASE_NEW_DAY] else ""
+	clock_label.text = str(phase.get("from_time", phase.get("time", ""))) if kind in [PHASE_CLOCK, PHASE_NEW_DAY] else ""
 	eyebrow_label.visible = kind == PHASE_NEW_DAY and eyebrow_label.text != ""
 	title_label.visible = kind == PHASE_NEW_DAY and title_label.text != ""
 	body_label.visible = kind == PHASE_OFF_PHONE or (kind == PHASE_NEW_DAY and body_label.text != "")
-	clock_label.visible = kind in [PHASE_CLOCK, PHASE_NEW_DAY] or (kind == PHASE_NIGHT and clock_label.text != "")
-	sleep_label.visible = kind == PHASE_NIGHT
-	dimmer.color = Color(0.015, 0.02, 0.04, 0.88 if kind == PHASE_NIGHT else 0.62)
+	clock_label.visible = kind in [PHASE_CLOCK, PHASE_NEW_DAY]
+	sleep_container.visible = kind == PHASE_NIGHT
+	_reset_sleep_labels()
+	if kind == PHASE_CLOCK:
+		dimmer.color = CLOCK_BACKGROUND
+	elif kind == PHASE_OFF_PHONE:
+		dimmer.color = OFF_PHONE_BACKGROUND
+	elif kind == PHASE_NIGHT:
+		dimmer.color = NIGHT_BACKGROUND
+	else:
+		dimmer.color = NEW_DAY_BACKGROUND
 	if reduced_motion:
 		phase_duration = maxf(float(phase.get("reduced_duration", 0.35)), 0.15)
 	elif kind == PHASE_CLOCK:
@@ -176,11 +193,30 @@ func _update_clock(phase: Dictionary, scaled_elapsed: float) -> void:
 	var shown := mini(to_minutes, from_minutes + int(floor(float(to_minutes - from_minutes) * ratio)))
 	clock_label.text = "%02d:%02d" % [shown / 60, shown % 60]
 
-func _update_sleep(scaled_elapsed: float) -> void:
-	var ratio := clampf(scaled_elapsed / maxf(phase_duration, 0.001), 0.0, 1.0)
-	sleep_label.text = "Z" if ratio < 0.33 else ("Zz" if ratio < 0.66 else "Zzz")
-	sleep_label.position.y = -8.0 * ratio
-	sleep_label.modulate.a = 1.0 - maxf(0.0, ratio - 0.75) * 3.0
+func _reset_sleep_labels() -> void:
+	for label in [sleep_z, sleep_zz, sleep_zzz]:
+		label.visible = false
+		label.modulate.a = 0.0
+	sleep_z.position.y = 20.0
+	sleep_zz.position.y = 10.0
+	sleep_zzz.position.y = 0.0
+	if reduced_motion:
+		sleep_zzz.visible = true
+		sleep_zzz.modulate.a = 1.0
+
+func _update_sleep(real_progress: float) -> void:
+	_set_sleep_label_progress(sleep_z, real_progress, 0.00, 0.85, 20.0, 6.0)
+	_set_sleep_label_progress(sleep_zz, real_progress, 0.70, 1.60, 10.0, 8.0)
+	_set_sleep_label_progress(sleep_zzz, real_progress, 1.45, 2.60, 0.0, 10.0)
+
+func _set_sleep_label_progress(label: Label, elapsed_seconds: float, start: float, end: float, base_y: float, rise: float) -> void:
+	var ratio := clampf((elapsed_seconds - start) / maxf(end - start, 0.001), 0.0, 1.0)
+	label.visible = elapsed_seconds >= start
+	var eased := 1.0 - pow(1.0 - ratio, 3.0)
+	label.position.y = base_y - rise * eased
+	var fade_in := clampf(ratio * 5.0, 0.0, 1.0)
+	var fade_out := clampf((1.0 - ratio) * 5.0, 0.0, 1.0)
+	label.modulate.a = minf(fade_in, fade_out) if elapsed_seconds >= phase_duration - 0.35 else fade_in
 
 func _on_gui_input(event: InputEvent) -> void:
 	if not active:

@@ -82,7 +82,7 @@ class UIMsg04BNarrativeTimeStaticTests(unittest.TestCase):
         driver = self.read("game/tests/UI_MSG_04BNarrativeTimeSmokeDriver.gd")
         self.assertIn('preload("res://scenes/portrait/PortraitMain.tscn")', driver)
         self.assertIn('emit_signal("pressed")', driver)
-        self.assertIn("narrative time starts at 18:12", driver)
+        self.assertIn("narrative header starts at Mar. · 18:12", driver)
         runner = self.read("tools/test_ui_msg_04b_narrative_time.sh")
         for resolution in ["540x960", "720x800", "720x960", "720x1280", "1080x1920"]:
             self.assertIn(resolution, runner)

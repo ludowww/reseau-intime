@@ -33,6 +33,7 @@ func presentation_source() -> Dictionary:
 	var source: Dictionary = active_provider.presentation_source()
 	source["pending_transition_flow"] = pending_transition_flow()
 	return source
+func current_narrative_day_short() -> String: return active_provider.current_narrative_day_short()
 func current_narrative_time_minutes() -> int: return active_provider.current_narrative_time_minutes()
 func current_narrative_time_text() -> String: return active_provider.current_narrative_time_text()
 func mark_message_presented(message_id: String) -> bool: return active_provider.mark_message_presented(message_id)

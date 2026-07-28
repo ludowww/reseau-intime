@@ -141,12 +141,13 @@ func open_thread(thread_id: String) -> void:
 	active_thread_id = thread_id
 	conversation_list.visible = false
 	conversation_screen.visible = true
-	if notification_banner != null and str(notification_banner.notification.get("thread_id", "")) == thread_id:
+	if _notification_targets(thread_id):
 		_hide_notification()
 	var messages := _dictionary_array(transcripts.get(thread_id, []))
 	var choices := _dictionary_array(available_choices.get(thread_id, []))
 	var position := int(reading_positions.get(thread_id, -1))
 	conversation_screen.configure(selected, messages, choices, characters, PORTRAIT_THEME, position, first_unread_message_id)
+	conversation_screen.set_narrative_day_short(_authoritative_narrative_day_short())
 	conversation_screen.set_narrative_time(_authoritative_narrative_time_text())
 	conversation_screen.set_compact_height_mode(compact_height_mode)
 	_set_screen_mode("conversation")
@@ -587,6 +588,8 @@ func refresh_from_runtime(source: Dictionary = {}) -> void:
 	if conversation_list != null:
 		conversation_list.configure(threads, characters, PORTRAIT_THEME, runtime_provider == null)
 	if screen_mode == "conversation":
+		conversation_screen.set_narrative_day_short(_authoritative_narrative_day_short())
+		conversation_screen.set_narrative_time(_authoritative_narrative_time_text())
 		_start_pending_delivery_for_thread(active_thread_id)
 
 func _initialize_runtime_source(source: Dictionary) -> void:
@@ -1078,11 +1081,12 @@ func _apply_time_passage_result(result: Dictionary, transition: Dictionary) -> v
 			_start_runtime_day_end(final_presentation)
 		return
 	_refresh_after_clock_only(result)
-	if destination == "list" and result.has("unlocked_thread_id"):
+	if result.has("unlocked_thread_id"):
 		var unlocked_id := str(result.get("unlocked_thread_id", ""))
 		var notification: Dictionary = result.get("notification", {})
 		var unlocked_thread := _thread_for(unlocked_id)
-		if not unlocked_thread.is_empty(): _show_notification(unlocked_thread, str(notification.get("body", "")), runtime_provider.current_narrative_time_text())
+		if not unlocked_thread.is_empty():
+			_show_notification(unlocked_thread, str(notification.get("body", "")), runtime_provider.current_narrative_time_text())
 
 func _refresh_after_clock_only(result: Dictionary) -> void:
 	if narrative_clock_animation_active or runtime_provider == null:
@@ -1108,6 +1112,11 @@ func _set_clock_interactions_blocked(blocked: bool) -> void:
 	if shell != null:
 		if shell.messages_button != null: shell.messages_button.disabled = blocked
 		if shell.gallery_button != null: shell.gallery_button.disabled = blocked
+
+func _authoritative_narrative_day_short() -> String:
+	if runtime_provider != null:
+		return runtime_provider.current_narrative_day_short()
+	return str(content_source.get("narrative_day_short", ""))
 
 func _authoritative_narrative_time_text() -> String:
 	if runtime_provider != null:
@@ -1221,6 +1230,8 @@ func _build() -> void:
 	conversation_screen.choice_selected.connect(_on_choice_selected)
 	conversation_screen.image_requested.connect(_on_image_requested)
 	conversation_screen.reading_speed_requested.connect(func(): reading_speed_requested.emit())
+	conversation_screen.header_notification_open_requested.connect(_on_notification_open_requested)
+	conversation_screen.header_notification_dismiss_requested.connect(_on_notification_dismiss_requested)
 	add_child(conversation_screen)
 	off_phone_transition = OFF_PHONE_TRANSITION_SCRIPT.new()
 	off_phone_transition.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -1352,7 +1363,7 @@ func _on_notification_dismiss_requested() -> void:
 	call_deferred("_restore_notification_focus")
 
 func _show_notification(thread: Dictionary, preview: String, timestamp: String) -> void:
-	if notification_banner != null and not notification_banner.visible:
+	if not _notification_visible():
 		var focus_owner := get_viewport().gui_get_focus_owner()
 		notification_focus_origin = focus_owner if focus_owner is Control else null
 	var notification := {
@@ -1363,21 +1374,30 @@ func _show_notification(thread: Dictionary, preview: String, timestamp: String) 
 		"avatar_ref": str(thread.get("avatar_ref", "?")),
 		"accent_color": str(thread.get("accent_color", "#8D63E6")),
 	}
+	if screen_mode == "conversation" and conversation_screen != null and conversation_screen.visible:
+		if notification_banner != null:
+			notification_banner.dismiss()
+		_set_content_banner_spacing(false)
+		conversation_screen.show_header_notification(notification, _reduced_motion_enabled())
+		return
 	_set_content_banner_spacing(true)
 	notification_banner.configure(notification, PORTRAIT_THEME, _reduced_motion_enabled())
 
 func _hide_notification() -> void:
 	if notification_banner != null:
 		notification_banner.dismiss()
+	if conversation_screen != null:
+		conversation_screen.hide_header_notification()
 	_set_content_banner_spacing(false)
 	notification_focus_origin = null
 
+func _notification_visible() -> bool:
+	return (notification_banner != null and notification_banner.visible) or (conversation_screen != null and conversation_screen.header_notification_visible())
+
 func _notification_targets(thread_id: String) -> bool:
-	return (
-		notification_banner != null
-		and notification_banner.visible
-		and str(notification_banner.notification.get("thread_id", "")) == thread_id
-	)
+	var global_target: bool = notification_banner != null and notification_banner.visible and str(notification_banner.notification.get("thread_id", "")) == thread_id
+	var local_target: bool = conversation_screen != null and conversation_screen.header_notification_visible() and str(conversation_screen.header_notification.notification.get("thread_id", "")) == thread_id
+	return global_target or local_target
 
 func _restore_notification_focus() -> void:
 	var previous_focus := notification_focus_origin

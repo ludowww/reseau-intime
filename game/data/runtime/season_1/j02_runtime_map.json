@@ -1,4 +1,5 @@
 {
+  "narrative_day_short": "Mer.",
   "conversation_paths": {
     "chapter_02_marie_make_room": "res://data/conversations/chapter_02_marie_make_room.json",
     "chapter_02_marie_arrival_trace": "res://data/conversations/chapter_02_marie_arrival_trace.json",

@@ -71,9 +71,13 @@ func presentation_source() -> Dictionary:
 		"threads": source_threads,
 		"messages_by_thread": source_transcripts,
 		"choices_by_thread": source_choices,
+		"narrative_day_short": current_narrative_day_short(),
 		"narrative_time": current_narrative_time_text(),
 		"narrative_time_minutes": current_time_minutes,
 	}
+
+func current_narrative_day_short() -> String:
+	return str(runtime_map.get("narrative_day_short", ""))
 
 func current_narrative_time_minutes() -> int:
 	return current_time_minutes
@@ -186,7 +190,10 @@ func confirm_transition() -> Dictionary:
 			_enter_current_segment("thread_sandra_private")
 		return {
 			"accepted": true,
-			"destination": "list",
+			"destination": "conversation",
+			"resume_destination": "conversation",
+			"resume_thread_id": "thread_marie_private",
+			"thread_id": "thread_marie_private",
 			"unlocked_thread_id": "thread_sandra_private",
 			"notification": runtime_map.get("sandra_notification", {}).duplicate(true),
 		}
