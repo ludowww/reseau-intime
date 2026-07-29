@@ -1,14 +1,15 @@
 # Documentation Reading Order — Réseau Intime
 
-> **Phase active : corpus J01–J21 signé, runtime portrait J01–J03 intégré, préparation de J04**
+> **Phase active : corpus J01–J21 signé, runtime portrait J01–J04 intégré, préparation de J05**
 
 ```text
 Bible Narrative / North Star : autorité active
 Corpus J01–J21 : consolidé et signé
 Paquets NAR-PROD Actes I–V : READY
-Runtime portrait : J01→J03 jouable et validé
-UI commune : verrouillée à c27bd933
-Prochaine intégration : J04 depuis la chaîne commune
+Runtime portrait : J01→J04 jouable et validé
+Baseline runtime : 5a6a832c148c68ee69d8991474ec778f33bc456d
+Tag : runtime-s1-04-j04-playable
+Prochaine intégration : J05 depuis la chaîne commune
 Assets : spécifiés, non produits
 ```
 
@@ -22,7 +23,7 @@ Lire avant toute modification :
 docs/canon/PROJECT_DOCUMENTATION_GOVERNANCE.md
 ```
 
-Ce document définit les sources autoritatives, les statuts actifs ou historiques, la séparation Canon / UI / Runtime et la règle anti-dispersion.
+Ce document définit les autorités, les statuts documentaires et la séparation Canon / UI / Runtime.
 
 ---
 
@@ -89,25 +90,11 @@ docs/canon/dialogues/J01_J06_SOURCE_CANON_CONSOLIDE.md
 
 ```text
 docs/canon/dialogues/J07_SCRIPT_NARRATIF_COMPLET.md
-docs/canon/dialogues/J08_SCRIPT_NARRATIF_COMPLET.md
-docs/canon/dialogues/J09_SCRIPT_NARRATIF_COMPLET.md
-docs/canon/dialogues/J10_SCRIPT_NARRATIF_COMPLET.md
-docs/canon/dialogues/J11_SCRIPT_NARRATIF_COMPLET.md
-docs/canon/dialogues/J12_SCRIPT_NARRATIF_COMPLET.md
-docs/canon/dialogues/J13_SCRIPT_NARRATIF_COMPLET.md
-docs/canon/dialogues/J14_SCRIPT_NARRATIF_COMPLET.md
-docs/canon/dialogues/J15_SCRIPT_NARRATIF_COMPLET.md
-docs/canon/dialogues/J16_SCRIPT_NARRATIF_COMPLET.md
-docs/canon/dialogues/J17_SCRIPT_NARRATIF_COMPLET.md
-docs/canon/dialogues/J18_SCRIPT_NARRATIF_COMPLET.md
-docs/canon/dialogues/J19_SCRIPT_NARRATIF_COMPLET.md
-docs/canon/dialogues/J20_SCRIPT_NARRATIF_COMPLET.md
+...
 docs/canon/dialogues/J21_SCRIPT_NARRATIF_COMPLET.md
 ```
 
 ## Addenda adultes validés
-
-Lire ensuite, dans cet ordre :
 
 ```text
 docs/canon/dialogues/NAR_PROD_07_ADULT_PAYOFF_AUDIT_SPECIFICATION.md
@@ -116,7 +103,7 @@ docs/canon/dialogues/NAR_ADULT_02_PAYOFF_SANDRA_J18.md
 docs/canon/dialogues/NAR_ADULT_03_PAYOFFS_PAULINE_RAPHAELLE.md
 ```
 
-Les addenda adultes ont été intégrés aux scripts, registres et paquets NAR-PROD. Ils restent des dossiers de décision actifs et ne remplacent pas les scripts consolidés.
+Les scripts consolidés prévalent. Les addenda conservent la traçabilité des décisions.
 
 ---
 
@@ -132,13 +119,7 @@ docs/canon/dialogues/J01_J21_REACHABILITY_MATRIX.md
 docs/canon/runtime/SEASON_1_NARRATIVE_STATE_CONTRACT.md
 ```
 
-Pour J14→J16, lire d’abord :
-
-```text
-docs/canon/dialogues/NAR_CANON_01_REPARATION_PROMESSES_ATTEIGNABILITE_J14_J16.md
-```
-
-Rappels structurants :
+Rappels :
 
 - aucun score de route ;
 - états relationnels bornés ;
@@ -158,7 +139,7 @@ Autorité finale :
 docs/canon/dialogues/J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md
 ```
 
-Audits et corrections conservés :
+Audits utiles :
 
 ```text
 docs/canon/dialogues/J01_J09_AUDIT_CONFORMITE_NARRATIVE.md
@@ -168,7 +149,7 @@ docs/canon/dialogues/J07_J21_LOT_D_POLISH_VOIX_NATUREL.md
 docs/canon/dialogues/NAR_PROD_01_AUDIT_PREPARATION_PRODUCTION_SAISON_1.md
 ```
 
-Les audits restent des archives de décision. Les scripts consolidés, registres et sign-off final prévalent.
+Les audits sont des archives de décision ; les scripts, registres et sign-off prévalent.
 
 ---
 
@@ -182,20 +163,13 @@ docs/canon/bible/12D_PLANS_SCENES_J17_J21.md
 docs/canon/bible/12E_AUDIT_GLOBAL_COHERENCE_J01_J21.md
 ```
 
-Ces documents restent utiles pour la traçabilité des scènes et des décisions. Toutefois :
-
-```text
-les observations runtime de 12A antérieures à la chaîne Season1RuntimeProvider
-sont HISTORIQUES pour J01–J03
-```
+Les observations runtime de ces plans antérieures à `Season1RuntimeProvider` sont historiques pour J01–J04.
 
 Elles sont supersédées techniquement par :
 
 ```text
-docs/runtime/SEASON_1_J01_J03_RUNTIME_BASELINE_AND_FORWARD_CONTRACT.md
+docs/runtime/SEASON_1_J01_J04_RUNTIME_BASELINE_AND_FORWARD_CONTRACT.md
 ```
-
-Les scripts consolidés, registres, paquets de production et sign-off prévalent sur toute classification ancienne `ADAPTABLE`, `RESTRUCTURE`, `RELOCATE` ou `REWRITE` déjà résolue.
 
 ---
 
@@ -209,17 +183,13 @@ docs/canon/dialogues/NAR_PROD_05_PAQUET_PRODUCTION_ACTE_IV_J13_J16.md
 docs/canon/dialogues/NAR_PROD_06_PAQUET_PRODUCTION_ACTE_V_J17_J21.md
 ```
 
-Statut :
-
 | Acte | Journées | Narration | Runtime portrait |
 |---|---|---|---|
-| I | J01–J04 | READY | J01–J03 intégrés, J04 à intégrer |
+| I | J01–J04 | READY | intégré, jouable, validé |
 | II | J05–J08 | READY | non intégré |
 | III | J09–J12 | READY | non intégré |
 | IV | J13–J16 | READY | non intégré |
 | V | J17–J21 | READY | non intégré |
-
-Ces paquets sont dérivés des sources autoritatives. Ils ne constituent ni une seconde carte de saison, ni un nouveau canon concurrent.
 
 ---
 
@@ -237,8 +207,6 @@ Les assets sont spécifiés mais non produits. Les placeholders runtime ne devie
 
 # 10. UX/UI
 
-Lire :
-
 ```text
 docs/canon/ui/README.md
 docs/canon/ui/UI_01_VERTICAL_SMARTPHONE_SYSTEM.md
@@ -246,41 +214,37 @@ docs/canon/ui/UI_02_SCREEN_ARCHITECTURE_AND_STATES.md
 docs/canon/ui/UI_03_INTEGRATION_HANDOFF_AND_MOCKUP_STATUS.md
 ```
 
-Le checkpoint T-UI-03D reste la fondation canonique du cœur portrait. Les correctifs UI-MSG-04A à 04C sont des améliorations runtime validées qui respectent ce canon :
+Le checkpoint T-UI-03D reste la fondation canonique du cœur portrait. Les lots UI-MSG-04A à 04C et les correctifs J04 restent des améliorations runtime conformes :
 
-- bandeau conversation et heure narrative ;
-- livraison progressive commune ;
+- bandeau jour/heure ;
+- livraison progressive ;
 - transitions unifiées ;
-- notifications interactives ;
-- séparateurs par `source_day` ;
-- vitesse limitée aux messages et au typing.
-
-Baseline technique actuelle :
-
-```text
-c27bd9331c01bed6c9a40c0c642d246cf26bb6cf
-```
+- notifications interactives neutres ;
+- séparateurs `source_day` ;
+- vitesse limitée ;
+- règle commune des non-lus via `RuntimeUnread` ;
+- aucun badge numérique.
 
 ---
 
 # 11. Runtime actif
 
-Lire obligatoirement avant J04+ :
+Lire obligatoirement avant J05+ :
 
 ```text
 docs/runtime/README.md
-docs/runtime/SEASON_1_J01_J03_RUNTIME_BASELINE_AND_FORWARD_CONTRACT.md
+docs/runtime/SEASON_1_J01_J04_RUNTIME_BASELINE_AND_FORWARD_CONTRACT.md
 ```
 
 Puis vérifier le code, les données et les tests sur `main`.
 
-La chaîne actuelle :
+Chaîne actuelle :
 
 ```text
-J01 → J02 → J03
+J01 → J02 → J03 → J04
 ```
 
-Les corrections communes doivent être héritées par les journées suivantes via l’orchestrateur, les providers bornés, le schéma de présentation et les composants UI partagés. Aucun ancien index modulaire ne devient automatiquement le provider de J04.
+Les futures journées doivent hériter des corrections communes via l’orchestrateur, les providers bornés, `RuntimeUnread` et les composants UI partagés.
 
 ---
 
@@ -292,14 +256,14 @@ Lire :
 ROADMAP.md
 ```
 
-Priorité actuelle :
+Priorité :
 
 ```text
-intégration runtime de J04
-→ handoff depuis J03
-→ non-régression J01–J03
-→ validation visuelle
-→ poursuite par blocs courts
+intégration runtime de J05 seul
+→ handoff depuis J04
+→ non-régression J01–J04
+→ validation technique et visuelle
+→ verrouillage avant J06
 ```
 
 ---
@@ -308,11 +272,12 @@ intégration runtime de J04
 
 ```text
 NARRATION       J01–J21 signé et READY
-RUNTIME NOUVEAU J01–J03 jouable
-PROCHAINE ÉTAPE J04
-UI COMMUNE      verrouillée à c27bd933
+RUNTIME NOUVEAU J01–J04 jouable
+BASELINE        5a6a832c148c68ee69d8991474ec778f33bc456d
+PROCHAINE ÉTAPE J05
+UI COMMUNE      verrouillée, extension gelée par défaut
 ASSETS          spécifiés, non produits
 ANCIENS DOCS    historiques sauf lien explicite
 ```
 
-Une reprise fiable ne dépend pas de connaître l’histoire du dépôt. Elle dépend de savoir immédiatement quelle source a autorité et quelle partie est déjà exécutée par le nouveau runtime.
+Une reprise fiable commence par les autorités actives, pas par l’historique du dépôt.
