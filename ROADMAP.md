@@ -4,7 +4,9 @@
 
 **Catégorie : portail projet actif**
 
-**Baseline stable : `c27bd9331c01bed6c9a40c0c642d246cf26bb6cf`**
+**Baseline stable : `5a6a832c148c68ee69d8991474ec778f33bc456d`**
+
+**Tag de verrouillage : `runtime-s1-04-j04-playable`**
 
 Cette roadmap résume la priorité courante. Elle ne remplace pas les sources canoniques.
 
@@ -25,8 +27,6 @@ Actes I–V : READY
 Réécriture structurelle globale : non requise
 ```
 
-Le corpus signé reste autoritaire pour J01–J21. La Bible Narrative reste autoritaire pour toute nouvelle production, révision structurelle ou extension.
-
 ## Production narrative
 
 ```text
@@ -43,27 +43,31 @@ NAR-PROD-06  Acte V   J17–J21   READY
 J01 : intégré et validé
 J02 : intégré après J01 et validé
 J03 : intégré après J02 et validé
-J04–J21 : non intégrés dans la nouvelle chaîne
+J04 : intégré après J03 et validé
+J05–J21 : non intégrés dans la chaîne active
 ```
 
-La baseline J01–J03 comprend :
+L’Acte I J01–J04 est jouable.
+
+La baseline comprend :
 
 - `Season1RuntimeProvider` ;
 - `Season1State` partagé ;
-- providers bornés par journée ;
-- transcripts et fils cumulatifs ;
+- providers bornés J01–J04 ;
+- transcripts, fils et Galerie cumulatifs ;
 - temps narratif monotone ;
 - transitions unifiées ;
 - snapshots et restauration ;
-- livraison progressive des messages ;
-- notifications interactives ;
+- livraison progressive ;
+- notifications interactives neutres ;
 - séparateurs par `source_day` ;
+- `RuntimeUnread` ;
 - vitesse limitée aux messages et au typing.
 
 Contrat actif :
 
 ```text
-docs/runtime/SEASON_1_J01_J03_RUNTIME_BASELINE_AND_FORWARD_CONTRACT.md
+docs/runtime/SEASON_1_J01_J04_RUNTIME_BASELINE_AND_FORWARD_CONTRACT.md
 ```
 
 ## UX/UI
@@ -78,7 +82,7 @@ T-UI-03D  Gallery States             TERMINÉ
 UI-MSG-04A à 04C                     INTÉGRÉS ET VALIDÉS
 ```
 
-Le cœur UI est verrouillé. Son extension est gelée par défaut. Les correctifs communs restent obligatoires pour toutes les futures journées.
+Le cœur UI est verrouillé. Son extension est gelée par défaut.
 
 ## Assets
 
@@ -90,7 +94,7 @@ PILOT-01 : sélectionné, non généré
 Production visuelle réelle : non commencée
 ```
 
-La production visuelle reste prête à démarrer, mais elle n’est pas la priorité technique immédiate tant que la chaîne narrative jouable n’a pas dépassé J03.
+La production visuelle n’est pas la priorité immédiate tant que la chaîne jouable progresse journée par journée.
 
 ---
 
@@ -100,111 +104,138 @@ La production visuelle reste prête à démarrer, mais elle n’est pas la prior
 J01–J21 restent la Saison 1 de référence.
 ```
 
-Le corpus signé n’est pas rouvert comme chantier structurel général. Une correction narrative exige une contradiction canonique, une rupture de continuité, un problème de consentement ou d’audience, une incohérence entre sources ou un blocage de production démontré.
-
 La future intégration runtime ne doit pas :
 
-- réécrire les dialogues signés sans raison démontrée ;
+- réécrire les dialogues signés sans contradiction démontrée ;
 - reprendre les anciens index modulaires comme autorité ;
 - créer une seconde chaîne de saison ;
 - réintroduire scores, owners ou candidate pools ;
 - contourner la livraison Messages commune ;
-- recréer une horloge, des séparateurs ou des notifications par journée ;
+- recréer une horloge, des séparateurs, non-lus ou notifications par journée ;
 - accélérer les transitions avec la vitesse de lecture.
 
 ---
 
-# 3. Priorité immédiate — J04
+# 3. Priorité immédiate — J05
 
 ## Objectif
 
 ```text
-Rendre J04 jouable après J03 dans la chaîne Season1RuntimeProvider.
+Rendre J05 jouable après J04 dans Season1RuntimeProvider.
 ```
+
+J05 ouvre l’Acte II. Le lot doit rester borné à une seule journée.
 
 ## Sources obligatoires
 
 ```text
 docs/canon/dialogues/J01_J06_SOURCE_CANON_CONSOLIDE.md
-docs/canon/dialogues/NAR_PROD_02_PAQUET_PRODUCTION_ACTE_I_J01_J04.md
+docs/canon/dialogues/NAR_PROD_03_PAQUET_PRODUCTION_ACTE_II_J05_J08.md
 docs/canon/dialogues/J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md
 docs/canon/dialogues/J01_J21_TRACE_REGISTRY.md
 docs/canon/dialogues/J01_J21_PROMISE_REGISTRY.md
 docs/canon/dialogues/J01_J21_KNOWLEDGE_REGISTRY.md
 docs/canon/dialogues/J01_J21_REACHABILITY_MATRIX.md
 docs/canon/runtime/SEASON_1_NARRATIVE_STATE_CONTRACT.md
-docs/runtime/SEASON_1_J01_J03_RUNTIME_BASELINE_AND_FORWARD_CONTRACT.md
+docs/runtime/SEASON_1_J01_J04_RUNTIME_BASELINE_AND_FORWARD_CONTRACT.md
 ```
+
+## Point narratif structurant
+
+J05 doit traiter la demande de Marie d’une heure réelle et la promesse structurée associée :
+
+```text
+marie_j05_shared_hour
+```
+
+Le runtime doit distinguer :
+
+- engagement concret ;
+- horaire alternatif précis ;
+- refus clair ;
+- absence de promesse pour une réponse vague ;
+- conséquence si Marie agit seule.
+
+Aucune promesse ne doit être créée avant le choix autoritatif.
 
 ## Périmètre recommandé
 
-- `J04RuntimeProvider.gd` ;
-- `j04_runtime_map.json` ;
+- `J05RuntimeProvider.gd` ;
+- `j05_runtime_map.json` ;
 - extension bornée de `Season1State` ;
-- handoff J03→J04 ;
-- snapshot/restore J04 ;
-- intégration des fils, horaires, transitions et contenus J04 ;
+- handoff J04→J05 ;
+- snapshot/restore J05 ;
+- fils, horaires, transitions et contenus J05 ;
 - tests statiques et smoke jouable ;
-- non-régression complète J01–J03 et UI-MSG-04A à 04C.
+- non-régression complète J01–J04 et UI-MSG-04A à 04C.
 
 ## Hors périmètre
 
-- réécriture globale J04 ;
-- migration simultanée J05–J21 ;
+- intégration simultanée de J06–J08 ;
+- réécriture générale de l’Acte II ;
 - nouveau système de route ;
 - refactor massif des providers ;
-- production des assets finaux ;
+- production d’assets finaux ;
 - persistance Galerie globale ;
 - écrans système ;
 - nouveau chantier UI sans blocage démontré.
+
+Branche recommandée :
+
+```text
+work/runtime-s1-05-j05-playable
+```
 
 ---
 
 # 4. Ordre d’intégration recommandé
 
 ```text
-J04
-→ verrouillage de l’Acte I jouable
-→ J05–J08 par blocs courts
-→ J09–J12
-→ J13–J16
-→ J17–J21
+J05
+→ validation et verrouillage
+→ J06
+→ validation et verrouillage
+→ J07
+→ validation et verrouillage
+→ J08
+→ verrouillage de l’Acte II jouable
+→ actes suivants par blocs courts
 ```
 
-Chaque bloc doit :
+Le découpage journée par journée reste préférable tant que chaque nouvelle journée révèle des comportements transversaux à stabiliser.
+
+Chaque lot doit :
 
 1. partir de la dernière baseline stable ;
-2. citer les sources canoniques ;
+2. citer ses sources canoniques ;
 3. prolonger la chaîne commune ;
-4. préserver les journées déjà jouables ;
-5. ajouter ses tests de handoff et restauration ;
+4. préserver toutes les journées déjà jouables ;
+5. ajouter handoff et restauration ;
 6. passer la gate globale par identité exacte ;
 7. obtenir une validation visuelle avant verrouillage.
-
-Le découpage exact après J04 peut être affiné selon la densité réelle. Aucun bloc ne doit devenir une migration globale incontrôlable.
 
 ---
 
 # 5. Contrat de non-régression commun
 
-Les corrections J01–J03 et UI-MSG-04A à 04C sont normatives :
+Les règles J01–J04 sont normatives :
 
 - heure provider-authoritative ;
 - choix Player horodaté à l’acceptation ;
 - transcripts cumulatifs ;
-- pas de doublon ;
+- absence de doublons ;
 - `source_day` obligatoire ;
 - un seul DayDivider par journée et par fil ;
-- aucun `SYSTEM_DAY_DIVIDER` en bulle ;
-- typing et livraison isolés par conversation ;
-- notification ouvrable ;
+- typing et livraison isolés ;
+- non-lus calculés par `RuntimeUnread` ;
+- nom et **« Nouveau message ! »** en `TEXT_PRIMARY`, gras `1.5` ;
+- aucun badge numérique ;
+- notification neutre et ouvrable ;
 - transition unifiée et temps réel ;
-- `×1 / ×3 / ×8` réservé aux messages et au typing ;
+- vitesse réservée aux messages et au typing ;
 - snapshot versionné ;
 - restauration cohérente ;
-- teardown de smoke sans fuite ObjectDB.
-
-Une journée future hérite automatiquement de ces corrections uniquement en passant par les couches communes.
+- teardown sans fuite ObjectDB.
 
 ---
 
@@ -219,33 +250,20 @@ handoff depuis la journée précédente
 snapshot / restore
 transcripts et doublons
 heure et source_day
-notifications et non-lus
+non-lus et notifications
 transitions temps réel
 responsive portrait
 gate globale comparée par identité exacte
 contrôle visuel utilisateur
 ```
 
-Baseline connue à `c27bd933…` :
-
-```text
-388 tests
-17 FAIL historiques
-2 ERROR historiques
-19 identités historiques identiques
-6 avertissements J6/J7 historiques
-04C/04C1 sans ObjectDB, leaked ou orphan
-```
-
-Ces nombres sont une preuve de la baseline, pas une valeur à coder en dur. Toute validation future compare les identités réelles.
+Les nombres d’échecs historiques ne sont jamais codés en dur. La comparaison porte sur leurs identités réelles.
 
 ---
 
 # 7. Chantiers différés
 
 ## Production visuelle réelle
-
-À reprendre après décision explicite :
 
 ```text
 ASSET-04
@@ -256,34 +274,27 @@ production et sélection des vrais assets
 
 ## Persistance et système
 
-Restent différés :
-
 - sauvegarde/chargement cible ;
 - persistance Galerie ;
 - état `REMOVED` ;
 - permissions ajouter/retirer/partager ;
 - écrans Titre, Pause, Paramètres et première configuration ;
-- migration de sauvegardes si le format global évolue.
+- migration de sauvegardes si nécessaire.
 
 ## UI
 
-L’UI ne se rouvre que pour :
-
-- un blocage narratif réel ;
-- l’intégration des vrais assets ;
-- la persistance ;
-- les écrans système décidés ;
-- une régression avérée.
+L’UI ne se rouvre que pour un blocage narratif réel, les vrais assets, la persistance, les écrans système décidés ou une régression avérée.
 
 ---
 
 # 8. Prochaine décision
 
 ```text
-Ouvrir un lot J04 documentation technique courte
-→ auditer les sources exactes
-→ définir le provider et le handoff
-→ intégrer sans réécriture narrative
+auditer précisément J05
+→ définir son provider, ses états et son handoff
+→ intégrer J05 seul
+→ valider technique et visuel
+→ verrouiller avant J06
 ```
 
-Aucun nouveau plan général ne doit dupliquer le contrat runtime actif ou créer un calendrier concurrent.
+Aucun nouveau plan général ne doit dupliquer le contrat runtime actif.
