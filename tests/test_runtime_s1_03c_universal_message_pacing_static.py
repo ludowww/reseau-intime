@@ -37,10 +37,16 @@ class RuntimeS103CUniversalMessagePacingStaticTests(unittest.TestCase):
         self.assertIn("if pending.is_empty() and normalized_visual != normalized_provider", source)
         self.assertIn("presented message ID sequence does not match visual transcript", source)
 
-    def test_active_thread_delivery_is_read_before_visual_insertion(self):
+    def test_active_thread_delivery_stays_unread_until_the_complete_lot_is_presented(self):
         source = self.read("game/scripts/ui/messages/MessagesScreen.gd")
-        self.assertIn("func _runtime_message_for_visual_insertion", source)
-        self.assertIn('visual_message["is_read"] = true', source)
+        insertion = source.split("func _runtime_message_for_visual_insertion", 1)[1].split("\nfunc ", 1)[0]
+        self.assertIn("return message.duplicate(true)", insertion)
+        self.assertNotIn('is_read"] = true', insertion)
+        finish = source.split("func _finish_runtime_delivery", 1)[1].split("\nfunc ", 1)[0]
+        self.assertIn("_mark_thread_read(thread_id)", finish)
+        mark_read = source.split("func _mark_thread_read", 1)[1].split("\nfunc ", 1)[0]
+        self.assertIn('message["is_read"] = true', mark_read)
+        self.assertIn("conversation_screen.timeline.messages = updated_messages.duplicate(true)", mark_read)
         self.assertIn("var visual_message := _runtime_message_for_visual_insertion", source)
 
     def test_atomic_typing_replacement_and_stable_follow_exist(self):

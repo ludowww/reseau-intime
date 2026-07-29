@@ -818,11 +818,8 @@ func _replace_runtime_typing_with_message(message: Dictionary) -> void:
 	transcripts[runtime_delivery_thread_id] = conversation_screen.timeline.messages.duplicate(true)
 	_mark_runtime_message_presented(runtime_delivery_thread_id, visual_message)
 
-func _runtime_message_for_visual_insertion(message: Dictionary, thread_id: String) -> Dictionary:
-	var visual_message := message.duplicate(true)
-	if screen_mode == "conversation" and active_thread_id == thread_id:
-		visual_message["is_read"] = true
-	return visual_message
+func _runtime_message_for_visual_insertion(message: Dictionary, _thread_id: String) -> Dictionary:
+	return message.duplicate(true)
 
 func _mark_runtime_message_presented(thread_id: String, message: Dictionary) -> void:
 	var ids: Array = runtime_presented_message_ids_by_thread.get(thread_id, []).duplicate()
@@ -865,6 +862,8 @@ func _finish_runtime_delivery(request_id: int, thread_id: String) -> void:
 		return
 	if not _runtime_delivery_request_is_current(request_id, thread_id):
 		return
+	if runtime_provider != null:
+		runtime_provider.mark_thread_batch_presented(thread_id)
 	if not _sync_runtime_delivery_provider(thread_id):
 		return
 	_mark_thread_read(thread_id)
@@ -1682,6 +1681,8 @@ func _mark_thread_read(thread_id: String) -> void:
 	for message in updated_messages:
 		message["is_read"] = true
 	transcripts[thread_id] = updated_messages
+	if conversation_screen != null and active_thread_id == thread_id:
+		conversation_screen.timeline.messages = updated_messages.duplicate(true)
 	var thread := _thread_for(thread_id)
 	if not thread.is_empty():
 		thread["unread_count"] = 0

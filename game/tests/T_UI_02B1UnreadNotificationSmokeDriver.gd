@@ -48,8 +48,14 @@ func _run() -> void:
 	_expect(str(unread_view.get("preview").text) == "Nouveau message !", "unread card hides the narrative preview")
 	_expect(str(unread_view.get("timestamp").text) == messages.thread_timestamp(unread_id), "unread card keeps the real last-message time")
 	_expect(unread_view.get("display_name").has_theme_font_override("font") and unread_view.get("preview").has_theme_font_override("font"), "unread name and neutral preview are bold")
+	var unread_name_font: Font = unread_view.get("display_name").get_theme_font("font")
+	var unread_preview_font: Font = unread_view.get("preview").get_theme_font("font")
+	_expect(unread_name_font is FontVariation and is_equal_approx(unread_name_font.variation_embolden, 1.5), "unread name uses strong 1.5 embolden")
+	_expect(unread_preview_font is FontVariation and is_equal_approx(unread_preview_font.variation_embolden, 1.5), "unread preview uses strong 1.5 embolden")
+	_expect(unread_view.get("display_name").get_theme_color("font_color") == messages.PORTRAIT_THEME.TEXT_PRIMARY and unread_view.get("preview").get_theme_color("font_color") == messages.PORTRAIT_THEME.TEXT_PRIMARY, "unread name and preview use TEXT_PRIMARY")
 	_expect(str(read_view.get("preview").text) == messages.thread_preview(other_id), "read card keeps its true preview")
 	_expect(not read_view.get("display_name").has_theme_font_override("font") and not read_view.get("preview").has_theme_font_override("font"), "read card removes unread bold styling")
+	_expect(read_view.get("display_name").get_theme_color("font_color") == messages.PORTRAIT_THEME.TEXT_PRIMARY and read_view.get("preview").get_theme_color("font_color") == messages.PORTRAIT_THEME.TEXT_SECONDARY, "read card uses primary name and secondary preview")
 	var initial_focus: String = str(messages.conversation_list.focused_thread_id())
 	_expect(initial_focus == unread_id, "unread fixture card must initially own focus")
 
@@ -68,6 +74,7 @@ func _run() -> void:
 	var read_after_open: Dictionary = messages.conversation_list.card_views.get(unread_id, {})
 	_expect(str(read_after_open.get("preview").text) == messages.thread_preview(unread_id), "true preview returns only after the full visible lot is read")
 	_expect(not read_after_open.get("display_name").has_theme_font_override("font") and not read_after_open.get("preview").has_theme_font_override("font"), "read card removes bold styling")
+	_expect(read_after_open.get("display_name").get_theme_color("font_color") == messages.PORTRAIT_THEME.TEXT_PRIMARY and read_after_open.get("preview").get_theme_color("font_color") == messages.PORTRAIT_THEME.TEXT_SECONDARY, "read transition restores primary name and secondary preview")
 	_expect(messages.conversation_list.focused_thread_id() == unread_id, "return must restore the same card focus")
 	messages.open_thread(unread_id)
 	await get_tree().process_frame

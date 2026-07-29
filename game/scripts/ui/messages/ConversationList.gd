@@ -154,16 +154,18 @@ func _build_conversation_card(thread: Dictionary) -> PanelContainer:
 func _apply_thread_read_style(thread: Dictionary, display_name: Label, preview: Label) -> void:
 	var has_unread_content := bool(thread.get("has_unread_content", false))
 	preview.text = "Nouveau message !" if has_unread_content else str(thread.get("last_preview", ""))
+	display_name.add_theme_color_override("font_color", PORTRAIT_THEME.TEXT_PRIMARY)
+	preview.add_theme_color_override("font_color", PORTRAIT_THEME.TEXT_PRIMARY if has_unread_content else PORTRAIT_THEME.TEXT_SECONDARY)
 	_set_bold(display_name, has_unread_content)
 	_set_bold(preview, has_unread_content)
 
 func _set_bold(label: Label, enabled: bool) -> void:
+	label.remove_theme_font_override("font")
 	if not enabled:
-		label.remove_theme_font_override("font")
 		return
 	var bold_font := FontVariation.new()
 	bold_font.base_font = label.get_theme_font("font")
-	bold_font.variation_embolden = 0.75
+	bold_font.variation_embolden = 1.5
 	label.add_theme_font_override("font", bold_font)
 
 func _label(value: String, font_size: int, color: Color) -> Label:

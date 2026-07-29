@@ -47,6 +47,11 @@ func _exercise_real_portrait_path(label: String, echo_order: Array, exercise_pho
 	var shell = main.shell
 	var messages = shell.messages_screen
 	var provider = shell.runtime_provider
+	var household_final_delivery_phases: Array[String] = []
+	messages.runtime_message_delivered.connect(func(_thread_id: String, message_id: String):
+		if message_id in ["msg_friday_marie_household_003", "msg_friday_mathilde_household_003"]:
+			household_final_delivery_phases.append(str(provider.j04_provider.phase))
+	)
 	shell.set_safe_area_preset("none")
 	# Reduced motion shortens only presentation animations; provider durations remain canonical.
 	shell.set_reduced_motion_enabled(true)
@@ -66,12 +71,15 @@ func _exercise_real_portrait_path(label: String, echo_order: Array, exercise_pho
 	_expect(not handoff_phases.has("NIGHT"), label + " does not replay J03 NIGHT at restored handoff boundary")
 	_expect(provider.current_narrative_time_text() == "08:35", label + " starts J04 at 08:35")
 	_expect(messages.screen_mode == "list", label + " handoff returns to real conversation list")
+	_expect(messages.thread_has_unread_content("thread_pauline_private"), label + " Pauline is unread on the J04 list")
+	_expect(_card_is_strong_unread(messages, "thread_pauline_private"), label + " Pauline card uses strong primary unread styling")
 
 	# Pauline: open a real card, let delivery signals present the provider suffix, use real choice buttons.
 	await _press_thread_card(messages, "thread_pauline_private", label + " opens Pauline card")
 	_expect(messages.thread_has_unread_content("thread_pauline_private"), label + " Pauline remains unread before her lot is fully presented")
 	await _wait_delivery(messages, label + " Pauline initial delivery")
 	_expect(not messages.thread_has_unread_content("thread_pauline_private"), label + " Pauline becomes read after full presentation")
+	_expect(_card_is_restored_read(messages, "thread_pauline_private"), label + " Pauline card restores its real secondary preview")
 	_expect(messages.active_thread_id == "thread_pauline_private", label + " Pauline is first active J04 thread")
 	_expect(messages.presentation_count_by_content_type("thread_pauline_private", "IMAGE") == 1, label + " Pauline PHOTO_SET uses one IMAGE parent")
 	var photo_set: Dictionary = _message_by_id(messages, "thread_pauline_private", "visual_friday_pauline_group_set")
@@ -113,6 +121,8 @@ func _exercise_real_portrait_path(label: String, echo_order: Array, exercise_pho
 	_expect(str(messages.active_notification.get("title", "")) == "Marie" and str(messages.active_notification.get("preview", "")) == "Nouveau message !", label + " Marie notification is neutral")
 	_expect(messages.thread_has_unread_content("thread_marie_private"), label + " Marie is pending/unread")
 	_expect(messages.thread_has_unread_content("thread_mathilde_private"), label + " Mathilde remains pending/unread without notification")
+	_expect(_card_is_strong_unread(messages, "thread_marie_private"), label + " Marie card uses strong primary unread styling")
+	_expect(_card_is_strong_unread(messages, "thread_mathilde_private"), label + " Mathilde card independently uses strong primary unread styling")
 
 	# Open both real conversations in the requested order. The second completion alone may arm final.
 	for index in range(2):
@@ -138,6 +148,7 @@ func _exercise_real_portrait_path(label: String, echo_order: Array, exercise_pho
 			_expect(not messages.is_time_passage_active() and provider.content_end().is_empty(), label + " no final surface after first echo")
 		else:
 			_expect(provider.j04_provider.phase == "household_close", label + " final arms only after both real presentations")
+	_expect(household_final_delivery_phases == ["household_echoes", "household_echoes"], label + " household close waits for post-layout batch acknowledgement")
 
 	# Real Back signal invokes on_thread_returned and starts CLOCK + OFF_PHONE to CONTENT_END.
 	messages.conversation_screen.back_button.emit_signal("pressed")
@@ -285,6 +296,23 @@ func _unique_provider_message_ids(provider) -> bool:
 			if id == "" or ids.has(id): return false
 			ids[id] = true
 	return true
+
+func _card_is_strong_unread(messages, thread_id: String) -> bool:
+	var view: Dictionary = messages.conversation_list.card_views.get(thread_id, {})
+	if view.is_empty(): return false
+	var name: Label = view.get("display_name")
+	var preview: Label = view.get("preview")
+	var name_font: Font = name.get_theme_font("font")
+	var preview_font: Font = preview.get_theme_font("font")
+	return preview.text == "Nouveau message !" and name.get_theme_color("font_color") == messages.PORTRAIT_THEME.TEXT_PRIMARY and preview.get_theme_color("font_color") == messages.PORTRAIT_THEME.TEXT_PRIMARY and name_font is FontVariation and preview_font is FontVariation and is_equal_approx(name_font.variation_embolden, 1.5) and is_equal_approx(preview_font.variation_embolden, 1.5)
+
+func _card_is_restored_read(messages, thread_id: String) -> bool:
+	var view: Dictionary = messages.conversation_list.card_views.get(thread_id, {})
+	var thread: Dictionary = messages._thread_for(thread_id)
+	if view.is_empty() or thread.is_empty(): return false
+	var name: Label = view.get("display_name")
+	var preview: Label = view.get("preview")
+	return preview.text == str(thread.get("last_preview", "")) and preview.get_theme_color("font_color") == messages.PORTRAIT_THEME.TEXT_SECONDARY and not name.has_theme_font_override("font") and not preview.has_theme_font_override("font")
 
 func _dispose_main(main: Node) -> void:
 	if not is_instance_valid(main): return

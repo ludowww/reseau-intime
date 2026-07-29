@@ -4,6 +4,7 @@ class_name J03RuntimeProvider
 
 const RUNTIME_MAP_PATH := "res://data/runtime/season_1/j03_runtime_map.json"
 const NARRATIVE_TIME := preload("res://scripts/runtime/season_1/NarrativeTime.gd")
+const RUNTIME_UNREAD := preload("res://scripts/runtime/season_1/RuntimeUnread.gd")
 const SNAPSHOT_VERSION := 1
 
 var state
@@ -257,7 +258,7 @@ func _enter_current_segment(thread_id: String) -> void:
 	pending_choice_ids_by_thread[thread_id] = ids
 func _append_messages(thread_id: String, messages: Array) -> void:
 	for message in messages:
-		_append(thread_id, {"message_id": str(message.get("id", "")), "author_id": str(message.get("sender", "system")), "timestamp": str(message.get("time_label", "")), "content_type": "TEXT", "text": str(message.get("text", "")), "media_ref": "", "is_player": false, "is_read": true, "source_day": 3})
+		_append(thread_id, {"message_id": str(message.get("id", "")), "author_id": str(message.get("sender", "system")), "timestamp": str(message.get("time_label", "")), "content_type": "TEXT", "text": str(message.get("text", "")), "media_ref": "", "is_player": false, "is_read": false, "source_day": 3})
 func _append_offline(thread_id: String, offline: Dictionary) -> void:
 	_append(thread_id, {"message_id": str(offline.get("message_id", "")), "author_id": "system", "timestamp": "", "content_type": "OFF_PHONE_TRANSITION", "text": str(offline.get("text", "")), "media_ref": "", "is_player": false, "is_read": true, "source_day": 3})
 func _append(thread_id: String, item: Dictionary) -> bool:
@@ -276,7 +277,8 @@ func _thread_presentation(id: String) -> Dictionary:
 	var title := str(titles.get(id, "")); var participant_id := str(participant_ids.get(id, "")); var transcript := transcript_for(id); var last: Dictionary = {}
 	for item in transcript:
 		if str(item.get("content_type", "")) not in ["OFF_PHONE_TRANSITION", "SYSTEM_DAY_DIVIDER"]: last = item
-	return {"thread_id": id, "title": title, "participant_ids": [participant_id, "player"], "last_preview": str(last.get("text", "")), "last_timestamp": str(last.get("timestamp", "")), "unread_count": 0, "has_unread_content": false, "availability_state": "AVAILABLE", "is_group": false, "is_archived": false, "avatar_ref": title.left(1), "accent_color": str(colors.get(id, "#8D63E6"))}
+	var unread := RUNTIME_UNREAD.incoming_unread_count(transcript, presented_time_message_ids, 3)
+	return {"thread_id": id, "title": title, "participant_ids": [participant_id, "player"], "last_preview": str(last.get("text", "")), "last_timestamp": str(last.get("timestamp", "")), "unread_count": unread, "has_unread_content": unread > 0, "availability_state": "AVAILABLE", "is_group": false, "is_archived": false, "avatar_ref": title.left(1), "accent_color": str(colors.get(id, "#8D63E6"))}
 func _character(id: String, title: String, accent: String, avatar: String) -> Dictionary: return {"character_id": id, "display_name": title, "accent_color": accent, "avatar_ref": avatar, "gallery_enabled": false}
 func _gallery_character(id: String, title: String, accent: String, avatar: String) -> Dictionary: return {"character_id": id, "display_name": title, "accent_color": Color.from_string(accent, Color.WHITE), "avatar_ref": avatar, "items": []}
 func _gallery_item(asset: Dictionary, character_id: String, index: int) -> Dictionary: return {"item_id": str(asset.get("asset_id", "")), "asset_id": str(asset.get("asset_id", "")), "character_id": character_id, "state": "UNLOCKED", "is_new": true, "sort_key": index, "thumbnail_ref": "", "full_ref": "", "thumbnail_label": str(asset.get("placeholder_label", "Visuel non produit")), "placeholder_label": str(asset.get("placeholder_label", "Visuel non produit")), "source_kind": "gallery", "content_type": "SCENE_IMAGE", "can_share": false, "transfer_rule": "FORBIDDEN", "is_diegetic": false}

@@ -56,7 +56,11 @@ func _test_real_ui() -> void:
 	_expect(not raphaelle_thread.is_empty(), "Raphaëlle thread missing")
 	_expect(raphaelle_thread.get("participant_ids", []) == ["raphaelle", "player"], "Raphaëlle participant IDs")
 	_expect(raphaelle_thread.get("title", "") == "Raphaëlle", "Raphaëlle visible title keeps accent")
+	_expect(messages.thread_has_unread_content("thread_raphaelle_private"), "J03 Raphaëlle initial incoming lot must be unread after NEW_DAY")
+	_expect(_card_is_strong_unread(messages, "thread_raphaelle_private"), "J03 Raphaëlle initial card must use strong primary unread styling")
 	await _open(messages, "thread_raphaelle_private"); await _frames(2)
+	_expect(not messages.thread_has_unread_content("thread_raphaelle_private"), "J03 Raphaëlle becomes read only after full presentation")
+	_expect(_card_is_restored_read(messages, "thread_raphaelle_private"), "J03 Raphaëlle card restores its real secondary preview")
 	messages.start_typing("thread_raphaelle_private", "raphaelle"); await _frames(2)
 	_expect(messages.is_thread_typing("thread_raphaelle_private"), "Raphaëlle thread typing state")
 	_expect(messages.conversation_screen.typing_visible(), "Raphaëlle typing indicator visible")
@@ -127,6 +131,23 @@ func _test_exact_dialogue_and_state_variants() -> void:
 		season.confirm_transition()
 		_expect(season.j03_provider.gallery_asset_ids.slice(3) == RAPH_ASSETS, "Raphaëlle gallery IDs/order")
 		_assert_gallery(season, false)
+
+func _card_is_strong_unread(messages, thread_id: String) -> bool:
+	var view: Dictionary = messages.conversation_list.card_views.get(thread_id, {})
+	if view.is_empty(): return false
+	var name: Label = view.get("display_name")
+	var preview: Label = view.get("preview")
+	var name_font: Font = name.get_theme_font("font")
+	var preview_font: Font = preview.get_theme_font("font")
+	return preview.text == "Nouveau message !" and name.get_theme_color("font_color") == messages.PORTRAIT_THEME.TEXT_PRIMARY and preview.get_theme_color("font_color") == messages.PORTRAIT_THEME.TEXT_PRIMARY and name_font is FontVariation and preview_font is FontVariation and is_equal_approx(name_font.variation_embolden, 1.5) and is_equal_approx(preview_font.variation_embolden, 1.5)
+
+func _card_is_restored_read(messages, thread_id: String) -> bool:
+	var view: Dictionary = messages.conversation_list.card_views.get(thread_id, {})
+	var thread: Dictionary = messages._thread_for(thread_id)
+	if view.is_empty() or thread.is_empty(): return false
+	var name: Label = view.get("display_name")
+	var preview: Label = view.get("preview")
+	return preview.text == str(thread.get("last_preview", "")) and preview.get_theme_color("font_color") == messages.PORTRAIT_THEME.TEXT_SECONDARY and not name.has_theme_font_override("font") and not preview.has_theme_font_override("font")
 
 func _test_sandra_paths() -> void:
 	# RESPONDED: source dialogue, T01, traces and promises are byte-for-byte stable.

@@ -37,8 +37,11 @@ class RuntimeS104J04PlayableStaticTests(unittest.TestCase):
         self.assertEqual(data["household_close"]["flow_phases"], ["CLOCK", "OFF_PHONE"])
         self.assertEqual(data["day_end"]["transition_mode"], "CONTENT_END")
         self.assertEqual(data["photo_set"]["placeholder_label"], "Set de 3 photos non produit")
-        self.assertEqual(len(data["photo_set"]["children"]), 3)
-        self.assertEqual(len(set(data["photo_set"]["children"])), 3)
+        self.assertEqual(data["photo_set"]["children"], [
+            "S1_A1_J04_DPH_PAULINE_PUBLIC_GROUP_SET_01_FRAME_01",
+            "S1_A1_J04_DPH_PAULINE_PUBLIC_GROUP_SET_01_FRAME_02",
+            "S1_A1_J04_DPH_PAULINE_PUBLIC_GROUP_SET_01_FRAME_03",
+        ])
         gallery = data["gallery_presentations"]
         self.assertEqual([x["asset_id"] for x in gallery], [
             "S1_A1_J04_DPH_PAULINE_PUBLIC_GROUP_SET_01",
@@ -63,13 +66,14 @@ class RuntimeS104J04PlayableStaticTests(unittest.TestCase):
             'source_day": 4', '"day_start_pending"', '"pauline_public_relay"',
             '"transition_1405"', '"nico_saved_seat"', '"transition_1805"',
             '"household_echoes"', '"household_close"', '"complete"',
-            "marie_household_echo_presented", "mathilde_household_echo_presented",
             "visual_friday_pauline_group_set", "S1_A1_J04_DPH_PAULINE_PUBLIC_GROUP_SET_01",
             "notification", "thread_nico_private", "thread_marie_private",
         ]:
             self.assertIn(token, j04)
         forbidden = ["chapter_04_modular_index", "route_score", "route_owner", "candidate_pool",
-                     "laverriere_public_group_photo_set_01", "SYSTEM_DAY_DIVIDER"]
+                     "laverriere_public_group_photo_set_01", "SYSTEM_DAY_DIVIDER",
+                     "marie_household_echo_presented", "mathilde_household_echo_presented",
+                     "msg_friday_marie_household_003", "msg_friday_mathilde_household_003"]
         for token in forbidden:
             self.assertNotIn(token, j04)
         self.assertIn('"destination": "conversation", "thread_id": PAULINE_THREAD', j04)
@@ -77,6 +81,50 @@ class RuntimeS104J04PlayableStaticTests(unittest.TestCase):
         self.assertEqual(j04.count('"body": "Nouveau message !"'), 2)
         self.assertNotIn("La chaise qui ne penche pas est encore libre.", j04)
         self.assertNotIn("Rapport du foyer.", j04)
+        mark_message = j04.split("func mark_message_presented", 1)[1].split("\nfunc ", 1)[0]
+        self.assertNotIn("incoming_batch_fully_presented", mark_message)
+        batch_complete = j04.split("func mark_thread_batch_presented", 1)[1].split("\nfunc ", 1)[0]
+        self.assertIn("incoming_batch_fully_presented", batch_complete)
+        screen = self.read("game/scripts/ui/messages/MessagesScreen.gd")
+        finish = screen.split("func _finish_runtime_delivery", 1)[1].split("\nfunc ", 1)[0]
+        self.assertLess(finish.index("_follow_runtime_delivery_after_layout"), finish.index("mark_thread_batch_presented"))
+        self.assertLess(finish.index("mark_thread_batch_presented"), finish.index("_sync_runtime_delivery_provider"))
+
+    def test_photo_set_dialogue_disqualifies_frame_one_without_offering_it(self):
+        data = json.loads(self.read("game/data/conversations/chapter_04_pauline_public_photo_relay.json"))
+        guided = data["segments"][0]["choices"][0]["next_messages"]
+        self.assertEqual(
+            [(message["id"], message["text"]) for message in guided[2:5]],
+            [
+                ("msg_friday_pauline_005a", "La 1, on regarde tous la télécommande."),
+                ("msg_friday_pauline_006", "La 2 pour le groupe."),
+                ("msg_friday_pauline_007", "La 3 si on veut garder Bastien au moment exact où il comprend que la télécommande n'est pas magique."),
+            ],
+        )
+        choices = data["segments"][1]["choices"]
+        self.assertEqual([choice["id"] for choice in choices], [
+            "choice_friday_pauline_practical",
+            "choice_friday_pauline_dry",
+            "choice_friday_pauline_defer",
+        ])
+        self.assertTrue(all("La 1" not in choice["text"] for choice in choices))
+
+    def test_all_day_providers_use_the_shared_incoming_unread_authority(self):
+        helper_path = ROOT / "game/scripts/runtime/season_1/RuntimeUnread.gd"
+        self.assertTrue(helper_path.exists())
+        helper = helper_path.read_text(encoding="utf-8")
+        self.assertIn("func incoming_unread_count", helper)
+        self.assertIn("func incoming_batch_fully_presented", helper)
+        for day in range(1, 5):
+            provider = self.read(f"game/scripts/runtime/season_1/J{day:02d}RuntimeProvider.gd")
+            self.assertIn('preload("res://scripts/runtime/season_1/RuntimeUnread.gd")', provider)
+            self.assertIn("incoming_unread_count", provider)
+        j01 = self.read("game/scripts/runtime/season_1/J01RuntimeProvider.gd")
+        j02 = self.read("game/scripts/runtime/season_1/J02RuntimeProvider.gd")
+        j03 = self.read("game/scripts/runtime/season_1/J03RuntimeProvider.gd")
+        self.assertNotIn('"has_unread_content": is_sandra', j01)
+        self.assertNotIn('"has_unread_content": false', j02)
+        self.assertNotIn('"has_unread_content": false', j03)
 
     def test_state_has_exact_j04_records_and_backward_compatible_snapshot(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")

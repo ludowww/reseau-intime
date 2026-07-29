@@ -4,6 +4,7 @@ class_name J04RuntimeProvider
 
 const RUNTIME_MAP_PATH := "res://data/runtime/season_1/j04_runtime_map.json"
 const NARRATIVE_TIME := preload("res://scripts/runtime/season_1/NarrativeTime.gd")
+const RUNTIME_UNREAD := preload("res://scripts/runtime/season_1/RuntimeUnread.gd")
 const SNAPSHOT_VERSION := 1
 const PAULINE_THREAD := "thread_pauline_private"
 const NICO_THREAD := "thread_nico_private"
@@ -23,8 +24,6 @@ var pending_transition: Dictionary = {}
 var phase := "day_start_pending"
 var current_time_minutes := -1
 var presented_time_message_ids: Dictionary = {}
-var marie_household_echo_presented := false
-var mathilde_household_echo_presented := false
 var initialized := false
 
 func initialize(shared_state, cumulative_transcripts: Dictionary, cumulative_ids: Dictionary, cumulative_threads: Array, cumulative_gallery_ids: Array) -> bool:
@@ -157,14 +156,17 @@ func mark_message_presented(message_id: String) -> bool:
 	presented_time_message_ids[message_id] = true
 	var candidate := NARRATIVE_TIME.parse_narrative_time(timestamp)
 	if candidate >= current_time_minutes: current_time_minutes = candidate
-	if message_id == "msg_friday_marie_household_003": marie_household_echo_presented = true
-	if message_id == "msg_friday_mathilde_household_003": mathilde_household_echo_presented = true
-	if phase == "household_echoes" and marie_household_echo_presented and mathilde_household_echo_presented:
-		state.complete_conversation("chapter_04_marie_household_report", "marie")
-		state.complete_conversation("chapter_04_mathilde_bathroom_correction", "mathilde")
-		phase = "household_close"
-		pending_transition = runtime_map["household_close"].duplicate(true)
-		pending_transition["kind"] = "offline"
+	return true
+
+func mark_thread_batch_presented(_thread_id: String) -> bool:
+	if phase != "household_echoes": return false
+	if not RUNTIME_UNREAD.incoming_batch_fully_presented(transcript_for(MARIE_THREAD), presented_time_message_ids, 4): return false
+	if not RUNTIME_UNREAD.incoming_batch_fully_presented(transcript_for(MATHILDE_THREAD), presented_time_message_ids, 4): return false
+	state.complete_conversation("chapter_04_marie_household_report", "marie")
+	state.complete_conversation("chapter_04_mathilde_bathroom_correction", "mathilde")
+	phase = "household_close"
+	pending_transition = runtime_map["household_close"].duplicate(true)
+	pending_transition["kind"] = "offline"
 	return true
 
 func commit_narrative_time(minutes: int) -> bool:
@@ -195,7 +197,7 @@ func gallery_source() -> Dictionary:
 	return {"fixtures": fixtures, "character_order": ["marie", "sandra", "mathilde", "raphaelle", "pauline", "nico"], "empty_label": "Aucun visuel disponible."}
 
 func snapshot() -> Dictionary:
-	return {"version": SNAPSHOT_VERSION, "phase": phase, "transcripts_by_thread": transcripts_by_thread.duplicate(true), "produced_message_ids": produced_message_ids.duplicate(true), "unlocked_thread_ids": unlocked_thread_ids.duplicate(), "gallery_asset_ids": gallery_asset_ids.duplicate(), "segment_index_by_thread": segment_index_by_thread.duplicate(true), "pending_choice_ids_by_thread": pending_choice_ids_by_thread.duplicate(true), "pending_transition": pending_transition.duplicate(true), "current_time_minutes": current_time_minutes, "presented_time_message_ids": presented_time_message_ids.duplicate(true), "marie_household_echo_presented": marie_household_echo_presented, "mathilde_household_echo_presented": mathilde_household_echo_presented}
+	return {"version": SNAPSHOT_VERSION, "phase": phase, "transcripts_by_thread": transcripts_by_thread.duplicate(true), "produced_message_ids": produced_message_ids.duplicate(true), "unlocked_thread_ids": unlocked_thread_ids.duplicate(), "gallery_asset_ids": gallery_asset_ids.duplicate(), "segment_index_by_thread": segment_index_by_thread.duplicate(true), "pending_choice_ids_by_thread": pending_choice_ids_by_thread.duplicate(true), "pending_transition": pending_transition.duplicate(true), "current_time_minutes": current_time_minutes, "presented_time_message_ids": presented_time_message_ids.duplicate(true)}
 
 func restore_snapshot(value: Dictionary) -> bool:
 	if int(value.get("version", -1)) != SNAPSHOT_VERSION: return false
@@ -217,8 +219,6 @@ func restore_snapshot(value: Dictionary) -> bool:
 	pending_transition = value["pending_transition"].duplicate(true)
 	current_time_minutes = restored_time
 	presented_time_message_ids = value["presented_time_message_ids"].duplicate(true)
-	marie_household_echo_presented = bool(value.get("marie_household_echo_presented", false))
-	mathilde_household_echo_presented = bool(value.get("mathilde_household_echo_presented", false))
 	return _restored_phase_consistent()
 
 func presentation_count_by_id(id: String) -> int:
@@ -288,10 +288,9 @@ func _thread_presentation(id: String) -> Dictionary:
 	var colors := {MARIE_THREAD: "#4F8BFF", "thread_sandra_private": "#20C7C9", MATHILDE_THREAD: "#E070A8", "thread_raphaelle_private": "#D69A42", PAULINE_THREAD: "#E6B84A", NICO_THREAD: "#65B87A"}
 	var transcript := transcript_for(id)
 	var last: Dictionary = {}
-	var unread := 0
+	var unread := RUNTIME_UNREAD.incoming_unread_count(transcript, presented_time_message_ids, 4)
 	for item in transcript:
 		if str(item.get("content_type", "")) != "OFF_PHONE_TRANSITION": last = item
-		if not bool(item.get("is_read", true)) and not presented_time_message_ids.has(str(item.get("message_id", ""))): unread += 1
 	var title := str(titles.get(id, ""))
 	return {"thread_id": id, "title": title, "participant_ids": [str(participants.get(id, "")), "player"], "last_preview": str(last.get("text", "Photo" if str(last.get("content_type", "")) == "IMAGE" else "")), "last_timestamp": str(last.get("timestamp", "")), "unread_count": unread, "has_unread_content": unread > 0, "availability_state": "AVAILABLE", "is_group": false, "is_archived": false, "avatar_ref": title.left(1), "accent_color": str(colors.get(id, "#8D63E6"))}
 

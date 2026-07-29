@@ -4,6 +4,7 @@ class_name J02RuntimeProvider
 
 const RUNTIME_MAP_PATH := "res://data/runtime/season_1/j02_runtime_map.json"
 const NARRATIVE_TIME := preload("res://scripts/runtime/season_1/NarrativeTime.gd")
+const RUNTIME_UNREAD := preload("res://scripts/runtime/season_1/RuntimeUnread.gd")
 const SNAPSHOT_VERSION := 1
 
 var state
@@ -223,7 +224,7 @@ func _append_messages(thread_id: String, messages: Array) -> void:
 		if runtime_map.get("excluded_message_ids", []).has(id): continue
 		var presentation := str(message.get("presentation", ""))
 		var type := "SYSTEM_DAY_DIVIDER" if presentation == "time_separator" else ("OFF_PHONE_TRANSITION" if presentation == "offline_beat" else "TEXT")
-		_append(thread_id, {"message_id": id, "author_id": str(message.get("sender", "system")), "timestamp": str(message.get("time_label", "")), "content_type": type, "text": str(message.get("text", "")), "media_ref": "", "is_player": false, "is_read": true, "source_day": 2})
+		_append(thread_id, {"message_id": id, "author_id": str(message.get("sender", "system")), "timestamp": str(message.get("time_label", "")), "content_type": type, "text": str(message.get("text", "")), "media_ref": "", "is_player": false, "is_read": type not in ["TEXT", "IMAGE"], "source_day": 2})
 
 func _append(thread_id: String, item: Dictionary) -> bool:
 	var id := str(item.get("message_id", ""))
@@ -247,7 +248,8 @@ func _thread_presentation(id: String) -> Dictionary:
 	var character := title.to_lower(); var transcript := transcript_for(id); var last: Dictionary = {}
 	for item in transcript:
 		if str(item.get("content_type", "")) not in ["OFF_PHONE_TRANSITION", "SYSTEM_DAY_DIVIDER"]: last = item
-	return {"thread_id": id, "title": title, "participant_ids": [character, "player"], "last_preview": str(last.get("text", "")), "last_timestamp": "18:22" if id == "thread_mathilde_private" else str(last.get("timestamp", "")), "unread_count": 0, "has_unread_content": false, "availability_state": "AVAILABLE", "is_group": false, "is_archived": false, "avatar_ref": title.left(1), "accent_color": "#E070A8" if id == "thread_mathilde_private" else ("#20C7C9" if id == "thread_sandra_private" else "#4F8BFF")}
+	var unread := RUNTIME_UNREAD.incoming_unread_count(transcript, presented_time_message_ids, 2)
+	return {"thread_id": id, "title": title, "participant_ids": [character, "player"], "last_preview": str(last.get("text", "")), "last_timestamp": str(last.get("timestamp", "")), "unread_count": unread, "has_unread_content": unread > 0, "availability_state": "AVAILABLE", "is_group": false, "is_archived": false, "avatar_ref": title.left(1), "accent_color": "#E070A8" if id == "thread_mathilde_private" else ("#20C7C9" if id == "thread_sandra_private" else "#4F8BFF")}
 func _character(id: String, title: String, accent: String, avatar: String) -> Dictionary: return {"character_id": id, "display_name": title, "accent_color": accent, "avatar_ref": avatar, "gallery_enabled": false}
 func _gallery_character(id: String, title: String, accent: String, avatar: String) -> Dictionary: return {"character_id": id, "display_name": title, "accent_color": Color.from_string(accent, Color.WHITE), "avatar_ref": avatar, "items": []}
 func _gallery_item(asset: Dictionary, character_id: String, index: int) -> Dictionary:

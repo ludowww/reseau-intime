@@ -4,6 +4,7 @@ class_name J01RuntimeProvider
 
 const STATE_SCRIPT := preload("res://scripts/runtime/season_1/Season1State.gd")
 const NARRATIVE_TIME := preload("res://scripts/runtime/season_1/NarrativeTime.gd")
+const RUNTIME_UNREAD := preload("res://scripts/runtime/season_1/RuntimeUnread.gd")
 const RUNTIME_MAP_PATH := "res://data/runtime/season_1/j01_runtime_map.json"
 const SNAPSHOT_VERSION := 1
 
@@ -280,7 +281,7 @@ func _append_authored_messages(thread_id: String, authored: Array) -> void:
 			"text": str(message.get("text", "")),
 			"media_ref": "",
 			"is_player": false,
-			"is_read": true,
+			"is_read": false,
 			"source_day": 1,
 		})
 		if message_id == str(runtime_map.get("sandra_image", {}).get("after_message_id", "")):
@@ -300,7 +301,7 @@ func _append_sandra_image(thread_id: String) -> void:
 		"access_state": "UNLOCKED",
 		"placeholder_label": str(image.get("placeholder_label", "Visuel non produit")),
 		"is_player": false,
-		"is_read": true,
+		"is_read": false,
 		"source_day": 1,
 	}
 	if _append_presentation(thread_id, presentation):
@@ -376,14 +377,15 @@ func _thread_presentation(thread_id: String) -> Dictionary:
 	for message in transcript:
 		if str(message.get("content_type", "")) != "OFF_PHONE_TRANSITION":
 			last_visible = message
+	var unread := RUNTIME_UNREAD.incoming_unread_count(transcript, presented_time_message_ids, 1)
 	return {
 		"thread_id": thread_id,
 		"title": "Sandra" if is_sandra else "Marie",
 		"participant_ids": ["sandra" if is_sandra else "marie", "player"],
 		"last_preview": str(last_visible.get("text", "")),
 		"last_timestamp": str(last_visible.get("timestamp", "")),
-		"unread_count": 1 if is_sandra and not state.completed_conversation_ids.has("chapter_01_sandra_trace") else 0,
-		"has_unread_content": is_sandra and not state.completed_conversation_ids.has("chapter_01_sandra_trace"),
+		"unread_count": unread,
+		"has_unread_content": unread > 0,
 		"availability_state": "AVAILABLE",
 		"is_group": false,
 		"is_archived": false,

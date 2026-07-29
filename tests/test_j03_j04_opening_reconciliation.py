@@ -123,6 +123,7 @@ class OpeningJ3J4ReconciliationTests(unittest.TestCase):
             "les trois versions de dimanche",
             "Bastien insiste",
             "C'est pour ça que ça avance.",
+            "La 1, on regarde tous la télécommande.",
             "Bastien mérite cette vérité.",
             "recent_group_photo_trace_exists",
         ]:

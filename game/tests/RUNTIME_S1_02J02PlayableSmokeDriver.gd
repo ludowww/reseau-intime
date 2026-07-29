@@ -27,7 +27,11 @@ func _run() -> void:
 	_expect(not messages.day_transition.visible, "J01/J02 informational cards must be removed")
 	_expect(messages.screen_mode == "list", "automatic J02 start must open cumulative list")
 	_expect(not messages._thread_for("thread_sandra_private").is_empty(), "Sandra must persist")
+	_expect(messages.thread_has_unread_content("thread_marie_private"), "J02 Marie initial incoming lot must be unread after NEW_DAY")
+	_expect(_card_is_strong_unread(messages, "thread_marie_private"), "J02 Marie initial card must use strong primary unread styling")
 	await _open(messages, "thread_marie_private")
+	_expect(not messages.thread_has_unread_content("thread_marie_private"), "J02 Marie becomes read only after full presentation")
+	_expect(_card_is_restored_read(messages, "thread_marie_private"), "J02 Marie card restores its real secondary preview")
 	await _choose(messages, "choice_wed_marie_emergency_guided")
 	_expect(messages.thread_choice_count("thread_marie_private") == 3, "Marie exact three choices unavailable")
 	await _choose_twice(messages, "choice_wed_make_room_proactive")
@@ -74,10 +78,13 @@ func _run() -> void:
 	_finish()
 
 func _play_j01(messages) -> void:
+	_expect(messages.thread_has_unread_content("thread_marie_private"), "J01 Marie initial incoming lot must be unread")
 	await _open(messages, "thread_marie_private")
+	_expect(not messages.thread_has_unread_content("thread_marie_private"), "J01 Marie initial lot becomes read after presentation")
 	for choice in ["choice_j1_marie_optimism_guided", "choice_j1_marie_crisis_guided", "choice_j1_marie_present", "choice_j1_marie_laverriere_guided", "choice_j1_marie_mathilde_guided"]:
 		await _choose(messages, choice)
 	await _frames(2)
+	_expect(messages.thread_has_unread_content("thread_sandra_private"), "J01 Sandra unlocked incoming lot must be unread")
 	await _open(messages, "thread_sandra_private")
 	for choice in ["choice_j1_sandra_what_guided", "choice_j1_sandra_art_guided", "choice_j1_sandra_cautious", "choice_j1_sandra_thanks_guided", "choice_j1_sandra_goodnight_guided"]:
 		await _choose(messages, choice)
@@ -214,6 +221,23 @@ func _j02_image_count(messages) -> int:
 		for item in messages.transcripts[thread_id]:
 			if int(item.get("source_day", 0)) == 2 and str(item.get("content_type", "")) == "IMAGE": count += 1
 	return count
+
+func _card_is_strong_unread(messages, thread_id: String) -> bool:
+	var view: Dictionary = messages.conversation_list.card_views.get(thread_id, {})
+	if view.is_empty(): return false
+	var name: Label = view.get("display_name")
+	var preview: Label = view.get("preview")
+	var name_font: Font = name.get_theme_font("font")
+	var preview_font: Font = preview.get_theme_font("font")
+	return preview.text == "Nouveau message !" and name.get_theme_color("font_color") == messages.PORTRAIT_THEME.TEXT_PRIMARY and preview.get_theme_color("font_color") == messages.PORTRAIT_THEME.TEXT_PRIMARY and name_font is FontVariation and preview_font is FontVariation and is_equal_approx(name_font.variation_embolden, 1.5) and is_equal_approx(preview_font.variation_embolden, 1.5)
+
+func _card_is_restored_read(messages, thread_id: String) -> bool:
+	var view: Dictionary = messages.conversation_list.card_views.get(thread_id, {})
+	var thread: Dictionary = messages._thread_for(thread_id)
+	if view.is_empty() or thread.is_empty(): return false
+	var name: Label = view.get("display_name")
+	var preview: Label = view.get("preview")
+	return preview.text == str(thread.get("last_preview", "")) and preview.get_theme_color("font_color") == messages.PORTRAIT_THEME.TEXT_SECONDARY and not name.has_theme_font_override("font") and not preview.has_theme_font_override("font")
 
 func _gallery_asset_count(source: Dictionary, asset_id: String) -> int:
 	var count := 0

@@ -67,8 +67,12 @@ class TUI02B1UnreadNotificationStaticTests(unittest.TestCase):
             self.assertIn(field, component)
         self.assertIn('"Nouveau message !"', component)
         self.assertIn('thread.get("has_unread_content", false)', component)
-        self.assertIn("variation_embolden", component)
+        self.assertIn("variation_embolden = 1.5", component)
+        style_method = component.split("func _apply_thread_read_style", 1)[1].split("\nfunc ", 1)[0]
+        self.assertIn("PORTRAIT_THEME.TEXT_PRIMARY", style_method)
+        self.assertIn("PORTRAIT_THEME.TEXT_SECONDARY", style_method)
         self.assertNotIn("UnreadCount", component)
+        self.assertNotIn("UnreadBadge", component)
         method = component.split("func update_thread_presentation", 1)[1].split("\nfunc ", 1)[0]
         self.assertNotIn("_build()", method)
 
