@@ -39,8 +39,17 @@ func _run() -> void:
 	var other_id := str(initial.get("read_thread_id", ""))
 	_expect(str(initial.get("screen", "")) == "list", "launch must show list")
 	_expect(unread_id != "" and other_id != "", "fixtures must expose unread and read threads")
-	_expect(messages.thread_unread_count(unread_id) >= 2, "initial unread badge must show exact positive count")
-	_expect(messages.thread_unread_count(other_id) == 0, "second fixture thread must start read")
+	_expect(messages.thread_unread_count(unread_id) >= 2, "initial fixture keeps its internal unread quantity")
+	_expect(messages.thread_has_unread_content(unread_id), "initial unread fixture exposes the shared boolean state")
+	_expect(messages.thread_unread_count(other_id) == 0 and not messages.thread_has_unread_content(other_id), "second fixture thread must start read")
+	var unread_view: Dictionary = messages.conversation_list.card_views.get(unread_id, {})
+	var read_view: Dictionary = messages.conversation_list.card_views.get(other_id, {})
+	_expect(not unread_view.has("unread") and not read_view.has("unread"), "conversation cards expose no numeric unread badge")
+	_expect(str(unread_view.get("preview").text) == "Nouveau message !", "unread card hides the narrative preview")
+	_expect(str(unread_view.get("timestamp").text) == messages.thread_timestamp(unread_id), "unread card keeps the real last-message time")
+	_expect(unread_view.get("display_name").has_theme_font_override("font") and unread_view.get("preview").has_theme_font_override("font"), "unread name and neutral preview are bold")
+	_expect(str(read_view.get("preview").text) == messages.thread_preview(other_id), "read card keeps its true preview")
+	_expect(not read_view.get("display_name").has_theme_font_override("font") and not read_view.get("preview").has_theme_font_override("font"), "read card removes unread bold styling")
 	var initial_focus: String = str(messages.conversation_list.focused_thread_id())
 	_expect(initial_focus == unread_id, "unread fixture card must initially own focus")
 
@@ -56,6 +65,9 @@ func _run() -> void:
 	messages.return_to_list()
 	await get_tree().process_frame
 	await get_tree().process_frame
+	var read_after_open: Dictionary = messages.conversation_list.card_views.get(unread_id, {})
+	_expect(str(read_after_open.get("preview").text) == messages.thread_preview(unread_id), "true preview returns only after the full visible lot is read")
+	_expect(not read_after_open.get("display_name").has_theme_font_override("font") and not read_after_open.get("preview").has_theme_font_override("font"), "read card removes bold styling")
 	_expect(messages.conversation_list.focused_thread_id() == unread_id, "return must restore the same card focus")
 	messages.open_thread(unread_id)
 	await get_tree().process_frame
@@ -90,6 +102,10 @@ func _run() -> void:
 	_expect(messages.thread_timestamp(other_id) != old_timestamp, "simulation must update timestamp")
 	_expect(bool(notified.get("notification_visible", false)), "notification banner must be visible")
 	_expect(str(notified.get("notification_thread_id", "")) == other_id, "notification must target updated thread")
+	_expect(str(messages.active_notification.get("title", "")) == str(messages._thread_for(other_id).get("title", "")), "notification title is the contact name")
+	_expect(str(messages.active_notification.get("preview", "")) == "Nouveau message !", "notification never exposes the real message preview")
+	var notification_preview: Label = messages.notification_banner.find_child("NotificationPreview", true, false)
+	_expect(notification_preview != null and notification_preview.has_theme_font_override("font"), "notification neutral body is bold")
 	_expect(get_viewport().gui_get_focus_owner() == focus_before_banner, "banner must not steal focus")
 	_expect(messages.notification_banner_count() == 1, "only one banner instance may exist")
 	_expect(messages.notification_banner.focus_mode == Control.FOCUS_ALL, "whole compact banner must accept keyboard focus")
@@ -123,6 +139,7 @@ func _run() -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	_expect(not messages.notification_banner.visible, "auto-dismiss must hide the banner")
+	_expect(messages.thread_has_unread_content(other_id), "closing a notification does not mark its thread read")
 	_expect(get_viewport().gui_get_focus_owner() == focus_before_banner, "dismiss must restore the useful previous focus")
 	_expect(messages.conversation_list.offset_top == 0.0, "list offset remains zero after dismiss")
 	_expect(messages.conversation_screen.offset_top == 0.0, "conversation offset remains zero after dismiss")

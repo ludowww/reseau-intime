@@ -29,14 +29,11 @@ func update_thread_presentation(thread: Dictionary) -> void:
 			threads[index] = thread.duplicate(true)
 			break
 	var view: Dictionary = card_views[thread_id]
+	var display_name: Label = view.get("display_name")
 	var preview: Label = view.get("preview")
 	var timestamp: Label = view.get("timestamp")
-	var unread: Label = view.get("unread")
-	preview.text = str(thread.get("last_preview", ""))
+	_apply_thread_read_style(thread, display_name, preview)
 	timestamp.text = str(thread.get("last_timestamp", ""))
-	var unread_count := int(thread.get("unread_count", 0))
-	unread.text = str(unread_count)
-	unread.visible = unread_count > 0
 
 func focus_first_card() -> void:
 	if not cards.is_empty():
@@ -133,10 +130,11 @@ func _build_conversation_card(thread: Dictionary) -> PanelContainer:
 	var display_name := _label(str(thread.get("title", "Conversation")), 19, PORTRAIT_THEME.TEXT_PRIMARY)
 	display_name.name = "DisplayName"
 	text_column.add_child(display_name)
-	var last_preview := _label(str(thread.get("last_preview", "")), 15, PORTRAIT_THEME.TEXT_SECONDARY)
+	var last_preview := _label("", 15, PORTRAIT_THEME.TEXT_SECONDARY)
 	last_preview.name = "LastPreview"
 	last_preview.max_lines_visible = 3
 	text_column.add_child(last_preview)
+	_apply_thread_read_style(thread, display_name, last_preview)
 	var metadata := VBoxContainer.new()
 	metadata.custom_minimum_size = Vector2(72, 0)
 	metadata.add_theme_constant_override("separation", 8)
@@ -145,20 +143,28 @@ func _build_conversation_card(thread: Dictionary) -> PanelContainer:
 	last_timestamp.name = "LastTimestamp"
 	last_timestamp.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	metadata.add_child(last_timestamp)
-	var unread_count := int(thread.get("unread_count", 0))
-	var unread := _label(str(unread_count), 14, PORTRAIT_THEME.TEXT_PRIMARY)
-	unread.name = "UnreadCount"
-	unread.visible = unread_count > 0
-	unread.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	unread.add_theme_stylebox_override("normal", PORTRAIT_THEME.button_style(accent.darkened(0.45), accent, 14))
-	metadata.add_child(unread)
 	card_views[thread_id] = {
 		"button": button,
+		"display_name": display_name,
 		"preview": last_preview,
 		"timestamp": last_timestamp,
-		"unread": unread,
 	}
 	return card
+
+func _apply_thread_read_style(thread: Dictionary, display_name: Label, preview: Label) -> void:
+	var has_unread_content := bool(thread.get("has_unread_content", false))
+	preview.text = "Nouveau message !" if has_unread_content else str(thread.get("last_preview", ""))
+	_set_bold(display_name, has_unread_content)
+	_set_bold(preview, has_unread_content)
+
+func _set_bold(label: Label, enabled: bool) -> void:
+	if not enabled:
+		label.remove_theme_font_override("font")
+		return
+	var bold_font := FontVariation.new()
+	bold_font.base_font = label.get_theme_font("font")
+	bold_font.variation_embolden = 0.75
+	label.add_theme_font_override("font", bold_font)
 
 func _label(value: String, font_size: int, color: Color) -> Label:
 	var label := Label.new()

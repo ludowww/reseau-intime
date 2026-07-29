@@ -61,7 +61,7 @@ class TUI02AMessagesStaticTests(unittest.TestCase):
 
     def test_conversation_card_contains_required_visible_fields(self):
         component = self._read("game/scripts/ui/messages/ConversationList.gd")
-        for token in ["ConversationCard", "display_name", "last_preview", "last_timestamp", "unread_count", "avatar_ref"]:
+        for token in ["ConversationCard", "display_name", "last_preview", "last_timestamp", "has_unread_content", "Nouveau message !", "avatar_ref"]:
             self.assertIn(token, component)
         self.assertIn("AUTOWRAP_WORD_SMART", component)
 

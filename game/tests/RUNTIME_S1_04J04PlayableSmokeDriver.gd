@@ -2,6 +2,7 @@ extends Node
 
 const MAIN_SCENE := preload("res://scenes/portrait/PortraitMain.tscn")
 const SEASON_PROVIDER := preload("res://scripts/runtime/season_1/Season1RuntimeProvider.gd")
+const SEASON_STATE := preload("res://scripts/runtime/season_1/Season1State.gd")
 
 var failures: Array[String] = []
 var tested_mains: Array[Node] = []
@@ -12,9 +13,31 @@ func _ready() -> void:
 func _run() -> void:
 	var requested_size := _parse_size(_arg("--runtime-size", "720x1280"))
 	get_window().size = requested_size
+	_exercise_pauline_outcome_snapshot_contracts()
 	await _exercise_real_portrait_path("Marie then Mathilde", ["thread_marie_private", "thread_mathilde_private"], true)
 	await _exercise_real_portrait_path("Mathilde then Marie", ["thread_mathilde_private", "thread_marie_private"], false)
 	_finish(requested_size)
+
+func _exercise_pauline_outcome_snapshot_contracts() -> void:
+	var cases: Array[Dictionary] = [
+		{"choice": "choice_friday_pauline_practical", "outcome": "FRAME_02_SELECTED", "retained": "FRAME_02"},
+		{"choice": "choice_friday_pauline_dry", "outcome": "FRAME_03_REQUESTED", "retained": "FRAME_02"},
+		{"choice": "choice_friday_pauline_defer", "outcome": "DEFERRED_TO_MARIE", "retained": "UNESTABLISHED"},
+	]
+	for test_case in cases:
+		var source = SEASON_STATE.new()
+		_expect(source.apply_j04_choice(str(test_case["choice"])), "Pauline outcome choice accepted: " + str(test_case["choice"]))
+		_expect(source.pauline_public_selection_outcome == str(test_case["outcome"]), "Pauline bounded outcome: " + str(test_case["choice"]))
+		_expect(source.pauline_retained_frame == str(test_case["retained"]), "Pauline retained frame: " + str(test_case["choice"]))
+		var legacy_snapshot: Dictionary = source.snapshot()
+		legacy_snapshot.erase("pauline_retained_frame")
+		var restored = SEASON_STATE.new()
+		_expect(restored.restore_snapshot(legacy_snapshot), "Pauline previous snapshot restores: " + str(test_case["choice"]))
+		_expect(restored.pauline_retained_frame == str(test_case["retained"]), "Pauline retained frame derives from previous snapshot: " + str(test_case["choice"]))
+		var contradictory_snapshot: Dictionary = source.snapshot()
+		contradictory_snapshot["pauline_retained_frame"] = "UNESTABLISHED" if str(test_case["retained"]) == "FRAME_02" else "FRAME_02"
+		var rejected = SEASON_STATE.new()
+		_expect(not rejected.restore_snapshot(contradictory_snapshot), "Pauline contradictory snapshot rejected: " + str(test_case["choice"]))
 
 func _exercise_real_portrait_path(label: String, echo_order: Array, exercise_photo: bool) -> void:
 	var main = MAIN_SCENE.instantiate()
@@ -46,9 +69,14 @@ func _exercise_real_portrait_path(label: String, echo_order: Array, exercise_pho
 
 	# Pauline: open a real card, let delivery signals present the provider suffix, use real choice buttons.
 	await _press_thread_card(messages, "thread_pauline_private", label + " opens Pauline card")
+	_expect(messages.thread_has_unread_content("thread_pauline_private"), label + " Pauline remains unread before her lot is fully presented")
 	await _wait_delivery(messages, label + " Pauline initial delivery")
+	_expect(not messages.thread_has_unread_content("thread_pauline_private"), label + " Pauline becomes read after full presentation")
 	_expect(messages.active_thread_id == "thread_pauline_private", label + " Pauline is first active J04 thread")
-	_expect(messages.presentation_count_by_content_type("thread_pauline_private", "IMAGE") >= 1, label + " Pauline PHOTO_SET is an IMAGE presentation")
+	_expect(messages.presentation_count_by_content_type("thread_pauline_private", "IMAGE") == 1, label + " Pauline PHOTO_SET uses one IMAGE parent")
+	var photo_set: Dictionary = _message_by_id(messages, "thread_pauline_private", "visual_friday_pauline_group_set")
+	_expect(str(photo_set.get("placeholder_label", "")) == "Set de 3 photos non produit", label + " Pauline PHOTO_SET uses the neutral set placeholder")
+	_expect(photo_set.get("photo_set_children", []).size() == 3, label + " Pauline PHOTO_SET exposes exactly three child frames")
 	_expect(messages.conversation_screen.timeline.day_divider_labels().count("Vendredi") == 1, label + " Pauline has one Vendredi divider")
 	if exercise_photo:
 		await _exercise_photo_viewer(shell, messages, label)
@@ -58,43 +86,54 @@ func _exercise_real_portrait_path(label: String, echo_order: Array, exercise_pho
 	# The final Pauline delivery launches the actual clock_only overlay and notification.
 	await _wait_until(func(): return provider.active_day == "J04" and provider.j04_provider.phase == "nico_saved_seat" and not messages.transition_flow_active, 360, label + " 14:05 clock_only timed out")
 	_expect(provider.current_narrative_time_text() == "14:05", label + " clock_only commits 14:05")
-	_expect(provider.state.pauline_public_selection_outcome == "FRAME_03_REQUESTED" and provider.state.pauline_state == "PUBLIC_ONLY", label + " real Pauline choices set bounded outcome")
+	_expect(messages.screen_mode == "conversation" and messages.active_thread_id == "thread_pauline_private", label + " 14:05 keeps Pauline open")
+	_expect(provider.state.pauline_public_selection_outcome == "FRAME_03_REQUESTED" and provider.state.pauline_retained_frame == "FRAME_02" and provider.state.pauline_state == "PUBLIC_ONLY", label + " dry request keeps Pauline's frame 2 selection")
 	_expect(provider.state.traces.has("j04_pauline_bastien_public_set_01") and provider.state.knowledge.has("fact_pauline_bastien_couple_public"), label + " Pauline establishes T04 and F03")
 	await _wait_until(func(): return messages._notification_visible(), 60, label + " Nico notification missing")
 	_expect(str(messages.active_notification.get("thread_id", "")) == "thread_nico_private", label + " visible notification targets Nico only")
+	_expect(str(messages.active_notification.get("title", "")) == "Nico" and str(messages.active_notification.get("preview", "")) == "Nouveau message !", label + " Nico notification is neutral")
 	_activate_notification(messages)
 	await _wait_until(func(): return messages.active_thread_id == "thread_nico_private" and messages.screen_mode == "conversation", 60, label + " Nico notification did not open thread")
+	_expect(messages.thread_has_unread_content("thread_nico_private"), label + " Nico remains unread while his lot is being presented")
 	await _wait_delivery(messages, label + " Nico initial delivery")
+	_expect(not messages.thread_has_unread_content("thread_nico_private"), label + " Nico becomes read after full presentation")
 
 	await _press_choice(messages, "choice_friday_nico_reservation_guided", label)
 	await _press_choice(messages, "choice_friday_nico_honest", label)
 	await _press_choice(messages, "choice_friday_nico_mathilde_guided", label)
 	await _wait_until(func(): return provider.j04_provider.phase == "household_echoes" and not messages.transition_flow_active, 360, label + " 18:05 clock_only timed out")
 	_expect(provider.current_narrative_time_text() == "18:05", label + " clock_only commits 18:05")
+	_expect(messages.screen_mode == "conversation" and messages.active_thread_id == "thread_nico_private", label + " 18:05 keeps Nico open")
 	_expect(provider.state.nico_state == "ORDINARY_FRIEND" and provider.state.nico_friendship_outcome == "HONEST", label + " real Nico choices set bounded outcome")
 	_expect(provider.state.knowledge.has("fact_nico_friendship_exists"), label + " Nico establishes F06")
 	var f02: Dictionary = provider.state.knowledge.get("fact_mathilde_stay_started", {})
 	_expect(f02.get("current_knowers", []).has("Nico") and f02.get("knowledge_acquisitions", {}).get("Nico", {}).get("source", "") == "Marie", label + " Nico learns F02 from Marie")
 	await _wait_until(func(): return messages._notification_visible(), 60, label + " Marie notification missing")
 	_expect(str(messages.active_notification.get("thread_id", "")) == "thread_marie_private" and messages._visible_notification_count() == 1, label + " Marie is the sole visible notification")
-	_expect(messages.thread_unread_count("thread_mathilde_private") > 0, label + " Mathilde remains pending/unread without notification")
+	_expect(str(messages.active_notification.get("title", "")) == "Marie" and str(messages.active_notification.get("preview", "")) == "Nouveau message !", label + " Marie notification is neutral")
+	_expect(messages.thread_has_unread_content("thread_marie_private"), label + " Marie is pending/unread")
+	_expect(messages.thread_has_unread_content("thread_mathilde_private"), label + " Mathilde remains pending/unread without notification")
 
 	# Open both real conversations in the requested order. The second completion alone may arm final.
 	for index in range(2):
 		var thread_id: String = str(echo_order[index])
-		if index > 0 and messages.screen_mode == "conversation":
-			messages.conversation_screen.back_button.emit_signal("pressed")
-			await _wait_until(func(): return messages.screen_mode == "list", 60, label + " return to list failed")
-			await _frames(3) # allow the deferred notification host transfer to finish
 		if thread_id == "thread_marie_private" and messages._notification_visible() and str(messages.active_notification.get("thread_id", "")) == thread_id:
 			_activate_notification(messages)
 			await _wait_until(func(): return messages.active_thread_id == thread_id, 60, label + " Marie notification open failed")
 		else:
+			if messages.screen_mode == "conversation":
+				messages.conversation_screen.back_button.emit_signal("pressed")
+				await _wait_until(func(): return messages.screen_mode == "list", 60, label + " return to list failed")
+				await _frames(3) # allow the deferred notification host transfer to finish
 			await _press_thread_card(messages, thread_id, label + " opens household card")
+		_expect(messages.thread_has_unread_content(thread_id), label + " selected household lot stays unread before full presentation")
 		await _wait_delivery(messages, label + " household delivery " + thread_id)
+		_expect(not messages.thread_has_unread_content(thread_id), label + " selected household lot becomes read after full presentation")
 		_expect(messages.active_thread_id == thread_id, label + " active household thread " + thread_id)
 		_expect(messages.conversation_screen.timeline.day_divider_labels().count("Vendredi") == 1, label + " one Vendredi divider in " + thread_id)
 		if index == 0:
+			var other_thread_id := "thread_mathilde_private" if thread_id == "thread_marie_private" else "thread_marie_private"
+			_expect(messages.thread_has_unread_content(other_thread_id), label + " opening one household thread does not read the other")
 			_expect(provider.j04_provider.phase == "household_echoes", label + " final waits after first real presentation")
 			_expect(not messages.is_time_passage_active() and provider.content_end().is_empty(), label + " no final surface after first echo")
 		else:
@@ -231,6 +270,12 @@ func _wait_until(predicate: Callable, frames: int, failure: String) -> void:
 			return
 		await get_tree().process_frame
 	_expect(false, failure)
+
+func _message_by_id(messages, thread_id: String, message_id: String) -> Dictionary:
+	for message in messages._dictionary_array(messages.transcripts.get(thread_id, [])):
+		if str(message.get("message_id", "")) == message_id:
+			return message
+	return {}
 
 func _unique_provider_message_ids(provider) -> bool:
 	var ids := {}

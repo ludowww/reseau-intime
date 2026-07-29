@@ -24,6 +24,7 @@ var mathilde_state := "UNESTABLISHED"
 var pauline_state := "UNESTABLISHED"
 var nico_state := "UNESTABLISHED"
 var pauline_public_selection_outcome := "UNESTABLISHED"
+var pauline_retained_frame := "UNESTABLISHED"
 var nico_friendship_outcome := "UNESTABLISHED"
 var opening_band_complete := false
 var household_rhythm_confirmed := false
@@ -69,6 +70,7 @@ func reset() -> void:
 	pauline_state = "UNESTABLISHED"
 	nico_state = "UNESTABLISHED"
 	pauline_public_selection_outcome = "UNESTABLISHED"
+	pauline_retained_frame = "UNESTABLISHED"
 	nico_friendship_outcome = "UNESTABLISHED"
 	opening_band_complete = false
 	household_rhythm_confirmed = false
@@ -162,9 +164,9 @@ func apply_j04_choice(choice_id: String) -> bool:
 	if choice_id == "" or selected_choice_ids.has(choice_id): return false
 	match choice_id:
 		"choice_friday_pauline_contract_guided", "choice_friday_nico_reservation_guided", "choice_friday_nico_mathilde_guided": pass
-		"choice_friday_pauline_practical": pauline_public_selection_outcome = "FRAME_02_SELECTED"
-		"choice_friday_pauline_dry": pauline_public_selection_outcome = "FRAME_03_REQUESTED"
-		"choice_friday_pauline_defer": pauline_public_selection_outcome = "DEFERRED_TO_MARIE"
+		"choice_friday_pauline_practical": pauline_public_selection_outcome = "FRAME_02_SELECTED"; pauline_retained_frame = "FRAME_02"
+		"choice_friday_pauline_dry": pauline_public_selection_outcome = "FRAME_03_REQUESTED"; pauline_retained_frame = "FRAME_02"
+		"choice_friday_pauline_defer": pauline_public_selection_outcome = "DEFERRED_TO_MARIE"; pauline_retained_frame = "UNESTABLISHED"
 		"choice_friday_nico_playful": nico_friendship_outcome = "PLAYFUL"
 		"choice_friday_nico_honest": nico_friendship_outcome = "HONEST"
 		"choice_friday_nico_home": nico_friendship_outcome = "RETURN_TO_MARIE"
@@ -338,6 +340,7 @@ func snapshot() -> Dictionary:
 		"pauline_state": pauline_state,
 		"nico_state": nico_state,
 		"pauline_public_selection_outcome": pauline_public_selection_outcome,
+		"pauline_retained_frame": pauline_retained_frame,
 		"nico_friendship_outcome": nico_friendship_outcome,
 		"opening_band_complete": opening_band_complete,
 		"household_rhythm_confirmed": household_rhythm_confirmed,
@@ -362,7 +365,9 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if str(value.get("mathilde_state", "FAMILY_GUEST" if value.get("knowledge", {}).has("fact_mathilde_stay_started") else "UNESTABLISHED")) not in ["UNESTABLISHED", "FAMILY_GUEST"]: return false
 	if str(value.get("pauline_state", "UNESTABLISHED")) not in ["UNESTABLISHED", "PUBLIC_ONLY"]: return false
 	if str(value.get("nico_state", "UNESTABLISHED")) not in ["UNESTABLISHED", "ORDINARY_FRIEND"]: return false
-	if str(value.get("pauline_public_selection_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "FRAME_02_SELECTED", "FRAME_03_REQUESTED", "DEFERRED_TO_MARIE"]: return false
+	var pauline_outcome := str(value.get("pauline_public_selection_outcome", "UNESTABLISHED"))
+	if pauline_outcome not in ["UNESTABLISHED", "FRAME_02_SELECTED", "FRAME_03_REQUESTED", "DEFERRED_TO_MARIE"]: return false
+	if str(value.get("pauline_retained_frame", _default_pauline_retained_frame(pauline_outcome))) != _default_pauline_retained_frame(pauline_outcome): return false
 	if str(value.get("nico_friendship_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "PLAYFUL", "HONEST", "RETURN_TO_MARIE"]: return false
 	for key in ["promises", "traces", "knowledge"]:
 		if typeof(value.get(key)) != TYPE_DICTIONARY:
@@ -390,7 +395,11 @@ func restore_snapshot(value: Dictionary) -> bool:
 	pauline_state = str(value.get("pauline_state", "UNESTABLISHED"))
 	nico_state = str(value.get("nico_state", "UNESTABLISHED"))
 	pauline_public_selection_outcome = str(value.get("pauline_public_selection_outcome", "UNESTABLISHED"))
+	pauline_retained_frame = str(value.get("pauline_retained_frame", _default_pauline_retained_frame(pauline_public_selection_outcome)))
 	nico_friendship_outcome = str(value.get("nico_friendship_outcome", "UNESTABLISHED"))
 	opening_band_complete = bool(value.get("opening_band_complete", false))
 	household_rhythm_confirmed = bool(value.get("household_rhythm_confirmed", false))
 	return true
+
+func _default_pauline_retained_frame(outcome: String) -> String:
+	return "FRAME_02" if outcome in ["FRAME_02_SELECTED", "FRAME_03_REQUESTED"] else "UNESTABLISHED"

@@ -100,7 +100,7 @@ func _exercise_resume_and_header_notification(messages, provider) -> void:
 	var notification_rect: Rect2 = state.get("header_notification_rect", Rect2())
 	var header_rect: Rect2 = state.get("conversation_header_rect", Rect2())
 	_expect(notification_rect.size.x > 0.0 and header_rect.encloses(notification_rect), "header notification remains inside conversation header")
-	_expect(str(messages.conversation_screen.header_notification.notification.get("preview", "")) == "J’ai retrouvé une photo.", "Sandra preview is exact")
+	_expect(str(messages.conversation_screen.header_notification.notification.get("preview", "")) == "Nouveau message !", "Sandra notification preview is neutral")
 	_expect(messages.conversation_screen.header_notification.auto_dismiss_timer != null, "real-time auto-dismiss timer exists")
 	_expect(is_equal_approx(messages.conversation_screen.header_notification.auto_dismiss_timer.wait_time, 3.5), "auto-dismiss is 3.5 seconds")
 	messages.reading_speed_multiplier = 8.0

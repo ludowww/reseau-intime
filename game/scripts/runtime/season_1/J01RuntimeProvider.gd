@@ -383,6 +383,7 @@ func _thread_presentation(thread_id: String) -> Dictionary:
 		"last_preview": str(last_visible.get("text", "")),
 		"last_timestamp": str(last_visible.get("timestamp", "")),
 		"unread_count": 1 if is_sandra and not state.completed_conversation_ids.has("chapter_01_sandra_trace") else 0,
+		"has_unread_content": is_sandra and not state.completed_conversation_ids.has("chapter_01_sandra_trace"),
 		"availability_state": "AVAILABLE",
 		"is_group": false,
 		"is_archived": false,

@@ -41,23 +41,34 @@ class TUI02B1UnreadNotificationStaticTests(unittest.TestCase):
                     offenders.append(f"{path}: {token}")
         self.assertEqual(offenders, [])
 
-    def test_unread_state_is_updated_per_thread_and_messages_become_read(self):
+    def test_unread_state_is_boolean_and_messages_become_read_only_after_presentation(self):
         screen = self._read("game/scripts/ui/messages/MessagesScreen.gd")
         for token in [
             "simulate_incoming_message(thread_id: String)",
             "_first_unread_message_id",
             'message["is_read"] = true',
-            'thread["unread_count"]',
+            'thread["has_unread_content"]',
             "update_thread_presentation(thread)",
         ]:
             self.assertIn(token, screen)
         self.assertIn('str(thread.get("thread_id", "")) == thread_id', screen)
+        open_method = screen.split("func open_thread", 1)[1].split("\nfunc ", 1)[0]
+        before_configure = open_method.split("conversation_screen.configure", 1)[0]
+        self.assertNotIn("_mark_thread_read(thread_id)", before_configure)
+        finish_delivery = screen.split("func _finish_runtime_delivery", 1)[1].split("\nfunc ", 1)[0]
+        self.assertIn("_mark_thread_read(thread_id)", finish_delivery)
+        queue_notification = screen.split("func _queue_notification", 1)[1].split("\nfunc ", 1)[0]
+        self.assertNotIn("_mark_thread_read(thread_id)", queue_notification)
 
     def test_conversation_list_has_targeted_refresh_without_rebuilding(self):
         component = self._read("game/scripts/ui/messages/ConversationList.gd")
         self.assertIn("func update_thread_presentation(thread: Dictionary)", component)
-        for field in ["LastPreview", "LastTimestamp", "UnreadCount"]:
+        for field in ["DisplayName", "LastPreview", "LastTimestamp"]:
             self.assertIn(field, component)
+        self.assertIn('"Nouveau message !"', component)
+        self.assertIn('thread.get("has_unread_content", false)', component)
+        self.assertIn("variation_embolden", component)
+        self.assertNotIn("UnreadCount", component)
         method = component.split("func update_thread_presentation", 1)[1].split("\nfunc ", 1)[0]
         self.assertNotIn("_build()", method)
 
@@ -84,6 +95,16 @@ class TUI02B1UnreadNotificationStaticTests(unittest.TestCase):
         self.assertNotIn("create_timer", notification_methods)
         self.assertIn("notification_banner", notification_methods)
 
+    def test_notifications_are_neutral_and_bold(self):
+        banner = self._read("game/scripts/ui/messages/NotificationBanner.gd")
+        screen = self._read("game/scripts/ui/messages/MessagesScreen.gd")
+        show_method = screen.split("func _show_notification", 1)[1].split("\nfunc ", 1)[0]
+        self.assertIn('"preview": "Nouveau message !"', show_method)
+        self.assertNotIn('"preview": preview', show_method)
+        self.assertIn('_label("Nouveau message !"', banner)
+        self.assertNotIn('notification.get("preview"', banner)
+        self.assertIn("variation_embolden", banner)
+
     def test_open_thread_simulation_preserves_a_foreign_notification(self):
         screen = self._read("game/scripts/ui/messages/MessagesScreen.gd")
         method = screen.split("func simulate_incoming_message", 1)[1].split("\nfunc ", 1)[0]
@@ -99,10 +120,10 @@ class TUI02B1UnreadNotificationStaticTests(unittest.TestCase):
         self.assertIn("if thread.is_empty():", method)
         self.assertIn("return", method)
 
-    def test_demo_has_one_unread_thread_and_multiple_unread_incoming_messages(self):
+    def test_demo_has_one_boolean_unread_thread_and_multiple_unread_incoming_messages(self):
         data = self._read("game/scripts/ui/messages/MessagesDemoData.gd")
-        self.assertIn('"unread_count": 2', data)
-        self.assertIn('"unread_count": 0', data)
+        self.assertIn('"has_unread_content": true', data)
+        self.assertIn('"has_unread_content": false', data)
         self.assertGreaterEqual(data.count("false, false)"), 2)
         self.assertIn("incoming_by_thread", data)
 

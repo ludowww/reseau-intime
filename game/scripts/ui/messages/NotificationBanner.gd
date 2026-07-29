@@ -118,8 +118,9 @@ func _build() -> void:
 	title.autowrap_mode = TextServer.AUTOWRAP_OFF
 	title.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	copy.add_child(title)
-	var preview := _label(str(notification.get("preview", "Nouveau message")), 14, PORTRAIT_THEME.TEXT_PRIMARY if compact_mode else PORTRAIT_THEME.TEXT_SECONDARY)
+	var preview := _label("Nouveau message !", 14, PORTRAIT_THEME.TEXT_PRIMARY if compact_mode else PORTRAIT_THEME.TEXT_SECONDARY)
 	preview.name = "NotificationPreview"
+	_set_bold(preview)
 	preview.max_lines_visible = 1 if compact_mode else 2
 	preview.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	copy.add_child(preview)
@@ -209,6 +210,12 @@ func _stop_transients() -> void:
 			remove_child(auto_dismiss_timer)
 		auto_dismiss_timer.queue_free()
 	auto_dismiss_timer = null
+
+func _set_bold(label: Label) -> void:
+	var bold_font := FontVariation.new()
+	bold_font.base_font = label.get_theme_font("font")
+	bold_font.variation_embolden = 0.75
+	label.add_theme_font_override("font", bold_font)
 
 func _label(value: String, font_size: int, color: Color) -> Label:
 	var label := Label.new()

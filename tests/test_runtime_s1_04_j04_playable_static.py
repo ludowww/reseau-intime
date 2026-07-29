@@ -36,6 +36,9 @@ class RuntimeS104J04PlayableStaticTests(unittest.TestCase):
         self.assertEqual(data["household_close"]["to_time"], "18:25")
         self.assertEqual(data["household_close"]["flow_phases"], ["CLOCK", "OFF_PHONE"])
         self.assertEqual(data["day_end"]["transition_mode"], "CONTENT_END")
+        self.assertEqual(data["photo_set"]["placeholder_label"], "Set de 3 photos non produit")
+        self.assertEqual(len(data["photo_set"]["children"]), 3)
+        self.assertEqual(len(set(data["photo_set"]["children"])), 3)
         gallery = data["gallery_presentations"]
         self.assertEqual([x["asset_id"] for x in gallery], [
             "S1_A1_J04_DPH_PAULINE_PUBLIC_GROUP_SET_01",
@@ -69,18 +72,26 @@ class RuntimeS104J04PlayableStaticTests(unittest.TestCase):
                      "laverriere_public_group_photo_set_01", "SYSTEM_DAY_DIVIDER"]
         for token in forbidden:
             self.assertNotIn(token, j04)
+        self.assertIn('"destination": "conversation", "thread_id": PAULINE_THREAD', j04)
+        self.assertIn('"destination": "conversation", "thread_id": NICO_THREAD', j04)
+        self.assertEqual(j04.count('"body": "Nouveau message !"'), 2)
+        self.assertNotIn("La chaise qui ne penche pas est encore libre.", j04)
+        self.assertNotIn("Rapport du foyer.", j04)
 
     def test_state_has_exact_j04_records_and_backward_compatible_snapshot(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         for token in [
             "pauline_state", "nico_state", "mathilde_state", "pauline_public_selection_outcome",
-            "nico_friendship_outcome", "opening_band_complete", "household_rhythm_confirmed",
+            "pauline_retained_frame", "nico_friendship_outcome", "opening_band_complete", "household_rhythm_confirmed",
             "j04_pauline_bastien_public_set_01", "fact_pauline_bastien_couple_public",
             "fact_nico_friendship_exists", "fact_mathilde_stay_started", "Marie",
             "PUBLIC_SOURCE_RULES", "PUBLIC_ACTIVE", "eligible_for_j14", "eligible_for_j21",
         ]:
             self.assertIn(token, state)
         self.assertIn("SNAPSHOT_VERSION := 2", state)
+        self.assertIn('"choice_friday_pauline_practical": pauline_public_selection_outcome = "FRAME_02_SELECTED"; pauline_retained_frame = "FRAME_02"', state)
+        self.assertIn('"choice_friday_pauline_dry": pauline_public_selection_outcome = "FRAME_03_REQUESTED"; pauline_retained_frame = "FRAME_02"', state)
+        self.assertIn('"choice_friday_pauline_defer": pauline_public_selection_outcome = "DEFERRED_TO_MARIE"; pauline_retained_frame = "UNESTABLISHED"', state)
         self.assertIn('version not in [1, SNAPSHOT_VERSION]', state)
 
     def test_knowledge_source_types_stay_within_the_canonical_registry(self):

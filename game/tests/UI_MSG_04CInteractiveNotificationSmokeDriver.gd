@@ -30,6 +30,7 @@ func _exercise_list_overlay(messages, shell) -> void:
 	var transcript_before: int = messages.total_presentation_count()
 	var list_scroll_before: int = messages.conversation_list.get_reading_position() if messages.conversation_list.has_method("get_reading_position") else 0
 	marie["unread_count"] = 1
+	marie["has_unread_content"] = true
 	messages.conversation_list.update_thread_presentation(marie)
 	messages.focus_first_conversation()
 	await _frames(2)
@@ -66,12 +67,12 @@ func _exercise_list_overlay(messages, shell) -> void:
 	await _frames(4)
 	await _wait_delivery(messages)
 	_expect(messages.screen_mode == "conversation" and messages.active_thread_id == "thread_marie_private", "ui_accept opens list notification target")
-	_expect(messages.thread_unread_count("thread_marie_private") == 0, "notification click marks opened target read")
+	_expect(not messages.thread_has_unread_content("thread_marie_private"), "notification target becomes read after its full delivery")
 	_expect(not messages._notification_visible(), "opening target clears active notification")
 	_expect(messages.total_presentation_count() >= transcript_before, "opening target preserves the authoritative transcript")
 	messages._show_notification(marie, "Déjà ouvert.", "18:13", "ui_msg_04c_same_open")
 	await _frames(2)
-	_expect(not messages._notification_visible() and messages.thread_unread_count("thread_marie_private") == 0, "open thread receives no notification and stays read")
+	_expect(not messages._notification_visible() and not messages.thread_has_unread_content("thread_marie_private"), "open thread receives no notification and stays read")
 
 func _exercise_j01_header_and_auto_dismiss(messages, provider) -> void:
 	var scroll_before: int = messages.conversation_screen.get_reading_position()
@@ -86,7 +87,9 @@ func _exercise_j01_header_and_auto_dismiss(messages, provider) -> void:
 	_expect(not messages.list_notification_host.visible, "header notification leaves list host hidden")
 	_expect(messages._visible_notification_count() == 1, "header has the sole visible banner")
 	_expect(str(messages.active_notification.get("thread_id", "")) == "thread_sandra_private", "Sandra is the active target")
-	_expect(str(messages.active_notification.get("preview", "")) == "J’ai retrouvé une photo.", "J01 Sandra text is unchanged")
+	_expect(str(messages.active_notification.get("preview", "")) == "Nouveau message !", "J01 Sandra notification hides narrative text")
+	var neutral_preview: Label = messages.conversation_screen.header_notification.find_child("NotificationPreview", true, false)
+	_expect(neutral_preview != null and neutral_preview.has_theme_font_override("font"), "header notification neutral body is bold")
 	_expect(messages.conversation_screen.header_notification.tooltip_text == "Ouvrir la conversation avec Sandra", "header tooltip names Sandra")
 	_expect(messages.conversation_screen.offset_top == 0.0 and messages.conversation_list.offset_top == 0.0, "header toast changes no offsets")
 	_expect(messages.conversation_screen.timeline.get_global_rect().is_equal_approx(timeline_before), "header toast changes no timeline geometry")
@@ -103,27 +106,30 @@ func _exercise_j01_header_and_auto_dismiss(messages, provider) -> void:
 	_expect(elapsed >= 3.45 and elapsed <= 4.25, "auto-dismiss uses approximately 3.5 real seconds")
 	_expect(messages.active_thread_id == "thread_marie_private", "auto-dismiss keeps Marie open")
 	_expect(messages.thread_unread_count("thread_sandra_private") == unread_before and unread_before > 0, "auto-dismiss keeps Sandra unread")
+	_expect(messages.thread_has_unread_content("thread_sandra_private"), "auto-dismiss does not read Sandra")
 
 func _exercise_replacement_deferral_and_content_end(messages) -> void:
 	var sandra: Dictionary = messages._thread_for("thread_sandra_private")
 	var marie: Dictionary = messages._thread_for("thread_marie_private")
 	sandra["unread_count"] = maxi(1, int(sandra.get("unread_count", 0)))
+	sandra["has_unread_content"] = true
 	messages._show_notification(sandra, "Première version.", "22:57", "same-message")
 	var same_id := str(messages.active_notification.get("notification_id", ""))
 	var first_generation: int = messages.active_notification_generation
 	messages._show_notification(sandra, "Version mise à jour.", "22:58", "same-message")
 	await _frames(2)
 	_expect(str(messages.active_notification.get("notification_id", "")) == same_id, "same-message replacement keeps deterministic id")
-	_expect(str(messages.active_notification.get("preview", "")) == "Version mise à jour.", "same-thread replacement updates preview")
+	_expect(str(messages.active_notification.get("preview", "")) == "Nouveau message !", "same-thread replacement remains neutral")
 	_expect(messages.active_notification_generation > first_generation and messages._visible_notification_count() == 1, "same-thread replacement invalidates old generation")
 	messages._on_notification_dismiss_requested(first_generation)
-	_expect(str(messages.active_notification.get("preview", "")) == "Version mise à jour.", "stale dismiss cannot clear replacement")
+	_expect(str(messages.active_notification.get("preview", "")) == "Nouveau message !", "stale dismiss cannot clear neutral replacement")
 	var deadline_before_transfer := int(messages.active_notification.get("_deadline_msec", 0))
 	messages.return_to_list()
 	await _frames(4)
 	_expect(int(messages.active_notification.get("_deadline_msec", -1)) == deadline_before_transfer, "host transfer preserves remaining auto-dismiss time")
 	_expect(messages.list_notification_host.visible and not messages.conversation_screen.header_notification_visible(), "conversation to list transfer keeps one presenter")
 	marie["unread_count"] = 1
+	marie["has_unread_content"] = true
 	messages._show_notification(marie, "Marie récente.", "22:59", "other-message")
 	await _frames(2)
 	_expect(str(messages.active_notification.get("thread_id", "")) == "thread_marie_private", "latest different thread wins visually")
@@ -145,12 +151,13 @@ func _exercise_replacement_deferral_and_content_end(messages) -> void:
 	messages.open_thread("thread_sandra_private")
 	await _frames(3)
 	messages.set_notification_photo_viewer_blocked(false)
-	await _frames(3)
+	await _wait_delivery(messages)
 	_expect(messages.active_thread_id == "thread_sandra_private" and not messages._notification_visible(), "opening pending target cancels deferred notification")
-	_expect(messages.thread_unread_count("thread_sandra_private") == 0, "manual target opening marks only Sandra read")
+	_expect(not messages.thread_has_unread_content("thread_sandra_private"), "manual target opening reads Sandra only after full delivery")
 	messages.return_to_list()
 	await _frames(3)
 	sandra["unread_count"] = 1
+	sandra["has_unread_content"] = true
 	messages._show_notification(sandra, "Fin.", "23:02", "content-end")
 	messages._start_runtime_day_end({"transition_mode": "CONTENT_END", "title": "Fin du contenu disponible", "subtitle": "", "body": ""})
 	await _frames(2)

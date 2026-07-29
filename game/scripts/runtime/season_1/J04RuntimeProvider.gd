@@ -128,12 +128,12 @@ func confirm_transition() -> Dictionary:
 		if not unlocked_thread_ids.has(NICO_THREAD): unlocked_thread_ids.append(NICO_THREAD)
 		phase = "nico_saved_seat"
 		_enter_current_segment(NICO_THREAD)
-		return {"accepted": true, "destination": "list", "focus_thread_id": NICO_THREAD, "unlocked_thread_id": NICO_THREAD, "notification": {"body": "La chaise qui ne penche pas est encore libre."}}
+		return {"accepted": true, "destination": "conversation", "thread_id": PAULINE_THREAD, "unlocked_thread_id": NICO_THREAD, "notification": {"body": "Nouveau message !"}}
 	if old_phase == "transition_1805":
 		phase = "household_echoes"
 		_enter_automatic_echo(MARIE_THREAD)
 		_enter_automatic_echo(MATHILDE_THREAD)
-		return {"accepted": true, "destination": "list", "focus_thread_id": MARIE_THREAD, "unlocked_thread_id": MARIE_THREAD, "notification": {"body": "Rapport du foyer."}}
+		return {"accepted": true, "destination": "conversation", "thread_id": NICO_THREAD, "unlocked_thread_id": MARIE_THREAD, "notification": {"body": "Nouveau message !"}}
 	if old_phase == "household_close":
 		state.complete_j04_household()
 		_unlock_gallery_asset("S1_A1_J04_SCN_HOUSEHOLD_THREE_RHYTHM_01")
@@ -293,7 +293,7 @@ func _thread_presentation(id: String) -> Dictionary:
 		if str(item.get("content_type", "")) != "OFF_PHONE_TRANSITION": last = item
 		if not bool(item.get("is_read", true)) and not presented_time_message_ids.has(str(item.get("message_id", ""))): unread += 1
 	var title := str(titles.get(id, ""))
-	return {"thread_id": id, "title": title, "participant_ids": [str(participants.get(id, "")), "player"], "last_preview": str(last.get("text", "Photo" if str(last.get("content_type", "")) == "IMAGE" else "")), "last_timestamp": str(last.get("timestamp", "")), "unread_count": unread, "availability_state": "AVAILABLE", "is_group": false, "is_archived": false, "avatar_ref": title.left(1), "accent_color": str(colors.get(id, "#8D63E6"))}
+	return {"thread_id": id, "title": title, "participant_ids": [str(participants.get(id, "")), "player"], "last_preview": str(last.get("text", "Photo" if str(last.get("content_type", "")) == "IMAGE" else "")), "last_timestamp": str(last.get("timestamp", "")), "unread_count": unread, "has_unread_content": unread > 0, "availability_state": "AVAILABLE", "is_group": false, "is_archived": false, "avatar_ref": title.left(1), "accent_color": str(colors.get(id, "#8D63E6"))}
 
 func _characters() -> Dictionary:
 	return {"marie": _character("marie", "Marie", "#4F8BFF", "M"), "sandra": _character("sandra", "Sandra", "#20C7C9", "S"), "mathilde": _character("mathilde", "Mathilde", "#E070A8", "M"), "raphaelle": _character("raphaelle", "Raphaëlle", "#D69A42", "R"), "pauline": _character("pauline", "Pauline", "#E6B84A", "P"), "nico": _character("nico", "Nico", "#65B87A", "N"), "player": _character("player", "Player", "#8D63E6", "")}

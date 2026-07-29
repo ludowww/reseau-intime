@@ -144,7 +144,6 @@ func open_thread(thread_id: String) -> void:
 		return
 	_save_reading_position()
 	var first_unread_message_id := _first_unread_message_id(thread_id)
-	_mark_thread_read(thread_id)
 	active_thread_id = thread_id
 	conversation_list.visible = false
 	conversation_screen.visible = true
@@ -159,6 +158,8 @@ func open_thread(thread_id: String) -> void:
 	conversation_screen.set_compact_height_mode(compact_height_mode)
 	_set_screen_mode("conversation")
 	_sync_active_typing()
+	if runtime_provider == null or _dictionary_array(runtime_pending_messages_by_thread.get(thread_id, [])).is_empty():
+		_mark_thread_read(thread_id)
 	if runtime_provider != null:
 		call_deferred("_start_pending_delivery_for_thread", thread_id)
 
@@ -260,11 +261,13 @@ func simulate_incoming_message(thread_id: String) -> void:
 	if is_open:
 		thread["unread_count"] = 0
 		conversation_screen.append_incoming_message(message)
+		thread["has_unread_content"] = false
 		reading_positions[thread_id] = conversation_screen.get_reading_position()
 		if _notification_targets(thread_id):
 			_hide_notification()
 	else:
 		thread["unread_count"] = int(thread.get("unread_count", 0)) + 1
+		thread["has_unread_content"] = true
 		_show_notification(thread, preview, timestamp, str(message.get("message_id", "")))
 	conversation_list.update_thread_presentation(thread)
 
@@ -521,6 +524,10 @@ func thread_unread_count(thread_id: String) -> int:
 	var thread := _thread_for(thread_id)
 	return int(thread.get("unread_count", 0)) if not thread.is_empty() else 0
 
+func thread_has_unread_content(thread_id: String) -> bool:
+	var thread := _thread_for(thread_id)
+	return bool(thread.get("has_unread_content", false)) if not thread.is_empty() else false
+
 func thread_message_count(thread_id: String) -> int:
 	return _dictionary_array(transcripts.get(thread_id, [])).size()
 
@@ -606,6 +613,7 @@ func _initialize_runtime_source(source: Dictionary) -> void:
 	content_source = source.duplicate(true)
 	characters = source.get("characters", {}).duplicate(true)
 	threads = _dictionary_array(source.get("threads", []))
+	_normalize_threads_unread_state()
 	transcripts.clear()
 	available_choices.clear()
 	for raw_thread_id in source.get("messages_by_thread", {}):
@@ -618,6 +626,7 @@ func _reconcile_runtime_source(source: Dictionary) -> bool:
 	content_source = source.duplicate(true)
 	characters = source.get("characters", {}).duplicate(true)
 	threads = _dictionary_array(source.get("threads", []))
+	_normalize_threads_unread_state()
 	var provider_by_thread: Dictionary = source.get("messages_by_thread", {})
 	var choices_by_thread: Dictionary = source.get("choices_by_thread", {})
 	for raw_thread_id in provider_by_thread:
@@ -858,6 +867,7 @@ func _finish_runtime_delivery(request_id: int, thread_id: String) -> void:
 		return
 	if not _sync_runtime_delivery_provider(thread_id):
 		return
+	_mark_thread_read(thread_id)
 	var pending_choices := runtime_delivery_pending_choices.duplicate(true)
 	var pending_transition := runtime_delivery_pending_transition.duplicate(true)
 	if not pending_transition.is_empty():
@@ -917,6 +927,8 @@ func _sync_runtime_delivery_provider(thread_id: String) -> bool:
 			continue
 		local_thread["last_preview"] = source_thread.get("last_preview", "")
 		local_thread["last_timestamp"] = source_thread.get("last_timestamp", "")
+		local_thread["unread_count"] = int(source_thread.get("unread_count", 0))
+		local_thread["has_unread_content"] = bool(source_thread.get("has_unread_content", false))
 		conversation_list.update_thread_presentation(local_thread)
 	return true
 
@@ -1150,6 +1162,7 @@ func _start_runtime_day_card(presentation: Dictionary) -> void:
 func _apply_content_source(source: Dictionary) -> void:
 	characters = source.get("characters", {}).duplicate(true)
 	threads = _dictionary_array(source.get("threads", []))
+	_normalize_threads_unread_state()
 	transcripts.clear()
 	for thread_id in source.get("messages_by_thread", {}):
 		transcripts[str(thread_id)] = _dictionary_array(source["messages_by_thread"][thread_id])
@@ -1198,6 +1211,7 @@ func _load_demo_data() -> void:
 	var demo: Dictionary = DEMO_DATA.build()
 	characters = demo.get("characters", {}).duplicate(true)
 	threads = _dictionary_array(demo.get("threads", []))
+	_normalize_threads_unread_state()
 	var source_transcripts: Dictionary = demo.get("messages_by_thread", {})
 	for thread_id in source_transcripts:
 		transcripts[str(thread_id)] = _dictionary_array(source_transcripts[thread_id]).duplicate(true)
@@ -1227,6 +1241,7 @@ func _apply_demo_day_delta(to_day: int) -> String:
 	thread["last_preview"] = str(message.get("text", ""))
 	thread["last_timestamp"] = str(message.get("timestamp", ""))
 	thread["unread_count"] = int(thread.get("unread_count", 0)) + 1
+	thread["has_unread_content"] = true
 	applied_demo_day_transitions[to_day] = 1
 	return thread_id
 
@@ -1397,16 +1412,16 @@ func _on_notification_dismiss_requested(generation: int) -> void:
 	_hide_notification_presenters()
 	call_deferred("_restore_notification_focus")
 
-func _show_notification(thread: Dictionary, preview: String, timestamp: String, message_id := "") -> void:
+func _show_notification(thread: Dictionary, _preview: String, timestamp: String, message_id := "") -> void:
 	var thread_id := str(thread.get("thread_id", ""))
 	if thread_id == "":
 		return
 	var notification := {
-		"notification_id": _notification_key(thread_id, message_id, timestamp, preview),
+		"notification_id": _notification_key(thread_id, message_id, timestamp, "Nouveau message !"),
 		"thread_id": thread_id,
 		"message_id": message_id,
 		"title": str(thread.get("title", "Conversation")),
-		"preview": preview,
+		"preview": "Nouveau message !",
 		"timestamp": timestamp,
 		"avatar_ref": str(thread.get("avatar_ref", "?")),
 		"accent_color": str(thread.get("accent_color", "#8D63E6")),
@@ -1420,7 +1435,6 @@ func _queue_notification(notification: Dictionary) -> void:
 	if screen_mode == "conversation" and active_thread_id == thread_id:
 		if _notification_targets(thread_id):
 			_clear_notification_state(false)
-		_mark_thread_read(thread_id)
 		return
 	if active_notification.is_empty() and pending_notification.is_empty():
 		var focus_owner := get_viewport().gui_get_focus_owner()
@@ -1476,7 +1490,7 @@ func _resume_pending_notification() -> void:
 	if pending_notification.is_empty() or _notification_presentation_blocked():
 		return
 	var thread_id := str(pending_notification.get("thread_id", ""))
-	if _thread_for(thread_id).is_empty() or (screen_mode == "conversation" and active_thread_id == thread_id) or thread_unread_count(thread_id) <= 0:
+	if _thread_for(thread_id).is_empty() or (screen_mode == "conversation" and active_thread_id == thread_id) or not thread_has_unread_content(thread_id):
 		pending_notification = {}
 		return
 	active_notification_generation += 1
@@ -1671,11 +1685,17 @@ func _mark_thread_read(thread_id: String) -> void:
 	var thread := _thread_for(thread_id)
 	if not thread.is_empty():
 		thread["unread_count"] = 0
+		thread["has_unread_content"] = false
 		conversation_list.update_thread_presentation(thread)
 
 func _save_reading_position() -> void:
 	if active_thread_id != "" and conversation_screen != null and screen_mode == "conversation" and conversation_screen.timeline != null:
 		reading_positions[active_thread_id] = conversation_screen.get_reading_position()
+
+func _normalize_threads_unread_state() -> void:
+	for thread in threads:
+		if not thread.has("has_unread_content"):
+			thread["has_unread_content"] = int(thread.get("unread_count", 0)) > 0
 
 func _thread_for(thread_id: String) -> Dictionary:
 	for thread in threads:
@@ -1691,7 +1711,7 @@ func _first_thread_id(group: bool) -> String:
 
 func _first_thread_by_unread(has_unread: bool) -> String:
 	for thread in threads:
-		if (int(thread.get("unread_count", 0)) > 0) == has_unread:
+		if bool(thread.get("has_unread_content", false)) == has_unread:
 			return str(thread.get("thread_id", ""))
 	return ""
 
