@@ -10,14 +10,16 @@ UI-SCREENS : validé
 UI-HANDOFF : validé
 T-UI-01 à T-UI-03D : implémentés et validés
 UI-MSG-04A à UI-MSG-04C : correctifs runtime intégrés et validés
+RUNTIME-S1-04 : J01→J04 intégré et validé
 UI CORE : verrouillé
 Extension UI par défaut : gelée
-Baseline technique courante : c27bd9331c01bed6c9a40c0c642d246cf26bb6cf
+Baseline technique courante : 5a6a832c148c68ee69d8991474ec778f33bc456d
+Tag runtime : runtime-s1-04-j04-playable
 ```
 
 Ce dossier contient les décisions UX/UI actives du projet. Les maquettes générées sont des références conceptuelles ; seules les décisions transférées dans les documents ci-dessous ont autorité.
 
-Le checkpoint T-UI-03D reste la fondation canonique. Les lots UI-MSG-04A à 04C ne créent pas une nouvelle direction visuelle : ils corrigent et stabilisent l’intégration du runtime narratif dans cette fondation.
+Le checkpoint T-UI-03D reste la fondation canonique. Les lots UI-MSG-04A à 04C et l’intégration J01→J04 ne créent pas une nouvelle direction visuelle : ils corrigent et stabilisent l’intégration du runtime narratif dans cette fondation.
 
 ---
 
@@ -38,10 +40,10 @@ UI_01 système visuel et responsive
 → code + tests sur main pour l’état runtime exact
 ```
 
-Le contrat technique J01–J03 et les corrections communes sont documentés dans :
+Le contrat technique J01–J04 et les corrections communes sont documentés dans :
 
 ```text
-docs/runtime/SEASON_1_J01_J03_RUNTIME_BASELINE_AND_FORWARD_CONTRACT.md
+docs/runtime/SEASON_1_J01_J04_RUNTIME_BASELINE_AND_FORWARD_CONTRACT.md
 ```
 
 ---
@@ -85,12 +87,17 @@ La couleur n’est jamais utilisée seule. L’UI n’affiche ni route, ni score
 - conversations privées et de groupe ;
 - bulles Player et personnages ;
 - choix Player ;
-- non-lus ;
+- non-lus calculés par la couche runtime commune ;
+- aucun badge numérique de non-lu ;
+- fil non lu affiché avec le nom et « Nouveau message ! » en `TEXT_PRIMARY` et graisse renforcée ;
+- `variation_embolden = 1.5` pour l’état non lu ;
+- restauration du véritable aperçu et du style normal après lecture complète ;
 - typing isolé par conversation ;
 - livraison progressive des messages ;
 - restauration du scroll et du focus ;
 - bandeau compact avec jour et heure courants ;
 - notifications interactives ouvrant le fil ;
+- notifications neutres affichant « Nouveau message ! » sans extrait narratif ;
 - DayDivider historique par `source_day` ;
 - un seul séparateur par jour et par fil ;
 - aucun `SYSTEM_DAY_DIVIDER` rendu comme bulle ;
@@ -118,7 +125,9 @@ Aucun bouton de vitesse n’est affiché dans l’overlay de transition.
 - PhotoViewer partagé ;
 - provenance Messages / Galerie ;
 - précédente / suivante depuis Galerie ;
-- placeholders générés par l’UI.
+- placeholders générés par l’UI ;
+- un `PHOTO_SET` peut être présenté comme un seul message avec plusieurs frames enfants ;
+- le set Pauline J04 comporte trois frames sans créer trois bulles séparées.
 
 ---
 
@@ -154,7 +163,7 @@ Aucun bouton de vitesse n’est affiché dans l’overlay de transition.
 - éligibilité ;
 - temps narratif ;
 - transcripts ;
-- non-lus ;
+- non-lus via `RuntimeUnread.gd` ;
 - transitions ;
 - persistance et sauvegarde futures ;
 - adaptation des données vers l’UI.
@@ -195,7 +204,10 @@ Règles actuelles :
 - le bandeau conserve le temps courant ;
 - `SYSTEM_DAY_DIVIDER` n’est jamais une bulle ;
 - `OFF_PHONE_TRANSITION` n’est jamais une bulle ordinaire ;
-- une photo ouverte depuis Messages ne devient pas automatiquement un item Galerie.
+- une photo ouverte depuis Messages ne devient pas automatiquement un item Galerie ;
+- un message entrant ajouté dans un fil fermé reste non lu jusqu’à présentation complète ;
+- fermer une notification ne marque jamais le fil comme lu ;
+- plusieurs messages en attente ne produisent aucun compteur visible.
 
 ## `GalleryItemPresentation`
 
@@ -253,7 +265,7 @@ Restent différés :
 - migration et compatibilité de sauvegarde cible ;
 - polish visuel global non bloquant.
 
-La liaison au runtime narratif n’est plus entièrement absente : J01–J03 sont intégrés dans la nouvelle chaîne portrait. J04–J21 restent à intégrer.
+La liaison au runtime narratif n’est plus entièrement absente : J01–J04 sont intégrés dans la nouvelle chaîne portrait. J05–J21 restent à intégrer.
 
 ---
 
@@ -291,8 +303,8 @@ Un nouveau lot UI ne s’ouvre que pour :
 4. les écrans système explicitement décidés ;
 5. une régression avérée.
 
-Les futures journées doivent utiliser les composants communs déjà corrigés. Un besoin propre à J04 ne justifie pas automatiquement un composant parallèle.
+Les futures journées doivent utiliser les composants communs déjà corrigés. Un besoin propre à J05 ne justifie pas automatiquement un composant parallèle.
 
 ```text
-PROCHAINE PRIORITÉ : INTÉGRATION RUNTIME J04 DEPUIS LA BASELINE J01–J03
+PROCHAINE PRIORITÉ : INTÉGRATION RUNTIME J05 DEPUIS LA BASELINE J01–J04
 ```
