@@ -47,16 +47,18 @@ class RuntimeS108J08PlayableStaticTests(unittest.TestCase):
         ]:
             self.assertNotIn(legacy, serialized)
 
-    def test_day_handoff_and_content_end_are_unique(self):
+    def test_day_handoffs_continue_through_j08(self):
         j07 = self.load("game/data/runtime/season_1/j07_runtime_map.json")
         j08 = self.load("game/data/runtime/season_1/j08_runtime_map.json")
         self.assertEqual("day_handoff", j07["day_end"]["transition_mode"])
         self.assertFalse(j07["day_end"]["content_end"])
         self.assertEqual("MARDI — MATIN", j07["day_end"]["next_day_presentation"]["eyebrow"])
         self.assertEqual("Ce qui ne tient pas ensemble", j07["day_end"]["next_day_presentation"]["title"])
-        self.assertEqual("CONTENT_END", j08["day_end"]["transition_mode"])
-        self.assertTrue(j08["day_end"]["content_end"])
+        self.assertEqual("day_handoff", j08["day_end"]["transition_mode"])
+        self.assertFalse(j08["day_end"]["content_end"])
         self.assertEqual("J08 terminé", j08["day_end"]["title"])
+        self.assertEqual("MERCREDI — APRÈS-MIDI", j08["day_end"]["next_day_presentation"]["eyebrow"])
+        self.assertEqual("Dans son élément", j08["day_end"]["next_day_presentation"]["title"])
 
     def test_global_priority_labels_are_exact_and_data_only(self):
         data = self.load("game/data/runtime/season_1/j08_runtime_map.json")
@@ -143,7 +145,7 @@ class RuntimeS108J08PlayableStaticTests(unittest.TestCase):
 
     def test_state_uses_bounded_j08_outcomes_without_relationship_progression(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
-        j08 = state.split("func begin_j08", 1)[1].split("func resolve_j07_morning_consequence", 1)[0]
+        j08 = state.split("func begin_j08", 1)[1].split("func begin_j09", 1)[0]
         for token in [
             "func begin_j08",
             "func resolve_j08_state_b_household",
@@ -172,7 +174,7 @@ class RuntimeS108J08PlayableStaticTests(unittest.TestCase):
             "couple_state =",
         ]:
             self.assertNotIn(forbidden, j08)
-        self.assertIn("const SNAPSHOT_VERSION := 6", state)
+        self.assertIn("const SNAPSHOT_VERSION := 7", state)
 
     def test_provider_distributes_global_choices_without_transcript_label(self):
         provider = self.read("game/scripts/runtime/season_1/J08RuntimeProvider.gd")
@@ -212,11 +214,11 @@ class RuntimeS108J08PlayableStaticTests(unittest.TestCase):
 
     def test_snapshot_versions_and_old_j07_restore_contract(self):
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
-        self.assertIn("const SNAPSHOT_VERSION := 7", season)
+        self.assertIn("const SNAPSHOT_VERSION := 8", season)
         self.assertIn('preload("res://scripts/runtime/season_1/J08RuntimeProvider.gd")', season)
-        self.assertIn("[2, 3, 4, 5, 6, SNAPSHOT_VERSION]", season)
+        self.assertIn("[2, 3, 4, 5, 6, 7, SNAPSHOT_VERSION]", season)
         self.assertIn('version < 6 and str(value.get("active_day", "")) == "J07"', season)
-        self.assertIn('version < SNAPSHOT_VERSION and str(value.get("active_day", "")) == "J08"', season)
+        self.assertIn('version < 7 and str(value.get("active_day", "")) == "J08"', season)
         self.assertIn("_handoff_to_j08", season)
         self.assertIn('"J08":', season)
         self.assertIn("const SNAPSHOT_VERSION := 1", self.read("game/scripts/runtime/season_1/J08RuntimeProvider.gd"))
@@ -233,7 +235,7 @@ class RuntimeS108J08PlayableStaticTests(unittest.TestCase):
             "global_priority",
             "household_return",
             "gallery_j08",
-            "content_end_j08",
+            "day_end_j08_handoff",
         ]:
             self.assertIn(label, driver)
 

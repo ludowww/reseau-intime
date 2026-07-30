@@ -1,0 +1,311 @@
+{
+  "id": "chapter_09_marie_laverriere",
+  "chapter": 9,
+  "day": 9,
+  "title": "Mercredi — Dans son élément",
+  "app": "messages",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": ["player", "marie"],
+    "display_name": "Marie"
+  },
+  "segments": [
+    {
+      "id": "j09_entry_clear_hours",
+      "messages": [
+        {"id": "msg_j09_entry_clear_001", "sender": "marie", "time_label": "15:48", "text": "Hier, merci d’avoir donné des heures qui existaient vraiment."},
+        {"id": "msg_j09_entry_clear_002", "sender": "marie", "time_label": "15:48", "text": "Je vais tenter la même méthode aujourd’hui."}
+      ]
+    },
+    {
+      "id": "j09_entry_honest_refusal",
+      "messages": [
+        {"id": "msg_j09_entry_refusal_001", "sender": "marie", "time_label": "15:48", "text": "Hier, merci d’avoir dit non avant qu’on organise autour de toi."},
+        {"id": "msg_j09_entry_refusal_002", "sender": "marie", "time_label": "15:48", "text": "Aujourd’hui, même principe."}
+      ]
+    },
+    {
+      "id": "j09_entry_vague_or_missed",
+      "messages": [
+        {"id": "msg_j09_entry_vague_001", "sender": "marie", "time_label": "15:48", "text": "Hier, on a fini par organiser sans savoir où tu étais."},
+        {"id": "msg_j09_entry_vague_002", "sender": "marie", "time_label": "15:48", "text": "Aujourd’hui je te donne les heures avant."}
+      ]
+    },
+    {
+      "id": "j09_marie_invitation",
+      "messages": [
+        {"id": "msg_j09_invitation_001", "sender": "marie", "time_label": "15:49", "text": "Portes à 19 h."},
+        {"id": "msg_j09_invitation_002", "sender": "marie", "time_label": "15:49", "text": "Trente-cinq personnes annoncées."},
+        {"id": "msg_j09_invitation_003", "sender": "marie", "time_label": "15:50", "text": "Donc probablement cinquante et une dame qui demandera pourquoi le logo est petit."},
+        {"id": "msg_j09_invitation_004", "sender": "marie", "time_label": "15:50", "text": "J’ai besoin de deux bras à 18 h."},
+        {"id": "msg_j09_invitation_005", "sender": "marie", "time_label": "15:51", "text": "Et j’ai envie que tu viennes."},
+        {"id": "msg_j09_invitation_006", "sender": "marie", "time_label": "15:51", "text": "Ce sont deux raisons différentes."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j09_extension_guided",
+          "text": "et la rallonge noire",
+          "next_messages": [
+            {"id": "msg_j09_extension_001", "sender": "marie", "time_label": "15:52", "text": "Arrivée."},
+            {"id": "msg_j09_extension_002", "sender": "marie", "time_label": "15:52", "text": "La grise est toujours maudite."},
+            {"id": "msg_j09_extension_003", "sender": "marie", "time_label": "15:53", "text": "Nous respectons les traditions."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j09_presence_choice",
+      "messages": [],
+      "choices": [
+        {
+          "id": "choice_j09_presence_early",
+          "text": "je viens à 18 h. envoie-moi la liste",
+          "next_messages": [
+            {"id": "msg_j09_presence_early_001", "sender": "marie", "time_label": "15:55", "text": "Marché conclu."},
+            {"id": "msg_j09_presence_early_002", "sender": "marie", "time_label": "15:55", "text": "Chaises, rallonges, deux tables et décisions de dernière minute."},
+            {"id": "msg_j09_presence_early_003", "sender": "marie", "time_label": "15:56", "text": "Arrive vraiment à 18 h et je serai presque impressionnée."}
+          ]
+        },
+        {
+          "id": "choice_j09_presence_late",
+          "text": "je ne peux pas pour le montage. je viens à 20 h 15 et je reste jusqu’à 21 h 30",
+          "next_messages": [
+            {"id": "msg_j09_presence_late_001", "sender": "marie", "time_label": "15:55", "text": "20 h 15."},
+            {"id": "msg_j09_presence_late_002", "sender": "marie", "time_label": "15:55", "text": "Je ne te garde pas la partie montage."},
+            {"id": "msg_j09_presence_late_003", "sender": "marie", "time_label": "15:56", "text": "Je garde juste l’envie de te voir."},
+            {"id": "msg_j09_presence_late_004", "sender": "marie", "time_label": "15:56", "text": "Et à 21 h 30, tu pars si tu as dit que tu partais."}
+          ]
+        },
+        {
+          "id": "choice_j09_presence_absent",
+          "text": "je ne viens pas ce soir. je te le dis maintenant pour que tu ne m’attendes pas",
+          "next_messages": [
+            {"id": "msg_j09_presence_absent_001", "sender": "marie", "time_label": "15:55", "text": "D’accord."},
+            {"id": "msg_j09_presence_absent_002", "sender": "marie", "time_label": "15:56", "text": "Je ne garde pas de place."},
+            {"id": "msg_j09_presence_absent_003", "sender": "marie", "time_label": "15:56", "text": "Et je mets quand même la robe noire."},
+            {"id": "msg_j09_presence_absent_004", "sender": "marie", "time_label": "15:57", "text": "La soirée aura lieu, donc autant qu’elle soit jolie."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j09_black_dress",
+      "messages": [
+        {"id": "msg_j09_black_dress_001", "sender": "marie", "time_label": "16:02", "text": "Et j’ai gardé la robe noire."},
+        {
+          "id": "msg_j09_black_dress_002",
+          "sender": "marie",
+          "time_label": "16:02",
+          "text": "Je te préviens. Je ne relance pas le vote.",
+          "content_type": "PHOTO",
+          "media_ref": "j09_marie_black_dress_private_01"
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_j09_black_dress_guided",
+          "text": "bonne décision",
+          "next_messages": [
+            {"id": "msg_j09_black_dress_003", "sender": "marie", "time_label": "16:03", "text": "Je sais 🙂"},
+            {"id": "msg_j09_black_dress_004", "sender": "marie", "time_label": "16:03", "text": "Elle a survécu au trajet dans mon tote bag. C’est déjà un signe."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j09_late_orientation",
+      "messages": [
+        {"id": "msg_j09_late_orientation_001", "sender": "marie", "time_label": "20:12", "text": "Tu es où ?"}
+      ],
+      "choices": [
+        {
+          "id": "choice_j09_late_orientation_guided",
+          "text": "côté cour",
+          "next_messages": [
+            {"id": "msg_j09_late_orientation_002", "sender": "marie", "time_label": "20:13", "text": "Passe par la porte scène."},
+            {"id": "msg_j09_late_orientation_003", "sender": "marie", "time_label": "20:13", "text": "Évite l’entrée principale. Il y a six manteaux et personne ne sait à qui ils appartiennent."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j09_absence_public_share",
+      "messages": [
+        {
+          "id": "msg_j09_absence_public_001",
+          "sender": "marie",
+          "time_label": "20:37",
+          "text": "Élodie a envoyé ça au groupe.",
+          "content_type": "PHOTO",
+          "media_ref": "j09_marie_laverriere_public_01"
+        },
+        {"id": "msg_j09_absence_public_002", "sender": "marie", "time_label": "20:38", "text": "Je te l’envoie parce que je l’aime bien."},
+        {"id": "msg_j09_absence_public_003", "sender": "marie", "time_label": "20:38", "text": "Pas pour te faire venir à 21 h."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j09_absence_public_guided",
+          "text": "tu as l’air bien",
+          "next_messages": [
+            {"id": "msg_j09_absence_public_004", "sender": "marie", "time_label": "20:39", "text": "Je le suis."},
+            {"id": "msg_j09_absence_public_005", "sender": "marie", "time_label": "20:39", "text": "Et j’ai toujours deux cartons à descendre, donc l’émotion reste contenue."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j09_after_trace",
+      "messages": [
+        {
+          "id": "msg_j09_after_trace_001",
+          "sender": "marie",
+          "time_label": "23:05",
+          "text": "Élodie vient de me renvoyer la dernière.",
+          "content_type": "PHOTO",
+          "media_ref": "j09_marie_laverriere_after_01"
+        }
+      ]
+    },
+    {
+      "id": "j09_return_active",
+      "messages": [
+        {"id": "msg_j09_return_active_001", "sender": "marie", "time_label": "23:07", "text": "Merci pour ce soir."},
+        {"id": "msg_j09_return_active_002", "sender": "marie", "time_label": "23:07", "text": "C’était bien de te voir porter des chaises, parler à Élodie et ne pas me demander toutes les cinq minutes si ça allait."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j09_return_active_guided",
+          "text": "j’étais bien là",
+          "next_messages": [
+            {"id": "msg_j09_return_active_003", "sender": "marie", "time_label": "23:08", "text": "Oui."},
+            {"id": "msg_j09_return_active_004", "sender": "marie", "time_label": "23:08", "text": "Je l’ai vu."},
+            {"id": "msg_j09_return_active_005", "sender": "marie", "time_label": "23:09", "text": "Demain, 20 h 30, on mange ensemble ?"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j09_return_distracted",
+      "messages": [
+        {"id": "msg_j09_return_distracted_001", "sender": "marie", "time_label": "23:07", "text": "Merci d’être venu."},
+        {"id": "msg_j09_return_distracted_002", "sender": "marie", "time_label": "23:07", "text": "Tu as passé une partie de la soirée dans ton téléphone."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j09_return_distracted_guided",
+          "text": "je sais",
+          "next_messages": [
+            {"id": "msg_j09_return_distracted_003", "sender": "marie", "time_label": "23:08", "text": "Je ne fais pas un procès."},
+            {"id": "msg_j09_return_distracted_004", "sender": "marie", "time_label": "23:08", "text": "Je note la différence."},
+            {"id": "msg_j09_return_distracted_005", "sender": "marie", "time_label": "23:09", "text": "Demain, ne bloque rien pour moi."},
+            {"id": "msg_j09_return_distracted_006", "sender": "marie", "time_label": "23:09", "text": "Dis-moi juste si tu rentres."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j09_return_late_active",
+      "messages": [
+        {"id": "msg_j09_return_late_active_001", "sender": "marie", "time_label": "23:07", "text": "Tu es arrivé à l’heure que tu avais donnée."},
+        {"id": "msg_j09_return_late_active_002", "sender": "marie", "time_label": "23:07", "text": "Et tu as pris un bout de la soirée en charge."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j09_return_late_active_guided",
+          "text": "j’aurais préféré être là plus tôt",
+          "next_messages": [
+            {"id": "msg_j09_return_late_active_003", "sender": "marie", "time_label": "23:08", "text": "Peut-être."},
+            {"id": "msg_j09_return_late_active_004", "sender": "marie", "time_label": "23:08", "text": "Mais tu n’as pas promis plus tôt."},
+            {"id": "msg_j09_return_late_active_005", "sender": "marie", "time_label": "23:09", "text": "Ce soir, ce que tu as dit et ce que tu as fait se ressemblent."},
+            {"id": "msg_j09_return_late_active_006", "sender": "marie", "time_label": "23:10", "text": "Demain 20 h 30 ?"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j09_return_spectator",
+      "messages": [
+        {"id": "msg_j09_return_spectator_001", "sender": "marie", "time_label": "23:07", "text": "J’étais contente de te voir."},
+        {"id": "msg_j09_return_spectator_002", "sender": "marie", "time_label": "23:07", "text": "Mais tu es venu me regarder."},
+        {"id": "msg_j09_return_spectator_003", "sender": "marie", "time_label": "23:08", "text": "Pas vraiment être avec moi."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j09_return_spectator_guided",
+          "text": "c’est pas faux",
+          "next_messages": [
+            {"id": "msg_j09_return_spectator_004", "sender": "marie", "time_label": "23:08", "text": "Non."},
+            {"id": "msg_j09_return_spectator_005", "sender": "marie", "time_label": "23:09", "text": "Et ce n’est pas rien."},
+            {"id": "msg_j09_return_spectator_006", "sender": "marie", "time_label": "23:09", "text": "Mais ce n’est pas pareil."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j09_return_bounded",
+      "messages": [
+        {"id": "msg_j09_return_bounded_001", "sender": "marie", "time_label": "23:07", "text": "Tu es parti à 21 h 30."},
+        {"id": "msg_j09_return_bounded_002", "sender": "marie", "time_label": "23:07", "text": "Exactement comme annoncé."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j09_return_bounded_guided",
+          "text": "tu vérifies mes sorties maintenant",
+          "next_messages": [
+            {"id": "msg_j09_return_bounded_003", "sender": "marie", "time_label": "23:08", "text": "Non."},
+            {"id": "msg_j09_return_bounded_004", "sender": "marie", "time_label": "23:08", "text": "J’apprécie simplement les heures qui ne fondent pas."},
+            {"id": "msg_j09_return_bounded_005", "sender": "marie", "time_label": "23:09", "text": "Demain 20 h 30, tu peux ?"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j09_return_absence",
+      "messages": [
+        {"id": "msg_j09_return_absence_001", "sender": "marie", "time_label": "23:07", "text": "Je ferme."},
+        {"id": "msg_j09_return_absence_002", "sender": "marie", "time_label": "23:07", "text": "La soirée était bien."},
+        {"id": "msg_j09_return_absence_003", "sender": "marie", "time_label": "23:08", "text": "Vraiment."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j09_return_absence_guided",
+          "text": "je suis content",
+          "next_messages": [
+            {"id": "msg_j09_return_absence_004", "sender": "marie", "time_label": "23:08", "text": "Moi aussi."},
+            {"id": "msg_j09_return_absence_005", "sender": "marie", "time_label": "23:09", "text": "Et merci d’avoir dit non avant."},
+            {"id": "msg_j09_return_absence_006", "sender": "marie", "time_label": "23:09", "text": "Je n’ai attendu personne."},
+            {"id": "msg_j09_return_absence_007", "sender": "marie", "time_label": "23:10", "text": "Demain 20 h 30, tu es là ?"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j09_dinner_choice",
+      "messages": [],
+      "choices": [
+        {
+          "id": "choice_j09_dinner_j10",
+          "text": "oui. 20 h 30",
+          "next_messages": [
+            {"id": "msg_j09_dinner_j10_001", "sender": "marie", "time_label": "23:10", "text": "Parfait."}
+          ]
+        },
+        {
+          "id": "choice_j09_dinner_friday",
+          "text": "demain non. vendredi 20 h 30 si tu peux",
+          "next_messages": [
+            {"id": "msg_j09_dinner_friday_001", "sender": "marie", "time_label": "23:10", "text": "Vendredi, oui."}
+          ]
+        },
+        {
+          "id": "choice_j09_dinner_refuse",
+          "text": "non. ne bloque pas pour moi",
+          "next_messages": [
+            {"id": "msg_j09_dinner_refuse_001", "sender": "marie", "time_label": "23:10", "text": "D’accord."}
+          ]
+        }
+      ]
+    }
+  ]
+}

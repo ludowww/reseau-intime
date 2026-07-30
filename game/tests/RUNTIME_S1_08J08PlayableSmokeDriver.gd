@@ -237,7 +237,7 @@ func _assert_path_outcomes(provider, household_state: String, p06_active: bool, 
 	}
 	_expect(state.resolved_visual_variant_by_asset == expected_variants, label + " stores exact visual variants")
 	_expect(provider.served_visual_beat_ids == expected_variants.keys(), label + " serves exactly three visual parents")
-	_expect(str(provider.runtime_map["day_end"]["transition_mode"]) == "CONTENT_END", label + " ends at J08 CONTENT_END")
+	_expect(str(provider.runtime_map["day_end"]["transition_mode"]) == "day_handoff", label + " ends at the J09 handoff")
 
 func _completed_j07_state(household_state: String, p06_active: bool):
 	var state = SEASON_STATE.new()
@@ -419,7 +419,7 @@ func _exercise_real_portrait_surfaces(size: Vector2i) -> void:
 	shell.activate_messages(false)
 	messages._start_runtime_day_card(provider.runtime_map["day_end"])
 	await _frames(3)
-	await _capture("content_end_j08", size)
+	await _capture("day_end_j08_handoff", size)
 	_expect(not bool(shell.describe_layout().get("has_vertical_crop", true)), "PortraitShell has no vertical crop")
 	_expect(not bool(messages.describe_state().get("has_horizontal_crop", true)), "Messages has no horizontal crop")
 	main.queue_free()

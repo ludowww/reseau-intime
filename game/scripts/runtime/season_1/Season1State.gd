@@ -2,7 +2,7 @@ extends RefCounted
 
 class_name Season1State
 
-const SNAPSHOT_VERSION := 6
+const SNAPSHOT_VERSION := 7
 
 var current_day := "J01"
 var day_status := "ACTIVE"
@@ -48,6 +48,9 @@ var nico_j08_meeting_resolution := "UNESTABLISHED"
 var marie_j08_household_resolution := "UNESTABLISHED"
 var mathilde_j08_household_resolution := "UNESTABLISHED"
 var marie_j08_echo_outcome := "UNESTABLISHED"
+var marie_j09_presence_choice := "UNESTABLISHED"
+var marie_j09_presence_outcome := "UNESTABLISHED"
+var marie_j09_dinner_outcome := "UNESTABLISHED"
 var resolved_visual_variant_by_asset: Dictionary = {}
 
 func _init() -> void:
@@ -115,6 +118,9 @@ func reset() -> void:
 	marie_j08_household_resolution = "UNESTABLISHED"
 	mathilde_j08_household_resolution = "UNESTABLISHED"
 	marie_j08_echo_outcome = "UNESTABLISHED"
+	marie_j09_presence_choice = "UNESTABLISHED"
+	marie_j09_presence_outcome = "UNESTABLISHED"
+	marie_j09_dinner_outcome = "UNESTABLISHED"
 	resolved_visual_variant_by_asset = {}
 
 func apply_choice(choice_id: String) -> bool:
@@ -407,6 +413,252 @@ func complete_j08() -> bool:
 		"S1_A2_J08_SCN_NICO_CHAIR_STATE_01": "S1_A2_J08_SCN_NICO_CHAIR_STATE_01_PAID" if nico_j08_meeting_resolution == "PAID_SHORT" else "S1_A2_J08_SCN_NICO_CHAIR_STATE_01_NO_WAIT",
 		"S1_A2_J08_SCN_HOUSEHOLD_STATE_01": "S1_A2_J08_SCN_HOUSEHOLD_STATE_01_PAID" if marie_j08_household_resolution == "PAID" else "S1_A2_J08_SCN_HOUSEHOLD_STATE_01_AUTONOMOUS",
 	}
+	return complete_day()
+
+func begin_j09() -> bool:
+	if current_day != "J08" or day_status != "COMPLETE" or not _j08_records_consistent(snapshot()):
+		return false
+	var p05: Dictionary = promises.get("raphaelle_j07_mobile_review", {})
+	if str(p05.get("status", "")) == "AMENDED":
+		if str(p05.get("due_at", "")) != "J09 09:00":
+			return false
+		p05["status"] = "PAID"
+		p05["paid_or_closed_at"] = "J09 09:00"
+		p05["paid_or_closed_by"] = "Player"
+		promises["raphaelle_j07_mobile_review"] = p05
+	current_day = "J09"
+	day_status = "ACTIVE"
+	return true
+
+func apply_j09_presence_choice(choice_id: String) -> bool:
+	if current_day != "J09" or day_status != "ACTIVE" or marie_j09_presence_choice != "UNESTABLISHED":
+		return false
+	if choice_id == "" or selected_choice_ids.has(choice_id):
+		return false
+	match choice_id:
+		"choice_j09_presence_early":
+			marie_j09_presence_choice = "EARLY"
+		"choice_j09_presence_late":
+			marie_j09_presence_choice = "LATE"
+		"choice_j09_presence_absent":
+			marie_j09_presence_choice = "ABSENCE_HONEST"
+			marie_j09_presence_outcome = "absence_honest"
+		_:
+			return false
+	selected_choice_ids.append(choice_id)
+	return true
+
+func establish_j09_black_dress_trace() -> bool:
+	if current_day != "J09" or marie_j09_presence_choice == "UNESTABLISHED":
+		return false
+	if traces.has("j09_marie_black_dress_private_01") or knowledge.has("fact_player_received_marie_black_dress_image"):
+		return false
+	traces["j09_marie_black_dress_private_01"] = {
+		"trace_id": "j09_marie_black_dress_private_01",
+		"trace_type": "PHOTO",
+		"source_day": "J09",
+		"source_scene": "préparation avant La Verrière",
+		"creator": "Marie",
+		"subjects": ["Marie"],
+		"owner": "Marie",
+		"initial_audience": ["Marie", "Player"],
+		"current_audience": ["Marie", "Player"],
+		"storage_location": "fil couple",
+		"saving_rule": "IN_THREAD_ONLY",
+		"transfer_rule": "FORBIDDEN",
+		"current_state": "PRIVATE_ACTIVE",
+		"knowledge_created": "fact_player_received_marie_black_dress_image",
+		"eligible_for_j14": true,
+		"eligible_for_j21": true,
+	}
+	knowledge["fact_player_received_marie_black_dress_image"] = {
+		"fact_id": "fact_player_received_marie_black_dress_image",
+		"source_type": "PRIVATE_TRACE",
+		"source_ref": "j09_marie_black_dress_private_01",
+		"initial_knowers": ["Marie", "Player"],
+		"certainty": "OBSERVED",
+		"shareability": "PRIVATE_DO_NOT_SHARE",
+		"source_day": "J09",
+	}
+	return true
+
+func apply_j09_presence_quality(choice_id: String) -> bool:
+	if current_day != "J09" or day_status != "ACTIVE" or marie_j09_presence_outcome != "UNESTABLISHED":
+		return false
+	if choice_id == "" or selected_choice_ids.has(choice_id):
+		return false
+	var outcome := ""
+	if marie_j09_presence_choice == "EARLY":
+		outcome = {
+			"choice_j09_quality_active": "presence_active",
+			"choice_j09_quality_playful_useful": "presence_playful_useful",
+			"choice_j09_quality_distracted": "presence_distracted",
+		}.get(choice_id, "")
+	elif marie_j09_presence_choice == "LATE":
+		outcome = {
+			"choice_j09_quality_late_active": "presence_late_active",
+			"choice_j09_quality_spectator": "presence_spectator",
+			"choice_j09_quality_bounded": "presence_bounded_reliable",
+		}.get(choice_id, "")
+	if outcome == "":
+		return false
+	selected_choice_ids.append(choice_id)
+	marie_j09_presence_outcome = outcome
+	if outcome == "presence_distracted":
+		couple_state = "STRAIN_VISIBLE"
+	return true
+
+func establish_j09_public_trace() -> bool:
+	if current_day != "J09" or marie_j09_presence_outcome == "UNESTABLISHED":
+		return false
+	if traces.has("j09_marie_laverriere_public_01") or knowledge.has("fact_marie_public_professional_version_visible"):
+		return false
+	traces["j09_marie_laverriere_public_01"] = {
+		"trace_id": "j09_marie_laverriere_public_01",
+		"trace_type": "PHOTO",
+		"source_day": "J09",
+		"source_scene": "événement La Verrière",
+		"creator": "Élodie",
+		"subjects": ["Marie", "participants visibles"],
+		"owner": "La Verrière",
+		"initial_audience": "groupe photographié / canal La Verrière nommé",
+		"current_audience": "groupe photographié / canal La Verrière nommé",
+		"storage_location": "dossier La Verrière / fil social",
+		"saving_rule": "PUBLIC_SOURCE_RULES",
+		"transfer_rule": "PUBLIC_SOURCE_RULES",
+		"current_state": "PUBLIC_ACTIVE",
+		"knowledge_created": "fact_marie_public_professional_version_visible",
+		"eligible_for_j14": true,
+		"eligible_for_j21": true,
+	}
+	knowledge["fact_marie_public_professional_version_visible"] = {
+		"fact_id": "fact_marie_public_professional_version_visible",
+		"source_type": "PUBLIC_TRACE",
+		"source_ref": "j09_marie_laverriere_public_01",
+		"initial_knowers": "audience sociale de la trace",
+		"certainty": "OBSERVED",
+		"shareability": "PUBLIC_SOURCE_RULES",
+		"source_day": "J09",
+	}
+	return true
+
+func establish_j09_after_trace() -> bool:
+	if current_day != "J09" or not traces.has("j09_marie_laverriere_public_01"):
+		return false
+	if traces.has("j09_marie_laverriere_after_01") or knowledge.has("fact_marie_recontextualized_evening_for_player"):
+		return false
+	traces["j09_marie_laverriere_after_01"] = {
+		"trace_id": "j09_marie_laverriere_after_01",
+		"trace_type": "PHOTO",
+		"source_day": "J09",
+		"source_scene": "fermeture ou fin de soirée",
+		"creator": "Élodie",
+		"subjects": ["Marie"],
+		"owner": "Marie ou Élodie selon accord final",
+		"initial_audience": ["Marie", "groupe autorisé"],
+		"current_audience": ["Marie", "Player"],
+		"storage_location": "fil Marie / Player après relais",
+		"saving_rule": "IN_THREAD_ONLY",
+		"transfer_rule": "FORBIDDEN hors audience",
+		"current_state": "PRIVATE_ACTIVE",
+		"knowledge_created": "fact_marie_recontextualized_evening_for_player",
+		"eligible_for_j14": true,
+		"eligible_for_j21": true,
+	}
+	knowledge["fact_marie_recontextualized_evening_for_player"] = {
+		"fact_id": "fact_marie_recontextualized_evening_for_player",
+		"source_type": "PRIVATE_TRACE",
+		"source_ref": "j09_marie_laverriere_after_01",
+		"initial_knowers": ["Marie", "Player"],
+		"certainty": "OBSERVED",
+		"shareability": "PRIVATE_DO_NOT_SHARE",
+		"source_day": "J09",
+	}
+	return true
+
+func apply_j09_dinner_choice(choice_id: String) -> bool:
+	if current_day != "J09" or day_status != "ACTIVE" or marie_j09_dinner_outcome != "UNESTABLISHED":
+		return false
+	if marie_j09_presence_outcome not in ["presence_active", "presence_playful_useful", "presence_late_active", "presence_bounded_reliable", "absence_honest"]:
+		return false
+	if choice_id == "" or selected_choice_ids.has(choice_id):
+		return false
+	match choice_id:
+		"choice_j09_dinner_j10":
+			marie_j09_dinner_outcome = "J10_ACCEPTED"
+			promises["marie_j09_dinner_j10_2030"] = {
+				"promise_id": "marie_j09_dinner_j10_2030",
+				"promise_type": "MEETING",
+				"created_at": "J09 23:09",
+				"created_by": "Marie",
+				"proposed_to": "Player",
+				"accepted_at": "J09 23:10",
+				"accepted_by_player": true,
+				"action_due": "Manger ensemble",
+				"due_at": "J10 20:30",
+				"confirmation_deadline": "J10 09:30",
+				"status": "ACTIVE",
+				"related_scene": "J09 after separation / J10 priorité couple",
+				"related_trace_ids": ["j09_marie_laverriere_after_01"],
+			}
+		"choice_j09_dinner_friday":
+			marie_j09_dinner_outcome = "FRIDAY_ACCEPTED"
+			promises["marie_j09_dinner_friday_2030"] = {
+				"promise_id": "marie_j09_dinner_friday_2030",
+				"promise_type": "MEETING",
+				"created_at": "J09 23:10",
+				"created_by": "Player",
+				"proposed_to": "Marie",
+				"accepted_at": "J09 23:10",
+				"accepted_by_player": true,
+				"action_due": "Manger ensemble",
+				"due_at": "J11 20:30",
+				"confirmation_deadline": "J11 18:00",
+				"status": "ACTIVE",
+				"related_scene": "conséquence couple J11",
+				"related_trace_ids": [],
+			}
+		"choice_j09_dinner_refuse":
+			marie_j09_dinner_outcome = "REFUSED"
+			promises["marie_j09_dinner_j10_2030"] = {
+				"promise_id": "marie_j09_dinner_j10_2030",
+				"promise_type": "MEETING",
+				"created_at": "J09 23:09",
+				"created_by": "Marie",
+				"proposed_to": "Player",
+				"accepted_at": "",
+				"accepted_by_player": false,
+				"action_due": "Manger ensemble",
+				"due_at": "",
+				"confirmation_deadline": "J10 09:30",
+				"status": "REFUSED",
+				"paid_or_closed_at": "J09 23:10",
+				"paid_or_closed_by": "Player",
+				"related_scene": "J09 after separation / J10 priorité couple",
+				"related_trace_ids": ["j09_marie_laverriere_after_01"],
+			}
+		_:
+			return false
+	selected_choice_ids.append(choice_id)
+	return true
+
+func close_j09_without_dinner_offer() -> bool:
+	if current_day != "J09" or marie_j09_dinner_outcome != "UNESTABLISHED":
+		return false
+	if marie_j09_presence_outcome not in ["presence_distracted", "presence_spectator"]:
+		return false
+	marie_j09_dinner_outcome = "NOT_OFFERED"
+	return true
+
+func complete_j09() -> bool:
+	if current_day != "J09" or day_status != "ACTIVE":
+		return false
+	if marie_j09_presence_choice == "UNESTABLISHED" or marie_j09_presence_outcome == "UNESTABLISHED":
+		return false
+	if marie_j09_dinner_outcome == "UNESTABLISHED" or not _j09_records_consistent(snapshot()):
+		return false
+	if not complete_conversation("chapter_09_marie_laverriere", "marie", "pivot"):
+		return false
 	return complete_day()
 
 func resolve_j07_morning_consequence() -> bool:
@@ -1074,24 +1326,29 @@ func snapshot() -> Dictionary:
 		"marie_j08_household_resolution": marie_j08_household_resolution,
 		"mathilde_j08_household_resolution": mathilde_j08_household_resolution,
 		"marie_j08_echo_outcome": marie_j08_echo_outcome,
+		"marie_j09_presence_choice": marie_j09_presence_choice,
+		"marie_j09_presence_outcome": marie_j09_presence_outcome,
+		"marie_j09_dinner_outcome": marie_j09_dinner_outcome,
 		"resolved_visual_variant_by_asset": resolved_visual_variant_by_asset.duplicate(true),
 	}
 
 func restore_snapshot(value: Dictionary) -> bool:
 	var version := int(value.get("version", -1))
-	if version not in [1, 2, 3, 4, 5, SNAPSHOT_VERSION]:
+	if version not in [1, 2, 3, 4, 5, 6, SNAPSHOT_VERSION]:
 		return false
-	if str(value.get("current_day", "")) not in ["J01", "J02", "J03", "J04", "J05", "J06", "J07", "J08"]:
+	if str(value.get("current_day", "")) not in ["J01", "J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09"]:
 		return false
 	if version < 4 and str(value.get("current_day", "")) == "J06":
 		return false
 	if version < 5 and str(value.get("current_day", "")) == "J07":
 		return false
-	if version < SNAPSHOT_VERSION and str(value.get("current_day", "")) == "J08":
+	if version < 6 and str(value.get("current_day", "")) == "J08":
+		return false
+	if version < SNAPSHOT_VERSION and str(value.get("current_day", "")) == "J09":
 		return false
 	if str(value.get("day_status", "")) not in ["ACTIVE", "COMPLETE"]:
 		return false
-	if str(value.get("couple_state", "")) != "BASELINE_SHARED_LIFE":
+	if str(value.get("couple_state", "")) not in ["BASELINE_SHARED_LIFE", "STRAIN_VISIBLE"]:
 		return false
 	if str(value.get("sandra_state", "")) not in ["DISTANT_FRIEND", "RECONNECTION_OPEN"]:
 		return false
@@ -1126,6 +1383,9 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if str(value.get("marie_j08_household_resolution", "UNESTABLISHED")) not in ["UNESTABLISHED", "PAID", "FAILED_LATE_AMENDMENT", "FAILED_VAGUE", "REFUSAL_ABSORBED"]: return false
 	if str(value.get("mathilde_j08_household_resolution", "UNESTABLISHED")) not in ["UNESTABLISHED", "AIDED_BY_PLAYER", "HANDLED_WITH_NEIGHBOR", "RESCHEDULED_WEDNESDAY"]: return false
 	if str(value.get("marie_j08_echo_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "CLEAR_HOURS", "HONEST_REFUSAL", "VAGUE_OR_MISSED"]: return false
+	if str(value.get("marie_j09_presence_choice", "UNESTABLISHED")) not in ["UNESTABLISHED", "EARLY", "LATE", "ABSENCE_HONEST"]: return false
+	if str(value.get("marie_j09_presence_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "presence_active", "presence_playful_useful", "presence_distracted", "presence_late_active", "presence_spectator", "presence_bounded_reliable", "absence_honest"]: return false
+	if str(value.get("marie_j09_dinner_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "J10_ACCEPTED", "FRIDAY_ACCEPTED", "REFUSED", "NOT_OFFERED"]: return false
 	if typeof(value.get("resolved_visual_variant_by_asset", {})) != TYPE_DICTIONARY: return false
 	for key in ["promises", "traces", "knowledge"]:
 		if typeof(value.get(key)) != TYPE_DICTIONARY:
@@ -1140,6 +1400,8 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if not _j07_records_consistent(value):
 		return false
 	if not _j08_records_consistent(value):
+		return false
+	if not _j09_records_consistent(value):
 		return false
 	current_day = str(value["current_day"])
 	day_status = str(value["day_status"])
@@ -1185,6 +1447,9 @@ func restore_snapshot(value: Dictionary) -> bool:
 	marie_j08_household_resolution = str(value.get("marie_j08_household_resolution", "UNESTABLISHED"))
 	mathilde_j08_household_resolution = str(value.get("mathilde_j08_household_resolution", "UNESTABLISHED"))
 	marie_j08_echo_outcome = str(value.get("marie_j08_echo_outcome", "UNESTABLISHED"))
+	marie_j09_presence_choice = str(value.get("marie_j09_presence_choice", "UNESTABLISHED"))
+	marie_j09_presence_outcome = str(value.get("marie_j09_presence_outcome", "UNESTABLISHED"))
+	marie_j09_dinner_outcome = str(value.get("marie_j09_dinner_outcome", "UNESTABLISHED"))
 	resolved_visual_variant_by_asset = value.get("resolved_visual_variant_by_asset", {}).duplicate(true)
 	return true
 
@@ -1247,7 +1512,7 @@ func _j06_snapshot_consistent(value: Dictionary) -> bool:
 	return due_at == ""
 
 func _j07_records_consistent(value: Dictionary) -> bool:
-	if str(value.get("current_day", "")) == "J08":
+	if str(value.get("current_day", "")) in ["J08", "J09"]:
 		return _j08_source_records_consistent(value)
 	var raphaelle_outcome := str(value.get("raphaelle_j07_mobile_review_outcome", "UNESTABLISHED"))
 	var nico_outcome := str(value.get("nico_j07_confidence_outcome", "UNESTABLISHED"))
@@ -1352,7 +1617,7 @@ func _j08_records_consistent(value: Dictionary) -> bool:
 	var mathilde := str(value.get("mathilde_j08_household_resolution", "UNESTABLISHED"))
 	var echo := str(value.get("marie_j08_echo_outcome", "UNESTABLISHED"))
 	var variants: Dictionary = value.get("resolved_visual_variant_by_asset", {})
-	if current != "J08":
+	if current not in ["J08", "J09"]:
 		return entry == "UNESTABLISHED" and preparation == "UNESTABLISHED" and priority == "UNESTABLISHED" and work == "UNESTABLISHED" and nico == "UNESTABLISHED" and household == "UNESTABLISHED" and mathilde == "UNESTABLISHED" and echo == "UNESTABLISHED" and variants.is_empty()
 	if entry == "UNESTABLISHED":
 		return false
@@ -1382,7 +1647,10 @@ func _j08_records_consistent(value: Dictionary) -> bool:
 			if str(p05.get("status", "")) != "PAID" or str(p05.get("paid_or_closed_by", "")) != "Player":
 				return false
 		"TRANSFERRED_HONESTLY":
-			if str(p05.get("status", "")) != "AMENDED" or str(p05.get("due_at", "")) != "J09 09:00":
+			if current == "J08":
+				if str(p05.get("status", "")) != "AMENDED" or str(p05.get("due_at", "")) != "J09 09:00":
+					return false
+			elif str(p05.get("status", "")) != "PAID" or str(p05.get("paid_or_closed_at", "")) != "J09 09:00" or str(p05.get("paid_or_closed_by", "")) != "Player":
 				return false
 			if str(p05.get("action_due", "")) != "Responsabilité professionnelle du point client":
 				return false
@@ -1445,5 +1713,71 @@ func _j08_records_consistent(value: Dictionary) -> bool:
 		if str(variants.get("S1_A2_J08_SCN_NICO_CHAIR_STATE_01", "")) != expected_nico:
 			return false
 		if str(variants.get("S1_A2_J08_SCN_HOUSEHOLD_STATE_01", "")) != expected_household:
+			return false
+	return true
+
+func _j09_records_consistent(value: Dictionary) -> bool:
+	var current := str(value.get("current_day", ""))
+	var presence_choice := str(value.get("marie_j09_presence_choice", "UNESTABLISHED"))
+	var presence_outcome := str(value.get("marie_j09_presence_outcome", "UNESTABLISHED"))
+	var dinner_outcome := str(value.get("marie_j09_dinner_outcome", "UNESTABLISHED"))
+	var restored_traces: Dictionary = value.get("traces", {})
+	var restored_knowledge: Dictionary = value.get("knowledge", {})
+	var restored_promises: Dictionary = value.get("promises", {})
+	var has_private := restored_traces.has("j09_marie_black_dress_private_01")
+	var has_public := restored_traces.has("j09_marie_laverriere_public_01")
+	var has_after := restored_traces.has("j09_marie_laverriere_after_01")
+	var has_f11 := restored_knowledge.has("fact_player_received_marie_black_dress_image")
+	var has_f12 := restored_knowledge.has("fact_marie_public_professional_version_visible")
+	var has_f13 := restored_knowledge.has("fact_marie_recontextualized_evening_for_player")
+	if current != "J09":
+		return presence_choice == "UNESTABLISHED" and presence_outcome == "UNESTABLISHED" and dinner_outcome == "UNESTABLISHED" and not has_private and not has_public and not has_after and not has_f11 and not has_f12 and not has_f13
+	if has_private != has_f11 or has_public != has_f12 or has_after != has_f13:
+		return false
+	if has_f13:
+		var f13: Dictionary = restored_knowledge["fact_marie_recontextualized_evening_for_player"]
+		if str(f13.get("source_ref", "")) != "j09_marie_laverriere_after_01" or str(f13.get("source_type", "")) != "PRIVATE_TRACE" or f13.get("initial_knowers", []) != ["Marie", "Player"]:
+			return false
+	if has_after and not has_public:
+		return false
+	if presence_choice == "UNESTABLISHED":
+		return presence_outcome == "UNESTABLISHED" and dinner_outcome == "UNESTABLISHED" and not has_private and not has_public and not has_after
+	if presence_choice == "ABSENCE_HONEST" and presence_outcome != "absence_honest":
+		return false
+	if presence_choice == "EARLY" and presence_outcome not in ["UNESTABLISHED", "presence_active", "presence_playful_useful", "presence_distracted"]:
+		return false
+	if presence_choice == "LATE" and presence_outcome not in ["UNESTABLISHED", "presence_late_active", "presence_spectator", "presence_bounded_reliable"]:
+		return false
+	if presence_outcome == "presence_distracted" and str(value.get("couple_state", "")) != "STRAIN_VISIBLE":
+		return false
+	var has_j10 := restored_promises.has("marie_j09_dinner_j10_2030")
+	var has_friday := restored_promises.has("marie_j09_dinner_friday_2030")
+	match dinner_outcome:
+		"UNESTABLISHED":
+			if has_j10 or has_friday:
+				return false
+		"J10_ACCEPTED":
+			if not has_j10 or has_friday:
+				return false
+			var p09: Dictionary = restored_promises["marie_j09_dinner_j10_2030"]
+			if str(p09.get("status", "")) != "ACTIVE" or str(p09.get("due_at", "")) != "J10 20:30" or not bool(p09.get("accepted_by_player", false)):
+				return false
+		"FRIDAY_ACCEPTED":
+			if has_j10 or not has_friday:
+				return false
+			var p10: Dictionary = restored_promises["marie_j09_dinner_friday_2030"]
+			if str(p10.get("status", "")) != "ACTIVE" or str(p10.get("due_at", "")) != "J11 20:30" or not bool(p10.get("accepted_by_player", false)):
+				return false
+		"REFUSED":
+			if not has_j10 or has_friday:
+				return false
+			var refused: Dictionary = restored_promises["marie_j09_dinner_j10_2030"]
+			if str(refused.get("status", "")) != "REFUSED" or bool(refused.get("accepted_by_player", false)) or str(refused.get("due_at", "")) != "":
+				return false
+		"NOT_OFFERED":
+			if has_j10 or has_friday or presence_outcome not in ["presence_distracted", "presence_spectator"]:
+				return false
+	if str(value.get("day_status", "")) == "COMPLETE":
+		if not has_private or not has_public or not has_after or dinner_outcome == "UNESTABLISHED":
 			return false
 	return true

@@ -120,10 +120,18 @@
     "eyebrow": "MARDI — FIN DE JOURNÉE",
     "title": "J08 terminé",
     "subtitle": "Ce qui ne tient pas ensemble",
-    "body": "Fin du contenu disponible.",
-    "action_label": "Terminer",
-    "transition_mode": "CONTENT_END",
-    "content_end": true
+    "body": "Mercredi, Marie donne les heures avant.",
+    "action_label": "Continuer",
+    "transition_mode": "day_handoff",
+    "content_end": false,
+    "next_day_presentation": {
+      "eyebrow": "MERCREDI — APRÈS-MIDI",
+      "title": "Dans son élément",
+      "subtitle": "15:48",
+      "body": "Marie donne les heures avant.",
+      "action_label": "Commencer",
+      "transition_mode": "day_boundary"
+    }
   },
   "gallery_presentations": [
     {

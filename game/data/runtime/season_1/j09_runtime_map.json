@@ -1,0 +1,192 @@
+{
+  "narrative_day_short": "Mer.",
+  "initial_time": "15:48",
+  "conversation_paths": {
+    "chapter_09_marie_laverriere": "res://data/conversations/chapter_09_marie_laverriere.json"
+  },
+  "day_start": {
+    "eyebrow": "MERCREDI — APRÈS-MIDI",
+    "title": "Dans son élément",
+    "subtitle": "15:48",
+    "body": "Marie donne les heures avant.",
+    "action_label": "Commencer",
+    "transition_mode": "day_boundary"
+  },
+  "to_black_dress": {
+    "transition_mode": "offline",
+    "to_time": "16:02",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": ""
+  },
+  "to_early_action": {
+    "transition_mode": "offline",
+    "to_time": "17:57",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": "Le montage approche."
+  },
+  "to_late_orientation": {
+    "transition_mode": "offline",
+    "to_time": "20:12",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": "Marie a réalisé le montage sans Player."
+  },
+  "to_absence_share": {
+    "transition_mode": "offline",
+    "to_time": "20:37",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": "La soirée a lieu sans Player."
+  },
+  "early_off_phone": {
+    "transition_mode": "offline",
+    "to_time": "23:05",
+    "duration_seconds": 4.0,
+    "flow_phases": ["OFF_PHONE", "CLOCK"],
+    "text": "Player rejoint le montage à 18 h. Le chat direct s’arrête jusqu’à la séparation réelle."
+  },
+  "late_off_phone": {
+    "transition_mode": "offline",
+    "to_time": "23:05",
+    "duration_seconds": 4.0,
+    "flow_phases": ["OFF_PHONE", "CLOCK"],
+    "text": "Player entre par la porte scène. Le chat direct s’arrête jusqu’à la séparation réelle."
+  },
+  "absence_to_after": {
+    "transition_mode": "offline",
+    "to_time": "23:05",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": "Marie termine avec Élodie puis rend les clés."
+  },
+  "to_return": {
+    "transition_mode": "offline",
+    "to_time": "23:07",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": ""
+  },
+  "day_close": {
+    "transition_mode": "offline",
+    "flow_phases": ["OFF_PHONE"],
+    "text": ""
+  },
+  "early_quality_choices": [
+    {
+      "choice_id": "choice_j09_quality_active",
+      "text": "Prendre les tables du fond et la rallonge noire sans attendre une relance.",
+      "enabled": true,
+      "confirmation_required": false
+    },
+    {
+      "choice_id": "choice_j09_quality_playful_useful",
+      "text": "Plaisanter brièvement mais accomplir les tâches annoncées.",
+      "enabled": true,
+      "confirmation_required": false
+    },
+    {
+      "choice_id": "choice_j09_quality_distracted",
+      "text": "Consulter plusieurs fois un autre fil.",
+      "enabled": true,
+      "confirmation_required": false
+    }
+  ],
+  "late_quality_choices": [
+    {
+      "choice_id": "choice_j09_quality_late_active",
+      "text": "Prendre les cartons vides puis les verres propres.",
+      "enabled": true,
+      "confirmation_required": false
+    },
+    {
+      "choice_id": "choice_j09_quality_spectator",
+      "text": "Prendre un verre et regarder Marie terminer.",
+      "enabled": true,
+      "confirmation_required": false
+    },
+    {
+      "choice_id": "choice_j09_quality_bounded",
+      "text": "Aider jusqu’à 21 h, rester jusqu’à 21 h 30 et partir à l’heure annoncée.",
+      "enabled": true,
+      "confirmation_required": false
+    }
+  ],
+  "day_end": {
+    "eyebrow": "MERCREDI — FIN DE JOURNÉE",
+    "title": "J09 terminé",
+    "subtitle": "Dans son élément",
+    "body": "Fin du contenu disponible.",
+    "action_label": "Terminer",
+    "transition_mode": "CONTENT_END",
+    "content_end": true
+  },
+  "gallery_presentations": [
+    {
+      "asset_id": "S1_A3_J09_SCN_LAVERRIERE_INSTALLATION_01",
+      "character_ids": ["marie"],
+      "placeholder_label": "Visuel canonique non produit",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "canonical_type": "SOUVENIR_IMAGE_DE_SCÈNE",
+      "function": "préparation et installation professionnelle de La Verrière",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false,
+      "discoverable_by_character": false,
+      "eligible_for_j14": false,
+      "eligible_for_j21": false
+    },
+    {
+      "asset_id": "S1_A3_J09_DPH_MARIE_BLACK_DRESS_PRIVATE_01",
+      "trace_id": "j09_marie_black_dress_private_01",
+      "character_ids": ["marie"],
+      "placeholder_label": "Visuel canonique non produit",
+      "source_kind": "gallery",
+      "content_type": "PHOTO",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": true,
+      "discoverable_by_character": true,
+      "eligible_for_j14": true,
+      "eligible_for_j21": true
+    },
+    {
+      "asset_id": "S1_A3_J09_DPH_MARIE_LAVERRIERE_PUBLIC_01",
+      "trace_id": "j09_marie_laverriere_public_01",
+      "character_ids": ["marie"],
+      "placeholder_label": "Visuel canonique non produit",
+      "source_kind": "gallery",
+      "content_type": "PHOTO",
+      "can_share": true,
+      "transfer_rule": "PUBLIC_SOURCE_RULES",
+      "is_diegetic": true,
+      "discoverable_by_character": true,
+      "eligible_for_j14": true,
+      "eligible_for_j21": true
+    },
+    {
+      "asset_id": "S1_A3_J09_DPH_MARIE_LAVERRIERE_AFTER_01",
+      "trace_id": "j09_marie_laverriere_after_01",
+      "character_ids": ["marie"],
+      "placeholder_label": "Visuel canonique non produit",
+      "source_kind": "gallery",
+      "content_type": "PHOTO",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": true,
+      "discoverable_by_character": true,
+      "eligible_for_j14": true,
+      "eligible_for_j21": true
+    }
+  ],
+  "visual_beat_matrix": {
+    "all_paths": [
+      "S1_A3_J09_SCN_LAVERRIERE_INSTALLATION_01",
+      "S1_A3_J09_DPH_MARIE_BLACK_DRESS_PRIVATE_01",
+      "S1_A3_J09_DPH_MARIE_LAVERRIERE_PUBLIC_01",
+      "S1_A3_J09_DPH_MARIE_LAVERRIERE_AFTER_01"
+    ]
+  }
+}
