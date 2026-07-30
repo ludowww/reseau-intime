@@ -1,0 +1,94 @@
+{
+  "narrative_day_short": "Dim.",
+  "initial_time": "10:25",
+  "conversation_paths": {
+    "chapter_06_mathilde_morning_afterglow": "res://data/conversations/chapter_06_mathilde_morning_afterglow.json",
+    "chapter_06_marie_concrete_return": "res://data/conversations/chapter_06_marie_concrete_return.json"
+  },
+  "day_start": {
+    "eyebrow": "DIMANCHE — MATIN",
+    "title": "Le regard remarqué",
+    "subtitle": "10:25",
+    "body": "Mathilde a quitté le logement. Le dimanche continue.",
+    "action_label": "Commencer",
+    "transition_mode": "day_boundary"
+  },
+  "household_beat": {
+    "transition_mode": "offline",
+    "to_time": "18:35",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK", "OFF_PHONE"],
+    "text": "Le dimanche suit son cours au foyer. Marie termine sa journée dehors."
+  },
+  "marie_immediate_resolution": {
+    "transition_mode": "offline",
+    "to_time": "19:14",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK", "OFF_PHONE"],
+    "text": "Player rentre. Le point de rencontre se paie hors téléphone."
+  },
+  "day_close": {
+    "transition_mode": "offline",
+    "flow_phases": ["OFF_PHONE"],
+    "text": "Le retour concret de Marie ferme le dimanche."
+  },
+  "day_end": {
+    "eyebrow": "DIMANCHE — FIN DE JOURNÉE",
+    "title": "J06 terminé",
+    "subtitle": "Un regard remarqué reste une limite, pas une permission.",
+    "body": "Fin du contenu disponible.",
+    "action_label": "Terminer",
+    "transition_mode": "CONTENT_END",
+    "content_end": true
+  },
+  "gallery_presentations": [
+    {
+      "asset_id": "S1_A2_J06_SCN_MATHILDE_LOOK_ACKNOWLEDGED_01",
+      "character_ids": ["mathilde"],
+      "placeholder_label": "Visuel non produit",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false
+    },
+    {
+      "asset_id": "S1_A2_J06_SCN_SUNDAY_WITHOUT_EXTERNAL_PROGRESS_01",
+      "character_ids": ["marie"],
+      "placeholder_label": "Visuel non produit",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false
+    },
+    {
+      "asset_id": "S1_A2_J06_SCN_MARIE_CONCRETE_RETURN_01",
+      "character_ids": ["marie"],
+      "placeholder_label": "Visuel non produit",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false
+    }
+  ],
+  "reused_asset_ids": [
+    "S1_A1_J04_SCN_HOUSEHOLD_THREE_RHYTHM_01"
+  ],
+  "context_anchor_asset_ids": [
+    "S1_A1_J02_SCN_MATHILDE_FIRST_INSTALLED_VIEW_01"
+  ],
+  "visual_beat_matrix": {
+    "mathilde_served": [
+      "S1_A2_J06_SCN_MATHILDE_LOOK_ACKNOWLEDGED_01",
+      "S1_A1_J04_SCN_HOUSEHOLD_THREE_RHYTHM_01",
+      "S1_A2_J06_SCN_MARIE_CONCRETE_RETURN_01"
+    ],
+    "no_external_continuity": [
+      "S1_A2_J06_SCN_SUNDAY_WITHOUT_EXTERNAL_PROGRESS_01",
+      "S1_A1_J04_SCN_HOUSEHOLD_THREE_RHYTHM_01",
+      "S1_A2_J06_SCN_MARIE_CONCRETE_RETURN_01"
+    ]
+  }
+}

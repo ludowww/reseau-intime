@@ -2,7 +2,7 @@ extends RefCounted
 
 class_name Season1State
 
-const SNAPSHOT_VERSION := 3
+const SNAPSHOT_VERSION := 4
 
 var current_day := "J01"
 var day_status := "ACTIVE"
@@ -31,6 +31,10 @@ var household_rhythm_confirmed := false
 var marie_j05_shared_hour_outcome := "UNESTABLISHED"
 var marie_j05_shared_hour_resolution := "UNESTABLISHED"
 var sandra_j05_outcome := "UNESTABLISHED"
+var mathilde_j06_outcome := "UNESTABLISHED"
+var j06_external_continuity_resolution := "UNESTABLISHED"
+var marie_j06_return_outcome := "UNESTABLISHED"
+var marie_j06_return_due_at := ""
 
 func _init() -> void:
 	reset()
@@ -80,6 +84,10 @@ func reset() -> void:
 	marie_j05_shared_hour_outcome = "UNESTABLISHED"
 	marie_j05_shared_hour_resolution = "UNESTABLISHED"
 	sandra_j05_outcome = "UNESTABLISHED"
+	mathilde_j06_outcome = "UNESTABLISHED"
+	j06_external_continuity_resolution = "UNESTABLISHED"
+	marie_j06_return_outcome = "UNESTABLISHED"
+	marie_j06_return_due_at = ""
 
 func apply_choice(choice_id: String) -> bool:
 	if choice_id == "" or selected_choice_ids.has(choice_id):
@@ -169,6 +177,127 @@ func begin_j04() -> void:
 func begin_j05() -> void:
 	current_day = "J05"
 	day_status = "ACTIVE"
+
+func begin_j06() -> void:
+	current_day = "J06"
+	day_status = "ACTIVE"
+
+func is_mathilde_j06_eligible() -> bool:
+	if current_day not in ["J05", "J06"] or day_status == "COMPLETE" and current_day == "J06":
+		return false
+	if mathilde_j06_outcome != "UNESTABLISHED" or j06_external_continuity_resolution != "UNESTABLISHED":
+		return false
+	if mathilde_state not in ["FAMILY_GUEST", "DOMESTIC_FAMILIARITY"]:
+		return false
+	var stay: Dictionary = knowledge.get("fact_mathilde_stay_started", {})
+	if stay.is_empty() or str(stay.get("certainty", "")) != "CONFIRMED":
+		return false
+	var installation: Dictionary = traces.get("j02_mathilde_arrival_room_01", {})
+	return not installation.is_empty() and str(installation.get("current_state", "")) == "ACTIVE"
+
+func apply_j06_mathilde_choice(choice_id: String) -> bool:
+	if choice_id == "" or selected_choice_ids.has(choice_id) or not is_mathilde_j06_eligible():
+		return false
+	if choice_id == "choice_sun_mathilde_what_guided":
+		selected_choice_ids.append(choice_id)
+		return true
+	var outcome := ""
+	match choice_id:
+		"choice_sun_mathilde_acknowledge_gaze":
+			outcome = "ACKNOWLEDGED_RESPECTFUL"
+		"choice_sun_mathilde_playful_gaze":
+			outcome = "ACKNOWLEDGED_PLAYFUL"
+		"choice_sun_mathilde_restore_distance":
+			outcome = "DISTANCE_RESTORED"
+		_:
+			return false
+	if not selected_choice_ids.has("choice_sun_mathilde_what_guided"):
+		return false
+	if traces.has("j06_mathilde_look_acknowledged_01") or knowledge.has("fact_mathilde_knows_player_noticed_her"):
+		return false
+	selected_choice_ids.append(choice_id)
+	mathilde_j06_outcome = outcome
+	j06_external_continuity_resolution = "NO_PROMISE"
+	if outcome in ["ACKNOWLEDGED_RESPECTFUL", "ACKNOWLEDGED_PLAYFUL"]:
+		mathilde_state = "LOOK_ACKNOWLEDGED"
+	_establish_j06_mathilde_records()
+	return true
+
+func _establish_j06_mathilde_records() -> void:
+	traces["j06_mathilde_look_acknowledged_01"] = {
+		"trace_id": "j06_mathilde_look_acknowledged_01",
+		"trace_type": "TEXT_MESSAGE",
+		"source_day": "J06",
+		"source_scene": "tenue domestique ordinaire / regard remarqué",
+		"creator": "Mathilde et Player par messages",
+		"subjects": ["Mathilde", "Player"],
+		"owner": "fil Player / Mathilde",
+		"initial_audience": ["Mathilde", "Player"],
+		"current_audience": ["Mathilde", "Player"],
+		"storage_location": "fil Player / Mathilde",
+		"saving_rule": "IN_THREAD_ONLY",
+		"transfer_rule": "FORBIDDEN",
+		"current_state": "ACTIVE",
+		"eligible_for_j14": true,
+		"eligible_for_j21": false,
+	}
+	knowledge["fact_mathilde_knows_player_noticed_her"] = {
+		"fact_id": "fact_mathilde_knows_player_noticed_her",
+		"source_type": "DIRECT_MESSAGE",
+		"source_ref": "j06_mathilde_look_acknowledged_01",
+		"initial_knowers": ["Mathilde", "Player"],
+		"certainty": "CONFIRMED",
+		"shareability": "PRIVATE_DO_NOT_SHARE",
+	}
+
+func record_j06_mathilde_unavailable() -> bool:
+	if mathilde_j06_outcome != "UNESTABLISHED" or is_mathilde_j06_eligible():
+		return false
+	mathilde_j06_outcome = "UNAVAILABLE"
+	j06_external_continuity_resolution = "UNAVAILABLE"
+	return true
+
+func record_j06_mathilde_expired() -> bool:
+	if mathilde_j06_outcome != "UNESTABLISHED" or not is_mathilde_j06_eligible():
+		return false
+	mathilde_j06_outcome = "EXPIRED"
+	j06_external_continuity_resolution = "EXPIRED"
+	return true
+
+func apply_j06_marie_choice(choice_id: String) -> bool:
+	if choice_id == "" or selected_choice_ids.has(choice_id) or marie_j06_return_outcome != "UNESTABLISHED":
+		return false
+	var outcome := ""
+	var due_at := ""
+	match choice_id:
+		"choice_sun_marie_warm_echo_guided":
+			if marie_j05_shared_hour_resolution != "PAID" or mathilde_j06_outcome not in ["UNAVAILABLE", "EXPIRED"]:
+				return false
+			outcome = "WARM_ECHO"
+		"choice_sun_marie_return_immediate":
+			outcome = "IMMEDIATE_ACT"
+		"choice_sun_marie_return_bounded":
+			outcome = "BOUNDED_NEXT_ACT"
+			due_at = "J07 09:30"
+		"choice_sun_marie_return_honest_drift":
+			outcome = "HONEST_DRIFT"
+		_:
+			return false
+	if outcome != "WARM_ECHO" and mathilde_j06_outcome in ["UNAVAILABLE", "EXPIRED"] and marie_j05_shared_hour_resolution == "PAID":
+		return false
+	selected_choice_ids.append(choice_id)
+	marie_j06_return_outcome = outcome
+	marie_j06_return_due_at = due_at
+	return true
+
+func complete_j06() -> bool:
+	if current_day != "J06" or day_status != "ACTIVE":
+		return false
+	if mathilde_j06_outcome == "UNESTABLISHED" or j06_external_continuity_resolution == "UNESTABLISHED":
+		return false
+	if marie_j06_return_outcome == "UNESTABLISHED":
+		return false
+	return complete_day()
 
 func apply_j05_marie_choice(choice_id: String) -> bool:
 	if choice_id == "" or selected_choice_ids.has(choice_id) or marie_j05_shared_hour_outcome != "UNESTABLISHED":
@@ -457,13 +586,19 @@ func snapshot() -> Dictionary:
 		"marie_j05_shared_hour_outcome": marie_j05_shared_hour_outcome,
 		"marie_j05_shared_hour_resolution": marie_j05_shared_hour_resolution,
 		"sandra_j05_outcome": sandra_j05_outcome,
+		"mathilde_j06_outcome": mathilde_j06_outcome,
+		"j06_external_continuity_resolution": j06_external_continuity_resolution,
+		"marie_j06_return_outcome": marie_j06_return_outcome,
+		"marie_j06_return_due_at": marie_j06_return_due_at,
 	}
 
 func restore_snapshot(value: Dictionary) -> bool:
 	var version := int(value.get("version", -1))
-	if version not in [1, 2, SNAPSHOT_VERSION]:
+	if version not in [1, 2, 3, SNAPSHOT_VERSION]:
 		return false
-	if str(value.get("current_day", "")) not in ["J01", "J02", "J03", "J04", "J05"]:
+	if str(value.get("current_day", "")) not in ["J01", "J02", "J03", "J04", "J05", "J06"]:
+		return false
+	if version < SNAPSHOT_VERSION and str(value.get("current_day", "")) == "J06":
 		return false
 	if str(value.get("day_status", "")) not in ["ACTIVE", "COMPLETE"]:
 		return false
@@ -475,7 +610,7 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if str(value.get("raphaelle_work_outcome", "")) not in ["", "ACCOUNTABLE", "DRY_HUMOR", "DELAYED"]: return false
 	if str(value.get("sandra_j03_echo_outcome", "")) not in ["", "UNAVAILABLE", "EXPIRED", "RESPONDED"]: return false
 	if str(value.get("marie_j03_return_outcome", "")) not in ["", "ACTIVE", "BOUNDED", "DRIFT"]: return false
-	if str(value.get("mathilde_state", "FAMILY_GUEST" if value.get("knowledge", {}).has("fact_mathilde_stay_started") else "UNESTABLISHED")) not in ["UNESTABLISHED", "FAMILY_GUEST"]: return false
+	if str(value.get("mathilde_state", "FAMILY_GUEST" if value.get("knowledge", {}).has("fact_mathilde_stay_started") else "UNESTABLISHED")) not in ["UNESTABLISHED", "FAMILY_GUEST", "DOMESTIC_FAMILIARITY", "LOOK_ACKNOWLEDGED", "DISTANCE", "TRUST_BROKEN"]: return false
 	if str(value.get("pauline_state", "UNESTABLISHED")) not in ["UNESTABLISHED", "PUBLIC_ONLY"]: return false
 	if str(value.get("nico_state", "UNESTABLISHED")) not in ["UNESTABLISHED", "ORDINARY_FRIEND"]: return false
 	var pauline_outcome := str(value.get("pauline_public_selection_outcome", "UNESTABLISHED"))
@@ -485,6 +620,10 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if str(value.get("marie_j05_shared_hour_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "JOIN_NOW", "PRECISE_ALTERNATIVE", "REFUSED"]: return false
 	if str(value.get("marie_j05_shared_hour_resolution", "UNESTABLISHED")) not in ["UNESTABLISHED", "PAID", "NO_PROMISE"]: return false
 	if str(value.get("sandra_j05_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "UNAVAILABLE", "THREAD_MAINTAINED", "GAP_ACKNOWLEDGED", "BOUNDARY_RESPECTED", "CONTINUITY_COOLED", "CONTINUITY_CLOSED"]: return false
+	if str(value.get("mathilde_j06_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "UNAVAILABLE", "ACKNOWLEDGED_RESPECTFUL", "ACKNOWLEDGED_PLAYFUL", "DISTANCE_RESTORED", "EXPIRED"]: return false
+	if str(value.get("j06_external_continuity_resolution", "UNESTABLISHED")) not in ["UNESTABLISHED", "PAID", "REFUSED", "EXPIRED", "UNAVAILABLE", "NO_PROMISE"]: return false
+	if str(value.get("marie_j06_return_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "WARM_ECHO", "IMMEDIATE_ACT", "BOUNDED_NEXT_ACT", "HONEST_DRIFT"]: return false
+	if str(value.get("marie_j06_return_due_at", "")) not in ["", "J07 09:30"]: return false
 	for key in ["promises", "traces", "knowledge"]:
 		if typeof(value.get(key)) != TYPE_DICTIONARY:
 			return false
@@ -492,6 +631,8 @@ func restore_snapshot(value: Dictionary) -> bool:
 		if typeof(value.get(key)) != TYPE_ARRAY:
 			return false
 	if not _j05_snapshot_consistent(value):
+		return false
+	if not _j06_snapshot_consistent(value):
 		return false
 	current_day = str(value["current_day"])
 	day_status = str(value["day_status"])
@@ -520,6 +661,10 @@ func restore_snapshot(value: Dictionary) -> bool:
 	marie_j05_shared_hour_outcome = str(value.get("marie_j05_shared_hour_outcome", "UNESTABLISHED"))
 	marie_j05_shared_hour_resolution = str(value.get("marie_j05_shared_hour_resolution", "UNESTABLISHED"))
 	sandra_j05_outcome = str(value.get("sandra_j05_outcome", "UNESTABLISHED"))
+	mathilde_j06_outcome = str(value.get("mathilde_j06_outcome", "UNESTABLISHED"))
+	j06_external_continuity_resolution = str(value.get("j06_external_continuity_resolution", "UNESTABLISHED"))
+	marie_j06_return_outcome = str(value.get("marie_j06_return_outcome", "UNESTABLISHED"))
+	marie_j06_return_due_at = str(value.get("marie_j06_return_due_at", ""))
 	return true
 
 func _default_pauline_retained_frame(outcome: String) -> String:
@@ -554,3 +699,28 @@ func _j05_snapshot_consistent(value: Dictionary) -> bool:
 	if sandra_outcome == "UNAVAILABLE" and resolution == "UNESTABLISHED":
 		return false
 	return true
+
+func _j06_snapshot_consistent(value: Dictionary) -> bool:
+	var outcome := str(value.get("mathilde_j06_outcome", "UNESTABLISHED"))
+	var resolution := str(value.get("j06_external_continuity_resolution", "UNESTABLISHED"))
+	var marie_outcome := str(value.get("marie_j06_return_outcome", "UNESTABLISHED"))
+	var due_at := str(value.get("marie_j06_return_due_at", ""))
+	var restored_traces: Dictionary = value.get("traces", {})
+	var restored_knowledge: Dictionary = value.get("knowledge", {})
+	var restored_promises: Dictionary = value.get("promises", {})
+	if restored_promises.has("j06_external_continuity_window"):
+		return false
+	var exchange_served := outcome in ["ACKNOWLEDGED_RESPECTFUL", "ACKNOWLEDGED_PLAYFUL", "DISTANCE_RESTORED"]
+	if exchange_served != restored_traces.has("j06_mathilde_look_acknowledged_01"):
+		return false
+	if exchange_served != restored_knowledge.has("fact_mathilde_knows_player_noticed_her"):
+		return false
+	if outcome == "UNESTABLISHED" and resolution != "UNESTABLISHED":
+		return false
+	if exchange_served and resolution != "NO_PROMISE":
+		return false
+	if outcome in ["UNAVAILABLE", "EXPIRED"] and resolution != outcome:
+		return false
+	if marie_outcome == "BOUNDED_NEXT_ACT":
+		return due_at == "J07 09:30"
+	return due_at == ""

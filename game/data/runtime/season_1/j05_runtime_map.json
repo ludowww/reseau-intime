@@ -38,17 +38,30 @@
   },
   "day_close": {
     "transition_mode": "offline",
-    "flow_phases": ["OFF_PHONE"],
-    "text": "La journée se termine."
+    "flow_phases": ["OFF_PHONE", "NIGHT", "NEW_DAY"],
+    "content_end": false,
+    "next_day_presentation": {
+      "eyebrow": "DIMANCHE — MATIN",
+      "title": "Le regard remarqué",
+      "subtitle": "10:25",
+      "body": "Mathilde a quitté le logement. Le dimanche continue.",
+      "action_label": "Commencer",
+      "transition_mode": "day_boundary"
+    },
+    "text": "Le samedi se termine."
   },
   "day_end": {
-    "eyebrow": "SAMEDI — FIN DE JOURNÉE",
-    "title": "J05 terminé",
-    "subtitle": "Une heure réelle ne se remplace pas par une intention.",
-    "body": "Fin du contenu disponible.",
-    "action_label": "Terminer",
-    "transition_mode": "CONTENT_END",
-    "content_end": true
+    "flow_phases": ["OFF_PHONE", "NIGHT"],
+    "next_day_presentation": {
+      "eyebrow": "DIMANCHE — MATIN",
+      "title": "Le regard remarqué",
+      "subtitle": "10:25",
+      "body": "Mathilde a quitté le logement. Le dimanche continue.",
+      "action_label": "Commencer",
+      "transition_mode": "day_boundary"
+    },
+    "transition_mode": "day_handoff",
+    "content_end": false
   },
   "gallery_presentations": [
     {

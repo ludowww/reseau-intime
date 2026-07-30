@@ -38,12 +38,10 @@ class RuntimeS105J05PlayableStaticTests(unittest.TestCase):
             },
             data["day_start"],
         )
-        self.assertEqual("CONTENT_END", data["day_end"]["transition_mode"])
-        self.assertEqual("J05 terminé", data["day_end"]["title"])
-        self.assertEqual(
-            "Une heure réelle ne se remplace pas par une intention.",
-            data["day_end"]["subtitle"],
-        )
+        self.assertEqual("day_handoff", data["day_end"]["transition_mode"])
+        self.assertFalse(data["day_end"]["content_end"])
+        self.assertEqual("DIMANCHE — MATIN", data["day_end"]["next_day_presentation"]["eyebrow"])
+        self.assertEqual("10:25", data["day_end"]["next_day_presentation"]["subtitle"])
         gallery = data["gallery_presentations"]
         self.assertEqual(
             [
@@ -147,8 +145,8 @@ class RuntimeS105J05PlayableStaticTests(unittest.TestCase):
             self.assertIn(token, eligibility)
         for forbidden in ["photo_opened", "sandra_j03_echo_outcome", "candidate_pool", "route_score"]:
             self.assertNotIn(forbidden, eligibility)
-        self.assertIn("const SNAPSHOT_VERSION := 3", state)
-        self.assertIn("version not in [1, 2, SNAPSHOT_VERSION]", state)
+        self.assertIn("const SNAPSHOT_VERSION := 4", state)
+        self.assertIn("version not in [1, 2, 3, SNAPSHOT_VERSION]", state)
 
     def test_provider_uses_common_runtime_contract(self):
         provider = self.read("game/scripts/runtime/season_1/J05RuntimeProvider.gd")
@@ -183,7 +181,7 @@ class RuntimeS105J05PlayableStaticTests(unittest.TestCase):
             self.assertNotIn(forbidden, provider)
         self.assertEqual(1, provider.count('"body": "Nouveau message !"'))
 
-    def test_j04_hands_off_and_only_j05_is_content_end(self):
+    def test_j04_hands_off_and_j05_now_hands_off_to_j06(self):
         j04 = self.load("game/data/runtime/season_1/j04_runtime_map.json")
         j05 = self.load("game/data/runtime/season_1/j05_runtime_map.json")
         self.assertNotEqual("CONTENT_END", j04["day_end"]["transition_mode"])
@@ -191,7 +189,8 @@ class RuntimeS105J05PlayableStaticTests(unittest.TestCase):
         self.assertEqual(["CLOCK", "OFF_PHONE", "NIGHT", "NEW_DAY"], j04["household_close"]["flow_phases"])
         self.assertEqual("SAMEDI — MATIN", j04["day_end"]["next_day_presentation"]["eyebrow"])
         self.assertEqual("09:35", j04["day_end"]["next_day_presentation"]["subtitle"])
-        self.assertEqual("CONTENT_END", j05["day_end"]["transition_mode"])
+        self.assertEqual("day_handoff", j05["day_end"]["transition_mode"])
+        self.assertFalse(j05["day_end"]["content_end"])
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
         for token in [
             'preload("res://scripts/runtime/season_1/J05RuntimeProvider.gd")',
@@ -200,11 +199,11 @@ class RuntimeS105J05PlayableStaticTests(unittest.TestCase):
             "_handoff_to_j05",
             'active_day = "J05"',
             '"J05":',
-            '["J01", "J02", "J03", "J04", "J05"]',
+            '["J01", "J02", "J03", "J04", "J05", "J06"]',
         ]:
             self.assertIn(token, season)
-        self.assertIn("const SNAPSHOT_VERSION := 4", season)
-        self.assertIn("version not in [2, 3, SNAPSHOT_VERSION]", season)
+        self.assertIn("const SNAPSHOT_VERSION := 5", season)
+        self.assertIn("version not in [2, 3, 4, SNAPSHOT_VERSION]", season)
 
     def test_smoke_and_runner_cover_all_required_paths_and_sizes(self):
         driver = self.read("game/tests/RUNTIME_S1_05J05PlayableSmokeDriver.gd")

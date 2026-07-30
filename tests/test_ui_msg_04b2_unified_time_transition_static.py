@@ -33,7 +33,7 @@ class UIMsg04B2UnifiedTimeTransitionStaticTests(unittest.TestCase):
             self.assertNotIn(token, overlay)
 
     def test_player_timestamps_are_provider_authoritative(self):
-        for day in ["J01", "J02", "J03", "J04", "J05"]:
+        for day in ["J01", "J02", "J03", "J04", "J05", "J06"]:
             source = self.read(f"game/scripts/runtime/season_1/{day}RuntimeProvider.gd")
             self.assertIn('"timestamp": current_narrative_time_text()', source)
             self.assertNotIn('"timestamp": "maintenant"', source)
@@ -55,8 +55,12 @@ class UIMsg04B2UnifiedTimeTransitionStaticTests(unittest.TestCase):
         self.assertEqual("08:35", j03["day_end"]["next_day_presentation"]["subtitle"])
         self.assertEqual("day_handoff", j04["day_end"]["transition_mode"])
         j05 = json.loads(self.read("game/data/runtime/season_1/j05_runtime_map.json"))
-        self.assertEqual("CONTENT_END", j05["day_end"]["transition_mode"])
+        j06 = json.loads(self.read("game/data/runtime/season_1/j06_runtime_map.json"))
+        self.assertEqual("day_handoff", j05["day_end"]["transition_mode"])
+        self.assertIn("NEW_DAY", j05["day_close"]["flow_phases"])
+        self.assertEqual("CONTENT_END", j06["day_end"]["transition_mode"])
         self.assertFalse(j04["day_end"]["content_end"])
+        self.assertFalse(j05["day_end"]["content_end"])
         self.assertEqual("19:05", j03["marie_offline"]["ACTIVE"]["time"])
         self.assertEqual("19:35", j03["marie_offline"]["BOUNDED"]["time"])
         self.assertEqual("20:30", j03["marie_offline"]["DRIFT"]["time"])
