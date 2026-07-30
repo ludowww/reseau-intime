@@ -14,7 +14,7 @@ func configure(choice_presentations: Array[Dictionary], portrait_theme) -> void:
 
 func set_choices(choice_presentations: Array[Dictionary]) -> void:
 	choices = choice_presentations
-	if choices.size() < 1 or choices.size() > 3:
+	if choices.size() < 1 or choices.size() > 4:
 		clear_choices()
 		return
 	_build()

@@ -150,13 +150,13 @@ func _exercise_real_portrait_path(label: String, echo_order: Array, exercise_pho
 			_expect(provider.j04_provider.phase == "household_close", label + " final arms only after both real presentations")
 	_expect(household_final_delivery_phases == ["household_echoes", "household_echoes"], label + " household close waits for post-layout batch acknowledgement")
 
-	# Real Back signal invokes on_thread_returned and starts CLOCK + OFF_PHONE to CONTENT_END.
+	# Real Back signal invokes on_thread_returned and starts the final J04 flow into J05.
 	messages.conversation_screen.back_button.emit_signal("pressed")
-	await _wait_until(func(): return provider.j04_provider.phase == "complete" and messages.is_day_transition_active(), 420, label + " 18:25 final flow timed out")
-	_expect(provider.current_narrative_time_text() == "18:25", label + " final commits 18:25 (got %s)" % provider.current_narrative_time_text())
-	_expect(handoff_phases.count("CLOCK") == 3 and handoff_phases.count("OFF_PHONE") == 1, label + " real signals present 14:05, 18:05 and 18:25 CLOCK plus one OFF_PHONE")
+	await _wait_until(func(): return provider.active_day == "J05" and provider.j05_provider.phase == "marie_shared_hour" and not messages.transition_flow_active, 480, label + " 18:25 J04 to J05 flow timed out")
+	_expect(provider.current_narrative_time_text() == "09:35", label + " J05 starts at 09:35 (got %s)" % provider.current_narrative_time_text())
+	_expect(handoff_phases.count("CLOCK") == 3 and handoff_phases.count("OFF_PHONE") == 1 and handoff_phases.has("NIGHT") and handoff_phases.count("NEW_DAY") == 2, label + " real signals present J04 clocks, night and one J05 handoff")
 	_expect(provider.state.opening_band_complete and provider.state.household_rhythm_confirmed, label + " final canonical flags")
-	_expect(str(provider.content_end().get("transition_mode", "")) == "CONTENT_END" and str(messages.day_transition.display_title()) == "J04 terminé", label + " CONTENT_END appears only after both echoes")
+	_expect(provider.content_end().is_empty() and messages.screen_mode == "list" and messages.thread_has_unread_content("thread_marie_private"), label + " J04 has no CONTENT_END and J05 Marie is unread")
 	_expect(not bool(shell.describe_layout().get("has_vertical_crop", true)) and not bool(messages.describe_state().get("has_horizontal_crop", true)), label + " no crop at final")
 	_expect(_unique_provider_message_ids(provider), label + " no duplicated provider message")
 

@@ -44,17 +44,30 @@
     "transition_mode": "offline",
     "to_time": "18:25",
     "duration_seconds": 4.0,
-    "flow_phases": ["CLOCK", "OFF_PHONE"],
+    "flow_phases": ["CLOCK", "OFF_PHONE", "NIGHT", "NEW_DAY"],
+    "content_end": false,
+    "next_day_presentation": {
+      "eyebrow": "SAMEDI — MATIN",
+      "title": "Une heure réelle",
+      "subtitle": "09:35",
+      "body": "Marie a déjà commencé sa journée.",
+      "action_label": "Commencer",
+      "transition_mode": "day_boundary"
+    },
     "text": "Player retrouve Marie et Mathilde.\nLa salle de bain est libre.\nLe chargeur est retrouvé.\nLe bureau n’est plus tout à fait un bureau.\nLe nouveau rythme tient pour ce soir."
   },
   "day_end": {
-    "eyebrow": "VENDREDI — SOIR",
-    "title": "J04 terminé",
-    "subtitle": "Le nouveau rythme tient pour ce soir.",
-    "body": "Fin du contenu disponible.",
-    "action_label": "Terminer",
-    "transition_mode": "CONTENT_END",
-    "content_end": true
+    "flow_phases": ["CLOCK", "OFF_PHONE", "NIGHT"],
+    "next_day_presentation": {
+      "eyebrow": "SAMEDI — MATIN",
+      "title": "Une heure réelle",
+      "subtitle": "09:35",
+      "body": "Marie a déjà commencé sa journée.",
+      "action_label": "Commencer",
+      "transition_mode": "day_boundary"
+    },
+    "transition_mode": "day_handoff",
+    "content_end": false
   },
   "gallery_presentations": [
     {

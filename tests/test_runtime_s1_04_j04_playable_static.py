@@ -34,8 +34,12 @@ class RuntimeS104J04PlayableStaticTests(unittest.TestCase):
         self.assertEqual(data["nico_transition"]["to_time"], "14:05")
         self.assertEqual(data["household_transition"]["to_time"], "18:05")
         self.assertEqual(data["household_close"]["to_time"], "18:25")
-        self.assertEqual(data["household_close"]["flow_phases"], ["CLOCK", "OFF_PHONE"])
-        self.assertEqual(data["day_end"]["transition_mode"], "CONTENT_END")
+        self.assertEqual(data["household_close"]["flow_phases"], ["CLOCK", "OFF_PHONE", "NIGHT", "NEW_DAY"])
+        self.assertEqual(data["day_end"]["transition_mode"], "day_handoff")
+        self.assertFalse(data["day_end"]["content_end"])
+        self.assertEqual(data["household_close"]["flow_phases"], ["CLOCK", "OFF_PHONE", "NIGHT", "NEW_DAY"])
+        self.assertEqual(data["day_end"]["next_day_presentation"]["eyebrow"], "SAMEDI — MATIN")
+        self.assertEqual(data["day_end"]["next_day_presentation"]["subtitle"], "09:35")
         self.assertEqual(data["photo_set"]["placeholder_label"], "Set de 3 photos non produit")
         self.assertEqual(data["photo_set"]["children"], [
             "S1_A1_J04_DPH_PAULINE_PUBLIC_GROUP_SET_01_FRAME_01",
@@ -115,7 +119,7 @@ class RuntimeS104J04PlayableStaticTests(unittest.TestCase):
         helper = helper_path.read_text(encoding="utf-8")
         self.assertIn("func incoming_unread_count", helper)
         self.assertIn("func incoming_batch_fully_presented", helper)
-        for day in range(1, 5):
+        for day in range(1, 6):
             provider = self.read(f"game/scripts/runtime/season_1/J{day:02d}RuntimeProvider.gd")
             self.assertIn('preload("res://scripts/runtime/season_1/RuntimeUnread.gd")', provider)
             self.assertIn("incoming_unread_count", provider)
@@ -136,11 +140,11 @@ class RuntimeS104J04PlayableStaticTests(unittest.TestCase):
             "PUBLIC_SOURCE_RULES", "PUBLIC_ACTIVE", "eligible_for_j14", "eligible_for_j21",
         ]:
             self.assertIn(token, state)
-        self.assertIn("SNAPSHOT_VERSION := 2", state)
+        self.assertIn("SNAPSHOT_VERSION := 3", state)
         self.assertIn('"choice_friday_pauline_practical": pauline_public_selection_outcome = "FRAME_02_SELECTED"; pauline_retained_frame = "FRAME_02"', state)
         self.assertIn('"choice_friday_pauline_dry": pauline_public_selection_outcome = "FRAME_03_REQUESTED"; pauline_retained_frame = "FRAME_02"', state)
         self.assertIn('"choice_friday_pauline_defer": pauline_public_selection_outcome = "DEFERRED_TO_MARIE"; pauline_retained_frame = "UNESTABLISHED"', state)
-        self.assertIn('version not in [1, SNAPSHOT_VERSION]', state)
+        self.assertIn('version not in [1, 2, SNAPSHOT_VERSION]', state)
 
     def test_knowledge_source_types_stay_within_the_canonical_registry(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
@@ -160,12 +164,12 @@ class RuntimeS104J04PlayableStaticTests(unittest.TestCase):
 
     def test_season_handoff_snapshot_and_content_end_contract(self):
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
-        self.assertIn('preload("res://scripts/runtime/season_1/J04RuntimeProvider.gd")', season)
-        for token in ["j04_provider", "j04_snapshot", "_handoff_to_j04", 'active_day = "J04"',
-                      '"J04":', '["J01", "J02", "J03", "J04"]']:
+        self.assertIn('preload("res://scripts/runtime/season_1/J05RuntimeProvider.gd")', season)
+        for token in ["j05_provider", "j05_snapshot", "_handoff_to_j05", 'active_day = "J05"',
+                      '"J05":', '["J01", "J02", "J03", "J04", "J05"]']:
             self.assertIn(token, season)
-        self.assertIn("const SNAPSHOT_VERSION := 3", season)
-        self.assertIn("version not in [2, SNAPSHOT_VERSION]", season)
+        self.assertIn("const SNAPSHOT_VERSION := 4", season)
+        self.assertIn("version not in [2, 3, SNAPSHOT_VERSION]", season)
 
     def test_j03_terminal_is_a_single_real_j04_handoff(self):
         data = json.loads(self.read("game/data/runtime/season_1/j03_runtime_map.json"))

@@ -1,0 +1,79 @@
+{
+  "narrative_day_short": "Sam.",
+  "initial_time": "09:35",
+  "conversation_paths": {
+    "chapter_05_marie_shared_hour": "res://data/conversations/chapter_05_marie_shared_hour.json",
+    "chapter_05_sandra_photo_continuity": "res://data/conversations/chapter_05_sandra_photo_continuity.json"
+  },
+  "day_start": {
+    "eyebrow": "SAMEDI — MATIN",
+    "title": "Une heure réelle",
+    "subtitle": "09:35",
+    "body": "Marie a déjà commencé sa journée.",
+    "action_label": "Commencer",
+    "transition_mode": "day_boundary"
+  },
+  "marie_resolution": {
+    "JOIN_NOW": {
+      "transition_mode": "offline",
+      "to_time": "10:48",
+      "duration_seconds": 4.0,
+      "flow_phases": ["CLOCK", "OFF_PHONE"],
+      "text": "Player rejoint Marie. L'heure partagée se déroule hors téléphone."
+    },
+    "PRECISE_ALTERNATIVE": {
+      "transition_mode": "offline",
+      "to_time": "13:30",
+      "duration_seconds": 4.0,
+      "flow_phases": ["CLOCK", "OFF_PHONE"],
+      "text": "L'alternative précise avec Marie se déroule hors téléphone."
+    },
+    "REFUSED": {
+      "transition_mode": "offline",
+      "to_time": "10:48",
+      "duration_seconds": 4.0,
+      "flow_phases": ["CLOCK", "OFF_PHONE"],
+      "text": "Marie poursuit sa journée. Aucune promesse n'a été créée."
+    }
+  },
+  "day_close": {
+    "transition_mode": "offline",
+    "flow_phases": ["OFF_PHONE"],
+    "text": "La journée se termine."
+  },
+  "day_end": {
+    "eyebrow": "SAMEDI — FIN DE JOURNÉE",
+    "title": "J05 terminé",
+    "subtitle": "Une heure réelle ne se remplace pas par une intention.",
+    "body": "Fin du contenu disponible.",
+    "action_label": "Terminer",
+    "transition_mode": "CONTENT_END",
+    "content_end": true
+  },
+  "gallery_presentations": [
+    {
+      "asset_id": "S1_A2_J05_SCN_MARIE_REAL_HOUR_01",
+      "character_ids": ["marie"],
+      "placeholder_label": "Visuel non produit",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false
+    },
+    {
+      "asset_id": "S1_A2_J05_SCN_MARIE_SATURDAY_CONTINUES_01",
+      "character_ids": ["marie"],
+      "placeholder_label": "Visuel non produit",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false
+    }
+  ],
+  "reused_asset_ids": [
+    "S1_A1_J04_SCN_MARIE_SOCIAL_MOTION_01",
+    "S1_A1_J01_DPH_SANDRA_LUNCH_SELECTED_01"
+  ]
+}

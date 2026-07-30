@@ -72,9 +72,9 @@ class TUI02AMessagesStaticTests(unittest.TestCase):
         self.assertIn("HORIZONTAL_ALIGNMENT_RIGHT", timeline)
         self.assertIn("HORIZONTAL_ALIGNMENT_LEFT", timeline)
 
-    def test_choice_bar_accepts_one_to_three_responses(self):
+    def test_choice_bar_accepts_one_to_four_responses(self):
         choices = self._read("game/scripts/ui/messages/ChoiceBar.gd")
-        for token in ["ChoiceBar", "ChoiceButton", "choices.size() < 1", "choices.size() > 3", "choice_selected"]:
+        for token in ["ChoiceBar", "ChoiceButton", "choices.size() < 1", "choices.size() > 4", "choice_selected"]:
             self.assertIn(token, choices)
         self.assertIn("AUTOWRAP_WORD_SMART", choices)
 

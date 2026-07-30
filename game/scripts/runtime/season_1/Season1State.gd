@@ -2,7 +2,7 @@ extends RefCounted
 
 class_name Season1State
 
-const SNAPSHOT_VERSION := 2
+const SNAPSHOT_VERSION := 3
 
 var current_day := "J01"
 var day_status := "ACTIVE"
@@ -28,6 +28,9 @@ var pauline_retained_frame := "UNESTABLISHED"
 var nico_friendship_outcome := "UNESTABLISHED"
 var opening_band_complete := false
 var household_rhythm_confirmed := false
+var marie_j05_shared_hour_outcome := "UNESTABLISHED"
+var marie_j05_shared_hour_resolution := "UNESTABLISHED"
+var sandra_j05_outcome := "UNESTABLISHED"
 
 func _init() -> void:
 	reset()
@@ -74,6 +77,9 @@ func reset() -> void:
 	nico_friendship_outcome = "UNESTABLISHED"
 	opening_band_complete = false
 	household_rhythm_confirmed = false
+	marie_j05_shared_hour_outcome = "UNESTABLISHED"
+	marie_j05_shared_hour_resolution = "UNESTABLISHED"
+	sandra_j05_outcome = "UNESTABLISHED"
 
 func apply_choice(choice_id: String) -> bool:
 	if choice_id == "" or selected_choice_ids.has(choice_id):
@@ -159,6 +165,110 @@ func begin_j03() -> void:
 func begin_j04() -> void:
 	current_day = "J04"
 	day_status = "ACTIVE"
+
+func begin_j05() -> void:
+	current_day = "J05"
+	day_status = "ACTIVE"
+
+func apply_j05_marie_choice(choice_id: String) -> bool:
+	if choice_id == "" or selected_choice_ids.has(choice_id) or marie_j05_shared_hour_outcome != "UNESTABLISHED":
+		return false
+	var outcome := ""
+	var status := ""
+	var due_at := ""
+	match choice_id:
+		"choice_sat_marie_join_now":
+			outcome = "JOIN_NOW"
+			status = "ACTIVE"
+			due_at = "J05 09:48"
+		"choice_sat_marie_bounded_alternative":
+			outcome = "PRECISE_ALTERNATIVE"
+			status = "AMENDED"
+			due_at = "J05 12:30"
+		"choice_sat_marie_moves_independently":
+			outcome = "REFUSED"
+		_:
+			return false
+	selected_choice_ids.append(choice_id)
+	marie_j05_shared_hour_outcome = outcome
+	if outcome != "REFUSED":
+		promises["marie_j05_shared_hour"] = {
+			"promise_id": "marie_j05_shared_hour",
+			"promise_type": "MEETING",
+			"created_at": "J05 09:36",
+			"created_by": "Marie",
+			"proposed_to": "Player",
+			"accepted_at": "J05 09:36",
+			"accepted_by_player": true,
+			"due_at": due_at,
+			"status": status,
+			"outcome": outcome,
+			"related_trace_ids": [],
+		}
+	return true
+
+func resolve_j05_marie_hour() -> bool:
+	if marie_j05_shared_hour_outcome == "UNESTABLISHED" or marie_j05_shared_hour_resolution != "UNESTABLISHED":
+		return false
+	if marie_j05_shared_hour_outcome == "REFUSED":
+		if promises.has("marie_j05_shared_hour"):
+			return false
+		marie_j05_shared_hour_resolution = "NO_PROMISE"
+		return true
+	var promise: Dictionary = promises.get("marie_j05_shared_hour", {})
+	if promise.is_empty() or str(promise.get("status", "")) not in ["ACTIVE", "AMENDED"]:
+		return false
+	promise["status"] = "PAID"
+	promises["marie_j05_shared_hour"] = promise
+	marie_j05_shared_hour_resolution = "PAID"
+	return true
+
+func is_sandra_j05_eligible() -> bool:
+	if marie_j05_shared_hour_outcome not in ["JOIN_NOW", "PRECISE_ALTERNATIVE"]:
+		return false
+	if marie_j05_shared_hour_resolution != "PAID" or sandra_state != "RECONNECTION_OPEN":
+		return false
+	if sandra_j05_outcome != "UNESTABLISHED":
+		return false
+	var trace: Dictionary = traces.get("j01_sandra_lunch_memory_soft", {})
+	return not trace.is_empty() and str(trace.get("current_state", "")) == "ACTIVE"
+
+func apply_j05_sandra_choice(choice_id: String) -> bool:
+	if choice_id == "" or selected_choice_ids.has(choice_id) or sandra_j05_outcome != "UNESTABLISHED":
+		return false
+	if not is_sandra_j05_eligible():
+		return false
+	var is_followup := choice_id in ["choice_sat_sandra_back_down", "choice_sat_sandra_insist"]
+	if is_followup != selected_choice_ids.has("choice_sat_sandra_more"):
+		return false
+	var outcome := ""
+	match choice_id:
+		"choice_sat_sandra_keep":
+			outcome = "THREAD_MAINTAINED"
+		"choice_sat_sandra_gap":
+			outcome = "GAP_ACKNOWLEDGED"
+		"choice_sat_sandra_autonomy":
+			outcome = "BOUNDARY_RESPECTED"
+		"choice_sat_sandra_more":
+			selected_choice_ids.append(choice_id)
+			return true
+		"choice_sat_sandra_back_down":
+			outcome = "CONTINUITY_COOLED"
+		"choice_sat_sandra_insist":
+			outcome = "CONTINUITY_CLOSED"
+		_:
+			return false
+	selected_choice_ids.append(choice_id)
+	sandra_j05_outcome = outcome
+	return true
+
+func record_sandra_j05_unavailable() -> bool:
+	if sandra_j05_outcome != "UNESTABLISHED" or marie_j05_shared_hour_resolution == "UNESTABLISHED":
+		return false
+	if is_sandra_j05_eligible():
+		return false
+	sandra_j05_outcome = "UNAVAILABLE"
+	return true
 
 func apply_j04_choice(choice_id: String) -> bool:
 	if choice_id == "" or selected_choice_ids.has(choice_id): return false
@@ -344,13 +454,16 @@ func snapshot() -> Dictionary:
 		"nico_friendship_outcome": nico_friendship_outcome,
 		"opening_band_complete": opening_band_complete,
 		"household_rhythm_confirmed": household_rhythm_confirmed,
+		"marie_j05_shared_hour_outcome": marie_j05_shared_hour_outcome,
+		"marie_j05_shared_hour_resolution": marie_j05_shared_hour_resolution,
+		"sandra_j05_outcome": sandra_j05_outcome,
 	}
 
 func restore_snapshot(value: Dictionary) -> bool:
 	var version := int(value.get("version", -1))
-	if version not in [1, SNAPSHOT_VERSION]:
+	if version not in [1, 2, SNAPSHOT_VERSION]:
 		return false
-	if str(value.get("current_day", "")) not in ["J01", "J02", "J03", "J04"]:
+	if str(value.get("current_day", "")) not in ["J01", "J02", "J03", "J04", "J05"]:
 		return false
 	if str(value.get("day_status", "")) not in ["ACTIVE", "COMPLETE"]:
 		return false
@@ -369,12 +482,17 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if pauline_outcome not in ["UNESTABLISHED", "FRAME_02_SELECTED", "FRAME_03_REQUESTED", "DEFERRED_TO_MARIE"]: return false
 	if str(value.get("pauline_retained_frame", _default_pauline_retained_frame(pauline_outcome))) != _default_pauline_retained_frame(pauline_outcome): return false
 	if str(value.get("nico_friendship_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "PLAYFUL", "HONEST", "RETURN_TO_MARIE"]: return false
+	if str(value.get("marie_j05_shared_hour_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "JOIN_NOW", "PRECISE_ALTERNATIVE", "REFUSED"]: return false
+	if str(value.get("marie_j05_shared_hour_resolution", "UNESTABLISHED")) not in ["UNESTABLISHED", "PAID", "NO_PROMISE"]: return false
+	if str(value.get("sandra_j05_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "UNAVAILABLE", "THREAD_MAINTAINED", "GAP_ACKNOWLEDGED", "BOUNDARY_RESPECTED", "CONTINUITY_COOLED", "CONTINUITY_CLOSED"]: return false
 	for key in ["promises", "traces", "knowledge"]:
 		if typeof(value.get(key)) != TYPE_DICTIONARY:
 			return false
 	for key in ["completed_conversation_ids", "selected_choice_ids", "foreground_history"]:
 		if typeof(value.get(key)) != TYPE_ARRAY:
 			return false
+	if not _j05_snapshot_consistent(value):
+		return false
 	current_day = str(value["current_day"])
 	day_status = str(value["day_status"])
 	couple_state = str(value["couple_state"])
@@ -399,7 +517,40 @@ func restore_snapshot(value: Dictionary) -> bool:
 	nico_friendship_outcome = str(value.get("nico_friendship_outcome", "UNESTABLISHED"))
 	opening_band_complete = bool(value.get("opening_band_complete", false))
 	household_rhythm_confirmed = bool(value.get("household_rhythm_confirmed", false))
+	marie_j05_shared_hour_outcome = str(value.get("marie_j05_shared_hour_outcome", "UNESTABLISHED"))
+	marie_j05_shared_hour_resolution = str(value.get("marie_j05_shared_hour_resolution", "UNESTABLISHED"))
+	sandra_j05_outcome = str(value.get("sandra_j05_outcome", "UNESTABLISHED"))
 	return true
 
 func _default_pauline_retained_frame(outcome: String) -> String:
 	return "FRAME_02" if outcome in ["FRAME_02_SELECTED", "FRAME_03_REQUESTED"] else "UNESTABLISHED"
+
+func _j05_snapshot_consistent(value: Dictionary) -> bool:
+	var outcome := str(value.get("marie_j05_shared_hour_outcome", "UNESTABLISHED"))
+	var resolution := str(value.get("marie_j05_shared_hour_resolution", "UNESTABLISHED"))
+	var sandra_outcome := str(value.get("sandra_j05_outcome", "UNESTABLISHED"))
+	var restored_promises: Dictionary = value.get("promises", {})
+	var promise: Dictionary = restored_promises.get("marie_j05_shared_hour", {})
+	if outcome == "UNESTABLISHED":
+		return resolution == "UNESTABLISHED" and promise.is_empty() and sandra_outcome == "UNESTABLISHED"
+	if outcome == "REFUSED":
+		if not promise.is_empty() or resolution not in ["UNESTABLISHED", "NO_PROMISE"]:
+			return false
+	else:
+		if promise.is_empty() or not bool(promise.get("accepted_by_player", false)):
+			return false
+		var expected_due := "J05 09:48" if outcome == "JOIN_NOW" else "J05 12:30"
+		if str(promise.get("due_at", "")) != expected_due:
+			return false
+		var expected_status := "ACTIVE" if outcome == "JOIN_NOW" else "AMENDED"
+		if resolution == "UNESTABLISHED" and str(promise.get("status", "")) != expected_status:
+			return false
+		if resolution == "PAID" and str(promise.get("status", "")) != "PAID":
+			return false
+		if resolution not in ["UNESTABLISHED", "PAID"]:
+			return false
+	if sandra_outcome not in ["UNESTABLISHED", "UNAVAILABLE"] and resolution != "PAID":
+		return false
+	if sandra_outcome == "UNAVAILABLE" and resolution == "UNESTABLISHED":
+		return false
+	return true

@@ -1,0 +1,309 @@
+{
+  "id": "chapter_05_sandra_photo_continuity",
+  "scene_id": "sandra_saturday_photo_continuity_01",
+  "chapter": 5,
+  "day": 5,
+  "title": "Samedi soir — La photo gardée",
+  "app": "messages",
+  "window_id": "W10_SANDRA_PHOTO_CONTINUITY",
+  "calendar_label": "Samedi",
+  "time_band": "EVENING",
+  "communication_mode": "REMOTE_ASYNC",
+  "foreground_role": "optional_continuity",
+  "physical_context": "Sandra initie un échange textuel à propos de la photographie du déjeuner déjà présente dans le fil. Aucun nouvel asset n'est envoyé.",
+  "thread": {
+    "id": "thread_sandra_private",
+    "type": "private",
+    "participants": [
+      "ludo",
+      "sandra"
+    ],
+    "display_name": "Sandra",
+    "profile_content_id": "profile_sandra_placeholder"
+  },
+  "segments": [
+    {
+      "id": "segment_saturday_sandra_photo_choice",
+      "pattern": "four_posture_choice",
+      "function": "Sandra rappelle qu'elle a gardé T01 et conserve seule le contrôle de cette image.",
+      "messages": [
+        {
+          "id": "msg_sat_sandra_photo_001",
+          "sender": "sandra",
+          "time_label": "20:40",
+          "text": "Je cherchais la facture du resto."
+        },
+        {
+          "id": "msg_sat_sandra_photo_002",
+          "sender": "sandra",
+          "time_label": "20:40",
+          "text": "Je suis retombée sur la photo que je t'avais envoyée."
+        },
+        {
+          "id": "msg_sat_sandra_photo_003",
+          "sender": "sandra",
+          "time_label": "20:41",
+          "text": "J'ai failli la supprimer."
+        },
+        {
+          "id": "msg_sat_sandra_photo_004",
+          "sender": "sandra",
+          "time_label": "20:41",
+          "text": "Et puis non."
+        },
+        {
+          "id": "msg_sat_sandra_photo_005",
+          "sender": "sandra",
+          "time_label": "20:42",
+          "text": "Je l'ai laissée. Voilà."
+        }
+      ],
+      "choices": [
+        {
+          "id": "choice_sat_sandra_keep",
+          "text": "Tu as bien fait de la garder.",
+          "tone": "recognize_choice",
+          "next_messages": [
+            {
+              "id": "msg_sat_sandra_keep_001",
+              "sender": "sandra",
+              "time_label": "20:43",
+              "text": "Je savais que tu répondrais ça."
+            },
+            {
+              "id": "msg_sat_sandra_keep_002",
+              "sender": "player",
+              "time_label": "20:43",
+              "text": "Tu préférais quoi ?"
+            },
+            {
+              "id": "msg_sat_sandra_keep_003",
+              "sender": "sandra",
+              "time_label": "20:44",
+              "text": "Rien de particulier."
+            },
+            {
+              "id": "msg_sat_sandra_keep_004",
+              "sender": "sandra",
+              "time_label": "20:44",
+              "text": "C'est bien aussi quand tu n'essaies pas d'arranger la situation."
+            },
+            {
+              "id": "msg_sat_sandra_keep_005",
+              "sender": "player",
+              "time_label": "20:45",
+              "text": "Je peux faire ça."
+            },
+            {
+              "id": "msg_sat_sandra_keep_006",
+              "sender": "sandra",
+              "time_label": "20:45",
+              "text": "On verra."
+            }
+          ]
+        },
+        {
+          "id": "choice_sat_sandra_gap",
+          "text": "Elle m'a surtout rappelé qu'on ne s'était pas vus depuis longtemps.",
+          "tone": "recognize_gap",
+          "next_messages": [
+            {
+              "id": "msg_sat_sandra_gap_001",
+              "sender": "sandra",
+              "time_label": "20:43",
+              "text": "Depuis le déjeuner."
+            },
+            {
+              "id": "msg_sat_sandra_gap_002",
+              "sender": "sandra",
+              "time_label": "20:43",
+              "text": "J'avais fait le calcul."
+            },
+            {
+              "id": "msg_sat_sandra_gap_003",
+              "sender": "player",
+              "time_label": "20:44",
+              "text": "Évidemment."
+            },
+            {
+              "id": "msg_sat_sandra_gap_004",
+              "sender": "sandra",
+              "time_label": "20:44",
+              "text": "Pas besoin d'avoir l'air si content."
+            },
+            {
+              "id": "msg_sat_sandra_gap_005",
+              "sender": "player",
+              "time_label": "20:45",
+              "text": "Je le cache mal."
+            },
+            {
+              "id": "msg_sat_sandra_gap_006",
+              "sender": "sandra",
+              "time_label": "20:45",
+              "text": "Oui."
+            },
+            {
+              "id": "msg_sat_sandra_gap_007",
+              "sender": "sandra",
+              "time_label": "20:46",
+              "text": "On pourrait éviter d'attendre autant la prochaine fois."
+            },
+            {
+              "id": "msg_sat_sandra_gap_008",
+              "sender": "player",
+              "time_label": "20:46",
+              "text": "Ça me va."
+            },
+            {
+              "id": "msg_sat_sandra_gap_009",
+              "sender": "sandra",
+              "time_label": "20:47",
+              "text": "J'ai dit « pourrait »."
+            },
+            {
+              "id": "msg_sat_sandra_gap_010",
+              "sender": "player",
+              "time_label": "20:47",
+              "text": "J'ai entendu."
+            }
+          ]
+        },
+        {
+          "id": "choice_sat_sandra_autonomy",
+          "text": "Tu peux la supprimer si elle finit par te gêner. Je ne vais pas te demander de la garder.",
+          "tone": "protect_autonomy",
+          "next_messages": [
+            {
+              "id": "msg_sat_sandra_autonomy_001",
+              "sender": "sandra",
+              "time_label": "20:43",
+              "text": "Elle ne me gêne pas."
+            },
+            {
+              "id": "msg_sat_sandra_autonomy_002",
+              "sender": "player",
+              "time_label": "20:44",
+              "text": "D'accord."
+            },
+            {
+              "id": "msg_sat_sandra_autonomy_003",
+              "sender": "sandra",
+              "time_label": "20:44",
+              "text": "Tu essaies déjà de m'aider à la supprimer."
+            },
+            {
+              "id": "msg_sat_sandra_autonomy_004",
+              "sender": "player",
+              "time_label": "20:45",
+              "text": "Je voulais juste te laisser le choix."
+            },
+            {
+              "id": "msg_sat_sandra_autonomy_005",
+              "sender": "sandra",
+              "time_label": "20:45",
+              "text": "Je l'ai."
+            },
+            {
+              "id": "msg_sat_sandra_autonomy_006",
+              "sender": "sandra",
+              "time_label": "20:46",
+              "text": "Laisse-le-moi, c'est tout."
+            },
+            {
+              "id": "msg_sat_sandra_autonomy_007",
+              "sender": "player",
+              "time_label": "20:46",
+              "text": "Reçu."
+            },
+            {
+              "id": "msg_sat_sandra_autonomy_008",
+              "sender": "sandra",
+              "time_label": "20:47",
+              "text": "Bien."
+            }
+          ]
+        },
+        {
+          "id": "choice_sat_sandra_more",
+          "text": "Garde-la alors. Et si tu en as une autre du même genre, je prends.",
+          "tone": "ask_for_more",
+          "next_messages": [
+            {
+              "id": "msg_sat_sandra_more_001",
+              "sender": "sandra",
+              "time_label": "20:43",
+              "text": "Non."
+            },
+            {
+              "id": "msg_sat_sandra_more_002",
+              "sender": "player",
+              "time_label": "20:44",
+              "text": "Je plaisantais."
+            },
+            {
+              "id": "msg_sat_sandra_more_003",
+              "sender": "sandra",
+              "time_label": "20:44",
+              "text": "Pas vraiment."
+            },
+            {
+              "id": "msg_sat_sandra_more_004",
+              "sender": "sandra",
+              "time_label": "20:45",
+              "text": "Je t'ai parlé d'une photo. Je n'ai pas ouvert un catalogue."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_saturday_sandra_limit_followup",
+      "pattern": "two_posture_choice",
+      "function": "Player respecte la limite ou insiste après qu'elle a été formulée.",
+      "messages": [],
+      "choices": [
+        {
+          "id": "choice_sat_sandra_back_down",
+          "text": "D'accord.",
+          "tone": "back_down",
+          "next_messages": [
+            {
+              "id": "msg_sat_sandra_back_down_001",
+              "sender": "sandra",
+              "time_label": "20:46",
+              "text": "On va en rester là."
+            }
+          ]
+        },
+        {
+          "id": "choice_sat_sandra_insist",
+          "text": "Tu le prends mal pour rien.",
+          "tone": "insist",
+          "next_messages": [
+            {
+              "id": "msg_sat_sandra_insist_001",
+              "sender": "sandra",
+              "time_label": "20:46",
+              "text": "Non."
+            },
+            {
+              "id": "msg_sat_sandra_insist_002",
+              "sender": "sandra",
+              "time_label": "20:47",
+              "text": "Tu viens juste de me rappeler pourquoi j'avais hésité."
+            },
+            {
+              "id": "msg_sat_sandra_insist_003",
+              "sender": "sandra",
+              "time_label": "20:47",
+              "text": "Bonne nuit."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "routes_nourished": [],
+  "debug_notes": "Échange Sandra J05 signé. Réutilise T01 sans nouveau message image, asset, audience, promesse ou route."
+}
