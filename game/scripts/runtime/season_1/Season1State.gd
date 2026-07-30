@@ -2,7 +2,7 @@ extends RefCounted
 
 class_name Season1State
 
-const SNAPSHOT_VERSION := 4
+const SNAPSHOT_VERSION := 5
 
 var current_day := "J01"
 var day_status := "ACTIVE"
@@ -35,6 +35,11 @@ var mathilde_j06_outcome := "UNESTABLISHED"
 var j06_external_continuity_resolution := "UNESTABLISHED"
 var marie_j06_return_outcome := "UNESTABLISHED"
 var marie_j06_return_due_at := ""
+var marie_j06_return_resolution := "UNESTABLISHED"
+var raphaelle_j07_mobile_review_outcome := "UNESTABLISHED"
+var nico_j07_confidence_outcome := "UNESTABLISHED"
+var nico_j07_continuation_outcome := "UNESTABLISHED"
+var marie_j07_household_outcome := "UNESTABLISHED"
 
 func _init() -> void:
 	reset()
@@ -88,6 +93,11 @@ func reset() -> void:
 	j06_external_continuity_resolution = "UNESTABLISHED"
 	marie_j06_return_outcome = "UNESTABLISHED"
 	marie_j06_return_due_at = ""
+	marie_j06_return_resolution = "UNESTABLISHED"
+	raphaelle_j07_mobile_review_outcome = "UNESTABLISHED"
+	nico_j07_confidence_outcome = "UNESTABLISHED"
+	nico_j07_continuation_outcome = "UNESTABLISHED"
+	marie_j07_household_outcome = "UNESTABLISHED"
 
 func apply_choice(choice_id: String) -> bool:
 	if choice_id == "" or selected_choice_ids.has(choice_id):
@@ -181,6 +191,254 @@ func begin_j05() -> void:
 func begin_j06() -> void:
 	current_day = "J06"
 	day_status = "ACTIVE"
+
+func begin_j07() -> void:
+	current_day = "J07"
+	day_status = "ACTIVE"
+
+func resolve_j07_morning_consequence() -> bool:
+	if current_day != "J07" or day_status != "ACTIVE" or marie_j06_return_resolution != "UNESTABLISHED":
+		return false
+	if marie_j06_return_outcome == "BOUNDED_NEXT_ACT" and marie_j06_return_due_at == "J07 09:30":
+		marie_j06_return_resolution = "PAID"
+	else:
+		marie_j06_return_resolution = "NOT_DUE"
+	return true
+
+func apply_j07_raphaelle_choice(choice_id: String) -> bool:
+	if choice_id == "" or selected_choice_ids.has(choice_id) or current_day != "J07" or day_status != "ACTIVE":
+		return false
+	if choice_id == "choice_j07_raphaelle_acknowledge_guided":
+		selected_choice_ids.append(choice_id)
+		return true
+	if choice_id != "choice_j07_raphaelle_understood_guided" or not selected_choice_ids.has("choice_j07_raphaelle_acknowledge_guided"):
+		return false
+	if raphaelle_j07_mobile_review_outcome != "UNESTABLISHED" or promises.has("raphaelle_j07_mobile_review"):
+		return false
+	selected_choice_ids.append(choice_id)
+	raphaelle_j07_mobile_review_outcome = "RESPONSIBILITY_ACKNOWLEDGED"
+	raphaelle_state = "PROFESSIONAL_ONLY"
+	promises["raphaelle_j07_mobile_review"] = {
+		"promise_id": "raphaelle_j07_mobile_review",
+		"promise_type": "TASK",
+		"created_at": "J07 11:04",
+		"created_by": "Raphaëlle",
+		"proposed_to": "Player",
+		"accepted_at": "J07 11:06",
+		"accepted_by_player": true,
+		"action_due": "Relire la version mobile",
+		"due_at": "J08 19:00",
+		"confirmation_deadline": "J08 17:00",
+		"status": "ACTIVE",
+		"related_scene": "j07_raphaelle_mobile_review_obligation",
+		"related_trace_ids": [],
+	}
+	return true
+
+func apply_j07_nico_guided_choice(choice_id: String) -> bool:
+	if choice_id == "" or selected_choice_ids.has(choice_id) or current_day != "J07" or day_status != "ACTIVE":
+		return false
+	if choice_id not in ["choice_j07_nico_topic_guided", "choice_j07_nico_what_mean_guided", "choice_j07_nico_at_least_said_guided"]:
+		return false
+	selected_choice_ids.append(choice_id)
+	return true
+
+func apply_j07_nico_main_choice(choice_id: String) -> bool:
+	if choice_id == "" or selected_choice_ids.has(choice_id) or nico_j07_confidence_outcome != "UNESTABLISHED":
+		return false
+	if not selected_choice_ids.has("choice_j07_nico_what_mean_guided"):
+		return false
+	var outcome := ""
+	var scope: Array[String] = []
+	match choice_id:
+		"choice_j07_nico_acknowledge_contradiction":
+			outcome = "CONTRADICTION_ACKNOWLEDGED"
+			scope = [
+				"Player se dit bien avec Marie",
+				"Player aime recevoir ailleurs une attention spéciale",
+				"aucune relation extérieure précise nommée",
+				"aucune permission demandée",
+			]
+		"choice_j07_nico_request_social_view":
+			outcome = "SOCIAL_VIEW_REQUESTED"
+			scope = [
+				"Player demande le regard social de Nico",
+				"aucun fait privé confirmé",
+				"ampleur de l’interprétation contestée",
+				"discussion continuée",
+			]
+		"choice_j07_nico_stay_vague":
+			outcome = "CONFIDENCE_DECLINED"
+			scope = [
+				"Player refuse de parler ce soir",
+				"Player ne nie pas être traversé par quelque chose",
+				"aucun alibi demandé",
+				"continuation encore à décider",
+			]
+		_:
+			return false
+	if traces.has("j07_nico_confidence_01") or knowledge.has("fact_nico_received_player_confidence"):
+		return false
+	selected_choice_ids.append(choice_id)
+	nico_j07_confidence_outcome = outcome
+	nico_state = "CONFIDENCE_ACTIVE"
+	traces["j07_nico_confidence_01"] = {
+		"trace_id": "j07_nico_confidence_01",
+		"trace_type": "TEXT_MESSAGE",
+		"source_day": "J07",
+		"source_scene": "confidence calme Nico",
+		"creator": "Player et Nico",
+		"subjects": ["Player", "Nico"],
+		"owner": "fil Player / Nico",
+		"initial_audience": ["Player", "Nico"],
+		"current_audience": ["Player", "Nico"],
+		"storage_location": "fil Player / Nico",
+		"saving_rule": "IN_THREAD_ONLY",
+		"transfer_rule": "FORBIDDEN",
+		"current_state": "ACTIVE",
+		"eligible_for_j14": true,
+		"eligible_for_j21": false,
+	}
+	knowledge["fact_nico_received_player_confidence"] = {
+		"fact_id": "fact_nico_received_player_confidence",
+		"source_type": "DIRECT_MESSAGE",
+		"source_ref": "j07_nico_confidence_01",
+		"initial_knowers": ["Nico", "Player"],
+		"certainty": "TOLD_DIRECTLY",
+		"shareability": "PRIVATE_DO_NOT_SHARE",
+		"branch_outcome": outcome,
+		"scope": scope,
+	}
+	return true
+
+func apply_j07_nico_continuation(choice_id: String) -> bool:
+	if choice_id == "" or selected_choice_ids.has(choice_id) or nico_j07_continuation_outcome != "UNESTABLISHED":
+		return false
+	if nico_j07_confidence_outcome == "UNESTABLISHED" or not selected_choice_ids.has("choice_j07_nico_at_least_said_guided"):
+		return false
+	match choice_id:
+		"choice_j07_nico_tuesday_accepted":
+			if promises.has("nico_j07_tuesday_1845") or promises.has("nico_j07_thursday_conditional"):
+				return false
+			nico_j07_continuation_outcome = "TUESDAY_ACCEPTED"
+			promises["nico_j07_tuesday_1845"] = {
+				"promise_id": "nico_j07_tuesday_1845",
+				"promise_type": "MEETING",
+				"created_at": "J07 23:00",
+				"created_by": "Nico",
+				"proposed_to": "Player",
+				"accepted_at": "J07 23:01",
+				"accepted_by_player": true,
+				"action_due": "Continuer la discussion avant le service",
+				"due_at": "J08 18:45",
+				"status": "ACTIVE",
+				"related_scene": "j07_nico_quiet_confidence",
+				"related_trace_ids": ["j07_nico_confidence_01"],
+			}
+		"choice_j07_nico_thursday_conditional":
+			if promises.has("nico_j07_tuesday_1845") or promises.has("nico_j07_thursday_conditional"):
+				return false
+			nico_j07_continuation_outcome = "THURSDAY_CONDITIONAL"
+			promises["nico_j07_thursday_conditional"] = {
+				"promise_id": "nico_j07_thursday_conditional",
+				"promise_type": "MEETING",
+				"created_at": "J07 23:01",
+				"created_by": "Player",
+				"proposed_to": "Nico",
+				"accepted_at": "J07 23:01",
+				"accepted_by_player": true,
+				"action_due": "Confirmer jeudi avant le service",
+				"due_at": "",
+				"confirmation_deadline": "J10 12:00",
+				"status": "CONDITIONAL",
+				"related_scene": "j07_nico_quiet_confidence",
+				"related_trace_ids": ["j07_nico_confidence_01"],
+			}
+		"choice_j07_nico_continuation_closed":
+			if promises.has("nico_j07_tuesday_1845") or promises.has("nico_j07_thursday_conditional"):
+				return false
+			nico_j07_continuation_outcome = "CONTINUATION_CLOSED"
+			promises["nico_j07_tuesday_1845"] = {
+				"promise_id": "nico_j07_tuesday_1845",
+				"promise_type": "MEETING",
+				"created_at": "J07 23:00",
+				"created_by": "Nico",
+				"proposed_to": "Player",
+				"accepted_at": "",
+				"accepted_by_player": false,
+				"action_due": "Aucune continuation",
+				"due_at": "",
+				"paid_or_closed_at": "J07 23:01",
+				"paid_or_closed_by": "Player",
+				"status": "REFUSED",
+				"related_scene": "j07_nico_quiet_confidence",
+				"related_trace_ids": ["j07_nico_confidence_01"],
+			}
+		_:
+			return false
+	selected_choice_ids.append(choice_id)
+	var fact: Dictionary = knowledge.get("fact_nico_received_player_confidence", {})
+	if not fact.is_empty() and nico_j07_confidence_outcome == "CONFIDENCE_DECLINED":
+		var scope: Array = fact.get("scope", [])
+		scope[3] = "continuation " + nico_j07_continuation_outcome.to_lower()
+		fact["scope"] = scope
+		knowledge["fact_nico_received_player_confidence"] = fact
+	return true
+
+func apply_j07_marie_choice(choice_id: String) -> bool:
+	if choice_id == "" or selected_choice_ids.has(choice_id) or marie_j07_household_outcome != "UNESTABLISHED":
+		return false
+	if promises.has("marie_j07_household_request"):
+		return false
+	var status := ""
+	var accepted := false
+	var due_at := ""
+	match choice_id:
+		"choice_j07_marie_presence_confirmed":
+			marie_j07_household_outcome = "PRESENCE_CONFIRMED"
+			status = "ACTIVE"
+			accepted = true
+			due_at = "J08 19:15"
+		"choice_j07_marie_precise_alternative":
+			marie_j07_household_outcome = "PRECISE_ALTERNATIVE"
+			status = "AMENDED"
+			accepted = true
+			due_at = "J08 18:30"
+		"choice_j07_marie_honest_refusal":
+			marie_j07_household_outcome = "HONEST_REFUSAL"
+			status = "REFUSED"
+		_:
+			return false
+	selected_choice_ids.append(choice_id)
+	promises["marie_j07_household_request"] = {
+		"promise_id": "marie_j07_household_request",
+		"promise_type": "PRESENCE",
+		"created_at": "J07 23:16",
+		"created_by": "Marie",
+		"proposed_to": "Player",
+		"accepted_at": "J07 23:18",
+		"accepted_by_player": accepted,
+		"action_due": "Être présent pour le constat" if accepted else "Aucune présence mardi maintenue",
+		"due_at": due_at,
+		"due_condition": "sous réserve de la réponse du propriétaire" if status == "AMENDED" else "",
+		"status": status,
+		"related_scene": "j07_marie_household_request",
+		"related_trace_ids": [],
+	}
+	return true
+
+func complete_j07() -> bool:
+	if current_day != "J07" or day_status != "ACTIVE":
+		return false
+	if marie_j06_return_resolution not in ["PAID", "NOT_DUE"]:
+		return false
+	if raphaelle_j07_mobile_review_outcome != "RESPONSIBILITY_ACKNOWLEDGED":
+		return false
+	if nico_j07_confidence_outcome == "UNESTABLISHED" or nico_j07_continuation_outcome == "UNESTABLISHED":
+		return false
+	if marie_j07_household_outcome == "UNESTABLISHED" or not _j07_records_consistent(snapshot()):
+		return false
+	return complete_day()
 
 func is_mathilde_j06_eligible() -> bool:
 	if current_day not in ["J05", "J06"] or day_status == "COMPLETE" and current_day == "J06":
@@ -543,11 +801,11 @@ func pay_marie_promise() -> bool:
 	promises["marie_j01_shared_evening"] = promise
 	return true
 
-func complete_conversation(conversation_id: String, character_id: String) -> bool:
+func complete_conversation(conversation_id: String, character_id: String, narrative_function := "foreground") -> bool:
 	if conversation_id == "" or completed_conversation_ids.has(conversation_id):
 		return false
 	completed_conversation_ids.append(conversation_id)
-	foreground_history.append({"day_id": current_day, "character_id": character_id, "function": "foreground"})
+	foreground_history.append({"day_id": current_day, "character_id": character_id, "function": narrative_function})
 	return true
 
 func complete_day() -> bool:
@@ -590,15 +848,22 @@ func snapshot() -> Dictionary:
 		"j06_external_continuity_resolution": j06_external_continuity_resolution,
 		"marie_j06_return_outcome": marie_j06_return_outcome,
 		"marie_j06_return_due_at": marie_j06_return_due_at,
+		"marie_j06_return_resolution": marie_j06_return_resolution,
+		"raphaelle_j07_mobile_review_outcome": raphaelle_j07_mobile_review_outcome,
+		"nico_j07_confidence_outcome": nico_j07_confidence_outcome,
+		"nico_j07_continuation_outcome": nico_j07_continuation_outcome,
+		"marie_j07_household_outcome": marie_j07_household_outcome,
 	}
 
 func restore_snapshot(value: Dictionary) -> bool:
 	var version := int(value.get("version", -1))
-	if version not in [1, 2, 3, SNAPSHOT_VERSION]:
+	if version not in [1, 2, 3, 4, SNAPSHOT_VERSION]:
 		return false
-	if str(value.get("current_day", "")) not in ["J01", "J02", "J03", "J04", "J05", "J06"]:
+	if str(value.get("current_day", "")) not in ["J01", "J02", "J03", "J04", "J05", "J06", "J07"]:
 		return false
-	if version < SNAPSHOT_VERSION and str(value.get("current_day", "")) == "J06":
+	if version < 4 and str(value.get("current_day", "")) == "J06":
+		return false
+	if version < SNAPSHOT_VERSION and str(value.get("current_day", "")) == "J07":
 		return false
 	if str(value.get("day_status", "")) not in ["ACTIVE", "COMPLETE"]:
 		return false
@@ -612,7 +877,7 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if str(value.get("marie_j03_return_outcome", "")) not in ["", "ACTIVE", "BOUNDED", "DRIFT"]: return false
 	if str(value.get("mathilde_state", "FAMILY_GUEST" if value.get("knowledge", {}).has("fact_mathilde_stay_started") else "UNESTABLISHED")) not in ["UNESTABLISHED", "FAMILY_GUEST", "DOMESTIC_FAMILIARITY", "LOOK_ACKNOWLEDGED", "DISTANCE", "TRUST_BROKEN"]: return false
 	if str(value.get("pauline_state", "UNESTABLISHED")) not in ["UNESTABLISHED", "PUBLIC_ONLY"]: return false
-	if str(value.get("nico_state", "UNESTABLISHED")) not in ["UNESTABLISHED", "ORDINARY_FRIEND"]: return false
+	if str(value.get("nico_state", "UNESTABLISHED")) not in ["UNESTABLISHED", "ORDINARY_FRIEND", "CONFIDENCE_ACTIVE"]: return false
 	var pauline_outcome := str(value.get("pauline_public_selection_outcome", "UNESTABLISHED"))
 	if pauline_outcome not in ["UNESTABLISHED", "FRAME_02_SELECTED", "FRAME_03_REQUESTED", "DEFERRED_TO_MARIE"]: return false
 	if str(value.get("pauline_retained_frame", _default_pauline_retained_frame(pauline_outcome))) != _default_pauline_retained_frame(pauline_outcome): return false
@@ -624,6 +889,11 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if str(value.get("j06_external_continuity_resolution", "UNESTABLISHED")) not in ["UNESTABLISHED", "PAID", "REFUSED", "EXPIRED", "UNAVAILABLE", "NO_PROMISE"]: return false
 	if str(value.get("marie_j06_return_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "WARM_ECHO", "IMMEDIATE_ACT", "BOUNDED_NEXT_ACT", "HONEST_DRIFT"]: return false
 	if str(value.get("marie_j06_return_due_at", "")) not in ["", "J07 09:30"]: return false
+	if str(value.get("marie_j06_return_resolution", "UNESTABLISHED")) not in ["UNESTABLISHED", "PAID", "NOT_DUE"]: return false
+	if str(value.get("raphaelle_j07_mobile_review_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "RESPONSIBILITY_ACKNOWLEDGED"]: return false
+	if str(value.get("nico_j07_confidence_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "CONTRADICTION_ACKNOWLEDGED", "SOCIAL_VIEW_REQUESTED", "CONFIDENCE_DECLINED"]: return false
+	if str(value.get("nico_j07_continuation_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "TUESDAY_ACCEPTED", "THURSDAY_CONDITIONAL", "CONTINUATION_CLOSED"]: return false
+	if str(value.get("marie_j07_household_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "PRESENCE_CONFIRMED", "PRECISE_ALTERNATIVE", "HONEST_REFUSAL"]: return false
 	for key in ["promises", "traces", "knowledge"]:
 		if typeof(value.get(key)) != TYPE_DICTIONARY:
 			return false
@@ -633,6 +903,8 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if not _j05_snapshot_consistent(value):
 		return false
 	if not _j06_snapshot_consistent(value):
+		return false
+	if not _j07_records_consistent(value):
 		return false
 	current_day = str(value["current_day"])
 	day_status = str(value["day_status"])
@@ -665,6 +937,11 @@ func restore_snapshot(value: Dictionary) -> bool:
 	j06_external_continuity_resolution = str(value.get("j06_external_continuity_resolution", "UNESTABLISHED"))
 	marie_j06_return_outcome = str(value.get("marie_j06_return_outcome", "UNESTABLISHED"))
 	marie_j06_return_due_at = str(value.get("marie_j06_return_due_at", ""))
+	marie_j06_return_resolution = str(value.get("marie_j06_return_resolution", "UNESTABLISHED"))
+	raphaelle_j07_mobile_review_outcome = str(value.get("raphaelle_j07_mobile_review_outcome", "UNESTABLISHED"))
+	nico_j07_confidence_outcome = str(value.get("nico_j07_confidence_outcome", "UNESTABLISHED"))
+	nico_j07_continuation_outcome = str(value.get("nico_j07_continuation_outcome", "UNESTABLISHED"))
+	marie_j07_household_outcome = str(value.get("marie_j07_household_outcome", "UNESTABLISHED"))
 	return true
 
 func _default_pauline_retained_frame(outcome: String) -> String:
@@ -724,3 +1001,65 @@ func _j06_snapshot_consistent(value: Dictionary) -> bool:
 	if marie_outcome == "BOUNDED_NEXT_ACT":
 		return due_at == "J07 09:30"
 	return due_at == ""
+
+func _j07_records_consistent(value: Dictionary) -> bool:
+	var raphaelle_outcome := str(value.get("raphaelle_j07_mobile_review_outcome", "UNESTABLISHED"))
+	var nico_outcome := str(value.get("nico_j07_confidence_outcome", "UNESTABLISHED"))
+	var continuation := str(value.get("nico_j07_continuation_outcome", "UNESTABLISHED"))
+	var marie_outcome := str(value.get("marie_j07_household_outcome", "UNESTABLISHED"))
+	var restored_promises: Dictionary = value.get("promises", {})
+	var restored_traces: Dictionary = value.get("traces", {})
+	var restored_knowledge: Dictionary = value.get("knowledge", {})
+	if (raphaelle_outcome != "UNESTABLISHED") != restored_promises.has("raphaelle_j07_mobile_review"):
+		return false
+	if raphaelle_outcome != "UNESTABLISHED":
+		var p05: Dictionary = restored_promises["raphaelle_j07_mobile_review"]
+		if str(p05.get("status", "")) != "ACTIVE" or str(p05.get("due_at", "")) != "J08 19:00" or not bool(p05.get("accepted_by_player", false)):
+			return false
+	var has_t06 := restored_traces.has("j07_nico_confidence_01")
+	var has_f10 := restored_knowledge.has("fact_nico_received_player_confidence")
+	if (nico_outcome != "UNESTABLISHED") != has_t06 or has_t06 != has_f10:
+		return false
+	if has_f10 and str(restored_knowledge["fact_nico_received_player_confidence"].get("branch_outcome", "")) != nico_outcome:
+		return false
+	var has_p06 := restored_promises.has("nico_j07_tuesday_1845")
+	var has_p07 := restored_promises.has("nico_j07_thursday_conditional")
+	var p06: Dictionary = restored_promises.get("nico_j07_tuesday_1845", {})
+	var p07: Dictionary = restored_promises.get("nico_j07_thursday_conditional", {})
+	match continuation:
+		"UNESTABLISHED":
+			if has_p06 or has_p07:
+				return false
+		"TUESDAY_ACCEPTED":
+			if not has_p06 or has_p07:
+				return false
+			if str(p06.get("status", "")) != "ACTIVE" or not bool(p06.get("accepted_by_player", false)):
+				return false
+			if str(p06.get("accepted_at", "")) != "J07 23:01" or str(p06.get("due_at", "")) != "J08 18:45":
+				return false
+			if str(p06.get("paid_or_closed_at", "")) != "":
+				return false
+		"THURSDAY_CONDITIONAL":
+			if has_p06 or not has_p07:
+				return false
+			if str(p07.get("status", "")) != "CONDITIONAL" or str(p07.get("due_at", "")) != "":
+				return false
+			if str(p07.get("confirmation_deadline", "")) != "J10 12:00":
+				return false
+		"CONTINUATION_CLOSED":
+			if not has_p06 or has_p07:
+				return false
+			if str(p06.get("status", "")) != "REFUSED" or bool(p06.get("accepted_by_player", false)):
+				return false
+			if str(p06.get("accepted_at", "")) != "" or str(p06.get("due_at", "")) != "":
+				return false
+			if str(p06.get("paid_or_closed_at", "")) != "J07 23:01" or str(p06.get("paid_or_closed_by", "")) != "Player":
+				return false
+	var has_p08 := restored_promises.has("marie_j07_household_request")
+	if (marie_outcome != "UNESTABLISHED") != has_p08:
+		return false
+	if has_p08:
+		var expected_status: String = str({"PRESENCE_CONFIRMED": "ACTIVE", "PRECISE_ALTERNATIVE": "AMENDED", "HONEST_REFUSAL": "REFUSED"}.get(marie_outcome, ""))
+		if str(restored_promises["marie_j07_household_request"].get("status", "")) != expected_status:
+			return false
+	return true

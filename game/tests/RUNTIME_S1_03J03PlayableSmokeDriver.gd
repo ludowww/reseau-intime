@@ -223,7 +223,7 @@ func _test_invalid_j03_phase() -> void:
 	_expect(not restored.restore_snapshot(snapshot), "unknown restored J03 phase accepted")
 
 func _restore_exact(snapshot: Dictionary, label: String):
-	_expect(int(snapshot.get("version", 0)) == 3 and snapshot.keys() == ["version", "active_day", "state", "provider_snapshots"], label + " v3 shape")
+	_expect(int(snapshot.get("version", 0)) == 6 and snapshot.keys() == ["version", "active_day", "state", "provider_snapshots"], label + " v6 shape")
 	var restored = SEASON_PROVIDER.new(); _expect(restored.initialize(), label + " initialize")
 	_expect(restored.restore_snapshot(snapshot), label + " restore")
 	_expect(restored.state_restore_count == 1, label + " Season1State restore count")

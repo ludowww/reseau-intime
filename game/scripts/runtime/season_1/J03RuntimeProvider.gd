@@ -231,7 +231,7 @@ func _restored_phase_is_consistent(restored_phase: String, transition: Dictionar
 	if restored_phase == "day_start_pending":
 		return state.current_day == "J02" and state.day_status == "COMPLETE" and transition.is_empty()
 	if restored_phase == "complete":
-		return ((state.current_day == "J03" and state.day_status == "COMPLETE") or state.current_day in ["J04", "J05", "J06"]) and transition.is_empty()
+		return ((state.current_day == "J03" and state.day_status == "COMPLETE") or state.current_day in ["J04", "J05", "J06", "J07"]) and transition.is_empty()
 	if state.current_day != "J03": return false
 	if state.day_status != "ACTIVE": return false
 	if restored_phase in ["raphaelle_offline", "marie_offline"]: return transition_kind == "offline"

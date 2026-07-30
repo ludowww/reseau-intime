@@ -1,0 +1,181 @@
+{
+  "id": "chapter_07_nico_quiet_confidence",
+  "scene_id": "j07_nico_quiet_confidence",
+  "chapter": 7,
+  "day": 7,
+  "title": "Lundi soir — Après la salle",
+  "app": "messages",
+  "window_id": "J07_NICO_QUIET_CONFIDENCE",
+  "calendar_label": "Lundi",
+  "time_band": "NIGHT",
+  "communication_mode": "REMOTE_ASYNC",
+  "foreground_role": "major_pivot",
+  "physical_context": "L’Annexe est fermée. Nico est seul sur place ; Player est ailleurs. Aucune rencontre n’a lieu ce soir.",
+  "thread": {
+    "id": "thread_nico_private",
+    "type": "private",
+    "participants": ["ludo", "nico"],
+    "display_name": "Nico",
+    "profile_content_id": "profile_nico_placeholder"
+  },
+  "segments": [
+    {
+      "id": "segment_j07_nico_opening",
+      "pattern": "guided_reply_pacing",
+      "messages": [
+        {"id": "msg_j07_nico_confidence_001", "sender": "nico", "time_label": "22:46", "text": "La salle est vide."},
+        {"id": "msg_j07_nico_confidence_002", "sender": "nico", "time_label": "22:46", "text": "J’ai essuyé la même table deux fois."},
+        {"id": "msg_j07_nico_confidence_003", "sender": "nico", "time_label": "22:47", "text": "Je commence à me méfier de moi."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j07_nico_topic_guided",
+          "text": "tu veux me parler de quoi",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "next_messages": [
+            {"id": "msg_j07_nico_confidence_004", "sender": "nico", "time_label": "22:48", "text": "De toi, malheureusement."},
+            {"id": "msg_j07_nico_confidence_005_marie_well", "sender": "nico", "time_label": "22:48", "variant": "marie_well_asked", "text": "Vendredi, tu m’as demandé si Marie avait l’air bien."},
+            {"id": "msg_j07_nico_confidence_005_chair", "sender": "nico", "time_label": "22:48", "variant": "chair_return", "text": "Vendredi, on parlait d’une chaise et tu as quand même fini par revenir à Marie."},
+            {"id": "msg_j07_nico_confidence_006", "sender": "nico", "time_label": "22:49", "text": "Pas si elle t’en voulait."},
+            {"id": "msg_j07_nico_confidence_007", "sender": "nico", "time_label": "22:49", "text": "Si elle avait l’air bien."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_j07_nico_social_read",
+      "pattern": "guided_reply_pacing",
+      "messages": [],
+      "choices": [
+        {
+          "id": "choice_j07_nico_what_mean_guided",
+          "text": "et ça t’a fait penser à quoi",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "next_messages": [
+            {"id": "msg_j07_nico_confidence_008", "sender": "nico", "time_label": "22:50", "text": "Que tu regardes si elle sait passer une bonne soirée sans toi."},
+            {"id": "msg_j07_nico_confidence_009", "sender": "nico", "time_label": "22:50", "text": "Et que ça te rassure autant que ça t’agace."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_j07_nico_main_choice",
+      "pattern": "three_posture_choice",
+      "messages": [],
+      "choices": [
+        {
+          "id": "choice_j07_nico_acknowledge_contradiction",
+          "text": "je suis bien avec elle. et j’aime quand quelqu’un d’autre me regarde autrement. les deux sont vrais",
+          "tone": "contradiction_acknowledged",
+          "next_messages": [
+            {"id": "msg_j07_nico_confidence_010a", "sender": "nico", "time_label": "22:52", "text": "Oui."},
+            {"id": "msg_j07_nico_confidence_011a", "sender": "nico", "time_label": "22:52", "text": "Et tant que tu ne choisis rien, tu peux appeler le deuxième « rien »."},
+            {"id": "msg_j07_nico_confidence_012a_player", "sender": "player", "time_label": "22:53", "text": "c’est un peu facile"},
+            {"id": "msg_j07_nico_confidence_013a", "sender": "nico", "time_label": "22:53", "text": "Oui."},
+            {"id": "msg_j07_nico_confidence_014a", "sender": "nico", "time_label": "22:53", "text": "C’est pour ça que je le fais gratuitement."},
+            {"id": "msg_j07_nico_confidence_015a", "sender": "nico", "time_label": "22:54", "text": "Je vais être clair aussi."},
+            {"id": "msg_j07_nico_confidence_016a", "sender": "nico", "time_label": "22:54", "text": "Marie me plaît."},
+            {"id": "msg_j07_nico_confidence_017a", "sender": "nico", "time_label": "22:55", "text": "Mathilde aussi. Pas de la même façon."},
+            {"id": "msg_j07_nico_confidence_018a", "sender": "nico", "time_label": "22:55", "text": "Ça ne me donne rien."},
+            {"id": "msg_j07_nico_confidence_019a", "sender": "nico", "time_label": "22:55", "text": "Mais mon avis n’est pas neutre."}
+          ]
+        },
+        {
+          "id": "choice_j07_nico_request_social_view",
+          "text": "toi, tu as vu quoi exactement",
+          "tone": "social_view_requested",
+          "next_messages": [
+            {"id": "msg_j07_nico_confidence_010b", "sender": "nico", "time_label": "22:52", "text": "Que tu regardes Marie quand elle parle aux autres."},
+            {"id": "msg_j07_nico_confidence_011b", "sender": "nico", "time_label": "22:52", "text": "Pas comme un mec qui s’ennuie."},
+            {"id": "msg_j07_nico_confidence_012b", "sender": "nico", "time_label": "22:53", "text": "Comme un mec qui vérifie si elle a encore besoin de lui."},
+            {"id": "msg_j07_nico_confidence_013b", "sender": "nico", "time_label": "22:53", "text": "Et tu réponds vite dès que Mathilde entre dans la conversation."},
+            {"id": "msg_j07_nico_confidence_014b_player", "sender": "player", "time_label": "22:54", "text": "tu lis beaucoup dans trois phrases"},
+            {"id": "msg_j07_nico_confidence_015b", "sender": "nico", "time_label": "22:54", "text": "Possible."},
+            {"id": "msg_j07_nico_confidence_016b", "sender": "nico", "time_label": "22:54", "text": "Je travaille avec des gens qui mentent sur leur dernière commande depuis six ans."},
+            {"id": "msg_j07_nico_confidence_017b", "sender": "nico", "time_label": "22:55", "text": "Ça déforme."},
+            {"id": "msg_j07_nico_confidence_018b", "sender": "nico", "time_label": "22:55", "text": "Et je préfère te prévenir."},
+            {"id": "msg_j07_nico_confidence_019b", "sender": "nico", "time_label": "22:56", "text": "Marie me plaît."},
+            {"id": "msg_j07_nico_confidence_020b", "sender": "nico", "time_label": "22:56", "text": "Mathilde aussi."},
+            {"id": "msg_j07_nico_confidence_021b", "sender": "nico", "time_label": "22:56", "text": "Donc mon avis n’est pas neutre."}
+          ]
+        },
+        {
+          "id": "choice_j07_nico_stay_vague",
+          "text": "j’ai juste la tête pleine. pas envie d’en faire une théorie",
+          "tone": "confidence_declined",
+          "next_messages": [
+            {"id": "msg_j07_nico_confidence_010c", "sender": "nico", "time_label": "22:52", "text": "D’accord."},
+            {"id": "msg_j07_nico_confidence_011c", "sender": "nico", "time_label": "22:52", "text": "Je vais pas te tirer les mots."},
+            {"id": "msg_j07_nico_confidence_012c", "sender": "nico", "time_label": "22:53", "text": "Mais ne me demande pas un alibi un jour en prétendant que je n’avais rien compris."},
+            {"id": "msg_j07_nico_confidence_013c_player", "sender": "player", "time_label": "22:54", "text": "je t’ai rien demandé"},
+            {"id": "msg_j07_nico_confidence_014c", "sender": "nico", "time_label": "22:54", "text": "Justement."},
+            {"id": "msg_j07_nico_confidence_015c", "sender": "nico", "time_label": "22:54", "text": "Je préfère être en avance."},
+            {"id": "msg_j07_nico_confidence_016c", "sender": "nico", "time_label": "22:55", "text": "Et pour que ce soit clair : Marie me plaît."},
+            {"id": "msg_j07_nico_confidence_017c", "sender": "nico", "time_label": "22:55", "text": "Mathilde aussi."},
+            {"id": "msg_j07_nico_confidence_018c", "sender": "nico", "time_label": "22:56", "text": "Ça ne me donne rien."},
+            {"id": "msg_j07_nico_confidence_019c", "sender": "nico", "time_label": "22:56", "text": "Mais je ne suis pas neutre."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_j07_nico_closing",
+      "pattern": "guided_reply_pacing",
+      "messages": [],
+      "choices": [
+        {
+          "id": "choice_j07_nico_at_least_said_guided",
+          "text": "au moins c’est dit",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "next_messages": [
+            {"id": "msg_j07_nico_confidence_022", "sender": "nico", "time_label": "22:58", "text": "Oui."},
+            {"id": "msg_j07_nico_confidence_023", "sender": "nico", "time_label": "22:58", "text": "Dire ce qu’on veut, c’est la partie facile."},
+            {"id": "msg_j07_nico_confidence_024", "sender": "nico", "time_label": "22:59", "text": "Le reste, c’est ce qu’on en fait et qui est au courant."},
+            {"id": "msg_j07_nico_confidence_025", "sender": "nico", "time_label": "23:00", "text": "Je finis les plannings demain avant le service."},
+            {"id": "msg_j07_nico_confidence_026", "sender": "nico", "time_label": "23:00", "text": "Passe à 18 h 45 si tu veux qu’on termine ça sans le faire tenir dans des bulles."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_j07_nico_continuation",
+      "pattern": "three_posture_choice",
+      "messages": [],
+      "choices": [
+        {
+          "id": "choice_j07_nico_tuesday_accepted",
+          "text": "je passe. 18 h 45",
+          "tone": "precise_acceptance",
+          "next_messages": [
+            {"id": "msg_j07_nico_confidence_027a", "sender": "nico", "time_label": "23:01", "text": "Ça marche."},
+            {"id": "msg_j07_nico_confidence_028a", "sender": "nico", "time_label": "23:01", "text": "Si tu annules, annule."},
+            {"id": "msg_j07_nico_confidence_029a", "sender": "nico", "time_label": "23:02", "text": "Ne me fais pas garder une chaise pour une philosophie."}
+          ]
+        },
+        {
+          "id": "choice_j07_nico_thursday_conditional",
+          "text": "mardi non. jeudi avant ton service si on confirme avant midi",
+          "tone": "conditional_alternative",
+          "next_messages": [
+            {"id": "msg_j07_nico_confidence_027b", "sender": "nico", "time_label": "23:01", "text": "Conditionnel, alors."},
+            {"id": "msg_j07_nico_confidence_028b", "sender": "nico", "time_label": "23:02", "text": "Sans confirmation, je ne garde rien."}
+          ]
+        },
+        {
+          "id": "choice_j07_nico_continuation_closed",
+          "text": "pas besoin de remettre. merci d’avoir parlé",
+          "tone": "continuation_closed",
+          "next_messages": [
+            {"id": "msg_j07_nico_confidence_027c", "sender": "nico", "time_label": "23:01", "text": "D’accord."},
+            {"id": "msg_j07_nico_confidence_028c", "sender": "nico", "time_label": "23:02", "text": "On garde le reste normal."}
+          ]
+        }
+      ]
+    }
+  ],
+  "routes_nourished": [],
+  "debug_notes": "J07 canonique signé. Nico est le pivot majeur borné ; aucune route romantique ou sexuelle Nico–Player."
+}

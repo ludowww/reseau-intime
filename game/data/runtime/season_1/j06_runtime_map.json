@@ -29,17 +29,30 @@
   },
   "day_close": {
     "transition_mode": "offline",
-    "flow_phases": ["OFF_PHONE"],
+    "flow_phases": ["OFF_PHONE", "NIGHT", "NEW_DAY"],
+    "content_end": false,
+    "next_day_presentation": {
+      "eyebrow": "LUNDI — MATIN",
+      "title": "Ce qu’on ne dit qu’à une personne",
+      "subtitle": "09:30",
+      "body": "La semaine recommence ordinairement.",
+      "action_label": "Commencer",
+      "transition_mode": "day_boundary"
+    },
     "text": "Le retour concret de Marie ferme le dimanche."
   },
   "day_end": {
-    "eyebrow": "DIMANCHE — FIN DE JOURNÉE",
-    "title": "J06 terminé",
-    "subtitle": "Un regard remarqué reste une limite, pas une permission.",
-    "body": "Fin du contenu disponible.",
-    "action_label": "Terminer",
-    "transition_mode": "CONTENT_END",
-    "content_end": true
+    "flow_phases": ["OFF_PHONE", "NIGHT"],
+    "next_day_presentation": {
+      "eyebrow": "LUNDI — MATIN",
+      "title": "Ce qu’on ne dit qu’à une personne",
+      "subtitle": "09:30",
+      "body": "La semaine recommence ordinairement.",
+      "action_label": "Commencer",
+      "transition_mode": "day_boundary"
+    },
+    "transition_mode": "day_handoff",
+    "content_end": false
   },
   "gallery_presentations": [
     {

@@ -1,0 +1,67 @@
+{
+  "id": "chapter_07_marie_household_request",
+  "scene_id": "j07_marie_household_request",
+  "chapter": 7,
+  "day": 7,
+  "title": "Lundi soir — Le constat",
+  "app": "messages",
+  "window_id": "J07_MARIE_HOUSEHOLD_REQUEST",
+  "calendar_label": "Lundi",
+  "time_band": "NIGHT",
+  "communication_mode": "REMOTE_ASYNC",
+  "foreground_role": "household_return",
+  "physical_context": "Marie est au foyer. Player est réellement séparé. Le propriétaire ne participe pas à la conversation.",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": ["ludo", "marie"],
+    "display_name": "Marie",
+    "profile_content_id": "profile_marie_placeholder"
+  },
+  "segments": [
+    {
+      "id": "segment_j07_marie_household_choice",
+      "pattern": "three_posture_choice",
+      "messages": [
+        {"id": "msg_j07_marie_household_001", "sender": "marie", "time_label": "23:16", "text": "Demain, le propriétaire passe pour le constat de Mathilde."},
+        {"id": "msg_j07_marie_household_002", "sender": "marie", "time_label": "23:16", "text": "19 h 15."},
+        {"id": "msg_j07_marie_household_003", "sender": "marie", "time_label": "23:17", "text": "Elle finit tard et moi je suis à La Verrière."},
+        {"id": "msg_j07_marie_household_004", "sender": "marie", "time_label": "23:17", "text": "Tu peux être à l’appart ?"}
+      ],
+      "choices": [
+        {
+          "id": "choice_j07_marie_presence_confirmed",
+          "text": "oui. 19 h 15, je serai là",
+          "tone": "precise_presence",
+          "next_messages": [
+            {"id": "msg_j07_marie_household_005a", "sender": "marie", "time_label": "23:18", "text": "Merci."},
+            {"id": "msg_j07_marie_household_006a", "sender": "marie", "time_label": "23:18", "text": "Les papiers sont dans la pochette bleue."},
+            {"id": "msg_j07_marie_household_007a", "sender": "marie", "time_label": "23:19", "text": "Pas la verte. La verte contient des choses que même l’administration a abandonnées."}
+          ]
+        },
+        {
+          "id": "choice_j07_marie_precise_alternative",
+          "text": "je peux être là à 18 h 30, pas 19 h 15. demande-lui s’il peut avancer",
+          "tone": "precise_alternative",
+          "next_messages": [
+            {"id": "msg_j07_marie_household_005b", "sender": "marie", "time_label": "23:18", "text": "Je lui écris."},
+            {"id": "msg_j07_marie_household_006b", "sender": "marie", "time_label": "23:19", "text": "Je te dis dès qu’il répond."},
+            {"id": "msg_j07_marie_household_007b", "sender": "marie", "time_label": "23:19", "text": "C’est une vraie alternative. Je prends."}
+          ]
+        },
+        {
+          "id": "choice_j07_marie_honest_refusal",
+          "text": "je ne peux pas demain. dis-lui de voir avec moi mercredi",
+          "tone": "honest_refusal",
+          "next_messages": [
+            {"id": "msg_j07_marie_household_005c", "sender": "marie", "time_label": "23:18", "text": "D’accord."},
+            {"id": "msg_j07_marie_household_006c", "sender": "marie", "time_label": "23:19", "text": "Je vais lui écrire."},
+            {"id": "msg_j07_marie_household_007c", "sender": "marie", "time_label": "23:19", "text": "Mais je ne garde pas le créneau en suspens."}
+          ]
+        }
+      ]
+    }
+  ],
+  "routes_nourished": [],
+  "debug_notes": "J07 canonique signé. Retour foyer et P08 seulement ; Mathilde ne progresse pas."
+}

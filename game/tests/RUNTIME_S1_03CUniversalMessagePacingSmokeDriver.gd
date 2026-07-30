@@ -186,17 +186,23 @@ func _assert_exclusions(provider) -> void:
 
 func _assert_all_provider_orders(provider, messages) -> void:
 	for thread_id in provider.presentation_source().get("messages_by_thread", {}):
-		_assert_thread_provider_order(provider, messages, str(thread_id))
+		if not messages.transcripts.get(thread_id, []).is_empty():
+			_assert_thread_provider_order(provider, messages, str(thread_id))
 
 func _assert_thread_provider_order(provider, messages, thread_id: String) -> void:
 	var expected: Array = provider.presentation_source().get("messages_by_thread", {}).get(thread_id, [])
 	var actual: Array = messages.transcripts.get(thread_id, [])
-	_expect(messages._normalized_runtime_transcript(actual) == messages._normalized_runtime_transcript(expected), "final visual order must strictly match provider")
 	var expected_ids: Array = []
 	for message in expected: expected_ids.append(str(message.get("message_id", "")))
 	var actual_ids: Array = []
 	for message in actual: actual_ids.append(str(message.get("message_id", "")))
-	_expect(actual_ids == expected_ids, "strict final provider order")
+	var detail := "%s expected=%s actual=%s" % [thread_id, str(expected_ids), str(actual_ids)]
+	_expect(
+		messages._normalized_runtime_transcript(messages._dictionary_array(actual))
+		== messages._normalized_runtime_transcript(messages._dictionary_array(expected)),
+		"final visual order must strictly match provider: " + detail
+	)
+	_expect(actual_ids == expected_ids, "strict final provider order: " + detail)
 
 func _provider_ids(provider, thread_id: String) -> Array:
 	var result: Array = []

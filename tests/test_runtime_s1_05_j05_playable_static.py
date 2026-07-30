@@ -145,8 +145,8 @@ class RuntimeS105J05PlayableStaticTests(unittest.TestCase):
             self.assertIn(token, eligibility)
         for forbidden in ["photo_opened", "sandra_j03_echo_outcome", "candidate_pool", "route_score"]:
             self.assertNotIn(forbidden, eligibility)
-        self.assertIn("const SNAPSHOT_VERSION := 4", state)
-        self.assertIn("version not in [1, 2, 3, SNAPSHOT_VERSION]", state)
+        self.assertIn("const SNAPSHOT_VERSION := 5", state)
+        self.assertIn("version not in [1, 2, 3, 4, SNAPSHOT_VERSION]", state)
 
     def test_provider_uses_common_runtime_contract(self):
         provider = self.read("game/scripts/runtime/season_1/J05RuntimeProvider.gd")
@@ -199,11 +199,11 @@ class RuntimeS105J05PlayableStaticTests(unittest.TestCase):
             "_handoff_to_j05",
             'active_day = "J05"',
             '"J05":',
-            '["J01", "J02", "J03", "J04", "J05", "J06"]',
+            '["J01", "J02", "J03", "J04", "J05", "J06", "J07"]',
         ]:
             self.assertIn(token, season)
-        self.assertIn("const SNAPSHOT_VERSION := 5", season)
-        self.assertIn("version not in [2, 3, 4, SNAPSHOT_VERSION]", season)
+        self.assertIn("const SNAPSHOT_VERSION := 6", season)
+        self.assertIn("version not in [2, 3, 4, 5, SNAPSHOT_VERSION]", season)
 
     def test_smoke_and_runner_cover_all_required_paths_and_sizes(self):
         driver = self.read("game/tests/RUNTIME_S1_05J05PlayableSmokeDriver.gd")

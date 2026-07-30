@@ -67,8 +67,8 @@ class RuntimeS103J03PlayableStaticTests(unittest.TestCase):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         day = self.read("game/scripts/ui/messages/DayTransition.gd")
         messages = self.read("game/scripts/ui/messages/MessagesScreen.gd")
-        self.assertIn("const SNAPSHOT_VERSION := 5", season)
-        self.assertIn("version not in [2, 3, 4, SNAPSHOT_VERSION]", season)
+        self.assertIn("const SNAPSHOT_VERSION := 6", season)
+        self.assertIn("version not in [2, 3, 4, 5, SNAPSHOT_VERSION]", season)
         for token in ['"state"', '"provider_snapshots"', '"J01"', '"J02"', '"J03"', '"J04"', '"J05"', '"J06"']:
             self.assertIn(token, season)
         self.assertIn("progress_snapshot", j01)

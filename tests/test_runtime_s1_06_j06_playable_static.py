@@ -72,8 +72,9 @@ class RuntimeS106J06PlayableStaticTests(unittest.TestCase):
         data = self.load("game/data/runtime/season_1/j06_runtime_map.json")
         self.assertEqual("Dim.", data["narrative_day_short"])
         self.assertEqual("10:25", data["initial_time"])
-        self.assertEqual("CONTENT_END", data["day_end"]["transition_mode"])
-        self.assertTrue(data["day_end"]["content_end"])
+        self.assertEqual("day_handoff", data["day_end"]["transition_mode"])
+        self.assertFalse(data["day_end"]["content_end"])
+        self.assertEqual("LUNDI — MATIN", data["day_end"]["next_day_presentation"]["eyebrow"])
         self.assertEqual(
             [
                 "S1_A2_J06_SCN_MATHILDE_LOOK_ACKNOWLEDGED_01",
@@ -171,14 +172,16 @@ class RuntimeS106J06PlayableStaticTests(unittest.TestCase):
         ]:
             self.assertNotIn(forbidden, provider)
 
-    def test_j05_hands_off_and_only_j06_is_content_end(self):
+    def test_j05_hands_off_and_j06_now_hands_off_to_j07(self):
         j05 = self.load("game/data/runtime/season_1/j05_runtime_map.json")
         j06 = self.load("game/data/runtime/season_1/j06_runtime_map.json")
         self.assertNotEqual("CONTENT_END", j05["day_end"]["transition_mode"])
         self.assertFalse(j05["day_end"]["content_end"])
         self.assertIn("NEW_DAY", j05["day_close"]["flow_phases"])
         self.assertEqual("DIMANCHE — MATIN", j05["day_close"]["next_day_presentation"]["eyebrow"])
-        self.assertEqual("CONTENT_END", j06["day_end"]["transition_mode"])
+        self.assertEqual("day_handoff", j06["day_end"]["transition_mode"])
+        self.assertFalse(j06["day_end"]["content_end"])
+        self.assertEqual("LUNDI — MATIN", j06["day_end"]["next_day_presentation"]["eyebrow"])
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
         for token in [
             'preload("res://scripts/runtime/season_1/J06RuntimeProvider.gd")',
@@ -187,16 +190,16 @@ class RuntimeS106J06PlayableStaticTests(unittest.TestCase):
             "_handoff_to_j06",
             'active_day = "J06"',
             '"J06":',
-            '["J01", "J02", "J03", "J04", "J05", "J06"]',
+            '["J01", "J02", "J03", "J04", "J05", "J06", "J07"]',
         ]:
             self.assertIn(token, season)
-        self.assertIn("const SNAPSHOT_VERSION := 5", season)
-        self.assertIn("const SNAPSHOT_VERSION := 4", self.read("game/scripts/runtime/season_1/Season1State.gd"))
+        self.assertIn("const SNAPSHOT_VERSION := 6", season)
+        self.assertIn("const SNAPSHOT_VERSION := 5", self.read("game/scripts/runtime/season_1/Season1State.gd"))
 
     def test_closed_characters_and_legacy_are_not_mutated(self):
         provider = self.read("game/scripts/runtime/season_1/J06RuntimeProvider.gd")
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
-        j06_state = state.split("func begin_j06", 1)[1].split("func apply_j05_marie_choice", 1)[0]
+        j06_state = state.split("func begin_j06", 1)[1].split("func begin_j07", 1)[0]
         for forbidden in [
             "sandra_state =",
             "pauline_state =",

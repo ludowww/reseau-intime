@@ -1,0 +1,64 @@
+{
+  "id": "chapter_07_raphaelle_mobile_review_obligation",
+  "scene_id": "j07_raphaelle_mobile_review_obligation",
+  "chapter": 7,
+  "day": 7,
+  "title": "Lundi — Version mobile",
+  "app": "messages",
+  "window_id": "J07_RAPHAELLE_MOBILE_REVIEW",
+  "calendar_label": "Lundi",
+  "time_band": "MORNING",
+  "communication_mode": "WORK_CHAT",
+  "foreground_role": "professional_secondary",
+  "physical_context": "Raphaëlle et Player travaillent dans des espaces distincts.",
+  "thread": {
+    "id": "thread_raphaelle_private",
+    "type": "private",
+    "participants": ["ludo", "raphaelle"],
+    "display_name": "Raphaëlle",
+    "profile_content_id": "profile_raphaelle_placeholder"
+  },
+  "segments": [
+    {
+      "id": "segment_j07_raphaelle_opening",
+      "pattern": "guided_reply_pacing",
+      "messages": [
+        {"id": "msg_j07_raphaelle_mobile_001", "sender": "raphaelle", "time_label": "11:04", "text": "Le point client passe à mercredi, 9 h."},
+        {"id": "msg_j07_raphaelle_mobile_002", "sender": "raphaelle", "time_label": "11:04", "text": "La version mobile doit être relue demain avant 19 h."},
+        {"id": "msg_j07_raphaelle_mobile_003_normal", "sender": "raphaelle", "time_label": "11:05", "variant": "normal", "text": "Je t’envoie le lien à 17 h. C’est toujours ta section."},
+        {"id": "msg_j07_raphaelle_mobile_003_delayed", "sender": "raphaelle", "time_label": "11:05", "variant": "delayed", "text": "La version mobile est toujours à toi. Je précise parce que le passé récent est instructif."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j07_raphaelle_acknowledge_guided",
+          "text": "oui. si je bloque, je te le dis avant 17 h",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "next_messages": [
+            {"id": "msg_j07_raphaelle_mobile_004", "sender": "raphaelle", "time_label": "11:06", "text": "Merci."},
+            {"id": "msg_j07_raphaelle_mobile_005", "sender": "raphaelle", "time_label": "11:06", "text": "Avant 17 h, donc."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "segment_j07_raphaelle_dry_return",
+      "pattern": "guided_reply_pacing",
+      "messages": [],
+      "choices": [
+        {
+          "id": "choice_j07_raphaelle_understood_guided",
+          "text": "j’avais compris le concept",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "next_messages": [
+            {"id": "msg_j07_raphaelle_mobile_006_normal", "sender": "raphaelle", "time_label": "11:07", "variant": "normal", "text": "Tu avais aussi compris « à vérifier »."},
+            {"id": "msg_j07_raphaelle_mobile_006_delayed", "sender": "raphaelle", "time_label": "11:07", "variant": "delayed", "text": "Ce n’est pas un reproche. C’est une date."}
+          ]
+        }
+      ]
+    }
+  ],
+  "routes_nourished": [],
+  "debug_notes": "J07 canonique signé. Obligation professionnelle P05 uniquement ; aucune progression privée."
+}

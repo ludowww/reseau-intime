@@ -1,0 +1,104 @@
+{
+  "narrative_day_short": "Lun.",
+  "initial_time": "09:30",
+  "conversation_paths": {
+    "chapter_07_raphaelle_mobile_review_obligation": "res://data/conversations/chapter_07_raphaelle_mobile_review_obligation.json",
+    "chapter_07_nico_quiet_confidence": "res://data/conversations/chapter_07_nico_quiet_confidence.json",
+    "chapter_07_marie_household_request": "res://data/conversations/chapter_07_marie_household_request.json"
+  },
+  "day_start": {
+    "eyebrow": "LUNDI — MATIN",
+    "title": "Ce qu’on ne dit qu’à une personne",
+    "subtitle": "09:30",
+    "body": "La semaine recommence ordinairement.",
+    "action_label": "Commencer",
+    "transition_mode": "day_boundary"
+  },
+  "morning_consequence": {
+    "transition_mode": "offline",
+    "to_time": "11:04",
+    "duration_seconds": 4.0,
+    "flow_phases": ["OFF_PHONE"],
+    "text_due": "Player et Marie se retrouvent dehors. Le téléphone reste dans la poche.",
+    "text_not_due": "La semaine recommence ordinairement."
+  },
+  "to_nico": {
+    "transition_mode": "offline",
+    "to_time": "22:46",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": "La journée de travail se poursuit. L’Annexe ferme."
+  },
+  "to_marie": {
+    "transition_mode": "offline",
+    "to_time": "23:16",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": "La soirée avance. Marie est au foyer ; Player est ailleurs."
+  },
+  "day_close": {
+    "transition_mode": "offline",
+    "flow_phases": ["OFF_PHONE"],
+    "text": ""
+  },
+  "day_end": {
+    "eyebrow": "LUNDI — FIN DE JOURNÉE",
+    "title": "J07 terminé",
+    "subtitle": "Ce qu’on ne dit qu’à une personne",
+    "body": "Fin du contenu disponible.",
+    "action_label": "Terminer",
+    "transition_mode": "CONTENT_END",
+    "content_end": true
+  },
+  "gallery_presentations": [
+    {
+      "asset_id": "S1_A2_J07_SCN_RAPHAELLE_MOBILE_REVIEW_DUE_01",
+      "character_ids": ["raphaelle"],
+      "placeholder_label": "Visuel non produit",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false,
+      "discoverable_by_character": false,
+      "eligible_for_j14": false,
+      "eligible_for_j21": false
+    },
+    {
+      "asset_id": "S1_A2_J07_SCN_NICO_AFTER_SERVICE_CONFIDENCE_01",
+      "character_ids": ["nico"],
+      "placeholder_label": "Visuel non produit",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false,
+      "discoverable_by_character": false,
+      "eligible_for_j14": false,
+      "eligible_for_j21": false
+    },
+    {
+      "asset_id": "S1_A2_J07_SCN_MARIE_HOUSEHOLD_REQUEST_01",
+      "character_ids": ["marie"],
+      "placeholder_label": "Visuel non produit",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false,
+      "discoverable_by_character": false,
+      "eligible_for_j14": false,
+      "eligible_for_j21": false
+    }
+  ],
+  "context_anchor_asset_ids": [
+    "S1_A1_J03_SCN_RAPHAELLE_GARMENT_BAG_01"
+  ],
+  "visual_beat_matrix": {
+    "all_paths": [
+      "S1_A2_J07_SCN_RAPHAELLE_MOBILE_REVIEW_DUE_01",
+      "S1_A2_J07_SCN_NICO_AFTER_SERVICE_CONFIDENCE_01",
+      "S1_A2_J07_SCN_MARIE_HOUSEHOLD_REQUEST_01"
+    ]
+  }
+}

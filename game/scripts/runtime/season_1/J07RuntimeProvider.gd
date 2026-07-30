@@ -1,17 +1,17 @@
 extends RefCounted
 
-class_name J06RuntimeProvider
+class_name J07RuntimeProvider
 
-const RUNTIME_MAP_PATH := "res://data/runtime/season_1/j06_runtime_map.json"
+const RUNTIME_MAP_PATH := "res://data/runtime/season_1/j07_runtime_map.json"
 const NARRATIVE_TIME := preload("res://scripts/runtime/season_1/NarrativeTime.gd")
 const RUNTIME_UNREAD := preload("res://scripts/runtime/season_1/RuntimeUnread.gd")
 const SNAPSHOT_VERSION := 1
+const RAPHAELLE_THREAD := "thread_raphaelle_private"
+const NICO_THREAD := "thread_nico_private"
 const MARIE_THREAD := "thread_marie_private"
-const MATHILDE_THREAD := "thread_mathilde_private"
-const HOUSEHOLD_ASSET := "S1_A1_J04_SCN_HOUSEHOLD_THREE_RHYTHM_01"
-const MATHILDE_ASSET := "S1_A2_J06_SCN_MATHILDE_LOOK_ACKNOWLEDGED_01"
-const NO_EXTERNAL_ASSET := "S1_A2_J06_SCN_SUNDAY_WITHOUT_EXTERNAL_PROGRESS_01"
-const MARIE_ASSET := "S1_A2_J06_SCN_MARIE_CONCRETE_RETURN_01"
+const RAPHAELLE_ASSET := "S1_A2_J07_SCN_RAPHAELLE_MOBILE_REVIEW_DUE_01"
+const NICO_ASSET := "S1_A2_J07_SCN_NICO_AFTER_SERVICE_CONFIDENCE_01"
+const MARIE_ASSET := "S1_A2_J07_SCN_MARIE_HOUSEHOLD_REQUEST_01"
 
 var state
 var runtime_map: Dictionary = {}
@@ -32,7 +32,7 @@ var initialized := false
 func initialize(shared_state, cumulative_transcripts: Dictionary, cumulative_ids: Dictionary, cumulative_threads: Array, cumulative_gallery_ids: Array) -> bool:
 	state = shared_state
 	runtime_map = DataLoader.load_json(RUNTIME_MAP_PATH)
-	if state == null or runtime_map.is_empty():
+	if runtime_map.is_empty():
 		return false
 	current_time_minutes = NARRATIVE_TIME.parse_narrative_time(str(runtime_map.get("initial_time", "")))
 	if current_time_minutes < 0:
@@ -47,7 +47,7 @@ func initialize(shared_state, cumulative_transcripts: Dictionary, cumulative_ids
 	unlocked_thread_ids.assign(cumulative_threads)
 	gallery_asset_ids.assign(cumulative_gallery_ids)
 	served_visual_beat_ids = []
-	segment_index_by_thread = {MATHILDE_THREAD: 0, MARIE_THREAD: 0}
+	segment_index_by_thread = {RAPHAELLE_THREAD: 0, NICO_THREAD: 0, MARIE_THREAD: 0}
 	pending_choice_ids_by_thread = {}
 	pending_transition = {}
 	presented_time_message_ids = {}
@@ -87,22 +87,17 @@ func presentation_source() -> Dictionary:
 func start_day() -> Dictionary:
 	if phase != "day_start_pending":
 		return {"accepted": false}
-	state.begin_j06()
-	if state.is_mathilde_j06_eligible():
-		if not unlocked_thread_ids.has(MATHILDE_THREAD):
-			unlocked_thread_ids.append(MATHILDE_THREAD)
-		phase = "mathilde_incoming"
-		segment_index_by_thread[MATHILDE_THREAD] = 0
-		_enter_current_segment(MATHILDE_THREAD)
-		return {"accepted": true, "destination": "list", "focus_thread_id": MATHILDE_THREAD}
-	if not state.record_j06_mathilde_unavailable():
+	state.begin_j07()
+	if not state.resolve_j07_morning_consequence():
 		return {"accepted": false}
-	_unlock_gallery_asset(NO_EXTERNAL_ASSET)
-	_record_visual_beat(NO_EXTERNAL_ASSET)
-	_record_visual_beat(HOUSEHOLD_ASSET)
-	current_time_minutes = NARRATIVE_TIME.parse_narrative_time("18:35")
-	_enter_marie_return()
-	return {"accepted": true, "destination": "list", "focus_thread_id": MARIE_THREAD}
+	phase = "morning_consequence"
+	pending_transition = runtime_map.get("morning_consequence", {}).duplicate(true)
+	pending_transition["kind"] = "morning_consequence"
+	pending_transition["from_time"] = current_narrative_time_text()
+	pending_transition["text"] = str(pending_transition.get("text_due" if state.marie_j06_return_resolution == "PAID" else "text_not_due", ""))
+	pending_transition.erase("text_due")
+	pending_transition.erase("text_not_due")
+	return {"accepted": true, "destination": "day_transition", "transition": pending_transition.duplicate(true)}
 
 func transcript_for(thread_id: String) -> Array[Dictionary]:
 	return _dictionary_array(transcripts_by_thread.get(thread_id, []))
@@ -129,15 +124,7 @@ func apply_choice(thread_id: String, choice_id: String) -> Dictionary:
 		if str(choice.get("id", "")) == choice_id:
 			selected = choice
 			break
-	if selected.is_empty():
-		return {"accepted": false}
-	if thread_id == MATHILDE_THREAD:
-		if not state.apply_j06_mathilde_choice(choice_id):
-			return {"accepted": false}
-	elif thread_id == MARIE_THREAD:
-		if not state.apply_j06_marie_choice(choice_id):
-			return {"accepted": false}
-	else:
+	if selected.is_empty() or not _apply_state_choice(thread_id, choice_id):
 		return {"accepted": false}
 	pending_choice_ids_by_thread[thread_id] = []
 	var before := transcript_for(thread_id).size()
@@ -150,34 +137,10 @@ func apply_choice(thread_id: String, choice_id: String) -> Dictionary:
 		"media_ref": "",
 		"is_player": true,
 		"is_read": true,
-		"source_day": 6,
+		"source_day": 7,
 	})
 	_append_messages(thread_id, selected.get("next_messages", []))
-	if thread_id == MATHILDE_THREAD:
-		segment_index_by_thread[thread_id] = int(segment_index_by_thread.get(thread_id, 0)) + 1
-		if choice_id == "choice_sun_mathilde_what_guided":
-			phase = "mathilde_exchange"
-			_enter_current_segment(MATHILDE_THREAD)
-		else:
-			state.complete_conversation("chapter_06_mathilde_morning_afterglow", "mathilde")
-			_unlock_gallery_asset(MATHILDE_ASSET)
-			_record_visual_beat(MATHILDE_ASSET)
-			phase = "household_beat"
-			pending_transition = runtime_map.get("household_beat", {}).duplicate(true)
-			pending_transition["kind"] = "household_beat"
-			pending_transition["from_time"] = current_narrative_time_text()
-	else:
-		state.complete_conversation("chapter_06_marie_concrete_return", "marie")
-		_unlock_gallery_asset(MARIE_ASSET)
-		_record_visual_beat(MARIE_ASSET)
-		if state.marie_j06_return_outcome == "IMMEDIATE_ACT":
-			phase = "marie_resolution"
-			pending_transition = runtime_map.get("marie_immediate_resolution", {}).duplicate(true)
-			pending_transition["kind"] = "marie_resolution"
-			pending_transition["from_time"] = current_narrative_time_text()
-		else:
-			phase = "day_close"
-			pending_transition = _day_close_transition()
+	_advance_after_choice(thread_id, choice_id)
 	return {
 		"accepted": true,
 		"new_messages": transcript_for(thread_id).slice(before),
@@ -195,31 +158,43 @@ func confirm_transition() -> Dictionary:
 		return {"accepted": false}
 	var old_phase := phase
 	pending_transition = {}
-	if old_phase == "household_beat":
-		_record_visual_beat(HOUSEHOLD_ASSET)
-		_enter_marie_return()
+	if old_phase == "morning_consequence":
+		_enter_incoming(RAPHAELLE_THREAD, "raphaelle_incoming")
+		return {
+			"accepted": true,
+			"destination": "list",
+			"focus_thread_id": RAPHAELLE_THREAD,
+			"notification": {"body": "Nouveau message !"},
+		}
+	if old_phase == "to_nico":
+		_enter_incoming(NICO_THREAD, "nico_incoming")
 		return {
 			"accepted": true,
 			"destination": "conversation",
-			"thread_id": MATHILDE_THREAD,
+			"thread_id": RAPHAELLE_THREAD,
+			"unlocked_thread_id": NICO_THREAD,
+			"notification": {"body": "Nouveau message !"},
+		}
+	if old_phase == "to_marie":
+		_enter_incoming(MARIE_THREAD, "marie_incoming")
+		return {
+			"accepted": true,
+			"destination": "conversation",
+			"thread_id": NICO_THREAD,
 			"unlocked_thread_id": MARIE_THREAD,
 			"notification": {"body": "Nouveau message !"},
 		}
-	if old_phase == "marie_resolution":
-		phase = "day_close"
-		pending_transition = _day_close_transition()
-		return {"accepted": true, "destination": "day_transition", "transition": pending_transition.duplicate(true)}
 	if old_phase == "day_close":
-		if not state.complete_j06():
+		if not state.complete_j07():
 			return {"accepted": false}
 		if TimelineState != null:
-			TimelineState.mark_day_complete(6)
+			TimelineState.mark_day_complete(7)
 		phase = "complete"
 		return {"accepted": true, "destination": "day_end", "day_end": runtime_map["day_end"].duplicate(true)}
 	return {"accepted": false}
 
 func on_thread_returned(_thread_id: String) -> Dictionary:
-	if phase in ["household_beat", "day_close"] and not pending_transition.is_empty():
+	if phase in ["to_nico", "to_marie", "day_close"] and not pending_transition.is_empty():
 		return pending_transition.duplicate(true)
 	return {}
 
@@ -241,17 +216,21 @@ func mark_message_presented(message_id: String) -> bool:
 	return true
 
 func mark_thread_batch_presented(thread_id: String) -> bool:
-	if phase == "mathilde_incoming" and thread_id == MATHILDE_THREAD:
-		if not RUNTIME_UNREAD.incoming_batch_fully_presented(transcript_for(MATHILDE_THREAD), presented_time_message_ids, 6):
-			return false
-		phase = "mathilde_exchange"
-		return true
-	if phase == "marie_incoming" and thread_id == MARIE_THREAD:
-		if not RUNTIME_UNREAD.incoming_batch_fully_presented(transcript_for(MARIE_THREAD), presented_time_message_ids, 6):
-			return false
-		phase = "marie_return"
-		return true
-	return false
+	var expected := {
+		"raphaelle_incoming": RAPHAELLE_THREAD,
+		"nico_incoming": NICO_THREAD,
+		"marie_incoming": MARIE_THREAD,
+	}
+	if not expected.has(phase) or str(expected[phase]) != thread_id:
+		return false
+	if not RUNTIME_UNREAD.incoming_batch_fully_presented(transcript_for(thread_id), presented_time_message_ids, 7):
+		return false
+	phase = {
+		"raphaelle_incoming": "raphaelle_exchange",
+		"nico_incoming": "nico_exchange",
+		"marie_incoming": "marie_choice",
+	}[phase]
+	return true
 
 func commit_narrative_time(minutes: int) -> bool:
 	if minutes < current_time_minutes or NARRATIVE_TIME.format_narrative_time(minutes) == "":
@@ -268,11 +247,9 @@ func gallery_source() -> Dictionary:
 		"pauline": _gallery_character("pauline", "Pauline", "#E6B84A", "P"),
 		"nico": _gallery_character("nico", "Nico", "#65B87A", "N"),
 	}
-	var all_assets: Array = DataLoader.load_json("res://data/runtime/season_1/j02_runtime_map.json").get("gallery_presentations", []).duplicate(true)
-	all_assets.append_array(DataLoader.load_json("res://data/runtime/season_1/j03_runtime_map.json").get("gallery_presentations", []))
-	all_assets.append_array(DataLoader.load_json("res://data/runtime/season_1/j04_runtime_map.json").get("gallery_presentations", []))
-	all_assets.append_array(DataLoader.load_json("res://data/runtime/season_1/j05_runtime_map.json").get("gallery_presentations", []))
-	all_assets.append_array(runtime_map.get("gallery_presentations", []))
+	var all_assets: Array = []
+	for day in range(2, 8):
+		all_assets.append_array(DataLoader.load_json("res://data/runtime/season_1/j%02d_runtime_map.json" % day).get("gallery_presentations", []))
 	for asset in all_assets:
 		if not gallery_asset_ids.has(str(asset.get("asset_id", ""))):
 			continue
@@ -309,7 +286,7 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if int(value.get("version", -1)) != SNAPSHOT_VERSION:
 		return false
 	var restored_phase := str(value.get("phase", ""))
-	if restored_phase not in ["day_start_pending", "mathilde_incoming", "mathilde_exchange", "no_external_continuity", "household_beat", "marie_incoming", "marie_return", "marie_resolution", "day_close", "complete"]:
+	if restored_phase not in ["day_start_pending", "morning_consequence", "raphaelle_incoming", "raphaelle_exchange", "to_nico", "nico_incoming", "nico_exchange", "nico_main_choice", "nico_continuation_choice", "to_marie", "marie_incoming", "marie_choice", "day_close", "complete"]:
 		return false
 	for key in ["transcripts_by_thread", "produced_message_ids", "segment_index_by_thread", "pending_choice_ids_by_thread", "pending_transition", "presented_time_message_ids"]:
 		if typeof(value.get(key)) != TYPE_DICTIONARY:
@@ -341,38 +318,72 @@ func presentation_count_by_id(id: String) -> int:
 				count += 1
 	return count
 
-func _restored_phase_consistent() -> bool:
-	if phase == "day_start_pending":
-		return state.current_day == "J05" and state.day_status == "COMPLETE" and pending_transition.is_empty()
-	if phase == "complete" and state.current_day == "J07":
-		return pending_transition.is_empty() and served_visual_beat_ids.size() == 3
-	if state.current_day != "J06":
-		return false
-	if phase == "complete":
-		return state.day_status == "COMPLETE" and pending_transition.is_empty() and served_visual_beat_ids.size() == 3
-	if state.day_status != "ACTIVE":
-		return false
-	if phase in ["household_beat", "marie_resolution", "day_close"]:
-		return not pending_transition.is_empty()
-	return pending_transition.is_empty()
+func _apply_state_choice(thread_id: String, choice_id: String) -> bool:
+	if thread_id == RAPHAELLE_THREAD:
+		return state.apply_j07_raphaelle_choice(choice_id)
+	if thread_id == NICO_THREAD:
+		if choice_id in ["choice_j07_nico_topic_guided", "choice_j07_nico_what_mean_guided", "choice_j07_nico_at_least_said_guided"]:
+			return state.apply_j07_nico_guided_choice(choice_id)
+		if choice_id in ["choice_j07_nico_acknowledge_contradiction", "choice_j07_nico_request_social_view", "choice_j07_nico_stay_vague"]:
+			return state.apply_j07_nico_main_choice(choice_id)
+		return state.apply_j07_nico_continuation(choice_id)
+	if thread_id == MARIE_THREAD:
+		return state.apply_j07_marie_choice(choice_id)
+	return false
 
-func _enter_marie_return() -> void:
-	if not unlocked_thread_ids.has(MARIE_THREAD):
-		unlocked_thread_ids.append(MARIE_THREAD)
-	var mathilde_served: bool = state.mathilde_j06_outcome in ["ACKNOWLEDGED_RESPECTFUL", "ACKNOWLEDGED_PLAYFUL", "DISTANCE_RESTORED"]
-	if state.marie_j05_shared_hour_resolution == "PAID" and not mathilde_served:
-		segment_index_by_thread[MARIE_THREAD] = 0
-		_enter_current_segment(MARIE_THREAD)
-	else:
-		segment_index_by_thread[MARIE_THREAD] = 1 if mathilde_served else 2
-		_append_messages(MARIE_THREAD, _current_segment(MARIE_THREAD).get("messages", []))
-		segment_index_by_thread[MARIE_THREAD] = 3
-		_set_pending_choices(MARIE_THREAD, _current_segment(MARIE_THREAD))
-	phase = "marie_incoming"
+func _advance_after_choice(thread_id: String, choice_id: String) -> void:
+	if thread_id == RAPHAELLE_THREAD:
+		if choice_id == "choice_j07_raphaelle_acknowledge_guided":
+			segment_index_by_thread[thread_id] = 1
+			_enter_current_segment(thread_id)
+			return
+		state.complete_conversation("chapter_07_raphaelle_mobile_review_obligation", "raphaelle", "professional_secondary")
+		_unlock_gallery_asset(RAPHAELLE_ASSET)
+		_record_visual_beat(RAPHAELLE_ASSET)
+		phase = "to_nico"
+		pending_transition = _transition("to_nico")
+		return
+	if thread_id == NICO_THREAD:
+		match choice_id:
+			"choice_j07_nico_topic_guided":
+				segment_index_by_thread[thread_id] = 1
+				_enter_current_segment(thread_id)
+			"choice_j07_nico_what_mean_guided":
+				segment_index_by_thread[thread_id] = 2
+				phase = "nico_main_choice"
+				_enter_current_segment(thread_id)
+			"choice_j07_nico_acknowledge_contradiction", "choice_j07_nico_request_social_view", "choice_j07_nico_stay_vague":
+				segment_index_by_thread[thread_id] = 3
+				phase = "nico_exchange"
+				_enter_current_segment(thread_id)
+			"choice_j07_nico_at_least_said_guided":
+				segment_index_by_thread[thread_id] = 4
+				phase = "nico_continuation_choice"
+				_enter_current_segment(thread_id)
+			_:
+				state.complete_conversation("chapter_07_nico_quiet_confidence", "nico", "major_pivot")
+				_unlock_gallery_asset(NICO_ASSET)
+				_record_visual_beat(NICO_ASSET)
+				phase = "to_marie"
+				pending_transition = _transition("to_marie")
+		return
+	state.complete_conversation("chapter_07_marie_household_request", "marie", "household_return")
+	_unlock_gallery_asset(MARIE_ASSET)
+	_record_visual_beat(MARIE_ASSET)
+	phase = "day_close"
+	pending_transition = _transition("day_close")
 
-func _day_close_transition() -> Dictionary:
-	var result: Dictionary = runtime_map.get("day_close", {}).duplicate(true)
-	result["kind"] = "day_close"
+func _enter_incoming(thread_id: String, incoming_phase: String) -> void:
+	if not unlocked_thread_ids.has(thread_id):
+		unlocked_thread_ids.append(thread_id)
+	segment_index_by_thread[thread_id] = 0
+	_enter_current_segment(thread_id)
+	phase = incoming_phase
+
+func _transition(key: String) -> Dictionary:
+	var result: Dictionary = runtime_map.get(key, {}).duplicate(true)
+	result["kind"] = key
+	result["from_time"] = current_narrative_time_text()
 	return result
 
 func _enter_current_segment(thread_id: String) -> void:
@@ -388,17 +399,35 @@ func _set_pending_choices(thread_id: String, segment: Dictionary) -> void:
 
 func _append_messages(thread_id: String, messages: Array) -> void:
 	for message in messages:
+		if not _message_variant_allowed(message):
+			continue
+		var author := str(message.get("sender", "system"))
 		_append(thread_id, {
 			"message_id": str(message.get("id", "")),
-			"author_id": str(message.get("sender", "system")),
+			"author_id": author,
 			"timestamp": str(message.get("time_label", "")),
 			"content_type": "TEXT",
 			"text": str(message.get("text", "")),
 			"media_ref": "",
-			"is_player": str(message.get("sender", "")) == "player",
-			"is_read": false,
-			"source_day": 6,
+			"is_player": author == "player",
+			"is_read": author == "player",
+			"source_day": 7,
 		})
+
+func _message_variant_allowed(message: Dictionary) -> bool:
+	var variant := str(message.get("variant", ""))
+	if variant == "":
+		return true
+	if variant in ["normal", "delayed"]:
+		return variant == ("delayed" if state.raphaelle_work_outcome == "DELAYED" else "normal")
+	if variant in ["marie_well_asked", "chair_return"]:
+		return variant == _nico_opening_variant()
+	return false
+
+func _nico_opening_variant() -> String:
+	# The playable J04 baseline never records a question about whether Marie looked well.
+	# Keep the signed alternate line data-driven without inventing that missing fact.
+	return "chair_return"
 
 func _append(thread_id: String, item: Dictionary) -> bool:
 	var id := str(item.get("message_id", ""))
@@ -411,22 +440,37 @@ func _append(thread_id: String, item: Dictionary) -> bool:
 	return true
 
 func _segments(thread_id: String) -> Array:
-	if thread_id == MATHILDE_THREAD:
-		return conversations["chapter_06_mathilde_morning_afterglow"].get("segments", [])
-	return conversations["chapter_06_marie_concrete_return"].get("segments", [])
+	if thread_id == RAPHAELLE_THREAD:
+		return conversations["chapter_07_raphaelle_mobile_review_obligation"].get("segments", [])
+	if thread_id == NICO_THREAD:
+		return conversations["chapter_07_nico_quiet_confidence"].get("segments", [])
+	return conversations["chapter_07_marie_household_request"].get("segments", [])
 
 func _current_segment(thread_id: String) -> Dictionary:
 	var segments := _segments(thread_id)
 	var index := int(segment_index_by_thread.get(thread_id, 0))
 	return segments[index] if index >= 0 and index < segments.size() else {}
 
+func _restored_phase_consistent() -> bool:
+	if phase == "day_start_pending":
+		return state.current_day == "J06" and state.day_status == "COMPLETE" and pending_transition.is_empty()
+	if state.current_day != "J07":
+		return false
+	if phase == "complete":
+		return state.day_status == "COMPLETE" and pending_transition.is_empty() and served_visual_beat_ids == [RAPHAELLE_ASSET, NICO_ASSET, MARIE_ASSET]
+	if state.day_status != "ACTIVE":
+		return false
+	if phase in ["morning_consequence", "to_nico", "to_marie", "day_close"]:
+		return not pending_transition.is_empty()
+	return pending_transition.is_empty()
+
 func _thread_presentation(id: String) -> Dictionary:
-	var titles := {MARIE_THREAD: "Marie", "thread_sandra_private": "Sandra", MATHILDE_THREAD: "Mathilde", "thread_raphaelle_private": "Raphaëlle", "thread_pauline_private": "Pauline", "thread_nico_private": "Nico"}
-	var participants := {MARIE_THREAD: "marie", "thread_sandra_private": "sandra", MATHILDE_THREAD: "mathilde", "thread_raphaelle_private": "raphaelle", "thread_pauline_private": "pauline", "thread_nico_private": "nico"}
-	var colors := {MARIE_THREAD: "#4F8BFF", "thread_sandra_private": "#20C7C9", MATHILDE_THREAD: "#E070A8", "thread_raphaelle_private": "#D69A42", "thread_pauline_private": "#E6B84A", "thread_nico_private": "#65B87A"}
+	var titles := {MARIE_THREAD: "Marie", "thread_sandra_private": "Sandra", "thread_mathilde_private": "Mathilde", RAPHAELLE_THREAD: "Raphaëlle", "thread_pauline_private": "Pauline", NICO_THREAD: "Nico"}
+	var participants := {MARIE_THREAD: "marie", "thread_sandra_private": "sandra", "thread_mathilde_private": "mathilde", RAPHAELLE_THREAD: "raphaelle", "thread_pauline_private": "pauline", NICO_THREAD: "nico"}
+	var colors := {MARIE_THREAD: "#4F8BFF", "thread_sandra_private": "#20C7C9", "thread_mathilde_private": "#E070A8", RAPHAELLE_THREAD: "#D69A42", "thread_pauline_private": "#E6B84A", NICO_THREAD: "#65B87A"}
 	var transcript := transcript_for(id)
 	var last: Dictionary = {}
-	var unread := RUNTIME_UNREAD.incoming_unread_count(transcript, presented_time_message_ids, 6)
+	var unread := RUNTIME_UNREAD.incoming_unread_count(transcript, presented_time_message_ids, 7)
 	for item in transcript:
 		if str(item.get("content_type", "")) != "OFF_PHONE_TRANSITION":
 			last = item

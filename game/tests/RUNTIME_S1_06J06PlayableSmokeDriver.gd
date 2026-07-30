@@ -92,9 +92,9 @@ func _exercise_provider_paths() -> void:
 		_expect_provider_round_trip(provider, "snapshot before Marie")
 		provider.apply_choice("thread_marie_private", "choice_sun_marie_return_bounded")
 		_expect(provider.state.marie_j06_return_outcome == "BOUNDED_NEXT_ACT", "Marie bounded outcome stored after Mathilde")
-		_expect_provider_round_trip(provider, "snapshot before CONTENT_END")
+		_expect_provider_round_trip(provider, "snapshot before J06 handoff")
 		provider.confirm_transition()
-		_expect(provider.phase == "complete", "Mathilde path reaches CONTENT_END")
+		_expect(provider.phase == "complete", "Mathilde path reaches J06 handoff")
 		_expect(provider.served_visual_beat_ids == [
 			"S1_A2_J06_SCN_MATHILDE_LOOK_ACKNOWLEDGED_01",
 			"S1_A1_J04_SCN_HOUSEHOLD_THREE_RHYTHM_01",
@@ -127,7 +127,7 @@ func _exercise_provider_paths() -> void:
 	_expect(independent.state.marie_j06_return_outcome == "IMMEDIATE_ACT", "IMMEDIATE_ACT stored")
 	independent.confirm_transition()
 	independent.confirm_transition()
-	_expect(independent.phase == "complete", "immediate path pays off-phone then reaches CONTENT_END")
+	_expect(independent.phase == "complete", "immediate path pays off-phone then reaches J06 handoff")
 
 func _prepared_j05_state(paid: bool, mathilde_available: bool):
 	var result = SEASON_STATE.new()
@@ -218,12 +218,20 @@ func _exercise_real_portrait_path(size: Vector2i) -> void:
 	_expect(messages.conversation_screen.choice_bar.choice_count() == 3, "three M3 choices visible")
 	await _capture("marie_choices", size)
 	await _press_choice(messages, "choice_sun_marie_return_bounded")
-	await _wait_until(func(): return provider.j06_provider.phase == "complete" and messages.is_day_transition_active(), 480, "J06 CONTENT_END timed out")
-	_expect(str(provider.content_end().get("transition_mode", "")) == "CONTENT_END", "CONTENT_END exists only after J06")
-	_expect(str(messages.day_transition.display_title()) == "J06 terminé", "J06 terminal card visible")
+	await _wait_until(
+		func(): return provider.j06_provider.phase == "complete" and (messages.is_day_transition_active() or provider.active_day == "J07"),
+		480,
+		"J06 handoff timed out"
+	)
+	_expect(provider.content_end().is_empty(), "J06 no longer exposes CONTENT_END")
+	_expect(
+		str(provider.j06_provider.runtime_map.get("day_end", {}).get("next_day_presentation", {}).get("title", ""))
+		== "Ce qu’on ne dit qu’à une personne",
+		"J06 exposes the canonical J07 card"
+	)
 	_expect(provider.j06_provider.served_visual_beat_ids.size() == 3, "real UI path serves exactly three beats")
 	_expect(not bool(shell.describe_layout().get("has_vertical_crop", true)) and not bool(messages.describe_state().get("has_horizontal_crop", true)), "responsive J06 has no crop")
-	await _capture("content_end", size)
+	await _capture("j07_handoff", size)
 
 	var snapshot: Dictionary = provider.snapshot()
 	var restored = SEASON_PROVIDER.new()
