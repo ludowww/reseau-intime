@@ -45,10 +45,18 @@
     "eyebrow": "LUNDI — FIN DE JOURNÉE",
     "title": "J07 terminé",
     "subtitle": "Ce qu’on ne dit qu’à une personne",
-    "body": "Fin du contenu disponible.",
-    "action_label": "Terminer",
-    "transition_mode": "CONTENT_END",
-    "content_end": true
+    "body": "Les heures données la veille existent maintenant.",
+    "action_label": "Continuer",
+    "transition_mode": "day_handoff",
+    "content_end": false,
+    "next_day_presentation": {
+      "eyebrow": "MARDI — MATIN",
+      "title": "Ce qui ne tient pas ensemble",
+      "subtitle": "08:42",
+      "body": "Les heures données la veille existent maintenant.",
+      "action_label": "Commencer",
+      "transition_mode": "day_boundary"
+    }
   },
   "gallery_presentations": [
     {

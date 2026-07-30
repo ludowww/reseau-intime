@@ -1,0 +1,190 @@
+{
+  "narrative_day_short": "Mar.",
+  "initial_time": "08:42",
+  "conversation_paths": {
+    "chapter_08_marie_household_and_j09_bridge": "res://data/conversations/chapter_08_marie_household_and_j09_bridge.json",
+    "chapter_08_raphaelle_mobile_review_resolution": "res://data/conversations/chapter_08_raphaelle_mobile_review_resolution.json",
+    "chapter_08_nico_chair_resolution": "res://data/conversations/chapter_08_nico_chair_resolution.json"
+  },
+  "day_start": {
+    "eyebrow": "MARDI — MATIN",
+    "title": "Ce qui ne tient pas ensemble",
+    "subtitle": "08:42",
+    "body": "Les heures données la veille existent maintenant.",
+    "action_label": "Commencer",
+    "transition_mode": "day_boundary"
+  },
+  "to_raphaelle": {
+    "transition_mode": "offline",
+    "to_time": "17:03",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": "La journée de travail avance."
+  },
+  "to_nico": {
+    "transition_mode": "offline",
+    "to_time": "18:21",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": "La fin de journée approche."
+  },
+  "raphaelle_r1_off_phone": {
+    "transition_mode": "offline",
+    "to_time": "17:44",
+    "duration_seconds": 4.0,
+    "flow_phases": ["OFF_PHONE"],
+    "text": "Player relit la version mobile."
+  },
+  "to_state_b_household": {
+    "transition_mode": "offline",
+    "to_time": "18:24",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": ""
+  },
+  "state_b_off_phone": {
+    "transition_mode": "offline",
+    "to_time": "18:47",
+    "duration_seconds": 4.0,
+    "flow_phases": ["OFF_PHONE"],
+    "text": "Player accueille le propriétaire. Le mur et les papiers sont vérifiés. Mathilde n’est pas présente."
+  },
+  "to_collision": {
+    "transition_mode": "offline",
+    "to_time": "18:27",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": "Deux heures promises se rapprochent."
+  },
+  "to_collision_after_household": {
+    "transition_mode": "offline",
+    "to_time": "18:47",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": "Le téléphone revient en main."
+  },
+  "to_household_return": {
+    "transition_mode": "offline",
+    "to_time": "20:14",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": "La soirée avance."
+  },
+  "to_raphaelle_return": {
+    "transition_mode": "offline",
+    "to_time": "21:02",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": ""
+  },
+  "to_nico_return": {
+    "transition_mode": "offline",
+    "to_time": "21:36",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": ""
+  },
+  "to_marie_close": {
+    "transition_mode": "offline",
+    "to_time": "22:18",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": "La journée se referme sur ce qui reste à tenir demain."
+  },
+  "day_close": {
+    "transition_mode": "offline",
+    "flow_phases": ["OFF_PHONE"],
+    "text": ""
+  },
+  "priority_choices": [
+    {
+      "choice_id": "choice_j08_priority_oldest",
+      "text": "Payer l’engagement le plus ancien",
+      "enabled": true,
+      "confirmation_required": false
+    },
+    {
+      "choice_id": "choice_j08_priority_immediate",
+      "text": "Payer la présence physique la plus immédiate",
+      "enabled": true,
+      "confirmation_required": false
+    },
+    {
+      "choice_id": "choice_j08_priority_vague",
+      "text": "Ne pas choisir clairement",
+      "enabled": true,
+      "confirmation_required": false
+    }
+  ],
+  "day_end": {
+    "eyebrow": "MARDI — FIN DE JOURNÉE",
+    "title": "J08 terminé",
+    "subtitle": "Ce qui ne tient pas ensemble",
+    "body": "Fin du contenu disponible.",
+    "action_label": "Terminer",
+    "transition_mode": "CONTENT_END",
+    "content_end": true
+  },
+  "gallery_presentations": [
+    {
+      "asset_id": "S1_A2_J08_SCN_RAPHAELLE_WORK_STATE_01",
+      "character_ids": ["raphaelle"],
+      "placeholder_label": "Visuel non produit",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false,
+      "discoverable_by_character": false,
+      "eligible_for_j14": false,
+      "eligible_for_j21": false
+    },
+    {
+      "asset_id": "S1_A2_J08_SCN_NICO_CHAIR_STATE_01",
+      "character_ids": ["nico"],
+      "placeholder_label": "Visuel non produit",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false,
+      "discoverable_by_character": false,
+      "eligible_for_j14": false,
+      "eligible_for_j21": false
+    },
+    {
+      "asset_id": "S1_A2_J08_SCN_HOUSEHOLD_STATE_01",
+      "character_ids": ["marie"],
+      "placeholder_label": "Visuel non produit",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false,
+      "discoverable_by_character": false,
+      "eligible_for_j14": false,
+      "eligible_for_j21": false
+    }
+  ],
+  "resolved_visual_variants": {
+    "S1_A2_J08_SCN_RAPHAELLE_WORK_STATE_01": [
+      "S1_A2_J08_SCN_RAPHAELLE_WORK_STATE_01_PAID",
+      "S1_A2_J08_SCN_RAPHAELLE_WORK_STATE_01_TAKEN_OVER"
+    ],
+    "S1_A2_J08_SCN_NICO_CHAIR_STATE_01": [
+      "S1_A2_J08_SCN_NICO_CHAIR_STATE_01_PAID",
+      "S1_A2_J08_SCN_NICO_CHAIR_STATE_01_NO_WAIT"
+    ],
+    "S1_A2_J08_SCN_HOUSEHOLD_STATE_01": [
+      "S1_A2_J08_SCN_HOUSEHOLD_STATE_01_PAID",
+      "S1_A2_J08_SCN_HOUSEHOLD_STATE_01_AUTONOMOUS"
+    ]
+  },
+  "visual_beat_matrix": {
+    "all_paths": [
+      "S1_A2_J08_SCN_RAPHAELLE_WORK_STATE_01",
+      "S1_A2_J08_SCN_NICO_CHAIR_STATE_01",
+      "S1_A2_J08_SCN_HOUSEHOLD_STATE_01"
+    ]
+  }
+}

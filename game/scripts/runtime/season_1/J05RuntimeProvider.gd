@@ -316,7 +316,7 @@ func presentation_count_by_id(id: String) -> int:
 func _restored_phase_consistent() -> bool:
 	if phase == "day_start_pending":
 		return state.current_day == "J04" and state.day_status == "COMPLETE" and pending_transition.is_empty()
-	if phase == "complete" and state.current_day in ["J06", "J07"]:
+	if phase == "complete" and state.current_day in ["J06", "J07", "J08"]:
 		return pending_transition.is_empty()
 	if state.current_day != "J05":
 		return false

@@ -42,8 +42,9 @@ class RuntimeS107J07PlayableStaticTests(unittest.TestCase):
         self.assertEqual("11:04", data["morning_consequence"]["to_time"])
         self.assertEqual("22:46", data["to_nico"]["to_time"])
         self.assertEqual("23:16", data["to_marie"]["to_time"])
-        self.assertEqual("CONTENT_END", data["day_end"]["transition_mode"])
-        self.assertTrue(data["day_end"]["content_end"])
+        self.assertEqual("day_handoff", data["day_end"]["transition_mode"])
+        self.assertFalse(data["day_end"]["content_end"])
+        self.assertEqual("MARDI — MATIN", data["day_end"]["next_day_presentation"]["eyebrow"])
         self.assertEqual("J07 terminé", data["day_end"]["title"])
 
     def test_visual_contract_is_exactly_three_non_diegetic_beats(self):
@@ -215,7 +216,7 @@ class RuntimeS107J07PlayableStaticTests(unittest.TestCase):
             "CONSCIOUS_ACCOMPLICE",
         ]:
             self.assertNotIn(forbidden, j07)
-        self.assertIn("const SNAPSHOT_VERSION := 5", state)
+        self.assertIn("const SNAPSHOT_VERSION := 6", state)
 
     def test_nico_p06_distinguishes_acceptance_from_refusal_closure(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
@@ -284,7 +285,8 @@ class RuntimeS107J07PlayableStaticTests(unittest.TestCase):
         j07 = self.load("game/data/runtime/season_1/j07_runtime_map.json")
         self.assertEqual("day_handoff", j06["day_end"]["transition_mode"])
         self.assertFalse(j06["day_end"]["content_end"])
-        self.assertEqual("CONTENT_END", j07["day_end"]["transition_mode"])
+        self.assertEqual("day_handoff", j07["day_end"]["transition_mode"])
+        self.assertFalse(j07["day_end"]["content_end"])
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
         for token in [
             'preload("res://scripts/runtime/season_1/J07RuntimeProvider.gd")',
@@ -293,12 +295,12 @@ class RuntimeS107J07PlayableStaticTests(unittest.TestCase):
             "_handoff_to_j07",
             'active_day = "J07"',
             '"J07":',
-            "[2, 3, 4, 5, SNAPSHOT_VERSION]",
+            "[2, 3, 4, 5, 6, SNAPSHOT_VERSION]",
             'version < 5 and str(value.get("active_day", "")) == "J06"',
-            'version < SNAPSHOT_VERSION and str(value.get("active_day", "")) == "J07"',
+            'version < 6 and str(value.get("active_day", "")) == "J07"',
         ]:
             self.assertIn(token, season)
-        self.assertIn("const SNAPSHOT_VERSION := 6", season)
+        self.assertIn("const SNAPSHOT_VERSION := 7", season)
 
     def test_smoke_runner_declares_all_required_sizes_and_capture_labels(self):
         driver = self.read("game/tests/RUNTIME_S1_07J07PlayableSmokeDriver.gd")

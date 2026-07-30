@@ -1,0 +1,119 @@
+{
+  "id": "chapter_08_nico_chair_resolution",
+  "chapter": 8,
+  "day": 8,
+  "title": "Mardi — Nico et la chaise",
+  "app": "messages",
+  "communication_mode": "REMOTE_ASYNC",
+  "foreground_role": "conditional_friendship_obligation",
+  "thread": {
+    "id": "thread_nico_private",
+    "type": "private",
+    "participants": ["ludo", "nico"],
+    "display_name": "Nico",
+    "profile_content_id": "profile_nico_placeholder"
+  },
+  "segments": [
+    {
+      "id": "j08_nico_reminder",
+      "messages": [
+        {"id": "msg_j08_nico_reminder_001", "sender": "nico", "time_label": "18:21", "text": "J’ouvre à 19 h."},
+        {"id": "msg_j08_nico_reminder_002", "sender": "nico", "time_label": "18:21", "text": "Ta chaise existe jusqu’à 18 h 50."},
+        {"id": "msg_j08_nico_reminder_003", "sender": "nico", "time_label": "18:22", "text": "Après, elle travaille."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j08_nico_reminder_guided",
+          "text": "j’arrive ou j’annule avant",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "next_messages": [
+            {"id": "msg_j08_nico_reminder_004", "sender": "nico", "time_label": "18:22", "text": "C’est tout ce que je demande."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j08_nico_cancel_oldest",
+      "messages": [
+        {"id": "msg_j08_nico_cancel_oldest_player_001", "sender": "player", "time_label": "18:31", "text": "je ne viens pas. ne garde pas la chaise"},
+        {"id": "msg_j08_nico_cancel_oldest_001", "sender": "nico", "time_label": "18:31", "text": "Reçu."},
+        {"id": "msg_j08_nico_cancel_oldest_002", "sender": "nico", "time_label": "18:31", "text": "Elle survivra."},
+        {"id": "msg_j08_nico_cancel_oldest_003", "sender": "nico", "time_label": "18:32", "text": "On ne remet pas automatiquement."}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j08_nico_cancel_household",
+      "messages": [
+        {"id": "msg_j08_nico_cancel_household_player_001", "sender": "player", "time_label": "18:31", "text": "je ne viens pas. problème au foyer. ne garde pas la chaise"},
+        {"id": "msg_j08_nico_cancel_household_001", "sender": "nico", "time_label": "18:31", "text": "Reçu."},
+        {"id": "msg_j08_nico_cancel_household_002", "sender": "nico", "time_label": "18:31", "text": "Va gérer le mur."},
+        {"id": "msg_j08_nico_cancel_household_003", "sender": "nico", "time_label": "18:32", "text": "La philosophie attendra."}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j08_nico_immediate_state_b",
+      "messages": [
+        {"id": "msg_j08_nico_immediate_b_player_001", "sender": "player", "time_label": "18:47", "text": "j’arrive. j’ai six minutes si ta chaise existe encore"},
+        {"id": "msg_j08_nico_immediate_b_001", "sender": "nico", "time_label": "18:47", "text": "Elle existe."},
+        {"id": "msg_j08_nico_immediate_b_002", "sender": "nico", "time_label": "18:47", "text": "Six minutes, donc."}
+      ],
+      "choices": [],
+      "off_phone_event": {
+        "communication_mode": "OFF_PHONE",
+        "summary": "Player rejoint Nico avant le service. Ils parlent environ six minutes. Aucun dialogue oral n’est montré."
+      }
+    },
+    {
+      "id": "j08_nico_immediate_state_c",
+      "messages": [
+        {"id": "msg_j08_nico_immediate_c_player_001", "sender": "player", "time_label": "18:29", "text": "j’arrive. garde-moi dix minutes"},
+        {"id": "msg_j08_nico_immediate_c_001", "sender": "nico", "time_label": "18:29", "text": "Dix."},
+        {"id": "msg_j08_nico_immediate_c_002", "sender": "nico", "time_label": "18:29", "text": "Après je travaille."}
+      ],
+      "choices": [],
+      "off_phone_event": {
+        "communication_mode": "OFF_PHONE",
+        "summary": "Player rejoint Nico. Ils parlent dix minutes avant le service. Aucun dialogue oral n’est joué."
+      }
+    },
+    {
+      "id": "j08_nico_priority_vague",
+      "messages": [
+        {"id": "msg_j08_nico_vague_player_001", "sender": "player", "time_label": "18:31", "text": "j’arrive"},
+        {"id": "msg_j08_nico_vague_001", "sender": "nico", "time_label": "18:31", "text": "Quelle heure ?"},
+        {"id": "msg_j08_nico_vague_player_002", "sender": "player", "time_label": "18:31", "text": "bientôt"},
+        {"id": "msg_j08_nico_vague_002", "sender": "nico", "time_label": "18:31", "text": "Non."},
+        {"id": "msg_j08_nico_vague_003", "sender": "nico", "time_label": "18:32", "text": "Bientôt n’a pas de chaise."},
+        {"id": "msg_j08_nico_vague_004", "sender": "nico", "time_label": "18:51", "text": "J’ai rendu la chaise."},
+        {"id": "msg_j08_nico_vague_005", "sender": "nico", "time_label": "18:51", "text": "La prochaine fois, annule."}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j08_nico_return_paid",
+      "messages": [
+        {"id": "msg_j08_nico_return_paid_001", "sender": "nico", "time_label": "21:36", "text": "Tu es venu."},
+        {"id": "msg_j08_nico_return_paid_002", "sender": "nico", "time_label": "21:36", "text": "C’était court."},
+        {"id": "msg_j08_nico_return_paid_003", "sender": "nico", "time_label": "21:37", "text": "Mais court et réel, c’est mieux que long dans ta tête."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j08_nico_return_paid_guided",
+          "text": "et ce que je t’ai dit hier",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "next_messages": [
+            {"id": "msg_j08_nico_return_paid_004", "sender": "nico", "time_label": "21:38", "text": "Reste avec moi."},
+            {"id": "msg_j08_nico_return_paid_005", "sender": "nico", "time_label": "21:38", "text": "Je n’en fais rien."},
+            {"id": "msg_j08_nico_return_paid_006", "sender": "nico", "time_label": "21:39", "text": "Si un jour il faut agir, les personnes concernées seront dans la pièce."}
+          ]
+        }
+      ]
+    }
+  ],
+  "routes_nourished": [],
+  "debug_notes": "J08 canonique : ce fichier n’est chargé que si P06 est ACTIVE ; P07 conditionnelle et P06 refusée ne créent aucun rappel."
+}

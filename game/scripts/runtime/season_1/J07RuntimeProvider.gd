@@ -454,10 +454,10 @@ func _current_segment(thread_id: String) -> Dictionary:
 func _restored_phase_consistent() -> bool:
 	if phase == "day_start_pending":
 		return state.current_day == "J06" and state.day_status == "COMPLETE" and pending_transition.is_empty()
+	if phase == "complete":
+		return state.current_day in ["J07", "J08"] and (state.day_status == "COMPLETE" or state.current_day == "J08") and pending_transition.is_empty() and served_visual_beat_ids == [RAPHAELLE_ASSET, NICO_ASSET, MARIE_ASSET]
 	if state.current_day != "J07":
 		return false
-	if phase == "complete":
-		return state.day_status == "COMPLETE" and pending_transition.is_empty() and served_visual_beat_ids == [RAPHAELLE_ASSET, NICO_ASSET, MARIE_ASSET]
 	if state.day_status != "ACTIVE":
 		return false
 	if phase in ["morning_consequence", "to_nico", "to_marie", "day_close"]:

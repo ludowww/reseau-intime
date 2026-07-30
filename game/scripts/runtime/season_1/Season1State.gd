@@ -2,7 +2,7 @@ extends RefCounted
 
 class_name Season1State
 
-const SNAPSHOT_VERSION := 5
+const SNAPSHOT_VERSION := 6
 
 var current_day := "J01"
 var day_status := "ACTIVE"
@@ -40,6 +40,15 @@ var raphaelle_j07_mobile_review_outcome := "UNESTABLISHED"
 var nico_j07_confidence_outcome := "UNESTABLISHED"
 var nico_j07_continuation_outcome := "UNESTABLISHED"
 var marie_j07_household_outcome := "UNESTABLISHED"
+var marie_j08_entry_outcome := "UNESTABLISHED"
+var raphaelle_j08_preparation_outcome := "UNESTABLISHED"
+var j08_priority_outcome := "UNESTABLISHED"
+var raphaelle_j08_work_resolution := "UNESTABLISHED"
+var nico_j08_meeting_resolution := "UNESTABLISHED"
+var marie_j08_household_resolution := "UNESTABLISHED"
+var mathilde_j08_household_resolution := "UNESTABLISHED"
+var marie_j08_echo_outcome := "UNESTABLISHED"
+var resolved_visual_variant_by_asset: Dictionary = {}
 
 func _init() -> void:
 	reset()
@@ -98,6 +107,15 @@ func reset() -> void:
 	nico_j07_confidence_outcome = "UNESTABLISHED"
 	nico_j07_continuation_outcome = "UNESTABLISHED"
 	marie_j07_household_outcome = "UNESTABLISHED"
+	marie_j08_entry_outcome = "UNESTABLISHED"
+	raphaelle_j08_preparation_outcome = "UNESTABLISHED"
+	j08_priority_outcome = "UNESTABLISHED"
+	raphaelle_j08_work_resolution = "UNESTABLISHED"
+	nico_j08_meeting_resolution = "UNESTABLISHED"
+	marie_j08_household_resolution = "UNESTABLISHED"
+	mathilde_j08_household_resolution = "UNESTABLISHED"
+	marie_j08_echo_outcome = "UNESTABLISHED"
+	resolved_visual_variant_by_asset = {}
 
 func apply_choice(choice_id: String) -> bool:
 	if choice_id == "" or selected_choice_ids.has(choice_id):
@@ -195,6 +213,201 @@ func begin_j06() -> void:
 func begin_j07() -> void:
 	current_day = "J07"
 	day_status = "ACTIVE"
+
+func begin_j08() -> bool:
+	if current_day != "J07" or day_status != "COMPLETE" or not _j07_records_consistent(snapshot()):
+		return false
+	var p05: Dictionary = promises.get("raphaelle_j07_mobile_review", {})
+	var p08: Dictionary = promises.get("marie_j07_household_request", {})
+	if str(p05.get("status", "")) != "ACTIVE" or str(p05.get("due_at", "")) != "J08 19:00":
+		return false
+	match str(p08.get("status", "")):
+		"ACTIVE":
+			if str(p08.get("due_at", "")) != "J08 19:15":
+				return false
+			marie_j08_entry_outcome = "STATE_A"
+		"AMENDED":
+			if str(p08.get("due_at", "")) != "J08 18:30":
+				return false
+			marie_j08_entry_outcome = "STATE_B"
+		"REFUSED":
+			if str(p08.get("due_at", "")) != "":
+				return false
+			marie_j08_entry_outcome = "STATE_C"
+			marie_j08_household_resolution = "REFUSAL_ABSORBED"
+			mathilde_j08_household_resolution = "RESCHEDULED_WEDNESDAY"
+		_:
+			return false
+	current_day = "J08"
+	day_status = "ACTIVE"
+	if not is_j08_nico_due():
+		nico_j08_meeting_resolution = "NOT_DUE"
+	return true
+
+func is_j08_nico_due() -> bool:
+	var p06: Dictionary = promises.get("nico_j07_tuesday_1845", {})
+	return str(p06.get("status", "")) == "ACTIVE" and str(p06.get("due_at", "")) == "J08 18:45"
+
+func j08_active_obligation_ids() -> Array[String]:
+	var result: Array[String] = []
+	for promise_id in ["raphaelle_j07_mobile_review", "nico_j07_tuesday_1845", "marie_j07_household_request"]:
+		var promise: Dictionary = promises.get(promise_id, {})
+		if str(promise.get("status", "")) == "ACTIVE":
+			result.append(promise_id)
+	return result
+
+func apply_j08_raphaelle_preparation(choice_id: String) -> bool:
+	if current_day != "J08" or day_status != "ACTIVE" or raphaelle_j08_preparation_outcome != "UNESTABLISHED":
+		return false
+	if choice_id == "" or selected_choice_ids.has(choice_id):
+		return false
+	match choice_id:
+		"choice_j08_raphaelle_anticipate_now":
+			raphaelle_j08_preparation_outcome = "ANTICIPATED"
+		"choice_j08_raphaelle_schedule_1820":
+			raphaelle_j08_preparation_outcome = "SCHEDULED_1820"
+		"choice_j08_raphaelle_vague":
+			raphaelle_j08_preparation_outcome = "VAGUE"
+		_:
+			return false
+	selected_choice_ids.append(choice_id)
+	return true
+
+func resolve_j08_state_b_household() -> bool:
+	if current_day != "J08" or marie_j08_entry_outcome != "STATE_B":
+		return false
+	if marie_j08_household_resolution != "UNESTABLISHED":
+		return false
+	var p08: Dictionary = promises.get("marie_j07_household_request", {})
+	if str(p08.get("status", "")) != "AMENDED" or str(p08.get("due_at", "")) != "J08 18:30":
+		return false
+	p08["status"] = "PAID"
+	p08["paid_or_closed_at"] = "J08 18:46"
+	p08["paid_or_closed_by"] = "Player"
+	promises["marie_j07_household_request"] = p08
+	marie_j08_household_resolution = "PAID"
+	mathilde_j08_household_resolution = "AIDED_BY_PLAYER"
+	return true
+
+func resolve_j08_single_obligation() -> bool:
+	if current_day != "J08" or raphaelle_j08_preparation_outcome == "UNESTABLISHED":
+		return false
+	if j08_priority_outcome != "UNESTABLISHED" or j08_active_obligation_ids() != ["raphaelle_j07_mobile_review"]:
+		return false
+	j08_priority_outcome = "AUTO_P05_ONLY"
+	_set_j08_promise_resolution("raphaelle_j07_mobile_review", "PAID", "J08 18:56", "Player")
+	raphaelle_j08_work_resolution = "PAID_ON_TIME"
+	_finalize_j08_household_echo()
+	return true
+
+func apply_j08_priority_choice(choice_id: String) -> bool:
+	if current_day != "J08" or day_status != "ACTIVE" or raphaelle_j08_preparation_outcome == "UNESTABLISHED":
+		return false
+	if choice_id == "" or selected_choice_ids.has(choice_id) or j08_priority_outcome != "UNESTABLISHED":
+		return false
+	if j08_active_obligation_ids().size() < 2:
+		return false
+	match choice_id:
+		"choice_j08_priority_oldest":
+			j08_priority_outcome = "OLDEST_COMMITMENT"
+			_resolve_j08_oldest()
+		"choice_j08_priority_immediate":
+			j08_priority_outcome = "IMMEDIATE_PRESENCE"
+			_resolve_j08_immediate()
+		"choice_j08_priority_vague":
+			j08_priority_outcome = "UNCLEAR"
+			_resolve_j08_vague()
+		_:
+			return false
+	selected_choice_ids.append(choice_id)
+	_finalize_j08_household_echo()
+	return true
+
+func _resolve_j08_oldest() -> void:
+	var late := raphaelle_j08_preparation_outcome == "VAGUE"
+	_set_j08_promise_resolution("raphaelle_j07_mobile_review", "PAID", "J08 19:06" if late else "J08 18:56", "Player")
+	raphaelle_j08_work_resolution = "PAID_LATE" if late else "PAID_ON_TIME"
+	if is_j08_nico_due():
+		_set_j08_promise_resolution("nico_j07_tuesday_1845", "CANCELLED", "J08 18:31", "Player")
+		nico_j08_meeting_resolution = "CANCELLED_HONESTLY"
+	if marie_j08_entry_outcome == "STATE_A":
+		if late:
+			_set_j08_promise_resolution("marie_j07_household_request", "FAILED", "J08 18:51", "Mathilde et la voisine")
+			marie_j08_household_resolution = "FAILED_LATE_AMENDMENT"
+			mathilde_j08_household_resolution = "HANDLED_WITH_NEIGHBOR"
+		else:
+			_set_j08_promise_resolution("marie_j07_household_request", "PAID", "J08 19:20", "Player")
+			marie_j08_household_resolution = "PAID"
+			mathilde_j08_household_resolution = "AIDED_BY_PLAYER"
+
+func _resolve_j08_immediate() -> void:
+	_set_j08_promise_resolution("raphaelle_j07_mobile_review", "AMENDED", "", "Player")
+	var p05: Dictionary = promises["raphaelle_j07_mobile_review"]
+	p05["action_due"] = "Responsabilité professionnelle du point client"
+	p05["due_at"] = "J09 09:00"
+	promises["raphaelle_j07_mobile_review"] = p05
+	raphaelle_j08_work_resolution = "TRANSFERRED_HONESTLY"
+	if marie_j08_entry_outcome == "STATE_A":
+		_set_j08_promise_resolution("marie_j07_household_request", "PAID", "J08 19:20", "Player")
+		marie_j08_household_resolution = "PAID"
+		mathilde_j08_household_resolution = "AIDED_BY_PLAYER"
+		if is_j08_nico_due():
+			_set_j08_promise_resolution("nico_j07_tuesday_1845", "CANCELLED", "J08 18:31", "Player")
+			nico_j08_meeting_resolution = "CANCELLED_HONESTLY"
+	elif is_j08_nico_due():
+		_set_j08_promise_resolution("nico_j07_tuesday_1845", "PAID", "J08 18:58", "Player")
+		nico_j08_meeting_resolution = "PAID_SHORT"
+
+func _resolve_j08_vague() -> void:
+	_set_j08_promise_resolution("raphaelle_j07_mobile_review", "FAILED", "J08 18:52", "Raphaëlle reprend sans réponse claire")
+	raphaelle_j08_work_resolution = "ABANDONED_VAGUELY"
+	if is_j08_nico_due():
+		_set_j08_promise_resolution("nico_j07_tuesday_1845", "FAILED", "J08 18:51", "Nico")
+		nico_j08_meeting_resolution = "FAILED_VAGUE"
+	if marie_j08_entry_outcome == "STATE_A":
+		_set_j08_promise_resolution("marie_j07_household_request", "FAILED", "J08 19:08", "Mathilde et la voisine")
+		marie_j08_household_resolution = "FAILED_VAGUE"
+		mathilde_j08_household_resolution = "HANDLED_WITH_NEIGHBOR"
+
+func _set_j08_promise_resolution(promise_id: String, status: String, closed_at: String, closed_by: String) -> void:
+	var promise: Dictionary = promises.get(promise_id, {})
+	promise["status"] = status
+	if closed_at != "":
+		promise["paid_or_closed_at"] = closed_at
+	else:
+		promise.erase("paid_or_closed_at")
+	if closed_by != "":
+		promise["paid_or_closed_by"] = closed_by
+	else:
+		promise.erase("paid_or_closed_by")
+	promises[promise_id] = promise
+
+func _finalize_j08_household_echo() -> void:
+	match marie_j08_household_resolution:
+		"PAID":
+			marie_j08_echo_outcome = "CLEAR_HOURS"
+		"REFUSAL_ABSORBED":
+			marie_j08_echo_outcome = "HONEST_REFUSAL"
+		"FAILED_LATE_AMENDMENT", "FAILED_VAGUE":
+			marie_j08_echo_outcome = "VAGUE_OR_MISSED"
+
+func complete_j08() -> bool:
+	if current_day != "J08" or day_status != "ACTIVE":
+		return false
+	if raphaelle_j08_preparation_outcome == "UNESTABLISHED" or j08_priority_outcome == "UNESTABLISHED":
+		return false
+	if raphaelle_j08_work_resolution == "UNESTABLISHED" or nico_j08_meeting_resolution == "UNESTABLISHED":
+		return false
+	if marie_j08_household_resolution == "UNESTABLISHED" or mathilde_j08_household_resolution == "UNESTABLISHED":
+		return false
+	if marie_j08_echo_outcome == "UNESTABLISHED" or not _j08_records_consistent(snapshot()):
+		return false
+	resolved_visual_variant_by_asset = {
+		"S1_A2_J08_SCN_RAPHAELLE_WORK_STATE_01": "S1_A2_J08_SCN_RAPHAELLE_WORK_STATE_01_PAID" if raphaelle_j08_work_resolution in ["PAID_ON_TIME", "PAID_LATE"] else "S1_A2_J08_SCN_RAPHAELLE_WORK_STATE_01_TAKEN_OVER",
+		"S1_A2_J08_SCN_NICO_CHAIR_STATE_01": "S1_A2_J08_SCN_NICO_CHAIR_STATE_01_PAID" if nico_j08_meeting_resolution == "PAID_SHORT" else "S1_A2_J08_SCN_NICO_CHAIR_STATE_01_NO_WAIT",
+		"S1_A2_J08_SCN_HOUSEHOLD_STATE_01": "S1_A2_J08_SCN_HOUSEHOLD_STATE_01_PAID" if marie_j08_household_resolution == "PAID" else "S1_A2_J08_SCN_HOUSEHOLD_STATE_01_AUTONOMOUS",
+	}
+	return complete_day()
 
 func resolve_j07_morning_consequence() -> bool:
 	if current_day != "J07" or day_status != "ACTIVE" or marie_j06_return_resolution != "UNESTABLISHED":
@@ -853,17 +1066,28 @@ func snapshot() -> Dictionary:
 		"nico_j07_confidence_outcome": nico_j07_confidence_outcome,
 		"nico_j07_continuation_outcome": nico_j07_continuation_outcome,
 		"marie_j07_household_outcome": marie_j07_household_outcome,
+		"marie_j08_entry_outcome": marie_j08_entry_outcome,
+		"raphaelle_j08_preparation_outcome": raphaelle_j08_preparation_outcome,
+		"j08_priority_outcome": j08_priority_outcome,
+		"raphaelle_j08_work_resolution": raphaelle_j08_work_resolution,
+		"nico_j08_meeting_resolution": nico_j08_meeting_resolution,
+		"marie_j08_household_resolution": marie_j08_household_resolution,
+		"mathilde_j08_household_resolution": mathilde_j08_household_resolution,
+		"marie_j08_echo_outcome": marie_j08_echo_outcome,
+		"resolved_visual_variant_by_asset": resolved_visual_variant_by_asset.duplicate(true),
 	}
 
 func restore_snapshot(value: Dictionary) -> bool:
 	var version := int(value.get("version", -1))
-	if version not in [1, 2, 3, 4, SNAPSHOT_VERSION]:
+	if version not in [1, 2, 3, 4, 5, SNAPSHOT_VERSION]:
 		return false
-	if str(value.get("current_day", "")) not in ["J01", "J02", "J03", "J04", "J05", "J06", "J07"]:
+	if str(value.get("current_day", "")) not in ["J01", "J02", "J03", "J04", "J05", "J06", "J07", "J08"]:
 		return false
 	if version < 4 and str(value.get("current_day", "")) == "J06":
 		return false
-	if version < SNAPSHOT_VERSION and str(value.get("current_day", "")) == "J07":
+	if version < 5 and str(value.get("current_day", "")) == "J07":
+		return false
+	if version < SNAPSHOT_VERSION and str(value.get("current_day", "")) == "J08":
 		return false
 	if str(value.get("day_status", "")) not in ["ACTIVE", "COMPLETE"]:
 		return false
@@ -894,6 +1118,15 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if str(value.get("nico_j07_confidence_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "CONTRADICTION_ACKNOWLEDGED", "SOCIAL_VIEW_REQUESTED", "CONFIDENCE_DECLINED"]: return false
 	if str(value.get("nico_j07_continuation_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "TUESDAY_ACCEPTED", "THURSDAY_CONDITIONAL", "CONTINUATION_CLOSED"]: return false
 	if str(value.get("marie_j07_household_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "PRESENCE_CONFIRMED", "PRECISE_ALTERNATIVE", "HONEST_REFUSAL"]: return false
+	if str(value.get("marie_j08_entry_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "STATE_A", "STATE_B", "STATE_C"]: return false
+	if str(value.get("raphaelle_j08_preparation_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "ANTICIPATED", "SCHEDULED_1820", "VAGUE"]: return false
+	if str(value.get("j08_priority_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "OLDEST_COMMITMENT", "IMMEDIATE_PRESENCE", "UNCLEAR", "AUTO_P05_ONLY"]: return false
+	if str(value.get("raphaelle_j08_work_resolution", "UNESTABLISHED")) not in ["UNESTABLISHED", "PAID_ON_TIME", "PAID_LATE", "TRANSFERRED_HONESTLY", "ABANDONED_VAGUELY"]: return false
+	if str(value.get("nico_j08_meeting_resolution", "UNESTABLISHED")) not in ["UNESTABLISHED", "PAID_SHORT", "CANCELLED_HONESTLY", "FAILED_VAGUE", "NOT_DUE"]: return false
+	if str(value.get("marie_j08_household_resolution", "UNESTABLISHED")) not in ["UNESTABLISHED", "PAID", "FAILED_LATE_AMENDMENT", "FAILED_VAGUE", "REFUSAL_ABSORBED"]: return false
+	if str(value.get("mathilde_j08_household_resolution", "UNESTABLISHED")) not in ["UNESTABLISHED", "AIDED_BY_PLAYER", "HANDLED_WITH_NEIGHBOR", "RESCHEDULED_WEDNESDAY"]: return false
+	if str(value.get("marie_j08_echo_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "CLEAR_HOURS", "HONEST_REFUSAL", "VAGUE_OR_MISSED"]: return false
+	if typeof(value.get("resolved_visual_variant_by_asset", {})) != TYPE_DICTIONARY: return false
 	for key in ["promises", "traces", "knowledge"]:
 		if typeof(value.get(key)) != TYPE_DICTIONARY:
 			return false
@@ -905,6 +1138,8 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if not _j06_snapshot_consistent(value):
 		return false
 	if not _j07_records_consistent(value):
+		return false
+	if not _j08_records_consistent(value):
 		return false
 	current_day = str(value["current_day"])
 	day_status = str(value["day_status"])
@@ -942,6 +1177,15 @@ func restore_snapshot(value: Dictionary) -> bool:
 	nico_j07_confidence_outcome = str(value.get("nico_j07_confidence_outcome", "UNESTABLISHED"))
 	nico_j07_continuation_outcome = str(value.get("nico_j07_continuation_outcome", "UNESTABLISHED"))
 	marie_j07_household_outcome = str(value.get("marie_j07_household_outcome", "UNESTABLISHED"))
+	marie_j08_entry_outcome = str(value.get("marie_j08_entry_outcome", "UNESTABLISHED"))
+	raphaelle_j08_preparation_outcome = str(value.get("raphaelle_j08_preparation_outcome", "UNESTABLISHED"))
+	j08_priority_outcome = str(value.get("j08_priority_outcome", "UNESTABLISHED"))
+	raphaelle_j08_work_resolution = str(value.get("raphaelle_j08_work_resolution", "UNESTABLISHED"))
+	nico_j08_meeting_resolution = str(value.get("nico_j08_meeting_resolution", "UNESTABLISHED"))
+	marie_j08_household_resolution = str(value.get("marie_j08_household_resolution", "UNESTABLISHED"))
+	mathilde_j08_household_resolution = str(value.get("mathilde_j08_household_resolution", "UNESTABLISHED"))
+	marie_j08_echo_outcome = str(value.get("marie_j08_echo_outcome", "UNESTABLISHED"))
+	resolved_visual_variant_by_asset = value.get("resolved_visual_variant_by_asset", {}).duplicate(true)
 	return true
 
 func _default_pauline_retained_frame(outcome: String) -> String:
@@ -1003,6 +1247,8 @@ func _j06_snapshot_consistent(value: Dictionary) -> bool:
 	return due_at == ""
 
 func _j07_records_consistent(value: Dictionary) -> bool:
+	if str(value.get("current_day", "")) == "J08":
+		return _j08_source_records_consistent(value)
 	var raphaelle_outcome := str(value.get("raphaelle_j07_mobile_review_outcome", "UNESTABLISHED"))
 	var nico_outcome := str(value.get("nico_j07_confidence_outcome", "UNESTABLISHED"))
 	var continuation := str(value.get("nico_j07_continuation_outcome", "UNESTABLISHED"))
@@ -1061,5 +1307,143 @@ func _j07_records_consistent(value: Dictionary) -> bool:
 	if has_p08:
 		var expected_status: String = str({"PRESENCE_CONFIRMED": "ACTIVE", "PRECISE_ALTERNATIVE": "AMENDED", "HONEST_REFUSAL": "REFUSED"}.get(marie_outcome, ""))
 		if str(restored_promises["marie_j07_household_request"].get("status", "")) != expected_status:
+			return false
+	return true
+
+func _j08_source_records_consistent(value: Dictionary) -> bool:
+	if str(value.get("raphaelle_j07_mobile_review_outcome", "")) != "RESPONSIBILITY_ACKNOWLEDGED":
+		return false
+	if str(value.get("nico_j07_confidence_outcome", "UNESTABLISHED")) == "UNESTABLISHED":
+		return false
+	if str(value.get("nico_j07_continuation_outcome", "UNESTABLISHED")) == "UNESTABLISHED":
+		return false
+	if str(value.get("marie_j07_household_outcome", "UNESTABLISHED")) == "UNESTABLISHED":
+		return false
+	var restored_promises: Dictionary = value.get("promises", {})
+	var restored_traces: Dictionary = value.get("traces", {})
+	var restored_knowledge: Dictionary = value.get("knowledge", {})
+	for promise_id in ["raphaelle_j07_mobile_review", "marie_j07_household_request"]:
+		if not restored_promises.has(promise_id):
+			return false
+	if not restored_traces.has("j07_nico_confidence_01") or not restored_knowledge.has("fact_nico_received_player_confidence"):
+		return false
+	var p05: Dictionary = restored_promises["raphaelle_j07_mobile_review"]
+	if str(p05.get("promise_type", "")) != "TASK" or str(p05.get("created_at", "")) != "J07 11:04":
+		return false
+	var continuation := str(value.get("nico_j07_continuation_outcome", ""))
+	if continuation == "TUESDAY_ACCEPTED" and not restored_promises.has("nico_j07_tuesday_1845"):
+		return false
+	if continuation == "THURSDAY_CONDITIONAL" and not restored_promises.has("nico_j07_thursday_conditional"):
+		return false
+	if continuation == "CONTINUATION_CLOSED":
+		var refused: Dictionary = restored_promises.get("nico_j07_tuesday_1845", {})
+		if str(refused.get("status", "")) != "REFUSED":
+			return false
+	return true
+
+func _j08_records_consistent(value: Dictionary) -> bool:
+	var current := str(value.get("current_day", ""))
+	var entry := str(value.get("marie_j08_entry_outcome", "UNESTABLISHED"))
+	var preparation := str(value.get("raphaelle_j08_preparation_outcome", "UNESTABLISHED"))
+	var priority := str(value.get("j08_priority_outcome", "UNESTABLISHED"))
+	var work := str(value.get("raphaelle_j08_work_resolution", "UNESTABLISHED"))
+	var nico := str(value.get("nico_j08_meeting_resolution", "UNESTABLISHED"))
+	var household := str(value.get("marie_j08_household_resolution", "UNESTABLISHED"))
+	var mathilde := str(value.get("mathilde_j08_household_resolution", "UNESTABLISHED"))
+	var echo := str(value.get("marie_j08_echo_outcome", "UNESTABLISHED"))
+	var variants: Dictionary = value.get("resolved_visual_variant_by_asset", {})
+	if current != "J08":
+		return entry == "UNESTABLISHED" and preparation == "UNESTABLISHED" and priority == "UNESTABLISHED" and work == "UNESTABLISHED" and nico == "UNESTABLISHED" and household == "UNESTABLISHED" and mathilde == "UNESTABLISHED" and echo == "UNESTABLISHED" and variants.is_empty()
+	if entry == "UNESTABLISHED":
+		return false
+	var restored_promises: Dictionary = value.get("promises", {})
+	var p05: Dictionary = restored_promises.get("raphaelle_j07_mobile_review", {})
+	var p06: Dictionary = restored_promises.get("nico_j07_tuesday_1845", {})
+	var p08: Dictionary = restored_promises.get("marie_j07_household_request", {})
+	if p05.is_empty() or p08.is_empty():
+		return false
+	match entry:
+		"STATE_A":
+			if str(p08.get("due_at", "")) != "J08 19:15" or str(p08.get("status", "")) not in ["ACTIVE", "PAID", "FAILED"]:
+				return false
+		"STATE_B":
+			if str(p08.get("due_at", "")) != "J08 18:30" or str(p08.get("status", "")) not in ["AMENDED", "PAID"]:
+				return false
+		"STATE_C":
+			if str(p08.get("status", "")) != "REFUSED" or str(p08.get("due_at", "")) != "":
+				return false
+	if preparation == "UNESTABLISHED" and priority != "UNESTABLISHED":
+		return false
+	match work:
+		"UNESTABLISHED":
+			if str(p05.get("status", "")) != "ACTIVE":
+				return false
+		"PAID_ON_TIME", "PAID_LATE":
+			if str(p05.get("status", "")) != "PAID" or str(p05.get("paid_or_closed_by", "")) != "Player":
+				return false
+		"TRANSFERRED_HONESTLY":
+			if str(p05.get("status", "")) != "AMENDED" or str(p05.get("due_at", "")) != "J09 09:00":
+				return false
+			if str(p05.get("action_due", "")) != "Responsabilité professionnelle du point client":
+				return false
+		"ABANDONED_VAGUELY":
+			if str(p05.get("status", "")) != "FAILED" or str(p05.get("paid_or_closed_by", "")) != "Raphaëlle reprend sans réponse claire":
+				return false
+	var p06_was_accepted := not p06.is_empty() and bool(p06.get("accepted_by_player", false))
+	match nico:
+		"UNESTABLISHED":
+			if not p06_was_accepted or str(p06.get("status", "")) != "ACTIVE":
+				return false
+		"PAID_SHORT":
+			if str(p06.get("status", "")) != "PAID":
+				return false
+		"CANCELLED_HONESTLY":
+			if str(p06.get("status", "")) != "CANCELLED":
+				return false
+		"FAILED_VAGUE":
+			if str(p06.get("status", "")) != "FAILED":
+				return false
+		"NOT_DUE":
+			if p06_was_accepted and str(p06.get("status", "")) == "ACTIVE":
+				return false
+	match household:
+		"UNESTABLISHED":
+			if entry == "STATE_C" or str(p08.get("status", "")) not in ["ACTIVE", "AMENDED"]:
+				return false
+		"PAID":
+			if str(p08.get("status", "")) != "PAID" or mathilde != "AIDED_BY_PLAYER":
+				return false
+		"FAILED_LATE_AMENDMENT", "FAILED_VAGUE":
+			if str(p08.get("status", "")) != "FAILED" or str(p08.get("paid_or_closed_by", "")) != "Mathilde et la voisine" or mathilde != "HANDLED_WITH_NEIGHBOR":
+				return false
+		"REFUSAL_ABSORBED":
+			if entry != "STATE_C" or str(p08.get("status", "")) != "REFUSED" or mathilde != "RESCHEDULED_WEDNESDAY":
+				return false
+	if echo != "UNESTABLISHED":
+		var expected_echo: String = {
+			"PAID": "CLEAR_HOURS",
+			"REFUSAL_ABSORBED": "HONEST_REFUSAL",
+			"FAILED_LATE_AMENDMENT": "VAGUE_OR_MISSED",
+			"FAILED_VAGUE": "VAGUE_OR_MISSED",
+		}.get(household, "")
+		if echo != expected_echo:
+			return false
+	for record in value.get("traces", {}).values():
+		if str(record.get("source_day", "")) == "J08":
+			return false
+	for record in value.get("knowledge", {}).values():
+		if str(record.get("source_day", "")) == "J08":
+			return false
+	if not variants.is_empty():
+		if variants.size() != 3:
+			return false
+		var expected_raphaelle := "S1_A2_J08_SCN_RAPHAELLE_WORK_STATE_01_PAID" if work in ["PAID_ON_TIME", "PAID_LATE"] else "S1_A2_J08_SCN_RAPHAELLE_WORK_STATE_01_TAKEN_OVER"
+		var expected_nico := "S1_A2_J08_SCN_NICO_CHAIR_STATE_01_PAID" if nico == "PAID_SHORT" else "S1_A2_J08_SCN_NICO_CHAIR_STATE_01_NO_WAIT"
+		var expected_household := "S1_A2_J08_SCN_HOUSEHOLD_STATE_01_PAID" if household == "PAID" else "S1_A2_J08_SCN_HOUSEHOLD_STATE_01_AUTONOMOUS"
+		if str(variants.get("S1_A2_J08_SCN_RAPHAELLE_WORK_STATE_01", "")) != expected_raphaelle:
+			return false
+		if str(variants.get("S1_A2_J08_SCN_NICO_CHAIR_STATE_01", "")) != expected_nico:
+			return false
+		if str(variants.get("S1_A2_J08_SCN_HOUSEHOLD_STATE_01", "")) != expected_household:
 			return false
 	return true

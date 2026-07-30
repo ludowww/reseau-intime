@@ -1,0 +1,191 @@
+{
+  "id": "chapter_08_raphaelle_mobile_review_resolution",
+  "chapter": 8,
+  "day": 8,
+  "title": "Mardi — Raphaëlle, la version mobile",
+  "app": "messages",
+  "communication_mode": "REMOTE_ASYNC",
+  "foreground_role": "professional_obligation",
+  "thread": {
+    "id": "thread_raphaelle_private",
+    "type": "private",
+    "participants": ["ludo", "raphaelle"],
+    "display_name": "Raphaëlle",
+    "profile_content_id": "profile_raphaelle_placeholder"
+  },
+  "segments": [
+    {
+      "id": "j08_raphaelle_preparation",
+      "messages": [
+        {"id": "msg_j08_raphaelle_prep_001", "sender": "raphaelle", "time_label": "17:03", "text": "Le lien est à jour."},
+        {"id": "msg_j08_raphaelle_prep_002", "sender": "raphaelle", "time_label": "17:03", "text": "Sur mobile, le bouton retour perd encore le focus après validation."},
+        {"id": "msg_j08_raphaelle_prep_003", "sender": "raphaelle", "time_label": "17:04", "text": "J’ai corrigé ma partie."},
+        {"id": "msg_j08_raphaelle_prep_004", "sender": "raphaelle", "time_label": "17:04", "text": "La tienne prend environ douze minutes si tu ne découvres pas un nouveau problème par principe."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j08_raphaelle_anticipate_now",
+          "text": "je m’y mets maintenant. tu as mes notes avant 18 h",
+          "tone": "anticipation",
+          "next_messages": [
+            {"id": "msg_j08_raphaelle_r1_001", "sender": "raphaelle", "time_label": "17:05", "text": "Très bien."},
+            {"id": "msg_j08_raphaelle_r1_002", "sender": "raphaelle", "time_label": "17:05", "text": "Je garde le fichier ouvert."},
+            {"id": "msg_j08_raphaelle_r1_player_001", "sender": "player", "time_label": "17:44", "text": "j’ai corrigé le retour clavier et laissé une note sur le message d’erreur"},
+            {"id": "msg_j08_raphaelle_r1_003", "sender": "raphaelle", "time_label": "17:45", "text": "Reçu."},
+            {"id": "msg_j08_raphaelle_r1_004", "sender": "raphaelle", "time_label": "17:45", "text": "Il restera seulement la vérification finale du build."}
+          ],
+          "off_phone_event": {
+            "from": "17:06",
+            "to": "17:42",
+            "communication_mode": "OFF_PHONE",
+            "summary": "Player relit la version mobile."
+          }
+        },
+        {
+          "id": "choice_j08_raphaelle_schedule_1820",
+          "text": "je termine ce que j’ai là et je fais ta partie à 18 h 20",
+          "tone": "scheduled",
+          "next_messages": [
+            {"id": "msg_j08_raphaelle_r2_001", "sender": "raphaelle", "time_label": "17:05", "text": "18 h 20."},
+            {"id": "msg_j08_raphaelle_r2_002", "sender": "raphaelle", "time_label": "17:05", "text": "Pas « autour de 18 h 20 »."},
+            {"id": "msg_j08_raphaelle_r2_player_001", "sender": "player", "time_label": "17:05", "text": "oui"},
+            {"id": "msg_j08_raphaelle_r2_003", "sender": "raphaelle", "time_label": "17:06", "text": "Parfait."}
+          ]
+        },
+        {
+          "id": "choice_j08_raphaelle_vague",
+          "text": "vu",
+          "tone": "vague",
+          "next_messages": [
+            {"id": "msg_j08_raphaelle_r3_001", "sender": "raphaelle", "time_label": "17:05", "text": "Ce n’est pas une heure."},
+            {"id": "msg_j08_raphaelle_r3_player_001", "sender": "player", "time_label": "17:05", "text": "je regarde avant 19 h"},
+            {"id": "msg_j08_raphaelle_r3_002", "sender": "raphaelle", "time_label": "17:06", "text": "D’accord."},
+            {"id": "msg_j08_raphaelle_r3_003", "sender": "raphaelle", "time_label": "17:06", "text": "Je vais donc prévoir que « avant » peut devenir très proche de « après »."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j08_raphaelle_collision_anticipated",
+      "messages": [
+        {"id": "msg_j08_raphaelle_collision_r1_001", "sender": "raphaelle", "time_label": "18:27", "text": "Le build est prêt."},
+        {"id": "msg_j08_raphaelle_collision_r1_002", "sender": "raphaelle", "time_label": "18:27", "text": "Il reste la validation finale."}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j08_raphaelle_collision_due",
+      "messages": [
+        {"id": "msg_j08_raphaelle_collision_due_001", "sender": "raphaelle", "time_label": "18:27", "text": "Le build est prêt."},
+        {"id": "msg_j08_raphaelle_collision_due_002", "sender": "raphaelle", "time_label": "18:27", "text": "Ta partie n’est pas encore relue."}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j08_raphaelle_priority_oldest_r1",
+      "messages": [
+        {"id": "msg_j08_raphaelle_oldest_r1_player_001", "sender": "player", "time_label": "18:30", "text": "je valide le build maintenant. tu as la réponse dans quatre minutes"},
+        {"id": "msg_j08_raphaelle_oldest_r1_001", "sender": "raphaelle", "time_label": "18:30", "text": "Très bien."}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j08_raphaelle_priority_oldest_due",
+      "messages": [
+        {"id": "msg_j08_raphaelle_oldest_due_player_001", "sender": "player", "time_label": "18:30", "text": "je termine ma partie maintenant. envoi avant 19 h"},
+        {"id": "msg_j08_raphaelle_oldest_due_001", "sender": "raphaelle", "time_label": "18:30", "text": "D’accord."},
+        {"id": "msg_j08_raphaelle_oldest_due_002", "sender": "raphaelle", "time_label": "18:30", "text": "Je reste disponible jusqu’à l’envoi."}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j08_raphaelle_paid_on_time",
+      "messages": [
+        {"id": "msg_j08_raphaelle_paid_001", "sender": "raphaelle", "time_label": "18:56", "text": "C’est bon."},
+        {"id": "msg_j08_raphaelle_paid_002", "sender": "raphaelle", "time_label": "18:56", "text": "J’envoie."},
+        {"id": "msg_j08_raphaelle_paid_003", "sender": "raphaelle", "time_label": "18:57", "text": "Merci d’avoir choisi une heure et de l’avoir tenue."}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j08_raphaelle_paid_late",
+      "messages": [
+        {"id": "msg_j08_raphaelle_paid_late_001", "sender": "raphaelle", "time_label": "19:06", "text": "J’ai envoyé à 19 h 06."},
+        {"id": "msg_j08_raphaelle_paid_late_002", "sender": "raphaelle", "time_label": "19:06", "text": "Le correctif est bon."},
+        {"id": "msg_j08_raphaelle_paid_late_003", "sender": "raphaelle", "time_label": "19:07", "text": "La prochaine fois, « vu » ne sera pas considéré comme une planification."}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j08_raphaelle_priority_immediate_a",
+      "messages": [
+        {"id": "msg_j08_raphaelle_immediate_a_player_001", "sender": "player", "time_label": "18:31", "text": "je dois partir. je n’ai pas fini. tu peux reprendre ou on décale l’envoi ?"},
+        {"id": "msg_j08_raphaelle_immediate_a_001", "sender": "raphaelle", "time_label": "18:31", "text": "Je reprends ta partie."},
+        {"id": "msg_j08_raphaelle_immediate_a_002", "sender": "raphaelle", "time_label": "18:31", "text": "Le point client reste demain à 9 h."},
+        {"id": "msg_j08_raphaelle_immediate_a_003", "sender": "raphaelle", "time_label": "18:32", "text": "Tu porteras l’explication si quelque chose manque."}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j08_raphaelle_priority_immediate_b",
+      "messages": [
+        {"id": "msg_j08_raphaelle_immediate_b_player_001", "sender": "player", "time_label": "18:48", "text": "le constat a débordé. je ne termine pas avant 19 h. tu peux reprendre ?"},
+        {"id": "msg_j08_raphaelle_immediate_b_001", "sender": "raphaelle", "time_label": "18:48", "text": "Oui."},
+        {"id": "msg_j08_raphaelle_immediate_b_002", "sender": "raphaelle", "time_label": "18:48", "text": "J’envoie sans attendre ton retour."},
+        {"id": "msg_j08_raphaelle_immediate_b_003", "sender": "raphaelle", "time_label": "18:49", "text": "Tu reprends le sujet demain matin."}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j08_raphaelle_priority_immediate_c",
+      "messages": [
+        {"id": "msg_j08_raphaelle_immediate_c_player_001", "sender": "player", "time_label": "18:30", "text": "je pars. je n’ai pas fini. tu peux reprendre et je prends le point demain ?"},
+        {"id": "msg_j08_raphaelle_immediate_c_001", "sender": "raphaelle", "time_label": "18:30", "text": "Oui."},
+        {"id": "msg_j08_raphaelle_immediate_c_002", "sender": "raphaelle", "time_label": "18:30", "text": "C’est une modification claire."},
+        {"id": "msg_j08_raphaelle_immediate_c_003", "sender": "raphaelle", "time_label": "18:31", "text": "Je reprends."}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j08_raphaelle_priority_vague",
+      "messages": [
+        {"id": "msg_j08_raphaelle_vague_player_001", "sender": "player", "time_label": "18:30", "text": "j’y suis"},
+        {"id": "msg_j08_raphaelle_vague_001", "sender": "raphaelle", "time_label": "18:30", "text": "Sur le fichier ou sur le départ ?"},
+        {"id": "msg_j08_raphaelle_vague_002", "sender": "raphaelle", "time_label": "18:52", "text": "J’ai repris ta partie."},
+        {"id": "msg_j08_raphaelle_vague_003", "sender": "raphaelle", "time_label": "18:52", "text": "J’envoie sans attendre."},
+        {"id": "msg_j08_raphaelle_vague_004", "sender": "raphaelle", "time_label": "18:53", "text": "Je ne savais plus si tu étais encore dessus."}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j08_raphaelle_return_transferred",
+      "messages": [
+        {"id": "msg_j08_raphaelle_return_transfer_001", "sender": "raphaelle", "time_label": "21:02", "text": "La version est envoyée."},
+        {"id": "msg_j08_raphaelle_return_transfer_002", "sender": "raphaelle", "time_label": "21:02", "text": "J’ai repris la navigation clavier."},
+        {"id": "msg_j08_raphaelle_return_transfer_003", "sender": "raphaelle", "time_label": "21:03", "text": "Demain, tu portes le point si le client demande pourquoi cela a bougé tard."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j08_raphaelle_return_transfer_guided",
+          "text": "oui",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "next_messages": [
+            {"id": "msg_j08_raphaelle_return_transfer_004", "sender": "raphaelle", "time_label": "21:03", "text": "Bien."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j08_raphaelle_return_abandoned",
+      "messages": [
+        {"id": "msg_j08_raphaelle_return_abandoned_001", "sender": "raphaelle", "time_label": "21:02", "text": "La version est envoyée."},
+        {"id": "msg_j08_raphaelle_return_abandoned_002", "sender": "raphaelle", "time_label": "21:02", "text": "J’ai repris sans savoir si tu revenais."},
+        {"id": "msg_j08_raphaelle_return_abandoned_003", "sender": "raphaelle", "time_label": "21:03", "text": "Demain, nous parlerons de la méthode. Pas du résultat."}
+      ],
+      "choices": []
+    }
+  ],
+  "routes_nourished": [],
+  "debug_notes": "J08 canonique : Raphaëlle reste PROFESSIONAL_ONLY et P05 est payée, amendée ou échouée sans nouvelle promesse."
+}

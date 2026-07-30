@@ -1,0 +1,227 @@
+{
+  "id": "chapter_08_marie_household_and_j09_bridge",
+  "chapter": 8,
+  "day": 8,
+  "title": "Mardi — Marie, le foyer et le lendemain",
+  "app": "messages",
+  "communication_mode": "REMOTE_ASYNC",
+  "foreground_role": "household_consequence",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": ["ludo", "marie"],
+    "display_name": "Marie",
+    "profile_content_id": "profile_marie_placeholder"
+  },
+  "segments": [
+    {
+      "id": "j08_marie_entry_state_a",
+      "messages": [
+        {"id": "msg_j08_marie_a_001", "sender": "marie", "time_label": "08:42", "text": "C’est confirmé pour 19 h 15."},
+        {"id": "msg_j08_marie_a_002", "sender": "marie", "time_label": "08:42", "text": "Il a dit qu’il arriverait peut-être dix minutes avant."},
+        {"id": "msg_j08_marie_a_003", "sender": "marie", "time_label": "08:43", "text": "La pochette bleue est sur le meuble de l’entrée."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j08_marie_entry_a_guided",
+          "text": "je serai là avant lui",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "next_messages": [
+            {"id": "msg_j08_marie_a_004", "sender": "marie", "time_label": "08:43", "text": "Parfait."},
+            {"id": "msg_j08_marie_a_005", "sender": "marie", "time_label": "08:44", "text": "Mathilde finit à 19 h 30. Elle te doit donc officiellement un café et officieusement rien du tout."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j08_marie_entry_state_b",
+      "messages": [
+        {"id": "msg_j08_marie_b_001", "sender": "marie", "time_label": "08:42", "text": "Il peut passer à 18 h 30."},
+        {"id": "msg_j08_marie_b_002", "sender": "marie", "time_label": "08:42", "text": "Ton alternative a fonctionné."},
+        {"id": "msg_j08_marie_b_003", "sender": "marie", "time_label": "08:43", "text": "C’est presque agaçant."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j08_marie_entry_b_guided",
+          "text": "je prends la victoire administrative",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "next_messages": [
+            {"id": "msg_j08_marie_b_004", "sender": "marie", "time_label": "08:43", "text": "Prends surtout la pochette bleue."},
+            {"id": "msg_j08_marie_b_005", "sender": "marie", "time_label": "08:44", "text": "Et sois là à 18 h 25. Les propriétaires qui disent 18 h 30 vivent parfois dans un autre fuseau horaire."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j08_marie_entry_state_c",
+      "messages": [
+        {"id": "msg_j08_marie_c_001", "sender": "marie", "time_label": "08:42", "text": "C’est déplacé à mercredi."},
+        {"id": "msg_j08_marie_c_002", "sender": "marie", "time_label": "08:42", "text": "Mathilde sera là."},
+        {"id": "msg_j08_marie_c_003", "sender": "marie", "time_label": "08:43", "text": "Donc c’est réglé."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j08_marie_entry_c_guided",
+          "text": "merci d’avoir géré",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "next_messages": [
+            {"id": "msg_j08_marie_c_004", "sender": "marie", "time_label": "08:43", "text": "On a géré."},
+            {"id": "msg_j08_marie_c_005", "sender": "marie", "time_label": "08:44", "text": "Tu avais dit non clairement. C’était plus simple que de t’attendre."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j08_marie_state_b_early",
+      "messages": [
+        {"id": "msg_j08_marie_b_early_001", "sender": "marie", "time_label": "18:24", "text": "Il est déjà en bas."},
+        {"id": "msg_j08_marie_b_early_002", "sender": "marie", "time_label": "18:24", "text": "Je t’avais prévenu pour le fuseau horaire."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j08_marie_state_b_go_guided",
+          "text": "j’y vais",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "next_messages": []
+        }
+      ],
+      "off_phone_event": {
+        "from": "18:26",
+        "to": "18:46",
+        "communication_mode": "OFF_PHONE",
+        "summary": "Player accueille le propriétaire. Le mur et les papiers sont vérifiés. Mathilde n’est pas présente."
+      }
+    },
+    {
+      "id": "j08_marie_collision_state_a",
+      "messages": [
+        {"id": "msg_j08_marie_collision_a_001", "sender": "marie", "time_label": "18:28", "text": "Il vient de m’écrire."},
+        {"id": "msg_j08_marie_collision_a_002", "sender": "marie", "time_label": "18:28", "text": "Il sera là à 19 h 05."},
+        {"id": "msg_j08_marie_collision_a_003", "sender": "marie", "time_label": "18:29", "text": "Tu es bien en route après ton travail ?"}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j08_marie_priority_oldest_state_a",
+      "messages": [
+        {"id": "msg_j08_marie_oldest_a_player_001", "sender": "player", "time_label": "18:32", "text": "je termine le correctif et je pars. j’arrive pour 19 h 05"},
+        {"id": "msg_j08_marie_oldest_a_001", "sender": "marie", "time_label": "18:32", "text": "19 h 05."},
+        {"id": "msg_j08_marie_oldest_a_002", "sender": "marie", "time_label": "18:32", "text": "Pas 19 h 20 avec une bonne explication."}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j08_marie_priority_oldest_state_a_late",
+      "messages": [
+        {"id": "msg_j08_marie_oldest_late_player_001", "sender": "player", "time_label": "18:50", "text": "je vais être en retard"},
+        {"id": "msg_j08_marie_oldest_late_001", "sender": "marie", "time_label": "18:51", "text": "Mathilde a trouvé une voisine pour ouvrir."},
+        {"id": "msg_j08_marie_oldest_late_002", "sender": "marie", "time_label": "18:51", "text": "Ne cours pas pour arriver après."}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j08_marie_priority_immediate_state_a",
+      "messages": [
+        {"id": "msg_j08_marie_immediate_a_player_001", "sender": "player", "time_label": "18:30", "text": "je pars maintenant. je serai là avant lui"},
+        {"id": "msg_j08_marie_immediate_a_001", "sender": "marie", "time_label": "18:30", "text": "Merci."},
+        {"id": "msg_j08_marie_immediate_a_002", "sender": "marie", "time_label": "18:30", "text": "La pochette bleue. Je répète parce que je nous connais."}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j08_marie_priority_vague_state_a",
+      "messages": [
+        {"id": "msg_j08_marie_vague_a_player_001", "sender": "player", "time_label": "18:32", "text": "cinq minutes"},
+        {"id": "msg_j08_marie_vague_a_001", "sender": "marie", "time_label": "18:32", "text": "Cinq minutes avant de partir ou avant d’arriver ?"},
+        {"id": "msg_j08_marie_vague_a_002", "sender": "marie", "time_label": "19:08", "text": "C’est réglé."},
+        {"id": "msg_j08_marie_vague_a_003", "sender": "marie", "time_label": "19:08", "text": "Mathilde a demandé à la voisine d’ouvrir."},
+        {"id": "msg_j08_marie_vague_a_004", "sender": "marie", "time_label": "19:09", "text": "On a arrêté d’attendre."}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j08_marie_household_return_paid",
+      "messages": [
+        {"id": "msg_j08_marie_return_paid_001", "sender": "marie", "time_label": "20:14", "text": "C’est fait."},
+        {"id": "msg_j08_marie_return_paid_002", "sender": "marie", "time_label": "20:14", "text": "Il a pris les photos du mur et signé le constat."},
+        {"id": "msg_j08_marie_return_paid_003", "sender": "marie", "time_label": "20:15", "text": "Mathilde te remercie."},
+        {"id": "msg_j08_marie_return_paid_004", "sender": "marie", "time_label": "20:15", "text": "Moi aussi."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j08_marie_return_paid_guided",
+          "text": "la pochette bleue a survécu",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "next_messages": [
+            {"id": "msg_j08_marie_return_paid_005", "sender": "marie", "time_label": "20:16", "text": "De peu."},
+            {"id": "msg_j08_marie_return_paid_006", "sender": "marie", "time_label": "20:16", "text": "La verte a essayé de participer."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j08_marie_household_return_failed",
+      "messages": [
+        {"id": "msg_j08_marie_return_failed_001", "sender": "marie", "time_label": "20:14", "text": "C’est fait."},
+        {"id": "msg_j08_marie_return_failed_002", "sender": "marie", "time_label": "20:14", "text": "Mathilde et la voisine ont géré."},
+        {"id": "msg_j08_marie_return_failed_003", "sender": "marie", "time_label": "20:15", "text": "Je ne te demande pas de refaire la soirée."},
+        {"id": "msg_j08_marie_return_failed_004", "sender": "marie", "time_label": "20:15", "text": "Juste ne dis pas que tu étais là."}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j08_marie_household_return_refused",
+      "messages": [
+        {"id": "msg_j08_marie_return_refused_001", "sender": "marie", "time_label": "20:14", "text": "Mercredi est confirmé pour le constat."},
+        {"id": "msg_j08_marie_return_refused_002", "sender": "marie", "time_label": "20:14", "text": "Mathilde sera là."},
+        {"id": "msg_j08_marie_return_refused_003", "sender": "marie", "time_label": "20:15", "text": "Rien à rattraper ce soir."}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j08_marie_j09_bridge_warm",
+      "messages": [
+        {"id": "msg_j08_marie_bridge_warm_001", "sender": "marie", "time_label": "22:18", "text": "Demain je finis tard à La Verrière."},
+        {"id": "msg_j08_marie_bridge_warm_002", "sender": "marie", "time_label": "22:18", "text": "Élodie a prévu une rallonge noire et trois personnes qui ne savent pas lire un plan."},
+        {"id": "msg_j08_marie_bridge_warm_003", "sender": "marie", "time_label": "22:19", "text": "Je te redis pour l’heure."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j08_marie_bridge_warm_guided",
+          "text": "d’accord. repose-toi avant de sauver la rallonge",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "next_messages": [
+            {"id": "msg_j08_marie_bridge_warm_004", "sender": "marie", "time_label": "22:20", "text": "C’est elle qui nous sauvera tous."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j08_marie_j09_bridge_cold",
+      "messages": [
+        {"id": "msg_j08_marie_bridge_cold_001", "sender": "marie", "time_label": "22:18", "text": "Demain je finis tard à La Verrière."},
+        {"id": "msg_j08_marie_bridge_cold_002", "sender": "marie", "time_label": "22:18", "text": "Élodie a prévu une rallonge noire et trois personnes qui ne savent pas lire un plan."},
+        {"id": "msg_j08_marie_bridge_cold_003", "sender": "marie", "time_label": "22:19", "text": "Je te redis pour l’heure."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j08_marie_bridge_cold_guided",
+          "text": "d’accord",
+          "tone": "guided_reply",
+          "_guided_reply": true,
+          "next_messages": [
+            {"id": "msg_j08_marie_bridge_cold_004", "sender": "marie", "time_label": "22:20", "text": "D’accord."}
+          ]
+        }
+      ]
+    }
+  ],
+  "routes_nourished": ["marie"],
+  "debug_notes": "J08 canonique : le foyer lit seulement P08 ; aucune progression Mathilde, aucune nouvelle promesse, trace ou connaissance."
+}
