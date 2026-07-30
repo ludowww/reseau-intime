@@ -111,6 +111,17 @@ class TUI02C2DayTransitionStaticTests(unittest.TestCase):
         self.assertNotIn("Timer.new", surface)
         self.assertRegex(surface, r"tween_property\([^\n]+0\.(?:15|16|17|18|19|20|21|22|23|24|25)\)")
 
+    def test_centered_content_tracks_available_width_without_portrait_magic(self):
+        surface = self._read("game/scripts/ui/messages/DayTransition.gd")
+        resize = self._method(surface, "_notification")
+        sync = self._method(surface, "_sync_content_width")
+        self.assertIn("NOTIFICATION_RESIZED", resize)
+        self.assertIn("_sync_content_width.call_deferred()", resize)
+        self.assertIn("center_container.size.x", sync)
+        self.assertIn("content_column.custom_minimum_size.x", sync)
+        self.assertNotIn("size.y", sync)
+        self.assertNotRegex(sync, r"720|1280|1080|1920")
+
     def test_lot_has_no_runtime_json_sha_or_composed_resource_path(self):
         paths = [
             "game/scripts/ui/messages/DayTransition.gd",

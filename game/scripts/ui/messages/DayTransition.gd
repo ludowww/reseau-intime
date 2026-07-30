@@ -17,11 +17,16 @@ var action_label := "Continuer"
 var secondary_action_label := ""
 var compact_height_mode := false
 var content_column: VBoxContainer
+var center_container: CenterContainer
 
 func set_compact_height_mode(enabled: bool) -> void:
 	compact_height_mode = enabled
 	if content_column != null:
 		content_column.add_theme_constant_override("separation", 10 if enabled else 22)
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_RESIZED and is_inside_tree():
+		_sync_content_width.call_deferred()
 
 func surface_rect() -> Rect2:
 	return get_global_rect() if visible else Rect2()
@@ -112,16 +117,17 @@ func _build() -> void:
 	size_flags_vertical = Control.SIZE_EXPAND_FILL
 	add_theme_stylebox_override("panel", PORTRAIT_THEME.panel_style(PORTRAIT_THEME.BACKGROUND_DEEP, 1, 28))
 
-	var center := CenterContainer.new()
-	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	center.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	center.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	add_child(center)
+	center_container = CenterContainer.new()
+	center_container.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	center_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	center_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	add_child(center_container)
 
 	content_column = VBoxContainer.new()
 	content_column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	content_column.add_theme_constant_override("separation", 10 if compact_height_mode else 22)
-	center.add_child(content_column)
+	center_container.add_child(content_column)
+	_sync_content_width.call_deferred()
 
 	var marker := HSeparator.new()
 	marker.name = "DayTransitionMarker"
@@ -182,6 +188,11 @@ func _build() -> void:
 		secondary_button.add_theme_stylebox_override("focus", PORTRAIT_THEME.focus_style())
 		secondary_button.pressed.connect(func(): secondary_requested.emit())
 		content_column.add_child(secondary_button)
+
+func _sync_content_width() -> void:
+	if center_container == null or content_column == null:
+		return
+	content_column.custom_minimum_size.x = maxf(center_container.size.x, 0.0)
 
 func _label(value: String, font_size: int, color: Color) -> Label:
 	var label := Label.new()
