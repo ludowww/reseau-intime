@@ -1,0 +1,29 @@
+{
+  "implementation_status": "PLAYABLE",
+  "narrative_day_short": "Sam.",
+  "initial_time": "09:06",
+  "day_start": {
+    "eyebrow": "SAMEDI",
+    "title": "La Verrière puis L’Annexe",
+    "subtitle": "09:06",
+    "body": "Les lignes privées occupent désormais les mêmes lieux sans partager les mêmes connaissances.",
+    "action_label": "Continuer",
+    "transition_mode": "day_boundary"
+  },
+  "conversation_paths": {
+    "chapter_12_obligations": "res://data/conversations/chapter_12_obligations.json",
+    "chapter_12_laverriere": "res://data/conversations/chapter_12_laverriere.json",
+    "chapter_12_annexe": "res://data/conversations/chapter_12_annexe.json"
+  },
+  "to_laverriere_plan": {"transition_id":"j12_to_laverriere_plan","mode":"CLOCK","to_time":"14:42","title":"Plus tard","subtitle":"14:42","body":"Marie fixe les heures et demande une forme de présence."},
+  "sandra_cafe_off_phone": {"transition_id":"j12_sandra_cafe","mode":"OFF_PHONE","to_time":"11:44","title":"Hors téléphone","subtitle":"11:00 → 11:30","body":"Le café reste une rencontre ordinaire, sans nouvelle image ni progression."},
+  "to_laverriere_public": {"transition_id":"j12_to_laverriere_public","mode":"OFF_PHONE","to_time":"20:18","title":"La Verrière","subtitle":"19:00 → 20:18","body":"La co-présence reste hors téléphone ; seuls les messages logistiques et les traces autorisées reviennent."},
+  "to_laverriere_close": {"transition_id":"j12_to_laverriere_close","mode":"CLOCK","to_time":"22:15","title":"Fermeture","subtitle":"22:15","body":"Marie demande une décision claire pour la suite."},
+  "to_annexe": {"transition_id":"j12_to_annexe","mode":"OFF_PHONE","to_time":"22:47","title":"Déplacement commun","subtitle":"22:22 → 22:47","body":"Le groupe rejoint L’Annexe ; aucun dialogue oral n’est transcrit."},
+  "to_after_separation": {"transition_id":"j12_to_after_separation","mode":"CLOCK","to_time":"00:28","title":"Après séparation","subtitle":"00:28","body":"Une seule conséquence principale revient au premier plan."},
+  "day_close": {"transition_id":"j12_day_close","mode":"NIGHT","to_time":"00:35","title":"Fin du samedi","subtitle":"Le réseau ne peut plus prétendre que ses lignes restent parallèles.","body":"La conséquence prioritaire devra être traitée avant toute nouvelle opportunité."},
+  "day_end": {"eyebrow":"FIN DU CONTENU JOUABLE","title":"Samedi terminé","subtitle":"J12","body":"La suite commencera par la conséquence prioritaire de la soirée.","action_label":"Continuer"},
+  "visual_asset_debt": "Les quatre visuels fonctionnels J12 utilisent des placeholders runtime ; aucun asset définitif n’est créé.",
+  "gallery_presentations": [],
+  "visual_variant_presentations": []
+}

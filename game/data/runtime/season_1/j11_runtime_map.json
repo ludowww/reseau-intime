@@ -107,11 +107,21 @@
     "body": "La suite devra porter la règle, la limite ou la conséquence."
   },
   "day_end": {
-    "eyebrow": "FIN DU CONTENU JOUABLE",
+    "eyebrow": "FIN DU VENDREDI",
     "title": "Vendredi terminé",
     "subtitle": "J11",
     "body": "La suite reprendra samedi à La Verrière.",
-    "action_label": "Continuer"
+    "action_label": "Continuer",
+    "transition_mode": "day_handoff",
+    "content_end": false,
+    "next_day_presentation": {
+      "eyebrow": "SAMEDI",
+      "title": "La Verrière puis L’Annexe",
+      "subtitle": "09:06",
+      "body": "Les lignes privées occupent désormais les mêmes lieux sans partager les mêmes connaissances.",
+      "action_label": "Continuer",
+      "transition_mode": "day_boundary"
+    }
   },
   "gallery_asset_debt": "Les six images de séquence J11 utilisent le placeholder textuel runtime ; aucun asset définitif n'est livré dans RUNTIME-S1-11D.",
   "gallery_presentations": [

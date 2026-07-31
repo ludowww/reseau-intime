@@ -1,0 +1,40 @@
+{
+  "id": "chapter_12_obligations",
+  "chapter": 12,
+  "day": 12,
+  "title": "Samedi — Les conséquences avant la convergence",
+  "app": "messages",
+  "design_goal": "Traiter P11 et l’aftercare Mathilde échoué avant la convergence J12.",
+  "thread": {"id":"thread_sandra_private","type":"private","participants":["player","sandra"],"display_name":"Sandra"},
+  "segments": [
+    {
+      "id": "j12_sandra_cafe_confirmation",
+      "messages": [
+        {"id":"msg_j12_sandra_001","sender":"sandra","time_label":"09:18","text":"11 h tient toujours."},
+        {"id":"msg_j12_sandra_002","sender":"sandra","time_label":"09:19","text":"Je pars à 10 h 34."},
+        {"id":"msg_j12_sandra_003","sender":"sandra","time_label":"09:19","text":"Information très utile pour éviter les réponses à 10 h 57."}
+      ],
+      "choices": [
+        {"id":"choice_j12_p11_confirm","text":"oui. 11 h tient toujours","next_messages":[]},
+        {"id":"choice_j12_p11_refuse","text":"non. ne pars pas pour moi ce matin","next_messages":[]}
+      ]
+    },
+    {
+      "id": "j12_sandra_cafe_after",
+      "messages": [
+        {"id":"msg_j12_sandra_004","sender":"sandra","time_label":"11:44","text":"Train attrapé."},
+        {"id":"msg_j12_sandra_005","sender":"sandra","time_label":"11:45","text":"Cette fois sans performance athlétique contestable."}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j12_mathilde_failed_aftercare",
+      "messages": [
+        {"id":"msg_j12_mathilde_failed_001","sender":"mathilde","time_label":"09:06","text":"Hier, tu as demandé la suite avant de vérifier comment j’étais."},
+        {"id":"msg_j12_mathilde_failed_002","sender":"mathilde","time_label":"09:07","text":"Je ne viens pas ce soir."},
+        {"id":"msg_j12_mathilde_failed_003","sender":"mathilde","time_label":"09:07","text":"Et on ne recommence rien."}
+      ],
+      "choices": []
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "id": "chapter_12_annexe",
+  "chapter": 12,
+  "day": 12,
+  "title": "Samedi — L’Annexe et l’après-coup",
+  "app": "messages",
+  "design_goal": "Rendre les positions sociales lisibles puis foreground une seule conséquence J13.",
+  "thread": {"id":"thread_annexe_group","type":"group","participants":["player","marie","pauline","bastien","nico"],"display_name":"L’Annexe"},
+  "segments": [
+    {
+      "id": "j12_annexe_public",
+      "messages": [
+        {"id":"msg_j12_nico_group_001","sender":"nico","time_label":"22:47","text":"Table du fond."},
+        {"id":"msg_j12_nico_group_002","sender":"nico","time_label":"22:47","text":"Pas celle près de la porte. Elle appartient à un courant d’air."},
+        {"id":"msg_j12_marie_group_001","sender":"marie","time_label":"22:48","text":"On arrive."},
+        {"id":"msg_j12_pauline_bastien_photo_001","sender":"pauline","time_label":"23:19","content_type":"PHOTO","media_ref":"J12_PLACEHOLDER_V3_PAULINE_BASTIEN","placeholder_label":"Visuel social canonique non produit · Pauline et Bastien","text":""},
+        {"id":"msg_j12_pauline_group_001","sender":"pauline","time_label":"23:19","text":"La 1 est correcte."},
+        {"id":"msg_j12_bastien_group_001","sender":"bastien","time_label":"23:19","text":"C’est la première fois que cette phrase me concerne positivement."},
+        {"id":"msg_j12_annexe_set_001","sender":"sophie","time_label":"23:23","content_type":"PHOTO","media_ref":"j12_annexe_public_group_set_01","placeholder_label":"Set public canonique non produit · positions à L’Annexe","text":""}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j12_annexe_remote_traces",
+      "messages": [
+        {"id":"msg_j12_pauline_bastien_remote_001","sender":"pauline","time_label":"23:19","content_type":"PHOTO","media_ref":"J12_PLACEHOLDER_V3_PAULINE_BASTIEN","placeholder_label":"Visuel social canonique non produit · Pauline et Bastien","text":""},
+        {"id":"msg_j12_pauline_remote_001","sender":"pauline","time_label":"23:19","text":"La 1 est correcte."},
+        {"id":"msg_j12_annexe_remote_set_001","sender":"sophie","time_label":"23:23","content_type":"PHOTO","media_ref":"j12_annexe_public_group_set_01","placeholder_label":"Set public canonique non produit · positions à L’Annexe","text":""}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j12_nico_module",
+      "messages": [
+        {"id":"msg_j12_nico_private_001","sender":"nico","time_label":"23:02","text":"Pas de commentaire privé sur elles ce soir."},
+        {"id":"msg_j12_nico_private_002","sender":"nico","time_label":"23:02","text":"On a dit la règle."}
+      ],
+      "choices": [
+        {"id":"choice_j12_nico_accept","text":"oui","next_messages":[{"id":"msg_j12_nico_accept_001","sender":"nico","time_label":"23:03","text":"Bien."}]},
+        {"id":"choice_j12_nico_observe","text":"tu as remarqué quelque chose","next_messages":[{"id":"msg_j12_nico_observe_001","sender":"nico","time_label":"23:03","text":"Oui."},{"id":"msg_j12_nico_observe_002","sender":"nico","time_label":"23:03","text":"Et je ne vais pas l’utiliser pendant qu’elles sont là."}]},
+        {"id":"choice_j12_nico_refuse","text":"je n’ai pas besoin que tu me surveilles","next_messages":[{"id":"msg_j12_nico_refuse_001","sender":"nico","time_label":"23:03","text":"Alors on ferme le garde-fou."},{"id":"msg_j12_nico_refuse_002","sender":"nico","time_label":"23:03","text":"Mais je ne deviens pas ton alibi."}]}
+      ]
+    },
+    {"id":"j12_after_sandra","messages":[{"id":"msg_j12_sandra_after_001","sender":"sandra","time_label":"00:28","text":"Merci d’avoir répondu sans transformer la photo publique en comparaison."},{"id":"msg_j12_sandra_after_guided","sender":"player","time_label":"00:28","text":"ce n’était pas la même image ni la même règle"},{"id":"msg_j12_sandra_after_002","sender":"sandra","time_label":"00:29","text":"Oui."},{"id":"msg_j12_sandra_after_003","sender":"sandra","time_label":"00:29","text":"C’est exactement ce que je voulais vérifier."}],"choices":[]},
+    {"id":"j12_after_mathilde","messages":[{"id":"msg_j12_mathilde_after_001","sender":"mathilde","time_label":"00:28","text":"On a été très normaux."},{"id":"msg_j12_mathilde_after_002","sender":"mathilde","time_label":"00:28","text":"Nico a quand même regardé deux fois si on s’évitait."},{"id":"msg_j12_mathilde_after_guided","sender":"player","time_label":"00:29","text":"il ne sait rien"},{"id":"msg_j12_mathilde_after_003","sender":"mathilde","time_label":"00:29","text":"Non. Mais il sait qu’il y a quelque chose à ne pas savoir."},{"id":"msg_j12_mathilde_after_004","sender":"mathilde","time_label":"00:30","text":"Demain, il faut qu’on décide comment on vit dans l’appartement."}],"choices":[]},
+    {"id":"j12_after_raphaelle","messages":[{"id":"msg_j12_raphaelle_after_001","sender":"raphaelle","time_label":"00:28","text":"Merci de ne pas avoir essayé de faire exister la version privée dans la salle."},{"id":"msg_j12_raphaelle_after_guided","sender":"player","time_label":"00:28","text":"ce n’était pas le lieu"},{"id":"msg_j12_raphaelle_after_002","sender":"raphaelle","time_label":"00:29","text":"Oui."},{"id":"msg_j12_raphaelle_after_003","sender":"raphaelle","time_label":"00:29","text":"Dimanche, je te dirai si je veux qu’elle existe encore ailleurs."}],"choices":[]},
+    {"id":"j12_after_nico","messages":[{"id":"msg_j12_nico_after_001","sender":"nico","time_label":"00:28","text":"La règle a tenu."},{"id":"msg_j12_nico_after_002","sender":"nico","time_label":"00:28","text":"Tu n’as pas parlé pour elles. Moi non plus."},{"id":"msg_j12_nico_after_guided","sender":"player","time_label":"00:29","text":"ça devrait être la base"},{"id":"msg_j12_nico_after_003","sender":"nico","time_label":"00:29","text":"Oui. Maintenant on sait qu’on peut la tenir quand elles sont vraiment là."}],"choices":[]},
+    {"id":"j12_after_marie","messages":[{"id":"msg_j12_marie_after_001","sender":"marie","time_label":"00:28","text":"On avait l’air d’un couple ce soir."},{"id":"msg_j12_marie_after_guided","sender":"player","time_label":"00:28","text":"on en est un"},{"id":"msg_j12_marie_after_002","sender":"marie","time_label":"00:29","text":"Oui."},{"id":"msg_j12_marie_after_003","sender":"marie","time_label":"00:29","text":"La question, c’est ce qu’on fait quand personne ne prend la photo."}],"choices":[]},
+    {"id":"j12_after_network","messages":[{"id":"msg_j12_marie_network_001","sender":"marie","time_label":"00:28","text":"On a été très bien en public."},{"id":"msg_j12_marie_network_002","sender":"marie","time_label":"00:29","text":"Je ne vais pas faire semblant que cela répond au reste."}],"choices":[]}
+  ]
+}
