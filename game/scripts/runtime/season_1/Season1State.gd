@@ -1078,7 +1078,7 @@ func set_j11_continuation(pivot: String, reason: String) -> bool:
 		return false
 	if reason not in ["J10_CONTINUATION", "J10_LIMIT_CONSEQUENCE", "P10_COUPLE_PRIORITY", "J10_NONE_MARIE_FALLBACK", "EXTERNAL_CLOSED_MARIE_CONSEQUENCE", "J10_NO_LEGITIMATE_CONTINUATION"]:
 		return false
-	if not _j11_selection_matches_j10(pivot, reason):
+	if not _j11_selection_matches_j10(pivot, reason, j10_pivot, j10_pivot_outcome):
 		return false
 	j11_pivot = pivot
 	j11_pivot_reason = reason
@@ -1307,7 +1307,7 @@ func _j11_p10_blocks_external_physical() -> bool:
 	var p10: Dictionary = promises.get("marie_j09_dinner_friday_2030", {})
 	return str(p10.get("status", "")) == "ACTIVE" or str(p10.get("j11_resolution", "")) == "MAINTAINED"
 
-func _j11_selection_matches_j10(pivot: String, reason: String) -> bool:
+func _j11_selection_matches_j10(pivot: String, reason: String, source_pivot: String, source_outcome: String) -> bool:
 	var mapping := {
 		"SANDRA": {
 			"CAFE_HELD_CALM_PRESENCE": ["RESPIRATION", "J10_NO_LEGITIMATE_CONTINUATION"],
@@ -1342,7 +1342,7 @@ func _j11_selection_matches_j10(pivot: String, reason: String) -> bool:
 			"ABSENCE_ANNOUNCED": ["MARIE", "J10_NONE_MARIE_FALLBACK"],
 		},
 	}
-	return mapping.get(j10_pivot, {}).get(j10_pivot_outcome, []) == [pivot, reason]
+	return mapping.get(source_pivot, {}).get(source_outcome, []) == [pivot, reason]
 
 func resolve_j07_morning_consequence() -> bool:
 	if current_day != "J07" or day_status != "ACTIVE" or marie_j06_return_resolution != "UNESTABLISHED":
@@ -2239,7 +2239,7 @@ func _j06_snapshot_consistent(value: Dictionary) -> bool:
 	return due_at == ""
 
 func _j07_records_consistent(value: Dictionary) -> bool:
-	if str(value.get("current_day", "")) in ["J08", "J09", "J10"]:
+	if str(value.get("current_day", "")) in ["J08", "J09", "J10", "J11"]:
 		return _j08_source_records_consistent(value)
 	var raphaelle_outcome := str(value.get("raphaelle_j07_mobile_review_outcome", "UNESTABLISHED"))
 	var nico_outcome := str(value.get("nico_j07_confidence_outcome", "UNESTABLISHED"))
@@ -2673,7 +2673,7 @@ func _j11_records_consistent(value: Dictionary) -> bool:
 		)
 	if (pivot == "") != (reason == ""):
 		return false
-	if pivot != "" and not _j11_selection_matches_j10(pivot, reason):
+	if pivot != "" and not _j11_selection_matches_j10(pivot, reason, str(value.get("j10_pivot", "")), str(value.get("j10_pivot_outcome", ""))):
 		return false
 	if pivot == "RESPIRATION" and (outcome != "" or physical_level != "NONE" or not restored_obligations.is_empty() or has_sandra_trace or has_raphaelle_trace or has_mathilde_trace):
 		return false

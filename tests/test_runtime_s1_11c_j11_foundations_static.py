@@ -155,6 +155,8 @@ class RuntimeS111CJ11FoundationsStaticTests(unittest.TestCase):
         self.assertIn("const SNAPSHOT_VERSION := 10", season)
         self.assertIn("const SNAPSHOT_VERSION := 1", provider)
         self.assertIn('version < SNAPSHOT_VERSION and str(value.get("current_day", "")) == "J11"', state)
+        self.assertIn('if str(value.get("current_day", "")) in ["J08", "J09", "J10", "J11"]:', state)
+        self.assertIn('not _j11_selection_matches_j10(pivot, reason, str(value.get("j10_pivot", "")), str(value.get("j10_pivot_outcome", "")))', state)
         self.assertIn('version < SNAPSHOT_VERSION and str(value.get("active_day", "")) == "J11"', season)
         self.assertIn('"J11": j11_provider.snapshot() if j11_provider != null else {}', season)
         self.assertIn("func begin_j11_foundation_handoff", season)
