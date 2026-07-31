@@ -123,10 +123,18 @@
     "eyebrow": "JEUDI — FIN DE JOURNÉE",
     "title": "J10 terminé",
     "subtitle": "Une ligne devient réelle",
-    "body": "Fin du contenu disponible.",
-    "action_label": "Terminer",
-    "transition_mode": "CONTENT_END",
-    "content_end": true
+    "body": "Vendredi, la continuité devra assumer son intention ou sa limite.",
+    "action_label": "Continuer",
+    "transition_mode": "day_handoff",
+    "content_end": false,
+    "next_day_presentation": {
+      "eyebrow": "VENDREDI",
+      "title": "Ce qui était encore défendable",
+      "subtitle": "17:32",
+      "body": "Ce qui ressemblait encore à une habitude doit maintenant assumer sa limite ou son intention.",
+      "action_label": "Continuer",
+      "transition_mode": "day_boundary"
+    }
   },
   "gallery_presentations": [
     {

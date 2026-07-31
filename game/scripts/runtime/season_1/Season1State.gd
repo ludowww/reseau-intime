@@ -1084,6 +1084,14 @@ func set_j11_continuation(pivot: String, reason: String) -> bool:
 	j11_pivot_reason = reason
 	return true
 
+func record_j11_choice(choice_id: String, allowed_choice_ids: Array) -> bool:
+	if current_day != "J11" or day_status != "ACTIVE" or choice_id == "" or selected_choice_ids.has(choice_id):
+		return false
+	if not allowed_choice_ids.has(choice_id):
+		return false
+	selected_choice_ids.append(choice_id)
+	return true
+
 func apply_j11_p10_choice(choice_id: String) -> bool:
 	if current_day != "J11" or day_status != "ACTIVE" or choice_id == "" or selected_choice_ids.has(choice_id):
 		return false
@@ -1221,6 +1229,22 @@ func establish_j11_sandra_private_image(access_mode: String) -> bool:
 	}
 	return true
 
+func update_j11_sandra_image_access(access_mode: String) -> bool:
+	if current_day != "J11" or day_status != "ACTIVE" or j11_pivot != "SANDRA" or access_mode not in ["view_only", "in_thread_allowed", "removed"]:
+		return false
+	var trace: Dictionary = traces.get("j11_sandra_chosen_image_01", {})
+	var fact: Dictionary = knowledge.get("fact_sandra_chose_private_image_for_player", {})
+	if trace.is_empty() or fact.is_empty():
+		return false
+	trace["current_state"] = "REMOVED" if access_mode == "removed" else "PRIVATE_ACTIVE"
+	trace["current_audience"] = ["Sandra"] if access_mode == "removed" else ["Sandra", "Player"]
+	trace["storage_location"] = "voir seulement" if access_mode == "view_only" else "fil Player / Sandra"
+	trace["saving_rule"] = "VIEW_ONLY" if access_mode == "view_only" else "IN_THREAD_ONLY"
+	fact["access_mode"] = access_mode
+	traces["j11_sandra_chosen_image_01"] = trace
+	knowledge["fact_sandra_chose_private_image_for_player"] = fact
+	return true
+
 func establish_j11_raphaelle_result() -> bool:
 	if current_day != "J11" or day_status != "ACTIVE" or j11_pivot != "RAPHAELLE":
 		return false
@@ -1343,6 +1367,29 @@ func _j11_selection_matches_j10(pivot: String, reason: String, source_pivot: Str
 		},
 	}
 	return mapping.get(source_pivot, {}).get(source_outcome, []) == [pivot, reason]
+
+func complete_j11() -> bool:
+	if current_day != "J11" or day_status != "ACTIVE" or not _j11_records_consistent(snapshot()):
+		return false
+	var p10: Dictionary = promises.get("marie_j09_dinner_friday_2030", {})
+	if str(p10.get("status", "")) == "ACTIVE":
+		return false
+	var p11: Dictionary = promises.get("sandra_cafe_saturday_1100", {})
+	if str(p11.get("status", "")) == "CONDITIONAL" and str(p11.get("counterparty_confirmed_at", "")) == "":
+		return false
+	var conversation_by_pivot := {
+		"SANDRA": ["chapter_11_sandra_image", "sandra"],
+		"MATHILDE": ["chapter_11_mathilde_return", "mathilde"],
+		"RAPHAELLE": ["chapter_11_raphaelle_result", "raphaelle"],
+		"NICO": ["chapter_11_nico_guardrail", "nico"],
+		"MARIE": ["chapter_11_marie_return", "marie"],
+	}
+	if j11_pivot == "RESPIRATION":
+		return complete_day()
+	var completion: Array = conversation_by_pivot.get(j11_pivot, [])
+	if completion.size() != 2 or not complete_conversation(str(completion[0]), str(completion[1]), "pivot"):
+		return false
+	return complete_day()
 
 func resolve_j07_morning_consequence() -> bool:
 	if current_day != "J07" or day_status != "ACTIVE" or marie_j06_return_resolution != "UNESTABLISHED":

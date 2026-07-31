@@ -29,14 +29,15 @@ class RuntimeS110J10PlayableStaticTests(unittest.TestCase):
         ]
         self.assertEqual([], [path for path in required if not (ROOT / path).exists()])
 
-    def test_j09_hands_off_and_only_j10_is_content_end(self):
+    def test_j09_and_j10_hand_off_to_playable_j11(self):
         j09 = self.load("game/data/runtime/season_1/j09_runtime_map.json")
         j10 = self.load("game/data/runtime/season_1/j10_runtime_map.json")
         self.assertEqual("day_handoff", j09["day_end"]["transition_mode"])
         self.assertFalse(j09["day_end"]["content_end"])
         self.assertEqual("Une ligne devient réelle", j09["day_end"]["next_day_presentation"]["title"])
-        self.assertEqual("CONTENT_END", j10["day_end"]["transition_mode"])
-        self.assertTrue(j10["day_end"]["content_end"])
+        self.assertEqual("day_handoff", j10["day_end"]["transition_mode"])
+        self.assertFalse(j10["day_end"]["content_end"])
+        self.assertEqual("Ce qui était encore défendable", j10["day_end"]["next_day_presentation"]["title"])
         self.assertEqual("08:21", j10["initial_time"])
         self.assertEqual("Jeu.", j10["narrative_day_short"])
 
@@ -310,9 +311,9 @@ class RuntimeS110J10PlayableStaticTests(unittest.TestCase):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
         self.assertIn("const SNAPSHOT_VERSION := 9", state)
-        self.assertIn("const SNAPSHOT_VERSION := 10", season)
+        self.assertIn("const SNAPSHOT_VERSION := 11", season)
         self.assertIn("[1, 2, 3, 4, 5, 6, 7, 8, SNAPSHOT_VERSION]", state)
-        self.assertIn("[2, 3, 4, 5, 6, 7, 8, 9, SNAPSHOT_VERSION]", season)
+        self.assertIn("[2, 3, 4, 5, 6, 7, 8, 9, 10, SNAPSHOT_VERSION]", season)
         self.assertIn('version < 8 and str(value.get("current_day", "")) == "J10"', state)
         self.assertIn('version < 8 and str(value.get("active_day", "")) == "J09"', season)
         self.assertIn('version < 9 and str(value.get("active_day", "")) == "J10"', season)

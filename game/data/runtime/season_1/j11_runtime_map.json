@@ -1,5 +1,5 @@
 {
-  "implementation_status": "FOUNDATION_ONLY",
+  "implementation_status": "PLAYABLE",
   "narrative_day_short": "Ven.",
   "initial_time": "17:32",
   "day_start": {
@@ -10,7 +10,109 @@
     "action_label": "Continuer",
     "transition_mode": "day_boundary"
   },
-  "conversation_paths": {},
+  "conversation_paths": {
+    "chapter_11_obligations": "res://data/conversations/chapter_11_obligations.json",
+    "chapter_11_sandra_image": "res://data/conversations/chapter_11_sandra_image.json",
+    "chapter_11_mathilde_return": "res://data/conversations/chapter_11_mathilde_return.json",
+    "chapter_11_raphaelle_result": "res://data/conversations/chapter_11_raphaelle_result.json",
+    "chapter_11_nico_guardrail": "res://data/conversations/chapter_11_nico_guardrail.json",
+    "chapter_11_marie_return": "res://data/conversations/chapter_11_marie_return.json"
+  },
+  "to_p11": {
+    "transition_id": "j11_to_p11",
+    "mode": "CLOCK",
+    "to_time": "17:44",
+    "title": "Plus tard",
+    "subtitle": "17:44",
+    "body": "Une confirmation administrative arrive avant l’échéance."
+  },
+  "to_raphaelle": {
+    "transition_id": "j11_to_raphaelle",
+    "mode": "CLOCK",
+    "to_time": "18:36",
+    "title": "Fin de journée",
+    "subtitle": "18:36",
+    "body": "Le résultat existe après le rôle."
+  },
+  "raphaelle_meeting_off_phone": {
+    "transition_id": "j11_raphaelle_meeting",
+    "mode": "OFF_PHONE",
+    "to_time": "20:18",
+    "title": "Hors téléphone",
+    "subtitle": "19:45 → 20:18",
+    "body": "La rencontre reste distincte du travail."
+  },
+  "to_marie": {
+    "transition_id": "j11_to_marie",
+    "mode": "CLOCK",
+    "to_time": "20:46",
+    "title": "Le soir",
+    "subtitle": "20:46",
+    "body": "Le désir du couple ne peut pas effacer ce qui précède."
+  },
+  "to_mathilde": {
+    "transition_id": "j11_to_mathilde",
+    "mode": "CLOCK",
+    "to_time": "21:06",
+    "title": "Le soir",
+    "subtitle": "21:06",
+    "body": "Elle prévient avant de revenir dans la pièce."
+  },
+  "mathilde_off_phone": {
+    "transition_id": "j11_mathilde_off_phone",
+    "mode": "OFF_PHONE",
+    "to_time": "21:39",
+    "title": "Hors téléphone",
+    "subtitle": "Dans la même pièce",
+    "body": "La co-présence interrompt le chat."
+  },
+  "mathilde_physical_off_phone": {
+    "transition_id": "j11_mathilde_physical_off_phone",
+    "mode": "OFF_PHONE",
+    "to_time": "21:51",
+    "title": "Hors téléphone",
+    "subtitle": "Consentement révocable",
+    "body": "Chaque changement reste négocié et l’arrêt demeure possible."
+  },
+  "marie_off_phone": {
+    "transition_id": "j11_marie_off_phone",
+    "mode": "OFF_PHONE",
+    "to_time": "22:48",
+    "title": "Hors téléphone",
+    "subtitle": "Vie commune",
+    "body": "La rencontre ne réinitialise rien."
+  },
+  "to_sandra": {
+    "transition_id": "j11_to_sandra",
+    "mode": "CLOCK",
+    "to_time": "21:18",
+    "title": "Le soir",
+    "subtitle": "21:18",
+    "body": "Une image choisie arrive avec sa propre règle."
+  },
+  "to_nico": {
+    "transition_id": "j11_to_nico",
+    "mode": "CLOCK",
+    "to_time": "23:11",
+    "title": "Fin de soirée",
+    "subtitle": "23:11",
+    "body": "Le regard partagé doit recevoir une limite."
+  },
+  "day_close": {
+    "transition_id": "j11_day_close",
+    "mode": "NIGHT",
+    "to_time": "23:30",
+    "title": "Fin du vendredi",
+    "subtitle": "Ce qui était défendable ne l’est plus de la même manière.",
+    "body": "La suite devra porter la règle, la limite ou la conséquence."
+  },
+  "day_end": {
+    "eyebrow": "FIN DU CONTENU JOUABLE",
+    "title": "Vendredi terminé",
+    "subtitle": "J11",
+    "body": "La suite reprendra samedi à La Verrière.",
+    "action_label": "Continuer"
+  },
   "gallery_asset_debt": "Les six images de séquence J11 utilisent le placeholder textuel runtime ; aucun asset définitif n'est livré dans RUNTIME-S1-11D.",
   "gallery_presentations": [
     {

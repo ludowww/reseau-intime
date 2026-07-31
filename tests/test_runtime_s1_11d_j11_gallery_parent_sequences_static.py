@@ -46,8 +46,8 @@ class RuntimeS111DGalleryParentSequencesStaticTests(unittest.TestCase):
 
     def test_canonical_parents_reference_exact_ordered_triplets(self):
         runtime_map = self.load(MAP_PATH)
-        self.assertEqual("FOUNDATION_ONLY", runtime_map["implementation_status"])
-        self.assertEqual({}, runtime_map["conversation_paths"])
+        self.assertEqual("PLAYABLE", runtime_map["implementation_status"])
+        self.assertEqual(6, len(runtime_map["conversation_paths"]))
         parents = {item["asset_id"]: item for item in runtime_map["gallery_presentations"]}
         self.assertEqual({MATHILDE_PARENT, MARIE_PARENT}, set(parents))
         self.assertEqual(MATHILDE_CHILDREN, parents[MATHILDE_PARENT]["sequence_child_ids"])
