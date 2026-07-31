@@ -13,7 +13,8 @@ const J07_SCRIPT := preload("res://scripts/runtime/season_1/J07RuntimeProvider.g
 const J08_SCRIPT := preload("res://scripts/runtime/season_1/J08RuntimeProvider.gd")
 const J09_SCRIPT := preload("res://scripts/runtime/season_1/J09RuntimeProvider.gd")
 const J10_SCRIPT := preload("res://scripts/runtime/season_1/J10RuntimeProvider.gd")
-const SNAPSHOT_VERSION := 9
+const J11_SCRIPT := preload("res://scripts/runtime/season_1/J11RuntimeProvider.gd")
+const SNAPSHOT_VERSION := 10
 
 var state
 var j01_provider
@@ -26,6 +27,7 @@ var j07_provider
 var j08_provider
 var j09_provider
 var j10_provider
+var j11_provider
 var active_provider
 var active_day := "J01"
 var j01_snapshot: Dictionary = {}
@@ -38,6 +40,7 @@ var j07_snapshot: Dictionary = {}
 var j08_snapshot: Dictionary = {}
 var j09_snapshot: Dictionary = {}
 var j10_snapshot: Dictionary = {}
+var j11_snapshot: Dictionary = {}
 var state_restore_count := 0
 
 func initialize() -> bool:
@@ -64,8 +67,8 @@ func gallery_source() -> Dictionary: return active_provider.gallery_source()
 func apply_choice(thread_id: String, choice_id: String) -> Dictionary: return active_provider.apply_choice(thread_id, choice_id)
 func confirm_transition() -> Dictionary: return active_provider.confirm_transition()
 func mark_photo_opened() -> bool: return active_provider.mark_photo_opened() if active_day == "J01" else false
-func on_thread_returned(thread_id: String) -> Dictionary: return active_provider.on_thread_returned(thread_id) if active_day in ["J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10"] else {}
-func presentation_count_by_id(id: String) -> int: return active_provider.presentation_count_by_id(id) if active_day in ["J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10"] else _count_j01(id)
+func on_thread_returned(thread_id: String) -> Dictionary: return active_provider.on_thread_returned(thread_id) if active_day in ["J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11"] else {}
+func presentation_count_by_id(id: String) -> int: return active_provider.presentation_count_by_id(id) if active_day in ["J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11"] else _count_j01(id)
 
 func confirm_day_transition() -> Dictionary:
 	if active_day == "J01":
@@ -164,6 +167,15 @@ func next_day_presentation() -> Dictionary:
 func content_end() -> Dictionary:
 	if active_day == "J10" and j10_provider.phase == "complete": return j10_provider.runtime_map.get("day_end", {}).duplicate(true)
 	return {}
+
+func begin_j11_foundation_handoff() -> Dictionary:
+	if active_day != "J10" or j10_provider == null or j10_provider.phase != "complete":
+		return {"accepted": false}
+	if not _handoff_to_j11():
+		return {"accepted": false}
+	var result: Dictionary = j11_provider.start_day()
+	result["foundation_handoff"] = true
+	return result
 
 func pending_transition_flow() -> Dictionary:
 	if active_day == "J01":
@@ -273,6 +285,13 @@ func _handoff_to_j10() -> bool:
 	active_day = "J10"; active_provider = j10_provider
 	return true
 
+func _handoff_to_j11() -> bool:
+	var candidate = J11_SCRIPT.new()
+	if not candidate.initialize(state, j10_provider.transcripts_by_thread, j10_provider.produced_message_ids, j10_provider.unlocked_thread_ids, j10_provider.gallery_asset_ids): return false
+	j10_snapshot = j10_provider.snapshot(); j11_provider = candidate
+	active_day = "J11"; active_provider = j11_provider
+	return true
+
 func snapshot() -> Dictionary:
 	return {"version": SNAPSHOT_VERSION, "active_day": active_day, "state": state.snapshot(), "provider_snapshots": {
 		"J01": j01_provider.progress_snapshot(), "J02": j02_provider.snapshot() if j02_provider != null else {},
@@ -283,17 +302,19 @@ func snapshot() -> Dictionary:
 		"J08": j08_provider.snapshot() if j08_provider != null else {},
 		"J09": j09_provider.snapshot() if j09_provider != null else {},
 		"J10": j10_provider.snapshot() if j10_provider != null else {},
+		"J11": j11_provider.snapshot() if j11_provider != null else {},
 	}}
 
 func restore_snapshot(value: Dictionary) -> bool:
 	var version := int(value.get("version", -1))
-	if version not in [2, 3, 4, 5, 6, 7, 8, SNAPSHOT_VERSION] or str(value.get("active_day", "")) not in ["J01", "J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10"]: return false
+	if version not in [2, 3, 4, 5, 6, 7, 8, 9, SNAPSHOT_VERSION] or str(value.get("active_day", "")) not in ["J01", "J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11"]: return false
 	if version < 4 and str(value.get("active_day", "")) == "J05": return false
 	if version < 5 and str(value.get("active_day", "")) == "J06": return false
 	if version < 6 and str(value.get("active_day", "")) == "J07": return false
 	if version < 7 and str(value.get("active_day", "")) == "J08": return false
 	if version < 8 and str(value.get("active_day", "")) == "J09": return false
-	if version < SNAPSHOT_VERSION and str(value.get("active_day", "")) == "J10": return false
+	if version < 9 and str(value.get("active_day", "")) == "J10": return false
+	if version < SNAPSHOT_VERSION and str(value.get("active_day", "")) == "J11": return false
 	if typeof(value.get("state")) != TYPE_DICTIONARY or typeof(value.get("provider_snapshots")) != TYPE_DICTIONARY: return false
 	var providers: Dictionary = value["provider_snapshots"]
 	for id in ["J01", "J02", "J03"]:
@@ -304,7 +325,8 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if version >= 6 and typeof(providers.get("J07")) != TYPE_DICTIONARY: return false
 	if version >= 7 and typeof(providers.get("J08")) != TYPE_DICTIONARY: return false
 	if version >= 8 and typeof(providers.get("J09")) != TYPE_DICTIONARY: return false
-	if version == SNAPSHOT_VERSION and typeof(providers.get("J10")) != TYPE_DICTIONARY: return false
+	if version >= 9 and typeof(providers.get("J10")) != TYPE_DICTIONARY: return false
+	if version == SNAPSHOT_VERSION and typeof(providers.get("J11")) != TYPE_DICTIONARY: return false
 	state_restore_count += 1
 	if not state.restore_snapshot(value["state"]): return false
 	if not j01_provider.restore_progress_snapshot(providers["J01"]): return false
@@ -365,7 +387,14 @@ func restore_snapshot(value: Dictionary) -> bool:
 	j10_provider = J10_SCRIPT.new()
 	if not j10_provider.initialize(state, j09_provider.transcripts_by_thread, j09_provider.produced_message_ids, j09_provider.unlocked_thread_ids, j09_provider.gallery_asset_ids): return false
 	if not j10_provider.restore_snapshot(providers.get("J10", {})): return false
-	j10_snapshot = providers["J10"].duplicate(true); active_provider = j10_provider
+	j10_snapshot = providers["J10"].duplicate(true)
+	if active_day == "J10":
+		active_provider = j10_provider
+		return true
+	j11_provider = J11_SCRIPT.new()
+	if not j11_provider.initialize(state, j10_provider.transcripts_by_thread, j10_provider.produced_message_ids, j10_provider.unlocked_thread_ids, j10_provider.gallery_asset_ids): return false
+	if not j11_provider.restore_snapshot(providers.get("J11", {})): return false
+	j11_snapshot = providers["J11"].duplicate(true); active_provider = j11_provider
 	return true
 
 func _count_j01(id: String) -> int:

@@ -214,9 +214,9 @@ class RuntimeS108J08PlayableStaticTests(unittest.TestCase):
 
     def test_snapshot_versions_and_old_j07_restore_contract(self):
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
-        self.assertIn("const SNAPSHOT_VERSION := 8", season)
+        self.assertIn("const SNAPSHOT_VERSION := 10", season)
         self.assertIn('preload("res://scripts/runtime/season_1/J08RuntimeProvider.gd")', season)
-        self.assertIn("[2, 3, 4, 5, 6, 7, SNAPSHOT_VERSION]", season)
+        self.assertIn("[2, 3, 4, 5, 6, 7, 8, 9, SNAPSHOT_VERSION]", season)
         self.assertIn('version < 6 and str(value.get("active_day", "")) == "J07"', season)
         self.assertIn('version < 7 and str(value.get("active_day", "")) == "J08"', season)
         self.assertIn("_handoff_to_j08", season)

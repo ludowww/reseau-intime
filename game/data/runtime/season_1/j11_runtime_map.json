@@ -1,0 +1,16 @@
+{
+  "implementation_status": "FOUNDATION_ONLY",
+  "narrative_day_short": "Ven.",
+  "initial_time": "17:32",
+  "day_start": {
+    "eyebrow": "VENDREDI",
+    "title": "Ce qui était encore défendable",
+    "subtitle": "17:32",
+    "body": "Ce qui ressemblait encore à une habitude doit maintenant assumer sa limite ou son intention.",
+    "action_label": "Continuer",
+    "transition_mode": "day_boundary"
+  },
+  "conversation_paths": {},
+  "gallery_presentations": [],
+  "visual_variant_presentations": []
+}
