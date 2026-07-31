@@ -1,0 +1,88 @@
+{
+  "id": "chapter_10_sandra_cafe",
+  "chapter": 10,
+  "day": 10,
+  "title": "Jeudi — Le café enfin tenu",
+  "app": "messages",
+  "design_goal": "Faire du café Sandra un acte réel, une unique reprogrammation ou une fermeture claire.",
+  "thread": {
+    "id": "thread_sandra_private",
+    "type": "private",
+    "participants": ["player", "sandra"],
+    "display_name": "Sandra"
+  },
+  "segments": [
+    {
+      "id": "j10_sandra_opening",
+      "messages": [
+        {"id": "msg_j10_sandra_open_001", "sender": "sandra", "time_label": "12:21", "text": "Je sors plus tôt."},
+        {"id": "msg_j10_sandra_open_002", "sender": "sandra", "time_label": "12:21", "text": "J’ai trente-cinq minutes avant mon train."},
+        {"id": "msg_j10_sandra_open_003", "sender": "sandra", "time_label": "12:22", "text": "Le café près de la gare existe toujours, apparemment."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j10_sandra_accept_now",
+          "text": "j’arrive. 12 h 40",
+          "next_messages": [
+            {"id": "msg_j10_sandra_accept_001", "sender": "sandra", "time_label": "12:23", "text": "D’accord."},
+            {"id": "msg_j10_sandra_accept_002", "sender": "sandra", "time_label": "12:23", "text": "Trente minutes. Je garde cinq minutes pour rater mon quai seule."}
+          ]
+        },
+        {
+          "id": "choice_j10_sandra_saturday",
+          "text": "pas aujourd’hui. samedi 11 h au même endroit si tu peux",
+          "next_messages": [
+            {"id": "msg_j10_sandra_saturday_001", "sender": "sandra", "time_label": "12:23", "text": "Samedi, peut-être."},
+            {"id": "msg_j10_sandra_saturday_002", "sender": "sandra", "time_label": "12:24", "text": "Je te confirme vendredi avant 18 h."},
+            {"id": "msg_j10_sandra_saturday_003", "sender": "sandra", "time_label": "12:24", "text": "Si je ne confirme pas, ne garde pas ta matinée pour ça."}
+          ]
+        },
+        {
+          "id": "choice_j10_sandra_close",
+          "text": "je ne peux pas. et je préfère qu’on ne garde pas ce rendez-vous en suspens",
+          "next_messages": [
+            {"id": "msg_j10_sandra_close_001", "sender": "sandra", "time_label": "12:23", "text": "D’accord."},
+            {"id": "msg_j10_sandra_close_002", "sender": "sandra", "time_label": "12:24", "text": "Merci de le dire comme ça."},
+            {"id": "msg_j10_sandra_close_003", "sender": "sandra", "time_label": "12:24", "text": "Je prends mon train."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j10_sandra_after_cafe",
+      "messages": [
+        {"id": "msg_j10_sandra_after_001", "sender": "sandra", "time_label": "13:27", "text": "Train attrapé."},
+        {"id": "msg_j10_sandra_after_002", "sender": "sandra", "time_label": "13:27", "text": "On ne va pas en faire un événement."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j10_sandra_calm_presence",
+          "text": "c’était simple. ça m’a fait du bien de te voir",
+          "next_messages": [
+            {"id": "msg_j10_sandra_calm_001", "sender": "sandra", "time_label": "13:27", "text": "Moi aussi."},
+            {"id": "msg_j10_sandra_calm_002", "sender": "sandra", "time_label": "13:27", "text": "C’était bien."},
+            {"id": "msg_j10_sandra_calm_003", "sender": "sandra", "time_label": "13:27", "text": "On peut laisser ça comme ça pour aujourd’hui."}
+          ]
+        },
+        {
+          "id": "choice_j10_sandra_missing_named",
+          "text": "ça m’avait manqué de te voir comme ça",
+          "next_messages": [
+            {"id": "msg_j10_sandra_missing_001", "sender": "sandra", "time_label": "13:27", "text": "Je sais pas encore quoi faire de cette phrase."},
+            {"id": "msg_j10_sandra_missing_002", "sender": "sandra", "time_label": "13:27", "text": "Mais je ne vais pas faire semblant qu’elle ne me touche pas."},
+            {"id": "msg_j10_sandra_missing_003", "sender": "sandra", "time_label": "13:27", "text": "Doucement."}
+          ]
+        },
+        {
+          "id": "choice_j10_sandra_friendship_bounded",
+          "text": "j’étais content de te voir. je préfère qu’on garde ça dans une amitié simple",
+          "next_messages": [
+            {"id": "msg_j10_sandra_friendship_001", "sender": "sandra", "time_label": "13:27", "text": "D’accord."},
+            {"id": "msg_j10_sandra_friendship_002", "sender": "sandra", "time_label": "13:27", "text": "Le café reste le café."},
+            {"id": "msg_j10_sandra_friendship_003", "sender": "sandra", "time_label": "13:27", "text": "Ça me va."}
+          ]
+        }
+      ]
+    }
+  ]
+}

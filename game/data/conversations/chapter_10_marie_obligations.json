@@ -1,0 +1,106 @@
+{
+  "id": "chapter_10_marie_obligations",
+  "chapter": 10,
+  "day": 10,
+  "title": "Jeudi — Une ligne devient réelle",
+  "app": "messages",
+  "design_goal": "Rendre les obligations P09/P10 et la conséquence du soir jouables sans créer de faux rendez-vous.",
+  "thread": {
+    "id": "thread_marie_private",
+    "type": "private",
+    "participants": ["player", "marie"],
+    "display_name": "Marie"
+  },
+  "segments": [
+    {
+      "id": "j10_marie_thursday_morning",
+      "messages": [
+        {"id": "msg_j10_marie_thursday_001", "sender": "marie", "time_label": "08:21", "text": "20 h 30 tient toujours ?"}
+      ],
+      "choices": [
+        {
+          "id": "choice_j10_marie_keep_thursday",
+          "text": "oui. 20 h 30",
+          "next_messages": [
+            {"id": "msg_j10_marie_keep_001", "sender": "marie", "time_label": "08:22", "text": "Parfait."},
+            {"id": "msg_j10_marie_keep_002", "sender": "marie", "time_label": "08:22", "text": "Je prends du pain. Toi, quelque chose qui ressemble à un dîner."}
+          ]
+        },
+        {
+          "id": "choice_j10_marie_amend_friday",
+          "text": "ce soir non. vendredi 20 h 30 tient si tu peux",
+          "next_messages": [
+            {"id": "msg_j10_marie_amend_001", "sender": "marie", "time_label": "08:22", "text": "Vendredi, oui."},
+            {"id": "msg_j10_marie_amend_002", "sender": "marie", "time_label": "08:22", "text": "Je déplace. Je ne garde pas les deux soirs en attente."}
+          ]
+        },
+        {
+          "id": "choice_j10_marie_cancel_morning",
+          "text": "je ne peux pas. ne m’attends pas ce soir",
+          "next_messages": [
+            {"id": "msg_j10_marie_cancel_001", "sender": "marie", "time_label": "08:22", "text": "D’accord."},
+            {"id": "msg_j10_marie_cancel_002", "sender": "marie", "time_label": "08:22", "text": "Je n’attends pas."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j10_marie_friday_morning",
+      "messages": [
+        {"id": "msg_j10_marie_friday_001", "sender": "marie", "time_label": "08:21", "text": "Vendredi 20 h 30 tient toujours de mon côté."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j10_marie_friday_confirm_guided",
+          "text": "du mien aussi",
+          "next_messages": []
+        }
+      ]
+    },
+    {
+      "id": "j10_marie_due_dinner",
+      "messages": [
+        {"id": "msg_j10_marie_dinner_001", "sender": "marie", "time_label": "19:52", "text": "J’ai le pain."},
+        {"id": "msg_j10_marie_dinner_002", "sender": "marie", "time_label": "19:52", "text": "Tu as la partie qui transforme ça en dîner ?"}
+      ],
+      "choices": [
+        {
+          "id": "choice_j10_dinner_pay",
+          "text": "oui. j’arrive à 20 h 25",
+          "next_messages": [
+            {"id": "msg_j10_marie_dinner_pay_001", "sender": "marie", "time_label": "19:52", "text": "Parfait."}
+          ]
+        },
+        {
+          "id": "choice_j10_dinner_late",
+          "text": "je serai là à 21 h",
+          "next_messages": [
+            {"id": "msg_j10_marie_dinner_late_001", "sender": "marie", "time_label": "19:52", "text": "Non."},
+            {"id": "msg_j10_marie_dinner_late_002", "sender": "marie", "time_label": "19:52", "text": "Je mange avec Mathilde."},
+            {"id": "msg_j10_marie_dinner_late_003", "sender": "marie", "time_label": "19:52", "text": "Il restera de quoi pour toi."}
+          ]
+        },
+        {
+          "id": "choice_j10_dinner_cancel",
+          "text": "je ne rentre pas pour dîner. ne m’attends pas",
+          "next_messages": [
+            {"id": "msg_j10_marie_dinner_cancel_001", "sender": "marie", "time_label": "19:52", "text": "D’accord."},
+            {"id": "msg_j10_marie_dinner_cancel_002", "sender": "marie", "time_label": "19:52", "text": "On mange."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j10_marie_ordinary_meal",
+      "messages": [
+        {"id": "msg_j10_marie_ordinary_001", "sender": "marie", "time_label": "19:48", "text": "Mathilde et moi mangeons à 20 h 30."},
+        {"id": "msg_j10_marie_ordinary_002", "sender": "marie", "time_label": "19:48", "text": "Il y aura assez pour trois, mais ce n’est pas une convocation."}
+      ],
+      "choices": [
+        {"id": "choice_j10_fallback_join", "text": "je vous rejoins à 20 h 30", "next_messages": []},
+        {"id": "choice_j10_fallback_late", "text": "je rentrerai à 21 h. je mangerai séparément", "next_messages": []},
+        {"id": "choice_j10_fallback_absent", "text": "je ne rentre pas ce soir", "next_messages": []}
+      ]
+    }
+  ]
+}

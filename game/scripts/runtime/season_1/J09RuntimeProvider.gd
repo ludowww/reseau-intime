@@ -514,10 +514,10 @@ func _unlock_visual(id: String) -> void:
 func _restored_phase_consistent() -> bool:
 	if phase == "day_start_pending":
 		return state.current_day == "J08" and state.day_status == "COMPLETE" and pending_transition.is_empty()
+	if phase == "complete":
+		return state.current_day in ["J09", "J10"] and (state.day_status == "COMPLETE" or state.current_day == "J10") and pending_transition.is_empty() and served_visual_beat_ids == [INSTALLATION_ASSET, PRIVATE_ASSET, PUBLIC_ASSET, AFTER_ASSET]
 	if state.current_day != "J09":
 		return false
-	if phase == "complete":
-		return state.day_status == "COMPLETE" and pending_transition.is_empty() and served_visual_beat_ids == [INSTALLATION_ASSET, PRIVATE_ASSET, PUBLIC_ASSET, AFTER_ASSET]
 	if state.day_status != "ACTIVE":
 		return false
 	var transition_phases := ["to_black_dress", "to_early_action", "to_late_orientation", "to_absence_share", "early_off_phone", "late_off_phone", "absence_to_after", "to_return", "day_close"]

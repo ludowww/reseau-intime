@@ -46,16 +46,20 @@ class RuntimeS109J09PlayableStaticTests(unittest.TestCase):
         ]:
             self.assertNotIn(forbidden, serialized)
 
-    def test_j08_is_handoff_and_j09_is_unique_content_end(self):
+    def test_j08_and_j09_are_handoffs_and_j10_is_unique_content_end(self):
         j08 = self.load("game/data/runtime/season_1/j08_runtime_map.json")
         j09 = self.load("game/data/runtime/season_1/j09_runtime_map.json")
+        j10 = self.load("game/data/runtime/season_1/j10_runtime_map.json")
         self.assertEqual("day_handoff", j08["day_end"]["transition_mode"])
         self.assertFalse(j08["day_end"]["content_end"])
         self.assertEqual("MERCREDI — APRÈS-MIDI", j08["day_end"]["next_day_presentation"]["eyebrow"])
         self.assertEqual("Dans son élément", j08["day_end"]["next_day_presentation"]["title"])
-        self.assertEqual("CONTENT_END", j09["day_end"]["transition_mode"])
-        self.assertTrue(j09["day_end"]["content_end"])
+        self.assertEqual("day_handoff", j09["day_end"]["transition_mode"])
+        self.assertFalse(j09["day_end"]["content_end"])
         self.assertEqual("J09 terminé", j09["day_end"]["title"])
+        self.assertEqual("Une ligne devient réelle", j09["day_end"]["next_day_presentation"]["title"])
+        self.assertEqual("CONTENT_END", j10["day_end"]["transition_mode"])
+        self.assertTrue(j10["day_end"]["content_end"])
 
     def test_exact_hours_and_signed_dialogue_are_data_first(self):
         data = self.load("game/data/conversations/chapter_09_marie_laverriere.json")
@@ -149,7 +153,7 @@ class RuntimeS109J09PlayableStaticTests(unittest.TestCase):
 
     def test_state_uses_bounded_outcomes_promises_and_three_registered_facts(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
-        j09 = state.split("func begin_j09", 1)[1].split("func resolve_j07_morning_consequence", 1)[0]
+        j09 = state.split("func begin_j09", 1)[1].split("func begin_j10", 1)[0]
         for token in [
             "presence_active",
             "presence_playful_useful",
@@ -205,12 +209,13 @@ class RuntimeS109J09PlayableStaticTests(unittest.TestCase):
     def test_snapshot_versions_keep_j08_restore_and_add_j09_once(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
-        self.assertIn("const SNAPSHOT_VERSION := 7", state)
-        self.assertIn("const SNAPSHOT_VERSION := 8", season)
-        self.assertIn("[1, 2, 3, 4, 5, 6, SNAPSHOT_VERSION]", state)
-        self.assertIn("[2, 3, 4, 5, 6, 7, SNAPSHOT_VERSION]", season)
+        self.assertIn("const SNAPSHOT_VERSION := 8", state)
+        self.assertIn("const SNAPSHOT_VERSION := 9", season)
+        self.assertIn("[1, 2, 3, 4, 5, 6, 7, SNAPSHOT_VERSION]", state)
+        self.assertIn("[2, 3, 4, 5, 6, 7, 8, SNAPSHOT_VERSION]", season)
         self.assertIn('version < 7 and str(value.get("active_day", "")) == "J08"', season)
-        self.assertIn('version < SNAPSHOT_VERSION and str(value.get("active_day", "")) == "J09"', season)
+        self.assertIn('version < 8 and str(value.get("active_day", "")) == "J09"', season)
+        self.assertIn('version < SNAPSHOT_VERSION and str(value.get("active_day", "")) == "J10"', season)
         self.assertIn('preload("res://scripts/runtime/season_1/J09RuntimeProvider.gd")', season)
         self.assertIn("_handoff_to_j09", season)
         self.assertIn('"J09":', season)

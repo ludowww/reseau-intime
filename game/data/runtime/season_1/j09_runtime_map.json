@@ -117,10 +117,18 @@
     "eyebrow": "MERCREDI — FIN DE JOURNÉE",
     "title": "J09 terminé",
     "subtitle": "Dans son élément",
-    "body": "Fin du contenu disponible.",
-    "action_label": "Terminer",
-    "transition_mode": "CONTENT_END",
-    "content_end": true
+    "body": "Jeudi, une continuité devient un acte, une limite ou une occasion close.",
+    "action_label": "Continuer",
+    "transition_mode": "day_handoff",
+    "content_end": false,
+    "next_day_presentation": {
+      "eyebrow": "JEUDI — MATIN",
+      "title": "Une ligne devient réelle",
+      "subtitle": "08:21",
+      "body": "Une continuité devient un acte, une limite ou une occasion close.",
+      "action_label": "Commencer",
+      "transition_mode": "day_boundary"
+    }
   },
   "gallery_presentations": [
     {

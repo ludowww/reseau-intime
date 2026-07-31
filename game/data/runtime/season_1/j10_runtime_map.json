@@ -1,0 +1,287 @@
+{
+  "narrative_day_short": "Jeu.",
+  "initial_time": "08:21",
+  "conversation_paths": {
+    "chapter_10_marie_obligations": "res://data/conversations/chapter_10_marie_obligations.json",
+    "chapter_10_sandra_cafe": "res://data/conversations/chapter_10_sandra_cafe.json",
+    "chapter_10_mathilde_outfit": "res://data/conversations/chapter_10_mathilde_outfit.json",
+    "chapter_10_raphaelle_process": "res://data/conversations/chapter_10_raphaelle_process.json",
+    "chapter_10_nico_observation": "res://data/conversations/chapter_10_nico_observation.json"
+  },
+  "day_start": {
+    "eyebrow": "JEUDI — MATIN",
+    "title": "Une ligne devient réelle",
+    "subtitle": "08:21",
+    "body": "Une continuité devient un acte, une limite ou une occasion close.",
+    "action_label": "Commencer",
+    "transition_mode": "day_boundary"
+  },
+  "to_nico_morning": {
+    "transition_mode": "offline",
+    "to_time": "11:42",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": ""
+  },
+  "to_sandra": {
+    "transition_mode": "offline",
+    "to_time": "12:21",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": ""
+  },
+  "to_mathilde": {
+    "transition_mode": "offline",
+    "to_time": "17:14",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": ""
+  },
+  "to_raphaelle": {
+    "transition_mode": "offline",
+    "to_time": "17:38",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": ""
+  },
+  "to_nico_1812": {
+    "transition_mode": "offline",
+    "to_time": "18:12",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": ""
+  },
+  "to_nico_common": {
+    "transition_mode": "offline",
+    "to_time": "22:11",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": ""
+  },
+  "sandra_cafe_off_phone": {
+    "transition_mode": "offline",
+    "to_time": "13:27",
+    "duration_seconds": 4.0,
+    "flow_phases": ["OFF_PHONE", "CLOCK"],
+    "text": "12:40–13:10 — café hors téléphone. Aucun dialogue oral n’est montré."
+  },
+  "raphaelle_comparison": {
+    "transition_mode": "offline",
+    "to_time": "17:41",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": ""
+  },
+  "raphaelle_visit_off_phone": {
+    "transition_mode": "offline",
+    "to_time": "19:02",
+    "duration_seconds": 4.0,
+    "flow_phases": ["OFF_PHONE", "CLOCK"],
+    "text": "18:15–18:38 — aide bornée hors téléphone. Aucun dialogue oral n’est montré."
+  },
+  "nico_meeting_off_phone": {
+    "transition_mode": "offline",
+    "to_time": "18:42",
+    "duration_seconds": 4.0,
+    "flow_phases": ["OFF_PHONE", "CLOCK"],
+    "text": "18:20–18:30 — rencontre hors téléphone. Aucun dialogue oral n’est montré."
+  },
+  "to_ordinary_evening": {
+    "transition_mode": "offline",
+    "to_time": "19:48",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": ""
+  },
+  "to_due_dinner": {
+    "transition_mode": "offline",
+    "to_time": "19:52",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": ""
+  },
+  "dinner_off_phone": {
+    "transition_mode": "offline",
+    "to_time": "21:30",
+    "duration_seconds": 4.0,
+    "flow_phases": ["OFF_PHONE", "CLOCK"],
+    "text": "Le repas éventuel se déroule hors téléphone. Aucun dialogue oral n’est montré."
+  },
+  "to_mathilde_after": {
+    "transition_mode": "offline",
+    "to_time": "22:06",
+    "duration_seconds": 4.0,
+    "flow_phases": ["CLOCK"],
+    "text": ""
+  },
+  "day_close": {
+    "transition_mode": "offline",
+    "flow_phases": ["OFF_PHONE"],
+    "text": ""
+  },
+  "day_end": {
+    "eyebrow": "JEUDI — FIN DE JOURNÉE",
+    "title": "J10 terminé",
+    "subtitle": "Une ligne devient réelle",
+    "body": "Fin du contenu disponible.",
+    "action_label": "Terminer",
+    "transition_mode": "CONTENT_END",
+    "content_end": true
+  },
+  "gallery_presentations": [
+    {
+      "asset_id": "S1_A3_J10_SCN_SANDRA_CAFE_HELD_01",
+      "character_ids": ["sandra"],
+      "placeholder_label": "Visuel canonique non produit",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "canonical_type": "IMAGE_DE_SCÈNE",
+      "function": "café Sandra réellement tenu",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false,
+      "discoverable_by_character": false,
+      "eligible_for_j14": false,
+      "eligible_for_j21": false
+    },
+    {
+      "asset_id": "S1_A3_J10_DPH_MATHILDE_OUTFIT_CHOICE_01",
+      "trace_id": "j10_mathilde_outfit_choice_01",
+      "character_ids": ["mathilde"],
+      "placeholder_label": "Visuel canonique non produit",
+      "source_kind": "gallery",
+      "content_type": "PHOTO",
+      "creator": "Mathilde",
+      "owner": "Mathilde",
+      "initial_audience": ["Mathilde", "Player"],
+      "saving_rule": "IN_THREAD_ONLY",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": true,
+      "discoverable_by_character": true,
+      "eligible_for_j14": true,
+      "eligible_for_j21": true
+    },
+    {
+      "asset_id": "S1_A3_J10_SCN_MATHILDE_SOCIAL_RESULT_01",
+      "character_ids": ["mathilde"],
+      "placeholder_label": "Visuel canonique non produit",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "canonical_type": "IMAGE_DE_SCÈNE",
+      "function": "résultat social de la tenue choisie",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false,
+      "discoverable_by_character": false,
+      "eligible_for_j14": false,
+      "eligible_for_j21": false
+    },
+    {
+      "asset_id": "S1_A3_J10_DPH_RAPHAELLE_PROCESS_DETAIL_01",
+      "character_ids": ["raphaelle"],
+      "placeholder_label": "Visuel canonique non produit",
+      "source_kind": "gallery",
+      "content_type": "PHOTO",
+      "creator": "Raphaëlle",
+      "owner": "Raphaëlle",
+      "initial_audience": ["Raphaëlle", "Player"],
+      "saving_rule": "IN_THREAD_ONLY",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": true,
+      "discoverable_by_character": true,
+      "eligible_for_j14": false,
+      "eligible_for_j21": false
+    },
+    {
+      "asset_id": "S1_A3_J10_DPH_RAPHAELLE_PROCESS_COMPARISON_02",
+      "character_ids": ["raphaelle"],
+      "placeholder_label": "Visuel canonique non produit",
+      "source_kind": "gallery",
+      "content_type": "PHOTO",
+      "creator": "Raphaëlle",
+      "owner": "Raphaëlle",
+      "initial_audience": ["Raphaëlle", "Player"],
+      "saving_rule": "IN_THREAD_ONLY",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": true,
+      "discoverable_by_character": true,
+      "eligible_for_j14": false,
+      "eligible_for_j21": false
+    },
+    {
+      "asset_id": "S1_A3_J10_DPH_ANNEXE_MARIE_PUBLIC_01",
+      "character_ids": ["marie"],
+      "placeholder_label": "Visuel canonique non produit",
+      "source_kind": "gallery",
+      "content_type": "PHOTO",
+      "creator": "Sophie",
+      "owner": "Sophie ou canal officiel L’Annexe",
+      "initial_audience": ["publication ou groupe autorisé nommé"],
+      "saving_rule": "PUBLIC_SOURCE_RULES",
+      "can_share": true,
+      "transfer_rule": "PUBLIC_SOURCE_RULES",
+      "is_diegetic": true,
+      "discoverable_by_character": true,
+      "eligible_for_j14": false,
+      "eligible_for_j21": false
+    },
+    {
+      "asset_id": "S1_A3_J10_DPH_ANNEXE_MATHILDE_PUBLIC_01",
+      "character_ids": ["mathilde"],
+      "placeholder_label": "Visuel canonique non produit",
+      "source_kind": "gallery",
+      "content_type": "PHOTO",
+      "creator": "Sophie",
+      "owner": "Sophie ou canal officiel L’Annexe",
+      "initial_audience": ["publication ou groupe autorisé nommé"],
+      "saving_rule": "PUBLIC_SOURCE_RULES",
+      "can_share": true,
+      "transfer_rule": "PUBLIC_SOURCE_RULES",
+      "is_diegetic": true,
+      "discoverable_by_character": true,
+      "eligible_for_j14": false,
+      "eligible_for_j21": false
+    }
+  ],
+  "visual_variant_presentations": [],
+  "visual_beat_matrix": {
+    "SANDRA_HELD": [
+      "S1_A3_J10_SCN_SANDRA_CAFE_HELD_01",
+      "S1_A1_J01_DPH_SANDRA_LUNCH_SELECTED_01",
+      "S1_A3_J09_DPH_MARIE_LAVERRIERE_PUBLIC_01"
+    ],
+    "SANDRA_NOT_HELD": [
+      "S1_A1_J01_DPH_SANDRA_LUNCH_SELECTED_01",
+      "S1_A3_J09_DPH_MARIE_LAVERRIERE_PUBLIC_01",
+      "S1_A2_J08_SCN_HOUSEHOLD_STATE_01"
+    ],
+    "MATHILDE": [
+      "S1_A3_J10_DPH_MATHILDE_OUTFIT_CHOICE_01",
+      "S1_A3_J10_SCN_MATHILDE_SOCIAL_RESULT_01",
+      "S1_A3_J09_DPH_MARIE_LAVERRIERE_PUBLIC_01"
+    ],
+    "RAPHAELLE_PROCESS": [
+      "S1_A3_J10_DPH_RAPHAELLE_PROCESS_DETAIL_01",
+      "S1_A3_J10_DPH_RAPHAELLE_PROCESS_COMPARISON_02",
+      "S1_A3_J09_DPH_MARIE_LAVERRIERE_PUBLIC_01"
+    ],
+    "RAPHAELLE_BOUNDARY": [
+      "S1_A2_J08_SCN_RAPHAELLE_WORK_STATE_01",
+      "S1_A3_J09_DPH_MARIE_LAVERRIERE_PUBLIC_01",
+      "S1_A2_J08_SCN_HOUSEHOLD_STATE_01"
+    ],
+    "NICO": [
+      "S1_A3_J10_DPH_ANNEXE_MARIE_PUBLIC_01",
+      "S1_A3_J10_DPH_ANNEXE_MATHILDE_PUBLIC_01",
+      "S1_A2_J08_SCN_HOUSEHOLD_STATE_01"
+    ],
+    "NONE": [
+      "S1_A3_J09_DPH_MARIE_LAVERRIERE_PUBLIC_01",
+      "S1_A2_J08_SCN_HOUSEHOLD_STATE_01",
+      "S1_A1_J04_DPH_PAULINE_PUBLIC_GROUP_SET_01"
+    ]
+  }
+}

@@ -659,10 +659,10 @@ func _unlock_final_visuals() -> void:
 func _restored_phase_consistent() -> bool:
 	if phase == "day_start_pending":
 		return state.current_day == "J07" and state.day_status == "COMPLETE" and pending_transition.is_empty()
+	if phase == "complete":
+		return state.current_day in ["J08", "J09", "J10"] and (state.day_status == "COMPLETE" or state.current_day != "J08") and pending_transition.is_empty() and served_visual_beat_ids == [RAPHAELLE_ASSET, NICO_ASSET, HOUSEHOLD_ASSET]
 	if state.current_day != "J08":
 		return false
-	if phase == "complete":
-		return state.day_status == "COMPLETE" and pending_transition.is_empty() and served_visual_beat_ids == [RAPHAELLE_ASSET, NICO_ASSET, HOUSEHOLD_ASSET]
 	if state.day_status != "ACTIVE":
 		return false
 	var transition_phases := [

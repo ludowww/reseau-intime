@@ -273,6 +273,29 @@ related_trace_ids: [j07_nico_confidence_01]
 
 Elle ne crée aucune attente mardi.
 
+Transitions J10 signées :
+
+```text
+J10 11:43, Player confirme « oui. 18 h 20 »
+→ CONDITIONAL → ACTIVE
+→ activated_at = J10 11:43
+→ accepted_at = J10 11:43
+→ due_at = J10 18:20
+
+J10 11:43, Player refuse
+→ CONDITIONAL → REFUSED
+→ paid_or_closed_at = J10 11:43
+→ paid_or_closed_by = Player
+→ due_at reste vide
+
+J10 12:00, aucune confirmation attribuable
+→ CONDITIONAL → EXPIRED
+```
+
+L’échange de 18 h 12 maintient ou annule une promesse déjà `ACTIVE`.
+
+Il ne peut jamais activer P07 après son `confirmation_deadline`.
+
 ## P08 — Demande foyer J07
 
 ```text

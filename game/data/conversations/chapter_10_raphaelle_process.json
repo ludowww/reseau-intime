@@ -1,0 +1,100 @@
+{
+  "id": "chapter_10_raphaelle_process",
+  "chapter": 10,
+  "day": 10,
+  "title": "Jeudi — La fermeture cassée",
+  "app": "messages",
+  "design_goal": "Ouvrir ou borner un accès réel au processus professionnel de Raphaëlle.",
+  "thread": {
+    "id": "thread_raphaelle_private",
+    "type": "private",
+    "participants": ["player", "raphaelle"],
+    "display_name": "Raphaëlle"
+  },
+  "segments": [
+    {
+      "id": "j10_raphaelle_opening",
+      "messages": [
+        {"id": "msg_j10_raphaelle_open_001", "sender": "raphaelle", "time_label": "17:38", "text": "J’ai un problème concret."},
+        {"id": "msg_j10_raphaelle_open_002", "sender": "raphaelle", "time_label": "17:38", "text": "La fermeture magnétique tient debout et abandonne dès que le tissu bouge."},
+        {"id": "msg_j10_raphaelle_open_003", "sender": "raphaelle", "time_label": "17:39", "text": "Maud cherche un remplacement."},
+        {"id": "msg_j10_raphaelle_open_004", "sender": "raphaelle", "time_label": "17:39", "text": "J’ai deux réparations visibles. J’ai besoin d’un regard qui n’a pas passé trois heures à les fabriquer."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j10_raphaelle_process",
+          "text": "envoie les deux versions et une vue un peu plus loin. je te dis ce qui ressemble à un choix, pas à une réparation",
+          "next_messages": [
+            {"id": "msg_j10_raphaelle_process_001", "sender": "raphaelle", "time_label": "17:40", "text": "Exactement."},
+            {"id": "msg_j10_raphaelle_process_002", "sender": "raphaelle", "time_label": "17:40", "text": "Je t’envoie la seconde série."}
+          ]
+        },
+        {
+          "id": "choice_j10_raphaelle_result",
+          "text": "je risque de voir une réparation parce que tu me l’as dit. envoie-moi plutôt le résultat demain",
+          "next_messages": [
+            {"id": "msg_j10_raphaelle_result_001", "sender": "raphaelle", "time_label": "17:40", "text": "C’est une réponse valable."},
+            {"id": "msg_j10_raphaelle_result_002", "sender": "raphaelle", "time_label": "17:40", "text": "Elle ne m’aide pas maintenant."},
+            {"id": "msg_j10_raphaelle_result_003", "sender": "raphaelle", "time_label": "17:40", "text": "Mais elle évite un faux avis."}
+          ]
+        },
+        {
+          "id": "choice_j10_raphaelle_boundary",
+          "text": "demande à Maud. je préfère rester hors de l’essayage et du processus",
+          "next_messages": [
+            {"id": "msg_j10_raphaelle_boundary_001", "sender": "raphaelle", "time_label": "17:40", "text": "D’accord."},
+            {"id": "msg_j10_raphaelle_boundary_002", "sender": "raphaelle", "time_label": "17:40", "text": "C’est clair."},
+            {"id": "msg_j10_raphaelle_boundary_003", "sender": "raphaelle", "time_label": "17:40", "text": "Je t’enverrai seulement ce qui devient public, si quelque chose le devient."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j10_raphaelle_comparison",
+      "messages": [
+        {"id": "msg_j10_raphaelle_compare_001", "sender": "raphaelle", "time_label": "17:41", "content_type": "PHOTO", "media_ref": "S1_A3_J10_DPH_RAPHAELLE_PROCESS_DETAIL_01", "text": ""},
+        {"id": "msg_j10_raphaelle_compare_002", "sender": "raphaelle", "time_label": "17:41", "content_type": "PHOTO", "media_ref": "S1_A3_J10_DPH_RAPHAELLE_PROCESS_COMPARISON_02", "text": ""}
+      ],
+      "choices": [
+        {
+          "id": "choice_j10_raphaelle_comparison_guided",
+          "text": "la deuxième. la ligne reste volontaire quand elle bouge",
+          "next_messages": [
+            {"id": "msg_j10_raphaelle_compare_003", "sender": "raphaelle", "time_label": "17:42", "text": "C’est aussi mon avis."},
+            {"id": "msg_j10_raphaelle_compare_004", "sender": "raphaelle", "time_label": "17:43", "text": "Si tu peux passer à 18 h 15, j’ai besoin de deux mains pendant vingt minutes."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j10_raphaelle_visit_choice",
+      "messages": [],
+      "choices": [
+        {
+          "id": "choice_j10_raphaelle_visit",
+          "text": "oui. 18 h 15 à 18 h 40",
+          "next_messages": [
+            {"id": "msg_j10_raphaelle_visit_001", "sender": "raphaelle", "time_label": "17:44", "text": "Très bien."},
+            {"id": "msg_j10_raphaelle_visit_002", "sender": "raphaelle", "time_label": "17:44", "text": "Maud sera là au début."}
+          ]
+        },
+        {
+          "id": "choice_j10_raphaelle_remote",
+          "text": "je ne peux pas passer. mon avis reste la deuxième, mais ne m’attends pas",
+          "next_messages": [
+            {"id": "msg_j10_raphaelle_remote_001", "sender": "raphaelle", "time_label": "17:44", "text": "Reçu."},
+            {"id": "msg_j10_raphaelle_remote_002", "sender": "raphaelle", "time_label": "17:44", "text": "Maud revient dans vingt minutes."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j10_raphaelle_visit_after",
+      "messages": [
+        {"id": "msg_j10_raphaelle_visit_after_001", "sender": "raphaelle", "time_label": "19:02", "text": "La fermeture tient."},
+        {"id": "msg_j10_raphaelle_visit_after_002", "sender": "raphaelle", "time_label": "19:02", "text": "Et tu es parti à l’heure annoncée."},
+        {"id": "msg_j10_raphaelle_visit_after_003", "sender": "raphaelle", "time_label": "19:03", "text": "Les deux sont appréciables."}
+      ]
+    }
+  ]
+}

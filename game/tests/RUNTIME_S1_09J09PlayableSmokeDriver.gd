@@ -159,6 +159,17 @@ func _exercise_j08_handoff_and_legacy_restore() -> void:
 	_expect(bool(handoff.get("accepted", false)), "legacy-restored J08 hands off to J09")
 	_expect(restored.active_day == "J09" and restored.j09_provider.phase == "entry_incoming", "handoff starts canonical J09")
 	_expect(restored.state.current_day == "J09" and restored.state.day_status == "ACTIVE", "handoff starts one shared state")
+	var legacy_j09_snapshot: Dictionary = restored.snapshot()
+	legacy_j09_snapshot["version"] = 8
+	legacy_j09_snapshot["provider_snapshots"].erase("J10")
+	legacy_j09_snapshot["state"]["version"] = 7
+	for key in ["j10_pivot", "j10_pivot_reason", "j10_pivot_outcome", "marie_j10_dinner_resolution", "nico_j10_morning_confirmation"]:
+		legacy_j09_snapshot["state"].erase(key)
+	var restored_j09 = SEASON_PROVIDER.new()
+	_expect(restored_j09.initialize(), "legacy J09 restore target initializes")
+	_expect(restored_j09.restore_snapshot(legacy_j09_snapshot), "season v8 active J09 with state v7 restores")
+	_expect(restored_j09.state_restore_count == 1, "legacy J09 restores shared Season1State once")
+	_expect(restored_j09.active_day == "J09" and restored_j09.j09_provider.phase == "entry_incoming", "legacy J09 restore preserves its exact active phase")
 	j07_helper.free()
 	j08_helper.free()
 

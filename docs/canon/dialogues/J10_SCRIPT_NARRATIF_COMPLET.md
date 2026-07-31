@@ -1155,7 +1155,71 @@ Les deux images sont individuellement consultables.
 
 Elles ne sont pas des crops privés.
 
-## 19.5 Entrée si rencontre jeudi différée depuis J07
+## 19.5 Confirmation avant midi si jeudi est conditionnel
+
+Condition :
+
+```text
+nico_j07_thursday_conditional.status == CONDITIONAL
+```
+
+**11:42 — Nico**
+
+> Pour ce soir, j’ai dix minutes avant le service.
+
+**11:42 — Nico**
+
+> 18 h 20.
+
+**11:43 — Nico**
+
+> Si tu veux que je les garde, confirme avant midi.
+
+### Choix A — Confirmer
+
+**Player**
+
+> oui. 18 h 20
+
+**Nico**
+
+> Ça marche.
+
+**Nico**
+
+> Je garde dix minutes. Après, je travaille.
+
+```text
+P07 CONDITIONAL → ACTIVE
+activated_at = J10 11:43
+accepted_at = J10 11:43
+due_at = J10 18:20
+```
+
+### Choix B — Refuser
+
+**Player**
+
+> non. ne garde rien pour ce soir
+
+**Nico**
+
+> Reçu.
+
+**Nico**
+
+> Je ne garde rien.
+
+```text
+P07 CONDITIONAL → REFUSED
+paid_or_closed_at = J10 11:43
+paid_or_closed_by = Player
+due_at reste vide
+```
+
+À 12 h, une P07 encore `CONDITIONAL` devient `EXPIRED`.
+
+## 19.6 Entrée si rencontre jeudi différée depuis J07
 
 À 18:12 :
 
@@ -1197,7 +1261,7 @@ Nico :
 
 La variante S22 mute en court écho textuel ou ferme pour J10.
 
-## 19.6 Entrée si rencontre J08 déjà payée
+## 19.7 Entrée si rencontre J08 déjà payée
 
 À 22:11, après le service :
 
@@ -1209,7 +1273,7 @@ La variante S22 mute en court écho textuel ou ferme pour J10.
 
 > Elles ne prennent pas la même place dehors que chez vous.
 
-## 19.7 Noyau commun
+## 19.8 Noyau commun
 
 **Nico**
 

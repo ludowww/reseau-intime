@@ -1,0 +1,138 @@
+{
+  "id": "chapter_10_nico_observation",
+  "chapter": 10,
+  "day": 10,
+  "title": "Jeudi — Le regard de l’intérieur et de l’extérieur",
+  "app": "messages",
+  "design_goal": "Comparer regard social et foyer sans demander, posséder ou transmettre d’image privée.",
+  "thread": {
+    "id": "thread_nico_private",
+    "type": "private",
+    "participants": ["player", "nico"],
+    "display_name": "Nico"
+  },
+  "segments": [
+    {
+      "id": "j10_nico_morning_confirmation",
+      "messages": [
+        {"id": "msg_j10_nico_morning_001", "sender": "nico", "time_label": "11:42", "text": "Pour ce soir, j’ai dix minutes avant le service."},
+        {"id": "msg_j10_nico_morning_002", "sender": "nico", "time_label": "11:42", "text": "18 h 20."},
+        {"id": "msg_j10_nico_morning_003", "sender": "nico", "time_label": "11:43", "text": "Si tu veux que je les garde, confirme avant midi."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j10_nico_morning_confirm",
+          "text": "oui. 18 h 20",
+          "next_messages": [
+            {"id": "msg_j10_nico_morning_confirm_001", "sender": "nico", "time_label": "11:43", "text": "Ça marche."},
+            {"id": "msg_j10_nico_morning_confirm_002", "sender": "nico", "time_label": "11:43", "text": "Je garde dix minutes. Après, je travaille."}
+          ]
+        },
+        {
+          "id": "choice_j10_nico_morning_refuse",
+          "text": "non. ne garde rien pour ce soir",
+          "next_messages": [
+            {"id": "msg_j10_nico_morning_refuse_001", "sender": "nico", "time_label": "11:43", "text": "Reçu."},
+            {"id": "msg_j10_nico_morning_refuse_002", "sender": "nico", "time_label": "11:43", "text": "Je ne garde rien."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j10_nico_1812",
+      "messages": [
+        {"id": "msg_j10_nico_1812_001", "sender": "nico", "time_label": "18:12", "text": "Tu confirmes 18 h 20 ?"}
+      ],
+      "choices": [
+        {
+          "id": "choice_j10_nico_1812_keep",
+          "text": "oui. dix minutes avant ton service",
+          "next_messages": [
+            {"id": "msg_j10_nico_1812_keep_001", "sender": "nico", "time_label": "18:13", "text": "Dix minutes."},
+            {"id": "msg_j10_nico_1812_keep_002", "sender": "nico", "time_label": "18:13", "text": "Après je travaille."}
+          ]
+        },
+        {
+          "id": "choice_j10_nico_1812_cancel",
+          "text": "non. ne m’attends pas",
+          "next_messages": [
+            {"id": "msg_j10_nico_1812_cancel_001", "sender": "nico", "time_label": "18:13", "text": "Reçu."},
+            {"id": "msg_j10_nico_1812_cancel_002", "sender": "nico", "time_label": "18:13", "text": "Je ne repropose pas ce soir."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j10_nico_common_after_meeting",
+      "messages": [
+        {"id": "msg_j10_nico_after_meeting_001", "sender": "nico", "time_label": "18:42", "content_type": "PHOTO", "media_ref": "S1_A3_J10_DPH_ANNEXE_MARIE_PUBLIC_01", "text": ""},
+        {"id": "msg_j10_nico_after_meeting_002", "sender": "nico", "time_label": "18:42", "content_type": "PHOTO", "media_ref": "S1_A3_J10_DPH_ANNEXE_MATHILDE_PUBLIC_01", "text": ""},
+        {"id": "msg_j10_nico_after_meeting_003", "sender": "nico", "time_label": "18:43", "text": "Marie parle à une pièce comme si elle avait déjà décidé qu’elle allait vivre."},
+        {"id": "msg_j10_nico_after_meeting_004", "sender": "nico", "time_label": "18:43", "text": "Mathilde regarde d’abord qui la regarde, puis fait une blague pour reprendre la main."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j10_nico_core_guided_after_meeting",
+          "text": "et tu veux savoir quoi",
+          "next_messages": [
+            {"id": "msg_j10_nico_core_after_meeting_001", "sender": "nico", "time_label": "18:44", "text": "Ce que toi tu vois quand il n’y a pas la salle autour."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j10_nico_common",
+      "messages": [
+        {"id": "msg_j10_nico_common_001", "sender": "nico", "time_label": "22:11", "text": "Marie et Mathilde sont passées à midi."},
+        {"id": "msg_j10_nico_common_002", "sender": "nico", "time_label": "22:11", "text": "Elles ne prennent pas la même place dehors que chez vous."},
+        {"id": "msg_j10_nico_common_003", "sender": "nico", "time_label": "22:12", "content_type": "PHOTO", "media_ref": "S1_A3_J10_DPH_ANNEXE_MARIE_PUBLIC_01", "text": ""},
+        {"id": "msg_j10_nico_common_004", "sender": "nico", "time_label": "22:12", "content_type": "PHOTO", "media_ref": "S1_A3_J10_DPH_ANNEXE_MATHILDE_PUBLIC_01", "text": ""},
+        {"id": "msg_j10_nico_common_005", "sender": "nico", "time_label": "22:13", "text": "Marie parle à une pièce comme si elle avait déjà décidé qu’elle allait vivre."},
+        {"id": "msg_j10_nico_common_006", "sender": "nico", "time_label": "22:13", "text": "Mathilde regarde d’abord qui la regarde, puis fait une blague pour reprendre la main."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j10_nico_core_guided",
+          "text": "et tu veux savoir quoi",
+          "next_messages": [
+            {"id": "msg_j10_nico_core_001", "sender": "nico", "time_label": "22:14", "text": "Ce que toi tu vois quand il n’y a pas la salle autour."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j10_nico_main_choice",
+      "messages": [],
+      "choices": [
+        {
+          "id": "choice_j10_nico_difference",
+          "text": "chez nous Marie laisse plus de silences. Mathilde prend moins de place qu’elle le prétend",
+          "next_messages": [
+            {"id": "msg_j10_nico_difference_001", "sender": "nico", "time_label": "22:15", "text": "Ça ressemble à elles."},
+            {"id": "msg_j10_nico_difference_002", "sender": "nico", "time_label": "22:15", "text": "Et je précise : je ne te demande pas de me montrer quoi que ce soit."},
+            {"id": "msg_j10_nico_difference_003", "sender": "nico", "time_label": "22:16", "text": "Je voulais savoir si tu voyais une différence ou seulement un privilège."}
+          ]
+        },
+        {
+          "id": "choice_j10_nico_observation",
+          "text": "qu’est-ce que tu as vu exactement",
+          "next_messages": [
+            {"id": "msg_j10_nico_observation_001", "sender": "nico", "time_label": "22:15", "text": "Marie bien dans la salle."},
+            {"id": "msg_j10_nico_observation_002", "sender": "nico", "time_label": "22:15", "text": "Mathilde contente d’être remarquée et agacée de l’être."},
+            {"id": "msg_j10_nico_observation_003", "sender": "nico", "time_label": "22:16", "text": "Et moi intéressé, donc pas neutre."},
+            {"id": "msg_j10_nico_observation_004", "sender": "nico", "time_label": "22:16", "text": "C’est tout ce que je peux affirmer."}
+          ]
+        },
+        {
+          "id": "choice_j10_nico_close",
+          "text": "je ne veux pas qu’on compare ce qu’elles sont dehors et chez moi",
+          "next_messages": [
+            {"id": "msg_j10_nico_close_001", "sender": "nico", "time_label": "22:15", "text": "D’accord."},
+            {"id": "msg_j10_nico_close_002", "sender": "nico", "time_label": "22:15", "text": "Je ne redemande pas."},
+            {"id": "msg_j10_nico_close_003", "sender": "nico", "time_label": "22:16", "text": "Et ce que tu m’as dit reste avec moi."}
+          ]
+        }
+      ]
+    }
+  ]
+}

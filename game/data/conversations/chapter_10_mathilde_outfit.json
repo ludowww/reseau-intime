@@ -1,0 +1,111 @@
+{
+  "id": "chapter_10_mathilde_outfit",
+  "chapter": 10,
+  "day": 10,
+  "title": "Jeudi — La tenue remarquée devient choisie",
+  "app": "messages",
+  "design_goal": "Transformer un regard remarqué en choix vestimentaire destiné sans permission générale.",
+  "thread": {
+    "id": "thread_mathilde_private",
+    "type": "private",
+    "participants": ["player", "mathilde"],
+    "display_name": "Mathilde"
+  },
+  "segments": [
+    {
+      "id": "j10_mathilde_opening",
+      "messages": [
+        {"id": "msg_j10_mathilde_open_001", "sender": "mathilde", "time_label": "17:14", "text": "Question vêtement."},
+        {"id": "msg_j10_mathilde_open_002", "sender": "mathilde", "time_label": "17:14", "text": "Inès me rejoint dans une heure."},
+        {"id": "msg_j10_mathilde_open_003", "sender": "mathilde", "time_label": "17:15", "text": "J’hésite entre deux."},
+        {"id": "msg_j10_mathilde_open_004", "sender": "mathilde", "time_label": "17:15", "text": "Je t’envoie avant de lui demander."},
+        {"id": "msg_j10_mathilde_open_005", "sender": "mathilde", "time_label": "17:15", "text": "C’est probablement une mauvaise idée."},
+        {"id": "msg_j10_mathilde_open_006", "sender": "mathilde", "time_label": "17:15", "content_type": "PHOTO", "media_ref": "S1_A3_J10_DPH_MATHILDE_OUTFIT_CHOICE_01", "text": ""}
+      ],
+      "choices": [
+        {
+          "id": "choice_j10_mathilde_precise",
+          "text": "la première. la veste donne une ligne plus nette et ça ressemble plus à toi qu’à une tenue fabriquée",
+          "next_messages": [
+            {"id": "msg_j10_mathilde_precise_001", "sender": "mathilde", "time_label": "17:18", "text": "Bon."},
+            {"id": "msg_j10_mathilde_precise_002", "sender": "mathilde", "time_label": "17:18", "text": "C’est exactement ce que je pensais."},
+            {"id": "msg_j10_mathilde_precise_003", "sender": "mathilde", "time_label": "17:18", "text": "J’avais changé la veste après l’autre matin."},
+            {"id": "msg_j10_mathilde_precise_004", "sender": "mathilde", "time_label": "17:19", "text": "Je voulais voir si tu le remarquerais."},
+            {"id": "msg_j10_mathilde_precise_005", "sender": "mathilde", "time_label": "17:19", "text": "Ne prends pas trop confiance."}
+          ]
+        },
+        {
+          "id": "choice_j10_mathilde_effect",
+          "text": "tu sais très bien que la première me fera regarder",
+          "next_messages": [
+            {"id": "msg_j10_mathilde_effect_001", "sender": "mathilde", "time_label": "17:18", "text": "Je savais que tu pouvais."},
+            {"id": "msg_j10_mathilde_effect_002", "sender": "mathilde", "time_label": "17:18", "text": "Je savais moins que tu l’écrirais."},
+            {"id": "msg_j10_mathilde_effect_003", "sender": "mathilde", "time_label": "17:19", "text": "Et ne pars pas trop loin avec ça."},
+            {"id": "msg_j10_mathilde_effect_004", "sender": "mathilde", "time_label": "17:19", "text": "Mais oui. Je l’avais un peu choisie pour l’effet."}
+          ]
+        },
+        {
+          "id": "choice_j10_mathilde_weather",
+          "text": "la deuxième. et prends une veste, il va pleuvoir",
+          "next_messages": [
+            {"id": "msg_j10_mathilde_weather_001", "sender": "mathilde", "time_label": "17:18", "text": "Merci papa."},
+            {"id": "msg_j10_mathilde_weather_002", "sender": "mathilde", "time_label": "17:18", "text": "Je demandais aussi si tu remarquerais la première."},
+            {"id": "msg_j10_mathilde_weather_003", "sender": "mathilde", "time_label": "17:19", "text": "Mais on peut garder la réponse météo."},
+            {"id": "msg_j10_mathilde_weather_004", "sender": "mathilde", "time_label": "17:19", "text": "C’est plus simple."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j10_mathilde_after_precise",
+      "messages": [
+        {"id": "msg_j10_mathilde_after_precise_001", "sender": "mathilde", "time_label": "22:06", "text": "Inès a choisi la même que toi."},
+        {"id": "msg_j10_mathilde_after_precise_002", "sender": "mathilde", "time_label": "22:06", "text": "Donc tu n’étais pas complètement perdu."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j10_mathilde_after_precise_guided",
+          "text": "et toi",
+          "next_messages": [
+            {"id": "msg_j10_mathilde_after_precise_003", "sender": "mathilde", "time_label": "22:07", "text": "J’ai gardé la première."},
+            {"id": "msg_j10_mathilde_after_precise_004", "sender": "mathilde", "time_label": "22:07", "text": "C’était mon choix avant les deux avis."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j10_mathilde_after_effect",
+      "messages": [
+        {"id": "msg_j10_mathilde_after_effect_001", "sender": "mathilde", "time_label": "22:06", "text": "Inès a choisi la même que toi."},
+        {"id": "msg_j10_mathilde_after_effect_002", "sender": "mathilde", "time_label": "22:06", "text": "Donc tu n’étais pas complètement perdu."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j10_mathilde_after_effect_guided",
+          "text": "et l’effet",
+          "next_messages": [
+            {"id": "msg_j10_mathilde_after_effect_003", "sender": "mathilde", "time_label": "22:07", "text": "A existé."},
+            {"id": "msg_j10_mathilde_after_effect_004", "sender": "mathilde", "time_label": "22:07", "text": "Fin du compte rendu pour ce soir."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "j10_mathilde_after_weather",
+      "messages": [
+        {"id": "msg_j10_mathilde_after_weather_001", "sender": "mathilde", "time_label": "22:06", "text": "Inès a choisi la même que toi."},
+        {"id": "msg_j10_mathilde_after_weather_002", "sender": "mathilde", "time_label": "22:06", "text": "Donc tu n’étais pas complètement perdu."}
+      ],
+      "choices": [
+        {
+          "id": "choice_j10_mathilde_after_weather_guided",
+          "text": "tu as pris la veste",
+          "next_messages": [
+            {"id": "msg_j10_mathilde_after_weather_003", "sender": "mathilde", "time_label": "22:07", "text": "Oui."},
+            {"id": "msg_j10_mathilde_after_weather_004", "sender": "mathilde", "time_label": "22:07", "text": "L’intimité a ses limites. La pluie aussi."}
+          ]
+        }
+      ]
+    }
+  ]
+}
