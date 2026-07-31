@@ -68,11 +68,86 @@ func current_narrative_time_text() -> String:
 func mark_message_presented(_message_id: String) -> bool: return false
 func mark_thread_batch_presented(_thread_id: String) -> bool: return false
 func commit_narrative_time(_minutes: int) -> bool: return false
-func gallery_source() -> Dictionary: return {"fixtures": {}, "character_order": [], "empty_label": "Aucun visuel J11 servi dans le lot fondations."}
+func gallery_source() -> Dictionary:
+	var fixtures := {
+		"marie": _gallery_character("marie", "Marie", "#4F8BFF", "M"),
+		"sandra": _gallery_character("sandra", "Sandra", "#20C7C9", "S"),
+		"mathilde": _gallery_character("mathilde", "Mathilde", "#E070A8", "M"),
+		"raphaelle": _gallery_character("raphaelle", "Raphaëlle", "#D69A42", "R"),
+		"pauline": _gallery_character("pauline", "Pauline", "#E6B84A", "P"),
+		"nico": _gallery_character("nico", "Nico", "#65B87A", "N"),
+	}
+	var all_assets: Array = []
+	var all_children: Dictionary = {}
+	for day in range(2, 12):
+		var day_map: Dictionary = DataLoader.load_json("res://data/runtime/season_1/j%02d_runtime_map.json" % day)
+		all_assets.append_array(day_map.get("gallery_presentations", []))
+		for raw_child in day_map.get("gallery_children", []):
+			if not raw_child is Dictionary:
+				continue
+			var child_id := str(raw_child.get("asset_id", ""))
+			if child_id != "" and not all_children.has(child_id):
+				all_children[child_id] = raw_child.duplicate(true)
+	var included_children: Dictionary = {}
+	var added_item_keys: Dictionary = {}
+	for raw_asset in all_assets:
+		if not raw_asset is Dictionary:
+			continue
+		var asset: Dictionary = raw_asset
+		var asset_id := str(asset.get("asset_id", ""))
+		if asset_id == "" or not gallery_asset_ids.has(asset_id):
+			continue
+		for raw_character_id in asset.get("character_ids", []):
+			var character_id := str(raw_character_id)
+			var character: Dictionary = fixtures.get(character_id, {})
+			var item_key := "%s::%s" % [character_id, asset_id]
+			if character.is_empty() or added_item_keys.has(item_key):
+				continue
+			var items: Array = character["items"]
+			items.append(_gallery_item(asset, character_id, items.size()))
+			character["items"] = items
+			added_item_keys[item_key] = true
+		var raw_child_ids: Variant = asset.get("sequence_child_ids", [])
+		if raw_child_ids is Array:
+			for raw_child_id in raw_child_ids:
+				var child_id := str(raw_child_id)
+				if all_children.has(child_id):
+					included_children[child_id] = all_children[child_id].duplicate(true)
+	return {
+		"fixtures": fixtures,
+		"character_order": ["marie", "sandra", "mathilde", "raphaelle", "pauline", "nico"],
+		"children_by_id": included_children,
+		"empty_label": "Aucun visuel disponible.",
+	}
 func apply_choice(_thread_id: String, _choice_id: String) -> Dictionary: return {"accepted": false}
 func confirm_transition() -> Dictionary: return {"accepted": false}
 func on_thread_returned(_thread_id: String) -> Dictionary: return {}
 func presentation_count_by_id(_id: String) -> int: return 0
+
+func _gallery_character(id: String, title: String, accent: String, avatar: String) -> Dictionary:
+	return {"character_id": id, "display_name": title, "accent_color": Color.from_string(accent, Color.WHITE), "avatar_ref": avatar, "items": []}
+
+func _gallery_item(asset: Dictionary, character_id: String, index: int) -> Dictionary:
+	var item := {
+		"item_id": str(asset.get("asset_id", "")),
+		"asset_id": str(asset.get("asset_id", "")),
+		"character_id": character_id,
+		"state": "UNLOCKED",
+		"is_new": true,
+		"sort_key": index,
+		"thumbnail_ref": "",
+		"full_ref": "",
+		"thumbnail_label": str(asset.get("placeholder_label", "Visuel non produit")),
+		"placeholder_label": str(asset.get("placeholder_label", "Visuel non produit")),
+		"source_kind": str(asset.get("source_kind", "gallery")),
+		"content_type": str(asset.get("content_type", "PHOTO")),
+		"can_share": bool(asset.get("can_share", false)),
+		"transfer_rule": str(asset.get("transfer_rule", "FORBIDDEN")),
+		"is_diegetic": bool(asset.get("is_diegetic", true)),
+	}
+	if asset.has("sequence_child_ids"):
+		item["sequence_child_ids"] = asset.get("sequence_child_ids")
+	return item
 
 func snapshot() -> Dictionary:
 	return {

@@ -27,7 +27,7 @@ class RuntimeS111CJ11FoundationsStaticTests(unittest.TestCase):
         self.assertTrue(j10["day_end"]["content_end"])
         self.assertEqual("FOUNDATION_ONLY", j11["implementation_status"])
         self.assertEqual({}, j11["conversation_paths"])
-        self.assertEqual([], j11["gallery_presentations"])
+        self.assertEqual(2, len(j11["gallery_presentations"]))
 
     def test_selector_contains_exact_22_outcomes_and_is_pure(self):
         selector = self.read("game/scripts/runtime/season_1/J11ContinuationSelector.gd")

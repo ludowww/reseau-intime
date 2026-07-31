@@ -11,6 +11,134 @@
     "transition_mode": "day_boundary"
   },
   "conversation_paths": {},
-  "gallery_presentations": [],
+  "gallery_asset_debt": "Les six images de séquence J11 utilisent le placeholder textuel runtime ; aucun asset définitif n'est livré dans RUNTIME-S1-11D.",
+  "gallery_presentations": [
+    {
+      "asset_id": "S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01",
+      "character_ids": ["mathilde"],
+      "placeholder_label": "Moment vécu",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "canonical_type": "SOUVENIR_IMAGE_DE_SCÈNE",
+      "sequence_id": "MATHILDE_J11_SECRET_INTIMACY",
+      "sequence_child_ids": [
+        "S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01_PROXIMITY",
+        "S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_CENTRAL_01",
+        "S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_AFTERCARE_01"
+      ],
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false,
+      "discoverable_by_character": false,
+      "eligible_for_j14": false,
+      "eligible_for_j21": false
+    },
+    {
+      "asset_id": "S1_A3_J11_SCN_MARIE_COUPLE_STATE_01",
+      "character_ids": ["marie"],
+      "placeholder_label": "Moment vécu",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "canonical_type": "SOUVENIR_IMAGE_DE_SCÈNE",
+      "sequence_id": "MARIE_J11_RECONQUEST",
+      "sequence_child_ids": [
+        "S1_A3_J11_SCN_MARIE_COUPLE_STATE_01_RECONNECTION",
+        "S1_A3_J11_SCN_MARIE_RECONQUEST_ADULT_PAYOFF_01",
+        "S1_A3_J11_SCN_MARIE_RECONQUEST_AFTERCARE_01"
+      ],
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false,
+      "discoverable_by_character": false,
+      "eligible_for_j14": false,
+      "eligible_for_j21": false
+    }
+  ],
+  "gallery_children": [
+    {
+      "asset_id": "S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01_PROXIMITY",
+      "parent_asset_id": "S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01",
+      "character_id": "mathilde",
+      "sequence_id": "MATHILDE_J11_SECRET_INTIMACY",
+      "placeholder_label": "Visuel canonique non produit · 1/3",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "canonical_type": "SOUVENIR_IMAGE_DE_SCÈNE",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false,
+      "discoverable_by_character": false
+    },
+    {
+      "asset_id": "S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_CENTRAL_01",
+      "parent_asset_id": "S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01",
+      "character_id": "mathilde",
+      "sequence_id": "MATHILDE_J11_SECRET_INTIMACY",
+      "placeholder_label": "Visuel canonique non produit · 2/3",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "canonical_type": "SOUVENIR_IMAGE_DE_SCÈNE",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false,
+      "discoverable_by_character": false
+    },
+    {
+      "asset_id": "S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_AFTERCARE_01",
+      "parent_asset_id": "S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01",
+      "character_id": "mathilde",
+      "sequence_id": "MATHILDE_J11_SECRET_INTIMACY",
+      "placeholder_label": "Visuel canonique non produit · 3/3",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "canonical_type": "SOUVENIR_IMAGE_DE_SCÈNE",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false,
+      "discoverable_by_character": false
+    },
+    {
+      "asset_id": "S1_A3_J11_SCN_MARIE_COUPLE_STATE_01_RECONNECTION",
+      "parent_asset_id": "S1_A3_J11_SCN_MARIE_COUPLE_STATE_01",
+      "character_id": "marie",
+      "sequence_id": "MARIE_J11_RECONQUEST",
+      "placeholder_label": "Visuel canonique non produit · 1/3",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "canonical_type": "SOUVENIR_IMAGE_DE_SCÈNE",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false,
+      "discoverable_by_character": false
+    },
+    {
+      "asset_id": "S1_A3_J11_SCN_MARIE_RECONQUEST_ADULT_PAYOFF_01",
+      "parent_asset_id": "S1_A3_J11_SCN_MARIE_COUPLE_STATE_01",
+      "character_id": "marie",
+      "sequence_id": "MARIE_J11_RECONQUEST",
+      "placeholder_label": "Visuel canonique non produit · 2/3",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "canonical_type": "SOUVENIR_IMAGE_DE_SCÈNE",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false,
+      "discoverable_by_character": false
+    },
+    {
+      "asset_id": "S1_A3_J11_SCN_MARIE_RECONQUEST_AFTERCARE_01",
+      "parent_asset_id": "S1_A3_J11_SCN_MARIE_COUPLE_STATE_01",
+      "character_id": "marie",
+      "sequence_id": "MARIE_J11_RECONQUEST",
+      "placeholder_label": "Visuel canonique non produit · 3/3",
+      "source_kind": "gallery",
+      "content_type": "SCENE_IMAGE",
+      "canonical_type": "SOUVENIR_IMAGE_DE_SCÈNE",
+      "can_share": false,
+      "transfer_rule": "FORBIDDEN",
+      "is_diegetic": false,
+      "discoverable_by_character": false
+    }
+  ],
   "visual_variant_presentations": []
 }

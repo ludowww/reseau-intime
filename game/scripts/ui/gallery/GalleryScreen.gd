@@ -119,13 +119,19 @@ func locked_item_count(character_id := "") -> int:
 func viewer_sequence_for_selected_character() -> Array[Dictionary]:
 	var sequence: Array[Dictionary] = []
 	var character: Dictionary = fixtures.get(selected_character_id, {})
-	var items: Array = character.get("items", []).duplicate(true)
-	items.sort_custom(func(a: Dictionary, b: Dictionary): return int(a.get("sort_key", 0)) < int(b.get("sort_key", 0)))
+	var items: Array[Dictionary] = _visible_items_for_character(character)
+	items.sort_custom(func(a: Dictionary, b: Dictionary):
+		var a_key := int(a.get("sort_key", 0))
+		var b_key := int(b.get("sort_key", 0))
+		return a_key < b_key if a_key != b_key else str(a.get("item_id", "")) < str(b.get("item_id", ""))
+	)
 	for item in items:
 		if str(item.get("state", "")) != "UNLOCKED":
 			continue
+		if _has_parent_sequence(item):
+			continue
 		sequence.append({
-			"photo_id": str(item.get("item_id", "")),
+			"photo_id": str(item.get("asset_id", item.get("item_id", ""))),
 			"visual_ref": str(item.get("full_ref", "")),
 			"access_state": "UNLOCKED",
 			"source_kind": "gallery",
@@ -139,7 +145,22 @@ func viewer_sequence_for_selected_character() -> Array[Dictionary]:
 		})
 	return sequence
 
+func viewer_sequence_for_item(item_id: String) -> Array[Dictionary]:
+	var character: Dictionary = fixtures.get(selected_character_id, {})
+	var item := _item_in_character(character, item_id)
+	if item.is_empty() or str(item.get("state", "")) != "UNLOCKED":
+		return []
+	if not _has_parent_sequence(item):
+		return viewer_sequence_for_selected_character()
+	return _viewer_sequence_for_parent(item, character)
+
 func viewer_index_for_item(item_id: String) -> int:
+	var character: Dictionary = fixtures.get(selected_character_id, {})
+	var item := _item_in_character(character, item_id)
+	if item.is_empty():
+		return -1
+	if _has_parent_sequence(item):
+		return 0 if not _viewer_sequence_for_parent(item, character).is_empty() else -1
 	var sequence := viewer_sequence_for_selected_character()
 	for index in range(sequence.size()):
 		if str(sequence[index].get("photo_id", "")) == item_id:
@@ -147,12 +168,15 @@ func viewer_index_for_item(item_id: String) -> int:
 	return -1
 
 func viewer_origin_for_item(item_id: String) -> Dictionary:
-	if viewer_index_for_item(item_id) < 0:
+	var character: Dictionary = fixtures.get(selected_character_id, {})
+	var item := _item_in_character(character, item_id)
+	if item.is_empty() or viewer_index_for_item(item_id) < 0:
 		return {}
 	return {
 		"source_kind": "gallery",
 		"selected_character_id": selected_character_id,
 		"item_id": item_id,
+		"parent_sequence": _has_parent_sequence(item),
 		"grid_scroll_position": grid_scroll.scroll_vertical,
 	}
 
@@ -172,8 +196,11 @@ func restore_after_photo_viewer(provenance: Dictionary, current_photo_id: String
 	grid_scroll.scroll_vertical = int(provenance.get("grid_scroll_position", 0))
 	await get_tree().process_frame
 	last_photo_restore_origin_scroll = grid_scroll.scroll_vertical
-	var photo_changed := current_photo_id != str(provenance.get("item_id", ""))
-	if not focus_item(current_photo_id, photo_changed):
+	var origin_item_id := str(provenance.get("item_id", ""))
+	var parent_sequence := bool(provenance.get("parent_sequence", false))
+	var focus_item_id := origin_item_id if parent_sequence else current_photo_id
+	var photo_changed := not parent_sequence and current_photo_id != origin_item_id
+	if not focus_item(focus_item_id, photo_changed):
 		if focus_target is Control and is_instance_valid(focus_target) and focus_target.is_visible_in_tree():
 			focus_target.grab_focus()
 
@@ -292,8 +319,7 @@ func _rebuild_content() -> void:
 		child.queue_free()
 	tile_buttons.clear()
 	var presentation: Dictionary = fixtures.get(selected_character_id, {})
-	var items: Array = presentation.get("items", [])
-	items.sort_custom(func(a: Dictionary, b: Dictionary): return int(a.get("sort_key", 0)) < int(b.get("sort_key", 0)))
+	var items := _visible_items_for_character(presentation)
 	count_label.text = "%d photo%s" % [items.size(), "s" if items.size() != 1 else ""]
 	grid_scroll.visible = not items.is_empty()
 	empty_state.visible = items.is_empty()
@@ -340,18 +366,93 @@ func _on_photo_requested(item_id: String) -> void:
 func _item_for_id(item_id: String) -> Dictionary:
 	if item_id == "":
 		return {}
+	var selected: Dictionary = fixtures.get(selected_character_id, {})
+	var selected_item := _item_in_character(selected, item_id)
+	if not selected_item.is_empty():
+		return selected_item
 	for character_id in character_order:
+		if character_id == selected_character_id:
+			continue
 		var character: Dictionary = fixtures.get(character_id, {})
-		for item in character.get("items", []):
-			if item is Dictionary and str(item.get("item_id", "")) == item_id:
-				return item
+		var item := _item_in_character(character, item_id)
+		if not item.is_empty():
+			return item
 	return {}
+
+func _item_in_character(character: Dictionary, item_id: String) -> Dictionary:
+	if item_id == "":
+		return {}
+	for item in character.get("items", []):
+		if item is Dictionary and str(item.get("item_id", "")) == item_id:
+			return item
+	return {}
+
+func _has_parent_sequence(item: Dictionary) -> bool:
+	return item.has("sequence_child_ids")
+
+func _visible_items_for_character(character: Dictionary) -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	var seen_ids: Dictionary = {}
+	for raw_item in character.get("items", []):
+		if not raw_item is Dictionary:
+			continue
+		var item_id := str(raw_item.get("item_id", ""))
+		if item_id == "" or seen_ids.has(item_id):
+			continue
+		seen_ids[item_id] = true
+		result.append(raw_item)
+	result.sort_custom(func(a: Dictionary, b: Dictionary):
+		var a_key := int(a.get("sort_key", 0))
+		var b_key := int(b.get("sort_key", 0))
+		return a_key < b_key if a_key != b_key else str(a.get("item_id", "")) < str(b.get("item_id", ""))
+	)
+	return result
+
+func _viewer_sequence_for_parent(parent: Dictionary, character: Dictionary) -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	var raw_child_ids: Variant = parent.get("sequence_child_ids", [])
+	var raw_catalog: Variant = content_source.get("children_by_id", {})
+	if not raw_child_ids is Array or raw_child_ids.is_empty() or not raw_catalog is Dictionary:
+		return result
+	var child_ids: Array = raw_child_ids
+	var catalog: Dictionary = raw_catalog
+	var parent_id := str(parent.get("item_id", ""))
+	var seen_ids: Dictionary = {}
+	for raw_child_id in child_ids:
+		var child_id := str(raw_child_id)
+		var child: Dictionary = catalog.get(child_id, {})
+		if child_id == "" or seen_ids.has(child_id) or child.is_empty():
+			return []
+		if str(child.get("asset_id", "")) != child_id or str(child.get("parent_asset_id", "")) != parent_id:
+			return []
+		if str(child.get("character_id", "")) != selected_character_id or str(child.get("source_kind", "")) != "gallery":
+			return []
+		if str(child.get("full_ref", "")) == "" and str(child.get("placeholder_label", "")) == "":
+			return []
+		seen_ids[child_id] = true
+		result.append(_viewer_presentation(child, character))
+	return result
+
+func _viewer_presentation(item: Dictionary, character: Dictionary) -> Dictionary:
+	return {
+		"photo_id": str(item.get("asset_id", item.get("item_id", ""))),
+		"visual_ref": str(item.get("full_ref", "")),
+		"access_state": "UNLOCKED",
+		"source_kind": "gallery",
+		"character_id": selected_character_id,
+		"display_name": str(character.get("display_name", "")),
+		"accent_color": character.get("accent_color", PORTRAIT_THEME.GALLERY_ACCENT),
+		"context_label": "Galerie · %s" % str(item.get("thumbnail_label", item.get("placeholder_label", "Photo démo"))),
+		"timestamp": "",
+		"caption": "",
+		"placeholder_label": str(item.get("placeholder_label", "Photo de démonstration")),
+	}
 
 func _item_count(character_id: String, state: String, new_only: bool) -> int:
 	var target := selected_character_id if character_id == "" else character_id
 	var character: Dictionary = fixtures.get(target, {})
 	var count := 0
-	for item in character.get("items", []):
+	for item in _visible_items_for_character(character):
 		if str(item.get("state", "")) != state:
 			continue
 		if new_only and not bool(item.get("is_new", false)):

@@ -281,7 +281,7 @@ func _on_message_photo_requested(presentation: Dictionary, provenance: Dictionar
 func _on_gallery_photo_requested(item_id: String) -> void:
 	if active_tab != TAG_GALLERY:
 		return
-	var sequence: Array[Dictionary] = gallery_screen.viewer_sequence_for_selected_character()
+	var sequence: Array[Dictionary] = gallery_screen.viewer_sequence_for_item(item_id)
 	var index: int = gallery_screen.viewer_index_for_item(item_id)
 	var provenance: Dictionary = gallery_screen.viewer_origin_for_item(item_id)
 	if _open_photo_viewer(sequence, index, provenance):
@@ -324,7 +324,11 @@ func _on_photo_viewer_current_photo_changed(photo_id: String) -> void:
 		return
 	if photo_viewer.source_kind() != TAG_GALLERY:
 		return
-	gallery_screen.mark_viewed(photo_id)
+	var provenance: Dictionary = photo_viewer_state.get("provenance", {})
+	if bool(provenance.get("parent_sequence", false)):
+		gallery_screen.mark_viewed(str(provenance.get("item_id", "")))
+	else:
+		gallery_screen.mark_viewed(photo_id)
 
 func _close_photo_viewer() -> void:
 	if not is_photo_viewer_active():
