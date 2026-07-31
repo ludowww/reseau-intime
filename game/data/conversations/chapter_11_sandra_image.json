@@ -1,0 +1,61 @@
+{
+  "id": "chapter_11_sandra_image",
+  "chapter": 11,
+  "day": 11,
+  "title": "Vendredi — La photographie qu’elle a vraiment choisie",
+  "app": "messages",
+  "design_goal": "Distinguer voir, conserver et retirer l’image choisie par Sandra.",
+  "thread": {"id": "thread_sandra_private", "type": "private", "participants": ["player", "sandra"], "display_name": "Sandra"},
+  "segments": [
+    {
+      "id": "j11_sandra_opening",
+      "messages": [
+        {"id": "msg_j11_sandra_001", "sender": "sandra", "time_label": "21:18", "text": "J’ai fait quelque chose d’un peu idiot."},
+        {"id": "msg_j11_sandra_guided_001", "sender": "player", "time_label": "21:18", "text": "à quel niveau"},
+        {"id": "msg_j11_sandra_002", "sender": "sandra", "time_label": "21:19", "text": "Niveau raisonnable."},
+        {"id": "msg_j11_sandra_003", "sender": "sandra", "time_label": "21:19", "text": "J’ai pris des photos avant de sortir."},
+        {"id": "msg_j11_sandra_004", "sender": "sandra", "time_label": "21:20", "text": "Je n’en ai gardé qu’une."},
+        {"id": "msg_j11_sandra_005", "sender": "sandra", "time_label": "21:21", "text": "Celle-là."},
+        {"id": "msg_j11_sandra_photo_001", "sender": "sandra", "time_label": "21:21", "content_type": "PHOTO", "media_ref": "S1_A3_J11_DPH_SANDRA_CHOSEN_IMAGE_01", "placeholder_label": "Visuel canonique non produit", "text": ""}
+      ],
+      "choices": [
+        {
+          "id": "choice_j11_sandra_rule",
+          "text": "tu veux que je la voie seulement ou je peux la garder",
+          "next_messages": [
+            {"id": "msg_j11_sandra_rule_001", "sender": "sandra", "time_label": "21:22", "text": "Merci de demander."},
+            {"id": "msg_j11_sandra_rule_002", "sender": "sandra", "time_label": "21:22", "text": "Pour l’instant, tu peux la voir ici."},
+            {"id": "msg_j11_sandra_rule_003", "sender": "sandra", "time_label": "21:23", "text": "Pas l’enregistrer ailleurs."},
+            {"id": "msg_j11_sandra_rule_004", "sender": "sandra", "time_label": "21:23", "text": "Pas la montrer."},
+            {"id": "msg_j11_sandra_rule_guided", "sender": "player", "time_label": "21:23", "text": "d’accord"},
+            {"id": "msg_j11_sandra_rule_005", "sender": "sandra", "time_label": "21:24", "text": "Je vais probablement vérifier demain si tu as compris."}
+          ]
+        },
+        {
+          "id": "choice_j11_sandra_desire",
+          "text": "tu savais que j’allais la regarder longtemps",
+          "next_messages": [
+            {"id": "msg_j11_sandra_desire_001", "sender": "sandra", "time_label": "21:22", "text": "Oui."},
+            {"id": "msg_j11_sandra_desire_002", "sender": "sandra", "time_label": "21:22", "text": "C’est pour ça que j’ai hésité."},
+            {"id": "msg_j11_sandra_desire_003", "sender": "sandra", "time_label": "21:23", "text": "Et c’est pour ça que je l’ai envoyée quand même."},
+            {"id": "msg_j11_sandra_desire_player", "sender": "player", "time_label": "21:23", "text": "je ne fais rien avec sans que tu me le dises"},
+            {"id": "msg_j11_sandra_desire_004", "sender": "sandra", "time_label": "21:24", "text": "Bien."},
+            {"id": "msg_j11_sandra_desire_005", "sender": "sandra", "time_label": "21:24", "text": "Je ne sais pas encore si ça me rassure ou si ça rend le geste plus réel."}
+          ]
+        },
+        {
+          "id": "choice_j11_sandra_more",
+          "text": "tu en as pris d’autres",
+          "next_messages": [
+            {"id": "msg_j11_sandra_more_001", "sender": "sandra", "time_label": "21:22", "text": "Oui."},
+            {"id": "msg_j11_sandra_more_002", "sender": "sandra", "time_label": "21:22", "text": "Et je les ai supprimées."},
+            {"id": "msg_j11_sandra_more_player", "sender": "player", "time_label": "21:22", "text": "dommage"},
+            {"id": "msg_j11_sandra_more_003", "sender": "sandra", "time_label": "21:23", "text": "Non."},
+            {"id": "msg_j11_sandra_more_004", "sender": "sandra", "time_label": "21:23", "text": "C’était le tri."},
+            {"id": "msg_j11_sandra_more_005", "sender": "sandra", "time_label": "21:24", "text": "Je vais retirer celle-ci aussi."}
+          ]
+        }
+      ]
+    }
+  ]
+}

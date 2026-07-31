@@ -1,0 +1,70 @@
+{
+  "id": "chapter_11_raphaelle_result",
+  "chapter": 11,
+  "day": 11,
+  "title": "Vendredi — Après le rôle",
+  "app": "messages",
+  "design_goal": "Distinguer le résultat, l’attirance et la personne après le rôle.",
+  "thread": {"id": "thread_raphaelle_private", "type": "private", "participants": ["player", "raphaelle"], "display_name": "Raphaëlle"},
+  "segments": [
+    {
+      "id": "j11_raphaelle_opening",
+      "messages": [
+        {"id": "msg_j11_raphaelle_001", "sender": "raphaelle", "time_label": "18:36", "text": "La fermeture a tenu."},
+        {"id": "msg_j11_raphaelle_002", "sender": "raphaelle", "time_label": "18:36", "text": "Maud a fait les images de test."},
+        {"id": "msg_j11_raphaelle_003", "sender": "raphaelle", "time_label": "18:37", "text": "Il y en a une que je peux t’envoyer."},
+        {"id": "msg_j11_raphaelle_004", "sender": "raphaelle", "time_label": "18:37", "text": "Pas pour le diagnostic technique cette fois."},
+        {"id": "msg_j11_raphaelle_photo", "sender": "raphaelle", "time_label": "18:37", "content_type": "PHOTO", "media_ref": "S1_A3_J11_DPH_RAPHAELLE_CHOSEN_RESULT_01", "placeholder_label": "Visuel canonique non produit", "text": ""}
+      ],
+      "choices": [
+        {"id": "choice_j11_raphaelle_work_person", "text": "le costume fonctionne. et on voit encore que c’est toi qui l’as construit, pas seulement porté", "next_messages": [
+          {"id": "msg_j11_raphaelle_work_001", "sender": "raphaelle", "time_label": "18:38", "text": "C’est la réponse que j’espérais."},
+          {"id": "msg_j11_raphaelle_work_002", "sender": "raphaelle", "time_label": "18:38", "text": "Pas la seule que je voulais entendre."},
+          {"id": "msg_j11_raphaelle_work_guided", "sender": "player", "time_label": "18:38", "text": "laquelle manque"},
+          {"id": "msg_j11_raphaelle_work_003", "sender": "raphaelle", "time_label": "18:39", "text": "Si je te plais quand le travail est fini."}
+        ]},
+        {"id": "choice_j11_raphaelle_attractive", "text": "tu sais que l’image est attirante. je ne suppose rien de plus", "next_messages": [
+          {"id": "msg_j11_raphaelle_attractive_001", "sender": "raphaelle", "time_label": "18:38", "text": "Oui."},
+          {"id": "msg_j11_raphaelle_attractive_002", "sender": "raphaelle", "time_label": "18:38", "text": "Je l’ai choisie parce que je voulais que tu le voies."},
+          {"id": "msg_j11_raphaelle_attractive_003", "sender": "raphaelle", "time_label": "18:39", "text": "Et je voulais voir si tu savais t’arrêter là."}
+        ]},
+        {"id": "choice_j11_raphaelle_boundary", "text": "je préfère ne pas devenir l’audience privée de cette version", "next_messages": [
+          {"id": "msg_j11_raphaelle_boundary_001", "sender": "raphaelle", "time_label": "18:38", "text": "D’accord."},
+          {"id": "msg_j11_raphaelle_boundary_002", "sender": "raphaelle", "time_label": "18:38", "text": "Je retire le message après que tu l’as vu."},
+          {"id": "msg_j11_raphaelle_boundary_003", "sender": "raphaelle", "time_label": "18:39", "text": "Samedi, ce sera une image publique ou rien."}
+        ]}
+      ]
+    },
+    {"id": "j11_raphaelle_attraction_choice", "messages": [], "choices": [
+      {"id": "choice_j11_raphaelle_attraction_yes", "text": "oui. toi aussi", "next_messages": [
+        {"id": "msg_j11_raphaelle_attraction_yes_001", "sender": "raphaelle", "time_label": "18:40", "text": "D’accord."},
+        {"id": "msg_j11_raphaelle_attraction_yes_002", "sender": "raphaelle", "time_label": "18:40", "text": "Je ne vais pas décider la suite dans ce message."},
+        {"id": "msg_j11_raphaelle_attraction_yes_003", "sender": "raphaelle", "time_label": "18:41", "text": "Mais je voulais que ce soit dit avant samedi."}
+      ]},
+      {"id": "choice_j11_raphaelle_attraction_no", "text": "je préfère rester sur le travail", "next_messages": [
+        {"id": "msg_j11_raphaelle_attraction_no_001", "sender": "raphaelle", "time_label": "18:40", "text": "D’accord."},
+        {"id": "msg_j11_raphaelle_attraction_no_002", "sender": "raphaelle", "time_label": "18:40", "text": "Alors l’image reste un résultat choisi, pas une proposition."}
+      ]}
+    ]},
+    {"id": "j11_raphaelle_meeting_choice", "messages": [
+      {"id": "msg_j11_raphaelle_meeting_001", "sender": "raphaelle", "time_label": "19:04", "text": "Je range l’atelier à 19 h 30."},
+      {"id": "msg_j11_raphaelle_meeting_002", "sender": "raphaelle", "time_label": "19:04", "text": "Après, je ne serai plus dans le costume."},
+      {"id": "msg_j11_raphaelle_meeting_003", "sender": "raphaelle", "time_label": "19:05", "text": "Si tu passes à 19 h 45, ce n’est pas pour vérifier la fermeture."}
+    ], "choices": [
+      {"id": "choice_j11_raphaelle_meeting_accept", "text": "je passe à 19 h 45. si tu changes d’avis, tu me le dis", "next_messages": [
+        {"id": "msg_j11_raphaelle_meeting_accept_001", "sender": "raphaelle", "time_label": "19:06", "text": "Oui."},
+        {"id": "msg_j11_raphaelle_meeting_accept_002", "sender": "raphaelle", "time_label": "19:06", "text": "Et je te le dirai avant que tu interprètes le silence."}
+      ]},
+      {"id": "choice_j11_raphaelle_meeting_decline", "text": "je ne passe pas. je préfère ne pas ouvrir ça avant samedi", "next_messages": [
+        {"id": "msg_j11_raphaelle_meeting_decline_001", "sender": "raphaelle", "time_label": "19:06", "text": "D’accord."},
+        {"id": "msg_j11_raphaelle_meeting_decline_002", "sender": "raphaelle", "time_label": "19:06", "text": "C’est une vraie réponse."}
+      ]}
+    ]},
+    {"id": "j11_raphaelle_after_kiss", "messages": [
+      {"id": "msg_j11_raphaelle_after_kiss_001", "sender": "raphaelle", "time_label": "20:18", "text": "Ce n’était pas le rôle."},
+      {"id": "msg_j11_raphaelle_after_kiss_guided", "sender": "player", "time_label": "20:18", "text": "je sais"},
+      {"id": "msg_j11_raphaelle_after_kiss_002", "sender": "raphaelle", "time_label": "20:19", "text": "Bien."},
+      {"id": "msg_j11_raphaelle_after_kiss_003", "sender": "raphaelle", "time_label": "20:19", "text": "Samedi, on ne fera pas comme si ça n’avait pas eu lieu."}
+    ], "choices": []}
+  ]
+}

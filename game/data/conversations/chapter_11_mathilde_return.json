@@ -1,0 +1,88 @@
+{
+  "id": "chapter_11_mathilde_return",
+  "chapter": 11,
+  "day": 11,
+  "title": "Vendredi — Elle revient dans la pièce",
+  "app": "messages",
+  "design_goal": "Rendre la proximité volontaire, bornée et immédiatement révocable.",
+  "thread": {"id": "thread_mathilde_private", "type": "private", "participants": ["player", "mathilde"], "display_name": "Mathilde"},
+  "segments": [
+    {
+      "id": "j11_mathilde_opening",
+      "messages": [
+        {"id": "msg_j11_mathilde_001", "sender": "mathilde", "time_label": "21:06", "text": "Je suis en bas."},
+        {"id": "msg_j11_mathilde_002", "sender": "mathilde", "time_label": "21:06", "text": "Je remonte dans deux minutes."},
+        {"id": "msg_j11_mathilde_003", "sender": "mathilde", "time_label": "21:06", "text": "Et je porte la première tenue."},
+        {"id": "msg_j11_mathilde_004", "sender": "mathilde", "time_label": "21:07", "text": "Oui, exprès."},
+        {"id": "msg_j11_mathilde_005", "sender": "mathilde", "time_label": "21:07", "text": "Je préfère te prévenir avant de voir ta tête."},
+        {"id": "msg_j11_mathilde_guided", "sender": "player", "time_label": "21:07", "text": "j’ai compris"},
+        {"id": "msg_j11_mathilde_006", "sender": "mathilde", "time_label": "21:08", "text": "Tu as compris une partie."},
+        {"id": "msg_j11_mathilde_007", "sender": "mathilde", "time_label": "21:08", "text": "Je veux que tu regardes."},
+        {"id": "msg_j11_mathilde_008", "sender": "mathilde", "time_label": "21:09", "text": "Le reste, je ne l’ai pas décidé."}
+      ],
+      "choices": [
+        {"id": "choice_j11_mathilde_look", "text": "j’ai compris. tu veux que je regarde. je garde mes mains", "next_messages": [
+          {"id": "msg_j11_mathilde_look_001", "sender": "mathilde", "time_label": "21:10", "text": "D’accord."},
+          {"id": "msg_j11_mathilde_look_002", "sender": "mathilde", "time_label": "21:10", "text": "C’est exactement ce que je voulais savoir."},
+          {"id": "msg_j11_mathilde_look_003", "sender": "mathilde", "time_label": "21:11", "text": "Et ça me met beaucoup plus mal à l’aise que prévu."}
+        ]},
+        {"id": "choice_j11_mathilde_proximity", "text": "viens. si tu veux que je m’approche, tu me le dis. sinon je garde mes mains", "next_messages": [
+          {"id": "msg_j11_mathilde_proximity_001", "sender": "mathilde", "time_label": "21:10", "text": "D’accord."},
+          {"id": "msg_j11_mathilde_proximity_002", "sender": "mathilde", "time_label": "21:10", "text": "Et si je dis stop, tu t’arrêtes."},
+          {"id": "msg_j11_mathilde_proximity_player_001", "sender": "player", "time_label": "21:10", "text": "oui"},
+          {"id": "msg_j11_mathilde_proximity_003", "sender": "mathilde", "time_label": "21:11", "text": "Et demain tu ne me fais pas un débrief de trois pages."},
+          {"id": "msg_j11_mathilde_proximity_player_002", "sender": "player", "time_label": "21:11", "text": "d’accord"}
+        ]},
+        {"id": "choice_j11_mathilde_distance", "text": "je préfère qu’on garde ça dans les messages. ne reviens pas pour moi", "next_messages": [
+          {"id": "msg_j11_mathilde_distance_001", "sender": "mathilde", "time_label": "21:10", "text": "D’accord."},
+          {"id": "msg_j11_mathilde_distance_002", "sender": "mathilde", "time_label": "21:11", "text": "Je vais quand même chercher de l’eau."},
+          {"id": "msg_j11_mathilde_distance_003", "sender": "mathilde", "time_label": "21:11", "text": "Mais je ne transforme pas le trajet en scène."},
+          {"id": "msg_j11_mathilde_distance_guided", "sender": "player", "time_label": "21:11", "text": "merci"},
+          {"id": "msg_j11_mathilde_distance_004", "sender": "mathilde", "time_label": "21:12", "text": "Réponse très solennelle pour une cuisine."}
+        ]}
+      ]
+    },
+    {"id": "j11_mathilde_look_after", "messages": [
+      {"id": "msg_j11_mathilde_look_after_001", "sender": "mathilde", "time_label": "21:42", "text": "Tu as tenu ta phrase."},
+      {"id": "msg_j11_mathilde_look_after_guided", "sender": "player", "time_label": "21:42", "text": "oui"},
+      {"id": "msg_j11_mathilde_look_after_002", "sender": "mathilde", "time_label": "21:43", "text": "Je l’ai remarqué."},
+      {"id": "msg_j11_mathilde_look_after_003", "sender": "mathilde", "time_label": "21:43", "text": "Et c’était quand même... enfin. oui. excitant."}
+    ], "choices": []},
+    {"id": "j11_mathilde_proximity_entry", "messages": [
+      {"id": "msg_j11_mathilde_proximity_entry_001", "sender": "mathilde", "time_label": "21:12", "text": "Tu peux t’asseoir près de moi."},
+      {"id": "msg_j11_mathilde_proximity_entry_002", "sender": "mathilde", "time_label": "21:12", "text": "Près. Pas collé. Voilà."}
+    ], "choices": []},
+    {"id": "j11_mathilde_proximity_after", "messages": [
+      {"id": "msg_j11_mathilde_proximity_after_001", "sender": "mathilde", "time_label": "21:39", "text": "C’était suffisant."},
+      {"id": "msg_j11_mathilde_proximity_after_guided", "sender": "player", "time_label": "21:39", "text": "oui"},
+      {"id": "msg_j11_mathilde_proximity_after_002", "sender": "mathilde", "time_label": "21:40", "text": "Ne réponds pas comme si tu passais un contrôle."},
+      {"id": "msg_j11_mathilde_proximity_after_003", "sender": "mathilde", "time_label": "21:40", "text": "Mais oui. Pour moi aussi."}
+    ], "choices": []},
+    {"id": "j11_mathilde_physical_entry", "messages": [
+      {"id": "msg_j11_mathilde_physical_001", "sender": "mathilde", "time_label": "21:12", "text": "Tu peux m’embrasser."},
+      {"id": "msg_j11_mathilde_physical_002", "sender": "mathilde", "time_label": "21:12", "text": "Rien d’autre sans me demander."},
+      {"id": "msg_j11_mathilde_physical_player", "sender": "player", "time_label": "21:12", "text": "je t’embrasse seulement. si tu veux autre chose, tu me le dis. tu peux arrêter quand tu veux"},
+      {"id": "msg_j11_mathilde_physical_003", "sender": "mathilde", "time_label": "21:13", "text": "Oui."},
+      {"id": "msg_j11_mathilde_physical_004", "sender": "mathilde", "time_label": "21:14", "text": "Viens."}
+    ], "choices": []},
+    {"id": "j11_mathilde_physical_after", "messages": [
+      {"id": "msg_j11_mathilde_physical_after_001", "sender": "mathilde", "time_label": "21:51", "text": "Je suis arrivée."},
+      {"id": "msg_j11_mathilde_physical_after_002", "sender": "mathilde", "time_label": "21:51", "text": "Je ne regrette pas."},
+      {"id": "msg_j11_mathilde_physical_after_003", "sender": "mathilde", "time_label": "21:52", "text": "Je ne sais pas encore ce que ça change."}
+    ], "choices": [
+      {"id": "choice_j11_mathilde_after_no_definition", "text": "on n’a pas besoin de décider ce soir", "next_messages": [
+        {"id": "msg_j11_mathilde_after_no_definition_001", "sender": "mathilde", "time_label": "21:53", "text": "Bien."},
+        {"id": "msg_j11_mathilde_after_no_definition_002", "sender": "mathilde", "time_label": "21:53", "text": "Mais demain, tu ne fais pas comme si rien ne s’était passé."}
+      ]},
+      {"id": "choice_j11_mathilde_after_marie", "text": "ça change déjà quelque chose avec Marie. même si elle ne sait pas", "next_messages": [
+        {"id": "msg_j11_mathilde_after_marie_001", "sender": "mathilde", "time_label": "21:53", "text": "Oui."},
+        {"id": "msg_j11_mathilde_after_marie_002", "sender": "mathilde", "time_label": "21:53", "text": "Merci de ne pas appeler ça juste un moment."}
+      ]},
+      {"id": "choice_j11_mathilde_after_repeat", "text": "on recommence quand", "next_messages": [
+        {"id": "msg_j11_mathilde_after_repeat_001", "sender": "mathilde", "time_label": "21:53", "text": "Non."},
+        {"id": "msg_j11_mathilde_after_repeat_002", "sender": "mathilde", "time_label": "21:53", "text": "Pas cette question maintenant."},
+        {"id": "msg_j11_mathilde_after_repeat_003", "sender": "mathilde", "time_label": "21:54", "text": "Je vais dormir."}
+      ]}
+    ]}
+  ]
+}

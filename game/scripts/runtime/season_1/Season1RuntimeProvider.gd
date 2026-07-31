@@ -14,7 +14,7 @@ const J08_SCRIPT := preload("res://scripts/runtime/season_1/J08RuntimeProvider.g
 const J09_SCRIPT := preload("res://scripts/runtime/season_1/J09RuntimeProvider.gd")
 const J10_SCRIPT := preload("res://scripts/runtime/season_1/J10RuntimeProvider.gd")
 const J11_SCRIPT := preload("res://scripts/runtime/season_1/J11RuntimeProvider.gd")
-const SNAPSHOT_VERSION := 10
+const SNAPSHOT_VERSION := 11
 
 var state
 var j01_provider
@@ -99,6 +99,9 @@ func confirm_day_transition() -> Dictionary:
 	if active_day == "J09" and j09_provider.phase == "complete":
 		if not _handoff_to_j10(): return {"accepted": false}
 		return {"accepted": true, "destination": "day_transition", "presentation": j10_provider.day_start_presentation()}
+	if active_day == "J10" and j10_provider.phase == "complete":
+		if not _handoff_to_j11(): return {"accepted": false}
+		return {"accepted": true, "destination": "day_transition", "presentation": j11_provider.day_start_presentation()}
 	return active_provider.confirm_day_transition()
 
 func confirm_secondary_day_transition() -> Dictionary:
@@ -150,6 +153,11 @@ func automatic_day_handoff() -> Dictionary:
 		var result: Dictionary = j10_provider.start_day()
 		result["automatic_day_handoff"] = true; result["next_day_presentation"] = j10_provider.day_start_presentation()
 		return result
+	if active_day == "J10" and j10_provider.phase == "complete":
+		if not _handoff_to_j11(): return {"accepted": false}
+		var result: Dictionary = j11_provider.start_day()
+		result["automatic_day_handoff"] = true; result["next_day_presentation"] = j11_provider.day_start_presentation()
+		return result
 	return {"accepted": false}
 
 func next_day_presentation() -> Dictionary:
@@ -162,10 +170,11 @@ func next_day_presentation() -> Dictionary:
 	if active_day == "J07": return j07_provider.runtime_map.get("day_end", {}).get("next_day_presentation", {}).duplicate(true)
 	if active_day == "J08": return j08_provider.runtime_map.get("day_end", {}).get("next_day_presentation", {}).duplicate(true)
 	if active_day == "J09": return j09_provider.runtime_map.get("day_end", {}).get("next_day_presentation", {}).duplicate(true)
+	if active_day == "J10": return j11_provider.day_start_presentation() if j11_provider != null else DataLoader.load_json("res://data/runtime/season_1/j11_runtime_map.json").get("day_start", {}).duplicate(true)
 	return {}
 
 func content_end() -> Dictionary:
-	if active_day == "J10" and j10_provider.phase == "complete": return j10_provider.runtime_map.get("day_end", {}).duplicate(true)
+	if active_day == "J11" and j11_provider.phase == "complete": return j11_provider.runtime_map.get("day_end", {}).duplicate(true)
 	return {}
 
 func begin_j11_foundation_handoff() -> Dictionary:
@@ -174,7 +183,7 @@ func begin_j11_foundation_handoff() -> Dictionary:
 	if not _handoff_to_j11():
 		return {"accepted": false}
 	var result: Dictionary = j11_provider.start_day()
-	result["foundation_handoff"] = true
+	result["playable_handoff"] = true
 	return result
 
 func pending_transition_flow() -> Dictionary:
@@ -216,11 +225,15 @@ func pending_transition_flow() -> Dictionary:
 	if active_day == "J10":
 		if not j10_provider.pending_transition.is_empty(): return j10_provider.pending_transition.duplicate(true)
 		if j10_provider.phase == "day_start_pending": return {"flow_phases": ["NEW_DAY"], "next_day_presentation": j10_provider.day_start_presentation(), "resume_action": "start_day"}
+		if j10_provider.phase == "complete": return {"flow_phases": ["NIGHT", "NEW_DAY"], "next_day_presentation": next_day_presentation(), "resume_action": "automatic_day_handoff"}
+	if active_day == "J11":
+		if not j11_provider.pending_transition.is_empty(): return j11_provider.pending_transition.duplicate(true)
+		if j11_provider.phase == "day_start_pending": return {"flow_phases": ["NEW_DAY"], "next_day_presentation": j11_provider.day_start_presentation(), "resume_action": "start_day"}
 	return {}
 
 func complete_pending_transition_flow(resume_action: String) -> Dictionary:
 	if resume_action == "automatic_day_handoff": return automatic_day_handoff()
-	if resume_action == "start_day" and active_day in ["J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10"] and active_provider.phase == "day_start_pending": return active_provider.start_day()
+	if resume_action == "start_day" and active_day in ["J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11"] and active_provider.phase == "day_start_pending": return active_provider.start_day()
 	return {"accepted": false}
 
 func _handoff_to_j02() -> void:
@@ -307,7 +320,7 @@ func snapshot() -> Dictionary:
 
 func restore_snapshot(value: Dictionary) -> bool:
 	var version := int(value.get("version", -1))
-	if version not in [2, 3, 4, 5, 6, 7, 8, 9, SNAPSHOT_VERSION] or str(value.get("active_day", "")) not in ["J01", "J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11"]: return false
+	if version not in [2, 3, 4, 5, 6, 7, 8, 9, 10, SNAPSHOT_VERSION] or str(value.get("active_day", "")) not in ["J01", "J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11"]: return false
 	if version < 4 and str(value.get("active_day", "")) == "J05": return false
 	if version < 5 and str(value.get("active_day", "")) == "J06": return false
 	if version < 6 and str(value.get("active_day", "")) == "J07": return false

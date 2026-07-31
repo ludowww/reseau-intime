@@ -1,0 +1,33 @@
+{
+  "id": "chapter_11_obligations",
+  "chapter": 11,
+  "day": 11,
+  "title": "Vendredi — Conséquences prioritaires",
+  "app": "messages",
+  "design_goal": "Résoudre P10 puis matérialiser P11 avant toute continuation de désir.",
+  "thread": {"id": "thread_marie_private", "type": "private", "participants": ["player", "marie"], "display_name": "Marie"},
+  "segments": [
+    {
+      "id": "j11_p10_dinner_confirmation",
+      "messages": [
+        {"id": "msg_j11_p10_001", "sender": "marie", "time_label": "17:32", "text": "20 h 30 tient toujours ?"},
+        {"id": "msg_j11_p10_002", "sender": "marie", "time_label": "17:32", "text": "Dis-moi avant 18 h si je dois compter sur toi."}
+      ],
+      "choices": [
+        {"id": "choice_j11_p10_maintain", "text": "oui. je rentre à 20 h 25", "next_messages": [{"id": "msg_j11_p10_maintain_001", "sender": "marie", "time_label": "17:33", "text": "D’accord. Je prends le pain."}]},
+        {"id": "choice_j11_p10_cancel", "text": "non. ne m’attends pas pour dîner", "next_messages": [{"id": "msg_j11_p10_cancel_001", "sender": "marie", "time_label": "17:33", "text": "D’accord. Je n’attends pas."}]},
+        {"id": "choice_j11_p10_late", "text": "je serai là à 21 h", "next_messages": [{"id": "msg_j11_p10_late_001", "sender": "marie", "time_label": "17:33", "text": "Non. On mange à 20 h 30. Il restera de quoi pour toi."}]}
+      ]
+    },
+    {
+      "id": "j11_p11_sandra_confirmation",
+      "thread": {"id": "thread_sandra_private", "type": "private", "participants": ["player", "sandra"], "display_name": "Sandra"},
+      "messages": [
+        {"id": "msg_j11_p11_001", "sender": "sandra", "time_label": "17:44", "text": "Samedi 11 h tient de mon côté."},
+        {"id": "msg_j11_p11_002", "sender": "sandra", "time_label": "17:44", "text": "Je pars à 10 h 34."},
+        {"id": "msg_j11_p11_003", "sender": "sandra", "time_label": "17:45", "text": "Tu me confirmes demain avant 9 h 30."}
+      ],
+      "choices": []
+    }
+  ]
+}

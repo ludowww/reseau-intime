@@ -14,7 +14,7 @@ class RuntimeS111CJ11FoundationsStaticTests(unittest.TestCase):
     def load(self, relative: str):
         return json.loads(self.read(relative))
 
-    def test_foundation_files_exist_without_exposing_empty_j11(self):
+    def test_foundation_files_remain_present_under_playable_j11(self):
         for path in [
             "game/data/runtime/season_1/j11_runtime_map.json",
             "game/scripts/runtime/season_1/J11ContinuationSelector.gd",
@@ -23,10 +23,10 @@ class RuntimeS111CJ11FoundationsStaticTests(unittest.TestCase):
             self.assertTrue((ROOT / path).exists(), path)
         j10 = self.load("game/data/runtime/season_1/j10_runtime_map.json")
         j11 = self.load("game/data/runtime/season_1/j11_runtime_map.json")
-        self.assertEqual("CONTENT_END", j10["day_end"]["transition_mode"])
-        self.assertTrue(j10["day_end"]["content_end"])
-        self.assertEqual("FOUNDATION_ONLY", j11["implementation_status"])
-        self.assertEqual({}, j11["conversation_paths"])
+        self.assertEqual("day_handoff", j10["day_end"]["transition_mode"])
+        self.assertFalse(j10["day_end"]["content_end"])
+        self.assertEqual("PLAYABLE", j11["implementation_status"])
+        self.assertEqual(6, len(j11["conversation_paths"]))
         self.assertEqual(2, len(j11["gallery_presentations"]))
 
     def test_selector_contains_exact_22_outcomes_and_is_pure(self):
@@ -147,13 +147,13 @@ class RuntimeS111CJ11FoundationsStaticTests(unittest.TestCase):
         self.assertIn('"selected_by": "Raphaëlle"', raphaelle)
         self.assertIn('"controller": "Raphaëlle"', raphaelle)
 
-    def test_snapshot_versions_and_explicit_foundation_handoff(self):
+    def test_snapshot_versions_and_explicit_playable_handoff(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
         provider = self.read("game/scripts/runtime/season_1/J11RuntimeProvider.gd")
         self.assertIn("const SNAPSHOT_VERSION := 9", state)
-        self.assertIn("const SNAPSHOT_VERSION := 10", season)
-        self.assertIn("const SNAPSHOT_VERSION := 1", provider)
+        self.assertIn("const SNAPSHOT_VERSION := 11", season)
+        self.assertIn("const SNAPSHOT_VERSION := 2", provider)
         self.assertIn('version < SNAPSHOT_VERSION and str(value.get("current_day", "")) == "J11"', state)
         self.assertIn('if str(value.get("current_day", "")) in ["J08", "J09", "J10", "J11"]:', state)
         self.assertIn('not _j11_selection_matches_j10(pivot, reason, str(value.get("j10_pivot", "")), str(value.get("j10_pivot_outcome", "")))', state)
@@ -162,8 +162,8 @@ class RuntimeS111CJ11FoundationsStaticTests(unittest.TestCase):
         self.assertIn("func begin_j11_foundation_handoff", season)
         self.assertIn("func _handoff_to_j11", season)
         self.assertEqual(1, season.count('state.restore_snapshot(value["state"])'))
-        self.assertIn('"foundation_handoff"', season)
-        self.assertNotIn('_handoff_to_j11()', season.split("func begin_j11_foundation_handoff", 1)[0])
+        self.assertIn('"playable_handoff"', season)
+        self.assertIn('_handoff_to_j11()', season.split("func begin_j11_foundation_handoff", 1)[0])
 
 
 if __name__ == "__main__":

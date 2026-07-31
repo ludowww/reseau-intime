@@ -1,0 +1,80 @@
+{
+  "id": "chapter_11_marie_return",
+  "chapter": 11,
+  "day": 11,
+  "title": "Vendredi — Reconquête ou limite du couple",
+  "app": "messages",
+  "design_goal": "Vérifier si le désir du couple revient sans effacer les conséquences.",
+  "thread": {"id": "thread_marie_private", "type": "private", "participants": ["player", "marie"], "display_name": "Marie"},
+  "segments": [
+    {
+      "id": "j11_marie_return_opening",
+      "messages": [
+        {"id": "msg_j11_marie_return_001", "sender": "marie", "time_label": "20:46", "text": "Je rentre vers 21 h 30."},
+        {"id": "msg_j11_marie_return_002", "sender": "marie", "time_label": "20:46", "text": "Et j’ai envie de te retrouver."},
+        {"id": "msg_j11_marie_return_003", "sender": "marie", "time_label": "20:47", "text": "Pas d’utiliser le sexe pour effacer les jours précédents."},
+        {"id": "msg_j11_marie_return_004", "sender": "marie", "time_label": "20:47", "text": "Ce sont deux choses différentes."}
+      ],
+      "choices": [
+        {"id": "choice_j11_marie_post_reconquest", "text": "je te veux. pas comme une solution. je t’attends et demain je suis encore là", "next_messages": [
+          {"id": "msg_j11_marie_reconquest_001", "sender": "marie", "time_label": "20:48", "text": "Bien."},
+          {"id": "msg_j11_marie_reconquest_002", "sender": "marie", "time_label": "20:48", "text": "Téléphone hors de la chambre."},
+          {"id": "msg_j11_marie_reconquest_003", "sender": "marie", "time_label": "20:48", "text": "Et si je change d’avis, on s’arrête sans en faire un drame."},
+          {"id": "msg_j11_marie_reconquest_player", "sender": "player", "time_label": "20:48", "text": "oui"}
+        ]},
+        {"id": "choice_j11_marie_post_no_pansement", "text": "je veux te retrouver. mais pas faire du sexe un pansement ce soir", "next_messages": [
+          {"id": "msg_j11_marie_no_pansement_001", "sender": "marie", "time_label": "20:48", "text": "Merci."},
+          {"id": "msg_j11_marie_no_pansement_002", "sender": "marie", "time_label": "20:48", "text": "C’est exactement la différence que je voulais entendre."},
+          {"id": "msg_j11_marie_no_pansement_003", "sender": "marie", "time_label": "20:49", "text": "On mange. On dort. On verra demain."}
+        ]},
+        {"id": "choice_j11_marie_post_refuse", "text": "pas ce soir. je préfère ne pas mentir avec ça", "next_messages": [
+          {"id": "msg_j11_marie_refuse_001", "sender": "marie", "time_label": "20:48", "text": "D’accord."},
+          {"id": "msg_j11_marie_refuse_002", "sender": "marie", "time_label": "20:48", "text": "Alors ne joue pas la tendresse pour compenser."},
+          {"id": "msg_j11_marie_refuse_003", "sender": "marie", "time_label": "20:49", "text": "Je rentre, je me douche et je dors."}
+        ]}
+      ]
+    },
+    {
+      "id": "j11_marie_post_dinner_opening",
+      "messages": [
+        {"id": "msg_j11_marie_post_dinner_001", "sender": "marie", "time_label": "21:12", "text": "Je range la cuisine."},
+        {"id": "msg_j11_marie_post_dinner_002", "sender": "marie", "time_label": "21:12", "text": "Après, j’ai envie de te retrouver."},
+        {"id": "msg_j11_marie_post_dinner_003", "sender": "marie", "time_label": "21:13", "text": "Pas d’utiliser le sexe pour effacer les jours précédents."},
+        {"id": "msg_j11_marie_post_dinner_004", "sender": "marie", "time_label": "21:13", "text": "Ce sont deux choses différentes."}
+      ],
+      "choices": [
+        {"id": "choice_j11_marie_reconquest", "text": "je te veux. pas comme une solution. je t’attends et demain je suis encore là", "next_messages": [
+          {"id": "msg_j11_marie_post_reconquest_001", "sender": "marie", "time_label": "21:14", "text": "Bien."},
+          {"id": "msg_j11_marie_post_reconquest_002", "sender": "marie", "time_label": "21:14", "text": "Téléphone hors de la chambre."},
+          {"id": "msg_j11_marie_post_reconquest_003", "sender": "marie", "time_label": "21:14", "text": "Et si je change d’avis, on s’arrête sans en faire un drame."},
+          {"id": "msg_j11_marie_post_reconquest_player", "sender": "player", "time_label": "21:14", "text": "oui"}
+        ]},
+        {"id": "choice_j11_marie_no_pansement", "text": "je veux te retrouver. mais pas faire du sexe un pansement ce soir", "next_messages": [
+          {"id": "msg_j11_marie_post_no_pansement_001", "sender": "marie", "time_label": "21:14", "text": "Merci."},
+          {"id": "msg_j11_marie_post_no_pansement_002", "sender": "marie", "time_label": "21:14", "text": "C’est exactement la différence que je voulais entendre."},
+          {"id": "msg_j11_marie_post_no_pansement_003", "sender": "marie", "time_label": "21:15", "text": "On mange. On dort. On verra demain."}
+        ]},
+        {"id": "choice_j11_marie_refuse", "text": "pas ce soir. je préfère ne pas mentir avec ça", "next_messages": [
+          {"id": "msg_j11_marie_post_refuse_001", "sender": "marie", "time_label": "21:14", "text": "D’accord."},
+          {"id": "msg_j11_marie_post_refuse_002", "sender": "marie", "time_label": "21:14", "text": "Alors ne joue pas la tendresse pour compenser."},
+          {"id": "msg_j11_marie_post_refuse_003", "sender": "marie", "time_label": "21:15", "text": "Je rentre, je me douche et je dors."}
+        ]}
+      ]
+    },
+    {"id": "j11_marie_reconquest_non_adult", "messages": [
+      {"id": "msg_j11_marie_non_adult_001", "sender": "marie", "time_label": "21:15", "text": "On commence par manger quelque chose et se regarder normalement."}
+    ], "choices": []},
+    {"id": "j11_marie_reconquest_adult", "messages": [
+      {"id": "msg_j11_marie_adult_001", "sender": "marie", "time_label": "21:15", "text": "Quand je rentre, je veux qu’on se choisisse pour ce soir."},
+      {"id": "msg_j11_marie_adult_002", "sender": "marie", "time_label": "21:15", "text": "Pas comme si ça réglait tout."},
+      {"id": "msg_j11_marie_adult_player_001", "sender": "player", "time_label": "21:15", "text": "compris"},
+      {"id": "msg_j11_marie_adult_003", "sender": "marie", "time_label": "21:16", "text": "Écris mieux."},
+      {"id": "msg_j11_marie_adult_player_002", "sender": "player", "time_label": "21:16", "text": "je te désire. je sais que ça ne règle rien. tu peux arrêter ou changer d’avis à n’importe quel moment"},
+      {"id": "msg_j11_marie_adult_004", "sender": "marie", "time_label": "21:17", "text": "Oui."},
+      {"id": "msg_j11_marie_adult_005", "sender": "marie", "time_label": "21:17", "text": "À tout à l’heure."}
+    ], "choices": []},
+    {"id": "j11_marie_non_adult_after", "messages": [
+      {"id": "msg_j11_marie_non_adult_after_001", "sender": "marie", "time_label": "22:48", "text": "C’était bien de ne pas forcer la suite."}
+    ], "choices": []}
+  ]
+}

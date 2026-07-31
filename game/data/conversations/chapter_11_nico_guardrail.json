@@ -1,0 +1,38 @@
+{
+  "id": "chapter_11_nico_guardrail",
+  "chapter": 11,
+  "day": 11,
+  "title": "Vendredi — Le rôle avant le regard",
+  "app": "messages",
+  "design_goal": "Définir le rôle de Nico sans image privée ni permission par procuration.",
+  "thread": {"id": "thread_nico_private", "type": "private", "participants": ["player", "nico"], "display_name": "Nico"},
+  "segments": [
+    {
+      "id": "j11_nico_opening",
+      "messages": [
+        {"id": "msg_j11_nico_001", "sender": "nico", "time_label": "23:11", "text": "Samedi, il y aura du monde à La Verrière puis probablement chez moi."},
+        {"id": "msg_j11_nico_002", "sender": "nico", "time_label": "23:11", "text": "Je te dis un truc avant."},
+        {"id": "msg_j11_nico_003", "sender": "nico", "time_label": "23:12", "text": "Je ne veux pas être ton conseiller neutre quand Marie ou Mathilde est dans la pièce."},
+        {"id": "msg_j11_nico_guided", "sender": "player", "time_label": "23:12", "text": "tu veux être quoi"},
+        {"id": "msg_j11_nico_004", "sender": "nico", "time_label": "23:13", "text": "Ça dépend de la règle qu’on garde."}
+      ],
+      "choices": [
+        {"id": "choice_j11_nico_guardrail", "text": "si je commence à transformer une envie en permission, tu me le dis. aucune image privée, aucun alibi", "next_messages": [
+          {"id": "msg_j11_nico_guardrail_001", "sender": "nico", "time_label": "23:14", "text": "D’accord."},
+          {"id": "msg_j11_nico_guardrail_002", "sender": "nico", "time_label": "23:14", "text": "Et si moi je le fais, tu me le dis aussi."},
+          {"id": "msg_j11_nico_guardrail_003", "sender": "nico", "time_label": "23:15", "text": "On se le dit quand ça dérape. Pas besoin d’un rapport quotidien."}
+        ]},
+        {"id": "choice_j11_nico_rivalry", "text": "on est peut-être juste deux hommes intéressés par les mêmes femmes", "next_messages": [
+          {"id": "msg_j11_nico_rivalry_001", "sender": "nico", "time_label": "23:14", "text": "Oui."},
+          {"id": "msg_j11_nico_rivalry_002", "sender": "nico", "time_label": "23:14", "text": "Mais on ne règle rien entre nous avec elles."},
+          {"id": "msg_j11_nico_rivalry_003", "sender": "nico", "time_label": "23:15", "text": "Samedi, je parle pour moi. C’est tout."}
+        ]},
+        {"id": "choice_j11_nico_close", "text": "je préfère qu’on arrête de parler de Marie et Mathilde comme ça", "next_messages": [
+          {"id": "msg_j11_nico_close_001", "sender": "nico", "time_label": "23:14", "text": "D’accord."},
+          {"id": "msg_j11_nico_close_002", "sender": "nico", "time_label": "23:14", "text": "Ce que tu m’as dit reste ici. Le commentaire, j’arrête."},
+          {"id": "msg_j11_nico_close_003", "sender": "nico", "time_label": "23:15", "text": "Samedi, je suis juste Nico."}
+        ]}
+      ]
+    }
+  ]
+}
