@@ -1,0 +1,107 @@
+{
+  "id": "chapter_12_laverriere",
+  "chapter": 12,
+  "day": 12,
+  "title": "Samedi — La Verrière",
+  "app": "messages",
+  "design_goal": "Rendre le couple et le réseau visibles sans révéler les lignes privées.",
+  "thread": {"id":"thread_marie_private","type":"private","participants":["player","marie"],"display_name":"Marie"},
+  "segments": [
+    {
+      "id": "j12_laverriere_plan",
+      "messages": [
+        {"id":"msg_j12_marie_001","sender":"marie","time_label":"14:42","text":"Portes à 19 h."},
+        {"id":"msg_j12_marie_002","sender":"marie","time_label":"14:42","text":"Fermeture à 22 h 15 si personne ne décide que l’art exige une heure supplémentaire."},
+        {"id":"msg_j12_marie_003","sender":"marie","time_label":"14:43","text":"Pauline et Bastien arrivent vers 19 h 30."},
+        {"id":"msg_j12_marie_004","sender":"marie","time_label":"14:43","text":"Élodie prétend qu’on a assez de verres."},
+        {"id":"msg_j12_marie_005","sender":"marie","time_label":"14:44","text":"J’ai donc besoin de savoir quelle version de toi existe ce soir."}
+      ],
+      "choices": [
+        {"id":"choice_j12_presence_la","text":"j’arrive à 17 h 45. je prends le montage et je reste jusqu’à la fermeture","next_messages":[{"id":"msg_j12_marie_la_001","sender":"marie","time_label":"14:45","text":"Très bien."},{"id":"msg_j12_marie_la_002","sender":"marie","time_label":"14:45","text":"Tu prends les tables du fond et la rallonge noire."},{"id":"msg_j12_marie_la_003","sender":"marie","time_label":"14:46","text":"Je garde la grise sous surveillance judiciaire."}]},
+        {"id":"choice_j12_presence_lb","text":"je viens à 19 h 15. je reste pour l’événement et je t’aide à fermer","next_messages":[{"id":"msg_j12_marie_lb_001","sender":"marie","time_label":"14:45","text":"19 h 15."},{"id":"msg_j12_marie_lb_002","sender":"marie","time_label":"14:45","text":"Je ne te garde rien du montage."},{"id":"msg_j12_marie_lb_003","sender":"marie","time_label":"14:46","text":"Je te garde les manteaux perdus et la fermeture."}]},
+        {"id":"choice_j12_presence_lc","text":"je passe à 20 h 15. une heure. je ne promets pas L’Annexe","next_messages":[{"id":"msg_j12_marie_lc_001","sender":"marie","time_label":"14:45","text":"D’accord."},{"id":"msg_j12_marie_lc_002","sender":"marie","time_label":"14:45","text":"20 h 15 à 21 h 15."},{"id":"msg_j12_marie_lc_003","sender":"marie","time_label":"14:46","text":"Je n’ajoute rien autour."}]}
+      ]
+    },
+    {
+      "id": "j12_laverriere_public",
+      "messages": [
+        {"id":"msg_j12_pauline_001","sender":"pauline","time_label":"19:31","text":"Nous sommes là."},
+        {"id":"msg_j12_pauline_002","sender":"pauline","time_label":"19:31","text":"Bastien a trouvé une place sans enfreindre le code de la route de manière prouvable."},
+        {"id":"msg_j12_bastien_001","sender":"bastien","time_label":"19:32","text":"Je demande la présence de mon avocat."},
+        {"id":"msg_j12_pauline_003","sender":"pauline","time_label":"19:32","text":"Refusée."},
+        {"id":"msg_j12_elodie_photo_001","sender":"elodie","time_label":"19:49","content_type":"PHOTO","media_ref":"J12_PLACEHOLDER_V1_MARIE_LAVERRIERE","placeholder_label":"Visuel public canonique non produit · Marie à La Verrière","text":""},
+        {"id":"msg_j12_elodie_001","sender":"elodie","time_label":"19:49","text":"Celle-là fonctionne."},
+        {"id":"msg_j12_marie_006","sender":"marie","time_label":"19:49","text":"Parce qu’on ne voit pas la rallonge grise."},
+        {"id":"msg_j12_pauline_set_001","sender":"pauline","time_label":"20:19","content_type":"PHOTO","media_ref":"j12_laverriere_public_group_set_01","placeholder_label":"Set public canonique non produit · groupe La Verrière","text":""},
+        {"id":"msg_j12_pauline_004","sender":"pauline","time_label":"20:19","text":"Quatre versions."},
+        {"id":"msg_j12_pauline_005","sender":"pauline","time_label":"20:19","text":"La 2 pour le groupe."},
+        {"id":"msg_j12_pauline_006","sender":"pauline","time_label":"20:20","text":"La 3 attend que chacun confirme qu’il accepte son propre visage."}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j12_sandra_module",
+      "messages": [
+        {"id":"msg_j12_sandra_module_001","sender":"sandra","time_label":"20:22","text":"La Verrière vient de publier la photo."},
+        {"id":"msg_j12_sandra_module_002","sender":"sandra","time_label":"20:22","text":"La robe noire, donc."},
+        {"id":"msg_j12_sandra_module_003","sender":"sandra","time_label":"20:23","text":"Je voulais juste vérifier une chose."},
+        {"id":"msg_j12_sandra_module_004","sender":"sandra","time_label":"20:23","text":"La mienne est toujours seulement dans notre fil ?"}
+      ],
+      "choices": [
+        {"id":"choice_j12_sandra_clear","text":"rien n’a changé. elle reste dans le cadre que tu as donné","next_messages":[{"id":"msg_j12_sandra_clear_001","sender":"sandra","time_label":"20:24","text":"D’accord."},{"id":"msg_j12_sandra_clear_002","sender":"sandra","time_label":"20:24","text":"Je te laisse avec ta soirée."}]},
+        {"id":"choice_j12_sandra_delay","text":"je te réponds après la fermeture. la règle n’a pas bougé","next_messages":[{"id":"msg_j12_sandra_delay_001","sender":"sandra","time_label":"20:24","text":"Bien."},{"id":"msg_j12_sandra_delay_002","sender":"sandra","time_label":"20:24","text":"Après la fermeture, pas demain matin."}]},
+        {"id":"choice_j12_sandra_exit","text":"je sors deux minutes. je veux te répondre correctement","next_messages":[{"id":"msg_j12_sandra_exit_001","sender":"sandra","time_label":"20:24","text":"Tu n’es pas obligé de quitter la pièce."},{"id":"msg_j12_sandra_exit_002","sender":"sandra","time_label":"20:25","text":"La règle tient en une phrase."}]}
+      ]
+    },
+    {
+      "id": "j12_mathilde_module",
+      "messages": [
+        {"id":"msg_j12_mathilde_001","sender":"mathilde","time_label":"20:22","text":"Tu peux arrêter de vérifier si je suis normale."},
+        {"id":"msg_j12_mathilde_002","sender":"mathilde","time_label":"20:22","text":"Je suis très occupée à l’être."}
+      ],
+      "choices": [
+        {"id":"choice_j12_mathilde_room","text":"d’accord. je te laisse vivre la soirée et je reste avec le groupe","next_messages":[{"id":"msg_j12_mathilde_room_001","sender":"mathilde","time_label":"20:23","text":"Merci."},{"id":"msg_j12_mathilde_room_002","sender":"mathilde","time_label":"20:23","text":"C’est presque vexant que ce soit la bonne réponse."}]},
+        {"id":"choice_j12_mathilde_ack","text":"je vérifiais juste qu’on allait bien. maintenant j’arrête","next_messages":[{"id":"msg_j12_mathilde_ack_001","sender":"mathilde","time_label":"20:23","text":"On va comme deux personnes qui ont une soirée à traverser."},{"id":"msg_j12_mathilde_ack_002","sender":"mathilde","time_label":"20:23","text":"Ça suffit pour maintenant."}]},
+        {"id":"choice_j12_mathilde_exit","text":"viens deux minutes dehors","next_messages":[{"id":"msg_j12_mathilde_exit_001","sender":"mathilde","time_label":"20:23","text":"Non."},{"id":"msg_j12_mathilde_exit_002","sender":"mathilde","time_label":"20:23","text":"Je ne vais pas quitter Marie et le groupe pour transformer ça en deuxième scène."},{"id":"msg_j12_mathilde_exit_003","sender":"mathilde","time_label":"20:24","text":"On parle demain."}]}
+      ]
+    },
+    {
+      "id": "j12_raphaelle_module",
+      "messages": [
+        {"id":"msg_j12_raphaelle_001","sender":"raphaelle","time_label":"20:22","text":"La version publique est simple."},
+        {"id":"msg_j12_raphaelle_002","sender":"raphaelle","time_label":"20:23","text":"Pour le reste, je préfère qu’on ne l’improvise pas ici."}
+      ],
+      "choices": [
+        {"id":"choice_j12_raphaelle_public","text":"on garde public ce soir. je ne fais pas référence au reste","next_messages":[{"id":"msg_j12_raphaelle_public_001","sender":"raphaelle","time_label":"20:24","text":"Bien."},{"id":"msg_j12_raphaelle_public_002","sender":"raphaelle","time_label":"20:24","text":"Alors je peux rester dans la salle sans gérer deux scènes en même temps."}]},
+        {"id":"choice_j12_raphaelle_delay","text":"on en parle demain à 18 h. pas ici","next_messages":[{"id":"msg_j12_raphaelle_delay_001","sender":"raphaelle","time_label":"20:24","text":"Demain 18 h."},{"id":"msg_j12_raphaelle_delay_002","sender":"raphaelle","time_label":"20:24","text":"Je confirme demain midi ou cela n’existe pas."}]},
+        {"id":"choice_j12_raphaelle_now","text":"je veux savoir maintenant ce que ça signifie","next_messages":[{"id":"msg_j12_raphaelle_now_001","sender":"raphaelle","time_label":"20:24","text":"Non."},{"id":"msg_j12_raphaelle_now_002","sender":"raphaelle","time_label":"20:24","text":"Ici, cela signifie que le cadre public tient."},{"id":"msg_j12_raphaelle_now_003","sender":"raphaelle","time_label":"20:25","text":"Le reste attendra ou disparaîtra."}]}
+      ]
+    },
+    {
+      "id": "j12_marie_module",
+      "messages": [
+        {"id":"msg_j12_marie_module_001","sender":"marie","time_label":"20:22","text":"Photo de groupe dans deux minutes."},
+        {"id":"msg_j12_marie_module_002","sender":"marie","time_label":"20:22","text":"Viens près de moi."},
+        {"id":"msg_j12_marie_module_003","sender":"marie","time_label":"20:22","text":"Pas pour raconter hier. Juste parce que tu es avec moi aujourd’hui."}
+      ],
+      "choices": [
+        {"id":"choice_j12_marie_join","text":"j’arrive","next_messages":[{"id":"msg_j12_marie_join_001","sender":"marie","time_label":"20:23","text":"Bien."}]},
+        {"id":"choice_j12_marie_joke","text":"tu surveilles la composition maintenant","next_messages":[{"id":"msg_j12_marie_joke_001","sender":"marie","time_label":"20:23","text":"Oui."},{"id":"msg_j12_marie_joke_002","sender":"marie","time_label":"20:23","text":"Et toi tu évites une phrase simple."},{"id":"msg_j12_marie_joke_003","sender":"marie","time_label":"20:24","text":"Viens quand même."}]},
+        {"id":"choice_j12_marie_distance","text":"je préfère rester derrière","next_messages":[{"id":"msg_j12_marie_distance_001","sender":"marie","time_label":"20:23","text":"D’accord."},{"id":"msg_j12_marie_distance_002","sender":"marie","time_label":"20:23","text":"Je ne te tire pas dans l’image."}]}
+      ]
+    },
+    {
+      "id": "j12_laverriere_close",
+      "messages": [
+        {"id":"msg_j12_marie_close_001","sender":"marie","time_label":"22:15","text":"On ferme dans cinq minutes."},
+        {"id":"msg_j12_marie_close_002","sender":"marie","time_label":"22:15","text":"Nico garde une table jusqu’à 22 h 50."},
+        {"id":"msg_j12_marie_close_003","sender":"marie","time_label":"22:16","text":"Tu viens, tu viens une heure ou tu rentres ?"}
+      ],
+      "choices": [
+        {"id":"choice_j12_annexe_a12","text":"je viens. je reste jusqu’à minuit","next_messages":[{"id":"msg_j12_marie_a12_001","sender":"marie","time_label":"22:16","text":"Minuit."},{"id":"msg_j12_marie_a12_002","sender":"marie","time_label":"22:16","text":"Après, tu pars si tu as dit que tu partais."}]},
+        {"id":"choice_j12_annexe_b12","text":"je vous accompagne. je pars à 23 h 15","next_messages":[{"id":"msg_j12_marie_b12_001","sender":"marie","time_label":"22:16","text":"23 h 15."},{"id":"msg_j12_marie_b12_002","sender":"marie","time_label":"22:16","text":"Je garde l’heure, pas l’idée générale."}]},
+        {"id":"choice_j12_annexe_c12","text":"je rentre. ne m’attendez pas","next_messages":[{"id":"msg_j12_marie_c12_001","sender":"marie","time_label":"22:16","text":"D’accord."},{"id":"msg_j12_marie_c12_002","sender":"marie","time_label":"22:16","text":"On ne t’attend pas."}]}
+      ]
+    }
+  ]
+}
