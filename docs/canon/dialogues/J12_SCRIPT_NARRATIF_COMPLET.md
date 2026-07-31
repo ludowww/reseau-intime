@@ -19,7 +19,11 @@ Il s’appuie sur :
 - `J01_J09_AUDIT_CONFORMITE_NARRATIVE.md` ;
 - `NAR_PROD_07_ADULT_PAYOFF_AUDIT_SPECIFICATION.md` ;
 - `NAR_ADULT_01_PAYOFFS_J11_MARIE_MATHILDE.md` ;
+- `NAR_PROD_05_AMENDEMENT_COHERENCE_J10_J12.md` ;
 - les canons de voix, d’image, de consentement et de communication text-only.
+
+Pour P11 et le traitement prioritaire d’un aftercare Mathilde échoué,
+`NAR_PROD_05_AMENDEMENT_COHERENCE_J10_J12.md` fait autorité.
 
 Il ne contient :
 
@@ -90,7 +94,7 @@ Dans toutes les parties :
 - Pauline et Bastien existent dans un couple officiel authentique ;
 - Nico existe dans son espace de maîtrise à L’Annexe ;
 - Élodie existe comme collègue et témoin de travail ;
-- Mathilde n’est présente que si l’invitation familiale et son horaire sont crédibles ;
+- Mathilde n’est présente que si l’invitation familiale et son horaire sont crédibles et si `aftercare_mathilde_j11 != FAILED` ;
 - Sandra peut être présente, absente ou active par message selon son poste ;
 - Raphaëlle n’est présente qu’avec une raison créative ou professionnelle établie ;
 - la route dominante J11 ne devient pas le centre officiel de la soirée ;
@@ -196,7 +200,9 @@ Cette fenêtre existe uniquement si :
 
 ```text
 promise_id: sandra_cafe_saturday_1100
-status: ACTIVE
+status: CONDITIONAL
+counterparty_confirmed_at: renseigné avant J11 18:00
+counterparty_confirmed_by: Sandra
 ```
 
 **09:18 — Sandra**
@@ -212,6 +218,27 @@ status: ACTIVE
 > Information très utile pour éviter les réponses à 10 h 57.
 
 Player confirme ou ferme avant le déplacement.
+
+Si Player confirme :
+
+**Player**
+
+> oui. 11 h tient toujours
+
+```text
+CONDITIONAL → ACTIVE
+accepted_at = J12 avant 09:30
+```
+
+Si Player refuse :
+
+**Player**
+
+> non. ne pars pas pour moi ce matin
+
+```text
+CONDITIONAL → REFUSED
+```
 
 Si le café est maintenu :
 
@@ -233,7 +260,41 @@ Après séparation :
 
 > Cette fois sans performance athlétique contestable.
 
-La promesse devient `PAID`. Si Player ne confirme pas avant 9 h 30, elle devient `EXPIRED` et Sandra ne se déplace pas.
+La promesse devient `PAID`. Si Player ne confirme pas avant 9 h 30, elle devient `EXPIRED` et Sandra ne se déplace pas. P11 n’est jamais `ACTIVE` avant la confirmation Player.
+
+# 5 ter. Préambule prioritaire — aftercare Mathilde échoué
+
+Cette fenêtre précède toute convergence normale lorsque :
+
+```text
+aftercare_mathilde_j11 == FAILED
+```
+
+**09:06 — Mathilde**
+
+> Hier, tu as demandé la suite avant de vérifier comment j’étais.
+
+**09:07 — Mathilde**
+
+> Je ne viens pas ce soir.
+
+**09:07 — Mathilde**
+
+> Et on ne recommence rien.
+
+Effets :
+
+```text
+conséquence aftercare enregistrée avant la convergence
+Mathilde absente de La Verrière et de L’Annexe
+progression physique Mathilde fermée
+aucune substitution vers une autre relation
+```
+
+Ce préambule ne transforme pas l’échec en paiement rétroactif. Après
+enregistrement de la conséquence, les contenus non adultes sans rapport peuvent
+continuer. Les modules Mathilde normaux des sections 15, 25 et 34 ne sont pas
+chargés dans cet état.
 
 # 6. Fenêtre A — 14:42 — Marie donne les heures
 
@@ -673,6 +734,7 @@ Aucune autre route ne remplace ce vide.
 
 - Mathilde est la route dominante J11 ;
 - elle est présente comme cousine invitée ;
+- `aftercare_mathilde_j11 != FAILED` ;
 - la limite ou l’intimité J11 doit modifier le comportement ;
 - aucun message n’est envoyé si Mathilde a restauré une distance et que l’ordinaire tient réellement.
 
@@ -1277,6 +1339,9 @@ Le silence est la conséquence correcte.
 
 ## Après J11 physique ou proximité
 
+Ce module est fermé si `aftercare_mathilde_j11 == FAILED` ; dans ce cas,
+Mathilde est absente conformément au préambule prioritaire §5 ter.
+
 Mathilde peut :
 
 - choisir une place qui évite Player ;
@@ -1566,6 +1631,15 @@ La dette est attribuable à la promesse non tenue.
 # 34. Après-coup Mathilde
 
 ## Après J11 physique
+
+Cette branche existe seulement si :
+
+```text
+aftercare_mathilde_j11 != FAILED
+```
+
+Si l’aftercare a échoué, le préambule prioritaire §5 ter a déjà remplacé cette
+convergence et Mathilde n’est pas présente.
 
 Une fois rentrée ou séparée :
 
@@ -2060,6 +2134,8 @@ J12 évite :
 - [ ] Raphaëlle possède une raison de présence ;
 - [ ] une seule conséquence J11 est active ;
 - [ ] aucune conséquence adulte ne disparaît ;
+- [ ] P11 reste `CONDITIONAL` jusqu’à la confirmation Player avant 9 h 30 ;
+- [ ] un aftercare Mathilde `FAILED` est traité avant la convergence et exclut Mathilde de celle-ci ;
 - [ ] aucun nouveau passage sexuel ;
 - [ ] les messages en co-présence restent logistiques ;
 - [ ] une seule conséquence finale est foreground ;

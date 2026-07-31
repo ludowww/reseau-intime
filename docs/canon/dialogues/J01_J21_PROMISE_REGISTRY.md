@@ -30,6 +30,8 @@ created_by
 proposed_to
 accepted_at
 accepted_by_player
+counterparty_confirmed_at si double confirmation
+counterparty_confirmed_by si double confirmation
 action_due
 due_at
 confirmation_deadline
@@ -343,13 +345,23 @@ proposed_to: Marie
 accepted_at: réponse Marie
 accepted_by_player: true
 due_at: J11 vendredi 20 h 30
-confirmation_deadline: J11 avant préparation
-status: ACTIVE, REFUSED, PAID ou FAILED
+confirmation_deadline: J11 vendredi 18 h
+status: ACTIVE, CANCELLED, PAID ou FAILED
 amends: marie_j09_dinner_j10_2030 si créé en J10
-paid_or_closed_by: dîner, refus ou absence
+paid_or_closed_by: dîner, annulation explicite ou retard incompatible
 related_scene: conséquence couple J11
 related_trace_ids: []
 ```
+
+Transitions J11 :
+
+```text
+maintenir avant 18:00 → ACTIVE jusqu’au dîner → PAID à 20:30
+annuler proprement avant 18:00 → CANCELLED
+annoncer 21:00 pour un dîner fixé à 20:30 → FAILED à 20:30
+```
+
+`REFUSED` ne requalifie pas l’annulation d’une promesse déjà acceptée.
 
 ---
 
@@ -363,10 +375,12 @@ promise_type: MEETING
 created_at: J10 12 h 24
 created_by: Player
 proposed_to: Sandra
-accepted_at: J11 vendredi avant 18 h puis confirmation Player
+accepted_at: confirmation Player J12 avant 9 h 30
 accepted_by_player: seulement après confirmation avant J12 9 h 30
+counterparty_confirmed_at: J11 vendredi avant 18 h si Sandra confirme
+counterparty_confirmed_by: Sandra si confirmation reçue
 due_at: J12 samedi 11 h
-confirmation_deadline: J12 9 h 30
+confirmation_deadline: Sandra J11 avant 18 h puis Player J12 avant 9 h 30
 status: CONDITIONAL, ACTIVE, REFUSED, EXPIRED ou PAID
 paid_or_closed_by: préambule J12, refus ou expiration
 related_scene: J12_PRELUDE_SANDRA_CAFE_CONFIRMED
@@ -378,11 +392,15 @@ Transitions canoniques :
 ```text
 J10 proposition → CONDITIONAL
 Sandra ne confirme pas vendredi → EXPIRED
-Sandra confirme + Player confirme avant 9 h 30 → ACTIVE
+Sandra confirme vendredi → reste CONDITIONAL avec counterparty_confirmed_at/by
+Player confirme avant J12 9 h 30 → ACTIVE
 Player refuse → REFUSED
 Player ne répond pas avant 9 h 30 → EXPIRED
 café tenu → PAID
 ```
+
+P11 ne devient jamais `ACTIVE` par la seule confirmation de Sandra. Sa
+notification J11 est administrative et ne constitue ni pivot, ni progression.
 
 ## P12 — Présence La Verrière J12
 

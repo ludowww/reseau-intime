@@ -31,6 +31,7 @@ scripts J01–J21
 → NAR_ADULT_01_PAYOFFS_J11_MARIE_MATHILDE.md
 → NAR_ADULT_02_PAYOFF_SANDRA_J18.md
 → NAR_ADULT_03_PAYOFFS_PAULINE_RAPHAELLE.md
+→ NAR_PROD_05_AMENDEMENT_COHERENCE_J10_J12.md
 → registres de traces / promesses / connaissances
 → contrat d’état borné
 → présente matrice
@@ -120,6 +121,16 @@ Les autres restent :
 - différées ;
 - ou secondaires sans progression équivalente.
 
+Les 22 outcomes J10 sont couverts par la matrice NAR-PROD-05 §3. Une fermeture
+sans continuation légitime produit `RESPIRATION`, jamais une autre relation en
+compensation.
+
+La scène adulte Marie J11 exige cumulativement le pivot Marie, `j10_pivot ==
+NONE`, un outcome dîner autorisé, une présence J09 dans l’ensemble signé, un
+état couple autorisé, P09 terminale, P10 absente ou payée, aucune obligation
+impayée, P-A sélectionné et un consentement actuel. Elle échoue fermée si une
+preuve manque.
+
 ## Acte IV — J13–J16
 
 Objectifs :
@@ -182,7 +193,7 @@ Aucune route tardive.
 
 ## Règles
 
-- `sandra_cafe_saturday_1100 = ACTIVE` rend le préambule J12 obligatoire.
+- `sandra_cafe_saturday_1100 = CONDITIONAL` avec confirmation Sandra renseignée rend le préambule J12 obligatoire ; la confirmation Player le passe ensuite à `ACTIVE`.
 - `LATE_INTIMACY` rend `aftercare_sandra_j18 = DUE` puis `PAID` avant J19.
 - `LATE_INTIMACY` ne crée aucun fichier sexuel diégétique.
 - la séquence visuelle J18 sert uniquement les fichiers réellement atteints et l’aftercare J19 reste dû.
@@ -225,6 +236,16 @@ no_due_safety_obligation
 ```
 
 M-B3 exige en plus toutes les conditions de `NAR_ADULT_01_PAYOFFS_J11_MARIE_MATHILDE.md`, notamment l’initiative Mathilde, M-B2 déjà crédible dans le même état, le départ réel et l’absence de droit acquis.
+
+Le consentement courant et l’initiative sont établis dans la scène J11 ; ils ne
+sont jamais hérités de J10. Après MA3 ou refus d’aftercare :
+
+```text
+aftercare_mathilde_j11 = FAILED
+→ conséquence prioritaire avant J12
+→ Mathilde absente de la convergence normale
+→ progression physique fermée
+```
 
 Sinon :
 
@@ -284,6 +305,8 @@ T25B peut être trace J21 uniquement si elle reste accessible.
 - `COLLEAGUE_ONLY` interdit une image privée active.
 - Maud ne crée aucune permission à la place de Raphaëlle.
 - aucune collision J15 complète Raphaëlle n’est atteignable sans seconde promesse antérieure réellement signée.
+- le premier baiser J11 est atteignable le même jour uniquement après envoi réel, attirance nommée, réaction réciproque et consentement actuel, dans cet ordre ; l’aide distante J10 seule ne suffit pas.
+- le baiser ne crée ni photo, ni trace diégétique, ni permission future et reste fermé si P10 est active ou maintenue.
 
 `CREATIVE_TRUST` ou `ATTRACTION_CONTAINED` peut produire T18B `j13_raphaelle_masked_adult_selected_01` seulement si :
 
@@ -325,8 +348,8 @@ T18B peut être trace J14 ou J21 selon son état.
 |---|---|---|---|
 | `nico_j07_tuesday_1845` | J07 N1 | J08 | J08 non conforme |
 | `marie_j09_dinner_j10_2030` | J09 M1 | J10 | pivot extérieur bloqué ou conséquence |
-| `marie_j09_dinner_friday_2030` | J09/J10 | J11 | conséquence couple |
-| `sandra_cafe_saturday_1100` | J10/J11 | préambule J12 | J12 non conforme |
+| `marie_j09_dinner_friday_2030` | J09/J10 | décision J11 avant 18 h, paiement à 20 h 30 | `CANCELLED` ou `FAILED`, adulte fermé |
+| `sandra_cafe_saturday_1100` | J10 conditionnelle, confirmation Sandra J11 | confirmation Player puis paiement J12 | expiration ; aucun déplacement |
 | `marie_j12_laverriere_presence` | J12 choix L | J12 | conséquence J13 |
 | `j14_witness_clarification` | J14 D-C avec heure précise uniquement | heure promise, ou amendement/échec/annulation explicite | admissible J15 seulement si encore `ACTIVE` |
 | `j14_inform_trace_controller` | audience compromise | J14 avant progression | `PAID` ou `FAILED` avant J15 ; jamais maintenue artificiellement |
@@ -345,7 +368,7 @@ Aucune promesse active ne peut être remplacée par une scène plus séduisante.
 
 | Obligation | Création | Doit être payée avant | Sortie si refus |
 |---|---|---|---|
-| `aftercare_mathilde_j11` | passage physique Mathilde | toute nouvelle progression, J12 convergence | recul / dette / fermeture |
+| `aftercare_mathilde_j11` | passage physique Mathilde | toute nouvelle progression, J12 convergence | `FAILED`, préambule prioritaire, absence Mathilde et fermeture physique |
 | `aftercare_marie_j11` | scène physique couple | route extérieure ou convergence | couple fragilisé |
 | `aftercare_sandra_j18` | intimité tardive Sandra | développement Pauline/Raphaëlle J19 | Sandra foreground en J19 |
 | `audience_repair_j14` | trace privée vue | J15 opportunité | conséquence prioritaire |
@@ -693,13 +716,15 @@ nico_j07_tuesday_1845 = REFUSED
 
 Attendu : aucun message Nico d’attente en J08.
 
-## T2 — Café Sandra confirmé
+## T2 — Café Sandra confirmé par Sandra
 
 ```text
-sandra_cafe_saturday_1100 = ACTIVE
+sandra_cafe_saturday_1100 = CONDITIONAL
+counterparty_confirmed_at renseigné avant J11 18 h
+counterparty_confirmed_by = Sandra
 ```
 
-Attendu : préambule J12 obligatoire.
+Attendu : préambule J12 obligatoire ; P11 devient `ACTIVE` seulement après la confirmation Player.
 
 ## T3 — Café Sandra expiré
 

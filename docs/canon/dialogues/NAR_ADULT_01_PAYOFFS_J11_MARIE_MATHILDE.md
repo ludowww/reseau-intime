@@ -20,6 +20,14 @@ Autorité du présent addendum :
 - en cas d’écart sur les payoffs adultes concernés, le présent addendum prévaut temporairement sur les anciens budgets de fichiers ;
 - il ne prévaut pas sur les règles générales de consentement, d’agence, de connaissance, de retrait ou de `text-only`.
 
+Amendement ultérieur applicable :
+
+- `NAR_PROD_05_AMENDEMENT_COHERENCE_J10_J12.md` remplace les notions vagues
+  d’éligibilité Marie par un prédicat exact, ordonne le premier baiser
+  Raphaëlle, et fixe l’échec d’aftercare Mathilde avant J12 ;
+- le présent document reste autoritatif pour le niveau adulte, la représentation
+  et les séquences visuelles Marie/Mathilde.
+
 ## 1. Statut
 
 ```text
@@ -179,19 +187,34 @@ Il est représentatif : la scène est autorisée, mais son cœur demeure ellipti
 
 ## 6. Éligibilité Marie
 
-La variante adulte est éligible seulement si :
+La variante adulte est éligible seulement si toutes les conditions suivantes
+sont vraies :
 
-- aucune route extérieure ne domine J11 ;
-- Marie est le pivot réel ;
-- J09 a été payé, amendé ou refusé honnêtement ;
-- la conséquence couple J10 est réglée ;
-- Player ne tente pas de remplacer une conversation par du sexe ;
-- la présence de Player a été suffisamment construite ;
-- Marie initie ou co-initie ;
-- Player nomme son désir sans promettre une réparation magique ;
-- aucun mensonge prioritaire ne bloque l’intimité ;
-- consentement actuel et révocable ;
-- lendemain ordinaire possible.
+```text
+j11_pivot == MARIE
+j10_pivot == NONE
+j10_pivot_outcome in {DUE_DINNER_PAID, ORDINARY_MEAL_JOINED}
+marie_j09_presence_outcome in {
+  presence_active,
+  presence_playful_useful,
+  presence_late_active,
+  presence_bounded_reliable
+}
+couple_state in {BASELINE_SHARED_LIFE, STRAIN_VISIBLE}
+P09 terminale
+P10 absente ou PAID
+aucune obligation DUE ou FAILED non traitée
+aucune progression extérieure J10 utilisée comme repli
+choix J11 P-A réellement sélectionné
+consentement Marie actuel, explicite et révocable
+```
+
+Pour ce prédicat, P09 terminale signifie : absente ou `PAID`, `CANCELLED`,
+`REFUSED`, `FAILED` ou `CLOSED`. P09 `AMENDED` ne compte comme résolue que si
+elle pointe vers P10 et que P10 est `PAID`.
+
+Marie doit toujours initier ou co-initier, Player doit nommer son désir sans
+promettre une réparation magique et le lendemain ordinaire doit rester possible.
 
 La variante est bloquée en cas de :
 
@@ -200,7 +223,14 @@ La variante est bloquée en cas de :
 - dette Marie encore active ;
 - tentative de consolation ;
 - refus antérieur non respecté ;
-- distance conjugale incompatible avec une intimité crédible.
+- `presence_distracted`, `presence_spectator` ou `absence_honest` ;
+- P10 `ACTIVE`, `CANCELLED` ou `FAILED` ;
+- obligation `DUE` ou `FAILED` non traitée ;
+- fermeture d’une route extérieure utilisée comme repli.
+
+`DUE_DINNER_PAID` ou `ORDINARY_MEAL_JOINED` ne suffit jamais seul. Le runtime ne
+crée pas `RECONQUEST_ACTIVE` avant la scène pour justifier rétroactivement son
+accès. Si une preuve manque, la branche non adulte est utilisée.
 
 ---
 
@@ -766,11 +796,15 @@ Sortie :
 recul
 répétition refusée
 confiance fragilisée
+aftercare_mathilde_j11 = FAILED
 ```
 
 La demande de répétition ne retire pas rétroactivement le consentement de la scène vécue.
 
 Elle dégrade l’après-coup et peut fermer la prochaine étape.
+
+MA1 et MA2 produisent `aftercare_mathilde_j11 = PAID`. Un refus explicite de
+l’aftercare produit également `FAILED`.
 
 ---
 
@@ -790,6 +824,11 @@ Après M-B3, J12 doit obligatoirement montrer au moins un comportement parmi :
 - elle refuse un aparté ;
 - elle choisit de ne pas venir ;
 - elle corrige Player s’il vérifie constamment sa position.
+
+Exception prioritaire : si `aftercare_mathilde_j11 == FAILED`, Mathilde ne
+participe pas à la convergence normale. J12 traite d’abord la conséquence,
+enregistre son absence, ferme toute progression physique et interdit toute
+substitution relationnelle.
 
 Le module existant interdit déjà une deuxième scène, l’usage de Nico pour provoquer Player et l’effacement moral de Marie.
 
@@ -871,6 +910,11 @@ Règles :
 - aucune image n’est retirable comme fichier diégétique ;
 - aucune image n’est une preuve accessible à Marie ;
 - la Galerie archive l’expérience du joueur, pas le téléphone de Player.
+
+Contrat runtime/UI restant : C11-03 et C11-06 restent chacun une seule tuile
+parent avec trois images internes. Les enfants ne sont jamais exposés comme
+trois entrées séparées. La navigation interne est une dépendance technique d’un
+lot ultérieur, sans modification du contrat narratif.
 
 Le contrat UI permet déjà qu’une image soit visible sans devenir un fichier diégétique et prévoit qu’un retrait de photo n’efface ni les faits vécus ni les connaissances.
 

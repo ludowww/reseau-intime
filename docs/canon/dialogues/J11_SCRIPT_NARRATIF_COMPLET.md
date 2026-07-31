@@ -18,7 +18,12 @@ Il applique :
 - `NSFW_CHARACTER_ROUTE_CANON.md` ;
 - `TEXT_ONLY_MESSAGING_CANON.md` ;
 - `NAR_PROD_07_ADULT_PAYOFF_AUDIT_SPECIFICATION.md` ;
-- `NAR_ADULT_01_PAYOFFS_J11_MARIE_MATHILDE.md`.
+- `NAR_ADULT_01_PAYOFFS_J11_MARIE_MATHILDE.md` ;
+- `NAR_PROD_05_AMENDEMENT_COHERENCE_J10_J12.md`.
+
+Pour P10, P11, les outcomes J10 sans continuation, le prédicat adulte Marie,
+le premier baiser Raphaëlle et l’aftercare Mathilde échoué,
+`NAR_PROD_05_AMENDEMENT_COHERENCE_J10_J12.md` fait autorité.
 
 Il ne contient :
 
@@ -93,12 +98,12 @@ Ses sorties légitimes sont :
 J11 Sandra existe seulement si J10 a produit :
 
 ```text
-manque soupçonné comme partagé
-ou confiance renforcée avec intention encore ouverte
+CAFE_HELD_MISSING_NAMED
 ```
 
 Elle n’existe pas si :
 
+- J10 a produit `CAFE_HELD_CALM_PRESENCE` ;
 - le café a été fermé ;
 - l’amitié simple a été explicitement choisie ;
 - le rendez-vous a seulement été reprogrammé ;
@@ -110,8 +115,8 @@ Elle n’existe pas si :
 J11 Mathilde existe seulement si J10 a produit :
 
 ```text
-effet choisi reconnu
-ou désir potentiel nommé avec limite explicite
+OUTFIT_PRECISE_NON_APPROPRIATIVE
+ou OUTFIT_EFFECT_ACKNOWLEDGED_BOUNDED
 ```
 
 Elle n’existe pas si :
@@ -127,8 +132,9 @@ Elle n’existe pas si :
 J11 Raphaëlle existe seulement si J10 a produit :
 
 ```text
-accès au processus
-ou attirance possible sans frontière fermée
+PROCESS_HELPED_VISIT_BOUNDED
+ou PROCESS_HELPED_REMOTE
+ou RESULT_ONLY avec nouvel envoi réel en J11
 ```
 
 Elle n’existe pas si :
@@ -143,8 +149,8 @@ Elle n’existe pas si :
 J11 Nico existe seulement si J10 a produit :
 
 ```text
-complicité avec garde-fou
-ou rivalité bornée
+DIFFERENCE_ACKNOWLEDGED_NO_IMAGE
+ou NICO_OBSERVATION_REQUESTED
 ```
 
 Elle n’existe pas si :
@@ -158,10 +164,31 @@ Elle n’existe pas si :
 
 Marie devient le pivot si :
 
-- aucune route extérieure n’est dominante ;
-- une conséquence de couple est prioritaire ;
-- le dîner ou une reconquête a été réellement construit ;
-- ou toutes les routes extérieures ont été refusées, différées ou fermées.
+- `j10_pivot == NONE` avec un outcome Marie signé ;
+- ou une conséquence de couple réelle est prioritaire.
+
+La fermeture, le refus ou le report d’une route extérieure ne crée jamais, à
+lui seul, une reconquête Marie.
+
+## 3.6 Respiration
+
+Les outcomes sans continuation légitime utilisent :
+
+```text
+j11_pivot = RESPIRATION
+j11_pivot_reason = J10_NO_LEGITIMATE_CONTINUATION
+```
+
+Cela vaut notamment pour :
+
+```text
+CAFE_HELD_CALM_PRESENCE
+OUTFIT_PRACTICAL_WEATHER
+```
+
+La matrice exhaustive des 22 outcomes figure dans NAR-PROD-05 §3. Une
+respiration ne crée ni route, ni progression, ni trace, ni photo, ni adulte et
+ne déclenche aucun pivot de remplacement.
 
 ---
 
@@ -177,6 +204,64 @@ Avant toute scène de désir :
 6. une conséquence J10 non réglée bloque l’adulte.
 
 Une scène adulte ne sert jamais à éviter une dette.
+
+## 4.1 P10 — Dîner Marie vendredi à 20 h 30
+
+**17:32 — Marie**
+
+> 20 h 30 tient toujours ?
+
+**17:32 — Marie**
+
+> Dis-moi avant 18 h si je dois compter sur toi.
+
+Trois résolutions signées :
+
+```text
+MAINTENIR
+Player : oui. je rentre à 20 h 25
+Marie : D’accord. Je prends le pain.
+→ P10 reste ACTIVE puis devient PAID à 20:30
+
+ANNULER PROPREMENT
+Player : non. ne m’attends pas pour dîner
+Marie : D’accord. Je n’attends pas.
+→ P10 devient CANCELLED
+
+RETARD INCOMPATIBLE
+Player : je serai là à 21 h
+Marie : Non. On mange à 20 h 30. Il restera de quoi pour toi.
+→ P10 devient FAILED à 20:30
+```
+
+Tant que P10 est `ACTIVE`, toute progression physique ou adulte est bloquée.
+Une P10 maintenue ferme les branches physiques Mathilde et Raphaëlle ce
+vendredi. `CANCELLED` ou `FAILED` ferme la scène adulte Marie J11.
+
+## 4.2 P11 — Confirmation administrative Sandra
+
+Si P11 existe encore en `CONDITIONAL` :
+
+**17:44 — Sandra**
+
+> Samedi 11 h tient de mon côté.
+
+**17:44 — Sandra**
+
+> Je pars à 10 h 34.
+
+**17:45 — Sandra**
+
+> Tu me confirmes demain avant 9 h 30.
+
+```text
+status reste CONDITIONAL
+counterparty_confirmed_at = J11 avant 18:00
+counterparty_confirmed_by = Sandra
+```
+
+Sans confirmation Sandra avant 18 h, P11 devient `EXPIRED`. Cette notification
+n’est ni un pivot, ni une progression Sandra, ni une seconde variante.
 
 ---
 
@@ -263,13 +348,35 @@ M-B3 ne crée aucun état relationnel au-delà de `PHYSICAL_SECRET`.
 
 ### Marie
 
-Possible uniquement sur une reconquête solide :
+Possible uniquement si le prédicat exact suivant est entièrement vrai :
 
-- J09 présence ou absence gérée clairement ;
-- J10 conséquence couple payée ;
-- aucun sexe utilisé comme réparation magique ;
-- Marie initie ou co-initie ;
-- le lendemain ordinaire reste prévu.
+```text
+j11_pivot == MARIE
+j10_pivot == NONE
+j10_pivot_outcome in {DUE_DINNER_PAID, ORDINARY_MEAL_JOINED}
+marie_j09_presence_outcome in {
+  presence_active,
+  presence_playful_useful,
+  presence_late_active,
+  presence_bounded_reliable
+}
+couple_state in {BASELINE_SHARED_LIFE, STRAIN_VISIBLE}
+P09 terminale
+P10 absente ou PAID
+aucune obligation DUE ou FAILED non traitée
+aucune progression extérieure J10 utilisée comme repli
+choix J11 P-A réellement sélectionné
+consentement Marie actuel, explicite et révocable
+```
+
+Ici, P09 terminale signifie : absente ou `PAID`, `CANCELLED`, `REFUSED`,
+`FAILED` ou `CLOSED`. P09 `AMENDED` n’est résolue pour ce prédicat que si elle
+pointe vers P10 et que P10 est `PAID`.
+
+`presence_distracted`, `presence_spectator`, `absence_honest`, une fermeture
+extérieure ou un seul outcome de dîner ne suffisent pas. Le runtime ne crée
+jamais `RECONQUEST_ACTIVE` avant la scène pour justifier son accès. À défaut,
+P-A reste non adulte.
 
 ## Routes non physiques par défaut en J11
 
@@ -990,7 +1097,12 @@ Sortie :
 
 - MA1 : niveau M-B2 ou M-B3 réellement vécu consigné, intention physique reconnue, clarification due ;
 - MA2 : niveau M-B2 ou M-B3 réellement vécu consigné, secret et responsabilité reconnus ;
-- MA3 : niveau M-B2 ou M-B3 réellement vécu consigné, recul, répétition non autorisée.
+- MA3 : niveau M-B2 ou M-B3 réellement vécu consigné, recul, répétition non autorisée, `aftercare_mathilde_j11 = FAILED`.
+
+MA1 et MA2 paient l’obligation d’aftercare. Un refus explicite de l’aftercare
+produit également `FAILED`. Dans cet état, Mathilde est exclue de la convergence
+normale J12 et toute progression physique future est fermée jusqu’au traitement
+de la conséquence.
 
 J12 doit obligatoirement refléter le comportement, la gêne et le secret.
 
@@ -1049,6 +1161,7 @@ Règles :
 - `S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01_DISTANCE` reste la seule variante visuelle ;
 - `S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_CENTRAL_01` et `S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_AFTERCARE_01` sont des enfants conditionnels, pas des variantes ;
 - la séquence M-B3 forme une seule tuile Galerie `Moment vécu` ;
+- les enfants ne sont jamais exposés comme des entrées séparées et la navigation interne reste une dépendance du futur lot runtime/UI ;
 - aucune image sexuelle diégétique n’est créée.
 
 ## V1 — Tenue choisie
@@ -1244,11 +1357,25 @@ cadre maintenu
 Seulement si :
 
 - accès atelier respecté ;
-- attirance déjà nommée ;
+- résultat réellement envoyé ;
+- attirance explicitement nommée plus tôt dans la séquence réellement vécue ;
+- réaction réciproque et consentement actuel ;
 - aucune dette professionnelle ;
 - rencontre distincte du travail ;
 - Marie reconnue comme personne exclue ;
-- Raphaëlle initie.
+- Raphaëlle initie ;
+- P10 n’est ni `ACTIVE`, ni maintenue pour 20 h 30.
+
+L’ordre est strict :
+
+```text
+résultat envoyé
+→ attirance nommée
+→ réciprocité et consentement actuel
+→ premier baiser possible
+```
+
+L’aide à distance J10 ne suffit jamais seule.
 
 **19:04 — Raphaëlle**
 
@@ -1300,6 +1427,18 @@ Après séparation :
 **Raphaëlle**
 
 > Bien.
+
+Outcomes signés :
+
+```text
+FIRST_KISS
+KISS_DECLINED
+RESULT_SENT_ATTRACTION_NAMED
+RESULT_SENT_BOUNDARY_HELD
+```
+
+Le baiser ne crée aucune photo, aucune trace diégétique et aucune permission
+future.
 
 **Raphaëlle**
 
@@ -1574,7 +1713,13 @@ Player a payé, amendé ou refusé clairement les obligations précédentes.
 
 Marie rentre plus tard que Player ou se trouve encore à La Verrière.
 
+Si P10 a été maintenue puis payée à 20 h 30, Marie et Player ont déjà dîné
+ensemble : l’ouverture post-dîner ci-dessous remplace l’annonce d’un retour à
+21 h 30.
+
 ## 22.3 Ouverture
+
+### Ouverture sans P10 maintenue puis payée
 
 **20:46 — Marie**
 
@@ -1593,6 +1738,27 @@ Marie rentre plus tard que Player ou se trouve encore à La Verrière.
 > Ce sont deux choses différentes.
 
 Player reçoit trois choix.
+
+### Ouverture après P10 payée
+
+**21:12 — Marie**
+
+> Je range la cuisine.
+
+**21:12 — Marie**
+
+> Après, j’ai envie de te retrouver.
+
+**21:13 — Marie**
+
+> Pas d’utiliser le sexe pour effacer les jours précédents.
+
+**21:13 — Marie**
+
+> Ce sont deux choses différentes.
+
+Player reçoit les mêmes trois choix. La branche adulte reste soumise à tout le
+prédicat de la section 5.
 
 ---
 
@@ -1807,6 +1973,9 @@ Règles :
 
 - `S1_A3_J11_SCN_MARIE_COUPLE_STATE_01_LIMIT` reste la seule variante visuelle ;
 - `S1_A3_J11_SCN_MARIE_RECONQUEST_ADULT_PAYOFF_01` et `S1_A3_J11_SCN_MARIE_RECONQUEST_AFTERCARE_01` sont des enfants conditionnels, pas des variantes.
+- la branche adulte forme une seule tuile Galerie `Moment vécu` contenant trois images internes ;
+- les enfants ne sont jamais exposés comme des entrées séparées ;
+- la navigation interne reste une dépendance du futur lot runtime/UI.
 
 ## V1 — Retour privé
 
@@ -1921,6 +2090,7 @@ J12 doit refléter J11.
 - proximité : comportement modifié ;
 - premier passage physique : secret et après-coup obligatoires ;
 - distance : interaction ordinaire restaurée.
+- aftercare `FAILED` : conséquence prioritaire avant convergence, Mathilde absente de la convergence normale et progression physique fermée.
 
 ## Raphaëlle
 

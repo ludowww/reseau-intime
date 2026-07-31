@@ -23,6 +23,10 @@ Les amendements adultes autoritatifs pour ce périmètre sont :
 - `NAR_ADULT_02_PAYOFF_SANDRA_J18.md` ;
 - `NAR_ADULT_03_PAYOFFS_PAULINE_RAPHAELLE.md`.
 
+L’amendement de cohérence J10→J12 autoritatif est :
+
+- `NAR_PROD_05_AMENDEMENT_COHERENCE_J10_J12.md`.
+
 ---
 
 # 1. Principe directeur
@@ -348,12 +352,18 @@ TRUST_BROKEN
 Éligible uniquement si :
 
 ```text
-mathilde_has_independent_sleep_option = true
-mathilde_can_leave_safely = true
-marie_absence_not_engineered = true
-consent_current = true
-aftercare_mathilde != FAILED
+mathilde_has_independent_sleep_option: bool = true
+mathilde_can_leave_safely: bool = true
+marie_absence_not_engineered: bool = true
+consent_current: événement J11 = true
+aftercare_mathilde_j11 != FAILED
 ```
+
+Les trois booléens matériels sont des preuves positives stockées. Leur absence
+ou une valeur fausse ferme la branche physique.
+
+`consent_current` et l’initiative de Mathilde sont des événements de la scène
+J11. Ils ne constituent pas des permissions persistantes héritées de J10.
 
 À défaut, plafond :
 
@@ -473,11 +483,29 @@ T25B j19_pauline_adult_compartment_01
 
 Le présent contrat ne fixe aucun nouveau champ JSON définitif et n’autorise aucune migration.
 
+Une promesse à double confirmation, telle P11, peut porter :
+
+```text
+counterparty_confirmed_at
+counterparty_confirmed_by
+```
+
+Ces champs ne changent pas seuls son statut `CONDITIONAL`. P11 devient `ACTIVE`
+uniquement après confirmation Player avant J12 9 h 30.
+
 ---
 
 # 12. Obligations et aftercare
 
 ## 12.1 Schéma
+
+La matérialisation runtime J11 utilise une collection unique :
+
+```text
+obligations: Dictionary
+```
+
+Chaque valeur de la collection suit ce schéma :
 
 ```text
 obligation_id
@@ -526,6 +554,27 @@ aftercare_mathilde_j11
 aftercare_marie_j11 si scène physique couple
 aftercare_sandra_j18
 aftercare_raphaelle si proximité physique antérieure
+```
+
+Résolution J11 Mathilde :
+
+```text
+création après M-B2 ou M-B3 → DUE
+MA1 ou MA2 → PAID
+MA3 → FAILED
+refus explicite → FAILED
+```
+
+`aftercare_mathilde_j11 == FAILED` doit être traité avant la convergence J12.
+Mathilde est absente de la convergence normale, toute progression physique est
+fermée et aucune autre relation n’est sélectionnée en compensation.
+
+Résolution J11 Marie :
+
+```text
+création après MARIE_ADULT_RECONQUEST → DUE
+paiement ordinaire J12 avant route extérieure ou convergence → PAID
+silence ou refus attribuable → FAILED ou REFUSED selon l’acte signé
 ```
 
 ---
