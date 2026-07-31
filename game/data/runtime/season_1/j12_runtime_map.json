@@ -22,7 +22,7 @@
   "to_annexe": {"transition_id":"j12_to_annexe","mode":"OFF_PHONE","to_time":"22:47","title":"Déplacement commun","subtitle":"22:22 → 22:47","body":"Le groupe rejoint L’Annexe ; aucun dialogue oral n’est transcrit."},
   "to_after_separation": {"transition_id":"j12_to_after_separation","mode":"CLOCK","to_time":"00:28","title":"Après séparation","subtitle":"00:28","body":"Une seule conséquence principale revient au premier plan."},
   "day_close": {"transition_id":"j12_day_close","mode":"NIGHT","to_time":"00:35","title":"Fin du samedi","subtitle":"Le réseau ne peut plus prétendre que ses lignes restent parallèles.","body":"La conséquence prioritaire devra être traitée avant toute nouvelle opportunité."},
-  "day_end": {"eyebrow":"FIN DU CONTENU JOUABLE","title":"Samedi terminé","subtitle":"J12","body":"La suite commencera par la conséquence prioritaire de la soirée.","action_label":"Continuer"},
+  "day_end": {"eyebrow":"FIN DU SAMEDI","title":"Samedi terminé","subtitle":"J12","body":"La suite commencera par la conséquence prioritaire de la soirée.","action_label":"Continuer","transition_mode":"day_handoff","content_end":false,"next_day_presentation":{"eyebrow":"DIMANCHE","title":"Ce qui réclame une réponse","subtitle":"09:14","body":"Une seule conséquence prend le premier plan avant le retour à l’ordinaire.","action_label":"Continuer","transition_mode":"day_boundary"}},
   "visual_asset_debt": "Les quatre visuels fonctionnels J12 utilisent des placeholders runtime ; aucun asset définitif n’est créé.",
   "gallery_presentations": [],
   "visual_variant_presentations": []

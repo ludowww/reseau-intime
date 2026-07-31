@@ -36,7 +36,7 @@ class RuntimeS112J12PlayableStaticTests(unittest.TestCase):
         self.assertEqual("day_handoff", j11["day_end"]["transition_mode"])
         self.assertFalse(j11["day_end"]["content_end"])
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
-        self.assertIn("const SNAPSHOT_VERSION := 12", season)
+        self.assertIn("const SNAPSHOT_VERSION := 13", season)
         self.assertIn("func _handoff_to_j12", season)
         self.assertIn('active_day == "J12" and j12_provider.phase == "complete"', season)
 
