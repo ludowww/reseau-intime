@@ -85,15 +85,22 @@ Les plans détaillés couvrent toute la saison.
 ## Runtime actuel
 
 ```text
-J01–J06 jouables
-J07–J21 non jouables
+J01–J21 présents dans la chaîne runtime Saison 1
+J09–J12 couverts par providers, données et tests dédiés
+J11 A5 dernier jalon produit explicitement verrouillé
 ```
+
+Cette présence ne signifie pas que toutes les journées sont définitivement polies
+ou que tous les tests globaux sont verts.
 
 ## Images
 
 Les slots et fonctions narratives sont définis.
 
-Les images seront fournies plus tard par Ludovic via ComfyUI.
+L’architecture de livraison visuelle est opérationnelle, mais les placeholders et
+prototypes ne valent pas assets finaux. Pour J11 A5, deux parents Galerie référencent
+six enfants de séquence ; aucun des six assets finaux n’est livré sur la baseline et
+le fallback attendu reste **« Visuel non livré »**.
 
 Aucun document de plans détaillés ne fixe prompts, poses, cadrages ou workflows.
 
@@ -171,27 +178,26 @@ sans catchphrase, métier ou nom propre
 
 | Périmètre | Plan détaillé | Dialogues | Runtime | Images finales |
 |---|---|---|---|---|
-| J01–J06 | oui | existants à réconcilier | actif | incomplet |
-| J07–J08 | oui | à produire | non | non fournies |
-| J09–J12 | oui | à produire | non | non fournies |
-| J13–J16 | oui | à produire | non | non fournies |
-| J17–J21 | oui | à produire | non | non fournies |
+| J01–J08 | oui | consolidés et signés | présent | livraison finale partielle ou absente |
+| J09–J12 | oui | consolidés et signés | providers, données et tests présents | J11 A5 : six enfants absents |
+| J13–J16 | oui | consolidés et signés | présent | livraison finale partielle ou absente |
+| J17–J21 | oui | consolidés et signés | présent | livraison finale partielle ou absente |
 
 ---
 
 # 9. Prochaine étape
 
-La production commence par :
+Prochaine recommandation bornée :
 
 ```text
-1. réécriture Sandra J01 avec le contrat de voix
-2. réconciliation J03–J04
-3. adaptation J05–J06
-4. écriture J07–J08
-5. puis tranches suivantes
+1. préparer les six assets enfants J11 A5
+2. conserver les deux parents Galerie et les triplets ordonnés
+3. utiliser le pipeline visuel commun
+4. valider la livraison avant retrait du fallback
+5. ne pas élargir vers un manifeste Acte III complet
 ```
 
-Chaque dialogue doit réussir les tests du document `13` avant intégration.
+Les dialogues restent gouvernés par les scripts signés et le document `13`.
 
 ---
 

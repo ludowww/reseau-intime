@@ -1,6 +1,6 @@
 # Narrative Canon Status — Current
 
-> **Current phase: technical-resumption decision**
+> **Current phase: signed canon with Season 1 runtime present on the locked baseline**
 
 The Season 1 narrative corpus J01–J21 is signed off.
 
@@ -10,7 +10,8 @@ There is no remaining narrative blocker.
 UI‑FOUNDATION: validated
 UI‑SCREENS: validated
 UI‑HANDOFF: validated
-Technical resumption: ready but not yet explicitly authorized
+Season 1 runtime J01–J21: present on the current baseline
+Latest explicitly locked product milestone: J11 A5
 ```
 
 ---
@@ -27,8 +28,8 @@ Project documentation governance
 → Narrative state contract and reachability
 → Final narrative corpus sign-off
 → Canonical UI system
-→ Explicit technical-resumption decision
-→ Runtime adaptation
+→ Runtime adaptation on an explicit product lot
+→ Baseline verification through code, data and tests
 ```
 
 Runtime does not define narrative or UI authority.
@@ -99,45 +100,29 @@ Critical UI rules:
 
 ## 4. Runtime status
 
-The current Godot prototype remains useful but historical relative to the signed product target.
+The current baseline contains the portrait Season 1 runtime from J01 through J21.
+`Season1RuntimeProvider` orchestrates the day providers, and J09–J12 have dedicated
+providers, runtime data and tests. J11 A5 is the latest explicitly locked product
+milestone.
 
 ```text
-current viewport: 1280 × 720 horizontal
-future target: 720 × 1280 portrait
-active code: accumulated V0.xx prototype layers
-J01–J04: several targeted reconciliations exist
-J05–J06: must be re-audited from signed canon
-J07+: historical runtime material is not authoritative for final adaptation
+baseline: fa2880c1ad168569b148ed85bedf4774324f87dd
+locked tag: runtime-s1-11e-j11-a5-scene-presentation
+runtime present: J01–J21
 ```
 
-The open draft PR #54 is not an automatic base for future work.
-
-A future branch must start from current `main` and cite the active narrative and UI sources.
+Runtime presence does not certify exhaustive polish, final content delivery or an
+entirely green global test gate.
 
 ---
 
-## 5. Technical-resumption boundary
+## 5. Runtime and asset boundary
 
-No global runtime migration begins until Ludovic explicitly authorizes `T‑UI‑01`.
-
-The first technical step must be:
-
-```text
-short documentation-first T‑UI‑01 plan
-→ current main
-→ portrait shell only
-→ no narrative migration
-→ Hermes local Godot validation
-```
-
-The plan must cite:
-
-```text
-docs/canon/ui/UI_01_VERTICAL_SMARTPHONE_SYSTEM.md
-docs/canon/ui/UI_02_SCREEN_ARCHITECTURE_AND_STATES.md
-docs/canon/ui/UI_03_INTEGRATION_HANDOFF_AND_MOCKUP_STATUS.md
-docs/runtime/README.md
-```
+The signed canon remains the narrative authority; code, data and tests on the
+baseline remain the execution authority. The common visual pipeline is operational
+through `VisualMediaResolver` and `ResourceLoader`, but placeholders and prototypes
+are not final assets. J11 A5 has two Gallery parents and six sequence children; none
+of the six final assets is delivered, so **“Visuel non livré”** remains expected.
 
 ---
 
@@ -207,11 +192,11 @@ S07 credits / legal
 ## 9. Next work
 
 ```text
-1. Ludovic explicitly authorizes or rejects technical resumption
-2. if authorized, Hermes writes a short T‑UI‑01 plan from current main
-3. validate the plan
-4. implement the portrait shell before narrative migration
-5. continue with Messages, Gallery, system screens, then J01–J06
+1. prepare a future lot limited to the six J11 A5 child assets
+2. preserve the two Gallery parents and ordered triplets
+3. use the common visual delivery pipeline
+4. validate actual delivery before removing the fallback
+5. do not expand that lot into a complete Act III manifest
 ```
 
 ---
@@ -220,8 +205,9 @@ S07 credits / legal
 
 ```text
 The narrative corpus is signed.
-The UI target and handoff are complete.
-The horizontal runtime is a prototype to reconcile, not a product specification.
+The Season 1 J01–J21 runtime is present on the locked baseline.
+J11 A5 is the latest explicitly locked product milestone.
+The six final J11 A5 child assets are not delivered.
 No new document may create a second active truth.
-No technical migration begins without explicit authorization.
+Runtime presence does not imply exhaustive polish or final asset delivery.
 ```

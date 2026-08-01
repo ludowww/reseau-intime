@@ -69,7 +69,7 @@ Contient encore des éléments utiles mais incompatibles avec les autorités act
 | Communication text-only | `docs/canon/TEXT_ONLY_MESSAGING_CANON.md` | docs UI/runtime |
 | UX/UI produit | `docs/canon/ui/` | portails et plans techniques |
 | Runtime actif | code, données et tests sur `main` | `docs/runtime/README.md` |
-| Continuité J01–J21 | `docs/runtime/SEASON_1_J01_J04_RUNTIME_BASELINE_AND_FORWARD_CONTRACT.md` | plans de journée |
+| Continuité J01–J21 | orchestrateur, providers, données et tests sur la baseline | `docs/runtime/README.md` |
 | Plan d’une branche technique | document ciblé sous `docs/runtime/` | branche correspondante |
 | Statut projet synthétique | `README.md` et `ROADMAP.md` | aucun détail canonique nouveau |
 
@@ -122,7 +122,7 @@ README.md
 → docs/canon/PROJECT_DOCUMENTATION_GOVERNANCE.md
 → autorité du domaine concerné
 → docs/runtime/README.md pour un travail technique
-→ contrat runtime J01–J04 pour une intégration J05+
+→ code, données et tests de la baseline pour l’état exécuté
 → ROADMAP.md pour la priorité courante
 ```
 
@@ -192,13 +192,13 @@ Les décisions validées sont transférées dans `docs/canon/ui/`.
 
 Le dépôt conserve des couches V0.xx, anciens index et anciennes journées. Ils servent à la traçabilité et à la localisation, pas à définir automatiquement J05–J21.
 
-## 9.2 Chaîne Saison 1 J01–J04
+## 9.2 Chaîne Saison 1 J01–J21
 
 La baseline active contient :
 
 - `Season1RuntimeProvider` ;
 - `Season1State` partagé ;
-- providers J01, J02, J03 et J04 ;
+- providers J01 à J21 ;
 - runtime maps bornées ;
 - handoffs automatiques ;
 - transcripts, fils et contenus cumulatifs ;
@@ -210,15 +210,19 @@ La baseline active contient :
 Statut :
 
 ```text
-J01→J04 intégrés et validés
-J05→J21 canoniques, non intégrés dans la chaîne active
+J01→J21 présents dans la chaîne active
+J09→J12 couverts par providers, données et tests dédiés
+J11 A5 dernier jalon produit explicitement verrouillé
 ```
+
+La présence runtime ne signifie pas que chaque journée est définitivement polie,
+que chaque contenu est finalisé ou que toute la gate globale est verte.
 
 Baseline technique :
 
 ```text
-5a6a832c148c68ee69d8991474ec778f33bc456d
-runtime-s1-04-j04-playable
+fa2880c1ad168569b148ed85bedf4774324f87dd
+runtime-s1-11e-j11-a5-scene-presentation
 ```
 
 ## 9.3 Cœur UI portrait
@@ -237,7 +241,11 @@ runtime-s1-04-j04-playable
 - non-lus sans badge ;
 - responsive, safe areas, reduced motion et clavier.
 
-Les vrais assets, la persistance Galerie, les écrans système et la migration J05–J21 restent incomplets.
+Le pipeline visuel commun utilise `VisualMediaResolver` et `ResourceLoader`.
+Les placeholders et prototypes ne valent pas livraison finale. J11 A5 contient
+deux parents Galerie et six enfants de séquence ; aucun des six assets finaux n’est
+livré et **« Visuel non livré »** reste le comportement attendu. La persistance
+Galerie et les écrans système restent incomplets.
 
 ---
 
@@ -249,7 +257,7 @@ Un nouveau lot technique cite explicitement :
 source narrative
 source UI
 contrat d’état
-contrat runtime J01–J04
+fondation runtime historique pertinente
 objectif produit ou besoin bloquant
 périmètre de données
 fichiers runtime visés
@@ -267,7 +275,7 @@ Une intégration de journée ne contourne jamais :
 - les notifications ;
 - les transitions ;
 - les snapshots ;
-- la non-régression J01–J04.
+- la non-régression de la chaîne Saison 1.
 
 L’UI ne se rouvre que pour un besoin narratif bloquant, les vrais assets, la persistance, les écrans système décidés ou une régression avérée.
 
@@ -282,7 +290,7 @@ Avant toute modification :
 - [ ] vérifier le statut actif ou historique ;
 - [ ] vérifier `main` ;
 - [ ] séparer produit et technique ;
-- [ ] lire le contrat J01–J04 pour J05+ ;
+- [ ] lire `docs/runtime/README.md` et vérifier le runtime sur la baseline ;
 - [ ] définir un lot court ;
 - [ ] préserver les corrections communes ;
 - [ ] synchroniser les portails ;
@@ -295,11 +303,11 @@ Avant toute modification :
 ```text
 NARRATION : Bible active + corpus J01–J21 signé
 UI/UX : fondation portrait canonique et runtime stabilisé
-RUNTIME : J01–J04 intégrés dans la nouvelle chaîne
-J05–J21 : prêts narrativement, à intégrer
-BASELINE : 5a6a832c148c68ee69d8991474ec778f33bc456d
+RUNTIME : J01–J21 présents dans la chaîne commune
+JALON VERROUILLÉ : J11 A5
+BASELINE : fa2880c1ad168569b148ed85bedf4774324f87dd
 EXTENSION UI : gelée par défaut
-PRIORITÉ : intégration J05 depuis la baseline J01–J04
+ASSETS J11 A5 : six enfants finaux absents, fallback actif
 ANCIENS DOCUMENTS : historiques sauf référence explicite
 ```
 

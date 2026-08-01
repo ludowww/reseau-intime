@@ -4,9 +4,9 @@
 
 **Catégorie : portail projet actif**
 
-**Baseline stable : `5a6a832c148c68ee69d8991474ec778f33bc456d`**
+**Baseline stable : `fa2880c1ad168569b148ed85bedf4774324f87dd`**
 
-**Tag de verrouillage : `runtime-s1-04-j04-playable`**
+**Tag de verrouillage : `runtime-s1-11e-j11-a5-scene-presentation`**
 
 Cette roadmap résume la priorité courante. Elle ne remplace pas les sources canoniques.
 
@@ -40,20 +40,20 @@ NAR-PROD-06  Acte V   J17–J21   READY
 ## Runtime portrait Saison 1
 
 ```text
-J01 : intégré et validé
-J02 : intégré après J01 et validé
-J03 : intégré après J02 et validé
-J04 : intégré après J03 et validé
-J05–J21 : non intégrés dans la chaîne active
+J01–J21 : providers et données présents dans la chaîne active
+J09–J12 : providers, données et tests dédiés présents
+J11 A5 : dernier jalon produit explicitement verrouillé
 ```
 
-L’Acte I J01–J04 est jouable.
+Le runtime Saison 1 orchestre J01–J21 sur la baseline. Cette présence ne vaut ni
+certification de polish exhaustif, ni livraison de tous les contenus, ni succès de
+toute la gate globale.
 
 La baseline comprend :
 
 - `Season1RuntimeProvider` ;
 - `Season1State` partagé ;
-- providers bornés J01–J04 ;
+- providers bornés J01–J21 ;
 - transcripts, fils et Galerie cumulatifs ;
 - temps narratif monotone ;
 - transitions unifiées ;
@@ -64,11 +64,14 @@ La baseline comprend :
 - `RuntimeUnread` ;
 - vitesse limitée aux messages et au typing.
 
-Contrat actif :
+Portail technique actif :
 
 ```text
-docs/runtime/SEASON_1_J01_J04_RUNTIME_BASELINE_AND_FORWARD_CONTRACT.md
+docs/runtime/README.md
 ```
+
+Le contrat J01–J04 reste une fondation historique ; il ne décrit plus seul
+l’étendue runtime courante.
 
 ## UX/UI
 
@@ -90,11 +93,14 @@ Le cœur UI est verrouillé. Son extension est gelée par défaut.
 ASSET-01 : manifeste intégré
 ASSET-02 : références personnages intégrées
 ASSET-03 : lieux et lot pilote intégrés
-PILOT-01 : sélectionné, non généré
-Production visuelle réelle : non commencée
+PILOT-01 : jalon historique, non assimilé à une livraison finale
+Assets finaux J11 A5 : 0/6 livrés
 ```
 
-La production visuelle n’est pas la priorité immédiate tant que la chaîne jouable progresse journée par journée.
+L’architecture visuelle est opérationnelle via `VisualMediaResolver` et
+`ResourceLoader`. Les placeholders et prototypes ne sont pas des livraisons finales.
+J11 A5 contient deux parents Galerie et six enfants de séquence ; les six assets
+finaux sont absents et le fallback attendu reste **« Visuel non livré »**.
 
 ---
 
@@ -116,9 +122,25 @@ La future intégration runtime ne doit pas :
 
 ---
 
-# 3. Priorité immédiate — J05
+# 3. Priorité actuelle — préparation des assets enfants J11 A5
 
-## Objectif
+## Objectif recommandé pour un lot futur
+
+Préparer puis livrer les six assets enfants des deux séquences Galerie J11 A5,
+sans élargir vers un manifeste Acte III complet. Ce travail n’est pas exécuté dans
+le présent lot documentaire.
+
+---
+
+# Annexe historique — ancienne feuille de route J05
+
+> **Statut : `HISTORICAL`** — les sections ci-dessous documentent l’ordre de travail
+> prévu depuis la baseline J01–J04. Elles ne décrivent plus la priorité ni l’état
+> runtime actuels.
+
+## Ancien objectif J05
+
+### Objectif
 
 ```text
 Rendre J05 jouable après J04 dans Season1RuntimeProvider.
@@ -126,7 +148,7 @@ Rendre J05 jouable après J04 dans Season1RuntimeProvider.
 
 J05 ouvre l’Acte II. Le lot doit rester borné à une seule journée.
 
-## Sources obligatoires
+### Sources obligatoires
 
 ```text
 docs/canon/dialogues/J01_J06_SOURCE_CANON_CONSOLIDE.md
@@ -140,7 +162,7 @@ docs/canon/runtime/SEASON_1_NARRATIVE_STATE_CONTRACT.md
 docs/runtime/SEASON_1_J01_J04_RUNTIME_BASELINE_AND_FORWARD_CONTRACT.md
 ```
 
-## Point narratif structurant
+### Point narratif structurant
 
 J05 doit traiter la demande de Marie d’une heure réelle et la promesse structurée associée :
 
@@ -158,7 +180,7 @@ Le runtime doit distinguer :
 
 Aucune promesse ne doit être créée avant le choix autoritatif.
 
-## Périmètre recommandé
+### Périmètre recommandé
 
 - `J05RuntimeProvider.gd` ;
 - `j05_runtime_map.json` ;
@@ -169,7 +191,7 @@ Aucune promesse ne doit être créée avant le choix autoritatif.
 - tests statiques et smoke jouable ;
 - non-régression complète J01–J04 et UI-MSG-04A à 04C.
 
-## Hors périmètre
+### Hors périmètre
 
 - intégration simultanée de J06–J08 ;
 - réécriture générale de l’Acte II ;
@@ -188,7 +210,7 @@ work/runtime-s1-05-j05-playable
 
 ---
 
-# 4. Ordre d’intégration recommandé
+## Ancien ordre d’intégration recommandé
 
 ```text
 J05
@@ -216,7 +238,7 @@ Chaque lot doit :
 
 ---
 
-# 5. Contrat de non-régression commun
+## Ancien contrat de non-régression commun
 
 Les règles J01–J04 sont normatives :
 
@@ -239,7 +261,7 @@ Les règles J01–J04 sont normatives :
 
 ---
 
-# 6. Validation minimale d’un lot runtime
+## Ancienne validation minimale d’un lot runtime
 
 ```text
 validation des données
@@ -261,9 +283,9 @@ Les nombres d’échecs historiques ne sont jamais codés en dur. La comparaison
 
 ---
 
-# 7. Chantiers différés
+## Chantiers alors différés
 
-## Production visuelle réelle
+### Production visuelle réelle
 
 ```text
 ASSET-04
@@ -272,7 +294,7 @@ préparation technique de PILOT-01
 production et sélection des vrais assets
 ```
 
-## Persistance et système
+### Persistance et système
 
 - sauvegarde/chargement cible ;
 - persistance Galerie ;
@@ -281,13 +303,13 @@ production et sélection des vrais assets
 - écrans Titre, Pause, Paramètres et première configuration ;
 - migration de sauvegardes si nécessaire.
 
-## UI
+### UI
 
 L’UI ne se rouvre que pour un blocage narratif réel, les vrais assets, la persistance, les écrans système décidés ou une régression avérée.
 
 ---
 
-# 8. Prochaine décision
+## Ancienne prochaine décision
 
 ```text
 auditer précisément J05

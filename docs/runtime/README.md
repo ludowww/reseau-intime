@@ -4,9 +4,9 @@
 
 **Catégorie : portail technique actif**
 
-**Baseline stable décrite : `5a6a832c148c68ee69d8991474ec778f33bc456d`**
+**Baseline stable décrite : `fa2880c1ad168569b148ed85bedf4774324f87dd`**
 
-**Tag de verrouillage : `runtime-s1-04-j04-playable`**
+**Tag de verrouillage : `runtime-s1-11e-j11-a5-scene-presentation`**
 
 Ce document résume l’état réellement présent sur `main`. Le code, les données et les tests restent l’autorité d’exécution.
 
@@ -15,24 +15,24 @@ Lire d’abord :
 ```text
 docs/canon/DOCUMENTATION_READING_ORDER.md
 docs/canon/PROJECT_DOCUMENTATION_GOVERNANCE.md
-docs/runtime/SEASON_1_J01_J04_RUNTIME_BASELINE_AND_FORWARD_CONTRACT.md
+docs/canon/runtime/SEASON_1_NARRATIVE_STATE_CONTRACT.md
 ```
 
 ---
 
 # 1. État réel de `main`
 
-## Chaîne Saison 1 jouable
+## Chaîne Saison 1 présente
 
 ```text
-J01 → intégré, jouable et validé
-J02 → intégré après J01, jouable et validé
-J03 → intégré après J02, jouable et validé
-J04 → intégré après J03, jouable et validé
-J05–J21 → corpus canonique prêt, non intégré dans la chaîne active
+J01–J21 → orchestrés dans Season1RuntimeProvider
+J09–J12 → providers, maps runtime et tests dédiés présents
+J11 A5 → dernier jalon produit explicitement verrouillé
 ```
 
-L’Acte I J01–J04 est jouable.
+La présence de J01–J21 dans le runtime ne prouve pas que chaque journée est
+définitivement polie, que tous les contenus sont finalisés ou que toutes les
+validations globales sont vertes.
 
 La chaîne active repose notamment sur :
 
@@ -44,17 +44,21 @@ game/scripts/runtime/season_1/J01RuntimeProvider.gd
 game/scripts/runtime/season_1/J02RuntimeProvider.gd
 game/scripts/runtime/season_1/J03RuntimeProvider.gd
 game/scripts/runtime/season_1/J04RuntimeProvider.gd
+...
+game/scripts/runtime/season_1/J21RuntimeProvider.gd
 game/data/runtime/season_1/j01_runtime_map.json
 game/data/runtime/season_1/j02_runtime_map.json
 game/data/runtime/season_1/j03_runtime_map.json
 game/data/runtime/season_1/j04_runtime_map.json
+...
+game/data/runtime/season_1/j21_runtime_map.json
 ```
 
 Elle fournit :
 
 - état de saison partagé ;
 - providers bornés par journée ;
-- handoffs J01→J04 ;
+- handoffs et restauration couvrant J01→J21 ;
 - transcripts, fils, identifiants et Galerie cumulatifs ;
 - temps narratif monotone ;
 - transitions unifiées ;
@@ -76,7 +80,12 @@ La baseline inclut :
 - séparateurs normalisés par `source_day` ;
 - vitesse `×1 / ×3 / ×8` limitée aux messages et au typing ;
 - ImageMessage, Galerie et PhotoViewer partagés ;
+- résolution commune des médias par `VisualMediaResolver` et `ResourceLoader` ;
 - matrices responsive portrait et contrôle historique `1280 × 720`.
+
+Les placeholders et prototypes ne sont jamais comptés comme assets finaux. J11 A5
+contient deux parents Galerie et six enfants de séquence. Aucun des six assets finaux
+n’est livré sur cette baseline ; le comportement verrouillé est **« Visuel non livré »**.
 
 ## Non-lus
 
@@ -109,13 +118,13 @@ Aucun extrait narratif ni compteur n’est affiché. Le clic ouvre le fil concer
 
 | Journées | Narration | Runtime portrait |
 |---|---|---|
-| J01–J04 | consolidée et signée | intégré, jouable, validé |
-| J05–J08 | consolidée, paquet Acte II READY | non intégré |
-| J09–J12 | consolidée, paquet Acte III READY | non intégré |
-| J13–J16 | consolidée, paquet Acte IV READY | non intégré |
-| J17–J21 | consolidée, paquet Acte V READY | non intégré |
+| J01–J08 | consolidée et signée | providers, données et tests disponibles |
+| J09–J12 | consolidée, paquet Acte III READY | providers, données et tests dédiés présents |
+| J13–J16 | consolidée, paquet Acte IV READY | providers, données et tests disponibles |
+| J17–J21 | consolidée, paquet Acte V READY | providers, données et tests disponibles |
 
-La présence d’anciens JSON ou chapitres ne change pas ce tableau.
+Ce tableau décrit la présence sur la baseline, pas un niveau uniforme de polish ou
+de validation produit. Les scripts signés et le sign-off restent l’autorité narrative.
 
 ---
 
@@ -128,16 +137,16 @@ dialogues J01–J21        → docs/canon/dialogues/
 état narratif            → registres + SEASON_1_NARRATIVE_STATE_CONTRACT.md
 UX/UI produit            → docs/canon/ui/
 runtime actif            → code + données + tests sur main
-continuité technique     → SEASON_1_J01_J04_RUNTIME_BASELINE_AND_FORWARD_CONTRACT.md
+continuité technique     → orchestrateur, providers, maps et tests sur la baseline
 ```
 
 Le runtime ne déduit jamais une nouvelle vérité narrative. Le canon n’impose pas une classe Godot ou un format JSON sans décision technique.
 
 ---
 
-# 5. Règles obligatoires pour J05+
+# 5. Règles communes de la chaîne Saison 1
 
-Toute nouvelle journée doit conserver :
+Toute évolution d’une journée doit conserver :
 
 - `Season1State` partagé ;
 - handoff cumulatif ;
@@ -153,11 +162,14 @@ Toute nouvelle journée doit conserver :
 
 Un provider ne fabrique pas directement des bulles, séparateurs, horloge, non-lus ou notifications parallèles.
 
-Source détaillée :
+Fondation historique de ces règles :
 
 ```text
 docs/runtime/SEASON_1_J01_J04_RUNTIME_BASELINE_AND_FORWARD_CONTRACT.md
 ```
+
+Ce contrat conserve la trace de la baseline J01–J04 ; il n’est plus le statut
+runtime courant.
 
 ---
 
@@ -199,25 +211,20 @@ Pour chaque journée, ajouter :
 - teardown sans fuite ObjectDB ;
 - validation visuelle utilisateur.
 
-La gate globale compare les échecs historiques par identité exacte ; elle ne fige pas leurs nombres dans le code.
+La gate globale compare les échecs historiques par identité exacte ; elle ne fige
+pas leurs nombres dans le code. Sur cette baseline, les 32 identités historiques
+connues restent une dette existante et ne constituent pas une régression documentaire.
 
 ---
 
-# 8. Prochaine étape technique
+# 8. Recommandation suivante
 
 ```text
-J05 seul
-→ adaptation du canon signé de l’Acte II
-→ handoff depuis J04
-→ préservation complète de J01–J04
-→ validation technique et visuelle
-→ verrouillage
+préparer un lot futur borné aux six assets enfants J11 A5
+→ conserver les deux parents Galerie et les triplets ordonnés
+→ utiliser le pipeline visuel commun
+→ valider la livraison avant de retirer le fallback
 ```
 
-Branche recommandée :
-
-```text
-work/runtime-s1-05-j05-playable
-```
-
-Aucun nouveau chantier UI ne s’ouvre sans besoin bloquant démontré.
+Ne pas élargir ce futur lot vers un manifeste Acte III complet. Aucun nouveau
+chantier UI ne s’ouvre sans besoin bloquant démontré.

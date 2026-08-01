@@ -1,16 +1,16 @@
 # Documentation Reading Order — Réseau Intime
 
-> **Phase active : corpus J01–J21 signé, runtime portrait J01–J04 intégré, préparation de J05**
+> **Phase active : corpus J01–J21 signé, runtime Saison 1 J01–J21 présent, J11 A5 verrouillé**
 
 ```text
 Bible Narrative / North Star : autorité active
 Corpus J01–J21 : consolidé et signé
 Paquets NAR-PROD Actes I–V : READY
-Runtime portrait : J01→J04 jouable et validé
-Baseline runtime : 5a6a832c148c68ee69d8991474ec778f33bc456d
-Tag : runtime-s1-04-j04-playable
-Prochaine intégration : J05 depuis la chaîne commune
-Assets : spécifiés, non produits
+Runtime portrait : J01→J21 présent dans la chaîne commune
+Baseline runtime : fa2880c1ad168569b148ed85bedf4774324f87dd
+Tag : runtime-s1-11e-j11-a5-scene-presentation
+Dernier jalon verrouillé : J11 A5
+Assets J11 A5 : six enfants finaux non livrés
 ```
 
 ---
@@ -105,6 +105,13 @@ docs/canon/dialogues/NAR_ADULT_03_PAYOFFS_PAULINE_RAPHAELLE.md
 
 Les scripts consolidés prévalent. Les addenda conservent la traçabilité des décisions.
 
+`NAR_PROD_05_AMENDEMENT_COHERENCE_J10_J12.md` conserve son statut historique
+`CANDIDAT À VALIDATION PRODUIT`. Ses décisions applicables ont ensuite été absorbées
+ou confirmées par les scripts signés J10–J12, les registres, le contrat d’état, le
+runtime et les tests de la baseline. Ces sources plus récentes priment : l’amendement
+n’est plus une source bloquante autonome. Le rapport de readiness qu’il cite n’est
+pas présent dans le dépôt.
+
 ---
 
 # 5. Contrats pré-runtime
@@ -163,9 +170,10 @@ docs/canon/bible/12D_PLANS_SCENES_J17_J21.md
 docs/canon/bible/12E_AUDIT_GLOBAL_COHERENCE_J01_J21.md
 ```
 
-Les observations runtime de ces plans antérieures à `Season1RuntimeProvider` sont historiques pour J01–J04.
+Les observations runtime de ces plans antérieures à l’orchestration J01–J21 actuelle
+sont historiques.
 
-Elles sont supersédées techniquement par :
+La fondation J01–J04 est conservée pour la traçabilité dans :
 
 ```text
 docs/runtime/SEASON_1_J01_J04_RUNTIME_BASELINE_AND_FORWARD_CONTRACT.md
@@ -185,11 +193,14 @@ docs/canon/dialogues/NAR_PROD_06_PAQUET_PRODUCTION_ACTE_V_J17_J21.md
 
 | Acte | Journées | Narration | Runtime portrait |
 |---|---|---|---|
-| I | J01–J04 | READY | intégré, jouable, validé |
-| II | J05–J08 | READY | non intégré |
-| III | J09–J12 | READY | non intégré |
-| IV | J13–J16 | READY | non intégré |
-| V | J17–J21 | READY | non intégré |
+| I | J01–J04 | READY | présent sur la baseline |
+| II | J05–J08 | READY | présent sur la baseline |
+| III | J09–J12 | READY | providers, données et tests dédiés présents |
+| IV | J13–J16 | READY | présent sur la baseline |
+| V | J17–J21 | READY | présent sur la baseline |
+
+La présence runtime ne signifie pas que tous les jours partagent le même niveau de
+polish ou que tous les tests globaux sont verts.
 
 ---
 
@@ -201,7 +212,10 @@ docs/canon/dialogues/ASSET_02_CHARACTER_REFERENCES.md
 docs/canon/dialogues/ASSET_03_LOCATION_REFERENCES_AND_PILOT_BATCH.md
 ```
 
-Les assets sont spécifiés mais non produits. Les placeholders runtime ne deviennent pas des assets canoniques.
+L’architecture visuelle commune utilise `VisualMediaResolver` et `ResourceLoader`.
+Les placeholders et prototypes ne deviennent pas des assets canoniques. J11 A5
+contient deux parents Galerie et six enfants de séquence ; aucun des six assets
+finaux n’est livré et **« Visuel non livré »** reste le fallback attendu.
 
 ---
 
@@ -229,22 +243,23 @@ Le checkpoint T-UI-03D reste la fondation canonique du cœur portrait. Les lots 
 
 # 11. Runtime actif
 
-Lire obligatoirement avant J05+ :
+Lire obligatoirement avant tout travail runtime :
 
 ```text
 docs/runtime/README.md
-docs/runtime/SEASON_1_J01_J04_RUNTIME_BASELINE_AND_FORWARD_CONTRACT.md
+docs/canon/runtime/SEASON_1_NARRATIVE_STATE_CONTRACT.md
 ```
 
 Puis vérifier le code, les données et les tests sur `main`.
 
-Chaîne actuelle :
+Chaîne présente :
 
 ```text
-J01 → J02 → J03 → J04
+J01 → J02 → … → J21
 ```
 
-Les futures journées doivent hériter des corrections communes via l’orchestrateur, les providers bornés, `RuntimeUnread` et les composants UI partagés.
+L’ancien contrat J01–J04 reste une fondation historique. Le code, les données et
+les tests de la baseline décrivent l’état exécuté courant.
 
 ---
 
@@ -259,11 +274,10 @@ ROADMAP.md
 Priorité :
 
 ```text
-intégration runtime de J05 seul
-→ handoff depuis J04
-→ non-régression J01–J04
-→ validation technique et visuelle
-→ verrouillage avant J06
+préparation future des six assets enfants J11 A5
+→ pipeline visuel commun
+→ validation avant retrait du fallback
+→ aucun manifeste Acte III complet dans ce lot
 ```
 
 ---
@@ -272,11 +286,11 @@ intégration runtime de J05 seul
 
 ```text
 NARRATION       J01–J21 signé et READY
-RUNTIME NOUVEAU J01–J04 jouable
-BASELINE        5a6a832c148c68ee69d8991474ec778f33bc456d
-PROCHAINE ÉTAPE J05
+RUNTIME PRÉSENT J01–J21 dans la chaîne commune
+BASELINE        fa2880c1ad168569b148ed85bedf4774324f87dd
+JALON VERROUILLÉ J11 A5
 UI COMMUNE      verrouillée, extension gelée par défaut
-ASSETS          spécifiés, non produits
+ASSETS J11 A5   six enfants finaux absents
 ANCIENS DOCS    historiques sauf lien explicite
 ```
 

@@ -2,7 +2,7 @@
 
 ## Statut
 
-**Catégorie : `ACTIVE_RUNTIME` — contrat technique actif**
+**Catégorie : `HISTORICAL` — fondation technique J01–J04 conservée**
 
 **Base validée : `5a6a832c148c68ee69d8991474ec778f33bc456d`**
 
@@ -14,7 +14,13 @@
 
 **Supersède : `docs/runtime/SEASON_1_J01_J03_RUNTIME_BASELINE_AND_FORWARD_CONTRACT.md`**
 
-Ce document ne modifie ni la Bible Narrative, ni les dialogues signés, ni les registres, ni les paquets NAR-PROD. Il décrit l’état réellement exécuté et les règles de continuité imposées aux prochaines journées.
+**Supersédé pour l’état courant par : `docs/runtime/README.md`, puis le code, les données et les tests de la baseline `fa2880c1ad168569b148ed85bedf4774324f87dd`**
+
+> Ce document décrit et verrouille l’ancienne baseline J01–J04. Son contenu est
+> conservé sans réécriture rétroactive, mais il ne représente plus l’étendue
+> runtime actuelle J01–J21 ni la priorité de travail courante.
+
+Ce document ne modifie ni la Bible Narrative, ni les dialogues signés, ni les registres, ni les paquets NAR-PROD. Il décrit l’état exécuté sur sa baseline historique et les règles de continuité alors imposées aux journées suivantes.
 
 ---
 

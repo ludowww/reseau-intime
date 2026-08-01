@@ -1,6 +1,43 @@
 # État courant du projet
 
-## Statut
+## Statut actif
+
+**Catégorie : portail d’orientation actif**
+
+```text
+Canon narratif Saison 1 : J01–J21 signé
+Runtime Saison 1 présent : J01–J21
+Baseline : fa2880c1ad168569b148ed85bedf4774324f87dd
+Tag : runtime-s1-11e-j11-a5-scene-presentation
+Dernier jalon produit explicitement verrouillé : J11 A5
+```
+
+J09–J12 possèdent des providers, des données runtime et des tests dédiés. Cette
+présence ne garantit ni un polish exhaustif de toutes les journées, ni la livraison
+de tous les contenus, ni une gate globale entièrement verte.
+
+L’architecture visuelle commune utilise `VisualMediaResolver` et `ResourceLoader`.
+J11 A5 contient deux parents Galerie et six enfants de séquence ; aucun des six
+assets finaux n’est livré. Les placeholders et prototypes ne valent pas livraison,
+et **« Visuel non livré »** reste le comportement attendu.
+
+Pour l’état courant, lire :
+
+```text
+README.md
+ROADMAP.md
+docs/canon/DOCUMENTATION_READING_ORDER.md
+docs/runtime/README.md
+```
+
+---
+
+# Annexe historique — ancienne orientation J5/J6
+
+> **Statut : `HISTORICAL`** — le contenu ci-dessous est conservé pour la
+> traçabilité. Il ne décrit ni `main`, ni la baseline, ni la priorité actuels.
+
+## Ancien statut
 
 Ce fichier sert de note courte d’orientation pour éviter de confondre :
 

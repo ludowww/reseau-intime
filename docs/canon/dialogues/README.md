@@ -29,6 +29,16 @@ J01_J21_LOT_A_CORRECTIONS_BLOQUANTES.md
 
 Les corrections A–C sont consolidées dans les sources. Les audits restent des archives de décision et les contrats pré-runtime restent autoritatifs.
 
+### Note sur NAR-PROD-05 J10→J12
+
+`NAR_PROD_05_AMENDEMENT_COHERENCE_J10_J12.md` conserve le statut historique
+`CANDIDAT À VALIDATION PRODUIT` porté au moment de sa rédaction. Ses décisions
+applicables ont ensuite été absorbées ou confirmées par les scripts signés J10–J12,
+les registres, le contrat d’état Saison 1, puis le runtime et les tests présents sur
+la baseline. Ces sources plus récentes priment ; l’amendement n’est plus un blocage
+autonome. Le rapport `RUNTIME-S1-11A_J11_READINESS_REPORT.md` qu’il cite n’est pas
+présent dans le dépôt.
+
 ## Contrats pré-runtime
 
 ```text
@@ -106,16 +116,15 @@ J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md
 Statut :
 
 ```text
-J01–J05 — noyaux narratifs conformes, visuels à produire
-J06 — intention narrative conforme, runtime actif non conforme
-J07–J21 — validés narrativement sous autorités correctives
+J01–J21 — scripts consolidés et signés
 Audit global J01–J21 — validé
 Lot A — validé
 Lot B — validé
 Lot C — validé
 Lot D — validé
 Validation finale J01–J21 — signée
-Prochaine étape — décision explicite et séparée de reprise technique
+Runtime J01–J21 — présent sur la baseline, sans promesse de polish uniforme
+J11 A5 — dernier jalon produit explicitement verrouillé
 ```
 
 ## Résultat du lot B
@@ -129,10 +138,10 @@ reachability J17 → J21 vérifiée
 posture finale déterministe
 ```
 
-## Règle de gel technique
-
-Aucune nouvelle intégration J07–J21 ne doit commencer avant une décision explicite et séparée de reprise technique.
+## Frontière canon / runtime
 
 La validation finale du corpus narratif est signée.
 
-La PR technique J05–J06 existante reste séparée et non autoritative.
+Le runtime ne remplace pas l’autorité des scripts et registres. Sa présence J01–J21
+sur la baseline ne signifie pas que tous les contenus sont définitivement polis,
+que les assets finaux sont livrés ou que toute la gate globale est verte.

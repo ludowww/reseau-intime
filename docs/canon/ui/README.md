@@ -10,16 +10,19 @@ UI-SCREENS : validé
 UI-HANDOFF : validé
 T-UI-01 à T-UI-03D : implémentés et validés
 UI-MSG-04A à UI-MSG-04C : correctifs runtime intégrés et validés
-RUNTIME-S1-04 : J01→J04 intégré et validé
+RUNTIME SAISON 1 : J01→J21 présent sur la baseline
+DERNIER JALON VERROUILLÉ : J11 A5
 UI CORE : verrouillé
 Extension UI par défaut : gelée
-Baseline technique courante : 5a6a832c148c68ee69d8991474ec778f33bc456d
-Tag runtime : runtime-s1-04-j04-playable
+Baseline technique courante : fa2880c1ad168569b148ed85bedf4774324f87dd
+Tag runtime : runtime-s1-11e-j11-a5-scene-presentation
 ```
 
 Ce dossier contient les décisions UX/UI actives du projet. Les maquettes générées sont des références conceptuelles ; seules les décisions transférées dans les documents ci-dessous ont autorité.
 
-Le checkpoint T-UI-03D reste la fondation canonique. Les lots UI-MSG-04A à 04C et l’intégration J01→J04 ne créent pas une nouvelle direction visuelle : ils corrigent et stabilisent l’intégration du runtime narratif dans cette fondation.
+Le checkpoint T-UI-03D reste la fondation canonique. Les lots runtime ultérieurs,
+jusqu’au verrouillage J11 A5, ne créent pas une nouvelle direction visuelle : ils
+adaptent le runtime narratif dans cette fondation.
 
 ---
 
@@ -40,7 +43,7 @@ UI_01 système visuel et responsive
 → code + tests sur main pour l’état runtime exact
 ```
 
-Le contrat technique J01–J04 et les corrections communes sont documentés dans :
+La fondation historique J01–J04 des corrections communes est conservée dans :
 
 ```text
 docs/runtime/SEASON_1_J01_J04_RUNTIME_BASELINE_AND_FORWARD_CONTRACT.md
@@ -257,7 +260,7 @@ Ils ne sont pas encore implémentés comme flux final. Leur absence actuelle ne 
 
 Restent différés :
 
-- vrais assets ;
+- livraison des vrais assets narratifs concernés ;
 - persistance Galerie ;
 - état `REMOVED` ;
 - permissions ajouter / retirer / partager ;
@@ -265,7 +268,12 @@ Restent différés :
 - migration et compatibilité de sauvegarde cible ;
 - polish visuel global non bloquant.
 
-La liaison au runtime narratif n’est plus entièrement absente : J01–J04 sont intégrés dans la nouvelle chaîne portrait. J05–J21 restent à intégrer.
+Le runtime narratif J01–J21 est présent dans la chaîne portrait. Cette présence ne
+garantit pas un polish uniforme. L’architecture visuelle commune utilise
+`VisualMediaResolver` et `ResourceLoader`, mais les placeholders et prototypes ne
+valent pas assets finaux. J11 A5 contient deux parents Galerie et six enfants de
+séquence ; aucun des six assets finaux n’est livré et **« Visuel non livré »** reste
+le fallback attendu.
 
 ---
 
@@ -303,8 +311,9 @@ Un nouveau lot UI ne s’ouvre que pour :
 4. les écrans système explicitement décidés ;
 5. une régression avérée.
 
-Les futures journées doivent utiliser les composants communs déjà corrigés. Un besoin propre à J05 ne justifie pas automatiquement un composant parallèle.
+Les évolutions futures doivent utiliser les composants communs déjà corrigés et ne
+justifient pas automatiquement un composant parallèle.
 
 ```text
-PROCHAINE PRIORITÉ : INTÉGRATION RUNTIME J05 DEPUIS LA BASELINE J01–J04
+PROCHAINE RECOMMANDATION : LOT BORNÉ AUX SIX ASSETS ENFANTS J11 A5
 ```

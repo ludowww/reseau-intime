@@ -1,5 +1,12 @@
 # Current Narrative Source of Truth
 
+> **Statut : `HISTORICAL`**
+>
+> Ce portail V0.xx est conservé pour la traçabilité. Il ne décrit plus l’état
+> canonique ou runtime courant. Lire `docs/canon/DOCUMENTATION_READING_ORDER.md`,
+> `docs/canon/PROJECT_DOCUMENTATION_GOVERNANCE.md` et `docs/runtime/README.md`.
+> Les scripts signés, registres, sign-off et contrat d’état Saison 1 priment.
+
 ## Hiérarchie de lecture
 
 1. **Brut narratif validé / source pack canonique = vérité narrative**

@@ -1,6 +1,7 @@
 # Données de jeu
 
-Ce dossier contient les premiers fichiers JSON exploitables par le futur prototype Godot.
+Ce dossier contient les données utilisées par le projet Godot, y compris les maps
+runtime Saison 1 J01–J21 sous `runtime/season_1/`.
 
 ## Structure
 
@@ -47,6 +48,11 @@ conversations/
 visual_content/
   placeholders.json
   chapter_04_proofs.json
+
+runtime/season_1/
+  j01_runtime_map.json
+  ...
+  j21_runtime_map.json
 ```
 
 ## Validation
@@ -79,7 +85,17 @@ Le validateur vérifie notamment :
 - À partir du Jour 3, les données peuvent inclure des choix de priorité, des branches conditionnelles et des aftershocks selon les flags.
 - À partir du Jour 4, les données peuvent inclure des preuves conditionnelles et un calcul debug de route probable.
 
-## Scope actuel
+## Scope runtime actuel
+
+La baseline `fa2880c1ad168569b148ed85bedf4774324f87dd` contient les maps runtime
+J01–J21 orchestrées par `Season1RuntimeProvider`. Les fichiers historiques ou
+placeholders présents dans ce dossier ne prouvent ni un polish final ni la livraison
+d’un asset définitif.
+
+## Archive du vertical slice J01–J04
+
+> La description ci-dessous documente le premier vertical slice. Elle n’est plus
+> le scope runtime courant.
 
 Le contenu couvre les Jours 1, 2, 3 et 4 du vertical slice.
 

@@ -40,25 +40,26 @@ docs/canon/runtime/SEASON_1_NARRATIVE_STATE_CONTRACT.md
 
 ## Runtime Saison 1
 
-Baseline stable :
+Baseline technique verrouillée :
 
 ```text
-main / origin/main
-5a6a832c148c68ee69d8991474ec778f33bc456d
-runtime-s1-04-j04-playable
+fa2880c1ad168569b148ed85bedf4774324f87dd
+runtime-s1-11e-j11-a5-scene-presentation
 ```
 
-État jouable dans la nouvelle chaîne portrait :
+État présent dans la chaîne portrait Saison 1 :
 
 ```text
-J01 → intégré et validé
-J02 → intégré après J01 et validé
-J03 → intégré après J02 et validé
-J04 → intégré après J03 et validé
-J05–J21 → canon prêt, intégration runtime à poursuivre
+J01–J21 → orchestrés par Season1RuntimeProvider
+J09–J12 → providers, données runtime et tests dédiés présents
+J11 A5 → dernier jalon produit explicitement verrouillé
 ```
 
-La chaîne J01→J04 repose sur :
+Cette présence runtime ne signifie pas que toutes les journées sont définitivement
+polies, que tous les contenus ou visuels sont finalisés, ni que la gate globale est
+entièrement verte.
+
+La chaîne J01→J21 repose sur :
 
 - `Season1RuntimeProvider` ;
 - un `Season1State` partagé ;
@@ -69,11 +70,14 @@ La chaîne J01→J04 repose sur :
 - des snapshots versionnés ;
 - `RuntimeUnread` pour la règle commune des non-lus.
 
-Contrat technique actif :
+Portail technique actif :
 
 ```text
-docs/runtime/SEASON_1_J01_J04_RUNTIME_BASELINE_AND_FORWARD_CONTRACT.md
+docs/runtime/README.md
 ```
+
+Le contrat J01–J04 est conservé comme fondation historique des règles communes ;
+le code, les données et les tests sur la baseline priment pour l’état exécuté actuel.
 
 ## UX/UI
 
@@ -111,7 +115,12 @@ Après présentation complète, le vrai aperçu et `TEXT_SECONDARY` sont restaur
 transitions   → temps réel
 ```
 
-Les vrais assets, la persistance Galerie, l’état `REMOVED`, les permissions runtime et les écrans système restent différés.
+L’architecture visuelle commune est opérationnelle : ImageMessage, Galerie et
+PhotoViewer utilisent `VisualMediaResolver` et `ResourceLoader`. Les placeholders
+et prototypes ne valent pas livraison finale. J11 A5 contient deux parents Galerie
+et six enfants de séquence ; aucun de ces six assets finaux n’est livré sur la
+baseline. Le fallback attendu reste **« Visuel non livré »**. La persistance Galerie,
+l’état `REMOVED`, certaines permissions runtime et les écrans système restent différés.
 
 ---
 
@@ -122,7 +131,7 @@ Les vrais assets, la persistance Galerie, l’état `REMOVED`, les permissions r
 2. docs/canon/PROJECT_DOCUMENTATION_GOVERNANCE.md
 3. source autoritative du domaine
 4. docs/runtime/README.md pour le code actif
-5. docs/runtime/SEASON_1_J01_J04_RUNTIME_BASELINE_AND_FORWARD_CONTRACT.md
+5. code, données et tests de la baseline pour l’état exécuté
 6. ROADMAP.md pour la priorité courante
 ```
 
@@ -136,7 +145,7 @@ Les vrais assets, la persistance Galerie, l’état `REMOVED`, les permissions r
 | État narratif | registres J01–J21 + contrat d’état |
 | UX/UI produit | `docs/canon/ui/` |
 | Runtime actif | code, données et tests sur `main` |
-| Continuité technique | contrat runtime J01–J04 |
+| Continuité technique | orchestrateur, providers, données et tests sur la baseline |
 
 Les documents `docs/V0_*.md`, les anciens fichiers numérotés à la racine de `docs/`, `docs/narrative/` et `docs/story_state/` sont historiques sauf référence explicite depuis un portail actif.
 
@@ -153,7 +162,7 @@ Les documents `docs/V0_*.md`, les anciens fichiers numérotés à la racine de `
 - Galerie organisée par personnage ;
 - photos comme étapes relationnelles ;
 - temps narratif possédé par le runtime ;
-- futures journées branchées sur la chaîne commune J01–J04 ;
+- journées J01–J21 branchées sur une chaîne commune unique ;
 - aucun runtime parallèle.
 
 ---
@@ -161,11 +170,10 @@ Les documents `docs/V0_*.md`, les anciens fichiers numérotés à la racine de `
 # Priorité de travail
 
 ```text
-intégrer J05 seul depuis la baseline J01–J04
-→ préserver toutes les corrections communes
-→ valider le handoff J04→J05
-→ valider technique, visuel et restauration
-→ verrouiller avant J06
+préparer un futur lot borné pour les six assets enfants J11 A5
+→ conserver les deux parents Galerie et l’ordre des deux triplets
+→ passer par le pipeline visuel commun
+→ ne remplacer « Visuel non livré » qu’après livraison effective
 ```
 
 Voir `ROADMAP.md`.
@@ -192,7 +200,7 @@ Les lots runtime ajoutent tests statiques, smokes jouables, handoffs, snapshots,
 une source autoritative
 → un lot court
 → adaptation dans la chaîne commune
-→ tests ciblés et non-régression J01–J04
+→ tests ciblés et comparaison des identités historiques
 → validation visuelle
 → portails synchronisés
 ```
