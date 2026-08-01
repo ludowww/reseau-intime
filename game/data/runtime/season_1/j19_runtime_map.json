@@ -1,0 +1,14 @@
+{
+  "implementation_status":"PLAYABLE",
+  "narrative_day_short":"Sam.",
+  "initial_time":"09:00",
+  "day_start":{"eyebrow":"SAMEDI","title":"Ce que les versions privées deviennent","subtitle":"09:00","body":"Une version privée devient une règle, une dette, une place ou une fermeture.","action_label":"Continuer","transition_mode":"day_boundary"},
+  "conversation_paths":{"chapter_19_private_versions":"res://data/conversations/chapter_19_private_versions.json"},
+  "to_secondary":{"transition_id":"j19_to_secondary","mode":"CLOCK","to_time":"10:14","title":"Samedi matin","subtitle":"La direction secondaire","body":"La relation non prioritaire reçoit un état court et autonome."},
+  "to_foreground":{"transition_id":"j19_to_foreground","mode":"CLOCK","to_time":"16:21","title":"Samedi après-midi","subtitle":"La version dominante","body":"Une seule relation reçoit le développement principal."},
+  "to_invitation":{"transition_id":"j19_to_invitation","mode":"CLOCK","to_time":"16:35","title":"Samedi après-midi","subtitle":"Une invitation bornée","body":"L’invitation exige une réponse réelle."},
+  "day_close":{"transition_id":"j19_day_close","mode":"NIGHT","to_time":"20:00","title":"Fin du samedi","subtitle":"Deux directions précises","body":"Pauline et Raphaëlle ne restent pas en faux suspense."},
+  "day_end":{"eyebrow":"FIN DU SAMEDI","title":"Samedi terminé","subtitle":"J19","body":"J20 définira ce que l’amitié de Nico peut porter.","action_label":"Continuer","transition_mode":"day_handoff","content_end":false,"next_day_presentation":{"eyebrow":"DIMANCHE","title":"Ce que l’amitié peut porter","subtitle":"J20","body":"Nico définit sa place sans devenir juge des autres relations.","action_label":"Continuer","transition_mode":"day_boundary"}},
+  "gallery_presentations":[],
+  "visual_variant_presentations":[]
+}
