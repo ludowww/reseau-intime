@@ -63,7 +63,13 @@ class TUI03CPhotoViewerStaticTests(unittest.TestCase):
         ]:
             self.assertIn(token, viewer)
         self.assertNotIn("posmod", viewer)
-        self.assertNotIn("TextureRect", viewer)
+        self.assertIn("TextureRect.new()", viewer)
+        self.assertIn("TextureRect.STRETCH_KEEP_ASPECT_CENTERED", viewer)
+        self.assertIn('preload("res://scripts/ui/media/VisualMediaResolver.gd")', viewer)
+        self.assertIn('presentation.get("visual_ref", "")', viewer)
+        self.assertIn("MEDIA_RESOLVER.NOT_DELIVERED_LABEL", viewer)
+        self.assertIn("func has_loaded_texture()", viewer)
+        self.assertIn("visual_label.visible = false", viewer)
         self.assertNotRegex(viewer, r"res://.*\.(png|jpe?g|webp)")
         navigation = viewer.split("func handle_navigation_event", 1)[1].split("\nfunc ", 1)[0]
         self.assertLess(
@@ -127,7 +133,9 @@ class TUI03CPhotoViewerStaticTests(unittest.TestCase):
         self.assertIn("focus_item", restore)
         data = self.read("game/scripts/ui/gallery/GalleryDemoData.gd")
         self.assertIn('"full_ref"', data)
-        self.assertIn('"demo_gallery_%s"', data)
+        self.assertIn('"thumbnail_ref"', data)
+        self.assertIn('PROTOTYPE_DEMO_REF := "marie_tuesday_black_dress_mirror_01"', data)
+        self.assertNotIn('"demo_gallery_%s"', data)
 
     def test_viewer_access_contract_has_no_gallery_display_states(self):
         viewer = self.read("game/scripts/ui/gallery/PhotoViewer.gd")

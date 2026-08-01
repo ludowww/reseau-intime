@@ -49,7 +49,7 @@ static func build() -> Dictionary:
 			_message("demo_m_01", "marie", "21:08", "Texte de démonstration non canonique : ce fil sert uniquement à vérifier la lecture d’une bulle courte.", false),
 			_message("demo_m_02", "player", "21:10", "Réponse fictive déjà présente pour vérifier l’alignement constant du Player à droite.", true),
 			_message("demo_m_03", "marie", "21:14", "Long message de démonstration hors récit : il doit s’envelopper naturellement, rester entièrement lisible et ne jamais passer sous la zone fixe des choix, même dans une fenêtre portrait étroite.", false),
-			_image_message("demo_image_private_marie_01", "marie", "21:16", "demo_private_marie_photo", "Une photo de démonstration envoyée dans ce fil.", 2),
+			_image_message("demo_image_private_marie_01", "marie", "21:16", "marie_tuesday_black_dress_mirror_01", "Une photo de démonstration envoyée dans ce fil.", 2),
 			_off_phone_transition("demo_off_phone_private_01", "Vous vous retrouvez hors du téléphone.", 2),
 		],
 		"demo_group_verriere": [

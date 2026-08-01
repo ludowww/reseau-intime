@@ -1,6 +1,9 @@
 # Godot
 .import/
 .godot/
+*.uid
+*.import
+!game/tests/fixtures/visual_delivery_test_pattern.svg.import
 export.cfg
 export_presets.cfg
 *.translation

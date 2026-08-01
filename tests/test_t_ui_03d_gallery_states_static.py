@@ -59,6 +59,7 @@ class TUI03DGalleryStatesStaticTests(unittest.TestCase):
         helper = self.method("game/scripts/ui/gallery/GalleryDemoData.gd", "_item")
         self.assertIn('state == "LOCKED"', helper)
         self.assertRegex(helper, r'"thumbnail_label"\s*:\s*""\s+if locked')
+        self.assertRegex(helper, r'"thumbnail_ref"\s*:\s*""\s+if locked')
         self.assertRegex(helper, r'"full_ref"\s*:\s*""\s+if locked')
         self.assertRegex(helper, r'"is_new"\s*:\s*false\s+if locked')
 
@@ -79,6 +80,11 @@ class TUI03DGalleryStatesStaticTests(unittest.TestCase):
         for token in ['"Nouveau"', '"🔒\\nPhoto verrouillée"', "Control.FOCUS_NONE", "Control.MOUSE_FILTER_IGNORE"]:
             self.assertIn(token, tile)
         self.assertIn("Control.FOCUS_ALL", tile)
+        self.assertIn('item.get("thumbnail_ref", "")', tile)
+        self.assertIn("MEDIA_RESOLVER.resolve(_thumbnail_ref)", tile)
+        self.assertIn('icon = resolved.get("texture")', tile)
+        self.assertIn("MEDIA_RESOLVER.NOT_DELIVERED_LABEL", tile)
+        self.assertIn("func has_loaded_thumbnail()", tile)
         self.assertNotIn("disabled = true", tile)
         self.assertIn("CURSOR_ARROW", tile)
         self.assertIn('tooltip_text = ""', tile)

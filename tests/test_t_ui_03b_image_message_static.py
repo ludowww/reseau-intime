@@ -31,6 +31,10 @@ class TUI03BImageMessageStaticTests(unittest.TestCase):
         self.assertIn("IMAGE_RATIO := 0.75", component)
         self.assertIn("pressed.connect", component)
         self.assertIn("image_requested.emit(message_id, media_ref)", component)
+        self.assertIn('preload("res://scripts/ui/media/VisualMediaResolver.gd")', component)
+        self.assertIn("image_button.icon = resolved.get(\"texture\")", component)
+        self.assertIn("MEDIA_RESOLVER.NOT_DELIVERED_LABEL", component)
+        self.assertIn("func has_loaded_texture()", component)
         for forbidden in ["Tween", "Timer", "create_tween", "create_timer", "TextureRect", "res://data/", ".png", ".jpg"]:
             self.assertNotIn(forbidden, component)
 
@@ -38,7 +42,9 @@ class TUI03BImageMessageStaticTests(unittest.TestCase):
         component = self._read("game/scripts/ui/messages/ImageMessage.gd")
         self.assertIn('if caption != ""', component)
         self.assertIn("AUTOWRAP_WORD_SMART", component)
-        self.assertIn("Photo de démonstration", component)
+        self.assertIn("Visuel non livré", self._read("game/scripts/ui/media/VisualMediaResolver.gd"))
+        self.assertNotIn('image_button.text = "◇', component)
+        self.assertNotRegex(component, r"image_button\.text\s*=.*placeholder_label")
         self.assertNotRegex(component, r"\.text\s*=\s*(message_id|media_ref)")
         self.assertNotIn("Author", component)
         self.assertNotIn("Timestamp", component)
@@ -47,11 +53,14 @@ class TUI03BImageMessageStaticTests(unittest.TestCase):
         data = self._read("game/scripts/ui/messages/MessagesDemoData.gd")
         self.assertEqual(data.count("_image_message("), 3)  # two calls plus helper declaration
         for token in [
-            '"demo_image_private_marie_01"', '"demo_private_marie_photo"', '"21:16"',
+            '"demo_image_private_marie_01"', '"marie_tuesday_black_dress_mirror_01"', '"21:16"',
             '"Une photo de démonstration envoyée dans ce fil."',
             '"demo_image_group_marie_01"', '"demo_group_photo"', '"20:46"',
         ]:
             self.assertIn(token, data)
+        smoke = self._read("game/tests/T_UI_03BImageMessageSmokeDriver.gd")
+        self.assertIn("PROTOTYPE ImageMessage must not load a texture", smoke)
+        self.assertIn('displayed_media_status() == "DEVELOPMENT_PLACEHOLDER"', smoke)
         helper = data.split("static func _image_message", 1)[1].split("\nstatic func ", 1)[0]
         for token in ['"content_type": "IMAGE"', '"is_player": false', '"is_read": true']:
             self.assertIn(token, helper)

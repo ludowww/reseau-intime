@@ -5,11 +5,15 @@ class_name GalleryTile
 signal photo_requested(item_id: String)
 signal navigation_requested(tile_index: int, horizontal_step: int, vertical_step: int)
 
+const MEDIA_RESOLVER := preload("res://scripts/ui/media/VisualMediaResolver.gd")
+
 var item_id := ""
 var tile_index := -1
 var _access_state := "UNLOCKED"
 var _is_new := false
 var _thumbnail_label := ""
+var _thumbnail_ref := ""
+var media_status := ""
 var new_badge: Label
 
 func configure(item: Dictionary, accent: Color, portrait_theme, index: int) -> void:
@@ -18,6 +22,7 @@ func configure(item: Dictionary, accent: Color, portrait_theme, index: int) -> v
 	_access_state = "LOCKED" if str(item.get("state", "")) == "LOCKED" else "UNLOCKED"
 	_is_new = _access_state == "UNLOCKED" and bool(item.get("is_new", false))
 	_thumbnail_label = "" if is_locked() else str(item.get("thumbnail_label", ""))
+	_thumbnail_ref = "" if is_locked() else str(item.get("thumbnail_ref", ""))
 	name = "GalleryTile_%s" % item_id
 	focus_mode = Control.FOCUS_ALL
 	custom_minimum_size = Vector2(96, 128)
@@ -61,6 +66,12 @@ func locked_copy_visible() -> bool:
 func displayed_primary_text() -> String:
 	return text
 
+func has_loaded_thumbnail() -> bool:
+	return not is_locked() and icon != null and media_status == MEDIA_RESOLVER.STATUS_LOADED
+
+func displayed_media_status() -> String:
+	return media_status
+
 func set_tile_width(width: float) -> void:
 	custom_minimum_size = Vector2(max(48.0, width), max(64.0, width / 0.75))
 
@@ -84,7 +95,9 @@ func _build_badge(portrait_theme) -> void:
 	add_child(new_badge)
 
 func _refresh_presentation(accent: Color, portrait_theme) -> void:
+	icon = null
 	if is_locked():
+		media_status = "LOCKED"
 		text = "🔒\nPhoto verrouillée"
 		tooltip_text = ""
 		mouse_default_cursor_shape = Control.CURSOR_ARROW
@@ -94,8 +107,16 @@ func _refresh_presentation(accent: Color, portrait_theme) -> void:
 		add_theme_stylebox_override("hover", _tile_style(locked_fill, neutral))
 		add_theme_stylebox_override("pressed", _tile_style(locked_fill, neutral))
 	else:
-		text = _thumbnail_label
-		tooltip_text = _thumbnail_label
+		var resolved := MEDIA_RESOLVER.resolve(_thumbnail_ref)
+		media_status = str(resolved.get("status", MEDIA_RESOLVER.STATUS_LOAD_FAILED))
+		if media_status == MEDIA_RESOLVER.STATUS_LOADED:
+			icon = resolved.get("texture")
+			text = ""
+			tooltip_text = _thumbnail_label
+		else:
+			text = MEDIA_RESOLVER.NOT_DELIVERED_LABEL
+			tooltip_text = MEDIA_RESOLVER.NOT_DELIVERED_LABEL
+		expand_icon = true
 		mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		add_theme_stylebox_override("normal", _tile_style(Color(0.08, 0.11, 0.18), accent))
 		add_theme_stylebox_override("hover", _tile_style(Color(0.12, 0.16, 0.24), accent))

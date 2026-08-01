@@ -29,6 +29,8 @@ const VISUAL_CONTENT_PATHS := [
 	"res://data/visual_content/chapter_02_proofs.json",
 	"res://data/visual_content/chapter_03_proofs.json",
 	"res://data/visual_content/chapter_04_opening_proofs.json",
+	"res://data/visual_content/chapter_08_named_boundaries_visuals.json",
+	"res://data/visual_content/chapter_09_named_boundaries_visuals.json",
 ]
 const LEGACY_VISUAL_CONTENT_PATHS := [
 	"res://data/visual_content/chapter_04_proofs.json",

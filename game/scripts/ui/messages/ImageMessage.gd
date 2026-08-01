@@ -4,6 +4,7 @@ class_name ImageMessage
 
 signal image_requested(message_id: String, media_ref: String)
 
+const MEDIA_RESOLVER := preload("res://scripts/ui/media/VisualMediaResolver.gd")
 const IMAGE_RATIO := 0.75
 const IMAGE_WIDTH := 240.0
 const IMAGE_HEIGHT := IMAGE_WIDTH / IMAGE_RATIO
@@ -15,6 +16,7 @@ var accent := Color.WHITE
 var image_button: Button
 var caption_label: Label
 var placeholder_label := "Photo de démonstration"
+var media_status := ""
 
 func configure(p_message_id: String, p_media_ref: String, p_caption: String, p_accent: Color, portrait_theme, p_placeholder_label := "Photo de démonstration") -> void:
 	message_id = p_message_id
@@ -51,6 +53,12 @@ func has_horizontal_crop() -> bool:
 func animation_running() -> bool:
 	return false
 
+func has_loaded_texture() -> bool:
+	return image_button != null and image_button.icon != null and media_status == MEDIA_RESOLVER.STATUS_LOADED
+
+func displayed_media_status() -> String:
+	return media_status
+
 func _build(portrait_theme) -> void:
 	for child in get_children():
 		remove_child(child)
@@ -60,8 +68,17 @@ func _build(portrait_theme) -> void:
 	add_theme_constant_override("separation", 8)
 	image_button = Button.new()
 	image_button.name = "ImageButton"
-	image_button.text = "◇\n%s\n╱╲" % placeholder_label
-	image_button.tooltip_text = "Activer la photo"
+	var resolved := MEDIA_RESOLVER.resolve(media_ref)
+	media_status = str(resolved.get("status", MEDIA_RESOLVER.STATUS_LOAD_FAILED))
+	if media_status == MEDIA_RESOLVER.STATUS_LOADED:
+		image_button.icon = resolved.get("texture")
+		image_button.text = ""
+		image_button.tooltip_text = "Activer la photo"
+	else:
+		image_button.icon = null
+		image_button.text = MEDIA_RESOLVER.NOT_DELIVERED_LABEL
+		image_button.tooltip_text = MEDIA_RESOLVER.NOT_DELIVERED_LABEL
+	image_button.expand_icon = true
 	image_button.custom_minimum_size = Vector2(IMAGE_WIDTH, IMAGE_HEIGHT)
 	image_button.focus_mode = Control.FOCUS_ALL
 	image_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND

@@ -5,6 +5,7 @@ class_name PhotoViewer
 signal close_requested
 signal current_photo_changed(photo_id: String)
 
+const MEDIA_RESOLVER := preload("res://scripts/ui/media/VisualMediaResolver.gd")
 const IMAGE_RATIO := 0.75
 const MAX_VISUAL_WIDTH := 480.0
 
@@ -15,6 +16,7 @@ var column: VBoxContainer
 var back_button: Button
 var visual_center: CenterContainer
 var visual_panel: PanelContainer
+var visual_texture: TextureRect
 var visual_label: Label
 var name_label: Label
 var context_label: Label
@@ -24,6 +26,7 @@ var actions: HBoxContainer
 var previous_button: Button
 var next_button: Button
 var placeholder_label := "Photo de démonstration"
+var media_status := ""
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -65,6 +68,7 @@ func reset_viewer() -> void:
 		child.queue_free()
 	back_button = null
 	access_label = null
+	visual_texture = null
 	previous_button = null
 	next_button = null
 
@@ -146,6 +150,18 @@ func displayed_caption() -> String:
 func displayed_access_state() -> String:
 	return access_label.text if access_label != null else ""
 
+func has_loaded_texture() -> bool:
+	return visual_texture != null and visual_texture.texture != null and media_status == MEDIA_RESOLVER.STATUS_LOADED
+
+func displayed_media_status() -> String:
+	return media_status
+
+func displayed_texture_ratio() -> float:
+	if not has_loaded_texture():
+		return 0.0
+	var texture_size := visual_texture.texture.get_size()
+	return texture_size.x / texture_size.y if texture_size.y > 0.0 else 0.0
+
 func focus_back() -> void:
 	if back_button != null:
 		back_button.grab_focus()
@@ -200,6 +216,12 @@ func _build() -> void:
 	visual_panel = PanelContainer.new()
 	visual_panel.name = "GeneratedPhoto"
 	visual_center.add_child(visual_panel)
+	visual_texture = TextureRect.new()
+	visual_texture.name = "DeliveredTexture"
+	visual_texture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	visual_texture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	visual_texture.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	visual_panel.add_child(visual_texture)
 	visual_label = _label("", 24, PORTRAIT_THEME.TEXT_PRIMARY)
 	visual_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	visual_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -221,7 +243,18 @@ func _build() -> void:
 func _refresh() -> void:
 	var presentation := current_presentation()
 	placeholder_label = str(presentation.get("placeholder_label", "Photo de démonstration"))
-	visual_label.text = placeholder_label
+	var resolved := MEDIA_RESOLVER.resolve(str(presentation.get("visual_ref", "")))
+	media_status = str(resolved.get("status", MEDIA_RESOLVER.STATUS_LOAD_FAILED))
+	if media_status == MEDIA_RESOLVER.STATUS_LOADED:
+		visual_texture.texture = resolved.get("texture")
+		visual_texture.visible = true
+		visual_label.text = ""
+		visual_label.visible = false
+	else:
+		visual_texture.texture = null
+		visual_texture.visible = false
+		visual_label.text = MEDIA_RESOLVER.NOT_DELIVERED_LABEL
+		visual_label.visible = true
 	var accent: Color = presentation.get("accent_color", PORTRAIT_THEME.GALLERY_ACCENT)
 	name_label.text = str(presentation.get("display_name", ""))
 	var context := str(presentation.get("context_label", ""))

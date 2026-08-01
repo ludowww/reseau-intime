@@ -5,6 +5,8 @@ class_name GalleryDemoData
 # Données locales de démonstration non canoniques.
 # Aucun élément ne provient du runtime narratif.
 
+const PROTOTYPE_DEMO_REF := "marie_tuesday_black_dress_mirror_01"
+
 static func fixtures() -> Dictionary:
 	return {
 		"marie": {
@@ -13,7 +15,7 @@ static func fixtures() -> Dictionary:
 			"accent_color": Color8(79, 139, 255),
 			"avatar_ref": "M",
 			"items": [
-				_item("marie_01", "marie", "Photo démo 01", 1),
+				_item("marie_01", "marie", "Photo démo 01", 1, "UNLOCKED", false, PROTOTYPE_DEMO_REF, PROTOTYPE_DEMO_REF),
 				_item("marie_02", "marie", "Photo démo 02", 2, "UNLOCKED", true),
 				_item("marie_03", "marie", "", 3, "LOCKED"),
 				_item("marie_04", "marie", "Photo démo 04", 4),
@@ -67,14 +69,15 @@ static func fixtures() -> Dictionary:
 static func character_order() -> Array[String]:
 	return ["marie", "sandra", "mathilde", "pauline", "raphaelle"]
 
-static func _item(item_id: String, character_id: String, thumbnail_label: String, sort_key: int, state := "UNLOCKED", is_new := false) -> Dictionary:
+static func _item(item_id: String, character_id: String, thumbnail_label: String, sort_key: int, state := "UNLOCKED", is_new := false, thumbnail_ref := "", full_ref := "") -> Dictionary:
 	var normalized_state := "LOCKED" if state == "LOCKED" else "UNLOCKED"
 	var locked := normalized_state == "LOCKED"
 	return {
 		"item_id": item_id,
 		"character_id": character_id,
 		"thumbnail_label": "" if locked else thumbnail_label,
-		"full_ref": "" if locked else "demo_gallery_%s" % item_id,
+		"thumbnail_ref": "" if locked else thumbnail_ref,
+		"full_ref": "" if locked else full_ref,
 		"state": normalized_state,
 		"is_new": false if locked else bool(is_new),
 		"sort_key": sort_key,

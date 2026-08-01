@@ -46,6 +46,13 @@ func _run() -> void:
 	_expect(int(initial.get("visible_locked_tile_count", -1)) == 1, "Marie must show one LOCKED tile")
 	_expect(float(initial.get("minimum_tile_target", 0.0)) >= 48.0, "tile target too small")
 	_expect(not bool(initial.get("has_horizontal_crop", true)), "gallery horizontal crop")
+	var prototype_tile = _tile_for(gallery, "marie_01")
+	_expect(prototype_tile != null and not prototype_tile.has_loaded_thumbnail(), "PROTOTYPE thumbnail_ref must not load a Gallery texture")
+	_expect(prototype_tile != null and prototype_tile.displayed_media_status() == "DEVELOPMENT_PLACEHOLDER", "PROTOTYPE Gallery thumbnail status mismatch")
+	_expect(prototype_tile != null and prototype_tile.text == "Visuel non livré", "PROTOTYPE Gallery thumbnail fallback mismatch")
+	var missing_tile = _tile_for(gallery, "marie_02")
+	_expect(missing_tile != null and not missing_tile.has_loaded_thumbnail(), "empty thumbnail_ref must not fabricate a thumbnail")
+	_expect(missing_tile != null and missing_tile.text == "Visuel non livré", "empty thumbnail_ref fallback mismatch")
 
 	var locked_tile = _tile_for(gallery, "marie_03")
 	_expect(locked_tile != null, "marie_03 tile missing")
