@@ -15,6 +15,6 @@ class RuntimeS113J13PlayableStaticTests(unittest.TestCase):
         for token in ["func _select_pivot", "func snapshot()", "func restore_snapshot", "incoming_batch_fully_presented"]: self.assertIn(token, provider)
     def test_handoff_and_placeholders(self):
         j12 = self.load("game/data/runtime/season_1/j12_runtime_map.json"); self.assertEqual("day_handoff", j12["day_end"]["transition_mode"]); self.assertFalse(j12["day_end"]["content_end"])
-        season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd"); self.assertIn("const SNAPSHOT_VERSION := 13", season); self.assertIn("func _handoff_to_j13", season)
+        season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd"); self.assertIn("const SNAPSHOT_VERSION := 14", season); self.assertIn("func _handoff_to_j13", season)
         corpus = self.read("game/data/conversations/chapter_13_priority.json"); self.assertIn("S1_A4_J13_DPH_PAULINE_PRIVATE_VERSION_01", corpus); self.assertIn("S1_A4_J13_DPH_RAPHAELLE_MASKED_POSTURE_01", corpus)
 if __name__ == "__main__": unittest.main()

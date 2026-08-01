@@ -7,7 +7,7 @@
   "to_priority":{"transition_id":"j13_to_priority","mode":"CLOCK","to_time":"11:18","title":"Dimanche","subtitle":"La conséquence prioritaire","body":"Le premier rang réellement actif gagne ; les autres fils restent silencieux."},
   "to_marie_echo":{"transition_id":"j13_to_marie_echo","mode":"CLOCK","to_time":"19:42","title":"Plus tard","subtitle":"19:42","body":"Le foyer revient sans concurrencer la conséquence principale."},
   "day_close":{"transition_id":"j13_day_close","mode":"NIGHT","to_time":"20:00","title":"Fin du dimanche","subtitle":"Une réponse a produit une audience, une limite ou une dette précise.","body":"J14 ne pourra recontextualiser qu’une trace réellement existante."},
-  "day_end":{"eyebrow":"FIN DU CONTENU JOUABLE","title":"Dimanche terminé","subtitle":"J13","body":"La suite reprendra avec la trace réellement accessible.","action_label":"Continuer"},
+  "day_end":{"eyebrow":"FIN DU DIMANCHE","title":"Dimanche terminé","subtitle":"J13","body":"La suite reprendra avec la trace réellement accessible.","action_label":"Continuer","transition_mode":"day_handoff","content_end":false,"next_day_presentation":{"eyebrow":"LUNDI","title":"La photo au mauvais écran","subtitle":"18:32","body":"Une trace existante peut être vue, sans rendre le témoin omniscient.","action_label":"Continuer","transition_mode":"day_boundary"}},
   "visual_asset_debt":"Les visuels J13 utilisent des placeholders conventionnels ; aucun asset définitif n’est créé.",
   "gallery_presentations":[],
   "visual_variant_presentations":[]
