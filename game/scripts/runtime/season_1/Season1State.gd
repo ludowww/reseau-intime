@@ -2,7 +2,7 @@ extends RefCounted
 
 class_name Season1State
 
-const SNAPSHOT_VERSION := 12
+const SNAPSHOT_VERSION := 13
 
 var current_day := "J01"
 var day_status := "ACTIVE"
@@ -76,6 +76,9 @@ var j13_j14_trace_id := ""
 var j14_variant := ""
 var j14_outcome := "UNESTABLISHED"
 var j14_witness := ""
+var j15_mode := "UNESTABLISHED"
+var j15_outcome := "UNESTABLISHED"
+var j15_urgent_consequence_remaining := false
 var resolved_visual_variant_by_asset: Dictionary = {}
 
 func _init() -> void:
@@ -171,6 +174,9 @@ func reset() -> void:
 	j14_variant = ""
 	j14_outcome = "UNESTABLISHED"
 	j14_witness = ""
+	j15_mode = "UNESTABLISHED"
+	j15_outcome = "UNESTABLISHED"
+	j15_urgent_consequence_remaining = false
 	resolved_visual_variant_by_asset = {}
 
 func apply_choice(choice_id: String) -> bool:
@@ -1619,6 +1625,57 @@ func complete_j14() -> bool:
 	if not complete_conversation("chapter_14_discovery", "mathilde" if j14_witness == "Mathilde" else "marie", "limited_discovery"): return false
 	return complete_day()
 
+func begin_j15() -> bool:
+	if current_day != "J14" or day_status != "COMPLETE": return false
+	current_day = "J15"; day_status = "ACTIVE"; j15_mode = "UNESTABLISHED"; j15_outcome = "UNESTABLISHED"; j15_urgent_consequence_remaining = false
+	return true
+
+func select_j15_mode() -> String:
+	var clarification: Dictionary = promises.get("j14_witness_clarification", {})
+	if str(clarification.get("status", "")) == "ACTIVE": return "ACTIVE_CLARIFICATION"
+	if j14_outcome.contains("LIE"): return "REPAIR"
+	if j14_outcome.contains("DEFER"): return "OPEN_CLARIFICATION"
+	return "NO_OBLIGATION"
+
+func establish_j15_mode(mode: String) -> bool:
+	if current_day != "J15" or day_status != "ACTIVE" or j15_mode != "UNESTABLISHED" or mode != select_j15_mode(): return false
+	j15_mode = mode
+	return true
+
+func apply_j15_choice(choice_id: String) -> bool:
+	if current_day != "J15" or day_status != "ACTIVE" or j15_mode == "UNESTABLISHED" or j15_outcome != "UNESTABLISHED" or selected_choice_ids.has(choice_id): return false
+	var action_id := choice_id.trim_suffix("_marie").trim_suffix("_mathilde")
+	var allowed: Array = {
+		"ACTIVE_CLARIFICATION":["choice_j15_due_pay","choice_j15_due_cancel","choice_j15_due_fail"],
+		"REPAIR":["choice_j15_repair_truth","choice_j15_repair_lie"],
+		"OPEN_CLARIFICATION":["choice_j15_open_answer","choice_j15_open_refuse","choice_j15_open_lie"],
+		"NO_OBLIGATION":["choice_j15_clean_acknowledge"],
+	}.get(j15_mode, [])
+	if action_id not in allowed: return false
+	selected_choice_ids.append(choice_id); j15_outcome = action_id.trim_prefix("choice_j15_").to_upper()
+	var clarification: Dictionary = promises.get("j14_witness_clarification", {})
+	var selected_promise_ids: Array[String] = []
+	var amended_ids: Array[String] = []; var failed_ids: Array[String] = []; var closed_ids: Array[String] = []
+	if j15_mode == "ACTIVE_CLARIFICATION":
+		selected_promise_ids.append("j14_witness_clarification")
+		if action_id == "choice_j15_due_pay": clarification["status"] = "PAID"
+		elif action_id == "choice_j15_due_cancel": clarification["status"] = "CANCELLED"; closed_ids.append("j14_witness_clarification")
+		else: clarification["status"] = "FAILED"; failed_ids.append("j14_witness_clarification"); j15_urgent_consequence_remaining = true
+		clarification["paid_or_closed_at"] = "J15 20:00"; clarification["paid_or_closed_by"] = "Player"; promises["j14_witness_clarification"] = clarification
+	elif action_id in ["choice_j15_repair_lie","choice_j15_open_lie"]:
+		j15_urgent_consequence_remaining = true
+	if j15_mode != "NO_OBLIGATION":
+		traces["j15_obligation_collision_record_01"] = {"trace_id":"j15_obligation_collision_record_01","record_type":"FACT_RECORD","source_day":"J15","collision_mode":"NO_COLLISION","eligible_active_promise_ids":selected_promise_ids,"selected_promise_id":selected_promise_ids[0] if not selected_promise_ids.is_empty() else "","chosen_priority":"BOUNDED_CLARIFICATION","amended_promise_ids":amended_ids,"failed_promise_ids":failed_ids,"closed_promise_ids":closed_ids,"promise_outcome":j15_outcome,"incompatible_windows_proven":false,"second_signed_obligation_present":false,"urgent_consequence_remaining":j15_urgent_consequence_remaining,"current_state":"ACTIVE","visual_asset":"none"}
+		knowledge["fact_j15_obligation_resolution"] = {"fact_id":"fact_j15_obligation_resolution","source_type":"INFERENCE","source_ref":"j15_obligation_collision_record_01","initial_knowers":[j14_witness,"Player"],"certainty":"CONFIRMED","shareability":"WITNESS_BOUNDED","source_day":"J15"}
+	if j15_urgent_consequence_remaining:
+		promises["j16_priority_consequence_payment"] = {"promise_id":"j16_priority_consequence_payment","promise_type":"REPAIR","status":"ACTIVE","created_at":"J15 20:00","accepted_by_player":true,"source_signed_ref":choice_id,"concerned_person":j14_witness,"action_due":"payer la clarification ou le mensonge précis laissé par J15","due_at":"J16","related_trace_ids":["j15_obligation_collision_record_01"]}
+	return true
+
+func complete_j15() -> bool:
+	if current_day != "J15" or day_status != "ACTIVE" or j15_mode == "UNESTABLISHED" or j15_outcome == "UNESTABLISHED": return false
+	if not complete_conversation("chapter_15_obligation_mutation", str(j14_witness).to_lower(), "obligation_mutation"): return false
+	return complete_day()
+
 func resolve_j07_morning_consequence() -> bool:
 	if current_day != "J07" or day_status != "ACTIVE" or marie_j06_return_resolution != "UNESTABLISHED":
 		return false
@@ -2312,14 +2369,17 @@ func snapshot() -> Dictionary:
 		"j14_variant": j14_variant,
 		"j14_outcome": j14_outcome,
 		"j14_witness": j14_witness,
+		"j15_mode": j15_mode,
+		"j15_outcome": j15_outcome,
+		"j15_urgent_consequence_remaining": j15_urgent_consequence_remaining,
 		"resolved_visual_variant_by_asset": resolved_visual_variant_by_asset.duplicate(true),
 	}
 
 func restore_snapshot(value: Dictionary) -> bool:
 	var version := int(value.get("version", -1))
-	if version not in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, SNAPSHOT_VERSION]:
+	if version not in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, SNAPSHOT_VERSION]:
 		return false
-	if str(value.get("current_day", "")) not in ["J01", "J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14"]:
+	if str(value.get("current_day", "")) not in ["J01", "J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14", "J15"]:
 		return false
 	if version < 4 and str(value.get("current_day", "")) == "J06":
 		return false
@@ -2334,7 +2394,8 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if version < 10 and str(value.get("current_day", "")) == "J12":
 		return false
 	if version < 11 and str(value.get("current_day", "")) == "J13": return false
-	if version < SNAPSHOT_VERSION and str(value.get("current_day", "")) == "J14": return false
+	if version < 12 and str(value.get("current_day", "")) == "J14": return false
+	if version < SNAPSHOT_VERSION and str(value.get("current_day", "")) == "J15": return false
 	if str(value.get("day_status", "")) not in ["ACTIVE", "COMPLETE"]:
 		return false
 	if str(value.get("couple_state", "")) not in ["BASELINE_SHARED_LIFE", "STRAIN_VISIBLE"]:
@@ -2388,6 +2449,7 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if str(value.get("j12_priority_route", "UNESTABLISHED")) not in ["UNESTABLISHED", "SANDRA", "MATHILDE", "RAPHAELLE", "NICO", "MARIE", "NETWORK"]: return false
 	if str(value.get("j13_pivot", "")) not in ["", "PAULINE", "RAPHAELLE", "NICO", "SANDRA", "MATHILDE", "MARIE", "RESPIRATION"]: return false
 	if str(value.get("j14_variant", "")) not in ["", "PAULINE", "SANDRA", "MATHILDE", "RAPHAELLE", "NICO", "COMPOSITE", "FALLBACK"]: return false
+	if str(value.get("j15_mode", "UNESTABLISHED")) not in ["UNESTABLISHED", "ACTIVE_CLARIFICATION", "REPAIR", "OPEN_CLARIFICATION", "NO_OBLIGATION"]: return false
 	if typeof(value.get("resolved_visual_variant_by_asset", {})) != TYPE_DICTIONARY: return false
 	for key in ["promises", "traces", "knowledge"]:
 		if typeof(value.get(key)) != TYPE_DICTIONARY:
@@ -2416,6 +2478,8 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if not _j13_records_consistent(value):
 		return false
 	if not _j14_records_consistent(value):
+		return false
+	if not _j15_records_consistent(value):
 		return false
 	current_day = str(value["current_day"])
 	day_status = str(value["day_status"])
@@ -2489,6 +2553,9 @@ func restore_snapshot(value: Dictionary) -> bool:
 	j14_variant = str(value.get("j14_variant", ""))
 	j14_outcome = str(value.get("j14_outcome", "UNESTABLISHED"))
 	j14_witness = str(value.get("j14_witness", ""))
+	j15_mode = str(value.get("j15_mode", "UNESTABLISHED"))
+	j15_outcome = str(value.get("j15_outcome", "UNESTABLISHED"))
+	j15_urgent_consequence_remaining = bool(value.get("j15_urgent_consequence_remaining", false))
 	resolved_visual_variant_by_asset = value.get("resolved_visual_variant_by_asset", {}).duplicate(true)
 	return true
 
@@ -2551,7 +2618,7 @@ func _j06_snapshot_consistent(value: Dictionary) -> bool:
 	return due_at == ""
 
 func _j07_records_consistent(value: Dictionary) -> bool:
-	if str(value.get("current_day", "")) in ["J08", "J09", "J10", "J11", "J12", "J13", "J14"]:
+	if str(value.get("current_day", "")) in ["J08", "J09", "J10", "J11", "J12", "J13", "J14", "J15"]:
 		return _j08_source_records_consistent(value)
 	var raphaelle_outcome := str(value.get("raphaelle_j07_mobile_review_outcome", "UNESTABLISHED"))
 	var nico_outcome := str(value.get("nico_j07_confidence_outcome", "UNESTABLISHED"))
@@ -2656,7 +2723,7 @@ func _j08_records_consistent(value: Dictionary) -> bool:
 	var mathilde := str(value.get("mathilde_j08_household_resolution", "UNESTABLISHED"))
 	var echo := str(value.get("marie_j08_echo_outcome", "UNESTABLISHED"))
 	var variants: Dictionary = value.get("resolved_visual_variant_by_asset", {})
-	if current not in ["J08", "J09", "J10", "J11", "J12", "J13", "J14"]:
+	if current not in ["J08", "J09", "J10", "J11", "J12", "J13", "J14", "J15"]:
 		return entry == "UNESTABLISHED" and preparation == "UNESTABLISHED" and priority == "UNESTABLISHED" and work == "UNESTABLISHED" and nico == "UNESTABLISHED" and household == "UNESTABLISHED" and mathilde == "UNESTABLISHED" and echo == "UNESTABLISHED" and variants.is_empty()
 	if entry == "UNESTABLISHED":
 		return false
@@ -2769,7 +2836,7 @@ func _j09_records_consistent(value: Dictionary) -> bool:
 	var has_f11 := restored_knowledge.has("fact_player_received_marie_black_dress_image")
 	var has_f12 := restored_knowledge.has("fact_marie_public_professional_version_visible")
 	var has_f13 := restored_knowledge.has("fact_marie_recontextualized_evening_for_player")
-	if current not in ["J09", "J10", "J11", "J12", "J13", "J14"]:
+	if current not in ["J09", "J10", "J11", "J12", "J13", "J14", "J15"]:
 		return presence_choice == "UNESTABLISHED" and presence_outcome == "UNESTABLISHED" and dinner_outcome == "UNESTABLISHED" and not has_private and not has_public and not has_after and not has_f11 and not has_f12 and not has_f13
 	if has_private != has_f11 or has_public != has_f12 or has_after != has_f13:
 		return false
@@ -2847,7 +2914,7 @@ func _j10_records_consistent(value: Dictionary) -> bool:
 	var restored_promises: Dictionary = value.get("promises", {})
 	var has_t10 := restored_traces.has("j10_mathilde_outfit_choice_01")
 	var has_mathilde_fact := restored_knowledge.has("fact_mathilde_chose_player_as_outfit_audience")
-	if current not in ["J10", "J11", "J12", "J13", "J14"]:
+	if current not in ["J10", "J11", "J12", "J13", "J14", "J15"]:
 		return pivot == "" and reason == "" and outcome == "" and dinner == "UNESTABLISHED" and confirmation == "UNESTABLISHED" and not has_t10 and not has_mathilde_fact
 	if (pivot == "") != (reason == ""):
 		return false
@@ -2971,7 +3038,7 @@ func _j11_records_consistent(value: Dictionary) -> bool:
 	var has_raphaelle_fact := restored_knowledge.has("fact_raphaelle_chose_player_for_result_image")
 	var has_mathilde_trace := restored_traces.has("j11_mathilde_physical_aftercare_01")
 	var has_mathilde_fact := restored_knowledge.has("fact_mathilde_physical_event_occurred")
-	if current not in ["J11", "J12", "J13", "J14"]:
+	if current not in ["J11", "J12", "J13", "J14", "J15"]:
 		return (
 			pivot == "" and reason == "" and outcome == "" and physical_level == "NONE"
 			and mathilde_state_value == "UNESTABLISHED"
@@ -3038,7 +3105,7 @@ func _j11_records_consistent(value: Dictionary) -> bool:
 	if current == "J12" and p11_confirmed_at != "" and str(p11.get("status", "")) not in ["CONDITIONAL", "ACTIVE", "PAID", "REFUSED"]: return false
 	for obligation_id in restored_obligations:
 		var obligation: Dictionary = restored_obligations[obligation_id]
-		if current in ["J12", "J13", "J14"] and obligation_id == "j12_priority_consequence_j13":
+		if current in ["J12", "J13", "J14", "J15"] and obligation_id == "j12_priority_consequence_j13":
 			continue
 		if obligation_id not in ["aftercare_mathilde_j11", "aftercare_marie_j11"]: return false
 		if str(obligation.get("obligation_id", "")) != obligation_id or str(obligation.get("obligation_type", "")) != "AFTERCARE": return false
@@ -3061,7 +3128,7 @@ func _j12_records_consistent(value: Dictionary) -> bool:
 	var restored_obligations: Dictionary = value.get("obligations", {})
 	var restored_traces: Dictionary = value.get("traces", {})
 	var restored_knowledge: Dictionary = value.get("knowledge", {})
-	if day not in ["J12", "J13", "J14"]:
+	if day not in ["J12", "J13", "J14", "J15"]:
 		return presence == "UNESTABLISHED" and private_outcome == "UNESTABLISHED" and annexe == "UNESTABLISHED" and priority == "UNESTABLISHED" and not processed and not restored_traces.has("j12_laverriere_public_group_set_01") and not restored_traces.has("j12_annexe_public_group_set_01")
 	if processed and str(restored_obligations.get("aftercare_mathilde_j11", {}).get("status", "")) != "FAILED": return false
 	var lav_trace: Dictionary = restored_traces.get("j12_laverriere_public_group_set_01", {})
@@ -3082,14 +3149,14 @@ func _j12_records_consistent(value: Dictionary) -> bool:
 	if priority == "UNESTABLISHED" and not priority_obligation.is_empty(): return false
 	if priority != "UNESTABLISHED" and priority_obligation.is_empty(): return false
 	if day == "J12" and priority != "UNESTABLISHED" and str(priority_obligation.get("status", "")) != "DUE": return false
-	if day in ["J13", "J14"] and priority != "UNESTABLISHED" and str(priority_obligation.get("status", "")) not in ["DUE", "PAID", "REFUSED"]: return false
+	if day in ["J13", "J14", "J15"] and priority != "UNESTABLISHED" and str(priority_obligation.get("status", "")) not in ["DUE", "PAID", "REFUSED"]: return false
 	if day == "J12" and str(value.get("day_status", "")) == "COMPLETE":
 		return presence != "UNESTABLISHED" and annexe != "UNESTABLISHED" and priority != "UNESTABLISHED" and not lav_trace.is_empty() and not annexe_trace.is_empty()
 	return true
 
 func _j13_records_consistent(value: Dictionary) -> bool:
 	var day := str(value.get("current_day", "")); var pivot := str(value.get("j13_pivot", "")); var outcome := str(value.get("j13_outcome", "UNESTABLISHED")); var trace_id := str(value.get("j13_j14_trace_id", "")); var restored_traces: Dictionary = value.get("traces", {}); var restored_knowledge: Dictionary = value.get("knowledge", {})
-	if day not in ["J13", "J14"]: return pivot == "" and outcome == "UNESTABLISHED" and trace_id == "" and not restored_traces.has("j13_pauline_private_version_01") and not restored_traces.has("j13_raphaelle_masked_version_01") and not restored_traces.has("j13_nico_alibi_or_hour_message_01")
+	if day not in ["J13", "J14", "J15"]: return pivot == "" and outcome == "UNESTABLISHED" and trace_id == "" and not restored_traces.has("j13_pauline_private_version_01") and not restored_traces.has("j13_raphaelle_masked_version_01") and not restored_traces.has("j13_nico_alibi_or_hour_message_01")
 	if pivot == "": return outcome == "UNESTABLISHED" and trace_id == ""
 	if restored_traces.has("j13_pauline_private_version_01") != restored_knowledge.has("fact_pauline_sent_private_j12_version"): return false
 	if restored_traces.has("j13_raphaelle_masked_version_01") != restored_knowledge.has("fact_raphaelle_selected_masked_version"): return false
@@ -3105,7 +3172,7 @@ func _j14_records_consistent(value: Dictionary) -> bool:
 	var restored_traces: Dictionary = value.get("traces", {})
 	var restored_knowledge: Dictionary = value.get("knowledge", {})
 	var restored_promises: Dictionary = value.get("promises", {})
-	if day != "J14":
+	if day not in ["J14", "J15"]:
 		return variant == "" and outcome == "UNESTABLISHED" and witness == "" and not restored_traces.has("j14_discovery_event_01") and not restored_knowledge.has("fact_witness_saw_limited_trace") and not restored_knowledge.has("fact_player_explanation_to_witness") and not restored_knowledge.has("fact_trace_controller_informed_of_audience_breach") and not restored_promises.has("j14_witness_clarification") and not restored_promises.has("j14_inform_trace_controller")
 	if variant == "": return outcome == "UNESTABLISHED" and witness == ""
 	if witness != ("Mathilde" if variant == "SANDRA" else "Marie"): return false
@@ -3126,4 +3193,21 @@ func _j14_records_consistent(value: Dictionary) -> bool:
 		if str(notice.get("status", "")) == "PAID" and not restored_knowledge.has("fact_trace_controller_informed_of_audience_breach"): return false
 		if str(notice.get("status", "")) == "ACTIVE" and restored_knowledge.has("fact_trace_controller_informed_of_audience_breach"): return false
 	if str(value.get("day_status", "")) == "COMPLETE" and variant != "FALLBACK" and str(notice.get("status", "")) != "PAID": return false
+	return true
+
+func _j15_records_consistent(value: Dictionary) -> bool:
+	var day := str(value.get("current_day", "")); var mode := str(value.get("j15_mode", "UNESTABLISHED")); var outcome := str(value.get("j15_outcome", "UNESTABLISHED")); var urgent := bool(value.get("j15_urgent_consequence_remaining", false)); var restored_traces: Dictionary = value.get("traces", {}); var restored_promises: Dictionary = value.get("promises", {}); var restored_knowledge: Dictionary = value.get("knowledge", {})
+	if day != "J15": return mode == "UNESTABLISHED" and outcome == "UNESTABLISHED" and not urgent and not restored_traces.has("j15_obligation_collision_record_01") and not restored_promises.has("j16_priority_consequence_payment") and not restored_knowledge.has("fact_j15_obligation_resolution")
+	if mode == "UNESTABLISHED": return outcome == "UNESTABLISHED" and not restored_traces.has("j15_obligation_collision_record_01")
+	if outcome == "UNESTABLISHED": return not restored_traces.has("j15_obligation_collision_record_01")
+	var record: Dictionary = restored_traces.get("j15_obligation_collision_record_01", {})
+	if mode == "NO_OBLIGATION":
+		if not record.is_empty() or restored_knowledge.has("fact_j15_obligation_resolution"): return false
+	else:
+		if record.is_empty() or str(record.get("collision_mode", "")) != "NO_COLLISION" or bool(record.get("incompatible_windows_proven", true)) or bool(record.get("second_signed_obligation_present", true)): return false
+		if str(restored_knowledge.get("fact_j15_obligation_resolution", {}).get("source_ref", "")) != "j15_obligation_collision_record_01": return false
+	var consequence: Dictionary = restored_promises.get("j16_priority_consequence_payment", {})
+	if urgent != not consequence.is_empty(): return false
+	if urgent and (str(consequence.get("status", "")) != "ACTIVE" or str(consequence.get("source_signed_ref", "")) == ""): return false
+	if str(value.get("day_status", "")) == "COMPLETE": return outcome != "UNESTABLISHED"
 	return true
