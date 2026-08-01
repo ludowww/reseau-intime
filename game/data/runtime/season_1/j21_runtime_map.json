@@ -1,0 +1,14 @@
+{
+  "implementation_status":"PLAYABLE",
+  "narrative_day_short":"Lun.",
+  "initial_time":"07:30",
+  "day_start":{"eyebrow":"LUNDI","title":"La dernière photo change de sens","subtitle":"07:30","body":"Une vie ordinaire, une trace existante et une règle déjà décidée ferment la saison.","action_label":"Continuer","transition_mode":"day_boundary"},
+  "conversation_paths":{"chapter_21_final_trace":"res://data/conversations/chapter_21_final_trace.json"},
+  "to_morning":{"transition_id":"j21_to_morning","mode":"CLOCK","to_time":"07:42","title":"Lundi matin","subtitle":"Une habitude devenue différente","body":"Marie parle de la vie concrète définie en J17."},
+  "to_trace":{"transition_id":"j21_to_trace","mode":"CLOCK","to_time":"12:07","title":"Lundi","subtitle":"La trace revient par sa source légitime","body":"Aucun fichier retiré, accès fermé ou audience limitée n’est restauré."},
+  "to_final_choice":{"transition_id":"j21_to_final_choice","mode":"CLOCK","to_time":"18:48","title":"Lundi soir","subtitle":"Une règle, une perte, ou une contradiction déjà active","body":"Le dernier choix ne sélectionne ni route ni personnage."},
+  "day_close":{"transition_id":"j21_day_close","mode":"NIGHT","to_time":"21:12","title":"Fin de la saison","subtitle":"La vie continue","body":"Les mêmes traces existent. Leurs permissions et leur sens ont changé."},
+  "day_end":{"eyebrow":"FIN DE LA SAISON 1","title":"La dernière photo","subtitle":"J21","body":"Un message, une trace, une règle, une vie qui continue.","action_label":"Terminer","transition_mode":"content_end","content_end":true},
+  "gallery_presentations":[],
+  "visual_variant_presentations":[]
+}
