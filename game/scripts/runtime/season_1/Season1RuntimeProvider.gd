@@ -23,7 +23,8 @@ const J17_SCRIPT := preload("res://scripts/runtime/season_1/J17RuntimeProvider.g
 const J18_SCRIPT := preload("res://scripts/runtime/season_1/J18RuntimeProvider.gd")
 const J19_SCRIPT := preload("res://scripts/runtime/season_1/J19RuntimeProvider.gd")
 const J20_SCRIPT := preload("res://scripts/runtime/season_1/J20RuntimeProvider.gd")
-const SNAPSHOT_VERSION := 20
+const J21_SCRIPT := preload("res://scripts/runtime/season_1/J21RuntimeProvider.gd")
+const SNAPSHOT_VERSION := 21
 
 var state
 var j01_provider
@@ -46,6 +47,7 @@ var j17_provider
 var j18_provider
 var j19_provider
 var j20_provider
+var j21_provider
 var active_provider
 var active_day := "J01"
 var j01_snapshot: Dictionary = {}
@@ -91,8 +93,8 @@ func gallery_source() -> Dictionary: return active_provider.gallery_source()
 func apply_choice(thread_id: String, choice_id: String) -> Dictionary: return active_provider.apply_choice(thread_id, choice_id)
 func confirm_transition() -> Dictionary: return active_provider.confirm_transition()
 func mark_photo_opened() -> bool: return active_provider.mark_photo_opened() if active_day == "J01" else false
-func on_thread_returned(thread_id: String) -> Dictionary: return active_provider.on_thread_returned(thread_id) if active_day in ["J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14", "J15", "J16", "J17", "J18", "J19", "J20"] else {}
-func presentation_count_by_id(id: String) -> int: return active_provider.presentation_count_by_id(id) if active_day in ["J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14", "J15", "J16", "J17", "J18", "J19", "J20"] else _count_j01(id)
+func on_thread_returned(thread_id: String) -> Dictionary: return active_provider.on_thread_returned(thread_id) if active_day in ["J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14", "J15", "J16", "J17", "J18", "J19", "J20", "J21"] else {}
+func presentation_count_by_id(id: String) -> int: return active_provider.presentation_count_by_id(id) if active_day in ["J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14", "J15", "J16", "J17", "J18", "J19", "J20", "J21"] else _count_j01(id)
 
 func confirm_day_transition() -> Dictionary:
 	if active_day == "J01":
@@ -153,6 +155,9 @@ func confirm_day_transition() -> Dictionary:
 	if active_day=="J19" and j19_provider.phase=="complete":
 		if not _handoff_to_j20():return {"accepted":false}
 		return {"accepted":true,"destination":"day_transition","presentation":j20_provider.day_start_presentation()}
+	if active_day=="J20" and j20_provider.phase=="complete":
+		if not _handoff_to_j21():return {"accepted":false}
+		return {"accepted":true,"destination":"day_transition","presentation":j21_provider.day_start_presentation()}
 	return active_provider.confirm_day_transition()
 
 func confirm_secondary_day_transition() -> Dictionary:
@@ -238,6 +243,9 @@ func automatic_day_handoff() -> Dictionary:
 	if active_day=="J19" and j19_provider.phase=="complete":
 		if not _handoff_to_j20():return {"accepted":false}
 		var result:Dictionary=j20_provider.start_day();result.automatic_day_handoff=true;result.next_day_presentation=j20_provider.day_start_presentation();return result
+	if active_day=="J20" and j20_provider.phase=="complete":
+		if not _handoff_to_j21():return {"accepted":false}
+		var result:Dictionary=j21_provider.start_day();result.automatic_day_handoff=true;result.next_day_presentation=j21_provider.day_start_presentation();return result
 	return {"accepted": false}
 
 func next_day_presentation() -> Dictionary:
@@ -260,10 +268,11 @@ func next_day_presentation() -> Dictionary:
 	if active_day=="J17":return DataLoader.load_json("res://data/runtime/season_1/j18_runtime_map.json").day_start.duplicate(true)
 	if active_day=="J18":return DataLoader.load_json("res://data/runtime/season_1/j19_runtime_map.json").day_start.duplicate(true)
 	if active_day=="J19":return DataLoader.load_json("res://data/runtime/season_1/j20_runtime_map.json").day_start.duplicate(true)
+	if active_day=="J20":return DataLoader.load_json("res://data/runtime/season_1/j21_runtime_map.json").day_start.duplicate(true)
 	return {}
 
 func content_end() -> Dictionary:
-	if active_day == "J20" and j20_provider.phase == "complete": return j20_provider.runtime_map.get("day_end", {}).duplicate(true)
+	if active_day == "J21" and j21_provider.phase == "complete": return j21_provider.runtime_map.get("day_end", {}).duplicate(true)
 	return {}
 
 func begin_j11_foundation_handoff() -> Dictionary:
@@ -354,11 +363,15 @@ func pending_transition_flow() -> Dictionary:
 	if active_day=="J20":
 		if not j20_provider.pending_transition.is_empty():return j20_provider.pending_transition.duplicate(true)
 		if j20_provider.phase=="day_start_pending":return {"flow_phases":["NEW_DAY"],"next_day_presentation":j20_provider.day_start_presentation(),"resume_action":"start_day"}
+		if j20_provider.phase=="complete":return {"flow_phases":["NIGHT","NEW_DAY"],"next_day_presentation":next_day_presentation(),"resume_action":"automatic_day_handoff"}
+	if active_day=="J21":
+		if not j21_provider.pending_transition.is_empty():return j21_provider.pending_transition.duplicate(true)
+		if j21_provider.phase=="day_start_pending":return {"flow_phases":["NEW_DAY"],"next_day_presentation":j21_provider.day_start_presentation(),"resume_action":"start_day"}
 	return {}
 
 func complete_pending_transition_flow(resume_action: String) -> Dictionary:
 	if resume_action == "automatic_day_handoff": return automatic_day_handoff()
-	if resume_action == "start_day" and active_day in ["J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14", "J15", "J16", "J17", "J18", "J19", "J20"] and active_provider.phase == "day_start_pending": return active_provider.start_day()
+	if resume_action == "start_day" and active_day in ["J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14", "J15", "J16", "J17", "J18", "J19", "J20", "J21"] and active_provider.phase == "day_start_pending": return active_provider.start_day()
 	return {"accepted": false}
 
 func _handoff_to_j02() -> void:
@@ -474,6 +487,10 @@ func _handoff_to_j20()->bool:
 	var candidate=J20_SCRIPT.new();if not candidate.initialize(state,j19_provider.transcripts_by_thread,j19_provider.produced_message_ids,j19_provider.unlocked_thread_ids,j19_provider.gallery_asset_ids):return false
 	j20_provider=candidate;active_day="J20";active_provider=candidate;return true
 
+func _handoff_to_j21()->bool:
+	var candidate=J21_SCRIPT.new();if not candidate.initialize(state,j20_provider.transcripts_by_thread,j20_provider.produced_message_ids,j20_provider.unlocked_thread_ids,j20_provider.gallery_asset_ids):return false
+	j21_provider=candidate;active_day="J21";active_provider=candidate;return true
+
 func snapshot() -> Dictionary:
 	return {"version": SNAPSHOT_VERSION, "active_day": active_day, "state": state.snapshot(), "provider_snapshots": {
 		"J01": j01_provider.progress_snapshot(), "J02": j02_provider.snapshot() if j02_provider != null else {},
@@ -494,11 +511,12 @@ func snapshot() -> Dictionary:
 		"J18": j18_provider.snapshot() if j18_provider != null else {},
 		"J19": j19_provider.snapshot() if j19_provider != null else {},
 		"J20": j20_provider.snapshot() if j20_provider != null else {},
+		"J21": j21_provider.snapshot() if j21_provider != null else {},
 	}}
 
 func restore_snapshot(value: Dictionary) -> bool:
 	var version := int(value.get("version", -1))
-	if version not in [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,SNAPSHOT_VERSION] or str(value.get("active_day","")) not in ["J01","J02","J03","J04","J05","J06","J07","J08","J09","J10","J11","J12","J13","J14","J15","J16","J17","J18","J19","J20"]:return false
+	if version not in [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,SNAPSHOT_VERSION] or str(value.get("active_day","")) not in ["J01","J02","J03","J04","J05","J06","J07","J08","J09","J10","J11","J12","J13","J14","J15","J16","J17","J18","J19","J20","J21"]:return false
 	if version < 4 and str(value.get("active_day", "")) == "J05": return false
 	if version < 5 and str(value.get("active_day", "")) == "J06": return false
 	if version < 6 and str(value.get("active_day", "")) == "J07": return false
@@ -514,7 +532,8 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if version < 17 and str(value.get("active_day", "")) == "J17": return false
 	if version<18 and str(value.get("active_day",""))=="J18":return false
 	if version<19 and str(value.get("active_day",""))=="J19":return false
-	if version<SNAPSHOT_VERSION and str(value.get("active_day",""))=="J20":return false
+	if version<20 and str(value.get("active_day",""))=="J20":return false
+	if version<SNAPSHOT_VERSION and str(value.get("active_day",""))=="J21":return false
 	if typeof(value.get("state")) != TYPE_DICTIONARY or typeof(value.get("provider_snapshots")) != TYPE_DICTIONARY: return false
 	var providers: Dictionary = value["provider_snapshots"]
 	for id in ["J01", "J02", "J03"]:
@@ -535,7 +554,8 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if version >= 17 and typeof(providers.get("J17")) != TYPE_DICTIONARY: return false
 	if version>=18 and typeof(providers.get("J18"))!=TYPE_DICTIONARY:return false
 	if version>=19 and typeof(providers.get("J19"))!=TYPE_DICTIONARY:return false
-	if version==SNAPSHOT_VERSION and typeof(providers.get("J20"))!=TYPE_DICTIONARY:return false
+	if version>=20 and typeof(providers.get("J20"))!=TYPE_DICTIONARY:return false
+	if version==SNAPSHOT_VERSION and typeof(providers.get("J21"))!=TYPE_DICTIONARY:return false
 	state_restore_count += 1
 	if not state.restore_snapshot(value["state"]): return false
 	if not j01_provider.restore_progress_snapshot(providers["J01"]): return false
@@ -645,7 +665,11 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if active_day=="J19":return true
 	j20_provider=J20_SCRIPT.new();if not j20_provider.initialize(state,j19_provider.transcripts_by_thread,j19_provider.produced_message_ids,j19_provider.unlocked_thread_ids,j19_provider.gallery_asset_ids):return false
 	if not j20_provider.restore_snapshot(providers.get("J20",{})):return false
-	active_provider=j20_provider;return true
+	active_provider=j20_provider
+	if active_day=="J20":return true
+	j21_provider=J21_SCRIPT.new();if not j21_provider.initialize(state,j20_provider.transcripts_by_thread,j20_provider.produced_message_ids,j20_provider.unlocked_thread_ids,j20_provider.gallery_asset_ids):return false
+	if not j21_provider.restore_snapshot(providers.get("J21",{})):return false
+	active_provider=j21_provider;return true
 
 func _count_j01(id: String) -> int:
 	var count := 0
