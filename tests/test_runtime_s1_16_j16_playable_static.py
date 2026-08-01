@@ -11,6 +11,6 @@ class RuntimeS116J16PlayableStaticTests(unittest.TestCase):
     def test_state_and_handoff(self):
         state=self.read("game/scripts/runtime/season_1/Season1State.gd")
         for token in ["func begin_j16","func select_j16_priority","func apply_j16_consequence_choice","func establish_j16_departure","func apply_j16_j17_choice","j16_consequence_payment_record_01","marie_j16_couple_conversation_j17"]: self.assertIn(token,state)
-        season=self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd"); self.assertIn("const SNAPSHOT_VERSION := 17",season); self.assertIn("func _handoff_to_j16",season)
+        season=self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd"); self.assertIn("const SNAPSHOT_VERSION := 18",season); self.assertIn("func _handoff_to_j16",season)
         j15=self.load("game/data/runtime/season_1/j15_runtime_map.json"); self.assertEqual("day_handoff",j15["day_end"]["transition_mode"]); self.assertFalse(j15["day_end"]["content_end"])
 if __name__ == "__main__": unittest.main()
