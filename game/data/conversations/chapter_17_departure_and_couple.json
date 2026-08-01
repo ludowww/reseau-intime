@@ -1,0 +1,151 @@
+{
+    "id": "chapter_17_departure_and_couple",
+    "chapter": 17,
+    "day": 17,
+    "title": "Jeudi \u2014 Ce qui reste quand on choisit",
+    "app": "messages",
+    "segments": [
+        {
+            "id": "j17_departure_ordinary",
+            "messages": [
+                {
+                    "id": "msg_j17_departure_ordinary_001",
+                    "sender": "mathilde",
+                    "time_label": "17:30",
+                    "text": "J\u2019ai les cl\u00e9s. Je reprends mes affaires aujourd\u2019hui."
+                }
+            ],
+            "choices": [
+                {
+                    "id": "choice_j17_help",
+                    "text": "je fais les piles et je te laisse d\u00e9cider du reste",
+                    "next_messages": [
+                        {
+                            "id": "msg_j17_help_001",
+                            "sender": "mathilde",
+                            "time_label": "17:31",
+                            "text": "Aider ne d\u00e9cide rien pour la suite."
+                        }
+                    ]
+                },
+                {
+                    "id": "choice_j17_distance",
+                    "text": "je ne serai pas l\u00e0. Marie peut servir d\u2019interm\u00e9diaire",
+                    "next_messages": [
+                        {
+                            "id": "msg_j17_distance_ordinary_001",
+                            "sender": "mathilde",
+                            "time_label": "17:31",
+                            "text": "D\u2019accord."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "j17_departure_distance",
+            "messages": [
+                {
+                    "id": "msg_j17_departure_distance_001",
+                    "sender": "mathilde",
+                    "time_label": "17:30",
+                    "text": "Je reprends mes affaires. Je ne veux pas que tu sois l\u00e0."
+                }
+            ],
+            "choices": [
+                {
+                    "id": "choice_j17_distance_required",
+                    "text": "je respecte la distance et je passe par Marie",
+                    "next_messages": [
+                        {
+                            "id": "msg_j17_distance_001",
+                            "sender": "mathilde",
+                            "time_label": "17:31",
+                            "text": "Oui. Ce point n\u2019est pas en discussion."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "j17_couple_due",
+            "messages": [
+                {
+                    "id": "msg_j17_couple_due_001",
+                    "sender": "marie",
+                    "time_label": "20:30",
+                    "text": "Je ne veux pas revenir exactement avant."
+                },
+                {
+                    "id": "msg_j17_couple_due_002",
+                    "sender": "marie",
+                    "time_label": "20:31",
+                    "text": "Je veux savoir quelle forme tu peux r\u00e9ellement tenir."
+                }
+            ],
+            "choices": [
+                {
+                    "id": "choice_j17_reconquest",
+                    "text": "je veux rester activement et arr\u00eater les versions fausses",
+                    "next_messages": [
+                        {
+                            "id": "msg_j17_reconquest_001",
+                            "sender": "marie",
+                            "time_label": "20:32",
+                            "text": "Alors ce sera une reconqu\u00eate, pas un retour automatique."
+                        }
+                    ]
+                },
+                {
+                    "id": "choice_j17_provisional",
+                    "text": "je demande un accord provisoire avec des r\u00e8gles r\u00e9visables",
+                    "next_messages": [
+                        {
+                            "id": "msg_j17_provisional_001",
+                            "sender": "marie",
+                            "time_label": "20:32",
+                            "text": "Provisoire. Et r\u00e9visable."
+                        }
+                    ]
+                },
+                {
+                    "id": "choice_j17_separation",
+                    "text": "je ne te demande pas de continuer",
+                    "next_messages": [
+                        {
+                            "id": "msg_j17_separation_001",
+                            "sender": "marie",
+                            "time_label": "20:32",
+                            "text": "D\u2019accord. On organise la s\u00e9paration."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "j17_couple_refused",
+            "messages": [
+                {
+                    "id": "msg_j17_couple_refused_001",
+                    "sender": "marie",
+                    "time_label": "20:30",
+                    "text": "Tu as refus\u00e9 cette heure. Je n\u2019ai pas construit ma soir\u00e9e autour de nous."
+                }
+            ],
+            "choices": [
+                {
+                    "id": "choice_j17_refused_acknowledge",
+                    "text": "je comprends. tu d\u00e9cides sans m\u2019attendre",
+                    "next_messages": [
+                        {
+                            "id": "msg_j17_refused_acknowledge_001",
+                            "sender": "marie",
+                            "time_label": "20:31",
+                            "text": "Oui. Le couple ne revient pas \u00e0 son ancien cadre."
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

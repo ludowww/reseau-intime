@@ -19,7 +19,8 @@ const J13_SCRIPT := preload("res://scripts/runtime/season_1/J13RuntimeProvider.g
 const J14_SCRIPT := preload("res://scripts/runtime/season_1/J14RuntimeProvider.gd")
 const J15_SCRIPT := preload("res://scripts/runtime/season_1/J15RuntimeProvider.gd")
 const J16_SCRIPT := preload("res://scripts/runtime/season_1/J16RuntimeProvider.gd")
-const SNAPSHOT_VERSION := 16
+const J17_SCRIPT := preload("res://scripts/runtime/season_1/J17RuntimeProvider.gd")
+const SNAPSHOT_VERSION := 17
 
 var state
 var j01_provider
@@ -38,6 +39,7 @@ var j13_provider
 var j14_provider
 var j15_provider
 var j16_provider
+var j17_provider
 var active_provider
 var active_day := "J01"
 var j01_snapshot: Dictionary = {}
@@ -56,6 +58,7 @@ var j13_snapshot: Dictionary = {}
 var j14_snapshot: Dictionary = {}
 var j15_snapshot: Dictionary = {}
 var j16_snapshot: Dictionary = {}
+var j17_snapshot: Dictionary = {}
 var state_restore_count := 0
 
 func initialize() -> bool:
@@ -82,8 +85,8 @@ func gallery_source() -> Dictionary: return active_provider.gallery_source()
 func apply_choice(thread_id: String, choice_id: String) -> Dictionary: return active_provider.apply_choice(thread_id, choice_id)
 func confirm_transition() -> Dictionary: return active_provider.confirm_transition()
 func mark_photo_opened() -> bool: return active_provider.mark_photo_opened() if active_day == "J01" else false
-func on_thread_returned(thread_id: String) -> Dictionary: return active_provider.on_thread_returned(thread_id) if active_day in ["J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14", "J15", "J16"] else {}
-func presentation_count_by_id(id: String) -> int: return active_provider.presentation_count_by_id(id) if active_day in ["J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14", "J15", "J16"] else _count_j01(id)
+func on_thread_returned(thread_id: String) -> Dictionary: return active_provider.on_thread_returned(thread_id) if active_day in ["J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14", "J15", "J16", "J17"] else {}
+func presentation_count_by_id(id: String) -> int: return active_provider.presentation_count_by_id(id) if active_day in ["J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14", "J15", "J16", "J17"] else _count_j01(id)
 
 func confirm_day_transition() -> Dictionary:
 	if active_day == "J01":
@@ -132,6 +135,9 @@ func confirm_day_transition() -> Dictionary:
 	if active_day == "J15" and j15_provider.phase == "complete":
 		if not _handoff_to_j16(): return {"accepted": false}
 		return {"accepted": true, "destination": "day_transition", "presentation": j16_provider.day_start_presentation()}
+	if active_day == "J16" and j16_provider.phase == "complete":
+		if not _handoff_to_j17(): return {"accepted": false}
+		return {"accepted": true, "destination": "day_transition", "presentation": j17_provider.day_start_presentation()}
 	return active_provider.confirm_day_transition()
 
 func confirm_secondary_day_transition() -> Dictionary:
@@ -205,6 +211,9 @@ func automatic_day_handoff() -> Dictionary:
 	if active_day == "J15" and j15_provider.phase == "complete":
 		if not _handoff_to_j16(): return {"accepted": false}
 		var result: Dictionary = j16_provider.start_day(); result["automatic_day_handoff"] = true; result["next_day_presentation"] = j16_provider.day_start_presentation(); return result
+	if active_day == "J16" and j16_provider.phase == "complete":
+		if not _handoff_to_j17(): return {"accepted": false}
+		var result: Dictionary = j17_provider.start_day(); result["automatic_day_handoff"] = true; result["next_day_presentation"] = j17_provider.day_start_presentation(); return result
 	return {"accepted": false}
 
 func next_day_presentation() -> Dictionary:
@@ -223,10 +232,11 @@ func next_day_presentation() -> Dictionary:
 	if active_day == "J13": return j14_provider.day_start_presentation() if j14_provider != null else DataLoader.load_json("res://data/runtime/season_1/j14_runtime_map.json").get("day_start", {}).duplicate(true)
 	if active_day == "J14": return j15_provider.day_start_presentation() if j15_provider != null else DataLoader.load_json("res://data/runtime/season_1/j15_runtime_map.json").get("day_start", {}).duplicate(true)
 	if active_day == "J15": return j16_provider.day_start_presentation() if j16_provider != null else DataLoader.load_json("res://data/runtime/season_1/j16_runtime_map.json").get("day_start", {}).duplicate(true)
+	if active_day == "J16": return j17_provider.day_start_presentation() if j17_provider != null else DataLoader.load_json("res://data/runtime/season_1/j17_runtime_map.json").get("day_start", {}).duplicate(true)
 	return {}
 
 func content_end() -> Dictionary:
-	if active_day == "J16" and j16_provider.phase == "complete": return j16_provider.runtime_map.get("day_end", {}).duplicate(true)
+	if active_day == "J17" and j17_provider.phase == "complete": return j17_provider.runtime_map.get("day_end", {}).duplicate(true)
 	return {}
 
 func begin_j11_foundation_handoff() -> Dictionary:
@@ -301,11 +311,15 @@ func pending_transition_flow() -> Dictionary:
 	if active_day == "J16":
 		if not j16_provider.pending_transition.is_empty(): return j16_provider.pending_transition.duplicate(true)
 		if j16_provider.phase == "day_start_pending": return {"flow_phases": ["NEW_DAY"], "next_day_presentation": j16_provider.day_start_presentation(), "resume_action": "start_day"}
+		if j16_provider.phase == "complete": return {"flow_phases": ["NIGHT", "NEW_DAY"], "next_day_presentation": next_day_presentation(), "resume_action": "automatic_day_handoff"}
+	if active_day == "J17":
+		if not j17_provider.pending_transition.is_empty(): return j17_provider.pending_transition.duplicate(true)
+		if j17_provider.phase == "day_start_pending": return {"flow_phases": ["NEW_DAY"], "next_day_presentation": j17_provider.day_start_presentation(), "resume_action": "start_day"}
 	return {}
 
 func complete_pending_transition_flow(resume_action: String) -> Dictionary:
 	if resume_action == "automatic_day_handoff": return automatic_day_handoff()
-	if resume_action == "start_day" and active_day in ["J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14", "J15", "J16"] and active_provider.phase == "day_start_pending": return active_provider.start_day()
+	if resume_action == "start_day" and active_day in ["J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14", "J15", "J16", "J17"] and active_provider.phase == "day_start_pending": return active_provider.start_day()
 	return {"accepted": false}
 
 func _handoff_to_j02() -> void:
@@ -404,6 +418,11 @@ func _handoff_to_j16() -> bool:
 	if not candidate.initialize(state, j15_provider.transcripts_by_thread, j15_provider.produced_message_ids, j15_provider.unlocked_thread_ids, j15_provider.gallery_asset_ids): return false
 	j15_snapshot = j15_provider.snapshot(); j16_provider = candidate; active_day = "J16"; active_provider = j16_provider; return true
 
+func _handoff_to_j17() -> bool:
+	var candidate=J17_SCRIPT.new()
+	if not candidate.initialize(state,j16_provider.transcripts_by_thread,j16_provider.produced_message_ids,j16_provider.unlocked_thread_ids,j16_provider.gallery_asset_ids):return false
+	j16_snapshot=j16_provider.snapshot(); j17_provider=candidate; active_day="J17"; active_provider=j17_provider; return true
+
 func snapshot() -> Dictionary:
 	return {"version": SNAPSHOT_VERSION, "active_day": active_day, "state": state.snapshot(), "provider_snapshots": {
 		"J01": j01_provider.progress_snapshot(), "J02": j02_provider.snapshot() if j02_provider != null else {},
@@ -420,11 +439,12 @@ func snapshot() -> Dictionary:
 		"J14": j14_provider.snapshot() if j14_provider != null else {},
 		"J15": j15_provider.snapshot() if j15_provider != null else {},
 		"J16": j16_provider.snapshot() if j16_provider != null else {},
+		"J17": j17_provider.snapshot() if j17_provider != null else {},
 	}}
 
 func restore_snapshot(value: Dictionary) -> bool:
 	var version := int(value.get("version", -1))
-	if version not in [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, SNAPSHOT_VERSION] or str(value.get("active_day", "")) not in ["J01", "J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14", "J15", "J16"]: return false
+	if version not in [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, SNAPSHOT_VERSION] or str(value.get("active_day", "")) not in ["J01", "J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14", "J15", "J16", "J17"]: return false
 	if version < 4 and str(value.get("active_day", "")) == "J05": return false
 	if version < 5 and str(value.get("active_day", "")) == "J06": return false
 	if version < 6 and str(value.get("active_day", "")) == "J07": return false
@@ -436,7 +456,8 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if version < 13 and str(value.get("active_day", "")) == "J13": return false
 	if version < 14 and str(value.get("active_day", "")) == "J14": return false
 	if version < 15 and str(value.get("active_day", "")) == "J15": return false
-	if version < SNAPSHOT_VERSION and str(value.get("active_day", "")) == "J16": return false
+	if version < 16 and str(value.get("active_day", "")) == "J16": return false
+	if version < SNAPSHOT_VERSION and str(value.get("active_day", "")) == "J17": return false
 	if typeof(value.get("state")) != TYPE_DICTIONARY or typeof(value.get("provider_snapshots")) != TYPE_DICTIONARY: return false
 	var providers: Dictionary = value["provider_snapshots"]
 	for id in ["J01", "J02", "J03"]:
@@ -453,7 +474,8 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if version >= 13 and typeof(providers.get("J13")) != TYPE_DICTIONARY: return false
 	if version >= 14 and typeof(providers.get("J14")) != TYPE_DICTIONARY: return false
 	if version >= 15 and typeof(providers.get("J15")) != TYPE_DICTIONARY: return false
-	if version == SNAPSHOT_VERSION and typeof(providers.get("J16")) != TYPE_DICTIONARY: return false
+	if version >= 16 and typeof(providers.get("J16")) != TYPE_DICTIONARY: return false
+	if version == SNAPSHOT_VERSION and typeof(providers.get("J17")) != TYPE_DICTIONARY: return false
 	state_restore_count += 1
 	if not state.restore_snapshot(value["state"]): return false
 	if not j01_provider.restore_progress_snapshot(providers["J01"]): return false
@@ -547,7 +569,11 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if not j16_provider.initialize(state, j15_provider.transcripts_by_thread, j15_provider.produced_message_ids, j15_provider.unlocked_thread_ids, j15_provider.gallery_asset_ids): return false
 	if not j16_provider.restore_snapshot(providers.get("J16", {})): return false
 	j16_snapshot = providers["J16"].duplicate(true); active_provider = j16_provider
-	return true
+	if active_day == "J16":return true
+	j17_provider=J17_SCRIPT.new()
+	if not j17_provider.initialize(state,j16_provider.transcripts_by_thread,j16_provider.produced_message_ids,j16_provider.unlocked_thread_ids,j16_provider.gallery_asset_ids):return false
+	if not j17_provider.restore_snapshot(providers.get("J17",{})):return false
+	j17_snapshot=providers["J17"].duplicate(true); active_provider=j17_provider; return true
 
 func _count_j01(id: String) -> int:
 	var count := 0
