@@ -123,10 +123,10 @@ class RuntimeS111J11PlayableStaticTests(unittest.TestCase):
 
     def test_season_handoff_snapshot_and_content_end_move_to_j11(self):
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
-        self.assertIn("const SNAPSHOT_VERSION := 13", season)
+        self.assertIn("const SNAPSHOT_VERSION := 14", season)
         self.assertIn('active_day == "J10" and j10_provider.phase == "complete"', season)
         self.assertIn('active_day == "J11" and j11_provider.phase == "complete"', season)
-        self.assertIn('active_day in ["J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13"]', season)
+        self.assertIn('active_day in ["J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14"]', season)
 
 
 if __name__ == "__main__":

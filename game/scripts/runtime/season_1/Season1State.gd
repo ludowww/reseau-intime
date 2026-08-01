@@ -2,7 +2,7 @@ extends RefCounted
 
 class_name Season1State
 
-const SNAPSHOT_VERSION := 11
+const SNAPSHOT_VERSION := 12
 
 var current_day := "J01"
 var day_status := "ACTIVE"
@@ -73,6 +73,9 @@ var j12_failed_aftercare_processed := false
 var j13_pivot := ""
 var j13_outcome := "UNESTABLISHED"
 var j13_j14_trace_id := ""
+var j14_variant := ""
+var j14_outcome := "UNESTABLISHED"
+var j14_witness := ""
 var resolved_visual_variant_by_asset: Dictionary = {}
 
 func _init() -> void:
@@ -165,6 +168,9 @@ func reset() -> void:
 	j13_pivot = ""
 	j13_outcome = "UNESTABLISHED"
 	j13_j14_trace_id = ""
+	j14_variant = ""
+	j14_outcome = "UNESTABLISHED"
+	j14_witness = ""
 	resolved_visual_variant_by_asset = {}
 
 func apply_choice(choice_id: String) -> bool:
@@ -1562,6 +1568,57 @@ func complete_j13() -> bool:
 	if not complete_conversation("chapter_13_priority", str({"PAULINE":"pauline","RAPHAELLE":"raphaelle","NICO":"nico","SANDRA":"sandra","MATHILDE":"mathilde","MARIE":"marie","RESPIRATION":"marie"}.get(j13_pivot, "marie")), "priority_consequence"): return false
 	return complete_day()
 
+func begin_j14() -> bool:
+	if current_day != "J13" or day_status != "COMPLETE": return false
+	current_day = "J14"; day_status = "ACTIVE"; j14_variant = ""; j14_outcome = "UNESTABLISHED"; j14_witness = ""
+	return true
+
+func select_j14_variant() -> String:
+	match j13_j14_trace_id:
+		"j13_pauline_private_version_01": return "PAULINE"
+		"j11_sandra_chosen_image_01": return "SANDRA"
+		"j11_mathilde_physical_aftercare_01": return "MATHILDE"
+		"j13_raphaelle_masked_version_01", "j13_raphaelle_masked_adult_selected_01": return "RAPHAELLE"
+		"j13_nico_alibi_or_hour_message_01": return "NICO"
+		_: return "FALLBACK"
+
+func establish_j14_discovery(variant: String) -> bool:
+	if current_day != "J14" or day_status != "ACTIVE" or j14_variant != "" or variant not in ["PAULINE","SANDRA","MATHILDE","RAPHAELLE","NICO","COMPOSITE","FALLBACK"]: return false
+	if variant != "FALLBACK" and (j13_j14_trace_id == "" or not traces.has(j13_j14_trace_id) or str(traces[j13_j14_trace_id].get("current_state", "")) == "REMOVED"): return false
+	j14_variant = variant; j14_witness = "Mathilde" if variant == "SANDRA" else "Marie"
+	if variant == "FALLBACK": return true
+	traces["j14_discovery_event_01"] = {"trace_id":"j14_discovery_event_01","trace_type":"FACT_RECORD","source_day":"J14","discovered_trace_id":j13_j14_trace_id,"witness":j14_witness,"visible_scope":"LIMITED_PREVIEW_OR_NOTIFICATION","source_trace_unchanged":true,"knowledge_created":"fact_witness_saw_limited_trace"}
+	knowledge["fact_witness_saw_limited_trace"] = {"fact_id":"fact_witness_saw_limited_trace","source_type":"DIRECT_OBSERVATION","source_ref":"j14_discovery_event_01","initial_knowers":[j14_witness,"Player"],"certainty":"CONFIRMED","shareability":"WITNESS_BOUNDED","source_day":"J14","discovered_trace_id":j13_j14_trace_id}
+	return true
+
+func apply_j14_choice(choice_id: String, variant: String) -> bool:
+	if current_day != "J14" or day_status != "ACTIVE" or variant != j14_variant or j14_outcome != "UNESTABLISHED" or choice_id == "" or selected_choice_ids.has(choice_id): return false
+	if not choice_id.begins_with("choice_j14_" + variant.to_lower() + "_"): return false
+	j14_outcome = choice_id.trim_prefix("choice_j14_").to_upper(); selected_choice_ids.append(choice_id)
+	knowledge["fact_player_explanation_to_witness"] = {"fact_id":"fact_player_explanation_to_witness","source_type":"DIRECT_STATEMENT","source_ref":choice_id,"initial_knowers":[j14_witness,"Player"],"certainty":"CONFIRMED","shareability":"WITNESS_BOUNDED","source_day":"J14"}
+	if choice_id == "choice_j14_composite_defer":
+		promises["j14_witness_clarification"] = {"promise_id":"j14_witness_clarification","promise_type":"CLARIFICATION","status":"ACTIVE","created_at":"J14 18:38","accepted_at":"J14 18:38","accepted_by_player":true,"source_signed_ref":choice_id,"concerned_person":j14_witness,"action_due":"clarifier la trace bornée au témoin","due_at":"J15 20:00","outcome":"DEFERRED_BOUNDED"}
+	if variant != "FALLBACK":
+		promises["j14_inform_trace_controller"] = {"promise_id":"j14_inform_trace_controller","promise_type":"AUDIENCE_NOTICE","status":"ACTIVE","accepted_by_player":true,"due_at":"J14 20:14","outcome":"NOTICE_DUE","controller":_j14_controller_for_variant(variant)}
+	return true
+
+func _j14_controller_for_variant(variant: String) -> String:
+	return {"PAULINE":"Pauline","SANDRA":"Sandra","MATHILDE":"Mathilde","RAPHAELLE":"Raphaëlle","NICO":"Nico","COMPOSITE":"Marie"}.get(variant, "Marie")
+
+func resolve_j14_controller_informed() -> bool:
+	var promise: Dictionary = promises.get("j14_inform_trace_controller", {})
+	if current_day != "J14" or str(promise.get("status", "")) != "ACTIVE": return false
+	promise["status"] = "PAID"; promise["paid_or_closed_at"] = "J14 20:14"; promise["paid_or_closed_by"] = "Player"; promises["j14_inform_trace_controller"] = promise
+	knowledge["fact_trace_controller_informed_of_audience_breach"] = {"fact_id":"fact_trace_controller_informed_of_audience_breach","source_type":"DIRECT_MESSAGE","source_ref":"j14_inform_trace_controller","initial_knowers":[str(promise.get("controller", "")),"Player"],"certainty":"CONFIRMED","shareability":"PRIVATE","source_day":"J14"}
+	return true
+
+func complete_j14() -> bool:
+	if current_day != "J14" or day_status != "ACTIVE" or j14_variant == "" or j14_outcome == "UNESTABLISHED": return false
+	var notice: Dictionary = promises.get("j14_inform_trace_controller", {})
+	if not notice.is_empty() and str(notice.get("status", "")) != "PAID": return false
+	if not complete_conversation("chapter_14_discovery", "mathilde" if j14_witness == "Mathilde" else "marie", "limited_discovery"): return false
+	return complete_day()
+
 func resolve_j07_morning_consequence() -> bool:
 	if current_day != "J07" or day_status != "ACTIVE" or marie_j06_return_resolution != "UNESTABLISHED":
 		return false
@@ -2252,14 +2309,17 @@ func snapshot() -> Dictionary:
 		"j13_pivot": j13_pivot,
 		"j13_outcome": j13_outcome,
 		"j13_j14_trace_id": j13_j14_trace_id,
+		"j14_variant": j14_variant,
+		"j14_outcome": j14_outcome,
+		"j14_witness": j14_witness,
 		"resolved_visual_variant_by_asset": resolved_visual_variant_by_asset.duplicate(true),
 	}
 
 func restore_snapshot(value: Dictionary) -> bool:
 	var version := int(value.get("version", -1))
-	if version not in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, SNAPSHOT_VERSION]:
+	if version not in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, SNAPSHOT_VERSION]:
 		return false
-	if str(value.get("current_day", "")) not in ["J01", "J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13"]:
+	if str(value.get("current_day", "")) not in ["J01", "J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14"]:
 		return false
 	if version < 4 and str(value.get("current_day", "")) == "J06":
 		return false
@@ -2273,7 +2333,8 @@ func restore_snapshot(value: Dictionary) -> bool:
 		return false
 	if version < 10 and str(value.get("current_day", "")) == "J12":
 		return false
-	if version < SNAPSHOT_VERSION and str(value.get("current_day", "")) == "J13": return false
+	if version < 11 and str(value.get("current_day", "")) == "J13": return false
+	if version < SNAPSHOT_VERSION and str(value.get("current_day", "")) == "J14": return false
 	if str(value.get("day_status", "")) not in ["ACTIVE", "COMPLETE"]:
 		return false
 	if str(value.get("couple_state", "")) not in ["BASELINE_SHARED_LIFE", "STRAIN_VISIBLE"]:
@@ -2326,6 +2387,7 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if str(value.get("j12_annexe_choice", "UNESTABLISHED")) not in ["UNESTABLISHED", "A12", "B12", "C12"]: return false
 	if str(value.get("j12_priority_route", "UNESTABLISHED")) not in ["UNESTABLISHED", "SANDRA", "MATHILDE", "RAPHAELLE", "NICO", "MARIE", "NETWORK"]: return false
 	if str(value.get("j13_pivot", "")) not in ["", "PAULINE", "RAPHAELLE", "NICO", "SANDRA", "MATHILDE", "MARIE", "RESPIRATION"]: return false
+	if str(value.get("j14_variant", "")) not in ["", "PAULINE", "SANDRA", "MATHILDE", "RAPHAELLE", "NICO", "COMPOSITE", "FALLBACK"]: return false
 	if typeof(value.get("resolved_visual_variant_by_asset", {})) != TYPE_DICTIONARY: return false
 	for key in ["promises", "traces", "knowledge"]:
 		if typeof(value.get(key)) != TYPE_DICTIONARY:
@@ -2352,6 +2414,8 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if not _j12_records_consistent(value):
 		return false
 	if not _j13_records_consistent(value):
+		return false
+	if not _j14_records_consistent(value):
 		return false
 	current_day = str(value["current_day"])
 	day_status = str(value["day_status"])
@@ -2422,6 +2486,9 @@ func restore_snapshot(value: Dictionary) -> bool:
 	j13_pivot = str(value.get("j13_pivot", ""))
 	j13_outcome = str(value.get("j13_outcome", "UNESTABLISHED"))
 	j13_j14_trace_id = str(value.get("j13_j14_trace_id", ""))
+	j14_variant = str(value.get("j14_variant", ""))
+	j14_outcome = str(value.get("j14_outcome", "UNESTABLISHED"))
+	j14_witness = str(value.get("j14_witness", ""))
 	resolved_visual_variant_by_asset = value.get("resolved_visual_variant_by_asset", {}).duplicate(true)
 	return true
 
@@ -2484,7 +2551,7 @@ func _j06_snapshot_consistent(value: Dictionary) -> bool:
 	return due_at == ""
 
 func _j07_records_consistent(value: Dictionary) -> bool:
-	if str(value.get("current_day", "")) in ["J08", "J09", "J10", "J11", "J12", "J13"]:
+	if str(value.get("current_day", "")) in ["J08", "J09", "J10", "J11", "J12", "J13", "J14"]:
 		return _j08_source_records_consistent(value)
 	var raphaelle_outcome := str(value.get("raphaelle_j07_mobile_review_outcome", "UNESTABLISHED"))
 	var nico_outcome := str(value.get("nico_j07_confidence_outcome", "UNESTABLISHED"))
@@ -2589,7 +2656,7 @@ func _j08_records_consistent(value: Dictionary) -> bool:
 	var mathilde := str(value.get("mathilde_j08_household_resolution", "UNESTABLISHED"))
 	var echo := str(value.get("marie_j08_echo_outcome", "UNESTABLISHED"))
 	var variants: Dictionary = value.get("resolved_visual_variant_by_asset", {})
-	if current not in ["J08", "J09", "J10", "J11", "J12", "J13"]:
+	if current not in ["J08", "J09", "J10", "J11", "J12", "J13", "J14"]:
 		return entry == "UNESTABLISHED" and preparation == "UNESTABLISHED" and priority == "UNESTABLISHED" and work == "UNESTABLISHED" and nico == "UNESTABLISHED" and household == "UNESTABLISHED" and mathilde == "UNESTABLISHED" and echo == "UNESTABLISHED" and variants.is_empty()
 	if entry == "UNESTABLISHED":
 		return false
@@ -2702,7 +2769,7 @@ func _j09_records_consistent(value: Dictionary) -> bool:
 	var has_f11 := restored_knowledge.has("fact_player_received_marie_black_dress_image")
 	var has_f12 := restored_knowledge.has("fact_marie_public_professional_version_visible")
 	var has_f13 := restored_knowledge.has("fact_marie_recontextualized_evening_for_player")
-	if current not in ["J09", "J10", "J11", "J12", "J13"]:
+	if current not in ["J09", "J10", "J11", "J12", "J13", "J14"]:
 		return presence_choice == "UNESTABLISHED" and presence_outcome == "UNESTABLISHED" and dinner_outcome == "UNESTABLISHED" and not has_private and not has_public and not has_after and not has_f11 and not has_f12 and not has_f13
 	if has_private != has_f11 or has_public != has_f12 or has_after != has_f13:
 		return false
@@ -2780,7 +2847,7 @@ func _j10_records_consistent(value: Dictionary) -> bool:
 	var restored_promises: Dictionary = value.get("promises", {})
 	var has_t10 := restored_traces.has("j10_mathilde_outfit_choice_01")
 	var has_mathilde_fact := restored_knowledge.has("fact_mathilde_chose_player_as_outfit_audience")
-	if current not in ["J10", "J11", "J12", "J13"]:
+	if current not in ["J10", "J11", "J12", "J13", "J14"]:
 		return pivot == "" and reason == "" and outcome == "" and dinner == "UNESTABLISHED" and confirmation == "UNESTABLISHED" and not has_t10 and not has_mathilde_fact
 	if (pivot == "") != (reason == ""):
 		return false
@@ -2904,7 +2971,7 @@ func _j11_records_consistent(value: Dictionary) -> bool:
 	var has_raphaelle_fact := restored_knowledge.has("fact_raphaelle_chose_player_for_result_image")
 	var has_mathilde_trace := restored_traces.has("j11_mathilde_physical_aftercare_01")
 	var has_mathilde_fact := restored_knowledge.has("fact_mathilde_physical_event_occurred")
-	if current not in ["J11", "J12", "J13"]:
+	if current not in ["J11", "J12", "J13", "J14"]:
 		return (
 			pivot == "" and reason == "" and outcome == "" and physical_level == "NONE"
 			and mathilde_state_value == "UNESTABLISHED"
@@ -2971,7 +3038,7 @@ func _j11_records_consistent(value: Dictionary) -> bool:
 	if current == "J12" and p11_confirmed_at != "" and str(p11.get("status", "")) not in ["CONDITIONAL", "ACTIVE", "PAID", "REFUSED"]: return false
 	for obligation_id in restored_obligations:
 		var obligation: Dictionary = restored_obligations[obligation_id]
-		if current in ["J12", "J13"] and obligation_id == "j12_priority_consequence_j13":
+		if current in ["J12", "J13", "J14"] and obligation_id == "j12_priority_consequence_j13":
 			continue
 		if obligation_id not in ["aftercare_mathilde_j11", "aftercare_marie_j11"]: return false
 		if str(obligation.get("obligation_id", "")) != obligation_id or str(obligation.get("obligation_type", "")) != "AFTERCARE": return false
@@ -2994,7 +3061,7 @@ func _j12_records_consistent(value: Dictionary) -> bool:
 	var restored_obligations: Dictionary = value.get("obligations", {})
 	var restored_traces: Dictionary = value.get("traces", {})
 	var restored_knowledge: Dictionary = value.get("knowledge", {})
-	if day not in ["J12", "J13"]:
+	if day not in ["J12", "J13", "J14"]:
 		return presence == "UNESTABLISHED" and private_outcome == "UNESTABLISHED" and annexe == "UNESTABLISHED" and priority == "UNESTABLISHED" and not processed and not restored_traces.has("j12_laverriere_public_group_set_01") and not restored_traces.has("j12_annexe_public_group_set_01")
 	if processed and str(restored_obligations.get("aftercare_mathilde_j11", {}).get("status", "")) != "FAILED": return false
 	var lav_trace: Dictionary = restored_traces.get("j12_laverriere_public_group_set_01", {})
@@ -3015,17 +3082,48 @@ func _j12_records_consistent(value: Dictionary) -> bool:
 	if priority == "UNESTABLISHED" and not priority_obligation.is_empty(): return false
 	if priority != "UNESTABLISHED" and priority_obligation.is_empty(): return false
 	if day == "J12" and priority != "UNESTABLISHED" and str(priority_obligation.get("status", "")) != "DUE": return false
-	if day == "J13" and priority != "UNESTABLISHED" and str(priority_obligation.get("status", "")) not in ["DUE", "PAID", "REFUSED"]: return false
+	if day in ["J13", "J14"] and priority != "UNESTABLISHED" and str(priority_obligation.get("status", "")) not in ["DUE", "PAID", "REFUSED"]: return false
 	if day == "J12" and str(value.get("day_status", "")) == "COMPLETE":
 		return presence != "UNESTABLISHED" and annexe != "UNESTABLISHED" and priority != "UNESTABLISHED" and not lav_trace.is_empty() and not annexe_trace.is_empty()
 	return true
 
 func _j13_records_consistent(value: Dictionary) -> bool:
 	var day := str(value.get("current_day", "")); var pivot := str(value.get("j13_pivot", "")); var outcome := str(value.get("j13_outcome", "UNESTABLISHED")); var trace_id := str(value.get("j13_j14_trace_id", "")); var restored_traces: Dictionary = value.get("traces", {}); var restored_knowledge: Dictionary = value.get("knowledge", {})
-	if day != "J13": return pivot == "" and outcome == "UNESTABLISHED" and trace_id == "" and not restored_traces.has("j13_pauline_private_version_01") and not restored_traces.has("j13_raphaelle_masked_version_01") and not restored_traces.has("j13_nico_alibi_or_hour_message_01")
+	if day not in ["J13", "J14"]: return pivot == "" and outcome == "UNESTABLISHED" and trace_id == "" and not restored_traces.has("j13_pauline_private_version_01") and not restored_traces.has("j13_raphaelle_masked_version_01") and not restored_traces.has("j13_nico_alibi_or_hour_message_01")
 	if pivot == "": return outcome == "UNESTABLISHED" and trace_id == ""
 	if restored_traces.has("j13_pauline_private_version_01") != restored_knowledge.has("fact_pauline_sent_private_j12_version"): return false
 	if restored_traces.has("j13_raphaelle_masked_version_01") != restored_knowledge.has("fact_raphaelle_selected_masked_version"): return false
 	if outcome != "UNESTABLISHED" and (trace_id == "" or not restored_traces.has(trace_id)): return false
 	if str(value.get("day_status", "")) == "COMPLETE": return outcome != "UNESTABLISHED" and trace_id != ""
+	return true
+
+func _j14_records_consistent(value: Dictionary) -> bool:
+	var day := str(value.get("current_day", ""))
+	var variant := str(value.get("j14_variant", ""))
+	var outcome := str(value.get("j14_outcome", "UNESTABLISHED"))
+	var witness := str(value.get("j14_witness", ""))
+	var restored_traces: Dictionary = value.get("traces", {})
+	var restored_knowledge: Dictionary = value.get("knowledge", {})
+	var restored_promises: Dictionary = value.get("promises", {})
+	if day != "J14":
+		return variant == "" and outcome == "UNESTABLISHED" and witness == "" and not restored_traces.has("j14_discovery_event_01") and not restored_knowledge.has("fact_witness_saw_limited_trace") and not restored_knowledge.has("fact_player_explanation_to_witness") and not restored_knowledge.has("fact_trace_controller_informed_of_audience_breach") and not restored_promises.has("j14_witness_clarification") and not restored_promises.has("j14_inform_trace_controller")
+	if variant == "": return outcome == "UNESTABLISHED" and witness == ""
+	if witness != ("Mathilde" if variant == "SANDRA" else "Marie"): return false
+	var discovery: Dictionary = restored_traces.get("j14_discovery_event_01", {})
+	var discovery_fact: Dictionary = restored_knowledge.get("fact_witness_saw_limited_trace", {})
+	if variant == "FALLBACK":
+		if not discovery.is_empty() or not discovery_fact.is_empty(): return false
+	else:
+		if discovery.is_empty() or discovery_fact.is_empty(): return false
+		if str(discovery.get("discovered_trace_id", "")) != str(value.get("j13_j14_trace_id", "")) or str(discovery_fact.get("source_ref", "")) != "j14_discovery_event_01": return false
+	if outcome == "UNESTABLISHED": return not restored_knowledge.has("fact_player_explanation_to_witness") and not restored_promises.has("j14_inform_trace_controller")
+	if not restored_knowledge.has("fact_player_explanation_to_witness"): return false
+	var notice: Dictionary = restored_promises.get("j14_inform_trace_controller", {})
+	if variant == "FALLBACK":
+		if not notice.is_empty() or restored_knowledge.has("fact_trace_controller_informed_of_audience_breach"): return false
+	else:
+		if notice.is_empty() or str(notice.get("status", "")) not in ["ACTIVE", "PAID"]: return false
+		if str(notice.get("status", "")) == "PAID" and not restored_knowledge.has("fact_trace_controller_informed_of_audience_breach"): return false
+		if str(notice.get("status", "")) == "ACTIVE" and restored_knowledge.has("fact_trace_controller_informed_of_audience_breach"): return false
+	if str(value.get("day_status", "")) == "COMPLETE" and variant != "FALLBACK" and str(notice.get("status", "")) != "PAID": return false
 	return true
