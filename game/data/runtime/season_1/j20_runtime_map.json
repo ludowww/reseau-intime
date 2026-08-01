@@ -1,0 +1,14 @@
+{
+  "implementation_status":"PLAYABLE",
+  "narrative_day_short":"Dim.",
+  "initial_time":"11:00",
+  "day_start":{"eyebrow":"DIMANCHE","title":"Ce que l’amitié peut porter","subtitle":"11:00","body":"Nico définit sa place sans devenir juge des autres relations.","action_label":"Continuer","transition_mode":"day_boundary"},
+  "conversation_paths":{"chapter_20_nico_position":"res://data/conversations/chapter_20_nico_position.json"},
+  "to_resolution":{"transition_id":"j20_to_resolution","mode":"CLOCK","to_time":"11:26","title":"Dimanche","subtitle":"Le fil retrouvé","body":"Nico demande ce que Player attend encore de lui."},
+  "to_invitation":{"transition_id":"j20_to_invitation","mode":"CLOCK","to_time":"18:57","title":"Dimanche soir","subtitle":"L’Annexe ferme à 21 h","body":"Une rencontre n’existe qu’après un choix réel."},
+  "to_meeting":{"transition_id":"j20_to_meeting","mode":"OFF_PHONE","to_time":"22:34","title":"Hors téléphone depuis 21 h 20","subtitle":"Petite salle","body":"Aucun dialogue oral n’est transcrit et aucune image n’est montrée sans permission."},
+  "day_close":{"transition_id":"j20_day_close","mode":"NIGHT","to_time":"22:40","title":"Fin du dimanche","subtitle":"La place de Nico est définie","body":"L’amitié ne sert plus d’alibi, d’archive ou de permission."},
+  "day_end":{"eyebrow":"FIN DU DIMANCHE","title":"Dimanche terminé","subtitle":"J20","body":"J21 recontextualisera une trace déjà établie.","action_label":"Continuer","transition_mode":"day_handoff","content_end":false,"next_day_presentation":{"eyebrow":"LUNDI","title":"La dernière photo change de sens","subtitle":"J21","body":"La finale sélectionne une trace existante sans nouveau menu de route.","action_label":"Continuer","transition_mode":"day_boundary"}},
+  "gallery_presentations":[],
+  "visual_variant_presentations":[]
+}

@@ -1,0 +1,9 @@
+import json,unittest
+from pathlib import Path
+R=Path(__file__).resolve().parents[1]
+class T(unittest.TestCase):
+ def test_contract(self):
+  runtime=json.loads((R/"game/data/runtime/season_1/j20_runtime_map.json").read_text(encoding="utf-8"));self.assertEqual("PLAYABLE",runtime["implementation_status"]);self.assertEqual("Dim.",runtime["narrative_day_short"])
+  state=(R/"game/scripts/runtime/season_1/Season1State.gd").read_text(encoding="utf-8");provider=(R/"game/scripts/runtime/season_1/J20RuntimeProvider.gd").read_text(encoding="utf-8");season=(R/"game/scripts/runtime/season_1/Season1RuntimeProvider.gd").read_text(encoding="utf-8")
+  self.assertIn("func select_j20_context",state);self.assertIn("func select_final_trace_after_j20",state);self.assertIn("fact_nico_friendship_position_defined",state);self.assertIn("func restore_snapshot",provider);self.assertIn("const SNAPSHOT_VERSION := 20",season);self.assertIn('"J20": j20_provider.snapshot()',season)
+if __name__=="__main__":unittest.main()
