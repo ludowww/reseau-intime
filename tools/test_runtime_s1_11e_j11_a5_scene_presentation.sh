@@ -17,7 +17,8 @@ GODOT_PROJECT_PATH="${GODOT_PROJECT_PATH:-game}"
   res://tests/RUNTIME_S1_11J11PlayableSmokeTest.tscn
 "${GODOT_BIN}" --headless --path "${GODOT_PROJECT_PATH}" \
   res://tests/RUNTIME_S1_11DGalleryParentSequencesSmokeTest.tscn
-"${GODOT_BIN}" --headless --path "${GODOT_PROJECT_PATH}" \
-  res://tests/T_UI_03CPhotoViewerSmokeTest.tscn
+"${GODOT_BIN}" --headless --path "${GODOT_PROJECT_PATH}" --resolution 720x1280 \
+  res://tests/T_UI_03CPhotoViewerSmokeTest.tscn -- \
+  "--demo-size=720x1280"
 
 echo "RUNTIME-S1-11E J11 A5 scene presentation: OK"

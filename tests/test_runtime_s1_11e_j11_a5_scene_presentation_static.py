@@ -35,6 +35,9 @@ class RuntimeS111EJ11A5ScenePresentationStaticTests(unittest.TestCase):
             "tools/test_runtime_s1_11e_j11_a5_scene_presentation.sh",
         ]:
             self.assertTrue((ROOT / relative).exists(), relative)
+        runner = self.read("tools/test_runtime_s1_11e_j11_a5_scene_presentation.sh")
+        self.assertIn("--resolution 720x1280", runner)
+        self.assertIn('"--demo-size=720x1280"', runner)
 
     def test_mathilde_has_three_explicit_ceiling_choices(self):
         data = self.load("game/data/conversations/chapter_11_mathilde_return.json")
