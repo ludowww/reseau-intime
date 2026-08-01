@@ -53,8 +53,8 @@ class TUI03CPhotoViewerStaticTests(unittest.TestCase):
         viewer = self.read("game/scripts/ui/gallery/PhotoViewer.gd")
         for token in [
             "signal close_requested", "signal current_photo_changed", "func configure(",
-            "sequence.is_empty()", "start_index < 0", 'expected_source != "messages" and expected_source != "gallery"',
-            'expected_source == "gallery"', 'presentation.get("character_id", "")',
+            "sequence.is_empty()", "start_index < 0", 'expected_source not in ["messages", "gallery", "scene"]',
+            'expected_source in ["gallery", "scene"]', 'presentation.get("character_id", "")',
             "IMAGE_RATIO := 0.75", "Control.FOCUS_NONE", "Control.FOCUS_ALL",
             'add_theme_stylebox_override("focus"', 'event.is_action_pressed("ui_cancel")',
             "show_previous()", "show_next()", "current_index - 1", "current_index + 1",
@@ -112,7 +112,9 @@ class TUI03CPhotoViewerStaticTests(unittest.TestCase):
         self.assertIn("active_tab != TAG_MESSAGES", message_gateway)
         self.assertIn('provenance.get("source_kind", "")', message_gateway)
         self.assertIn("active_tab != TAG_GALLERY", gallery_gateway)
-        self.assertIn("active_tab != requested_source", opener)
+        self.assertIn('requested_source not in [TAG_MESSAGES, TAG_GALLERY, "scene"]', opener)
+        self.assertIn('required_tab := TAG_MESSAGES if requested_source == "scene" else requested_source', opener)
+        self.assertIn("active_tab != required_tab", opener)
 
     def test_gallery_sequence_is_character_local_sorted_and_restored(self):
         gallery = self.read("game/scripts/ui/gallery/GalleryScreen.gd")

@@ -18,6 +18,16 @@ const SANDRA_IMAGE_REF := "S1_A3_J11_DPH_SANDRA_CHOSEN_IMAGE_01"
 const RAPHAELLE_RESULT_REF := "S1_A3_J11_DPH_RAPHAELLE_CHOSEN_RESULT_01"
 const MATHILDE_PARENT_ASSET := "S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01"
 const MARIE_PARENT_ASSET := "S1_A3_J11_SCN_MARIE_COUPLE_STATE_01"
+const MATHILDE_A5_ASSETS := [
+	"S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01_PROXIMITY",
+	"S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_CENTRAL_01",
+	"S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_AFTERCARE_01",
+]
+const MARIE_A5_ASSETS := [
+	"S1_A3_J11_SCN_MARIE_COUPLE_STATE_01_RECONNECTION",
+	"S1_A3_J11_SCN_MARIE_RECONQUEST_ADULT_PAYOFF_01",
+	"S1_A3_J11_SCN_MARIE_RECONQUEST_AFTERCARE_01",
+]
 
 var state
 var runtime_map: Dictionary = {}
@@ -32,6 +42,8 @@ var pending_choice_ids_by_thread: Dictionary = {}
 var pending_transition: Dictionary = {}
 var selection_audit: Dictionary = {}
 var presented_time_message_ids: Dictionary = {}
+var pending_scene_asset_ids: Array[String] = []
+var pending_scene_character_id := ""
 var phase := "day_start_pending"
 var current_time_minutes := -1
 var resume_after_transition := ""
@@ -63,6 +75,8 @@ func initialize(shared_state, cumulative_transcripts: Dictionary, cumulative_ids
 	pending_transition = {}
 	selection_audit = {}
 	presented_time_message_ids = {}
+	pending_scene_asset_ids = []
+	pending_scene_character_id = ""
 	phase = "day_start_pending"
 	resume_after_transition = ""
 	return true
@@ -96,6 +110,22 @@ func presentation_source() -> Dictionary:
 		"narrative_time": current_narrative_time_text(),
 		"narrative_time_minutes": current_time_minutes,
 		"implementation_status": "PLAYABLE",
+		"pending_scene_sequence": pending_scene_sequence(),
+	}
+
+func pending_scene_sequence() -> Dictionary:
+	if phase not in ["mathilde_scene_pending", "marie_scene_pending"]:
+		return {}
+	var sequence := _scene_presentations(pending_scene_asset_ids, pending_scene_character_id)
+	if sequence.size() != 3:
+		return {}
+	return {
+		"sequence": sequence,
+		"provenance": {
+			"source_kind": "scene",
+			"scene_phase": phase,
+			"character_id": pending_scene_character_id,
+		},
 	}
 
 func start_day() -> Dictionary:
@@ -174,7 +204,12 @@ func confirm_transition() -> Dictionary:
 				return {"accepted": false}
 			_enter_segment(MATHILDE_THREAD, "j11_mathilde_opening", "mathilde_incoming")
 			return _incoming_result(MATHILDE_THREAD)
-		"mathilde_off_phone", "mathilde_physical_off_phone":
+		"mathilde_off_phone":
+			return _resume_mathilde_after()
+		"mathilde_physical_off_phone":
+			if resume_after_transition == "mathilde_a5_scene":
+				resume_after_transition = ""
+				return _begin_scene_sequence("mathilde", MATHILDE_A5_ASSETS)
 			return _resume_mathilde_after()
 		"to_raphaelle":
 			if not state.establish_j11_raphaelle_result():
@@ -194,6 +229,9 @@ func confirm_transition() -> Dictionary:
 			_enter_segment(MARIE_THREAD, segment_id, "marie_incoming")
 			return _incoming_result(MARIE_THREAD)
 		"marie_off_phone":
+			if resume_after_transition == "marie_a5_scene":
+				resume_after_transition = ""
+				return _begin_scene_sequence("marie", MARIE_A5_ASSETS)
 			if resume_after_transition == "marie_non_adult_after":
 				resume_after_transition = ""
 				_enter_segment(MARIE_THREAD, "j11_marie_non_adult_after", "marie_after_incoming")
@@ -209,6 +247,19 @@ func confirm_transition() -> Dictionary:
 				TimelineState.mark_day_complete(11)
 			phase = "complete"
 			return {"accepted": true, "destination": "day_end", "day_end": runtime_map["day_end"].duplicate(true)}
+	return {"accepted": false}
+
+func confirm_scene_sequence() -> Dictionary:
+	if phase == "mathilde_scene_pending" and pending_scene_character_id == "mathilde" and pending_scene_asset_ids == MATHILDE_A5_ASSETS:
+		_complete_scene_sequence(MATHILDE_PARENT_ASSET)
+		_enter_segment(MATHILDE_THREAD, "j11_mathilde_physical_after", "mathilde_after_incoming")
+		return _incoming_result(MATHILDE_THREAD)
+	if phase == "marie_scene_pending" and pending_scene_character_id == "marie" and pending_scene_asset_ids == MARIE_A5_ASSETS:
+		if not state.resolve_j11_aftercare("aftercare_marie_j11", "PAID", "Marie et Player"):
+			return {"accepted": false}
+		_complete_scene_sequence(MARIE_PARENT_ASSET)
+		_schedule_day_close()
+		return _transition_result()
 	return {"accepted": false}
 
 func on_thread_returned(_thread_id: String) -> Dictionary:
@@ -245,6 +296,8 @@ func mark_thread_batch_presented(thread_id: String) -> bool:
 			phase = "sandra_choice"
 		"mathilde_incoming":
 			phase = "mathilde_choice"
+		"mathilde_ceiling_incoming":
+			phase = "mathilde_ceiling_choice"
 		"mathilde_after_incoming":
 			if pending_choice_ids_by_thread.get(MATHILDE_THREAD, []).is_empty():
 				_schedule_day_close()
@@ -337,6 +390,8 @@ func snapshot() -> Dictionary:
 		"presented_time_message_ids": presented_time_message_ids.duplicate(true),
 		"current_time_minutes": current_time_minutes,
 		"resume_after_transition": resume_after_transition,
+		"pending_scene_asset_ids": pending_scene_asset_ids.duplicate(),
+		"pending_scene_character_id": pending_scene_character_id,
 	}
 
 func restore_snapshot(value: Dictionary) -> bool:
@@ -345,12 +400,13 @@ func restore_snapshot(value: Dictionary) -> bool:
 	var allowed_phases := [
 		"day_start_pending", "p10_incoming", "p10_choice", "to_p11", "p11_incoming",
 		"to_sandra", "sandra_incoming", "sandra_choice", "to_mathilde", "mathilde_incoming",
-		"mathilde_choice", "mathilde_off_phone", "mathilde_physical_off_phone", "mathilde_after_incoming",
+		"mathilde_choice", "mathilde_ceiling_incoming", "mathilde_ceiling_choice", "mathilde_off_phone",
+		"mathilde_physical_off_phone", "mathilde_scene_pending", "mathilde_after_incoming",
 		"mathilde_after_choice", "to_raphaelle", "raphaelle_incoming", "raphaelle_choice",
 		"raphaelle_attraction_incoming", "raphaelle_attraction_choice", "raphaelle_meeting_incoming",
 		"raphaelle_meeting_choice", "raphaelle_meeting_off_phone", "raphaelle_after_incoming",
 		"to_nico", "nico_incoming", "nico_choice", "to_marie", "marie_incoming", "marie_choice",
-		"marie_off_phone", "marie_after_incoming", "day_close", "complete",
+		"marie_off_phone", "marie_scene_pending", "marie_after_incoming", "day_close", "complete",
 	]
 	if str(value.get("phase", "")) not in allowed_phases:
 		return false
@@ -360,7 +416,9 @@ func restore_snapshot(value: Dictionary) -> bool:
 	for key in ["unlocked_thread_ids", "gallery_asset_ids", "served_visual_beat_ids"]:
 		if typeof(value.get(key)) != TYPE_ARRAY:
 			return false
-	if str(value.get("resume_after_transition", "")) not in ["", "mathilde_look_after", "mathilde_proximity_after", "mathilde_physical_after", "marie_non_adult_after", "day_close"]:
+	if typeof(value.get("pending_scene_asset_ids", [])) != TYPE_ARRAY:
+		return false
+	if str(value.get("resume_after_transition", "")) not in ["", "mathilde_look_after", "mathilde_proximity_after", "mathilde_physical_after", "mathilde_a5_scene", "marie_a5_scene", "marie_non_adult_after", "day_close"]:
 		return false
 	var restored_time := int(value.get("current_time_minutes", -1))
 	if NARRATIVE_TIME.format_narrative_time(restored_time) == "":
@@ -377,6 +435,8 @@ func restore_snapshot(value: Dictionary) -> bool:
 	presented_time_message_ids = value["presented_time_message_ids"].duplicate(true)
 	current_time_minutes = restored_time
 	resume_after_transition = str(value["resume_after_transition"])
+	pending_scene_asset_ids.assign(value.get("pending_scene_asset_ids", []))
+	pending_scene_character_id = str(value.get("pending_scene_character_id", ""))
 	return _restored_phase_consistent()
 
 func presentation_count_by_id(id: String) -> int:
@@ -399,8 +459,13 @@ func _apply_state_choice(choice_id: String) -> bool:
 	if choice_id == "choice_j11_mathilde_distance":
 		return state.set_j11_mathilde_proximity("DISTANCE") and state.record_j11_choice(choice_id, [choice_id])
 	if choice_id == "choice_j11_mathilde_proximity":
-		var established: bool = state.establish_j11_mathilde_physical_event("MATHILDE_M_B2", true) if _mathilde_physical_eligible() else state.set_j11_mathilde_proximity("PROXIMITY_CONSENTED")
-		return established and state.record_j11_choice(choice_id, [choice_id])
+		return state.set_j11_mathilde_proximity("PROXIMITY_CONSENTED") and state.record_j11_choice(choice_id, [choice_id])
+	if choice_id == "choice_j11_mathilde_m_b3_accept":
+		return _mathilde_physical_eligible() and state.establish_j11_mathilde_physical_event("MATHILDE_M_B3", true) and state.record_j11_choice(choice_id, [choice_id])
+	if choice_id == "choice_j11_mathilde_m_b2_hold":
+		return _mathilde_physical_eligible() and state.establish_j11_mathilde_physical_event("MATHILDE_M_B2", true) and state.record_j11_choice(choice_id, [choice_id])
+	if choice_id == "choice_j11_mathilde_physical_stop":
+		return state.record_j11_choice(choice_id, [choice_id])
 	if choice_id in ["choice_j11_mathilde_after_no_definition", "choice_j11_mathilde_after_marie", "choice_j11_mathilde_after_repeat"]:
 		var resolution := "FAILED" if choice_id == "choice_j11_mathilde_after_repeat" else "PAID"
 		return state.resolve_j11_aftercare("aftercare_mathilde_j11", resolution, "Player") and state.record_j11_choice(choice_id, [choice_id])
@@ -440,15 +505,20 @@ func _advance_after_choice(choice_id: String) -> Dictionary:
 		resume_after_transition = "mathilde_look_after"
 		_schedule_transition("mathilde_off_phone")
 	elif choice_id == "choice_j11_mathilde_proximity":
-		if state.j11_physical_level == "MATHILDE_M_B2":
-			_append_segment_messages(MATHILDE_THREAD, "j11_mathilde_physical_entry")
-			_unlock_visual(MATHILDE_PARENT_ASSET)
-			resume_after_transition = "mathilde_physical_after"
-			_schedule_transition("mathilde_physical_off_phone")
+		if _mathilde_physical_eligible():
+			_enter_segment(MATHILDE_THREAD, "j11_mathilde_physical_entry", "mathilde_ceiling_incoming")
 		else:
 			_append_segment_messages(MATHILDE_THREAD, "j11_mathilde_proximity_entry")
 			resume_after_transition = "mathilde_proximity_after"
 			_schedule_transition("mathilde_off_phone")
+	elif choice_id == "choice_j11_mathilde_m_b3_accept":
+		resume_after_transition = "mathilde_a5_scene"
+		_schedule_transition("mathilde_physical_off_phone")
+	elif choice_id == "choice_j11_mathilde_m_b2_hold":
+		resume_after_transition = "mathilde_physical_after"
+		_schedule_transition("mathilde_physical_off_phone")
+	elif choice_id == "choice_j11_mathilde_physical_stop":
+		_schedule_day_close()
 	elif choice_id == "choice_j11_mathilde_distance" or choice_id.begins_with("choice_j11_mathilde_after_"):
 		_schedule_day_close()
 	elif choice_id == "choice_j11_raphaelle_work_person":
@@ -466,8 +536,7 @@ func _advance_after_choice(choice_id: String) -> Dictionary:
 	elif choice_id.ends_with("reconquest"):
 		if state.j11_physical_level == "MARIE_ADULT_RECONQUEST":
 			_append_segment_messages(MARIE_THREAD, "j11_marie_reconquest_adult")
-			_unlock_visual(MARIE_PARENT_ASSET)
-			resume_after_transition = "day_close"
+			resume_after_transition = "marie_a5_scene"
 		else:
 			_append_segment_messages(MARIE_THREAD, "j11_marie_reconquest_non_adult")
 			resume_after_transition = "marie_non_adult_after"
@@ -505,6 +574,71 @@ func _resume_mathilde_after() -> Dictionary:
 		return {"accepted": false}
 	_enter_segment(MATHILDE_THREAD, segment_id, "mathilde_after_incoming")
 	return _incoming_result(MATHILDE_THREAD)
+
+func _begin_scene_sequence(character_id: String, asset_ids: Array) -> Dictionary:
+	var sequence := _scene_presentations(asset_ids, character_id)
+	if sequence.size() != 3:
+		return {"accepted": false}
+	pending_scene_asset_ids.assign(asset_ids)
+	pending_scene_character_id = character_id
+	phase = "%s_scene_pending" % character_id
+	return {
+		"accepted": true,
+		"destination": "scene_sequence",
+		"sequence": sequence,
+		"provenance": {
+			"source_kind": "scene",
+			"scene_phase": phase,
+			"character_id": character_id,
+		},
+	}
+
+func _complete_scene_sequence(parent_asset_id: String) -> void:
+	for asset_id in pending_scene_asset_ids:
+		if not served_visual_beat_ids.has(asset_id):
+			served_visual_beat_ids.append(asset_id)
+	if not gallery_asset_ids.has(parent_asset_id):
+		gallery_asset_ids.append(parent_asset_id)
+	pending_scene_asset_ids = []
+	pending_scene_character_id = ""
+
+func _scene_presentations(asset_ids: Array, character_id: String) -> Array[Dictionary]:
+	var expected_name := ""
+	var expected_accent := ""
+	match character_id:
+		"mathilde":
+			expected_name = "Mathilde"
+			expected_accent = "#E070A8"
+		"marie":
+			expected_name = "Marie"
+			expected_accent = "#4F8BFF"
+	if expected_name == "" or asset_ids.size() != 3:
+		return []
+	var children: Dictionary = {}
+	for raw_child in runtime_map.get("gallery_children", []):
+		if raw_child is Dictionary:
+			children[str(raw_child.get("asset_id", ""))] = raw_child
+	var result: Array[Dictionary] = []
+	var captions := ["Entrée", "Centre", "Après-coup"]
+	for index in range(asset_ids.size()):
+		var asset_id := str(asset_ids[index])
+		var child: Dictionary = children.get(asset_id, {})
+		if child.is_empty() or str(child.get("character_id", "")) != character_id or str(child.get("source_kind", "")) != "gallery":
+			return []
+		result.append({
+			"photo_id": asset_id,
+			"visual_ref": asset_id,
+			"access_state": "UNLOCKED",
+			"source_kind": "scene",
+			"character_id": character_id,
+			"display_name": expected_name,
+			"accent_color": Color.from_string(expected_accent, Color.WHITE),
+			"context_label": "Scène vécue · %d/3" % (index + 1),
+			"timestamp": "",
+			"caption": captions[index],
+			"placeholder_label": str(child.get("placeholder_label", "Visuel canonique non produit")),
+		})
+	return result
 
 func _mathilde_physical_eligible() -> bool:
 	if str(selection_audit.get("advanced_ceiling", "")) != "PHYSICAL_IF_ALL_GATES":
@@ -557,7 +691,7 @@ func _schedule_day_close() -> void:
 
 func _phase_accepts_batch() -> bool:
 	return phase in [
-		"p10_incoming", "p11_incoming", "sandra_incoming", "mathilde_incoming", "mathilde_after_incoming",
+		"p10_incoming", "p11_incoming", "sandra_incoming", "mathilde_incoming", "mathilde_ceiling_incoming", "mathilde_after_incoming",
 		"raphaelle_incoming", "raphaelle_attraction_incoming", "raphaelle_meeting_incoming", "raphaelle_after_incoming",
 		"nico_incoming", "marie_incoming", "marie_after_incoming",
 	]
@@ -657,20 +791,20 @@ func _unlock_thread(id: String) -> void:
 	if not unlocked_thread_ids.has(id):
 		unlocked_thread_ids.append(id)
 
-func _unlock_visual(id: String) -> void:
-	if not gallery_asset_ids.has(id):
-		gallery_asset_ids.append(id)
-	if not served_visual_beat_ids.has(id):
-		served_visual_beat_ids.append(id)
-
 func _restored_phase_consistent() -> bool:
 	if phase == "day_start_pending":
-		return state.current_day == "J10" and state.day_status == "COMPLETE" and pending_transition.is_empty()
+		return state.current_day == "J10" and state.day_status == "COMPLETE" and pending_transition.is_empty() and pending_scene_asset_ids.is_empty() and pending_scene_character_id == ""
 	if state.current_day != "J11":
 		return false
 	if phase == "complete":
-		return state.day_status == "COMPLETE" and pending_transition.is_empty()
+		return state.day_status == "COMPLETE" and pending_transition.is_empty() and pending_scene_asset_ids.is_empty() and pending_scene_character_id == ""
 	if state.day_status != "ACTIVE":
+		return false
+	if phase == "mathilde_scene_pending":
+		return pending_transition.is_empty() and pending_scene_character_id == "mathilde" and pending_scene_asset_ids == MATHILDE_A5_ASSETS
+	if phase == "marie_scene_pending":
+		return pending_transition.is_empty() and pending_scene_character_id == "marie" and pending_scene_asset_ids == MARIE_A5_ASSETS
+	if not pending_scene_asset_ids.is_empty() or pending_scene_character_id != "":
 		return false
 	var transition_phases := ["to_p11", "to_sandra", "to_mathilde", "mathilde_off_phone", "mathilde_physical_off_phone", "to_raphaelle", "raphaelle_meeting_off_phone", "to_nico", "to_marie", "marie_off_phone", "day_close"]
 	return not pending_transition.is_empty() if phase in transition_phases else pending_transition.is_empty()

@@ -263,6 +263,7 @@ func _build_shell() -> void:
 	photo_viewer.close_requested.connect(_close_photo_viewer)
 	photo_viewer.current_photo_changed.connect(_on_photo_viewer_current_photo_changed)
 	messages_screen.photo_requested.connect(_on_message_photo_requested)
+	messages_screen.scene_sequence_requested.connect(_on_scene_sequence_requested)
 	messages_screen.screen_mode_changed.connect(_set_messages_surface_mode)
 	messages_screen.reading_speed_requested.connect(_cycle_reading_speed)
 	gallery_screen.photo_requested.connect(_on_gallery_photo_requested)
@@ -278,6 +279,11 @@ func _on_message_photo_requested(presentation: Dictionary, provenance: Dictionar
 	if _open_photo_viewer(sequence, 0, provenance) and runtime_provider != null:
 		runtime_provider.mark_photo_opened()
 
+func _on_scene_sequence_requested(sequence: Array[Dictionary], provenance: Dictionary) -> void:
+	if active_tab != TAG_MESSAGES or str(provenance.get("source_kind", "")) != "scene" or sequence.size() != 3:
+		return
+	_open_photo_viewer(sequence, 0, provenance)
+
 func _on_gallery_photo_requested(item_id: String) -> void:
 	if active_tab != TAG_GALLERY:
 		return
@@ -291,9 +297,10 @@ func _open_photo_viewer(sequence: Array[Dictionary], start_index: int, provenanc
 	if is_photo_viewer_active() or provenance.is_empty():
 		return false
 	var requested_source := str(provenance.get("source_kind", ""))
-	if requested_source != TAG_MESSAGES and requested_source != TAG_GALLERY:
+	if requested_source not in [TAG_MESSAGES, TAG_GALLERY, "scene"]:
 		return false
-	if active_tab != requested_source:
+	var required_tab := TAG_MESSAGES if requested_source == "scene" else requested_source
+	if active_tab != required_tab:
 		return false
 	if sequence.is_empty() or str(sequence[0].get("source_kind", "")) != requested_source:
 		return false
@@ -334,13 +341,17 @@ func _close_photo_viewer() -> void:
 	if not is_photo_viewer_active():
 		return
 	var saved_state := photo_viewer_state.duplicate(false)
+	var source := str(saved_state.get("source_kind", ""))
+	if source == "scene" and photo_viewer.current_index < photo_viewer.presentations.size() - 1:
+		return
+	if source == "scene" and not messages_screen.complete_runtime_scene_sequence():
+		return
 	var current_photo_id: String = photo_viewer.current_photo_id()
 	photo_viewer.visible = false
 	photo_viewer.reset_viewer()
 	shell_column.visible = true
 	photo_viewer_state = {}
 	messages_screen.set_notification_photo_viewer_blocked(false)
-	var source := str(saved_state.get("source_kind", ""))
 	var provenance: Dictionary = saved_state.get("provenance", {})
 	var focus_target: Variant = saved_state.get("focus_target")
 	if source == "messages":

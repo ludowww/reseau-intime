@@ -3,6 +3,8 @@ extends Node
 const SEASON_STATE := preload("res://scripts/runtime/season_1/Season1State.gd")
 const J11_PROVIDER := preload("res://scripts/runtime/season_1/J11RuntimeProvider.gd")
 const NARRATIVE_TIME := preload("res://scripts/runtime/season_1/NarrativeTime.gd")
+const PHOTO_VIEWER_SCENE := preload("res://scenes/portrait/gallery/PhotoViewer.tscn")
+const PORTRAIT_THEME := preload("res://scripts/ui/PortraitShellTheme.gd")
 
 const MARIE_THREAD := "thread_marie_private"
 const SANDRA_THREAD := "thread_sandra_private"
@@ -16,9 +18,11 @@ func _ready() -> void:
 	_exercise_p10_p11_priority_and_round_trip()
 	_exercise_sandra_removal()
 	_exercise_mathilde_physical_aftercare()
+	_exercise_mathilde_lower_ceilings()
 	_exercise_raphaelle_kiss()
 	_exercise_nico_guardrail()
 	_exercise_marie_adult_reconquest()
+	_exercise_marie_non_adult_fallback()
 	_exercise_respiration()
 	if failures.is_empty():
 		print("RUNTIME_S1_11_J11_PLAYABLE: OK")
@@ -65,14 +69,50 @@ func _exercise_mathilde_physical_aftercare() -> void:
 	_confirm_transition(provider)
 	_present_batch(provider, MATHILDE_THREAD)
 	_expect(bool(provider.apply_choice(MATHILDE_THREAD, "choice_j11_mathilde_proximity").get("accepted", false)), "Mathilde conditional proximity applies")
-	_expect(provider.state.j11_physical_level == "MATHILDE_M_B2", "eligible Mathilde route reaches only the bounded M-B2 ceiling")
-	_expect(provider.gallery_asset_ids.has("S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01"), "Mathilde physical event unlocks the existing parent sequence")
-	_confirm_transition(provider)
+	_expect(provider.state.j11_physical_level == "PROXIMITY_ONLY", "Mathilde proximity does not preselect a physical ceiling")
+	_present_batch(provider, MATHILDE_THREAD)
+	_expect(bool(provider.apply_choice(MATHILDE_THREAD, "choice_j11_mathilde_m_b3_accept").get("accepted", false)), "Mathilde M-B3 requires a second explicit choice")
+	_expect(provider.state.j11_physical_level == "MATHILDE_M_B3", "eligible Mathilde route reaches M-B3 only after explicit consent")
+	_expect(not provider.gallery_asset_ids.has("S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01"), "Mathilde sequence stays locked before presentation")
+	var scene_result := _confirm_transition(provider)
+	_expect(str(scene_result.get("destination", "")) == "scene_sequence" and scene_result.get("sequence", []).size() == 3, "Mathilde A5 presents an exact three-beat scene")
+	_exercise_scene_viewer(scene_result.get("sequence", []), "mathilde")
+	_expect_round_trip(provider, "Mathilde scene checkpoint")
+	_expect(bool(provider.confirm_scene_sequence().get("accepted", false)), "Mathilde scene completion resumes aftercare")
+	_expect(provider.gallery_asset_ids.has("S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01"), "Mathilde sequence unlocks only after presentation")
 	_present_batch(provider, MATHILDE_THREAD)
 	_expect(bool(provider.apply_choice(MATHILDE_THREAD, "choice_j11_mathilde_after_no_definition").get("accepted", false)), "Mathilde aftercare can be paid without demanding a definition")
 	_expect(str(provider.state.obligations["aftercare_mathilde_j11"].get("status", "")) == "PAID", "Mathilde aftercare is paid")
 	_confirm_transition(provider)
 	_expect(provider.phase == "complete", "Mathilde route completes J11")
+
+func _exercise_mathilde_lower_ceilings() -> void:
+	var b2 = _new_provider(_completed_j10_state("MATHILDE", "OUTFIT_PRECISE_NON_APPROPRIATIVE"))
+	b2.start_day()
+	_confirm_transition(b2)
+	_present_batch(b2, MATHILDE_THREAD)
+	b2.apply_choice(MATHILDE_THREAD, "choice_j11_mathilde_proximity")
+	_present_batch(b2, MATHILDE_THREAD)
+	_expect(bool(b2.apply_choice(MATHILDE_THREAD, "choice_j11_mathilde_m_b2_hold").get("accepted", false)), "Mathilde can hold at M-B2")
+	_expect(b2.state.j11_physical_level == "MATHILDE_M_B2", "M-B2 remains distinct from M-B3")
+	_expect(not b2.gallery_asset_ids.has("S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01"), "M-B2 never unlocks the M-B3 sequence")
+	_confirm_transition(b2)
+	_present_batch(b2, MATHILDE_THREAD)
+	b2.apply_choice(MATHILDE_THREAD, "choice_j11_mathilde_after_marie")
+	_confirm_transition(b2)
+	_expect(b2.phase == "complete", "M-B2 completes with paid aftercare")
+
+	var stopped = _new_provider(_completed_j10_state("MATHILDE", "OUTFIT_PRECISE_NON_APPROPRIATIVE"))
+	stopped.start_day()
+	_confirm_transition(stopped)
+	_present_batch(stopped, MATHILDE_THREAD)
+	stopped.apply_choice(MATHILDE_THREAD, "choice_j11_mathilde_proximity")
+	_present_batch(stopped, MATHILDE_THREAD)
+	_expect(bool(stopped.apply_choice(MATHILDE_THREAD, "choice_j11_mathilde_physical_stop").get("accepted", false)), "Mathilde progression can stop cleanly")
+	_expect(stopped.state.j11_physical_level == "PROXIMITY_ONLY" and not stopped.state.obligations.has("aftercare_mathilde_j11"), "clean stop creates no physical event or punitive obligation")
+	_expect(not stopped.gallery_asset_ids.has("S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01"), "clean stop unlocks no adult sequence")
+	_confirm_transition(stopped)
+	_expect(stopped.phase == "complete", "clean stop completes J11 without punishment")
 
 func _exercise_raphaelle_kiss() -> void:
 	var provider = _new_provider(_completed_j10_state("RAPHAELLE", "PROCESS_HELPED_VISIT_BOUNDED"))
@@ -114,10 +154,32 @@ func _exercise_marie_adult_reconquest() -> void:
 	var reconquest_result: Dictionary = provider.apply_choice(MARIE_THREAD, reconquest_choice)
 	_expect(bool(reconquest_result.get("accepted", false)), "Marie reconquest choice applies: %s / %s / %s" % [reconquest_choice, provider.phase, str(provider.choices_for(MARIE_THREAD))])
 	_expect(provider.state.j11_physical_level == "MARIE_ADULT_RECONQUEST", "Marie adult event requires the exact constructed predicate")
-	_expect(provider.gallery_asset_ids.has("S1_A3_J11_SCN_MARIE_COUPLE_STATE_01"), "Marie adult event unlocks the existing parent sequence")
-	_confirm_transition(provider)
+	_expect(not provider.gallery_asset_ids.has("S1_A3_J11_SCN_MARIE_COUPLE_STATE_01"), "Marie sequence stays locked before presentation")
+	var scene_result := _confirm_transition(provider)
+	_expect(str(scene_result.get("destination", "")) == "scene_sequence" and scene_result.get("sequence", []).size() == 3, "Marie A5 presents an exact three-beat scene")
+	_exercise_scene_viewer(scene_result.get("sequence", []), "marie")
+	_expect(bool(provider.confirm_scene_sequence().get("accepted", false)), "Marie scene completion pays aftercare")
+	_expect(provider.gallery_asset_ids.has("S1_A3_J11_SCN_MARIE_COUPLE_STATE_01"), "Marie sequence unlocks only after presentation")
+	_expect(str(provider.state.obligations["aftercare_marie_j11"].get("status", "")) == "PAID", "Marie scene pays its aftercare before J12")
 	_confirm_transition(provider)
 	_expect(provider.phase == "complete", "Marie route completes J11")
+
+func _exercise_marie_non_adult_fallback() -> void:
+	var state = _completed_j10_state("NONE", "ORDINARY_MEAL_JOINED")
+	state.marie_j09_presence_outcome = "presence_distracted"
+	state.couple_state = "BASELINE_SHARED_LIFE"
+	var provider = _new_provider(state)
+	provider.start_day()
+	_confirm_transition(provider)
+	_present_batch(provider, MARIE_THREAD)
+	var reconquest_choice := _choice_containing(provider, MARIE_THREAD, "reconquest")
+	_expect(bool(provider.apply_choice(MARIE_THREAD, reconquest_choice).get("accepted", false)), "Marie reconquest keeps its non-adult fallback")
+	_expect(provider.state.j11_physical_level == "NONE", "missing Marie gate cannot establish the adult event")
+	_expect(not provider.gallery_asset_ids.has("S1_A3_J11_SCN_MARIE_COUPLE_STATE_01"), "non-adult Marie fallback unlocks no A5 sequence")
+	_confirm_transition(provider)
+	_present_batch(provider, MARIE_THREAD)
+	_confirm_transition(provider)
+	_expect(provider.phase == "complete", "Marie non-adult fallback completes without punishment")
 
 func _exercise_respiration() -> void:
 	var provider = _new_provider(_completed_j10_state("SANDRA", "CAFE_HELD_CALM_PRESENCE"))
@@ -182,6 +244,22 @@ func _media_count(provider, media_ref: String) -> int:
 			if str(message.get("media_ref", "")) == media_ref:
 				count += 1
 	return count
+
+func _exercise_scene_viewer(raw_sequence: Array, character_id: String) -> void:
+	var sequence: Array[Dictionary] = []
+	for item in raw_sequence:
+		if item is Dictionary:
+			sequence.append(item)
+	var viewer = PHOTO_VIEWER_SCENE.instantiate()
+	add_child(viewer)
+	_expect(viewer.configure(sequence, 0, PORTRAIT_THEME.new()), "%s scene configures in PhotoViewer" % character_id)
+	_expect(viewer.source_kind() == "scene" and viewer.presentations.size() == 3, "%s scene remains non-diegetic and ordered" % character_id)
+	_expect(viewer.back_button.text == "Continuer" and viewer.back_button.disabled, "%s scene cannot be archived before all three beats" % character_id)
+	_expect(viewer.visual_label.text == "Visuel non livré" and not viewer.has_loaded_texture(), "%s scene uses the locked delivery fallback" % character_id)
+	viewer.show_next()
+	viewer.show_next()
+	_expect(viewer.current_index == 2 and not viewer.back_button.disabled, "%s scene enables continuation only on aftercare" % character_id)
+	viewer.queue_free()
 
 func _expect_round_trip(provider, label: String) -> void:
 	var provider_snapshot: Dictionary = provider.snapshot()

@@ -92,6 +92,8 @@ func commit_narrative_time(minutes: int) -> bool: return active_provider.commit_
 func gallery_source() -> Dictionary: return active_provider.gallery_source()
 func apply_choice(thread_id: String, choice_id: String) -> Dictionary: return active_provider.apply_choice(thread_id, choice_id)
 func confirm_transition() -> Dictionary: return active_provider.confirm_transition()
+func confirm_scene_sequence() -> Dictionary: return active_provider.confirm_scene_sequence() if active_day == "J11" else {"accepted": false}
+func pending_scene_sequence() -> Dictionary: return j11_provider.pending_scene_sequence() if active_day == "J11" and j11_provider != null else {}
 func mark_photo_opened() -> bool: return active_provider.mark_photo_opened() if active_day == "J01" else false
 func on_thread_returned(thread_id: String) -> Dictionary: return active_provider.on_thread_returned(thread_id) if active_day in ["J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14", "J15", "J16", "J17", "J18", "J19", "J20", "J21"] else {}
 func presentation_count_by_id(id: String) -> int: return active_provider.presentation_count_by_id(id) if active_day in ["J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14", "J15", "J16", "J17", "J18", "J19", "J20", "J21"] else _count_j01(id)

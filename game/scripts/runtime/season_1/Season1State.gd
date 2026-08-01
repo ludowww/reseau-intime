@@ -1243,7 +1243,7 @@ func set_j11_mathilde_proximity(state_value: String) -> bool:
 	return true
 
 func establish_j11_mathilde_physical_event(level: String, consent_current: bool) -> bool:
-	if current_day != "J11" or day_status != "ACTIVE" or j11_pivot != "MATHILDE" or mathilde_j11_state != "UNESTABLISHED":
+	if current_day != "J11" or day_status != "ACTIVE" or j11_pivot != "MATHILDE" or mathilde_j11_state not in ["UNESTABLISHED", "PROXIMITY_CONSENTED"]:
 		return false
 	if level not in ["MATHILDE_M_B2", "MATHILDE_M_B3"] or not consent_current:
 		return false

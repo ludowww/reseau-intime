@@ -3,6 +3,7 @@ extends Control
 class_name MessagesScreen
 
 signal photo_requested(presentation: Dictionary, provenance: Dictionary)
+signal scene_sequence_requested(sequence: Array[Dictionary], provenance: Dictionary)
 signal runtime_typing_started(thread_id: String, message_id: String, author_id: String)
 signal runtime_message_delivered(thread_id: String, message_id: String)
 signal screen_mode_changed(mode: String)
@@ -131,6 +132,7 @@ func _ready() -> void:
 	visibility_changed.connect(_on_visibility_changed)
 	if runtime_provider != null:
 		call_deferred("_resume_authoritative_transition_flow")
+		call_deferred("_resume_authoritative_scene_sequence")
 
 func focus_first_conversation() -> void:
 	if conversation_list != null and screen_mode == "list":
@@ -1094,6 +1096,12 @@ func _apply_time_passage_result(result: Dictionary, transition: Dictionary) -> v
 	refresh_from_runtime()
 	_refresh_runtime_gallery()
 	var destination := str(result.get("destination", ""))
+	if destination == "scene_sequence":
+		var sequence := _dictionary_array(result.get("sequence", []))
+		var provenance: Dictionary = result.get("provenance", {})
+		if not sequence.is_empty() and str(provenance.get("source_kind", "")) == "scene":
+			scene_sequence_requested.emit(sequence, provenance)
+		return
 	if destination == "day_transition" and result.has("transition"):
 		call_deferred("_start_time_passage_flow", result.get("transition", {}))
 		return
@@ -1110,6 +1118,29 @@ func _apply_time_passage_result(result: Dictionary, transition: Dictionary) -> v
 		var unlocked_thread := _thread_for(unlocked_id)
 		if not unlocked_thread.is_empty():
 			_show_notification(unlocked_thread, str(notification.get("body", "")), runtime_provider.current_narrative_time_text())
+
+func complete_runtime_scene_sequence() -> bool:
+	if runtime_provider == null:
+		return false
+	var result: Dictionary = runtime_provider.confirm_scene_sequence()
+	if not bool(result.get("accepted", false)):
+		return false
+	refresh_from_runtime()
+	_refresh_runtime_gallery()
+	if result.has("transition"):
+		call_deferred("_start_time_passage_flow", result.get("transition", {}))
+	else:
+		_refresh_after_clock_only(result)
+	return true
+
+func _resume_authoritative_scene_sequence() -> void:
+	if runtime_provider == null:
+		return
+	var pending: Dictionary = runtime_provider.pending_scene_sequence()
+	var sequence := _dictionary_array(pending.get("sequence", []))
+	var provenance: Dictionary = pending.get("provenance", {})
+	if sequence.size() == 3 and str(provenance.get("source_kind", "")) == "scene":
+		scene_sequence_requested.emit(sequence, provenance)
 
 func _refresh_after_clock_only(result: Dictionary) -> void:
 	if narrative_clock_animation_active or runtime_provider == null:
@@ -1178,6 +1209,12 @@ func _finish_runtime_off_phone_transition() -> void:
 	_set_gallery_navigation_blocked(false)
 	refresh_from_runtime()
 	_refresh_runtime_gallery()
+	if str(result.get("destination", "")) == "scene_sequence":
+		var sequence := _dictionary_array(result.get("sequence", []))
+		var provenance: Dictionary = result.get("provenance", {})
+		if sequence.size() == 3 and str(provenance.get("source_kind", "")) == "scene":
+			scene_sequence_requested.emit(sequence, provenance)
+		return
 	if str(result.get("destination", "")) == "list":
 		_set_screen_mode("list")
 		conversation_screen.visible = false

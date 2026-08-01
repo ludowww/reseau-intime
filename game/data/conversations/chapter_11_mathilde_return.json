@@ -61,10 +61,24 @@
     {"id": "j11_mathilde_physical_entry", "messages": [
       {"id": "msg_j11_mathilde_physical_001", "sender": "mathilde", "time_label": "21:12", "text": "Tu peux m’embrasser."},
       {"id": "msg_j11_mathilde_physical_002", "sender": "mathilde", "time_label": "21:12", "text": "Rien d’autre sans me demander."},
-      {"id": "msg_j11_mathilde_physical_player", "sender": "player", "time_label": "21:12", "text": "je t’embrasse seulement. si tu veux autre chose, tu me le dis. tu peux arrêter quand tu veux"},
-      {"id": "msg_j11_mathilde_physical_003", "sender": "mathilde", "time_label": "21:13", "text": "Oui."},
-      {"id": "msg_j11_mathilde_physical_004", "sender": "mathilde", "time_label": "21:14", "text": "Viens."}
-    ], "choices": []},
+      {"id": "msg_j11_mathilde_physical_003", "sender": "mathilde", "time_label": "21:13", "text": "Et... je veux aller plus loin que ça."},
+      {"id": "msg_j11_mathilde_physical_004", "sender": "mathilde", "time_label": "21:13", "text": "Je te dis ce que j’accepte au fur et à mesure. Tu ne complètes pas le reste tout seul."}
+    ], "choices": [
+      {"id": "choice_j11_mathilde_m_b3_accept", "text": "d’accord. tu décides chaque étape. si tu hésites, si tu changes d’avis ou si tu dis stop, on arrête", "next_messages": [
+        {"id": "msg_j11_mathilde_m_b3_001", "sender": "mathilde", "time_label": "21:14", "text": "Oui."},
+        {"id": "msg_j11_mathilde_m_b3_002", "sender": "mathilde", "time_label": "21:14", "text": "Et après je dors ailleurs comme prévu."},
+        {"id": "msg_j11_mathilde_m_b3_player", "sender": "player", "time_label": "21:14", "text": "compris"},
+        {"id": "msg_j11_mathilde_m_b3_003", "sender": "mathilde", "time_label": "21:15", "text": "Viens."}
+      ]},
+      {"id": "choice_j11_mathilde_m_b2_hold", "text": "je t’embrasse seulement. si tu veux autre chose, on en reparle une autre fois", "next_messages": [
+        {"id": "msg_j11_mathilde_m_b2_001", "sender": "mathilde", "time_label": "21:14", "text": "D’accord."},
+        {"id": "msg_j11_mathilde_m_b2_002", "sender": "mathilde", "time_label": "21:14", "text": "On reste exactement là."}
+      ]},
+      {"id": "choice_j11_mathilde_physical_stop", "text": "on s’arrête là. tu n’as rien à justifier", "next_messages": [
+        {"id": "msg_j11_mathilde_physical_stop_001", "sender": "mathilde", "time_label": "21:14", "text": "D’accord."},
+        {"id": "msg_j11_mathilde_physical_stop_002", "sender": "mathilde", "time_label": "21:14", "text": "Je dors ailleurs comme prévu."}
+      ]}
+    ]},
     {"id": "j11_mathilde_physical_after", "messages": [
       {"id": "msg_j11_mathilde_physical_after_001", "sender": "mathilde", "time_label": "21:51", "text": "Je suis arrivée."},
       {"id": "msg_j11_mathilde_physical_after_002", "sender": "mathilde", "time_label": "21:51", "text": "Je ne regrette pas."},

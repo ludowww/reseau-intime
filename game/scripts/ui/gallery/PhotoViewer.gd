@@ -38,7 +38,7 @@ func configure(sequence: Array[Dictionary], start_index: int, portrait_theme) ->
 		return false
 	var expected_source := str(sequence[start_index].get("source_kind", ""))
 	var expected_character := str(sequence[start_index].get("character_id", ""))
-	if expected_source != "messages" and expected_source != "gallery":
+	if expected_source not in ["messages", "gallery", "scene"]:
 		return false
 	for presentation in sequence:
 		var photo_id := str(presentation.get("photo_id", ""))
@@ -47,7 +47,7 @@ func configure(sequence: Array[Dictionary], start_index: int, portrait_theme) ->
 			return false
 		if str(presentation.get("access_state", "")) != "UNLOCKED":
 			return false
-		if expected_source == "gallery" and str(presentation.get("character_id", "")) != expected_character:
+		if expected_source in ["gallery", "scene"] and str(presentation.get("character_id", "")) != expected_character:
 			return false
 	if expected_source == "messages" and sequence.size() != 1:
 		return false
@@ -73,14 +73,14 @@ func reset_viewer() -> void:
 	next_button = null
 
 func show_previous() -> void:
-	if source_kind() != "gallery" or current_index <= 0:
+	if source_kind() not in ["gallery", "scene"] or current_index <= 0:
 		return
 	current_index = current_index - 1
 	_refresh()
 	current_photo_changed.emit(current_photo_id())
 
 func show_next() -> void:
-	if source_kind() != "gallery" or current_index >= presentations.size() - 1:
+	if source_kind() not in ["gallery", "scene"] or current_index >= presentations.size() - 1:
 		return
 	current_index = current_index + 1
 	_refresh()
@@ -111,7 +111,7 @@ func next_enabled() -> bool:
 	return next_visible() and not next_button.disabled
 
 func action_count() -> int:
-	return 1 if source_kind() == "messages" else 3 if source_kind() == "gallery" else 0
+	return 1 if source_kind() == "messages" else 3 if source_kind() in ["gallery", "scene"] else 0
 
 func visual_ratio() -> float:
 	var rect := visual_global_rect()
@@ -164,20 +164,22 @@ func displayed_texture_ratio() -> float:
 
 func focus_back() -> void:
 	if back_button != null:
-		back_button.grab_focus()
+		(back_button if not back_button.disabled else next_button).grab_focus()
 
 func handle_navigation_event(event: InputEvent) -> bool:
 	if not visible:
 		return false
 	if event.is_action_pressed("ui_cancel"):
+		if source_kind() == "scene" and current_index < presentations.size() - 1:
+			return true
 		close_requested.emit()
 		return true
 	if not event is InputEventKey or not event.pressed or event.echo:
 		return false
-	if source_kind() == "gallery" and event.keycode == KEY_LEFT:
+	if source_kind() in ["gallery", "scene"] and event.keycode == KEY_LEFT:
 		show_previous()
 		return true
-	if source_kind() == "gallery" and event.keycode == KEY_RIGHT:
+	if source_kind() in ["gallery", "scene"] and event.keycode == KEY_RIGHT:
 		show_next()
 		return true
 	return false
@@ -262,13 +264,16 @@ func _refresh() -> void:
 	context_label.text = context + (" · " + timestamp if timestamp != "" else "")
 	caption_label.text = str(presentation.get("caption", ""))
 	caption_label.visible = caption_label.text != ""
-	access_label.text = "Accessible"
+	access_label.text = "Moment vécu" if source_kind() == "scene" else "Accessible"
 	visual_panel.add_theme_stylebox_override("panel", PORTRAIT_THEME.button_style(Color(0.045, 0.06, 0.12), accent, 18))
-	var gallery_source := source_kind() == "gallery"
-	previous_button.visible = gallery_source
-	next_button.visible = gallery_source
-	previous_button.focus_mode = Control.FOCUS_ALL if gallery_source else Control.FOCUS_NONE
-	next_button.focus_mode = Control.FOCUS_ALL if gallery_source else Control.FOCUS_NONE
+	var sequence_source := source_kind() in ["gallery", "scene"]
+	var scene_source := source_kind() == "scene"
+	previous_button.visible = sequence_source
+	next_button.visible = sequence_source
+	previous_button.focus_mode = Control.FOCUS_ALL if sequence_source else Control.FOCUS_NONE
+	next_button.focus_mode = Control.FOCUS_ALL if sequence_source else Control.FOCUS_NONE
+	back_button.text = "Continuer" if scene_source else "Retour"
+	back_button.disabled = scene_source and current_index < presentations.size() - 1
 	var previous_had_focus := previous_button.has_focus()
 	var next_had_focus := next_button.has_focus()
 	previous_button.disabled = current_index <= 0
@@ -276,7 +281,10 @@ func _refresh() -> void:
 	if previous_button.disabled and previous_had_focus:
 		(next_button if not next_button.disabled else back_button).grab_focus()
 	if next_button.disabled and next_had_focus:
-		(previous_button if not previous_button.disabled else back_button).grab_focus()
+		if scene_source:
+			back_button.grab_focus()
+		else:
+			(previous_button if not previous_button.disabled else back_button).grab_focus()
 	call_deferred("_update_visual_size")
 
 func _update_visual_size() -> void:
