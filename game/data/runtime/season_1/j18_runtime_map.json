@@ -1,0 +1,12 @@
+{
+  "implementation_status":"PLAYABLE",
+  "narrative_day_short":"Ven.",
+  "initial_time":"18:30",
+  "day_start":{"eyebrow":"VENDREDI","title":"Sandra choisit ce qu’elle garde","subtitle":"18:30","body":"Garder une trace ne signifie pas garder un accès ouvert.","action_label":"Continuer","transition_mode":"day_boundary"},
+  "conversation_paths":{"chapter_18_sandra_resolution":"res://data/conversations/chapter_18_sandra_resolution.json"},
+  "to_resolution":{"transition_id":"j18_to_resolution","mode":"CLOCK","to_time":"18:47","title":"Vendredi","subtitle":"Le ticket et l’impression","body":"Sandra contrôle le maintien, le retrait et l’audience."},
+  "day_close":{"transition_id":"j18_day_close","mode":"NIGHT","to_time":"20:40","title":"Fin du vendredi","subtitle":"Sandra a choisi une forme unique.","body":"Jeff reste réel et aucune image de consolation n’apparaît."},
+  "day_end":{"eyebrow":"FIN DU VENDREDI","title":"Vendredi terminé","subtitle":"J18","body":"J19 résoudra prioritairement Pauline ou Raphaëlle.","action_label":"Continuer","transition_mode":"day_handoff","content_end":false,"next_day_presentation":{"eyebrow":"SAMEDI","title":"Ce que les versions privées deviennent","subtitle":"J19","body":"Pauline ou Raphaëlle obtient le premier plan développé.","action_label":"Continuer","transition_mode":"day_boundary"}},
+  "gallery_presentations":[],
+  "visual_variant_presentations":[]
+}

@@ -30,7 +30,7 @@ class RuntimeS115J15PlayableStaticTests(unittest.TestCase):
         self.assertFalse(j14["day_end"]["content_end"])
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
-        self.assertIn("const SNAPSHOT_VERSION := 17", season)
+        self.assertIn("const SNAPSHOT_VERSION := 18", season)
         self.assertIn("func _handoff_to_j15", season)
         provider = self.read("game/scripts/runtime/season_1/J15RuntimeProvider.gd")
         self.assertIn("func restore_snapshot", provider)

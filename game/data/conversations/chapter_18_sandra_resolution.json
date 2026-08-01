@@ -1,0 +1,76 @@
+{
+  "id": "chapter_18_sandra_resolution",
+  "chapter": 18,
+  "day": 18,
+  "title": "Sandra choisit ce qu’elle garde",
+  "app": "messages",
+  "segments": [
+    {
+      "id": "j18_resolution_intact",
+      "messages": [
+        {"id":"msg_j18_intact_001","sender":"sandra","time_label":"18:47","text":"Le ticket fantôme est revenu."},
+        {"id":"msg_j18_intact_002","sender":"sandra","time_label":"18:48","text":"Il a disparu quand j’ai voulu faire une capture."},
+        {"id":"msg_j18_intact_003","sender":"sandra","time_label":"18:48","text":"Très utile."},
+        {"id":"msg_j18_intact_004","sender":"sandra","time_label":"18:49","text":"L’imprimante fonctionnait, par contre."},
+        {"id":"msg_j18_intact_005","sender":"sandra","time_label":"18:50","text":"J’ai imprimé la vieille photo du déjeuner."},
+        {"id":"msg_j18_intact_006","sender":"sandra","time_label":"18:55","text":"Je dois décider ce que je garde de tout ça."}
+      ],
+      "choices": [
+        {"id":"choice_j18_recognize","text":"garde ce que tu veux garder. tu ne me dois ni la photo ni une suite","next_messages":[]},
+        {"id":"choice_j18_future","text":"j’aimerais qu’on se revoie. pas pour récupérer une image","next_messages":[]},
+        {"id":"choice_j18_minimize","text":"j’ai besoin de savoir si je compte encore pour toi","next_messages":[]}
+      ]
+    },
+    {
+      "id": "j18_resolution_removed",
+      "messages": [
+        {"id":"msg_j18_removed_001","sender":"sandra","time_label":"18:47","text":"J’ai imprimé la photo du déjeuner."},
+        {"id":"msg_j18_removed_002","sender":"sandra","time_label":"18:48","text":"Pas l’autre."},
+        {"id":"msg_j18_removed_003","sender":"sandra","time_label":"18:48","text":"Elle reste supprimée."},
+        {"id":"msg_j18_removed_004","sender":"sandra","time_label":"18:50","text":"La vieille photo ne me fait pas le même effet maintenant."},
+        {"id":"msg_j18_removed_005","sender":"sandra","time_label":"18:51","text":"Moi, un peu."}
+      ],
+      "choices": [
+        {"id":"choice_j18_recognize_removed","text":"garde ce que tu veux garder. tu ne me dois ni la photo ni une suite","next_messages":[]},
+        {"id":"choice_j18_future_removed","text":"j’aimerais qu’on se revoie. pas pour récupérer une image","next_messages":[]},
+        {"id":"choice_j18_minimize_removed","text":"tu as supprimé l’image. on ne peut pas laisser ça décider de tout","next_messages":[]}
+      ]
+    },
+    {
+      "id": "j18_resolution_compromised",
+      "messages": [
+        {"id":"msg_j18_compromised_001","sender":"sandra","time_label":"18:47","text":"J’ai imprimé la vieille photo."},
+        {"id":"msg_j18_compromised_002","sender":"sandra","time_label":"18:48","text":"Mauvaise idée, probablement."},
+        {"id":"msg_j18_compromised_003","sender":"sandra","time_label":"18:49","text":"Je pensais que je verrais seulement le déjeuner."},
+        {"id":"msg_j18_compromised_004","sender":"sandra","time_label":"18:50","text":"Maintenant je vois aussi tout ce qui s’est passé après."},
+        {"id":"msg_j18_compromised_005","sender":"sandra","time_label":"18:51","text":"L’autre image reste supprimée."},
+        {"id":"msg_j18_compromised_006","sender":"sandra","time_label":"18:52","text":"Je veux savoir si je te laisse encore une place là-dedans."}
+      ],
+      "choices": [
+        {"id":"choice_j18_recognize_compromised","text":"garde ce que tu veux garder. tu ne me dois ni la photo ni une suite","next_messages":[]},
+        {"id":"choice_j18_future_compromised","text":"j’aimerais qu’on se revoie. pas pour récupérer une image","next_messages":[]},
+        {"id":"choice_j18_minimize_compromised","text":"Mathilde l’a vue quelques secondes. ça ne devrait pas effacer tout le reste","next_messages":[]}
+      ]
+    },
+    {
+      "id": "j18_resolution_simple",
+      "messages": [
+        {"id":"msg_j18_simple_001","sender":"sandra","time_label":"18:47","text":"J’ai retrouvé la photo du déjeuner."},
+        {"id":"msg_j18_simple_002","sender":"sandra","time_label":"18:48","text":"Version papier."},
+        {"id":"msg_j18_simple_003","sender":"sandra","time_label":"18:48","text":"Très moderne."},
+        {"id":"msg_j18_simple_004","sender":"sandra","time_label":"18:50","text":"Et parce que le déjeuner était vrai."},
+        {"id":"msg_j18_simple_005","sender":"sandra","time_label":"18:51","text":"Même si on n’en fait rien d’autre."}
+      ],
+      "choices": [
+        {"id":"choice_j18_recognize_simple","text":"garde ce que tu veux garder. tu ne me dois ni la photo ni une suite","next_messages":[]},
+        {"id":"choice_j18_future_simple","text":"j’aimerais qu’on se revoie. pas pour récupérer une image","next_messages":[]},
+        {"id":"choice_j18_minimize_simple","text":"j’ai besoin de savoir si je compte encore pour toi","next_messages":[]}
+      ]
+    },
+    {"id":"j18_outcome_friendship","messages":[{"id":"msg_j18_friendship_001","sender":"sandra","time_label":"19:01","text":"Je sais."},{"id":"msg_j18_friendship_002","sender":"sandra","time_label":"19:05","text":"Je garde la photo."},{"id":"msg_j18_friendship_003","sender":"sandra","time_label":"19:05","text":"Dans le livre."},{"id":"msg_j18_friendship_004","sender":"sandra","time_label":"19:06","text":"Pas pour annoncer quoi que ce soit."}],"choices":[]},
+    {"id":"j18_outcome_confidence","messages":[{"id":"msg_j18_confidence_001","sender":"sandra","time_label":"19:01","text":"Je vais garder la vieille photo sur papier."},{"id":"msg_j18_confidence_002","sender":"sandra","time_label":"19:02","text":"L’autre reste dans notre fil."},{"id":"msg_j18_confidence_003","sender":"sandra","time_label":"19:03","text":"Pas les suivantes."},{"id":"msg_j18_confidence_004","sender":"sandra","time_label":"19:04","text":"Et je ne t’en envoie pas une nouvelle pour marquer le coup."}],"choices":[]},
+    {"id":"j18_outcome_protective","messages":[{"id":"msg_j18_protective_001","sender":"sandra","time_label":"19:01","text":"Merci."},{"id":"msg_j18_protective_002","sender":"sandra","time_label":"19:03","text":"Je garde la photo du déjeuner."},{"id":"msg_j18_protective_003","sender":"sandra","time_label":"19:03","text":"Pour moi."},{"id":"msg_j18_protective_004","sender":"sandra","time_label":"19:04","text":"Je ne garde pas l’autre image."}],"choices":[]},
+    {"id":"j18_outcome_broken","messages":[{"id":"msg_j18_broken_001","sender":"sandra","time_label":"19:01","text":"J’ai réfléchi."},{"id":"msg_j18_broken_002","sender":"sandra","time_label":"19:02","text":"Je garde la photo du déjeuner."},{"id":"msg_j18_broken_003","sender":"sandra","time_label":"19:03","text":"Je ne garde pas cet endroit-là."},{"id":"msg_j18_broken_004","sender":"sandra","time_label":"19:04","text":"Alors n’écris pas pour rendre la fermeture plus douce."}],"choices":[]}
+  ],
+  "debug_notes": "J18 canonique borné aux états déjà représentés par le runtime ; aucun payoff adulte ou visuel définitif n’est créé."
+}
