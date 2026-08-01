@@ -183,7 +183,7 @@ class RuntimeS110J10PlayableStaticTests(unittest.TestCase):
 
     def test_bounded_outcomes_and_only_authorized_relationship_changes(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
-        j10 = state.split("func begin_j10", 1)[1].split("func resolve_j07_morning_consequence", 1)[0]
+        j10 = state.split("func begin_j10", 1)[1].split("func begin_j11", 1)[0]
         for outcome in [
             "CAFE_HELD_CALM_PRESENCE",
             "CAFE_HELD_MISSING_NAMED",
@@ -232,14 +232,14 @@ class RuntimeS110J10PlayableStaticTests(unittest.TestCase):
         self.assertIn('"amends": "marie_j09_dinner_j10_2030"', block)
         self.assertIn('p09["status"] = "CANCELLED"', block)
         self.assertIn('"choice_j10_marie_friday_confirm_guided"', block)
-        j10 = state.split("func begin_j10", 1)[1].split("func resolve_j07_morning_consequence", 1)[0]
+        j10 = state.split("func begin_j10", 1)[1].split("func begin_j11", 1)[0]
         self.assertIn('"created_at": "J10 12:24"', j10)
         evening = j10.split("func apply_j10_evening_choice", 1)[1].split("func complete_j10", 1)[0]
         self.assertEqual(2, evening.count('p09["paid_or_closed_at"] = "J10 19:52"'))
 
     def test_only_mathilde_creates_the_single_trace_fact_pair(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
-        j10 = state.split("func begin_j10", 1)[1].split("func resolve_j07_morning_consequence", 1)[0]
+        j10 = state.split("func begin_j10", 1)[1].split("func begin_j11", 1)[0]
         self.assertEqual(1, j10.count('traces["j10_mathilde_outfit_choice_01"]'))
         self.assertEqual(1, j10.count('knowledge["fact_mathilde_chose_player_as_outfit_audience"]'))
         for token in [
@@ -310,10 +310,10 @@ class RuntimeS110J10PlayableStaticTests(unittest.TestCase):
     def test_snapshot_versions_handoff_and_legacy_j09_restore(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
-        self.assertIn("const SNAPSHOT_VERSION := 17", state)
-        self.assertIn("const SNAPSHOT_VERSION := 19", season)
-        self.assertIn("[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, SNAPSHOT_VERSION]", state)
-        self.assertIn("[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,SNAPSHOT_VERSION]", season)
+        self.assertIn("const SNAPSHOT_VERSION := 18", state)
+        self.assertIn("const SNAPSHOT_VERSION := 20", season)
+        self.assertIn("[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, SNAPSHOT_VERSION]", state)
+        self.assertIn("[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,SNAPSHOT_VERSION]", season)
         self.assertIn('version < 8 and str(value.get("current_day", "")) == "J10"', state)
         self.assertIn('version < 8 and str(value.get("active_day", "")) == "J09"', season)
         self.assertIn('version < 9 and str(value.get("active_day", "")) == "J10"', season)
