@@ -5,7 +5,7 @@ class_name J12RuntimeProvider
 const RUNTIME_MAP_PATH := "res://data/runtime/season_1/j12_runtime_map.json"
 const NARRATIVE_TIME := preload("res://scripts/runtime/season_1/NarrativeTime.gd")
 const RUNTIME_UNREAD := preload("res://scripts/runtime/season_1/RuntimeUnread.gd")
-const SNAPSHOT_VERSION := 1
+const SNAPSHOT_VERSION := 2
 
 const MARIE_THREAD := "thread_marie_private"
 const SANDRA_THREAD := "thread_sandra_private"
@@ -77,12 +77,18 @@ func presentation_source() -> Dictionary:
 func start_day() -> Dictionary:
 	if phase != "day_start_pending" or not state.begin_j12():
 		return {"accepted":false}
-	var aftercare: Dictionary = state.obligations.get("aftercare_mathilde_j11", {})
-	if str(aftercare.get("status", "")) == "FAILED":
+	var mathilde_aftercare: Dictionary = state.obligations.get("aftercare_mathilde_j11", {})
+	if str(mathilde_aftercare.get("status", "")) == "FAILED":
 		if not state.mark_j12_failed_aftercare_processed():
 			return {"accepted":false}
 		_enter_segment(MATHILDE_THREAD, "j12_mathilde_failed_aftercare", "mathilde_failed_incoming")
 		return _incoming_result(MATHILDE_THREAD)
+	if state.j11_pivot_outcome == "MARIE_ADULT_RECONQUEST":
+		var marie_aftercare: Dictionary = state.obligations.get("aftercare_marie_j11", {})
+		if state.j11_physical_level != "MARIE_ADULT_RECONQUEST" or str(marie_aftercare.get("status", "")) != "DUE":
+			return {"accepted":false}
+		_enter_segment(MARIE_THREAD, "j12_marie_morning_aftercare", "marie_aftercare_incoming")
+		return _incoming_result(MARIE_THREAD)
 	return _continue_morning()
 
 func confirm_day_transition() -> Dictionary: return start_day() if phase == "day_start_pending" else {"accepted":false}
@@ -141,8 +147,12 @@ func confirm_transition() -> Dictionary:
 		"to_after_separation":
 			if not state.establish_j12_priority_consequence(_priority_route()): return {"accepted":false}
 			var route := _priority_route()
+			var segment_id := _after_segment_for_route(route)
+			if segment_id == "":
+				_schedule_transition("day_close")
+				return _transition_result()
 			var thread_id := _thread_for_route(route)
-			_enter_segment(thread_id, "j12_after_%s" % route.to_lower(), "after_incoming")
+			_enter_segment(thread_id, segment_id, "after_incoming")
 			return _incoming_result(thread_id)
 		"day_close":
 			if not state.complete_j12(): return {"accepted":false}
@@ -170,6 +180,9 @@ func mark_thread_batch_presented(thread_id: String) -> bool:
 	if not _phase_accepts_batch() or not RUNTIME_UNREAD.incoming_batch_fully_presented(transcript_for(thread_id), presented_time_message_ids, 12): return false
 	match phase:
 		"mathilde_failed_incoming": return not _continue_morning().is_empty()
+		"marie_aftercare_incoming":
+			if not state.pay_j12_marie_aftercare(): return false
+			return not _continue_morning().is_empty()
 		"p11_incoming": phase = "p11_choice"
 		"p11_after_incoming": _schedule_transition("to_laverriere_plan")
 		"plan_incoming": phase = "plan_choice"
@@ -191,8 +204,8 @@ func snapshot() -> Dictionary:
 	return {"version":SNAPSHOT_VERSION,"phase":phase,"transcripts_by_thread":transcripts_by_thread.duplicate(true),"produced_message_ids":produced_message_ids.duplicate(true),"unlocked_thread_ids":unlocked_thread_ids.duplicate(),"gallery_asset_ids":gallery_asset_ids.duplicate(),"served_visual_beat_ids":served_visual_beat_ids.duplicate(),"pending_choice_ids_by_thread":pending_choice_ids_by_thread.duplicate(true),"pending_transition":pending_transition.duplicate(true),"presented_time_message_ids":presented_time_message_ids.duplicate(true),"current_time_minutes":current_time_minutes}
 
 func restore_snapshot(value: Dictionary) -> bool:
-	if int(value.get("version", -1)) != SNAPSHOT_VERSION: return false
-	var allowed := ["day_start_pending","mathilde_failed_incoming","p11_incoming","p11_choice","sandra_cafe_off_phone","p11_after_incoming","to_laverriere_plan","plan_incoming","plan_choice","to_laverriere_public","public_incoming","route_incoming","route_choice","to_laverriere_close","close_incoming","close_choice","to_annexe","annexe_incoming","remote_incoming","nico_incoming","nico_choice","to_after_separation","after_incoming","day_close","complete"]
+	if int(value.get("version", -1)) not in [1, SNAPSHOT_VERSION]: return false
+	var allowed := ["day_start_pending","mathilde_failed_incoming","marie_aftercare_incoming","p11_incoming","p11_choice","sandra_cafe_off_phone","p11_after_incoming","to_laverriere_plan","plan_incoming","plan_choice","to_laverriere_public","public_incoming","route_incoming","route_choice","to_laverriere_close","close_incoming","close_choice","to_annexe","annexe_incoming","remote_incoming","nico_incoming","nico_choice","to_after_separation","after_incoming","day_close","complete"]
 	if str(value.get("phase", "")) not in allowed: return false
 	for key in ["transcripts_by_thread","produced_message_ids","pending_choice_ids_by_thread","pending_transition","presented_time_message_ids"]:
 		if typeof(value.get(key)) != TYPE_DICTIONARY: return false
@@ -242,10 +255,23 @@ func _continue_after_public() -> void:
 			if str(trace.get("current_state", "")) != "REMOVED": segment_id = "j12_sandra_module"; thread_id = SANDRA_THREAD
 		"MATHILDE":
 			var aftercare: Dictionary = state.obligations.get("aftercare_mathilde_j11", {})
-			if str(aftercare.get("status", "")) != "FAILED" and state.mathilde_j11_state in ["PROXIMITY_CONSENTED","PHYSICAL_SECRET"]: segment_id = "j12_mathilde_module"; thread_id = MATHILDE_THREAD
+			if str(aftercare.get("status", "")) != "FAILED":
+				match state.j11_pivot_outcome:
+					"MATHILDE_LOOK_ONLY": segment_id = "j12_mathilde_look_module"
+					"MATHILDE_M_B1": segment_id = "j12_mathilde_m_b1_module"
+					"MATHILDE_M_B2":
+						if state.j11_physical_level == "MATHILDE_M_B2" and str(aftercare.get("status", "")) == "PAID": segment_id = "j12_mathilde_m_b2_module"
+					"MATHILDE_M_B3":
+						if state.j11_physical_level == "MATHILDE_M_B3" and str(aftercare.get("status", "")) == "PAID": segment_id = "j12_mathilde_m_b3_module"
+				if segment_id != "": thread_id = MATHILDE_THREAD
 		"RAPHAELLE": segment_id = "j12_raphaelle_module"; thread_id = RAPHAELLE_THREAD
 		"MARIE":
-			if state.j11_physical_level == "MARIE_ADULT_RECONQUEST": segment_id = "j12_marie_module"; thread_id = MARIE_THREAD
+			match state.j11_pivot_outcome:
+				"MARIE_ADULT_RECONQUEST":
+					if state.j11_physical_level == "MARIE_ADULT_RECONQUEST" and str(state.obligations.get("aftercare_marie_j11", {}).get("status", "")) == "PAID": segment_id = "j12_marie_module"
+				"MARIE_NON_ADULT_RECONNECTION": segment_id = "j12_marie_non_adult_module"
+				"MARIE_SEX_NOT_USED_AS_BANDAGE": segment_id = "j12_marie_no_bandage_module"
+			if segment_id != "": thread_id = MARIE_THREAD
 	if segment_id == "": _schedule_transition("to_laverriere_close")
 	else: _enter_segment(thread_id, segment_id, "route_incoming")
 
@@ -255,15 +281,44 @@ func _continue_after_annexe() -> void:
 
 func _priority_route() -> String:
 	var failed: Dictionary = state.obligations.get("aftercare_mathilde_j11", {})
-	if str(failed.get("status", "")) == "FAILED": return "NETWORK"
+	if str(failed.get("status", "")) == "FAILED": return "MATHILDE"
 	if state.j11_pivot == "SANDRA" and str(state.traces.get("j11_sandra_chosen_image_01", {}).get("current_state", "")) == "REMOVED": return "NETWORK"
-	if state.j11_pivot in ["SANDRA","MATHILDE","RAPHAELLE","NICO","MARIE"]: return state.j11_pivot
+	if state.j11_pivot == "MATHILDE":
+		if state.j11_pivot_outcome in ["MATHILDE_LOOK_ONLY","MATHILDE_M_B1","MATHILDE_CLEAN_STOP","MATHILDE_DISTANCE_RESTORED"]: return "MATHILDE"
+		if state.j11_pivot_outcome in ["MATHILDE_M_B2","MATHILDE_M_B3"] and state.j11_physical_level == state.j11_pivot_outcome and str(failed.get("status", "")) == "PAID": return "MATHILDE"
+		return "NETWORK"
+	if state.j11_pivot == "MARIE":
+		if state.j11_pivot_outcome == "MARIE_ADULT_RECONQUEST" and state.j11_physical_level == "MARIE_ADULT_RECONQUEST" and str(state.obligations.get("aftercare_marie_j11", {}).get("status", "")) == "PAID": return "MARIE"
+		if state.j11_pivot_outcome in ["MARIE_NON_ADULT_RECONNECTION","MARIE_SEX_NOT_USED_AS_BANDAGE","MARIE_HONEST_REFUSAL","MARIE_NO_RECONQUEST"]: return "MARIE"
+		return "NETWORK"
+	if state.j11_pivot in ["SANDRA","RAPHAELLE","NICO"]: return state.j11_pivot
 	return "NETWORK"
+
+func _after_segment_for_route(route: String) -> String:
+	if route == "MATHILDE":
+		if str(state.obligations.get("aftercare_mathilde_j11", {}).get("status", "")) == "FAILED": return ""
+		return str({
+			"MATHILDE_LOOK_ONLY":"j12_after_mathilde_look",
+			"MATHILDE_M_B1":"j12_after_mathilde_m_b1",
+			"MATHILDE_M_B2":"j12_after_mathilde_m_b2",
+			"MATHILDE_M_B3":"j12_after_mathilde",
+			"MATHILDE_CLEAN_STOP":"j12_after_mathilde_clean_stop",
+			"MATHILDE_DISTANCE_RESTORED":"",
+		}.get(state.j11_pivot_outcome, ""))
+	if route == "MARIE":
+		return str({
+			"MARIE_ADULT_RECONQUEST":"j12_after_marie",
+			"MARIE_NON_ADULT_RECONNECTION":"j12_after_marie_non_adult",
+			"MARIE_SEX_NOT_USED_AS_BANDAGE":"j12_after_marie_no_bandage",
+			"MARIE_HONEST_REFUSAL":"j12_after_marie_distance",
+			"MARIE_NO_RECONQUEST":"j12_after_marie_distance",
+		}.get(state.j11_pivot_outcome, ""))
+	return "j12_after_%s" % route.to_lower()
 
 func _thread_for_route(route: String) -> String:
 	return {"SANDRA":SANDRA_THREAD,"MATHILDE":MATHILDE_THREAD,"RAPHAELLE":RAPHAELLE_THREAD,"NICO":NICO_THREAD,"MARIE":MARIE_THREAD,"NETWORK":MARIE_THREAD}.get(route, MARIE_THREAD)
 
-func _phase_accepts_batch() -> bool: return phase in ["mathilde_failed_incoming","p11_incoming","p11_after_incoming","plan_incoming","public_incoming","route_incoming","close_incoming","annexe_incoming","remote_incoming","nico_incoming","after_incoming"]
+func _phase_accepts_batch() -> bool: return phase in ["mathilde_failed_incoming","marie_aftercare_incoming","p11_incoming","p11_after_incoming","plan_incoming","public_incoming","route_incoming","close_incoming","annexe_incoming","remote_incoming","nico_incoming","after_incoming"]
 func _schedule_transition(key: String) -> void: phase = key; pending_transition = _transition(key)
 func _transition(key: String) -> Dictionary:
 	var result: Dictionary = runtime_map.get(key, {}).duplicate(true); result["kind"] = key; result["from_time"] = current_narrative_time_text(); return result

@@ -35,6 +35,16 @@
         {"id":"msg_j12_mathilde_failed_003","sender":"mathilde","time_label":"09:07","text":"Et on ne recommence rien."}
       ],
       "choices": []
+    },
+    {
+      "id": "j12_marie_morning_aftercare",
+      "messages": [
+        {"id":"msg_j12_marie_aftercare_001","sender":"marie","time_label":"08:24","text":"Café dans dix minutes."},
+        {"id":"msg_j12_marie_aftercare_002","sender":"marie","time_label":"08:24","text":"Et je précise : hier soir ne te dispense pas d’être une personne ce matin."},
+        {"id":"msg_j12_marie_aftercare_player","sender":"player","time_label":"08:24","text":"j’arrive"},
+        {"id":"msg_j12_marie_aftercare_003","sender":"marie","time_label":"08:24","text":"Très bien."}
+      ],
+      "choices": []
     }
   ]
 }

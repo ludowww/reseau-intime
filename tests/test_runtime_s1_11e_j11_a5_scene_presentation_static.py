@@ -98,9 +98,12 @@ class RuntimeS111EJ11A5ScenePresentationStaticTests(unittest.TestCase):
 
     def test_marie_aftercare_and_mathilde_aftercare_resume_after_scene(self):
         completion = self.method(PROVIDER_PATH, "confirm_scene_sequence")
-        self.assertIn('resolve_j11_aftercare("aftercare_marie_j11", "PAID", "Marie et Player")', completion)
+        self.assertNotIn('resolve_j11_aftercare("aftercare_marie_j11"', completion)
         self.assertIn('"j11_mathilde_physical_after"', completion)
         self.assertIn("_schedule_day_close()", completion)
+        state_source = self.read(STATE_PATH)
+        self.assertIn("func pay_j12_marie_aftercare() -> bool", state_source)
+        self.assertIn('j11_pivot_outcome = "MARIE_ADULT_RECONQUEST"', state_source)
         state = self.method(STATE_PATH, "establish_j11_mathilde_physical_event")
         self.assertIn('mathilde_j11_state not in ["UNESTABLISHED", "PROXIMITY_CONSENTED"]', state)
         self.assertIn('level not in ["MATHILDE_M_B2", "MATHILDE_M_B3"]', state)

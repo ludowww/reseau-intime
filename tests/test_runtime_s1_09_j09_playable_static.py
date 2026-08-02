@@ -210,9 +210,9 @@ class RuntimeS109J09PlayableStaticTests(unittest.TestCase):
     def test_snapshot_versions_keep_j08_restore_and_add_j09_once(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
-        self.assertIn("const SNAPSHOT_VERSION := 19", state)
+        self.assertIn("const SNAPSHOT_VERSION := 20", state)
         self.assertIn("const SNAPSHOT_VERSION := 21", season)
-        self.assertIn("[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, SNAPSHOT_VERSION]", state)
+        self.assertIn("[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, SNAPSHOT_VERSION]", state)
         self.assertIn("[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,SNAPSHOT_VERSION]", season)
         self.assertIn('version < 7 and str(value.get("active_day", "")) == "J08"', season)
         self.assertIn('version < 8 and str(value.get("active_day", "")) == "J09"', season)

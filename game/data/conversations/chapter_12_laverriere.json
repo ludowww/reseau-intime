@@ -66,6 +66,51 @@
       ]
     },
     {
+      "id": "j12_mathilde_look_module",
+      "messages": [
+        {"id":"msg_j12_mathilde_look_module_001","sender":"mathilde","time_label":"20:22","text":"Tu peux arrêter de vérifier si je vais faire une scène."},
+        {"id":"msg_j12_mathilde_look_module_002","sender":"mathilde","time_label":"20:22","text":"Je regarde une exposition avec ma famille. C’est tout."}
+      ],
+      "choices": [
+        {"id":"choice_j12_mathilde_look_room","text":"d’accord. je te laisse profiter de la soirée","next_messages":[{"id":"msg_j12_mathilde_look_room_001","sender":"mathilde","time_label":"20:23","text":"Merci."}]},
+        {"id":"choice_j12_mathilde_look_ack","text":"compris. je n’ajoute rien à hier","next_messages":[{"id":"msg_j12_mathilde_look_ack_001","sender":"mathilde","time_label":"20:23","text":"Très bien."}]}
+      ]
+    },
+    {
+      "id": "j12_mathilde_m_b1_module",
+      "messages": [
+        {"id":"msg_j12_mathilde_m_b1_module_001","sender":"mathilde","time_label":"20:22","text":"On a dit que ça ne devenait pas une version permanente de nous."},
+        {"id":"msg_j12_mathilde_m_b1_module_002","sender":"mathilde","time_label":"20:22","text":"Tu peux donc arrêter de vérifier chaque chaise."}
+      ],
+      "choices": [
+        {"id":"choice_j12_mathilde_m_b1_room","text":"d’accord. je reste avec le groupe","next_messages":[{"id":"msg_j12_mathilde_m_b1_room_001","sender":"mathilde","time_label":"20:23","text":"Bien."}]},
+        {"id":"choice_j12_mathilde_m_b1_ack","text":"je vérifiais juste qu’on allait bien. maintenant j’arrête","next_messages":[{"id":"msg_j12_mathilde_m_b1_ack_001","sender":"mathilde","time_label":"20:23","text":"Ça suffit pour maintenant."}]}
+      ]
+    },
+    {
+      "id": "j12_mathilde_m_b2_module",
+      "messages": [
+        {"id":"msg_j12_mathilde_m_b2_module_001","sender":"mathilde","time_label":"20:22","text":"Hier s’est arrêté exactement là où on l’a décidé."},
+        {"id":"msg_j12_mathilde_m_b2_module_002","sender":"mathilde","time_label":"20:22","text":"Ce soir n’est pas une répétition."}
+      ],
+      "choices": [
+        {"id":"choice_j12_mathilde_m_b2_room","text":"d’accord. je reste avec le groupe","next_messages":[{"id":"msg_j12_mathilde_m_b2_room_001","sender":"mathilde","time_label":"20:23","text":"Merci."}]},
+        {"id":"choice_j12_mathilde_m_b2_ack","text":"je n’attends rien de plus ce soir","next_messages":[{"id":"msg_j12_mathilde_m_b2_ack_001","sender":"mathilde","time_label":"20:23","text":"Bien."}]}
+      ]
+    },
+    {
+      "id": "j12_mathilde_m_b3_module",
+      "messages": [
+        {"id":"msg_j12_mathilde_m_b3_module_001","sender":"mathilde","time_label":"20:22","text":"Ne me regarde pas comme si on avait décidé la suite."},
+        {"id":"msg_j12_mathilde_m_b3_module_player","sender":"player","time_label":"20:22","text":"d’accord"},
+        {"id":"msg_j12_mathilde_m_b3_module_002","sender":"mathilde","time_label":"20:22","text":"On a décidé hier. Pas aujourd’hui."}
+      ],
+      "choices": [
+        {"id":"choice_j12_mathilde_m_b3_room","text":"je te laisse vivre la soirée et je reste avec le groupe","next_messages":[{"id":"msg_j12_mathilde_m_b3_room_001","sender":"mathilde","time_label":"20:23","text":"Merci."}]},
+        {"id":"choice_j12_mathilde_m_b3_exit","text":"viens deux minutes dehors","next_messages":[{"id":"msg_j12_mathilde_m_b3_exit_001","sender":"mathilde","time_label":"20:23","text":"Non."},{"id":"msg_j12_mathilde_m_b3_exit_002","sender":"mathilde","time_label":"20:23","text":"Je ne vais pas quitter Marie et le groupe pour transformer ça en deuxième scène."}]}
+      ]
+    },
+    {
       "id": "j12_raphaelle_module",
       "messages": [
         {"id":"msg_j12_raphaelle_001","sender":"raphaelle","time_label":"20:22","text":"La version publique est simple."},
@@ -88,6 +133,27 @@
         {"id":"choice_j12_marie_join","text":"j’arrive","next_messages":[{"id":"msg_j12_marie_join_001","sender":"marie","time_label":"20:23","text":"Bien."}]},
         {"id":"choice_j12_marie_joke","text":"tu surveilles la composition maintenant","next_messages":[{"id":"msg_j12_marie_joke_001","sender":"marie","time_label":"20:23","text":"Oui."},{"id":"msg_j12_marie_joke_002","sender":"marie","time_label":"20:23","text":"Et toi tu évites une phrase simple."},{"id":"msg_j12_marie_joke_003","sender":"marie","time_label":"20:24","text":"Viens quand même."}]},
         {"id":"choice_j12_marie_distance","text":"je préfère rester derrière","next_messages":[{"id":"msg_j12_marie_distance_001","sender":"marie","time_label":"20:23","text":"D’accord."},{"id":"msg_j12_marie_distance_002","sender":"marie","time_label":"20:23","text":"Je ne te tire pas dans l’image."}]}
+      ]
+    },
+    {
+      "id": "j12_marie_non_adult_module",
+      "messages": [
+        {"id":"msg_j12_marie_non_adult_module_001","sender":"marie","time_label":"20:22","text":"Merci d’être là sans chercher à donner un sens à chaque geste."}
+      ],
+      "choices": [
+        {"id":"choice_j12_marie_non_adult_join","text":"j’arrive pour la photo","next_messages":[{"id":"msg_j12_marie_non_adult_join_001","sender":"marie","time_label":"20:23","text":"Bien."}]},
+        {"id":"choice_j12_marie_non_adult_distance","text":"je reste derrière et je vous laisse la place","next_messages":[{"id":"msg_j12_marie_non_adult_distance_001","sender":"marie","time_label":"20:23","text":"D’accord."}]}
+      ]
+    },
+    {
+      "id": "j12_marie_no_bandage_module",
+      "messages": [
+        {"id":"msg_j12_marie_no_bandage_module_001","sender":"marie","time_label":"20:22","text":"La différence que tu as faite hier tient encore aujourd’hui."},
+        {"id":"msg_j12_marie_no_bandage_module_002","sender":"marie","time_label":"20:22","text":"On n’a rien à prouver avec cette photo."}
+      ],
+      "choices": [
+        {"id":"choice_j12_marie_no_bandage_join","text":"j’arrive","next_messages":[{"id":"msg_j12_marie_no_bandage_join_001","sender":"marie","time_label":"20:23","text":"Très bien."}]},
+        {"id":"choice_j12_marie_no_bandage_distance","text":"je préfère rester derrière","next_messages":[{"id":"msg_j12_marie_no_bandage_distance_001","sender":"marie","time_label":"20:23","text":"D’accord."}]}
       ]
     },
     {

@@ -255,8 +255,6 @@ func confirm_scene_sequence() -> Dictionary:
 		_enter_segment(MATHILDE_THREAD, "j11_mathilde_physical_after", "mathilde_after_incoming")
 		return _incoming_result(MATHILDE_THREAD)
 	if phase == "marie_scene_pending" and pending_scene_character_id == "marie" and pending_scene_asset_ids == MARIE_A5_ASSETS:
-		if not state.resolve_j11_aftercare("aftercare_marie_j11", "PAID", "Marie et Player"):
-			return {"accepted": false}
 		_complete_scene_sequence(MARIE_PARENT_ASSET)
 		_schedule_day_close()
 		return _transition_result()
@@ -455,7 +453,7 @@ func _apply_state_choice(choice_id: String) -> bool:
 	if choice_id == "choice_j11_sandra_more":
 		return state.update_j11_sandra_image_access("removed") and state.record_j11_choice(choice_id, [choice_id])
 	if choice_id == "choice_j11_mathilde_look":
-		return state.record_j11_choice(choice_id, [choice_id])
+		return state.set_j11_semantic_outcome("MATHILDE_LOOK_ONLY") and state.record_j11_choice(choice_id, [choice_id])
 	if choice_id == "choice_j11_mathilde_distance":
 		return state.set_j11_mathilde_proximity("DISTANCE") and state.record_j11_choice(choice_id, [choice_id])
 	if choice_id == "choice_j11_mathilde_proximity":
@@ -465,7 +463,7 @@ func _apply_state_choice(choice_id: String) -> bool:
 	if choice_id == "choice_j11_mathilde_m_b2_hold":
 		return _mathilde_physical_eligible() and state.establish_j11_mathilde_physical_event("MATHILDE_M_B2", true) and state.record_j11_choice(choice_id, [choice_id])
 	if choice_id == "choice_j11_mathilde_physical_stop":
-		return state.record_j11_choice(choice_id, [choice_id])
+		return state.set_j11_semantic_outcome("MATHILDE_CLEAN_STOP") and state.record_j11_choice(choice_id, [choice_id])
 	if choice_id in ["choice_j11_mathilde_after_no_definition", "choice_j11_mathilde_after_marie", "choice_j11_mathilde_after_repeat"]:
 		var resolution := "FAILED" if choice_id == "choice_j11_mathilde_after_repeat" else "PAID"
 		return state.resolve_j11_aftercare("aftercare_mathilde_j11", resolution, "Player") and state.record_j11_choice(choice_id, [choice_id])
@@ -488,10 +486,12 @@ func _apply_state_choice(choice_id: String) -> bool:
 	if choice_id.begins_with("choice_j11_nico_"):
 		return state.record_j11_choice(choice_id, [choice_id])
 	if choice_id.ends_with("reconquest"):
-		var established: bool = state.establish_j11_marie_adult_event(true, true) if _marie_adult_eligible() else true
+		var established: bool = state.establish_j11_marie_adult_event(true, true) if _marie_adult_eligible() else state.set_j11_semantic_outcome("MARIE_NON_ADULT_RECONNECTION")
 		return established and state.record_j11_choice(choice_id, [choice_id])
-	if choice_id.ends_with("no_pansement") or choice_id.ends_with("refuse"):
-		return state.record_j11_choice(choice_id, [choice_id])
+	if choice_id.ends_with("no_pansement"):
+		return state.set_j11_semantic_outcome("MARIE_SEX_NOT_USED_AS_BANDAGE") and state.record_j11_choice(choice_id, [choice_id])
+	if choice_id.ends_with("refuse"):
+		return state.set_j11_semantic_outcome("MARIE_HONEST_REFUSAL") and state.record_j11_choice(choice_id, [choice_id])
 	return false
 
 func _advance_after_choice(choice_id: String) -> Dictionary:
