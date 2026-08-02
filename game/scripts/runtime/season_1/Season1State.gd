@@ -2,7 +2,7 @@ extends RefCounted
 
 class_name Season1State
 
-const SNAPSHOT_VERSION := 21
+const SNAPSHOT_VERSION := 22
 
 var current_day := "J01"
 var day_status := "ACTIVE"
@@ -916,13 +916,15 @@ func apply_j10_sandra_outcome(choice_id: String) -> bool:
 			"created_at": "J10 12:24",
 			"created_by": "Player",
 			"proposed_to": "Sandra",
-			"accepted_at": "",
-			"accepted_by_player": false,
+			"accepted_at": "", "accepted_by_player": false,
+			"counterparty_confirmed_at": "", "counterparty_confirmed_by": "",
 			"action_due": "Café au même endroit samedi si double confirmation",
-			"due_at": "",
-			"possible_due_at": "J12 11:00",
-			"confirmation_deadline": "J12 09:30",
+			"due_at": "J12 11:00",
+			"confirmation_deadline": "Sandra J11 18:00 puis Player J12 09:30",
+			"counterparty_confirmation_deadline": "J11 18:00",
+			"player_confirmation_deadline": "J12 09:30",
 			"status": "CONDITIONAL",
+			"paid_or_closed_at": "", "paid_or_closed_by": "", "outcome": "PENDING_DOUBLE_CONFIRMATION",
 			"related_scene": "J12_PRELUDE_SANDRA_CAFE_CONFIRMED",
 			"related_trace_ids": ["j01_sandra_lunch_memory_soft"],
 		}
@@ -1228,15 +1230,17 @@ func confirm_or_expire_j11_p11_counterparty(confirmed: bool) -> bool:
 	if current_day != "J11" or day_status != "ACTIVE":
 		return false
 	var p11: Dictionary = promises.get("sandra_cafe_saturday_1100", {})
-	if str(p11.get("status", "")) != "CONDITIONAL" or p11.has("counterparty_confirmed_at"):
+	if str(p11.get("status", "")) != "CONDITIONAL" or str(p11.get("counterparty_confirmed_at", "")) != "" or str(p11.get("counterparty_confirmed_by", "")) != "":
 		return false
 	if confirmed:
 		p11["counterparty_confirmed_at"] = "J11 17:44"
 		p11["counterparty_confirmed_by"] = "Sandra"
+		p11["outcome"] = "COUNTERPARTY_CONFIRMED"
 	else:
 		p11["status"] = "EXPIRED"
 		p11["paid_or_closed_at"] = "J11 18:00"
 		p11["paid_or_closed_by"] = "counterparty_confirmation_deadline"
+		p11["outcome"] = "EXPIRED_COUNTERPARTY_NOT_CONFIRMED"
 	promises["sandra_cafe_saturday_1100"] = p11
 	return true
 
@@ -1547,31 +1551,42 @@ func apply_j12_choice(choice_id: String) -> bool:
 			p11["status"] = "ACTIVE"
 			p11["accepted_at"] = "J12 09:19"
 			p11["accepted_by_player"] = true
+			p11["outcome"] = "ACCEPTED_BY_PLAYER"
 		else:
 			p11["status"] = "REFUSED"
 			p11["paid_or_closed_at"] = "J12 09:19"
 			p11["paid_or_closed_by"] = "Player"
+			p11["outcome"] = "REFUSED_BY_PLAYER"
 		promises["sandra_cafe_saturday_1100"] = p11
 	elif choice_id.begins_with("choice_j12_presence_"):
 		if j12_presence_choice != "UNESTABLISHED": return false
 		j12_presence_choice = {"choice_j12_presence_la":"L-A","choice_j12_presence_lb":"L-B","choice_j12_presence_lc":"L-C"}.get(choice_id, "")
 		if j12_presence_choice == "": return false
-		promises["marie_j12_laverriere_presence"] = {"promise_id":"marie_j12_laverriere_presence","promise_type":"PRESENCE","status":"ACTIVE","accepted_by_player":true,"outcome":j12_presence_choice,"due_at":"J12 22:15"}
+		var presence_due_at := str({"L-A":"J12 17:45","L-B":"J12 19:15","L-C":"J12 20:15–21:15"}[j12_presence_choice])
+		promises["marie_j12_laverriere_presence"] = {"promise_id":"marie_j12_laverriere_presence","promise_type":"PRESENCE","created_at":"J12 14:42","created_by":"Marie","proposed_to":"Player","accepted_at":"J12 14:45","accepted_by_player":true,"due_at":presence_due_at,"confirmation_deadline":"avant l’heure d’arrivée","status":"ACTIVE","paid_or_closed_at":"","paid_or_closed_by":"","outcome":j12_presence_choice,"related_scene":"S23 La Verrière puis L’Annexe","related_trace_ids":["j12_laverriere_public_group_set_01"]}
 	elif choice_id.begins_with("choice_j12_sandra_") or choice_id.begins_with("choice_j12_mathilde_") or choice_id.begins_with("choice_j12_raphaelle_") or choice_id.begins_with("choice_j12_marie_"):
 		if j12_private_outcome != "UNESTABLISHED": return false
-		j12_private_outcome = {
+		var private_outcome := str({
 			"choice_j12_sandra_clear": "SANDRA_RESPONSE_CLEAR",
 			"choice_j12_sandra_delay": "SANDRA_RESPONSE_DELAYED",
 			"choice_j12_sandra_exit": "SANDRA_EXIT_CLEAN",
 			"choice_j12_raphaelle_declined_hold": "RAPHAELLE_PUBLIC",
 			"choice_j12_raphaelle_boundary_hold": "RAPHAELLE_PUBLIC",
-		}.get(choice_id, choice_id.trim_prefix("choice_j12_").to_upper())
+		}.get(choice_id, choice_id.trim_prefix("choice_j12_").to_upper()))
+		if choice_id == "choice_j12_sandra_exit" and knowledge.has("fact_j12_unusual_behavior_observed"): return false
+		if choice_id.begins_with("choice_j12_sandra_") and not traces.has("j12_sandra_public_context_view_01") and not establish_j12_sandra_public_context_view(): return false
+		if choice_id == "choice_j12_sandra_exit" and not establish_j12_unusual_behavior("PLAYER_LEFT_ROOM_AT_LAVERRIERE_PUBLICATION", ["Marie"], choice_id): return false
+		j12_private_outcome = private_outcome
 	elif choice_id.begins_with("choice_j12_annexe_"):
 		if j12_annexe_choice != "UNESTABLISHED": return false
 		j12_annexe_choice = choice_id.trim_prefix("choice_j12_annexe_").to_upper()
-		promises["j12_annexe_continuation"] = {"promise_id":"j12_annexe_continuation","promise_type":"PRESENCE","status":"REFUSED" if j12_annexe_choice == "C12" else "ACTIVE","accepted_by_player":j12_annexe_choice != "C12","outcome":j12_annexe_choice,"due_at":"J12 23:15" if j12_annexe_choice == "B12" else "J12 00:00"}
+		var annexe_accepted := j12_annexe_choice != "C12"
+		promises["j12_annexe_continuation"] = {"promise_id":"j12_annexe_continuation","promise_type":"PRESENCE","created_at":"J12 22:22","created_by":"groupe La Verrière / Nico","proposed_to":"Player","accepted_at":"J12 22:22" if annexe_accepted else "","accepted_by_player":annexe_accepted,"due_at":"J12 22:50","confirmation_deadline":"avant le déplacement du groupe","status":"ACTIVE" if annexe_accepted else "REFUSED","paid_or_closed_at":"" if annexe_accepted else "J12 22:22","paid_or_closed_by":"" if annexe_accepted else "Player","outcome":j12_annexe_choice,"action_due":"rester jusqu’à minuit" if j12_annexe_choice == "A12" else ("rester jusqu’à 23:15" if j12_annexe_choice == "B12" else "refus explicite"),"related_scene":"continuation L’Annexe","related_trace_ids":["j12_annexe_public_group_set_01"]}
 	elif choice_id.begins_with("choice_j12_nico_"):
 		if j12_private_outcome != "UNESTABLISHED": return false
+		if j11_pivot_outcome == "NICO_RIVALRY_MAINTAINED":
+			if knowledge.has("fact_j12_unusual_behavior_observed"): return false
+			if not establish_j12_unusual_behavior("PLAYER_WATCHED_NICO_TALK_TO_MARIE", ["Nico"], choice_id): return false
 		j12_private_outcome = choice_id.trim_prefix("choice_j12_").to_upper()
 	else:
 		return false
@@ -1585,41 +1600,118 @@ func pay_j12_p11() -> bool:
 	p11["status"] = "PAID"
 	p11["paid_or_closed_at"] = "J12 11:30"
 	p11["paid_or_closed_by"] = "Player et Sandra hors téléphone"
+	p11["outcome"] = "CAFE_HELD"
 	promises["sandra_cafe_saturday_1100"] = p11
 	return true
 
+func expire_j12_p11_player_confirmation() -> bool:
+	if current_day != "J12" or day_status != "ACTIVE": return false
+	var p11: Dictionary = promises.get("sandra_cafe_saturday_1100", {})
+	if str(p11.get("status", "")) != "CONDITIONAL" or str(p11.get("counterparty_confirmed_by", "")) != "Sandra" or bool(p11.get("accepted_by_player", false)): return false
+	p11["status"] = "EXPIRED"; p11["paid_or_closed_at"] = "J12 09:30"; p11["paid_or_closed_by"] = "player_confirmation_deadline"; p11["outcome"] = "EXPIRED_PLAYER_NOT_CONFIRMED"
+	promises["sandra_cafe_saturday_1100"] = p11
+	return true
+
+func pay_j12_laverriere_presence() -> bool:
+	if current_day != "J12" or day_status != "ACTIVE": return false
+	var presence: Dictionary = promises.get("marie_j12_laverriere_presence", {})
+	if str(presence.get("status", "")) != "ACTIVE" or str(presence.get("outcome", "")) != j12_presence_choice: return false
+	presence["status"] = "PAID"; presence["paid_or_closed_at"] = "J12 21:15" if j12_presence_choice == "L-C" else "J12 22:15"; presence["paid_or_closed_by"] = "arrivée et durée réelles de Player"
+	promises["marie_j12_laverriere_presence"] = presence
+	return true
+
+func pay_j12_annexe_continuation() -> bool:
+	if current_day != "J12" or day_status != "ACTIVE" or j12_annexe_choice not in ["A12", "B12"]: return false
+	var annexe: Dictionary = promises.get("j12_annexe_continuation", {})
+	if str(annexe.get("status", "")) != "ACTIVE" or str(annexe.get("outcome", "")) != j12_annexe_choice: return false
+	annexe["status"] = "PAID"; annexe["paid_or_closed_at"] = "J12 22:50"; annexe["paid_or_closed_by"] = "arrivée de Player avec le groupe"
+	promises["j12_annexe_continuation"] = annexe
+	return true
+
 func establish_j12_laverriere_public_trace() -> bool:
-	if current_day != "J12" or day_status != "ACTIVE" or j12_presence_choice == "UNESTABLISHED" or traces.has("j12_laverriere_public_group_set_01"):
+	if current_day != "J12" or day_status != "ACTIVE" or j12_presence_choice == "UNESTABLISHED" or traces.has("j12_laverriere_public_group_set_01") or knowledge.has("fact_j12_laverriere_participants"):
 		return false
-	traces["j12_laverriere_public_group_set_01"] = {"trace_id":"j12_laverriere_public_group_set_01","trace_type":"PHOTO_SET","source_day":"J12","source_scene":"La Verrière","creator":"Élodie","subjects":["Marie","Player","Pauline","Bastien","Élodie"],"owner":"groupe photographié","initial_audience":["participants La Verrière"],"current_audience":["participants La Verrière"],"storage_location":"fil de groupe La Verrière","saving_rule":"COLLECTIVE_SELECTION","transfer_rule":"GROUP_CONSENT_REQUIRED","current_state":"PUBLIC_AUTHORIZED","knowledge_created":"fact_j12_laverriere_participants"}
-	knowledge["fact_j12_laverriere_participants"] = {"fact_id":"fact_j12_laverriere_participants","source_type":"PUBLIC_TRACE","source_ref":"j12_laverriere_public_group_set_01","initial_knowers":["Marie","Player","Pauline","Bastien","Élodie"],"certainty":"CONFIRMED","shareability":"PUBLIC_AUTHORIZED","source_day":"J12"}
+	var subjects := _j12_laverriere_subjects()
+	traces["j12_laverriere_public_group_set_01"] = {"trace_id":"j12_laverriere_public_group_set_01","trace_type":"PHOTO_SET","source_day":"J12","source_scene":"convergence La Verrière","creator":"Élodie","subjects":subjects.duplicate(),"owner":"La Verrière","initial_audience":subjects.duplicate(),"current_audience":subjects.duplicate(),"storage_location":"canal La Verrière nommé","saving_rule":"PUBLIC_SOURCE_RULES","transfer_rule":"PUBLIC_SOURCE_RULES","current_state":"PUBLIC_ACTIVE","knowledge_created":"fact_j12_laverriere_participants","eligible_for_j14":true,"eligible_for_j21":true,"player_present":true,"player_photographed":true}
+	knowledge["fact_j12_laverriere_participants"] = {"fact_id":"fact_j12_laverriere_participants","source_type":"PUBLIC_TRACE","source_ref":"j12_laverriere_public_group_set_01","initial_knowers":subjects.duplicate(),"current_knowers":subjects.duplicate(),"certainty":"OBSERVED","shareability":"PUBLIC","participants":subjects.duplicate(),"source_day":"J12"}
 	return true
 
 func establish_j12_annexe_public_trace() -> bool:
-	if current_day != "J12" or day_status != "ACTIVE" or j12_annexe_choice == "UNESTABLISHED" or traces.has("j12_annexe_public_group_set_01"):
+	if current_day != "J12" or day_status != "ACTIVE" or j12_annexe_choice == "UNESTABLISHED" or traces.has("j12_annexe_public_group_set_01") or knowledge.has("fact_j12_annexe_participants"):
 		return false
-	traces["j12_annexe_public_group_set_01"] = {"trace_id":"j12_annexe_public_group_set_01","trace_type":"PHOTO_SET","source_day":"J12","source_scene":"L’Annexe","creator":"Sophie","subjects":["Marie","Pauline","Bastien","Nico"],"owner":"groupe photographié","initial_audience":["participants L’Annexe"],"current_audience":["participants L’Annexe","Player"],"storage_location":"fil de groupe L’Annexe","saving_rule":"COLLECTIVE_SELECTION","transfer_rule":"GROUP_CONSENT_REQUIRED","current_state":"PUBLIC_AUTHORIZED","knowledge_created":"fact_j12_annexe_participants"}
-	knowledge["fact_j12_annexe_participants"] = {"fact_id":"fact_j12_annexe_participants","source_type":"PUBLIC_TRACE","source_ref":"j12_annexe_public_group_set_01","initial_knowers":["Marie","Pauline","Bastien","Nico","Player"],"certainty":"CONFIRMED","shareability":"PUBLIC_AUTHORIZED","source_day":"J12","player_present":j12_annexe_choice != "C12"}
+	var records := _j12_annexe_public_records()
+	if records.is_empty(): return false
+	traces["j12_annexe_public_group_set_01"] = records["trace"]
+	knowledge["fact_j12_annexe_participants"] = records["fact"]
 	return true
 
+func pay_and_establish_j12_annexe_arrival() -> bool:
+	if current_day != "J12" or day_status != "ACTIVE" or j12_annexe_choice not in ["A12", "B12"]: return false
+	if traces.has("j12_annexe_public_group_set_01") or knowledge.has("fact_j12_annexe_participants"): return false
+	var annexe: Dictionary = promises.get("j12_annexe_continuation", {})
+	if str(annexe.get("status", "")) != "ACTIVE" or str(annexe.get("outcome", "")) != j12_annexe_choice: return false
+	var records := _j12_annexe_public_records()
+	if records.is_empty(): return false
+	var paid_annexe := annexe.duplicate(true)
+	paid_annexe["status"] = "PAID"; paid_annexe["paid_or_closed_at"] = "J12 22:50"; paid_annexe["paid_or_closed_by"] = "arrivée de Player avec le groupe"
+	promises["j12_annexe_continuation"] = paid_annexe
+	traces["j12_annexe_public_group_set_01"] = records["trace"]
+	knowledge["fact_j12_annexe_participants"] = records["fact"]
+	return true
+
+func _j12_annexe_public_records() -> Dictionary:
+	if j12_annexe_choice not in ["A12", "B12", "C12"]: return {}
+	var subjects: Array = ["Marie", "Pauline", "Bastien", "Nico"]
+	if j12_annexe_choice in ["A12", "B12"]: subjects.append("Player")
+	var current_audience := subjects.duplicate()
+	if j12_annexe_choice == "C12": current_audience.append("Player")
+	return {
+		"trace":{"trace_id":"j12_annexe_public_group_set_01","trace_type":"PHOTO_SET","source_day":"J12","source_scene":"continuation sociale à L’Annexe","creator":"Sophie","subjects":subjects.duplicate(),"owner":"Sophie","initial_audience":subjects.duplicate(),"current_audience":current_audience.duplicate(),"storage_location":"fil social / dossier L’Annexe","saving_rule":"PUBLIC_SOURCE_RULES","transfer_rule":"PUBLIC_SOURCE_RULES","current_state":"PUBLIC_ACTIVE","knowledge_created":"fact_j12_annexe_participants","eligible_for_j14":true,"eligible_for_j21":true,"player_present":j12_annexe_choice != "C12","player_photographed":j12_annexe_choice != "C12","player_received_trace":true},
+		"fact":{"fact_id":"fact_j12_annexe_participants","source_type":"PUBLIC_TRACE","source_ref":"j12_annexe_public_group_set_01","initial_knowers":subjects.duplicate(),"current_knowers":current_audience.duplicate(),"certainty":"OBSERVED","shareability":"SAME_AUDIENCE_ONLY","participants":subjects.duplicate(),"source_day":"J12","player_present":j12_annexe_choice != "C12","player_received_trace":true},
+	}
+
+func establish_j12_sandra_public_context_view() -> bool:
+	if current_day != "J12" or day_status != "ACTIVE" or j11_pivot != "SANDRA" or j11_pivot_outcome not in ["SANDRA_RULE_CLARIFIED", "SANDRA_DESIRE_BOUNDED"]: return false
+	if traces.has("j12_sandra_public_context_view_01") or knowledge.has("fact_sandra_saw_public_j12_context"): return false
+	var public_trace: Dictionary = traces.get("j12_laverriere_public_group_set_01", {})
+	var private_trace: Dictionary = traces.get("j11_sandra_chosen_image_01", {})
+	if public_trace.is_empty() or str(public_trace.get("current_state", "")) != "PUBLIC_ACTIVE" or str(private_trace.get("current_state", "")) == "REMOVED": return false
+	var subjects: Array = public_trace.get("subjects", []).duplicate()
+	var audience: Array = public_trace.get("current_audience", []).duplicate()
+	if not audience.has("Sandra"): audience.append("Sandra")
+	traces["j12_sandra_public_context_view_01"] = {"trace_id":"j12_sandra_public_context_view_01","trace_type":"NOTIFICATION","source_day":"J12","source_scene":"Sandra absente voyant la publication La Verrière","creator":"canal public La Verrière","subjects":subjects,"owner":"source publique","initial_audience":audience.duplicate(),"current_audience":audience.duplicate(),"storage_location":"source publique La Verrière","saving_rule":"PUBLIC_SOURCE_RULES","transfer_rule":"PUBLIC_SOURCE_RULES","current_state":"ACTIVE","knowledge_created":"fact_sandra_saw_public_j12_context","eligible_for_j14":false,"eligible_for_j21":false,"player_present":subjects.has("Player")}
+	knowledge["fact_sandra_saw_public_j12_context"] = {"fact_id":"fact_sandra_saw_public_j12_context","source_type":"PUBLIC_TRACE","source_ref":"j12_sandra_public_context_view_01","initial_knowers":["Sandra"],"current_knowers":["Sandra"],"certainty":"OBSERVED","shareability":"PUBLIC_SOURCE_RULES","source_day":"J12"}
+	return true
+
+func establish_j12_unusual_behavior(observed_value: String, knowers: Array, source_event_id: String) -> bool:
+	if current_day != "J12" or day_status != "ACTIVE" or observed_value == "" or knowers.is_empty() or source_event_id == "" or knowledge.has("fact_j12_unusual_behavior_observed"): return false
+	knowledge["fact_j12_unusual_behavior_observed"] = {"fact_id":"fact_j12_unusual_behavior_observed","source_type":"DIRECT_OBSERVATION","source_ref":observed_value,"source_event_id":source_event_id,"value":observed_value,"initial_knowers":knowers.duplicate(),"current_knowers":knowers.duplicate(),"certainty":"OBSERVED","meaning_certainty":"INFERRED","shareability":"FACTUAL_ONLY","source_day":"J12"}
+	return true
+
+func _j12_laverriere_subjects() -> Array:
+	var subjects: Array = ["Marie", "Player", "Pauline", "Bastien", "Élodie"]
+	if j11_pivot == "MATHILDE" and str(obligations.get("aftercare_mathilde_j11", {}).get("status", "")) != "FAILED" and j11_pivot_outcome not in ["MATHILDE_DISTANCE_RESTORED", ""]: subjects.append("Mathilde")
+	if j11_pivot == "RAPHAELLE" and j11_pivot_outcome in ["FIRST_KISS", "KISS_DECLINED", "RESULT_SENT_ATTRACTION_NAMED", "RESULT_SENT_BOUNDARY_HELD"]: subjects.append("Raphaëlle")
+	return subjects
+
 func establish_j12_priority_consequence(route: String) -> bool:
-	if current_day != "J12" or day_status != "ACTIVE" or route not in ["SANDRA","MATHILDE","RAPHAELLE","NICO","MARIE","NETWORK"] or j12_priority_route != "UNESTABLISHED":
+	if current_day != "J12" or day_status != "ACTIVE" or route not in ["SANDRA","MATHILDE","RAPHAELLE","NICO","MARIE","NETWORK"] or j12_priority_route != "UNESTABLISHED" or obligations.has("j12_priority_consequence_j13"):
 		return false
+	var priority_contract := _j12_priority_contract(route, obligations)
+	if priority_contract.is_empty(): return false
 	j12_priority_route = route
-	var counterparty := str({"SANDRA":"Sandra","MATHILDE":"Mathilde","RAPHAELLE":"Raphaëlle","NICO":"Nico","MARIE":"Marie","NETWORK":"Marie"}.get(route, "Marie"))
-	var origin := "MATHILDE_HOUSEHOLD_AFTERCARE" if route == "MATHILDE" and str(obligations.get("aftercare_mathilde_j11", {}).get("status", "")) == "FAILED" else "%s_J11_CONSEQUENCE" % route
-	obligations["j12_priority_consequence_j13"] = {"obligation_id":"j12_priority_consequence_j13","obligation_type":"PRIORITY_CONSEQUENCE","created_at":"J12","concerned_people":["Player", counterparty],"due_before":"toute nouvelle opportunité J13","status":"DUE","paid_by":"","failure_effect":"la conséquence reste prioritaire","origin":origin}
+	priority_contract["status"] = "DUE"; priority_contract["paid_by"] = ""; priority_contract["paid_or_closed_at"] = ""
+	obligations["j12_priority_consequence_j13"] = priority_contract
 	return true
 
 func complete_j12() -> bool:
 	if current_day != "J12" or day_status != "ACTIVE" or not _j12_records_consistent(snapshot()): return false
 	var presence: Dictionary = promises.get("marie_j12_laverriere_presence", {})
-	if str(presence.get("status", "")) != "ACTIVE": return false
-	presence["status"] = "PAID"; presence["paid_or_closed_at"] = "J12 22:15"; presence["paid_or_closed_by"] = "Player"
-	promises["marie_j12_laverriere_presence"] = presence
+	if str(presence.get("status", "")) != "PAID": return false
 	var annexe: Dictionary = promises.get("j12_annexe_continuation", {})
-	if str(annexe.get("status", "")) == "ACTIVE": annexe["status"] = "PAID"; annexe["paid_or_closed_at"] = "J12 23:15" if j12_annexe_choice == "B12" else "J13 00:00"; annexe["paid_or_closed_by"] = "Player"
-	promises["j12_annexe_continuation"] = annexe
+	if str(annexe.get("status", "")) not in ["PAID", "REFUSED"]: return false
+	var p11: Dictionary = promises.get("sandra_cafe_saturday_1100", {})
+	if not p11.is_empty() and str(p11.get("status", "")) not in ["PAID", "REFUSED", "EXPIRED"]: return false
 	if not complete_conversation("chapter_12_laverriere", "marie", "network_pivot"): return false
 	return complete_day()
 
@@ -1643,10 +1735,12 @@ func apply_j13_choice(choice_id: String, pivot: String) -> bool:
 	if current_day != "J13" or day_status != "ACTIVE" or pivot != j13_pivot or j13_outcome != "UNESTABLISHED" or choice_id == "" or selected_choice_ids.has(choice_id): return false
 	var prefix: String = str({"PAULINE":"choice_j13_pauline_","RAPHAELLE":"choice_j13_raphaelle_","NICO":"choice_j13_nico_","SANDRA":"choice_j13_sandra_","MATHILDE":"choice_j13_mathilde_","MARIE":"choice_j13_marie_","RESPIRATION":"choice_j13_respiration_"}.get(pivot, ""))
 	if not choice_id.begins_with(str(prefix)): return false
+	var obligation: Dictionary = obligations.get("j12_priority_consequence_j13", {})
+	var expected_route := "NETWORK" if pivot in ["PAULINE", "RESPIRATION"] else pivot
+	if str(obligation.get("status", "")) != "DUE" or str(obligation.get("route", "")) != expected_route: return false
 	j13_outcome = choice_id.trim_prefix("choice_j13_").to_upper(); selected_choice_ids.append(choice_id)
 	var refused: bool = choice_id in ["choice_j13_raphaelle_product","choice_j13_raphaelle_insist_pressure","choice_j13_nico_alibi","choice_j13_sandra_more","choice_j13_mathilde_minimize","choice_j13_marie_proof"]
-	var obligation: Dictionary = obligations.get("j12_priority_consequence_j13", {})
-	if not obligation.is_empty(): obligation["status"] = "REFUSED" if refused else "PAID"; obligation["paid_by"] = "Player"; obligations["j12_priority_consequence_j13"] = obligation
+	obligation["status"] = "REFUSED" if refused else "PAID"; obligation["paid_by"] = "Player"; obligation["paid_or_closed_at"] = "J13 priority response"; obligations["j12_priority_consequence_j13"] = obligation
 	if choice_id == "choice_j13_pauline_refuse": _close_j13_trace("j13_pauline_private_version_01")
 	if choice_id == "choice_j13_raphaelle_product": _close_j13_trace("j13_raphaelle_masked_version_01")
 	if choice_id == "choice_j13_sandra_more":
@@ -2707,9 +2801,11 @@ func snapshot() -> Dictionary:
 
 func restore_snapshot(value: Dictionary) -> bool:
 	var version := int(value.get("version", -1))
-	if version not in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, SNAPSHOT_VERSION]:
+	if version not in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, SNAPSHOT_VERSION]:
 		return false
 	if str(value.get("current_day", "")) not in ["J01", "J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14", "J15", "J16", "J17", "J18", "J19", "J20", "J21"]:
+		return false
+	if not _snapshot_ledgers_have_dictionary_records(value):
 		return false
 	if version < 4 and str(value.get("current_day", "")) == "J06":
 		return false
@@ -2736,10 +2832,15 @@ func restore_snapshot(value: Dictionary) -> bool:
 		value = value.duplicate(true)
 		if not _migrate_r5a_j11_semantic_outcome(value):
 			return false
-	if version < SNAPSHOT_VERSION:
+	if version < 21:
 		if version >= 20:
 			value = value.duplicate(true)
 		if not _migrate_r5b_j11_semantic_outcome(value):
+			return false
+	if version < SNAPSHOT_VERSION:
+		if version >= 21:
+			value = value.duplicate(true)
+		if not _migrate_r5c_j12_registers(value):
 			return false
 		value["version"] = SNAPSHOT_VERSION
 		version = SNAPSHOT_VERSION
@@ -3067,6 +3168,140 @@ func _migrate_r5b_j11_semantic_outcome(value: Dictionary) -> bool:
 		return true
 	value["j11_pivot_outcome"] = inferred
 	return true
+
+func _migrate_r5c_j12_registers(value: Dictionary) -> bool:
+	for key in ["promises", "obligations", "traces", "knowledge"]:
+		if typeof(value.get(key, {})) != TYPE_DICTIONARY: return false
+	if typeof(value.get("selected_choice_ids", [])) != TYPE_ARRAY: return false
+	var restored_promises: Dictionary = value.get("promises", {})
+	var restored_obligations: Dictionary = value.get("obligations", {})
+	var restored_traces: Dictionary = value.get("traces", {})
+	var restored_knowledge: Dictionary = value.get("knowledge", {})
+	var choices: Array = value.get("selected_choice_ids", [])
+	var p11: Dictionary = restored_promises.get("sandra_cafe_saturday_1100", {})
+	if not p11.is_empty():
+		var p11_status := str(p11.get("status", ""))
+		if p11_status not in ["CONDITIONAL", "ACTIVE", "REFUSED", "EXPIRED", "PAID"]: return false
+		var p11_confirmed := choices.has("choice_j12_p11_confirm")
+		var p11_refused := choices.has("choice_j12_p11_refuse")
+		if p11_confirmed and p11_refused: return false
+		if p11_status in ["ACTIVE", "PAID"] and not p11_confirmed: return false
+		if p11_status == "REFUSED" and not p11_refused: return false
+		if p11_status in ["CONDITIONAL", "EXPIRED"] and (p11_confirmed or p11_refused): return false
+		if p11_status == "PAID" and (str(p11.get("paid_or_closed_at", "")) != "J12 11:30" or str(p11.get("paid_or_closed_by", "")) == ""): return false
+		if p11_status == "EXPIRED" and str(p11.get("paid_or_closed_at", "")) not in ["J11 18:00", "J12 09:30"]: return false
+		p11["promise_id"] = "sandra_cafe_saturday_1100"; p11["promise_type"] = "MEETING"; p11["created_at"] = "J10 12:24"; p11["created_by"] = "Player"; p11["proposed_to"] = "Sandra"
+		p11["accepted_at"] = "J12 09:19" if p11_confirmed else ""; p11["accepted_by_player"] = p11_confirmed; p11["action_due"] = "Café au même endroit samedi si double confirmation"; p11["due_at"] = "J12 11:00"
+		p11["confirmation_deadline"] = "Sandra J11 18:00 puis Player J12 09:30"; p11["counterparty_confirmation_deadline"] = "J11 18:00"; p11["player_confirmation_deadline"] = "J12 09:30"
+		p11["counterparty_confirmed_at"] = str(p11.get("counterparty_confirmed_at", "")); p11["counterparty_confirmed_by"] = str(p11.get("counterparty_confirmed_by", "")); p11["paid_or_closed_at"] = str(p11.get("paid_or_closed_at", "")); p11["paid_or_closed_by"] = str(p11.get("paid_or_closed_by", ""))
+		p11["outcome"] = {"CONDITIONAL":"COUNTERPARTY_CONFIRMED" if str(p11["counterparty_confirmed_by"]) == "Sandra" else "PENDING_DOUBLE_CONFIRMATION","ACTIVE":"ACCEPTED_BY_PLAYER","REFUSED":"REFUSED_BY_PLAYER","EXPIRED":"EXPIRED_COUNTERPARTY_NOT_CONFIRMED" if str(p11["paid_or_closed_at"]) == "J11 18:00" else "EXPIRED_PLAYER_NOT_CONFIRMED","PAID":"CAFE_HELD"}[p11_status]
+		p11["related_scene"] = "J12_PRELUDE_SANDRA_CAFE_CONFIRMED"; p11["related_trace_ids"] = ["j01_sandra_lunch_memory_soft"]
+		p11.erase("possible_due_at"); restored_promises["sandra_cafe_saturday_1100"] = p11
+	var day := str(value.get("current_day", ""))
+	if day not in ["J12", "J13", "J14", "J15", "J16", "J17", "J18", "J19", "J20", "J21"]:
+		value["promises"] = restored_promises; value["obligations"] = restored_obligations; value["traces"] = restored_traces; value["knowledge"] = restored_knowledge
+		return true
+	var presence := str(value.get("j12_presence_choice", "UNESTABLISHED"))
+	var presence_choices := {"L-A":"choice_j12_presence_la", "L-B":"choice_j12_presence_lb", "L-C":"choice_j12_presence_lc"}
+	if presence != "UNESTABLISHED":
+		if not presence_choices.has(presence) or not choices.has(presence_choices[presence]): return false
+		var old_presence: Dictionary = restored_promises.get("marie_j12_laverriere_presence", {})
+		var presence_status := str(old_presence.get("status", ""))
+		if presence_status not in ["ACTIVE", "PAID", "FAILED"]: return false
+		var presence_due := str({"L-A":"J12 17:45", "L-B":"J12 19:15", "L-C":"J12 20:15–21:15"}[presence])
+		var presence_closed := ""; var presence_closed_by := ""
+		if presence_status == "PAID": presence_closed = "J12 21:15" if presence == "L-C" else "J12 22:15"; presence_closed_by = "arrivée et durée réelles de Player"
+		elif presence_status == "FAILED":
+			presence_closed = str(old_presence.get("paid_or_closed_at", "")); presence_closed_by = str(old_presence.get("paid_or_closed_by", ""))
+			if presence_closed == "" or presence_closed_by == "": return false
+		restored_promises["marie_j12_laverriere_presence"] = {"promise_id":"marie_j12_laverriere_presence","promise_type":"PRESENCE","created_at":"J12 14:42","created_by":"Marie","proposed_to":"Player","accepted_at":"J12 14:45","accepted_by_player":true,"due_at":presence_due,"confirmation_deadline":"avant l’heure d’arrivée","status":presence_status,"paid_or_closed_at":presence_closed,"paid_or_closed_by":presence_closed_by,"outcome":presence,"related_scene":"S23 La Verrière puis L’Annexe","related_trace_ids":["j12_laverriere_public_group_set_01"]}
+	var annexe := str(value.get("j12_annexe_choice", "UNESTABLISHED"))
+	var annexe_choices := {"A12":"choice_j12_annexe_a12", "B12":"choice_j12_annexe_b12", "C12":"choice_j12_annexe_c12"}
+	if annexe != "UNESTABLISHED":
+		if not annexe_choices.has(annexe) or not choices.has(annexe_choices[annexe]): return false
+		var old_annexe: Dictionary = restored_promises.get("j12_annexe_continuation", {})
+		var annexe_status := str(old_annexe.get("status", ""))
+		if annexe_status not in ["ACTIVE", "PAID", "REFUSED", "FAILED"] or (annexe == "C12") != (annexe_status == "REFUSED"): return false
+		var annexe_accepted := annexe != "C12"
+		var annexe_closed := ""; var annexe_closed_by := ""
+		if annexe_status == "REFUSED": annexe_closed = "J12 22:22"; annexe_closed_by = "Player"
+		elif annexe_status in ["PAID", "FAILED"]:
+			annexe_closed = str(old_annexe.get("paid_or_closed_at", "")); annexe_closed_by = str(old_annexe.get("paid_or_closed_by", ""))
+			if annexe_closed == "" or annexe_closed_by == "": return false
+			if annexe_status == "PAID" and annexe_closed not in (["J12 22:50", "J13 00:00"] if annexe == "A12" else ["J12 22:50", "J12 23:15"]): return false
+		restored_promises["j12_annexe_continuation"] = {"promise_id":"j12_annexe_continuation","promise_type":"PRESENCE","created_at":"J12 22:22","created_by":"groupe La Verrière / Nico","proposed_to":"Player","accepted_at":"J12 22:22" if annexe_accepted else "","accepted_by_player":annexe_accepted,"due_at":"J12 22:50","confirmation_deadline":"avant le déplacement du groupe","status":annexe_status,"paid_or_closed_at":annexe_closed,"paid_or_closed_by":annexe_closed_by,"outcome":annexe,"action_due":"rester jusqu’à minuit" if annexe == "A12" else ("rester jusqu’à 23:15" if annexe == "B12" else "refus explicite"),"related_scene":"continuation L’Annexe","related_trace_ids":["j12_annexe_public_group_set_01"]}
+	if restored_traces.has("j12_laverriere_public_group_set_01"):
+		if presence == "UNESTABLISHED": return false
+		var old_lav_trace: Dictionary = restored_traces["j12_laverriere_public_group_set_01"]
+		if typeof(old_lav_trace.get("subjects", [])) != TYPE_ARRAY: return false
+		var lav_subjects: Array = old_lav_trace.get("subjects", []).duplicate()
+		for required_subject in ["Marie", "Player", "Pauline", "Bastien", "Élodie"]:
+			if not lav_subjects.has(required_subject): return false
+		restored_traces["j12_laverriere_public_group_set_01"] = {"trace_id":"j12_laverriere_public_group_set_01","trace_type":"PHOTO_SET","source_day":"J12","source_scene":"convergence La Verrière","creator":"Élodie","subjects":lav_subjects.duplicate(),"owner":"La Verrière","initial_audience":lav_subjects.duplicate(),"current_audience":lav_subjects.duplicate(),"storage_location":"canal La Verrière nommé","saving_rule":"PUBLIC_SOURCE_RULES","transfer_rule":"PUBLIC_SOURCE_RULES","current_state":"PUBLIC_ACTIVE","knowledge_created":"fact_j12_laverriere_participants","eligible_for_j14":true,"eligible_for_j21":true,"player_present":true,"player_photographed":true}
+		restored_knowledge["fact_j12_laverriere_participants"] = {"fact_id":"fact_j12_laverriere_participants","source_type":"PUBLIC_TRACE","source_ref":"j12_laverriere_public_group_set_01","initial_knowers":lav_subjects.duplicate(),"current_knowers":lav_subjects.duplicate(),"certainty":"OBSERVED","shareability":"PUBLIC","participants":lav_subjects.duplicate(),"source_day":"J12"}
+	if restored_traces.has("j12_annexe_public_group_set_01"):
+		if annexe == "UNESTABLISHED": return false
+		var annexe_subjects: Array = ["Marie", "Pauline", "Bastien", "Nico"]
+		if annexe in ["A12", "B12"]: annexe_subjects.append("Player")
+		var annexe_audience := annexe_subjects.duplicate()
+		if annexe == "C12": annexe_audience.append("Player")
+		restored_traces["j12_annexe_public_group_set_01"] = {"trace_id":"j12_annexe_public_group_set_01","trace_type":"PHOTO_SET","source_day":"J12","source_scene":"continuation sociale à L’Annexe","creator":"Sophie","subjects":annexe_subjects.duplicate(),"owner":"Sophie","initial_audience":annexe_subjects.duplicate(),"current_audience":annexe_audience.duplicate(),"storage_location":"fil social / dossier L’Annexe","saving_rule":"PUBLIC_SOURCE_RULES","transfer_rule":"PUBLIC_SOURCE_RULES","current_state":"PUBLIC_ACTIVE","knowledge_created":"fact_j12_annexe_participants","eligible_for_j14":true,"eligible_for_j21":true,"player_present":annexe != "C12","player_photographed":annexe != "C12","player_received_trace":true}
+		restored_knowledge["fact_j12_annexe_participants"] = {"fact_id":"fact_j12_annexe_participants","source_type":"PUBLIC_TRACE","source_ref":"j12_annexe_public_group_set_01","initial_knowers":annexe_subjects.duplicate(),"current_knowers":annexe_audience.duplicate(),"certainty":"OBSERVED","shareability":"SAME_AUDIENCE_ONLY","participants":annexe_subjects.duplicate(),"source_day":"J12","player_present":annexe != "C12","player_received_trace":true}
+	var private_outcome := str(value.get("j12_private_outcome", "UNESTABLISHED"))
+	var requires_t16 := private_outcome in ["SANDRA_RESPONSE_CLEAR", "SANDRA_RESPONSE_DELAYED", "SANDRA_EXIT_CLEAN"]
+	if restored_traces.has("j12_sandra_public_context_view_01") != restored_knowledge.has("fact_sandra_saw_public_j12_context"): return false
+	if requires_t16:
+		var lav_trace: Dictionary = restored_traces.get("j12_laverriere_public_group_set_01", {})
+		if lav_trace.is_empty() or str(value.get("j11_pivot", "")) != "SANDRA" or str(value.get("j11_pivot_outcome", "")) not in ["SANDRA_RULE_CLARIFIED", "SANDRA_DESIRE_BOUNDED"]: return false
+		var t16_subjects: Array = lav_trace.get("subjects", []).duplicate(); var t16_audience: Array = lav_trace.get("current_audience", []).duplicate()
+		if not t16_audience.has("Sandra"): t16_audience.append("Sandra")
+		restored_traces["j12_sandra_public_context_view_01"] = {"trace_id":"j12_sandra_public_context_view_01","trace_type":"NOTIFICATION","source_day":"J12","source_scene":"Sandra absente voyant la publication La Verrière","creator":"canal public La Verrière","subjects":t16_subjects,"owner":"source publique","initial_audience":t16_audience.duplicate(),"current_audience":t16_audience.duplicate(),"storage_location":"source publique La Verrière","saving_rule":"PUBLIC_SOURCE_RULES","transfer_rule":"PUBLIC_SOURCE_RULES","current_state":"ACTIVE","knowledge_created":"fact_sandra_saw_public_j12_context","eligible_for_j14":false,"eligible_for_j21":false,"player_present":t16_subjects.has("Player")}
+		restored_knowledge["fact_sandra_saw_public_j12_context"] = {"fact_id":"fact_sandra_saw_public_j12_context","source_type":"PUBLIC_TRACE","source_ref":"j12_sandra_public_context_view_01","initial_knowers":["Sandra"],"current_knowers":["Sandra"],"certainty":"OBSERVED","shareability":"PUBLIC_SOURCE_RULES","source_day":"J12"}
+	elif restored_traces.has("j12_sandra_public_context_view_01"): return false
+	var expected_f20 := _expected_j12_f20(value)
+	if expected_f20.has("invalid"): return false
+	if restored_knowledge.has("fact_j12_unusual_behavior_observed") and expected_f20.is_empty(): return false
+	if not expected_f20.is_empty(): restored_knowledge["fact_j12_unusual_behavior_observed"] = expected_f20
+	var priority := str(value.get("j12_priority_route", "UNESTABLISHED"))
+	var priority_obligation: Dictionary = restored_obligations.get("j12_priority_consequence_j13", {})
+	if priority == "UNESTABLISHED" and not priority_obligation.is_empty(): return false
+	if priority != "UNESTABLISHED":
+		if priority_obligation.is_empty() or priority not in ["SANDRA", "MATHILDE", "RAPHAELLE", "NICO", "MARIE", "NETWORK"]: return false
+		var priority_status := str(priority_obligation.get("status", "")); if priority_status not in ["DUE", "PAID", "REFUSED"]: return false
+		var priority_contract := _j12_priority_contract(priority, restored_obligations)
+		if priority_contract.is_empty() or str(priority_obligation.get("origin", priority_contract["origin"])) != str(priority_contract["origin"]): return false
+		priority_contract["status"] = priority_status; priority_contract["paid_by"] = str(priority_obligation.get("paid_by", "")); priority_contract["paid_or_closed_at"] = str(priority_obligation.get("paid_or_closed_at", ""))
+		restored_obligations["j12_priority_consequence_j13"] = priority_contract
+	value["promises"] = restored_promises; value["obligations"] = restored_obligations; value["traces"] = restored_traces; value["knowledge"] = restored_knowledge
+	return true
+
+func _snapshot_ledgers_have_dictionary_records(value: Dictionary) -> bool:
+	for ledger_key in ["promises", "obligations", "traces", "knowledge"]:
+		if not value.has(ledger_key): continue
+		if typeof(value[ledger_key]) != TYPE_DICTIONARY: return false
+		for record in value[ledger_key].values():
+			if typeof(record) != TYPE_DICTIONARY: return false
+	return true
+
+func _expected_j12_f20(value: Dictionary) -> Dictionary:
+	var choices: Array = value.get("selected_choice_ids", [])
+	var observed_value := ""; var knowers: Array = []; var source_event_id := ""
+	if choices.has("choice_j12_sandra_exit"):
+		observed_value = "PLAYER_LEFT_ROOM_AT_LAVERRIERE_PUBLICATION"; knowers = ["Marie"]; source_event_id = "choice_j12_sandra_exit"
+	elif str(value.get("j11_pivot_outcome", "")) == "NICO_RIVALRY_MAINTAINED" and str(value.get("j12_private_outcome", "")).begins_with("NICO_"):
+		for choice_id in ["choice_j12_nico_rivalry_leave", "choice_j12_nico_rivalry_joke", "choice_j12_nico_rivalry_exit"]:
+			if choices.has(choice_id):
+				if source_event_id != "": return {"invalid":true}
+				observed_value = "PLAYER_WATCHED_NICO_TALK_TO_MARIE"; knowers = ["Nico"]; source_event_id = choice_id
+	if observed_value == "": return {}
+	return {"fact_id":"fact_j12_unusual_behavior_observed","source_type":"DIRECT_OBSERVATION","source_ref":observed_value,"source_event_id":source_event_id,"value":observed_value,"initial_knowers":knowers.duplicate(),"current_knowers":knowers.duplicate(),"certainty":"OBSERVED","meaning_certainty":"INFERRED","shareability":"FACTUAL_ONLY","source_day":"J12"}
+
+func _j12_priority_contract(route: String, restored_obligations: Dictionary) -> Dictionary:
+	if route not in ["SANDRA", "MATHILDE", "RAPHAELLE", "NICO", "MARIE", "NETWORK"]: return {}
+	var counterparty := str({"SANDRA":"Sandra", "MATHILDE":"Mathilde", "RAPHAELLE":"Raphaëlle", "NICO":"Nico", "MARIE":"Marie", "NETWORK":"Marie"}[route])
+	var origin := "MATHILDE_HOUSEHOLD_AFTERCARE" if route == "MATHILDE" and str(restored_obligations.get("aftercare_mathilde_j11", {}).get("status", "")) == "FAILED" else "%s_J11_CONSEQUENCE" % route
+	var failure_effect := str({"SANDRA":"la confiance d’audience reste à réparer", "MATHILDE":"la règle du foyer reste prioritaire et la confiance demeure rompue", "RAPHAELLE":"l’accès privé reste refroidi ou fermé", "NICO":"le garde-fou ou la rivalité reste à clarifier sans utiliser Marie", "MARIE":"la conversation privée du couple reste due", "NETWORK":"l’image publique ne remplace pas la réponse vécue"}[route])
+	return {"obligation_id":"j12_priority_consequence_j13","obligation_type":"PRIORITY_CONSEQUENCE","created_at":"J12 00:28","concerned_people":["Player", counterparty],"due_before":"toute nouvelle opportunité J13","due_at":"J13 avant toute nouvelle opportunité","failure_effect":failure_effect,"origin":origin,"route":route}
 
 func _default_pauline_retained_frame(outcome: String) -> String:
 	return "FRAME_02" if outcome in ["FRAME_02_SELECTED", "FRAME_03_REQUESTED"] else "UNESTABLISHED"
@@ -3652,7 +3887,7 @@ func _j11_records_consistent(value: Dictionary) -> bool:
 	if (p11_confirmed_at == "") != (p11_confirmed_by == ""): return false
 	if p11_confirmed_at != "" and (p11_confirmed_at != "J11 17:44" or p11_confirmed_by != "Sandra"): return false
 	if current == "J11" and p11_confirmed_at != "" and str(p11.get("status", "")) != "CONDITIONAL": return false
-	if current == "J12" and p11_confirmed_at != "" and str(p11.get("status", "")) not in ["CONDITIONAL", "ACTIVE", "PAID", "REFUSED"]: return false
+	if current == "J12" and p11_confirmed_at != "" and str(p11.get("status", "")) not in ["CONDITIONAL", "ACTIVE", "PAID", "REFUSED", "EXPIRED"]: return false
 	for obligation_id in restored_obligations:
 		var obligation: Dictionary = restored_obligations[obligation_id]
 		if current in ["J12", "J13", "J14", "J15", "J16", "J17", "J18", "J19", "J20", "J21"] and obligation_id == "j12_priority_consequence_j13":
@@ -3705,25 +3940,97 @@ func _j12_records_consistent(value: Dictionary) -> bool:
 	var lav_trace: Dictionary = restored_traces.get("j12_laverriere_public_group_set_01", {})
 	var lav_fact: Dictionary = restored_knowledge.get("fact_j12_laverriere_participants", {})
 	if lav_trace.is_empty() != lav_fact.is_empty(): return false
-	if not lav_trace.is_empty() and (presence == "UNESTABLISHED" or str(lav_fact.get("source_ref", "")) != "j12_laverriere_public_group_set_01"): return false
+	if not lav_trace.is_empty():
+		if presence == "UNESTABLISHED" or str(lav_fact.get("source_ref", "")) != "j12_laverriere_public_group_set_01": return false
+		if str(lav_trace.get("creator", "")) != "Élodie" or str(lav_trace.get("owner", "")) != "La Verrière" or str(lav_trace.get("current_state", "")) != "PUBLIC_ACTIVE": return false
+		var lav_subjects: Array = lav_trace.get("subjects", [])
+		var unique_lav_subjects: Array = []
+		for lav_subject in lav_subjects:
+			if unique_lav_subjects.has(lav_subject): return false
+			unique_lav_subjects.append(lav_subject)
+		for required_lav_subject in ["Marie", "Player", "Pauline", "Bastien", "Élodie"]:
+			if not lav_subjects.has(required_lav_subject): return false
+		for lav_subject in unique_lav_subjects:
+			if lav_subject not in ["Marie", "Player", "Pauline", "Bastien", "Élodie", "Mathilde", "Raphaëlle"]: return false
+		if str(lav_trace.get("saving_rule", "")) != "PUBLIC_SOURCE_RULES" or str(lav_trace.get("transfer_rule", "")) != "PUBLIC_SOURCE_RULES" or not bool(lav_trace.get("eligible_for_j14", false)) or not bool(lav_trace.get("eligible_for_j21", false)): return false
+		if lav_trace.get("initial_audience", []) != lav_subjects or lav_trace.get("current_audience", []) != lav_subjects or lav_fact.get("participants", []) != lav_subjects: return false
+		if str(lav_fact.get("source_type", "")) != "PUBLIC_TRACE" or lav_fact.get("initial_knowers", []) != lav_subjects or lav_fact.get("current_knowers", []) != lav_subjects or str(lav_fact.get("certainty", "")) != "OBSERVED" or str(lav_fact.get("shareability", "")) != "PUBLIC": return false
 	var annexe_trace: Dictionary = restored_traces.get("j12_annexe_public_group_set_01", {})
 	var annexe_fact: Dictionary = restored_knowledge.get("fact_j12_annexe_participants", {})
 	if annexe_trace.is_empty() != annexe_fact.is_empty(): return false
-	if not annexe_trace.is_empty() and (annexe == "UNESTABLISHED" or str(annexe_fact.get("source_ref", "")) != "j12_annexe_public_group_set_01"): return false
+	if not annexe_trace.is_empty():
+		if annexe == "UNESTABLISHED" or str(annexe_fact.get("source_ref", "")) != "j12_annexe_public_group_set_01": return false
+		var expected_annexe_subjects: Array = ["Marie", "Pauline", "Bastien", "Nico"]
+		if annexe in ["A12", "B12"]: expected_annexe_subjects.append("Player")
+		var expected_annexe_audience := expected_annexe_subjects.duplicate()
+		if annexe == "C12": expected_annexe_audience.append("Player")
+		if str(annexe_trace.get("creator", "")) != "Sophie" or str(annexe_trace.get("owner", "")) != "Sophie" or str(annexe_trace.get("current_state", "")) != "PUBLIC_ACTIVE": return false
+		if str(annexe_trace.get("saving_rule", "")) != "PUBLIC_SOURCE_RULES" or str(annexe_trace.get("transfer_rule", "")) != "PUBLIC_SOURCE_RULES" or not bool(annexe_trace.get("eligible_for_j14", false)) or not bool(annexe_trace.get("eligible_for_j21", false)) or annexe_trace.get("subjects", []) != expected_annexe_subjects: return false
+		if annexe_trace.get("initial_audience", []) != expected_annexe_subjects or annexe_trace.get("current_audience", []) != expected_annexe_audience or annexe_fact.get("participants", []) != expected_annexe_subjects: return false
+		if str(annexe_fact.get("source_type", "")) != "PUBLIC_TRACE" or annexe_fact.get("initial_knowers", []) != expected_annexe_subjects or annexe_fact.get("current_knowers", []) != expected_annexe_audience or str(annexe_fact.get("certainty", "")) != "OBSERVED" or str(annexe_fact.get("shareability", "")) != "SAME_AUDIENCE_ONLY": return false
+		if bool(annexe_trace.get("player_present", false)) != (annexe != "C12") or bool(annexe_trace.get("player_photographed", false)) != (annexe != "C12") or not bool(annexe_trace.get("player_received_trace", false)): return false
 	var presence_promise: Dictionary = restored_promises.get("marie_j12_laverriere_presence", {})
 	if presence == "UNESTABLISHED" and not presence_promise.is_empty(): return false
-	if presence != "UNESTABLISHED" and (presence_promise.is_empty() or str(presence_promise.get("outcome", "")) != presence): return false
+	if presence != "UNESTABLISHED":
+		if presence_promise.is_empty() or str(presence_promise.get("outcome", "")) != presence or str(presence_promise.get("created_at", "")) != "J12 14:42" or str(presence_promise.get("created_by", "")) != "Marie" or not bool(presence_promise.get("accepted_by_player", false)): return false
+		if str(presence_promise.get("due_at", "")) != str({"L-A":"J12 17:45", "L-B":"J12 19:15", "L-C":"J12 20:15–21:15"}[presence]) or str(presence_promise.get("status", "")) not in ["ACTIVE", "PAID", "FAILED"]: return false
+		var presence_status := str(presence_promise.get("status", ""))
+		if presence_status == "ACTIVE" and (str(presence_promise.get("paid_or_closed_at", "")) != "" or str(presence_promise.get("paid_or_closed_by", "")) != ""): return false
+		if presence_status == "PAID" and (str(presence_promise.get("paid_or_closed_at", "")) != ("J12 21:15" if presence == "L-C" else "J12 22:15") or str(presence_promise.get("paid_or_closed_by", "")) != "arrivée et durée réelles de Player"): return false
+		if presence_status == "FAILED" and (str(presence_promise.get("paid_or_closed_at", "")) == "" or str(presence_promise.get("paid_or_closed_by", "")) == ""): return false
 	var annexe_promise: Dictionary = restored_promises.get("j12_annexe_continuation", {})
 	if annexe == "UNESTABLISHED" and not annexe_promise.is_empty(): return false
-	if annexe != "UNESTABLISHED" and (annexe_promise.is_empty() or str(annexe_promise.get("outcome", "")) != annexe): return false
+	if annexe != "UNESTABLISHED":
+		if annexe_promise.is_empty() or str(annexe_promise.get("outcome", "")) != annexe or str(annexe_promise.get("created_at", "")) != "J12 22:22" or str(annexe_promise.get("due_at", "")) != "J12 22:50": return false
+		if (annexe == "C12") != (str(annexe_promise.get("status", "")) == "REFUSED") or bool(annexe_promise.get("accepted_by_player", false)) != (annexe != "C12"): return false
+		var annexe_status := str(annexe_promise.get("status", ""))
+		if annexe_status not in ["ACTIVE", "PAID", "REFUSED", "FAILED"]: return false
+		if annexe_status == "ACTIVE" and (str(annexe_promise.get("paid_or_closed_at", "")) != "" or str(annexe_promise.get("paid_or_closed_by", "")) != ""): return false
+		if annexe_status == "PAID" and str(annexe_promise.get("paid_or_closed_at", "")) not in (["J12 22:50", "J13 00:00"] if annexe == "A12" else ["J12 22:50", "J12 23:15"]): return false
+		if annexe_status in ["PAID", "FAILED"] and str(annexe_promise.get("paid_or_closed_by", "")) == "": return false
+		if annexe_status == "REFUSED" and (str(annexe_promise.get("paid_or_closed_at", "")) != "J12 22:22" or str(annexe_promise.get("paid_or_closed_by", "")) != "Player"): return false
+	var p11: Dictionary = restored_promises.get("sandra_cafe_saturday_1100", {})
+	if not p11.is_empty():
+		if str(p11.get("due_at", "")) != "J12 11:00" or str(p11.get("confirmation_deadline", "")) != "Sandra J11 18:00 puis Player J12 09:30": return false
+		var p11_status := str(p11.get("status", ""))
+		var p11_confirm_choice: bool = value.get("selected_choice_ids", []).has("choice_j12_p11_confirm")
+		var p11_refuse_choice: bool = value.get("selected_choice_ids", []).has("choice_j12_p11_refuse")
+		if p11_status not in ["CONDITIONAL", "ACTIVE", "PAID", "REFUSED", "EXPIRED"] or (p11_confirm_choice and p11_refuse_choice): return false
+		if (p11_status in ["ACTIVE", "PAID"]) != p11_confirm_choice or (p11_status == "REFUSED") != p11_refuse_choice: return false
+		if bool(p11.get("accepted_by_player", false)) != (p11_status in ["ACTIVE", "PAID"]): return false
+		if p11_status == "PAID" and (str(p11.get("paid_or_closed_at", "")) != "J12 11:30" or str(p11.get("paid_or_closed_by", "")) != "Player et Sandra hors téléphone" or str(p11.get("outcome", "")) != "CAFE_HELD"): return false
+		if p11_status == "REFUSED" and (str(p11.get("paid_or_closed_at", "")) != "J12 09:19" or str(p11.get("outcome", "")) != "REFUSED_BY_PLAYER"): return false
+		if p11_status == "EXPIRED" and (str(p11.get("paid_or_closed_at", "")) not in ["J11 18:00", "J12 09:30"] or str(p11.get("paid_or_closed_by", "")) not in ["counterparty_confirmation_deadline", "player_confirmation_deadline"]): return false
+	var t16: Dictionary = restored_traces.get("j12_sandra_public_context_view_01", {})
+	var f21: Dictionary = restored_knowledge.get("fact_sandra_saw_public_j12_context", {})
+	if t16.is_empty() != f21.is_empty(): return false
+	var t16_required := private_outcome in ["SANDRA_RESPONSE_CLEAR", "SANDRA_RESPONSE_DELAYED", "SANDRA_EXIT_CLEAN"]
+	var t16_allowed_before_choice := day == "J12" and str(value.get("day_status", "")) == "ACTIVE" and private_outcome == "UNESTABLISHED" and j11_pivot_value == "SANDRA" and j11_outcome in ["SANDRA_RULE_CLARIFIED", "SANDRA_DESIRE_BOUNDED"] and not lav_trace.is_empty()
+	if t16_required and t16.is_empty(): return false
+	if not t16_required and not t16_allowed_before_choice and not t16.is_empty(): return false
+	if not t16.is_empty():
+		if str(t16.get("current_state", "")) != "ACTIVE" or str(t16.get("creator", "")) != "canal public La Verrière" or str(t16.get("owner", "")) != "source publique" or str(f21.get("source_ref", "")) != "j12_sandra_public_context_view_01": return false
+		if t16.get("subjects", []) != lav_trace.get("subjects", []) or t16.get("initial_audience", []) != t16.get("current_audience", []) or not t16.get("current_audience", []).has("Sandra") or bool(t16.get("eligible_for_j14", true)) or bool(t16.get("eligible_for_j21", true)): return false
+		if f21.get("initial_knowers", []) != ["Sandra"] or f21.get("current_knowers", []) != ["Sandra"] or str(f21.get("certainty", "")) != "OBSERVED" or str(f21.get("shareability", "")) != "PUBLIC_SOURCE_RULES": return false
+	var f20: Dictionary = restored_knowledge.get("fact_j12_unusual_behavior_observed", {})
+	var expected_f20 := _expected_j12_f20(value)
+	if expected_f20.is_empty() != f20.is_empty(): return false
+	if not f20.is_empty():
+		for f20_key in expected_f20:
+			if f20.get(f20_key) != expected_f20[f20_key]: return false
 	var priority_obligation: Dictionary = restored_obligations.get("j12_priority_consequence_j13", {})
 	if priority == "UNESTABLISHED" and not priority_obligation.is_empty(): return false
 	if priority != "UNESTABLISHED" and priority_obligation.is_empty(): return false
+	if priority != "UNESTABLISHED":
+		var expected_priority := _j12_priority_contract(priority, restored_obligations)
+		for priority_key in expected_priority:
+			if priority_obligation.get(priority_key) != expected_priority[priority_key]: return false
 	if processed and (priority not in ["UNESTABLISHED", "MATHILDE"] or (priority == "MATHILDE" and (priority_obligation.get("concerned_people", []) != ["Player", "Mathilde"] or str(priority_obligation.get("origin", "")) != "MATHILDE_HOUSEHOLD_AFTERCARE"))): return false
 	if day == "J12" and priority != "UNESTABLISHED" and str(priority_obligation.get("status", "")) != "DUE": return false
 	if day in ["J13", "J14", "J15", "J16", "J17", "J18", "J19", "J20", "J21"] and priority != "UNESTABLISHED" and str(priority_obligation.get("status", "")) not in ["DUE", "PAID", "REFUSED"]: return false
+	if priority != "UNESTABLISHED" and str(priority_obligation.get("status", "")) == "PAID" and (str(priority_obligation.get("paid_by", "")) == "" or str(priority_obligation.get("paid_or_closed_at", "")) == ""): return false
 	if day == "J12" and str(value.get("day_status", "")) == "COMPLETE":
-		return presence != "UNESTABLISHED" and annexe != "UNESTABLISHED" and priority != "UNESTABLISHED" and not lav_trace.is_empty() and not annexe_trace.is_empty()
+		return presence != "UNESTABLISHED" and str(presence_promise.get("status", "")) == "PAID" and annexe != "UNESTABLISHED" and str(annexe_promise.get("status", "")) in ["PAID", "REFUSED"] and priority != "UNESTABLISHED" and not lav_trace.is_empty() and not annexe_trace.is_empty() and (p11.is_empty() or str(p11.get("status", "")) in ["PAID", "REFUSED", "EXPIRED"])
 	return true
 
 func _j13_records_consistent(value: Dictionary) -> bool:

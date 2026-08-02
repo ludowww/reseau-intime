@@ -6,6 +6,7 @@ const RUNTIME_MAP_PATH := "res://data/runtime/season_1/j12_runtime_map.json"
 const NARRATIVE_TIME := preload("res://scripts/runtime/season_1/NarrativeTime.gd")
 const RUNTIME_UNREAD := preload("res://scripts/runtime/season_1/RuntimeUnread.gd")
 const SNAPSHOT_VERSION := 2
+const P11_PLAYER_CONFIRMATION_DEADLINE_MINUTES := 570
 
 const MARIE_THREAD := "thread_marie_private"
 const SANDRA_THREAD := "thread_sandra_private"
@@ -106,6 +107,9 @@ func choices_for(thread_id: String) -> Array[Dictionary]:
 func apply_choice(thread_id: String, choice_id: String) -> Dictionary:
 	if not pending_transition.is_empty() or not pending_choice_ids_by_thread.get(thread_id, []).has(choice_id):
 		return {"accepted":false}
+	if choice_id in ["choice_j12_p11_confirm", "choice_j12_p11_refuse"] and current_time_minutes >= P11_PLAYER_CONFIRMATION_DEADLINE_MINUTES:
+		_expire_overdue_p11()
+		return {"accepted":false,"transition":pending_transition.duplicate(true)}
 	var selected := _choice_by_id(choice_id)
 	if selected.is_empty() or not state.apply_j12_choice(choice_id):
 		return {"accepted":false}
@@ -124,28 +128,36 @@ func apply_choice(thread_id: String, choice_id: String) -> Dictionary:
 func confirm_transition() -> Dictionary:
 	if pending_transition.is_empty(): return {"accepted":false}
 	var kind := str(pending_transition.get("kind", ""))
-	pending_transition = {}
 	match kind:
 		"sandra_cafe_off_phone":
 			if not state.pay_j12_p11(): return {"accepted":false}
+			pending_transition = {}
 			_enter_segment(SANDRA_THREAD, "j12_sandra_cafe_after", "p11_after_incoming")
 			return _incoming_result(SANDRA_THREAD)
 		"to_laverriere_plan":
+			pending_transition = {}
 			_enter_segment(MARIE_THREAD, "j12_laverriere_plan", "plan_incoming")
 			return _incoming_result(MARIE_THREAD)
 		"to_laverriere_public":
 			if not state.establish_j12_laverriere_public_trace(): return {"accepted":false}
+			pending_transition = {}
 			_enter_segment(LAVERRIERE_THREAD, "j12_laverriere_public", "public_incoming")
 			return _incoming_result(LAVERRIERE_THREAD)
 		"to_laverriere_close":
+			var presence_status := str(state.promises.get("marie_j12_laverriere_presence", {}).get("status", ""))
+			if presence_status == "ACTIVE" and not state.pay_j12_laverriere_presence(): return {"accepted":false}
+			if str(state.promises.get("marie_j12_laverriere_presence", {}).get("status", "")) != "PAID": return {"accepted":false}
+			pending_transition = {}
 			_enter_segment(MARIE_THREAD, "j12_laverriere_close", "close_incoming")
 			return _incoming_result(MARIE_THREAD)
 		"to_annexe":
-			if not state.establish_j12_annexe_public_trace(): return {"accepted":false}
+			if not state.pay_and_establish_j12_annexe_arrival(): return {"accepted":false}
+			pending_transition = {}
 			_enter_segment(ANNEXE_THREAD, "j12_annexe_public", "annexe_incoming")
 			return _incoming_result(ANNEXE_THREAD)
 		"to_after_separation":
 			if not state.establish_j12_priority_consequence(_priority_route()): return {"accepted":false}
+			pending_transition = {}
 			var route := _priority_route()
 			var segment_id := _after_segment_for_route(route)
 			if segment_id == "":
@@ -156,6 +168,7 @@ func confirm_transition() -> Dictionary:
 			return _incoming_result(thread_id)
 		"day_close":
 			if not state.complete_j12(): return {"accepted":false}
+			pending_transition = {}
 			if TimelineState != null: TimelineState.mark_day_complete(12)
 			phase = "complete"
 			return {"accepted":true,"destination":"day_end","day_end":runtime_map["day_end"].duplicate(true)}
@@ -186,7 +199,7 @@ func mark_thread_batch_presented(thread_id: String) -> bool:
 		"p11_incoming": phase = "p11_choice"
 		"p11_after_incoming": _schedule_transition("to_laverriere_plan")
 		"plan_incoming": phase = "plan_choice"
-		"public_incoming": _continue_after_public()
+		"public_incoming": return _continue_after_public()
 		"route_incoming": phase = "route_choice"
 		"close_incoming": phase = "close_choice"
 		"annexe_incoming": _continue_after_annexe()
@@ -197,7 +210,24 @@ func mark_thread_batch_presented(thread_id: String) -> bool:
 
 func commit_narrative_time(minutes: int) -> bool:
 	if minutes < current_time_minutes or NARRATIVE_TIME.format_narrative_time(minutes) == "": return false
+	var previous_time := current_time_minutes
 	current_time_minutes = minutes
+	if phase == "p11_choice" and minutes >= P11_PLAYER_CONFIRMATION_DEADLINE_MINUTES and not _expire_overdue_p11():
+		current_time_minutes = previous_time
+		return false
+	var presence: Dictionary = state.promises.get("marie_j12_laverriere_presence", {})
+	var presence_payment_time := 1275 if state.j12_presence_choice == "L-C" else 1335
+	if str(presence.get("status", "")) == "ACTIVE" and state.j12_presence_choice != "UNESTABLISHED" and minutes >= presence_payment_time:
+		if not state.pay_j12_laverriere_presence():
+			current_time_minutes = previous_time
+			return false
+	return true
+
+func _expire_overdue_p11() -> bool:
+	if phase != "p11_choice" or current_time_minutes < P11_PLAYER_CONFIRMATION_DEADLINE_MINUTES: return false
+	if not state.expire_j12_p11_player_confirmation(): return false
+	pending_choice_ids_by_thread[SANDRA_THREAD] = []
+	_schedule_transition("to_laverriere_plan")
 	return true
 
 func snapshot() -> Dictionary:
@@ -216,6 +246,14 @@ func restore_snapshot(value: Dictionary) -> bool:
 	phase = str(value["phase"]); transcripts_by_thread = value["transcripts_by_thread"].duplicate(true); produced_message_ids = value["produced_message_ids"].duplicate(true)
 	unlocked_thread_ids.assign(value["unlocked_thread_ids"]); gallery_asset_ids.assign(value["gallery_asset_ids"]); served_visual_beat_ids.assign(value["served_visual_beat_ids"])
 	pending_choice_ids_by_thread = value["pending_choice_ids_by_thread"].duplicate(true); pending_transition = value["pending_transition"].duplicate(true); presented_time_message_ids = value["presented_time_message_ids"].duplicate(true); current_time_minutes = restored_time
+	if phase == "p11_choice" and current_time_minutes >= P11_PLAYER_CONFIRMATION_DEADLINE_MINUTES:
+		if not _expire_overdue_p11(): return false
+	var phases_after_laverriere_payment := ["close_incoming","close_choice","to_annexe","annexe_incoming","remote_incoming","nico_incoming","nico_choice","to_after_separation","after_incoming","day_close"]
+	var presence: Dictionary = state.promises.get("marie_j12_laverriere_presence", {})
+	if phase in phases_after_laverriere_payment and str(presence.get("status", "")) == "ACTIVE" and not state.pay_j12_laverriere_presence(): return false
+	var phases_after_annexe_arrival := ["annexe_incoming","nico_incoming","nico_choice","to_after_separation","after_incoming","day_close"]
+	var annexe: Dictionary = state.promises.get("j12_annexe_continuation", {})
+	if phase in phases_after_annexe_arrival and state.j12_annexe_choice in ["A12", "B12"] and str(annexe.get("status", "")) == "ACTIVE" and not state.pay_j12_annexe_continuation(): return false
 	return _restored_phase_consistent()
 
 func presentation_count_by_id(id: String) -> int:
@@ -246,13 +284,14 @@ func _advance_after_choice(choice_id: String) -> Dictionary:
 	elif choice_id.begins_with("choice_j12_nico_"): _schedule_transition("to_after_separation")
 	return _transition_result() if not pending_transition.is_empty() else {}
 
-func _continue_after_public() -> void:
+func _continue_after_public() -> bool:
 	var segment_id := ""
 	var thread_id := ""
 	match state.j11_pivot:
 		"SANDRA":
 			var trace: Dictionary = state.traces.get("j11_sandra_chosen_image_01", {})
 			if str(trace.get("current_state", "")) != "REMOVED" and state.j11_pivot_outcome in ["SANDRA_RULE_CLARIFIED", "SANDRA_DESIRE_BOUNDED"]:
+				if not state.establish_j12_sandra_public_context_view(): return false
 				_append_context_messages(SANDRA_THREAD, "j12_sandra_rule_context" if state.j11_pivot_outcome == "SANDRA_RULE_CLARIFIED" else "j12_sandra_desire_context")
 				segment_id = "j12_sandra_module"; thread_id = SANDRA_THREAD
 		"MATHILDE":
@@ -288,6 +327,7 @@ func _continue_after_public() -> void:
 		_enter_segment(thread_id, segment_id, "route_incoming")
 		if state.j11_pivot_outcome == "KISS_DECLINED": pending_choice_ids_by_thread[RAPHAELLE_THREAD] = ["choice_j12_raphaelle_declined_hold"]
 		elif state.j11_pivot_outcome == "RESULT_SENT_BOUNDARY_HELD": pending_choice_ids_by_thread[RAPHAELLE_THREAD] = ["choice_j12_raphaelle_boundary_hold"]
+	return true
 
 func _continue_after_annexe() -> void:
 	if state.j11_pivot != "NICO":
@@ -406,6 +446,8 @@ func _restored_phase_consistent() -> bool:
 	if state.current_day != "J12": return false
 	if phase == "complete": return state.day_status == "COMPLETE" and pending_transition.is_empty()
 	if state.day_status != "ACTIVE": return false
+	if phase in ["close_incoming","close_choice","to_annexe","annexe_incoming","remote_incoming","nico_incoming","nico_choice","to_after_separation","after_incoming","day_close"] and str(state.promises.get("marie_j12_laverriere_presence", {}).get("status", "")) != "PAID": return false
+	if phase in ["annexe_incoming","nico_incoming","nico_choice","to_after_separation","after_incoming","day_close"] and state.j12_annexe_choice in ["A12", "B12"] and str(state.promises.get("j12_annexe_continuation", {}).get("status", "")) != "PAID": return false
 	var transition_phases := ["sandra_cafe_off_phone","to_laverriere_plan","to_laverriere_public","to_laverriere_close","to_annexe","to_after_separation","day_close"]
 	return not pending_transition.is_empty() if phase in transition_phases else pending_transition.is_empty()
 

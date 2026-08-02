@@ -24,7 +24,9 @@ var mathilde_j11_base_snapshot: Dictionary = {}
 func _ready() -> void:
 	marie_j11_base_snapshot = _build_real_j11_base_snapshot("MARIE")
 	mathilde_j11_base_snapshot = _build_real_j11_base_snapshot("MATHILDE")
+	_exercise_p11_deadlines_and_round_trips()
 	_exercise_sandra_p11_and_public_audience()
+	_exercise_public_trace_presence_matrix()
 	_exercise_r5b_semantic_matrix()
 	_exercise_failed_mathilde_aftercare_precedes_convergence("MATHILDE_M_B2")
 	_exercise_failed_mathilde_aftercare_precedes_convergence("MATHILDE_M_B3")
@@ -32,6 +34,7 @@ func _ready() -> void:
 	_exercise_marie_mathilde_semantic_matrix()
 	_exercise_r5a_snapshot_migration()
 	_exercise_r5b_snapshot_migration()
+	_exercise_r5c_snapshot_migration()
 	if failures.is_empty():
 		print("RUNTIME_S1_12_J12_PLAYABLE: OK")
 		get_tree().quit(0)
@@ -40,26 +43,39 @@ func _ready() -> void:
 	get_tree().quit(1)
 
 func _exercise_sandra_p11_and_public_audience() -> void:
-	var state = _completed_j11_state("SANDRA")
-	state.promises["sandra_cafe_saturday_1100"] = {"promise_id":"sandra_cafe_saturday_1100","status":"CONDITIONAL","counterparty_confirmed_at":"J11 17:44","counterparty_confirmed_by":"Sandra"}
+	var state = _completed_r5b_j11_state("SANDRA_RULE_CLARIFIED")
+	state.promises["sandra_cafe_saturday_1100"] = _canonical_p11(true)
 	var provider = _new_provider(state)
 	_expect(bool(provider.start_day().get("accepted", false)) and provider.phase == "p11_incoming", "P11 confirmation opens before convergence")
+	_expect_round_trip(provider, "P11 before incoming confirmation is presented")
 	_present_batch(provider, SANDRA_THREAD)
+	_expect_round_trip(provider, "P11 before Player choice")
 	_expect(bool(provider.apply_choice(SANDRA_THREAD, "choice_j12_p11_confirm").get("accepted", false)), "P11 accepts only after Player confirmation")
+	_expect(str(state.promises["sandra_cafe_saturday_1100"].get("status", "")) == "ACTIVE", "P11 remains unpaid during the off-phone transition")
+	_expect_round_trip(provider, "P11 during off-phone transition")
 	_confirm_transition(provider)
+	_expect(str(state.promises["sandra_cafe_saturday_1100"].get("status", "")) == "PAID" and not state.pay_j12_p11(), "P11 is paid exactly once by the off-phone meeting")
+	_expect_state_round_trip(state, "P11 after payment")
 	_present_batch(provider, SANDRA_THREAD)
 	_confirm_transition(provider)
 	_present_batch(provider, MARIE_THREAD)
 	_expect_round_trip(provider, "J12 plan choice")
 	provider.apply_choice(MARIE_THREAD, "choice_j12_presence_la")
+	_expect(str(state.promises["marie_j12_laverriere_presence"].get("due_at", "")) == "J12 17:45" and str(state.promises["marie_j12_laverriere_presence"].get("status", "")) == "ACTIVE", "P12 L-A is active with its exact due time")
 	_confirm_transition(provider)
+	_expect(str(state.promises["marie_j12_laverriere_presence"].get("status", "")) == "ACTIVE", "P12 is not paid merely by publishing T14")
 	_present_batch(provider, LAVERRIERE_THREAD)
+	var t16: Dictionary = state.traces.get("j12_sandra_public_context_view_01", {})
+	_expect(not t16.is_empty() and t16.get("subjects", []).has("Player") and t16.get("current_audience", []).has("Sandra"), "T16 records Sandra's public view while Player remains a photographed La Verrière subject")
 	_present_batch(provider, SANDRA_THREAD)
 	provider.apply_choice(SANDRA_THREAD, "choice_j12_sandra_clear")
 	_confirm_transition(provider)
+	_expect(str(state.promises["marie_j12_laverriere_presence"].get("status", "")) == "PAID", "P12 is paid only when the La Verrière presence is completed")
 	_present_batch(provider, MARIE_THREAD)
 	provider.apply_choice(MARIE_THREAD, "choice_j12_annexe_a12")
+	_expect(str(state.promises["j12_annexe_continuation"].get("status", "")) == "ACTIVE" and str(state.promises["j12_annexe_continuation"].get("due_at", "")) == "J12 22:50", "P13 A12 stays active before the group reaches L’Annexe")
 	_confirm_transition(provider)
+	_expect(str(state.promises["j12_annexe_continuation"].get("status", "")) == "PAID", "P13 A12 is paid by the actual group arrival")
 	_present_batch(provider, ANNEXE_THREAD)
 	_confirm_transition(provider)
 	_present_batch(provider, SANDRA_THREAD)
@@ -68,6 +84,73 @@ func _exercise_sandra_p11_and_public_audience() -> void:
 	_expect(str(state.promises["sandra_cafe_saturday_1100"].get("status", "")) == "PAID", "P11 is paid after the off-phone meeting")
 	_expect(state.traces.has("j12_laverriere_public_group_set_01") and state.traces.has("j12_annexe_public_group_set_01"), "both canonical public traces persist")
 	_expect(state.j12_priority_route == "SANDRA", "only Sandra consequence is foreground for J13")
+	_expect(not state.knowledge.has("fact_j12_unusual_behavior_observed"), "F20 is absent when Sandra receives a clear response without unusual observable behavior")
+
+func _exercise_p11_deadlines_and_round_trips() -> void:
+	var real_confirm = SEASON_STATE.new()
+	real_confirm.current_day = "J10"; real_confirm.day_status = "ACTIVE"; real_confirm.j10_pivot = "SANDRA"
+	_expect(real_confirm.apply_j10_sandra_outcome("choice_j10_sandra_saturday"), "real J10 flow creates conditional P11")
+	real_confirm.current_day = "J11"; real_confirm.day_status = "ACTIVE"
+	_expect(real_confirm.confirm_or_expire_j11_p11_counterparty(true), "real J11 flow records Sandra confirmation on the predeclared empty fields")
+	_expect(str(real_confirm.promises["sandra_cafe_saturday_1100"].get("status", "")) == "CONDITIONAL" and str(real_confirm.promises["sandra_cafe_saturday_1100"].get("counterparty_confirmed_by", "")) == "Sandra", "Sandra confirmation alone keeps P11 conditional")
+	var real_expire = SEASON_STATE.new()
+	real_expire.current_day = "J10"; real_expire.day_status = "ACTIVE"; real_expire.j10_pivot = "SANDRA"
+	real_expire.apply_j10_sandra_outcome("choice_j10_sandra_saturday"); real_expire.current_day = "J11"; real_expire.day_status = "ACTIVE"
+	_expect(real_expire.confirm_or_expire_j11_p11_counterparty(false) and str(real_expire.promises["sandra_cafe_saturday_1100"].get("status", "")) == "EXPIRED", "real J11 flow expires an unconfirmed P11")
+	var before_confirmation = _completed_r5b_j11_state("SANDRA_RULE_CLARIFIED")
+	before_confirmation.promises["sandra_cafe_saturday_1100"] = _canonical_p11(false)
+	_expect_state_round_trip(before_confirmation, "P11 before Sandra confirmation")
+	var absent = _completed_r5b_j11_state("SANDRA_RULE_CLARIFIED")
+	absent.promises["sandra_cafe_saturday_1100"] = _expired_p11()
+	var absent_provider = _new_provider(absent)
+	absent_provider.start_day()
+	_expect(absent_provider.phase == "to_laverriere_plan" and str(absent.promises["sandra_cafe_saturday_1100"].get("status", "")) == "EXPIRED", "missing Sandra confirmation remains expired and never opens P11")
+	_expect(not absent.pay_j12_p11(), "expired P11 cannot be paid")
+	var deadline = _completed_r5b_j11_state("SANDRA_RULE_CLARIFIED")
+	deadline.promises["sandra_cafe_saturday_1100"] = _canonical_p11(true)
+	var deadline_provider = _new_provider(deadline)
+	deadline_provider.start_day(); _present_batch(deadline_provider, SANDRA_THREAD)
+	_expect(deadline_provider.commit_narrative_time(570), "P11 Player deadline advances to 09:30")
+	_expect(deadline_provider.phase == "to_laverriere_plan" and str(deadline.promises["sandra_cafe_saturday_1100"].get("status", "")) == "EXPIRED", "P11 expires when Player does not confirm by 09:30")
+	_expect(not deadline.pay_j12_p11() and not deadline.expire_j12_p11_player_confirmation(), "expired Player deadline cannot pay or expire twice")
+	_expect_state_round_trip(deadline, "P11 after Player deadline expiration")
+	_expect_round_trip(deadline_provider, "P11 after Player deadline expiration")
+	var legacy_deadline = _completed_r5b_j11_state("SANDRA_RULE_CLARIFIED")
+	legacy_deadline.promises["sandra_cafe_saturday_1100"] = _canonical_p11(true)
+	var legacy_provider = _new_provider(legacy_deadline)
+	legacy_provider.start_day(); _present_batch(legacy_provider, SANDRA_THREAD)
+	var overdue_snapshot: Dictionary = legacy_provider.snapshot(); overdue_snapshot["current_time_minutes"] = 571
+	var overdue_restored = _new_provider(legacy_deadline)
+	_expect(overdue_restored.restore_snapshot(overdue_snapshot), "legacy P11 choice snapshot at 09:31 normalizes on restore")
+	_expect(overdue_restored.phase == "to_laverriere_plan" and str(legacy_deadline.promises["sandra_cafe_saturday_1100"].get("status", "")) == "EXPIRED", "restored overdue P11 cannot be accepted after its deadline")
+	var refused = _completed_r5b_j11_state("SANDRA_RULE_CLARIFIED")
+	refused.promises["sandra_cafe_saturday_1100"] = _canonical_p11(true)
+	var refused_provider = _new_provider(refused)
+	refused_provider.start_day(); _present_batch(refused_provider, SANDRA_THREAD)
+	_expect(bool(refused_provider.apply_choice(SANDRA_THREAD, "choice_j12_p11_refuse").get("accepted", false)), "Player can explicitly refuse P11")
+	_expect(str(refused.promises["sandra_cafe_saturday_1100"].get("status", "")) == "REFUSED" and not refused.pay_j12_p11(), "refused P11 remains closed and unpaid")
+	_expect_state_round_trip(refused, "P11 after Player refusal")
+
+func _exercise_public_trace_presence_matrix() -> void:
+	var cases := [
+		{"presence":"choice_j12_presence_la", "annexe":"choice_j12_annexe_a12", "player_at_annexe":true},
+		{"presence":"choice_j12_presence_lb", "annexe":"choice_j12_annexe_b12", "player_at_annexe":true},
+		{"presence":"choice_j12_presence_lc", "annexe":"choice_j12_annexe_c12", "player_at_annexe":false},
+	]
+	for test_case in cases:
+		var state = _completed_r5b_j11_state("SANDRA_RULE_CLARIFIED")
+		_expect(state.begin_j12(), "trace matrix begins J12")
+		_expect(state.apply_j12_choice(str(test_case["presence"])) and state.establish_j12_laverriere_public_trace(), "trace matrix creates T14 from exact presence")
+		_expect(state.establish_j12_sandra_public_context_view(), "trace matrix creates T16 from Sandra's exact public view")
+		var t14: Dictionary = state.traces["j12_laverriere_public_group_set_01"]
+		var t16: Dictionary = state.traces["j12_sandra_public_context_view_01"]
+		_expect(t14.get("subjects", []).has("Player") and bool(t14.get("player_present", false)) and t16.get("subjects", []).has("Player"), "T14/T16 preserve Player's real La Verrière presence for " + str(test_case["presence"]))
+		_expect(state.apply_j12_choice(str(test_case["annexe"])) and state.establish_j12_annexe_public_trace(), "trace matrix creates T15 from exact L’Annexe branch")
+		var t15: Dictionary = state.traces["j12_annexe_public_group_set_01"]
+		var expected_presence := bool(test_case["player_at_annexe"])
+		_expect(bool(t15.get("player_present", false)) == expected_presence and t15.get("subjects", []).has("Player") == expected_presence, "T15 distinguishes Player presence and photographed subject for " + str(test_case["annexe"]))
+		_expect(bool(t15.get("player_received_trace", false)) and t15.get("current_audience", []).has("Player"), "T15 records explicit Player receipt independently of presence")
+		_expect_state_round_trip(state, "public trace matrix " + str(test_case["presence"]) + "/" + str(test_case["annexe"]))
 
 func _exercise_failed_mathilde_aftercare_precedes_convergence(physical_level: String) -> void:
 	var state = _completed_semantic_j11_state(physical_level, "FAILED")
@@ -182,9 +265,22 @@ func _exercise_r5b_path(test_case: Dictionary) -> void:
 		_expect(provider.phase == "after_incoming" and provider.presentation_count_by_id(after_message) == 1, outcome + " selects its exact after-separation consequence")
 		_present_batch(provider, route_thread)
 	_expect(state.j12_private_outcome == str(test_case["private"]), outcome + " stores the exact J12 private outcome")
+	var f20: Dictionary = state.knowledge.get("fact_j12_unusual_behavior_observed", {})
+	var expected_f20 := ""
+	var expected_knowers: Array = []
+	if outcome == "SANDRA_DESIRE_BOUNDED" and str(test_case["private"]) == "SANDRA_EXIT_CLEAN": expected_f20 = "PLAYER_LEFT_ROOM_AT_LAVERRIERE_PUBLICATION"; expected_knowers = ["Marie"]
+	elif outcome == "NICO_RIVALRY_MAINTAINED": expected_f20 = "PLAYER_WATCHED_NICO_TALK_TO_MARIE"; expected_knowers = ["Nico"]
+	if expected_f20 == "":
+		_expect(f20.is_empty(), outcome + " creates no unobserved F20")
+	else:
+		_expect(str(f20.get("source_ref", "")) == expected_f20 and f20.get("initial_knowers", []) == expected_knowers, outcome + " creates F20 with exact source and knowers")
+		_expect(str(f20.get("certainty", "")) == "OBSERVED" and str(f20.get("meaning_certainty", "")) == "INFERRED" and str(f20.get("shareability", "")) == "FACTUAL_ONLY", outcome + " preserves F20 epistemic qualifiers")
 	_expect_round_trip(provider, outcome + " provider after consequence")
 	_confirm_transition(provider)
 	_expect(provider.phase == "complete", outcome + " completes J12")
+	var route_debt: Dictionary = state.obligations.get("j12_priority_consequence_j13", {})
+	_expect(str(route_debt.get("route", "")) == state.j12_priority_route and str(route_debt.get("status", "")) == "DUE", outcome + " hands off one exact due J13 route")
+	_expect(not state.establish_j12_priority_consequence(state.j12_priority_route), outcome + " cannot duplicate the J13 priority obligation")
 	_expect_state_round_trip(state, outcome + " state after J12")
 	var transcript := JSON.stringify(provider.transcript_for(route_thread))
 	if outcome == "RESULT_SENT_BOUNDARY_HELD":
@@ -294,6 +390,8 @@ func _exercise_semantic_path(test_case: Dictionary) -> void:
 		_expect(not transcript.contains("Viens près de moi"), outcome + " receives no close-couple text")
 	if outcome in ["MATHILDE_LOOK_ONLY", "MATHILDE_DISTANCE_RESTORED"]:
 		_expect(not transcript.contains("quelque chose à ne pas savoir") and not transcript.contains("contact sexuel"), outcome + " receives no physical-secret implication")
+	var f20: Dictionary = state.knowledge.get("fact_j12_unusual_behavior_observed", {})
+	_expect(f20.is_empty(), outcome + " does not infer F20 from a private Mathilde/Marie choice")
 	if outcome == "MATHILDE_M_B2":
 		_expect(not transcript.contains("On a décidé hier. Pas aujourd’hui."), "M-B2 never opens the M-B3 consequence")
 	if outcome == "MATHILDE_M_B3":
@@ -380,6 +478,64 @@ func _exercise_r5b_snapshot_migration() -> void:
 	ambiguous_nico["version"] = 20; ambiguous_nico["j11_pivot_outcome"] = ""; ambiguous_nico["selected_choice_ids"].erase("choice_j11_nico_guardrail")
 	_expect(not SEASON_STATE.new().restore_snapshot(ambiguous_nico), "ambiguous legacy Nico snapshot fails closed")
 
+func _exercise_r5c_snapshot_migration() -> void:
+	var state = _completed_r5b_j11_state("SANDRA_RULE_CLARIFIED")
+	_expect(state.begin_j12(), "R5C migration fixture begins J12")
+	_expect(state.apply_j12_choice("choice_j12_presence_la"), "R5C migration fixture selects L-A")
+	_expect(state.pay_j12_laverriere_presence() and state.establish_j12_laverriere_public_trace(), "R5C migration fixture pays P12 and creates T14")
+	_expect(state.establish_j12_sandra_public_context_view() and state.apply_j12_choice("choice_j12_sandra_exit"), "R5C migration fixture creates exact T16/F20 evidence")
+	_expect(state.apply_j12_choice("choice_j12_annexe_c12") and state.establish_j12_annexe_public_trace(), "R5C migration fixture refuses P13 and receives T15")
+	_expect(state.establish_j12_priority_consequence("SANDRA") and state.complete_j12(), "R5C migration fixture completes J12")
+	var legacy: Dictionary = state.snapshot()
+	legacy["version"] = 21
+	legacy["promises"]["marie_j12_laverriere_presence"] = {"promise_id":"marie_j12_laverriere_presence", "status":"PAID", "outcome":"L-A", "due_at":"J12 22:15"}
+	legacy["promises"]["j12_annexe_continuation"] = {"promise_id":"j12_annexe_continuation", "status":"REFUSED", "accepted_by_player":false, "outcome":"C12", "due_at":"J12 00:00"}
+	legacy["traces"].erase("j12_sandra_public_context_view_01")
+	legacy["knowledge"].erase("fact_sandra_saw_public_j12_context")
+	legacy["knowledge"].erase("fact_j12_unusual_behavior_observed")
+	var restored = SEASON_STATE.new()
+	var restored_ok := restored.restore_snapshot(legacy)
+	_expect(restored_ok, "legacy v21 J12 snapshot migrates from exact choices")
+	if restored_ok:
+		_expect(int(restored.snapshot().get("version", -1)) == 22, "R5C migration advances the state contract from 21 to 22")
+		_expect(str(restored.promises["marie_j12_laverriere_presence"].get("due_at", "")) == "J12 17:45" and str(restored.promises["j12_annexe_continuation"].get("due_at", "")) == "J12 22:50", "R5C migration canonicalizes P12/P13 due times")
+		_expect(restored.traces.has("j12_sandra_public_context_view_01") and restored.knowledge.has("fact_j12_unusual_behavior_observed"), "R5C migration reconstructs T16/F20 only from exact selected-choice evidence")
+		_expect_state_round_trip(restored, "R5C migrated completed J12")
+	var pre_event = _completed_r5b_j11_state("SANDRA_RULE_CLARIFIED")
+	pre_event.begin_j12(); pre_event.apply_j12_choice("choice_j12_presence_lb"); pre_event.establish_j12_laverriere_public_trace()
+	var pre_event_legacy: Dictionary = pre_event.snapshot(); pre_event_legacy["version"] = 21
+	var pre_event_restored = SEASON_STATE.new()
+	_expect(pre_event_restored.restore_snapshot(pre_event_legacy), "legacy v21 snapshot before Sandra's view resumes")
+	_expect(not pre_event_restored.traces.has("j12_sandra_public_context_view_01") and not pre_event_restored.knowledge.has("fact_j12_unusual_behavior_observed"), "migration creates neither T16 nor F20 before an exact source event")
+	var malformed: Dictionary = pre_event.snapshot(); malformed["version"] = 21; malformed["promises"]["marie_j12_laverriere_presence"] = 1
+	_expect(not SEASON_STATE.new().restore_snapshot(malformed), "R5C migration rejects non-dictionary nested ledger records without crashing")
+	var contradictory = _completed_r5b_j11_state("SANDRA_RULE_CLARIFIED")
+	contradictory.begin_j12(); contradictory.apply_j12_choice("choice_j12_presence_la"); contradictory.apply_j12_choice("choice_j12_annexe_a12")
+	var contradictory_snapshot: Dictionary = contradictory.snapshot(); contradictory_snapshot["version"] = 21; contradictory_snapshot["promises"]["j12_annexe_continuation"]["status"] = "REFUSED"
+	_expect(not SEASON_STATE.new().restore_snapshot(contradictory_snapshot), "R5C migration rejects contradictory A12 refusal evidence")
+	var late_presence = _completed_r5b_j11_state("SANDRA_RULE_CLARIFIED")
+	late_presence.begin_j12(); late_presence.apply_j12_choice("choice_j12_presence_lb"); late_presence.establish_j12_laverriere_public_trace()
+	var late_presence_provider = _new_provider(late_presence)
+	var close_snapshot: Dictionary = late_presence_provider.snapshot()
+	close_snapshot["phase"] = "close_incoming"; close_snapshot["current_time_minutes"] = 1335
+	_expect(late_presence_provider.restore_snapshot(close_snapshot), "provider resumes an old post-La Verrière payment phase")
+	_expect(str(late_presence.promises["marie_j12_laverriere_presence"].get("status", "")) == "PAID", "post-close phase is exact evidence that P12 was paid")
+	var late_annexe = _completed_r5b_j11_state("SANDRA_RULE_CLARIFIED")
+	late_annexe.begin_j12(); late_annexe.apply_j12_choice("choice_j12_presence_lb"); late_annexe.pay_j12_laverriere_presence(); late_annexe.establish_j12_laverriere_public_trace(); late_annexe.apply_j12_choice("choice_j12_annexe_a12"); late_annexe.establish_j12_annexe_public_trace()
+	var late_annexe_provider = _new_provider(late_annexe)
+	var annexe_snapshot: Dictionary = late_annexe_provider.snapshot()
+	annexe_snapshot["phase"] = "annexe_incoming"; annexe_snapshot["current_time_minutes"] = 1398
+	_expect(late_annexe_provider.restore_snapshot(annexe_snapshot), "provider resumes an old post-arrival P13 phase")
+	_expect(str(late_annexe.promises["j12_annexe_continuation"].get("status", "")) == "PAID", "post-arrival phase is exact evidence that P13 was paid")
+	var atomic_state = _completed_r5b_j11_state("SANDRA_RULE_CLARIFIED")
+	atomic_state.begin_j12(); atomic_state.apply_j12_choice("choice_j12_presence_lb"); atomic_state.pay_j12_laverriere_presence(); atomic_state.establish_j12_laverriere_public_trace(); atomic_state.apply_j12_choice("choice_j12_annexe_a12"); atomic_state.establish_j12_annexe_public_trace()
+	var atomic_provider = _new_provider(atomic_state)
+	var atomic_snapshot: Dictionary = atomic_provider.snapshot()
+	atomic_snapshot["phase"] = "to_annexe"; atomic_snapshot["pending_transition"] = {"kind":"to_annexe"}; atomic_snapshot["current_time_minutes"] = 1362
+	_expect(atomic_provider.restore_snapshot(atomic_snapshot), "atomic arrival failure fixture restores")
+	_expect(not bool(atomic_provider.confirm_transition().get("accepted", false)), "duplicate T15 makes the atomic arrival transition fail")
+	_expect(str(atomic_state.promises["j12_annexe_continuation"].get("status", "")) == "ACTIVE" and not atomic_provider.pending_transition.is_empty(), "failed arrival leaves P13 and its transition untouched")
+
 func _completed_j11_state(pivot: String):
 	var state = SEASON_STATE.new()
 	state.current_day = "J11"; state.day_status = "ACTIVE"
@@ -400,6 +556,21 @@ func _completed_j11_state(pivot: String):
 func _new_provider(state):
 	var provider = J12_PROVIDER.new(); _expect(provider.initialize(state, {}, {}, [], []), "J12 provider initializes"); return provider
 
+func _canonical_p11(counterparty_confirmed: bool) -> Dictionary:
+	return {
+		"promise_id":"sandra_cafe_saturday_1100", "promise_type":"MEETING", "created_at":"J10 12:24", "created_by":"Player", "proposed_to":"Sandra",
+		"accepted_at":"", "accepted_by_player":false, "counterparty_confirmed_at":"J11 17:44" if counterparty_confirmed else "", "counterparty_confirmed_by":"Sandra" if counterparty_confirmed else "",
+		"action_due":"Café au même endroit samedi si double confirmation", "due_at":"J12 11:00", "confirmation_deadline":"Sandra J11 18:00 puis Player J12 09:30",
+		"counterparty_confirmation_deadline":"J11 18:00", "player_confirmation_deadline":"J12 09:30", "status":"CONDITIONAL",
+		"paid_or_closed_at":"", "paid_or_closed_by":"", "outcome":"COUNTERPARTY_CONFIRMED" if counterparty_confirmed else "PENDING_DOUBLE_CONFIRMATION",
+		"related_scene":"J12_PRELUDE_SANDRA_CAFE_CONFIRMED", "related_trace_ids":["j01_sandra_lunch_memory_soft"],
+	}
+
+func _expired_p11() -> Dictionary:
+	var p11 := _canonical_p11(false)
+	p11["status"] = "EXPIRED"; p11["paid_or_closed_at"] = "J11 18:00"; p11["paid_or_closed_by"] = "counterparty_confirmation_deadline"; p11["outcome"] = "EXPIRED_COUNTERPARTY_NOT_CONFIRMED"
+	return p11
+
 func _present_batch(provider, thread_id: String) -> void:
 	for message in provider.transcript_for(thread_id):
 		if int(message.get("source_day", 0)) == 12 and not bool(message.get("is_player", false)) and not provider.presented_time_message_ids.has(str(message.get("message_id", ""))): provider.mark_message_presented(str(message.get("message_id", "")))
@@ -418,7 +589,8 @@ func _expect_round_trip(provider, label: String) -> void:
 
 func _expect_state_round_trip(state, label: String) -> void:
 	var state_snapshot: Dictionary = state.snapshot(); var restored = SEASON_STATE.new()
-	_expect(restored.restore_snapshot(state_snapshot), label + " state restore")
+	var restored_ok := restored.restore_snapshot(state_snapshot)
+	_expect(restored_ok, label + " state restore")
 	_expect(restored.snapshot() == state_snapshot, label + " exact state round trip")
 
 func _expect(condition: bool, label: String) -> void:

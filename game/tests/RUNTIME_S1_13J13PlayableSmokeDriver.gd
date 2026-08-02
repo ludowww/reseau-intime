@@ -30,7 +30,7 @@ func _exercise_marie_priority_without_duplicate_echo() -> void:
 func _completed_j12_state(priority: String):
 	var state = STATE.new(); state.current_day = "J10"; state.day_status = "COMPLETE"; state.j10_pivot = "SANDRA"; state.j10_pivot_reason = "AUTHORED_ORDER"; state.j10_pivot_outcome = "CAFE_HELD_CALM_PRESENCE"; state.marie_j10_dinner_resolution = "NOT_DUE"; state.nico_j10_morning_confirmation = "NOT_DUE"; state.completed_conversation_ids.append("chapter_10_sandra_cafe")
 	_expect(state.begin_j11(), "fixture enters J11"); _expect(state.set_j11_continuation("RESPIRATION", "J10_NO_LEGITIMATE_CONTINUATION"), "fixture selects respiration"); _expect(state.complete_j11(), "fixture completes J11")
-	_expect(state.begin_j12(), "fixture enters J12"); state.apply_j12_choice("choice_j12_presence_la"); state.establish_j12_laverriere_public_trace(); state.apply_j12_choice("choice_j12_annexe_a12"); state.establish_j12_annexe_public_trace(); state.establish_j12_priority_consequence(priority); _expect(state.complete_j12(), "fixture completes J12")
+	_expect(state.begin_j12(), "fixture enters J12"); state.apply_j12_choice("choice_j12_presence_la"); state.establish_j12_laverriere_public_trace(); state.pay_j12_laverriere_presence(); state.apply_j12_choice("choice_j12_annexe_a12"); state.pay_and_establish_j12_annexe_arrival(); state.establish_j12_priority_consequence(priority); _expect(state.complete_j12(), "fixture completes J12")
 	return state
 
 func _new_provider(state):

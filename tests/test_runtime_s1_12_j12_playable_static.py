@@ -31,6 +31,78 @@ class RuntimeS112J12PlayableStaticTests(unittest.TestCase):
         for token in ["RUNTIME_UNREAD.incoming_batch_fully_presented", "func snapshot()", "func restore_snapshot", "func _priority_route", '"source_day":12']:
             self.assertIn(token, provider)
 
+    def test_r5c_p11_p12_and_p13_have_exact_lifecycle_contracts(self):
+        state = self.read("game/scripts/runtime/season_1/Season1State.gd")
+        provider = self.read("game/scripts/runtime/season_1/J12RuntimeProvider.gd")
+        self.assertIn("const SNAPSHOT_VERSION := 22", state)
+        for token in [
+            '"due_at": "J12 11:00"',
+            '"counterparty_confirmation_deadline": "J11 18:00"',
+            '"player_confirmation_deadline": "J12 09:30"',
+            "func expire_j12_p11_player_confirmation",
+            "func pay_j12_p11",
+            "func pay_j12_laverriere_presence",
+            "func pay_j12_annexe_continuation",
+            '"L-A":"J12 17:45"',
+            '"L-B":"J12 19:15"',
+            '"L-C":"J12 20:15–21:15"',
+            '"due_at":"J12 22:50"',
+        ]:
+            self.assertIn(token, state)
+        self.assertIn("P11_PLAYER_CONFIRMATION_DEADLINE_MINUTES := 570", provider)
+        self.assertIn("_expire_overdue_p11()", provider)
+        self.assertIn("state.pay_j12_laverriere_presence()", provider)
+        self.assertIn("state.pay_j12_annexe_continuation()", provider)
+        complete_j12 = state.split("func complete_j12", 1)[1].split("func begin_j13", 1)[0]
+        self.assertNotIn('presence["status"] = "PAID"', complete_j12)
+        self.assertNotIn('annexe["status"] = "PAID"', complete_j12)
+
+    def test_r5c_public_traces_t16_and_f20_preserve_epistemic_distinctions(self):
+        state = self.read("game/scripts/runtime/season_1/Season1State.gd")
+        provider = self.read("game/scripts/runtime/season_1/J12RuntimeProvider.gd")
+        for token in [
+            "func establish_j12_laverriere_public_trace",
+            '"creator":"Élodie"', '"owner":"La Verrière"',
+            '"current_state":"PUBLIC_ACTIVE"', '"shareability":"PUBLIC"',
+            "func establish_j12_annexe_public_trace",
+            '"creator":"Sophie"', '"owner":"Sophie"',
+            '"player_present":j12_annexe_choice != "C12"',
+            '"player_photographed":j12_annexe_choice != "C12"',
+            '"player_received_trace":true',
+            "func establish_j12_sandra_public_context_view",
+            '"fact_sandra_saw_public_j12_context"',
+            "func establish_j12_unusual_behavior",
+            '"source_type":"DIRECT_OBSERVATION"',
+            '"certainty":"OBSERVED"', '"meaning_certainty":"INFERRED"',
+            '"shareability":"FACTUAL_ONLY"',
+        ]:
+            self.assertIn(token, state)
+        self.assertIn("state.establish_j12_sandra_public_context_view()", provider)
+        self.assertIn('str(trace.get("current_state", "")) != "REMOVED"', provider)
+        smoke = self.read("game/tests/RUNTIME_S1_12J12PlayableSmokeDriver.gd")
+        for route in ["choice_j12_presence_la", "choice_j12_presence_lb", "choice_j12_presence_lc", "choice_j12_annexe_a12", "choice_j12_annexe_b12", "choice_j12_annexe_c12"]:
+            self.assertIn(route, smoke)
+
+    def test_r5c_priority_debt_and_v21_migration_are_fail_closed(self):
+        state = self.read("game/scripts/runtime/season_1/Season1State.gd")
+        smoke = self.read("game/tests/RUNTIME_S1_12J12PlayableSmokeDriver.gd")
+        for route in ["SANDRA", "MATHILDE", "RAPHAELLE", "NICO", "MARIE", "NETWORK"]:
+            self.assertIn(f'"{route}"', state)
+        for token in [
+            '"due_at":"J13 avant toute nouvelle opportunité"',
+            '"route":route',
+            "MATHILDE_HOUSEHOLD_AFTERCARE",
+            "func _migrate_r5c_j12_registers",
+            'if version < SNAPSHOT_VERSION:',
+        ]:
+            self.assertIn(token, state)
+        for token in [
+            "R5C migration rejects contradictory A12 refusal evidence",
+            "migration creates neither T16 nor F20 before an exact source event",
+        ]:
+            self.assertIn(token, smoke)
+        self.assertIn('if state.j11_pivot_outcome == "SANDRA_IMAGE_REMOVED": return "NETWORK"', self.read("game/scripts/runtime/season_1/J12RuntimeProvider.gd"))
+
     def test_r5a_exact_outcomes_morning_aftercare_and_fail_closed_migration(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         j11 = self.read("game/scripts/runtime/season_1/J11RuntimeProvider.gd")
