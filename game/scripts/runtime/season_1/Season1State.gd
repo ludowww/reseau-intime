@@ -1720,14 +1720,59 @@ func begin_j13() -> bool:
 
 func set_j13_priority(pivot: String) -> bool:
 	if current_day != "J13" or day_status != "ACTIVE" or j13_pivot != "" or pivot not in ["PAULINE","RAPHAELLE","NICO","SANDRA","MATHILDE","MARIE","RESPIRATION"]: return false
+	var obligation: Dictionary = obligations.get("j12_priority_consequence_j13", {})
+	var expected_route := "NETWORK" if pivot in ["PAULINE", "RESPIRATION"] else pivot
+	if str(obligation.get("status", "")) != "DUE" or str(obligation.get("route", "")) != expected_route or expected_route != j12_priority_route: return false
+	if pivot == "SANDRA" and j11_pivot_outcome == "SANDRA_IMAGE_REMOVED": return false
+	if pivot == "NICO" and j11_pivot_outcome == "NICO_CLEAN_CLOSE": return false
+	if pivot == "PAULINE" and not j13_pauline_eligible(): return false
+	if pivot == "RESPIRATION" and j13_pauline_eligible(): return false
 	j13_pivot = pivot
-	if pivot == "PAULINE":
-		traces["j13_pauline_private_version_01"] = {"trace_id":"j13_pauline_private_version_01","trace_type":"PHOTO","source_day":"J13","source_scene":"S24 Les deux versions","creator":"Pauline","subjects":["Pauline"],"owner":"Pauline","initial_audience":["Pauline"],"current_audience":["Pauline","Player"],"storage_location":"fil Player / Pauline","saving_rule":"UNDEFINED_UNTIL_RESPONSE","transfer_rule":"FORBIDDEN","current_state":"PRIVATE_ACTIVE","knowledge_created":"fact_pauline_sent_private_j12_version"}
-		knowledge["fact_pauline_sent_private_j12_version"] = {"fact_id":"fact_pauline_sent_private_j12_version","source_type":"PRIVATE_TRACE","source_ref":"j13_pauline_private_version_01","initial_knowers":["Pauline","Player"],"certainty":"CONFIRMED","shareability":"PRIVATE_DO_NOT_SHARE","source_day":"J13"}
-	elif pivot == "RAPHAELLE" and j12_private_outcome != "RAPHAELLE_NOW":
-		traces["j13_raphaelle_masked_version_01"] = {"trace_id":"j13_raphaelle_masked_version_01","trace_type":"PHOTO","source_day":"J13","source_scene":"S25 Le masque change la posture","creator":"Maud","selected_by":"Raphaëlle","subjects":["Raphaëlle"],"owner":"Raphaëlle","initial_audience":["Raphaëlle","Maud"],"current_audience":["Raphaëlle","Maud","Player"],"storage_location":"fil Player / Raphaëlle","saving_rule":"IN_THREAD_ONLY","transfer_rule":"FORBIDDEN","current_state":"PRIVATE_ACTIVE","knowledge_created":"fact_raphaelle_selected_masked_version"}
-		knowledge["fact_raphaelle_selected_masked_version"] = {"fact_id":"fact_raphaelle_selected_masked_version","source_type":"PRIVATE_TRACE","source_ref":"j13_raphaelle_masked_version_01","initial_knowers":["Raphaëlle","Maud","Player"],"certainty":"CONFIRMED","shareability":"PRIVATE_DO_NOT_SHARE","source_day":"J13"}
 	return true
+
+func j13_pauline_eligible() -> bool:
+	if j11_pivot != "RESPIRATION" or j11_pivot_outcome != "" or j12_private_outcome != "UNESTABLISHED" or j12_annexe_choice not in ["A12", "B12"]: return false
+	if not completed_conversation_ids.has("chapter_12_laverriere"): return false
+	for obligation_id in obligations:
+		if obligation_id == "j12_priority_consequence_j13": continue
+		if str(obligations[obligation_id].get("status", "")) in ["DUE", "FAILED"]: return false
+	var laverriere: Dictionary = traces.get("j12_laverriere_public_group_set_01", {})
+	var annexe: Dictionary = traces.get("j12_annexe_public_group_set_01", {})
+	if str(laverriere.get("current_state", "")) != "PUBLIC_ACTIVE" or str(annexe.get("current_state", "")) != "PUBLIC_ACTIVE": return false
+	for person in ["Player", "Pauline", "Bastien"]:
+		if not laverriere.get("subjects", []).has(person) or not laverriere.get("current_audience", []).has(person): return false
+		if not annexe.get("subjects", []).has(person) or not annexe.get("current_audience", []).has(person): return false
+	return bool(annexe.get("player_present", false)) and bool(annexe.get("player_received_trace", false))
+
+func j13_raphaelle_standard_image_eligible() -> bool:
+	return _j13_raphaelle_standard_eligible_in(snapshot())
+
+func _j13_raphaelle_standard_eligible_in(value: Dictionary) -> bool:
+	if str(value.get("j11_pivot_outcome", "")) not in ["FIRST_KISS", "RESULT_SENT_ATTRACTION_NAMED"] or str(value.get("j12_private_outcome", "")) not in ["RAPHAELLE_PUBLIC", "RAPHAELLE_DELAY"]: return false
+	var source: Dictionary = value.get("traces", {}).get("j11_raphaelle_chosen_result_01", {})
+	return str(source.get("creator", "")) == "Maud" and str(source.get("selected_by", "")) == "Raphaëlle" and str(source.get("current_state", "")) == "PRIVATE_ACTIVE" and source.get("current_audience", []).has("Player")
+
+func deliver_j13_priority(pivot: String, segment_id: String) -> bool:
+	if current_day != "J13" or day_status != "ACTIVE" or pivot != j13_pivot or j13_outcome != "UNESTABLISHED": return false
+	if pivot == "PAULINE":
+		if segment_id != "j13_pauline" or not j13_pauline_eligible() or traces.has("j13_pauline_private_version_01") or knowledge.has("fact_pauline_sent_private_j12_version"): return false
+		traces["j13_pauline_private_version_01"] = {"trace_id":"j13_pauline_private_version_01","trace_type":"PHOTO","source_day":"J13","source_scene":"S24 Les deux versions","creator":"Pauline","selected_by":"Pauline","subjects":["Pauline"],"owner":"Pauline","initial_audience":["Pauline"],"current_audience":["Pauline","Player"],"storage_location":"fil Player / Pauline","saving_rule":"UNDEFINED_UNTIL_RESPONSE","transfer_rule":"FORBIDDEN","current_state":"PRIVATE_ACTIVE","knowledge_created":"fact_pauline_sent_private_j12_version","eligible_for_j14":true}
+		knowledge["fact_pauline_sent_private_j12_version"] = {"fact_id":"fact_pauline_sent_private_j12_version","source_type":"PRIVATE_TRACE","source_ref":"j13_pauline_private_version_01","initial_knowers":["Pauline","Player"],"current_knowers":["Pauline","Player"],"certainty":"CONFIRMED","shareability":"PRIVATE_DO_NOT_SHARE","source_day":"J13"}
+		return true
+	if pivot == "RAPHAELLE" and segment_id == "j13_raphaelle":
+		if not j13_raphaelle_standard_image_eligible() or traces.has("j13_raphaelle_masked_version_01") or knowledge.has("fact_raphaelle_selected_masked_version"): return false
+		traces["j13_raphaelle_masked_version_01"] = {"trace_id":"j13_raphaelle_masked_version_01","trace_type":"PHOTO","source_day":"J13","source_scene":"S25 Le masque change la posture","creator":"Maud","selected_by":"Raphaëlle","subjects":["Raphaëlle"],"owner":"Raphaëlle","initial_audience":["Raphaëlle","Maud"],"current_audience":["Raphaëlle","Maud","Player"],"storage_location":"fil Player / Raphaëlle","saving_rule":"IN_THREAD_ONLY","transfer_rule":"FORBIDDEN","current_state":"PRIVATE_ACTIVE","knowledge_created":"fact_raphaelle_selected_masked_version","eligible_for_j14":true}
+		knowledge["fact_raphaelle_selected_masked_version"] = {"fact_id":"fact_raphaelle_selected_masked_version","source_type":"PRIVATE_TRACE","source_ref":"j13_raphaelle_masked_version_01","initial_knowers":["Raphaëlle","Maud","Player"],"current_knowers":["Raphaëlle","Maud","Player"],"certainty":"CONFIRMED","shareability":"PRIVATE_DO_NOT_SHARE","source_day":"J13"}
+		return true
+	var allowed_segments := {
+		"SANDRA":["j13_sandra_clear","j13_sandra_delayed","j13_sandra_exit"],
+		"MATHILDE":["j13_mathilde_look","j13_mathilde_m_b1","j13_mathilde_m_b2","j13_mathilde_m_b3","j13_mathilde_clean_stop","j13_mathilde_distance","j13_mathilde_failed"],
+		"RAPHAELLE":["j13_raphaelle_boundary","j13_raphaelle_pressed"],
+		"NICO":["j13_nico_guardrail","j13_nico_rivalry"],
+		"MARIE":["j13_marie_close","j13_marie_non_adult","j13_marie_no_bandage","j13_marie_distance"],
+		"RESPIRATION":["j13_respiration"],
+	}
+	return allowed_segments.get(pivot, []).has(segment_id)
 
 func apply_j13_choice(choice_id: String, pivot: String) -> bool:
 	if current_day != "J13" or day_status != "ACTIVE" or pivot != j13_pivot or j13_outcome != "UNESTABLISHED" or choice_id == "" or selected_choice_ids.has(choice_id): return false
@@ -1736,40 +1781,85 @@ func apply_j13_choice(choice_id: String, pivot: String) -> bool:
 	var obligation: Dictionary = obligations.get("j12_priority_consequence_j13", {})
 	var expected_route := "NETWORK" if pivot in ["PAULINE", "RESPIRATION"] else pivot
 	if str(obligation.get("status", "")) != "DUE" or str(obligation.get("route", "")) != expected_route: return false
+	var resolution := _j13_resolution_for_choice(choice_id)
+	if resolution == "" or not _j13_choice_allowed_for_snapshot(choice_id, pivot, snapshot()): return false
+	if pivot == "PAULINE" and not traces.has("j13_pauline_private_version_01"): return false
+	if pivot == "RAPHAELLE" and j13_raphaelle_standard_image_eligible() and choice_id in ["choice_j13_raphaelle_process", "choice_j13_raphaelle_effect", "choice_j13_raphaelle_product"] and not traces.has("j13_raphaelle_masked_version_01"): return false
+	if pivot == "NICO" and traces.has("j13_nico_alibi_or_hour_message_01"): return false
 	j13_outcome = choice_id.trim_prefix("choice_j13_").to_upper(); selected_choice_ids.append(choice_id)
-	var refused: bool = choice_id in ["choice_j13_raphaelle_product","choice_j13_raphaelle_insist_pressure","choice_j13_nico_alibi","choice_j13_sandra_more","choice_j13_mathilde_minimize","choice_j13_marie_proof"]
-	obligation["status"] = "REFUSED" if refused else "PAID"; obligation["paid_by"] = "Player"; obligation["paid_or_closed_at"] = "J13 priority response"; obligations["j12_priority_consequence_j13"] = obligation
+	obligation["status"] = resolution; obligation["paid_by"] = "Player"; obligation["paid_or_closed_at"] = "J13 priority response"; obligations["j12_priority_consequence_j13"] = obligation
 	if choice_id == "choice_j13_pauline_refuse": _close_j13_trace("j13_pauline_private_version_01")
 	if choice_id == "choice_j13_raphaelle_product": _close_j13_trace("j13_raphaelle_masked_version_01")
-	if choice_id == "choice_j13_sandra_more":
+	if choice_id in ["choice_j13_sandra_clear_more", "choice_j13_sandra_delayed_more", "choice_j13_sandra_exit_more"]:
 		var sandra_trace: Dictionary = traces.get("j11_sandra_chosen_image_01", {}); var sandra_fact: Dictionary = knowledge.get("fact_sandra_chose_private_image_for_player", {})
 		if not sandra_trace.is_empty(): sandra_trace["current_state"] = "REMOVED"; sandra_trace["current_audience"] = ["Sandra"]; traces["j11_sandra_chosen_image_01"] = sandra_trace
 		if not sandra_fact.is_empty(): sandra_fact["access_mode"] = "removed"; knowledge["fact_sandra_chose_private_image_for_player"] = sandra_fact
 	if pivot == "NICO":
-		traces["j13_nico_alibi_or_hour_message_01"] = {"trace_id":"j13_nico_alibi_or_hour_message_01","trace_type":"TEXT_MESSAGE","source_day":"J13","creator":"Nico","subjects":["Nico","Player"],"owner":"Nico","initial_audience":["Nico","Player"],"current_audience":["Nico","Player"],"storage_location":"fil Player / Nico","saving_rule":"IN_THREAD_ONLY","transfer_rule":"FORBIDDEN","current_state":"PRIVATE_ACTIVE"}
+		traces["j13_nico_alibi_or_hour_message_01"] = {"trace_id":"j13_nico_alibi_or_hour_message_01","trace_type":"TEXT_MESSAGE","source_day":"J13","source_scene":"S26 Nico borne la vérité, l’alibi ou la couverture","creator":"Player et Nico","subjects":["Nico","Player","Marie"],"owner":"Nico","initial_audience":["Nico","Player"],"current_audience":["Nico","Player"],"storage_location":"fil Player / Nico","saving_rule":"IN_THREAD_ONLY","transfer_rule":"FORBIDDEN","current_state":"ACTIVE","eligible_for_j14":true,"choice_source":choice_id}
 	_j13_select_j14_trace()
 	return true
+
+func _j13_resolution_for_choice(choice_id: String) -> String:
+	var closed := ["choice_j13_pauline_refuse", "choice_j13_nico_guardrail_close", "choice_j13_nico_rivalry_close", "choice_j13_sandra_exit_ack", "choice_j13_mathilde_look_distance", "choice_j13_mathilde_m_b1_distance", "choice_j13_mathilde_clean_stop_ack", "choice_j13_mathilde_distance_ack", "choice_j13_marie_distance_space", "choice_j13_raphaelle_boundary_work"]
+	var failed := ["choice_j13_raphaelle_product", "choice_j13_raphaelle_insist_pressure", "choice_j13_raphaelle_boundary_pressure", "choice_j13_nico_guardrail_alibi", "choice_j13_nico_rivalry_alibi", "choice_j13_sandra_clear_more", "choice_j13_sandra_delayed_more", "choice_j13_sandra_exit_more", "choice_j13_mathilde_look_minimize", "choice_j13_mathilde_m_b1_minimize", "choice_j13_mathilde_m_b2_minimize", "choice_j13_mathilde_m_b3_minimize", "choice_j13_mathilde_clean_stop_reopen", "choice_j13_mathilde_distance_reopen", "choice_j13_mathilde_failed_explain", "choice_j13_mathilde_failed_contest", "choice_j13_marie_close_proof", "choice_j13_marie_non_adult_proof", "choice_j13_marie_no_bandage_proof", "choice_j13_marie_distance_proof"]
+	var paid := ["choice_j13_pauline_rule", "choice_j13_pauline_address", "choice_j13_raphaelle_process", "choice_j13_raphaelle_effect", "choice_j13_raphaelle_ack_pressure", "choice_j13_raphaelle_explain_pressure", "choice_j13_raphaelle_boundary_ack", "choice_j13_nico_guardrail_truth", "choice_j13_nico_rivalry_truth", "choice_j13_sandra_clear_confirm", "choice_j13_sandra_clear_withdraw", "choice_j13_sandra_delayed_confirm", "choice_j13_sandra_delayed_withdraw", "choice_j13_sandra_exit_rule", "choice_j13_mathilde_look_rule", "choice_j13_mathilde_m_b1_rule", "choice_j13_mathilde_m_b2_rule", "choice_j13_mathilde_m_b2_debt", "choice_j13_mathilde_m_b3_rule", "choice_j13_mathilde_m_b3_debt", "choice_j13_mathilde_clean_stop_ordinary", "choice_j13_mathilde_distance_ordinary", "choice_j13_mathilde_failed_accept", "choice_j13_marie_close_truth", "choice_j13_marie_close_walk", "choice_j13_marie_non_adult_truth", "choice_j13_marie_non_adult_walk", "choice_j13_marie_no_bandage_truth", "choice_j13_marie_no_bandage_ordinary", "choice_j13_marie_distance_truth", "choice_j13_respiration_bread", "choice_j13_respiration_walk", "choice_j13_respiration_alone"]
+	if choice_id in closed: return "CLOSED"
+	if choice_id in failed: return "FAILED"
+	if choice_id in paid: return "PAID"
+	return ""
+
+func _j13_choice_allowed_for_snapshot(choice_id: String, pivot: String, value: Dictionary) -> bool:
+	var private_outcome := str(value.get("j12_private_outcome", "")); var j11_outcome := str(value.get("j11_pivot_outcome", "")); var obligation: Dictionary = value.get("obligations", {}).get("j12_priority_consequence_j13", {})
+	match pivot:
+		"PAULINE": return choice_id.begins_with("choice_j13_pauline_")
+		"RESPIRATION": return choice_id.begins_with("choice_j13_respiration_")
+		"SANDRA":
+			var sandra_prefix := str({"SANDRA_RESPONSE_CLEAR":"choice_j13_sandra_clear_", "SANDRA_RESPONSE_DELAYED":"choice_j13_sandra_delayed_", "SANDRA_EXIT_CLEAN":"choice_j13_sandra_exit_"}.get(private_outcome, ""))
+			return sandra_prefix != "" and choice_id.begins_with(sandra_prefix)
+		"MATHILDE":
+			var mathilde_variant := "failed" if str(obligation.get("origin", "")) == "MATHILDE_HOUSEHOLD_AFTERCARE" else str({"MATHILDE_LOOK_ONLY":"look", "MATHILDE_M_B1":"m_b1", "MATHILDE_M_B2":"m_b2", "MATHILDE_M_B3":"m_b3", "MATHILDE_CLEAN_STOP":"clean_stop", "MATHILDE_DISTANCE_RESTORED":"distance"}.get(j11_outcome, ""))
+			return mathilde_variant != "" and choice_id.begins_with("choice_j13_mathilde_" + mathilde_variant + "_")
+		"RAPHAELLE":
+			if private_outcome == "RAPHAELLE_NOW": return choice_id in ["choice_j13_raphaelle_ack_pressure", "choice_j13_raphaelle_explain_pressure", "choice_j13_raphaelle_insist_pressure"]
+			if j11_outcome in ["KISS_DECLINED", "RESULT_SENT_BOUNDARY_HELD"] or not _j13_raphaelle_standard_eligible_in(value): return choice_id in ["choice_j13_raphaelle_boundary_ack", "choice_j13_raphaelle_boundary_work", "choice_j13_raphaelle_boundary_pressure"]
+			return choice_id in ["choice_j13_raphaelle_process", "choice_j13_raphaelle_effect", "choice_j13_raphaelle_product"]
+		"NICO":
+			var nico_variant := str({"NICO_GUARDRAIL_HELD":"guardrail", "NICO_RIVALRY_MAINTAINED":"rivalry"}.get(j11_outcome, ""))
+			return nico_variant != "" and choice_id.begins_with("choice_j13_nico_" + nico_variant + "_")
+		"MARIE":
+			var marie_variant := str({"MARIE_ADULT_RECONQUEST":"close", "MARIE_NON_ADULT_RECONNECTION":"non_adult", "MARIE_SEX_NOT_USED_AS_BANDAGE":"no_bandage", "MARIE_HONEST_REFUSAL":"distance", "MARIE_NO_RECONQUEST":"distance"}.get(j11_outcome, ""))
+			return marie_variant != "" and choice_id.begins_with("choice_j13_marie_" + marie_variant + "_")
+	return false
 
 func _close_j13_trace(trace_id: String) -> void:
 	var trace: Dictionary = traces.get(trace_id, {})
 	if not trace.is_empty(): trace["current_state"] = "REMOVED"; trace["current_audience"] = [trace.get("owner", "")]; traces[trace_id] = trace
 
 func _j13_select_j14_trace() -> void:
+	var public_trace_id := "j12_laverriere_public_group_set_01"
 	match j13_pivot:
-		"PAULINE": j13_j14_trace_id = "j13_pauline_private_version_01" if str(traces.get("j13_pauline_private_version_01", {}).get("current_state", "")) == "PRIVATE_ACTIVE" else "j12_laverriere_public_group_set_01"
-		"RAPHAELLE": j13_j14_trace_id = "j13_raphaelle_masked_version_01" if str(traces.get("j13_raphaelle_masked_version_01", {}).get("current_state", "")) == "PRIVATE_ACTIVE" else "j12_laverriere_public_group_set_01"
-		"NICO": j13_j14_trace_id = "j13_nico_alibi_or_hour_message_01"
-		"SANDRA": j13_j14_trace_id = "j11_sandra_chosen_image_01" if str(traces.get("j11_sandra_chosen_image_01", {}).get("current_state", "")) == "PRIVATE_ACTIVE" else "j12_laverriere_public_group_set_01"
-		"MATHILDE": j13_j14_trace_id = "j11_mathilde_physical_aftercare_01" if traces.has("j11_mathilde_physical_aftercare_01") else "j12_laverriere_public_group_set_01"
-		_: j13_j14_trace_id = "j12_laverriere_public_group_set_01"
+		"PAULINE": j13_j14_trace_id = "j13_pauline_private_version_01" if _j13_trace_accessible_for_j14("j13_pauline_private_version_01") else public_trace_id
+		"RAPHAELLE": j13_j14_trace_id = "j13_raphaelle_masked_version_01" if _j13_trace_accessible_for_j14("j13_raphaelle_masked_version_01") else public_trace_id
+		"NICO": j13_j14_trace_id = "j13_nico_alibi_or_hour_message_01" if _j13_trace_accessible_for_j14("j13_nico_alibi_or_hour_message_01") else public_trace_id
+		"SANDRA": j13_j14_trace_id = "j11_sandra_chosen_image_01" if _j13_trace_accessible_for_j14("j11_sandra_chosen_image_01") else public_trace_id
+		"MATHILDE": j13_j14_trace_id = "j11_mathilde_physical_aftercare_01" if _j13_trace_accessible_for_j14("j11_mathilde_physical_aftercare_01") else public_trace_id
+		_: j13_j14_trace_id = public_trace_id
+	if not _j13_trace_accessible_for_j14(j13_j14_trace_id): j13_j14_trace_id = ""
+
+func _j13_trace_accessible_for_j14(trace_id: String) -> bool:
+	var trace: Dictionary = traces.get(trace_id, {})
+	if trace.is_empty() or str(trace.get("current_state", "")) in ["REMOVED", "INACCESSIBLE", "NOT_CREATED"]: return false
+	var canonical_legacy := trace_id in ["j11_sandra_chosen_image_01", "j11_mathilde_physical_aftercare_01"]
+	if not bool(trace.get("eligible_for_j14", canonical_legacy)): return false
+	return str(trace.get("current_state", "")) == "PUBLIC_ACTIVE" or trace.get("current_audience", []).has("Player")
 
 func complete_j13() -> bool:
-	if current_day != "J13" or day_status != "ACTIVE" or j13_pivot == "" or j13_outcome == "UNESTABLISHED" or j13_j14_trace_id == "" or not traces.has(j13_j14_trace_id): return false
+	if current_day != "J13" or day_status != "ACTIVE" or j13_pivot == "" or j13_outcome == "UNESTABLISHED" or j13_j14_trace_id == "" or not _j13_trace_accessible_for_j14(j13_j14_trace_id): return false
 	if not complete_conversation("chapter_13_priority", str({"PAULINE":"pauline","RAPHAELLE":"raphaelle","NICO":"nico","SANDRA":"sandra","MATHILDE":"mathilde","MARIE":"marie","RESPIRATION":"marie"}.get(j13_pivot, "marie")), "priority_consequence"): return false
 	return complete_day()
 
 func begin_j14() -> bool:
-	if current_day != "J13" or day_status != "COMPLETE": return false
+	if current_day != "J13" or day_status != "COMPLETE" or j13_j14_trace_id == "" or not _j13_records_consistent(snapshot()) or not _j13_trace_accessible_for_j14(j13_j14_trace_id): return false
 	current_day = "J14"; day_status = "ACTIVE"; j14_variant = ""; j14_outcome = "UNESTABLISHED"; j14_witness = ""
 	return true
 
@@ -1784,7 +1874,7 @@ func select_j14_variant() -> String:
 
 func establish_j14_discovery(variant: String) -> bool:
 	if current_day != "J14" or day_status != "ACTIVE" or j14_variant != "" or variant not in ["PAULINE","SANDRA","MATHILDE","RAPHAELLE","NICO","COMPOSITE","FALLBACK"]: return false
-	if variant != "FALLBACK" and (j13_j14_trace_id == "" or not traces.has(j13_j14_trace_id) or str(traces[j13_j14_trace_id].get("current_state", "")) == "REMOVED"): return false
+	if variant != "FALLBACK" and not _j13_trace_accessible_for_j14(j13_j14_trace_id): return false
 	j14_variant = variant; j14_witness = "Mathilde" if variant == "SANDRA" else "Marie"
 	if variant == "FALLBACK": return true
 	traces["j14_discovery_event_01"] = {"trace_id":"j14_discovery_event_01","trace_type":"FACT_RECORD","source_day":"J14","discovered_trace_id":j13_j14_trace_id,"witness":j14_witness,"visible_scope":"LIMITED_PREVIEW_OR_NOTIFICATION","source_trace_unchanged":true,"knowledge_created":"fact_witness_saw_limited_trace"}
@@ -3266,7 +3356,7 @@ func _migrate_r5c_j12_registers(value: Dictionary) -> bool:
 	if priority == "UNESTABLISHED" and not priority_obligation.is_empty(): return false
 	if priority != "UNESTABLISHED":
 		if priority_obligation.is_empty() or priority not in ["SANDRA", "MATHILDE", "RAPHAELLE", "NICO", "MARIE", "NETWORK"]: return false
-		var priority_status := str(priority_obligation.get("status", "")); if priority_status not in ["DUE", "PAID", "REFUSED"]: return false
+		var priority_status := str(priority_obligation.get("status", "")); if priority_status not in ["DUE", "PAID", "REFUSED", "FAILED", "CLOSED"]: return false
 		var priority_contract := _j12_priority_contract(priority, restored_obligations)
 		if priority_contract.is_empty() or str(priority_obligation.get("origin", priority_contract["origin"])) != str(priority_contract["origin"]): return false
 		priority_contract["status"] = priority_status; priority_contract["paid_by"] = str(priority_obligation.get("paid_by", "")); priority_contract["paid_or_closed_at"] = str(priority_obligation.get("paid_or_closed_at", ""))
@@ -3822,7 +3912,8 @@ func _j11_records_consistent(value: Dictionary) -> bool:
 		if str(sandra_trace.get("knowledge_created", "")) != "fact_sandra_chose_private_image_for_player" or str(sandra_fact.get("source_ref", "")) != "j11_sandra_chosen_image_01": return false
 		if str(sandra_trace.get("current_state", "")) not in ["PRIVATE_ACTIVE", "REMOVED"] or str(sandra_fact.get("access_mode", "")) not in ["view_only", "in_thread_allowed", "removed"]: return false
 		var sandra_removed := str(sandra_trace.get("current_state", "")) == "REMOVED" and str(sandra_fact.get("access_mode", "")) == "removed"
-		if sandra_removed != (outcome == "SANDRA_IMAGE_REMOVED"): return false
+		var removed_by_j13 := current in ["J13", "J14", "J15", "J16", "J17", "J18", "J19", "J20", "J21"] and (restored_choices.has("choice_j13_sandra_clear_more") or restored_choices.has("choice_j13_sandra_delayed_more") or restored_choices.has("choice_j13_sandra_exit_more"))
+		if sandra_removed != (outcome == "SANDRA_IMAGE_REMOVED" or removed_by_j13): return false
 		if not sandra_removed and outcome not in ["", "SANDRA_RULE_CLARIFIED", "SANDRA_DESIRE_BOUNDED"]: return false
 		var expected_sandra_choice := str({"SANDRA_RULE_CLARIFIED":"choice_j11_sandra_rule","SANDRA_DESIRE_BOUNDED":"choice_j11_sandra_desire","SANDRA_IMAGE_REMOVED":"choice_j11_sandra_more"}.get(outcome, ""))
 		if expected_sandra_choice != "" and not restored_choices.has(expected_sandra_choice): return false
@@ -4019,21 +4110,51 @@ func _j12_records_consistent(value: Dictionary) -> bool:
 			if priority_obligation.get(priority_key) != expected_priority[priority_key]: return false
 	if processed and (priority not in ["UNESTABLISHED", "MATHILDE"] or (priority == "MATHILDE" and (priority_obligation.get("concerned_people", []) != ["Player", "Mathilde"] or str(priority_obligation.get("origin", "")) != "MATHILDE_HOUSEHOLD_AFTERCARE"))): return false
 	if day == "J12" and priority != "UNESTABLISHED" and str(priority_obligation.get("status", "")) != "DUE": return false
-	if day in ["J13", "J14", "J15", "J16", "J17", "J18", "J19", "J20", "J21"] and priority != "UNESTABLISHED" and str(priority_obligation.get("status", "")) not in ["DUE", "PAID", "REFUSED"]: return false
-	if priority != "UNESTABLISHED" and str(priority_obligation.get("status", "")) == "PAID" and (str(priority_obligation.get("paid_by", "")) == "" or str(priority_obligation.get("paid_or_closed_at", "")) == ""): return false
+	if day in ["J13", "J14", "J15", "J16", "J17", "J18", "J19", "J20", "J21"] and priority != "UNESTABLISHED" and str(priority_obligation.get("status", "")) not in ["DUE", "PAID", "REFUSED", "FAILED", "CLOSED"]: return false
+	if priority != "UNESTABLISHED" and str(priority_obligation.get("status", "")) in ["PAID", "REFUSED", "FAILED", "CLOSED"] and (str(priority_obligation.get("paid_by", "")) == "" or str(priority_obligation.get("paid_or_closed_at", "")) == ""): return false
 	if day == "J12" and str(value.get("day_status", "")) == "COMPLETE":
 		return presence != "UNESTABLISHED" and str(presence_promise.get("status", "")) == "PAID" and annexe != "UNESTABLISHED" and str(annexe_promise.get("status", "")) in ["PAID", "REFUSED"] and priority != "UNESTABLISHED" and not lav_trace.is_empty() and not annexe_trace.is_empty() and (p11.is_empty() or str(p11.get("status", "")) in ["PAID", "REFUSED", "EXPIRED"])
 	return true
 
 func _j13_records_consistent(value: Dictionary) -> bool:
-	var day := str(value.get("current_day", "")); var pivot := str(value.get("j13_pivot", "")); var outcome := str(value.get("j13_outcome", "UNESTABLISHED")); var trace_id := str(value.get("j13_j14_trace_id", "")); var restored_traces: Dictionary = value.get("traces", {}); var restored_knowledge: Dictionary = value.get("knowledge", {})
+	var day := str(value.get("current_day", "")); var pivot := str(value.get("j13_pivot", "")); var outcome := str(value.get("j13_outcome", "UNESTABLISHED")); var trace_id := str(value.get("j13_j14_trace_id", "")); var restored_traces: Dictionary = value.get("traces", {}); var restored_knowledge: Dictionary = value.get("knowledge", {}); var restored_obligations: Dictionary = value.get("obligations", {})
 	if day not in ["J13", "J14", "J15", "J16", "J17", "J18", "J19", "J20", "J21"]: return pivot == "" and outcome == "UNESTABLISHED" and trace_id == "" and not restored_traces.has("j13_pauline_private_version_01") and not restored_traces.has("j13_raphaelle_masked_version_01") and not restored_traces.has("j13_nico_alibi_or_hour_message_01")
 	if pivot == "": return outcome == "UNESTABLISHED" and trace_id == ""
+	if pivot not in ["PAULINE", "RAPHAELLE", "NICO", "SANDRA", "MATHILDE", "MARIE", "RESPIRATION"]: return false
+	var obligation: Dictionary = restored_obligations.get("j12_priority_consequence_j13", {})
+	var expected_route := "NETWORK" if pivot in ["PAULINE", "RESPIRATION"] else pivot
+	if str(obligation.get("route", "")) != expected_route or str(value.get("j12_priority_route", "")) != expected_route: return false
+	if pivot == "SANDRA" and str(value.get("j11_pivot_outcome", "")) == "SANDRA_IMAGE_REMOVED": return false
+	if pivot == "NICO" and str(value.get("j11_pivot_outcome", "")) == "NICO_CLEAN_CLOSE": return false
 	if restored_traces.has("j13_pauline_private_version_01") != restored_knowledge.has("fact_pauline_sent_private_j12_version"): return false
 	if restored_traces.has("j13_raphaelle_masked_version_01") != restored_knowledge.has("fact_raphaelle_selected_masked_version"): return false
-	if outcome != "UNESTABLISHED" and (trace_id == "" or not restored_traces.has(trace_id)): return false
+	if restored_traces.has("j13_pauline_private_version_01") and pivot != "PAULINE": return false
+	if restored_traces.has("j13_raphaelle_masked_version_01") and pivot != "RAPHAELLE": return false
+	if restored_traces.has("j13_nico_alibi_or_hour_message_01") and pivot != "NICO": return false
+	if outcome == "UNESTABLISHED": return trace_id == "" and str(obligation.get("status", "")) == "DUE" and not restored_traces.has("j13_nico_alibi_or_hour_message_01")
+	var choice_id := "choice_j13_" + outcome.to_lower()
+	if not value.get("selected_choice_ids", []).has(choice_id): return false
+	var expected_resolution := _j13_resolution_for_choice(choice_id)
+	if expected_resolution == "" or not _j13_choice_allowed_for_snapshot(choice_id, pivot, value) or str(obligation.get("status", "")) != expected_resolution or str(obligation.get("paid_by", "")) == "" or str(obligation.get("paid_or_closed_at", "")) == "": return false
+	if pivot == "PAULINE" and not restored_traces.has("j13_pauline_private_version_01"): return false
+	if pivot == "RAPHAELLE" and _j13_raphaelle_standard_eligible_in(value) != restored_traces.has("j13_raphaelle_masked_version_01"): return false
+	if pivot == "NICO" and not restored_traces.has("j13_nico_alibi_or_hour_message_01"): return false
+	var expected_trace_id := _j13_expected_snapshot_handoff(pivot, restored_traces)
+	if trace_id == "" or trace_id != expected_trace_id or not _j13_snapshot_trace_accessible(restored_traces, trace_id): return false
 	if str(value.get("day_status", "")) == "COMPLETE": return outcome != "UNESTABLISHED" and trace_id != ""
 	return true
+
+func _j13_snapshot_trace_accessible(restored_traces: Dictionary, trace_id: String) -> bool:
+	var trace: Dictionary = restored_traces.get(trace_id, {})
+	if trace.is_empty() or str(trace.get("current_state", "")) in ["REMOVED", "INACCESSIBLE", "NOT_CREATED"]: return false
+	var canonical_legacy := trace_id in ["j11_sandra_chosen_image_01", "j11_mathilde_physical_aftercare_01"]
+	if not bool(trace.get("eligible_for_j14", canonical_legacy)): return false
+	return str(trace.get("current_state", "")) == "PUBLIC_ACTIVE" or trace.get("current_audience", []).has("Player")
+
+func _j13_expected_snapshot_handoff(pivot: String, restored_traces: Dictionary) -> String:
+	var preferred := str({"PAULINE":"j13_pauline_private_version_01", "RAPHAELLE":"j13_raphaelle_masked_version_01", "NICO":"j13_nico_alibi_or_hour_message_01", "SANDRA":"j11_sandra_chosen_image_01", "MATHILDE":"j11_mathilde_physical_aftercare_01"}.get(pivot, "j12_laverriere_public_group_set_01"))
+	if _j13_snapshot_trace_accessible(restored_traces, preferred): return preferred
+	return "j12_laverriere_public_group_set_01" if _j13_snapshot_trace_accessible(restored_traces, "j12_laverriere_public_group_set_01") else ""
 
 func _j14_records_consistent(value: Dictionary) -> bool:
 	var day := str(value.get("current_day", ""))

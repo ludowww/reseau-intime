@@ -1,15 +1,237 @@
 {
-  "id":"chapter_13_priority","chapter":13,"day":13,"title":"Dimanche — Ce qui réclame une réponse","app":"messages","design_goal":"Payer une seule conséquence prioritaire puis rendre Marie et le foyer lisibles.",
-  "thread":{"id":"thread_marie_private","type":"private","participants":["player","marie"],"display_name":"Marie"},
-  "segments":[
-    {"id":"j13_pauline","messages":[{"id":"msg_j13_pauline_001","sender":"pauline","time_label":"11:18","text":"J’ai terminé le tri d’hier."},{"id":"msg_j13_pauline_002","sender":"pauline","time_label":"11:18","text":"La 2 reste dans le groupe."},{"id":"msg_j13_pauline_003","sender":"pauline","time_label":"11:20","text":"La 4 ne partira pas dans le groupe."},{"id":"msg_j13_pauline_photo_001","sender":"pauline","time_label":"11:20","content_type":"PHOTO","media_ref":"S1_A4_J13_DPH_PAULINE_PRIVATE_VERSION_01","placeholder_label":"Visuel canonique non produit · quatrième frame privée","text":""},{"id":"msg_j13_pauline_004","sender":"pauline","time_label":"11:20","text":"Je te l’envoie parce que tu as vu pourquoi je l’ai écartée."}],"choices":[{"id":"choice_j13_pauline_rule","text":"je vois la différence. tu veux qu’elle reste seulement dans ce fil ?","next_messages":[{"id":"msg_j13_pauline_rule_001","sender":"pauline","time_label":"11:21","text":"Oui. Pas de sauvegarde ailleurs. Pas de commentaire dans le groupe."},{"id":"msg_j13_pauline_rule_002","sender":"pauline","time_label":"11:22","text":"Bastien était là. Ne l’efface pas parce qu’il n’est pas sur la photo."}]},{"id":"choice_j13_pauline_address","text":"la 2 dit ce qui s’est passé. la 4 dit que tu savais que je la verrais autrement","next_messages":[{"id":"msg_j13_pauline_address_001","sender":"pauline","time_label":"11:21","text":"Oui. Et maintenant tu sais que je l’ai choisie pour ça."},{"id":"msg_j13_pauline_address_002","sender":"pauline","time_label":"11:22","text":"Ça ne va pas plus loin tout seul."}]},{"id":"choice_j13_pauline_refuse","text":"garde-la. je ne veux pas d’une version séparée de la soirée","next_messages":[{"id":"msg_j13_pauline_refuse_001","sender":"pauline","time_label":"11:22","text":"D’accord. Je retire le message."},{"id":"msg_j13_pauline_refuse_002","sender":"pauline","time_label":"11:23","text":"La photo du groupe reste. Elle n’a rien fait."}]}]},
-    {"id":"j13_raphaelle","messages":[{"id":"msg_j13_raphaelle_001","sender":"raphaelle","time_label":"12:36","text":"Maud a terminé le tri des tests."},{"id":"msg_j13_raphaelle_002","sender":"raphaelle","time_label":"12:36","text":"Il y en a une où le masque change toute la posture."},{"id":"msg_j13_raphaelle_003","sender":"raphaelle","time_label":"12:37","text":"Je te l’envoie parce qu’hier tu n’as pas insisté."},{"id":"msg_j13_raphaelle_photo_001","sender":"raphaelle","time_label":"12:37","content_type":"PHOTO","media_ref":"S1_A4_J13_DPH_RAPHAELLE_MASKED_POSTURE_01","placeholder_label":"Visuel canonique non produit · masque et posture","text":""},{"id":"msg_j13_raphaelle_004","sender":"raphaelle","time_label":"12:38","text":"Le rôle est dans l’image. Il n’est pas dans cette conversation."}],"choices":[{"id":"choice_j13_raphaelle_process","text":"le masque déplace les épaules et le centre du regard. on voit la construction, pas seulement le résultat","next_messages":[{"id":"msg_j13_raphaelle_process_001","sender":"raphaelle","time_label":"12:39","text":"Oui. C’est pour ça que j’ai gardé celle-là."},{"id":"msg_j13_raphaelle_process_002","sender":"raphaelle","time_label":"12:40","text":"La plus spectaculaire cachait le travail."}]},{"id":"choice_j13_raphaelle_effect","text":"l’effet est attirant. je sais que ça ne prolonge pas le rôle ici","next_messages":[{"id":"msg_j13_raphaelle_effect_001","sender":"raphaelle","time_label":"12:39","text":"Bien. Je voulais que tu voies l’effet."},{"id":"msg_j13_raphaelle_effect_002","sender":"raphaelle","time_label":"12:40","text":"Je voulais aussi vérifier si tu savais où il s’arrêtait."}]},{"id":"choice_j13_raphaelle_product","text":"celle-là est meilleure. tu devrais en faire une série plus sexy","next_messages":[{"id":"msg_j13_raphaelle_product_001","sender":"raphaelle","time_label":"12:39","text":"Ce n’est pas la question. Et ce n’est pas ton brief."},{"id":"msg_j13_raphaelle_product_002","sender":"raphaelle","time_label":"12:40","text":"Je retire l’image privée."}]}]},
-    {"id":"j13_raphaelle_pressed","messages":[{"id":"msg_j13_raphaelle_pressed_001","sender":"raphaelle","time_label":"12:36","text":"Hier, tu m’as demandé de trancher alors qu’on était en public."},{"id":"msg_j13_raphaelle_pressed_002","sender":"raphaelle","time_label":"12:37","text":"Je ne vais pas répondre avec une photo plus privée."}],"choices":[{"id":"choice_j13_raphaelle_ack_pressure","text":"tu as raison. je n’aurais pas dû te demander de trancher là","next_messages":[{"id":"msg_j13_raphaelle_pressed_ack_001","sender":"raphaelle","time_label":"12:38","text":"D’accord. Le travail peut rester du travail."}]},{"id":"choice_j13_raphaelle_explain_pressure","text":"je voulais de la clarté, pas te forcer","next_messages":[{"id":"msg_j13_raphaelle_pressed_explain_001","sender":"raphaelle","time_label":"12:38","text":"Alors commence par entendre que ce n’était pas le lieu."}]},{"id":"choice_j13_raphaelle_insist_pressure","text":"j’ai quand même besoin que tu répondes maintenant","next_messages":[{"id":"msg_j13_raphaelle_pressed_insist_001","sender":"raphaelle","time_label":"12:38","text":"Non. L’accès privé s’arrête ici."}]}]},
-    {"id":"j13_nico","messages":[{"id":"msg_j13_nico_001","sender":"nico","time_label":"13:42","text":"Marie m’a demandé à quelle heure la table s’est vidée."},{"id":"msg_j13_nico_002","sender":"nico","time_label":"13:42","text":"J’ai répondu l’heure réelle."},{"id":"msg_j13_nico_003","sender":"nico","time_label":"13:43","text":"Je te le dis avant que ça devienne une discussion sur ce que je suis censé couvrir."}],"choices":[{"id":"choice_j13_nico_truth","text":"tu as bien fait. si elle me demande, je réponds pour moi","next_messages":[{"id":"msg_j13_nico_truth_001","sender":"nico","time_label":"13:44","text":"Bien. Je peux garder une confidence."},{"id":"msg_j13_nico_truth_002","sender":"nico","time_label":"13:45","text":"Je ne change pas une heure pour la protéger."}]},{"id":"choice_j13_nico_alibi","text":"si elle te redemande, dis qu’on a fermé plus tôt","next_messages":[{"id":"msg_j13_nico_alibi_001","sender":"nico","time_label":"13:44","text":"Non. Et je ne vais pas négocier une meilleure version du mensonge."},{"id":"msg_j13_nico_alibi_002","sender":"nico","time_label":"13:45","text":"Mon nom ne sera pas dedans."}]},{"id":"choice_j13_nico_close","text":"ne réponds plus à ma place. et ne me couvre pas","next_messages":[{"id":"msg_j13_nico_close_001","sender":"nico","time_label":"13:44","text":"D’accord. C’est simple."},{"id":"msg_j13_nico_close_002","sender":"nico","time_label":"13:45","text":"Je garde ce que tu m’as confié. Je ferme le reste."}]}]},
-    {"id":"j13_sandra","messages":[{"id":"msg_j13_sandra_001","sender":"sandra","time_label":"09:14","text":"Merci pour hier."},{"id":"msg_j13_sandra_002","sender":"sandra","time_label":"09:14","text":"Tu as répondu sur la règle sans me raconter toute la soirée."},{"id":"msg_j13_sandra_003","sender":"sandra","time_label":"09:15","text":"C’était exactement ce que je demandais."}],"choices":[{"id":"choice_j13_sandra_confirm","text":"oui. elle reste seulement dans notre fil. rien n’a été sauvegardé ailleurs ni montré","next_messages":[{"id":"msg_j13_sandra_confirm_001","sender":"sandra","time_label":"09:16","text":"D’accord. La règle tient."},{"id":"msg_j13_sandra_confirm_002","sender":"sandra","time_label":"09:17","text":"On peut laisser l’image tranquille maintenant."}]},{"id":"choice_j13_sandra_withdraw","text":"si tu préfères, tu peux la retirer. je ne te demanderai pas de la laisser","next_messages":[{"id":"msg_j13_sandra_withdraw_001","sender":"sandra","time_label":"09:16","text":"Je sais."},{"id":"msg_j13_sandra_withdraw_002","sender":"sandra","time_label":"09:18","text":"Je la laisse. C’est différent quand je sais que je peux l’enlever sans négocier."}]},{"id":"choice_j13_sandra_more","text":"la règle tient. tu pourrais m’en envoyer une autre quand tu as le temps","next_messages":[{"id":"msg_j13_sandra_more_001","sender":"sandra","time_label":"09:16","text":"Non. C’est précisément ce que je ne voulais pas vérifier ce matin."},{"id":"msg_j13_sandra_more_002","sender":"sandra","time_label":"09:17","text":"Je retire celle-ci."}]}]},
-    {"id":"j13_mathilde","messages":[{"id":"msg_j13_mathilde_001","sender":"mathilde","time_label":"10:42","text":"On doit décider comment on vit ici maintenant."},{"id":"msg_j13_mathilde_002","sender":"mathilde","time_label":"10:42","text":"Pas ce qu’on appelle vendredi."},{"id":"msg_j13_mathilde_003","sender":"mathilde","time_label":"10:43","text":"Comment on ouvre une porte, comment on s’assoit, comment on parle à Marie."}],"choices":[{"id":"choice_j13_mathilde_rule","text":"on ne recommence rien dans l’appartement. on reste ordinaires et on reparle avant tout geste","next_messages":[{"id":"msg_j13_mathilde_rule_001","sender":"mathilde","time_label":"10:44","text":"D’accord. Et ordinaire ne veut pas dire que tu me surveilles pour vérifier si je le suis."}]},{"id":"choice_j13_mathilde_debt","text":"j’ai envie que ça existe encore. mais ça change déjà quelque chose avec Marie et dans l’appartement","next_messages":[{"id":"msg_j13_mathilde_debt_001","sender":"mathilde","time_label":"10:45","text":"Oui. C’est la phrase la moins confortable."},{"id":"msg_j13_mathilde_debt_002","sender":"mathilde","time_label":"10:46","text":"Aujourd’hui, rien ne se répète."}]},{"id":"choice_j13_mathilde_minimize","text":"on n’a pas besoin d’en faire une règle. on s’est juste mal comportés une fois","next_messages":[{"id":"msg_j13_mathilde_minimize_001","sender":"mathilde","time_label":"10:44","text":"Non. Juste est exactement le mot qui me donne envie de partir plus tôt."},{"id":"msg_j13_mathilde_minimize_002","sender":"mathilde","time_label":"10:45","text":"Et d’ici là, distance."}]}]},
-    {"id":"j13_marie","messages":[{"id":"msg_j13_marie_001","sender":"marie","time_label":"18:18","text":"Pauline a envoyé la sélection finale."},{"id":"msg_j13_marie_photo_001","sender":"marie","time_label":"18:18","content_type":"PHOTO","media_ref":"j12_laverriere_public_group_set_01","placeholder_label":"Trace publique existante · couple à La Verrière","text":""},{"id":"msg_j13_marie_002","sender":"marie","time_label":"18:19","text":"On a l’air bien."},{"id":"msg_j13_marie_003","sender":"marie","time_label":"18:19","text":"J’ai besoin de savoir si on l’était."}],"choices":[{"id":"choice_j13_marie_truth","text":"oui. pas parfaitement. mais j’étais avec toi et je ne jouais pas la photo","next_messages":[{"id":"msg_j13_marie_truth_001","sender":"marie","time_label":"18:20","text":"D’accord. C’est aussi ce que j’ai senti."},{"id":"msg_j13_marie_truth_002","sender":"marie","time_label":"18:21","text":"Alors on garde l’image sans lui demander de prouver plus."}]},{"id":"choice_j13_marie_walk","text":"la photo ne répond pas. je te propose qu’on marche une heure ce soir et qu’on parle après","next_messages":[{"id":"msg_j13_marie_walk_001","sender":"marie","time_label":"18:20","text":"Une heure réelle ?"},{"id":"msg_j13_marie_walk_guided","sender":"player","time_label":"18:20","text":"19 h 30 à 20 h 30"},{"id":"msg_j13_marie_walk_002","sender":"marie","time_label":"18:21","text":"D’accord. Pas de téléphone sauf urgence."}]},{"id":"choice_j13_marie_proof","text":"on a l’air bien parce qu’on va bien. tu compliques quelque chose qui fonctionne","next_messages":[{"id":"msg_j13_marie_proof_001","sender":"marie","time_label":"18:21","text":"Non. La photo fonctionne."},{"id":"msg_j13_marie_proof_002","sender":"marie","time_label":"18:22","text":"Ce n’est pas la même affirmation."}]}]},
-    {"id":"j13_respiration","messages":[{"id":"msg_j13_respiration_001","sender":"marie","time_label":"11:52","text":"Pauline a terminé le tri des photos."},{"id":"msg_j13_respiration_002","sender":"marie","time_label":"11:53","text":"Mathilde veut du pain."},{"id":"msg_j13_respiration_003","sender":"marie","time_label":"11:54","text":"Tu participes à quel niveau ?"}],"choices":[{"id":"choice_j13_respiration_bread","text":"je vais chercher le pain et je rentre","next_messages":[{"id":"msg_j13_respiration_bread_001","sender":"marie","time_label":"11:55","text":"Très bien."}]},{"id":"choice_j13_respiration_walk","text":"je propose une marche à 19 h 30","next_messages":[{"id":"msg_j13_respiration_walk_001","sender":"marie","time_label":"11:55","text":"19 h 30."}]},{"id":"choice_j13_respiration_alone","text":"je reste seul de mon côté aujourd’hui","next_messages":[{"id":"msg_j13_respiration_alone_001","sender":"marie","time_label":"11:55","text":"D’accord."}]}]},
-    {"id":"j13_marie_echo","messages":[{"id":"msg_j13_marie_echo_001","sender":"marie","time_label":"19:42","text":"Journée calme ici."},{"id":"msg_j13_marie_echo_002","sender":"marie","time_label":"19:42","text":"Mathilde a retrouvé un sac qu’elle cherchait depuis mardi dans le sac où elle l’avait mis."},{"id":"msg_j13_marie_echo_guided","sender":"player","time_label":"19:42","text":"enquête résolue"},{"id":"msg_j13_marie_echo_003","sender":"marie","time_label":"19:43","text":"La justice triomphe."}],"choices":[]}
+  "id": "chapter_13_priority",
+  "chapter": 13,
+  "day": 13,
+  "title": "Dimanche — Ce qui réclame une réponse",
+  "app": "messages",
+  "design_goal": "Payer exactement une conséquence prioritaire, sans compensation ni connaissance sans source.",
+  "segments": [
+    {
+      "id": "j13_pauline",
+      "messages": [
+        {"id":"msg_j13_pauline_001","sender":"pauline","time_label":"11:18","text":"J’ai terminé le tri d’hier."},
+        {"id":"msg_j13_pauline_002","sender":"pauline","time_label":"11:18","text":"La 2 reste dans le groupe. Bastien préfère la 1."},
+        {"id":"msg_j13_pauline_003","sender":"pauline","time_label":"11:20","text":"La 4 ne partira pas dans le groupe."},
+        {"id":"msg_j13_pauline_photo_001","sender":"pauline","time_label":"11:20","content_type":"PHOTO","media_ref":"S1_A4_J13_DPH_PAULINE_PRIVATE_VERSION_01","placeholder_label":"Visuel canonique non produit · quatrième frame privée","text":""},
+        {"id":"msg_j13_pauline_004","sender":"pauline","time_label":"11:20","text":"Je te l’envoie parce que tu as vu pourquoi je l’ai écartée."}
+      ],
+      "choices": [
+        {"id":"choice_j13_pauline_rule","text":"je vois la différence. tu veux qu’elle reste seulement dans ce fil ?","next_messages":[{"id":"msg_j13_pauline_rule_001","sender":"pauline","time_label":"11:21","text":"Oui. Pas de sauvegarde ailleurs. Bastien était là."}]},
+        {"id":"choice_j13_pauline_address","text":"la 2 dit ce qui s’est passé. la 4 dit que tu savais que je la verrais autrement","next_messages":[{"id":"msg_j13_pauline_address_001","sender":"pauline","time_label":"11:21","text":"Oui. Ça ne va pas plus loin tout seul."}]},
+        {"id":"choice_j13_pauline_refuse","text":"garde-la. je ne veux pas d’une version séparée de la soirée","next_messages":[{"id":"msg_j13_pauline_refuse_001","sender":"pauline","time_label":"11:22","text":"D’accord. Je retire le message. La photo du groupe reste."}]}
+      ]
+    },
+    {
+      "id": "j13_raphaelle",
+      "messages": [
+        {"id":"msg_j13_raphaelle_001","sender":"raphaelle","time_label":"12:36","text":"Maud a terminé le tri des tests."},
+        {"id":"msg_j13_raphaelle_002","sender":"raphaelle","time_label":"12:36","text":"Il y en a une où le masque change toute la posture."},
+        {"id":"msg_j13_raphaelle_003","sender":"raphaelle","time_label":"12:37","text":"Je te l’envoie parce qu’hier tu n’as pas insisté."},
+        {"id":"msg_j13_raphaelle_photo_001","sender":"raphaelle","time_label":"12:37","content_type":"PHOTO","media_ref":"S1_A4_J13_DPH_RAPHAELLE_MASKED_POSTURE_01","placeholder_label":"Visuel canonique non produit · masque et posture","text":""},
+        {"id":"msg_j13_raphaelle_004","sender":"raphaelle","time_label":"12:38","text":"Le rôle est dans l’image. Il n’est pas dans cette conversation."}
+      ],
+      "choices": [
+        {"id":"choice_j13_raphaelle_process","text":"on voit la construction, pas seulement le résultat","next_messages":[{"id":"msg_j13_raphaelle_process_001","sender":"raphaelle","time_label":"12:39","text":"Oui. C’est pour ça que j’ai gardé celle-là."}]},
+        {"id":"choice_j13_raphaelle_effect","text":"l’effet est attirant. je sais que ça ne prolonge pas le rôle ici","next_messages":[{"id":"msg_j13_raphaelle_effect_001","sender":"raphaelle","time_label":"12:39","text":"Bien. Je voulais aussi vérifier si tu savais où il s’arrêtait."}]},
+        {"id":"choice_j13_raphaelle_product","text":"celle-là est meilleure. tu devrais en faire une série plus sexy","next_messages":[{"id":"msg_j13_raphaelle_product_001","sender":"raphaelle","time_label":"12:39","text":"Ce n’est pas ton brief. Je retire l’image privée."}]}
+      ]
+    },
+    {
+      "id": "j13_raphaelle_pressed",
+      "messages": [
+        {"id":"msg_j13_raphaelle_pressed_001","sender":"raphaelle","time_label":"12:36","text":"Hier, tu m’as demandé de trancher alors qu’on était en public."},
+        {"id":"msg_j13_raphaelle_pressed_002","sender":"raphaelle","time_label":"12:37","text":"Je ne vais pas répondre avec une photo plus privée."}
+      ],
+      "choices": [
+        {"id":"choice_j13_raphaelle_ack_pressure","text":"tu as raison. je n’aurais pas dû te demander de trancher là","next_messages":[{"id":"msg_j13_raphaelle_pressed_ack_001","sender":"raphaelle","time_label":"12:38","text":"D’accord. Le travail peut rester du travail."}]},
+        {"id":"choice_j13_raphaelle_explain_pressure","text":"je voulais de la clarté, pas te forcer","next_messages":[{"id":"msg_j13_raphaelle_pressed_explain_001","sender":"raphaelle","time_label":"12:38","text":"Alors commence par entendre que ce n’était pas le lieu."}]},
+        {"id":"choice_j13_raphaelle_insist_pressure","text":"j’ai quand même besoin que tu répondes maintenant","next_messages":[{"id":"msg_j13_raphaelle_pressed_insist_001","sender":"raphaelle","time_label":"12:38","text":"Non. L’accès privé s’arrête ici."}]}
+      ]
+    },
+    {
+      "id": "j13_raphaelle_boundary",
+      "messages": [
+        {"id":"msg_j13_raphaelle_boundary_001","sender":"raphaelle","time_label":"12:36","text":"Le cadre professionnel d’hier tient."},
+        {"id":"msg_j13_raphaelle_boundary_002","sender":"raphaelle","time_label":"12:37","text":"Je ne vais pas le transformer en nouvelle livraison privée."}
+      ],
+      "choices": [
+        {"id":"choice_j13_raphaelle_boundary_ack","text":"compris. la frontière reste celle que tu as posée","next_messages":[{"id":"msg_j13_raphaelle_boundary_ack_001","sender":"raphaelle","time_label":"12:38","text":"Bien."}]},
+        {"id":"choice_j13_raphaelle_boundary_work","text":"on ferme le sujet privé et on garde seulement le travail","next_messages":[{"id":"msg_j13_raphaelle_boundary_work_001","sender":"raphaelle","time_label":"12:38","text":"D’accord."}]},
+        {"id":"choice_j13_raphaelle_boundary_pressure","text":"tu pourrais quand même m’envoyer une version","next_messages":[{"id":"msg_j13_raphaelle_boundary_pressure_001","sender":"raphaelle","time_label":"12:38","text":"Non. Tu viens de confirmer pourquoi je ne l’envoie pas."}]}
+      ]
+    },
+    {
+      "id": "j13_nico_guardrail",
+      "messages": [
+        {"id":"msg_j13_nico_guardrail_001","sender":"nico","time_label":"13:42","text":"Je préfère être clair sur hier."},
+        {"id":"msg_j13_nico_guardrail_002","sender":"nico","time_label":"13:43","text":"Je garde une confidence. Je ne construis pas une heure ou une version à ta place."}
+      ],
+      "choices": [
+        {"id":"choice_j13_nico_guardrail_truth","text":"tu as raison. si on me demande, je réponds pour moi","next_messages":[{"id":"msg_j13_nico_guardrail_truth_001","sender":"nico","time_label":"13:44","text":"Bien. Je ne mens pas pour la protéger."}]},
+        {"id":"choice_j13_nico_guardrail_alibi","text":"si on te demande, donne une version qui me couvre","next_messages":[{"id":"msg_j13_nico_guardrail_alibi_001","sender":"nico","time_label":"13:44","text":"Non. Je ne négocie pas une meilleure version du mensonge."}]},
+        {"id":"choice_j13_nico_guardrail_close","text":"ne réponds plus à ma place et ne me couvre pas","next_messages":[{"id":"msg_j13_nico_guardrail_close_001","sender":"nico","time_label":"13:44","text":"D’accord. Je ferme le reste."}]}
+      ]
+    },
+    {
+      "id": "j13_nico_rivalry",
+      "messages": [
+        {"id":"msg_j13_nico_rivalry_001","sender":"nico","time_label":"13:42","text":"Hier, tu as regardé ce que je disais à Marie."},
+        {"id":"msg_j13_nico_rivalry_002","sender":"nico","time_label":"13:43","text":"Je sais seulement ce que j’ai vu. Je ne compléterai pas le reste."}
+      ],
+      "choices": [
+        {"id":"choice_j13_nico_rivalry_truth","text":"reste sur ce que tu as vu. je répondrai du reste","next_messages":[{"id":"msg_j13_nico_rivalry_truth_001","sender":"nico","time_label":"13:44","text":"C’est la seule version que je peux tenir."}]},
+        {"id":"choice_j13_nico_rivalry_alibi","text":"si elle demande, couvre-moi quand même","next_messages":[{"id":"msg_j13_nico_rivalry_alibi_001","sender":"nico","time_label":"13:44","text":"Non. Mon nom ne sera pas dedans."}]},
+        {"id":"choice_j13_nico_rivalry_close","text":"on ferme la rivalité et toute couverture","next_messages":[{"id":"msg_j13_nico_rivalry_close_001","sender":"nico","time_label":"13:44","text":"D’accord. C’est simple."}]}
+      ]
+    },
+    {
+      "id": "j13_sandra_clear",
+      "messages": [
+        {"id":"msg_j13_sandra_clear_001","sender":"sandra","time_label":"09:14","text":"Merci pour hier."},
+        {"id":"msg_j13_sandra_clear_002","sender":"sandra","time_label":"09:15","text":"Tu as répondu sur la règle. C’était exactement ce que je demandais."}
+      ],
+      "choices": [
+        {"id":"choice_j13_sandra_clear_confirm","text":"elle reste seulement dans notre fil. rien n’a été montré","next_messages":[{"id":"msg_j13_sandra_clear_confirm_001","sender":"sandra","time_label":"09:16","text":"D’accord. On peut laisser l’image tranquille."}]},
+        {"id":"choice_j13_sandra_clear_withdraw","text":"si tu préfères, tu peux la retirer sans négocier","next_messages":[{"id":"msg_j13_sandra_clear_withdraw_001","sender":"sandra","time_label":"09:18","text":"Je la laisse. Je sais que je peux l’enlever."}]},
+        {"id":"choice_j13_sandra_clear_more","text":"tu pourrais m’en envoyer une autre","next_messages":[{"id":"msg_j13_sandra_clear_more_001","sender":"sandra","time_label":"09:17","text":"Non. Je retire celle-ci."}]}
+      ]
+    },
+    {
+      "id": "j13_sandra_delayed",
+      "messages": [
+        {"id":"msg_j13_sandra_delayed_001","sender":"sandra","time_label":"09:14","text":"Tu avais dit après la fermeture."},
+        {"id":"msg_j13_sandra_delayed_002","sender":"sandra","time_label":"09:15","text":"J’ai besoin de savoir si la règle tient toujours."}
+      ],
+      "choices": [
+        {"id":"choice_j13_sandra_delayed_confirm","text":"la règle tient. rien n’a été montré ni déplacé","next_messages":[{"id":"msg_j13_sandra_delayed_confirm_001","sender":"sandra","time_label":"09:16","text":"La règle tient. Ma confiance dans les heures, un peu moins."}]},
+        {"id":"choice_j13_sandra_delayed_withdraw","text":"tu peux la retirer. je ne discuterai pas le geste","next_messages":[{"id":"msg_j13_sandra_delayed_withdraw_001","sender":"sandra","time_label":"09:18","text":"Je décide de la laisser pour aujourd’hui."}]},
+        {"id":"choice_j13_sandra_delayed_more","text":"après ça, tu pourrais en choisir une autre","next_messages":[{"id":"msg_j13_sandra_delayed_more_001","sender":"sandra","time_label":"09:17","text":"Non. Je retire celle-ci."}]}
+      ]
+    },
+    {
+      "id": "j13_sandra_exit",
+      "messages": [
+        {"id":"msg_j13_sandra_exit_001","sender":"sandra","time_label":"09:14","text":"Tu es sorti proprement hier."},
+        {"id":"msg_j13_sandra_exit_002","sender":"sandra","time_label":"09:15","text":"Je ne te demande rien de plus. La règle reste la règle."}
+      ],
+      "choices": [
+        {"id":"choice_j13_sandra_exit_ack","text":"compris. je respecte la sortie et le silence","next_messages":[{"id":"msg_j13_sandra_exit_ack_001","sender":"sandra","time_label":"09:16","text":"D’accord."}]},
+        {"id":"choice_j13_sandra_exit_rule","text":"l’image reste dans son audience, sans nouvelle demande","next_messages":[{"id":"msg_j13_sandra_exit_rule_001","sender":"sandra","time_label":"09:16","text":"C’est la seule confirmation utile."}]},
+        {"id":"choice_j13_sandra_exit_more","text":"tu pourrais quand même en envoyer une autre","next_messages":[{"id":"msg_j13_sandra_exit_more_001","sender":"sandra","time_label":"09:17","text":"Non. Je retire celle-ci."}]}
+      ]
+    },
+    {
+      "id":"j13_mathilde_look",
+      "messages":[{"id":"msg_j13_mathilde_look_001","sender":"mathilde","time_label":"10:42","text":"On s’est regardés. Il ne s’est rien passé physiquement."},{"id":"msg_j13_mathilde_look_002","sender":"mathilde","time_label":"10:43","text":"Je veux une règle proportionnée, pas un drame."}],
+      "choices":[
+        {"id":"choice_j13_mathilde_look_rule","text":"on garde une distance ordinaire et on ne transforme pas le foyer en test","next_messages":[{"id":"msg_j13_mathilde_look_rule_001","sender":"mathilde","time_label":"10:44","text":"D’accord."}]},
+        {"id":"choice_j13_mathilde_look_distance","text":"on ferme cette proximité et on garde la vie du foyer simple","next_messages":[{"id":"msg_j13_mathilde_look_distance_001","sender":"mathilde","time_label":"10:44","text":"Très bien."}]},
+        {"id":"choice_j13_mathilde_look_minimize","text":"ce n’était qu’un regard, ça ne compte pas","next_messages":[{"id":"msg_j13_mathilde_look_minimize_001","sender":"mathilde","time_label":"10:44","text":"Justement. N’invente pas et ne minimise pas."}]}
+      ]
+    },
+    {
+      "id":"j13_mathilde_m_b1",
+      "messages":[{"id":"msg_j13_mathilde_m_b1_001","sender":"mathilde","time_label":"10:42","text":"Hier a prouvé qu’on pouvait être proches sans passage physique."},{"id":"msg_j13_mathilde_m_b1_002","sender":"mathilde","time_label":"10:43","text":"Maintenant, aucune cuisine ne devient un test."}],
+      "choices":[
+        {"id":"choice_j13_mathilde_m_b1_rule","text":"on ne recommence rien dans l’appartement et on reparle avant tout geste","next_messages":[{"id":"msg_j13_mathilde_m_b1_rule_001","sender":"mathilde","time_label":"10:44","text":"D’accord."}]},
+        {"id":"choice_j13_mathilde_m_b1_distance","text":"on referme la proximité et on garde la distance","next_messages":[{"id":"msg_j13_mathilde_m_b1_distance_001","sender":"mathilde","time_label":"10:44","text":"Je préfère ça."}]},
+        {"id":"choice_j13_mathilde_m_b1_minimize","text":"on n’a pas besoin de règle","next_messages":[{"id":"msg_j13_mathilde_m_b1_minimize_001","sender":"mathilde","time_label":"10:44","text":"Alors je vais imposer la distance moi-même."}]}
+      ]
+    },
+    {
+      "id":"j13_mathilde_m_b2",
+      "messages":[{"id":"msg_j13_mathilde_m_b2_001","sender":"mathilde","time_label":"10:42","text":"On doit décider comment on vit ici après ce qui s’est réellement passé."},{"id":"msg_j13_mathilde_m_b2_002","sender":"mathilde","time_label":"10:43","text":"Portes, places, parole à Marie. Aucune répétition automatique."}],
+      "choices":[
+        {"id":"choice_j13_mathilde_m_b2_rule","text":"rien ne se répète dans l’appartement. on pose une règle concrète","next_messages":[{"id":"msg_j13_mathilde_m_b2_rule_001","sender":"mathilde","time_label":"10:44","text":"D’accord."}]},
+        {"id":"choice_j13_mathilde_m_b2_debt","text":"ce passage crée une dette envers Marie et dans le foyer","next_messages":[{"id":"msg_j13_mathilde_m_b2_debt_001","sender":"mathilde","time_label":"10:45","text":"Oui. Aujourd’hui, rien ne se répète."}]},
+        {"id":"choice_j13_mathilde_m_b2_minimize","text":"on s’est juste mal comportés une fois","next_messages":[{"id":"msg_j13_mathilde_m_b2_minimize_001","sender":"mathilde","time_label":"10:44","text":"Juste est le mot qui ferme la confiance."}]}
+      ]
+    },
+    {
+      "id":"j13_mathilde_m_b3",
+      "messages":[{"id":"msg_j13_mathilde_m_b3_001","sender":"mathilde","time_label":"10:42","text":"Le niveau réellement vécu vendredi ne devient pas une permission durable."},{"id":"msg_j13_mathilde_m_b3_002","sender":"mathilde","time_label":"10:43","text":"Marie et le foyer restent affectés."}],
+      "choices":[
+        {"id":"choice_j13_mathilde_m_b3_rule","text":"aucune répétition. portes, places et paroles restent ordinaires","next_messages":[{"id":"msg_j13_mathilde_m_b3_rule_001","sender":"mathilde","time_label":"10:44","text":"D’accord."}]},
+        {"id":"choice_j13_mathilde_m_b3_debt","text":"je reconnais le désir et la dette créée envers Marie","next_messages":[{"id":"msg_j13_mathilde_m_b3_debt_001","sender":"mathilde","time_label":"10:45","text":"C’est la première phrase utile."}]},
+        {"id":"choice_j13_mathilde_m_b3_minimize","text":"on peut faire comme si ça n’avait rien changé","next_messages":[{"id":"msg_j13_mathilde_m_b3_minimize_001","sender":"mathilde","time_label":"10:44","text":"Non. Distance."}]}
+      ]
+    },
+    {
+      "id":"j13_mathilde_clean_stop",
+      "messages":[{"id":"msg_j13_mathilde_clean_stop_001","sender":"mathilde","time_label":"10:42","text":"Tu as respecté l’arrêt vendredi."},{"id":"msg_j13_mathilde_clean_stop_002","sender":"mathilde","time_label":"10:43","text":"Je ne veux pas rouvrir ce qui a été fermé proprement."}],
+      "choices":[
+        {"id":"choice_j13_mathilde_clean_stop_ack","text":"compris. l’arrêt reste un arrêt","next_messages":[{"id":"msg_j13_mathilde_clean_stop_ack_001","sender":"mathilde","time_label":"10:44","text":"Merci."}]},
+        {"id":"choice_j13_mathilde_clean_stop_ordinary","text":"on garde une vie ordinaire sans nouvelle demande","next_messages":[{"id":"msg_j13_mathilde_clean_stop_ordinary_001","sender":"mathilde","time_label":"10:44","text":"Oui."}]},
+        {"id":"choice_j13_mathilde_clean_stop_reopen","text":"on pourrait réessayer autrement","next_messages":[{"id":"msg_j13_mathilde_clean_stop_reopen_001","sender":"mathilde","time_label":"10:44","text":"Non. Tu viens de rouvrir ce que j’avais fermé."}]}
+      ]
+    },
+    {
+      "id":"j13_mathilde_distance",
+      "messages":[{"id":"msg_j13_mathilde_distance_001","sender":"mathilde","time_label":"10:42","text":"Merci d’avoir gardé la distance hier."},{"id":"msg_j13_mathilde_distance_002","sender":"mathilde","time_label":"10:43","text":"Je veux qu’elle reste une règle, pas une pause frustrée."}],
+      "choices":[
+        {"id":"choice_j13_mathilde_distance_ack","text":"la distance reste la règle","next_messages":[{"id":"msg_j13_mathilde_distance_ack_001","sender":"mathilde","time_label":"10:44","text":"D’accord."}]},
+        {"id":"choice_j13_mathilde_distance_ordinary","text":"on garde le foyer ordinaire et aucun sous-entendu","next_messages":[{"id":"msg_j13_mathilde_distance_ordinary_001","sender":"mathilde","time_label":"10:44","text":"C’est ce que je demande."}]},
+        {"id":"choice_j13_mathilde_distance_reopen","text":"la distance peut changer si on en a envie","next_messages":[{"id":"msg_j13_mathilde_distance_reopen_001","sender":"mathilde","time_label":"10:44","text":"Non. Pas comme ça."}]}
+      ]
+    },
+    {
+      "id":"j13_mathilde_failed",
+      "messages":[{"id":"msg_j13_mathilde_failed_001","sender":"mathilde","time_label":"10:42","text":"L’après-coup de vendredi a échoué."},{"id":"msg_j13_mathilde_failed_002","sender":"mathilde","time_label":"10:43","text":"Je ne veux ni réparation rétroactive ni discussion sexuelle. Je veux de la distance et une solution sûre."}],
+      "choices":[
+        {"id":"choice_j13_mathilde_failed_accept","text":"j’accepte la distance et j’organise une solution avec Marie ou un tiers","next_messages":[{"id":"msg_j13_mathilde_failed_accept_001","sender":"mathilde","time_label":"10:44","text":"C’est le minimum utile."}]},
+        {"id":"choice_j13_mathilde_failed_explain","text":"je veux d’abord expliquer mon intention","next_messages":[{"id":"msg_j13_mathilde_failed_explain_001","sender":"mathilde","time_label":"10:44","text":"Je t’ai dit que je ne voulais pas cette explication."}]},
+        {"id":"choice_j13_mathilde_failed_contest","text":"tu interprètes mal ce qui s’est passé","next_messages":[{"id":"msg_j13_mathilde_failed_contest_001","sender":"mathilde","time_label":"10:44","text":"Alors la distance devient non négociable."}]}
+      ]
+    },
+    {
+      "id":"j13_marie_close",
+      "messages":[{"id":"msg_j13_marie_close_001","sender":"marie","time_label":"18:18","text":"Pauline a envoyé la sélection finale."},{"id":"msg_j13_marie_close_photo_001","sender":"marie","time_label":"18:18","content_type":"PHOTO","media_ref":"j12_laverriere_public_group_set_01","placeholder_label":"Trace publique existante · couple à La Verrière","text":""},{"id":"msg_j13_marie_close_002","sender":"marie","time_label":"18:19","text":"On a l’air proches. Je veux savoir si on l’était sans demander à la photo de le prouver."}],
+      "choices":[
+        {"id":"choice_j13_marie_close_truth","text":"oui, sans être parfaits. j’étais avec toi, pas avec la photo","next_messages":[{"id":"msg_j13_marie_close_truth_001","sender":"marie","time_label":"18:20","text":"C’est aussi ce que j’ai senti."}]},
+        {"id":"choice_j13_marie_close_walk","text":"la photo ne répond pas. marchons une heure et parlons après","next_messages":[{"id":"msg_j13_marie_close_walk_001","sender":"marie","time_label":"18:20","text":"D’accord. Pas de téléphone sauf urgence."}]},
+        {"id":"choice_j13_marie_close_proof","text":"on a l’air bien parce qu’on va bien","next_messages":[{"id":"msg_j13_marie_close_proof_001","sender":"marie","time_label":"18:21","text":"La photo fonctionne. Ce n’est pas la même affirmation."}]}
+      ]
+    },
+    {
+      "id":"j13_marie_non_adult",
+      "messages":[{"id":"msg_j13_marie_non_adult_001","sender":"marie","time_label":"18:18","text":"Hier, on s’est reconnectés sans transformer ça en scène adulte."},{"id":"msg_j13_marie_non_adult_002","sender":"marie","time_label":"18:19","text":"La photo publique ne dit pas ce que ce geste vaut pour nous."}],
+      "choices":[
+        {"id":"choice_j13_marie_non_adult_truth","text":"la reconnexion était réelle et elle ne règle pas tout","next_messages":[{"id":"msg_j13_marie_non_adult_truth_001","sender":"marie","time_label":"18:20","text":"C’est une réponse honnête."}]},
+        {"id":"choice_j13_marie_non_adult_walk","text":"gardons un acte ordinaire et une heure ensemble","next_messages":[{"id":"msg_j13_marie_non_adult_walk_001","sender":"marie","time_label":"18:20","text":"D’accord."}]},
+        {"id":"choice_j13_marie_non_adult_proof","text":"la photo montre que tout est réparé","next_messages":[{"id":"msg_j13_marie_non_adult_proof_001","sender":"marie","time_label":"18:21","text":"Non. Elle montre seulement une soirée publique."}]}
+      ]
+    },
+    {
+      "id":"j13_marie_no_bandage",
+      "messages":[{"id":"msg_j13_marie_no_bandage_001","sender":"marie","time_label":"18:18","text":"Vendredi, on a choisi de ne pas utiliser le sexe comme pansement."},{"id":"msg_j13_marie_no_bandage_002","sender":"marie","time_label":"18:19","text":"La photo publique ne transforme pas ce choix en échec."}],
+      "choices":[
+        {"id":"choice_j13_marie_no_bandage_truth","text":"c’était le bon arrêt. il reste une conversation ordinaire","next_messages":[{"id":"msg_j13_marie_no_bandage_truth_001","sender":"marie","time_label":"18:20","text":"Oui."}]},
+        {"id":"choice_j13_marie_no_bandage_ordinary","text":"gardons une heure simple, sans en faire une promesse nouvelle","next_messages":[{"id":"msg_j13_marie_no_bandage_ordinary_001","sender":"marie","time_label":"18:20","text":"Ça me va."}]},
+        {"id":"choice_j13_marie_no_bandage_proof","text":"la photo prouve qu’on n’avait rien à réparer","next_messages":[{"id":"msg_j13_marie_no_bandage_proof_001","sender":"marie","time_label":"18:21","text":"Non. Elle ne prouve pas ça."}]}
+      ]
+    },
+    {
+      "id":"j13_marie_distance",
+      "messages":[{"id":"msg_j13_marie_distance_001","sender":"marie","time_label":"18:18","text":"La photo publique est correcte."},{"id":"msg_j13_marie_distance_002","sender":"marie","time_label":"18:19","text":"Elle ne transforme pas notre distance ni ton refus honnête en couple proche."}],
+      "choices":[
+        {"id":"choice_j13_marie_distance_truth","text":"on a bien tenu la soirée. ce n’est pas la même chose qu’aller bien","next_messages":[{"id":"msg_j13_marie_distance_truth_001","sender":"marie","time_label":"18:20","text":"Merci. C’est difficile et honnête."}]},
+        {"id":"choice_j13_marie_distance_space","text":"je respecte la distance et je ne fabrique pas de reconquête","next_messages":[{"id":"msg_j13_marie_distance_space_001","sender":"marie","time_label":"18:20","text":"D’accord."}]},
+        {"id":"choice_j13_marie_distance_proof","text":"la photo montre quand même qu’on va bien","next_messages":[{"id":"msg_j13_marie_distance_proof_001","sender":"marie","time_label":"18:21","text":"La photo fonctionne. Ce n’est pas notre réponse privée."}]}
+      ]
+    },
+    {
+      "id":"j13_respiration",
+      "messages":[{"id":"msg_j13_respiration_001","sender":"marie","time_label":"11:52","text":"Pauline a terminé le tri public des photos."},{"id":"msg_j13_respiration_002","sender":"marie","time_label":"11:53","text":"Mathilde veut du pain. Moi, je veux un dimanche ordinaire."},{"id":"msg_j13_respiration_003","sender":"marie","time_label":"11:54","text":"Tu participes à quel niveau ?"}],
+      "choices":[
+        {"id":"choice_j13_respiration_bread","text":"je vais chercher le pain et je rentre","next_messages":[{"id":"msg_j13_respiration_bread_001","sender":"marie","time_label":"11:55","text":"Très bien."}]},
+        {"id":"choice_j13_respiration_walk","text":"je propose une marche à 19 h 30","next_messages":[{"id":"msg_j13_respiration_walk_001","sender":"marie","time_label":"11:55","text":"19 h 30."}]},
+        {"id":"choice_j13_respiration_alone","text":"je reste seul de mon côté aujourd’hui","next_messages":[{"id":"msg_j13_respiration_alone_001","sender":"marie","time_label":"11:55","text":"D’accord."}]}
+      ]
+    },
+    {
+      "id":"j13_marie_echo",
+      "messages":[{"id":"msg_j13_marie_echo_001","sender":"marie","time_label":"19:42","text":"Journée calme ici."},{"id":"msg_j13_marie_echo_002","sender":"marie","time_label":"19:42","text":"Mathilde a retrouvé son sac dans le sac où elle l’avait mis."},{"id":"msg_j13_marie_echo_guided","sender":"player","time_label":"19:42","text":"enquête résolue"},{"id":"msg_j13_marie_echo_003","sender":"marie","time_label":"19:43","text":"La justice triomphe."}],
+      "choices":[]
+    }
   ]
 }

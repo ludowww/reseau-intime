@@ -50,10 +50,15 @@ func presentation_source() -> Dictionary:
 	return {"characters":_characters(),"threads":threads,"messages_by_thread":transcripts,"choices_by_thread":choices,"narrative_day_short":current_narrative_day_short(),"narrative_time":current_narrative_time_text(),"narrative_time_minutes":current_time_minutes,"implementation_status":"PLAYABLE"}
 
 func start_day() -> Dictionary:
-	if phase != "day_start_pending" or not state.begin_j13(): return {"accepted":false}
 	selected_pivot = _select_pivot()
-	if not state.set_j13_priority(selected_pivot): return {"accepted":false}
+	var segment_id := _priority_segment_id()
+	if phase != "day_start_pending" or selected_pivot == "" or segment_id == "" or not segments_by_id.has(segment_id) or not state.begin_j13() or not state.set_j13_priority(selected_pivot):
+		selected_pivot = ""
+		return {"accepted":false}
 	_schedule_transition("to_priority")
+	var segment: Dictionary = segments_by_id.get(segment_id, {})
+	var messages: Array = segment.get("messages", [])
+	if not messages.is_empty(): pending_transition["to_time"] = str(messages[0].get("time_label", pending_transition.get("to_time", "")))
 	return _transition_result()
 
 func choices_for(thread_id: String) -> Array[Dictionary]:
@@ -77,15 +82,17 @@ func apply_choice(thread_id: String, choice_id: String) -> Dictionary:
 
 func confirm_transition() -> Dictionary:
 	if pending_transition.is_empty(): return {"accepted":false}
-	var kind := str(pending_transition.get("kind", "")); pending_transition = {}
+	var kind := str(pending_transition.get("kind", ""))
 	match kind:
 		"to_priority":
-			var thread_id := str(THREADS.get(selected_pivot, "thread_marie_private")); var segment_id := "j13_" + selected_pivot.to_lower()
-			if selected_pivot == "RAPHAELLE" and state.j12_private_outcome == "RAPHAELLE_NOW": segment_id = "j13_raphaelle_pressed"
+			var thread_id := str(THREADS.get(selected_pivot, "thread_marie_private")); var segment_id := _priority_segment_id()
+			if segment_id == "" or not state.deliver_j13_priority(selected_pivot, segment_id): return {"accepted":false}
+			pending_transition = {}
 			_enter_segment(thread_id, segment_id, "priority_incoming"); return _incoming_result(thread_id)
-		"to_marie_echo": _enter_segment("thread_marie_private", "j13_marie_echo", "echo_incoming"); return _incoming_result("thread_marie_private")
+		"to_marie_echo": pending_transition = {}; _enter_segment("thread_marie_private", "j13_marie_echo", "echo_incoming"); return _incoming_result("thread_marie_private")
 		"day_close":
 			if not state.complete_j13(): return {"accepted":false}
+			pending_transition = {}
 			if TimelineState != null: TimelineState.mark_day_complete(13)
 			phase = "complete"; return {"accepted":true,"destination":"day_end","day_end":runtime_map["day_end"].duplicate(true)}
 	return {"accepted":false}
@@ -130,17 +137,39 @@ func presentation_count_by_id(id: String) -> int:
 	return count
 
 func _select_pivot() -> String:
-	var aftercare: Dictionary = state.obligations.get("aftercare_mathilde_j11", {})
-	if str(aftercare.get("status", "")) in ["DUE","FAILED"]: return "MATHILDE"
-	match state.j12_priority_route:
+	var obligation: Dictionary = state.obligations.get("j12_priority_consequence_j13", {})
+	for key in ["status", "route", "origin", "concerned_people", "due_at", "failure_effect"]:
+		if not obligation.has(key): return ""
+	if str(obligation.get("status", "")) != "DUE": return ""
+	var route := str(obligation.get("route", ""))
+	if route != state.j12_priority_route: return ""
+	match route:
 		"SANDRA": return "SANDRA"
 		"MATHILDE": return "MATHILDE"
 		"RAPHAELLE": return "RAPHAELLE"
-		"NICO": return "NICO"
+		"NICO": return "" if state.j11_pivot_outcome == "NICO_CLEAN_CLOSE" else "NICO"
 		"MARIE": return "MARIE"
-		"NETWORK":
-			if state.traces.has("j12_annexe_public_group_set_01"): return "PAULINE"
-	return "RESPIRATION"
+		"NETWORK": return "PAULINE" if _pauline_eligible() else "RESPIRATION"
+	return ""
+
+func _pauline_eligible() -> bool:
+	return state.j13_pauline_eligible()
+
+func _priority_segment_id() -> String:
+	match selected_pivot:
+		"PAULINE": return "j13_pauline"
+		"SANDRA": return str({"SANDRA_RESPONSE_CLEAR":"j13_sandra_clear", "SANDRA_RESPONSE_DELAYED":"j13_sandra_delayed", "SANDRA_EXIT_CLEAN":"j13_sandra_exit"}.get(state.j12_private_outcome, ""))
+		"MATHILDE":
+			if str(state.obligations.get("j12_priority_consequence_j13", {}).get("origin", "")) == "MATHILDE_HOUSEHOLD_AFTERCARE": return "j13_mathilde_failed"
+			return str({"MATHILDE_LOOK_ONLY":"j13_mathilde_look", "MATHILDE_M_B1":"j13_mathilde_m_b1", "MATHILDE_M_B2":"j13_mathilde_m_b2", "MATHILDE_M_B3":"j13_mathilde_m_b3", "MATHILDE_CLEAN_STOP":"j13_mathilde_clean_stop", "MATHILDE_DISTANCE_RESTORED":"j13_mathilde_distance"}.get(state.j11_pivot_outcome, ""))
+		"RAPHAELLE":
+			if state.j12_private_outcome == "RAPHAELLE_NOW": return "j13_raphaelle_pressed"
+			if state.j11_pivot_outcome in ["KISS_DECLINED", "RESULT_SENT_BOUNDARY_HELD"]: return "j13_raphaelle_boundary"
+			return "j13_raphaelle" if state.j13_raphaelle_standard_image_eligible() else "j13_raphaelle_boundary"
+		"NICO": return str({"NICO_GUARDRAIL_HELD":"j13_nico_guardrail", "NICO_RIVALRY_MAINTAINED":"j13_nico_rivalry"}.get(state.j11_pivot_outcome, ""))
+		"MARIE": return str({"MARIE_ADULT_RECONQUEST":"j13_marie_close", "MARIE_NON_ADULT_RECONNECTION":"j13_marie_non_adult", "MARIE_SEX_NOT_USED_AS_BANDAGE":"j13_marie_no_bandage", "MARIE_HONEST_REFUSAL":"j13_marie_distance", "MARIE_NO_RECONQUEST":"j13_marie_distance"}.get(state.j11_pivot_outcome, ""))
+		"RESPIRATION": return "j13_respiration"
+	return ""
 
 func _enter_segment(thread_id: String, segment_id: String, incoming_phase: String) -> void:
 	if not unlocked_thread_ids.has(thread_id): unlocked_thread_ids.append(thread_id)
@@ -164,6 +193,15 @@ func _incoming_result(thread_id: String) -> Dictionary: return {"accepted":true,
 func _restored_phase_consistent() -> bool:
 	if phase == "day_start_pending": return state.current_day == "J12" and state.day_status == "COMPLETE" and pending_transition.is_empty()
 	if state.current_day != "J13": return false
+	if selected_pivot == "" or selected_pivot != state.j13_pivot: return false
+	var obligation: Dictionary = state.obligations.get("j12_priority_consequence_j13", {})
+	var expected_route := "NETWORK" if selected_pivot in ["PAULINE", "RESPIRATION"] else selected_pivot
+	if str(obligation.get("route", "")) != expected_route: return false
+	var private_trace_id := "j13_pauline_private_version_01" if selected_pivot == "PAULINE" else ("j13_raphaelle_masked_version_01" if selected_pivot == "RAPHAELLE" and _priority_segment_id() == "j13_raphaelle" else "")
+	if phase == "to_priority" and (state.traces.has("j13_pauline_private_version_01") or state.traces.has("j13_raphaelle_masked_version_01")): return false
+	if private_trace_id != "" and phase not in ["to_priority"] and not state.traces.has(private_trace_id): return false
+	if phase in ["to_priority", "priority_incoming", "priority_choice"] and str(obligation.get("status", "")) != "DUE": return false
+	if phase in ["to_marie_echo", "echo_incoming", "day_close", "complete"] and str(obligation.get("status", "")) == "DUE": return false
 	if phase == "complete": return state.day_status == "COMPLETE" and pending_transition.is_empty()
 	if state.day_status != "ACTIVE": return false
 	return not pending_transition.is_empty() if phase in ["to_priority","to_marie_echo","day_close"] else pending_transition.is_empty()
