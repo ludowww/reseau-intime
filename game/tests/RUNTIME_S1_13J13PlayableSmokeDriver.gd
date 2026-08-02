@@ -9,6 +9,9 @@ const PUBLIC_TRACE := "j12_laverriere_public_group_set_01"
 const PAULINE_TRACE := "j13_pauline_private_version_01"
 const RAPHAELLE_TRACE := "j13_raphaelle_masked_version_01"
 const NICO_TRACE := "j13_nico_alibi_or_hour_message_01"
+const PAULINE_FACT := "fact_pauline_created_private_double_address"
+const RAPHAELLE_FACT := "fact_raphaelle_chose_player_for_masked_posture_image"
+const NICO_FACT := "fact_nico_knows_specific_hour_or_alibi_request"
 
 var failures: Array[String] = []
 var j12_helper
@@ -40,12 +43,16 @@ func _ready() -> void:
 func _exercise_network_routes() -> void:
 	var pauline = _completed_network_state(true)
 	_exercise_case("Pauline eligible", pauline, "PAULINE", "msg_j13_pauline_001", "choice_j13_pauline_rule", "PAID", "NETWORK_J11_CONSEQUENCE", PAULINE_TRACE)
+	_assert_private_trace_contract(pauline, PAULINE_TRACE, PAULINE_FACT, "Pauline P-A")
+	var addressed = _completed_network_state(true)
+	_exercise_case("Pauline double address", addressed, "PAULINE", "msg_j13_pauline_001", "choice_j13_pauline_address", "PAID", "NETWORK_J11_CONSEQUENCE", PAULINE_TRACE)
+	_assert_private_trace_contract(addressed, PAULINE_TRACE, PAULINE_FACT, "Pauline P-B")
 	var refused = _completed_network_state(true)
 	_exercise_case("Pauline clean refusal", refused, "PAULINE", "msg_j13_pauline_001", "choice_j13_pauline_refuse", "CLOSED", "NETWORK_J11_CONSEQUENCE", PUBLIC_TRACE)
-	_expect(str(refused.traces[PAULINE_TRACE].get("current_state", "")) == "REMOVED" and refused.knowledge.has("fact_pauline_sent_private_j12_version"), "Pauline refusal removes access but preserves sourced history")
+	_expect(str(refused.traces[PAULINE_TRACE].get("current_state", "")) == "REMOVED" and refused.traces[PAULINE_TRACE].get("current_audience", []) == ["Pauline"] and refused.knowledge.has(PAULINE_FACT), "Pauline P-C removes access but preserves F22")
 	var respiration = _completed_network_state(false)
 	_exercise_case("NETWORK respiration", respiration, "RESPIRATION", "msg_j13_respiration_001", "choice_j13_respiration_bread", "PAID", "NETWORK_J11_CONSEQUENCE", PUBLIC_TRACE)
-	var impossible: Dictionary = pauline.snapshot(); impossible["traces"].erase(PAULINE_TRACE); impossible["knowledge"].erase("fact_pauline_sent_private_j12_version")
+	var impossible: Dictionary = pauline.snapshot(); impossible["traces"].erase(PAULINE_TRACE); impossible["knowledge"].erase(PAULINE_FACT)
 	_expect(not STATE.new().restore_snapshot(impossible), "a completed Pauline snapshot without its delivered trace fails closed")
 
 
@@ -83,22 +90,40 @@ func _exercise_mathilde_matrix() -> void:
 func _exercise_raphaelle_matrix() -> void:
 	var standard = _completed_r5b_j12("FIRST_KISS", "RAPHAELLE", "choice_j12_raphaelle_public", "C12")
 	_exercise_case("Raphaelle standard", standard, "RAPHAELLE", "msg_j13_raphaelle_001", "choice_j13_raphaelle_process", "PAID", "RAPHAELLE_J11_CONSEQUENCE", RAPHAELLE_TRACE)
+	_assert_private_trace_contract(standard, RAPHAELLE_TRACE, RAPHAELLE_FACT, "Raphaelle process")
+	var effect = _completed_r5b_j12("RESULT_SENT_ATTRACTION_NAMED", "RAPHAELLE", "choice_j12_raphaelle_public", "C12")
+	_exercise_case("Raphaelle effect", effect, "RAPHAELLE", "msg_j13_raphaelle_001", "choice_j13_raphaelle_effect", "PAID", "RAPHAELLE_J11_CONSEQUENCE", RAPHAELLE_TRACE)
+	_assert_private_trace_contract(effect, RAPHAELLE_TRACE, RAPHAELLE_FACT, "Raphaelle effect")
+	var product = _completed_r5b_j12("FIRST_KISS", "RAPHAELLE", "choice_j12_raphaelle_public", "C12")
+	_exercise_case("Raphaelle product reduction", product, "RAPHAELLE", "msg_j13_raphaelle_001", "choice_j13_raphaelle_product", "FAILED", "RAPHAELLE_J11_CONSEQUENCE", PUBLIC_TRACE)
+	_expect(str(product.traces[RAPHAELLE_TRACE].get("current_state", "")) == "REMOVED" and product.traces[RAPHAELLE_TRACE].get("current_audience", []) == ["Raphaëlle"] and product.knowledge.has(RAPHAELLE_FACT), "Raphaelle product removes T18 but preserves its knowledge")
 	var boundary = _completed_r5b_j12("KISS_DECLINED", "RAPHAELLE", "choice_j12_raphaelle_declined_hold", "C12")
 	_exercise_case("Raphaelle boundary", boundary, "RAPHAELLE", "msg_j13_raphaelle_boundary_001", "choice_j13_raphaelle_boundary_work", "CLOSED", "RAPHAELLE_J11_CONSEQUENCE", PUBLIC_TRACE)
-	_expect(not boundary.traces.has(RAPHAELLE_TRACE), "a declined kiss creates no masked private image")
+	_expect(not boundary.traces.has(RAPHAELLE_TRACE) and not boundary.knowledge.has(RAPHAELLE_FACT), "a declined kiss creates neither T18 nor its knowledge")
+	var held = _completed_r5b_j12("RESULT_SENT_BOUNDARY_HELD", "RAPHAELLE", "choice_j12_raphaelle_boundary_hold", "C12")
+	_exercise_case("Raphaelle professional boundary", held, "RAPHAELLE", "msg_j13_raphaelle_boundary_001", "choice_j13_raphaelle_boundary_ack", "PAID", "RAPHAELLE_J11_CONSEQUENCE", PUBLIC_TRACE)
+	_expect(not held.traces.has(RAPHAELLE_TRACE) and not held.knowledge.has(RAPHAELLE_FACT), "a professional boundary creates neither T18 nor its knowledge")
 	var pressed = _completed_r5b_j12("RESULT_SENT_ATTRACTION_NAMED", "RAPHAELLE", "choice_j12_raphaelle_now", "C12")
 	_exercise_case("Raphaelle pressed", pressed, "RAPHAELLE", "msg_j13_raphaelle_pressed_001", "choice_j13_raphaelle_insist_pressure", "FAILED", "RAPHAELLE_J11_CONSEQUENCE", PUBLIC_TRACE)
-	_expect(not pressed.traces.has(RAPHAELLE_TRACE), "RAPHAELLE_NOW creates no masked private image")
+	_expect(not pressed.traces.has(RAPHAELLE_TRACE) and not pressed.knowledge.has(RAPHAELLE_FACT), "RAPHAELLE_NOW creates neither T18 nor its knowledge")
 
 
 func _exercise_nico_matrix() -> void:
-	var guardrail = _completed_r5b_j12("NICO_GUARDRAIL_HELD", "NICO", "choice_j12_nico_accept", "B12")
-	_exercise_case("Nico guardrail", guardrail, "NICO", "msg_j13_nico_guardrail_001", "choice_j13_nico_guardrail_truth", "PAID", "NICO_J11_CONSEQUENCE", NICO_TRACE)
-	var rivalry = _completed_r5b_j12("NICO_RIVALRY_MAINTAINED", "NICO", "choice_j12_nico_rivalry_leave", "B12")
-	_exercise_case("Nico rivalry", rivalry, "NICO", "msg_j13_nico_rivalry_001", "choice_j13_nico_rivalry_alibi", "FAILED", "NICO_J11_CONSEQUENCE", NICO_TRACE)
+	var cases := [
+		{"outcome":"NICO_GUARDRAIL_HELD", "j12_choice":"choice_j12_nico_accept", "message":"msg_j13_nico_guardrail_001", "choice":"choice_j13_nico_guardrail_truth", "status":"PAID", "boundary":"TRUTH_LIMIT", "marie":false},
+		{"outcome":"NICO_GUARDRAIL_HELD", "j12_choice":"choice_j12_nico_accept", "message":"msg_j13_nico_guardrail_001", "choice":"choice_j13_nico_guardrail_alibi", "status":"FAILED", "boundary":"ALIBI_REQUEST", "marie":false},
+		{"outcome":"NICO_GUARDRAIL_HELD", "j12_choice":"choice_j12_nico_accept", "message":"msg_j13_nico_guardrail_001", "choice":"choice_j13_nico_guardrail_close", "status":"CLOSED", "boundary":"COVERAGE_CLOSED", "marie":false},
+		{"outcome":"NICO_RIVALRY_MAINTAINED", "j12_choice":"choice_j12_nico_rivalry_leave", "message":"msg_j13_nico_rivalry_001", "choice":"choice_j13_nico_rivalry_truth", "status":"PAID", "boundary":"TRUTH_LIMIT", "marie":true},
+		{"outcome":"NICO_RIVALRY_MAINTAINED", "j12_choice":"choice_j12_nico_rivalry_leave", "message":"msg_j13_nico_rivalry_001", "choice":"choice_j13_nico_rivalry_alibi", "status":"FAILED", "boundary":"ALIBI_REQUEST", "marie":true},
+		{"outcome":"NICO_RIVALRY_MAINTAINED", "j12_choice":"choice_j12_nico_rivalry_leave", "message":"msg_j13_nico_rivalry_001", "choice":"choice_j13_nico_rivalry_close", "status":"CLOSED", "boundary":"COVERAGE_CLOSED", "marie":true},
+	]
+	for test_case in cases:
+		var state = _completed_r5b_j12(str(test_case.outcome), "NICO", str(test_case.j12_choice), "B12")
+		_exercise_case("Nico " + str(test_case.choice), state, "NICO", str(test_case.message), str(test_case.choice), str(test_case.status), "NICO_J11_CONSEQUENCE", NICO_TRACE)
+		_assert_nico_contract(state, str(test_case.choice), str(test_case.boundary), bool(test_case.marie))
 	var closed = _completed_r5b_j12("NICO_CLEAN_CLOSE", "NETWORK", "", "C12")
 	_exercise_case("Nico clean close stays silent", closed, "RESPIRATION", "msg_j13_respiration_001", "choice_j13_respiration_alone", "PAID", "NETWORK_J11_CONSEQUENCE", PUBLIC_TRACE)
-	_expect(not closed.traces.has(NICO_TRACE), "NICO_CLEAN_CLOSE creates no Nico consequence trace")
+	_expect(not closed.traces.has(NICO_TRACE) and not closed.knowledge.has(NICO_FACT), "NICO_CLEAN_CLOSE creates neither T19 nor F24")
 
 
 func _exercise_marie_matrix() -> void:
@@ -131,12 +156,16 @@ func _exercise_case(label: String, state, expected_pivot: String, first_message_
 	var provider = _new_provider(state)
 	_expect_round_trip(provider, label + " end J12")
 	_expect(bool(provider.start_day().get("accepted", false)) and provider.selected_pivot == expected_pivot, label + " selects the exact foreground")
-	_expect(not state.traces.has(PAULINE_TRACE) and not state.traces.has(RAPHAELLE_TRACE), label + " creates no private J13 trace during selection")
+	_expect(not state.traces.has(PAULINE_TRACE) and not state.traces.has(RAPHAELLE_TRACE) and not state.traces.has(NICO_TRACE), label + " creates no J13 trace during selection")
+	_expect(not state.knowledge.has(PAULINE_FACT) and not state.knowledge.has(RAPHAELLE_FACT) and not state.knowledge.has(NICO_FACT), label + " creates no J13 knowledge during selection")
 	_expect_round_trip(provider, label + " before delivery")
 	_confirm(provider)
 	_expect(provider.presentation_count_by_id(first_message_id) == 1, label + " delivers only the exact variant")
 	if expected_trace == PAULINE_TRACE or expected_trace == RAPHAELLE_TRACE:
-		_expect(state.traces.has(expected_trace), label + " creates its private trace at delivery")
+		var expected_fact := PAULINE_FACT if expected_trace == PAULINE_TRACE else RAPHAELLE_FACT
+		_expect(state.traces.has(expected_trace) and state.knowledge.has(expected_fact), label + " creates its private trace and knowledge at delivery")
+	if expected_pivot == "NICO":
+		_expect(not state.traces.has(NICO_TRACE) and not state.knowledge.has(NICO_FACT), label + " keeps T19 and F24 absent before the real choice")
 	_expect_round_trip(provider, label + " after delivery")
 	var thread_id := str(PROVIDER.THREADS.get(expected_pivot, "thread_marie_private"))
 	_present(provider, thread_id)
@@ -164,6 +193,22 @@ func _exercise_case(label: String, state, expected_pivot: String, first_message_
 			if int(message.get("source_day", 0)) == 13:
 				j13_threads[candidate_thread] = true
 	_expect(j13_threads.size() <= (1 if expected_pivot in ["MARIE", "RESPIRATION"] else 2), label + " unlocks no compensation thread")
+
+
+func _assert_private_trace_contract(state, trace_id: String, fact_id: String, label: String) -> void:
+	var trace: Dictionary = state.traces.get(trace_id, {}); var fact: Dictionary = state.knowledge.get(fact_id, {})
+	_expect(not trace.is_empty() and not fact.is_empty(), label + " keeps its trace and knowledge pair")
+	_expect(str(trace.get("knowledge_created", "")) == fact_id and str(fact.get("source_ref", "")) == trace_id, label + " links trace and knowledge canonically")
+	_expect(str(trace.get("current_state", "")) == "PRIVATE_ACTIVE" and str(trace.get("saving_rule", "")) == "IN_THREAD_ONLY" and str(trace.get("transfer_rule", "")) == "FORBIDDEN", label + " keeps bounded in-thread access")
+
+
+func _assert_nico_contract(state, choice_id: String, expected_boundary: String, includes_marie: bool) -> void:
+	var trace: Dictionary = state.traces.get(NICO_TRACE, {}); var fact: Dictionary = state.knowledge.get(NICO_FACT, {}); var expected_subjects := ["Nico","Player","Marie"] if includes_marie else ["Nico","Player"]
+	_expect(not trace.is_empty() and not fact.is_empty(), choice_id + " creates T19 and F24")
+	_expect(trace.get("subjects", []) == expected_subjects, choice_id + " records only the subjects established by its variant")
+	_expect(str(trace.get("knowledge_created", "")) == NICO_FACT and str(fact.get("source_ref", "")) == NICO_TRACE, choice_id + " links T19 and F24")
+	_expect(str(fact.get("source_choice_id", "")) == choice_id and str(fact.get("request_or_boundary", "")) == expected_boundary, choice_id + " stores its exact bounded meaning")
+	_expect(str(fact.get("source_type", "")) == "DIRECT_MESSAGE" and str(fact.get("certainty", "")) == "TOLD_DIRECTLY" and str(fact.get("shareability", "")) == "FACTUAL_ONLY", choice_id + " preserves the canonical F24 epistemic contract")
 
 
 func _completed_network_state(pauline_eligible: bool):

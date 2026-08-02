@@ -107,6 +107,37 @@ class RuntimeS113J13PlayableStaticTests(unittest.TestCase):
         self.assertIn("S1_A4_J13_DPH_RAPHAELLE_MASKED_POSTURE_01", corpus)
         self.assertNotIn("S1_A4_J13_DPH_RAPHAELLE_MASKED_ADULT", corpus)
 
+    def test_trace_knowledge_contracts_use_canonical_ids(self):
+        state = self.read("game/scripts/runtime/season_1/Season1State.gd")
+        smoke = self.read("game/tests/RUNTIME_S1_13J13PlayableSmokeDriver.gd")
+        contracts = {
+            "j13_pauline_private_version_01": "fact_pauline_created_private_double_address",
+            "j13_raphaelle_masked_version_01": "fact_raphaelle_chose_player_for_masked_posture_image",
+            "j13_nico_alibi_or_hour_message_01": "fact_nico_knows_specific_hour_or_alibi_request",
+        }
+        for trace_id, fact_id in contracts.items():
+            self.assertIn('"knowledge_created":"%s"' % fact_id, state)
+            self.assertIn('"source_ref":"%s"' % trace_id, state)
+            self.assertIn(fact_id, smoke)
+        for token in [
+            '"saving_rule":"IN_THREAD_ONLY"',
+            '"source_type":"DIRECT_MESSAGE"',
+            '"certainty":"TOLD_DIRECTLY"',
+            '"request_or_boundary":request_or_boundary',
+            '"source_choice_id":choice_id',
+        ]:
+            self.assertIn(token, state)
+        for bounded_value in ["TRUTH_LIMIT", "ALIBI_REQUEST", "COVERAGE_CLOSED"]:
+            self.assertIn(bounded_value, state)
+            self.assertIn(bounded_value, smoke)
+        legacy_ids = [
+            "fact_pauline_" + "sent_private_j12_version",
+            "fact_raphaelle_" + "selected_masked_version",
+        ]
+        for legacy_id in legacy_ids:
+            self.assertNotIn(legacy_id, state)
+            self.assertNotIn(legacy_id, smoke)
+
     def test_snapshot_versions_are_unchanged_and_restore_checks_phase(self):
         provider = self.read("game/scripts/runtime/season_1/J13RuntimeProvider.gd")
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
