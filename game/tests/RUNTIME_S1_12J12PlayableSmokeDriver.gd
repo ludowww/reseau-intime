@@ -168,6 +168,16 @@ func _exercise_r5b_path(test_case: Dictionary) -> void:
 	if after_message == "":
 		_expect(provider.phase == "day_close", outcome + " represents canonical silence by no segment")
 		_expect(provider.presentation_count_by_id("msg_j12_marie_network_001") == 0, outcome + " receives no substitute route")
+		if outcome == "SANDRA_IMAGE_REMOVED":
+			_expect(provider.transcript_for(SANDRA_THREAD).is_empty(), "removed Sandra image creates no Sandra segment")
+			_expect(state.j12_priority_route == "NETWORK", "removed Sandra image returns priority to the network")
+			var debt: Dictionary = state.obligations.get("j12_priority_consequence_j13", {})
+			_expect(str(debt.get("origin", "")) == "NETWORK_J11_CONSEQUENCE", "removed Sandra image creates only the network J13 obligation")
+			var state_snapshot: Dictionary = state.snapshot()
+			var restored_state = SEASON_STATE.new()
+			_expect(restored_state.restore_snapshot(state_snapshot), "removed Sandra network consequence restores after save")
+			var restored_debt: Dictionary = restored_state.obligations.get("j12_priority_consequence_j13", {})
+			_expect(restored_state.j12_priority_route == "NETWORK" and str(restored_debt.get("origin", "")) == "NETWORK_J11_CONSEQUENCE", "removed Sandra network consequence survives save and reload")
 	else:
 		_expect(provider.phase == "after_incoming" and provider.presentation_count_by_id(after_message) == 1, outcome + " selects its exact after-separation consequence")
 		_present_batch(provider, route_thread)

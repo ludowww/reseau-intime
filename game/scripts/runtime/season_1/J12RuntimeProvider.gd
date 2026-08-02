@@ -303,7 +303,8 @@ func _priority_route() -> String:
 	var failed: Dictionary = state.obligations.get("aftercare_mathilde_j11", {})
 	if str(failed.get("status", "")) == "FAILED": return "MATHILDE"
 	if state.j11_pivot == "SANDRA":
-		return "SANDRA" if state.j11_pivot_outcome in ["SANDRA_RULE_CLARIFIED", "SANDRA_DESIRE_BOUNDED", "SANDRA_IMAGE_REMOVED"] else "NETWORK"
+		if state.j11_pivot_outcome == "SANDRA_IMAGE_REMOVED": return "NETWORK"
+		return "SANDRA" if state.j11_pivot_outcome in ["SANDRA_RULE_CLARIFIED", "SANDRA_DESIRE_BOUNDED"] else "NETWORK"
 	if state.j11_pivot == "MATHILDE":
 		if state.j11_pivot_outcome in ["MATHILDE_LOOK_ONLY","MATHILDE_M_B1","MATHILDE_CLEAN_STOP","MATHILDE_DISTANCE_RESTORED"]: return "MATHILDE"
 		if state.j11_pivot_outcome in ["MATHILDE_M_B2","MATHILDE_M_B3"] and state.j11_physical_level == state.j11_pivot_outcome and str(failed.get("status", "")) == "PAID": return "MATHILDE"
@@ -317,8 +318,8 @@ func _priority_route() -> String:
 	return "NETWORK"
 
 func _after_segment_for_route(route: String) -> String:
+	if state.j11_pivot == "SANDRA" and state.j11_pivot_outcome == "SANDRA_IMAGE_REMOVED": return ""
 	if route == "SANDRA":
-		if state.j11_pivot_outcome == "SANDRA_IMAGE_REMOVED": return ""
 		return str({
 			"SANDRA_RESPONSE_CLEAR": "j12_after_sandra_clear",
 			"SANDRA_RESPONSE_DELAYED": "j12_after_sandra_delayed",
