@@ -12,6 +12,7 @@ const J10_SMOKE := preload("res://tests/RUNTIME_S1_10J10PlayableSmokeDriver.gd")
 const MARIE_THREAD := "thread_marie_private"
 const SANDRA_THREAD := "thread_sandra_private"
 const MATHILDE_THREAD := "thread_mathilde_private"
+const RAPHAELLE_THREAD := "thread_raphaelle_private"
 const NICO_THREAD := "thread_nico_private"
 const LAVERRIERE_THREAD := "thread_laverriere_group"
 const ANNEXE_THREAD := "thread_annexe_group"
@@ -24,11 +25,13 @@ func _ready() -> void:
 	marie_j11_base_snapshot = _build_real_j11_base_snapshot("MARIE")
 	mathilde_j11_base_snapshot = _build_real_j11_base_snapshot("MATHILDE")
 	_exercise_sandra_p11_and_public_audience()
+	_exercise_r5b_semantic_matrix()
 	_exercise_failed_mathilde_aftercare_precedes_convergence("MATHILDE_M_B2")
 	_exercise_failed_mathilde_aftercare_precedes_convergence("MATHILDE_M_B3")
 	_exercise_nico_annexe_guardrail()
 	_exercise_marie_mathilde_semantic_matrix()
 	_exercise_r5a_snapshot_migration()
+	_exercise_r5b_snapshot_migration()
 	if failures.is_empty():
 		print("RUNTIME_S1_12_J12_PLAYABLE: OK")
 		get_tree().quit(0)
@@ -105,6 +108,112 @@ func _exercise_nico_annexe_guardrail() -> void:
 	_present_batch(provider, NICO_THREAD)
 	provider.apply_choice(NICO_THREAD, "choice_j12_nico_accept"); _confirm_transition(provider); _present_batch(provider, NICO_THREAD); _confirm_transition(provider)
 	_expect(provider.phase == "complete" and state.j12_priority_route == "NICO", "Nico guardrail persists as the single priority consequence")
+
+func _exercise_r5b_semantic_matrix() -> void:
+	var cases := [
+		{"outcome":"SANDRA_RULE_CLARIFIED","choice":"choice_j12_sandra_clear","context":"msg_j12_sandra_module_001","after":"msg_j12_sandra_after_clear_001","private":"SANDRA_RESPONSE_CLEAR"},
+		{"outcome":"SANDRA_DESIRE_BOUNDED","choice":"choice_j12_sandra_delay","context":"msg_j12_sandra_desire_context_001","after":"msg_j12_sandra_after_delayed_001","private":"SANDRA_RESPONSE_DELAYED"},
+		{"outcome":"SANDRA_DESIRE_BOUNDED","choice":"choice_j12_sandra_exit","context":"msg_j12_sandra_desire_context_001","after":"msg_j12_sandra_after_exit_001","private":"SANDRA_EXIT_CLEAN"},
+		{"outcome":"SANDRA_IMAGE_REMOVED","choice":"","context":"","after":"","private":"UNESTABLISHED"},
+		{"outcome":"FIRST_KISS","choice":"choice_j12_raphaelle_public","context":"msg_j12_raphaelle_001","after":"msg_j12_raphaelle_after_kiss_001","private":"RAPHAELLE_PUBLIC"},
+		{"outcome":"RESULT_SENT_ATTRACTION_NAMED","choice":"choice_j12_raphaelle_public","context":"msg_j12_raphaelle_attraction_context_001","after":"msg_j12_raphaelle_after_attraction_001","private":"RAPHAELLE_PUBLIC"},
+		{"outcome":"KISS_DECLINED","choice":"choice_j12_raphaelle_declined_hold","context":"msg_j12_raphaelle_declined_context_001","after":"msg_j12_raphaelle_after_declined_001","private":"RAPHAELLE_PUBLIC"},
+		{"outcome":"RESULT_SENT_BOUNDARY_HELD","choice":"choice_j12_raphaelle_boundary_hold","context":"msg_j12_raphaelle_boundary_context_001","after":"msg_j12_raphaelle_after_boundary_001","private":"RAPHAELLE_PUBLIC"},
+		{"outcome":"NICO_GUARDRAIL_HELD","choice":"choice_j12_nico_accept","context":"msg_j12_nico_private_001","after":"msg_j12_nico_after_guardrail_001","private":"NICO_ACCEPT"},
+		{"outcome":"NICO_RIVALRY_MAINTAINED","choice":"choice_j12_nico_rivalry_leave","context":"msg_j12_nico_rivalry_module_001","after":"msg_j12_nico_after_rivalry_respected_001","private":"NICO_RIVALRY_LEAVE"},
+		{"outcome":"NICO_CLEAN_CLOSE","choice":"","context":"","after":"","private":"UNESTABLISHED"},
+	]
+	for test_case in cases:
+		_exercise_r5b_path(test_case)
+
+func _exercise_r5b_path(test_case: Dictionary) -> void:
+	var outcome := str(test_case["outcome"])
+	var state = _completed_r5b_j11_state(outcome)
+	var provider = _new_provider(state)
+	_expect_state_round_trip(state, outcome + " state before J12")
+	_expect(bool(provider.start_day().get("accepted", false)), outcome + " starts J12")
+	_confirm_transition(provider)
+	_present_batch(provider, MARIE_THREAD)
+	provider.apply_choice(MARIE_THREAD, "choice_j12_presence_lb")
+	_confirm_transition(provider)
+	_present_batch(provider, LAVERRIERE_THREAD)
+	var route_thread := SANDRA_THREAD if outcome.begins_with("SANDRA_") else (RAPHAELLE_THREAD if outcome in ["FIRST_KISS","KISS_DECLINED","RESULT_SENT_ATTRACTION_NAMED","RESULT_SENT_BOUNDARY_HELD"] else NICO_THREAD)
+	var context_message := str(test_case["context"])
+	var choice_id := str(test_case["choice"])
+	if outcome.begins_with("NICO_"):
+		_expect(provider.phase == "to_laverriere_close", outcome + " waits for Nico's own place")
+	else:
+		if context_message == "":
+			_expect(provider.phase == "to_laverriere_close", outcome + " preserves public silence")
+		else:
+			_expect(provider.phase == "route_incoming" and provider.presentation_count_by_id(context_message) == 1, outcome + " selects its exact public module")
+			_present_batch(provider, route_thread)
+			_expect(bool(provider.apply_choice(route_thread, choice_id).get("accepted", false)), outcome + " public response applies")
+	_confirm_transition(provider)
+	_present_batch(provider, MARIE_THREAD)
+	provider.apply_choice(MARIE_THREAD, "choice_j12_annexe_b12" if outcome.begins_with("NICO_") else "choice_j12_annexe_c12")
+	if outcome.begins_with("NICO_"):
+		_confirm_transition(provider)
+		_present_batch(provider, ANNEXE_THREAD)
+		if context_message == "":
+			_expect(provider.phase == "to_after_separation", outcome + " creates no Nico aparté")
+		else:
+			_expect(provider.phase == "nico_incoming" and provider.presentation_count_by_id(context_message) == 1, outcome + " selects its exact Nico module")
+			_present_batch(provider, NICO_THREAD)
+			_expect(bool(provider.apply_choice(NICO_THREAD, choice_id).get("accepted", false)), outcome + " Nico response applies")
+	else:
+		_present_batch(provider, ANNEXE_THREAD)
+	_confirm_transition(provider)
+	var after_message := str(test_case["after"])
+	if after_message == "":
+		_expect(provider.phase == "day_close", outcome + " represents canonical silence by no segment")
+		_expect(provider.presentation_count_by_id("msg_j12_marie_network_001") == 0, outcome + " receives no substitute route")
+	else:
+		_expect(provider.phase == "after_incoming" and provider.presentation_count_by_id(after_message) == 1, outcome + " selects its exact after-separation consequence")
+		_present_batch(provider, route_thread)
+	_expect(state.j12_private_outcome == str(test_case["private"]), outcome + " stores the exact J12 private outcome")
+	_expect_round_trip(provider, outcome + " provider after consequence")
+	_confirm_transition(provider)
+	_expect(provider.phase == "complete", outcome + " completes J12")
+	_expect_state_round_trip(state, outcome + " state after J12")
+	var transcript := JSON.stringify(provider.transcript_for(route_thread))
+	if outcome == "RESULT_SENT_BOUNDARY_HELD":
+		_expect(not transcript.contains("version privée") and not transcript.contains("Demain 18 h"), "professional boundary promises no future private version")
+	if outcome == "KISS_DECLINED":
+		_expect(not transcript.contains("Hier n’était pas le rôle") and transcript.contains("travailler normalement"), "declined kiss is respected without physical opening")
+	if outcome == "NICO_RIVALRY_MAINTAINED":
+		_expect(not transcript.contains("La règle a tenu"), "Nico rivalry never receives guardrail praise")
+
+func _completed_r5b_j11_state(outcome: String):
+	var state = SEASON_STATE.new()
+	_expect(state.restore_snapshot(marie_j11_base_snapshot), outcome + " clones a real J10→J11 handoff")
+	var pivot := "SANDRA" if outcome.begins_with("SANDRA_") else ("RAPHAELLE" if outcome in ["FIRST_KISS","KISS_DECLINED","RESULT_SENT_ATTRACTION_NAMED","RESULT_SENT_BOUNDARY_HELD"] else "NICO")
+	var source_outcome: String = str({"SANDRA":"CAFE_HELD_MISSING_NAMED","RAPHAELLE":"PROCESS_HELPED_VISIT_BOUNDED","NICO":"DIFFERENCE_ACKNOWLEDGED_NO_IMAGE"}[pivot])
+	state.j10_pivot = pivot; state.j10_pivot_reason = "AUTHORED_ORDER"; state.j10_pivot_outcome = source_outcome
+	state.marie_j10_dinner_resolution = "NOT_DUE"; state.nico_j10_morning_confirmation = "NOT_DUE"
+	state.completed_conversation_ids.erase("chapter_10_marie_obligations")
+	state.completed_conversation_ids.append({"SANDRA":"chapter_10_sandra_cafe","RAPHAELLE":"chapter_10_raphaelle_process","NICO":"chapter_10_nico_observation"}[pivot])
+	state.j11_pivot = pivot; state.j11_pivot_reason = "J10_CONTINUATION"; state.j11_pivot_outcome = ""; state.j11_physical_level = "NONE"
+	if pivot == "SANDRA":
+		var removed := outcome == "SANDRA_IMAGE_REMOVED"
+		state.establish_j11_sandra_private_image("removed" if removed else "view_only")
+		state.set_j11_semantic_outcome(outcome)
+		var choice_id: String = str({"SANDRA_RULE_CLARIFIED":"choice_j11_sandra_rule","SANDRA_DESIRE_BOUNDED":"choice_j11_sandra_desire","SANDRA_IMAGE_REMOVED":"choice_j11_sandra_more"}[outcome])
+		state.record_j11_choice(choice_id, [choice_id])
+	elif pivot == "RAPHAELLE":
+		state.establish_j11_raphaelle_result()
+		state.set_j11_raphaelle_outcome(outcome, outcome == "FIRST_KISS", outcome == "FIRST_KISS", outcome == "FIRST_KISS")
+		var choice_id: String = str({"FIRST_KISS":"choice_j11_raphaelle_meeting_accept","KISS_DECLINED":"choice_j11_raphaelle_meeting_decline","RESULT_SENT_ATTRACTION_NAMED":"choice_j11_raphaelle_attractive","RESULT_SENT_BOUNDARY_HELD":"choice_j11_raphaelle_boundary"}[outcome])
+		state.record_j11_choice(choice_id, [choice_id])
+		if outcome == "RESULT_SENT_BOUNDARY_HELD":
+			state.traces["j11_raphaelle_chosen_result_01"]["current_state"] = "REMOVED"
+			state.traces["j11_raphaelle_chosen_result_01"]["current_audience"] = ["Raphaëlle", "Maud"]
+	else:
+		state.set_j11_semantic_outcome(outcome)
+		var choice_id: String = str({"NICO_GUARDRAIL_HELD":"choice_j11_nico_guardrail","NICO_RIVALRY_MAINTAINED":"choice_j11_nico_rivalry","NICO_CLEAN_CLOSE":"choice_j11_nico_close"}[outcome])
+		state.record_j11_choice(choice_id, [choice_id])
+	_expect(state.complete_j11(), outcome + " fixture completes J11")
+	return state
 
 func _exercise_marie_mathilde_semantic_matrix() -> void:
 	var cases := [
@@ -246,6 +355,21 @@ func _exercise_r5a_snapshot_migration() -> void:
 	var ambiguous = _completed_semantic_j11_state("MATHILDE_LOOK_ONLY").snapshot(); ambiguous["version"] = 19; ambiguous["j11_pivot_outcome"] = ""; ambiguous["selected_choice_ids"] = []
 	_expect(not SEASON_STATE.new().restore_snapshot(ambiguous), "ambiguous legacy Mathilde snapshot fails closed")
 
+func _exercise_r5b_snapshot_migration() -> void:
+	for outcome in ["SANDRA_RULE_CLARIFIED","SANDRA_DESIRE_BOUNDED","SANDRA_IMAGE_REMOVED","FIRST_KISS","KISS_DECLINED","RESULT_SENT_ATTRACTION_NAMED","RESULT_SENT_BOUNDARY_HELD","NICO_GUARDRAIL_HELD","NICO_RIVALRY_MAINTAINED","NICO_CLEAN_CLOSE"]:
+		var legacy: Dictionary = _completed_r5b_j11_state(outcome).snapshot()
+		legacy["version"] = 20
+		legacy["j11_pivot_outcome"] = ""
+		var restored = SEASON_STATE.new()
+		_expect(restored.restore_snapshot(legacy), outcome + " legacy v20 snapshot migrates from exact choice evidence")
+		_expect(restored.j11_pivot_outcome == outcome, outcome + " migration preserves the exact semantic outcome")
+	var ambiguous_sandra: Dictionary = _completed_r5b_j11_state("SANDRA_RULE_CLARIFIED").snapshot()
+	ambiguous_sandra["version"] = 20; ambiguous_sandra["j11_pivot_outcome"] = ""; ambiguous_sandra["selected_choice_ids"].erase("choice_j11_sandra_rule")
+	_expect(not SEASON_STATE.new().restore_snapshot(ambiguous_sandra), "ambiguous legacy Sandra snapshot fails closed")
+	var ambiguous_nico: Dictionary = _completed_r5b_j11_state("NICO_GUARDRAIL_HELD").snapshot()
+	ambiguous_nico["version"] = 20; ambiguous_nico["j11_pivot_outcome"] = ""; ambiguous_nico["selected_choice_ids"].erase("choice_j11_nico_guardrail")
+	_expect(not SEASON_STATE.new().restore_snapshot(ambiguous_nico), "ambiguous legacy Nico snapshot fails closed")
+
 func _completed_j11_state(pivot: String):
 	var state = SEASON_STATE.new()
 	state.current_day = "J11"; state.day_status = "ACTIVE"
@@ -255,11 +379,11 @@ func _completed_j11_state(pivot: String):
 	state.completed_conversation_ids.append({"SANDRA":"chapter_10_sandra_cafe","MATHILDE":"chapter_10_mathilde_outfit","NICO":"chapter_10_nico_observation"}[pivot])
 	state.j11_pivot = pivot; state.j11_pivot_reason = "J10_CONTINUATION"
 	if pivot == "SANDRA":
-		state.establish_j11_sandra_private_image("view_only"); state.record_j11_choice("choice_j11_sandra_rule", ["choice_j11_sandra_rule"])
+		state.establish_j11_sandra_private_image("view_only"); state.set_j11_semantic_outcome("SANDRA_RULE_CLARIFIED"); state.record_j11_choice("choice_j11_sandra_rule", ["choice_j11_sandra_rule"])
 	elif pivot == "MATHILDE":
 		state.configure_j11_mathilde_safety(true, true, true); state.establish_j11_mathilde_physical_event("MATHILDE_M_B2", true); state.resolve_j11_aftercare("aftercare_mathilde_j11", "PAID", "Player"); state.record_j11_choice("choice_j11_mathilde_after_no_definition", ["choice_j11_mathilde_after_no_definition"])
 	else:
-		state.record_j11_choice("choice_j11_nico_guardrail", ["choice_j11_nico_guardrail"])
+		state.set_j11_semantic_outcome("NICO_GUARDRAIL_HELD"); state.record_j11_choice("choice_j11_nico_guardrail", ["choice_j11_nico_guardrail"])
 	_expect(state.complete_j11(), "fixture completes J11 for " + pivot)
 	return state
 

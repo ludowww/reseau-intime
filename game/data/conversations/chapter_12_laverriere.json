@@ -40,13 +40,27 @@
       "choices": []
     },
     {
-      "id": "j12_sandra_module",
+      "id": "j12_sandra_rule_context",
       "messages": [
         {"id":"msg_j12_sandra_module_001","sender":"sandra","time_label":"20:22","text":"La Verrière vient de publier la photo."},
         {"id":"msg_j12_sandra_module_002","sender":"sandra","time_label":"20:22","text":"La robe noire, donc."},
         {"id":"msg_j12_sandra_module_003","sender":"sandra","time_label":"20:23","text":"Je voulais juste vérifier une chose."},
         {"id":"msg_j12_sandra_module_004","sender":"sandra","time_label":"20:23","text":"La mienne est toujours seulement dans notre fil ?"}
       ],
+      "choices": []
+    },
+    {
+      "id": "j12_sandra_desire_context",
+      "messages": [
+        {"id":"msg_j12_sandra_desire_context_001","sender":"sandra","time_label":"20:22","text":"La Verrière vient de publier la photo."},
+        {"id":"msg_j12_sandra_desire_context_002","sender":"sandra","time_label":"20:23","text":"Hier, tu as dit que tu ne ferais rien sans que je te le dise."},
+        {"id":"msg_j12_sandra_desire_context_003","sender":"sandra","time_label":"20:23","text":"Ça tient toujours ?"}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j12_sandra_module",
+      "messages": [],
       "choices": [
         {"id":"choice_j12_sandra_clear","text":"rien n’a changé. elle reste dans le cadre que tu as donné","next_messages":[{"id":"msg_j12_sandra_clear_001","sender":"sandra","time_label":"20:24","text":"D’accord."},{"id":"msg_j12_sandra_clear_002","sender":"sandra","time_label":"20:24","text":"Je te laisse avec ta soirée."}]},
         {"id":"choice_j12_sandra_delay","text":"je te réponds après la fermeture. la règle n’a pas bougé","next_messages":[{"id":"msg_j12_sandra_delay_001","sender":"sandra","time_label":"20:24","text":"Bien."},{"id":"msg_j12_sandra_delay_002","sender":"sandra","time_label":"20:24","text":"Après la fermeture, pas demain matin."}]},
@@ -111,15 +125,46 @@
       ]
     },
     {
-      "id": "j12_raphaelle_module",
+      "id": "j12_raphaelle_first_kiss_context",
       "messages": [
         {"id":"msg_j12_raphaelle_001","sender":"raphaelle","time_label":"20:22","text":"La version publique est simple."},
-        {"id":"msg_j12_raphaelle_002","sender":"raphaelle","time_label":"20:23","text":"Pour le reste, je préfère qu’on ne l’improvise pas ici."}
+        {"id":"msg_j12_raphaelle_002","sender":"raphaelle","time_label":"20:23","text":"Hier n’était pas le rôle. Ici, on garde le cadre public."}
       ],
+      "choices": []
+    },
+    {
+      "id": "j12_raphaelle_attraction_context",
+      "messages": [
+        {"id":"msg_j12_raphaelle_attraction_context_001","sender":"raphaelle","time_label":"20:22","text":"Ce qu’on s’est dit hier reste vrai."},
+        {"id":"msg_j12_raphaelle_attraction_context_002","sender":"raphaelle","time_label":"20:23","text":"Je préfère qu’on ne décide rien de plus dans cette salle."}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j12_raphaelle_kiss_declined_context",
+      "messages": [
+        {"id":"msg_j12_raphaelle_declined_context_001","sender":"raphaelle","time_label":"20:22","text":"Ta réponse d’hier était claire."},
+        {"id":"msg_j12_raphaelle_declined_context_002","sender":"raphaelle","time_label":"20:23","text":"Je n’attends pas qu’on la change ici."}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j12_raphaelle_boundary_context",
+      "messages": [
+        {"id":"msg_j12_raphaelle_boundary_context_001","sender":"raphaelle","time_label":"20:22","text":"On a gardé le travail à sa place hier."},
+        {"id":"msg_j12_raphaelle_boundary_context_002","sender":"raphaelle","time_label":"20:23","text":"Ce soir aussi."}
+      ],
+      "choices": []
+    },
+    {
+      "id": "j12_raphaelle_module",
+      "messages": [],
       "choices": [
         {"id":"choice_j12_raphaelle_public","text":"on garde public ce soir. je ne fais pas référence au reste","next_messages":[{"id":"msg_j12_raphaelle_public_001","sender":"raphaelle","time_label":"20:24","text":"Bien."},{"id":"msg_j12_raphaelle_public_002","sender":"raphaelle","time_label":"20:24","text":"Alors je peux rester dans la salle sans gérer deux scènes en même temps."}]},
         {"id":"choice_j12_raphaelle_delay","text":"on en parle demain à 18 h. pas ici","next_messages":[{"id":"msg_j12_raphaelle_delay_001","sender":"raphaelle","time_label":"20:24","text":"Demain 18 h."},{"id":"msg_j12_raphaelle_delay_002","sender":"raphaelle","time_label":"20:24","text":"Je confirme demain midi ou cela n’existe pas."}]},
-        {"id":"choice_j12_raphaelle_now","text":"je veux savoir maintenant ce que ça signifie","next_messages":[{"id":"msg_j12_raphaelle_now_001","sender":"raphaelle","time_label":"20:24","text":"Non."},{"id":"msg_j12_raphaelle_now_002","sender":"raphaelle","time_label":"20:24","text":"Ici, cela signifie que le cadre public tient."},{"id":"msg_j12_raphaelle_now_003","sender":"raphaelle","time_label":"20:25","text":"Le reste attendra ou disparaîtra."}]}
+        {"id":"choice_j12_raphaelle_now","text":"je veux savoir maintenant ce que ça signifie","next_messages":[{"id":"msg_j12_raphaelle_now_001","sender":"raphaelle","time_label":"20:24","text":"Non."},{"id":"msg_j12_raphaelle_now_002","sender":"raphaelle","time_label":"20:24","text":"Ici, cela signifie que le cadre public tient."},{"id":"msg_j12_raphaelle_now_003","sender":"raphaelle","time_label":"20:25","text":"Le reste attendra ou disparaîtra."}]},
+        {"id":"choice_j12_raphaelle_declined_hold","text":"on garde ma réponse d’hier et le cadre professionnel","next_messages":[{"id":"msg_j12_raphaelle_declined_hold_001","sender":"raphaelle","time_label":"20:24","text":"Bien."},{"id":"msg_j12_raphaelle_declined_hold_002","sender":"raphaelle","time_label":"20:24","text":"Alors on peut travailler normalement."}]},
+        {"id":"choice_j12_raphaelle_boundary_hold","text":"on reste sur le travail, sans sous-entendu","next_messages":[{"id":"msg_j12_raphaelle_boundary_hold_001","sender":"raphaelle","time_label":"20:24","text":"D’accord."},{"id":"msg_j12_raphaelle_boundary_hold_002","sender":"raphaelle","time_label":"20:24","text":"C’est plus simple comme ça."}]}
       ]
     },
     {

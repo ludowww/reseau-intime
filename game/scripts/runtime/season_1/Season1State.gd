@@ -2,7 +2,7 @@ extends RefCounted
 
 class_name Season1State
 
-const SNAPSHOT_VERSION := 20
+const SNAPSHOT_VERSION := 21
 
 var current_day := "J01"
 var day_status := "ACTIVE"
@@ -1168,8 +1168,10 @@ func set_j11_semantic_outcome(outcome: String) -> bool:
 	if current_day != "J11" or day_status != "ACTIVE":
 		return false
 	var allowed_by_pivot := {
+		"SANDRA": ["SANDRA_RULE_CLARIFIED", "SANDRA_DESIRE_BOUNDED", "SANDRA_IMAGE_REMOVED"],
 		"MARIE": ["MARIE_ADULT_RECONQUEST", "MARIE_NON_ADULT_RECONNECTION", "MARIE_SEX_NOT_USED_AS_BANDAGE", "MARIE_HONEST_REFUSAL", "MARIE_NO_RECONQUEST"],
 		"MATHILDE": ["MATHILDE_LOOK_ONLY", "MATHILDE_M_B1", "MATHILDE_M_B2", "MATHILDE_M_B3", "MATHILDE_CLEAN_STOP", "MATHILDE_DISTANCE_RESTORED"],
+		"NICO": ["NICO_GUARDRAIL_HELD", "NICO_RIVALRY_MAINTAINED", "NICO_CLEAN_CLOSE"],
 	}
 	if outcome not in allowed_by_pivot.get(j11_pivot, []):
 		return false
@@ -1354,6 +1356,17 @@ func establish_j11_raphaelle_result() -> bool:
 	}
 	return true
 
+func remove_j11_raphaelle_result() -> bool:
+	if current_day != "J11" or day_status != "ACTIVE" or j11_pivot != "RAPHAELLE":
+		return false
+	var trace: Dictionary = traces.get("j11_raphaelle_chosen_result_01", {})
+	if trace.is_empty() or str(trace.get("current_state", "")) != "PRIVATE_ACTIVE":
+		return false
+	trace["current_state"] = "REMOVED"
+	trace["current_audience"] = ["Raphaëlle", "Maud"]
+	traces["j11_raphaelle_chosen_result_01"] = trace
+	return true
+
 func set_j11_raphaelle_outcome(outcome: String, attraction_named := false, reciprocal_consent := false, distinct_meeting := false) -> bool:
 	if current_day != "J11" or day_status != "ACTIVE" or j11_pivot != "RAPHAELLE" or j11_pivot_outcome != "":
 		return false
@@ -1473,7 +1486,7 @@ func _j11_selection_matches_j10(pivot: String, reason: String, source_pivot: Str
 func complete_j11() -> bool:
 	if current_day != "J11" or day_status != "ACTIVE" or not _j11_records_consistent(snapshot()):
 		return false
-	if j11_pivot in ["MARIE", "MATHILDE"] and j11_pivot_outcome == "":
+	if j11_pivot != "RESPIRATION" and j11_pivot_outcome == "":
 		return false
 	var mathilde_aftercare: Dictionary = obligations.get("aftercare_mathilde_j11", {})
 	if not mathilde_aftercare.is_empty() and str(mathilde_aftercare.get("status", "")) not in ["PAID", "FAILED"]:
@@ -1546,7 +1559,13 @@ func apply_j12_choice(choice_id: String) -> bool:
 		promises["marie_j12_laverriere_presence"] = {"promise_id":"marie_j12_laverriere_presence","promise_type":"PRESENCE","status":"ACTIVE","accepted_by_player":true,"outcome":j12_presence_choice,"due_at":"J12 22:15"}
 	elif choice_id.begins_with("choice_j12_sandra_") or choice_id.begins_with("choice_j12_mathilde_") or choice_id.begins_with("choice_j12_raphaelle_") or choice_id.begins_with("choice_j12_marie_"):
 		if j12_private_outcome != "UNESTABLISHED": return false
-		j12_private_outcome = choice_id.trim_prefix("choice_j12_").to_upper()
+		j12_private_outcome = {
+			"choice_j12_sandra_clear": "SANDRA_RESPONSE_CLEAR",
+			"choice_j12_sandra_delay": "SANDRA_RESPONSE_DELAYED",
+			"choice_j12_sandra_exit": "SANDRA_EXIT_CLEAN",
+			"choice_j12_raphaelle_declined_hold": "RAPHAELLE_PUBLIC",
+			"choice_j12_raphaelle_boundary_hold": "RAPHAELLE_PUBLIC",
+		}.get(choice_id, choice_id.trim_prefix("choice_j12_").to_upper())
 	elif choice_id.begins_with("choice_j12_annexe_"):
 		if j12_annexe_choice != "UNESTABLISHED": return false
 		j12_annexe_choice = choice_id.trim_prefix("choice_j12_annexe_").to_upper()
@@ -2688,7 +2707,7 @@ func snapshot() -> Dictionary:
 
 func restore_snapshot(value: Dictionary) -> bool:
 	var version := int(value.get("version", -1))
-	if version not in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, SNAPSHOT_VERSION]:
+	if version not in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, SNAPSHOT_VERSION]:
 		return false
 	if str(value.get("current_day", "")) not in ["J01", "J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14", "J15", "J16", "J17", "J18", "J19", "J20", "J21"]:
 		return false
@@ -2713,9 +2732,14 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if version < 17 and str(value.get("current_day", "")) == "J19": return false
 	if version < 18 and str(value.get("current_day", "")) == "J20": return false
 	if version < SNAPSHOT_VERSION and str(value.get("current_day", "")) == "J21": return false
-	if version < SNAPSHOT_VERSION:
+	if version < 20:
 		value = value.duplicate(true)
 		if not _migrate_r5a_j11_semantic_outcome(value):
+			return false
+	if version < SNAPSHOT_VERSION:
+		if version >= 20:
+			value = value.duplicate(true)
+		if not _migrate_r5b_j11_semantic_outcome(value):
 			return false
 		value["version"] = SNAPSHOT_VERSION
 		version = SNAPSHOT_VERSION
@@ -2765,7 +2789,7 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if str(value.get("nico_j10_morning_confirmation", "UNESTABLISHED")) not in ["UNESTABLISHED", "NOT_DUE", "CONFIRMED_ACTIVE", "REFUSED", "EXPIRED"]: return false
 	if str(value.get("j11_pivot", "")) not in ["", "SANDRA", "MATHILDE", "RAPHAELLE", "NICO", "MARIE", "RESPIRATION"]: return false
 	if str(value.get("j11_pivot_reason", "")) not in ["", "J10_CONTINUATION", "J10_LIMIT_CONSEQUENCE", "P10_COUPLE_PRIORITY", "J10_NONE_MARIE_FALLBACK", "EXTERNAL_CLOSED_MARIE_CONSEQUENCE", "J10_NO_LEGITIMATE_CONTINUATION"]: return false
-	if str(value.get("j11_pivot_outcome", "")) not in ["", "FIRST_KISS", "KISS_DECLINED", "RESULT_SENT_ATTRACTION_NAMED", "RESULT_SENT_BOUNDARY_HELD", "MARIE_ADULT_RECONQUEST", "MARIE_NON_ADULT_RECONNECTION", "MARIE_SEX_NOT_USED_AS_BANDAGE", "MARIE_HONEST_REFUSAL", "MARIE_NO_RECONQUEST", "MATHILDE_LOOK_ONLY", "MATHILDE_M_B1", "MATHILDE_M_B2", "MATHILDE_M_B3", "MATHILDE_CLEAN_STOP", "MATHILDE_DISTANCE_RESTORED"]: return false
+	if str(value.get("j11_pivot_outcome", "")) not in ["", "SANDRA_RULE_CLARIFIED", "SANDRA_DESIRE_BOUNDED", "SANDRA_IMAGE_REMOVED", "FIRST_KISS", "KISS_DECLINED", "RESULT_SENT_ATTRACTION_NAMED", "RESULT_SENT_BOUNDARY_HELD", "NICO_GUARDRAIL_HELD", "NICO_RIVALRY_MAINTAINED", "NICO_CLEAN_CLOSE", "MARIE_ADULT_RECONQUEST", "MARIE_NON_ADULT_RECONNECTION", "MARIE_SEX_NOT_USED_AS_BANDAGE", "MARIE_HONEST_REFUSAL", "MARIE_NO_RECONQUEST", "MATHILDE_LOOK_ONLY", "MATHILDE_M_B1", "MATHILDE_M_B2", "MATHILDE_M_B3", "MATHILDE_CLEAN_STOP", "MATHILDE_DISTANCE_RESTORED"]: return false
 	if str(value.get("j11_physical_level", "NONE")) not in ["NONE", "PROXIMITY_ONLY", "MATHILDE_M_B2", "MATHILDE_M_B3", "MARIE_ADULT_RECONQUEST", "RAPHAELLE_FIRST_KISS"]: return false
 	if str(value.get("mathilde_j11_state", "UNESTABLISHED")) not in ["UNESTABLISHED", "PROXIMITY_CONSENTED", "PHYSICAL_SECRET", "DISTANCE"]: return false
 	if str(value.get("j12_presence_choice", "UNESTABLISHED")) not in ["UNESTABLISHED", "L-A", "L-B", "L-C"]: return false
@@ -2976,6 +3000,72 @@ func _migrate_r5a_j11_semantic_outcome(value: Dictionary) -> bool:
 	else:
 		outcome = ""
 	value["j11_pivot_outcome"] = outcome
+	return true
+
+func _migrate_r5b_j11_semantic_outcome(value: Dictionary) -> bool:
+	var current := str(value.get("current_day", ""))
+	if current not in ["J11", "J12", "J13", "J14", "J15", "J16", "J17", "J18", "J19", "J20", "J21"]:
+		value["j11_pivot_outcome"] = ""
+		return true
+	var pivot := str(value.get("j11_pivot", ""))
+	var outcome := str(value.get("j11_pivot_outcome", ""))
+	var choices: Array = value.get("selected_choice_ids", [])
+	var inferred := ""
+	match pivot:
+		"SANDRA":
+			if outcome in ["SANDRA_RULE_CLARIFIED", "SANDRA_DESIRE_BOUNDED", "SANDRA_IMAGE_REMOVED"]:
+				return true
+			var exact_choices := {
+				"choice_j11_sandra_rule": "SANDRA_RULE_CLARIFIED",
+				"choice_j11_sandra_desire": "SANDRA_DESIRE_BOUNDED",
+				"choice_j11_sandra_more": "SANDRA_IMAGE_REMOVED",
+			}
+			for choice_id in exact_choices:
+				if choices.has(choice_id):
+					if inferred != "": return false
+					inferred = str(exact_choices[choice_id])
+			if inferred != "":
+				var trace: Dictionary = value.get("traces", {}).get("j11_sandra_chosen_image_01", {})
+				var fact: Dictionary = value.get("knowledge", {}).get("fact_sandra_chose_private_image_for_player", {})
+				var removed := str(trace.get("current_state", "")) == "REMOVED" and str(fact.get("access_mode", "")) == "removed"
+				if removed != (inferred == "SANDRA_IMAGE_REMOVED"): return false
+		"RAPHAELLE":
+			if outcome in ["FIRST_KISS", "KISS_DECLINED", "RESULT_SENT_ATTRACTION_NAMED", "RESULT_SENT_BOUNDARY_HELD"]:
+				inferred = outcome
+			elif choices.has("choice_j11_raphaelle_meeting_accept"):
+				inferred = "FIRST_KISS"
+			elif choices.has("choice_j11_raphaelle_meeting_decline"):
+				inferred = "KISS_DECLINED"
+			elif choices.has("choice_j11_raphaelle_attractive") or choices.has("choice_j11_raphaelle_attraction_yes"):
+				inferred = "RESULT_SENT_ATTRACTION_NAMED"
+			elif choices.has("choice_j11_raphaelle_boundary") or choices.has("choice_j11_raphaelle_attraction_no"):
+				inferred = "RESULT_SENT_BOUNDARY_HELD"
+			if inferred == "RESULT_SENT_BOUNDARY_HELD" and choices.has("choice_j11_raphaelle_boundary"):
+				var trace: Dictionary = value.get("traces", {}).get("j11_raphaelle_chosen_result_01", {})
+				if trace.is_empty(): return false
+				trace["current_state"] = "REMOVED"
+				trace["current_audience"] = ["Raphaëlle", "Maud"]
+				value["traces"]["j11_raphaelle_chosen_result_01"] = trace
+		"NICO":
+			if outcome in ["NICO_GUARDRAIL_HELD", "NICO_RIVALRY_MAINTAINED", "NICO_CLEAN_CLOSE"]:
+				return true
+			var exact_choices := {
+				"choice_j11_nico_guardrail": "NICO_GUARDRAIL_HELD",
+				"choice_j11_nico_rivalry": "NICO_RIVALRY_MAINTAINED",
+				"choice_j11_nico_close": "NICO_CLEAN_CLOSE",
+			}
+			for choice_id in exact_choices:
+				if choices.has(choice_id):
+					if inferred != "": return false
+					inferred = str(exact_choices[choice_id])
+		_:
+			return true
+	if inferred == "":
+		if str(value.get("day_status", "")) == "COMPLETE" or current != "J11":
+			return false
+		value["j11_pivot_outcome"] = ""
+		return true
+	value["j11_pivot_outcome"] = inferred
 	return true
 
 func _default_pauline_retained_frame(outcome: String) -> String:
@@ -3451,6 +3541,7 @@ func _j11_records_consistent(value: Dictionary) -> bool:
 	var restored_knowledge: Dictionary = value.get("knowledge", {})
 	var restored_obligations: Dictionary = value.get("obligations", {})
 	var restored_promises: Dictionary = value.get("promises", {})
+	var restored_choices: Array = value.get("selected_choice_ids", [])
 	var has_sandra_trace := restored_traces.has("j11_sandra_chosen_image_01")
 	var has_sandra_fact := restored_knowledge.has("fact_sandra_chose_private_image_for_player")
 	var has_raphaelle_trace := restored_traces.has("j11_raphaelle_chosen_result_01")
@@ -3474,14 +3565,16 @@ func _j11_records_consistent(value: Dictionary) -> bool:
 	if pivot != "" and not _j11_selection_matches_j10(pivot, reason, str(value.get("j10_pivot", "")), str(value.get("j10_pivot_outcome", ""))):
 		return false
 	var semantic_outcomes := {
+		"SANDRA": ["", "SANDRA_RULE_CLARIFIED", "SANDRA_DESIRE_BOUNDED", "SANDRA_IMAGE_REMOVED"],
 		"MARIE": ["", "MARIE_ADULT_RECONQUEST", "MARIE_NON_ADULT_RECONNECTION", "MARIE_SEX_NOT_USED_AS_BANDAGE", "MARIE_HONEST_REFUSAL", "MARIE_NO_RECONQUEST"],
 		"MATHILDE": ["", "MATHILDE_LOOK_ONLY", "MATHILDE_M_B1", "MATHILDE_M_B2", "MATHILDE_M_B3", "MATHILDE_CLEAN_STOP", "MATHILDE_DISTANCE_RESTORED"],
 		"RAPHAELLE": ["", "FIRST_KISS", "KISS_DECLINED", "RESULT_SENT_ATTRACTION_NAMED", "RESULT_SENT_BOUNDARY_HELD"],
-		"SANDRA": [""], "NICO": [""], "RESPIRATION": [""], "": [""],
+		"NICO": ["", "NICO_GUARDRAIL_HELD", "NICO_RIVALRY_MAINTAINED", "NICO_CLEAN_CLOSE"],
+		"RESPIRATION": [""], "": [""],
 	}
 	if outcome not in semantic_outcomes.get(pivot, []):
 		return false
-	if str(value.get("day_status", "")) == "COMPLETE" and pivot in ["MARIE", "MATHILDE"] and outcome == "":
+	if str(value.get("day_status", "")) == "COMPLETE" and pivot != "RESPIRATION" and outcome == "":
 		return false
 	var has_j11_obligation := restored_obligations.has("aftercare_mathilde_j11") or restored_obligations.has("aftercare_marie_j11")
 	if pivot == "RESPIRATION" and (outcome != "" or physical_level != "NONE" or has_j11_obligation or has_sandra_trace or has_raphaelle_trace or has_mathilde_trace):
@@ -3494,12 +3587,29 @@ func _j11_records_consistent(value: Dictionary) -> bool:
 		var sandra_fact: Dictionary = restored_knowledge["fact_sandra_chose_private_image_for_player"]
 		if str(sandra_trace.get("knowledge_created", "")) != "fact_sandra_chose_private_image_for_player" or str(sandra_fact.get("source_ref", "")) != "j11_sandra_chosen_image_01": return false
 		if str(sandra_trace.get("current_state", "")) not in ["PRIVATE_ACTIVE", "REMOVED"] or str(sandra_fact.get("access_mode", "")) not in ["view_only", "in_thread_allowed", "removed"]: return false
+		var sandra_removed := str(sandra_trace.get("current_state", "")) == "REMOVED" and str(sandra_fact.get("access_mode", "")) == "removed"
+		if sandra_removed != (outcome == "SANDRA_IMAGE_REMOVED"): return false
+		if not sandra_removed and outcome not in ["", "SANDRA_RULE_CLARIFIED", "SANDRA_DESIRE_BOUNDED"]: return false
+		var expected_sandra_choice := str({"SANDRA_RULE_CLARIFIED":"choice_j11_sandra_rule","SANDRA_DESIRE_BOUNDED":"choice_j11_sandra_desire","SANDRA_IMAGE_REMOVED":"choice_j11_sandra_more"}.get(outcome, ""))
+		if expected_sandra_choice != "" and not restored_choices.has(expected_sandra_choice): return false
 	if has_raphaelle_trace:
 		if pivot != "RAPHAELLE": return false
 		var raphaelle_trace: Dictionary = restored_traces["j11_raphaelle_chosen_result_01"]
 		var raphaelle_fact: Dictionary = restored_knowledge["fact_raphaelle_chose_player_for_result_image"]
 		if str(raphaelle_trace.get("creator", "")) != "Maud" or str(raphaelle_trace.get("selected_by", "")) != "Raphaëlle" or str(raphaelle_trace.get("controller", "")) != "Raphaëlle": return false
 		if str(raphaelle_fact.get("source_ref", "")) != "j11_raphaelle_chosen_result_01": return false
+		if str(raphaelle_trace.get("current_state", "")) not in ["PRIVATE_ACTIVE", "REMOVED"]: return false
+		var direct_boundary: bool = value.get("selected_choice_ids", []).has("choice_j11_raphaelle_boundary")
+		if (str(raphaelle_trace.get("current_state", "")) == "REMOVED") != direct_boundary: return false
+		match outcome:
+			"FIRST_KISS":
+				if not restored_choices.has("choice_j11_raphaelle_meeting_accept"): return false
+			"KISS_DECLINED":
+				if not restored_choices.has("choice_j11_raphaelle_meeting_decline"): return false
+			"RESULT_SENT_ATTRACTION_NAMED":
+				if not restored_choices.has("choice_j11_raphaelle_attractive") and not restored_choices.has("choice_j11_raphaelle_attraction_yes"): return false
+			"RESULT_SENT_BOUNDARY_HELD":
+				if not restored_choices.has("choice_j11_raphaelle_boundary") and not restored_choices.has("choice_j11_raphaelle_attraction_no"): return false
 	if has_mathilde_trace:
 		if pivot != "MATHILDE" or mathilde_state_value != "PHYSICAL_SECRET" or physical_level not in ["MATHILDE_M_B2", "MATHILDE_M_B3"]: return false
 		if not bool(value.get("mathilde_has_independent_sleep_option", false)) or not bool(value.get("mathilde_can_leave_safely", false)) or not bool(value.get("marie_absence_not_engineered", false)): return false
@@ -3555,6 +3665,8 @@ func _j11_records_consistent(value: Dictionary) -> bool:
 	if outcome in ["FIRST_KISS", "KISS_DECLINED", "RESULT_SENT_ATTRACTION_NAMED", "RESULT_SENT_BOUNDARY_HELD"]:
 		if pivot != "RAPHAELLE" or not has_raphaelle_trace: return false
 	if outcome == "FIRST_KISS" and physical_level != "RAPHAELLE_FIRST_KISS": return false
+	var expected_nico_choice := str({"NICO_GUARDRAIL_HELD":"choice_j11_nico_guardrail","NICO_RIVALRY_MAINTAINED":"choice_j11_nico_rivalry","NICO_CLEAN_CLOSE":"choice_j11_nico_close"}.get(outcome, ""))
+	if expected_nico_choice != "" and (pivot != "NICO" or not restored_choices.has(expected_nico_choice)): return false
 	return true
 
 func _j12_records_consistent(value: Dictionary) -> bool:
@@ -3571,6 +3683,25 @@ func _j12_records_consistent(value: Dictionary) -> bool:
 	if day not in ["J12", "J13", "J14", "J15", "J16", "J17", "J18", "J19", "J20", "J21"]:
 		return presence == "UNESTABLISHED" and private_outcome == "UNESTABLISHED" and annexe == "UNESTABLISHED" and priority == "UNESTABLISHED" and not processed and not restored_traces.has("j12_laverriere_public_group_set_01") and not restored_traces.has("j12_annexe_public_group_set_01")
 	if processed and str(restored_obligations.get("aftercare_mathilde_j11", {}).get("status", "")) != "FAILED": return false
+	var j11_pivot_value := str(value.get("j11_pivot", ""))
+	var j11_outcome := str(value.get("j11_pivot_outcome", ""))
+	var r5b_private_outcomes := {
+		"SANDRA_RULE_CLARIFIED": ["UNESTABLISHED", "SANDRA_RESPONSE_CLEAR", "SANDRA_RESPONSE_DELAYED", "SANDRA_EXIT_CLEAN"],
+		"SANDRA_DESIRE_BOUNDED": ["UNESTABLISHED", "SANDRA_RESPONSE_CLEAR", "SANDRA_RESPONSE_DELAYED", "SANDRA_EXIT_CLEAN"],
+		"SANDRA_IMAGE_REMOVED": ["UNESTABLISHED"],
+		"FIRST_KISS": ["UNESTABLISHED", "RAPHAELLE_PUBLIC", "RAPHAELLE_DELAY", "RAPHAELLE_NOW"],
+		"KISS_DECLINED": ["UNESTABLISHED", "RAPHAELLE_PUBLIC"],
+		"RESULT_SENT_ATTRACTION_NAMED": ["UNESTABLISHED", "RAPHAELLE_PUBLIC", "RAPHAELLE_DELAY", "RAPHAELLE_NOW"],
+		"RESULT_SENT_BOUNDARY_HELD": ["UNESTABLISHED", "RAPHAELLE_PUBLIC"],
+		"NICO_GUARDRAIL_HELD": ["UNESTABLISHED", "NICO_ACCEPT", "NICO_OBSERVE", "NICO_REFUSE"],
+		"NICO_RIVALRY_MAINTAINED": ["UNESTABLISHED", "NICO_RIVALRY_LEAVE", "NICO_RIVALRY_JOKE", "NICO_RIVALRY_EXIT"],
+		"NICO_CLEAN_CLOSE": ["UNESTABLISHED"],
+	}
+	if r5b_private_outcomes.has(j11_outcome) and private_outcome not in r5b_private_outcomes[j11_outcome]: return false
+	var j12_resolved := day != "J12" or str(value.get("day_status", "")) == "COMPLETE"
+	if j12_resolved and j11_pivot_value in ["SANDRA", "RAPHAELLE", "NICO"]:
+		var silence_outcome := j11_outcome in ["SANDRA_IMAGE_REMOVED", "NICO_CLEAN_CLOSE"]
+		if silence_outcome != (private_outcome == "UNESTABLISHED"): return false
 	var lav_trace: Dictionary = restored_traces.get("j12_laverriere_public_group_set_01", {})
 	var lav_fact: Dictionary = restored_knowledge.get("fact_j12_laverriere_participants", {})
 	if lav_trace.is_empty() != lav_fact.is_empty(): return false

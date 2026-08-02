@@ -252,7 +252,9 @@ func _continue_after_public() -> void:
 	match state.j11_pivot:
 		"SANDRA":
 			var trace: Dictionary = state.traces.get("j11_sandra_chosen_image_01", {})
-			if str(trace.get("current_state", "")) != "REMOVED": segment_id = "j12_sandra_module"; thread_id = SANDRA_THREAD
+			if str(trace.get("current_state", "")) != "REMOVED" and state.j11_pivot_outcome in ["SANDRA_RULE_CLARIFIED", "SANDRA_DESIRE_BOUNDED"]:
+				_append_context_messages(SANDRA_THREAD, "j12_sandra_rule_context" if state.j11_pivot_outcome == "SANDRA_RULE_CLARIFIED" else "j12_sandra_desire_context")
+				segment_id = "j12_sandra_module"; thread_id = SANDRA_THREAD
 		"MATHILDE":
 			var aftercare: Dictionary = state.obligations.get("aftercare_mathilde_j11", {})
 			if str(aftercare.get("status", "")) != "FAILED":
@@ -264,7 +266,16 @@ func _continue_after_public() -> void:
 					"MATHILDE_M_B3":
 						if state.j11_physical_level == "MATHILDE_M_B3" and str(aftercare.get("status", "")) == "PAID": segment_id = "j12_mathilde_m_b3_module"
 				if segment_id != "": thread_id = MATHILDE_THREAD
-		"RAPHAELLE": segment_id = "j12_raphaelle_module"; thread_id = RAPHAELLE_THREAD
+		"RAPHAELLE":
+			var context_segment := str({
+				"FIRST_KISS": "j12_raphaelle_first_kiss_context",
+				"KISS_DECLINED": "j12_raphaelle_kiss_declined_context",
+				"RESULT_SENT_ATTRACTION_NAMED": "j12_raphaelle_attraction_context",
+				"RESULT_SENT_BOUNDARY_HELD": "j12_raphaelle_boundary_context",
+			}.get(state.j11_pivot_outcome, ""))
+			if context_segment != "":
+				_append_context_messages(RAPHAELLE_THREAD, context_segment)
+				segment_id = "j12_raphaelle_module"; thread_id = RAPHAELLE_THREAD
 		"MARIE":
 			match state.j11_pivot_outcome:
 				"MARIE_ADULT_RECONQUEST":
@@ -273,16 +284,26 @@ func _continue_after_public() -> void:
 				"MARIE_SEX_NOT_USED_AS_BANDAGE": segment_id = "j12_marie_no_bandage_module"
 			if segment_id != "": thread_id = MARIE_THREAD
 	if segment_id == "": _schedule_transition("to_laverriere_close")
-	else: _enter_segment(thread_id, segment_id, "route_incoming")
+	else:
+		_enter_segment(thread_id, segment_id, "route_incoming")
+		if state.j11_pivot_outcome == "KISS_DECLINED": pending_choice_ids_by_thread[RAPHAELLE_THREAD] = ["choice_j12_raphaelle_declined_hold"]
+		elif state.j11_pivot_outcome == "RESULT_SENT_BOUNDARY_HELD": pending_choice_ids_by_thread[RAPHAELLE_THREAD] = ["choice_j12_raphaelle_boundary_hold"]
 
 func _continue_after_annexe() -> void:
-	if state.j11_pivot == "NICO": _enter_segment(NICO_THREAD, "j12_nico_module", "nico_incoming")
-	else: _schedule_transition("to_after_separation")
+	if state.j11_pivot != "NICO":
+		_schedule_transition("to_after_separation")
+		return
+	match state.j11_pivot_outcome:
+		"NICO_GUARDRAIL_HELD": _enter_segment(NICO_THREAD, "j12_nico_guardrail_module", "nico_incoming")
+		"NICO_RIVALRY_MAINTAINED": _enter_segment(NICO_THREAD, "j12_nico_rivalry_module", "nico_incoming")
+		"NICO_CLEAN_CLOSE": _schedule_transition("to_after_separation")
+		_: _schedule_transition("to_after_separation")
 
 func _priority_route() -> String:
 	var failed: Dictionary = state.obligations.get("aftercare_mathilde_j11", {})
 	if str(failed.get("status", "")) == "FAILED": return "MATHILDE"
-	if state.j11_pivot == "SANDRA" and str(state.traces.get("j11_sandra_chosen_image_01", {}).get("current_state", "")) == "REMOVED": return "NETWORK"
+	if state.j11_pivot == "SANDRA":
+		return "SANDRA" if state.j11_pivot_outcome in ["SANDRA_RULE_CLARIFIED", "SANDRA_DESIRE_BOUNDED", "SANDRA_IMAGE_REMOVED"] else "NETWORK"
 	if state.j11_pivot == "MATHILDE":
 		if state.j11_pivot_outcome in ["MATHILDE_LOOK_ONLY","MATHILDE_M_B1","MATHILDE_CLEAN_STOP","MATHILDE_DISTANCE_RESTORED"]: return "MATHILDE"
 		if state.j11_pivot_outcome in ["MATHILDE_M_B2","MATHILDE_M_B3"] and state.j11_physical_level == state.j11_pivot_outcome and str(failed.get("status", "")) == "PAID": return "MATHILDE"
@@ -291,10 +312,29 @@ func _priority_route() -> String:
 		if state.j11_pivot_outcome == "MARIE_ADULT_RECONQUEST" and state.j11_physical_level == "MARIE_ADULT_RECONQUEST" and str(state.obligations.get("aftercare_marie_j11", {}).get("status", "")) == "PAID": return "MARIE"
 		if state.j11_pivot_outcome in ["MARIE_NON_ADULT_RECONNECTION","MARIE_SEX_NOT_USED_AS_BANDAGE","MARIE_HONEST_REFUSAL","MARIE_NO_RECONQUEST"]: return "MARIE"
 		return "NETWORK"
-	if state.j11_pivot in ["SANDRA","RAPHAELLE","NICO"]: return state.j11_pivot
+	if state.j11_pivot == "RAPHAELLE" and state.j11_pivot_outcome in ["FIRST_KISS", "KISS_DECLINED", "RESULT_SENT_ATTRACTION_NAMED", "RESULT_SENT_BOUNDARY_HELD"]: return "RAPHAELLE"
+	if state.j11_pivot == "NICO" and state.j11_pivot_outcome in ["NICO_GUARDRAIL_HELD", "NICO_RIVALRY_MAINTAINED", "NICO_CLEAN_CLOSE"]: return "NICO"
 	return "NETWORK"
 
 func _after_segment_for_route(route: String) -> String:
+	if route == "SANDRA":
+		if state.j11_pivot_outcome == "SANDRA_IMAGE_REMOVED": return ""
+		return str({
+			"SANDRA_RESPONSE_CLEAR": "j12_after_sandra_clear",
+			"SANDRA_RESPONSE_DELAYED": "j12_after_sandra_delayed",
+			"SANDRA_EXIT_CLEAN": "j12_after_sandra_exit",
+		}.get(state.j12_private_outcome, ""))
+	if route == "RAPHAELLE":
+		if state.j11_pivot_outcome == "KISS_DECLINED": return "j12_after_raphaelle_kiss_declined"
+		if state.j11_pivot_outcome == "RESULT_SENT_BOUNDARY_HELD": return "j12_after_raphaelle_boundary"
+		if state.j12_private_outcome == "RAPHAELLE_NOW": return "j12_after_raphaelle_pressure"
+		return "j12_after_raphaelle_first_kiss" if state.j11_pivot_outcome == "FIRST_KISS" else "j12_after_raphaelle_attraction"
+	if route == "NICO":
+		match state.j11_pivot_outcome:
+			"NICO_CLEAN_CLOSE": return ""
+			"NICO_RIVALRY_MAINTAINED": return "j12_after_nico_rivalry_respected" if state.j12_private_outcome == "NICO_RIVALRY_LEAVE" else "j12_after_nico_rivalry"
+			"NICO_GUARDRAIL_HELD": return "j12_after_nico_guardrail_closed" if state.j12_private_outcome == "NICO_REFUSE" else "j12_after_nico_guardrail"
+		return ""
 	if route == "MATHILDE":
 		if str(state.obligations.get("aftercare_mathilde_j11", {}).get("status", "")) == "FAILED": return ""
 		return str({
@@ -333,6 +373,10 @@ func _enter_segment(thread_id: String, segment_id: String, incoming_phase: Strin
 	for choice in segment.get("choices", []): ids.append(str(choice.get("id", "")))
 	pending_choice_ids_by_thread[thread_id] = ids
 	phase = incoming_phase
+
+func _append_context_messages(thread_id: String, segment_id: String) -> void:
+	_unlock_thread(thread_id)
+	_append_messages(thread_id, segments_by_id.get(segment_id, {}).get("messages", []))
 
 func _choice_by_id(choice_id: String) -> Dictionary:
 	for segment in segments_by_id.values():

@@ -75,6 +75,48 @@ class RuntimeS112J12PlayableStaticTests(unittest.TestCase):
         self.assertIn('"MARIE_HONEST_REFUSAL":"j12_after_marie_distance"', provider)
         self.assertIn('"MARIE_NO_RECONQUEST":"j12_after_marie_distance"', provider)
 
+    def test_r5b_exact_outcomes_modules_aftercare_and_silence(self):
+        state = self.read("game/scripts/runtime/season_1/Season1State.gd")
+        j11 = self.read("game/scripts/runtime/season_1/J11RuntimeProvider.gd")
+        j12 = self.read("game/scripts/runtime/season_1/J12RuntimeProvider.gd")
+        laverriere = self.load("game/data/conversations/chapter_12_laverriere.json")
+        annexe = self.load("game/data/conversations/chapter_12_annexe.json")
+        outcomes = [
+            "SANDRA_RULE_CLARIFIED", "SANDRA_DESIRE_BOUNDED", "SANDRA_IMAGE_REMOVED",
+            "FIRST_KISS", "KISS_DECLINED", "RESULT_SENT_ATTRACTION_NAMED", "RESULT_SENT_BOUNDARY_HELD",
+            "NICO_GUARDRAIL_HELD", "NICO_RIVALRY_MAINTAINED", "NICO_CLEAN_CLOSE",
+        ]
+        for outcome in outcomes:
+            self.assertIn(outcome, state)
+            self.assertIn(outcome, j12)
+        for outcome in ["SANDRA_RULE_CLARIFIED", "SANDRA_DESIRE_BOUNDED", "SANDRA_IMAGE_REMOVED", "NICO_GUARDRAIL_HELD", "NICO_RIVALRY_MAINTAINED", "NICO_CLEAN_CLOSE"]:
+            self.assertIn(outcome, j11)
+        for private_outcome in ["SANDRA_RESPONSE_CLEAR", "SANDRA_RESPONSE_DELAYED", "SANDRA_EXIT_CLEAN"]:
+            self.assertIn(private_outcome, state)
+            self.assertIn(private_outcome, j12)
+        lav_ids = {segment["id"] for segment in laverriere["segments"]}
+        annexe_ids = {segment["id"] for segment in annexe["segments"]}
+        for segment_id in [
+            "j12_sandra_rule_context", "j12_sandra_desire_context",
+            "j12_raphaelle_first_kiss_context", "j12_raphaelle_attraction_context",
+            "j12_raphaelle_kiss_declined_context", "j12_raphaelle_boundary_context",
+        ]:
+            self.assertIn(segment_id, lav_ids)
+        for segment_id in [
+            "j12_after_sandra_clear", "j12_after_sandra_delayed", "j12_after_sandra_exit",
+            "j12_after_raphaelle_first_kiss", "j12_after_raphaelle_attraction",
+            "j12_after_raphaelle_kiss_declined", "j12_after_raphaelle_boundary",
+            "j12_nico_guardrail_module", "j12_nico_rivalry_module",
+            "j12_after_nico_guardrail", "j12_after_nico_rivalry",
+        ]:
+            self.assertIn(segment_id, annexe_ids)
+        self.assertNotIn("j12_after_sandra_removed", annexe_ids)
+        self.assertNotIn("j12_after_nico_clean_close", annexe_ids)
+        self.assertIn('"SANDRA_IMAGE_REMOVED": return ""', j12)
+        self.assertIn('"NICO_CLEAN_CLOSE": return ""', j12)
+        self.assertIn("ambiguous legacy Sandra snapshot fails closed", self.read("game/tests/RUNTIME_S1_12J12PlayableSmokeDriver.gd"))
+        self.assertIn("ambiguous legacy Nico snapshot fails closed", self.read("game/tests/RUNTIME_S1_12J12PlayableSmokeDriver.gd"))
+
     def test_handoff_moves_content_end_to_j12(self):
         j11 = self.load("game/data/runtime/season_1/j11_runtime_map.json")
         self.assertEqual("day_handoff", j11["day_end"]["transition_mode"])

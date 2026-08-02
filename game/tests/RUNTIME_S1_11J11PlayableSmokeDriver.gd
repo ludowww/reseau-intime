@@ -16,11 +16,14 @@ var failures: Array[String] = []
 
 func _ready() -> void:
 	_exercise_p10_p11_priority_and_round_trip()
+	_exercise_sandra_exact_outcomes()
 	_exercise_sandra_removal()
 	_exercise_mathilde_physical_aftercare()
 	_exercise_mathilde_lower_ceilings()
 	_exercise_raphaelle_kiss()
+	_exercise_raphaelle_non_kiss_outcomes()
 	_exercise_nico_guardrail()
+	_exercise_nico_exact_outcomes()
 	_exercise_marie_adult_reconquest()
 	_exercise_marie_non_adult_fallback()
 	_exercise_respiration()
@@ -59,9 +62,22 @@ func _exercise_sandra_removal() -> void:
 	_expect(bool(provider.apply_choice(SANDRA_THREAD, "choice_j11_sandra_more").get("accepted", false)), "Sandra removal choice applies")
 	var trace: Dictionary = provider.state.traces.get("j11_sandra_chosen_image_01", {})
 	_expect(str(trace.get("current_state", "")) == "REMOVED", "Sandra image becomes inaccessible")
+	_expect(provider.state.j11_pivot_outcome == "SANDRA_IMAGE_REMOVED", "Sandra removal records an exact semantic outcome")
 	_expect(_media_count(provider, "S1_A3_J11_DPH_SANDRA_CHOSEN_IMAGE_01") == 0, "removed Sandra image no longer exposes media")
 	_confirm_transition(provider)
 	_expect(provider.phase == "complete", "Sandra route completes J11")
+
+func _exercise_sandra_exact_outcomes() -> void:
+	for test_case in [
+		{"choice":"choice_j11_sandra_rule","outcome":"SANDRA_RULE_CLARIFIED"},
+		{"choice":"choice_j11_sandra_desire","outcome":"SANDRA_DESIRE_BOUNDED"},
+	]:
+		var provider = _new_provider(_completed_j10_state("SANDRA", "CAFE_HELD_MISSING_NAMED"))
+		provider.start_day(); _confirm_transition(provider); _present_batch(provider, SANDRA_THREAD)
+		_expect(bool(provider.apply_choice(SANDRA_THREAD, str(test_case["choice"])).get("accepted", false)), str(test_case["outcome"]) + " choice applies")
+		_expect(provider.state.j11_pivot_outcome == str(test_case["outcome"]), str(test_case["outcome"]) + " remains exact")
+		_confirm_transition(provider)
+		_expect(provider.phase == "complete", str(test_case["outcome"]) + " completes J11")
 
 func _exercise_mathilde_physical_aftercare() -> void:
 	var provider = _new_provider(_completed_j10_state("MATHILDE", "OUTFIT_EFFECT_ACKNOWLEDGED_BOUNDED"))
@@ -134,6 +150,26 @@ func _exercise_raphaelle_kiss() -> void:
 	_expect(provider.state.j11_physical_level == "RAPHAELLE_FIRST_KISS", "Raphaëlle never exceeds the first-kiss ceiling")
 	_expect(provider.phase == "complete", "Raphaëlle route completes J11")
 
+func _exercise_raphaelle_non_kiss_outcomes() -> void:
+	for direct_case in [
+		{"choice":"choice_j11_raphaelle_attractive","outcome":"RESULT_SENT_ATTRACTION_NAMED"},
+		{"choice":"choice_j11_raphaelle_boundary","outcome":"RESULT_SENT_BOUNDARY_HELD"},
+	]:
+		var provider = _new_provider(_completed_j10_state("RAPHAELLE", "PROCESS_HELPED_VISIT_BOUNDED"))
+		provider.start_day(); _confirm_transition(provider); _present_batch(provider, RAPHAELLE_THREAD)
+		provider.apply_choice(RAPHAELLE_THREAD, str(direct_case["choice"]))
+		_expect(provider.state.j11_pivot_outcome == str(direct_case["outcome"]), str(direct_case["outcome"]) + " remains distinct")
+		_confirm_transition(provider)
+		_expect(provider.phase == "complete", str(direct_case["outcome"]) + " completes J11")
+	var declined = _new_provider(_completed_j10_state("RAPHAELLE", "PROCESS_HELPED_VISIT_BOUNDED"))
+	declined.start_day(); _confirm_transition(declined); _present_batch(declined, RAPHAELLE_THREAD)
+	declined.apply_choice(RAPHAELLE_THREAD, "choice_j11_raphaelle_work_person"); _present_batch(declined, RAPHAELLE_THREAD)
+	declined.apply_choice(RAPHAELLE_THREAD, "choice_j11_raphaelle_attraction_yes"); _present_batch(declined, RAPHAELLE_THREAD)
+	declined.apply_choice(RAPHAELLE_THREAD, "choice_j11_raphaelle_meeting_decline")
+	_expect(declined.state.j11_pivot_outcome == "KISS_DECLINED" and declined.state.j11_physical_level == "NONE", "declined kiss records no physical opening")
+	_confirm_transition(declined)
+	_expect(declined.phase == "complete", "declined kiss completes J11")
+
 func _exercise_nico_guardrail() -> void:
 	var provider = _new_provider(_completed_j10_state("NICO", "DIFFERENCE_ACKNOWLEDGED_NO_IMAGE"))
 	provider.start_day()
@@ -142,7 +178,20 @@ func _exercise_nico_guardrail() -> void:
 	_expect(bool(provider.apply_choice(NICO_THREAD, "choice_j11_nico_guardrail").get("accepted", false)), "Nico reciprocal guardrail applies")
 	_confirm_transition(provider)
 	_expect(provider.state.selected_choice_ids.has("choice_j11_nico_guardrail"), "Nico role is preserved without an image or permission")
+	_expect(provider.state.j11_pivot_outcome == "NICO_GUARDRAIL_HELD", "Nico guardrail records an exact semantic outcome")
 	_expect(provider.phase == "complete", "Nico route completes J11")
+
+func _exercise_nico_exact_outcomes() -> void:
+	for test_case in [
+		{"choice":"choice_j11_nico_rivalry","outcome":"NICO_RIVALRY_MAINTAINED"},
+		{"choice":"choice_j11_nico_close","outcome":"NICO_CLEAN_CLOSE"},
+	]:
+		var provider = _new_provider(_completed_j10_state("NICO", "DIFFERENCE_ACKNOWLEDGED_NO_IMAGE"))
+		provider.start_day(); _confirm_transition(provider); _present_batch(provider, NICO_THREAD)
+		provider.apply_choice(NICO_THREAD, str(test_case["choice"]))
+		_expect(provider.state.j11_pivot_outcome == str(test_case["outcome"]), str(test_case["outcome"]) + " remains exact")
+		_confirm_transition(provider)
+		_expect(provider.phase == "complete", str(test_case["outcome"]) + " completes J11")
 
 func _exercise_marie_adult_reconquest() -> void:
 	var state = _completed_j10_state("NONE", "ORDINARY_MEAL_JOINED")

@@ -448,10 +448,12 @@ func presentation_count_by_id(id: String) -> int:
 func _apply_state_choice(choice_id: String) -> bool:
 	if choice_id.begins_with("choice_j11_p10_"):
 		return state.apply_j11_p10_choice(choice_id)
-	if choice_id in ["choice_j11_sandra_rule", "choice_j11_sandra_desire"]:
-		return state.record_j11_choice(choice_id, [choice_id])
+	if choice_id == "choice_j11_sandra_rule":
+		return state.set_j11_semantic_outcome("SANDRA_RULE_CLARIFIED") and state.record_j11_choice(choice_id, [choice_id])
+	if choice_id == "choice_j11_sandra_desire":
+		return state.set_j11_semantic_outcome("SANDRA_DESIRE_BOUNDED") and state.record_j11_choice(choice_id, [choice_id])
 	if choice_id == "choice_j11_sandra_more":
-		return state.update_j11_sandra_image_access("removed") and state.record_j11_choice(choice_id, [choice_id])
+		return state.update_j11_sandra_image_access("removed") and state.set_j11_semantic_outcome("SANDRA_IMAGE_REMOVED") and state.record_j11_choice(choice_id, [choice_id])
 	if choice_id == "choice_j11_mathilde_look":
 		return state.set_j11_semantic_outcome("MATHILDE_LOOK_ONLY") and state.record_j11_choice(choice_id, [choice_id])
 	if choice_id == "choice_j11_mathilde_distance":
@@ -472,7 +474,7 @@ func _apply_state_choice(choice_id: String) -> bool:
 	if choice_id == "choice_j11_raphaelle_attractive":
 		return state.set_j11_raphaelle_outcome("RESULT_SENT_ATTRACTION_NAMED") and state.record_j11_choice(choice_id, [choice_id])
 	if choice_id == "choice_j11_raphaelle_boundary":
-		return state.set_j11_raphaelle_outcome("RESULT_SENT_BOUNDARY_HELD") and state.record_j11_choice(choice_id, [choice_id])
+		return state.remove_j11_raphaelle_result() and state.set_j11_raphaelle_outcome("RESULT_SENT_BOUNDARY_HELD") and state.record_j11_choice(choice_id, [choice_id])
 	if choice_id == "choice_j11_raphaelle_attraction_yes":
 		if _raphaelle_kiss_eligible():
 			return state.record_j11_choice(choice_id, [choice_id])
@@ -484,7 +486,12 @@ func _apply_state_choice(choice_id: String) -> bool:
 	if choice_id == "choice_j11_raphaelle_meeting_decline":
 		return state.set_j11_raphaelle_outcome("KISS_DECLINED") and state.record_j11_choice(choice_id, [choice_id])
 	if choice_id.begins_with("choice_j11_nico_"):
-		return state.record_j11_choice(choice_id, [choice_id])
+		var outcome := str({
+			"choice_j11_nico_guardrail": "NICO_GUARDRAIL_HELD",
+			"choice_j11_nico_rivalry": "NICO_RIVALRY_MAINTAINED",
+			"choice_j11_nico_close": "NICO_CLEAN_CLOSE",
+		}.get(choice_id, ""))
+		return outcome != "" and state.set_j11_semantic_outcome(outcome) and state.record_j11_choice(choice_id, [choice_id])
 	if choice_id.ends_with("reconquest"):
 		var established: bool = state.establish_j11_marie_adult_event(true, true) if _marie_adult_eligible() else state.set_j11_semantic_outcome("MARIE_NON_ADULT_RECONNECTION")
 		return established and state.record_j11_choice(choice_id, [choice_id])
