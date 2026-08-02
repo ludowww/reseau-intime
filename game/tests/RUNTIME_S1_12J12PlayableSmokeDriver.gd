@@ -24,7 +24,8 @@ func _ready() -> void:
 	marie_j11_base_snapshot = _build_real_j11_base_snapshot("MARIE")
 	mathilde_j11_base_snapshot = _build_real_j11_base_snapshot("MATHILDE")
 	_exercise_sandra_p11_and_public_audience()
-	_exercise_failed_mathilde_aftercare_precedes_convergence()
+	_exercise_failed_mathilde_aftercare_precedes_convergence("MATHILDE_M_B2")
+	_exercise_failed_mathilde_aftercare_precedes_convergence("MATHILDE_M_B3")
 	_exercise_nico_annexe_guardrail()
 	_exercise_marie_mathilde_semantic_matrix()
 	_exercise_r5a_snapshot_migration()
@@ -65,11 +66,11 @@ func _exercise_sandra_p11_and_public_audience() -> void:
 	_expect(state.traces.has("j12_laverriere_public_group_set_01") and state.traces.has("j12_annexe_public_group_set_01"), "both canonical public traces persist")
 	_expect(state.j12_priority_route == "SANDRA", "only Sandra consequence is foreground for J13")
 
-func _exercise_failed_mathilde_aftercare_precedes_convergence() -> void:
-	var state = _completed_j11_state("MATHILDE", true)
+func _exercise_failed_mathilde_aftercare_precedes_convergence(physical_level: String) -> void:
+	var state = _completed_j11_state("MATHILDE", true, physical_level)
 	var provider = _new_provider(state)
 	provider.start_day()
-	_expect(provider.phase == "mathilde_failed_incoming", "failed Mathilde aftercare precedes normal J12")
+	_expect(state.j11_physical_level == physical_level and provider.phase == "mathilde_failed_incoming", "%s failed Mathilde aftercare precedes normal J12" % physical_level)
 	_present_batch(provider, MATHILDE_THREAD)
 	_confirm_transition(provider)
 	_present_batch(provider, MARIE_THREAD)
@@ -240,7 +241,7 @@ func _exercise_r5a_snapshot_migration() -> void:
 	var ambiguous = _completed_semantic_j11_state("MATHILDE_LOOK_ONLY").snapshot(); ambiguous["version"] = 19; ambiguous["j11_pivot_outcome"] = ""; ambiguous["selected_choice_ids"] = []
 	_expect(not SEASON_STATE.new().restore_snapshot(ambiguous), "ambiguous legacy Mathilde snapshot fails closed")
 
-func _completed_j11_state(pivot: String, fail_mathilde := false):
+func _completed_j11_state(pivot: String, fail_mathilde := false, mathilde_level := "MATHILDE_M_B2"):
 	var state = SEASON_STATE.new()
 	state.current_day = "J11"; state.day_status = "ACTIVE"
 	var source: Array = {"SANDRA":["SANDRA","CAFE_HELD_MISSING_NAMED"],"MATHILDE":["MATHILDE","OUTFIT_EFFECT_ACKNOWLEDGED_BOUNDED"],"NICO":["NICO","DIFFERENCE_ACKNOWLEDGED_NO_IMAGE"]}[pivot]
@@ -251,7 +252,7 @@ func _completed_j11_state(pivot: String, fail_mathilde := false):
 	if pivot == "SANDRA":
 		state.establish_j11_sandra_private_image("view_only"); state.record_j11_choice("choice_j11_sandra_rule", ["choice_j11_sandra_rule"])
 	elif pivot == "MATHILDE":
-		state.configure_j11_mathilde_safety(true, true, true); state.establish_j11_mathilde_physical_event("MATHILDE_M_B2", true); state.resolve_j11_aftercare("aftercare_mathilde_j11", "FAILED" if fail_mathilde else "PAID", "Player"); state.record_j11_choice("choice_j11_mathilde_after_repeat" if fail_mathilde else "choice_j11_mathilde_after_no_definition", ["choice_j11_mathilde_after_repeat" if fail_mathilde else "choice_j11_mathilde_after_no_definition"])
+		state.configure_j11_mathilde_safety(true, true, true); state.establish_j11_mathilde_physical_event(mathilde_level, true); state.resolve_j11_aftercare("aftercare_mathilde_j11", "FAILED" if fail_mathilde else "PAID", "Player"); state.record_j11_choice("choice_j11_mathilde_after_repeat" if fail_mathilde else "choice_j11_mathilde_after_no_definition", ["choice_j11_mathilde_after_repeat" if fail_mathilde else "choice_j11_mathilde_after_no_definition"])
 	else:
 		state.record_j11_choice("choice_j11_nico_guardrail", ["choice_j11_nico_guardrail"])
 	_expect(state.complete_j11(), "fixture completes J11 for " + pivot)
