@@ -83,6 +83,17 @@ class RuntimeS112J12PlayableStaticTests(unittest.TestCase):
         for route in ["choice_j12_presence_la", "choice_j12_presence_lb", "choice_j12_presence_lc", "choice_j12_annexe_a12", "choice_j12_annexe_b12", "choice_j12_annexe_c12"]:
             self.assertIn(route, smoke)
 
+    def test_r5c_t14_requires_explicit_physical_presence(self):
+        state = self.read("game/scripts/runtime/season_1/Season1State.gd")
+        helper = state.split("func _j12_laverriere_subjects", 1)[1].split("func ", 1)[0]
+        self.assertIn('J12_LAVERRIERE_EXPLICIT_SUBJECTS := ["Marie", "Player", "Pauline", "Bastien", "Élodie"]', state)
+        self.assertIn("return J12_LAVERRIERE_EXPLICIT_SUBJECTS.duplicate()", helper)
+        for inferred_subject in ["Mathilde", "Raphaëlle", "Sandra", "Nico", "j11_pivot", "j11_pivot_outcome", "aftercare"]:
+            self.assertNotIn(inferred_subject, helper)
+        smoke = self.read("game/tests/RUNTIME_S1_12J12PlayableSmokeDriver.gd")
+        for evidence in ["FIRST_KISS does not infer Raphaëlle as a T14 subject", "M-B2 does not infer Mathilde as a T14 subject", "v21 migration removes route-derived Mathilde and Raphaëlle from T14"]:
+            self.assertIn(evidence, smoke)
+
     def test_r5c_priority_debt_and_v21_migration_are_fail_closed(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         smoke = self.read("game/tests/RUNTIME_S1_12J12PlayableSmokeDriver.gd")

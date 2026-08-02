@@ -3,6 +3,7 @@ extends RefCounted
 class_name Season1State
 
 const SNAPSHOT_VERSION := 22
+const J12_LAVERRIERE_EXPLICIT_SUBJECTS := ["Marie", "Player", "Pauline", "Bastien", "Élodie"]
 
 var current_day := "J01"
 var day_status := "ACTIVE"
@@ -1689,10 +1690,7 @@ func establish_j12_unusual_behavior(observed_value: String, knowers: Array, sour
 	return true
 
 func _j12_laverriere_subjects() -> Array:
-	var subjects: Array = ["Marie", "Player", "Pauline", "Bastien", "Élodie"]
-	if j11_pivot == "MATHILDE" and str(obligations.get("aftercare_mathilde_j11", {}).get("status", "")) != "FAILED" and j11_pivot_outcome not in ["MATHILDE_DISTANCE_RESTORED", ""]: subjects.append("Mathilde")
-	if j11_pivot == "RAPHAELLE" and j11_pivot_outcome in ["FIRST_KISS", "KISS_DECLINED", "RESULT_SENT_ATTRACTION_NAMED", "RESULT_SENT_BOUNDARY_HELD"]: subjects.append("Raphaëlle")
-	return subjects
+	return J12_LAVERRIERE_EXPLICIT_SUBJECTS.duplicate()
 
 func establish_j12_priority_consequence(route: String) -> bool:
 	if current_day != "J12" or day_status != "ACTIVE" or route not in ["SANDRA","MATHILDE","RAPHAELLE","NICO","MARIE","NETWORK"] or j12_priority_route != "UNESTABLISHED" or obligations.has("j12_priority_consequence_j13"):
@@ -3234,9 +3232,10 @@ func _migrate_r5c_j12_registers(value: Dictionary) -> bool:
 		if presence == "UNESTABLISHED": return false
 		var old_lav_trace: Dictionary = restored_traces["j12_laverriere_public_group_set_01"]
 		if typeof(old_lav_trace.get("subjects", [])) != TYPE_ARRAY: return false
-		var lav_subjects: Array = old_lav_trace.get("subjects", []).duplicate()
-		for required_subject in ["Marie", "Player", "Pauline", "Bastien", "Élodie"]:
-			if not lav_subjects.has(required_subject): return false
+		var old_lav_subjects: Array = old_lav_trace.get("subjects", [])
+		for required_subject in J12_LAVERRIERE_EXPLICIT_SUBJECTS:
+			if not old_lav_subjects.has(required_subject): return false
+		var lav_subjects: Array = J12_LAVERRIERE_EXPLICIT_SUBJECTS.duplicate()
 		restored_traces["j12_laverriere_public_group_set_01"] = {"trace_id":"j12_laverriere_public_group_set_01","trace_type":"PHOTO_SET","source_day":"J12","source_scene":"convergence La Verrière","creator":"Élodie","subjects":lav_subjects.duplicate(),"owner":"La Verrière","initial_audience":lav_subjects.duplicate(),"current_audience":lav_subjects.duplicate(),"storage_location":"canal La Verrière nommé","saving_rule":"PUBLIC_SOURCE_RULES","transfer_rule":"PUBLIC_SOURCE_RULES","current_state":"PUBLIC_ACTIVE","knowledge_created":"fact_j12_laverriere_participants","eligible_for_j14":true,"eligible_for_j21":true,"player_present":true,"player_photographed":true}
 		restored_knowledge["fact_j12_laverriere_participants"] = {"fact_id":"fact_j12_laverriere_participants","source_type":"PUBLIC_TRACE","source_ref":"j12_laverriere_public_group_set_01","initial_knowers":lav_subjects.duplicate(),"current_knowers":lav_subjects.duplicate(),"certainty":"OBSERVED","shareability":"PUBLIC","participants":lav_subjects.duplicate(),"source_day":"J12"}
 	if restored_traces.has("j12_annexe_public_group_set_01"):
@@ -3944,14 +3943,7 @@ func _j12_records_consistent(value: Dictionary) -> bool:
 		if presence == "UNESTABLISHED" or str(lav_fact.get("source_ref", "")) != "j12_laverriere_public_group_set_01": return false
 		if str(lav_trace.get("creator", "")) != "Élodie" or str(lav_trace.get("owner", "")) != "La Verrière" or str(lav_trace.get("current_state", "")) != "PUBLIC_ACTIVE": return false
 		var lav_subjects: Array = lav_trace.get("subjects", [])
-		var unique_lav_subjects: Array = []
-		for lav_subject in lav_subjects:
-			if unique_lav_subjects.has(lav_subject): return false
-			unique_lav_subjects.append(lav_subject)
-		for required_lav_subject in ["Marie", "Player", "Pauline", "Bastien", "Élodie"]:
-			if not lav_subjects.has(required_lav_subject): return false
-		for lav_subject in unique_lav_subjects:
-			if lav_subject not in ["Marie", "Player", "Pauline", "Bastien", "Élodie", "Mathilde", "Raphaëlle"]: return false
+		if lav_subjects != J12_LAVERRIERE_EXPLICIT_SUBJECTS: return false
 		if str(lav_trace.get("saving_rule", "")) != "PUBLIC_SOURCE_RULES" or str(lav_trace.get("transfer_rule", "")) != "PUBLIC_SOURCE_RULES" or not bool(lav_trace.get("eligible_for_j14", false)) or not bool(lav_trace.get("eligible_for_j21", false)): return false
 		if lav_trace.get("initial_audience", []) != lav_subjects or lav_trace.get("current_audience", []) != lav_subjects or lav_fact.get("participants", []) != lav_subjects: return false
 		if str(lav_fact.get("source_type", "")) != "PUBLIC_TRACE" or lav_fact.get("initial_knowers", []) != lav_subjects or lav_fact.get("current_knowers", []) != lav_subjects or str(lav_fact.get("certainty", "")) != "OBSERVED" or str(lav_fact.get("shareability", "")) != "PUBLIC": return false

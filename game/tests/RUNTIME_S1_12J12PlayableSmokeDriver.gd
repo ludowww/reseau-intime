@@ -144,7 +144,10 @@ func _exercise_public_trace_presence_matrix() -> void:
 		_expect(state.establish_j12_sandra_public_context_view(), "trace matrix creates T16 from Sandra's exact public view")
 		var t14: Dictionary = state.traces["j12_laverriere_public_group_set_01"]
 		var t16: Dictionary = state.traces["j12_sandra_public_context_view_01"]
-		_expect(t14.get("subjects", []).has("Player") and bool(t14.get("player_present", false)) and t16.get("subjects", []).has("Player"), "T14/T16 preserve Player's real La Verrière presence for " + str(test_case["presence"]))
+		var fixed_subjects: Array = ["Marie", "Player", "Pauline", "Bastien", "Élodie"]
+		_expect(t14.get("subjects", []) == fixed_subjects and bool(t14.get("player_present", false)) and bool(t14.get("player_photographed", false)), "T14 contains exactly the five explicitly present La Verrière subjects for " + str(test_case["presence"]))
+		_expect(not t14.get("subjects", []).has("Sandra") and t16.get("subjects", []) == fixed_subjects and t16.get("current_audience", []).has("Sandra"), "T16 keeps Sandra's view separate from T14 subjects")
+		_expect(state.knowledge["fact_sandra_saw_public_j12_context"].get("current_knowers", []) == ["Sandra"], "F21 names Sandra as its sole current knower")
 		_expect(state.apply_j12_choice(str(test_case["annexe"])) and state.establish_j12_annexe_public_trace(), "trace matrix creates T15 from exact L’Annexe branch")
 		var t15: Dictionary = state.traces["j12_annexe_public_group_set_01"]
 		var expected_presence := bool(test_case["player_at_annexe"])
@@ -220,6 +223,11 @@ func _exercise_r5b_path(test_case: Dictionary) -> void:
 	provider.apply_choice(MARIE_THREAD, "choice_j12_presence_lb")
 	_confirm_transition(provider)
 	_present_batch(provider, LAVERRIERE_THREAD)
+	if outcome == "FIRST_KISS":
+		var raphaelle_t14: Dictionary = state.traces.get("j12_laverriere_public_group_set_01", {})
+		_expect(raphaelle_t14.get("subjects", []) == ["Marie", "Player", "Pauline", "Bastien", "Élodie"] and not raphaelle_t14.get("subjects", []).has("Raphaëlle"), "FIRST_KISS does not infer Raphaëlle as a T14 subject")
+		_expect(state.knowledge["fact_j12_laverriere_participants"].get("participants", []) == ["Marie", "Player", "Pauline", "Bastien", "Élodie"], "FIRST_KISS does not infer Raphaëlle as an F18 participant")
+		_expect_state_round_trip(state, "FIRST_KISS T14 explicit subjects")
 	var route_thread := SANDRA_THREAD if outcome.begins_with("SANDRA_") else (RAPHAELLE_THREAD if outcome in ["FIRST_KISS","KISS_DECLINED","RESULT_SENT_ATTRACTION_NAMED","RESULT_SENT_BOUNDARY_HELD"] else NICO_THREAD)
 	var context_message := str(test_case["context"])
 	var choice_id := str(test_case["choice"])
@@ -359,6 +367,11 @@ func _exercise_semantic_path(test_case: Dictionary) -> void:
 	_expect(bool(provider.apply_choice(MARIE_THREAD, "choice_j12_presence_la").get("accepted", false)), outcome + " chooses public presence")
 	_confirm_transition(provider)
 	_present_batch(provider, LAVERRIERE_THREAD)
+	if outcome == "MATHILDE_M_B2":
+		var mathilde_t14: Dictionary = state.traces.get("j12_laverriere_public_group_set_01", {})
+		_expect(mathilde_t14.get("subjects", []) == ["Marie", "Player", "Pauline", "Bastien", "Élodie"] and not mathilde_t14.get("subjects", []).has("Mathilde"), "M-B2 does not infer Mathilde as a T14 subject")
+		_expect(state.knowledge["fact_j12_laverriere_participants"].get("participants", []) == ["Marie", "Player", "Pauline", "Bastien", "Élodie"], "M-B2 does not infer Mathilde as an F18 participant")
+		_expect_state_round_trip(state, "M-B2 T14 explicit subjects")
 	var module_message := str(test_case.get("module_message", ""))
 	var route_thread := MARIE_THREAD if outcome.begins_with("MARIE_") else MATHILDE_THREAD
 	if module_message != "":
@@ -493,12 +506,18 @@ func _exercise_r5c_snapshot_migration() -> void:
 	legacy["traces"].erase("j12_sandra_public_context_view_01")
 	legacy["knowledge"].erase("fact_sandra_saw_public_j12_context")
 	legacy["knowledge"].erase("fact_j12_unusual_behavior_observed")
+	legacy["traces"]["j12_laverriere_public_group_set_01"]["subjects"].append_array(["Mathilde", "Raphaëlle"])
+	legacy["traces"]["j12_laverriere_public_group_set_01"]["initial_audience"].append_array(["Mathilde", "Raphaëlle"])
+	legacy["traces"]["j12_laverriere_public_group_set_01"]["current_audience"].append_array(["Mathilde", "Raphaëlle"])
+	legacy["knowledge"]["fact_j12_laverriere_participants"]["participants"].append_array(["Mathilde", "Raphaëlle"])
 	var restored = SEASON_STATE.new()
 	var restored_ok := restored.restore_snapshot(legacy)
 	_expect(restored_ok, "legacy v21 J12 snapshot migrates from exact choices")
 	if restored_ok:
 		_expect(int(restored.snapshot().get("version", -1)) == 22, "R5C migration advances the state contract from 21 to 22")
 		_expect(str(restored.promises["marie_j12_laverriere_presence"].get("due_at", "")) == "J12 17:45" and str(restored.promises["j12_annexe_continuation"].get("due_at", "")) == "J12 22:50", "R5C migration canonicalizes P12/P13 due times")
+		_expect(restored.traces["j12_laverriere_public_group_set_01"].get("subjects", []) == ["Marie", "Player", "Pauline", "Bastien", "Élodie"], "v21 migration removes route-derived Mathilde and Raphaëlle from T14")
+		_expect(restored.knowledge["fact_j12_laverriere_participants"].get("participants", []) == ["Marie", "Player", "Pauline", "Bastien", "Élodie"], "v21 migration normalizes F18 to explicit T14 participants")
 		_expect(restored.traces.has("j12_sandra_public_context_view_01") and restored.knowledge.has("fact_j12_unusual_behavior_observed"), "R5C migration reconstructs T16/F20 only from exact selected-choice evidence")
 		_expect_state_round_trip(restored, "R5C migrated completed J12")
 	var pre_event = _completed_r5b_j11_state("SANDRA_RULE_CLARIFIED")
