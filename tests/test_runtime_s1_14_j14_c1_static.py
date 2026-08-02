@@ -289,6 +289,22 @@ class RuntimeS114J14C1StaticTests(unittest.TestCase):
             "fact_witness_saw_limited_trace",
             "j14_inform_trace_controller",
         ])
+        posture = self.block(
+            state,
+            "func _j14_posture_for_choice",
+            "func _j14_player_statement_for_choice",
+        )
+        self.assertIn('variant == "NICO" and choice_id == "choice_j14_nico_defer": return "PROTECT_AND_ANSWER_NOW"', posture)
+        self.assertLess(posture.index('choice_id == "choice_j14_nico_defer"'), posture.index('choice_id.ends_with("_defer")'))
+        consistency = self.block(state, "func _j14_records_consistent", "func _j15_records_consistent")
+        self.assertIn('outcome not in ["UNESTABLISHED","PROTECT_AND_ANSWER_NOW"]', consistency)
+        self.assertIn('outcome == "PROTECT_AND_ANSWER_NOW" and variant != "NICO"', consistency)
+        j15_consistency = self.block(state, "func _j15_records_consistent", "func _j16_records_consistent")
+        self.assertIn('"PROTECT_AND_ANSWER_NOW" and mode in ["ACTIVE_CLARIFICATION","OPEN_CLARIFICATION"]', j15_consistency)
+        self.assertIn('variant == "NICO" and source_choice_id == "choice_j14_nico_defer"', migration)
+        self.assertIn('restored_promises.erase("j14_witness_clarification")', migration)
+        handoff = self.block(state, "func select_j15_mode", "func establish_j15_mode")
+        self.assertIn('j14_outcome == "PROTECT_AND_ANSWER_NOW": return "NO_OBLIGATION"', handoff)
 
     def test_c1_j14_v2_v3_cover_all_phases_and_fail_closed_corruptions(self):
         provider = self.read("game/scripts/runtime/season_1/J14RuntimeProvider.gd")

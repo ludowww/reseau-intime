@@ -2,6 +2,7 @@ extends Node
 
 const STATE := preload("res://scripts/runtime/season_1/Season1State.gd")
 const PROVIDER := preload("res://scripts/runtime/season_1/J14RuntimeProvider.gd")
+const J15_PROVIDER := preload("res://scripts/runtime/season_1/J15RuntimeProvider.gd")
 const TIME := preload("res://scripts/runtime/season_1/NarrativeTime.gd")
 const J13_SMOKE := preload("res://tests/RUNTIME_S1_13J13PlayableSmokeDriver.gd")
 const J12_SMOKE := preload("res://tests/RUNTIME_S1_12J12PlayableSmokeDriver.gd")
@@ -18,6 +19,7 @@ func _ready() -> void:
 	_exercise_public_mutation()
 	_exercise_presence_negatives()
 	_exercise_variant_and_posture_matrix()
+	_exercise_nico_immediate_answer()
 	_exercise_p15_failed_path()
 	_exercise_state_migrations_and_corruption()
 	_exercise_authentic_v23_state_snapshots()
@@ -90,7 +92,8 @@ func _exercise_variant_and_posture_matrix() -> void:
 		var state = fixture.state; _expect(state.begin_j14(), str(fixture.variant) + " begins"); var evidence: Dictionary = state.j14_presence_contract(); evidence.merge({"evidence_id":"matrix_" + str(fixture.variant).to_lower(),"source_day":"J14","recorded_at":"J14 18:34","physically_present":true,"presented_before_selection":true}, true)
 		_expect(state.record_j14_presence_evidence(evidence) and state.select_j14_variant() == fixture.variant and state.j14_witness == fixture.witness, str(fixture.variant) + " consumes explicit witness proof")
 		_expect(state.establish_j14_discovery(fixture.variant), str(fixture.variant) + " establishes canonical ledgers"); var base: Dictionary = state.snapshot()
-		for posture in [{"suffix":"truth","outcome":"TRUTH_LIMITED"},{"suffix":"lie","outcome":"MINIMIZE_OR_LIE"},{"suffix":"defer","outcome":"PROTECT_AND_DEFER"}]:
+		var postures := [{"suffix":"truth","outcome":"TRUTH_LIMITED"},{"suffix":"lie","outcome":"MINIMIZE_OR_LIE"},{"suffix":"defer","outcome":"PROTECT_AND_ANSWER_NOW" if str(fixture.variant) == "NICO" else "PROTECT_AND_DEFER"}]
+		for posture in postures:
 			var branch = STATE.new(); _expect(branch.restore_snapshot(base), str(fixture.variant) + " restores for " + str(posture.outcome)); var choice_id := "choice_j14_" + str(fixture.variant).to_lower() + "_" + str(posture.suffix)
 			_expect(branch.apply_j14_choice(choice_id, fixture.variant) and branch.j14_outcome == posture.outcome, str(fixture.variant) + " applies " + str(posture.outcome))
 			var expects_p14: bool = posture.outcome == "PROTECT_AND_DEFER" and str(fixture.due) != ""
@@ -100,6 +103,28 @@ func _exercise_variant_and_posture_matrix() -> void:
 				var terminal_base: Dictionary = branch.snapshot()
 				for resolution in [{"status":"PAID","actor":"Player"},{"status":"AMENDED","actor":str(fixture.witness)},{"status":"FAILED","actor":"Player"},{"status":"CANCELLED","actor":str(fixture.witness)}]:
 					var terminal = STATE.new(); _expect(terminal.restore_snapshot(terminal_base) and terminal.resolve_j14_witness_clarification(resolution.status, resolution.actor, str(fixture.due)) and str(terminal.promises["j14_witness_clarification"].get("paid_or_closed_by", "")) == resolution.actor, str(fixture.variant) + " supports attributed P14 " + str(resolution.status))
+
+func _exercise_nico_immediate_answer() -> void:
+	var state = _finish_j13(j13_helper._completed_r5b_j12("NICO_GUARDRAIL_HELD", "NICO", "choice_j12_nico_accept", "B12"), "NICO", "j13_nico_guardrail", "choice_j13_nico_guardrail_truth")
+	var provider = _new_provider(state)
+	_expect(bool(provider.start_day().get("accepted", false)), "Nico C starts J14")
+	_confirm(provider); _confirm(provider); _present(provider, "thread_marie_private")
+	_expect(bool(provider.apply_choice("thread_marie_private", "choice_j14_nico_defer").get("accepted", false)), "Nico C applies")
+	_expect(state.j14_outcome == "PROTECT_AND_ANSWER_NOW" and state.j14_player_explanation == "PROTECT_AND_ANSWER_NOW" and str(state.knowledge.get("fact_player_explanation_to_witness", {}).get("player_explanation", "")) == "PROTECT_AND_ANSWER_NOW" and str(state.traces.get("j14_discovery_event_01", {}).get("player_explanation", "")) == "PROTECT_AND_ANSWER_NOW", "Nico C records the bounded immediate answer everywhere")
+	_expect(not state.promises.has("j14_witness_clarification") and state.j14_j15_obligation_id == "", "Nico C creates no P14 or J15 obligation id")
+	_expect_round_trip(provider, "Nico C J14 v4 after choice")
+	_confirm(provider); _expect(provider.phase == "echo_incoming", "Nico C keeps P15 pending for the compromised Nico audience")
+	_present(provider, "thread_nico_private")
+	_expect(str(state.promises.get("j14_inform_trace_controller", {}).get("status", "")) == "PAID" and provider.phase == "day_close", "Nico C pays exact P15 after its presentation")
+	_confirm(provider); _expect(provider.phase == "complete" and state.day_status == "COMPLETE", "Nico C completes J14 after P15")
+	_expect(state._j14_records_consistent(state.snapshot()), "Nico C J14 records remain consistent at handoff")
+	_expect(state.select_j15_mode() == "NO_OBLIGATION", "Nico C hands off to J15 without clarification")
+	var j15 = J15_PROVIDER.new(); _expect(j15.initialize(state, {}, {}, [], []), "Nico C initializes J15"); _expect(bool(j15.start_day().get("accepted", false)) and j15.selected_pivot == "NO_OBLIGATION", "Nico C begins and selects J15 NO_OBLIGATION")
+	var j15_snapshot: Dictionary = j15.snapshot(); var restored_j15 = J15_PROVIDER.new(); _expect(restored_j15.initialize(state, {}, {}, [], []) and restored_j15.restore_snapshot(j15_snapshot) and restored_j15.snapshot() == j15_snapshot, "Nico C J15 v5 round-trip")
+	var legacy: Dictionary = state.snapshot(); legacy["version"] = 24; legacy["j14_outcome"] = "PROTECT_AND_DEFER"; legacy["j14_player_explanation"] = "PROTECT_AND_DEFER"; legacy["traces"]["j14_discovery_event_01"]["player_explanation"] = "PROTECT_AND_DEFER"; legacy["knowledge"]["fact_player_explanation_to_witness"]["player_explanation"] = "PROTECT_AND_DEFER"
+	var migrated = STATE.new(); _expect(migrated.restore_snapshot(legacy) and migrated.j14_outcome == "PROTECT_AND_ANSWER_NOW" and migrated.j14_j15_obligation_id == "" and not migrated.promises.has("j14_witness_clarification"), "Nico C legacy defer migrates to immediate bounded answer")
+	var invalid: Dictionary = state.snapshot(); invalid["j14_outcome"] = "PROTECT_AND_DEFER"; invalid["j14_player_explanation"] = "PROTECT_AND_DEFER"; invalid["traces"]["j14_discovery_event_01"]["player_explanation"] = "PROTECT_AND_DEFER"; invalid["knowledge"]["fact_player_explanation_to_witness"]["player_explanation"] = "PROTECT_AND_DEFER"
+	_expect(not STATE.new().restore_snapshot(invalid), "current Nico C legacy defer is rejected without migration")
 
 func _exercise_p15_failed_path() -> void:
 	var state = _completed_j13_state("PAULINE"); var provider = _new_provider(state); provider.start_day(); _confirm(provider); _confirm(provider); _present(provider, "thread_marie_private"); provider.apply_choice("thread_marie_private", "choice_j14_pauline_truth")
