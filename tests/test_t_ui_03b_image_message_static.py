@@ -35,6 +35,9 @@ class TUI03BImageMessageStaticTests(unittest.TestCase):
         self.assertIn("image_button.icon = resolved.get(\"texture\")", component)
         self.assertIn("MEDIA_RESOLVER.NOT_DELIVERED_LABEL", component)
         self.assertIn("func has_loaded_texture()", component)
+        self.assertIn("func can_request_image()", component)
+        self.assertIn("image_button.disabled = not viewer_enabled", component)
+        self.assertIn("placeholder_label if not viewer_enabled", component)
         for forbidden in ["Tween", "Timer", "create_tween", "create_timer", "TextureRect", "res://data/", ".png", ".jpg"]:
             self.assertNotIn(forbidden, component)
 
@@ -96,6 +99,7 @@ class TUI03BImageMessageStaticTests(unittest.TestCase):
             "func image_message_with_caption_count() -> int",
             "func image_message_without_caption_count() -> int",
             "func focused_image_message_id() -> String", "func image_request_count() -> int",
+            "func replace_message(message: Dictionary) -> bool",
         ]:
             self.assertIn(signature, timeline)
         self.assertRegex(timeline, r"func message_count\(\) -> int:\s+return messages\.size\(\)")
@@ -109,6 +113,7 @@ class TUI03BImageMessageStaticTests(unittest.TestCase):
         self.assertIn("conversation_screen.image_requested.connect(_on_image_requested)", messages)
         gateway = messages.split("func _on_image_requested", 1)[1].split("\nfunc ", 1)[0]
         self.assertIn('content_type", "")) != "IMAGE"', gateway)
+        self.assertIn('accepted.get("viewer_enabled", true)', gateway)
         self.assertIn('media_ref", "")) != media_ref', gateway)
         self.assertIn("photo_requested.emit", gateway)
         self.assertIn('"access_state": "UNLOCKED"', gateway)
@@ -121,6 +126,9 @@ class TUI03BImageMessageStaticTests(unittest.TestCase):
         self.assertNotIn("PHOTO_VIEWER_SCENE", messages)
         self.assertNotIn("PhotoViewer.new", messages)
         self.assertNotIn("PhotoViewer.instantiate", messages)
+        self.assertIn('result.get("updated_messages", [])', messages)
+        self.assertIn("func _apply_runtime_message_updates", messages)
+        self.assertIn("conversation_screen.timeline.replace_message(update)", messages)
         for token in ['"image_message_count"', '"image_message_ids"', '"image_request_count"']:
             self.assertIn(token, conversation)
 

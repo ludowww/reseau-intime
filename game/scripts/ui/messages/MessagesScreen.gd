@@ -717,6 +717,9 @@ func apply_runtime_choice(choice_id: String) -> bool:
 	if not bool(result.get("accepted", false)):
 		replace_runtime_choices(previous_choices)
 		return false
+	if not _apply_runtime_message_updates(thread_id, _dictionary_array(result.get("updated_messages", []))):
+		push_error("Runtime message update could not be applied to the active transcript")
+		return false
 	runtime_delivery_request_id += 1
 	runtime_delivery_active = true
 	runtime_delivery_cancelled = false
@@ -737,6 +740,21 @@ func apply_runtime_choice(choice_id: String) -> bool:
 	runtime_pending_transition_by_thread[thread_id] = runtime_delivery_pending_transition.duplicate(true)
 	_set_runtime_delivery_interactions_blocked(true)
 	_continue_runtime_delivery_after_player(runtime_delivery_request_id, thread_id)
+	return true
+
+func _apply_runtime_message_updates(thread_id: String, updates: Array[Dictionary]) -> bool:
+	if updates.is_empty(): return true
+	if thread_id == "" or thread_id != active_thread_id or conversation_screen == null: return false
+	for update in updates:
+		var message_id := str(update.get("message_id", "")); var current := {}
+		for message in conversation_screen.timeline.messages:
+			if str(message.get("message_id", "")) == message_id: current = message; break
+		if current.is_empty(): return false
+		for immutable_key in ["message_id","author_id","timestamp","source_day","is_player"]:
+			if update.get(immutable_key) != current.get(immutable_key): return false
+		if not conversation_screen.timeline.replace_message(update): return false
+	transcripts[thread_id] = conversation_screen.timeline.messages.duplicate(true)
+	reading_positions[thread_id] = conversation_screen.get_reading_position()
 	return true
 
 func _continue_runtime_delivery_after_player(request_id: int, thread_id: String) -> void:
@@ -1353,6 +1371,8 @@ func _on_image_requested(message_id: String, media_ref: String) -> void:
 			accepted = message
 			break
 	if accepted.is_empty() or str(accepted.get("content_type", "")) != "IMAGE":
+		return
+	if not bool(accepted.get("viewer_enabled", true)):
 		return
 	if str(accepted.get("media_ref", "")) != media_ref or bool(accepted.get("is_player", false)):
 		return

@@ -6,6 +6,13 @@ const RUNTIME_MAP_PATH := "res://data/runtime/season_1/j13_runtime_map.json"
 const NARRATIVE_TIME := preload("res://scripts/runtime/season_1/NarrativeTime.gd")
 const RUNTIME_UNREAD := preload("res://scripts/runtime/season_1/RuntimeUnread.gd")
 const SNAPSHOT_VERSION := 1
+const REMOVED_CONTENT_LABEL := "Contenu retiré"
+const PAULINE_TRACE_ID := "j13_pauline_private_version_01"
+const PAULINE_ASSET_ID := "S1_A4_J13_DPH_PAULINE_PRIVATE_VERSION_01"
+const RAPHAELLE_TRACE_ID := "j13_raphaelle_masked_version_01"
+const RAPHAELLE_ASSET_ID := "S1_A4_J13_DPH_RAPHAELLE_MASKED_POSTURE_01"
+const SANDRA_TRACE_ID := "j11_sandra_chosen_image_01"
+const SANDRA_ASSET_ID := "S1_A3_J11_DPH_SANDRA_CHOSEN_IMAGE_01"
 
 const THREADS := {"PAULINE":"thread_pauline_private","RAPHAELLE":"thread_raphaelle_private","NICO":"thread_nico_private","SANDRA":"thread_sandra_private","MATHILDE":"thread_mathilde_private","MARIE":"thread_marie_private","RESPIRATION":"thread_marie_private"}
 var state
@@ -32,6 +39,7 @@ func initialize(shared_state, cumulative_transcripts: Dictionary, cumulative_ids
 	for segment in conversation.get("segments", []):
 		var id := str(segment.get("id", "")); if id == "" or segments_by_id.has(id): return false
 		segments_by_id[id] = segment
+	if not _authored_visual_contracts_valid(): return false
 	transcripts_by_thread = cumulative_transcripts.duplicate(true); produced_message_ids = cumulative_ids.duplicate(true); unlocked_thread_ids.assign(cumulative_threads); gallery_asset_ids.assign(cumulative_gallery_ids)
 	served_visual_beat_ids = []; pending_choice_ids_by_thread = {}; pending_transition = {}; presented_time_message_ids = {}; phase = "day_start_pending"; selected_pivot = ""
 	return true
@@ -73,12 +81,13 @@ func apply_choice(thread_id: String, choice_id: String) -> Dictionary:
 	var selected := _choice_by_id(choice_id)
 	if selected.is_empty() or not state.apply_j13_choice(choice_id, selected_pivot): return {"accepted":false}
 	pending_choice_ids_by_thread[thread_id] = []
+	var updated_messages := _neutralize_removed_visual(choice_id)
 	var before := transcript_for(thread_id).size(); var responses: Array = selected.get("next_messages", []); var timestamp := current_narrative_time_text()
 	if not responses.is_empty(): timestamp = str(responses[0].get("time_label", timestamp))
 	_append(thread_id, {"message_id":choice_id + "_player","author_id":"player","timestamp":timestamp,"content_type":"TEXT","text":str(selected.get("text", "")),"media_ref":"","is_player":true,"is_read":true,"source_day":13}); _append_messages(thread_id, responses)
 	if selected_pivot == "MARIE" or selected_pivot == "RESPIRATION": _schedule_transition("day_close")
 	else: _schedule_transition("to_marie_echo")
-	return {"accepted":true,"new_messages":transcript_for(thread_id).slice(before),"choices":[],"transition":pending_transition.duplicate(true)}
+	return {"accepted":true,"new_messages":transcript_for(thread_id).slice(before),"updated_messages":updated_messages,"choices":[],"transition":pending_transition.duplicate(true)}
 
 func confirm_transition() -> Dictionary:
 	if pending_transition.is_empty(): return {"accepted":false}
@@ -136,6 +145,13 @@ func presentation_count_by_id(id: String) -> int:
 			if str(item.get("message_id", "")) == id: count += 1
 	return count
 
+func presentation_count_by_trace_id(trace_id: String) -> int:
+	var count := 0
+	for thread_id in transcripts_by_thread:
+		for item in transcripts_by_thread[thread_id]:
+			if int(item.get("source_day", 0)) == 13 and str(item.get("trace_id", "")) == trace_id: count += 1
+	return count
+
 func _select_pivot() -> String:
 	var obligation: Dictionary = state.obligations.get("j12_priority_consequence_j13", {})
 	for key in ["status", "route", "origin", "concerned_people", "due_at", "failure_effect"]:
@@ -183,7 +199,13 @@ func _choice_by_id(choice_id: String) -> Dictionary:
 	return {}
 func _append_messages(thread_id: String, messages: Array) -> void:
 	for message in messages:
-		var author := str(message.get("sender", "system")); _append(thread_id, {"message_id":str(message.get("id", "")),"author_id":author,"timestamp":str(message.get("time_label", "")),"content_type":str(message.get("content_type", "TEXT")),"text":str(message.get("text", "")),"media_ref":str(message.get("media_ref", "")),"placeholder_label":str(message.get("placeholder_label", "Photo de démonstration")),"is_player":author == "player","is_read":author == "player","source_day":13})
+		var author := str(message.get("sender", "system")); var authored_type := str(message.get("content_type", "TEXT")); var trace_id := str(message.get("trace_id", ""))
+		var item := {"message_id":str(message.get("id", "")),"author_id":author,"timestamp":str(message.get("time_label", "")),"content_type":"IMAGE" if authored_type == "PHOTO" else authored_type,"text":str(message.get("text", "")),"media_ref":str(message.get("media_ref", "")),"placeholder_label":str(message.get("placeholder_label", "Photo de démonstration")),"is_player":author == "player","is_read":author == "player","source_day":13}
+		if authored_type == "PHOTO":
+			if trace_id == "" or served_visual_beat_ids.has(trace_id): continue
+			item["trace_id"] = trace_id; item["asset_id"] = str(message.get("asset_id", "")); item["viewer_enabled"] = bool(message.get("viewer_enabled", true))
+			if _append(thread_id, item): served_visual_beat_ids.append(trace_id)
+		else: _append(thread_id, item)
 func _append(thread_id: String, item: Dictionary) -> bool:
 	var id := str(item.get("message_id", "")); if id == "" or produced_message_ids.has(id): return false
 	var transcript: Array = transcripts_by_thread.get(thread_id, []); transcript.append(item.duplicate(true)); transcripts_by_thread[thread_id] = transcript; produced_message_ids[id] = true; return true
@@ -191,6 +213,7 @@ func _schedule_transition(key: String) -> void: phase = key; pending_transition 
 func _transition_result() -> Dictionary: return {"accepted":true,"destination":"timeline","transition":pending_transition.duplicate(true)}
 func _incoming_result(thread_id: String) -> Dictionary: return {"accepted":true,"destination":"conversation","thread_id":thread_id,"notification":{"body":"Nouveau message !"}}
 func _restored_phase_consistent() -> bool:
+	if not _visual_snapshot_consistent(): return false
 	if phase == "day_start_pending": return state.current_day == "J12" and state.day_status == "COMPLETE" and pending_transition.is_empty()
 	if state.current_day != "J13": return false
 	if selected_pivot == "" or selected_pivot != state.j13_pivot: return false
@@ -205,6 +228,68 @@ func _restored_phase_consistent() -> bool:
 	if phase == "complete": return state.day_status == "COMPLETE" and pending_transition.is_empty()
 	if state.day_status != "ACTIVE": return false
 	return not pending_transition.is_empty() if phase in ["to_priority","to_marie_echo","day_close"] else pending_transition.is_empty()
+
+func _authored_visual_contracts_valid() -> bool:
+	var expected := {
+		"msg_j13_pauline_photo_001":{"segment_id":"j13_pauline","trace_id":PAULINE_TRACE_ID,"asset_id":PAULINE_ASSET_ID,"label":"Visuel canonique non produit · quatrième frame privée Pauline"},
+		"msg_j13_raphaelle_photo_001":{"segment_id":"j13_raphaelle","trace_id":RAPHAELLE_TRACE_ID,"asset_id":RAPHAELLE_ASSET_ID,"label":"Visuel canonique non produit · masque et posture Raphaëlle"},
+		"msg_j13_marie_close_photo_001":{"segment_id":"j13_marie_close","trace_id":"j12_laverriere_public_group_set_01","asset_id":"","label":"Trace publique existante · couple à La Verrière"},
+	}
+	var found := {}
+	for segment_id in segments_by_id:
+		for message in segments_by_id[segment_id].get("messages", []):
+			if str(message.get("content_type", "TEXT")) != "PHOTO": continue
+			var message_id := str(message.get("id", "")); var contract: Dictionary = expected.get(message_id, {})
+			if contract.is_empty() or found.has(message_id) or str(contract.get("segment_id", "")) != segment_id: return false
+			if str(message.get("trace_id", "")) != str(contract.get("trace_id", "")) or str(message.get("asset_id", "")) != str(contract.get("asset_id", "")): return false
+			if str(message.get("media_ref", "")) != (str(contract.get("asset_id", "")) if str(contract.get("asset_id", "")) != "" else str(contract.get("trace_id", ""))): return false
+			if str(message.get("placeholder_label", "")) != str(contract.get("label", "")) or bool(message.get("viewer_enabled", true)): return false
+			found[message_id] = true
+	return found.size() == expected.size()
+
+func _neutralize_removed_visual(choice_id: String) -> Array[Dictionary]:
+	var updated: Array[Dictionary] = []
+	var trace_id := ""; var asset_id := ""
+	if choice_id == "choice_j13_pauline_refuse": trace_id = PAULINE_TRACE_ID; asset_id = PAULINE_ASSET_ID
+	elif choice_id == "choice_j13_raphaelle_product": trace_id = RAPHAELLE_TRACE_ID; asset_id = RAPHAELLE_ASSET_ID
+	elif choice_id in ["choice_j13_sandra_clear_more", "choice_j13_sandra_delayed_more", "choice_j13_sandra_exit_more"]: trace_id = SANDRA_TRACE_ID; asset_id = SANDRA_ASSET_ID
+	if trace_id == "": return updated
+	for thread_id in transcripts_by_thread:
+		var transcript: Array = transcripts_by_thread[thread_id]
+		for index in range(transcript.size()):
+			var item: Dictionary = transcript[index]
+			if str(item.get("trace_id", "")) != trace_id and str(item.get("media_ref", "")) != asset_id: continue
+			item["trace_id"] = trace_id; item["asset_id"] = asset_id; item["content_type"] = "TEXT"; item["text"] = REMOVED_CONTENT_LABEL; item["media_ref"] = ""; item["placeholder_label"] = REMOVED_CONTENT_LABEL; item["viewer_enabled"] = false
+			transcript[index] = item
+			updated.append(item.duplicate(true))
+		transcripts_by_thread[thread_id] = transcript
+	return updated
+
+func _visual_snapshot_consistent() -> bool:
+	var seen_served := {}
+	for served_id in served_visual_beat_ids:
+		if str(served_id) == "" or seen_served.has(str(served_id)): return false
+		seen_served[str(served_id)] = true
+	var contracts := {PAULINE_TRACE_ID:PAULINE_ASSET_ID,RAPHAELLE_TRACE_ID:RAPHAELLE_ASSET_ID,"j12_laverriere_public_group_set_01":""}
+	for trace_id in contracts:
+		var count := 0; var presentation := {}
+		for thread_id in transcripts_by_thread:
+			for item in transcripts_by_thread[thread_id]:
+				if int(item.get("source_day", 0)) != 13 or str(item.get("trace_id", "")) != trace_id: continue
+				count += 1; presentation = item
+				if str(item.get("content_type", "")) not in ["IMAGE","TEXT"] or bool(item.get("viewer_enabled", true)): return false
+				if str(item.get("content_type", "")) == "IMAGE" and str(item.get("media_ref", "")) != (str(contracts[trace_id]) if str(contracts[trace_id]) != "" else trace_id): return false
+				if str(item.get("content_type", "")) == "TEXT" and (str(item.get("text", "")) != REMOVED_CONTENT_LABEL or str(item.get("media_ref", "")) != ""): return false
+		if count > 1 or served_visual_beat_ids.has(trace_id) != (count == 1): return false
+		if trace_id in [PAULINE_TRACE_ID,RAPHAELLE_TRACE_ID]:
+			var trace: Dictionary = state.traces.get(trace_id, {})
+			if trace.is_empty() != (count == 0) or (not trace.is_empty() and str(trace.get("asset_id", "")) != str(contracts[trace_id])): return false
+			if count == 1 and str(trace.get("current_state", "")) == "PRIVATE_ACTIVE" and str(presentation.get("content_type", "")) != "IMAGE": return false
+			if count == 1 and str(trace.get("current_state", "")) in ["REMOVED","INACCESSIBLE"] and str(presentation.get("content_type", "")) != "TEXT": return false
+	for thread_id in transcripts_by_thread:
+		for item in transcripts_by_thread[thread_id]:
+			if int(item.get("source_day", 0)) == 13 and str(item.get("content_type", "")) == "IMAGE" and not contracts.has(str(item.get("trace_id", ""))): return false
+	return true
 
 func _thread_presentation(id: String) -> Dictionary:
 	var titles := {"thread_marie_private":"Marie","thread_sandra_private":"Sandra","thread_mathilde_private":"Mathilde","thread_raphaelle_private":"Raphaëlle","thread_nico_private":"Nico","thread_pauline_private":"Pauline"}; var transcript := transcript_for(id); var last: Dictionary = {}; var unread := RUNTIME_UNREAD.incoming_unread_count(transcript, presented_time_message_ids, 13)

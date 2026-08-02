@@ -12,7 +12,7 @@
         {"id":"msg_j13_pauline_001","sender":"pauline","time_label":"11:18","text":"J’ai terminé le tri d’hier."},
         {"id":"msg_j13_pauline_002","sender":"pauline","time_label":"11:18","text":"La 2 reste dans le groupe. Bastien préfère la 1."},
         {"id":"msg_j13_pauline_003","sender":"pauline","time_label":"11:20","text":"La 4 ne partira pas dans le groupe."},
-        {"id":"msg_j13_pauline_photo_001","sender":"pauline","time_label":"11:20","content_type":"PHOTO","media_ref":"S1_A4_J13_DPH_PAULINE_PRIVATE_VERSION_01","placeholder_label":"Visuel canonique non produit · quatrième frame privée","text":""},
+        {"id":"msg_j13_pauline_photo_001","sender":"pauline","time_label":"11:20","content_type":"PHOTO","trace_id":"j13_pauline_private_version_01","asset_id":"S1_A4_J13_DPH_PAULINE_PRIVATE_VERSION_01","media_ref":"S1_A4_J13_DPH_PAULINE_PRIVATE_VERSION_01","placeholder_label":"Visuel canonique non produit · quatrième frame privée Pauline","viewer_enabled":false,"text":""},
         {"id":"msg_j13_pauline_004","sender":"pauline","time_label":"11:20","text":"Je te l’envoie parce que tu as vu pourquoi je l’ai écartée."}
       ],
       "choices": [
@@ -27,7 +27,7 @@
         {"id":"msg_j13_raphaelle_001","sender":"raphaelle","time_label":"12:36","text":"Maud a terminé le tri des tests."},
         {"id":"msg_j13_raphaelle_002","sender":"raphaelle","time_label":"12:36","text":"Il y en a une où le masque change toute la posture."},
         {"id":"msg_j13_raphaelle_003","sender":"raphaelle","time_label":"12:37","text":"Je te l’envoie parce qu’hier tu n’as pas insisté."},
-        {"id":"msg_j13_raphaelle_photo_001","sender":"raphaelle","time_label":"12:37","content_type":"PHOTO","media_ref":"S1_A4_J13_DPH_RAPHAELLE_MASKED_POSTURE_01","placeholder_label":"Visuel canonique non produit · masque et posture","text":""},
+        {"id":"msg_j13_raphaelle_photo_001","sender":"raphaelle","time_label":"12:37","content_type":"PHOTO","trace_id":"j13_raphaelle_masked_version_01","asset_id":"S1_A4_J13_DPH_RAPHAELLE_MASKED_POSTURE_01","media_ref":"S1_A4_J13_DPH_RAPHAELLE_MASKED_POSTURE_01","placeholder_label":"Visuel canonique non produit · masque et posture Raphaëlle","viewer_enabled":false,"text":""},
         {"id":"msg_j13_raphaelle_004","sender":"raphaelle","time_label":"12:38","text":"Le rôle est dans l’image. Il n’est pas dans cette conversation."}
       ],
       "choices": [
@@ -185,7 +185,7 @@
     },
     {
       "id":"j13_marie_close",
-      "messages":[{"id":"msg_j13_marie_close_001","sender":"marie","time_label":"18:18","text":"Pauline a envoyé la sélection finale."},{"id":"msg_j13_marie_close_photo_001","sender":"marie","time_label":"18:18","content_type":"PHOTO","media_ref":"j12_laverriere_public_group_set_01","placeholder_label":"Trace publique existante · couple à La Verrière","text":""},{"id":"msg_j13_marie_close_002","sender":"marie","time_label":"18:19","text":"On a l’air proches. Je veux savoir si on l’était sans demander à la photo de le prouver."}],
+      "messages":[{"id":"msg_j13_marie_close_001","sender":"marie","time_label":"18:18","text":"Pauline a envoyé la sélection finale."},{"id":"msg_j13_marie_close_photo_001","sender":"marie","time_label":"18:18","content_type":"PHOTO","trace_id":"j12_laverriere_public_group_set_01","media_ref":"j12_laverriere_public_group_set_01","placeholder_label":"Trace publique existante · couple à La Verrière","viewer_enabled":false,"text":""},{"id":"msg_j13_marie_close_002","sender":"marie","time_label":"18:19","text":"On a l’air proches. Je veux savoir si on l’était sans demander à la photo de le prouver."}],
       "choices":[
         {"id":"choice_j13_marie_close_truth","text":"oui, sans être parfaits. j’étais avec toi, pas avec la photo","next_messages":[{"id":"msg_j13_marie_close_truth_001","sender":"marie","time_label":"18:20","text":"C’est aussi ce que j’ai senti."}]},
         {"id":"choice_j13_marie_close_walk","text":"la photo ne répond pas. marchons une heure et parlons après","next_messages":[{"id":"msg_j13_marie_close_walk_001","sender":"marie","time_label":"18:20","text":"D’accord. Pas de téléphone sauf urgence."}]},

@@ -17,13 +17,15 @@ var image_button: Button
 var caption_label: Label
 var placeholder_label := "Photo de démonstration"
 var media_status := ""
+var viewer_enabled := true
 
-func configure(p_message_id: String, p_media_ref: String, p_caption: String, p_accent: Color, portrait_theme, p_placeholder_label := "Photo de démonstration") -> void:
+func configure(p_message_id: String, p_media_ref: String, p_caption: String, p_accent: Color, portrait_theme, p_placeholder_label := "Photo de démonstration", p_viewer_enabled := true) -> void:
 	message_id = p_message_id
 	media_ref = p_media_ref
 	caption = p_caption
 	accent = p_accent
 	placeholder_label = p_placeholder_label
+	viewer_enabled = p_viewer_enabled
 	_build(portrait_theme)
 
 func focus_image() -> void:
@@ -59,6 +61,9 @@ func has_loaded_texture() -> bool:
 func displayed_media_status() -> String:
 	return media_status
 
+func can_request_image() -> bool:
+	return viewer_enabled
+
 func _build(portrait_theme) -> void:
 	for child in get_children():
 		remove_child(child)
@@ -76,19 +81,21 @@ func _build(portrait_theme) -> void:
 		image_button.tooltip_text = "Activer la photo"
 	else:
 		image_button.icon = null
-		image_button.text = MEDIA_RESOLVER.NOT_DELIVERED_LABEL
-		image_button.tooltip_text = MEDIA_RESOLVER.NOT_DELIVERED_LABEL
+		var fallback_label := placeholder_label if not viewer_enabled and placeholder_label != "" else MEDIA_RESOLVER.NOT_DELIVERED_LABEL
+		image_button.text = fallback_label
+		image_button.tooltip_text = fallback_label
 	image_button.expand_icon = true
 	image_button.custom_minimum_size = Vector2(IMAGE_WIDTH, IMAGE_HEIGHT)
-	image_button.focus_mode = Control.FOCUS_ALL
-	image_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	image_button.disabled = not viewer_enabled
+	image_button.focus_mode = Control.FOCUS_ALL if viewer_enabled else Control.FOCUS_NONE
+	image_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND if viewer_enabled else Control.CURSOR_ARROW
 	image_button.add_theme_font_size_override("font_size", 18)
 	image_button.add_theme_color_override("font_color", portrait_theme.TEXT_PRIMARY)
 	image_button.add_theme_stylebox_override("normal", portrait_theme.button_style(Color(0.055, 0.07, 0.13), accent, 14))
 	image_button.add_theme_stylebox_override("hover", portrait_theme.button_style(Color(0.075, 0.10, 0.18), accent.lightened(0.12), 14))
 	image_button.add_theme_stylebox_override("pressed", portrait_theme.button_style(Color(0.04, 0.05, 0.10), accent, 14))
 	image_button.add_theme_stylebox_override("focus", portrait_theme.focus_style())
-	image_button.pressed.connect(func(): image_requested.emit(message_id, media_ref))
+	if viewer_enabled: image_button.pressed.connect(func(): image_requested.emit(message_id, media_ref))
 	add_child(image_button)
 	if caption != "":
 		caption_label = Label.new()

@@ -12,6 +12,11 @@ const NICO_TRACE := "j13_nico_alibi_or_hour_message_01"
 const PAULINE_FACT := "fact_pauline_created_private_double_address"
 const RAPHAELLE_FACT := "fact_raphaelle_chose_player_for_masked_posture_image"
 const NICO_FACT := "fact_nico_knows_specific_hour_or_alibi_request"
+const PAULINE_ASSET := "S1_A4_J13_DPH_PAULINE_PRIVATE_VERSION_01"
+const RAPHAELLE_ASSET := "S1_A4_J13_DPH_RAPHAELLE_MASKED_POSTURE_01"
+const SANDRA_ASSET := "S1_A3_J11_DPH_SANDRA_CHOSEN_IMAGE_01"
+const PAULINE_PHOTO_MESSAGE := "msg_j13_pauline_photo_001"
+const RAPHAELLE_PHOTO_MESSAGE := "msg_j13_raphaelle_photo_001"
 
 var failures: Array[String] = []
 var j12_helper
@@ -27,6 +32,7 @@ func _ready() -> void:
 	_exercise_raphaelle_matrix()
 	_exercise_nico_matrix()
 	_exercise_marie_matrix()
+	_exercise_sandra_transcript_removal()
 	_exercise_invalid_obligations_fail_closed()
 	for failure in j12_helper.failures:
 		failures.append("J12 helper: " + failure)
@@ -150,6 +156,20 @@ func _exercise_invalid_obligations_fail_closed() -> void:
 		_expect(state.current_day == "J12" and state.day_status == "COMPLETE" and provider.selected_pivot == "", "invalid obligation cannot mutate the J12 handoff: " + mode)
 
 
+func _exercise_sandra_transcript_removal() -> void:
+	var state = _completed_r5b_j12("SANDRA_RULE_CLARIFIED", "SANDRA", "choice_j12_sandra_clear", "C12")
+	var historical := {"thread_sandra_private":[{"message_id":"msg_j11_sandra_photo_001","author_id":"sandra","timestamp":"21:21","content_type":"IMAGE","text":"","media_ref":SANDRA_ASSET,"placeholder_label":"Visuel canonique non produit","viewer_enabled":true,"is_player":false,"is_read":true,"source_day":11}]}
+	var provider = PROVIDER.new()
+	_expect(provider.initialize(state, historical, {"msg_j11_sandra_photo_001":true}, ["thread_sandra_private"], []), "Sandra removal provider initializes with historical media")
+	_expect(bool(provider.start_day().get("accepted", false)), "Sandra removal selects its priority")
+	_confirm(provider); _present(provider, "thread_sandra_private")
+	_expect(bool(provider.apply_choice("thread_sandra_private", "choice_j13_sandra_clear_more").get("accepted", false)), "Sandra extra request applies")
+	var removed := _message_by_id(provider, "thread_sandra_private", "msg_j11_sandra_photo_001")
+	_expect(str(removed.get("trace_id", "")) == "j11_sandra_chosen_image_01" and str(removed.get("asset_id", "")) == SANDRA_ASSET, "Sandra removed message keeps trace and asset identity")
+	_expect(str(removed.get("content_type", "")) == "TEXT" and str(removed.get("text", "")) == "Contenu retiré" and str(removed.get("media_ref", "")) == "" and not bool(removed.get("viewer_enabled", true)), "Sandra removed message becomes inaccessible in the transcript")
+	_expect_round_trip(provider, "Sandra removed historical media")
+
+
 func _exercise_case(label: String, state, expected_pivot: String, first_message_id: String, choice_id: String, expected_status: String, expected_origin: String, expected_trace: String) -> void:
 	var obligation: Dictionary = state.obligations.get("j12_priority_consequence_j13", {})
 	_expect(str(obligation.get("status", "")) == "DUE" and str(obligation.get("origin", "")) == expected_origin, label + " starts from the exact due obligation")
@@ -158,16 +178,22 @@ func _exercise_case(label: String, state, expected_pivot: String, first_message_
 	_expect(bool(provider.start_day().get("accepted", false)) and provider.selected_pivot == expected_pivot, label + " selects the exact foreground")
 	_expect(not state.traces.has(PAULINE_TRACE) and not state.traces.has(RAPHAELLE_TRACE) and not state.traces.has(NICO_TRACE), label + " creates no J13 trace during selection")
 	_expect(not state.knowledge.has(PAULINE_FACT) and not state.knowledge.has(RAPHAELLE_FACT) and not state.knowledge.has(NICO_FACT), label + " creates no J13 knowledge during selection")
+	_expect(provider.presentation_count_by_trace_id(PAULINE_TRACE) == 0 and provider.presentation_count_by_trace_id(RAPHAELLE_TRACE) == 0, label + " has no private visual before delivery")
 	_expect_round_trip(provider, label + " before delivery")
 	_confirm(provider)
 	_expect(provider.presentation_count_by_id(first_message_id) == 1, label + " delivers only the exact variant")
+	var thread_id := str(PROVIDER.THREADS.get(expected_pivot, "thread_marie_private"))
+	var private_visual_trace := PAULINE_TRACE if expected_pivot == "PAULINE" else (RAPHAELLE_TRACE if first_message_id == "msg_j13_raphaelle_001" else "")
+	if private_visual_trace == PAULINE_TRACE: _assert_visual_delivery(provider, thread_id, PAULINE_PHOTO_MESSAGE, PAULINE_TRACE, PAULINE_ASSET, "Visuel canonique non produit · quatrième frame privée Pauline", label)
+	elif private_visual_trace == RAPHAELLE_TRACE: _assert_visual_delivery(provider, thread_id, RAPHAELLE_PHOTO_MESSAGE, RAPHAELLE_TRACE, RAPHAELLE_ASSET, "Visuel canonique non produit · masque et posture Raphaëlle", label)
+	else: _expect(provider.presentation_count_by_trace_id(PAULINE_TRACE) == 0 and provider.presentation_count_by_trace_id(RAPHAELLE_TRACE) == 0, label + " produces no ineligible private visual")
+	_expect(provider.gallery_asset_ids.is_empty(), label + " adds no J13 gallery asset")
 	if expected_trace == PAULINE_TRACE or expected_trace == RAPHAELLE_TRACE:
 		var expected_fact := PAULINE_FACT if expected_trace == PAULINE_TRACE else RAPHAELLE_FACT
 		_expect(state.traces.has(expected_trace) and state.knowledge.has(expected_fact), label + " creates its private trace and knowledge at delivery")
 	if expected_pivot == "NICO":
 		_expect(not state.traces.has(NICO_TRACE) and not state.knowledge.has(NICO_FACT), label + " keeps T19 and F24 absent before the real choice")
 	_expect_round_trip(provider, label + " after delivery")
-	var thread_id := str(PROVIDER.THREADS.get(expected_pivot, "thread_marie_private"))
 	_present(provider, thread_id)
 	_expect_round_trip(provider, label + " before choice")
 	_expect(bool(provider.apply_choice(thread_id, choice_id).get("accepted", false)), label + " applies its authored choice")
@@ -175,6 +201,14 @@ func _exercise_case(label: String, state, expected_pivot: String, first_message_
 	_expect(str(state.obligations["j12_priority_consequence_j13"].get("paid_by", "")) == "Player" and str(state.obligations["j12_priority_consequence_j13"].get("paid_or_closed_at", "")) != "", label + " preserves settlement attribution")
 	_expect(not bool(provider.apply_choice(thread_id, choice_id).get("accepted", false)), label + " cannot settle twice")
 	_expect(state.j13_j14_trace_id == expected_trace, label + " hands J14 the exact accessible trace")
+	if private_visual_trace != "":
+		var visual_message_id := PAULINE_PHOTO_MESSAGE if private_visual_trace == PAULINE_TRACE else RAPHAELLE_PHOTO_MESSAGE
+		var visual := _message_by_id(provider, thread_id, visual_message_id); var trace: Dictionary = state.traces.get(private_visual_trace, {})
+		if str(trace.get("current_state", "")) == "REMOVED": _expect(str(visual.get("content_type", "")) == "TEXT" and str(visual.get("text", "")) == "Contenu retiré" and str(visual.get("media_ref", "")) == "" and not bool(visual.get("viewer_enabled", true)), label + " neutralizes the removed visual")
+		else: _expect(str(visual.get("content_type", "")) == "IMAGE" and not bool(visual.get("viewer_enabled", true)), label + " keeps the accessible placeholder non-viewable")
+		_expect(provider.presentation_count_by_trace_id(private_visual_trace) == 1 and provider.served_visual_beat_ids.count(private_visual_trace) == 1, label + " keeps exactly one visual across choice and thread return")
+		provider.on_thread_returned(thread_id)
+		_expect(provider.presentation_count_by_trace_id(private_visual_trace) == 1, label + " does not duplicate visual on thread return")
 	_expect_round_trip(provider, label + " after choice")
 	if expected_pivot not in ["MARIE", "RESPIRATION"]:
 		_confirm(provider)
@@ -200,6 +234,21 @@ func _assert_private_trace_contract(state, trace_id: String, fact_id: String, la
 	_expect(not trace.is_empty() and not fact.is_empty(), label + " keeps its trace and knowledge pair")
 	_expect(str(trace.get("knowledge_created", "")) == fact_id and str(fact.get("source_ref", "")) == trace_id, label + " links trace and knowledge canonically")
 	_expect(str(trace.get("current_state", "")) == "PRIVATE_ACTIVE" and str(trace.get("saving_rule", "")) == "IN_THREAD_ONLY" and str(trace.get("transfer_rule", "")) == "FORBIDDEN", label + " keeps bounded in-thread access")
+
+
+func _assert_visual_delivery(provider, thread_id: String, message_id: String, trace_id: String, asset_id: String, expected_label: String, label: String) -> void:
+	var message := _message_by_id(provider, thread_id, message_id); var trace: Dictionary = provider.state.traces.get(trace_id, {})
+	_expect(not message.is_empty() and str(message.get("content_type", "")) == "IMAGE", label + " creates one ImageMessage")
+	_expect(str(message.get("trace_id", "")) == trace_id and str(message.get("asset_id", "")) == asset_id and str(message.get("media_ref", "")) == asset_id, label + " separates message, trace and asset ids")
+	_expect(str(message.get("placeholder_label", "")) == expected_label and not bool(message.get("viewer_enabled", true)), label + " exposes the specific non-viewable placeholder")
+	_expect(str(trace.get("trace_id", "")) == trace_id and str(trace.get("asset_id", "")) == asset_id, label + " trace carries the same deterministic asset contract")
+	_expect(provider.presentation_count_by_trace_id(trace_id) == 1 and provider.served_visual_beat_ids.count(trace_id) == 1, label + " serves the visual beat exactly once")
+
+
+func _message_by_id(provider, thread_id: String, message_id: String) -> Dictionary:
+	for message in provider.transcript_for(thread_id):
+		if str(message.get("message_id", "")) == message_id: return message
+	return {}
 
 
 func _assert_nico_contract(state, choice_id: String, expected_boundary: String, includes_marie: bool) -> void:

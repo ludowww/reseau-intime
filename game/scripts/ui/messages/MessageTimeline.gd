@@ -87,6 +87,18 @@ func append_incoming_message(message: Dictionary, force_follow := false) -> void
 	else:
 		call_deferred("scroll_to_last_message")
 
+func replace_message(message: Dictionary) -> bool:
+	var message_id := str(message.get("message_id", ""))
+	if message_id == "": return false
+	for index in range(messages.size()):
+		if str(messages[index].get("message_id", "")) != message_id: continue
+		var reading_position := get_reading_position(); var replacement := message.duplicate(true)
+		replacement["is_read"] = bool(messages[index].get("is_read", replacement.get("is_read", false)))
+		messages[index] = replacement
+		reading_restore_request_id += 1; reading_position_restore_pending = true; _build(); _restore_reading_position_after_layout(reading_position, reading_restore_request_id)
+		return true
+	return false
+
 func replace_typing_with_message(message: Dictionary, force_follow := true) -> void:
 	# Atomic exchange: no await occurs between inserting the bubble and removing typing.
 	if typing_indicator == null or not is_instance_valid(typing_indicator):
@@ -594,6 +606,7 @@ func _build_message_bubble(message: Dictionary) -> HBoxContainer:
 			accent,
 			PORTRAIT_THEME,
 			str(message.get("placeholder_label", "Photo de démonstration")),
+			bool(message.get("viewer_enabled", true)),
 		)
 		image_message.image_requested.connect(func(requested_message_id: String, requested_media_ref: String):
 			image_request_total += 1

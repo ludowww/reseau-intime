@@ -53,6 +53,15 @@ func _run() -> void:
 	_expect(not empty_image.has_loaded_texture() and empty_image.displayed_media_status() == "MISSING_REFERENCE", "empty ImageMessage reference must be explicit")
 	_expect(empty_image.image_button.text == "Visuel non livré" and not empty_image.image_button.text.contains("Ancien placeholder"), "empty ImageMessage fallback mismatch")
 	empty_image.free()
+	var unavailable_image = preload("res://scripts/ui/messages/ImageMessage.gd").new()
+	unavailable_image.configure("j13_placeholder", "S1_A4_J13_DPH_PAULINE_PRIVATE_VERSION_01", "", Color.WHITE, shell.PORTRAIT_THEME, "Visuel canonique non produit · quatrième frame privée Pauline", false)
+	unavailable_image.image_requested.connect(_on_forwarded_image_requested)
+	_expect(not unavailable_image.has_loaded_texture() and not unavailable_image.can_request_image(), "non-viewable placeholder must stay unresolved and deny viewer requests")
+	_expect(unavailable_image.image_button.disabled and unavailable_image.image_button.focus_mode == Control.FOCUS_NONE, "non-viewable placeholder must not expose an interactive target")
+	_expect(unavailable_image.image_button.text == "Visuel canonique non produit · quatrième frame privée Pauline", "non-viewable placeholder must render its specific stable label")
+	unavailable_image.image_button.emit_signal("pressed")
+	_expect(forwarded_requests == 0, "non-viewable placeholder must not emit a viewer request")
+	unavailable_image.free()
 	_validate_image_geometry(messages)
 	_validate_image_bubble(messages, "demo_image_private_marie_01", "21:16", "", "")
 	_expect(int(private_state.get("message_count", 0)) == messages.thread_message_count(private_id), "private image must remain a normal presentation")
@@ -177,6 +186,17 @@ func _run() -> void:
 		await RenderingServer.frame_post_draw
 		var image := get_viewport().get_texture().get_image()
 		_expect(image.save_png(capture_path) == OK, "capture must be written")
+
+	if str(messages.describe_state().get("active_thread_id", "")) != group_id:
+		messages.return_to_list(); await get_tree().process_frame; messages.open_thread(group_id); await _settle(false)
+	var removed_message := {}
+	for message in messages.conversation_screen.timeline.messages:
+		if str(message.get("message_id", "")) == "demo_image_group_marie_01": removed_message = message.duplicate(true); break
+	removed_message["content_type"] = "TEXT"; removed_message["text"] = "Contenu retiré"; removed_message["media_ref"] = ""; removed_message["viewer_enabled"] = false
+	var removed_updates: Array[Dictionary] = [removed_message]
+	_expect(messages._apply_runtime_message_updates(group_id, removed_updates), "delivered image presentation must be replaceable by its inaccessible state")
+	await get_tree().process_frame
+	_expect(messages.conversation_screen.timeline.image_message_count() == 0 and messages.conversation_screen.timeline.message_count() == int(group_state.get("message_count", 0)), "removed presentation must keep transcript history without an ImageMessage target")
 
 	_finish()
 

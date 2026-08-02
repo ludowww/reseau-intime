@@ -1756,12 +1756,12 @@ func deliver_j13_priority(pivot: String, segment_id: String) -> bool:
 	if current_day != "J13" or day_status != "ACTIVE" or pivot != j13_pivot or j13_outcome != "UNESTABLISHED": return false
 	if pivot == "PAULINE":
 		if segment_id != "j13_pauline" or not j13_pauline_eligible() or traces.has("j13_pauline_private_version_01") or knowledge.has("fact_pauline_created_private_double_address"): return false
-		traces["j13_pauline_private_version_01"] = {"trace_id":"j13_pauline_private_version_01","trace_type":"PHOTO","source_day":"J13","source_scene":"S24 Les deux versions","creator":"Pauline","selected_by":"Pauline","subjects":["Pauline"],"owner":"Pauline","initial_audience":["Pauline"],"current_audience":["Pauline","Player"],"storage_location":"fil Player / Pauline","saving_rule":"IN_THREAD_ONLY","transfer_rule":"FORBIDDEN","current_state":"PRIVATE_ACTIVE","knowledge_created":"fact_pauline_created_private_double_address","eligible_for_j14":true}
+		traces["j13_pauline_private_version_01"] = {"trace_id":"j13_pauline_private_version_01","trace_type":"PHOTO","asset_id":"S1_A4_J13_DPH_PAULINE_PRIVATE_VERSION_01","source_day":"J13","source_scene":"S24 Les deux versions","parent_content_id":"C12-03","parent_asset_id":"S1_A3_J12_DPH_PAULINE_BASTIEN_ANNEXE_01","creator":"Pauline","selected_by":"Pauline","subjects":["Pauline"],"owner":"Pauline","initial_audience":["Pauline"],"current_audience":["Pauline","Player"],"storage_location":"fil Player / Pauline","saving_rule":"IN_THREAD_ONLY","transfer_rule":"FORBIDDEN","current_state":"PRIVATE_ACTIVE","knowledge_created":"fact_pauline_created_private_double_address","eligible_for_j14":true}
 		knowledge["fact_pauline_created_private_double_address"] = {"fact_id":"fact_pauline_created_private_double_address","source_type":"PRIVATE_TRACE","source_ref":"j13_pauline_private_version_01","initial_knowers":["Pauline","Player"],"current_knowers":["Pauline","Player"],"certainty":"CONFIRMED","shareability":"PRIVATE_DO_NOT_SHARE","source_day":"J13"}
 		return true
 	if pivot == "RAPHAELLE" and segment_id == "j13_raphaelle":
 		if not j13_raphaelle_standard_image_eligible() or traces.has("j13_raphaelle_masked_version_01") or knowledge.has("fact_raphaelle_chose_player_for_masked_posture_image"): return false
-		traces["j13_raphaelle_masked_version_01"] = {"trace_id":"j13_raphaelle_masked_version_01","trace_type":"PHOTO","source_day":"J13","source_scene":"S25 Le masque change la posture","creator":"Maud","selected_by":"Raphaëlle","subjects":["Raphaëlle"],"owner":"Raphaëlle","initial_audience":["Raphaëlle","Maud"],"current_audience":["Raphaëlle","Maud","Player"],"storage_location":"fil Player / Raphaëlle","saving_rule":"IN_THREAD_ONLY","transfer_rule":"FORBIDDEN","current_state":"PRIVATE_ACTIVE","knowledge_created":"fact_raphaelle_chose_player_for_masked_posture_image","eligible_for_j14":true}
+		traces["j13_raphaelle_masked_version_01"] = {"trace_id":"j13_raphaelle_masked_version_01","trace_type":"PHOTO","asset_id":"S1_A4_J13_DPH_RAPHAELLE_MASKED_POSTURE_01","source_day":"J13","source_scene":"S25 Le masque change la posture","creator":"Maud","selected_by":"Raphaëlle","subjects":["Raphaëlle"],"owner":"Raphaëlle","initial_audience":["Raphaëlle","Maud"],"current_audience":["Raphaëlle","Maud","Player"],"storage_location":"fil Player / Raphaëlle","saving_rule":"IN_THREAD_ONLY","transfer_rule":"FORBIDDEN","current_state":"PRIVATE_ACTIVE","knowledge_created":"fact_raphaelle_chose_player_for_masked_posture_image","eligible_for_j14":true}
 		knowledge["fact_raphaelle_chose_player_for_masked_posture_image"] = {"fact_id":"fact_raphaelle_chose_player_for_masked_posture_image","source_type":"PRIVATE_TRACE","source_ref":"j13_raphaelle_masked_version_01","initial_knowers":["Raphaëlle","Maud","Player"],"current_knowers":["Raphaëlle","Maud","Player"],"certainty":"CONFIRMED","shareability":"PRIVATE_DO_NOT_SHARE","source_day":"J13"}
 		return true
 	var allowed_segments := {
@@ -1872,7 +1872,7 @@ func select_j14_variant() -> String:
 		"j13_pauline_private_version_01": return "PAULINE"
 		"j11_sandra_chosen_image_01": return "SANDRA"
 		"j11_mathilde_physical_aftercare_01": return "MATHILDE"
-		"j13_raphaelle_masked_version_01", "j13_raphaelle_masked_adult_selected_01": return "RAPHAELLE"
+		"j13_raphaelle_masked_version_01": return "RAPHAELLE"
 		"j13_nico_alibi_or_hour_message_01": return "NICO"
 		_: return "FALLBACK"
 
@@ -4152,6 +4152,7 @@ func _j13_trace_knowledge_contracts_consistent(restored_traces: Dictionary, rest
 	if pauline_trace.is_empty() != pauline_fact.is_empty(): return false
 	if not pauline_trace.is_empty():
 		if str(pauline_trace.get("knowledge_created", "")) != "fact_pauline_created_private_double_address" or str(pauline_trace.get("saving_rule", "")) != "IN_THREAD_ONLY" or str(pauline_trace.get("transfer_rule", "")) != "FORBIDDEN": return false
+		if str(pauline_trace.get("asset_id", "")) != "S1_A4_J13_DPH_PAULINE_PRIVATE_VERSION_01" or str(pauline_trace.get("parent_content_id", "")) != "C12-03" or str(pauline_trace.get("parent_asset_id", "")) != "S1_A3_J12_DPH_PAULINE_BASTIEN_ANNEXE_01": return false
 		if pauline_trace.get("initial_audience", []) != ["Pauline"] or str(pauline_trace.get("current_state", "")) not in ["PRIVATE_ACTIVE", "REMOVED", "INACCESSIBLE"]: return false
 		if str(pauline_trace.get("current_state", "")) == "PRIVATE_ACTIVE" and pauline_trace.get("current_audience", []) != ["Pauline","Player"]: return false
 		if str(pauline_trace.get("current_state", "")) == "REMOVED" and pauline_trace.get("current_audience", []) != ["Pauline"]: return false
@@ -4161,6 +4162,7 @@ func _j13_trace_knowledge_contracts_consistent(restored_traces: Dictionary, rest
 	if raphaelle_trace.is_empty() != raphaelle_fact.is_empty(): return false
 	if not raphaelle_trace.is_empty():
 		if str(raphaelle_trace.get("knowledge_created", "")) != "fact_raphaelle_chose_player_for_masked_posture_image" or str(raphaelle_trace.get("creator", "")) != "Maud" or str(raphaelle_trace.get("selected_by", "")) != "Raphaëlle": return false
+		if str(raphaelle_trace.get("asset_id", "")) != "S1_A4_J13_DPH_RAPHAELLE_MASKED_POSTURE_01": return false
 		if str(raphaelle_trace.get("saving_rule", "")) != "IN_THREAD_ONLY" or str(raphaelle_trace.get("transfer_rule", "")) != "FORBIDDEN" or raphaelle_trace.get("initial_audience", []) != ["Raphaëlle","Maud"] or str(raphaelle_trace.get("current_state", "")) not in ["PRIVATE_ACTIVE", "REMOVED", "INACCESSIBLE"]: return false
 		if str(raphaelle_trace.get("current_state", "")) == "PRIVATE_ACTIVE" and raphaelle_trace.get("current_audience", []) != ["Raphaëlle","Maud","Player"]: return false
 		if str(raphaelle_trace.get("current_state", "")) == "REMOVED" and raphaelle_trace.get("current_audience", []) != ["Raphaëlle"]: return false
