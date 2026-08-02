@@ -67,10 +67,13 @@ func _exercise_sandra_p11_and_public_audience() -> void:
 	_expect(state.j12_priority_route == "SANDRA", "only Sandra consequence is foreground for J13")
 
 func _exercise_failed_mathilde_aftercare_precedes_convergence(physical_level: String) -> void:
-	var state = _completed_j11_state("MATHILDE", true, physical_level)
+	var state = _completed_semantic_j11_state(physical_level, "FAILED")
 	var provider = _new_provider(state)
+	_expect_state_round_trip(state, "%s FAILED state before handoff" % physical_level)
+	_expect_round_trip(provider, "%s FAILED provider before handoff" % physical_level)
 	provider.start_day()
 	_expect(state.j11_physical_level == physical_level and provider.phase == "mathilde_failed_incoming", "%s failed Mathilde aftercare precedes normal J12" % physical_level)
+	_expect_round_trip(provider, "%s FAILED exact priority phase" % physical_level)
 	_present_batch(provider, MATHILDE_THREAD)
 	_confirm_transition(provider)
 	_present_batch(provider, MARIE_THREAD)
@@ -89,6 +92,8 @@ func _exercise_failed_mathilde_aftercare_precedes_convergence(physical_level: St
 	_expect(state.j12_priority_route == "MATHILDE", "failed aftercare keeps its Mathilde origin")
 	var debt: Dictionary = state.obligations.get("j12_priority_consequence_j13", {})
 	_expect(debt.get("concerned_people", []) == ["Player", "Mathilde"] and str(debt.get("origin", "")) == "MATHILDE_HOUSEHOLD_AFTERCARE", "failed aftercare debt remains attributed to Mathilde and the household")
+	_expect_state_round_trip(state, "%s FAILED state after handoff" % physical_level)
+	_expect_round_trip(provider, "%s FAILED provider after handoff" % physical_level)
 
 func _exercise_nico_annexe_guardrail() -> void:
 	var state = _completed_j11_state("NICO")
@@ -175,7 +180,7 @@ func _exercise_semantic_path(test_case: Dictionary) -> void:
 	if outcome == "MATHILDE_M_B3":
 		_expect(transcript.contains("On a décidé hier. Pas aujourd’hui.") and transcript.contains("deuxième scène"), "M-B3 remains distinct without new J12 sexuality")
 
-func _completed_semantic_j11_state(outcome: String):
+func _completed_semantic_j11_state(outcome: String, mathilde_aftercare_resolution := "PAID"):
 	var state = SEASON_STATE.new()
 	var base_snapshot: Dictionary = marie_j11_base_snapshot if outcome.begins_with("MARIE_") else mathilde_j11_base_snapshot
 	_expect(state.restore_snapshot(base_snapshot), outcome + " clones a real J10→J11 handoff")
@@ -192,7 +197,7 @@ func _completed_semantic_j11_state(outcome: String):
 		match outcome:
 			"MATHILDE_LOOK_ONLY": state.set_j11_semantic_outcome(outcome); state.record_j11_choice("choice_j11_mathilde_look", ["choice_j11_mathilde_look"])
 			"MATHILDE_M_B1": state.set_j11_mathilde_proximity("PROXIMITY_CONSENTED"); state.record_j11_choice("choice_j11_mathilde_proximity", ["choice_j11_mathilde_proximity"])
-			"MATHILDE_M_B2", "MATHILDE_M_B3": state.establish_j11_mathilde_physical_event(outcome, true); state.resolve_j11_aftercare("aftercare_mathilde_j11", "PAID", "Player"); state.record_j11_choice("choice_j11_mathilde_m_b2_hold" if outcome == "MATHILDE_M_B2" else "choice_j11_mathilde_m_b3_accept", ["choice_j11_mathilde_m_b2_hold" if outcome == "MATHILDE_M_B2" else "choice_j11_mathilde_m_b3_accept"])
+			"MATHILDE_M_B2", "MATHILDE_M_B3": state.establish_j11_mathilde_physical_event(outcome, true); state.resolve_j11_aftercare("aftercare_mathilde_j11", mathilde_aftercare_resolution, "Player"); state.record_j11_choice("choice_j11_mathilde_after_repeat" if mathilde_aftercare_resolution == "FAILED" else ("choice_j11_mathilde_m_b2_hold" if outcome == "MATHILDE_M_B2" else "choice_j11_mathilde_m_b3_accept"), ["choice_j11_mathilde_after_repeat" if mathilde_aftercare_resolution == "FAILED" else ("choice_j11_mathilde_m_b2_hold" if outcome == "MATHILDE_M_B2" else "choice_j11_mathilde_m_b3_accept")])
 			"MATHILDE_CLEAN_STOP": state.set_j11_mathilde_proximity("PROXIMITY_CONSENTED"); state.set_j11_semantic_outcome(outcome); state.record_j11_choice("choice_j11_mathilde_proximity", ["choice_j11_mathilde_proximity"]); state.record_j11_choice("choice_j11_mathilde_physical_stop", ["choice_j11_mathilde_physical_stop"])
 			"MATHILDE_DISTANCE_RESTORED": state.set_j11_mathilde_proximity("DISTANCE"); state.record_j11_choice("choice_j11_mathilde_distance", ["choice_j11_mathilde_distance"])
 	_expect(state.complete_j11(), "fixture completes J11 for " + outcome)
@@ -241,7 +246,7 @@ func _exercise_r5a_snapshot_migration() -> void:
 	var ambiguous = _completed_semantic_j11_state("MATHILDE_LOOK_ONLY").snapshot(); ambiguous["version"] = 19; ambiguous["j11_pivot_outcome"] = ""; ambiguous["selected_choice_ids"] = []
 	_expect(not SEASON_STATE.new().restore_snapshot(ambiguous), "ambiguous legacy Mathilde snapshot fails closed")
 
-func _completed_j11_state(pivot: String, fail_mathilde := false, mathilde_level := "MATHILDE_M_B2"):
+func _completed_j11_state(pivot: String):
 	var state = SEASON_STATE.new()
 	state.current_day = "J11"; state.day_status = "ACTIVE"
 	var source: Array = {"SANDRA":["SANDRA","CAFE_HELD_MISSING_NAMED"],"MATHILDE":["MATHILDE","OUTFIT_EFFECT_ACKNOWLEDGED_BOUNDED"],"NICO":["NICO","DIFFERENCE_ACKNOWLEDGED_NO_IMAGE"]}[pivot]
@@ -252,7 +257,7 @@ func _completed_j11_state(pivot: String, fail_mathilde := false, mathilde_level 
 	if pivot == "SANDRA":
 		state.establish_j11_sandra_private_image("view_only"); state.record_j11_choice("choice_j11_sandra_rule", ["choice_j11_sandra_rule"])
 	elif pivot == "MATHILDE":
-		state.configure_j11_mathilde_safety(true, true, true); state.establish_j11_mathilde_physical_event(mathilde_level, true); state.resolve_j11_aftercare("aftercare_mathilde_j11", "FAILED" if fail_mathilde else "PAID", "Player"); state.record_j11_choice("choice_j11_mathilde_after_repeat" if fail_mathilde else "choice_j11_mathilde_after_no_definition", ["choice_j11_mathilde_after_repeat" if fail_mathilde else "choice_j11_mathilde_after_no_definition"])
+		state.configure_j11_mathilde_safety(true, true, true); state.establish_j11_mathilde_physical_event("MATHILDE_M_B2", true); state.resolve_j11_aftercare("aftercare_mathilde_j11", "PAID", "Player"); state.record_j11_choice("choice_j11_mathilde_after_no_definition", ["choice_j11_mathilde_after_no_definition"])
 	else:
 		state.record_j11_choice("choice_j11_nico_guardrail", ["choice_j11_nico_guardrail"])
 	_expect(state.complete_j11(), "fixture completes J11 for " + pivot)
