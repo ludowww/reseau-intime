@@ -213,7 +213,7 @@ func _exercise_r6b_snapshot_migrations() -> void:
 	_exercise_r6b_state_snapshot_migration(pre_state, pauline_removed_state, raphaelle_state)
 	var nested_state = STATE.new(); _expect(nested_state.restore_snapshot(_legacy_r6a_state_snapshot(pre_state)), "global R6A nested state v22 restores first")
 	var nested_provider = PROVIDER.new(); _expect(nested_provider.initialize(nested_state, {}, {}, [], []) and nested_provider.restore_snapshot(pauline_paid_snapshot), "global R6A nested J13 provider v1 restores after state")
-	_expect(int(nested_state.snapshot().get("version", -1)) == 24 and int(nested_provider.snapshot().get("version", -1)) == 2, "global R7A state and R6A provider snapshots round-trip in current formats")
+	_expect(int(nested_state.snapshot().get("version", -1)) == 25 and int(nested_provider.snapshot().get("version", -1)) == 2, "global R7A state and R6A provider snapshots round-trip in current formats")
 
 
 func _exercise_v2_visual_snapshot_fail_closed() -> void:

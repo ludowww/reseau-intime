@@ -220,7 +220,7 @@ class RuntimeS113J13PlayableStaticTests(unittest.TestCase):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
         self.assertIn("const SNAPSHOT_VERSION := 2", provider)
-        self.assertIn("const SNAPSHOT_VERSION := 24", state)
+        self.assertIn("const SNAPSHOT_VERSION := 25", state)
         self.assertIn("const SNAPSHOT_VERSION := 21", season)
         self.assertLess(season.index('state.restore_snapshot(value["state"])'), season.index('j13_provider.restore_snapshot(providers.get("J13", {}))'))
         for token in ["func restore_snapshot", "func _migrate_r6b_visual_snapshot_v1_to_v2", "version not in [1, SNAPSHOT_VERSION]", "func _restored_phase_consistent", "selected_pivot != state.j13_pivot"]:

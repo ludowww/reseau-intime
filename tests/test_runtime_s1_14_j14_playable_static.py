@@ -12,8 +12,10 @@ class RuntimeS114J14PlayableStaticTests(unittest.TestCase):
         data = self.load("game/data/runtime/season_1/j14_runtime_map.json")
         self.assertEqual("PLAYABLE", data["implementation_status"])
         corpus = self.read("game/data/conversations/chapter_14_discovery.json")
-        for segment in ["j14_pauline", "j14_sandra", "j14_mathilde", "j14_raphaelle", "j14_nico", "j14_composite", "j14_fallback", "j14_controller_pauline", "j14_controller_sandra", "j14_controller_mathilde", "j14_controller_raphaelle", "j14_controller_nico"]:
+        for segment in ["j14_pauline", "j14_sandra", "j14_mathilde", "j14_raphaelle", "j14_nico", "j14_composite", "j14_controller_pauline", "j14_controller_sandra", "j14_controller_mathilde", "j14_controller_raphaelle", "j14_controller_nico"]:
             self.assertIn(segment, corpus)
+        self.assertNotIn("j14_fallback", corpus)
+        self.assertIn("to_presence_context", data)
         for choice in ["_truth", "_lie", "_defer"]:
             self.assertIn(choice, corpus)
 
@@ -34,7 +36,8 @@ class RuntimeS114J14PlayableStaticTests(unittest.TestCase):
             self.assertIn(trace_id, state)
         selection = state[state.index("func select_j14_variant"):state.index("func _j14_contract_for_variant")]
         self.assertNotIn('"COMPOSITE"', selection)
-        self.assertIn('"j12_laverriere_public_group_set_01":"FALLBACK"', selection)
+        self.assertIn('"j12_laverriere_public_group_set_01":"S27_MUTATION_NO_DISCOVERY"', selection)
+        self.assertIn("not _j14_presence_evidence_admissible", selection)
 
     def test_provider_delays_discovery_and_controller_payment_until_presentation(self):
         provider = self.read("game/scripts/runtime/season_1/J14RuntimeProvider.gd")
@@ -42,9 +45,10 @@ class RuntimeS114J14PlayableStaticTests(unittest.TestCase):
         transition = provider[provider.index("func confirm_transition"):provider.index("func mark_thread_batch_presented")]
         presentation = provider[provider.index("func mark_thread_batch_presented"):provider.index("func snapshot")]
         self.assertNotIn("establish_j14_discovery", start)
-        self.assertIn("state.establish_j14_discovery(selected_pivot)", transition)
+        self.assertNotIn("state.establish_j14_discovery(selected_pivot)", transition)
+        self.assertIn("state.establish_j14_discovery(selected_pivot)", presentation)
         self.assertNotIn("resolve_j14_controller_informed", transition)
-        self.assertIn("state.resolve_j14_controller_informed()", presentation)
+        self.assertIn("state.resolve_j14_controller_informed", presentation)
 
     def test_handoff_snapshot_and_no_new_media(self):
         j13 = self.load("game/data/runtime/season_1/j13_runtime_map.json")
@@ -54,7 +58,7 @@ class RuntimeS114J14PlayableStaticTests(unittest.TestCase):
         self.assertIn("const SNAPSHOT_VERSION := 21", season)
         self.assertIn("func _handoff_to_j14", season)
         provider = self.read("game/scripts/runtime/season_1/J14RuntimeProvider.gd")
-        self.assertIn("const J14_SNAPSHOT_VERSION := 3", provider)
+        self.assertIn("const J14_SNAPSHOT_VERSION := 4", provider)
         self.assertIn("func restore_snapshot", provider)
         corpus = self.load("game/data/conversations/chapter_14_discovery.json")
         self.assertNotIn("media_ref", json.dumps(corpus))

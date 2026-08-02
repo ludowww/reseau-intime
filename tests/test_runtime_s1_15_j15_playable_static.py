@@ -33,10 +33,25 @@ class RuntimeS115J15PlayableStaticTests(unittest.TestCase):
         self.assertIn("const SNAPSHOT_VERSION := 21", season)
         self.assertIn("func _handoff_to_j15", season)
         provider = self.read("game/scripts/runtime/season_1/J15RuntimeProvider.gd")
-        self.assertIn("const J15_SNAPSHOT_VERSION := 4", provider)
+        self.assertIn("const J15_SNAPSHOT_VERSION := 5", provider)
         self.assertIn("func restore_snapshot", provider)
         for forbidden in ["marie_j14_pauline_player_account_j15", "pauline_j14_post_breach_return_j15", "household_j14_sandra_rule_j15", "sandra_j14_breach_account_j15", "mathilde_j14_household_safety_rule_j15", "marie_j14_raphaelle_position_j15", "marie_j14_nico_hour_account_j15"]:
             self.assertNotIn(forbidden, state)
+
+    def test_v2_v4_migration_and_fail_closed_restore_contract(self):
+        provider = self.read("game/scripts/runtime/season_1/J15RuntimeProvider.gd")
+        for token in [
+            "const J15_LEGACY_SNAPSHOT_VERSIONS := [SNAPSHOT_VERSION, 4]",
+            "func _migrate_legacy_snapshot_to_v5",
+            'selected_pivot != state.j15_mode',
+            "state._j15_records_consistent(state.snapshot())",
+            'func _transition_consistent',
+            'func _j15_thread_state_consistent',
+            'RUNTIME_UNREAD.incoming_batch_fully_presented',
+            'str(thread_id) != witness_thread',
+            'state.selected_choice_ids.has(seen_choice_ids[0])',
+        ]:
+            self.assertIn(token, provider)
 
 
 if __name__ == "__main__": unittest.main()

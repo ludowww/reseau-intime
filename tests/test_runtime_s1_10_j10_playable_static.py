@@ -310,9 +310,9 @@ class RuntimeS110J10PlayableStaticTests(unittest.TestCase):
     def test_snapshot_versions_handoff_and_legacy_j09_restore(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
-        self.assertIn("const SNAPSHOT_VERSION := 24", state)
+        self.assertIn("const SNAPSHOT_VERSION := 25", state)
         self.assertIn("const SNAPSHOT_VERSION := 21", season)
-        self.assertIn("[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, SNAPSHOT_VERSION]", state)
+        self.assertIn("[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, SNAPSHOT_VERSION]", state)
         self.assertIn("[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,SNAPSHOT_VERSION]", season)
         self.assertIn('version < 8 and str(value.get("current_day", "")) == "J10"', state)
         self.assertIn('version < 8 and str(value.get("active_day", "")) == "J09"', season)

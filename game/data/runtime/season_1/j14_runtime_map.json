@@ -1,1 +1,76 @@
-{"implementation_status":"PLAYABLE","narrative_day_short":"Lun.","initial_time":"18:32","day_start":{"eyebrow":"LUNDI","title":"La photo au mauvais écran","subtitle":"18:32","body":"Une trace existante peut être vue, sans rendre le témoin omniscient.","action_label":"Continuer","transition_mode":"day_boundary"},"conversation_paths":{"chapter_14_discovery":"res://data/conversations/chapter_14_discovery.json"},"to_discovery":{"transition_id":"j14_to_discovery","mode":"OFF_PHONE","to_time":"18:36","title":"Écran refermé","subtitle":"Un aperçu suffit","body":"Le témoin a vu une trace bornée, pas son histoire complète."},"to_controller":{"transition_id":"j14_to_controller","mode":"CLOCK","to_time":"20:14","title":"Après séparation","subtitle":"20:14","body":"La personne qui contrôle la trace doit être informée si son audience a changé."},"day_close":{"transition_id":"j14_day_close","mode":"NIGHT","to_time":"20:30","title":"Fin du lundi","subtitle":"Le fichier et la connaissance du témoin restent deux états distincts.","body":"Seules les obligations réellement acceptées pourront atteindre J15."},"day_end":{"eyebrow":"FIN DU LUNDI","title":"Lundi terminé","subtitle":"J14","body":"La suite confrontera uniquement les horaires et obligations réellement actifs.","action_label":"Continuer","transition_mode":"day_handoff","content_end":false,"next_day_presentation":{"eyebrow":"MARDI","title":"Les horaires ne tiennent plus","subtitle":"18:30","body":"Une obligation absente ne deviendra pas une collision artificielle.","action_label":"Continuer","transition_mode":"day_boundary"}},"gallery_presentations":[],"visual_variant_presentations":[]}
+{
+  "implementation_status": "PLAYABLE",
+  "narrative_day_short": "Lun.",
+  "initial_time": "18:32",
+  "day_start": {
+    "eyebrow": "LUNDI",
+    "title": "La photo au mauvais écran",
+    "subtitle": "18:32",
+    "body": "Une trace existante peut être vue, sans rendre le témoin omniscient.",
+    "action_label": "Continuer",
+    "transition_mode": "day_boundary"
+  },
+  "conversation_paths": {
+    "chapter_14_discovery": "res://data/conversations/chapter_14_discovery.json"
+  },
+  "to_presence_context": {
+    "transition_id": "j14_to_presence_context",
+    "mode": "OFF_PHONE",
+    "to_time": "18:34",
+    "title": "Situation ordinaire",
+    "subtitle": "Avant l’écran",
+    "body": "Une personne physiquement présente partage une tâche ordinaire près de l’écran.",
+    "shared_context_required": true
+  },
+  "to_discovery": {
+    "transition_id": "j14_to_discovery",
+    "mode": "OFF_PHONE",
+    "to_time": "18:36",
+    "title": "Écran refermé",
+    "subtitle": "Un aperçu suffit",
+    "body": "Le témoin a vu une trace bornée, pas son histoire complète."
+  },
+  "to_controller": {
+    "transition_id": "j14_to_controller",
+    "mode": "CLOCK",
+    "to_time": "20:14",
+    "title": "Après séparation",
+    "subtitle": "20:14",
+    "body": "La personne qui contrôle la trace doit être informée si son audience a changé."
+  },
+  "to_clarification": {
+    "transition_id": "j14_to_clarification",
+    "mode": "CLOCK",
+    "to_time": "22:00",
+    "title": "Heure donnée",
+    "subtitle": "Avant mardi",
+    "body": "La clarification acceptée devient terminale à l’heure exacte annoncée."
+  },
+  "day_close": {
+    "transition_id": "j14_day_close",
+    "mode": "NIGHT",
+    "to_time": "22:05",
+    "title": "Fin du lundi",
+    "subtitle": "Le fichier et la connaissance du témoin restent deux états distincts.",
+    "body": "Seules les obligations réellement acceptées pourront atteindre J15."
+  },
+  "day_end": {
+    "eyebrow": "FIN DU LUNDI",
+    "title": "Lundi terminé",
+    "subtitle": "J14",
+    "body": "La suite confrontera uniquement les horaires et obligations réellement actifs.",
+    "action_label": "Continuer",
+    "transition_mode": "day_handoff",
+    "content_end": false,
+    "next_day_presentation": {
+      "eyebrow": "MARDI",
+      "title": "Les horaires ne tiennent plus",
+      "subtitle": "18:30",
+      "body": "Une obligation absente ne deviendra pas une collision artificielle.",
+      "action_label": "Continuer",
+      "transition_mode": "day_boundary"
+    }
+  },
+  "gallery_presentations": [],
+  "visual_variant_presentations": []
+}
