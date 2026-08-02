@@ -225,9 +225,13 @@ class RuntimeS113J13PlayableStaticTests(unittest.TestCase):
         self.assertLess(season.index('state.restore_snapshot(value["state"])'), season.index('j13_provider.restore_snapshot(providers.get("J13", {}))'))
         for token in ["func restore_snapshot", "func _migrate_r6b_visual_snapshot_v1_to_v2", "version not in [1, SNAPSHOT_VERSION]", "func _restored_phase_consistent", "selected_pivot != state.j13_pivot"]:
             self.assertIn(token, provider)
+        for token in ["trace_by_message_id", 'content_type == "PHOTO"', "not item.has(\"asset_id\")", "produced != presented.has(trace_id)", "served_visual_beat_ids.size() != presented.size()"]:
+            self.assertIn(token, provider)
         for token in ["func _migrate_r6b_j13_visual_contracts", "func _r6b_legacy_private_trace_consistent", "version < 22", "version < SNAPSHOT_VERSION"]:
             self.assertIn(token, state)
         for token in ["global R6A nested state v22 restores first", "global R6A nested J13 provider v1 restores after state", "global R6A nested snapshot round-trips in current formats"]:
+            self.assertIn(token, self.read("game/tests/RUNTIME_S1_13J13PlayableSmokeDriver.gd"))
+        for token in ["v2 wrong visual asset fails closed", "v2 missing visual asset fails closed", "v2 wrong visual message id fails closed", "v2 wrong active placeholder label fails closed", "v2 unknown served visual id fails closed", "v2 missing served visual id fails closed", "v2 injected PHOTO presentation fails closed", "v2 unknown J13 image fails closed", "v2 duplicated visual presentation fails closed", "v2 missing produced visual id fails closed"]:
             self.assertIn(token, self.read("game/tests/RUNTIME_S1_13J13PlayableSmokeDriver.gd"))
 
 

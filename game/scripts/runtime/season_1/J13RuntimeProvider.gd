@@ -348,29 +348,51 @@ func _neutralize_removed_visual(choice_id: String) -> Array[Dictionary]:
 	return updated
 
 func _visual_snapshot_consistent() -> bool:
+	var contracts := {
+		PAULINE_TRACE_ID:{"message_id":"msg_j13_pauline_photo_001","asset_id":PAULINE_ASSET_ID,"label":"Visuel canonique non produit · quatrième frame privée Pauline"},
+		RAPHAELLE_TRACE_ID:{"message_id":"msg_j13_raphaelle_photo_001","asset_id":RAPHAELLE_ASSET_ID,"label":"Visuel canonique non produit · masque et posture Raphaëlle"},
+		"j12_laverriere_public_group_set_01":{"message_id":"msg_j13_marie_close_photo_001","asset_id":"","label":"Trace publique existante · couple à La Verrière"},
+	}
 	var seen_served := {}
 	for served_id in served_visual_beat_ids:
-		if str(served_id) == "" or seen_served.has(str(served_id)): return false
+		if str(served_id) == "" or not contracts.has(str(served_id)) or seen_served.has(str(served_id)): return false
 		seen_served[str(served_id)] = true
-	var contracts := {PAULINE_TRACE_ID:PAULINE_ASSET_ID,RAPHAELLE_TRACE_ID:RAPHAELLE_ASSET_ID,"j12_laverriere_public_group_set_01":""}
-	for trace_id in contracts:
-		var count := 0; var presentation := {}
-		for thread_id in transcripts_by_thread:
-			for item in transcripts_by_thread[thread_id]:
-				if int(item.get("source_day", 0)) != 13 or str(item.get("trace_id", "")) != trace_id: continue
-				count += 1; presentation = item
-				if str(item.get("content_type", "")) not in ["IMAGE","TEXT"] or bool(item.get("viewer_enabled", true)): return false
-				if str(item.get("content_type", "")) == "IMAGE" and str(item.get("media_ref", "")) != (str(contracts[trace_id]) if str(contracts[trace_id]) != "" else trace_id): return false
-				if str(item.get("content_type", "")) == "TEXT" and (str(item.get("text", "")) != REMOVED_CONTENT_LABEL or str(item.get("media_ref", "")) != ""): return false
-		if count > 1 or served_visual_beat_ids.has(trace_id) != (count == 1): return false
-		if trace_id in [PAULINE_TRACE_ID,RAPHAELLE_TRACE_ID]:
-			var trace: Dictionary = state.traces.get(trace_id, {})
-			if trace.is_empty() != (count == 0) or (not trace.is_empty() and str(trace.get("asset_id", "")) != str(contracts[trace_id])): return false
-			if count == 1 and str(trace.get("current_state", "")) == "PRIVATE_ACTIVE" and str(presentation.get("content_type", "")) != "IMAGE": return false
-			if count == 1 and str(trace.get("current_state", "")) in ["REMOVED","INACCESSIBLE"] and str(presentation.get("content_type", "")) != "TEXT": return false
+	var trace_by_message_id := {}
+	for trace_id in contracts: trace_by_message_id[str(contracts[trace_id]["message_id"])] = trace_id
+	var presented := {}
 	for thread_id in transcripts_by_thread:
+		if typeof(transcripts_by_thread[thread_id]) != TYPE_ARRAY: return false
 		for item in transcripts_by_thread[thread_id]:
-			if int(item.get("source_day", 0)) == 13 and str(item.get("content_type", "")) == "IMAGE" and not contracts.has(str(item.get("trace_id", ""))): return false
+			if typeof(item) != TYPE_DICTIONARY: return false
+			var message_id := str(item.get("message_id", "")); var source_day := int(item.get("source_day", 0)); var content_type := str(item.get("content_type", ""))
+			if trace_by_message_id.has(message_id) and source_day != 13: return false
+			if source_day != 13: continue
+			if content_type == "PHOTO": return false
+			if not trace_by_message_id.has(message_id):
+				if content_type == "IMAGE" or str(item.get("trace_id", "")) != "" or str(item.get("asset_id", "")) != "" or item.has("viewer_enabled"): return false
+				continue
+			var trace_id := str(trace_by_message_id[message_id]); var contract: Dictionary = contracts[trace_id]
+			if presented.has(trace_id) or not item.has("trace_id") or str(item.get("trace_id", "")) != trace_id: return false
+			if not item.has("asset_id") or str(item.get("asset_id", "")) != str(contract["asset_id"]): return false
+			if not item.has("viewer_enabled") or bool(item.get("viewer_enabled", true)): return false
+			var trace: Dictionary = state.traces.get(trace_id, {})
+			if trace.is_empty(): return false
+			if trace_id in [PAULINE_TRACE_ID,RAPHAELLE_TRACE_ID] and str(trace.get("asset_id", "")) != str(contract["asset_id"]): return false
+			var removed := str(trace.get("current_state", "")) in ["REMOVED","INACCESSIBLE"]
+			if removed:
+				if content_type != "TEXT" or str(item.get("text", "")) != REMOVED_CONTENT_LABEL or str(item.get("media_ref", "")) != "" or str(item.get("placeholder_label", "")) != REMOVED_CONTENT_LABEL: return false
+			else:
+				var expected_media_ref := str(contract["asset_id"]) if str(contract["asset_id"]) != "" else trace_id
+				if content_type != "IMAGE" or str(item.get("text", "")) != "" or str(item.get("media_ref", "")) != expected_media_ref or str(item.get("placeholder_label", "")) != str(contract["label"]): return false
+			presented[trace_id] = true
+	for trace_id in contracts:
+		var message_id := str(contracts[trace_id]["message_id"]); var produced := produced_message_ids.has(message_id)
+		if produced and (typeof(produced_message_ids[message_id]) != TYPE_BOOL or not bool(produced_message_ids[message_id])): return false
+		if produced != presented.has(trace_id): return false
+		if trace_id in [PAULINE_TRACE_ID,RAPHAELLE_TRACE_ID] and state.traces.has(trace_id) != presented.has(trace_id): return false
+	if served_visual_beat_ids.size() != presented.size(): return false
+	for trace_id in presented:
+		if not seen_served.has(trace_id): return false
 	return true
 
 func _thread_presentation(id: String) -> Dictionary:

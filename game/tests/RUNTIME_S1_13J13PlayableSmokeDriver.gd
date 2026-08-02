@@ -34,6 +34,7 @@ func _ready() -> void:
 	_exercise_marie_matrix()
 	_exercise_sandra_transcript_removal()
 	_exercise_r6b_snapshot_migrations()
+	_exercise_v2_visual_snapshot_fail_closed()
 	_exercise_invalid_obligations_fail_closed()
 	for failure in j12_helper.failures:
 		failures.append("J12 helper: " + failure)
@@ -213,6 +214,39 @@ func _exercise_r6b_snapshot_migrations() -> void:
 	var nested_state = STATE.new(); _expect(nested_state.restore_snapshot(_legacy_r6a_state_snapshot(pre_state)), "global R6A nested state v22 restores first")
 	var nested_provider = PROVIDER.new(); _expect(nested_provider.initialize(nested_state, {}, {}, [], []) and nested_provider.restore_snapshot(pauline_paid_snapshot), "global R6A nested J13 provider v1 restores after state")
 	_expect(int(nested_state.snapshot().get("version", -1)) == 23 and int(nested_provider.snapshot().get("version", -1)) == 2, "global R6A nested snapshot round-trips in current formats")
+
+
+func _exercise_v2_visual_snapshot_fail_closed() -> void:
+	var state = _completed_network_state(true); var provider = _new_provider(state)
+	_expect(bool(provider.start_day().get("accepted", false)), "v2 strict fixture starts"); _confirm(provider); _present(provider, "thread_pauline_private")
+	_expect(bool(provider.apply_choice("thread_pauline_private", "choice_j13_pauline_rule").get("accepted", false)), "v2 strict fixture settles Pauline")
+	var canonical: Dictionary = provider.snapshot()
+	var wrong_asset := canonical.duplicate(true); _legacy_message_by_id(wrong_asset, "thread_pauline_private", PAULINE_PHOTO_MESSAGE)["asset_id"] = "WRONG"
+	_expect_v2_snapshot_rejected(state, wrong_asset, "v2 wrong visual asset fails closed")
+	var missing_asset := canonical.duplicate(true); _legacy_message_by_id(missing_asset, "thread_pauline_private", PAULINE_PHOTO_MESSAGE).erase("asset_id")
+	_expect_v2_snapshot_rejected(state, missing_asset, "v2 missing visual asset fails closed")
+	var wrong_message := canonical.duplicate(true); _legacy_message_by_id(wrong_message, "thread_pauline_private", PAULINE_PHOTO_MESSAGE)["message_id"] = "msg_j13_pauline_photo_wrong"; wrong_message["produced_message_ids"].erase(PAULINE_PHOTO_MESSAGE); wrong_message["produced_message_ids"]["msg_j13_pauline_photo_wrong"] = true
+	_expect_v2_snapshot_rejected(state, wrong_message, "v2 wrong visual message id fails closed")
+	var wrong_label := canonical.duplicate(true); _legacy_message_by_id(wrong_label, "thread_pauline_private", PAULINE_PHOTO_MESSAGE)["placeholder_label"] = "WRONG"
+	_expect_v2_snapshot_rejected(state, wrong_label, "v2 wrong active placeholder label fails closed")
+	var unknown_served := canonical.duplicate(true); unknown_served["served_visual_beat_ids"].append("unknown_visual_trace")
+	_expect_v2_snapshot_rejected(state, unknown_served, "v2 unknown served visual id fails closed")
+	var missing_served := canonical.duplicate(true); missing_served["served_visual_beat_ids"].erase(PAULINE_TRACE)
+	_expect_v2_snapshot_rejected(state, missing_served, "v2 missing served visual id fails closed")
+	var legacy_photo := canonical.duplicate(true); _legacy_message_by_id(legacy_photo, "thread_pauline_private", PAULINE_PHOTO_MESSAGE)["content_type"] = "PHOTO"
+	_expect_v2_snapshot_rejected(state, legacy_photo, "v2 injected PHOTO presentation fails closed")
+	var unknown_image := canonical.duplicate(true); unknown_image["transcripts_by_thread"]["thread_pauline_private"].append({"message_id":"msg_j13_unknown_image","author_id":"pauline","timestamp":"11:21","content_type":"IMAGE","text":"","media_ref":"UNKNOWN","placeholder_label":"Unknown","viewer_enabled":false,"is_player":false,"is_read":false,"source_day":13}); unknown_image["produced_message_ids"]["msg_j13_unknown_image"] = true
+	_expect_v2_snapshot_rejected(state, unknown_image, "v2 unknown J13 image fails closed")
+	var duplicate := canonical.duplicate(true); duplicate["transcripts_by_thread"]["thread_pauline_private"].append(_legacy_message_by_id(duplicate, "thread_pauline_private", PAULINE_PHOTO_MESSAGE).duplicate(true))
+	_expect_v2_snapshot_rejected(state, duplicate, "v2 duplicated visual presentation fails closed")
+	var missing_produced := canonical.duplicate(true); missing_produced["produced_message_ids"].erase(PAULINE_PHOTO_MESSAGE)
+	_expect_v2_snapshot_rejected(state, missing_produced, "v2 missing produced visual id fails closed")
+	_expect_round_trip(provider, "v2 canonical snapshot remains restorable")
+
+
+func _expect_v2_snapshot_rejected(state, snapshot: Dictionary, label: String) -> void:
+	var restored = PROVIDER.new()
+	_expect(restored.initialize(state, {}, {}, [], []) and not restored.restore_snapshot(snapshot), label)
 
 
 func _exercise_r6b_state_snapshot_migration(pauline_active_state, pauline_removed_state, raphaelle_removed_state) -> void:
