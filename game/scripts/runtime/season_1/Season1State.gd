@@ -2,7 +2,7 @@ extends RefCounted
 
 class_name Season1State
 
-const SNAPSHOT_VERSION := 23
+const SNAPSHOT_VERSION := 24
 const J12_LAVERRIERE_EXPLICIT_SUBJECTS := ["Marie", "Player", "Pauline", "Bastien", "Élodie"]
 
 var current_day := "J01"
@@ -77,6 +77,15 @@ var j13_j14_trace_id := ""
 var j14_variant := ""
 var j14_outcome := "UNESTABLISHED"
 var j14_witness := ""
+var j14_witness_presence_evidence := ""
+var j14_discovery_mode := ""
+var j14_visible_fields: Array = []
+var j14_source_trace_id := ""
+var j14_secondary_trace_id := ""
+var j14_player_initial_reaction := ""
+var j14_player_explanation := ""
+var j14_j15_obligation_id := ""
+var j14_controller_notified := false
 var j15_mode := "UNESTABLISHED"
 var j15_outcome := "UNESTABLISHED"
 var j15_urgent_consequence_remaining := false
@@ -197,6 +206,15 @@ func reset() -> void:
 	j14_variant = ""
 	j14_outcome = "UNESTABLISHED"
 	j14_witness = ""
+	j14_witness_presence_evidence = ""
+	j14_discovery_mode = ""
+	j14_visible_fields = []
+	j14_source_trace_id = ""
+	j14_secondary_trace_id = ""
+	j14_player_initial_reaction = ""
+	j14_player_explanation = ""
+	j14_j15_obligation_id = ""
+	j14_controller_notified = false
 	j15_mode = "UNESTABLISHED"
 	j15_outcome = "UNESTABLISHED"
 	j15_urgent_consequence_remaining = false
@@ -1864,52 +1882,118 @@ func complete_j13() -> bool:
 
 func begin_j14() -> bool:
 	if current_day != "J13" or day_status != "COMPLETE" or j13_j14_trace_id == "" or not _j13_records_consistent(snapshot()) or not _j13_trace_accessible_for_j14(j13_j14_trace_id): return false
-	current_day = "J14"; day_status = "ACTIVE"; j14_variant = ""; j14_outcome = "UNESTABLISHED"; j14_witness = ""
+	current_day = "J14"; day_status = "ACTIVE"; j14_variant = ""; j14_outcome = "UNESTABLISHED"; j14_witness = ""; j14_witness_presence_evidence = ""; j14_discovery_mode = ""; j14_visible_fields = []; j14_source_trace_id = ""; j14_secondary_trace_id = ""; j14_player_initial_reaction = ""; j14_player_explanation = ""; j14_j15_obligation_id = ""; j14_controller_notified = false
 	return true
 
 func select_j14_variant() -> String:
-	match j13_j14_trace_id:
-		"j13_pauline_private_version_01": return "PAULINE"
-		"j11_sandra_chosen_image_01": return "SANDRA"
-		"j11_mathilde_physical_aftercare_01": return "MATHILDE"
-		"j13_raphaelle_masked_version_01": return "RAPHAELLE"
-		"j13_nico_alibi_or_hour_message_01": return "NICO"
-		_: return "FALLBACK"
+	if current_day != "J14" or day_status != "ACTIVE" or j14_variant != "" or not _j13_trace_accessible_for_j14(j13_j14_trace_id): return ""
+	var variant := str({
+		"j13_pauline_private_version_01":"PAULINE",
+		"j11_sandra_chosen_image_01":"SANDRA",
+		"j11_mathilde_physical_aftercare_01":"MATHILDE",
+		"j13_raphaelle_masked_version_01":"RAPHAELLE",
+		"j13_nico_alibi_or_hour_message_01":"NICO",
+		"j12_laverriere_public_group_set_01":"FALLBACK",
+	}.get(j13_j14_trace_id, ""))
+	if variant == "": return ""
+	var contract := _j14_contract_for_variant(variant)
+	var witness := str(contract.get("witness_id", ""))
+	var presence_evidence := _j14_presence_evidence_for_witness(witness)
+	if contract.is_empty() or witness == "" or presence_evidence == "": return ""
+	j14_variant = variant; j14_witness = witness; j14_witness_presence_evidence = presence_evidence
+	j14_discovery_mode = str(contract["discovery_mode"]); j14_visible_fields = contract["visible_fields"].duplicate(); j14_source_trace_id = j13_j14_trace_id; j14_secondary_trace_id = ""; j14_player_initial_reaction = str(contract["player_initial_reaction"])
+	return variant
+
+func _j14_contract_for_variant(variant: String, witness_override := "") -> Dictionary:
+	var sandra_witness := str(witness_override) if str(witness_override) in ["Marie", "Mathilde"] else ("Mathilde" if _j14_presence_evidence_for_witness("Mathilde") != "" else "Marie")
+	return {
+		"PAULINE":{"witness_id":"Marie","discovery_mode":"OPEN_CONVERSATION","visible_fields":["thread_name","thumbnail"],"player_initial_reaction":"SCREEN_CLOSED"},
+		"SANDRA":{"witness_id":sandra_witness,"discovery_mode":"OPEN_CONVERSATION","visible_fields":["thread_name","thumbnail"],"player_initial_reaction":"SCREEN_CLOSED"},
+		"MATHILDE":{"witness_id":"Marie","discovery_mode":"TEXT_NOTIFICATION","visible_fields":["sender_name","first_line","received_at"],"player_initial_reaction":"PREVIEW_DISMISSED"},
+		"RAPHAELLE":{"witness_id":"Marie","discovery_mode":"OPEN_GALLERY_OR_SELECTION","visible_fields":["thumbnail","thread_name"],"player_initial_reaction":"SCREEN_CLOSED"},
+		"NICO":{"witness_id":"Marie","discovery_mode":"TEXT_NOTIFICATION","visible_fields":["sender_name","first_line","received_at"],"player_initial_reaction":"PREVIEW_DISMISSED"},
+		"FALLBACK":{"witness_id":"Marie","discovery_mode":"PUBLIC_ONLY","visible_fields":["public_image"],"player_initial_reaction":"PUBLIC_CONTENT_LEFT_OPEN"},
+	}.get(variant, {})
+
+func _j14_presence_evidence_for_witness(witness: String) -> String:
+	var public_trace: Dictionary = traces.get("j12_laverriere_public_group_set_01", {})
+	if witness == "Marie" and _j13_trace_accessible_for_j14("j12_laverriere_public_group_set_01") and public_trace.get("subjects", []).has("Marie") and public_trace.get("subjects", []).has("Player"):
+		return "J14_SIGNED_SHARED_SCREEN_TASK_WITH_MARIE"
+	if witness == "Mathilde" and household_rhythm_confirmed and mathilde_state != "UNESTABLISHED" and not knowledge.has("fact_mathilde_left_household"):
+		return "J14_SIGNED_SHARED_HOUSEHOLD_TASK_WITH_MATHILDE"
+	return ""
 
 func establish_j14_discovery(variant: String) -> bool:
-	if current_day != "J14" or day_status != "ACTIVE" or j14_variant != "" or variant not in ["PAULINE","SANDRA","MATHILDE","RAPHAELLE","NICO","COMPOSITE","FALLBACK"]: return false
-	if variant != "FALLBACK" and not _j13_trace_accessible_for_j14(j13_j14_trace_id): return false
-	j14_variant = variant; j14_witness = "Mathilde" if variant == "SANDRA" else "Marie"
+	if current_day != "J14" or day_status != "ACTIVE" or variant != j14_variant or variant not in ["PAULINE","SANDRA","MATHILDE","RAPHAELLE","NICO","FALLBACK"]: return false
+	if j14_source_trace_id != j13_j14_trace_id or not _j13_trace_accessible_for_j14(j14_source_trace_id) or j14_witness_presence_evidence == "": return false
 	if variant == "FALLBACK": return true
-	traces["j14_discovery_event_01"] = {"trace_id":"j14_discovery_event_01","trace_type":"FACT_RECORD","source_day":"J14","discovered_trace_id":j13_j14_trace_id,"witness":j14_witness,"visible_scope":"LIMITED_PREVIEW_OR_NOTIFICATION","source_trace_unchanged":true,"knowledge_created":"fact_witness_saw_limited_trace"}
-	knowledge["fact_witness_saw_limited_trace"] = {"fact_id":"fact_witness_saw_limited_trace","source_type":"DIRECT_OBSERVATION","source_ref":"j14_discovery_event_01","initial_knowers":[j14_witness,"Player"],"certainty":"CONFIRMED","shareability":"WITNESS_BOUNDED","source_day":"J14","discovered_trace_id":j13_j14_trace_id}
+	if traces.has("j14_discovery_event_01") or knowledge.has("fact_witness_saw_limited_trace"): return false
+	var source_before: Dictionary = traces[j14_source_trace_id].duplicate(true)
+	traces["j14_discovery_event_01"] = {"trace_id":"j14_discovery_event_01","trace_type":"FACT_RECORD","source_day":"J14","source_scene":"S27 photo au mauvais écran","discovered_trace_id":j14_source_trace_id,"secondary_trace_id":j14_secondary_trace_id,"witness_id":j14_witness,"discovery_mode":j14_discovery_mode,"visible_fields":j14_visible_fields.duplicate(),"visible_duration":"BRIEF_GLANCE","witness_presence_evidence":j14_witness_presence_evidence,"player_initial_reaction":j14_player_initial_reaction,"player_explanation":"","source_trace_unchanged":true,"knowledge_created":"fact_witness_saw_limited_trace","current_state":"ACTIVE"}
+	knowledge["fact_witness_saw_limited_trace"] = {"fact_id":"fact_witness_saw_limited_trace","source_type":"DIRECT_OBSERVATION","source_ref":"j14_discovery_event_01","initial_knowers":[j14_witness,"Player"],"current_knowers":[j14_witness,"Player"],"certainty":"OBSERVED","context_certainty":"INCOMPLETE","shareability":"FACTUAL_ONLY","source_day":"J14","witness_id":j14_witness,"discovered_trace_id":j14_source_trace_id,"visible_fields":j14_visible_fields.duplicate(),"visible_duration":"BRIEF_GLANCE","player_initial_reaction":j14_player_initial_reaction}
+	if traces.get(j14_source_trace_id, {}) != source_before: return false
+	if _j14_private_audience_compromised(): _create_j14_controller_notice()
 	return true
 
 func apply_j14_choice(choice_id: String, variant: String) -> bool:
 	if current_day != "J14" or day_status != "ACTIVE" or variant != j14_variant or j14_outcome != "UNESTABLISHED" or choice_id == "" or selected_choice_ids.has(choice_id): return false
 	if not choice_id.begins_with("choice_j14_" + variant.to_lower() + "_"): return false
-	j14_outcome = choice_id.trim_prefix("choice_j14_").to_upper(); selected_choice_ids.append(choice_id)
-	knowledge["fact_player_explanation_to_witness"] = {"fact_id":"fact_player_explanation_to_witness","source_type":"DIRECT_STATEMENT","source_ref":choice_id,"initial_knowers":[j14_witness,"Player"],"certainty":"CONFIRMED","shareability":"WITNESS_BOUNDED","source_day":"J14"}
-	if choice_id == "choice_j14_composite_defer":
-		promises["j14_witness_clarification"] = {"promise_id":"j14_witness_clarification","promise_type":"CLARIFICATION","status":"ACTIVE","created_at":"J14 18:38","accepted_at":"J14 18:38","accepted_by_player":true,"source_signed_ref":choice_id,"concerned_person":j14_witness,"action_due":"clarifier la trace bornée au témoin","due_at":"J15 20:00","outcome":"DEFERRED_BOUNDED"}
-	if variant != "FALLBACK":
-		promises["j14_inform_trace_controller"] = {"promise_id":"j14_inform_trace_controller","promise_type":"AUDIENCE_NOTICE","status":"ACTIVE","accepted_by_player":true,"due_at":"J14 20:14","outcome":"NOTICE_DUE","controller":_j14_controller_for_variant(variant)}
+	var posture := _j14_posture_for_choice(choice_id, variant)
+	if posture == "": return false
+	var discovery: Dictionary = traces.get("j14_discovery_event_01", {})
+	if variant != "FALLBACK" and discovery.is_empty(): return false
+	j14_outcome = posture; j14_player_explanation = posture; selected_choice_ids.append(choice_id)
+	if variant == "FALLBACK": return true
+	var lie_detail := str({"PAULINE":"PRIVATE_IMAGE_CALLED_PUBLIC_GROUP_VERSION","SANDRA":"PRIVATE_CHOSEN_IMAGE_DENIED","MATHILDE":"HOUSEHOLD_BOUNDARY_NOTIFICATION_DENIED","RAPHAELLE":"PRIVATE_SELECTED_IMAGE_CALLED_WORK_FILE","NICO":"REAL_HOUR_MESSAGE_CALLED_OUT_OF_CONTEXT"}.get(variant, "")) if posture == "MINIMIZE_OR_LIE" else ""
+	knowledge["fact_player_explanation_to_witness"] = {"fact_id":"fact_player_explanation_to_witness","source_type":"DIRECT_STATEMENT","source_ref":choice_id,"initial_knowers":[j14_witness,"Player"],"current_knowers":[j14_witness,"Player"],"certainty":"CONFIRMED","context_certainty":"BOUNDED_BY_STATEMENT","shareability":"WITNESS_BOUNDED","source_day":"J14","witness_id":j14_witness,"discovered_trace_id":j14_source_trace_id,"player_explanation":posture,"lie_or_minimization":lie_detail}
+	discovery["player_explanation"] = posture; traces["j14_discovery_event_01"] = discovery
+	if posture == "PROTECT_AND_DEFER": _create_j14_witness_clarification(choice_id, variant)
 	return true
 
-func _j14_controller_for_variant(variant: String) -> String:
-	return {"PAULINE":"Pauline","SANDRA":"Sandra","MATHILDE":"Mathilde","RAPHAELLE":"Raphaëlle","NICO":"Nico","COMPOSITE":"Marie"}.get(variant, "Marie")
+func _j14_posture_for_choice(choice_id: String, variant: String) -> String:
+	if variant == "FALLBACK" and choice_id == "choice_j14_fallback_close": return "FALLBACK"
+	if choice_id.ends_with("_truth"): return "TRUTH_LIMITED"
+	if choice_id.ends_with("_lie"): return "MINIMIZE_OR_LIE"
+	if choice_id.ends_with("_defer"): return "PROTECT_AND_DEFER"
+	return ""
+
+func _create_j14_witness_clarification(choice_id: String, variant: String) -> void:
+	var due_at := str({"PAULINE":"J14 21:30","SANDRA":"J15 19:00","MATHILDE":"J14 20:30","RAPHAELLE":"J14 22:00"}.get(variant, ""))
+	if due_at == "": return
+	var sandra_action := "répondre à Mathilde sur la règle du foyer et ce qui concerne Marie" if j14_witness == "Mathilde" else "répondre à Marie sur la règle du foyer et ce qui la concerne"
+	var sandra_failure := "la règle du foyer reste due et Mathilde refuse de couvrir" if j14_witness == "Mathilde" else "la règle du foyer et la contradiction du couple restent dues en J15"
+	var action_due := str({"PAULINE":"répondre à Marie sur ce que Player a accepté avec Pauline","SANDRA":sandra_action,"MATHILDE":"donner à Marie la règle utile au foyer sans parler à la place de Mathilde","RAPHAELLE":"répondre à Marie sur la place réelle de Player dans le processus Raphaëlle"}[variant])
+	var failure_effect := str({"PAULINE":"la contradiction couple reste active en J15","SANDRA":sandra_failure,"MATHILDE":"la sécurité et la distance du foyer restent prioritaires","RAPHAELLE":"la clarification couple reste due sans créer une seconde obligation professionnelle"}[variant])
+	promises["j14_witness_clarification"] = {"promise_id":"j14_witness_clarification","promise_type":"CLARIFICATION","status":"ACTIVE","created_at":"J14 18:38","created_by":"Player","accepted_at":"J14 18:38","accepted_by_player":true,"witness_id":j14_witness,"action_due":action_due,"due_at":due_at,"confirmation_deadline":"IMMEDIATE","source_choice_id":choice_id,"source_signed_ref":choice_id,"failure_effect":failure_effect,"related_scene":"S27 photo au mauvais écran","related_trace_ids":["j14_discovery_event_01"]}
+	j14_j15_obligation_id = "j14_witness_clarification"
+
+func _j14_private_audience_compromised() -> bool:
+	var source: Dictionary = traces.get(j14_source_trace_id, {})
+	return not source.is_empty() and str(source.get("current_state", "")) != "PUBLIC_ACTIVE" and not source.get("current_audience", []).has(j14_witness)
+
+func _j14_controller_for_source(trace_id: String) -> String:
+	return {"j13_pauline_private_version_01":"Pauline","j13_raphaelle_masked_version_01":"Raphaëlle","j13_nico_alibi_or_hour_message_01":"Nico","j11_sandra_chosen_image_01":"Sandra","j11_mathilde_physical_aftercare_01":"Mathilde","j10_mathilde_outfit_choice_01":"Mathilde","j09_marie_black_dress_private_01":"Marie"}.get(trace_id, "")
+
+func _create_j14_controller_notice() -> void:
+	var controller := _j14_controller_for_source(j14_source_trace_id)
+	if controller == "" or promises.has("j14_inform_trace_controller"): return
+	promises["j14_inform_trace_controller"] = {"promise_id":"j14_inform_trace_controller","promise_type":"CLARIFICATION","status":"ACTIVE","created_at":"J14 18:36","created_by":"responsabilité narrative","proposed_to":"Player","accepted_at":"J14 18:36","accepted_by_player":true,"due_at":"J14 20:14","confirmation_deadline":"avant toute nouvelle progression et avant J15","controller":controller,"witness_id":j14_witness,"visible_fields":j14_visible_fields.duplicate(),"player_initial_reaction":j14_player_initial_reaction,"related_scene":"conséquence audience J14","related_trace_ids":[j14_source_trace_id]}
+
+func j14_controller_notice_pending() -> bool:
+	return str(promises.get("j14_inform_trace_controller", {}).get("status", "")) == "ACTIVE"
 
 func resolve_j14_controller_informed() -> bool:
 	var promise: Dictionary = promises.get("j14_inform_trace_controller", {})
-	if current_day != "J14" or str(promise.get("status", "")) != "ACTIVE": return false
+	if current_day != "J14" or str(promise.get("status", "")) != "ACTIVE" or not _j14_private_audience_compromised(): return false
 	promise["status"] = "PAID"; promise["paid_or_closed_at"] = "J14 20:14"; promise["paid_or_closed_by"] = "Player"; promises["j14_inform_trace_controller"] = promise
-	knowledge["fact_trace_controller_informed_of_audience_breach"] = {"fact_id":"fact_trace_controller_informed_of_audience_breach","source_type":"DIRECT_MESSAGE","source_ref":"j14_inform_trace_controller","initial_knowers":[str(promise.get("controller", "")),"Player"],"certainty":"CONFIRMED","shareability":"PRIVATE","source_day":"J14"}
+	j14_controller_notified = true
+	knowledge["fact_trace_controller_informed_of_audience_breach"] = {"fact_id":"fact_trace_controller_informed_of_audience_breach","source_type":"DIRECT_MESSAGE","source_ref":"j14_inform_trace_controller","initial_knowers":[str(promise.get("controller", "")),"Player"],"current_knowers":[str(promise.get("controller", "")),"Player"],"certainty":"CONFIRMED","context_certainty":"BOUNDED_NOTICE_ONLY","shareability":"PRIVATE_DO_NOT_SHARE","source_day":"J14","witness_id":j14_witness,"discovered_trace_id":j14_source_trace_id,"visible_fields":j14_visible_fields.duplicate(),"player_initial_reaction":j14_player_initial_reaction}
 	return true
 
 func complete_j14() -> bool:
 	if current_day != "J14" or day_status != "ACTIVE" or j14_variant == "" or j14_outcome == "UNESTABLISHED": return false
 	var notice: Dictionary = promises.get("j14_inform_trace_controller", {})
-	if not notice.is_empty() and str(notice.get("status", "")) != "PAID": return false
+	if not notice.is_empty() and (str(notice.get("status", "")) != "PAID" or not j14_controller_notified): return false
 	if not complete_conversation("chapter_14_discovery", "mathilde" if j14_witness == "Mathilde" else "marie", "limited_discovery"): return false
 	return complete_day()
 
@@ -1921,8 +2005,8 @@ func begin_j15() -> bool:
 func select_j15_mode() -> String:
 	var clarification: Dictionary = promises.get("j14_witness_clarification", {})
 	if str(clarification.get("status", "")) == "ACTIVE": return "ACTIVE_CLARIFICATION"
-	if j14_outcome.contains("LIE"): return "REPAIR"
-	if j14_outcome.contains("DEFER"): return "OPEN_CLARIFICATION"
+	if j14_outcome == "MINIMIZE_OR_LIE": return "REPAIR"
+	if j14_outcome == "PROTECT_AND_DEFER" and j14_variant != "NICO": return "OPEN_CLARIFICATION"
 	return "NO_OBLIGATION"
 
 func establish_j15_mode(mode: String) -> bool:
@@ -2863,6 +2947,15 @@ func snapshot() -> Dictionary:
 		"j14_variant": j14_variant,
 		"j14_outcome": j14_outcome,
 		"j14_witness": j14_witness,
+		"j14_witness_presence_evidence": j14_witness_presence_evidence,
+		"j14_discovery_mode": j14_discovery_mode,
+		"j14_visible_fields": j14_visible_fields.duplicate(),
+		"j14_source_trace_id": j14_source_trace_id,
+		"j14_secondary_trace_id": j14_secondary_trace_id,
+		"j14_player_initial_reaction": j14_player_initial_reaction,
+		"j14_player_explanation": j14_player_explanation,
+		"j14_j15_obligation_id": j14_j15_obligation_id,
+		"j14_controller_notified": j14_controller_notified,
 		"j15_mode": j15_mode,
 		"j15_outcome": j15_outcome,
 		"j15_urgent_consequence_remaining": j15_urgent_consequence_remaining,
@@ -2893,7 +2986,7 @@ func snapshot() -> Dictionary:
 
 func restore_snapshot(value: Dictionary) -> bool:
 	var version := int(value.get("version", -1))
-	if version not in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, SNAPSHOT_VERSION]:
+	if version not in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, SNAPSHOT_VERSION]:
 		return false
 	if str(value.get("current_day", "")) not in ["J01", "J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14", "J15", "J16", "J17", "J18", "J19", "J20", "J21"]:
 		return false
@@ -2934,10 +3027,16 @@ func restore_snapshot(value: Dictionary) -> bool:
 			value = value.duplicate(true)
 		if not _migrate_r5c_j12_registers(value):
 			return false
-	if version < SNAPSHOT_VERSION:
+	if version < 23:
 		if version >= 22:
 			value = value.duplicate(true)
 		if not _migrate_r6b_j13_visual_contracts(value):
+			return false
+		value["version"] = 23
+		version = 23
+	if version < SNAPSHOT_VERSION:
+		value = value.duplicate(true)
+		if not _migrate_r7a_j14_limited_discovery(value):
 			return false
 		value["version"] = SNAPSHOT_VERSION
 		version = SNAPSHOT_VERSION
@@ -2995,6 +3094,10 @@ func restore_snapshot(value: Dictionary) -> bool:
 	if str(value.get("j12_priority_route", "UNESTABLISHED")) not in ["UNESTABLISHED", "SANDRA", "MATHILDE", "RAPHAELLE", "NICO", "MARIE", "NETWORK"]: return false
 	if str(value.get("j13_pivot", "")) not in ["", "PAULINE", "RAPHAELLE", "NICO", "SANDRA", "MATHILDE", "MARIE", "RESPIRATION"]: return false
 	if str(value.get("j14_variant", "")) not in ["", "PAULINE", "SANDRA", "MATHILDE", "RAPHAELLE", "NICO", "COMPOSITE", "FALLBACK"]: return false
+	if str(value.get("j14_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "TRUTH_LIMITED", "MINIMIZE_OR_LIE", "PROTECT_AND_DEFER", "FALLBACK"]: return false
+	if typeof(value.get("j14_visible_fields", [])) != TYPE_ARRAY: return false
+	if str(value.get("j14_discovery_mode", "")) not in ["", "LOCK_SCREEN_PREVIEW", "OPEN_CONVERSATION", "OPEN_GALLERY_OR_SELECTION", "TEXT_NOTIFICATION", "COMPOSITE_PUBLIC_PLUS_PRIVATE_NOTIFICATION", "PUBLIC_ONLY"]: return false
+	if str(value.get("j14_player_initial_reaction", "")) not in ["", "SCREEN_CLOSED", "TRACE_LEFT_VISIBLE", "PREVIEW_DISMISSED", "PUBLIC_CONTENT_LEFT_OPEN"]: return false
 	if str(value.get("j15_mode", "UNESTABLISHED")) not in ["UNESTABLISHED", "ACTIVE_CLARIFICATION", "REPAIR", "OPEN_CLARIFICATION", "NO_OBLIGATION"]: return false
 	if str(value.get("j16_priority", "UNESTABLISHED")) not in ["UNESTABLISHED", "MARIE", "MATHILDE", "FALLBACK"]: return false
 	if str(value.get("j18_sandra_outcome", "UNESTABLISHED")) not in ["UNESTABLISHED", "PRIVILEGED_CONFIDENCE", "FRIENDSHIP_RESTORED", "PROTECTIVE_DISTANCE", "TRUST_BROKEN"]: return false
@@ -3118,6 +3221,15 @@ func restore_snapshot(value: Dictionary) -> bool:
 	j14_variant = str(value.get("j14_variant", ""))
 	j14_outcome = str(value.get("j14_outcome", "UNESTABLISHED"))
 	j14_witness = str(value.get("j14_witness", ""))
+	j14_witness_presence_evidence = str(value.get("j14_witness_presence_evidence", ""))
+	j14_discovery_mode = str(value.get("j14_discovery_mode", ""))
+	j14_visible_fields = value.get("j14_visible_fields", []).duplicate()
+	j14_source_trace_id = str(value.get("j14_source_trace_id", ""))
+	j14_secondary_trace_id = str(value.get("j14_secondary_trace_id", ""))
+	j14_player_initial_reaction = str(value.get("j14_player_initial_reaction", ""))
+	j14_player_explanation = str(value.get("j14_player_explanation", ""))
+	j14_j15_obligation_id = str(value.get("j14_j15_obligation_id", ""))
+	j14_controller_notified = bool(value.get("j14_controller_notified", false))
 	j15_mode = str(value.get("j15_mode", "UNESTABLISHED"))
 	j15_outcome = str(value.get("j15_outcome", "UNESTABLISHED"))
 	j15_urgent_consequence_remaining = bool(value.get("j15_urgent_consequence_remaining", false))
@@ -3398,6 +3510,63 @@ func _migrate_r6b_j13_visual_contracts(value: Dictionary) -> bool:
 		trace["asset_id"] = "S1_A4_J13_DPH_RAPHAELLE_MASKED_POSTURE_01"
 		restored_traces[raphaelle_id] = trace
 	value["traces"] = restored_traces
+	return true
+
+func _migrate_r7a_j14_limited_discovery(value: Dictionary) -> bool:
+	for key in ["j14_witness_presence_evidence","j14_discovery_mode","j14_source_trace_id","j14_secondary_trace_id","j14_player_initial_reaction","j14_player_explanation","j14_j15_obligation_id"]: value[key] = ""
+	value["j14_visible_fields"] = []; value["j14_controller_notified"] = false
+	var day := str(value.get("current_day", "")); var variant := str(value.get("j14_variant", ""))
+	if day not in ["J14","J15","J16","J17","J18","J19","J20","J21"] or variant == "": return true
+	if variant == "COMPOSITE": return false
+	var source_trace_id := str(value.get("j13_j14_trace_id", "")); var restored_traces: Dictionary = value.get("traces", {}); var restored_knowledge: Dictionary = value.get("knowledge", {}); var restored_promises: Dictionary = value.get("promises", {})
+	if source_trace_id == "" or not _j13_snapshot_trace_accessible(restored_traces, source_trace_id): return false
+	var witness := str(value.get("j14_witness", ""))
+	if witness == "":
+		witness = "Mathilde" if variant == "SANDRA" and bool(value.get("household_rhythm_confirmed", false)) and str(value.get("mathilde_state", "UNESTABLISHED")) != "UNESTABLISHED" and not restored_knowledge.has("fact_mathilde_left_household") else "Marie"
+	var contract := _j14_contract_for_variant(variant, witness)
+	if contract.is_empty(): return false
+	var public_trace: Dictionary = restored_traces.get("j12_laverriere_public_group_set_01", {})
+	var presence_evidence := ""
+	if witness == "Marie" and _j13_snapshot_trace_accessible(restored_traces, "j12_laverriere_public_group_set_01") and public_trace.get("subjects", []).has("Marie") and public_trace.get("subjects", []).has("Player"): presence_evidence = "J14_SIGNED_SHARED_SCREEN_TASK_WITH_MARIE"
+	elif witness == "Mathilde" and bool(value.get("household_rhythm_confirmed", false)) and str(value.get("mathilde_state", "UNESTABLISHED")) != "UNESTABLISHED" and not restored_knowledge.has("fact_mathilde_left_household"): presence_evidence = "J14_SIGNED_SHARED_HOUSEHOLD_TASK_WITH_MATHILDE"
+	if presence_evidence == "": return false
+	value["j14_witness"] = witness; value["j14_witness_presence_evidence"] = presence_evidence; value["j14_discovery_mode"] = str(contract["discovery_mode"]); value["j14_visible_fields"] = contract["visible_fields"].duplicate(); value["j14_source_trace_id"] = source_trace_id; value["j14_player_initial_reaction"] = str(contract["player_initial_reaction"])
+	var old_outcome := str(value.get("j14_outcome", "UNESTABLISHED")); var posture := "UNESTABLISHED"
+	if old_outcome.ends_with("_TRUTH"): posture = "TRUTH_LIMITED"
+	elif old_outcome.ends_with("_LIE"): posture = "MINIMIZE_OR_LIE"
+	elif old_outcome.ends_with("_DEFER"): posture = "PROTECT_AND_DEFER"
+	elif old_outcome == "FALLBACK_CLOSE": posture = "FALLBACK"
+	elif old_outcome in ["UNESTABLISHED","TRUTH_LIMITED","MINIMIZE_OR_LIE","PROTECT_AND_DEFER","FALLBACK"]: posture = old_outcome
+	else: return false
+	value["j14_outcome"] = posture; value["j14_player_explanation"] = "" if posture == "UNESTABLISHED" else posture
+	var discovery: Dictionary = restored_traces.get("j14_discovery_event_01", {})
+	if variant == "FALLBACK":
+		if not discovery.is_empty() or restored_knowledge.has("fact_witness_saw_limited_trace"): return false
+	else:
+		if discovery.is_empty() or not restored_knowledge.has("fact_witness_saw_limited_trace"): return false
+		discovery.merge({"source_scene":"S27 photo au mauvais écran","secondary_trace_id":"","witness_id":witness,"discovery_mode":str(contract["discovery_mode"]),"visible_fields":contract["visible_fields"].duplicate(),"visible_duration":"BRIEF_GLANCE","witness_presence_evidence":presence_evidence,"player_initial_reaction":str(contract["player_initial_reaction"]),"player_explanation":value["j14_player_explanation"],"current_state":"ACTIVE"}, true); discovery.erase("witness"); discovery.erase("visible_scope"); restored_traces["j14_discovery_event_01"] = discovery
+		var fact: Dictionary = restored_knowledge["fact_witness_saw_limited_trace"]
+		fact.merge({"current_knowers":[witness,"Player"],"certainty":"OBSERVED","context_certainty":"INCOMPLETE","shareability":"FACTUAL_ONLY","witness_id":witness,"visible_fields":contract["visible_fields"].duplicate(),"visible_duration":"BRIEF_GLANCE","player_initial_reaction":str(contract["player_initial_reaction"])}, true); restored_knowledge["fact_witness_saw_limited_trace"] = fact
+		if posture != "UNESTABLISHED":
+			var explanation: Dictionary = restored_knowledge.get("fact_player_explanation_to_witness", {})
+			if explanation.is_empty(): return false
+			explanation.merge({"current_knowers":[witness,"Player"],"context_certainty":"BOUNDED_BY_STATEMENT","witness_id":witness,"discovered_trace_id":source_trace_id,"player_explanation":posture,"lie_or_minimization":"LEGACY_MINIMIZATION" if posture == "MINIMIZE_OR_LIE" else ""}, true); restored_knowledge["fact_player_explanation_to_witness"] = explanation
+		var controller := _j14_controller_for_source(source_trace_id)
+		if controller == "": return false
+		var notice: Dictionary = restored_promises.get("j14_inform_trace_controller", {})
+		if notice.is_empty(): notice = {"promise_id":"j14_inform_trace_controller","promise_type":"CLARIFICATION","status":"ACTIVE","created_at":"J14 18:36","created_by":"responsabilité narrative","proposed_to":"Player","accepted_at":"J14 18:36","accepted_by_player":true,"due_at":"J14 20:14","confirmation_deadline":"avant toute nouvelle progression et avant J15","controller":controller,"witness_id":witness,"visible_fields":contract["visible_fields"].duplicate(),"player_initial_reaction":str(contract["player_initial_reaction"]),"related_scene":"conséquence audience J14","related_trace_ids":[source_trace_id]}
+		else: notice.merge({"promise_type":"CLARIFICATION","controller":controller,"witness_id":witness,"visible_fields":contract["visible_fields"].duplicate(),"player_initial_reaction":str(contract["player_initial_reaction"]),"related_trace_ids":[source_trace_id]}, true)
+		restored_promises["j14_inform_trace_controller"] = notice; value["j14_controller_notified"] = str(notice.get("status", "")) == "PAID" and restored_knowledge.has("fact_trace_controller_informed_of_audience_breach")
+		if bool(value["j14_controller_notified"]):
+			var notice_fact: Dictionary = restored_knowledge["fact_trace_controller_informed_of_audience_breach"]
+			notice_fact.merge({"current_knowers":[controller,"Player"],"context_certainty":"BOUNDED_NOTICE_ONLY","shareability":"PRIVATE_DO_NOT_SHARE","witness_id":witness,"discovered_trace_id":source_trace_id,"visible_fields":contract["visible_fields"].duplicate(),"player_initial_reaction":str(contract["player_initial_reaction"])}, true); restored_knowledge["fact_trace_controller_informed_of_audience_breach"] = notice_fact
+	if restored_promises.has("j14_witness_clarification"): value["j14_j15_obligation_id"] = "j14_witness_clarification"
+	value["traces"] = restored_traces; value["knowledge"] = restored_knowledge; value["promises"] = restored_promises
+	return true
+
+func rollback_unpresented_legacy_j14_discovery() -> bool:
+	if current_day != "J14" or j14_variant in ["", "FALLBACK"] or j14_outcome != "UNESTABLISHED": return false
+	traces.erase("j14_discovery_event_01"); knowledge.erase("fact_witness_saw_limited_trace"); knowledge.erase("fact_trace_controller_informed_of_audience_breach"); promises.erase("j14_inform_trace_controller"); j14_controller_notified = false
 	return true
 
 func _r6b_legacy_private_trace_consistent(trace: Dictionary, trace_id: String, source_scene: String, creator: String, selected_by: String, owner: String, initial_audience: Array, storage_location: String, fact_id: String) -> bool:
@@ -4244,26 +4413,48 @@ func _j14_records_consistent(value: Dictionary) -> bool:
 	var restored_knowledge: Dictionary = value.get("knowledge", {})
 	var restored_promises: Dictionary = value.get("promises", {})
 	if day not in ["J14", "J15", "J16", "J17", "J18", "J19", "J20", "J21"]:
-		return variant == "" and outcome == "UNESTABLISHED" and witness == "" and not restored_traces.has("j14_discovery_event_01") and not restored_knowledge.has("fact_witness_saw_limited_trace") and not restored_knowledge.has("fact_player_explanation_to_witness") and not restored_knowledge.has("fact_trace_controller_informed_of_audience_breach") and not restored_promises.has("j14_witness_clarification") and not restored_promises.has("j14_inform_trace_controller")
-	if variant == "": return outcome == "UNESTABLISHED" and witness == ""
-	if witness != ("Mathilde" if variant == "SANDRA" else "Marie"): return false
+		return variant == "" and outcome == "UNESTABLISHED" and witness == "" and str(value.get("j14_source_trace_id", "")) == "" and value.get("j14_visible_fields", []).is_empty() and not restored_traces.has("j14_discovery_event_01") and not restored_knowledge.has("fact_witness_saw_limited_trace") and not restored_knowledge.has("fact_player_explanation_to_witness") and not restored_knowledge.has("fact_trace_controller_informed_of_audience_breach") and not restored_promises.has("j14_witness_clarification") and not restored_promises.has("j14_inform_trace_controller")
+	if variant == "": return outcome == "UNESTABLISHED" and witness == "" and str(value.get("j14_source_trace_id", "")) == "" and value.get("j14_visible_fields", []).is_empty()
+	if variant == "COMPOSITE": return false
+	var contract := _j14_contract_for_variant(variant, witness)
+	if contract.is_empty() or witness != str(contract["witness_id"]): return false
+	if str(value.get("j14_source_trace_id", "")) != str(value.get("j13_j14_trace_id", "")) or not _j13_snapshot_trace_accessible(restored_traces, str(value.get("j14_source_trace_id", ""))): return false
+	if str(value.get("j14_secondary_trace_id", "")) != "" or str(value.get("j14_discovery_mode", "")) != str(contract["discovery_mode"]) or value.get("j14_visible_fields", []) != contract["visible_fields"] or str(value.get("j14_player_initial_reaction", "")) != str(contract["player_initial_reaction"]): return false
+	if str(value.get("j14_witness_presence_evidence", "")) == "": return false
 	var discovery: Dictionary = restored_traces.get("j14_discovery_event_01", {})
 	var discovery_fact: Dictionary = restored_knowledge.get("fact_witness_saw_limited_trace", {})
 	if variant == "FALLBACK":
-		if not discovery.is_empty() or not discovery_fact.is_empty(): return false
+		if not discovery.is_empty() or not discovery_fact.is_empty() or restored_promises.has("j14_inform_trace_controller") or restored_knowledge.has("fact_trace_controller_informed_of_audience_breach"): return false
+		if outcome not in ["UNESTABLISHED","FALLBACK"] or str(value.get("j14_player_explanation", "")) not in ["","FALLBACK"]: return false
+		return not restored_promises.has("j14_witness_clarification") and str(value.get("j14_j15_obligation_id", "")) == "" and not bool(value.get("j14_controller_notified", false))
 	else:
-		if discovery.is_empty() or discovery_fact.is_empty(): return false
-		if str(discovery.get("discovered_trace_id", "")) != str(value.get("j13_j14_trace_id", "")) or str(discovery_fact.get("source_ref", "")) != "j14_discovery_event_01": return false
-	if outcome == "UNESTABLISHED": return not restored_knowledge.has("fact_player_explanation_to_witness") and not restored_promises.has("j14_inform_trace_controller")
-	if not restored_knowledge.has("fact_player_explanation_to_witness"): return false
+		if discovery.is_empty() != discovery_fact.is_empty(): return false
+		if discovery.is_empty():
+			return outcome == "UNESTABLISHED" and str(value.get("j14_player_explanation", "")) == "" and not restored_knowledge.has("fact_player_explanation_to_witness") and not restored_promises.has("j14_inform_trace_controller") and not restored_promises.has("j14_witness_clarification") and not bool(value.get("j14_controller_notified", false))
+		for key in ["trace_id","trace_type","source_day","source_scene","discovered_trace_id","witness_id","discovery_mode","player_initial_reaction","knowledge_created","current_state"]:
+			if not discovery.has(key): return false
+		if str(discovery.get("trace_id", "")) != "j14_discovery_event_01" or str(discovery.get("trace_type", "")) != "FACT_RECORD" or str(discovery.get("source_day", "")) != "J14" or str(discovery.get("discovered_trace_id", "")) != str(value.get("j14_source_trace_id", "")) or str(discovery.get("secondary_trace_id", "")) != "": return false
+		if str(discovery.get("witness_id", "")) != witness or str(discovery.get("discovery_mode", "")) != str(contract["discovery_mode"]) or discovery.get("visible_fields", []) != contract["visible_fields"] or str(discovery.get("player_initial_reaction", "")) != str(contract["player_initial_reaction"]) or not bool(discovery.get("source_trace_unchanged", false)): return false
+		if str(discovery_fact.get("fact_id", "")) != "fact_witness_saw_limited_trace" or str(discovery_fact.get("source_type", "")) != "DIRECT_OBSERVATION" or str(discovery_fact.get("source_ref", "")) != "j14_discovery_event_01" or str(discovery_fact.get("certainty", "")) != "OBSERVED" or str(discovery_fact.get("context_certainty", "")) != "INCOMPLETE": return false
+		if str(discovery_fact.get("witness_id", "")) != witness or str(discovery_fact.get("discovered_trace_id", "")) != str(value.get("j14_source_trace_id", "")) or discovery_fact.get("visible_fields", []) != contract["visible_fields"] or discovery_fact.get("initial_knowers", []) != [witness,"Player"]: return false
+	if outcome == "UNESTABLISHED":
+		if restored_knowledge.has("fact_player_explanation_to_witness") or restored_promises.has("j14_witness_clarification") or str(value.get("j14_player_explanation", "")) != "": return false
+	else:
+		var explanation: Dictionary = restored_knowledge.get("fact_player_explanation_to_witness", {})
+		if explanation.is_empty() or str(value.get("j14_player_explanation", "")) != outcome or str(explanation.get("player_explanation", "")) != outcome or str(explanation.get("witness_id", "")) != witness or str(explanation.get("discovered_trace_id", "")) != str(value.get("j14_source_trace_id", "")): return false
+		if str(discovery.get("player_explanation", "")) != outcome: return false
+	var clarification: Dictionary = restored_promises.get("j14_witness_clarification", {})
+	if not clarification.is_empty():
+		if outcome != "PROTECT_AND_DEFER" or variant == "NICO" or str(value.get("j14_j15_obligation_id", "")) != "j14_witness_clarification": return false
+		if str(clarification.get("promise_id", "")) != "j14_witness_clarification" or str(clarification.get("status", "")) not in ["ACTIVE","AMENDED","PAID","FAILED","CANCELLED"] or str(clarification.get("witness_id", "")) != witness or str(clarification.get("source_choice_id", "")) == "" or str(clarification.get("due_at", "")) == "" or str(clarification.get("failure_effect", "")) == "": return false
+	elif str(value.get("j14_j15_obligation_id", "")) != "": return false
 	var notice: Dictionary = restored_promises.get("j14_inform_trace_controller", {})
-	if variant == "FALLBACK":
-		if not notice.is_empty() or restored_knowledge.has("fact_trace_controller_informed_of_audience_breach"): return false
-	else:
-		if notice.is_empty() or str(notice.get("status", "")) not in ["ACTIVE", "PAID"]: return false
-		if str(notice.get("status", "")) == "PAID" and not restored_knowledge.has("fact_trace_controller_informed_of_audience_breach"): return false
-		if str(notice.get("status", "")) == "ACTIVE" and restored_knowledge.has("fact_trace_controller_informed_of_audience_breach"): return false
-	if str(value.get("day_status", "")) == "COMPLETE" and variant != "FALLBACK" and str(notice.get("status", "")) != "PAID": return false
+	if notice.is_empty() or str(notice.get("status", "")) not in ["ACTIVE", "PAID"] or str(notice.get("controller", "")) != _j14_controller_for_source(str(value.get("j14_source_trace_id", ""))) or notice.get("visible_fields", []) != contract["visible_fields"]: return false
+	var notified := bool(value.get("j14_controller_notified", false)); var notice_fact: Dictionary = restored_knowledge.get("fact_trace_controller_informed_of_audience_breach", {})
+	if str(notice.get("status", "")) == "PAID":
+		if not notified or notice_fact.is_empty() or str(notice_fact.get("source_ref", "")) != "j14_inform_trace_controller" or str(notice_fact.get("discovered_trace_id", "")) != str(value.get("j14_source_trace_id", "")): return false
+	elif notified or not notice_fact.is_empty(): return false
+	if str(value.get("day_status", "")) == "COMPLETE" and str(notice.get("status", "")) != "PAID": return false
 	return true
 
 func _j15_records_consistent(value: Dictionary) -> bool:

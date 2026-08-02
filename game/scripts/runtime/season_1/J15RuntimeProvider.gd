@@ -3,6 +3,7 @@ extends "res://scripts/runtime/season_1/J14RuntimeProvider.gd"
 class_name J15RuntimeProvider
 
 const J15_MAP_PATH := "res://data/runtime/season_1/j15_runtime_map.json"
+const J15_SNAPSHOT_VERSION := 4
 
 func initialize(shared_state, cumulative_transcripts: Dictionary, cumulative_ids: Dictionary, cumulative_threads: Array, cumulative_gallery_ids: Array) -> bool:
 	if not super.initialize(shared_state, cumulative_transcripts, cumulative_ids, cumulative_threads, cumulative_gallery_ids): return false
@@ -48,8 +49,11 @@ func mark_thread_batch_presented(thread_id: String) -> bool:
 	if phase != "priority_incoming" or not RUNTIME_UNREAD.incoming_batch_fully_presented(transcript_for(thread_id), presented_time_message_ids, 15): return false
 	phase = "priority_choice"; return true
 
+func snapshot() -> Dictionary:
+	var value: Dictionary = super.snapshot(); value["version"] = J15_SNAPSHOT_VERSION; return value
+
 func restore_snapshot(value: Dictionary) -> bool:
-	if int(value.get("version", -1)) != SNAPSHOT_VERSION or str(value.get("phase", "")) not in ["day_start_pending","to_resolution","priority_incoming","priority_choice","day_close","complete"]: return false
+	if int(value.get("version", -1)) not in [SNAPSHOT_VERSION,J15_SNAPSHOT_VERSION] or str(value.get("phase", "")) not in ["day_start_pending","to_resolution","priority_incoming","priority_choice","day_close","complete"]: return false
 	if str(value.get("selected_pivot", "")) not in ["","ACTIVE_CLARIFICATION","REPAIR","OPEN_CLARIFICATION","NO_OBLIGATION"]: return false
 	for key in ["transcripts_by_thread","produced_message_ids","pending_choice_ids_by_thread","pending_transition","presented_time_message_ids"]:
 		if typeof(value.get(key)) != TYPE_DICTIONARY: return false

@@ -34,7 +34,7 @@ class RuntimeS112J12PlayableStaticTests(unittest.TestCase):
     def test_r5c_p11_p12_and_p13_have_exact_lifecycle_contracts(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         provider = self.read("game/scripts/runtime/season_1/J12RuntimeProvider.gd")
-        self.assertIn("const SNAPSHOT_VERSION := 23", state)
+        self.assertIn("const SNAPSHOT_VERSION := 24", state)
         for token in [
             '"due_at": "J12 11:00"',
             '"counterparty_confirmation_deadline": "J11 18:00"',
