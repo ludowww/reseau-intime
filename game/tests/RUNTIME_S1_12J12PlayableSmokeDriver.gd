@@ -514,7 +514,7 @@ func _exercise_r5c_snapshot_migration() -> void:
 	var restored_ok := restored.restore_snapshot(legacy)
 	_expect(restored_ok, "legacy v21 J12 snapshot migrates from exact choices")
 	if restored_ok:
-		_expect(int(restored.snapshot().get("version", -1)) == 22, "R5C migration advances the state contract from 21 to 22")
+		_expect(int(restored.snapshot().get("version", -1)) == 23, "R5C migration advances through the current state contract")
 		_expect(str(restored.promises["marie_j12_laverriere_presence"].get("due_at", "")) == "J12 17:45" and str(restored.promises["j12_annexe_continuation"].get("due_at", "")) == "J12 22:50", "R5C migration canonicalizes P12/P13 due times")
 		_expect(restored.traces["j12_laverriere_public_group_set_01"].get("subjects", []) == ["Marie", "Player", "Pauline", "Bastien", "Élodie"], "v21 migration removes route-derived Mathilde and Raphaëlle from T14")
 		_expect(restored.knowledge["fact_j12_laverriere_participants"].get("participants", []) == ["Marie", "Player", "Pauline", "Bastien", "Élodie"], "v21 migration normalizes F18 to explicit T14 participants")

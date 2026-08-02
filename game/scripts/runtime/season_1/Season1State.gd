@@ -2,7 +2,7 @@ extends RefCounted
 
 class_name Season1State
 
-const SNAPSHOT_VERSION := 22
+const SNAPSHOT_VERSION := 23
 const J12_LAVERRIERE_EXPLICIT_SUBJECTS := ["Marie", "Player", "Pauline", "Bastien", "Élodie"]
 
 var current_day := "J01"
@@ -2893,7 +2893,7 @@ func snapshot() -> Dictionary:
 
 func restore_snapshot(value: Dictionary) -> bool:
 	var version := int(value.get("version", -1))
-	if version not in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, SNAPSHOT_VERSION]:
+	if version not in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, SNAPSHOT_VERSION]:
 		return false
 	if str(value.get("current_day", "")) not in ["J01", "J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14", "J15", "J16", "J17", "J18", "J19", "J20", "J21"]:
 		return false
@@ -2929,10 +2929,15 @@ func restore_snapshot(value: Dictionary) -> bool:
 			value = value.duplicate(true)
 		if not _migrate_r5b_j11_semantic_outcome(value):
 			return false
-	if version < SNAPSHOT_VERSION:
+	if version < 22:
 		if version >= 21:
 			value = value.duplicate(true)
 		if not _migrate_r5c_j12_registers(value):
+			return false
+	if version < SNAPSHOT_VERSION:
+		if version >= 22:
+			value = value.duplicate(true)
+		if not _migrate_r6b_j13_visual_contracts(value):
 			return false
 		value["version"] = SNAPSHOT_VERSION
 		version = SNAPSHOT_VERSION
@@ -3367,6 +3372,44 @@ func _migrate_r5c_j12_registers(value: Dictionary) -> bool:
 		restored_obligations["j12_priority_consequence_j13"] = priority_contract
 	value["promises"] = restored_promises; value["obligations"] = restored_obligations; value["traces"] = restored_traces; value["knowledge"] = restored_knowledge
 	return true
+
+func _migrate_r6b_j13_visual_contracts(value: Dictionary) -> bool:
+	if typeof(value.get("traces", {})) != TYPE_DICTIONARY or typeof(value.get("knowledge", {})) != TYPE_DICTIONARY: return false
+	var restored_traces: Dictionary = value["traces"]
+	var restored_knowledge: Dictionary = value["knowledge"]
+	for trace_id in restored_traces:
+		if str(trace_id).begins_with("j13_raphaelle_masked_adult"): return false
+	var pauline_id := "j13_pauline_private_version_01"; var pauline_fact_id := "fact_pauline_created_private_double_address"
+	if restored_traces.has(pauline_id) != restored_knowledge.has(pauline_fact_id): return false
+	if restored_traces.has(pauline_id):
+		var trace: Dictionary = restored_traces[pauline_id]
+		if not _r6b_legacy_private_trace_consistent(trace, pauline_id, "S24 Les deux versions", "Pauline", "Pauline", "Pauline", ["Pauline"], "fil Player / Pauline", pauline_fact_id): return false
+		if trace.has("asset_id") and str(trace.get("asset_id", "")) != "S1_A4_J13_DPH_PAULINE_PRIVATE_VERSION_01": return false
+		if trace.has("parent_content_id") and str(trace.get("parent_content_id", "")) != "C12-03": return false
+		if trace.has("parent_asset_id") and str(trace.get("parent_asset_id", "")) != "S1_A3_J12_DPH_PAULINE_BASTIEN_ANNEXE_01": return false
+		trace["asset_id"] = "S1_A4_J13_DPH_PAULINE_PRIVATE_VERSION_01"; trace["parent_content_id"] = "C12-03"; trace["parent_asset_id"] = "S1_A3_J12_DPH_PAULINE_BASTIEN_ANNEXE_01"
+		restored_traces[pauline_id] = trace
+	var raphaelle_id := "j13_raphaelle_masked_version_01"; var raphaelle_fact_id := "fact_raphaelle_chose_player_for_masked_posture_image"
+	if restored_traces.has(raphaelle_id) != restored_knowledge.has(raphaelle_fact_id): return false
+	if restored_traces.has(raphaelle_id):
+		var trace: Dictionary = restored_traces[raphaelle_id]
+		if not _r6b_legacy_private_trace_consistent(trace, raphaelle_id, "S25 Le masque change la posture", "Maud", "Raphaëlle", "Raphaëlle", ["Raphaëlle","Maud"], "fil Player / Raphaëlle", raphaelle_fact_id): return false
+		if trace.has("asset_id") and str(trace.get("asset_id", "")) != "S1_A4_J13_DPH_RAPHAELLE_MASKED_POSTURE_01": return false
+		trace["asset_id"] = "S1_A4_J13_DPH_RAPHAELLE_MASKED_POSTURE_01"
+		restored_traces[raphaelle_id] = trace
+	value["traces"] = restored_traces
+	return true
+
+func _r6b_legacy_private_trace_consistent(trace: Dictionary, trace_id: String, source_scene: String, creator: String, selected_by: String, owner: String, initial_audience: Array, storage_location: String, fact_id: String) -> bool:
+	if str(trace.get("trace_id", "")) != trace_id or str(trace.get("trace_type", "")) != "PHOTO" or str(trace.get("source_day", "")) != "J13": return false
+	if str(trace.get("source_scene", "")) != source_scene or str(trace.get("creator", "")) != creator or str(trace.get("selected_by", "")) != selected_by or trace.get("subjects", []) != [owner] or str(trace.get("owner", "")) != owner: return false
+	if str(trace.get("storage_location", "")) != storage_location or str(trace.get("knowledge_created", "")) != fact_id or not bool(trace.get("eligible_for_j14", false)): return false
+	if trace.get("initial_audience", []) != initial_audience or str(trace.get("saving_rule", "")) != "IN_THREAD_ONLY" or str(trace.get("transfer_rule", "")) != "FORBIDDEN": return false
+	var current_state := str(trace.get("current_state", "")); var current_audience: Array = trace.get("current_audience", [])
+	if current_state == "PRIVATE_ACTIVE": return current_audience == initial_audience + ["Player"]
+	if current_state == "REMOVED": return current_audience == [owner]
+	if current_state == "INACCESSIBLE": return not current_audience.has("Player") and (current_audience.is_empty() or current_audience == [owner])
+	return false
 
 func _snapshot_ledgers_have_dictionary_records(value: Dictionary) -> bool:
 	for ledger_key in ["promises", "obligations", "traces", "knowledge"]:

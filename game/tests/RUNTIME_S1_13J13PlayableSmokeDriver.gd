@@ -33,6 +33,7 @@ func _ready() -> void:
 	_exercise_nico_matrix()
 	_exercise_marie_matrix()
 	_exercise_sandra_transcript_removal()
+	_exercise_r6b_snapshot_migrations()
 	_exercise_invalid_obligations_fail_closed()
 	for failure in j12_helper.failures:
 		failures.append("J12 helper: " + failure)
@@ -168,6 +169,103 @@ func _exercise_sandra_transcript_removal() -> void:
 	_expect(str(removed.get("trace_id", "")) == "j11_sandra_chosen_image_01" and str(removed.get("asset_id", "")) == SANDRA_ASSET, "Sandra removed message keeps trace and asset identity")
 	_expect(str(removed.get("content_type", "")) == "TEXT" and str(removed.get("text", "")) == "Contenu retiré" and str(removed.get("media_ref", "")) == "" and not bool(removed.get("viewer_enabled", true)), "Sandra removed message becomes inaccessible in the transcript")
 	_expect_round_trip(provider, "Sandra removed historical media")
+
+
+func _exercise_r6b_snapshot_migrations() -> void:
+	var pre_state = _completed_network_state(true); var pre_provider = _new_provider(pre_state)
+	_expect(bool(pre_provider.start_day().get("accepted", false)), "R6A to_priority fixture starts")
+	_assert_legacy_provider_restore(pre_provider, "R6A to_priority before delivery")
+	_confirm(pre_provider)
+	_assert_legacy_provider_restore(pre_provider, "R6A Pauline after delivery before choice")
+	_present(pre_provider, "thread_pauline_private")
+	_expect(bool(pre_provider.apply_choice("thread_pauline_private", "choice_j13_pauline_rule").get("accepted", false)), "R6A Pauline P-A fixture chooses rule")
+	_assert_legacy_provider_restore(pre_provider, "R6A Pauline after P-A")
+	var pauline_paid_snapshot := _legacy_r6a_provider_snapshot(pre_provider)
+	var pauline_removed_state = _completed_network_state(true); var pauline_removed = _new_provider(pauline_removed_state)
+	_expect(bool(pauline_removed.start_day().get("accepted", false)), "R6A Pauline P-C fixture starts"); _confirm(pauline_removed); _present(pauline_removed, "thread_pauline_private")
+	_expect(bool(pauline_removed.apply_choice("thread_pauline_private", "choice_j13_pauline_refuse").get("accepted", false)), "R6A Pauline P-C fixture removes T17")
+	_assert_legacy_provider_restore(pauline_removed, "R6A Pauline after P-C with T17 removed")
+	var raphaelle_state = _completed_r5b_j12("FIRST_KISS", "RAPHAELLE", "choice_j12_raphaelle_public", "C12"); var raphaelle = _new_provider(raphaelle_state)
+	_expect(bool(raphaelle.start_day().get("accepted", false)), "R6A Raphaelle fixture starts"); _confirm(raphaelle)
+	_assert_legacy_provider_restore(raphaelle, "R6A Raphaelle after delivery")
+	_present(raphaelle, "thread_raphaelle_private"); _expect(bool(raphaelle.apply_choice("thread_raphaelle_private", "choice_j13_raphaelle_product").get("accepted", false)), "R6A Raphaelle product fixture removes T18")
+	_assert_legacy_provider_restore(raphaelle, "R6A Raphaelle product with T18 removed")
+	var marie_state = _completed_semantic_j12("MARIE_ADULT_RECONQUEST", "", false); var marie = _new_provider(marie_state)
+	_expect(bool(marie.start_day().get("accepted", false)), "R6A Marie close fixture starts"); _confirm(marie)
+	_assert_legacy_provider_restore(marie, "R6A Marie close with public T14")
+	var sandra_state = _completed_r5b_j12("SANDRA_RULE_CLARIFIED", "SANDRA", "choice_j12_sandra_clear", "C12")
+	var historical := {"thread_sandra_private":[{"message_id":"msg_j11_sandra_photo_001","author_id":"sandra","timestamp":"21:21","content_type":"PHOTO","text":"","media_ref":SANDRA_ASSET,"placeholder_label":"Visuel canonique non produit","is_player":false,"is_read":true,"source_day":11}]}
+	var sandra = PROVIDER.new(); _expect(sandra.initialize(sandra_state, historical, {"msg_j11_sandra_photo_001":true}, ["thread_sandra_private"], []), "R6A Sandra migration fixture initializes")
+	_expect(bool(sandra.start_day().get("accepted", false)), "R6A Sandra migration fixture starts"); _confirm(sandra); _present(sandra, "thread_sandra_private")
+	_expect(bool(sandra.apply_choice("thread_sandra_private", "choice_j13_sandra_clear_more").get("accepted", false)), "R6A Sandra migration fixture removes T11")
+	_assert_legacy_provider_restore(sandra, "R6A Sandra historical media after removal")
+	var completed_state = _completed_network_state(false); var completed = _new_provider(completed_state)
+	_expect(bool(completed.start_day().get("accepted", false)), "R6A complete fixture starts"); _confirm(completed); _present(completed, "thread_marie_private")
+	_expect(bool(completed.apply_choice("thread_marie_private", "choice_j13_respiration_bread").get("accepted", false)), "R6A complete fixture chooses"); _confirm(completed)
+	_expect(completed.phase == "complete", "R6A complete fixture closes J13"); _assert_legacy_provider_restore(completed, "R6A end J13")
+	var duplicate := pauline_paid_snapshot.duplicate(true); duplicate["transcripts_by_thread"]["thread_pauline_private"].append(_legacy_message_by_id(duplicate, "thread_pauline_private", PAULINE_PHOTO_MESSAGE))
+	var duplicate_restored = PROVIDER.new(); _expect(duplicate_restored.initialize(pre_provider.state, {}, {}, [], []) and not duplicate_restored.restore_snapshot(duplicate), "duplicated R6A exact visual message fails closed")
+	var wrong_asset := pauline_paid_snapshot.duplicate(true); _legacy_message_by_id(wrong_asset, "thread_pauline_private", PAULINE_PHOTO_MESSAGE)["media_ref"] = "WRONG"
+	var wrong_asset_restored = PROVIDER.new(); _expect(wrong_asset_restored.initialize(pre_provider.state, {}, {}, [], []) and not wrong_asset_restored.restore_snapshot(wrong_asset), "contradictory R6A provider asset fails closed")
+	var wrong_pivot := pauline_paid_snapshot.duplicate(true); wrong_pivot["selected_pivot"] = "RAPHAELLE"
+	var wrong_pivot_restored = PROVIDER.new(); _expect(wrong_pivot_restored.initialize(pre_provider.state, {}, {}, [], []) and not wrong_pivot_restored.restore_snapshot(wrong_pivot), "contradictory R6A provider pivot fails closed")
+	_exercise_r6b_state_snapshot_migration(pre_state, pauline_removed_state, raphaelle_state)
+	var nested_state = STATE.new(); _expect(nested_state.restore_snapshot(_legacy_r6a_state_snapshot(pre_state)), "global R6A nested state v22 restores first")
+	var nested_provider = PROVIDER.new(); _expect(nested_provider.initialize(nested_state, {}, {}, [], []) and nested_provider.restore_snapshot(pauline_paid_snapshot), "global R6A nested J13 provider v1 restores after state")
+	_expect(int(nested_state.snapshot().get("version", -1)) == 23 and int(nested_provider.snapshot().get("version", -1)) == 2, "global R6A nested snapshot round-trips in current formats")
+
+
+func _exercise_r6b_state_snapshot_migration(pauline_active_state, pauline_removed_state, raphaelle_removed_state) -> void:
+	var before_j13 = _completed_network_state(false); var restored_before = STATE.new()
+	_expect(restored_before.restore_snapshot(_legacy_r6a_state_snapshot(before_j13)) and not restored_before.traces.has(PAULINE_TRACE) and not restored_before.traces.has(RAPHAELLE_TRACE), "v22 before J13 migrates without private traces")
+	for test_case in [{"label":"Pauline T17 active","state":pauline_active_state,"trace":PAULINE_TRACE,"asset":PAULINE_ASSET},{"label":"Pauline T17 removed","state":pauline_removed_state,"trace":PAULINE_TRACE,"asset":PAULINE_ASSET},{"label":"Raphaelle T18 removed","state":raphaelle_removed_state,"trace":RAPHAELLE_TRACE,"asset":RAPHAELLE_ASSET}]:
+		var restored = STATE.new(); _expect(restored.restore_snapshot(_legacy_r6a_state_snapshot(test_case.state)), "v22 " + str(test_case.label) + " restores")
+		_expect(str(restored.traces.get(test_case.trace, {}).get("asset_id", "")) == str(test_case.asset), "v22 " + str(test_case.label) + " gains its canonical asset")
+	var raphaelle_active_state = _completed_r5b_j12("FIRST_KISS", "RAPHAELLE", "choice_j12_raphaelle_public", "C12"); var raphaelle_active_provider = _new_provider(raphaelle_active_state)
+	_expect(bool(raphaelle_active_provider.start_day().get("accepted", false)), "v22 Raphaelle active fixture starts"); _confirm(raphaelle_active_provider)
+	var restored_raphaelle = STATE.new(); _expect(restored_raphaelle.restore_snapshot(_legacy_r6a_state_snapshot(raphaelle_active_state)) and str(restored_raphaelle.traces[RAPHAELLE_TRACE].get("asset_id", "")) == RAPHAELLE_ASSET, "v22 Raphaelle T18 active restores")
+	var bad_asset := _legacy_r6a_state_snapshot(pauline_active_state); bad_asset["traces"][PAULINE_TRACE]["asset_id"] = "WRONG"; _expect(not STATE.new().restore_snapshot(bad_asset), "v22 contradictory Pauline asset fails closed")
+	var bad_parent := _legacy_r6a_state_snapshot(pauline_active_state); bad_parent["traces"][PAULINE_TRACE]["parent_content_id"] = "WRONG"; _expect(not STATE.new().restore_snapshot(bad_parent), "v22 contradictory Pauline parent fails closed")
+	var missing_fact := _legacy_r6a_state_snapshot(pauline_active_state); missing_fact["knowledge"].erase(PAULINE_FACT); _expect(not STATE.new().restore_snapshot(missing_fact), "v22 private trace without knowledge fails closed")
+	var t18b := _legacy_r6a_state_snapshot(before_j13); t18b["traces"]["j13_raphaelle_masked_adult_selected_01"] = {}; _expect(not STATE.new().restore_snapshot(t18b), "v22 T18B fails closed")
+	var wrong_owner := _legacy_r6a_state_snapshot(pauline_active_state); wrong_owner["traces"][PAULINE_TRACE]["owner"] = "Player"; _expect(not STATE.new().restore_snapshot(wrong_owner), "v22 wrong private trace owner fails closed")
+
+
+func _assert_legacy_provider_restore(provider, label: String) -> void:
+	var legacy := _legacy_r6a_provider_snapshot(provider); var gallery_before: Array = legacy["gallery_asset_ids"].duplicate(); var restored = PROVIDER.new()
+	_expect(restored.initialize(provider.state, {}, {}, [], []), label + " initializes")
+	_expect(restored.restore_snapshot(legacy), label + " restores v1")
+	_expect(int(restored.snapshot().get("version", -1)) == 2 and restored.gallery_asset_ids == gallery_before, label + " becomes v2 without Gallery mutation")
+	_expect(restored._visual_snapshot_consistent(), label + " satisfies current visual invariants")
+
+
+func _legacy_r6a_provider_snapshot(provider) -> Dictionary:
+	var legacy: Dictionary = provider.snapshot(); legacy["version"] = 1; legacy["served_visual_beat_ids"] = []
+	var refs := {PAULINE_PHOTO_MESSAGE:PAULINE_ASSET,RAPHAELLE_PHOTO_MESSAGE:RAPHAELLE_ASSET,"msg_j13_marie_close_photo_001":PUBLIC_TRACE}
+	for thread_id in legacy["transcripts_by_thread"]:
+		var transcript: Array = legacy["transcripts_by_thread"][thread_id]
+		for index in range(transcript.size()):
+			var item: Dictionary = transcript[index]; var message_id := str(item.get("message_id", ""))
+			if refs.has(message_id):
+				item["content_type"] = "PHOTO"; item["media_ref"] = str(refs[message_id]); item.erase("trace_id"); item.erase("asset_id"); item.erase("viewer_enabled")
+			elif str(item.get("trace_id", "")) == "j11_sandra_chosen_image_01" or str(item.get("asset_id", "")) == SANDRA_ASSET:
+				item["content_type"] = "PHOTO"; item["text"] = ""; item["media_ref"] = SANDRA_ASSET; item["placeholder_label"] = "Visuel canonique non produit"; item.erase("trace_id"); item.erase("asset_id"); item.erase("viewer_enabled")
+			transcript[index] = item
+		legacy["transcripts_by_thread"][thread_id] = transcript
+	return legacy
+
+
+func _legacy_message_by_id(snapshot: Dictionary, thread_id: String, message_id: String) -> Dictionary:
+	for message in snapshot["transcripts_by_thread"].get(thread_id, []):
+		if str(message.get("message_id", "")) == message_id: return message
+	return {}
+
+
+func _legacy_r6a_state_snapshot(state) -> Dictionary:
+	var legacy: Dictionary = state.snapshot(); legacy["version"] = 22
+	if legacy["traces"].has(PAULINE_TRACE): legacy["traces"][PAULINE_TRACE].erase("asset_id"); legacy["traces"][PAULINE_TRACE].erase("parent_content_id"); legacy["traces"][PAULINE_TRACE].erase("parent_asset_id")
+	if legacy["traces"].has(RAPHAELLE_TRACE): legacy["traces"][RAPHAELLE_TRACE].erase("asset_id")
+	return legacy
 
 
 func _exercise_case(label: String, state, expected_pivot: String, first_message_id: String, choice_id: String, expected_status: String, expected_origin: String, expected_trace: String) -> void:

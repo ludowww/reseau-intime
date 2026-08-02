@@ -136,9 +136,8 @@ class RuntimeS113J13PlayableStaticTests(unittest.TestCase):
             '"asset_id":"S1_A4_J13_DPH_RAPHAELLE_MASKED_POSTURE_01"',
         ]:
             self.assertIn(token, state)
-        playable = "\n".join([state, provider, data])
-        self.assertNotIn("j13_raphaelle_masked_adult_selected_01", playable)
-        self.assertNotIn("S1_A4_J13_DPH_RAPHAELLE_MASKED_ADULT_SELECTED_01", playable)
+        self.assertNotIn("j13_raphaelle_masked_adult_selected_01", state + provider + data)
+        self.assertNotIn("S1_A4_J13_DPH_RAPHAELLE_MASKED_ADULT_SELECTED_01", state + provider + data)
 
     def test_obligation_is_authoritative_and_delivery_is_atomic(self):
         provider = self.read("game/scripts/runtime/season_1/J13RuntimeProvider.gd")
@@ -216,15 +215,20 @@ class RuntimeS113J13PlayableStaticTests(unittest.TestCase):
             self.assertNotIn(legacy_id, state)
             self.assertNotIn(legacy_id, smoke)
 
-    def test_snapshot_versions_are_unchanged_and_restore_checks_phase(self):
+    def test_snapshot_versions_migrate_r6a_visual_contracts_and_restore_checks_phase(self):
         provider = self.read("game/scripts/runtime/season_1/J13RuntimeProvider.gd")
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
-        self.assertIn("const SNAPSHOT_VERSION := 1", provider)
-        self.assertIn("const SNAPSHOT_VERSION := 22", state)
+        self.assertIn("const SNAPSHOT_VERSION := 2", provider)
+        self.assertIn("const SNAPSHOT_VERSION := 23", state)
         self.assertIn("const SNAPSHOT_VERSION := 21", season)
-        for token in ["func restore_snapshot", "func _restored_phase_consistent", "selected_pivot != state.j13_pivot"]:
+        self.assertLess(season.index('state.restore_snapshot(value["state"])'), season.index('j13_provider.restore_snapshot(providers.get("J13", {}))'))
+        for token in ["func restore_snapshot", "func _migrate_r6b_visual_snapshot_v1_to_v2", "version not in [1, SNAPSHOT_VERSION]", "func _restored_phase_consistent", "selected_pivot != state.j13_pivot"]:
             self.assertIn(token, provider)
+        for token in ["func _migrate_r6b_j13_visual_contracts", "func _r6b_legacy_private_trace_consistent", "version < 22", "version < SNAPSHOT_VERSION"]:
+            self.assertIn(token, state)
+        for token in ["global R6A nested state v22 restores first", "global R6A nested J13 provider v1 restores after state", "global R6A nested snapshot round-trips in current formats"]:
+            self.assertIn(token, self.read("game/tests/RUNTIME_S1_13J13PlayableSmokeDriver.gd"))
 
 
 if __name__ == "__main__":

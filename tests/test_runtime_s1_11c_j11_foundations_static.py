@@ -151,7 +151,7 @@ class RuntimeS111CJ11FoundationsStaticTests(unittest.TestCase):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
         provider = self.read("game/scripts/runtime/season_1/J11RuntimeProvider.gd")
-        self.assertIn("const SNAPSHOT_VERSION := 22", state)
+        self.assertIn("const SNAPSHOT_VERSION := 23", state)
         self.assertIn("const SNAPSHOT_VERSION := 21", season)
         self.assertIn("const SNAPSHOT_VERSION := 2", provider)
         self.assertIn('version < 9 and str(value.get("current_day", "")) == "J11"', state)
