@@ -12,11 +12,9 @@ class TUI01PortraitShellStaticTests(unittest.TestCase):
             GAME / "scenes" / "portrait" / "PortraitMain.tscn",
             GAME / "scenes" / "portrait" / "PortraitShell.tscn",
             GAME / "scenes" / "portrait" / "PortraitShellDemo.tscn",
-            GAME / "scenes" / "legacy" / "LegacyMain.tscn",
             GAME / "scripts" / "ui" / "PortraitShell.gd",
             GAME / "scripts" / "ui" / "PortraitShellDemo.gd",
             GAME / "scripts" / "ui" / "PortraitMain.gd",
-            GAME / "scripts" / "ui" / "LegacyMain.gd",
             GAME / "scripts" / "ui" / "SafeAreaContainer.gd",
             GAME / "scripts" / "ui" / "PortraitShellTheme.gd",
             GAME / "tests" / "T_UI_01PortraitShellSmokeTest.tscn",
@@ -107,26 +105,6 @@ class TUI01PortraitShellStaticTests(unittest.TestCase):
         self.assertIn('PortraitShell', scene)
         self.assertNotIn('PortraitShellDemo', scene)
 
-    def test_legacy_main_scene_is_isolated_and_reinstates_historic_canvas(self):
-        scene = (GAME / "scenes" / "legacy" / "LegacyMain.tscn").read_text(encoding="utf-8")
-        script = (GAME / "scripts" / "ui" / "LegacyMain.gd").read_text(encoding="utf-8")
-        for token in [
-            'res://scenes/Main.tscn',
-            'LegacyMain.gd',
-        ]:
-            self.assertIn(token, scene)
-        self.assertNotIn('PortraitShell.tscn', scene)
-        for token in [
-            'content_scale_size = Vector2i(1280, 720)',
-            'Window.CONTENT_SCALE_MODE_DISABLED',
-            'Window.CONTENT_SCALE_ASPECT_KEEP',
-            'root.get_visible_rect()',
-            '--t-ui-01b-legacy-smoke',
-            'find_child("PortraitShell", true, false)',
-        ]:
-            self.assertIn(token, script)
-        self.assertNotIn('SHELL_SCENE', (GAME / "scripts" / "ui" / "PortraitMain.gd").read_text(encoding="utf-8"))
-
     def test_project_defaults_to_portrait_shell_and_portrait_stretch(self):
         project = (GAME / "project.godot").read_text(encoding="utf-8")
         for token in [
@@ -138,12 +116,7 @@ class TUI01PortraitShellStaticTests(unittest.TestCase):
         ]:
             self.assertIn(token, project)
 
-    def test_legacy_main_scene_still_exists_and_stays_horizontal(self):
-        main_scene = (GAME / "scenes" / "Main.tscn").read_text(encoding="utf-8")
-        self.assertIn('PhonePrototype.tscn', main_scene)
-        self.assertNotIn('PortraitShell.tscn', main_scene)
-
-    def test_smoke_script_covers_required_resolutions_default_launch_and_legacy_launch(self):
+    def test_smoke_script_covers_required_resolutions_and_default_launch(self):
         shell = (TOOLS / "test_t_ui_01_portrait_shell.sh").read_text(encoding="utf-8")
         for token in [
             '720x1280',
@@ -154,8 +127,6 @@ class TUI01PortraitShellStaticTests(unittest.TestCase):
             '"--demo-size=${resolution}"',
             'res://tests/T_UI_01PortraitShellSmokeTest.tscn',
             'godot --headless --path game --quit',
-            'res://scenes/legacy/LegacyMain.tscn',
-            '--t-ui-01b-legacy-smoke',
         ]:
             self.assertIn(token, shell)
 

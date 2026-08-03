@@ -15,7 +15,7 @@ func _ready() -> void:
 	j13_helper.j12_helper.mathilde_j11_base_snapshot = j13_helper.j12_helper._build_real_j11_base_snapshot("MATHILDE")
 	_exercise_lie_mutation()
 	_exercise_clean_no_obligation()
-	_exercise_legacy_and_corrupt_snapshots()
+	_exercise_current_snapshot_policy()
 	for failure in j13_helper.failures: failures.append("J13 helper: " + failure)
 	for failure in j13_helper.j12_helper.failures: failures.append("J12 helper: " + failure)
 	j13_helper.j12_helper.free(); j13_helper.free()
@@ -41,26 +41,32 @@ func _exercise_clean_no_obligation() -> void:
 	_expect(not state.traces.has("j15_obligation_collision_record_01"), "no obligation creates no T21 record")
 	_expect(not state.promises.has("j16_priority_consequence_payment"), "clean closure creates no J16 debt")
 
-func _exercise_legacy_and_corrupt_snapshots() -> void:
-	var state = _completed_j14_state("choice_j14_pauline_truth"); var provider = _new_provider(state); var fixtures: Array[Dictionary] = []
-	_append_legacy_fixture(fixtures, provider, state, 2)
-	provider.start_day(); _append_legacy_fixture(fixtures, provider, state, 4)
-	_confirm(provider); _append_legacy_fixture(fixtures, provider, state, 2)
-	_present(provider, "thread_marie_private"); _append_legacy_fixture(fixtures, provider, state, 4)
-	provider.apply_choice("thread_marie_private", "choice_j15_clean_acknowledge_marie"); _append_legacy_fixture(fixtures, provider, state, 2)
-	_confirm(provider); _append_legacy_fixture(fixtures, provider, state, 4)
-	for fixture in fixtures:
-		var restored_state = STATE.new(); var restored = PROVIDER.new(); var label := str(fixture.provider.get("phase", "")) + " v" + str(fixture.provider.get("version", -1))
-		_expect(restored_state.restore_snapshot(fixture.state) and restored.initialize(restored_state, {}, {}, [], []) and restored.restore_snapshot(fixture.provider), "J15 legacy " + label + " migrates")
-	var incoming_fixture: Dictionary = fixtures[2]; var corruptions: Array[Dictionary] = []
-	var bad_pivot: Dictionary = incoming_fixture.provider.duplicate(true); bad_pivot["version"] = 5; bad_pivot["selected_pivot"] = "REPAIR"; corruptions.append(bad_pivot)
-	var bad_choices: Dictionary = incoming_fixture.provider.duplicate(true); bad_choices["version"] = 5; bad_choices["pending_choice_ids_by_thread"]["thread_marie_private"] = ["choice_j15_repair_lie_marie"]; corruptions.append(bad_choices)
-	var bad_thread: Dictionary = incoming_fixture.provider.duplicate(true); bad_thread["version"] = 5; bad_thread["transcripts_by_thread"]["thread_wrong"] = bad_thread["transcripts_by_thread"].get("thread_marie_private", []); bad_thread["transcripts_by_thread"]["thread_marie_private"] = []; corruptions.append(bad_thread)
+func _exercise_current_snapshot_policy() -> void:
+	var state = _completed_j14_state("choice_j14_pauline_truth")
+	var provider = _new_provider(state)
+	_expect_state_round_trip(state, "current J15 handoff")
+	_expect_round_trip(provider, "current J15 before start")
+	_expect(bool(provider.start_day().get("accepted", false)), "current J15 fixture starts")
+	_expect_round_trip(provider, "current J15 before delivery")
+	_confirm(provider)
+	_expect_round_trip(provider, "current J15 incoming")
+	var incoming_snapshot: Dictionary = provider.snapshot()
+	for obsolete_version in [2, 4]:
+		var obsolete: Dictionary = incoming_snapshot.duplicate(true)
+		obsolete["version"] = obsolete_version
+		var obsolete_restore = PROVIDER.new()
+		_expect(obsolete_restore.initialize(state, {}, {}, [], []) and not obsolete_restore.restore_snapshot(obsolete), "obsolete J15 provider v%s is rejected" % obsolete_version)
+	var corruptions: Array[Dictionary] = []
+	var bad_pivot: Dictionary = incoming_snapshot.duplicate(true); bad_pivot["selected_pivot"] = "REPAIR"; corruptions.append(bad_pivot)
+	var bad_choices: Dictionary = incoming_snapshot.duplicate(true); bad_choices["pending_choice_ids_by_thread"]["thread_marie_private"] = ["choice_j15_repair_lie_marie"]; corruptions.append(bad_choices)
+	var bad_thread: Dictionary = incoming_snapshot.duplicate(true); bad_thread["transcripts_by_thread"]["thread_wrong"] = bad_thread["transcripts_by_thread"].get("thread_marie_private", []); bad_thread["transcripts_by_thread"]["thread_marie_private"] = []; corruptions.append(bad_thread)
 	for corrupted in corruptions:
-		var corrupted_state = STATE.new(); var rejected = PROVIDER.new(); _expect(corrupted_state.restore_snapshot(incoming_fixture.state) and rejected.initialize(corrupted_state, {}, {}, [], []) and not rejected.restore_snapshot(corrupted), "J15 corrupted snapshot fails closed")
-
-func _append_legacy_fixture(fixtures: Array[Dictionary], provider, state, version: int) -> void:
-	var provider_snapshot: Dictionary = provider.snapshot(); provider_snapshot["version"] = version; fixtures.append({"provider":provider_snapshot,"state":state.snapshot()})
+		var rejected = PROVIDER.new()
+		_expect(rejected.initialize(state, {}, {}, [], []) and not rejected.restore_snapshot(corrupted), "corrupt current J15 provider snapshot fails closed")
+	_present(provider, "thread_marie_private")
+	_expect(bool(provider.apply_choice("thread_marie_private", "choice_j15_clean_acknowledge_marie").get("accepted", false)), "current J15 fixture resolves cleanly")
+	_expect_round_trip(provider, "current J15 after choice")
+	_expect_state_round_trip(state, "current J15 state after choice")
 
 func _completed_j14_state(j14_choice: String):
 	var state = j13_helper._completed_network_state(true)
@@ -91,5 +97,7 @@ func _confirm_any(provider) -> void:
 	_expect(bool(provider.confirm_transition().get("accepted", false)), "transition confirms")
 func _expect_round_trip(provider, label: String) -> void:
 	var snap: Dictionary = provider.snapshot(); var restored = PROVIDER.new(); _expect(restored.initialize(provider.state, {}, {}, [], []), label + " initializes"); _expect(restored.restore_snapshot(snap), label + " restores"); _expect(restored.snapshot() == snap, label + " is exact")
+func _expect_state_round_trip(state, label: String) -> void:
+	var snap: Dictionary = state.snapshot(); var restored = STATE.new(); _expect(restored.restore_snapshot(snap), label + " restores"); _expect(restored.snapshot() == snap, label + " is exact")
 func _expect(condition: bool, label: String) -> void:
 	if not condition: failures.append(label)

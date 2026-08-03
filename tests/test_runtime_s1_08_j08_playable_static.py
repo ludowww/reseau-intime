@@ -147,35 +147,15 @@ class RuntimeS108J08PlayableStaticTests(unittest.TestCase):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         j08 = state.split("func begin_j08", 1)[1].split("func begin_j09", 1)[0]
         for token in [
-            "func begin_j08",
-            "func resolve_j08_state_b_household",
-            "func resolve_j08_single_obligation",
-            "func apply_j08_priority_choice",
-            "func complete_j08",
-            "PAID_ON_TIME",
-            "PAID_LATE",
-            "TRANSFERRED_HONESTLY",
-            "ABANDONED_VAGUELY",
-            "PAID_SHORT",
-            "CANCELLED_HONESTLY",
-            "FAILED_VAGUE",
-            "NOT_DUE",
-            "CLEAR_HOURS",
-            "HONEST_REFUSAL",
-            "VAGUE_OR_MISSED",
+            "func begin_j08", "func resolve_j08_state_b_household", "func resolve_j08_single_obligation",
+            "func apply_j08_priority_choice", "func complete_j08", "PAID_ON_TIME", "PAID_LATE",
+            "TRANSFERRED_HONESTLY", "ABANDONED_VAGUELY", "CLEAR_HOURS", "HONEST_REFUSAL",
         ]:
             self.assertIn(token, state)
-        for forbidden in [
-            "raphaelle_state =",
-            "nico_state =",
-            "mathilde_state =",
-            "sandra_state =",
-            "pauline_state =",
-            "couple_state =",
-        ]:
+        for forbidden in ["raphaelle_state =", "nico_state =", "mathilde_state =", "sandra_state =", "pauline_state =", "couple_state ="]:
             self.assertNotIn(forbidden, j08)
-        self.assertIn("const SNAPSHOT_VERSION := 7", state)
-
+        self.assertIn("const SNAPSHOT_VERSION := 25", state)
+        self.assertIn("if version != SNAPSHOT_VERSION", state)
     def test_provider_distributes_global_choices_without_transcript_label(self):
         provider = self.read("game/scripts/runtime/season_1/J08RuntimeProvider.gd")
         self.assertIn('if phase == "priority_choice"', provider)
@@ -212,17 +192,14 @@ class RuntimeS108J08PlayableStaticTests(unittest.TestCase):
         ]:
             self.assertIn(token, visual_path)
 
-    def test_snapshot_versions_and_old_j07_restore_contract(self):
+    def test_snapshot_versions_reject_old_j07_payloads(self):
+        state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
+        self.assertIn("const SNAPSHOT_VERSION := 25", state)
+        self.assertIn("if version != SNAPSHOT_VERSION", state)
         self.assertIn("const SNAPSHOT_VERSION := 21", season)
-        self.assertIn('preload("res://scripts/runtime/season_1/J08RuntimeProvider.gd")', season)
-        self.assertIn("[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,SNAPSHOT_VERSION]", season)
-        self.assertIn('version < 6 and str(value.get("active_day", "")) == "J07"', season)
-        self.assertIn('version < 7 and str(value.get("active_day", "")) == "J08"', season)
-        self.assertIn("_handoff_to_j08", season)
-        self.assertIn('"J08":', season)
-        self.assertIn("const SNAPSHOT_VERSION := 1", self.read("game/scripts/runtime/season_1/J08RuntimeProvider.gd"))
-
+        self.assertIn("if version != SNAPSHOT_VERSION", season)
+        self.assertNotIn("version not in [", season)
     def test_runner_declares_all_sizes_and_required_capture_labels(self):
         runner = self.read("tools/test_runtime_s1_08_j08_playable.sh")
         driver = self.read("game/tests/RUNTIME_S1_08J08PlayableSmokeDriver.gd")

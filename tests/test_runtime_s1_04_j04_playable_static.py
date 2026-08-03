@@ -130,7 +130,7 @@ class RuntimeS104J04PlayableStaticTests(unittest.TestCase):
         self.assertNotIn('"has_unread_content": false', j02)
         self.assertNotIn('"has_unread_content": false', j03)
 
-    def test_state_has_exact_j04_records_and_backward_compatible_snapshot(self):
+    def test_state_has_exact_j04_records_and_current_snapshot_only(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         for token in [
             "pauline_state", "nico_state", "mathilde_state", "pauline_public_selection_outcome",
@@ -140,12 +140,12 @@ class RuntimeS104J04PlayableStaticTests(unittest.TestCase):
             "PUBLIC_SOURCE_RULES", "PUBLIC_ACTIVE", "eligible_for_j14", "eligible_for_j21",
         ]:
             self.assertIn(token, state)
-        self.assertIn("SNAPSHOT_VERSION := 5", state)
+        self.assertIn("const SNAPSHOT_VERSION := 25", state)
+        self.assertIn("if version != SNAPSHOT_VERSION", state)
+        self.assertNotIn("version not in [", state)
         self.assertIn('"choice_friday_pauline_practical": pauline_public_selection_outcome = "FRAME_02_SELECTED"; pauline_retained_frame = "FRAME_02"', state)
         self.assertIn('"choice_friday_pauline_dry": pauline_public_selection_outcome = "FRAME_03_REQUESTED"; pauline_retained_frame = "FRAME_02"', state)
         self.assertIn('"choice_friday_pauline_defer": pauline_public_selection_outcome = "DEFERRED_TO_MARIE"; pauline_retained_frame = "UNESTABLISHED"', state)
-        self.assertIn('version not in [1, 2, 3, 4, SNAPSHOT_VERSION]', state)
-
     def test_knowledge_source_types_stay_within_the_canonical_registry(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         allowed = {
@@ -162,15 +162,14 @@ class RuntimeS104J04PlayableStaticTests(unittest.TestCase):
         self.assertEqual(set(), source_types - allowed)
         self.assertIn("DIRECT_MESSAGE", source_types)
 
-    def test_season_handoff_snapshot_and_content_end_contract(self):
+    def test_season_handoff_and_current_snapshot_contract(self):
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
         self.assertIn('preload("res://scripts/runtime/season_1/J05RuntimeProvider.gd")', season)
-        for token in ["j05_provider", "j05_snapshot", "_handoff_to_j05", 'active_day = "J05"',
-                      '"J05":', '"J06":', '"J07":', '["J01", "J02", "J03", "J04", "J05", "J06", "J07"]']:
+        for token in ["j05_provider", "j05_snapshot", "_handoff_to_j05", 'active_day = "J05"', '"J05":', '"J21":']:
             self.assertIn(token, season)
-        self.assertIn("const SNAPSHOT_VERSION := 6", season)
-        self.assertIn("version not in [2, 3, 4, 5, SNAPSHOT_VERSION]", season)
-
+        self.assertIn("const SNAPSHOT_VERSION := 21", season)
+        self.assertIn("if version != SNAPSHOT_VERSION", season)
+        self.assertNotIn("version not in [", season)
     def test_j03_terminal_is_a_single_real_j04_handoff(self):
         data = json.loads(self.read("game/data/runtime/season_1/j03_runtime_map.json"))
         self.assertNotEqual(data.get("day_end", {}).get("transition_mode"), "CONTENT_END")

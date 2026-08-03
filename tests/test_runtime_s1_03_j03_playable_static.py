@@ -61,26 +61,24 @@ class RuntimeS103J03PlayableStaticTests(unittest.TestCase):
             self.assertEqual(item["transfer_rule"], "FORBIDDEN")
             self.assertFalse(item["is_diegetic"])
 
-    def test_snapshot_v2_and_additive_secondary_action_contract(self):
+    def test_current_snapshot_and_additive_secondary_action_contract(self):
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
         j01 = self.read("game/scripts/runtime/season_1/J01RuntimeProvider.gd")
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         day = self.read("game/scripts/ui/messages/DayTransition.gd")
         messages = self.read("game/scripts/ui/messages/MessagesScreen.gd")
-        self.assertIn("const SNAPSHOT_VERSION := 6", season)
-        self.assertIn("version not in [2, 3, 4, 5, SNAPSHOT_VERSION]", season)
-        for token in ['"state"', '"provider_snapshots"', '"J01"', '"J02"', '"J03"', '"J04"', '"J05"', '"J06"']:
+        self.assertIn("const SNAPSHOT_VERSION := 21", season)
+        self.assertIn("if version != SNAPSHOT_VERSION", season)
+        self.assertNotIn("version not in [", season)
+        self.assertIn("const SNAPSHOT_VERSION := 25", state)
+        self.assertIn("if version != SNAPSHOT_VERSION", state)
+        for token in ['"state"', '"provider_snapshots"', '"J01"', '"J03"', '"J21"']:
             self.assertIn(token, season)
         self.assertIn("progress_snapshot", j01)
         self.assertIn("restore_progress_snapshot", j01)
         self.assertIn("signal secondary_requested", day)
         self.assertIn("secondary_action_label", day)
         self.assertIn("secondary_requested.connect", messages)
-        for token in ["raphaelle_state", "raphaelle_work_outcome", "sandra_j03_echo_outcome",
-                      "marie_j03_return_outcome", "fact_raphaelle_professional_relationship_exists",
-                      "j03_marie_laverriere_setup_01", "fact_marie_laverriere_world_exists"]:
-            self.assertIn(token, state)
-
     def test_j03_handoff_failure_and_restored_phase_are_bounded(self):
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
         j03 = self.read("game/scripts/runtime/season_1/J03RuntimeProvider.gd")

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -13,12 +14,16 @@ TOOLS = ROOT / "tools"
 
 class DialogueEmojiToolsTests(unittest.TestCase):
     def run_tool(self, *args: str) -> str:
+        env = os.environ.copy()
+        env["PYTHONIOENCODING"] = "utf-8"
         result = subprocess.run(
             [sys.executable, *args],
             cwd=ROOT,
             check=True,
             text=True,
             capture_output=True,
+            encoding="utf-8",
+            env=env,
         )
         return result.stdout
 

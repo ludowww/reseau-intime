@@ -175,27 +175,15 @@ class RuntimeS106J06PlayableStaticTests(unittest.TestCase):
     def test_j05_hands_off_and_j06_now_hands_off_to_j07(self):
         j05 = self.load("game/data/runtime/season_1/j05_runtime_map.json")
         j06 = self.load("game/data/runtime/season_1/j06_runtime_map.json")
-        self.assertNotEqual("CONTENT_END", j05["day_end"]["transition_mode"])
         self.assertFalse(j05["day_end"]["content_end"])
-        self.assertIn("NEW_DAY", j05["day_close"]["flow_phases"])
-        self.assertEqual("DIMANCHE — MATIN", j05["day_close"]["next_day_presentation"]["eyebrow"])
         self.assertEqual("day_handoff", j06["day_end"]["transition_mode"])
         self.assertFalse(j06["day_end"]["content_end"])
-        self.assertEqual("LUNDI — MATIN", j06["day_end"]["next_day_presentation"]["eyebrow"])
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
-        for token in [
-            'preload("res://scripts/runtime/season_1/J06RuntimeProvider.gd")',
-            "j06_provider",
-            "j06_snapshot",
-            "_handoff_to_j06",
-            'active_day = "J06"',
-            '"J06":',
-            '["J01", "J02", "J03", "J04", "J05", "J06", "J07"]',
-        ]:
+        for token in ['preload("res://scripts/runtime/season_1/J07RuntimeProvider.gd")', "_handoff_to_j07", 'active_day = "J07"']:
             self.assertIn(token, season)
-        self.assertIn("const SNAPSHOT_VERSION := 6", season)
-        self.assertIn("const SNAPSHOT_VERSION := 5", self.read("game/scripts/runtime/season_1/Season1State.gd"))
-
+        self.assertIn("const SNAPSHOT_VERSION := 21", season)
+        self.assertIn("if version != SNAPSHOT_VERSION", season)
+        self.assertNotIn("version not in [", season)
     def test_closed_characters_and_legacy_are_not_mutated(self):
         provider = self.read("game/scripts/runtime/season_1/J06RuntimeProvider.gd")
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")

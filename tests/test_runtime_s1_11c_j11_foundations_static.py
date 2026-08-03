@@ -147,27 +147,20 @@ class RuntimeS111CJ11FoundationsStaticTests(unittest.TestCase):
         self.assertIn('"selected_by": "Raphaëlle"', raphaelle)
         self.assertIn('"controller": "Raphaëlle"', raphaelle)
 
-    def test_snapshot_versions_and_explicit_playable_handoff(self):
+    def test_current_snapshot_versions_and_explicit_playable_handoff(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
         provider = self.read("game/scripts/runtime/season_1/J11RuntimeProvider.gd")
         self.assertIn("const SNAPSHOT_VERSION := 25", state)
+        self.assertIn("if version != SNAPSHOT_VERSION", state)
         self.assertIn("const SNAPSHOT_VERSION := 21", season)
+        self.assertIn("if version != SNAPSHOT_VERSION", season)
+        self.assertNotIn("version not in [", season)
         self.assertIn("const SNAPSHOT_VERSION := 2", provider)
-        self.assertIn('version < 9 and str(value.get("current_day", "")) == "J11"', state)
-        self.assertIn('if str(value.get("current_day", "")) in ["J08", "J09", "J10", "J11", "J12", "J13", "J14", "J15", "J16", "J17", "J18", "J19", "J20", "J21"]:', state)
-        self.assertIn('not _j11_selection_matches_j10(pivot, reason, str(value.get("j10_pivot", "")), str(value.get("j10_pivot_outcome", "")))', state)
-        self.assertIn('version < 11 and str(value.get("active_day", "")) == "J11"', season)
-        self.assertIn("func _migrate_r5a_j11_semantic_outcome", state)
-        self.assertIn("func _migrate_r5b_j11_semantic_outcome", state)
-        self.assertIn("if version < SNAPSHOT_VERSION:", state)
         self.assertIn('"J11": j11_provider.snapshot() if j11_provider != null else {}', season)
         self.assertIn("func begin_j11_foundation_handoff", season)
         self.assertIn("func _handoff_to_j11", season)
-        self.assertEqual(1, season.count('state.restore_snapshot(value["state"])'))
         self.assertIn('"playable_handoff"', season)
-        self.assertIn('_handoff_to_j11()', season.split("func begin_j11_foundation_handoff", 1)[0])
-
 
 if __name__ == "__main__":
     unittest.main()

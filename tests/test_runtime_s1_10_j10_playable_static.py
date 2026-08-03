@@ -307,20 +307,17 @@ class RuntimeS110J10PlayableStaticTests(unittest.TestCase):
         self.assertIn('_schedule_evening("day_close")', after_external)
         self.assertGreaterEqual(provider.count("_after_external_pivot()"), 4)
 
-    def test_snapshot_versions_handoff_and_legacy_j09_restore(self):
+    def test_snapshot_versions_and_j10_handoff_are_current_only(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
         self.assertIn("const SNAPSHOT_VERSION := 25", state)
+        self.assertIn("if version != SNAPSHOT_VERSION", state)
         self.assertIn("const SNAPSHOT_VERSION := 21", season)
-        self.assertIn("[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, SNAPSHOT_VERSION]", state)
-        self.assertIn("[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,SNAPSHOT_VERSION]", season)
-        self.assertIn('version < 8 and str(value.get("current_day", "")) == "J10"', state)
-        self.assertIn('version < 8 and str(value.get("active_day", "")) == "J09"', season)
-        self.assertIn('version < 9 and str(value.get("active_day", "")) == "J10"', season)
+        self.assertIn("if version != SNAPSHOT_VERSION", season)
+        self.assertNotIn("version not in [", season)
         self.assertIn("_handoff_to_j10", season)
         self.assertIn('"J10":', season)
         self.assertEqual(1, season.count('state.restore_snapshot(value["state"])'))
-
     def test_runner_covers_all_resolutions_and_two_capture_orientations(self):
         runner = self.read("tools/test_runtime_s1_10_j10_playable.sh")
         driver = self.read("game/tests/RUNTIME_S1_10J10PlayableSmokeDriver.gd")

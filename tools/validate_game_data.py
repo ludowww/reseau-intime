@@ -19,34 +19,16 @@ from typing import Any, Iterable
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "game" / "data"
 
-KNOWN_VARIABLES = {
-    "marie_trust",
-    "lie_score",
-    "truth_tendency",
-    "ludo_jealousy",
-    "social_pressure",
-    "marie.trust",
-    "marie.lucidity",
-    "mathilde.desire",
-    "mathilde.loyalty",
-    "sandra.attachment",
-    "sandra.exposure",
-    "raphaelle.attachment",
-    "raphaelle.clarity",
-    "pauline.interest",
-    "pauline.control",
-    "nico.desire_for_marie",
-    "nico.place_near_marie",
-    "marie_attention_score",
-    "marie_neglect_score",
-    "mathilde_attention_score",
-    "sandra_priority_score",
-    "raphaelle_clarity_score",
-    "pauline_risk_score",
-    "nico_surveillance_score",
+FORBIDDEN_STATE_KEYS = {
+    "route_points",
+    "consent_score",
+    "attraction_score",
+    "passive_signals",
 }
 
 KNOWN_CONDITION_TOKENS = {
+    "marie_shared_hour_paid",
+    "marie_shared_time_paid",
     "scene_reveals_wallpaper",
 }
 
@@ -136,15 +118,18 @@ def collect_content_catalog(data: dict[Path, Any]) -> set[str]:
     return catalog
 
 
-def collect_effect_variables(data: dict[Path, Any]) -> dict[str, list[str]]:
-    variables: dict[str, list[str]] = defaultdict(list)
+def collect_forbidden_state_keys(data: dict[Path, Any]) -> dict[str, list[str]]:
+    forbidden: dict[str, list[str]] = defaultdict(list)
     for file_path, root in data.items():
         rel = str(file_path.relative_to(ROOT))
         for node_path, node in walk(root):
-            if isinstance(node, dict) and isinstance(node.get("effects"), dict):
-                for var_name in node["effects"].keys():
-                    variables[var_name].append(f"{rel}:{node_path}.effects")
-    return variables
+            if not isinstance(node, dict):
+                continue
+            for key in node:
+                normalized = str(key).casefold()
+                if normalized in FORBIDDEN_STATE_KEYS or normalized.endswith("_score"):
+                    forbidden[str(key)].append(f"{rel}:{node_path or '$'}")
+    return forbidden
 
 
 def collect_res_paths(data: dict[Path, Any]) -> dict[str, list[str]]:
@@ -159,7 +144,13 @@ def collect_res_paths(data: dict[Path, Any]) -> dict[str, list[str]]:
 
 def res_path_exists(res_path: str) -> bool:
     relative = res_path.removeprefix("res://")
-    return (ROOT / "game" / relative).exists()
+    data_root = DATA_DIR.resolve()
+    candidate = (ROOT / "game" / relative).resolve()
+    try:
+        candidate.relative_to(data_root)
+    except ValueError:
+        return False
+    return candidate.exists()
 
 
 def collect_content_references(data: dict[Path, Any]) -> dict[str, list[str]]:
@@ -252,17 +243,16 @@ def main() -> int:
     else:
         print(f"OK: content references valid ({len(catalog)} content ids cataloged)")
 
-    variables = collect_effect_variables(data)
-    unknown_vars = {var: locs for var, locs in variables.items() if var not in KNOWN_VARIABLES}
-    if unknown_vars:
-        errors.append("Unknown variables in effects:")
-        for var, locs in sorted(unknown_vars.items()):
-            errors.append(f"  {var}: " + "; ".join(locs))
+    forbidden_keys = collect_forbidden_state_keys(data)
+    if forbidden_keys:
+        errors.append("Forbidden score or accumulator keys found:")
+        for key, locs in sorted(forbidden_keys.items()):
+            errors.append(f"  {key}: " + "; ".join(locs))
     else:
-        print("OK: variable references valid")
+        print("OK: no score or accumulator keys")
 
     created_flags, referenced_tokens = collect_flags(data)
-    known_condition_tokens = set(KNOWN_VARIABLES) | set(KNOWN_CONDITION_TOKENS) | set(created_flags)
+    known_condition_tokens = set(KNOWN_CONDITION_TOKENS) | set(created_flags)
     unresolved = {
         token: locs
         for token, locs in referenced_tokens.items()
@@ -274,13 +264,6 @@ def main() -> int:
             warnings.append(f"  {token}: " + "; ".join(locs[:3]) + ("; ..." if len(locs) > 3 else ""))
     else:
         print("OK: condition references look resolvable")
-
-    for file_path, root in data.items():
-        if "conversations" in file_path.parts and isinstance(root, dict):
-            if root.get("id", "").endswith("_index") and "conversation_files" not in root:
-                warnings.append(f"Index missing conversation_files: {file_path.relative_to(ROOT)}")
-            if not root.get("debug_notes") and not root.get("debug_expected_outcomes") and not root.get("design_goal"):
-                warnings.append(f"Conversation/index missing debug/design notes: {file_path.relative_to(ROOT)}")
 
     if warnings:
         print("WARNINGS:")

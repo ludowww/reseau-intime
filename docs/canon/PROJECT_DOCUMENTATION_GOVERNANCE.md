@@ -93,6 +93,12 @@ docs/canon/ui/
 docs/canon/runtime/
     contrat d’état narratif pré-runtime
 
+docs/architecture/
+    contrats et réalisations canoniques R8A–R8C
+
+docs/maintenance/
+    rapports de consolidation encore nécessaires au canon courant
+
 docs/runtime/
     état technique, continuité et plans d’implémentation
 ```
@@ -159,7 +165,8 @@ Le statut et le périmètre sont obligatoires.
 7. Une maquette ne devient pas automatiquement une spécification.
 8. Les choix abandonnés restent dans Git ; ils n’exigent pas un second document actif.
 9. Toute duplication nécessaire contient un lien vers l’autorité.
-10. Une contradiction est supprimée ou explicitement classée historique.
+10. Une contradiction est supprimée; son historique reste dans Git. Le statut
+    historique n'est utilisé que si le fichier conserve une utilité opérationnelle.
 11. Un document racine ancien ne concurrence jamais `docs/canon/`.
 12. Un statut distingue cible canonique, fondation UI, runtime intégré et différé.
 13. Une journée future ne crée pas une seconde chaîne de saison.

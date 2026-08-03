@@ -207,22 +207,16 @@ class RuntimeS109J09PlayableStaticTests(unittest.TestCase):
             self.assertNotIn(forbidden, j09.lower())
         self.assertIn('couple_state = "STRAIN_VISIBLE"', j09)
 
-    def test_snapshot_versions_keep_j08_restore_and_add_j09_once(self):
+    def test_snapshot_versions_are_current_only_and_add_j09_once(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
         self.assertIn("const SNAPSHOT_VERSION := 25", state)
+        self.assertIn("if version != SNAPSHOT_VERSION", state)
         self.assertIn("const SNAPSHOT_VERSION := 21", season)
-        self.assertIn("[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, SNAPSHOT_VERSION]", state)
-        self.assertIn("[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,SNAPSHOT_VERSION]", season)
-        self.assertIn('version < 7 and str(value.get("active_day", "")) == "J08"', season)
-        self.assertIn('version < 8 and str(value.get("active_day", "")) == "J09"', season)
-        self.assertIn('version < 9 and str(value.get("active_day", "")) == "J10"', season)
-        self.assertIn('preload("res://scripts/runtime/season_1/J09RuntimeProvider.gd")', season)
-        self.assertIn("_handoff_to_j09", season)
+        self.assertIn("if version != SNAPSHOT_VERSION", season)
+        self.assertNotIn("version not in [", season)
+        self.assertEqual(1, season.count('state.restore_snapshot(value["state"])'))
         self.assertIn('"J09":', season)
-        self.assertIn("state_restore_count += 1", season)
-        self.assertEqual(1, season.count("state.restore_snapshot(value[\"state\"])"))
-
     def test_runner_covers_portrait_landscape_and_required_captures(self):
         runner = self.read("tools/test_runtime_s1_09_j09_playable.sh")
         driver = self.read("game/tests/RUNTIME_S1_09J09PlayableSmokeDriver.gd")

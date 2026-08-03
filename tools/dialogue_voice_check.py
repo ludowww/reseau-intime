@@ -111,6 +111,8 @@ def contains_unknown_reference(texts: list[str], unknown_facts: list[str]) -> li
 
 
 def main() -> int:
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description="Check dialogue voice against character profiles.")
     parser.add_argument("file", help="Conversation JSON file")
     parser.add_argument("--character", default=None, help="Character key override")

@@ -32,9 +32,7 @@ func _ready() -> void:
 	_exercise_failed_mathilde_aftercare_precedes_convergence("MATHILDE_M_B3")
 	_exercise_nico_annexe_guardrail()
 	_exercise_marie_mathilde_semantic_matrix()
-	_exercise_r5a_snapshot_migration()
-	_exercise_r5b_snapshot_migration()
-	_exercise_r5c_snapshot_migration()
+	_exercise_current_snapshot_policy()
 	if failures.is_empty():
 		print("RUNTIME_S1_12_J12_PLAYABLE: OK")
 		get_tree().quit(0)
@@ -462,98 +460,14 @@ func _build_real_j11_base_snapshot(pivot: String) -> Dictionary:
 	j09_helper.free(); j10_helper.free()
 	return result
 
-func _exercise_r5a_snapshot_migration() -> void:
-	var adult = _completed_semantic_j11_state("MARIE_ADULT_RECONQUEST")
-	for legacy_version in [9, 19]:
-		var legacy_adult: Dictionary = adult.snapshot(); legacy_adult["version"] = legacy_version; legacy_adult["j11_pivot_outcome"] = ""; legacy_adult["obligations"]["aftercare_marie_j11"]["status"] = "PAID"; legacy_adult["obligations"]["aftercare_marie_j11"]["paid_by"] = "legacy auto-payment"
-		var restored_adult = SEASON_STATE.new()
-		_expect(restored_adult.restore_snapshot(legacy_adult), "legacy v%d Marie snapshot migrates explicitly" % legacy_version)
-		_expect(restored_adult.j11_pivot_outcome == "MARIE_ADULT_RECONQUEST" and str(restored_adult.obligations["aftercare_marie_j11"].get("status", "")) == "DUE", "legacy v%d Marie auto-payment migrates back to due before J12" % legacy_version)
-	var b3 = _completed_semantic_j11_state("MATHILDE_M_B3")
-	var legacy_b3: Dictionary = b3.snapshot(); legacy_b3["version"] = 19; legacy_b3["j11_pivot_outcome"] = ""
-	var restored_b3 = SEASON_STATE.new()
-	_expect(restored_b3.restore_snapshot(legacy_b3) and restored_b3.j11_pivot_outcome == "MATHILDE_M_B3", "legacy exact physical level migrates to M-B3")
-	var ambiguous = _completed_semantic_j11_state("MATHILDE_LOOK_ONLY").snapshot(); ambiguous["version"] = 19; ambiguous["j11_pivot_outcome"] = ""; ambiguous["selected_choice_ids"] = []
-	_expect(not SEASON_STATE.new().restore_snapshot(ambiguous), "ambiguous legacy Mathilde snapshot fails closed")
-
-func _exercise_r5b_snapshot_migration() -> void:
-	for outcome in ["SANDRA_RULE_CLARIFIED","SANDRA_DESIRE_BOUNDED","SANDRA_IMAGE_REMOVED","FIRST_KISS","KISS_DECLINED","RESULT_SENT_ATTRACTION_NAMED","RESULT_SENT_BOUNDARY_HELD","NICO_GUARDRAIL_HELD","NICO_RIVALRY_MAINTAINED","NICO_CLEAN_CLOSE"]:
-		var legacy: Dictionary = _completed_r5b_j11_state(outcome).snapshot()
-		legacy["version"] = 20
-		legacy["j11_pivot_outcome"] = ""
-		var restored = SEASON_STATE.new()
-		_expect(restored.restore_snapshot(legacy), outcome + " legacy v20 snapshot migrates from exact choice evidence")
-		_expect(restored.j11_pivot_outcome == outcome, outcome + " migration preserves the exact semantic outcome")
-	var ambiguous_sandra: Dictionary = _completed_r5b_j11_state("SANDRA_RULE_CLARIFIED").snapshot()
-	ambiguous_sandra["version"] = 20; ambiguous_sandra["j11_pivot_outcome"] = ""; ambiguous_sandra["selected_choice_ids"].erase("choice_j11_sandra_rule")
-	_expect(not SEASON_STATE.new().restore_snapshot(ambiguous_sandra), "ambiguous legacy Sandra snapshot fails closed")
-	var ambiguous_nico: Dictionary = _completed_r5b_j11_state("NICO_GUARDRAIL_HELD").snapshot()
-	ambiguous_nico["version"] = 20; ambiguous_nico["j11_pivot_outcome"] = ""; ambiguous_nico["selected_choice_ids"].erase("choice_j11_nico_guardrail")
-	_expect(not SEASON_STATE.new().restore_snapshot(ambiguous_nico), "ambiguous legacy Nico snapshot fails closed")
-
-func _exercise_r5c_snapshot_migration() -> void:
-	var state = _completed_r5b_j11_state("SANDRA_RULE_CLARIFIED")
-	_expect(state.begin_j12(), "R5C migration fixture begins J12")
-	_expect(state.apply_j12_choice("choice_j12_presence_la"), "R5C migration fixture selects L-A")
-	_expect(state.pay_j12_laverriere_presence() and state.establish_j12_laverriere_public_trace(), "R5C migration fixture pays P12 and creates T14")
-	_expect(state.establish_j12_sandra_public_context_view() and state.apply_j12_choice("choice_j12_sandra_exit"), "R5C migration fixture creates exact T16/F20 evidence")
-	_expect(state.apply_j12_choice("choice_j12_annexe_c12") and state.establish_j12_annexe_public_trace(), "R5C migration fixture refuses P13 and receives T15")
-	_expect(state.establish_j12_priority_consequence("SANDRA") and state.complete_j12(), "R5C migration fixture completes J12")
-	var legacy: Dictionary = state.snapshot()
-	legacy["version"] = 21
-	legacy["promises"]["marie_j12_laverriere_presence"] = {"promise_id":"marie_j12_laverriere_presence", "status":"PAID", "outcome":"L-A", "due_at":"J12 22:15"}
-	legacy["promises"]["j12_annexe_continuation"] = {"promise_id":"j12_annexe_continuation", "status":"REFUSED", "accepted_by_player":false, "outcome":"C12", "due_at":"J12 00:00"}
-	legacy["traces"].erase("j12_sandra_public_context_view_01")
-	legacy["knowledge"].erase("fact_sandra_saw_public_j12_context")
-	legacy["knowledge"].erase("fact_j12_unusual_behavior_observed")
-	legacy["traces"]["j12_laverriere_public_group_set_01"]["subjects"].append_array(["Mathilde", "Raphaëlle"])
-	legacy["traces"]["j12_laverriere_public_group_set_01"]["initial_audience"].append_array(["Mathilde", "Raphaëlle"])
-	legacy["traces"]["j12_laverriere_public_group_set_01"]["current_audience"].append_array(["Mathilde", "Raphaëlle"])
-	legacy["knowledge"]["fact_j12_laverriere_participants"]["participants"].append_array(["Mathilde", "Raphaëlle"])
-	var restored = SEASON_STATE.new()
-	var restored_ok := restored.restore_snapshot(legacy)
-	_expect(restored_ok, "legacy v21 J12 snapshot migrates from exact choices")
-	if restored_ok:
-		_expect(int(restored.snapshot().get("version", -1)) == 23, "R5C migration advances through the current state contract")
-		_expect(str(restored.promises["marie_j12_laverriere_presence"].get("due_at", "")) == "J12 17:45" and str(restored.promises["j12_annexe_continuation"].get("due_at", "")) == "J12 22:50", "R5C migration canonicalizes P12/P13 due times")
-		_expect(restored.traces["j12_laverriere_public_group_set_01"].get("subjects", []) == ["Marie", "Player", "Pauline", "Bastien", "Élodie"], "v21 migration removes route-derived Mathilde and Raphaëlle from T14")
-		_expect(restored.knowledge["fact_j12_laverriere_participants"].get("participants", []) == ["Marie", "Player", "Pauline", "Bastien", "Élodie"], "v21 migration normalizes F18 to explicit T14 participants")
-		_expect(restored.traces.has("j12_sandra_public_context_view_01") and restored.knowledge.has("fact_j12_unusual_behavior_observed"), "R5C migration reconstructs T16/F20 only from exact selected-choice evidence")
-		_expect_state_round_trip(restored, "R5C migrated completed J12")
-	var pre_event = _completed_r5b_j11_state("SANDRA_RULE_CLARIFIED")
-	pre_event.begin_j12(); pre_event.apply_j12_choice("choice_j12_presence_lb"); pre_event.establish_j12_laverriere_public_trace()
-	var pre_event_legacy: Dictionary = pre_event.snapshot(); pre_event_legacy["version"] = 21
-	var pre_event_restored = SEASON_STATE.new()
-	_expect(pre_event_restored.restore_snapshot(pre_event_legacy), "legacy v21 snapshot before Sandra's view resumes")
-	_expect(not pre_event_restored.traces.has("j12_sandra_public_context_view_01") and not pre_event_restored.knowledge.has("fact_j12_unusual_behavior_observed"), "migration creates neither T16 nor F20 before an exact source event")
-	var malformed: Dictionary = pre_event.snapshot(); malformed["version"] = 21; malformed["promises"]["marie_j12_laverriere_presence"] = 1
-	_expect(not SEASON_STATE.new().restore_snapshot(malformed), "R5C migration rejects non-dictionary nested ledger records without crashing")
-	var contradictory = _completed_r5b_j11_state("SANDRA_RULE_CLARIFIED")
-	contradictory.begin_j12(); contradictory.apply_j12_choice("choice_j12_presence_la"); contradictory.apply_j12_choice("choice_j12_annexe_a12")
-	var contradictory_snapshot: Dictionary = contradictory.snapshot(); contradictory_snapshot["version"] = 21; contradictory_snapshot["promises"]["j12_annexe_continuation"]["status"] = "REFUSED"
-	_expect(not SEASON_STATE.new().restore_snapshot(contradictory_snapshot), "R5C migration rejects contradictory A12 refusal evidence")
-	var late_presence = _completed_r5b_j11_state("SANDRA_RULE_CLARIFIED")
-	late_presence.begin_j12(); late_presence.apply_j12_choice("choice_j12_presence_lb"); late_presence.establish_j12_laverriere_public_trace()
-	var late_presence_provider = _new_provider(late_presence)
-	var close_snapshot: Dictionary = late_presence_provider.snapshot()
-	close_snapshot["phase"] = "close_incoming"; close_snapshot["current_time_minutes"] = 1335
-	_expect(late_presence_provider.restore_snapshot(close_snapshot), "provider resumes an old post-La Verrière payment phase")
-	_expect(str(late_presence.promises["marie_j12_laverriere_presence"].get("status", "")) == "PAID", "post-close phase is exact evidence that P12 was paid")
-	var late_annexe = _completed_r5b_j11_state("SANDRA_RULE_CLARIFIED")
-	late_annexe.begin_j12(); late_annexe.apply_j12_choice("choice_j12_presence_lb"); late_annexe.pay_j12_laverriere_presence(); late_annexe.establish_j12_laverriere_public_trace(); late_annexe.apply_j12_choice("choice_j12_annexe_a12"); late_annexe.establish_j12_annexe_public_trace()
-	var late_annexe_provider = _new_provider(late_annexe)
-	var annexe_snapshot: Dictionary = late_annexe_provider.snapshot()
-	annexe_snapshot["phase"] = "annexe_incoming"; annexe_snapshot["current_time_minutes"] = 1398
-	_expect(late_annexe_provider.restore_snapshot(annexe_snapshot), "provider resumes an old post-arrival P13 phase")
-	_expect(str(late_annexe.promises["j12_annexe_continuation"].get("status", "")) == "PAID", "post-arrival phase is exact evidence that P13 was paid")
-	var atomic_state = _completed_r5b_j11_state("SANDRA_RULE_CLARIFIED")
-	atomic_state.begin_j12(); atomic_state.apply_j12_choice("choice_j12_presence_lb"); atomic_state.pay_j12_laverriere_presence(); atomic_state.establish_j12_laverriere_public_trace(); atomic_state.apply_j12_choice("choice_j12_annexe_a12"); atomic_state.establish_j12_annexe_public_trace()
-	var atomic_provider = _new_provider(atomic_state)
-	var atomic_snapshot: Dictionary = atomic_provider.snapshot()
-	atomic_snapshot["phase"] = "to_annexe"; atomic_snapshot["pending_transition"] = {"kind":"to_annexe"}; atomic_snapshot["current_time_minutes"] = 1362
-	_expect(atomic_provider.restore_snapshot(atomic_snapshot), "atomic arrival failure fixture restores")
-	_expect(not bool(atomic_provider.confirm_transition().get("accepted", false)), "duplicate T15 makes the atomic arrival transition fail")
-	_expect(str(atomic_state.promises["j12_annexe_continuation"].get("status", "")) == "ACTIVE" and not atomic_provider.pending_transition.is_empty(), "failed arrival leaves P13 and its transition untouched")
+func _exercise_current_snapshot_policy() -> void:
+	var current_state = _completed_semantic_j11_state("MARIE_ADULT_RECONQUEST")
+	var current_snapshot: Dictionary = current_state.snapshot()
+	_expect(SEASON_STATE.new().restore_snapshot(current_snapshot), "current v25 snapshot round-trips")
+	for obsolete_version in [1, 9, 19, 20, 21, 22, 23, 24]:
+		var obsolete_snapshot: Dictionary = current_snapshot.duplicate(true)
+		obsolete_snapshot["version"] = obsolete_version
+		_expect(not SEASON_STATE.new().restore_snapshot(obsolete_snapshot), "obsolete state snapshot is rejected: v%d" % obsolete_version)
 
 func _completed_j11_state(pivot: String):
 	var state = SEASON_STATE.new()

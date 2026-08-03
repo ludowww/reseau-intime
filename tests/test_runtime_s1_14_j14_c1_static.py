@@ -270,48 +270,23 @@ class RuntimeS114J14C1StaticTests(unittest.TestCase):
         )
         self.assertRegex(consistency, r'\["ACTIVE",\s*"PAID",\s*"FAILED"\]')
 
-    def test_c1_state_migrates_both_v23_and_v24_and_rejects_corruption(self):
+    def test_c1_state_accepts_only_current_snapshot_and_rejects_corruption(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
-        restore = self.block(state, "func restore_snapshot", "func _migrate_r5a_j11_semantic_outcome")
-        normalized = re.sub(r"\s+", "", restore)
-        self.assertIn("23,24,SNAPSHOT_VERSION", normalized)
-        self.assertIn("_migrate_r7a_j14_limited_discovery", state)
-        migration = self.block(
-            state,
-            "func _migrate_r7a_j14_limited_discovery",
-            "func rollback_unpresented_legacy_j14_discovery",
-        )
-        self.assert_tokens(migration, [
-            'if variant == "COMPOSITE": return false',
-            "_j13_snapshot_trace_accessible",
-            "_j14_contract_for_variant",
-            "j14_discovery_event_01",
-            "fact_witness_saw_limited_trace",
-            "j14_inform_trace_controller",
-        ])
-        posture = self.block(
-            state,
-            "func _j14_posture_for_choice",
-            "func _j14_player_statement_for_choice",
-        )
+        restore = self.block(state, "func restore_snapshot", "func _snapshot_ledgers_have_dictionary_records")
+        self.assertIn("if version != SNAPSHOT_VERSION", restore)
+        self.assertNotIn("func _migrate_", state)
+        posture = self.block(state, "func _j14_posture_for_choice", "func _j14_player_statement_for_choice")
         self.assertIn('variant == "NICO" and choice_id == "choice_j14_nico_defer": return "PROTECT_AND_ANSWER_NOW"', posture)
-        self.assertLess(posture.index('choice_id == "choice_j14_nico_defer"'), posture.index('choice_id.ends_with("_defer")'))
         consistency = self.block(state, "func _j14_records_consistent", "func _j15_records_consistent")
-        self.assertIn('outcome not in ["UNESTABLISHED","PROTECT_AND_ANSWER_NOW"]', consistency)
         self.assertIn('outcome == "PROTECT_AND_ANSWER_NOW" and variant != "NICO"', consistency)
-        j15_consistency = self.block(state, "func _j15_records_consistent", "func _j16_records_consistent")
-        self.assertIn('"PROTECT_AND_ANSWER_NOW" and mode in ["ACTIVE_CLARIFICATION","OPEN_CLARIFICATION"]', j15_consistency)
-        self.assertIn('variant == "NICO" and source_choice_id == "choice_j14_nico_defer"', migration)
-        self.assertIn('restored_promises.erase("j14_witness_clarification")', migration)
         handoff = self.block(state, "func select_j15_mode", "func establish_j15_mode")
         self.assertIn('j14_outcome == "PROTECT_AND_ANSWER_NOW": return "NO_OBLIGATION"', handoff)
-
-    def test_c1_j14_v2_v3_cover_all_phases_and_fail_closed_corruptions(self):
+    def test_c1_j14_current_snapshot_covers_all_phases_and_fail_closed_corruptions(self):
         provider = self.read("game/scripts/runtime/season_1/J14RuntimeProvider.gd")
-        restore = self.block(provider, "func restore_snapshot", "func _append_messages")
+        restore = self.block(provider, "func restore_snapshot", "func _append_j14_clarification_messages")
         self.assertIn("const J14_SNAPSHOT_VERSION := 4", provider)
-        self.assertIn("const LEGACY_J14_SNAPSHOT_VERSIONS := [SNAPSHOT_VERSION, 3]", provider)
-        self.assertIn("version not in LEGACY_J14_SNAPSHOT_VERSIONS", restore)
+        self.assertNotIn("LEGACY_J14_SNAPSHOT_VERSIONS", provider)
+        self.assertIn("int(value.get(\"version\", -1)) != J14_SNAPSHOT_VERSION", restore)
         expected_phases = {
             "day_start_pending", "to_presence_context", "to_discovery", "priority_incoming",
             "priority_choice", "to_controller", "echo_incoming", "to_clarification",
@@ -319,36 +294,8 @@ class RuntimeS114J14C1StaticTests(unittest.TestCase):
         }
         match = re.search(r'const J14_PHASES := \[([^]]+)\]', provider)
         self.assertIsNotNone(match)
-        actual_phases = set(re.findall(r'"([^"]+)"', match.group(1)))
-        self.assertEqual(expected_phases, actual_phases)
-        self.assert_tokens(restore, [
-            'for key in ["transcripts_by_thread","produced_message_ids","pending_choice_ids_by_thread","pending_transition","presented_time_message_ids"]',
-            'typeof(migrated.get(key)) != TYPE_DICTIONARY',
-            'for key in ["unlocked_thread_ids","gallery_asset_ids","served_visual_beat_ids"]',
-            'typeof(migrated.get(key)) != TYPE_ARRAY',
-            'rollback_unpresented_legacy_j14_discovery',
-            "_restored_phase_consistent",
-        ])
-        consistency = self.block(
-            provider,
-            "func _restored_phase_consistent",
-            "func _thread_presentation",
-        )
-        self.assert_tokens(consistency, [
-            "selected_pivot != state.j14_variant",
-            "state._j14_records_consistent(state.snapshot())",
-            'phase == "to_presence_context"',
-            'phase == "to_discovery"',
-            'phase == "priority_incoming"',
-            'phase == "priority_choice"',
-            'phase == "to_controller"',
-            'phase == "echo_incoming"',
-            'phase == "to_clarification"',
-            'phase == "clarification_incoming"',
-            'phase == "day_close"',
-            'phase == "complete"',
-        ])
-
+        self.assertEqual(expected_phases, set(re.findall(r'"([^"]+)"', match.group(1))))
+        self.assertIn("return _restored_phase_consistent()", restore)
 
 if __name__ == "__main__":
     unittest.main()

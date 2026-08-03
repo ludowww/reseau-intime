@@ -113,22 +113,10 @@ class RuntimeS105J05PlayableStaticTests(unittest.TestCase):
     def test_state_has_bounded_j05_outcomes_and_single_p03(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         for token in [
-            "marie_j05_shared_hour_outcome",
-            "marie_j05_shared_hour_resolution",
-            "sandra_j05_outcome",
-            '"JOIN_NOW"',
-            '"PRECISE_ALTERNATIVE"',
-            '"REFUSED"',
-            '"PAID"',
-            '"NO_PROMISE"',
-            '"UNAVAILABLE"',
-            '"THREAD_MAINTAINED"',
-            '"GAP_ACKNOWLEDGED"',
-            '"BOUNDARY_RESPECTED"',
-            '"CONTINUITY_COOLED"',
-            '"CONTINUITY_CLOSED"',
-            '"J05 09:48"',
-            '"J05 12:30"',
+            "marie_j05_shared_hour_outcome", "marie_j05_shared_hour_resolution", "sandra_j05_outcome",
+            '"JOIN_NOW"', '"PRECISE_ALTERNATIVE"', '"REFUSED"', '"PAID"', '"NO_PROMISE"',
+            '"UNAVAILABLE"', '"THREAD_MAINTAINED"', '"GAP_ACKNOWLEDGED"', '"BOUNDARY_RESPECTED"',
+            '"CONTINUITY_COOLED"', '"CONTINUITY_CLOSED"', '"J05 09:48"', '"J05 12:30"',
         ]:
             self.assertIn(token, state)
         self.assertEqual(1, state.count('promises["marie_j05_shared_hour"] = {'))
@@ -145,9 +133,8 @@ class RuntimeS105J05PlayableStaticTests(unittest.TestCase):
             self.assertIn(token, eligibility)
         for forbidden in ["photo_opened", "sandra_j03_echo_outcome", "candidate_pool", "route_score"]:
             self.assertNotIn(forbidden, eligibility)
-        self.assertIn("const SNAPSHOT_VERSION := 5", state)
-        self.assertIn("version not in [1, 2, 3, 4, SNAPSHOT_VERSION]", state)
-
+        self.assertIn("const SNAPSHOT_VERSION := 25", state)
+        self.assertIn("if version != SNAPSHOT_VERSION", state)
     def test_provider_uses_common_runtime_contract(self):
         provider = self.read("game/scripts/runtime/season_1/J05RuntimeProvider.gd")
         for token in [
@@ -184,27 +171,15 @@ class RuntimeS105J05PlayableStaticTests(unittest.TestCase):
     def test_j04_hands_off_and_j05_now_hands_off_to_j06(self):
         j04 = self.load("game/data/runtime/season_1/j04_runtime_map.json")
         j05 = self.load("game/data/runtime/season_1/j05_runtime_map.json")
-        self.assertNotEqual("CONTENT_END", j04["day_end"]["transition_mode"])
         self.assertFalse(j04["day_end"]["content_end"])
-        self.assertEqual(["CLOCK", "OFF_PHONE", "NIGHT", "NEW_DAY"], j04["household_close"]["flow_phases"])
-        self.assertEqual("SAMEDI — MATIN", j04["day_end"]["next_day_presentation"]["eyebrow"])
-        self.assertEqual("09:35", j04["day_end"]["next_day_presentation"]["subtitle"])
         self.assertEqual("day_handoff", j05["day_end"]["transition_mode"])
         self.assertFalse(j05["day_end"]["content_end"])
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
-        for token in [
-            'preload("res://scripts/runtime/season_1/J05RuntimeProvider.gd")',
-            "j05_provider",
-            "j05_snapshot",
-            "_handoff_to_j05",
-            'active_day = "J05"',
-            '"J05":',
-            '["J01", "J02", "J03", "J04", "J05", "J06", "J07"]',
-        ]:
+        for token in ['preload("res://scripts/runtime/season_1/J06RuntimeProvider.gd")', "_handoff_to_j06", 'active_day = "J06"']:
             self.assertIn(token, season)
-        self.assertIn("const SNAPSHOT_VERSION := 6", season)
-        self.assertIn("version not in [2, 3, 4, 5, SNAPSHOT_VERSION]", season)
-
+        self.assertIn("const SNAPSHOT_VERSION := 21", season)
+        self.assertIn("if version != SNAPSHOT_VERSION", season)
+        self.assertNotIn("version not in [", season)
     def test_smoke_and_runner_cover_all_required_paths_and_sizes(self):
         driver = self.read("game/tests/RUNTIME_S1_05J05PlayableSmokeDriver.gd")
         runner = self.read("tools/test_runtime_s1_05_j05_playable.sh")

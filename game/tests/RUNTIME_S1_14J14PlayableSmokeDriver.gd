@@ -21,9 +21,7 @@ func _ready() -> void:
 	_exercise_variant_and_posture_matrix()
 	_exercise_nico_immediate_answer()
 	_exercise_p15_failed_path()
-	_exercise_state_migrations_and_corruption()
-	_exercise_authentic_v23_state_snapshots()
-	_exercise_provider_legacy_phases()
+	_exercise_current_snapshot_policy()
 	for failure in j13_helper.failures: failures.append("J13 helper: " + failure)
 	for failure in j13_helper.j12_helper.failures: failures.append("J12 helper: " + failure)
 	j13_helper.j12_helper.free(); j13_helper.free()
@@ -121,8 +119,8 @@ func _exercise_nico_immediate_answer() -> void:
 	_expect(state.select_j15_mode() == "NO_OBLIGATION", "Nico C hands off to J15 without clarification")
 	var j15 = J15_PROVIDER.new(); _expect(j15.initialize(state, {}, {}, [], []), "Nico C initializes J15"); _expect(bool(j15.start_day().get("accepted", false)) and j15.selected_pivot == "NO_OBLIGATION", "Nico C begins and selects J15 NO_OBLIGATION")
 	var j15_snapshot: Dictionary = j15.snapshot(); var restored_j15 = J15_PROVIDER.new(); _expect(restored_j15.initialize(state, {}, {}, [], []) and restored_j15.restore_snapshot(j15_snapshot) and restored_j15.snapshot() == j15_snapshot, "Nico C J15 v5 round-trip")
-	var legacy: Dictionary = state.snapshot(); legacy["version"] = 24; legacy["j14_outcome"] = "PROTECT_AND_DEFER"; legacy["j14_player_explanation"] = "PROTECT_AND_DEFER"; legacy["traces"]["j14_discovery_event_01"]["player_explanation"] = "PROTECT_AND_DEFER"; legacy["knowledge"]["fact_player_explanation_to_witness"]["player_explanation"] = "PROTECT_AND_DEFER"
-	var migrated = STATE.new(); _expect(migrated.restore_snapshot(legacy) and migrated.j14_outcome == "PROTECT_AND_ANSWER_NOW" and migrated.j14_j15_obligation_id == "" and not migrated.promises.has("j14_witness_clarification"), "Nico C legacy defer migrates to immediate bounded answer")
+	var obsolete: Dictionary = state.snapshot(); obsolete["version"] = 24
+	_expect(not STATE.new().restore_snapshot(obsolete), "obsolete Nico C state v24 is rejected")
 	var invalid: Dictionary = state.snapshot(); invalid["j14_outcome"] = "PROTECT_AND_DEFER"; invalid["j14_player_explanation"] = "PROTECT_AND_DEFER"; invalid["traces"]["j14_discovery_event_01"]["player_explanation"] = "PROTECT_AND_DEFER"; invalid["knowledge"]["fact_player_explanation_to_witness"]["player_explanation"] = "PROTECT_AND_DEFER"
 	_expect(not STATE.new().restore_snapshot(invalid), "current Nico C legacy defer is rejected without migration")
 
@@ -131,61 +129,43 @@ func _exercise_p15_failed_path() -> void:
 	_expect(bool(provider.fail_controller_notice("REFUSED").get("accepted", false)) and str(state.promises["j14_inform_trace_controller"].get("status", "")) == "FAILED" and str(state.knowledge.get("fact_trace_controller_not_informed", {}).get("failed_by", "")) == "Player", "P15 exposes attributable refusal path")
 	_confirm(provider); _expect(provider.phase == "complete", "failed P15 is terminal before J15")
 
-func _exercise_state_migrations_and_corruption() -> void:
-	var end_j13 = _completed_j13_state("PAULINE")
-	for version in [23,24]:
-		var snapshot: Dictionary = end_j13.snapshot(); snapshot["version"] = version; if version == 23: snapshot.erase("j14_visible_values")
-		var restored = STATE.new(); _expect(restored.restore_snapshot(snapshot) and int(restored.snapshot().get("version", -1)) == 25, "state v" + str(version) + " end-J13 migrates to v25")
-	var state = _completed_j13_state("PAULINE"); state.begin_j14(); _expect_legacy_state_versions(state, "J14 begun"); var evidence: Dictionary = state.j14_presence_contract(); evidence.merge({"evidence_id":"migration","source_day":"J14","recorded_at":"J14 18:34","physically_present":true,"presented_before_selection":true}, true); state.record_j14_presence_evidence(evidence); state.select_j14_variant(); _expect_legacy_state_versions(state, "J14 selected"); state.establish_j14_discovery("PAULINE"); _expect_legacy_state_versions(state, "J14 discovery presented"); state.apply_j14_choice("choice_j14_pauline_truth", "PAULINE"); _expect_legacy_state_versions(state, "J14 posture selected")
-	for version in [23,24]:
-		var legacy: Dictionary = state.snapshot(); legacy["version"] = version; var migrated = STATE.new(); _expect(migrated.restore_snapshot(legacy) and migrated._j14_records_consistent(migrated.snapshot()), "state v" + str(version) + " active J14 migrates complete ledgers")
-	for corruption in ["presence","creator","visible_values","p15"]:
+func _exercise_current_snapshot_policy() -> void:
+	var state = _completed_j13_state("PAULINE")
+	var provider = _new_provider(state)
+	_expect_state_round_trip(state, "current J14 handoff")
+	_expect_round_trip(provider, "current J14 before start")
+	_expect(bool(provider.start_day().get("accepted", false)), "current J14 fixture starts")
+	_expect_round_trip(provider, "current J14 before discovery")
+	_confirm(provider)
+	_confirm(provider)
+	_expect_round_trip(provider, "current J14 discovery incoming")
+	var incoming_snapshot: Dictionary = provider.snapshot()
+	var obsolete_provider: Dictionary = incoming_snapshot.duplicate(true)
+	obsolete_provider["version"] = 2
+	var obsolete_restore = PROVIDER.new()
+	_expect(obsolete_restore.initialize(state, {}, {}, [], []) and not obsolete_restore.restore_snapshot(obsolete_provider), "obsolete J14 provider v2 is rejected")
+	var corruptions: Array[Dictionary] = []
+	var bad_pivot: Dictionary = incoming_snapshot.duplicate(true); bad_pivot["selected_pivot"] = "NICO"; corruptions.append(bad_pivot)
+	var bad_choices: Dictionary = incoming_snapshot.duplicate(true); bad_choices["pending_choice_ids_by_thread"]["thread_marie_private"] = ["choice_j14_nico_truth"]; corruptions.append(bad_choices)
+	var bad_messages: Dictionary = incoming_snapshot.duplicate(true); bad_messages["produced_message_ids"].erase("msg_j14_pauline_001"); corruptions.append(bad_messages)
+	for corrupted in corruptions:
+		var rejected = PROVIDER.new()
+		_expect(rejected.initialize(state, {}, {}, [], []) and not rejected.restore_snapshot(corrupted), "corrupt current J14 provider snapshot fails closed")
+	_present(provider, "thread_marie_private")
+	_expect(bool(provider.apply_choice("thread_marie_private", "choice_j14_pauline_truth").get("accepted", false)), "current J14 fixture resolves Pauline")
+	_expect_round_trip(provider, "current J14 after choice")
+	_expect_state_round_trip(state, "current J14 state after choice")
+	for obsolete_version in [23, 24]:
+		var obsolete_state: Dictionary = state.snapshot()
+		obsolete_state["version"] = obsolete_version
+		_expect(not STATE.new().restore_snapshot(obsolete_state), "obsolete season state v%s is rejected" % obsolete_version)
+	for corruption in ["presence", "creator", "visible_values", "p15"]:
 		var broken: Dictionary = state.snapshot()
 		if corruption == "presence": broken["j14_witness_presence_evidence"].erase("reason_near_screen")
 		elif corruption == "creator": broken["traces"]["j14_discovery_event_01"]["creator"] = "wrong"
 		elif corruption == "visible_values": broken["knowledge"]["fact_witness_saw_limited_trace"]["visible_values"] = {}
 		else: broken["promises"]["j14_inform_trace_controller"]["controller"] = "Marie"
-		_expect(not STATE.new().restore_snapshot(broken), "corrupt " + corruption + " snapshot fails closed")
-	state.resolve_j14_controller_informed("J14 20:15"); _expect_legacy_state_versions(state, "J14 P15 terminal"); state.complete_j14(); _expect_legacy_state_versions(state, "J14 complete")
-	state.begin_j15(); _expect_legacy_state_versions(state, "J15 begun"); state.establish_j15_mode(state.select_j15_mode()); _expect_legacy_state_versions(state, "J15 mode selected"); state.apply_j15_choice("choice_j15_clean_acknowledge_marie"); _expect_legacy_state_versions(state, "J15 choice applied"); state.complete_j15(); _expect_legacy_state_versions(state, "J15 complete")
-
-func _expect_legacy_state_versions(state, label: String) -> void:
-	for version in [23,24]:
-		var legacy: Dictionary = state.snapshot(); legacy["version"] = version; var restored = STATE.new(); _expect(restored.restore_snapshot(legacy) and int(restored.snapshot().get("version", -1)) == 25, label + " v" + str(version) + " migrates")
-
-func _exercise_authentic_v23_state_snapshots() -> void:
-	var base_state = _completed_j13_state("PAULINE"); var begun: Dictionary = base_state.snapshot(); begun["version"] = 23; begun["current_day"] = "J14"; begun["day_status"] = "ACTIVE"; begun["j14_variant"] = ""; begun["j14_outcome"] = "UNESTABLISHED"; begun["j14_witness"] = ""
-	for key in ["j14_witness_presence_evidence","j14_discovery_mode","j14_visible_fields","j14_visible_values","j14_source_trace_id","j14_secondary_trace_id","j14_player_initial_reaction","j14_player_explanation","j14_j15_obligation_id","j14_controller_notified"]: begun.erase(key)
-	var discovered: Dictionary = begun.duplicate(true); discovered["j14_variant"] = "PAULINE"; discovered["j14_witness"] = "Marie"; discovered["traces"]["j14_discovery_event_01"] = {"trace_id":"j14_discovery_event_01","trace_type":"FACT_RECORD","source_day":"J14","discovered_trace_id":discovered["j13_j14_trace_id"],"witness":"Marie","visible_scope":"LIMITED_PREVIEW_OR_NOTIFICATION","source_trace_unchanged":true,"knowledge_created":"fact_witness_saw_limited_trace"}; discovered["knowledge"]["fact_witness_saw_limited_trace"] = {"fact_id":"fact_witness_saw_limited_trace","source_type":"DIRECT_OBSERVATION","source_ref":"j14_discovery_event_01","initial_knowers":["Marie","Player"],"certainty":"CONFIRMED","shareability":"WITNESS_BOUNDED","source_day":"J14","discovered_trace_id":discovered["j13_j14_trace_id"]}
-	var chosen: Dictionary = discovered.duplicate(true); chosen["j14_outcome"] = "PAULINE_TRUTH"; chosen["selected_choice_ids"].append("choice_j14_pauline_truth"); chosen["knowledge"]["fact_player_explanation_to_witness"] = {"fact_id":"fact_player_explanation_to_witness","source_type":"DIRECT_STATEMENT","source_ref":"choice_j14_pauline_truth","initial_knowers":["Marie","Player"],"certainty":"CONFIRMED","shareability":"WITNESS_BOUNDED","source_day":"J14"}; chosen["promises"]["j14_inform_trace_controller"] = {"promise_id":"j14_inform_trace_controller","promise_type":"AUDIENCE_NOTICE","status":"ACTIVE","accepted_by_player":true,"due_at":"J14 20:14","outcome":"NOTICE_DUE","controller":"Pauline"}
-	var paid: Dictionary = chosen.duplicate(true); paid["promises"]["j14_inform_trace_controller"]["status"] = "PAID"; paid["promises"]["j14_inform_trace_controller"]["paid_or_closed_at"] = "J14 20:14"; paid["promises"]["j14_inform_trace_controller"]["paid_or_closed_by"] = "Player"; paid["knowledge"]["fact_trace_controller_informed_of_audience_breach"] = {"fact_id":"fact_trace_controller_informed_of_audience_breach","source_type":"DIRECT_MESSAGE","source_ref":"j14_inform_trace_controller","initial_knowers":["Pauline","Player"],"certainty":"CONFIRMED","shareability":"PRIVATE","source_day":"J14"}
-	var complete: Dictionary = paid.duplicate(true); complete["day_status"] = "COMPLETE"; complete["completed_conversation_ids"].append("chapter_14_discovery"); complete["foreground_history"].append({"day_id":"J14","character_id":"marie","function":"limited_discovery"})
-	for fixture in [{"name":"begun","value":begun},{"name":"discovered","value":discovered},{"name":"chosen","value":chosen},{"name":"paid","value":paid},{"name":"complete","value":complete}]:
-		var migrated = STATE.new(); _expect(migrated.restore_snapshot(fixture.value) and int(migrated.snapshot().get("version", -1)) == 25 and migrated._j14_records_consistent(migrated.snapshot()), "authentic v23 J14 " + str(fixture.name) + " migrates")
-
-func _exercise_provider_legacy_phases() -> void:
-	var state = _completed_j13_state("PAULINE"); var provider = _new_provider(state); var fixtures: Array[Dictionary] = []
-	_append_legacy_fixture(fixtures, provider, state, 2)
-	provider.start_day(); _confirm(provider); _append_legacy_fixture(fixtures, provider, state, 2)
-	_confirm(provider); _append_legacy_fixture(fixtures, provider, state, 2)
-	_present(provider, "thread_marie_private"); _append_legacy_fixture(fixtures, provider, state, 2)
-	provider.apply_choice("thread_marie_private", "choice_j14_pauline_truth"); _append_legacy_fixture(fixtures, provider, state, 2)
-	_confirm(provider); var echo: Dictionary = provider.snapshot(); echo["version"] = 2; var echo_state: Dictionary = state.snapshot(); fixtures.append({"provider":echo,"state":echo_state})
-	_present(provider, "thread_pauline_private"); _append_legacy_fixture(fixtures, provider, state, 2)
-	_confirm(provider); _append_legacy_fixture(fixtures, provider, state, 2)
-	for fixture in fixtures:
-		var restored_state = STATE.new(); var restored = PROVIDER.new(); var phase_name := str(fixture.provider.get("phase", "")); _expect(restored_state.restore_snapshot(fixture.state) and restored.initialize(restored_state, {}, {}, [], []) and restored.restore_snapshot(fixture.provider), "provider legacy phase " + phase_name + " migrates")
-	var paid_state = STATE.new(); paid_state.restore_snapshot(echo_state); paid_state.resolve_j14_controller_informed("J14 20:15"); var paid_echo: Dictionary = echo.duplicate(true); paid_echo["transcripts_by_thread"]["thread_pauline_private"] = [{"message_id":"msg_j14_controller_001","author_id":"system","timestamp":"20:14","content_type":"TEXT","text":"message générique legacy","media_ref":"","is_player":false,"is_read":false,"source_day":14}]; paid_echo["produced_message_ids"].erase("msg_j14_controller_pauline_001"); paid_echo["produced_message_ids"].erase("msg_j14_controller_pauline_002"); paid_echo["produced_message_ids"]["msg_j14_controller_001"] = true
-	var migrated_paid = PROVIDER.new(); _expect(migrated_paid.initialize(paid_state, {}, {}, [], []) and migrated_paid.restore_snapshot(paid_echo) and migrated_paid.phase == "day_close" and not migrated_paid.produced_message_ids.has("msg_j14_controller_001") and migrated_paid.produced_message_ids.has("msg_j14_controller_pauline_001"), "legacy paid echo migrates without double payment or generic message")
-	var incoming_fixture: Dictionary = fixtures[2]; var corruptions: Array[Dictionary] = []
-	var bad_pivot: Dictionary = incoming_fixture.provider.duplicate(true); bad_pivot["version"] = 4; bad_pivot["selected_pivot"] = "NICO"; corruptions.append(bad_pivot)
-	var bad_choices: Dictionary = incoming_fixture.provider.duplicate(true); bad_choices["version"] = 4; bad_choices["pending_choice_ids_by_thread"]["thread_marie_private"] = ["choice_j14_nico_truth"]; corruptions.append(bad_choices)
-	var bad_messages: Dictionary = incoming_fixture.provider.duplicate(true); bad_messages["version"] = 4; bad_messages["produced_message_ids"].erase("msg_j14_pauline_001"); corruptions.append(bad_messages)
-	for corrupted in corruptions:
-		var corrupted_state = STATE.new(); var rejected = PROVIDER.new(); _expect(corrupted_state.restore_snapshot(incoming_fixture.state) and rejected.initialize(corrupted_state, {}, {}, [], []) and not rejected.restore_snapshot(corrupted), "corrupt J14 provider snapshot fails closed")
-
-func _append_legacy_fixture(fixtures: Array[Dictionary], provider, state, version: int) -> void:
-	var provider_snapshot: Dictionary = provider.snapshot(); provider_snapshot["version"] = version; fixtures.append({"provider":provider_snapshot,"state":state.snapshot()})
+		_expect(not STATE.new().restore_snapshot(broken), "corrupt current J14 state " + corruption + " fails closed")
 
 func _finish_j13(state, pivot: String, segment_id: String, choice_id: String):
 	_expect(state.begin_j13() and state.set_j13_priority(pivot) and state.deliver_j13_priority(pivot, segment_id) and state.apply_j13_choice(choice_id, pivot) and state.complete_j13(), pivot + " route completes J13")

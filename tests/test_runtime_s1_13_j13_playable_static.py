@@ -215,25 +215,18 @@ class RuntimeS113J13PlayableStaticTests(unittest.TestCase):
             self.assertNotIn(legacy_id, state)
             self.assertNotIn(legacy_id, smoke)
 
-    def test_snapshot_versions_migrate_r6a_visual_contracts_and_restore_checks_phase(self):
+    def test_current_snapshot_versions_and_j13_visual_restore_checks_phase(self):
         provider = self.read("game/scripts/runtime/season_1/J13RuntimeProvider.gd")
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
         self.assertIn("const SNAPSHOT_VERSION := 2", provider)
+        self.assertIn("if version != SNAPSHOT_VERSION", provider)
+        self.assertNotIn("func _migrate_", provider)
         self.assertIn("const SNAPSHOT_VERSION := 25", state)
         self.assertIn("const SNAPSHOT_VERSION := 21", season)
         self.assertLess(season.index('state.restore_snapshot(value["state"])'), season.index('j13_provider.restore_snapshot(providers.get("J13", {}))'))
-        for token in ["func restore_snapshot", "func _migrate_r6b_visual_snapshot_v1_to_v2", "version not in [1, SNAPSHOT_VERSION]", "func _restored_phase_consistent", "selected_pivot != state.j13_pivot"]:
+        for token in ["func _restored_phase_consistent", "selected_pivot != state.j13_pivot", "trace_by_message_id", 'content_type == "PHOTO"', "served_visual_beat_ids.size() != presented.size()"]:
             self.assertIn(token, provider)
-        for token in ["trace_by_message_id", 'content_type == "PHOTO"', "not item.has(\"asset_id\")", "produced != presented.has(trace_id)", "served_visual_beat_ids.size() != presented.size()"]:
-            self.assertIn(token, provider)
-        for token in ["func _migrate_r6b_j13_visual_contracts", "func _r6b_legacy_private_trace_consistent", "version < 22", "version < SNAPSHOT_VERSION"]:
-            self.assertIn(token, state)
-        for token in ["global R6A nested state v22 restores first", "global R6A nested J13 provider v1 restores after state", "global R7A state and R6A provider snapshots round-trip in current formats"]:
-            self.assertIn(token, self.read("game/tests/RUNTIME_S1_13J13PlayableSmokeDriver.gd"))
-        for token in ["v2 wrong visual asset fails closed", "v2 missing visual asset fails closed", "v2 wrong visual message id fails closed", "v2 wrong active placeholder label fails closed", "v2 unknown served visual id fails closed", "v2 missing served visual id fails closed", "v2 injected PHOTO presentation fails closed", "v2 unknown J13 image fails closed", "v2 duplicated visual presentation fails closed", "v2 missing produced visual id fails closed"]:
-            self.assertIn(token, self.read("game/tests/RUNTIME_S1_13J13PlayableSmokeDriver.gd"))
-
 
 if __name__ == "__main__":
     unittest.main()

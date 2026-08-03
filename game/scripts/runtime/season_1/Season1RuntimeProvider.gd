@@ -518,46 +518,11 @@ func snapshot() -> Dictionary:
 
 func restore_snapshot(value: Dictionary) -> bool:
 	var version := int(value.get("version", -1))
-	if version not in [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,SNAPSHOT_VERSION] or str(value.get("active_day","")) not in ["J01","J02","J03","J04","J05","J06","J07","J08","J09","J10","J11","J12","J13","J14","J15","J16","J17","J18","J19","J20","J21"]:return false
-	if version < 4 and str(value.get("active_day", "")) == "J05": return false
-	if version < 5 and str(value.get("active_day", "")) == "J06": return false
-	if version < 6 and str(value.get("active_day", "")) == "J07": return false
-	if version < 7 and str(value.get("active_day", "")) == "J08": return false
-	if version < 8 and str(value.get("active_day", "")) == "J09": return false
-	if version < 9 and str(value.get("active_day", "")) == "J10": return false
-	if version < 11 and str(value.get("active_day", "")) == "J11": return false
-	if version < 12 and str(value.get("active_day", "")) == "J12": return false
-	if version < 13 and str(value.get("active_day", "")) == "J13": return false
-	if version < 14 and str(value.get("active_day", "")) == "J14": return false
-	if version < 15 and str(value.get("active_day", "")) == "J15": return false
-	if version < 16 and str(value.get("active_day", "")) == "J16": return false
-	if version < 17 and str(value.get("active_day", "")) == "J17": return false
-	if version<18 and str(value.get("active_day",""))=="J18":return false
-	if version<19 and str(value.get("active_day",""))=="J19":return false
-	if version<20 and str(value.get("active_day",""))=="J20":return false
-	if version<SNAPSHOT_VERSION and str(value.get("active_day",""))=="J21":return false
+	if version != SNAPSHOT_VERSION or str(value.get("active_day", "")) not in ["J01", "J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14", "J15", "J16", "J17", "J18", "J19", "J20", "J21"]: return false
 	if typeof(value.get("state")) != TYPE_DICTIONARY or typeof(value.get("provider_snapshots")) != TYPE_DICTIONARY: return false
 	var providers: Dictionary = value["provider_snapshots"]
-	for id in ["J01", "J02", "J03"]:
+	for id in ["J01", "J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14", "J15", "J16", "J17", "J18", "J19", "J20", "J21"]:
 		if typeof(providers.get(id)) != TYPE_DICTIONARY: return false
-	if version >= 3 and typeof(providers.get("J04")) != TYPE_DICTIONARY: return false
-	if version >= 4 and typeof(providers.get("J05")) != TYPE_DICTIONARY: return false
-	if version >= 5 and typeof(providers.get("J06")) != TYPE_DICTIONARY: return false
-	if version >= 6 and typeof(providers.get("J07")) != TYPE_DICTIONARY: return false
-	if version >= 7 and typeof(providers.get("J08")) != TYPE_DICTIONARY: return false
-	if version >= 8 and typeof(providers.get("J09")) != TYPE_DICTIONARY: return false
-	if version >= 9 and typeof(providers.get("J10")) != TYPE_DICTIONARY: return false
-	if version >= 11 and typeof(providers.get("J11")) != TYPE_DICTIONARY: return false
-	if version >= 12 and typeof(providers.get("J12")) != TYPE_DICTIONARY: return false
-	if version >= 13 and typeof(providers.get("J13")) != TYPE_DICTIONARY: return false
-	if version >= 14 and typeof(providers.get("J14")) != TYPE_DICTIONARY: return false
-	if version >= 15 and typeof(providers.get("J15")) != TYPE_DICTIONARY: return false
-	if version >= 16 and typeof(providers.get("J16")) != TYPE_DICTIONARY: return false
-	if version >= 17 and typeof(providers.get("J17")) != TYPE_DICTIONARY: return false
-	if version>=18 and typeof(providers.get("J18"))!=TYPE_DICTIONARY:return false
-	if version>=19 and typeof(providers.get("J19"))!=TYPE_DICTIONARY:return false
-	if version>=20 and typeof(providers.get("J20"))!=TYPE_DICTIONARY:return false
-	if version==SNAPSHOT_VERSION and typeof(providers.get("J21"))!=TYPE_DICTIONARY:return false
 	state_restore_count += 1
 	if not state.restore_snapshot(value["state"]): return false
 	if not j01_provider.restore_progress_snapshot(providers["J01"]): return false

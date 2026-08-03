@@ -13,12 +13,4 @@ done
 echo "=== T-UI-01B default project launch ==="
 godot --headless --path game --quit
 
-echo "=== T-UI-01B legacy Main.tscn smoke ==="
-godot --headless \
-  --path game \
-  --scene res://scenes/legacy/LegacyMain.tscn \
-  --resolution 1280x720 \
-  -- \
-  --t-ui-01b-legacy-smoke
-
 echo "T-UI-01B portrait shell smoke: OK"

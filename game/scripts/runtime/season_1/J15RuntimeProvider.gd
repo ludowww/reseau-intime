@@ -4,7 +4,6 @@ class_name J15RuntimeProvider
 
 const J15_MAP_PATH := "res://data/runtime/season_1/j15_runtime_map.json"
 const J15_SNAPSHOT_VERSION := 5
-const J15_LEGACY_SNAPSHOT_VERSIONS := [SNAPSHOT_VERSION, 4]
 
 func initialize(shared_state, cumulative_transcripts: Dictionary, cumulative_ids: Dictionary, cumulative_threads: Array, cumulative_gallery_ids: Array) -> bool:
 	if not super.initialize(shared_state, cumulative_transcripts, cumulative_ids, cumulative_threads, cumulative_gallery_ids): return false
@@ -55,26 +54,15 @@ func snapshot() -> Dictionary:
 
 func restore_snapshot(value: Dictionary) -> bool:
 	var version := int(value.get("version", -1))
-	if version not in J15_LEGACY_SNAPSHOT_VERSIONS and version != J15_SNAPSHOT_VERSION: return false
-	var restored_value := value
-	if version != J15_SNAPSHOT_VERSION:
-		restored_value = value.duplicate(true)
-		if not _migrate_legacy_snapshot_to_v5(restored_value, version): return false
-	if str(restored_value.get("phase", "")) not in ["day_start_pending","to_resolution","priority_incoming","priority_choice","day_close","complete"]: return false
-	if str(restored_value.get("selected_pivot", "")) not in ["","ACTIVE_CLARIFICATION","REPAIR","OPEN_CLARIFICATION","NO_OBLIGATION"]: return false
+	if version != J15_SNAPSHOT_VERSION: return false
+	if str(value.get("phase", "")) not in ["day_start_pending","to_resolution","priority_incoming","priority_choice","day_close","complete"]: return false
+	if str(value.get("selected_pivot", "")) not in ["","ACTIVE_CLARIFICATION","REPAIR","OPEN_CLARIFICATION","NO_OBLIGATION"]: return false
 	for key in ["transcripts_by_thread","produced_message_ids","pending_choice_ids_by_thread","pending_transition","presented_time_message_ids"]:
-		if typeof(restored_value.get(key)) != TYPE_DICTIONARY: return false
+		if typeof(value.get(key)) != TYPE_DICTIONARY: return false
 	for key in ["unlocked_thread_ids","gallery_asset_ids","served_visual_beat_ids"]:
-		if typeof(restored_value.get(key)) != TYPE_ARRAY: return false
-	phase = str(restored_value["phase"]); selected_pivot = str(restored_value["selected_pivot"]); transcripts_by_thread = restored_value["transcripts_by_thread"].duplicate(true); produced_message_ids = restored_value["produced_message_ids"].duplicate(true); unlocked_thread_ids.assign(restored_value["unlocked_thread_ids"]); gallery_asset_ids.assign(restored_value["gallery_asset_ids"]); served_visual_beat_ids.assign(restored_value["served_visual_beat_ids"]); pending_choice_ids_by_thread = restored_value["pending_choice_ids_by_thread"].duplicate(true); pending_transition = restored_value["pending_transition"].duplicate(true); presented_time_message_ids = restored_value["presented_time_message_ids"].duplicate(true); current_time_minutes = int(restored_value.get("current_time_minutes", -1))
+		if typeof(value.get(key)) != TYPE_ARRAY: return false
+	phase = str(value["phase"]); selected_pivot = str(value["selected_pivot"]); transcripts_by_thread = value["transcripts_by_thread"].duplicate(true); produced_message_ids = value["produced_message_ids"].duplicate(true); unlocked_thread_ids.assign(value["unlocked_thread_ids"]); gallery_asset_ids.assign(value["gallery_asset_ids"]); served_visual_beat_ids.assign(value["served_visual_beat_ids"]); pending_choice_ids_by_thread = value["pending_choice_ids_by_thread"].duplicate(true); pending_transition = value["pending_transition"].duplicate(true); presented_time_message_ids = value["presented_time_message_ids"].duplicate(true); current_time_minutes = int(value.get("current_time_minutes", -1))
 	return _restored_phase_consistent()
-
-func _migrate_legacy_snapshot_to_v5(value: Dictionary, legacy_version: int) -> bool:
-	if legacy_version not in J15_LEGACY_SNAPSHOT_VERSIONS: return false
-	# V2 and V4 used the same provider payload. V5 changes no narrative data: it
-	# makes the state/phase/thread invariants below mandatory at restore time.
-	value["version"] = J15_SNAPSHOT_VERSION
-	return true
 
 func _append_messages(thread_id: String, messages: Array) -> void:
 	for message in messages:

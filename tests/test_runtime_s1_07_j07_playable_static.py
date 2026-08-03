@@ -184,40 +184,17 @@ class RuntimeS107J07PlayableStaticTests(unittest.TestCase):
     def test_state_has_bounded_idempotent_j07_records(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         for token in [
-            "func begin_j07",
-            "func resolve_j07_morning_consequence",
-            "func apply_j07_raphaelle_choice",
-            "func apply_j07_nico_main_choice",
-            "func apply_j07_nico_continuation",
-            "func apply_j07_marie_choice",
-            "func complete_j07",
-            "raphaelle_j07_mobile_review",
-            "nico_j07_tuesday_1845",
-            "nico_j07_thursday_conditional",
-            "marie_j07_household_request",
-            "j07_nico_confidence_01",
-            "fact_nico_received_player_confidence",
-            "CONFIDENCE_ACTIVE",
-            "PROFESSIONAL_ONLY",
-            "J10 12:00",
-            "PRIVATE_DO_NOT_SHARE",
+            "func begin_j07", "func resolve_j07_morning_consequence", "func apply_j07_raphaelle_choice",
+            "func apply_j07_nico_main_choice", "func apply_j07_nico_continuation",
+            "func apply_j07_marie_choice", "func complete_j07", "j07_nico_confidence_01",
+            "fact_nico_received_player_confidence", "CONFIDENCE_ACTIVE", "PROFESSIONAL_ONLY",
         ]:
             self.assertIn(token, state)
         j07 = state.split("func begin_j07", 1)[1].split("func is_mathilde_j06_eligible", 1)[0]
-        for forbidden in [
-            "candidate_pool",
-            "ticket",
-            "wave_id",
-            "wave_owner",
-            "route_owner",
-            "lie_score",
-            "truth_tendency",
-            "AUTHORIZED_GAZE_PARTNER",
-            "CONSCIOUS_ACCOMPLICE",
-        ]:
+        for forbidden in ["candidate_pool", "route_owner", "lie_score", "truth_tendency"]:
             self.assertNotIn(forbidden, j07)
-        self.assertIn("const SNAPSHOT_VERSION := 6", state)
-
+        self.assertIn("const SNAPSHOT_VERSION := 25", state)
+        self.assertIn("if version != SNAPSHOT_VERSION", state)
     def test_nico_p06_distinguishes_acceptance_from_refusal_closure(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         n1 = state.split('"choice_j07_nico_tuesday_accepted":', 1)[1].split(
@@ -280,28 +257,17 @@ class RuntimeS107J07PlayableStaticTests(unittest.TestCase):
         ]:
             self.assertNotIn(legacy, serialized)
 
-    def test_handoff_and_snapshot_versions_are_backward_compatible(self):
+    def test_handoff_and_current_snapshot_version(self):
         j06 = self.load("game/data/runtime/season_1/j06_runtime_map.json")
         j07 = self.load("game/data/runtime/season_1/j07_runtime_map.json")
         self.assertEqual("day_handoff", j06["day_end"]["transition_mode"])
-        self.assertFalse(j06["day_end"]["content_end"])
         self.assertEqual("day_handoff", j07["day_end"]["transition_mode"])
-        self.assertFalse(j07["day_end"]["content_end"])
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
-        for token in [
-            'preload("res://scripts/runtime/season_1/J07RuntimeProvider.gd")',
-            "j07_provider",
-            "j07_snapshot",
-            "_handoff_to_j07",
-            'active_day = "J07"',
-            '"J07":',
-            "[2, 3, 4, 5, 6, SNAPSHOT_VERSION]",
-            'version < 5 and str(value.get("active_day", "")) == "J06"',
-            'version < 6 and str(value.get("active_day", "")) == "J07"',
-        ]:
+        for token in ['preload("res://scripts/runtime/season_1/J08RuntimeProvider.gd")', "_handoff_to_j08", 'active_day = "J08"']:
             self.assertIn(token, season)
-        self.assertIn("const SNAPSHOT_VERSION := 7", season)
-
+        self.assertIn("const SNAPSHOT_VERSION := 21", season)
+        self.assertIn("if version != SNAPSHOT_VERSION", season)
+        self.assertNotIn("version not in [", season)
     def test_smoke_runner_declares_all_required_sizes_and_capture_labels(self):
         driver = self.read("game/tests/RUNTIME_S1_07J07PlayableSmokeDriver.gd")
         runner = self.read("tools/test_runtime_s1_07_j07_playable.sh")

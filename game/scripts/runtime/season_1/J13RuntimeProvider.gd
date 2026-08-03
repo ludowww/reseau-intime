@@ -130,95 +130,15 @@ func on_thread_returned(_thread_id: String) -> Dictionary: return pending_transi
 func snapshot() -> Dictionary: return {"version":SNAPSHOT_VERSION,"phase":phase,"selected_pivot":selected_pivot,"transcripts_by_thread":transcripts_by_thread.duplicate(true),"produced_message_ids":produced_message_ids.duplicate(true),"unlocked_thread_ids":unlocked_thread_ids.duplicate(),"gallery_asset_ids":gallery_asset_ids.duplicate(),"served_visual_beat_ids":served_visual_beat_ids.duplicate(),"pending_choice_ids_by_thread":pending_choice_ids_by_thread.duplicate(true),"pending_transition":pending_transition.duplicate(true),"presented_time_message_ids":presented_time_message_ids.duplicate(true),"current_time_minutes":current_time_minutes}
 func restore_snapshot(value: Dictionary) -> bool:
 	var version := int(value.get("version", -1))
-	if version not in [1, SNAPSHOT_VERSION]: return false
+	if version != SNAPSHOT_VERSION: return false
 	for key in ["transcripts_by_thread","produced_message_ids","pending_choice_ids_by_thread","pending_transition","presented_time_message_ids"]:
 		if typeof(value.get(key)) != TYPE_DICTIONARY: return false
 	for key in ["unlocked_thread_ids","gallery_asset_ids","served_visual_beat_ids"]:
 		if typeof(value.get(key)) != TYPE_ARRAY: return false
-	var restored_value := value
-	if version == 1:
-		restored_value = value.duplicate(true)
-		if not _migrate_r6b_visual_snapshot_v1_to_v2(restored_value): return false
-	if str(restored_value.get("phase", "")) not in ["day_start_pending","to_priority","priority_incoming","priority_choice","to_marie_echo","echo_incoming","day_close","complete"]: return false
-	if str(restored_value.get("selected_pivot", "")) not in ["","PAULINE","RAPHAELLE","NICO","SANDRA","MATHILDE","MARIE","RESPIRATION"]: return false
-	phase = str(restored_value["phase"]); selected_pivot = str(restored_value["selected_pivot"]); transcripts_by_thread = restored_value["transcripts_by_thread"].duplicate(true); produced_message_ids = restored_value["produced_message_ids"].duplicate(true); unlocked_thread_ids.assign(restored_value["unlocked_thread_ids"]); gallery_asset_ids.assign(restored_value["gallery_asset_ids"]); served_visual_beat_ids.assign(restored_value["served_visual_beat_ids"]); pending_choice_ids_by_thread = restored_value["pending_choice_ids_by_thread"].duplicate(true); pending_transition = restored_value["pending_transition"].duplicate(true); presented_time_message_ids = restored_value["presented_time_message_ids"].duplicate(true); current_time_minutes = int(restored_value.get("current_time_minutes", -1))
+	if str(value.get("phase", "")) not in ["day_start_pending","to_priority","priority_incoming","priority_choice","to_marie_echo","echo_incoming","day_close","complete"]: return false
+	if str(value.get("selected_pivot", "")) not in ["","PAULINE","RAPHAELLE","NICO","SANDRA","MATHILDE","MARIE","RESPIRATION"]: return false
+	phase = str(value["phase"]); selected_pivot = str(value["selected_pivot"]); transcripts_by_thread = value["transcripts_by_thread"].duplicate(true); produced_message_ids = value["produced_message_ids"].duplicate(true); unlocked_thread_ids.assign(value["unlocked_thread_ids"]); gallery_asset_ids.assign(value["gallery_asset_ids"]); served_visual_beat_ids.assign(value["served_visual_beat_ids"]); pending_choice_ids_by_thread = value["pending_choice_ids_by_thread"].duplicate(true); pending_transition = value["pending_transition"].duplicate(true); presented_time_message_ids = value["presented_time_message_ids"].duplicate(true); current_time_minutes = int(value.get("current_time_minutes", -1))
 	return _restored_phase_consistent()
-
-func _migrate_r6b_visual_snapshot_v1_to_v2(value: Dictionary) -> bool:
-	if state == null or typeof(state.traces) != TYPE_DICTIONARY or typeof(state.selected_choice_ids) != TYPE_ARRAY: return false
-	if not value.get("served_visual_beat_ids", []).is_empty(): return false
-	for trace_id in state.traces:
-		if str(trace_id).begins_with("j13_raphaelle_masked_adult"): return false
-	var contracts := {
-		"msg_j13_pauline_photo_001":{"pivot":"PAULINE","trace_id":PAULINE_TRACE_ID,"asset_id":PAULINE_ASSET_ID,"label":"Visuel canonique non produit · quatrième frame privée Pauline","removal_choice":"choice_j13_pauline_refuse"},
-		"msg_j13_raphaelle_photo_001":{"pivot":"RAPHAELLE","trace_id":RAPHAELLE_TRACE_ID,"asset_id":RAPHAELLE_ASSET_ID,"label":"Visuel canonique non produit · masque et posture Raphaëlle","removal_choice":"choice_j13_raphaelle_product"},
-		"msg_j13_marie_close_photo_001":{"pivot":"MARIE","trace_id":"j12_laverriere_public_group_set_01","asset_id":"","label":"Trace publique existante · couple à La Verrière","removal_choice":""},
-	}
-	var found := {}
-	var visual_owners := {}
-	for message_id in contracts:
-		var contract: Dictionary = contracts[message_id]
-		var trace_id := str(contract["trace_id"])
-		if visual_owners.has(trace_id) or visual_owners.has(message_id): return false
-		visual_owners[trace_id] = message_id
-		visual_owners[message_id] = trace_id
-	for thread_id in value["transcripts_by_thread"]:
-		var transcript = value["transcripts_by_thread"][thread_id]
-		if typeof(transcript) != TYPE_ARRAY: return false
-		for index in range(transcript.size()):
-			if typeof(transcript[index]) != TYPE_DICTIONARY: return false
-			var item: Dictionary = transcript[index]
-			var message_id := str(item.get("message_id", ""))
-			var item_trace_id := str(item.get("trace_id", ""))
-			if item_trace_id.begins_with("j13_raphaelle_masked_adult"): return false
-			if contracts.has(message_id):
-				if found.has(message_id): return false
-				found[message_id] = {"thread_id":thread_id,"index":index}
-				var contract: Dictionary = contracts[message_id]
-				var expected_trace_id := str(contract["trace_id"]); var expected_asset_id := str(contract["asset_id"])
-				if str(value.get("selected_pivot", "")) != str(contract["pivot"]): return false
-				if str(item.get("content_type", "")) != "PHOTO" or str(item.get("media_ref", "")) != (expected_asset_id if expected_asset_id != "" else expected_trace_id): return false
-				if item.has("trace_id") and item_trace_id != expected_trace_id: return false
-				if item.has("asset_id") and str(item.get("asset_id", "")) != expected_asset_id: return false
-			elif int(item.get("source_day", 0)) == 13:
-				for contract_message_id in contracts:
-					var contract: Dictionary = contracts[contract_message_id]
-					var expected_ref := str(contract["asset_id"]) if str(contract["asset_id"]) != "" else str(contract["trace_id"])
-					if item_trace_id == str(contract["trace_id"]) or str(item.get("media_ref", "")) == expected_ref: return false
-	var expected_private := {"msg_j13_pauline_photo_001":PAULINE_TRACE_ID,"msg_j13_raphaelle_photo_001":RAPHAELLE_TRACE_ID}
-	for message_id in expected_private:
-		var trace_id := str(expected_private[message_id])
-		if state.traces.has(trace_id) != found.has(message_id): return false
-	var marie_expected := str(value.get("selected_pivot", "")) == "MARIE" and str(value.get("phase", "")) != "to_priority"
-	if marie_expected != found.has("msg_j13_marie_close_photo_001"): return false
-	for message_id in contracts:
-		if found.has(message_id) != bool(value["produced_message_ids"].get(message_id, false)): return false
-		if not found.has(message_id): continue
-		var contract: Dictionary = contracts[message_id]; var trace_id := str(contract["trace_id"]); var trace: Dictionary = state.traces.get(trace_id, {})
-		if trace.is_empty(): return false
-		var removed := str(trace.get("current_state", "")) in ["REMOVED","INACCESSIBLE"]
-		var removal_choice := str(contract["removal_choice"])
-		if removal_choice != "" and removed != state.selected_choice_ids.has(removal_choice): return false
-		var location: Dictionary = found[message_id]; var transcript: Array = value["transcripts_by_thread"][location["thread_id"]]; var item: Dictionary = transcript[int(location["index"])]
-		item["trace_id"] = trace_id; item["asset_id"] = str(contract["asset_id"]); item["viewer_enabled"] = false
-		if removed:
-			item["content_type"] = "TEXT"; item["text"] = REMOVED_CONTENT_LABEL; item["media_ref"] = ""; item["placeholder_label"] = REMOVED_CONTENT_LABEL
-		else:
-			item["content_type"] = "IMAGE"; item["media_ref"] = str(contract["asset_id"]) if str(contract["asset_id"]) != "" else trace_id; item["placeholder_label"] = str(contract["label"])
-		transcript[int(location["index"])] = item; value["transcripts_by_thread"][location["thread_id"]] = transcript
-		value["served_visual_beat_ids"].append(trace_id)
-	var sandra_trace: Dictionary = state.traces.get(SANDRA_TRACE_ID, {})
-	if not sandra_trace.is_empty() and str(sandra_trace.get("current_state", "")) == "REMOVED":
-		for thread_id in value["transcripts_by_thread"]:
-			var transcript: Array = value["transcripts_by_thread"][thread_id]
-			for index in range(transcript.size()):
-				var item: Dictionary = transcript[index]
-				if str(item.get("trace_id", "")) != SANDRA_TRACE_ID and str(item.get("media_ref", "")) != SANDRA_ASSET_ID: continue
-				item["trace_id"] = SANDRA_TRACE_ID; item["asset_id"] = SANDRA_ASSET_ID; item["content_type"] = "TEXT"; item["text"] = REMOVED_CONTENT_LABEL; item["media_ref"] = ""; item["placeholder_label"] = REMOVED_CONTENT_LABEL; item["viewer_enabled"] = false
-				transcript[index] = item
-			value["transcripts_by_thread"][thread_id] = transcript
-	value["version"] = SNAPSHOT_VERSION
-	return true
 
 func presentation_count_by_id(id: String) -> int:
 	var count := 0

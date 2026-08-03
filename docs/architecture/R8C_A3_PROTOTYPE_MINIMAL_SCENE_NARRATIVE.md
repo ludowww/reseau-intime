@@ -10,7 +10,9 @@
 
 Ce lot prouve le trajet minimal d'une scène écrite : déclaration, évaluation, instance située, proposition perceptible, résolution liée au choix ou occasion manquée, puis éventuelle conséquence qualitative par la frontière transactionnelle existante d'`EtatNarratif`.
 
-Il ne modifie ni R8C-A1, ni R8C-A2, ni `docs/15_PLAYER_FLOW_AND_PASSIVE_SIGNALS.md`.
+Lors de sa livraison, A3 n'a modifié ni R8C-A1, ni R8C-A2, ni l'ancien document
+de signaux passifs. Ce dernier a ensuite été supprimé par R8C-A4 comme source
+non canonique; cette clarification ne change aucun contrat A3.
 
 ## Contrat réellement consommé
 

@@ -79,6 +79,8 @@ def emoji_evolution_guidance(
 
 
 def main() -> int:
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description="Build a dialogue writing context pack.")
     parser.add_argument("--character", required=True, help="Character key, e.g. marie, sandra, raphaelle")
     parser.add_argument("--day", type=int, default=None, help="Target story day, e.g. 6")

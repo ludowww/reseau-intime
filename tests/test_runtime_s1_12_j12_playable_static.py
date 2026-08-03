@@ -91,30 +91,25 @@ class RuntimeS112J12PlayableStaticTests(unittest.TestCase):
         for inferred_subject in ["Mathilde", "Raphaëlle", "Sandra", "Nico", "j11_pivot", "j11_pivot_outcome", "aftercare"]:
             self.assertNotIn(inferred_subject, helper)
         smoke = self.read("game/tests/RUNTIME_S1_12J12PlayableSmokeDriver.gd")
-        for evidence in ["FIRST_KISS does not infer Raphaëlle as a T14 subject", "M-B2 does not infer Mathilde as a T14 subject", "v21 migration removes route-derived Mathilde and Raphaëlle from T14"]:
+        for evidence in ["FIRST_KISS does not infer Raphaëlle as a T14 subject", "M-B2 does not infer Mathilde as a T14 subject"]:
             self.assertIn(evidence, smoke)
 
-    def test_r5c_priority_debt_and_v21_migration_are_fail_closed(self):
+    def test_j12_priority_debt_is_canonical_and_old_snapshots_are_rejected(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         smoke = self.read("game/tests/RUNTIME_S1_12J12PlayableSmokeDriver.gd")
         for route in ["SANDRA", "MATHILDE", "RAPHAELLE", "NICO", "MARIE", "NETWORK"]:
             self.assertIn(f'"{route}"', state)
         for token in [
-            '"due_at":"J13 avant toute nouvelle opportunité"',
-            '"route":route',
-            "MATHILDE_HOUSEHOLD_AFTERCARE",
-            "func _migrate_r5c_j12_registers",
-            'if version < SNAPSHOT_VERSION:',
+            "j12_priority_route", "j12_failed_aftercare_processed", "func begin_j12", "func complete_j12",
+            '"due_at":"J13 avant toute nouvelle opportunité"', '"route":route',
+            "MATHILDE_HOUSEHOLD_AFTERCARE", "const SNAPSHOT_VERSION := 25", "if version != SNAPSHOT_VERSION",
         ]:
             self.assertIn(token, state)
-        for token in [
-            "R5C migration rejects contradictory A12 refusal evidence",
-            "migration creates neither T16 nor F20 before an exact source event",
-        ]:
-            self.assertIn(token, smoke)
+        self.assertNotIn("func _migrate_r5c_j12_registers", state)
+        self.assertIn("current v25 snapshot round-trips", smoke)
+        self.assertIn("obsolete state snapshot is rejected", smoke)
         self.assertIn('if state.j11_pivot_outcome == "SANDRA_IMAGE_REMOVED": return "NETWORK"', self.read("game/scripts/runtime/season_1/J12RuntimeProvider.gd"))
-
-    def test_r5a_exact_outcomes_morning_aftercare_and_fail_closed_migration(self):
+    def test_j11_exact_outcomes_and_morning_aftercare_use_current_state(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         j11 = self.read("game/scripts/runtime/season_1/J11RuntimeProvider.gd")
         j12 = self.read("game/scripts/runtime/season_1/J12RuntimeProvider.gd")
@@ -128,15 +123,16 @@ class RuntimeS112J12PlayableStaticTests(unittest.TestCase):
             self.assertIn(outcome, state)
             self.assertIn(outcome, j12)
         self.assertIn("func set_j11_semantic_outcome", state)
-        self.assertIn("func _migrate_r5a_j11_semantic_outcome", state)
-        self.assertIn("ambiguous", self.read("game/tests/RUNTIME_S1_12J12PlayableSmokeDriver.gd"))
         self.assertNotIn('resolve_j11_aftercare("aftercare_marie_j11"', j11.split("func confirm_scene_sequence", 1)[1].split("func ", 1)[0])
         for token in ["Café dans dix minutes.", "hier soir ne te dispense pas d’être une personne ce matin.", "j12_marie_morning_aftercare"]:
             self.assertIn(token, obligations)
         self.assertIn("state.pay_j12_marie_aftercare()", j12)
         self.assertIn('return "MATHILDE"', j12.split("func _priority_route", 1)[1])
         self.assertIn("MATHILDE_HOUSEHOLD_AFTERCARE", state)
-
+        self.assertIn("const SNAPSHOT_VERSION := 25", state)
+        self.assertIn("if version != SNAPSHOT_VERSION", state)
+        self.assertNotIn("func _migrate_r5a_j11_semantic_outcome", state)
+        self.assertNotIn("func _migrate_r5b_j11_semantic_outcome", state)
     def test_r5a_branch_data_preserves_silence_and_distinct_consequences(self):
         laverriere = self.load("game/data/conversations/chapter_12_laverriere.json")
         annexe = self.load("game/data/conversations/chapter_12_annexe.json")
@@ -197,8 +193,6 @@ class RuntimeS112J12PlayableStaticTests(unittest.TestCase):
         self.assertNotIn("j12_after_nico_clean_close", annexe_ids)
         self.assertIn('"SANDRA_IMAGE_REMOVED": return ""', j12)
         self.assertIn('"NICO_CLEAN_CLOSE": return ""', j12)
-        self.assertIn("ambiguous legacy Sandra snapshot fails closed", self.read("game/tests/RUNTIME_S1_12J12PlayableSmokeDriver.gd"))
-        self.assertIn("ambiguous legacy Nico snapshot fails closed", self.read("game/tests/RUNTIME_S1_12J12PlayableSmokeDriver.gd"))
 
     def test_handoff_moves_content_end_to_j12(self):
         j11 = self.load("game/data/runtime/season_1/j11_runtime_map.json")

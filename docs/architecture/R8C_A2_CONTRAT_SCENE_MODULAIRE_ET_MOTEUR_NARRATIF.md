@@ -339,13 +339,19 @@ Ces explications utilisent des identifiants et codes de raisons stables. Elles s
 - Les vues de candidats, classements et disponibilités sont reconstructibles et invalidables.
 - Les décisions importantes restent des événements sourcés, pas des états implicites dans l'orchestrateur.
 
-## 19. Dette documentaire explicitement non canonique
+## 19. Consolidation documentaire R8C-A4
 
-Le modèle d'accumulation et de scores cachés présenté dans `docs/15_PLAYER_FLOW_AND_PASSIVE_SIGNALS.md`, notamment ses scores d'attention et sa règle d'accumulation de signaux passifs, est **non canonique sur ce point**.
+Le modèle d'accumulation et de scores cachés autrefois présenté dans
+`docs/15_PLAYER_FLOW_AND_PASSIVE_SIGNALS.md` est non canonique. R8C-A4 a supprimé
+ce document et son doublon de décision après transfert de ses seules règles
+encore utiles : charge mentale bornée, conséquences lisibles, absence de
+surveillance punitive et chaîne explicite du micro-signal.
 
-Le présent contrat le remplace pour les micro-signaux relationnels : expression située, réception et interprétation par le personnage, effets bornés et événements qualitatifs sourcés, sans compteur ni jauge cachée. Les autres recommandations de fluidité ou de charge mentale de l'ancien document ne sont pas arbitrées ici.
-
-`docs/15_PLAYER_FLOW_AND_PASSIVE_SIGNALS.md` doit être réconcilié dans un lot documentaire séparé afin de préserver un historique de décision clair. R8C-A2 ne modifie pas ce fichier.
+Le présent contrat demeure l'autorité pour les micro-signaux relationnels :
+expression située, réception et interprétation par le personnage, effets bornés
+et événements qualitatifs sourcés, sans compteur ni jauge cachée. Le classement
+et les vérifications de références sont consignés dans
+`docs/maintenance/R8C_A4_CONSOLIDATION_CANONIQUE_ET_NETTOYAGE_LEGACY.md`.
 
 ## 20. Critères de validation produit
 

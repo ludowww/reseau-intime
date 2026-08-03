@@ -4,7 +4,6 @@ class_name J14RuntimeProvider
 
 const J14_MAP_PATH := "res://data/runtime/season_1/j14_runtime_map.json"
 const J14_SNAPSHOT_VERSION := 4
-const LEGACY_J14_SNAPSHOT_VERSIONS := [SNAPSHOT_VERSION, 3]
 const J14_PHASES := ["day_start_pending","to_presence_context","to_discovery","priority_incoming","priority_choice","to_controller","echo_incoming","to_clarification","clarification_incoming","day_close","complete"]
 
 func initialize(shared_state, cumulative_transcripts: Dictionary, cumulative_ids: Dictionary, cumulative_threads: Array, cumulative_gallery_ids: Array) -> bool:
@@ -100,49 +99,15 @@ func snapshot() -> Dictionary:
 	var value: Dictionary = super.snapshot(); value["version"] = J14_SNAPSHOT_VERSION; return value
 
 func restore_snapshot(value: Dictionary) -> bool:
-	var migrated := value.duplicate(true); var version := int(migrated.get("version", -1))
-	if version != J14_SNAPSHOT_VERSION:
-		if version not in LEGACY_J14_SNAPSHOT_VERSIONS or not _migrate_legacy_j14_provider_snapshot(migrated, version): return false
-	var restored_phase := str(migrated.get("phase", ""))
-	if int(migrated.get("version", -1)) != J14_SNAPSHOT_VERSION or restored_phase not in J14_PHASES: return false
-	if str(migrated.get("selected_pivot", "")) not in ["","PAULINE","SANDRA","MATHILDE","RAPHAELLE","NICO","S27_MUTATION_NO_DISCOVERY"]: return false
+	var restored_phase := str(value.get("phase", ""))
+	if int(value.get("version", -1)) != J14_SNAPSHOT_VERSION or restored_phase not in J14_PHASES: return false
+	if str(value.get("selected_pivot", "")) not in ["","PAULINE","SANDRA","MATHILDE","RAPHAELLE","NICO","S27_MUTATION_NO_DISCOVERY"]: return false
 	for key in ["transcripts_by_thread","produced_message_ids","pending_choice_ids_by_thread","pending_transition","presented_time_message_ids"]:
-		if typeof(migrated.get(key)) != TYPE_DICTIONARY: return false
+		if typeof(value.get(key)) != TYPE_DICTIONARY: return false
 	for key in ["unlocked_thread_ids","gallery_asset_ids","served_visual_beat_ids"]:
-		if typeof(migrated.get(key)) != TYPE_ARRAY: return false
-	phase = restored_phase; selected_pivot = str(migrated["selected_pivot"]); transcripts_by_thread = migrated["transcripts_by_thread"].duplicate(true); produced_message_ids = migrated["produced_message_ids"].duplicate(true); unlocked_thread_ids.assign(migrated["unlocked_thread_ids"]); gallery_asset_ids.assign(migrated["gallery_asset_ids"]); served_visual_beat_ids.assign(migrated["served_visual_beat_ids"]); pending_choice_ids_by_thread = migrated["pending_choice_ids_by_thread"].duplicate(true); pending_transition = migrated["pending_transition"].duplicate(true); presented_time_message_ids = migrated["presented_time_message_ids"].duplicate(true); current_time_minutes = int(migrated.get("current_time_minutes", -1))
+		if typeof(value.get(key)) != TYPE_ARRAY: return false
+	phase = restored_phase; selected_pivot = str(value["selected_pivot"]); transcripts_by_thread = value["transcripts_by_thread"].duplicate(true); produced_message_ids = value["produced_message_ids"].duplicate(true); unlocked_thread_ids.assign(value["unlocked_thread_ids"]); gallery_asset_ids.assign(value["gallery_asset_ids"]); served_visual_beat_ids.assign(value["served_visual_beat_ids"]); pending_choice_ids_by_thread = value["pending_choice_ids_by_thread"].duplicate(true); pending_transition = value["pending_transition"].duplicate(true); presented_time_message_ids = value["presented_time_message_ids"].duplicate(true); current_time_minutes = int(value.get("current_time_minutes", -1))
 	return _restored_phase_consistent()
-
-func _migrate_legacy_j14_provider_snapshot(value: Dictionary, version: int) -> bool:
-	var legacy_phase := str(value.get("phase", ""))
-	if legacy_phase not in ["day_start_pending","to_discovery","priority_incoming","priority_choice","to_controller","echo_incoming","day_close","complete"]: return false
-	if legacy_phase in ["to_discovery","priority_incoming"] and state.traces.has("j14_discovery_event_01") and not state.rollback_unpresented_legacy_j14_discovery(): return false
-	if str(value.get("selected_pivot", "")) == "FALLBACK": value["selected_pivot"] = "S27_MUTATION_NO_DISCOVERY"
-	if legacy_phase == "echo_incoming":
-		var notice: Dictionary = state.promises.get("j14_inform_trace_controller", {})
-		if str(notice.get("status", "")) == "PAID":
-			value["phase"] = "day_close"; value["pending_transition"] = _legacy_transition("day_close", value)
-		_migrate_legacy_controller_transcript(value)
-	value["version"] = J14_SNAPSHOT_VERSION
-	return true
-
-func _legacy_transition(kind: String, value: Dictionary) -> Dictionary:
-	var transition: Dictionary = runtime_map.get(kind, {}).duplicate(true); transition["kind"] = kind; transition["from_time"] = NARRATIVE_TIME.format_narrative_time(int(value.get("current_time_minutes", current_time_minutes))); return transition
-
-func _migrate_legacy_controller_transcript(value: Dictionary) -> void:
-	var controller_thread := _controller_thread(); var transcripts: Dictionary = value.get("transcripts_by_thread", {})
-	if controller_thread == "" or not transcripts.has(controller_thread): return
-	var transcript: Array = transcripts[controller_thread]; var replacement: Array = []
-	for message in transcript:
-		if str(message.get("message_id", "")) == "msg_j14_controller_001":
-			var segment: Dictionary = segments_by_id.get("j14_controller_" + str(value.get("selected_pivot", "")).to_lower(), {})
-			for canonical in segment.get("messages", []):
-				var canonical_author := str(canonical.get("sender", "system")); var canonical_text := _canonical_controller_notice_text(str(value.get("selected_pivot", ""))) if canonical_author == "player" else str(canonical.get("text", "")); var item := {"message_id":str(canonical.get("id", "")),"author_id":canonical_author,"timestamp":str(canonical.get("time_label", "")),"content_type":"TEXT","text":canonical_text,"media_ref":"","is_player":canonical_author == "player","is_read":canonical_author == "player","source_day":14}; replacement.append(item)
-		else: replacement.append(message)
-	transcripts[controller_thread] = replacement; value["transcripts_by_thread"] = transcripts
-	var produced: Dictionary = value.get("produced_message_ids", {}); produced.erase("msg_j14_controller_001")
-	for item in replacement: produced[str(item.get("message_id", ""))] = true
-	value["produced_message_ids"] = produced
 
 func _append_j14_clarification_messages(thread_id: String) -> void:
 	var promise: Dictionary = state.promises.get("j14_witness_clarification", {}); var due_at := str(promise.get("due_at", "")); var clock := due_at.trim_prefix("J14 ")
