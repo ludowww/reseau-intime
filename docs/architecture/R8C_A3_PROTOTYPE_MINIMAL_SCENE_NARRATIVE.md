@@ -45,15 +45,16 @@ Une définition éligible jamais proposée expire silencieusement. Une propositi
 
 La résolution prend explicitement `choix_id` et `resolution_id`. Le moteur vérifie que le choix existe, que la résolution lui est autorisée, puis que `signal_emis == signal_recu`. Une formulation sobre ne peut donc produire ni la réception chaleureuse ni la limite audacieuse.
 
-Avec `AVANT_PROPOSITION_ET_RESOLUTION`, le contexte courant est réévalué juste avant toute préparation terminale. Une fenêtre fermée, un participant indisponible, un acte changé, une exclusion nouvelle, une opportunité expirée ou une résolution UNIQUE concurrente refusent l'opération sans modifier A1 ni l'instance.
+Avec `AVANT_PROPOSITION_ET_RESOLUTION`, le contexte courant est réévalué juste avant toute préparation de résolution. Une fenêtre fermée, un participant indisponible, un acte changé, une exclusion nouvelle, une opportunité expirée ou une résolution UNIQUE concurrente refusent l'opération sans modifier A1 ni l'instance.
 
 La séquence terminale est :
 
 1. validation définition, choix, résolution, signal et contexte ;
-2. construction de la conséquence candidate ;
+2. construction des données terminales et de l'éventuelle trace temporaire ;
 3. préparation complète et sans mutation de la transition d'instance ;
-4. appel atomique unique à A1 si la portée est durable ;
-5. application sans validation restante de la transition déjà préparée.
+4. construction et vérification de la conséquence candidate si la portée est durable ;
+5. appel atomique unique à A1 si la portée est durable ;
+6. application sans validation restante de la transition déjà préparée.
 
 Un rejet A1 laisse l'instance `PROPOSED`. Après un retour `APPLIQUE` ou `IDEMPOTENT`, aucune opération susceptible de refuser la transition n'est exécutée.
 
