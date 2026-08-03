@@ -1,6 +1,6 @@
 # R8C-A2 — Contrat de scène modulaire et moteur narratif
 
-> **Statut : `PRODUCT_CONTRACT_READY_FOR_REVIEW`**
+> **Statut : `PRODUCT_APPROVED_READY_FOR_LOCK`**
 > **Portée : documentation produit uniquement**
 > **Dépendance verrouillée :** R8C-A1, commit `6a1f08834a832dd406cd8adb96e3ad034eb5018e`, tag `r8c-a1-narrative-state-foundation`.
 
@@ -378,4 +378,4 @@ Les lots techniques futurs devront d'abord choisir la représentation minimale d
 
 ## Verdict
 
-`PRODUCT_CONTRACT_READY_FOR_REVIEW`
+`PRODUCT_APPROVED_READY_FOR_LOCK`
