@@ -2,11 +2,11 @@
 
 ## Statut
 
-> **Candidat de réconciliation produit — READY_FOR_PRODUCT_REVIEW.**
+> **PRODUCT_APPROVED_READY_FOR_LOCK.**
 >
-> Ce document fixe les décisions à valider avant R8B/R8C. Il ne verrouille pas
-> encore une architecture définitive et ne révoque pas silencieusement les scripts
-> ou canons personnages existants.
+> Les arbitrages narratifs de saison sont approuvés. Ce document ne constitue pas
+> à lui seul le verrouillage cumulé R8A-C1 + C2 + C3 et n'autorise donc ni R8B ni
+> R8C avant ce verrouillage et la signature du contrat produit du moteur.
 
 ## Résumé exécutif
 
@@ -81,26 +81,30 @@ Une scène modulaire peut être légère, relationnelle ou structurante et incar
 événement obligatoire du tronc commun. Elle produit événements et conséquences,
 mais ne possède pas d'état relationnel persistant : celui-ci appartient à
 `EtatNarratif`, `EtatRelation` ou `EtatRelationCentrale`. Le consentement est local
-à la scène, actuel, révocable et non persistant.
+à la scène, actuel, révocable et non persistant. Elle ne crée aucune variable `jNN_*`.
 
 ## 3. Contrat de finale Marie / Player
 
 ### Obligation de clôture
 
-Toute partie complète se conclut par une conversation explicite Marie/Player,
-après les résolutions de routes pertinentes. Une posture face à une trace, un état
-de route ou un épilogue visuel ne peut la remplacer. Cette conversation produit une
-décision réelle, même lorsque celle-ci reste difficile ou provisoire.
+Toute saison complète se conclut dans cet ordre : conséquences pertinentes des
+routes, promesses, traces et obligations ; conversation finale Marie/Player
+explicite et autonome ; décision du couple et organisation concrète ; puis courts
+épilogues relationnels ou visuels compatibles. Ni posture face à une trace, ni état
+de route, ni épilogue ne peut remplacer cette conversation ou contredire le contrat
+final. Cette conversation produit une décision réelle, même difficile ou provisoire.
 
 | Décision | Valeurs nécessaires | Règle |
 |---|---|---|
-| Rester ensemble | `contrat_couple = exclusif | ouvert | libertin` | Contrat explicite et actuel ; pas de permission générale envers des tiers. |
-| Rester ensemble | `etat_divulgation = honnete | partiel | asymetrique | mensonger_compromis | revele` | La divulgation est séparée du contrat. |
+| Statut | `statut_couple = ENSEMBLE | SEPARES | INDETERMINE/EN_CLARIFICATION` | Les états d'indétermination ne sont admis avant finale que si nécessaire. |
+| Rester ensemble | `contrat_couple = EXCLUSIF | OUVERT | LIBERTIN | PROVISOIRE` | Contrat explicite et actuel ; pas de permission générale envers des tiers. |
+| Rester ensemble | `etat_divulgation = HONNETE | PARTIEL | ASYMETRIQUE | MENSONGER_COMPROMIS | REVELE` | La divulgation est séparée du contrat. |
 | Se séparer | départ et logistique concrets | La sortie traite logement, objets, rendez-vous ou limites. |
-| Se séparer | `relation_apres_separation = bons_termes | blessee | hostile | sans_contact` | La relation résiduelle est distincte de la rupture. |
+| Se séparer | `relation_apres_separation = BONS_TERMES | BLESSEE | HOSTILE | SANS_CONTACT` | La relation résiduelle est distincte de la rupture. |
 
-Une double vie mensongère n'est jamais un contrat sain : elle relève de
-`mensonger_compromis`, reste instable et porte des conséquences réelles.
+Ces termes sont internes : l'interface et le dialogue emploient un vocabulaire
+naturel. Une double vie mensongère n'est jamais un contrat sain : elle relève de
+`MENSONGER_COMPROMIS`, reste instable et porte des conséquences réelles.
 
 La conversation finale doit partir des événements, connaissances, promesses,
 traces et conséquences établis ; respecter ce que Marie sait réellement ; rendre
@@ -108,47 +112,31 @@ sa réponse autonome ; et établir l'état central de sortie. Elle ne doit ni ab
 un mensonge rétroactivement, ni convertir un consentement passé en permission, ni
 promettre un tiers.
 
-## 4. Actes : comparaison et recommandation
+Un contrat final `PROVISOIRE` est une résolution de saison seulement s'il comporte
+simultanément la règle actuelle, ses limites explicites, une date ou condition de
+réévaluation, des obligations concrètes de suivi et aucune permission extérieure
+implicite. Il ne vaut ni absence de décision ni report indéfini.
 
-### Architecture actuelle
+## 4. Actes approuvés : cinq mouvements souples
 
-| Mouvement | Valeur conservée | Risque à corriger |
-|---|---|---|
-| I — Réouverture | Installe couple, ordinaire et possibilité de désir. | Marie ne devient pas l'état initial à dépasser. |
-| II — Lignes privées | Rend limites et liens distinctifs visibles. | La discrétion ne devient pas un mini-jeu de dissimulation. |
-| III — Vies parallèles | Met des mondes et désirs divergents en tension. | Le retour au couple reste rythmé. |
-| IV — Convergence | Fait collisionner conséquences, connaissances et obligations. | Aucune convergence identique n'est imposée à toutes les routes. |
-| V — Vérité supportable | Porte clarification, réparation, perte et clôture. | La finale Marie/Player devient obligatoire. |
+Les séquences et le corpus existants sont matière à adapter, jamais un ordre rigide.
+Un acte ne se franchit ni par score, ni compteur, ni nombre fixe de scènes ou jours.
 
-Cette structure est compatible avec R8A : elle distingue mouvements fixes et
-contenu variable, et accepte l'autonomie des personnages hors champ.
+| Acte | Question dramatique | Transformation attendue | Événements structurants possibles | Sortie narrative | Garde-fous de rythme |
+|---|---|---|---|---|---|
+| I — Réouverture | Qu'est-ce qui se réveille dans la vie de Marie et Player ? | Désir, changement ou rapprochement devient reconnaissable dans le quotidien. | Retour de lien, promesse, invitation, friction intime, premier refus ou curiosité. | L'ouverture a un effet lisible et un recentrage Marie/Player a eu lieu. | Installer l'ordinaire avant l'intensité ; pas d'opportunités semblables immédiates. |
+| II — Attirances | Pourquoi certaines personnes commencent-elles à compter autrement ? | Une attirance, un attachement ou une limite ne peut plus être réduit à une occasion. | Confidence, rendez-vous, proximité, limite, jalousie ou soutien révélateur. | L'attirance ou limite a une conséquence, située par un retour à Marie/Player. | Différencier personnages et émotions ; alterner découverte, respiration et recentrage. |
+| III — Explorations | Qu'est-ce que Player et les autres souhaitent réellement vivre ? | Désirs, limites, accords ou incompatibilités deviennent précis et engageants. | Exploration consentie, retrait, accord local, contradiction, promesse ou dette. | Une exploration modifie ce qui est possible, dû ou difficile à dire. | Consentement actuel ; pas d'empilement ; conséquence avant intensification ; journées calmes. |
+| IV — Limites et conséquences | Qu'est-ce qui ne peut plus être vécu sans être assumé ? | Les faits, limites, connaissances ou obligations exigent une réponse. | Limite non négociable, révélation située, conflit, réparation, retrait, promesse à honorer. | Les conséquences pertinentes sont résolues, transformées ou portées vers la finale. | Pas de collision identique imposée ; pas d'escalade mécanique ; temps d'intégration. |
+| V — Clarification | Que choisissent Marie et Player de construire ou de terminer ? | Contrat, séparation organisée ou contrat provisoire complet. | Conséquences finales, conversation finale, organisation concrète, départ, réparation, épilogues compatibles. | L'ordre de fin est accompli et l'état final établi. | Pas de trace ou épilogue à la place de la conversation ; ni ambiguïté-report, ni contenu infini. |
 
-### Architectures candidates
+## 5. Modèle temporel approuvé
 
-| Candidat | Forme | Avantages | Risques |
-|---|---|---|---|
-| A — Cinq mouvements réconciliés | Réouverture / lignes privées / vies parallèles / convergence / clarification | Préserve corpus, séquences et progression de conséquences. | Lourdeur si chaque mouvement devient un quota. |
-| B — Quatre mouvements simplifiés | Attirance / exploration / limite / construction ou séparation | Lecture produit compacte. | Fusionne des tensions distinctes et demande un audit des séquences. |
-| C — Trois macro-questions | Désir nommé / vérité à l'épreuve / décision commune | Très lisible conceptuellement. | Trop abstrait pour guider seul la production. |
+J01–J21 sont des références du corpus et runtime historiques. Le futur moteur ne garantit ni vingt-et-un jours, ni une correspondance fixe jour/fonction dramatique. Les jours restent des contenants diégétiques pour horaires, rendez-vous, promesses, repos, absences et crédibilité ; une journée n'a pas nécessairement provider, outcome ni variables `jNN_*`.
 
-**Recommandation : candidat A.** Les cinq mouvements sont conservés comme
-structure souple ; l'Acte V devient fonctionnellement « clarification et décision ».
-Le candidat B peut être audité comme vue de planification, sans réécrire la saison.
+Les actes ont une durée variable et peuvent contenir un nombre très différent de discussions selon le parcours. Le rythme doit éviter stagnation, répétition, progression trop rapide et contenu infini : chaque variation sert transformation, conséquence, respiration ou préparation de choix. Tout exemple numérique est non canonique.
 
-| Acte recommandé | Question dramatique | Transformation | Sortie narrative |
-|---|---|---|---|
-| I — Réouverture | Qu'est-ce qui manque ou se réveille dans le couple ? | Une possibilité réelle de désir ou changement est établie. | Événement de réouverture et retour de couple lisible. |
-| II — Lignes privées | Que chacun garde-t-il, partage-t-il ou refuse-t-il ? | Limites et liens distinctifs reconnus. | Une ligne privée a conséquence et un recentrage couple a eu lieu. |
-| III — Vies parallèles | Que révèle la coexistence de désirs ou mondes divergents ? | Contradiction, désir ou dette devient impossible à ignorer. | Événement significatif modifie confiance, foyer, connaissance ou engagement. |
-| IV — Convergence | Quelles conséquences doivent être affrontées ? | Les faits cessent de pouvoir être évités. | Obligations majeures résolues, transformées ou assumées ; finale due. |
-| V — Clarification | Que choisissent Marie et Player de construire ou terminer ? | Contrat explicite ou séparation organisée. | Conversation accomplie, état central final et conséquences de sortie établis. |
-
-Un acte peut contenir trois ou quinze discussions. Il n'est jamais franchi par un
-score ni un compteur. Chaque acte doit fournir une progression significative,
-éviter la répétition infinie, inclure au moins un recentrage Marie/Player et faire
-remonter les conséquences dues avant une opportunité de même nature.
-
-## 5. Fiches synthétiques des sept personnages
+## 6. Fiches synthétiques des sept personnages
 
 | Personnage | Éveille | Peut construire | Impact couple | Rôle finale | Décision |
 |---|---|---|---|---|---|
@@ -160,7 +148,7 @@ remonter les conséquences dues avant une opportunité de même nature.
 | Nico | Miroir masculin, rivalité, regard partagé. | Amitié, garde-fou, rival, pacte conditionnel ou retrait. | Éclaire posture, alibi et jalousie de Player. | Témoin ou conséquence de réseau. | ADAPT : `desir = NONE`. |
 | Player | Désir reconnu, responsabilité, présence. | Engagement, réparation limitée ou séparation assumée. | Sujet des choix, non collectionneur de routes. | Décide avec Marie sans contrôler sa réponse. | ADAPT. |
 
-## 6. Matrice documentaire KEEP / ADAPT / REWRITE / ARCHIVE
+## 7. Matrice documentaire KEEP / ADAPT / REWRITE / ARCHIVE
 
 | Document | Décision | Raccord futur requis |
 |---|---|---|
@@ -193,57 +181,48 @@ remonter les conséquences dues avant une opportunité de même nature.
 **ARCHIVE : aucun document inspecté n'est à archiver immédiatement.** Une archive ne
 peut suivre qu'une réécriture explicitement signée avec renvoi historique stable.
 
-## 7. Écart J17 / J21
+## 8. Statut des séquences historiques J17 / J21
 
 J17 contient une conversation Marie/Player substantielle et des sorties de
 reconquête, accord provisoire, reconfiguration, double vie fragile et
-fracture/séparation. C'est une clarification provisoire de milieu de parcours :
-elle ne satisfait pas l'obligation de fin de partie complète.
+fracture/séparation. C'est une source historique à réécrire comme séquence de
+clarification intermédiaire tardive et provisoire : ni « milieu de parcours », ni
+jour fixe, ni résolution de saison.
 
-J21 est aujourd'hui centré sur trace principale et postures finales (agir,
-reconnaître une perte, maintenir une contradiction). Il reflète des états de couple
-mais ne rend pas obligatoire une conversation finale clarifiant contrat ou
-séparation. L'écart est réel. Une réécriture ciblée ultérieure doit garder J17 comme
-clarification provisoire et faire de J21 l'accomplissement de la conversation
-Marie/Player, après les modules de conséquence.
+J21 est aujourd'hui centré sur trace principale et postures finales. Il devient une
+source historique à réécrire ou adopter comme matière de la **séquence finale de
+saison**, jamais une date obligatoire. Cette séquence accomplit la conversation
+finale Marie/Player après les conséquences pertinentes, puis conduit à la décision
+et aux épilogues compatibles.
 
-## 8. Impacts R8A / R8B / R8C
+## 9. Impacts R8A / R8B / R8C
 
-R8A reste applicable : le futur moteur exprimera `relation_centrale`, routes
-qualitatives, événements, traces narratives, connaissances, consentement local,
-scènes modulaires et finale obligatoire. `contrat_couple` et `etat_divulgation`
-sont distincts ; un mensonge est un état instable, non un contrat sain.
+R8A est applicable dans son principe : le futur moteur exprimera `relation_centrale`,
+routes qualitatives, événements, traces, connaissances, consentement local, scènes
+modulaires sans `jNN_*` et séquence finale de saison. `contrat_couple` et
+`etat_divulgation` sont distincts ; un mensonge est un état instable, non un contrat.
 
-R8B et R8C restent **non autorisés** avant signature de ce contrat et arbitrage des
-points ouverts. Aucun modèle, reducer, JSON narratif, test ou migration ne peut
-anticiper ces décisions comme si elles étaient acquises.
+R8B et R8C restent **non autorisés** avant verrouillage cumulé R8A-C1 + C2 + C3 et
+signature du contrat produit moteur. Aucun modèle, reducer, JSON narratif, test,
+migration, dialogue, asset ou code ne peut anticiper ces décisions comme acquises.
 
-## 9. Décisions encore à arbitrer
+## 10. Décisions encore ouvertes
 
-1. Valider le candidat A ou auditer la piste B avant toute réécriture de trame.
-2. Définir si un contrat final peut être explicitement temporaire, avec date et
-   obligations de suivi, ou doit être stable à la clôture.
-3. Valider la taxonomie et le vocabulaire joueur de contrat, divulgation et
-   relation après séparation.
-4. Choisir la granularité de J21 : module final unique ou journée restructurée.
-5. Auditer chaque promesse implicite de pont futur : motivation, crédibilité,
-   consentement actuel.
-6. Arbitrer les raccords Pauline et Nico, les plus sensibles pour double vie,
-   alibi, tiers et regard partagé.
+1. Granularité exacte des réécritures de la trame et des séquences historiques J17/J21.
+2. Sélection des premiers ponts conditionnels à produire et de leurs raccords.
+3. Détail de la taxonomie technique dans le futur contrat moteur.
 
-## 10. Prochains lots recommandés
+## 11. Prochains lots recommandés
 
-1. **R8A-C3 — Validation et verrouillage** : arbitrer les points ouverts et signer
-   la structure ; modifier seulement les index/statuts indispensables.
-2. **R8A-C4 — Réécriture canonique ciblée J17/J21** : écrire la finale obligatoire
-   et ajuster la trame, sans runtime.
-3. **R8B — Lecture seule de l'état réconcilié** : seulement après C3/C4 signés.
+1. **Verrouillage cumulé R8A-C1 + C2 + C3** : enregistrer et signer la décision approuvée.
+2. **Réécriture canonique ciblée** : adapter trame et séquences historiques J17/J21 en séquences non liées à des jours fixes, sans runtime.
+3. **Contrat produit du nouveau moteur / R8B en lecture seule** : seulement après verrouillage et dans cet ordre recommandé.
 
 ## Verdict documentaire
 
 ```text
-READY_FOR_PRODUCT_REVIEW
+PRODUCT_APPROVED_READY_FOR_LOCK
 ```
 
-La direction conserve la valeur du corpus existant et rend R8A cohérent, sans
-devenir canonique définitive avant validation explicite.
+L'architecture narrative est applicable dans son principe. R8B et R8C restent non
+autorisés jusqu'au verrouillage cumulé et à la signature du contrat produit moteur.
