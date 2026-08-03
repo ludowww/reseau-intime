@@ -56,7 +56,7 @@ func mark_thread_batch_presented(thread_id: String) -> bool:
 	return true
 
 func restore_snapshot(value: Dictionary) -> bool:
-	if int(value.get("version", -1)) != SNAPSHOT_VERSION or str(value.get("phase", "")) not in ["day_start_pending","to_priority","priority_incoming","priority_choice","to_departure","departure_incoming","to_j17","j17_incoming","j17_choice","day_close","complete"]: return false
+	if int(value.get("version", -1)) != J15_SNAPSHOT_VERSION or str(value.get("phase", "")) not in ["day_start_pending","to_priority","priority_incoming","priority_choice","to_departure","departure_incoming","to_j17","j17_incoming","j17_choice","day_close","complete"]: return false
 	if str(value.get("selected_pivot", "")) not in ["","MARIE","MATHILDE","FALLBACK"]: return false
 	for key in ["transcripts_by_thread","produced_message_ids","pending_choice_ids_by_thread","pending_transition","presented_time_message_ids"]:
 		if typeof(value.get(key)) != TYPE_DICTIONARY: return false

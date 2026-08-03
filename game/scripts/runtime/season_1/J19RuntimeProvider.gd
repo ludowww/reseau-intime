@@ -50,7 +50,7 @@ func _foreground_segment()->String:
 	if selected_pivot=="RAPHAELLE":return "j19_raphaelle_foreground"
 	return "j19_pauline_fallback" if selected_pivot=="FALLBACK" else "j19_pauline_foreground"
 func restore_snapshot(value:Dictionary)->bool:
-	if int(value.get("version",-1))!=SNAPSHOT_VERSION or str(value.get("phase","")) not in ["day_start_pending","to_secondary","secondary_incoming","secondary_choice","to_foreground","foreground_incoming","foreground_choice","to_invitation","invitation_incoming","invitation_choice","day_close","complete"]:return false
+	if int(value.get("version",-1))!=J15_SNAPSHOT_VERSION or str(value.get("phase","")) not in ["day_start_pending","to_secondary","secondary_incoming","secondary_choice","to_foreground","foreground_incoming","foreground_choice","to_invitation","invitation_incoming","invitation_choice","day_close","complete"]:return false
 	if str(value.get("selected_pivot","")) not in ["","PAULINE","RAPHAELLE","FALLBACK"]:return false
 	for key in ["transcripts_by_thread","produced_message_ids","pending_choice_ids_by_thread","pending_transition","presented_time_message_ids"]:
 		if typeof(value.get(key))!=TYPE_DICTIONARY:return false

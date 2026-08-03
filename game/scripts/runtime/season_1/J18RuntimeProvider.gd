@@ -39,7 +39,7 @@ func _choice_for_opening(choice_id:String)->Dictionary:
 		if str(choice.get("id",""))==choice_id:return choice
 	return {}
 func restore_snapshot(value:Dictionary)->bool:
-	if int(value.get("version",-1))!=SNAPSHOT_VERSION or str(value.get("phase","")) not in ["day_start_pending","to_resolution","priority_incoming","priority_choice","day_close","complete"]:return false
+	if int(value.get("version",-1))!=J15_SNAPSHOT_VERSION or str(value.get("phase","")) not in ["day_start_pending","to_resolution","priority_incoming","priority_choice","day_close","complete"]:return false
 	for key in ["transcripts_by_thread","produced_message_ids","pending_choice_ids_by_thread","pending_transition","presented_time_message_ids"]:
 		if typeof(value.get(key))!=TYPE_DICTIONARY:return false
 	for key in ["unlocked_thread_ids","gallery_asset_ids","served_visual_beat_ids"]:

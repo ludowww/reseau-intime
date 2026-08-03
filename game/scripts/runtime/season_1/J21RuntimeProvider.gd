@@ -70,7 +70,7 @@ func _response_segment()->String:
 	if controller.contains("nico"):return prefix+"nico"
 	return prefix+"marie"
 func restore_snapshot(value:Dictionary)->bool:
-	if int(value.get("version",-1))!=SNAPSHOT_VERSION or str(value.get("phase","")) not in ["day_start_pending","to_morning","morning_incoming","morning_choice","to_trace","trace_incoming","to_final_choice","final_choice","day_close","complete"]:return false
+	if int(value.get("version",-1))!=J15_SNAPSHOT_VERSION or str(value.get("phase","")) not in ["day_start_pending","to_morning","morning_incoming","morning_choice","to_trace","trace_incoming","to_final_choice","final_choice","day_close","complete"]:return false
 	for key in ["transcripts_by_thread","produced_message_ids","pending_choice_ids_by_thread","pending_transition","presented_time_message_ids"]:
 		if typeof(value.get(key))!=TYPE_DICTIONARY:return false
 	for key in ["unlocked_thread_ids","gallery_asset_ids","served_visual_beat_ids"]:

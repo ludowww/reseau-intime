@@ -32,7 +32,7 @@ func _append_messages(thread_id:String,messages:Array)->void:
 	for m in messages:
 		var a:=str(m.get("sender","system")); _append(thread_id,{"message_id":str(m.get("id","")),"author_id":a,"timestamp":str(m.get("time_label","")),"content_type":"TEXT","text":str(m.get("text","")),"media_ref":"","is_player":false,"is_read":false,"source_day":17})
 func restore_snapshot(value:Dictionary)->bool:
-	if int(value.get("version",-1))!=SNAPSHOT_VERSION or str(value.get("phase","")) not in ["day_start_pending","to_departure","departure_incoming","departure_choice","to_couple","couple_incoming","couple_choice","day_close","complete"]:return false
+	if int(value.get("version",-1))!=J15_SNAPSHOT_VERSION or str(value.get("phase","")) not in ["day_start_pending","to_departure","departure_incoming","departure_choice","to_couple","couple_incoming","couple_choice","day_close","complete"]:return false
 	for key in ["transcripts_by_thread","produced_message_ids","pending_choice_ids_by_thread","pending_transition","presented_time_message_ids"]:
 		if typeof(value.get(key))!=TYPE_DICTIONARY:return false
 	phase=str(value.phase); selected_pivot=str(value.selected_pivot); transcripts_by_thread=value.transcripts_by_thread.duplicate(true); produced_message_ids=value.produced_message_ids.duplicate(true); unlocked_thread_ids.assign(value.unlocked_thread_ids); gallery_asset_ids.assign(value.gallery_asset_ids); served_visual_beat_ids.assign(value.served_visual_beat_ids); pending_choice_ids_by_thread=value.pending_choice_ids_by_thread.duplicate(true); pending_transition=value.pending_transition.duplicate(true); presented_time_message_ids=value.presented_time_message_ids.duplicate(true); current_time_minutes=int(value.current_time_minutes); return _restored_phase_consistent()

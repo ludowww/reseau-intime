@@ -47,7 +47,7 @@ func _append_messages(thread_id:String,messages:Array)->void:
 func _opening_segment()->String:return {"ALIBI":"j20_open_alibi","CONFIDENCE":"j20_open_confidence","ORDINARY":"j20_open_ordinary"}.get(selected_pivot,"j20_open_ordinary")
 func _outcome_segment()->String:return {"GUARDRAIL":"j20_outcome_guardrail","LIMITED_CONFIDANT":"j20_outcome_confidant","DISTANCE":"j20_outcome_distance"}.get(state.j20_nico_position,"")
 func restore_snapshot(value:Dictionary)->bool:
-	if int(value.get("version",-1))!=SNAPSHOT_VERSION or str(value.get("phase","")) not in ["day_start_pending","to_resolution","resolution_incoming","resolution_choice","to_invitation","invitation_incoming","invitation_choice","to_meeting","return_incoming","return_presented","day_close","complete"]:return false
+	if int(value.get("version",-1))!=J15_SNAPSHOT_VERSION or str(value.get("phase","")) not in ["day_start_pending","to_resolution","resolution_incoming","resolution_choice","to_invitation","invitation_incoming","invitation_choice","to_meeting","return_incoming","return_presented","day_close","complete"]:return false
 	if str(value.get("selected_pivot","")) not in ["","ALIBI","CONFIDENCE","ORDINARY"]:return false
 	for key in ["transcripts_by_thread","produced_message_ids","pending_choice_ids_by_thread","pending_transition","presented_time_message_ids"]:
 		if typeof(value.get(key))!=TYPE_DICTIONARY:return false
