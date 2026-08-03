@@ -52,6 +52,7 @@ class R8CA1NarrativeStateStaticTests(unittest.TestCase):
             public_functions,
         )
         self.assertIn("relation_centrale_initiale: Dictionary", etat)
+        self.assertIn("var instance := new()", etat)
         self.assertNotRegex(etat, r"(?m)^func (?:set|definir|modifier)_")
 
     def test_initial_shape_has_six_relations_without_individual_player_relation(self):

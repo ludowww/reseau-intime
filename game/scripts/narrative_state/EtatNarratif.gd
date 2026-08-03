@@ -23,7 +23,7 @@ static func creer_synthetique(relation_centrale_initiale: Dictionary) -> EtatNar
 	var relations: Dictionary = {}
 	for personnage_id in PERSONNAGES:
 		relations[personnage_id] = EtatRelationModele.creer_synthetique(personnage_id)
-	var instance := EtatNarratif.new()
+	var instance := new()
 	instance._etat = {
 		"progression_saison": {
 			"acte_courant": null,
