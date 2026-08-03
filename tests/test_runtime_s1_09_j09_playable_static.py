@@ -210,6 +210,7 @@ class RuntimeS109J09PlayableStaticTests(unittest.TestCase):
     def test_snapshot_versions_are_current_only_and_add_j09_once(self):
         state = self.read("game/scripts/runtime/season_1/Season1State.gd")
         season = self.read("game/scripts/runtime/season_1/Season1RuntimeProvider.gd")
+        driver = self.read("game/tests/RUNTIME_S1_09J09PlayableSmokeDriver.gd")
         self.assertIn("const SNAPSHOT_VERSION := 25", state)
         self.assertIn("if version != SNAPSHOT_VERSION", state)
         self.assertIn("const SNAPSHOT_VERSION := 21", season)
@@ -217,6 +218,15 @@ class RuntimeS109J09PlayableStaticTests(unittest.TestCase):
         self.assertNotIn("version not in [", season)
         self.assertEqual(1, season.count('state.restore_snapshot(value["state"])'))
         self.assertIn('"J09":', season)
+        self.assertIn("_exercise_j08_handoff_and_snapshot_policy", driver)
+        self.assertNotIn("_exercise_j08_handoff_and_legacy_restore", driver)
+        for obsolete_contract in [
+            "obsolete season v7 snapshot is rejected",
+            "obsolete state v6 snapshot is rejected",
+            "obsolete season v8 J09 snapshot is rejected",
+            "obsolete state v7 J09 snapshot is rejected",
+        ]:
+            self.assertIn(obsolete_contract, driver)
     def test_runner_covers_portrait_landscape_and_required_captures(self):
         runner = self.read("tools/test_runtime_s1_09_j09_playable.sh")
         driver = self.read("game/tests/RUNTIME_S1_09J09PlayableSmokeDriver.gd")

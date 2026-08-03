@@ -196,12 +196,10 @@ func _exercise_fallback_provider_and_round_trip() -> void:
 func _exercise_provider_pivot_paths() -> void:
 	var helper = J09_SMOKE.new()
 	var j09 = _completed_j09_provider(helper, "choice_j09_dinner_refuse")
-	var legacy_snapshot: Dictionary = j09.state.snapshot()
-	legacy_snapshot["version"] = 7
-	for key in ["j10_pivot", "j10_pivot_reason", "j10_pivot_outcome", "marie_j10_dinner_resolution", "nico_j10_morning_confirmation"]:
-		legacy_snapshot.erase(key)
-	var legacy_state = SEASON_STATE.new()
-	_expect(legacy_state.restore_snapshot(legacy_snapshot), "legacy state v7 at completed J09 restores")
+	var obsolete_snapshot: Dictionary = j09.state.snapshot()
+	obsolete_snapshot["version"] = 7
+	var obsolete_state = SEASON_STATE.new()
+	_expect(not obsolete_state.restore_snapshot(obsolete_snapshot), "obsolete state v7 at completed J09 is rejected")
 	_exercise_mathilde_provider(_clone_j09_state(j09.state))
 	_exercise_raphaelle_provider(_clone_j09_state(j09.state))
 	_exercise_nico_paid_provider(_clone_j09_state(j09.state))

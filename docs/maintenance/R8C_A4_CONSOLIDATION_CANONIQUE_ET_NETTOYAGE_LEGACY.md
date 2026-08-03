@@ -147,12 +147,66 @@ du schéma courant ou être réinitialisée; aucune coexistence n'est entretenue
   ou les données; les seules mentions restantes hors canon sont des garde-fous
   de validation ou des constats historiques explicites;
 - [x] gate globale : 371/371 tests;
+- [x] 48/48 scènes smoke Godot encore présentes, avec leurs arguments
+  contractuels;
 - [x] `git diff --check` : vert.
+
+### 6.1 Revue produit et UX finale
+
+Le point d'entrée réel reste `game/project.godot` vers
+`PortraitMain.tscn`, avec `PortraitShell.content_mode = "runtime_s1"`. Le smoke
+final A4 instancie cette scène de production, jamais une coque de test parallèle.
+
+| Journée | Preuve `PortraitMain` | Résultat |
+| --- | --- | --- |
+| J01 | Messages au démarrage, fils Marie/Sandra, choix, notifications, transitions, retour conversation, image-message et PhotoViewer placeholder | `OK` |
+| J09 | handoff J08→J09, choix de présence/qualité, transitions, Galerie et fin de journée; snapshots courants restaurés | `OK` |
+| J12 | Messages, notification/non-lu Sandra, fil et choix P11, transition, retour liste, Galerie cumulative, PhotoViewer placeholder et précédent/suivant | `OK` |
+| J15 | Messages, notification/non-lu Marie, choix de mutation, transition, retour liste, Galerie cumulative, PhotoViewer placeholder et précédent/suivant | `OK` |
+| J21 | Messages, notification/non-lu Marie, choix final du matin, transition, retour liste, Galerie cumulative, PhotoViewer placeholder et précédent/suivant | `OK` |
+
+L'UX canonique conservée est donc explicitement : **Messages + Galerie +
+PhotoViewer + transitions temporelles + notifications/non-lus**. Le smoke final
+vérifie aussi l'absence de crop à 720×1280 et ne produit aucune erreur Godot.
+
+Les éléments supprimés ne sont pas réintroduits : Contacts, Historique,
+sélection manuelle des jours, Debug/Reset/vitesse, ancienne galerie verrouillée
+et ancienne chaîne smartphone parallèle.
+
+### 6.2 Décision J09
+
+Le rouge J09 a été reproduit : ses neuf assertions en échec exigeaient
+exclusivement la restauration de snapshots Season1 v7/v8 et state v6/v7. Le
+parcours canonique J08→J09, les choix, données, Galerie et surfaces
+`PortraitMain` n'étaient pas en régression.
+
+Le smoke a été réécrit pour le contrat actuel : restauration exacte des
+snapshots Season1 v21 / state v25 à J08 puis J09, handoff J08→J09 conservé, et
+rejet explicite des quatre versions obsolètes. Aucune migration ou couche de
+compatibilité legacy n'a été ajoutée.
+
+La même revue exhaustive a trouvé deux attentes legacy identiques hors de la
+gate Python : J08 exigeait Season1 v6 / state v5, et J10 exigeait state v7.
+Elles ont été remplacées par restauration current-only et rejet explicite des
+versions obsolètes. Le smoke J16 utilisait quant à lui des libellés de fixture
+J14 antérieurs au contrat J15 courant; sa fixture démarre désormais directement
+depuis un état J15 courant et borné. Ces trois corrections ne modifient aucun
+provider ni donnée de jeu.
+
+Commande de preuve UX finale :
+
+```bash
+bash tools/test_r8c_a4_final_portrait_ux.sh
+bash tools/test_all_canonical_godot_smokes.sh
+```
 
 ## 7. Empreinte du lot
 
 - 217 fichiers touchés avant commit : 170 supprimés, 43 modifiés, 4 ajoutés;
-- environ 38 700 lignes historiques retirées pour moins de 900 lignes ajoutées;
+- verrouillage final : 11 fichiers ajustés (7 existants, 4 nouveaux), soit 225
+  fichiers uniques touchés depuis la baseline;
+- lot initial : 38 688 lignes historiques retirées pour 837 lignes ajoutées;
+- cumul final depuis la baseline : 38 751 suppressions et 1 288 ajouts;
 - ajouts : index canonique `docs/architecture/README.md`, présent rapport et
   tests de lint de fixture et de frontière des chemins de données;
 - modifications : portails documentaires, autoloads, loaders minimaux,

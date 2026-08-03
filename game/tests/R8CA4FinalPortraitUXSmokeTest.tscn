@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://tests/R8CA4FinalPortraitUXSmokeDriver.gd" id="1"]
+
+[node name="R8CA4FinalPortraitUXSmokeTest" type="Node"]
+script = ExtResource("1")

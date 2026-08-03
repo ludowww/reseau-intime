@@ -37,7 +37,7 @@ func _run() -> void:
 	capture_dir = _arg("--capture-dir", OS.get_environment("CAPTURE_DIR"))
 	get_window().size = requested_size
 	_exercise_all_admissible_paths()
-	_exercise_backward_compatibility()
+	_exercise_current_snapshot_policy()
 	await _exercise_real_portrait_surfaces(requested_size)
 	_finish(requested_size)
 
@@ -80,7 +80,7 @@ func _exercise_all_admissible_paths() -> void:
 					_expect(_relationship_snapshot(state) == relationships_before, label + " preserves every relationship state")
 					_expect_provider_round_trip(provider, label + " complete snapshot")
 
-func _exercise_backward_compatibility() -> void:
+func _exercise_current_snapshot_policy() -> void:
 	var helper = J07_SMOKE.new()
 	var season = helper._season_at_completed_j06()
 	season.automatic_day_handoff()
@@ -94,42 +94,30 @@ func _exercise_backward_compatibility() -> void:
 	season.apply_choice("thread_nico_private", "choice_j07_nico_at_least_said_guided")
 	season.apply_choice("thread_nico_private", "choice_j07_nico_tuesday_accepted")
 	season.confirm_transition()
-	var old_snapshot: Dictionary = season.snapshot()
-	old_snapshot["version"] = 6
-	old_snapshot["provider_snapshots"].erase("J08")
-	old_snapshot["state"]["version"] = 5
-	for key in [
-		"marie_j08_entry_outcome", "raphaelle_j08_preparation_outcome", "j08_priority_outcome",
-		"raphaelle_j08_work_resolution", "nico_j08_meeting_resolution",
-		"marie_j08_household_resolution", "mathilde_j08_household_resolution",
-		"marie_j08_echo_outcome", "resolved_visual_variant_by_asset",
-	]:
-		old_snapshot["state"].erase(key)
+	var current_snapshot: Dictionary = season.snapshot()
 	var restored = SEASON_PROVIDER.new()
-	_expect(restored.initialize(), "legacy J07 season provider initializes")
-	_expect(restored.restore_snapshot(old_snapshot), "season v6 active J07 with state v5 restores")
-	_expect(restored.state_restore_count == 1, "legacy restore restores shared state once")
-	_expect(restored.active_day == "J07", "legacy restore remains on J07")
+	_expect(restored.initialize(), "current J07 season provider initializes")
+	_expect(restored.restore_snapshot(current_snapshot), "current active J07 snapshot restores")
+	_expect(restored.state_restore_count == 1, "current restore restores shared state once")
+	_expect(restored.active_day == "J07", "current restore remains on J07")
+	var obsolete_season: Dictionary = current_snapshot.duplicate(true)
+	obsolete_season["version"] = 6
+	var obsolete_season_target = SEASON_PROVIDER.new()
+	_expect(obsolete_season_target.initialize() and not obsolete_season_target.restore_snapshot(obsolete_season), "obsolete season v6 J07 snapshot is rejected")
+	var obsolete_state: Dictionary = current_snapshot.duplicate(true)
+	obsolete_state["state"]["version"] = 5
+	var obsolete_state_target = SEASON_PROVIDER.new()
+	_expect(obsolete_state_target.initialize() and not obsolete_state_target.restore_snapshot(obsolete_state), "obsolete state v5 J07 snapshot is rejected")
 	restored.apply_choice("thread_marie_private", "choice_j07_marie_presence_confirmed")
 	restored.confirm_transition()
-	_expect(restored.j07_provider.phase == "complete", "legacy-restored J07 can complete")
-	var completed_old_snapshot: Dictionary = restored.snapshot()
-	completed_old_snapshot["version"] = 6
-	completed_old_snapshot["provider_snapshots"].erase("J08")
-	completed_old_snapshot["state"]["version"] = 5
-	for key in [
-		"marie_j08_entry_outcome", "raphaelle_j08_preparation_outcome", "j08_priority_outcome",
-		"raphaelle_j08_work_resolution", "nico_j08_meeting_resolution",
-		"marie_j08_household_resolution", "mathilde_j08_household_resolution",
-		"marie_j08_echo_outcome", "resolved_visual_variant_by_asset",
-	]:
-		completed_old_snapshot["state"].erase(key)
+	_expect(restored.j07_provider.phase == "complete", "current-restored J07 can complete")
+	var completed_current_snapshot: Dictionary = restored.snapshot()
 	var completed_restored = SEASON_PROVIDER.new()
-	_expect(completed_restored.initialize(), "completed legacy J07 provider initializes")
-	_expect(completed_restored.restore_snapshot(completed_old_snapshot), "completed season v6 J07 restores")
+	_expect(completed_restored.initialize(), "completed current J07 provider initializes")
+	_expect(completed_restored.restore_snapshot(completed_current_snapshot), "completed current J07 snapshot restores")
 	_expect(completed_restored.content_end().is_empty(), "completed J07 is not CONTENT_END")
 	_expect(str(completed_restored.next_day_presentation().get("title", "")) == "Ce qui ne tient pas ensemble", "completed J07 exposes J08")
-	_expect(bool(completed_restored.automatic_day_handoff().get("accepted", false)), "completed legacy J07 hands off")
+	_expect(bool(completed_restored.automatic_day_handoff().get("accepted", false)), "completed current J07 hands off")
 	_expect(completed_restored.active_day == "J08" and completed_restored.j08_provider.phase == "marie_entry_incoming", "handoff starts canonical J08")
 	helper.free()
 

@@ -50,7 +50,7 @@ func _run() -> void:
 	capture_dir = _arg("--capture-dir", OS.get_environment("CAPTURE_DIR"))
 	get_window().size = requested_size
 	_exercise_all_paths()
-	_exercise_j08_handoff_and_legacy_restore()
+	_exercise_j08_handoff_and_snapshot_policy()
 	await _exercise_real_surfaces(requested_size)
 	_finish(requested_size)
 
@@ -117,7 +117,7 @@ func _exercise_all_paths() -> void:
 			_expect_round_trip(provider, label + " complete snapshot")
 			path_index += 1
 
-func _exercise_j08_handoff_and_legacy_restore() -> void:
+func _exercise_j08_handoff_and_snapshot_policy() -> void:
 	var j07_helper = J07_SMOKE.new()
 	var j08_helper = J08_SMOKE.new()
 	var season = j07_helper._season_at_completed_j06()
@@ -143,33 +143,39 @@ func _exercise_j08_handoff_and_legacy_restore() -> void:
 	_expect(season.active_day == "J08" and season.j08_provider.phase == "complete", "full fixture completes J08")
 	_expect(season.content_end().is_empty(), "J08 is no longer CONTENT_END")
 	_expect(str(season.next_day_presentation().get("title", "")) == "Dans son élément", "J08 exposes J09 presentation")
-	var legacy_snapshot: Dictionary = season.snapshot()
-	legacy_snapshot["version"] = 7
-	legacy_snapshot["provider_snapshots"].erase("J09")
-	legacy_snapshot["state"]["version"] = 6
-	for key in ["marie_j09_presence_choice", "marie_j09_presence_outcome", "marie_j09_dinner_outcome"]:
-		legacy_snapshot["state"].erase(key)
+	var current_j08_snapshot: Dictionary = season.snapshot()
 	var restored = SEASON_PROVIDER.new()
-	_expect(restored.initialize(), "legacy J08 restore target initializes")
-	_expect(restored.restore_snapshot(legacy_snapshot), "season v7 active J08 with state v6 restores")
-	_expect(restored.state_restore_count == 1, "legacy J08 restores shared Season1State once")
-	_expect(restored.active_day == "J08" and restored.j08_provider.phase == "complete", "legacy restore remains at complete J08")
-	_expect(restored.content_end().is_empty(), "legacy-restored J08 is handoff only")
+	_expect(restored.initialize(), "current J08 restore target initializes")
+	_expect(restored.restore_snapshot(current_j08_snapshot), "current season/state snapshot restores at complete J08")
+	_expect(restored.state_restore_count == 1, "current J08 restores shared Season1State once")
+	_expect(restored.active_day == "J08" and restored.j08_provider.phase == "complete", "current restore remains at complete J08")
+	_expect(restored.content_end().is_empty(), "current-restored J08 is handoff only")
+	var obsolete_season: Dictionary = current_j08_snapshot.duplicate(true)
+	obsolete_season["version"] = 7
+	var obsolete_season_target = SEASON_PROVIDER.new()
+	_expect(obsolete_season_target.initialize() and not obsolete_season_target.restore_snapshot(obsolete_season), "obsolete season v7 snapshot is rejected")
+	var obsolete_state: Dictionary = current_j08_snapshot.duplicate(true)
+	obsolete_state["state"]["version"] = 6
+	var obsolete_state_target = SEASON_PROVIDER.new()
+	_expect(obsolete_state_target.initialize() and not obsolete_state_target.restore_snapshot(obsolete_state), "obsolete state v6 snapshot is rejected")
 	var handoff: Dictionary = restored.automatic_day_handoff()
-	_expect(bool(handoff.get("accepted", false)), "legacy-restored J08 hands off to J09")
+	_expect(bool(handoff.get("accepted", false)), "current-restored J08 hands off to J09")
 	_expect(restored.active_day == "J09" and restored.j09_provider.phase == "entry_incoming", "handoff starts canonical J09")
 	_expect(restored.state.current_day == "J09" and restored.state.day_status == "ACTIVE", "handoff starts one shared state")
-	var legacy_j09_snapshot: Dictionary = restored.snapshot()
-	legacy_j09_snapshot["version"] = 8
-	legacy_j09_snapshot["provider_snapshots"].erase("J10")
-	legacy_j09_snapshot["state"]["version"] = 7
-	for key in ["j10_pivot", "j10_pivot_reason", "j10_pivot_outcome", "marie_j10_dinner_resolution", "nico_j10_morning_confirmation"]:
-		legacy_j09_snapshot["state"].erase(key)
+	var current_j09_snapshot: Dictionary = restored.snapshot()
 	var restored_j09 = SEASON_PROVIDER.new()
-	_expect(restored_j09.initialize(), "legacy J09 restore target initializes")
-	_expect(restored_j09.restore_snapshot(legacy_j09_snapshot), "season v8 active J09 with state v7 restores")
-	_expect(restored_j09.state_restore_count == 1, "legacy J09 restores shared Season1State once")
-	_expect(restored_j09.active_day == "J09" and restored_j09.j09_provider.phase == "entry_incoming", "legacy J09 restore preserves its exact active phase")
+	_expect(restored_j09.initialize(), "current J09 restore target initializes")
+	_expect(restored_j09.restore_snapshot(current_j09_snapshot), "current season/state snapshot restores at active J09")
+	_expect(restored_j09.state_restore_count == 1, "current J09 restores shared Season1State once")
+	_expect(restored_j09.active_day == "J09" and restored_j09.j09_provider.phase == "entry_incoming", "current J09 restore preserves its exact active phase")
+	var obsolete_j09_season: Dictionary = current_j09_snapshot.duplicate(true)
+	obsolete_j09_season["version"] = 8
+	var obsolete_j09_season_target = SEASON_PROVIDER.new()
+	_expect(obsolete_j09_season_target.initialize() and not obsolete_j09_season_target.restore_snapshot(obsolete_j09_season), "obsolete season v8 J09 snapshot is rejected")
+	var obsolete_j09_state: Dictionary = current_j09_snapshot.duplicate(true)
+	obsolete_j09_state["state"]["version"] = 7
+	var obsolete_j09_state_target = SEASON_PROVIDER.new()
+	_expect(obsolete_j09_state_target.initialize() and not obsolete_j09_state_target.restore_snapshot(obsolete_j09_state), "obsolete state v7 J09 snapshot is rejected")
 	j07_helper.free()
 	j08_helper.free()
 

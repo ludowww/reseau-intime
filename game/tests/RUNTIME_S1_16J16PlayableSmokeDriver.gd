@@ -16,8 +16,8 @@ func _exercise_fallback()->void:
 	var state=_completed_j15(false); var provider=_new_provider(state); provider.start_day(); _expect(provider.selected_pivot=="FALLBACK","clean J15 selects priority 8"); _confirm(provider); _present(provider,"thread_marie_private"); provider.apply_choice("thread_marie_private","choice_j16_fallback_confirm"); _confirm(provider); _present(provider,"thread_mathilde_private"); _confirm(provider); _present(provider,"thread_marie_private"); provider.apply_choice("thread_marie_private","choice_j16_j17_refuse"); _confirm(provider)
 	_expect(provider.phase=="complete" and not state.promises.has("marie_j16_couple_conversation_j17"),"fallback closes without invented J17 promise")
 func _completed_j15(urgent:bool):
-	var state=STATE.new(); state.current_day="J14"; state.day_status="COMPLETE"; state.j14_variant="PAULINE"; state.j14_outcome="PAULINE_LIE" if urgent else "PAULINE_TRUTH"; state.j14_witness="Marie"; state.j13_pivot="PAULINE"; state.j13_outcome="RULE"; state.j13_j14_trace_id="j13_pauline_private_version_01"; state.traces["j13_pauline_private_version_01"]={"current_state":"PRIVATE_ACTIVE"}; state.completed_conversation_ids.append("chapter_14_discovery")
-	state.begin_j15(); state.establish_j15_mode("REPAIR" if urgent else "NO_OBLIGATION"); state.apply_j15_choice("choice_j15_repair_lie_marie" if urgent else "choice_j15_clean_acknowledge_marie"); _expect(state.complete_j15(),"fixture completes J15"); return state
+	var state=STATE.new(); state.current_day="J15"; state.day_status="ACTIVE"; state.j14_witness="Marie"; state.j15_mode="REPAIR" if urgent else "NO_OBLIGATION"
+	_expect(state.apply_j15_choice("choice_j15_repair_lie_marie" if urgent else "choice_j15_clean_acknowledge_marie"),"fixture applies current J15 choice"); _expect(state.complete_j15(),"fixture completes J15"); return state
 func _new_provider(state): var p=PROVIDER.new(); _expect(p.initialize(state,{}, {},[],[]),"provider initializes"); return p
 func _present(p,thread:String)->void:
 	for m in p.transcript_for(thread):

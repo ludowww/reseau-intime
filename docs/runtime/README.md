@@ -47,6 +47,8 @@ python tools/simulate_route_paths.py
 python -m unittest discover -s tests -p "test_*.py" -v
 godot --headless --path game --quit
 godot --headless --path game --resolution 1280x720 --quit
+bash tools/test_r8c_a4_final_portrait_ux.sh
+bash tools/test_all_canonical_godot_smokes.sh
 git diff --check
 ```
 
@@ -56,6 +58,14 @@ Smokes R8C ciblés :
 godot --headless --path game res://tests/R8CANarrativeStateSmokeTest.tscn
 godot --headless --path game res://tests/R8CAMinimalScenePrototypeSmokeTest.tscn
 ```
+
+Le smoke final A4 monte la vraie scène `PortraitMain` et couvre les surfaces
+Messages, Galerie et PhotoViewer sur J01, J09, J12, J15 et J21. Il vérifie
+également les choix, états de notification/non-lu, transitions temporelles,
+retours vers la liste, placeholders et navigation de séquence disponibles.
+Le lanceur exhaustif exécute en plus les 48 scènes `*SmokeTest.tscn` encore
+présentes avec leurs arguments contractuels; aucune scène canonique n'est tenue
+hors gate.
 
 `simulate_route_paths.py` valide désormais les branches qualitatives de la
 fixture synthétique R8C-A3; il ne calcule aucune route dominante ni aucun score.
