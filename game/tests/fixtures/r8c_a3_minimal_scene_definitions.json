@@ -8,6 +8,7 @@
       "titre_interne": "Sandra demande une présence à distance",
       "nature": "SIGNATURE",
       "fonction_principale": "RELATION",
+      "politique_unicite": "UNIQUE",
       "participants_requis": [
         {
           "personnage_id": "sandra",
@@ -29,31 +30,19 @@
           "r8c-a3-sandra-signature-blocked"
         ]
       },
-      "lectures_etat": {
-        "persistantes": [
-          "evenements",
-          "relations.sandra.faits"
-        ],
-        "contextuelles": [
-          "acte_courant",
-          "participants_disponibles.sandra",
-          "moment_diegetique",
-          "opportunite_valide"
-        ]
-      },
       "contrat_temporel": {
         "date_debut": "2030-04-08",
         "date_fin": "2030-04-08",
         "heure_ouverture": "18:00",
         "heure_fermeture": "22:00",
         "duree_minutes": 20,
-        "referentiel_calendrier": "EUROPE_PARIS_SYNTHETIQUE",
         "revalidation": "AVANT_PROPOSITION_ET_RESOLUTION"
       },
       "choix": [
         {
           "choix_id": "sobre",
           "formulation": "Je suis là. Raconte-moi.",
+          "signal_emis": "PRESENCE_SOBRE",
           "resolution_ids": [
             "resolution_commune"
           ]
@@ -61,6 +50,7 @@
         {
           "choix_id": "chaleureuse",
           "formulation": "Je suis là, et j'aime quand tu me le dis aussi clairement.",
+          "signal_emis": "ATTENTION_CHALEUREUSE",
           "resolution_ids": [
             "signal_chaleureux_recu"
           ]
@@ -68,6 +58,7 @@
         {
           "choix_id": "audacieuse",
           "formulation": "Tu sais très bien l'effet que ça me fait quand tu me demandes ça.",
+          "signal_emis": "AUDACE_SITUEE",
           "resolution_ids": [
             "signal_audacieux_recu",
             "limite_audace_explicite"
@@ -78,19 +69,16 @@
         "resolution_commune": {
           "personnage_id": "sandra",
           "portee_micro_signal": "LOCALE",
+          "signal_recu": "PRESENCE_SOBRE",
           "reception": "NON_PERSISTANTE",
           "interpretation": "VARIATION_DE_TON_SANS_MEMOIRE",
-          "faits_relationnels": [
-            {
-              "fait_id": "r8c_a3_signature_sandra_resolue",
-              "nature": "RESOLUTION_DE_SCENE"
-            }
-          ],
+          "faits_relationnels": [],
           "convergence": "RETOUR_NOYAU_COMMUN"
         },
         "signal_chaleureux_recu": {
           "personnage_id": "sandra",
           "portee_micro_signal": "DURABLE",
+          "signal_recu": "ATTENTION_CHALEUREUSE",
           "reception": "RECUE_INTERPRETEE",
           "interpretation": "ATTENTION_CLAIREMENT_RECONNUE_PAR_SANDRA",
           "faits_relationnels": [
@@ -109,6 +97,7 @@
         "signal_audacieux_recu": {
           "personnage_id": "sandra",
           "portee_micro_signal": "DURABLE",
+          "signal_recu": "AUDACE_SITUEE",
           "reception": "RECUE_INTERPRETEE",
           "interpretation": "AUDACE_RECUE_SANS_PERMISSION_FUTURE",
           "faits_relationnels": [
@@ -128,6 +117,7 @@
         "limite_audace_explicite": {
           "personnage_id": "sandra",
           "portee_micro_signal": "DURABLE",
+          "signal_recu": "AUDACE_SITUEE",
           "reception": "LIMITE_EXPLICITE",
           "interpretation": "SANDRA_DEMANDE_UN_REGISTRE_MOINS_AUDACIEUX",
           "faits_relationnels": [
@@ -146,8 +136,6 @@
       },
       "politique_non_resolution": {
         "proposition_expire": "MISSED",
-        "sans_proposition": "EXPIRATION_SILENCIEUSE",
-        "echeance": "FIN_FENETRE_ECRITE",
         "consequence_manquee": {
           "personnage_id": "sandra",
           "fait_relationnel": {
@@ -155,15 +143,6 @@
             "nature": "OPPORTUNITE_REELLEMENT_MANQUEE"
           }
         }
-      },
-      "sortie": {
-        "statut_attendu": "RESOLVED",
-        "suivi": "AUCUN_DANS_CE_PROTOTYPE"
-      },
-      "observabilite": {
-        "code_eligible": "SIGNATURE_SANDRA_ELIGIBLE",
-        "code_proposee": "SIGNATURE_SANDRA_PROPOSED",
-        "code_resolue": "SIGNATURE_SANDRA_RESOLVED"
       }
     },
     "module_distance_sandra": {
@@ -173,6 +152,7 @@
       "nature": "MODULAIRE",
       "structure_id": "conversation_distance_absence_temporaire",
       "fonction_principale": "ECHO",
+      "politique_unicite": "REPETABLE",
       "participants_requis": [
         {
           "personnage_id": "sandra",
@@ -194,29 +174,19 @@
           "r8c-a3-sandra-returned"
         ]
       },
-      "lectures_etat": {
-        "persistantes": [
-          "evenements",
-          "relations.sandra.faits"
-        ],
-        "contextuelles": [
-          "participants_disponibles.sandra",
-          "moment_diegetique"
-        ]
-      },
       "contrat_temporel": {
         "date_debut": "2030-04-09",
         "date_fin": "2030-04-10",
         "heure_ouverture": "08:00",
         "heure_fermeture": "20:00",
         "duree_minutes": 10,
-        "referentiel_calendrier": "EUROPE_PARIS_SYNTHETIQUE",
         "revalidation": "AVANT_PROPOSITION_ET_RESOLUTION"
       },
       "choix": [
         {
           "choix_id": "sobre",
           "formulation": "Bien reçu. Profite de ta journée.",
+          "signal_emis": "ECHO_CONCRET_COURT",
           "resolution_ids": [
             "echo_sandra_local"
           ]
@@ -225,30 +195,20 @@
       "resolutions": {
         "echo_sandra_local": {
           "personnage_id": "sandra",
-          "portee_micro_signal": "LOCALE",
-          "reception": "NON_PERSISTANTE",
+          "portee_micro_signal": "TEMPORAIRE",
+          "signal_recu": "ECHO_CONCRET_COURT",
+          "reception": "RECUE_INTERPRETEE",
           "interpretation": "SANDRA_REPREND_SON_DETAIL_CONCRET",
-          "faits_relationnels": [
-            {
-              "fait_id": "r8c_a3_module_distance_sandra_resolu",
-              "nature": "RESOLUTION_DE_SCENE"
-            }
-          ],
+          "trace_temporaire": {
+            "trace_id": "echo_concret_sandra_sequence_courte",
+            "contenu": "DETAIL_CONCRET_REPRIS_DANS_LA_SEQUENCE"
+          },
+          "faits_relationnels": [],
           "convergence": "RETOUR_NOYAU_COMMUN"
         }
       },
       "politique_non_resolution": {
-        "proposition_expire": "CANCELLED",
-        "sans_proposition": "EXPIRATION_SILENCIEUSE",
-        "echeance": "FIN_FENETRE_ECRITE"
-      },
-      "sortie": {
-        "statut_attendu": "RESOLVED",
-        "suivi": "AUCUN_DANS_CE_PROTOTYPE"
-      },
-      "observabilite": {
-        "code_eligible": "MODULE_DISTANCE_SANDRA_ELIGIBLE",
-        "code_resolue": "MODULE_DISTANCE_SANDRA_RESOLVED"
+        "proposition_expire": "CANCELLED"
       }
     },
     "module_distance_raphaelle": {
@@ -258,6 +218,7 @@
       "nature": "MODULAIRE",
       "structure_id": "conversation_distance_absence_temporaire",
       "fonction_principale": "OPPORTUNITE",
+      "politique_unicite": "UNIQUE",
       "participants_requis": [
         {
           "personnage_id": "raphaelle",
@@ -279,29 +240,19 @@
           "r8c-a3-raphaelle-deadline-passed"
         ]
       },
-      "lectures_etat": {
-        "persistantes": [
-          "evenements",
-          "relations.raphaelle.faits"
-        ],
-        "contextuelles": [
-          "participants_disponibles.raphaelle",
-          "moment_diegetique"
-        ]
-      },
       "contrat_temporel": {
         "date_debut": "2030-04-09",
         "date_fin": "2030-04-10",
         "heure_ouverture": "12:00",
         "heure_fermeture": "23:00",
         "duree_minutes": 15,
-        "referentiel_calendrier": "EUROPE_PARIS_SYNTHETIQUE",
         "revalidation": "AVANT_PROPOSITION_ET_RESOLUTION"
       },
       "choix": [
         {
           "choix_id": "precise",
           "formulation": "Je relis le passage et je te réponds point par point.",
+          "signal_emis": "ATTENTION_EDITORIALE_PRECISE",
           "resolution_ids": [
             "relecture_raphaelle_recue"
           ]
@@ -311,6 +262,7 @@
         "relecture_raphaelle_recue": {
           "personnage_id": "raphaelle",
           "portee_micro_signal": "DURABLE",
+          "signal_recu": "ATTENTION_EDITORIALE_PRECISE",
           "reception": "RECUE_INTERPRETEE",
           "interpretation": "RAPHAELLE_RECONNAIT_L_ATTENTION_EDITORIALE",
           "faits_relationnels": [
@@ -328,17 +280,7 @@
         }
       },
       "politique_non_resolution": {
-        "proposition_expire": "CANCELLED",
-        "sans_proposition": "EXPIRATION_SILENCIEUSE",
-        "echeance": "FIN_FENETRE_ECRITE"
-      },
-      "sortie": {
-        "statut_attendu": "RESOLVED",
-        "suivi": "AUCUN_DANS_CE_PROTOTYPE"
-      },
-      "observabilite": {
-        "code_eligible": "MODULE_DISTANCE_RAPHAELLE_ELIGIBLE",
-        "code_resolue": "MODULE_DISTANCE_RAPHAELLE_RESOLVED"
+        "proposition_expire": "CANCELLED"
       }
     }
   }

@@ -4,26 +4,22 @@ class_name R8CSceneDefinition
 
 const NATURES := ["SIGNATURE", "MODULAIRE"]
 const FONCTIONS := ["RELATION", "OPPORTUNITE", "ECHO", "RESPIRATION"]
-const PORTEES_MICRO_SIGNAL := ["LOCALE", "DURABLE"]
+const POLITIQUES_UNICITE := ["UNIQUE", "REPETABLE"]
+const PORTEES_MICRO_SIGNAL := ["LOCALE", "TEMPORAIRE", "DURABLE"]
 const RECEPTIONS := ["NON_PERSISTANTE", "RECUE_INTERPRETEE", "LIMITE_EXPLICITE"]
+const POLITIQUES_REVALIDATION := ["AVANT_PROPOSITION", "AVANT_PROPOSITION_ET_RESOLUTION"]
 
 const CHAMPS_REQUIS := [
 	"scene_id",
 	"version_contrat",
-	"titre_interne",
 	"nature",
 	"fonction_principale",
 	"participants_requis",
-	"relation_ou_question_focale",
-	"noyau_stable",
 	"conditions_dures",
 	"exclusions_dures",
-	"lectures_etat",
 	"contrat_temporel",
+	"politique_unicite",
 	"resolutions",
-	"politique_non_resolution",
-	"sortie",
-	"observabilite",
 ]
 
 
@@ -41,19 +37,18 @@ static func valider(definition: Dictionary) -> String:
 	for champ in CHAMPS_REQUIS:
 		if not definition.has(champ):
 			return "definition de scene: champ manquant: %s" % champ
-	for champ in [
-		"scene_id",
-		"version_contrat",
-		"titre_interne",
-		"relation_ou_question_focale",
-		"noyau_stable",
-	]:
+	for champ in ["scene_id", "version_contrat"]:
 		if not _chaine_non_vide(definition[champ]):
 			return "definition de scene: %s doit etre une chaine non vide" % champ
+	for champ in ["titre_interne", "relation_ou_question_focale", "noyau_stable"]:
+		if definition.has(champ) and not _chaine_non_vide(definition[champ]):
+			return "definition de scene: %s optionnel doit etre une chaine non vide" % champ
 	if definition["nature"] not in NATURES:
 		return "definition de scene: nature invalide"
 	if definition["fonction_principale"] not in FONCTIONS:
 		return "definition de scene: fonction principale hors prototype"
+	if definition["politique_unicite"] not in POLITIQUES_UNICITE:
+		return "definition de scene: politique d'unicite invalide"
 	var erreur_participants := _valider_participants(definition["participants_requis"])
 	if not erreur_participants.is_empty():
 		return erreur_participants
@@ -63,13 +58,13 @@ static func valider(definition: Dictionary) -> String:
 	var erreur_temps := _valider_contrat_temporel(definition["contrat_temporel"])
 	if not erreur_temps.is_empty():
 		return erreur_temps
-	for champ in ["lectures_etat", "politique_non_resolution", "sortie", "observabilite"]:
-		if typeof(definition[champ]) != TYPE_DICTIONARY:
-			return "definition de scene: %s doit etre un dictionnaire" % champ
 	var erreur_resolutions := _valider_resolutions(definition)
 	if not erreur_resolutions.is_empty():
 		return erreur_resolutions
-	return _valider_choix(definition)
+	var erreur_choix := _valider_choix(definition)
+	if not erreur_choix.is_empty():
+		return erreur_choix
+	return _valider_politique_non_resolution(definition)
 
 
 static func _valider_participants(participants) -> String:
@@ -93,8 +88,10 @@ static func _valider_conditions(definition: Dictionary) -> String:
 	if typeof(conditions) != TYPE_DICTIONARY:
 		return "definition de scene: conditions_dures doit etre un dictionnaire"
 	for champ in ["actes_compatibles", "evenements_requis"]:
-		if typeof(conditions.get(champ)) != TYPE_ARRAY or conditions[champ].is_empty():
+		if typeof(conditions.get(champ)) != TYPE_ARRAY:
 			return "definition de scene: condition borne manquante: %s" % champ
+	if conditions["actes_compatibles"].is_empty():
+		return "definition de scene: au moins un acte compatible est requis"
 	for valeur in conditions["actes_compatibles"] + conditions["evenements_requis"]:
 		if not _chaine_non_vide(valeur):
 			return "definition de scene: condition vide"
@@ -113,21 +110,29 @@ static func _valider_conditions(definition: Dictionary) -> String:
 static func _valider_contrat_temporel(contrat) -> String:
 	if typeof(contrat) != TYPE_DICTIONARY:
 		return "definition de scene: contrat_temporel doit etre un dictionnaire"
-	for champ in ["date_debut", "date_fin", "heure_ouverture", "heure_fermeture", "referentiel_calendrier"]:
+	for champ in ["date_debut", "date_fin", "heure_ouverture", "heure_fermeture"]:
 		if not _chaine_non_vide(contrat.get(champ)):
 			return "definition de scene: contrat temporel incomplet: %s" % champ
+	if not _date_valide(contrat["date_debut"]) or not _date_valide(contrat["date_fin"]):
+		return "definition de scene: date temporelle invalide"
+	var ouverture := heure_en_minutes(contrat["heure_ouverture"])
+	var fermeture := heure_en_minutes(contrat["heure_fermeture"])
+	if ouverture < 0 or fermeture < 0:
+		return "definition de scene: heure temporelle invalide"
+	if contrat["date_debut"] > contrat["date_fin"] or ouverture >= fermeture:
+		return "definition de scene: fenetre temporelle incoherente"
 	var duree = contrat.get("duree_minutes")
 	if typeof(duree) not in [TYPE_INT, TYPE_FLOAT] or duree <= 0 or float(duree) != floor(float(duree)):
-		return "definition de scene: duree_minutes doit etre positive"
-	if contrat["date_debut"] > contrat["date_fin"] or contrat["heure_ouverture"] >= contrat["heure_fermeture"]:
-		return "definition de scene: fenetre temporelle incoherente"
+		return "definition de scene: duree_minutes doit etre un entier positif"
+	if contrat.get("revalidation") not in POLITIQUES_REVALIDATION:
+		return "definition de scene: politique de revalidation invalide"
 	return ""
 
 
 static func _valider_resolutions(definition: Dictionary) -> String:
 	var resolutions = definition["resolutions"]
-	if typeof(resolutions) != TYPE_DICTIONARY or resolutions.is_empty():
-		return "definition de scene: resolutions doit etre un dictionnaire non vide"
+	if typeof(resolutions) != TYPE_DICTIONARY:
+		return "definition de scene: resolutions doit etre un dictionnaire"
 	var participants := _identifiants_participants(definition["participants_requis"])
 	for resolution_id in resolutions:
 		if not _chaine_non_vide(resolution_id):
@@ -137,36 +142,56 @@ static func _valider_resolutions(definition: Dictionary) -> String:
 			return "definition de scene: resolution invalide"
 		if resolution.get("personnage_id") not in participants:
 			return "definition de scene: consequence hors participants"
-		if resolution.get("portee_micro_signal") not in PORTEES_MICRO_SIGNAL:
+		var portee = resolution.get("portee_micro_signal")
+		if portee not in PORTEES_MICRO_SIGNAL:
 			return "definition de scene: portee de micro-signal invalide"
-		if resolution.get("reception") not in RECEPTIONS:
+		var reception = resolution.get("reception")
+		if reception not in RECEPTIONS:
 			return "definition de scene: reception de micro-signal invalide"
+		if not _chaine_non_vide(resolution.get("signal_recu")):
+			return "definition de scene: signal recu manquant"
 		if not _chaine_non_vide(resolution.get("interpretation")):
 			return "definition de scene: interpretation manquante"
 		if resolution.get("convergence") != "RETOUR_NOYAU_COMMUN":
 			return "definition de scene: micro-branche non convergente"
-		var faits = resolution.get("faits_relationnels")
-		if typeof(faits) != TYPE_ARRAY or faits.is_empty():
-			return "definition de scene: resolution sans consequence qualitative"
+		var faits = resolution.get("faits_relationnels", [])
+		if typeof(faits) != TYPE_ARRAY:
+			return "definition de scene: faits_relationnels doit etre un tableau"
 		for fait in faits:
 			if typeof(fait) != TYPE_DICTIONARY or not _chaine_non_vide(fait.get("fait_id")):
 				return "definition de scene: fait relationnel invalide"
-		if resolution["portee_micro_signal"] == "LOCALE" and resolution["reception"] != "NON_PERSISTANTE":
-			return "definition de scene: signal local ne peut pas etre recu durablement"
+		if portee == "LOCALE" and reception != "NON_PERSISTANTE":
+			return "definition de scene: signal local doit rester non persistant"
+		if portee == "LOCALE" and not faits.is_empty():
+			return "definition de scene: signal local ne peut pas ecrire de fait durable"
+		if portee == "TEMPORAIRE":
+			var trace = resolution.get("trace_temporaire")
+			if typeof(trace) != TYPE_DICTIONARY or not _chaine_non_vide(trace.get("trace_id")):
+				return "definition de scene: trace temporaire explicite requise"
+			if not faits.is_empty():
+				return "definition de scene: signal temporaire ne peut pas ecrire de fait durable"
+		if portee == "DURABLE":
+			if reception == "NON_PERSISTANTE" or faits.is_empty():
+				return "definition de scene: durable exige reception, interpretation et fait explicites"
 	return ""
 
 
 static func _valider_choix(definition: Dictionary) -> String:
 	var choix = definition.get("choix", [])
-	if typeof(choix) != TYPE_ARRAY or choix.is_empty() or choix.size() > 3:
-		return "definition de scene: un a trois choix ecrits sont requis"
+	if typeof(choix) != TYPE_ARRAY or choix.size() > 3:
+		return "definition de scene: zero a trois choix ecrits sont autorises"
+	if choix.is_empty() and not definition["resolutions"].is_empty():
+		return "definition de scene: resolutions orphelines sans choix"
 	var choix_ids := {}
+	var resolutions_referencees := {}
 	for option in choix:
 		if typeof(option) != TYPE_DICTIONARY:
 			return "definition de scene: choix invalide"
 		var choix_id = option.get("choix_id")
 		if not _chaine_non_vide(choix_id) or not _chaine_non_vide(option.get("formulation")):
 			return "definition de scene: choix incomplet"
+		if not _chaine_non_vide(option.get("signal_emis")):
+			return "definition de scene: choix sans signal emis"
 		if choix_ids.has(choix_id):
 			return "definition de scene: choix duplique"
 		choix_ids[choix_id] = true
@@ -176,7 +201,80 @@ static func _valider_choix(definition: Dictionary) -> String:
 		for resolution_id in resolution_ids:
 			if not definition["resolutions"].has(resolution_id):
 				return "definition de scene: choix vers resolution inconnue"
+			if definition["resolutions"][resolution_id].get("signal_recu") != option["signal_emis"]:
+				return "definition de scene: signal emis et signal recu incoherents"
+			resolutions_referencees[resolution_id] = true
+	if resolutions_referencees.size() != definition["resolutions"].size():
+		return "definition de scene: resolution orpheline non consommee"
 	return ""
+
+
+static func _valider_politique_non_resolution(definition: Dictionary) -> String:
+	if not definition.has("politique_non_resolution"):
+		return ""
+	var politique = definition["politique_non_resolution"]
+	if typeof(politique) != TYPE_DICTIONARY:
+		return "definition de scene: politique_non_resolution doit etre un dictionnaire"
+	for champ in politique:
+		if champ not in ["proposition_expire", "consequence_manquee"]:
+			return "definition de scene: politique_non_resolution contient un champ non consomme"
+	if politique.get("proposition_expire") not in ["MISSED", "CANCELLED"]:
+		return "definition de scene: statut d'expiration invalide"
+	var consequence = politique.get("consequence_manquee")
+	if consequence != null:
+		if typeof(consequence) != TYPE_DICTIONARY:
+			return "definition de scene: consequence manquee invalide"
+		if consequence.get("personnage_id") not in _identifiants_participants(definition["participants_requis"]):
+			return "definition de scene: consequence manquee hors participants"
+		var fait = consequence.get("fait_relationnel")
+		if typeof(fait) != TYPE_DICTIONARY or not _chaine_non_vide(fait.get("fait_id")):
+			return "definition de scene: fait manque invalide"
+	return ""
+
+
+static func heure_en_minutes(heure) -> int:
+	if typeof(heure) != TYPE_STRING:
+		return -1
+	var morceaux: PackedStringArray = heure.split(":")
+	if morceaux.size() != 2 or morceaux[0].length() != 2 or morceaux[1].length() != 2:
+		return -1
+	if not morceaux[0].is_valid_int() or not morceaux[1].is_valid_int():
+		return -1
+	var heures := int(morceaux[0])
+	var minutes := int(morceaux[1])
+	if heures < 0 or heures > 23 or minutes < 0 or minutes > 59:
+		return -1
+	return heures * 60 + minutes
+
+
+static func moment_valide(moment) -> bool:
+	return (
+		typeof(moment) == TYPE_STRING
+		and moment.length() >= 16
+		and moment.substr(10, 1) == "T"
+		and _date_valide(moment.substr(0, 10))
+		and heure_en_minutes(moment.substr(11, 5)) >= 0
+	)
+
+
+static func _date_valide(date) -> bool:
+	if typeof(date) != TYPE_STRING or date.length() != 10:
+		return false
+	var morceaux: PackedStringArray = date.split("-")
+	if morceaux.size() != 3 or morceaux[0].length() != 4 or morceaux[1].length() != 2 or morceaux[2].length() != 2:
+		return false
+	for morceau in morceaux:
+		if not morceau.is_valid_int():
+			return false
+	var annee := int(morceaux[0])
+	var mois := int(morceaux[1])
+	var jour := int(morceaux[2])
+	if annee < 1 or mois < 1 or mois > 12:
+		return false
+	var jours := [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+	if mois == 2 and (annee % 400 == 0 or (annee % 4 == 0 and annee % 100 != 0)):
+		jours[1] = 29
+	return jour >= 1 and jour <= jours[mois - 1]
 
 
 static func _identifiants_participants(participants: Array) -> Array:

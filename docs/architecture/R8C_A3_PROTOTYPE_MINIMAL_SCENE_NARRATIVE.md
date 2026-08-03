@@ -8,59 +8,77 @@
 
 **Base :** R8C-A1 et contrat produit R8C-A2, depuis `5484a4dfbd94a4c7da947362a4b9a40fc7eab1ef`
 
-Ce lot prouve le trajet minimal d'une scène écrite : déclaration, évaluation, création d'une instance lors d'une intention réelle, proposition perceptible, résolution ou occasion manquée, puis conséquence qualitative via la frontière transactionnelle existante d'`EtatNarratif`.
+Ce lot prouve le trajet minimal d'une scène écrite : déclaration, évaluation, instance située, proposition perceptible, résolution liée au choix ou occasion manquée, puis éventuelle conséquence qualitative par la frontière transactionnelle existante d'`EtatNarratif`.
 
-## Représentation retenue
+Il ne modifie ni R8C-A1, ni R8C-A2, ni `docs/15_PLAYER_FLOW_AND_PASSIVE_SIGNALS.md`.
 
-Les définitions sont des dictionnaires issus d'une fixture JSON explicitement non canonique. Elles portent l'identité stable, la version, la nature, la fonction, les participants, le noyau écrit, les lectures autorisées, les conditions bornées, le contrat temporel, les choix, les résolutions et la politique de non-résolution.
+## Contrat réellement consommé
 
-`R8CSceneDefinition` valide cette forme sans langage d'expression général. `R8CSceneInstance` conserve l'occurrence située, sa référence au contexte évalué et l'historique sourcé de ses transitions. `R8CMinimalSceneEngine` évalue six familles seulement :
+Les définitions sont des dictionnaires provenant d'une fixture JSON marquée `FIXTURE_NON_CANONIQUE`. Le noyau obligatoire contient : identité et version, nature, fonction, participants, conditions et exclusions bornées, contrat temporel, politique `UNIQUE` ou `REPETABLE`, et dictionnaire de résolutions. Les choix sont optionnels et limités à trois.
+
+Chaque choix écrit déclare un `choix_id`, une formulation, un `signal_emis` et les `resolution_ids` autorisés. Chaque résolution déclare le même signal comme `signal_recu`, sa portée, sa réception, son interprétation et sa convergence. Une définition avec zéro choix et zéro résolution est valide. Une résolution durable n'est valide qu'avec réception non locale, interprétation explicite et au moins un fait relationnel.
+
+Les anciens champs décoratifs `lectures_etat`, `observabilite`, `sortie` et `referentiel_calendrier` ont été retirés de la fixture. Il n'existe aucun langage d'expression général.
+
+Le contrat temporel valide les vraies dates civiles et les heures `HH:MM`. Les horaires sont convertis en minutes avant comparaison. Le diagnostic expose `revalidation_requise_avant`, qui vaut réellement la fermeture de la fenêtre écrite.
+
+## Évaluation et cycle de vie
+
+`R8CMinimalSceneEngine` évalue six familles :
 
 - acte compatible ;
 - événements requis présents et événements interdits absents ;
 - participants requis disponibles ;
-- définition non déjà résolue ;
+- politique d'unicité ;
 - fenêtre datée et horaire ouverte ;
 - opportunité contextuelle encore valide.
 
-Le diagnostic liste chaque condition, son résultat et un code de raison stable. Une définition seulement éligible ne crée aucune instance. La création exige un identifiant d'instance et une intention de proposition explicite.
+Le diagnostic énumère chaque condition avec son résultat et un code de raison. Une instance peut naître `INELIGIBLE` ou `ELIGIBLE`. Une réévaluation autorise `INELIGIBLE -> ELIGIBLE` et `ELIGIBLE -> INELIGIBLE`.
 
-## Cycle de vie minimal
+Le cycle implémenté emploie exactement `INELIGIBLE`, `ELIGIBLE`, `PROPOSED`, `RESOLVED`, `MISSED` et `CANCELLED`. Depuis `ELIGIBLE`, seule une proposition peut mener à `PROPOSED`. Depuis `PROPOSED`, seules une résolution, une occasion manquée ou une annulation peuvent terminer l'instance. `RESOLVED`, `MISSED` et `CANCELLED` sont immuables. Toute autre transition est refusée avant mutation.
 
-La surface A3 demandée emploie `INELIGIBLE`, `ELIGIBLE`, `PROPOSED`, `RESOLVED`, `MISSED` et `CANCELLED`. Ils correspondent respectivement aux concepts `INELIGIBLE`, `ELIGIBLE`, `PROPOSEE`, `RESOLUE`, `MANQUEE` et `ANNULEE` de R8C-A2.
+`PLANIFIEE` reste hors prototype : A3 ne construit pas de journée.
 
-`PLANIFIEE` n'est pas implémenté : le prototype ne planifie pas de journée et crée directement une instance `ELIGIBLE` au moment d'une intention concrète de proposition. Cette réduction est locale à A3 et ne redéfinit pas le cycle canonique complet d'A2.
+Une définition éligible jamais proposée expire silencieusement. Une proposition peut devenir `MISSED` ou `CANCELLED` après fermeture selon sa politique. Une conséquence d'occasion manquée n'existe que si elle est explicitement écrite.
 
-Une définition éligible jamais proposée expire sans événement. `MISSED` n'est accessible que depuis `PROPOSED`, après la fin de la fenêtre écrite et seulement si la politique authored lui donne un sens narratif. `CANCELLED` reste une terminaison sourcée sans imputation automatique au joueur.
+## Choix, revalidation et transaction
 
-## Transaction et invariants A1
+La résolution prend explicitement `choix_id` et `resolution_id`. Le moteur vérifie que le choix existe, que la résolution lui est autorisée, puis que `signal_emis == signal_recu`. Une formulation sobre ne peut donc produire ni la réception chaleureuse ni la limite audacieuse.
 
-Le prototype n'ajoute aucun type d'événement à A1 et ne modifie pas son API. Une résolution produit un événement relationnel synthétique A1 comprenant une provenance de scène, d'instance et de résolution. Le reducer existant reçoit une liste complète de faits qualitatifs préservant les faits antérieurs.
+Avec `AVANT_PROPOSITION_ET_RESOLUTION`, le contexte courant est réévalué juste avant toute préparation terminale. Une fenêtre fermée, un participant indisponible, un acte changé, une exclusion nouvelle, une opportunité expirée ou une résolution UNIQUE concurrente refusent l'opération sans modifier A1 ni l'instance.
 
-L'instance ne passe à `RESOLVED` ou `MISSED` qu'après un retour `APPLIQUE` ou `IDEMPOTENT` d'`EtatNarratif`. Un rejet conserve l'instance dans `PROPOSED` et bénéficie de l'atomicité d'un événement unique déjà garantie par A1. Ce lot ne prétend pas fournir une transaction multi-événements.
+La séquence terminale est :
 
-Les scripts de scène ne mutent jamais directement `EtatRelation`, `EtatRelationCentrale` ni les registres d'`EtatNarratif`.
+1. validation définition, choix, résolution, signal et contexte ;
+2. construction de la conséquence candidate ;
+3. préparation complète et sans mutation de la transition d'instance ;
+4. appel atomique unique à A1 si la portée est durable ;
+5. application sans validation restante de la transition déjà préparée.
 
-## Démonstration synthétique
+Un rejet A1 laisse l'instance `PROPOSED`. Après un retour `APPLIQUE` ou `IDEMPOTENT`, aucune opération susceptible de refuser la transition n'est exécutée.
 
-La fixture contient :
+L'identifiant `r8c-a3:<instance_id>:resolution:<resolution_id>` est déterministe. L'instance mémorise cette terminaison avec le choix et la résolution. Une reprise strictement identique est `IDEMPOTENT`; toute autre résolution terminale est refusée. Si A1 avait déjà accepté l'événement mais que l'instance était encore `PROPOSED`, le candidat existant identique peut être repris puis la transition préparée appliquée.
 
-- une signature Sandra bornée à une fenêtre réelle, unique après résolution, dépendante d'un événement relationnel synthétique et dotée de trois formulations : sobre, chaleureuse, audacieuse ;
-- un module « conversation à distance avec une personne temporairement absente » écrit pour Sandra ;
-- le même squelette technique écrit pour Raphaëlle avec participant, condition, noyau, horaire, réaction et conséquence distincts.
+## Unicité
 
-Les variantes modulaires partagent un `structure_id`, jamais leur identité ou leur contrat authored. Une instance créée depuis l'une refuse l'autre définition.
+`instance_id` identifie une occurrence et ne peut jamais être enregistré deux fois dans un même moteur.
 
-## Micro-signaux
+`UNIQUE` s'applique à la définition : le registre du moteur interdit deux instances non terminales simultanées. Après une résolution durable, la provenance A1 empêche aussi une nouvelle résolution par un autre moteur. `REPETABLE` permet plusieurs occurrences et plusieurs résolutions.
 
-Les branches convergent vers `RETOUR_NOYAU_COMMUN`.
+Limite assumée du prototype : une résolution UNIQUE purement LOCAL ou TEMPORAIRE n'écrit volontairement rien dans A1. Son unicité post-résolution est donc conservée par le moteur vivant, pas restaurée après reconstruction complète du moteur. Résoudre ce point demanderait un registre persistant d'instances, hors A3 et contradictoire avec l'interdiction de persister un signal local.
 
-La réponse sobre ne persiste ni sa formulation ni son identifiant de choix ; seul le fait neutre que la scène a été résolue est écrit. Une réponse chaleureuse ne produit un fait durable que lorsque Sandra la reçoit et l'interprète explicitement. La réponse audacieuse peut être reçue dans ce contexte sans créer de permission future, ou conduire Sandra à formuler une limite explicite persistée comme fait qualitatif sourcé.
+## Trois portées de micro-signaux
 
-Aucune accumulation ne relie ces branches et aucun micro-choix isolé ne débloque une escalade.
+- `LOCALE` : aucune écriture A1 et aucune trace de séquence ; seul le diagnostic retourné décrit l'effet immédiat.
+- `TEMPORAIRE` : aucune écriture A1 ; une trace explicitement déclarée vit dans `SceneInstance` et peut être nettoyée à la fin de la courte séquence.
+- `DURABLE` : un événement relationnel A1 est produit avec provenance de scène, instance, choix, signal et résolution.
 
-## Hors périmètre
+`DURABLE + NON_PERSISTANTE` est invalide. Les branches convergent toutes vers `RETOUR_NOYAU_COMMUN`. Aucune accumulation, aucun score, aucun compteur ni profil psychologique ne relie ces branches.
 
-Sont exclus : runtime Saison 1 historique, dialogues canoniques, UI, sauvegarde, migration, constructeur de journée, planificateur, séquences, sélection entre candidates, hasard, priorité numérique, texte dynamique, langage universel de règles, transaction multi-événements, taxonomie finale, traces temporaires, médias et réconciliation de `docs/15_PLAYER_FLOW_AND_PASSIVE_SIGNALS.md`.
+La fixture démontre une réponse Sandra sobre locale, une attention chaleureuse durable, une audace durable ou une limite durable accessible seulement depuis le choix audacieux, ainsi qu'un écho Sandra temporaire. Le module Raphaëlle conserve des participants, conditions, horaires, signaux et conséquences distincts malgré un `structure_id` partagé.
 
-Le prototype ne contient aucune jauge relationnelle cachée, aucun compteur de gestes et aucun profil psychologique inféré.
+## Frontière A1 et hors périmètre
+
+A3 n'ajoute aucun type d'événement et aucune fonction publique à A1. Les scripts de scène ne mutent jamais directement `EtatRelation`, `EtatRelationCentrale` ni les registres d'`EtatNarratif`.
+
+Restent exclus : runtime Saison 1 historique, dialogues canoniques, UI, sauvegarde, migration, constructeur de journée, planificateur, séquences, sélection entre candidates, hasard, priorité numérique, texte dynamique, moteur universel, rollback générique, transaction multi-événements, médias et démarrage de R8C-A4.
