@@ -1,7 +1,7 @@
 # R8A-D1 — Contrat produit du nouveau moteur narratif
 
-> **Statut : `READY_FOR_PRODUCT_REVIEW`**
-> Candidat de contrat produit. Il n'est pas canonique, ni verrouillé, avant revue et verrouillage explicites.
+> **Statut : `PRODUCT_APPROVED_READY_FOR_LOCK`**
+> Corrections D1-C1 intégrées. Le contrat n'est canonique qu'après verrouillage explicite ; R8B et R8C restent non autorisés jusque-là.
 
 ## 1. Autorité, portée et vocabulaire
 
@@ -30,7 +30,7 @@ Les identifiants conceptuels sont français, sans accents, avec `snake_case` rec
 | `obligations` | Conséquences dues, y compris hors promesse. |
 | `traces_narratives` | Objets, contenus ou enregistrements dont circulation et accès comptent. |
 | `connaissances` | Ce que chaque personne sait, et par quelle source. |
-| `livraison_medias` | Etat persistant de disponibilité, contrôle et remise des médias, sans confondre média, trace et connaissance. |
+| `livraison_medias` | Etat technique et opérationnel de disponibilité et de remise des médias ; il n'établit ni contrôle narratif, ni droit d'accès, ni connaissance. |
 
 Les registres et états courants ci-dessus sont persistants. Les vues suivantes sont calculées ou reconstructibles : `scenes_candidates`, `medias_disponibles`, `promesses_actives_ids`, `obligations_actives_ids`, `traces_visibles_ids`, `resume_relation`, `preference_joueur_calculee`, `peut_progresser`, `acte_pret_a_sortir` et `finale_eligible`. Elles ne sont pas des sources de vérité ; un cache est admissible seulement s'il est explicitement invalidable et reconstructible.
 
@@ -38,7 +38,7 @@ Les registres et états courants ci-dessus sont persistants. Les vues suivantes 
 
 ### 3.1 `EtatRelationCentrale` — Marie/Player
 
-Champs minimaux : `statut_couple`, `contrat_couple`, `etat_divulgation`, `etat_foyer`, `relation_apres_separation`, `dernier_evenement_majeur_id` et `faits`.
+Champs minimaux : `statut_couple`, `contrat_couple`, `etat_divulgation`, `etat_foyer`, `relation_apres_separation`, `dernier_evenement_majeur_id` et `faits`. `contrat_couple` et `relation_apres_separation` sont conditionnels : ils sont optionnels ou `null` quand ils ne s'appliquent pas. La nullabilité porte le non-applicable ; aucune valeur de taxonomie `AUCUN` ou `NON_APPLICABLE` n'est ajoutée.
 
 Taxonomies bornées :
 
@@ -47,7 +47,13 @@ Taxonomies bornées :
 - `etat_divulgation` : `HONNETE`, `PARTIEL`, `ASYMETRIQUE`, `MENSONGER_COMPROMIS`, `REVELE` ;
 - `relation_apres_separation` : `BONS_TERMES`, `BLESSEE`, `HOSTILE`, `SANS_CONTACT`.
 
-Invariants : un mensonge n'est jamais un contrat ; `contrat_couple` ne devient effectif que par événement de contrat accepté et sourcé ; `relation_apres_separation` n'est renseignée que lorsque `statut_couple = SEPARES` ; un couple séparé ne porte pas un contrat de couple actif sans nouvel événement explicite de clarification ou reprise. `PROVISOIRE` exige une règle, des limites, une échéance ou condition de réévaluation, et des obligations concrètes. La divulgation décrit ce qui a été partagé, non l'accord ; aucune combinaison ne peut transformer automatiquement une divulgation partielle ou mensongère en accord.
+Invariants :
+
+- `statut_couple = ENSEMBLE` impose un `contrat_couple` obligatoire et une `relation_apres_separation` absente ; aucune valeur de séparation n'est portée par un couple encore ensemble.
+- `statut_couple = SEPARES` impose un `contrat_couple` absent et une `relation_apres_separation` obligatoire ; aucun fallback artificiel `EXCLUSIF` ne peut représenter un couple séparé.
+- `statut_couple = EN_CLARIFICATION` peut conserver le dernier `contrat_couple` encore actif, ou ne porter aucun contrat lorsque l'ancien a explicitement cessé ; chaque cas est sourcé par un événement.
+- Un mensonge n'est jamais un contrat ; `contrat_couple` ne devient effectif que par événement de contrat accepté et sourcé. `PROVISOIRE` exige une règle, des limites, une échéance ou condition de réévaluation, et des obligations concrètes.
+- La divulgation décrit ce qui a été partagé, non l'accord ; aucune combinaison ne peut transformer automatiquement une divulgation partielle ou mensongère en accord.
 
 ### 3.2 `EtatRelation` — personnage
 
@@ -73,6 +79,8 @@ Une trace narrative est un contenu, objet ou enregistrement persistant dont l'ex
 
 Un événement enregistre qu'un fait a eu lieu ; une trace est le support persistant qui peut circuler ; une connaissance est l'état sourcé d'une personne qui sait un fait. Toutes les actions ne créent pas une trace. La suppression d'une trace ne restaure jamais son contenu : elle peut laisser une connaissance, une copie, une absence significative ou une obligation, sans réapparition magique.
 
+`RegistreTracesNarratives` est l'autorité narrative exclusive pour l'existence d'une trace, son contrôleur, son audience, son accessibilité, sa sauvegarde, son transfert, sa permanence et sa suppression ou son retrait. Ces droits et états sont établis par trace, contexte et règles narratives, puis persistent dans ce registre.
+
 ### 4.3 `RegistreConnaissances`
 
 Une connaissance est sourcée par personne et comprend au minimum `fait_id`, `connaisseurs_actuels`, `source_type`, `source_ref`, `certitude`, `contexte_certitude`, `partageabilite` et date ou `source_scene`. Il n'y a aucune omniscience automatique : l'audience d'une trace ne vaut ni connaissance certaine de son contenu, ni autorisation de partage. Une connaissance partielle, erronée ou contextuelle reste distinguée du fait établi.
@@ -81,7 +89,9 @@ Une connaissance est sourcée par personne et comprend au minimum `fait_id`, `co
 
 Une promesse est un engagement accepté avec échéance ou condition. Une obligation est une conséquence due ou action nécessaire, qui peut venir d'une promesse, d'un contrat, d'une règle de sécurité ou d'un événement. Elles ont des cycles de vie bornés (créée/active, remplie, transformée, expirée, annulée de façon sourcée lorsque compatible), une échéance diégétique concrète ou une condition explicite.
 
-Elles ne dupliquent pas de scalaire dans `EtatRelation`. Les collisions se résolvent par priorité narrative : sécurité et consentement, conséquence à échéance dure, contrat explicite, réparation/clarification, puis logistique et respiration. Elles ne deviennent jamais un mini-jeu de gestion de dettes. `LivraisonMedias` exprime la disponibilité et la remise concrète ; il ne déduit ni accès, ni connaissance, ni consentement hors de la scène.
+Elles ne dupliquent pas de scalaire dans `EtatRelation`. Les collisions se résolvent par priorité narrative : sécurité et consentement, conséquence à échéance dure, contrat explicite, réparation/clarification, puis logistique et respiration. Elles ne deviennent jamais un mini-jeu de gestion de dettes.
+
+`LivraisonMedias` est exclusivement technique et opérationnel : média prêt ou non prêt, média servi ou non servi, moment de présentation, surface ou canal de livraison, variante technique livrée, erreur, attente ou retry de livraison. Une livraison réussie exécute un droit déjà établi par la trace, les contextes et les règles ; elle ne crée jamais de droit d'accès, d'audience, de connaissance, de sauvegarde ou de transfert, et ne contrôle pas narrativement le média.
 
 ## 6. `ContexteScene`, consentement et scènes modulaires
 
@@ -95,15 +105,26 @@ Le contrat d'une scène modulaire contient : identifiant et séquence source ; r
 
 `MoteurReglesScene` lit état, historique et registres pour calculer les scènes éligibles. Il applique priorités narratives, conséquences dues, respirations et recentrages Marie/Player. Il évite répétition, stagnation, escalade trop rapide et contenu infini. Il ne crée pas de vérité persistante et ne propose pas une route comme un menu. Chaque proposition peut porter des raisons de debug, non exposées techniquement au joueur.
 
-`ReducerRelation` est le seul composant autorisé à modifier les états relationnels et central. Il applique des transitions atomiques déclenchées par événements, validées contre les combinaisons et transitions autorisées. Il rejette explicitement une incohérence, et peut mettre à jour plusieurs relations pour un événement multi-personnages. Provider, scène et UI ne mutent rien directement. L'idempotence et la protection de replay sont requises au futur design technique.
+`ReducerRelation` est le seul composant autorisé à modifier les états relationnels et central. Il valide les transitions contre les combinaisons autorisées, rejette explicitement une incohérence et peut préparer plusieurs relations pour un événement multi-personnages. Provider, scène et UI ne mutent rien directement. L'idempotence et la protection de replay sont requises au futur design technique.
+
+Le traitement d'un événement candidat est une transaction narrative atomique, exposée publiquement par `traiter_evenement(evenement)`. Elle doit, dans une même opération logique :
+
+1. recevoir l'événement candidat ;
+2. vérifier sa provenance, son unicité et son idempotence ;
+3. valider toutes les transitions et les mutations de registres ;
+4. préparer les mutations de `EtatRelationCentrale`, d'une ou plusieurs `EtatRelation`, des promesses, obligations, traces narratives, connaissances et de `progression_saison` ;
+5. appliquer l'ensemble ;
+6. enregistrer l'événement comme accompli uniquement si toutes les mutations sont valides ;
+7. invalider ou recalculer les vues calculées après succès.
+
+En cas d'échec, aucune mutation partielle n'est conservée, aucun événement n'est partiellement enregistré et aucune vue n'est considérée valide. `enregistrer_evenement(evenement)` et `appliquer_evenement(evenement)` peuvent exister comme opérations internes conceptuelles, mais ne sont pas des points d'entrée publics indépendants : une scène, un provider ou l'UI ne peuvent jamais les appeler séparément.
 
 API produit indicative, non définitive et sans engagement sur les signatures Godot :
 
 ```text
 obtenir_resume_relation(personnage_id)
 obtenir_resume_relation_centrale()
-enregistrer_evenement(evenement)
-appliquer_evenement(evenement)
+traiter_evenement(evenement)
 obtenir_scenes_eligibles(contexte)
 creer_contexte_scene(scene_id)
 obtenir_connaissances(personnage_id)
@@ -163,6 +184,9 @@ Le debug doit exposer, sans obligation d'écran joueur : résumé de relation ce
 - Une journée calme est possible sans contenu important.
 - La préférence joueur est recalculée et permet un changement d'avis.
 - Le traitement idempotent d'un événement rejoué est spécifié et vérifiable.
+- Un événement rejeté par le reducer ne laisse aucune mutation partielle ni enregistrement accompli.
+- Un couple séparé possède `relation_apres_separation` mais aucun `contrat_couple` actif.
+- Une livraison média réussie n'étend ni audience ni connaissance.
 - La séquence finale obligatoire est construite et respecte ses invariants.
 - Une sauvegarde du nouveau format incompatible est reprise avec état narratif et reprise technique séparés.
 
@@ -178,10 +202,10 @@ Ces points ne rouvrent aucune décision narrative verrouillée.
 
 ## 15. Roadmap après D1
 
-1. `D1-C1` — corrections éventuelles puis verrouillage de ce contrat.
-2. `R8B` — lecture seule et résumé de l'état réconcilié.
+1. Verrouillage explicite de D1-C1, sans rouvrir de point narratif verrouillé.
+2. `R8B` — lecture seule et résumé de l'état réconcilié, seulement après ce verrouillage.
 3. `R8C` — fondation du nouveau moteur, seulement après R8B validé ou décision explicite contraire.
 
 ## Verdict
 
-`READY_FOR_PRODUCT_REVIEW`
+`PRODUCT_APPROVED_READY_FOR_LOCK`
