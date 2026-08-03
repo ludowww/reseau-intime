@@ -1,0 +1,345 @@
+{
+  "prototype_id": "r8c_a3_scene_prototype_synthetique",
+  "statut_contenu": "FIXTURE_NON_CANONIQUE",
+  "definitions": {
+    "signature_sandra": {
+      "scene_id": "r8c_a3_signature_sandra_presence_distance",
+      "version_contrat": "1.0.0-prototype",
+      "titre_interne": "Sandra demande une présence à distance",
+      "nature": "SIGNATURE",
+      "fonction_principale": "RELATION",
+      "participants_requis": [
+        {
+          "personnage_id": "sandra",
+          "role": "INTERLOCUTRICE"
+        }
+      ],
+      "relation_ou_question_focale": "relation_player_sandra_synthetique",
+      "noyau_stable": "Sandra formule elle-même ce qu'elle attend d'une présence à distance.",
+      "conditions_dures": {
+        "actes_compatibles": [
+          "ACTE_SYNTHETIQUE_A3"
+        ],
+        "evenements_requis": [
+          "r8c-a3-sandra-relation-ready"
+        ]
+      },
+      "exclusions_dures": {
+        "evenements_interdits": [
+          "r8c-a3-sandra-signature-blocked"
+        ]
+      },
+      "lectures_etat": {
+        "persistantes": [
+          "evenements",
+          "relations.sandra.faits"
+        ],
+        "contextuelles": [
+          "acte_courant",
+          "participants_disponibles.sandra",
+          "moment_diegetique",
+          "opportunite_valide"
+        ]
+      },
+      "contrat_temporel": {
+        "date_debut": "2030-04-08",
+        "date_fin": "2030-04-08",
+        "heure_ouverture": "18:00",
+        "heure_fermeture": "22:00",
+        "duree_minutes": 20,
+        "referentiel_calendrier": "EUROPE_PARIS_SYNTHETIQUE",
+        "revalidation": "AVANT_PROPOSITION_ET_RESOLUTION"
+      },
+      "choix": [
+        {
+          "choix_id": "sobre",
+          "formulation": "Je suis là. Raconte-moi.",
+          "resolution_ids": [
+            "resolution_commune"
+          ]
+        },
+        {
+          "choix_id": "chaleureuse",
+          "formulation": "Je suis là, et j'aime quand tu me le dis aussi clairement.",
+          "resolution_ids": [
+            "signal_chaleureux_recu"
+          ]
+        },
+        {
+          "choix_id": "audacieuse",
+          "formulation": "Tu sais très bien l'effet que ça me fait quand tu me demandes ça.",
+          "resolution_ids": [
+            "signal_audacieux_recu",
+            "limite_audace_explicite"
+          ]
+        }
+      ],
+      "resolutions": {
+        "resolution_commune": {
+          "personnage_id": "sandra",
+          "portee_micro_signal": "LOCALE",
+          "reception": "NON_PERSISTANTE",
+          "interpretation": "VARIATION_DE_TON_SANS_MEMOIRE",
+          "faits_relationnels": [
+            {
+              "fait_id": "r8c_a3_signature_sandra_resolue",
+              "nature": "RESOLUTION_DE_SCENE"
+            }
+          ],
+          "convergence": "RETOUR_NOYAU_COMMUN"
+        },
+        "signal_chaleureux_recu": {
+          "personnage_id": "sandra",
+          "portee_micro_signal": "DURABLE",
+          "reception": "RECUE_INTERPRETEE",
+          "interpretation": "ATTENTION_CLAIREMENT_RECONNUE_PAR_SANDRA",
+          "faits_relationnels": [
+            {
+              "fait_id": "r8c_a3_signature_sandra_resolue",
+              "nature": "RESOLUTION_DE_SCENE"
+            },
+            {
+              "fait_id": "sandra_attention_chaleureuse_reconnue",
+              "nature": "SIGNAL_RECU_ET_INTERPRETE",
+              "recu_par": "sandra"
+            }
+          ],
+          "convergence": "RETOUR_NOYAU_COMMUN"
+        },
+        "signal_audacieux_recu": {
+          "personnage_id": "sandra",
+          "portee_micro_signal": "DURABLE",
+          "reception": "RECUE_INTERPRETEE",
+          "interpretation": "AUDACE_RECUE_SANS_PERMISSION_FUTURE",
+          "faits_relationnels": [
+            {
+              "fait_id": "r8c_a3_signature_sandra_resolue",
+              "nature": "RESOLUTION_DE_SCENE"
+            },
+            {
+              "fait_id": "sandra_audace_situee_reconnue",
+              "nature": "SIGNAL_RECU_ET_INTERPRETE",
+              "recu_par": "sandra",
+              "permission_future": false
+            }
+          ],
+          "convergence": "RETOUR_NOYAU_COMMUN"
+        },
+        "limite_audace_explicite": {
+          "personnage_id": "sandra",
+          "portee_micro_signal": "DURABLE",
+          "reception": "LIMITE_EXPLICITE",
+          "interpretation": "SANDRA_DEMANDE_UN_REGISTRE_MOINS_AUDACIEUX",
+          "faits_relationnels": [
+            {
+              "fait_id": "r8c_a3_signature_sandra_resolue",
+              "nature": "RESOLUTION_DE_SCENE"
+            },
+            {
+              "fait_id": "sandra_limite_registre_audacieux_formulee",
+              "nature": "LIMITE_EXPLICITE",
+              "formulee_par": "sandra"
+            }
+          ],
+          "convergence": "RETOUR_NOYAU_COMMUN"
+        }
+      },
+      "politique_non_resolution": {
+        "proposition_expire": "MISSED",
+        "sans_proposition": "EXPIRATION_SILENCIEUSE",
+        "echeance": "FIN_FENETRE_ECRITE",
+        "consequence_manquee": {
+          "personnage_id": "sandra",
+          "fait_relationnel": {
+            "fait_id": "sandra_proposition_visible_restee_sans_reponse",
+            "nature": "OPPORTUNITE_REELLEMENT_MANQUEE"
+          }
+        }
+      },
+      "sortie": {
+        "statut_attendu": "RESOLVED",
+        "suivi": "AUCUN_DANS_CE_PROTOTYPE"
+      },
+      "observabilite": {
+        "code_eligible": "SIGNATURE_SANDRA_ELIGIBLE",
+        "code_proposee": "SIGNATURE_SANDRA_PROPOSED",
+        "code_resolue": "SIGNATURE_SANDRA_RESOLVED"
+      }
+    },
+    "module_distance_sandra": {
+      "scene_id": "r8c_a3_module_distance_sandra",
+      "version_contrat": "1.0.0-prototype",
+      "titre_interne": "Sandra absente envoie un détail concret",
+      "nature": "MODULAIRE",
+      "structure_id": "conversation_distance_absence_temporaire",
+      "fonction_principale": "ECHO",
+      "participants_requis": [
+        {
+          "personnage_id": "sandra",
+          "role": "PERSONNE_TEMPORAIREMENT_ABSENTE"
+        }
+      ],
+      "relation_ou_question_focale": "continuite_concrete_player_sandra",
+      "noyau_stable": "Sandra choisit un détail concret de son absence et attend une réponse précise.",
+      "conditions_dures": {
+        "actes_compatibles": [
+          "ACTE_SYNTHETIQUE_A3"
+        ],
+        "evenements_requis": [
+          "r8c-a3-sandra-away"
+        ]
+      },
+      "exclusions_dures": {
+        "evenements_interdits": [
+          "r8c-a3-sandra-returned"
+        ]
+      },
+      "lectures_etat": {
+        "persistantes": [
+          "evenements",
+          "relations.sandra.faits"
+        ],
+        "contextuelles": [
+          "participants_disponibles.sandra",
+          "moment_diegetique"
+        ]
+      },
+      "contrat_temporel": {
+        "date_debut": "2030-04-09",
+        "date_fin": "2030-04-10",
+        "heure_ouverture": "08:00",
+        "heure_fermeture": "20:00",
+        "duree_minutes": 10,
+        "referentiel_calendrier": "EUROPE_PARIS_SYNTHETIQUE",
+        "revalidation": "AVANT_PROPOSITION_ET_RESOLUTION"
+      },
+      "choix": [
+        {
+          "choix_id": "sobre",
+          "formulation": "Bien reçu. Profite de ta journée.",
+          "resolution_ids": [
+            "echo_sandra_local"
+          ]
+        }
+      ],
+      "resolutions": {
+        "echo_sandra_local": {
+          "personnage_id": "sandra",
+          "portee_micro_signal": "LOCALE",
+          "reception": "NON_PERSISTANTE",
+          "interpretation": "SANDRA_REPREND_SON_DETAIL_CONCRET",
+          "faits_relationnels": [
+            {
+              "fait_id": "r8c_a3_module_distance_sandra_resolu",
+              "nature": "RESOLUTION_DE_SCENE"
+            }
+          ],
+          "convergence": "RETOUR_NOYAU_COMMUN"
+        }
+      },
+      "politique_non_resolution": {
+        "proposition_expire": "CANCELLED",
+        "sans_proposition": "EXPIRATION_SILENCIEUSE",
+        "echeance": "FIN_FENETRE_ECRITE"
+      },
+      "sortie": {
+        "statut_attendu": "RESOLVED",
+        "suivi": "AUCUN_DANS_CE_PROTOTYPE"
+      },
+      "observabilite": {
+        "code_eligible": "MODULE_DISTANCE_SANDRA_ELIGIBLE",
+        "code_resolue": "MODULE_DISTANCE_SANDRA_RESOLVED"
+      }
+    },
+    "module_distance_raphaelle": {
+      "scene_id": "r8c_a3_module_distance_raphaelle",
+      "version_contrat": "1.0.0-prototype",
+      "titre_interne": "Raphaëlle absente demande une relecture",
+      "nature": "MODULAIRE",
+      "structure_id": "conversation_distance_absence_temporaire",
+      "fonction_principale": "OPPORTUNITE",
+      "participants_requis": [
+        {
+          "personnage_id": "raphaelle",
+          "role": "PERSONNE_TEMPORAIREMENT_ABSENTE"
+        }
+      ],
+      "relation_ou_question_focale": "attention_editoriale_player_raphaelle",
+      "noyau_stable": "Raphaëlle choisit un fragment de travail et demande une relecture attentive.",
+      "conditions_dures": {
+        "actes_compatibles": [
+          "ACTE_SYNTHETIQUE_A3"
+        ],
+        "evenements_requis": [
+          "r8c-a3-raphaelle-away"
+        ]
+      },
+      "exclusions_dures": {
+        "evenements_interdits": [
+          "r8c-a3-raphaelle-deadline-passed"
+        ]
+      },
+      "lectures_etat": {
+        "persistantes": [
+          "evenements",
+          "relations.raphaelle.faits"
+        ],
+        "contextuelles": [
+          "participants_disponibles.raphaelle",
+          "moment_diegetique"
+        ]
+      },
+      "contrat_temporel": {
+        "date_debut": "2030-04-09",
+        "date_fin": "2030-04-10",
+        "heure_ouverture": "12:00",
+        "heure_fermeture": "23:00",
+        "duree_minutes": 15,
+        "referentiel_calendrier": "EUROPE_PARIS_SYNTHETIQUE",
+        "revalidation": "AVANT_PROPOSITION_ET_RESOLUTION"
+      },
+      "choix": [
+        {
+          "choix_id": "precise",
+          "formulation": "Je relis le passage et je te réponds point par point.",
+          "resolution_ids": [
+            "relecture_raphaelle_recue"
+          ]
+        }
+      ],
+      "resolutions": {
+        "relecture_raphaelle_recue": {
+          "personnage_id": "raphaelle",
+          "portee_micro_signal": "DURABLE",
+          "reception": "RECUE_INTERPRETEE",
+          "interpretation": "RAPHAELLE_RECONNAIT_L_ATTENTION_EDITORIALE",
+          "faits_relationnels": [
+            {
+              "fait_id": "r8c_a3_module_distance_raphaelle_resolu",
+              "nature": "RESOLUTION_DE_SCENE"
+            },
+            {
+              "fait_id": "raphaelle_relecture_precise_reconnue",
+              "nature": "SIGNAL_RECU_ET_INTERPRETE",
+              "recu_par": "raphaelle"
+            }
+          ],
+          "convergence": "RETOUR_NOYAU_COMMUN"
+        }
+      },
+      "politique_non_resolution": {
+        "proposition_expire": "CANCELLED",
+        "sans_proposition": "EXPIRATION_SILENCIEUSE",
+        "echeance": "FIN_FENETRE_ECRITE"
+      },
+      "sortie": {
+        "statut_attendu": "RESOLVED",
+        "suivi": "AUCUN_DANS_CE_PROTOTYPE"
+      },
+      "observabilite": {
+        "code_eligible": "MODULE_DISTANCE_RAPHAELLE_ELIGIBLE",
+        "code_resolue": "MODULE_DISTANCE_RAPHAELLE_RESOLVED"
+      }
+    }
+  }
+}
