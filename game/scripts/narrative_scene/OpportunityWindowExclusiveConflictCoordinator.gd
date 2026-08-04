@@ -202,6 +202,111 @@ func obtenir_fenetre(window_id: String) -> Dictionary:
 	return {} if fenetre == null else _resume_fenetre(fenetre)
 
 
+func revalider_fenetre_planifiable(
+	window_id: String,
+	etat_narratif,
+	contexte: Dictionary,
+	debut_planifie: String,
+	fin_planifiee: String
+) -> Dictionary:
+	return _revalider_fenetre_planifiable(
+		window_id,
+		etat_narratif,
+		contexte,
+		debut_planifie,
+		fin_planifiee,
+		false,
+	)
+
+
+func revalider_fenetre_planifiable_dev(
+	window_id: String,
+	etat_narratif,
+	contexte: Dictionary,
+	debut_planifie: String,
+	fin_planifiee: String
+) -> Dictionary:
+	if not _diagnostics_detailles_autorises():
+		return {"ok": false, "erreur": "DIAGNOSTICS_INDISPONIBLES"}
+	return _revalider_fenetre_planifiable(
+		window_id,
+		etat_narratif,
+		contexte,
+		debut_planifie,
+		fin_planifiee,
+		true,
+	)
+
+
+func _revalider_fenetre_planifiable(
+	window_id: String,
+	etat_narratif,
+	contexte: Dictionary,
+	debut_planifie: String,
+	fin_planifiee: String,
+	inclure_diagnostics: bool
+) -> Dictionary:
+	if not _identifiant_valide(window_id):
+		return _echec("WINDOW_ID_INVALIDE", inclure_diagnostics)
+	if (
+		etat_narratif == null
+		or typeof(etat_narratif) != TYPE_OBJECT
+		or not etat_narratif.has_method("obtenir_snapshot")
+	):
+		return _echec("ETAT_NARRATIF_ABSENT", inclure_diagnostics)
+	var fenetre = _fenetres.get(window_id)
+	if fenetre == null:
+		return _echec("FENETRE_INCONNUE", inclure_diagnostics)
+	if fenetre["state"] != OPEN or not fenetre["selected_option_id"].is_empty():
+		return _echec("ETAT_FENETRE_INCOMPATIBLE", inclure_diagnostics)
+	var erreur_contexte := _valider_liaison_contexte(fenetre, contexte)
+	if not erreur_contexte.is_empty():
+		return _echec(erreur_contexte, inclure_diagnostics)
+	if contexte["moment_diegetique"] < fenetre["opens_at"]:
+		return _echec("FENETRE_NON_OUVERTE", inclure_diagnostics)
+	if contexte["moment_diegetique"] >= fenetre["closes_at"]:
+		return _echec("FENETRE_EXPIREE", inclure_diagnostics)
+	if (
+		not DefinitionModele.moment_normalise_valide(debut_planifie)
+		or not DefinitionModele.moment_normalise_valide(fin_planifiee)
+		or not DefinitionModele.meme_offset(fenetre["opens_at"], debut_planifie)
+		or not DefinitionModele.meme_offset(fenetre["opens_at"], fin_planifiee)
+		or debut_planifie < fenetre["opens_at"]
+		or debut_planifie >= fin_planifiee
+		or fin_planifiee > fenetre["closes_at"]
+	):
+		return _echec("BORNES_PLANIFIEES_HORS_FENETRE", inclure_diagnostics)
+	if contexte["moment_diegetique"] > debut_planifie:
+		return _echec("INSTANT_PLANIFIE_DEPASSE", inclure_diagnostics)
+	var contexte_planifie := contexte.duplicate(true)
+	contexte_planifie["moment_diegetique"] = debut_planifie
+	for option_id in fenetre["options_par_id"]:
+		var option: Dictionary = fenetre["options_par_id"][option_id]
+		if option["state"] != CANDIDATE:
+			return _echec("ETAT_OPTION_INCOMPATIBLE", inclure_diagnostics)
+		if not _option_appartient(window_id, option):
+			return _echec("PROPRIETE_INSTANCE_INCOHERENTE", inclure_diagnostics)
+		if _moteur.obtenir_instance(option["instance_id"]) != null:
+			return _echec("INSTANCE_A5_INATTENDUE", inclure_diagnostics)
+		var charge: Dictionary = _charger_candidat(option, etat_narratif, contexte_planifie)
+		if not charge["ok"]:
+			return _echec(charge["erreur"], inclure_diagnostics)
+	var resultat := {
+		"ok": true,
+		"erreur": "",
+		"window": _resume_fenetre(fenetre),
+		"window_fingerprint": _empreinte_fenetre(fenetre),
+	}
+	if inclure_diagnostics:
+		resultat["diagnostic"] = {
+			"code": "FENETRE_PLANIFIABLE_REVALIDEE",
+			"debut_planifie": debut_planifie,
+			"fin_planifiee": fin_planifiee,
+			"options_revalidees": fenetre["options_par_id"].size(),
+		}
+	return resultat
+
+
 func _ouvrir_fenetre(
 	specification,
 	etat_narratif,
@@ -773,6 +878,10 @@ func _option_appartient(window_id: String, option: Dictionary) -> bool:
 
 static func _option_avant(a: Dictionary, b: Dictionary) -> bool:
 	return a["option_id"] < b["option_id"]
+
+
+static func _empreinte_fenetre(fenetre: Dictionary) -> String:
+	return JSON.stringify(fenetre["specification"], "", true, true).sha256_text()
 
 
 static func _diagnostics_detailles_autorises() -> bool:
