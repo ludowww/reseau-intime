@@ -1,0 +1,36 @@
+{
+  "format": "R8C_A11_RELATIONSHIP_REGISTER",
+  "version": 1,
+  "relations": [
+    {
+      "relation_id": "sandra_player",
+      "participant_ids": ["sandra", "player"],
+      "kind": "ancienne complicité en reprise prudente",
+      "shared_facts": [
+        {"fact_id": "last_lunch_photo", "text": "La photo montre un déjeuner banal sur une banquette.", "known_by": ["sandra", "player"]},
+        {"fact_id": "cracked_glass_detail", "text": "Le verre fêlé en étoile était devant Sandra.", "known_by": ["sandra", "player"]},
+        {"fact_id": "cold_fries_joke", "text": "Les frites froides avaient lancé une mauvaise blague de Player.", "known_by": ["sandra", "player"]}
+      ],
+      "boundaries": ["aucune déclaration directe", "aucune place officielle demandée", "ambiguïté déniable"]
+    },
+    {
+      "relation_id": "marie_player",
+      "participant_ids": ["marie", "player"],
+      "kind": "couple ancré dans le quotidien",
+      "shared_facts": [
+        {"fact_id": "bread_for_tonight", "text": "Le pain manque pour le dîner.", "known_by": ["marie", "player"]}
+      ],
+      "boundaries": ["Marie reste une présence affective", "aucune confrontation sans preuve", "pas de rupture"]
+    },
+    {
+      "relation_id": "sandra_marie",
+      "participant_ids": ["sandra", "marie"],
+      "kind": "connaissance cordiale sans intimité",
+      "shared_facts": [
+        {"fact_id": "lunch_photo_taken_by_marie", "text": "Marie a pris la photo banale du dernier déjeuner.", "known_by": ["sandra", "marie"]},
+        {"fact_id": "cracked_glass_detail", "text": "Marie et Sandra ont remarqué la fêlure du verre.", "known_by": ["sandra", "marie"]}
+      ],
+      "boundaries": ["pas de rivalité déclarée", "cordialité concrète", "aucune omniscience"]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "format": "R8C_A11_DIALOGUE_DRAFT",
+  "version": 1,
+  "draft_id": "a11_sandra_last_lunch_invalid_draft",
+  "revision": "rev_invalid_01",
+  "plan_id": "a11_sandra_last_lunch_detail",
+  "messages": [
+    {"message_id": "invalid_m01", "speaker_id": "sandra", "kind": "TEXT", "text": "Je sais ce que Marie n'a dit à personne.", "fact_refs": ["marie_private_concern"], "beat_id": "ordinary_photo", "branch": "COMMON", "burst_id": null, "strength": "NORMAL", "media": null}
+  ],
+  "choice": {
+    "choice_id": "player_attitude_after_detail",
+    "after_message_id": "invalid_m01",
+    "converge_at_message_id": "invalid_m01",
+    "options": [
+      {"option_id": "careful_warmth", "reception_message_ids": ["invalid_m01"]},
+      {"option_id": "ironic_withdrawal", "reception_message_ids": ["invalid_m01"]}
+    ]
+  }
+}

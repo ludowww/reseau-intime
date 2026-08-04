@@ -1,0 +1,72 @@
+{
+  "format": "R8C_A11_SCENE_PLAN",
+  "version": 1,
+  "plan_id": "a11_sandra_last_lunch_detail",
+  "title": "Prototype Sandra — le détail du dernier déjeuner",
+  "participant_ids": ["sandra", "marie", "player"],
+  "premise": "Une photo banale du dernier déjeuner fait revenir un détail partagé et permet à Player de laisser entendre un manque sans le déclarer.",
+  "shared_detail": "La petite fêlure en étoile du verre de Sandra, à côté des frites froides.",
+  "required_beats": [
+    {"beat_id": "ordinary_photo", "goal": "Sandra envoie la photo banale liée au dernier déjeuner."},
+    {"beat_id": "concrete_detail", "goal": "Le verre fêlé devient le détail concret reconnu."},
+    {"beat_id": "shared_memory", "goal": "La blague des frites froides réactive le souvenir partagé."},
+    {"beat_id": "indirect_missing", "goal": "Player exprime indirectement que ce moment lui a manqué."},
+    {"beat_id": "joke_misread", "goal": "Sandra prend d'abord l'allusion pour une plaisanterie."},
+    {"beat_id": "gentle_clarification", "goal": "Player précise sans déclaration directe."},
+    {"beat_id": "attitude_choice", "goal": "Player choisit entre chaleur prudente et retrait ironique."},
+    {"beat_id": "local_reception", "goal": "Sandra reçoit localement les deux attitudes de façon différente."},
+    {"beat_id": "allowed_convergence", "goal": "Les micro-branches convergent sans effacer leur tonalité."},
+    {"beat_id": "ordinary_close", "goal": "Marie ramène la conversation vers un détail quotidien."}
+  ],
+  "choice": {
+    "choice_id": "player_attitude_after_detail",
+    "prompt": "Comment Player laisse-t-il le sous-entendu ?",
+    "after_beat_id": "attitude_choice",
+    "converge_beat_id": "allowed_convergence",
+    "options": [
+      {
+        "option_id": "careful_warmth",
+        "attitude": "chaleur prudente",
+        "formulation": "Je plaisante pas complètement. J'aimais bien ce moment-là.",
+        "signal": "MANQUE_RECONNU_SANS_PROMESSE",
+        "sandra_local_state": "intriguée_touchée"
+      },
+      {
+        "option_id": "ironic_withdrawal",
+        "attitude": "retrait ironique",
+        "formulation": "Oublie, c'était mon hommage aux frites molles.",
+        "signal": "ALLUSION_RETIREE_PAR_IRONIE",
+        "sandra_local_state": "défensive_embarrassée"
+      }
+    ]
+  },
+  "media_requirement": {
+    "required": true,
+    "kind": "PHOTO",
+    "linked_fact_id": "last_lunch_photo",
+    "justification": "La photo banale rend visible le verre fêlé et déclenche le souvenir partagé."
+  },
+  "limits": {
+    "forbidden_phrases": ["tu me manques", "je suis amoureux", "on devrait être ensemble"],
+    "forbidden_outcomes": ["séduction instantanée", "conséquence majeure", "voie verrouillée"],
+    "route_lock_allowed": false,
+    "major_consequence_allowed": false
+  },
+  "a6_projection": {
+    "scene_definition_id": "r8c_a11_sandra_last_lunch_definition",
+    "variant_id": "sandra_last_lunch_detail",
+    "version_contract": "1.0.0-prototype",
+    "nature": "MODULAIRE",
+    "function": "ECHO",
+    "compatible_act_ids": ["ACTE_SYNTHETIQUE_A11"],
+    "required_event_ids": [],
+    "forbidden_event_ids": [],
+    "start_date": "2030-04-11",
+    "end_date": "2030-04-11",
+    "opening_time": "12:00",
+    "closing_time": "14:00",
+    "duration_minutes": 15,
+    "uniqueness": "REPETABLE",
+    "expiration_policy": "CANCELLED"
+  }
+}

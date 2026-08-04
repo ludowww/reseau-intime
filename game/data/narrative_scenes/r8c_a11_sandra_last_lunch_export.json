@@ -1,0 +1,78 @@
+{
+  "format": "R8C_A6_SCENE_LIBRARY",
+  "version": 1,
+  "definitions": [
+    {
+      "scene_definition_id": "r8c_a11_sandra_last_lunch_definition",
+      "variant_id": "sandra_last_lunch_detail",
+      "definition": {
+        "scene_id": "r8c_a11_sandra_last_lunch_definition",
+        "version_contrat": "1.0.0-prototype",
+        "titre_interne": "Prototype Sandra — le détail du dernier déjeuner",
+        "nature": "MODULAIRE",
+        "fonction_principale": "ECHO",
+        "participants_requis": [
+          {"personnage_id": "sandra", "role": "PARTICIPANT_AUTEUR"},
+          {"personnage_id": "marie", "role": "PARTICIPANT_AUTEUR"},
+          {"personnage_id": "player", "role": "PARTICIPANT_AUTEUR"}
+        ],
+        "conditions_dures": {
+          "actes_compatibles": ["ACTE_SYNTHETIQUE_A11"],
+          "evenements_requis": []
+        },
+        "exclusions_dures": {
+          "evenements_interdits": []
+        },
+        "contrat_temporel": {
+          "date_debut": "2030-04-11",
+          "date_fin": "2030-04-11",
+          "heure_ouverture": "12:00",
+          "heure_fermeture": "14:00",
+          "duree_minutes": 15,
+          "revalidation": "AVANT_PROPOSITION_ET_RESOLUTION"
+        },
+        "politique_unicite": "REPETABLE",
+        "relation_ou_question_focale": "Une photo banale du dernier déjeuner fait revenir un détail partagé et permet à Player de laisser entendre un manque sans le déclarer.",
+        "noyau_stable": "La petite fêlure en étoile du verre de Sandra, à côté des frites froides.",
+        "structure_id": "a11_sandra_last_lunch_detail",
+        "choix": [
+          {
+            "choix_id": "careful_warmth",
+            "formulation": "Je plaisante pas complètement. J'aimais bien ce moment-là.",
+            "signal_emis": "MANQUE_RECONNU_SANS_PROMESSE",
+            "resolution_ids": ["careful_warmth_reception"]
+          },
+          {
+            "choix_id": "ironic_withdrawal",
+            "formulation": "Oublie, c'était mon hommage aux frites molles.",
+            "signal_emis": "ALLUSION_RETIREE_PAR_IRONIE",
+            "resolution_ids": ["ironic_withdrawal_reception"]
+          }
+        ],
+        "resolutions": {
+          "careful_warmth_reception": {
+            "personnage_id": "sandra",
+            "portee_micro_signal": "LOCALE",
+            "signal_recu": "MANQUE_RECONNU_SANS_PROMESSE",
+            "reception": "NON_PERSISTANTE",
+            "interpretation": "intriguée_touchée",
+            "faits_relationnels": [],
+            "convergence": "RETOUR_NOYAU_COMMUN"
+          },
+          "ironic_withdrawal_reception": {
+            "personnage_id": "sandra",
+            "portee_micro_signal": "LOCALE",
+            "signal_recu": "ALLUSION_RETIREE_PAR_IRONIE",
+            "reception": "NON_PERSISTANTE",
+            "interpretation": "défensive_embarrassée",
+            "faits_relationnels": [],
+            "convergence": "RETOUR_NOYAU_COMMUN"
+          }
+        },
+        "politique_non_resolution": {
+          "proposition_expire": "CANCELLED"
+        }
+      }
+    }
+  ]
+}

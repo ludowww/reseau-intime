@@ -1,0 +1,22 @@
+{
+  "format": "R8C_A11_VALIDATION_REPORT",
+  "version": 1,
+  "draft_id": "a11_sandra_last_lunch_detail_draft",
+  "draft_revision": "rev_01",
+  "revision_fingerprint": "c96e715f80f40c20fcaab7e645307bf6baeabcbd2ec78d027a68b71a3474418d",
+  "status": "READY_WITH_WARNINGS",
+  "blocking_errors": [],
+  "warnings": [
+    {
+      "code": "STYLE_LONG_BUBBLE",
+      "path": "draft.messages[46].text",
+      "message": "bulle longue à relire"
+    }
+  ],
+  "human_approval": {
+    "decision": "APPROVED",
+    "approved_by": "reviewer_a11_fixture",
+    "draft_revision": "rev_01",
+    "revision_fingerprint": "c96e715f80f40c20fcaab7e645307bf6baeabcbd2ec78d027a68b71a3474418d"
+  }
+}

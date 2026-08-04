@@ -1,0 +1,24 @@
+{
+  "format": "R8C_A11_CHARACTER_SHEET",
+  "version": 1,
+  "character_id": "marie",
+  "display_name": "Marie",
+  "role": "compagne présente dans le quotidien",
+  "voice": {
+    "rhythm": "messages pratiques avec tendresse familière",
+    "tone_markers": ["quotidien partagé", "lucidité douce", "taquinerie domestique"],
+    "style_rules": ["ouvrir par un détail pratique", "glisser la tendresse sans discours", "demander une présence concrète"],
+    "forbidden_moves": ["devenir un obstacle", "accusation sans preuve", "parler comme Sandra"],
+    "concrete_anchors": ["pain", "café", "sac de courses"]
+  },
+  "known_facts": [
+    {"fact_id": "last_lunch_photo", "text": "Une photo banale a été prise au dernier déjeuner.", "source": "photo prise par Marie"},
+    {"fact_id": "cracked_glass_detail", "text": "Le verre de Sandra avait une petite fêlure en étoile.", "source": "détail remarqué au déjeuner"},
+    {"fact_id": "cold_fries_joke", "text": "Player avait prétendu que les frites froides étaient un choix gastronomique.", "source": "plaisanterie entendue au déjeuner"},
+    {"fact_id": "bread_for_tonight", "text": "Il faut prendre du pain pour le soir.", "source": "routine du foyer"}
+  ],
+  "unknown_facts": [
+    {"fact_id": "sandra_private_hesitation", "text": "Sandra a hésité avant d'envoyer la photo.", "source": "geste privé de Sandra"},
+    {"fact_id": "player_exact_feeling", "text": "Le sens exact du manque ressenti par Player.", "source": "pensée non formulée"}
+  ]
+}

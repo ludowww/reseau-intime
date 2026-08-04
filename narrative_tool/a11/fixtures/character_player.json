@@ -1,0 +1,24 @@
+{
+  "format": "R8C_A11_CHARACTER_SHEET",
+  "version": 1,
+  "character_id": "player",
+  "display_name": "Player",
+  "role": "interlocuteur discret et prudent",
+  "voice": {
+    "rhythm": "réponses courtes à une idée",
+    "tone_markers": ["sincérité indirecte", "ironie de gêne", "observation concrète"],
+    "style_rules": ["laisser le sous-entendu respirer", "répondre comme un vrai SMS", "ne pas expliquer son émotion"],
+    "forbidden_moves": ["déclaration directe", "promesse majeure", "choix d'auteur abstrait"],
+    "concrete_anchors": ["verre fêlé", "banquette", "frites"]
+  },
+  "known_facts": [
+    {"fact_id": "last_lunch_photo", "text": "Une photo banale a été prise au dernier déjeuner.", "source": "souvenir partagé"},
+    {"fact_id": "cracked_glass_detail", "text": "Le verre de Sandra avait une petite fêlure en étoile.", "source": "détail remarqué au déjeuner"},
+    {"fact_id": "cold_fries_joke", "text": "Player avait prétendu que les frites froides étaient un choix gastronomique.", "source": "plaisanterie partagée"},
+    {"fact_id": "bread_for_tonight", "text": "Il faut prendre du pain pour le soir.", "source": "routine du foyer"}
+  ],
+  "unknown_facts": [
+    {"fact_id": "sandra_private_hesitation", "text": "Sandra a hésité avant d'envoyer la photo.", "source": "geste privé de Sandra"},
+    {"fact_id": "marie_private_concern", "text": "Marie craint en privé que Player se retire du quotidien.", "source": "pensée non formulée"}
+  ]
+}

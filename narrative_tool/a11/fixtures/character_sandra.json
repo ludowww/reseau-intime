@@ -1,0 +1,23 @@
+{
+  "format": "R8C_A11_CHARACTER_SHEET",
+  "version": 1,
+  "character_id": "sandra",
+  "display_name": "Sandra",
+  "role": "ancienne amie qui revient avec prudence",
+  "voice": {
+    "rhythm": "rafales courtes puis espace de respiration",
+    "tone_markers": ["nostalgie concrète", "moquerie douce", "recul protecteur"],
+    "style_rules": ["tester la mémoire par un détail", "laisser une sortie", "masquer le trouble par une banalité"],
+    "forbidden_moves": ["déclaration frontale", "séduction immédiate", "culpabilisation de Player"],
+    "concrete_anchors": ["photo du déjeuner", "verre fêlé", "frites froides"]
+  },
+  "known_facts": [
+    {"fact_id": "last_lunch_photo", "text": "Une photo banale a été prise au dernier déjeuner.", "source": "souvenir partagé"},
+    {"fact_id": "cracked_glass_detail", "text": "Le verre de Sandra avait une petite fêlure en étoile.", "source": "détail visible au déjeuner"},
+    {"fact_id": "cold_fries_joke", "text": "Player avait prétendu que les frites froides étaient un choix gastronomique.", "source": "plaisanterie partagée"}
+  ],
+  "unknown_facts": [
+    {"fact_id": "marie_private_concern", "text": "Marie craint en privé que Player se retire du quotidien.", "source": "conversation privée absente"},
+    {"fact_id": "player_exact_feeling", "text": "Le sens exact du manque ressenti par Player.", "source": "pensée non formulée"}
+  ]
+}
