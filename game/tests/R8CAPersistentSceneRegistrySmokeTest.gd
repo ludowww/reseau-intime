@@ -37,6 +37,7 @@ func _executer() -> void:
 	_test_invariants_a1_apres_rechargement()
 	_test_durcissement_du_format_persistant()
 	_test_terminaison_bornee_avant_mutation()
+	_test_provenance_scene_fermee_et_coherence_croisee()
 
 
 func _test_round_trip_des_quatre_statuts() -> void:
@@ -411,6 +412,52 @@ func _test_terminaison_bornee_avant_mutation() -> void:
 		and paquet["instance"].obtenir_snapshot() == avant_instance
 		and recharge["ok"],
 		"31 terminaison hors borne refusee avant mutation et snapshot toujours rechargeable",
+	)
+
+
+func _test_provenance_scene_fermee_et_coherence_croisee() -> void:
+	var etat_spoof = _nouvel_etat()
+	var faits: Array = etat_spoof.obtenir_snapshot()["relations"]["sandra"]["faits"].duplicate(true)
+	faits.append({"fait_id": "relation_sandra_prete", "nature": "PRECONDITION_SYNTHETIQUE"})
+	var evenement_spoof: Dictionary = {
+		"event_id": "r8c-a3-sandra-relation-ready",
+		"event_type": EtatNarratifModele.TYPE_RELATION,
+		"provenance": {
+			"type": "TEST_SYNTHETIQUE",
+			"id": "a5_spoof_generique",
+			"source_scene_id": definitions["signature_sandra"]["scene_id"],
+			"scene_status": InstanceModele.RESOLVED,
+		},
+		"payload": {"personnage_id": "sandra", "changements": {"faits": faits}},
+	}
+	var application_spoof: Dictionary = etat_spoof.traiter_evenement(evenement_spoof)
+	var moteur_spoof := MoteurModele.new()
+	var diagnostic_spoof: Dictionary = moteur_spoof.evaluer_definition(
+		definitions["signature_sandra"],
+		etat_spoof,
+		_contexte("a5-spoof-generique", "2030-04-08T19:00:00+02:00", "sandra"),
+	)
+	_expect(
+		application_spoof["ok"] and diagnostic_spoof["eligible"],
+		"32 provenance generique ne peut pas usurper l'unicite d'une scene",
+	)
+	_expect(
+		moteur_spoof.obtenir_snapshot(etat_spoof).is_empty(),
+		"33 provenance generique avec champs de scene refusee par le codec ferme",
+	)
+
+	var durable := _signature_proposee("a5-coherence-croisee")
+	durable["moteur"].resoudre(
+		durable["instance"], definitions["signature_sandra"], "chaleureuse", "signal_chaleureux_recu",
+		durable["etat"], durable["contexte"]
+	)
+	var snapshot_orphelin: Dictionary = durable["moteur"].obtenir_snapshot(durable["etat"])
+	snapshot_orphelin["scene_registry"].clear()
+	var recharge_orpheline: Dictionary = MoteurModele.creer_depuis_snapshot(snapshot_orphelin)
+	_expect(
+		not recharge_orpheline["ok"]
+		and recharge_orpheline["erreur"] == "SNAPSHOT_A5_COHERENCE_INVALIDE",
+		"34 evenement de scene sans instance A5 correspondante refuse atomiquement",
 	)
 
 

@@ -118,6 +118,8 @@ static func creer_depuis_snapshot(value) -> Dictionary:
 	var registre_candidat = RegistreModele.creer_depuis_snapshot(value["scene_registry"])
 	if registre_candidat == null:
 		return _resultat_restauration(false, "REGISTRE_SCENES_INVALIDE", null, null)
+	if not _registre_coherent_avec_evenements(registre_candidat, etat_candidat):
+		return _resultat_restauration(false, "SNAPSHOT_A5_COHERENCE_INVALIDE", null, null)
 	var moteur_candidat := new()
 	moteur_candidat._registre = registre_candidat
 	return _resultat_restauration(true, "", moteur_candidat, etat_candidat)
@@ -537,6 +539,7 @@ func _evaluer_unicite(
 			)
 			if (
 				typeof(provenance) == TYPE_DICTIONARY
+				and provenance.get("type") == "R8C_A3_SCENE_SYNTHETIQUE"
 				and not reprise_courante
 				and provenance.get("source_scene_id") == scene_id
 				and provenance.get("scene_status") == InstanceModele.RESOLVED
@@ -854,6 +857,33 @@ func _valider_lien_instance(instance, definition: Dictionary) -> String:
 	if snapshot.get("politique_unicite") != definition.get("politique_unicite"):
 		return "POLITIQUE_UNICITE_INCOHERENTE"
 	return ""
+
+
+static func _registre_coherent_avec_evenements(registre, etat_narratif) -> bool:
+	for evenement in etat_narratif.obtenir_snapshot()["evenements"].values():
+		var provenance: Dictionary = evenement.get("provenance", {})
+		if provenance.get("type") != "R8C_A3_SCENE_SYNTHETIQUE":
+			continue
+		var instance = registre.obtenir_instance(provenance.get("source_scene_instance_id", ""))
+		if instance == null:
+			return false
+		var terminaison: Dictionary = instance.obtenir_terminaison()
+		if (
+			instance.obtenir_scene_definition_id() != provenance.get("source_scene_id")
+			or instance.obtenir_statut() != provenance.get("scene_status")
+			or terminaison.get("transaction_id") != evenement.get("event_id")
+			or terminaison.get("resolution_id") != provenance.get("source_resolution_id")
+		):
+			return false
+		if provenance.has("source_choix_id"):
+			if (
+				terminaison.get("operation") != "RESOLUTION"
+				or terminaison.get("choix_id") != provenance.get("source_choix_id")
+			):
+				return false
+		elif terminaison.get("operation") != "MANQUEE" or terminaison.get("choix_id") != "":
+			return false
+	return true
 
 
 static func _valider_enveloppe_snapshot(value) -> String:

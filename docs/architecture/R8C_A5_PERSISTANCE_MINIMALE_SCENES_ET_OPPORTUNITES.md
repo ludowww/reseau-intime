@@ -59,6 +59,11 @@ registre d'opportunités parallèle ne duplique ces états.
   Toute transition vers `RESOLVED`, `MISSED` ou `CANCELLED` nettoie les traces.
 - Les effets `DURABLE` restent des événements A1 sourcés; le registre ne les
   recopie pas.
+- Une provenance A1 générique contient seulement `type` et `id`. Une provenance
+  de scène possède une forme fermée de résolution ou d'occasion manquée, un
+  identifiant transactionnel déterministe et une instance terminale A5
+  correspondante. Un événement générique ne peut donc pas usurper l'unicité
+  d'une scène, et un événement de scène orphelin invalide le snapshot entier.
 - L'enveloppe et chaque instance ont une forme fermée. Tout champ, type, statut,
   doublon ou invariant inattendu invalide le snapshot entier.
 - Les instants suivent exactement `YYYY-MM-DDTHH:MM:SS±HH:MM`; une instance et

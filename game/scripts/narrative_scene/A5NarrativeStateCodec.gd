@@ -123,6 +123,8 @@ static func _evenement_valide(event_id, evenement) -> bool:
 	for valeur in provenance.values():
 		if not _chaine_bornee(valeur):
 			return false
+	if not _provenance_valide(event_id, evenement["event_type"], provenance):
+		return false
 	var payload = evenement["payload"]
 	var relation_simple: bool = evenement["event_type"] == EtatNarratifModele.TYPE_RELATION
 	var champs_payload := ["personnage_id", "changements"] if relation_simple else ["changements"]
@@ -144,6 +146,45 @@ static func _evenement_valide(event_id, evenement) -> bool:
 		if changements[champ] != null and not _chaine_bornee(changements[champ]):
 			return false
 	return true
+
+
+static func _provenance_valide(event_id: String, event_type: String, provenance: Dictionary) -> bool:
+	if provenance["type"] != "R8C_A3_SCENE_SYNTHETIQUE":
+		return _champs_exacts(provenance, ["type", "id"])
+	if event_type != EtatNarratifModele.TYPE_RELATION or provenance["id"] != event_id:
+		return false
+	var champs_resolution := [
+		"type",
+		"id",
+		"source_scene_id",
+		"source_scene_instance_id",
+		"source_choix_id",
+		"source_signal_emis",
+		"source_resolution_id",
+		"scene_status",
+	]
+	if _champs_exacts(provenance, champs_resolution):
+		return (
+			provenance["scene_status"] == "RESOLVED"
+			and event_id == "r8c-a3:%s:resolution:%s" % [
+				provenance["source_scene_instance_id"],
+				provenance["source_resolution_id"],
+			]
+		)
+	var champs_manquee := [
+		"type",
+		"id",
+		"source_scene_id",
+		"source_scene_instance_id",
+		"source_resolution_id",
+		"scene_status",
+	]
+	return (
+		_champs_exacts(provenance, champs_manquee)
+		and provenance["source_resolution_id"] == "opportunite_manquee"
+		and provenance["scene_status"] in ["MISSED", "CANCELLED"]
+		and event_id == "r8c-a3:%s:missed" % provenance["source_scene_instance_id"]
+	)
 
 
 static func _faits_valides(faits) -> bool:
