@@ -50,12 +50,32 @@ sélection humaine et la relecture portent sur le même plan.
 | `diagnostic.selectable_information_gaps` | une à trois options ordonnées par décision | assistance bornée sans choix automatique |
 | `diagnostic.mandatory_human_decision_ids` | ordre exact des décisions requises | aucune sélection omise |
 | `human_selection` | auteur humain et option retenue par décision | origine humaine explicite |
-| `plan` | sept battements, faits, limites, mouvements, changement maximal, choix éventuel, réception et sortie | plan relisible sans bulles finales |
+| `plan` | sept battements au contrat minimal explicite, faits, limites, mouvements, changement maximal, choix éventuel, réception, décision média et sortie | plan relisible sans bulles finales |
 | `human_review` | statut, relecteur, empreinte et notes | approbation du plan exact |
 
-L’empreinte SHA-256 couvre l’intention, le diagnostic, les sélections humaines,
-le plan et `a11-planning-validator-1.0`. Toute modification révoque donc la
+L’empreinte SHA-256 couvre l’intention, le diagnostic, les options bornées, les
+sélections humaines, le contrat Sandra, le registre Player–Sandra, le plan, le
+rapport de validation éditoriale et `a11-planning-validator-1.1`. La validation
+de l’approbation est effectuée après ce calcul pour éviter une dépendance
+circulaire. Toute modification du plan ou d’une source A11.2 active révoque la
 relecture précédente.
+
+## A11.3 minimal contract decisions
+
+| Élément | Décision | Pourquoi | Invariant protégé | Complexité évitée |
+| --- | --- | --- | --- | --- |
+| `beats[].scene_kind` | présent, `MODULAR` ou `SIGNATURE` | qualifier la nature éditoriale du battement | un battement ne reste pas typologiquement implicite | aucune taxonomie générale de scènes |
+| `beats[].narrative_moment` | présent | nommer le moment narratif abstrait | séparer fonction et formulation finale | aucune génération de prose |
+| `beats[].state_before` | présent | rendre l’état local préalable relisible | chaque battement part d’une situation bornée | aucun état runtime partagé |
+| `beats[].possible_local_delta` | présent | expliciter l’évolution locale autorisée | empêcher une conséquence durable implicite | aucun moteur de conséquence |
+| `beats[].transition_condition` | présent | indiquer la condition de passage | la séquence reste contrôlable humainement | aucun orchestrateur automatique |
+| `beats[].forbidden_elements` | présent et non vide | porter les interdits locaux | les limites ne reposent pas sur le seul résumé | aucun système général de règles |
+| `media_requirement.media_decision` | présent, `NONE` dans le prototype | représenter explicitement l’absence de média | aucune absence silencieuse | aucune génération ou sélection média |
+| formulations de dialogue et `messages` | absents | A11.3 s’arrête au plan | aucune bulle finale ne peut devenir canonique | aucun brouillon A11.1 |
+| `a6_projection` et export A6 | absents | hors responsabilité du lot | le plan reste sans effet de jeu | aucun adaptateur A6 |
+| état runtime et conséquence durable | absents | le changement maximal reste local et révocable | aucune persistance narrative | aucune connexion au runtime |
+| agrégat numérique, classement et sélection automatique | absents | les décisions restent humaines et ordonnées par l’auteur | aucune décision majeure autonome | aucun modèle numérique |
+| fixture invalide et rapport de validation persistants | absents et non annoncés comme livrables | les mutations vivent dans les tests et le rapport est produit par le CLI | une seule fixture approuvée reste la source du prototype | aucun artefact éditorial supplémentaire à maintenir |
 
 ## Intention et diagnostic du prototype
 
@@ -99,20 +119,30 @@ promesse.
 
 Les seuls faits utilisables sont `sandra_folded_ticket` et
 `sandra_current_distance`. Les faits privés de Marie et Mathilde sont
-explicitement interdits. Aucun média n’est requis.
+explicitement interdits. `media_decision: NONE` représente explicitement
+l’absence de média.
 
 ## Validation
 
 Les erreurs bloquantes couvrent : participant inattendu, registre absent,
 objectif manquant, battement sans fonction ou mouvement, fait inconnu, limite
 violée, changement maximal dépassé, conséquence interdite, choix sans
-réception, média injustifié, fermeture punitive, bulle finale écrite dans le
-plan et approbation humaine absente.
+réception, média injustifié, fermeture punitive ou contradictoire, contrat
+minimal incomplet, bulle finale écrite dans tout champ éditorial du plan et
+approbation humaine absente. Le contrôle anti-dialogue parcourt récursivement
+les chaînes du plan et n’exclut que les identifiants, références, empreintes et
+énumérations administratives connues.
 
-Les avertissements couvrent : accroche abstraite, objectifs symétriques,
-battements redondants, risque absent, sortie trop parfaite, évolution trop
-importante, plan interchangeable, Player moteur de tout et Sandra limitée à la
-réaction. Aucun résultat agrégé n’est calculé.
+La fermeture exige structurellement une reprise future révocable, une sortie
+autonome pour Sandra et les interdictions explicites d’humiliation, de rupture
+imposée et de sanction relationnelle. Le booléen `punitive` est conservé mais
+ne suffit plus à valider la neutralité du texte.
+
+Les avertissements couvrent : accroche abstraite, détail concret sans fonction,
+objectifs fonctionnellement symétriques, tension reposant seulement sur un
+sous-entendu romantique, battements redondants, risque absent, sortie trop
+parfaite, évolution trop importante, plan interchangeable, Player moteur de
+tout et Sandra limitée à la réaction. Aucun résultat agrégé n’est calculé.
 
 ## Spécificité structurelle
 

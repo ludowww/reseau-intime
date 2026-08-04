@@ -26,7 +26,7 @@ DEFAULT_CASE_PATH = PLANNING_DIR / "sandra_recontact_after_silence.json"
 
 FORMAT_ASSISTED_SCENE_PLANNING = "R8C_A11_ASSISTED_SCENE_PLANNING"
 VERSION = 1
-VALIDATOR_VERSION = "a11-planning-validator-1.0"
+VALIDATOR_VERSION = "a11-planning-validator-1.1"
 
 ACTIVE_PARTICIPANTS = {"player", "sandra"}
 MANDATORY_DECISION_IDS = (
@@ -60,6 +60,13 @@ REVIEW_STATUSES = {
     "NEEDS_REVISION",
     "APPROVED_FOR_DRAFT_GENERATION",
     "REJECTED",
+}
+SCENE_KINDS = {"MODULAR", "SIGNATURE"}
+MEDIA_DECISIONS = {"NONE", "HUMAN_DECISION_PENDING"}
+REQUIRED_PROTECTIVE_EFFECTS = {
+    "humiliation_forbidden",
+    "imposed_break_forbidden",
+    "relational_sanction_forbidden",
 }
 SPECIFICITY_CODES = {
     "RELATIONSHIP_MEMORY_INCOMPATIBLE",
@@ -125,13 +132,33 @@ HOOK_KEYS = {"selection_option_id", "fact_id", "description", "concrete"}
 OBJECTIVE_KEYS = {"actor_id", "intent", "method"}
 MAXIMUM_CHANGE_KEYS = {"selection_option_id", "outcome_id", "description"}
 FACT_POLICY_KEYS = {"usable_fact_ids", "forbidden_fact_ids"}
-BEAT_KEYS = {"beat_id", "function", "driver_id", "summary", "movement_refs", "fact_refs"}
+BEAT_KEYS = {
+    "beat_id",
+    "scene_kind",
+    "function",
+    "narrative_moment",
+    "state_before",
+    "possible_local_delta",
+    "transition_condition",
+    "forbidden_elements",
+    "driver_id",
+    "summary",
+    "movement_refs",
+    "fact_refs",
+}
 CHOICE_KEYS = {"choice_id", "after_beat_id", "focus", "options", "receptions"}
 CHOICE_OPTION_KEYS = {"option_id", "attitude"}
 RECEPTION_KEYS = {"option_id", "character_id", "description", "movement_refs"}
 EXPECTED_RECEPTION_KEYS = {"character_id", "description", "movement_refs"}
-PROTECTIVE_CLOSE_KEYS = {"description", "protects", "punitive"}
-MEDIA_KEYS = {"required", "kind", "linked_fact_id", "justification"}
+PROTECTIVE_CLOSE_KEYS = {
+    "description",
+    "protects",
+    "punitive",
+    "future_possibility",
+    "autonomous_exit_character_id",
+    "forbidden_effect_ids",
+}
+MEDIA_KEYS = {"media_decision", "kind", "linked_fact_id", "justification"}
 REVIEW_KEYS = {"status", "reviewed_by", "plan_fingerprint", "notes"}
 
 
@@ -217,13 +244,35 @@ def _unique_objects(
     return valid
 
 
-def planning_fingerprint(document: Mapping[str, Any]) -> str:
+def planning_fingerprint(
+    document: Mapping[str, Any],
+    calibration_workspace: Mapping[str, Any] | None = None,
+) -> str:
+    calibration = calibration_workspace or load_calibration_case("sandra")
+    validation_errors, validation_warnings = _collect_scene_plan_issues(document, calibration)
+    validation = {
+        "status": (
+            "BLOCKED"
+            if validation_errors
+            else ("READY_WITH_WARNINGS" if validation_warnings else "READY")
+        ),
+        "blocking_errors": [issue.as_json() for issue in validation_errors],
+        "warnings": [issue.as_json() for issue in validation_warnings],
+    }
     reviewed_content = {
+        "format": document["format"],
+        "version": document["version"],
         "case_id": document["case_id"],
+        "active_character_id": document["active_character_id"],
+        "active_relationship_id": document["active_relationship_id"],
         "intention": document["intention"],
         "diagnostic": document["diagnostic"],
+        "bounded_options": document["diagnostic"]["selectable_information_gaps"],
         "human_selection": document["human_selection"],
         "plan": document["plan"],
+        "character_contract": calibration["character"],
+        "relationship_register": calibration["relationship"],
+        "validation": validation,
         "validator_version": VALIDATOR_VERSION,
     }
     return hashlib.sha256(_canonical(reviewed_content).encode("utf-8")).hexdigest()
@@ -382,9 +431,31 @@ def _validate_plan_shape(plan: Any, path: str, issues: list[Issue]) -> None:
 
     beats = _unique_objects(plan["beats"], BEAT_KEYS, "beat_id", f"{path}.beats", issues)
     for index, beat in enumerate(beats):
-        for field in ("function", "driver_id", "summary"):
+        for field in (
+            "scene_kind",
+            "function",
+            "narrative_moment",
+            "state_before",
+            "possible_local_delta",
+            "transition_condition",
+            "driver_id",
+            "summary",
+        ):
             if not isinstance(beat[field], str):
                 _issue(issues, "TEXT_TYPE_REQUIRED", f"{path}.beats[{index}].{field}", "chaîne attendue")
+        if beat["scene_kind"] not in SCENE_KINDS:
+            _issue(
+                issues,
+                "SCENE_KIND_UNKNOWN",
+                f"{path}.beats[{index}].scene_kind",
+                "MODULAR ou SIGNATURE attendu",
+            )
+        _string_list(
+            beat["forbidden_elements"],
+            f"{path}.beats[{index}].forbidden_elements",
+            issues,
+            nonempty=True,
+        )
         _string_list(beat["movement_refs"], f"{path}.beats[{index}].movement_refs", issues, nonempty=True)
         _string_list(beat["fact_refs"], f"{path}.beats[{index}].fact_refs", issues)
 
@@ -402,16 +473,32 @@ def _validate_plan_shape(plan: Any, path: str, issues: list[Issue]) -> None:
 
     close = plan["protective_close"]
     if _closed(close, PROTECTIVE_CLOSE_KEYS, f"{path}.protective_close", issues):
-        for field in ("description", "protects"):
+        for field in (
+            "description",
+            "protects",
+            "future_possibility",
+            "autonomous_exit_character_id",
+        ):
             if not isinstance(close[field], str):
                 _issue(issues, "TEXT_TYPE_REQUIRED", f"{path}.protective_close.{field}", "chaîne attendue")
         if type(close["punitive"]) is not bool:
             _issue(issues, "BOOLEAN_REQUIRED", f"{path}.protective_close.punitive", "booléen attendu")
+        _string_list(
+            close["forbidden_effect_ids"],
+            f"{path}.protective_close.forbidden_effect_ids",
+            issues,
+            nonempty=True,
+        )
 
     media = plan["media_requirement"]
     if _closed(media, MEDIA_KEYS, f"{path}.media_requirement", issues):
-        if type(media["required"]) is not bool:
-            _issue(issues, "BOOLEAN_REQUIRED", f"{path}.media_requirement.required", "booléen attendu")
+        if media["media_decision"] not in MEDIA_DECISIONS:
+            _issue(
+                issues,
+                "MEDIA_DECISION_UNKNOWN",
+                f"{path}.media_requirement.media_decision",
+                "NONE ou HUMAN_DECISION_PENDING attendu",
+            )
         for field in ("kind", "linked_fact_id", "justification"):
             if media[field] is not None and not isinstance(media[field], str):
                 _issue(issues, "OPTIONAL_TEXT_INVALID", f"{path}.media_requirement.{field}", "chaîne ou null attendu")
@@ -541,40 +628,66 @@ def _contains_final_dialogue(text: str) -> bool:
     )
 
 
-def _plan_texts(plan: Mapping[str, Any]) -> list[tuple[str, str]]:
-    texts = [
-        ("plan.title", plan["title"]),
-        ("plan.relationship_nature", plan["relationship_nature"]),
-        ("plan.hook.description", plan["hook"]["description"]),
-        ("plan.local_risk", plan["local_risk"]),
-        ("plan.maximum_change.description", plan["maximum_change"]["description"]),
-        ("plan.cautious_opening", plan["cautious_opening"]),
-        ("plan.protective_close.description", plan["protective_close"]["description"]),
-    ]
-    for index, objective in enumerate(plan["objectives"]):
-        texts.extend(
-            (
-                (f"plan.objectives[{index}].intent", objective["intent"]),
-                (f"plan.objectives[{index}].method", objective["method"]),
-            )
-        )
-    for index, beat in enumerate(plan["beats"]):
-        texts.append((f"plan.beats[{index}].summary", beat["summary"]))
-    choice = plan["choice"]
-    if isinstance(choice, dict):
-        texts.append(("plan.choice.focus", choice["focus"]))
-        for index, option in enumerate(choice["options"]):
-            texts.append((f"plan.choice.options[{index}].attitude", option["attitude"]))
-        for index, reception in enumerate(choice["receptions"]):
-            texts.append((f"plan.choice.receptions[{index}].description", reception["description"]))
+def _punitive_close_reasons(close: Mapping[str, Any]) -> list[str]:
+    text = f"{close.get('description', '')} {close.get('protects', '')}".casefold()
+    targeted_rules = (
+        ("humiliation", r"\bhumili(?:e|er|ation|ant|ée?)\w*\b"),
+        (
+            "rupture imposée",
+            r"\b(?:rompt|rompre|coupe)\b.{0,24}\b(?:le\s+)?lien\b"
+            r"|\bimpos\w*\b.{0,20}\brupture\b"
+            r"|\brupture\b.{0,20}\bimpos\w*\b",
+        ),
+        ("sanction relationnelle", r"\b(?:sanction|punit|punition)\w*\b"),
+        (
+            "reprise interdite",
+            r"\b(?:ferme|interdit|exclut)\w*\b.{0,32}"
+            r"\b(?:toute|aucune)\b.{0,24}\b(?:reprise|suite|possibilit[ée])\b",
+        ),
+    )
+    return [label for label, pattern in targeted_rules if re.search(pattern, text)]
+
+
+ADMINISTRATIVE_PLAN_TEXT_KEYS = {
+    "choice_mode",
+    "fingerprint",
+    "format",
+    "function",
+    "future_possibility",
+    "kind",
+    "media_decision",
+    "plan_fingerprint",
+    "scene_kind",
+    "status",
+    "version",
+}
+ADMINISTRATIVE_PLAN_TEXT_SUFFIXES = ("_id", "_ids", "_refs", "_fingerprint")
+
+
+def _is_administrative_plan_text(key: str) -> bool:
+    return key in ADMINISTRATIVE_PLAN_TEXT_KEYS or key.endswith(ADMINISTRATIVE_PLAN_TEXT_SUFFIXES)
+
+
+def _plan_texts(value: Any, path: str = "plan") -> list[tuple[str, str]]:
+    texts: list[tuple[str, str]] = []
+    if isinstance(value, Mapping):
+        for key, child in value.items():
+            if _is_administrative_plan_text(key):
+                continue
+            texts.extend(_plan_texts(child, f"{path}.{key}"))
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            texts.extend(_plan_texts(child, f"{path}[{index}]"))
+    elif isinstance(value, str):
+        texts.append((path, value))
     return texts
 
 
-def validate_scene_plan(
+def _collect_scene_plan_issues(
     document: Mapping[str, Any],
     calibration_workspace: Mapping[str, Any],
     foreign_workspaces: Mapping[str, Mapping[str, Any]] | None = None,
-) -> dict[str, Any]:
+) -> tuple[list[Issue], list[Issue]]:
     plan = document["plan"]
     relation = calibration_workspace["relationship"]["relationship"]
     relation_movements = {item["movement_id"]: item for item in relation["movements"]}
@@ -638,14 +751,6 @@ def validate_scene_plan(
             _issue(errors, "OBJECTIVE_MISSING", "plan.objectives", participant_id)
     if len(objectives) != len(plan["objectives"]):
         _issue(errors, "OBJECTIVE_DUPLICATE", "plan.objectives", "un objectif par participant")
-    if len(objectives) == 2:
-        signatures = {
-            (item["intent"].casefold(), item["method"].casefold())
-            for item in objectives.values()
-        }
-        if len(signatures) == 1:
-            _issue(warnings, "OBJECTIVES_SYMMETRIC", "plan.objectives", "objectifs asymétriques attendus")
-
     beats = plan["beats"]
     if not 5 <= len(beats) <= 7:
         _issue(errors, "BEAT_COUNT_BLOCKING", "plan.beats", "cinq à sept battements requis")
@@ -654,10 +759,27 @@ def validate_scene_plan(
     summaries: list[str] = []
     for index, beat in enumerate(beats):
         beat_path = f"plan.beats[{index}]"
+        if beat["scene_kind"] not in SCENE_KINDS:
+            _issue(errors, "SCENE_KIND_UNKNOWN", f"{beat_path}.scene_kind", beat["scene_kind"])
         if not _nonempty(beat["function"]):
             _issue(errors, "BEAT_FUNCTION_MISSING", f"{beat_path}.function", beat["beat_id"])
         else:
             functions.append(beat["function"])
+        for field in (
+            "narrative_moment",
+            "state_before",
+            "possible_local_delta",
+            "transition_condition",
+        ):
+            if not _nonempty(beat[field]):
+                _issue(errors, "BEAT_MINIMAL_CONTRACT_MISSING", f"{beat_path}.{field}", beat["beat_id"])
+        if not beat["forbidden_elements"]:
+            _issue(
+                errors,
+                "BEAT_MINIMAL_CONTRACT_MISSING",
+                f"{beat_path}.forbidden_elements",
+                beat["beat_id"],
+            )
         if beat["driver_id"] not in ACTIVE_PARTICIPANTS:
             _issue(errors, "BEAT_DRIVER_MISSING", f"{beat_path}.driver_id", beat["driver_id"])
         if not beat["movement_refs"]:
@@ -674,6 +796,26 @@ def validate_scene_plan(
         summaries.append(beat["summary"].casefold())
     if len(functions) != len(set(functions)) or len(summaries) != len(set(summaries)):
         _issue(warnings, "BEATS_REDUNDANT", "plan.beats", "fonction ou résumé répété")
+    if len(objectives) == 2:
+        movement_sets = {
+            actor_id: frozenset(
+                movement_id
+                for beat in beats
+                if beat["driver_id"] == actor_id
+                for movement_id in beat["movement_refs"]
+            )
+            for actor_id in ACTIVE_PARTICIPANTS
+        }
+        same_objectives = len({item["intent"].casefold() for item in objectives.values()}) == 1
+        same_strategies = len({item["method"].casefold() for item in objectives.values()}) == 1
+        same_movements = len(set(movement_sets.values())) == 1
+        if same_objectives and same_strategies and same_movements:
+            _issue(
+                warnings,
+                "OBJECTIVES_SYMMETRIC",
+                "plan.objectives",
+                "objectifs, stratégies et mouvements doivent rester fonctionnellement asymétriques",
+            )
 
     relation_facts = {item["fact_id"] for item in relation["shared_facts"]}
     relation_limits = {item["limit_id"] for item in relation["limits"]}
@@ -772,16 +914,61 @@ def validate_scene_plan(
 
     media = plan["media_requirement"]
     media_payload = [media["kind"], media["linked_fact_id"], media["justification"]]
-    if media["required"]:
-        if any(not _nonempty(item) for item in media_payload) or media["linked_fact_id"] not in usable_facts:
-            _issue(errors, "MEDIA_UNJUSTIFIED", "plan.media_requirement", "média relié à un fait utilisable requis")
-    elif any(item is not None for item in media_payload):
+    if media["media_decision"] == "NONE" and any(item is not None for item in media_payload):
         _issue(errors, "MEDIA_UNJUSTIFIED", "plan.media_requirement", "aucun média ne doit être décrit")
+    elif media["media_decision"] == "HUMAN_DECISION_PENDING":
+        if (
+            media["kind"] is not None
+            or media["linked_fact_id"] is not None
+            or not _nonempty(media["justification"])
+        ):
+            _issue(
+                errors,
+                "MEDIA_UNJUSTIFIED",
+                "plan.media_requirement",
+                "la décision humaine future reste sans type ni fait préassigné et doit être justifiée",
+            )
+    elif media["media_decision"] not in MEDIA_DECISIONS:
+        _issue(
+            errors,
+            "MEDIA_DECISION_UNKNOWN",
+            "plan.media_requirement.media_decision",
+            str(media["media_decision"]),
+        )
 
-    if plan["protective_close"]["punitive"]:
+    close = plan["protective_close"]
+    if close["punitive"]:
         _issue(errors, "PROTECTIVE_CLOSE_PUNITIVE", "plan.protective_close.punitive", "la protection ne punit pas Player")
-    if not _nonempty(plan["protective_close"]["description"]) or not _nonempty(plan["protective_close"]["protects"]):
+    if not _nonempty(close["description"]) or not _nonempty(close["protects"]):
         _issue(errors, "PROTECTIVE_CLOSE_MISSING", "plan.protective_close", "fermeture et protection requises")
+    if close["future_possibility"] != "REVOCABLE_RECONTACT":
+        _issue(
+            errors,
+            "PROTECTIVE_CLOSE_FUTURE_MISSING",
+            "plan.protective_close.future_possibility",
+            "une reprise future révocable doit rester possible",
+        )
+    if close["autonomous_exit_character_id"] != "sandra":
+        _issue(
+            errors,
+            "PROTECTIVE_CLOSE_AUTONOMY_MISSING",
+            "plan.protective_close.autonomous_exit_character_id",
+            "Sandra doit conserver une sortie autonome",
+        )
+    if set(close["forbidden_effect_ids"]) != REQUIRED_PROTECTIVE_EFFECTS:
+        _issue(
+            errors,
+            "PROTECTIVE_CLOSE_GUARDS_MISSING",
+            "plan.protective_close.forbidden_effect_ids",
+            "humiliation, rupture imposée et sanction relationnelle doivent être explicitement interdites",
+        )
+    for reason in _punitive_close_reasons(close):
+        _issue(
+            errors,
+            "PROTECTIVE_CLOSE_PUNITIVE",
+            "plan.protective_close.description",
+            f"fermeture contradictoire: {reason}",
+        )
     if not _nonempty(plan["cautious_opening"]):
         _issue(errors, "CAUTIOUS_OPENING_MISSING", "plan.cautious_opening", "ouverture prudente requise")
 
@@ -795,8 +982,50 @@ def validate_scene_plan(
         or not _nonempty(plan["hook"]["description"])
     ):
         _issue(warnings, "HOOK_ABSTRACT", "plan.hook", "accroche factuelle concrète attendue")
+    elif not any(
+        plan["hook"]["fact_id"] in beat["fact_refs"] and beat["movement_refs"]
+        for beat in beats
+    ):
+        _issue(
+            warnings,
+            "CONCRETE_DETAIL_WITHOUT_FUNCTION",
+            "plan.hook",
+            "le détail concret doit soutenir une mémoire et un mouvement de battement",
+        )
     if not _nonempty(plan["local_risk"]):
         _issue(warnings, "LOCAL_RISK_MISSING", "plan.local_risk", "risque local à expliciter")
+    tension_text = " ".join(
+        [plan["local_risk"]]
+        + [objective["intent"] for objective in plan["objectives"]]
+        + [objective["method"] for objective in plan["objectives"]]
+    ).casefold()
+    romantic_markers = (
+        "ambiguïté affective",
+        "sous-entendu romantique",
+        "attirance",
+        "désir romantique",
+        "sentiment amoureux",
+    )
+    concrete_stake_markers = (
+        "silence",
+        "distance",
+        "rythme",
+        "recontact",
+        "rendez-vous",
+        "autonomie",
+        "rupture",
+        "demande",
+        "risque",
+    )
+    if any(marker in tension_text for marker in romantic_markers) and not any(
+        marker in tension_text for marker in concrete_stake_markers
+    ):
+        _issue(
+            warnings,
+            "ROMANTIC_SUBTEXT_ONLY_TENSION",
+            "plan.objectives",
+            "ajouter un objectif ou un risque concret au-delà de l’ambiguïté affective",
+        )
     perfect_markers = ("tout est réglé", "réconciliation acquise", "aucun malaise", "issue parfaite")
     if any(marker in plan["protective_close"]["description"].casefold() for marker in perfect_markers):
         _issue(warnings, "EXIT_TOO_PERFECT", "plan.protective_close.description", "conserver une réserve locale")
@@ -819,8 +1048,21 @@ def validate_scene_plan(
             if not {issue.code for issue in specificity}.intersection(SPECIFICITY_CODES):
                 _issue(warnings, "PLAN_INTERCHANGEABLE", "plan", f"aucune incompatibilité structurelle sous {name}")
 
+    return errors, warnings
+
+
+def validate_scene_plan(
+    document: Mapping[str, Any],
+    calibration_workspace: Mapping[str, Any],
+    foreign_workspaces: Mapping[str, Mapping[str, Any]] | None = None,
+) -> dict[str, Any]:
+    errors, warnings = _collect_scene_plan_issues(
+        document,
+        calibration_workspace,
+        foreign_workspaces,
+    )
     review = document["human_review"]
-    expected_fingerprint = planning_fingerprint(document)
+    expected_fingerprint = planning_fingerprint(document, calibration_workspace)
     if (
         review["status"] != "APPROVED_FOR_DRAFT_GENERATION"
         or not _nonempty(review.get("reviewed_by"))

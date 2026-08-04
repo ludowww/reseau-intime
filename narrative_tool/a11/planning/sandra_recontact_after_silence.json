@@ -174,7 +174,13 @@
     "beats": [
       {
         "beat_id": "concrete_hook",
+        "scene_kind": "SIGNATURE",
         "function": "accroche_concrete",
+        "narrative_moment": "Réouverture du contact par une mémoire matérielle propre au lien.",
+        "state_before": "Silence de plusieurs jours et continuité relationnelle incertaine.",
+        "possible_local_delta": "Le retour devient situable sans constituer encore une reprise acquise.",
+        "transition_condition": "Le détail partagé permet à Sandra de reconnaître la mémoire sans devoir accueillir immédiatement le rapprochement.",
+        "forbidden_elements": ["declaration_affective_directe", "proximite_tenue_pour_acquise"],
         "driver_id": "player",
         "summary": "Player reprend le fil par le souvenir matériel du ticket plié et rend son retour situable.",
         "movement_refs": ["sandra_player_returns_carefully"],
@@ -182,7 +188,13 @@
       },
       {
         "beat_id": "calibration",
+        "scene_kind": "SIGNATURE",
         "function": "calibration",
+        "narrative_moment": "Mesure protectrice de la manière dont le lien reprend.",
+        "state_before": "Le détail partagé a rendu le retour reconnaissable, mais la distance reste active.",
+        "possible_local_delta": "Sandra peut tolérer la reprise sans réduire sa réserve.",
+        "transition_condition": "Player laisse le détour protecteur exister sans accélérer l’échange.",
+        "forbidden_elements": ["seduction_immediate", "effacement_du_silence"],
         "driver_id": "sandra",
         "summary": "Sandra signale le délai par un détour protecteur qui mesure si Player respecte encore la distance actuelle.",
         "movement_refs": ["sandra_deflects_with_humor"],
@@ -190,7 +202,13 @@
       },
       {
         "beat_id": "indirect_reopening",
+        "scene_kind": "MODULAR",
         "function": "relance_indirecte",
+        "narrative_moment": "Reconnaissance indirecte de l’importance du rapprochement récent.",
+        "state_before": "Sandra maintient une distance lisible après avoir reconnu l’accroche.",
+        "possible_local_delta": "L’importance du moment récent devient perceptible sans demande de réciprocité.",
+        "transition_condition": "Sandra peut examiner la manière de revenir plutôt que répondre sur ses sentiments.",
+        "forbidden_elements": ["question_affective_frontale", "confirmation_exigee"],
         "driver_id": "player",
         "summary": "Player relie le souvenir récent à l’ancienne complicité sans réclamer de confirmation affective.",
         "movement_refs": ["sandra_player_returns_carefully"],
@@ -198,7 +216,13 @@
       },
       {
         "beat_id": "sandra_test",
+        "scene_kind": "SIGNATURE",
         "function": "esquive_ou_test_de_sandra",
+        "narrative_moment": "Test de la capacité de Player à reconnaître le silence sans droit acquis.",
+        "state_before": "L’importance du rapprochement est perceptible mais reste indéfinie.",
+        "possible_local_delta": "Sandra peut relancer une mémoire tout en gardant le contrôle du rythme.",
+        "transition_condition": "Le retour prudent de Player résiste au détour sans devenir une revendication.",
+        "forbidden_elements": ["humiliation", "jalousie_directe", "promesse_implicite"],
         "driver_id": "sandra",
         "summary": "Sandra déplace l’attention vers la manière dont Player revient et teste s’il peut reconnaître le silence sans demande implicite.",
         "movement_refs": ["sandra_deflects_with_humor", "sandra_relaunches_shared_memory"],
@@ -206,7 +230,13 @@
       },
       {
         "beat_id": "player_positioning",
+        "scene_kind": "MODULAR",
         "function": "positionnement_eventuel_de_player",
+        "narrative_moment": "Positionnement borné sur le degré d’explicitation acceptable.",
+        "state_before": "Sandra a déplacé l’enjeu vers la qualité du retour.",
+        "possible_local_delta": "Player peut rendre son intention plus lisible sans fixer le sens du lien.",
+        "transition_condition": "Une attitude humaine est sélectionnée et reste compatible avec la lenteur demandée.",
+        "forbidden_elements": ["replique_finale", "declaration_romantique", "ultimatum"],
         "driver_id": "player",
         "summary": "Player choisit le degré d’explicitation de l’importance du rapprochement tout en maintenant l’absence de revendication.",
         "movement_refs": ["sandra_player_returns_carefully"],
@@ -214,7 +244,13 @@
       },
       {
         "beat_id": "reception",
+        "scene_kind": "SIGNATURE",
         "function": "reception",
+        "narrative_moment": "Réception prudente du positionnement choisi.",
+        "state_before": "L’attitude de Player est définie sans conséquence automatique.",
+        "possible_local_delta": "Sandra peut prolonger légèrement l’échange tout en conservant sa réserve.",
+        "transition_condition": "La réception reste révocable et n’impose aucune clarification affective.",
+        "forbidden_elements": ["intimite_acquise", "accord_romantique", "effacement_des_limites"],
         "driver_id": "sandra",
         "summary": "Sandra reçoit l’attitude choisie, garde sa réserve et décide si une légère prolongation demeure possible.",
         "movement_refs": ["sandra_relaunches_shared_memory", "sandra_prolongs_without_claim"],
@@ -222,7 +258,13 @@
       },
       {
         "beat_id": "protective_exit",
+        "scene_kind": "SIGNATURE",
         "function": "sortie",
+        "narrative_moment": "Fermeture protectrice avant toute définition affective.",
+        "state_before": "Une légère prolongation est possible mais ne vaut ni promesse ni engagement.",
+        "possible_local_delta": "Un rendez-vous ultérieur reste envisageable et entièrement révocable.",
+        "transition_condition": "Sandra dispose d’une sortie autonome et une reprise future demeure possible.",
+        "forbidden_elements": ["humiliation", "rupture_imposee", "sanction_relationnelle"],
         "driver_id": "sandra",
         "summary": "Sandra clôt sur un repère concret et laisse l’hypothèse d’un rendez-vous ultérieur ouverte, sans engagement.",
         "movement_refs": ["sandra_prolongs_without_claim"],
@@ -268,10 +310,17 @@
     "protective_close": {
       "description": "Sandra clôt avant que l’échange exige une définition affective et conserve une possibilité de reprise ultérieure.",
       "protects": "Son autonomie, la distance actuelle et le caractère révocable de toute ouverture.",
-      "punitive": false
+      "punitive": false,
+      "future_possibility": "REVOCABLE_RECONTACT",
+      "autonomous_exit_character_id": "sandra",
+      "forbidden_effect_ids": [
+        "humiliation_forbidden",
+        "imposed_break_forbidden",
+        "relational_sanction_forbidden"
+      ]
     },
     "media_requirement": {
-      "required": false,
+      "media_decision": "NONE",
       "kind": null,
       "linked_fact_id": null,
       "justification": null
@@ -281,7 +330,7 @@
   "human_review": {
     "status": "APPROVED_FOR_DRAFT_GENERATION",
     "reviewed_by": "reviewer_r8c_a11_3_fixture",
-    "plan_fingerprint": "155e7fefe6910b585fd3dbe6062148adf3d56c1e907254dad8678cb898c15774",
+    "plan_fingerprint": "bf64f608fb11a83f42588a87d738b4e25f86e8c8f19d9a7ea806240b3fe2d675",
     "notes": [
       "Le plan reste limité à sept battements et ne contient aucune bulle finale.",
       "Sandra conduit la calibration, le test, la réception et la fermeture protectrice.",

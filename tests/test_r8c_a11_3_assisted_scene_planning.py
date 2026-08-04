@@ -149,9 +149,29 @@ class R8CA113AssistedScenePlanningTests(unittest.TestCase):
         self.assertTrue(plan["local_risk"])
         self.assertEqual("possible_meeting", plan["maximum_change"]["outcome_id"])
         self.assertEqual("ONE", plan["choice_mode"])
-        self.assertFalse(plan["media_requirement"]["required"])
+        self.assertEqual("NONE", plan["media_requirement"]["media_decision"])
         self.assertFalse(plan["protective_close"]["punitive"])
         self.assertEqual("READY", self.validation(self.case)["status"])
+
+        minimal_beat_fields = {
+            "scene_kind",
+            "narrative_moment",
+            "state_before",
+            "possible_local_delta",
+            "transition_condition",
+            "forbidden_elements",
+        }
+        for beat in plan["beats"]:
+            self.assertTrue(minimal_beat_fields.issubset(beat))
+            self.assertIn(beat["scene_kind"], {"MODULAR", "SIGNATURE"})
+            self.assertTrue(beat["forbidden_elements"])
+
+        missing_field = copy.deepcopy(self.case)
+        missing_field["plan"]["beats"][0].pop("transition_condition")
+        self.assertIn(
+            "CLOSED_SCHEMA_MISMATCH",
+            {issue.code for issue in validate_planning_case(missing_field)},
+        )
 
     def test_unexpected_participant_and_missing_register_block(self):
         participant = copy.deepcopy(self.case)
@@ -254,14 +274,20 @@ class R8CA113AssistedScenePlanningTests(unittest.TestCase):
         stray = copy.deepcopy(self.case)
         stray["plan"]["media_requirement"]["kind"] = "PHOTO"
         self.assertIn("MEDIA_UNJUSTIFIED", self.codes(self.validation(stray)))
-        required = copy.deepcopy(self.case)
-        required["plan"]["media_requirement"] = {
-            "required": True,
+        pending = copy.deepcopy(self.case)
+        pending["plan"]["media_requirement"] = {
+            "media_decision": "HUMAN_DECISION_PENDING",
             "kind": "PHOTO",
             "linked_fact_id": "unknown_memory",
-            "justification": "Décor générique.",
+            "justification": "Décision à prendre.",
         }
-        self.assertIn("MEDIA_UNJUSTIFIED", self.codes(self.validation(required)))
+        self.assertIn("MEDIA_UNJUSTIFIED", self.codes(self.validation(pending)))
+        implicit = copy.deepcopy(self.case)
+        implicit["plan"]["media_requirement"].pop("media_decision")
+        self.assertIn(
+            "CLOSED_SCHEMA_MISMATCH",
+            {issue.code for issue in validate_planning_case(implicit)},
+        )
 
     def test_protective_close_is_valid_but_punishment_blocks(self):
         self.assertFalse(self.case["plan"]["protective_close"]["punitive"])
@@ -270,22 +296,58 @@ class R8CA113AssistedScenePlanningTests(unittest.TestCase):
         mutant["plan"]["protective_close"]["punitive"] = True
         self.assertIn("PROTECTIVE_CLOSE_PUNITIVE", self.codes(self.validation(mutant)))
 
-    def test_final_dialogue_is_refused_inside_the_plan(self):
-        for final_line in (
-            "Sandra : « Tu veux vraiment reprendre ? »",
-            "Tu veux vraiment reprendre contact ?",
-            "Je voulais savoir si ce moment comptait pour toi.",
-        ):
+        disguised = copy.deepcopy(self.case)
+        disguised["plan"]["protective_close"]["punitive"] = False
+        disguised["plan"]["protective_close"]["description"] = (
+            "Sandra humilie Player, rompt le lien et ferme toute reprise"
+        )
+        self.assertIn("PROTECTIVE_CLOSE_PUNITIVE", self.codes(self.validation(disguised)))
+
+        no_future = copy.deepcopy(self.case)
+        no_future["plan"]["protective_close"]["future_possibility"] = "NONE"
+        self.assertIn("PROTECTIVE_CLOSE_FUTURE_MISSING", self.codes(self.validation(no_future)))
+
+        no_autonomy = copy.deepcopy(self.case)
+        no_autonomy["plan"]["protective_close"]["autonomous_exit_character_id"] = "player"
+        self.assertIn("PROTECTIVE_CLOSE_AUTONOMY_MISSING", self.codes(self.validation(no_autonomy)))
+
+    def test_final_dialogue_is_refused_in_every_editorial_plan_text(self):
+        injections = (
+            (
+                ("beats", 2, "summary"),
+                "Sandra : « Tu veux vraiment reprendre ? »",
+            ),
+            (
+                ("expected_reception", "description"),
+                "Je voulais savoir si ce moment comptait pour toi.",
+            ),
+            (
+                ("protective_close", "protects"),
+                "— Reviens quand tu auras compris.",
+            ),
+            (("media_requirement", "justification"), "Player : Tu dois regarder cette image."),
+        )
+        for path, final_line in injections:
             mutant = copy.deepcopy(self.case)
-            mutant["plan"]["beats"][2]["summary"] = final_line
-            self.assertIn("FINAL_DIALOGUE_IN_PLAN", self.codes(self.validation(mutant)))
+            target = mutant["plan"]
+            for key in path[:-1]:
+                target = target[key]
+            target[path[-1]] = final_line
+            self.assertIn(
+                "FINAL_DIALOGUE_IN_PLAN",
+                self.codes(self.validation(mutant)),
+                ".".join(str(part) for part in path),
+            )
 
     def test_human_review_status_and_exact_fingerprint_are_mandatory(self):
         self.assertEqual(
             {"DRAFT", "NEEDS_REVISION", "APPROVED_FOR_DRAFT_GENERATION", "REJECTED"},
             REVIEW_STATUSES,
         )
-        self.assertEqual(planning_fingerprint(self.case), self.case["human_review"]["plan_fingerprint"])
+        self.assertEqual(
+            planning_fingerprint(self.case, self.sandra),
+            self.case["human_review"]["plan_fingerprint"],
+        )
         for status in ("DRAFT", "NEEDS_REVISION", "REJECTED"):
             mutant = copy.deepcopy(self.case)
             mutant["human_review"]["status"] = status
@@ -293,6 +355,19 @@ class R8CA113AssistedScenePlanningTests(unittest.TestCase):
         changed = copy.deepcopy(self.case)
         changed["plan"]["local_risk"] += " Révision."
         self.assertIn("HUMAN_APPROVAL_ABSENT", self.codes(self.validation(changed)))
+
+        changed_contract = copy.deepcopy(self.sandra)
+        changed_contract["character"]["voice"]["rhythm"] += " Révision du contrat."
+        self.assertIn(
+            "HUMAN_APPROVAL_ABSENT",
+            self.codes(
+                validate_scene_plan(
+                    self.case,
+                    changed_contract,
+                    self.foreign,
+                )
+            ),
+        )
 
     def test_warning_catalog_is_exercised_without_aggregate_result(self):
         mutant = copy.deepcopy(self.case)
@@ -313,7 +388,6 @@ class R8CA113AssistedScenePlanningTests(unittest.TestCase):
         self.assertTrue(
             {
                 "HOOK_ABSTRACT",
-                "OBJECTIVES_SYMMETRIC",
                 "BEATS_REDUNDANT",
                 "LOCAL_RISK_MISSING",
                 "EXIT_TOO_PERFECT",
@@ -329,6 +403,63 @@ class R8CA113AssistedScenePlanningTests(unittest.TestCase):
         empty_hook = copy.deepcopy(self.case)
         empty_hook["plan"]["hook"]["description"] = ""
         self.assertIn("HOOK_ABSTRACT", self.codes(self.validation(empty_hook), "warnings"))
+
+    def test_missing_warning_cases_are_structural_and_non_blocking(self):
+        unused_hook = copy.deepcopy(self.case)
+        hook_fact_id = unused_hook["plan"]["hook"]["fact_id"]
+        for beat in unused_hook["plan"]["beats"]:
+            beat["fact_refs"] = [
+                fact_id for fact_id in beat["fact_refs"] if fact_id != hook_fact_id
+            ]
+        unused_hook["human_review"]["plan_fingerprint"] = planning_fingerprint(unused_hook, self.sandra)
+        unused_hook_report = self.validation(unused_hook)
+        self.assertEqual("READY_WITH_WARNINGS", unused_hook_report["status"])
+        self.assertIn(
+            "CONCRETE_DETAIL_WITHOUT_FUNCTION",
+            self.codes(unused_hook_report, "warnings"),
+        )
+
+        romantic_only = copy.deepcopy(self.case)
+        romantic_only["plan"]["local_risk"] = "Une attirance demeure ambiguë."
+        romantic_only["plan"]["objectives"][0]["intent"] = (
+            "Entretenir une ambiguïté affective."
+        )
+        romantic_only["plan"]["objectives"][0]["method"] = (
+            "Maintenir un sous-entendu romantique."
+        )
+        romantic_only["plan"]["objectives"][1]["intent"] = "Observer une attirance."
+        romantic_only["plan"]["objectives"][1]["method"] = "Prolonger un désir romantique."
+        romantic_only["human_review"]["plan_fingerprint"] = planning_fingerprint(
+            romantic_only,
+            self.sandra,
+        )
+        romantic_report = self.validation(romantic_only)
+        self.assertEqual("READY_WITH_WARNINGS", romantic_report["status"])
+        self.assertIn(
+            "ROMANTIC_SUBTEXT_ONLY_TENSION",
+            self.codes(romantic_report, "warnings"),
+        )
+
+        symmetric = copy.deepcopy(self.case)
+        symmetric["plan"]["objectives"][1]["intent"] = symmetric["plan"]["objectives"][0][
+            "intent"
+        ]
+        symmetric["plan"]["objectives"][1]["method"] = symmetric["plan"]["objectives"][0][
+            "method"
+        ]
+        shared_movements = list(symmetric["plan"]["movement_ids"])
+        for beat in symmetric["plan"]["beats"]:
+            beat["movement_refs"] = shared_movements
+        symmetric["human_review"]["plan_fingerprint"] = planning_fingerprint(
+            symmetric,
+            self.sandra,
+        )
+        symmetric_report = self.validation(symmetric)
+        self.assertEqual("READY_WITH_WARNINGS", symmetric_report["status"])
+        self.assertIn(
+            "OBJECTIVES_SYMMETRIC",
+            self.codes(symmetric_report, "warnings"),
+        )
 
     def test_sandra_specificity_fails_under_marie_and_mathilde_structurally(self):
         cross = cross_validate_sandra_plan(self.case)
