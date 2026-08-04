@@ -202,6 +202,29 @@ func obtenir_fenetre(window_id: String) -> Dictionary:
 	return {} if fenetre == null else _resume_fenetre(fenetre)
 
 
+func abandonner_fenetre_non_materialisee(window_id: String) -> Dictionary:
+	if not _identifiant_valide(window_id):
+		return _echec("WINDOW_ID_INVALIDE", false)
+	var fenetre = _fenetres.get(window_id)
+	if fenetre == null:
+		return _echec("FENETRE_INCONNUE", false)
+	if fenetre["state"] != OPEN or not fenetre["selected_option_id"].is_empty():
+		return _echec("FENETRE_NON_ABANDONNABLE", false)
+	for option_id in fenetre["options_par_id"]:
+		var option: Dictionary = fenetre["options_par_id"][option_id]
+		if (
+			option["state"] != CANDIDATE
+			or _moteur.obtenir_instance(option["instance_id"]) != null
+			or not _option_appartient(window_id, option)
+		):
+			return _echec("FENETRE_NON_ABANDONNABLE", false)
+	for option_id in fenetre["options_par_id"]:
+		var option: Dictionary = fenetre["options_par_id"][option_id]
+		_proprietaires_instance.erase(option["instance_id"])
+	_fenetres.erase(window_id)
+	return {"ok": true, "erreur": "", "window_id": window_id}
+
+
 func revalider_fenetre_planifiable(
 	window_id: String,
 	etat_narratif,

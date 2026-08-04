@@ -22,6 +22,7 @@ documents techniques qui le suivent.
 13. [`R8C_A7_RESERVATION_ET_PROPOSITION_CANDIDATS.md`](R8C_A7_RESERVATION_ET_PROPOSITION_CANDIDATS.md) — provenance fermée, revalidation et matérialisation explicite `RESERVE`/`PROPOSE`.
 14. [`R8C_A8_FENETRES_OPPORTUNITE_ET_CONFLITS_EXCLUSIFS.md`](R8C_A8_FENETRES_OPPORTUNITE_ET_CONFLITS_EXCLUSIFS.md) — fenêtres éphémères, options explicites et trois politiques bornées de conflit exclusif.
 15. [`R8C_A9_COMPOSITION_CONTROLEE_CRENEAU_NARRATIF.md`](R8C_A9_COMPOSITION_CONTROLEE_CRENEAU_NARRATIF.md) — composition déterministe d’un créneau à partir de fenêtres A8 explicitement ordonnées, sans sélection ni matérialisation.
+16. [`R8C_A10_VERTICAL_SLICE_ORCHESTRATION_ET_SIMPLIFICATION_API.md`](R8C_A10_VERTICAL_SLICE_ORCHESTRATION_ET_SIMPLIFICATION_API.md) — façade verticale A1–A9, surface runtime réduite et budget de complexité sans nouvelle logique narrative.
 
 ## Invariants de reprise
 
