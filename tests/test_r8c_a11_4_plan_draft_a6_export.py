@@ -1,4 +1,5 @@
 import copy
+import hashlib
 import json
 import re
 import subprocess
@@ -17,6 +18,7 @@ from tools.a11_plan_draft_export import (
     build_projection_report,
     composite_approval_fingerprint,
     default_paths,
+    dialogue_specificity,
     export_a6,
     load_workspace,
     render_human_review,
@@ -27,6 +29,7 @@ from tools.a11_plan_draft_export import (
     validate_draft_format,
     validate_projection_report_format,
 )
+from tools.a11_voice_calibration import load_case as load_calibration_case
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -172,6 +175,73 @@ class R8CA114PlanDraftA6ExportTests(unittest.TestCase):
         for mutant, expected_code in mutations:
             self.assertIn(expected_code, self.codes(validate_draft(mutant)))
 
+    def test_folded_ticket_truth_refuses_player_possession_and_accepts_sandra_possession(self):
+        contradictory = copy.deepcopy(self.workspace)
+        contradictory["draft"]["messages"][0]["text"] = (
+            "Je viens de retrouver le ticket dans ma poche."
+        )
+        report = validate_draft(contradictory)
+        self.assertIn(
+            "FOLDED_TICKET_POSSESSION_CONTRADICTION",
+            self.codes(report),
+        )
+
+        coherent = copy.deepcopy(self.workspace)
+        coherent["draft"]["messages"][0]["text"] = (
+            "J'ai repensé au ticket que tu avais plié et gardé."
+        )
+        coherent["draft"]["messages"][44]["text"] = (
+            "Je l'ai toujours dans une boîte, d'ailleurs."
+        )
+        report = validate_draft(coherent)
+        self.assertNotIn(
+            "FOLDED_TICKET_POSSESSION_CONTRADICTION",
+            self.codes(report),
+        )
+        self.assertEqual("READY", report["status"])
+
+    def test_real_dialogue_is_structurally_specific_to_sandra(self):
+        specificity = dialogue_specificity(self.workspace)
+        self.assertEqual([], specificity["sandra"])
+        required_codes = {
+            "VOICE_RULE_INCOMPATIBLE",
+            "FACT_UNAVAILABLE",
+            "LIMIT_INCOMPATIBLE",
+            "MOVEMENT_INCOMPATIBLE",
+            "LOCAL_STATE_INCOMPATIBLE",
+        }
+        for foreign_name in ("marie", "mathilde"):
+            self.assertTrue(
+                required_codes.issubset(
+                    {issue["code"] for issue in specificity[foreign_name]}
+                )
+            )
+
+        wrong_strategy = copy.deepcopy(self.workspace)
+        wrong_strategy["relationship_register"]["relationship"]["local_states"][0][
+            "strategy"
+        ] = (
+            "Nommer le retard, rappeler l'engagement et demander une présence "
+            "vérifiable."
+        )
+        self.assertIn(
+            "DIALOGUE_RELATIONAL_STRATEGY_INCOMPATIBLE",
+            self.codes(validate_draft(wrong_strategy)),
+        )
+
+    def test_foreign_dialogue_text_cannot_pass_with_unchanged_sandra_metadata(self):
+        for foreign_name in ("marie", "mathilde"):
+            mutant = copy.deepcopy(self.workspace)
+            foreign_texts = [
+                message["text"]
+                for message in load_calibration_case(foreign_name)["case"]["messages"]
+            ]
+            for index, message in enumerate(mutant["draft"]["messages"]):
+                message["text"] = foreign_texts[index % len(foreign_texts)]
+            report = validate_draft(mutant)
+            self.assertIn("DIALOGUE_INTERCHANGEABLE", self.codes(report))
+            self.assertEqual("BLOCKED", report["status"])
+
     def test_all_authored_choice_text_and_common_paraphrases_are_refused(self):
         cases = (
             ("Je suis amoureuse de toi.", "DIRECT_ROMANTIC_DECLARATION"),
@@ -308,6 +378,12 @@ class R8CA114PlanDraftA6ExportTests(unittest.TestCase):
         changed_register = copy.deepcopy(self.workspace)
         changed_register["relationship_register"]["relationship"]["nature"] += " !"
         mutants.append(changed_register)
+        changed_foreign_contract = copy.deepcopy(self.workspace)
+        changed_foreign_contract["foreign_calibrations"]["marie"]["character"]["role"] += " !"
+        mutants.append(changed_foreign_contract)
+        changed_foreign_register = copy.deepcopy(self.workspace)
+        changed_foreign_register["foreign_calibrations"]["mathilde"]["relationship"]["relationship"]["nature"] += " !"
+        mutants.append(changed_foreign_register)
         changed_bubble = copy.deepcopy(self.workspace)
         changed_bubble["draft"]["messages"][0]["text"] += " !"
         mutants.append(changed_bubble)
@@ -419,6 +495,17 @@ class R8CA114PlanDraftA6ExportTests(unittest.TestCase):
             self.assertEqual("RETOUR_NOYAU_COMMUN", resolution["convergence"])
         self.assertNotIn("messages", definition)
         self.assertNotIn("approval_fingerprint", definition)
+        canonical = json.dumps(
+            bundle,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        )
+        self.assertEqual(
+            hashlib.sha256(canonical.encode("utf-8")).hexdigest(),
+            report["canonical_json_sha256"],
+        )
+        self.assertNotIn("export_sha256", report)
         sources = {item["source"] for item in report["unrepresentable_elements"]}
         self.assertIn("draft.messages", sources)
         self.assertIn("static validation creates no A5 instance", report["preserved_invariants"])
@@ -477,6 +564,12 @@ class R8CA114PlanDraftA6ExportTests(unittest.TestCase):
         self.assertEqual(60, result["bubble_count"])
         self.assertEqual(4, result["burst_count"])
         self.assertEqual(7, result["weak_message_count"])
+        self.assertEqual([], result["dialogue_specificity"]["sandra"])
+        for foreign_name in ("marie", "mathilde"):
+            self.assertIn(
+                "VOICE_RULE_INCOMPATIBLE",
+                result["dialogue_specificity"][foreign_name],
+            )
         for command in ("validate-json", "validate", "review", "export", "smoke"):
             arguments = [sys.executable, "tools/a11_plan_draft_export.py", command]
             if command == "export":

@@ -1,12 +1,12 @@
 {
   "format": "R8C_A11_A6_PROJECTION_REPORT",
   "version": 1,
-  "approval_fingerprint": "a0a76d59147c4c70c34c468c1126e1fc50fc66a4eb2decc93e43749d2f4a6679",
+  "approval_fingerprint": "07d6c92278a1c6a59ca69cad752d559b8dc45efef2585bd6a4520d3192faa81e",
   "draft_id": "a11_4_sandra_recontact_after_silence_draft",
   "draft_revision": "rev_01",
   "scene_definition_id": "r8c_a11_4_sandra_recontact_after_silence_definition",
   "variant_id": "sandra_recontact_after_silence_test",
-  "export_sha256": "ad3dc8aa5ed2f6b728f7cca946ed103681028558f098c7eed3a0d3a8c8198019",
+  "canonical_json_sha256": "ad3dc8aa5ed2f6b728f7cca946ed103681028558f098c7eed3a0d3a8c8198019",
   "exported_elements": [
     {
       "source": "planning.plan participant_ids and approved projection identity",

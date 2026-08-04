@@ -26,7 +26,10 @@ try:
         load_planning_case,
         validate_scene_plan,
     )
-    from tools.a11_voice_calibration import load_case as load_calibration_case
+    from tools.a11_voice_calibration import (
+        load_case as load_calibration_case,
+        validate_compatibility as validate_calibration_compatibility,
+    )
 except ModuleNotFoundError:
     from a11_authoring_workshop import (  # type: ignore
         FORMAT_REPORT,
@@ -36,7 +39,10 @@ except ModuleNotFoundError:
         validate_report_format,
     )
     from a11_scene_planning import load_planning_case, validate_scene_plan  # type: ignore
-    from a11_voice_calibration import load_case as load_calibration_case  # type: ignore
+    from a11_voice_calibration import (  # type: ignore
+        load_case as load_calibration_case,
+        validate_compatibility as validate_calibration_compatibility,
+    )
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -58,7 +64,7 @@ A6_FIXTURE_PATH = (
 FORMAT_COMPOSITE_APPROVAL = "R8C_A11_COMPOSITE_APPROVAL"
 FORMAT_PROJECTION_REPORT = "R8C_A11_A6_PROJECTION_REPORT"
 VERSION = 1
-VALIDATOR_VERSION = "a11-plan-draft-validator-1.1"
+VALIDATOR_VERSION = "a11-plan-draft-validator-1.2"
 REVIEW_STATUSES = {
     "DRAFT",
     "NEEDS_REVISION",
@@ -157,7 +163,7 @@ PROJECTION_REPORT_ROOT_KEYS = {
     "draft_revision",
     "scene_definition_id",
     "variant_id",
-    "export_sha256",
+    "canonical_json_sha256",
     "exported_elements",
     "unrepresentable_elements",
     "preserved_invariants",
@@ -214,6 +220,47 @@ PLAYER_PERFECT_MARKERS = (
     "mon intention était parfaitement",
     "je voulais simplement respecter exactement",
 )
+FOLDED_TICKET_FACT_ID = "sandra_folded_ticket"
+PLAYER_FOLDED_TICKET_POSSESSION_PATTERNS = (
+    re.compile(r"\bje\s+viens\s+de\s+(?:re)?trouver\b"),
+    re.compile(r"\bj['’]ai\s+(?:retrouv[ée]|trouv[ée]|gard[ée]|conserv[ée])\b"),
+    re.compile(r"\bje\s+l['’](?:ai|avais)\s+(?:encore|gard[ée]|conserv[ée]|retrouv[ée]|trouv[ée])\b"),
+    re.compile(r"\bje\s+le\s+(?:garde|conserve|possède)\b"),
+    re.compile(r"\bmon\s+ticket\b"),
+    re.compile(r"\b(?:dans|à)\s+ma\s+poche\b"),
+    re.compile(r"\bil\s+est\s+(?:chez\s+moi|avec\s+moi)\b"),
+)
+SANDRA_DIALOGUE_TEXT_SIGNATURES = {
+    "protective_detour": (
+        "archives",
+        "procédure",
+        "catégories administratives",
+        "colloque",
+        "permis de détour",
+        "dossier",
+        "archiviste",
+    ),
+    "shared_memory": ("ticket", "cinéma", "coque", "boîte"),
+    "slow_reversible_progression": (
+        "doucement",
+        "pour ce soir",
+        "si j'y repasse",
+        "peut me revenir",
+        "aucune cérémonie",
+    ),
+}
+SANDRA_RELATIONAL_STRATEGY_SIGNATURES = {
+    "protective_detour": ("détourner",),
+    "shared_memory": ("mémoire",),
+    "slow_reversible_progression": ("prolongation légère",),
+}
+FOREIGN_DIALOGUE_SPECIFICITY_CODES = {
+    "VOICE_RULE_INCOMPATIBLE",
+    "FACT_UNAVAILABLE",
+    "LIMIT_INCOMPATIBLE",
+    "MOVEMENT_INCOMPATIBLE",
+    "LOCAL_STATE_INCOMPATIBLE",
+}
 DIRECT_DECLARATION_PATTERNS = (
     re.compile(r"\bje\s+(?:suis\s+amoureux|suis\s+amoureuse|veux\s+être\s+avec\s+toi)\b"),
     re.compile(r"\bje\s+t['’]aime\b"),
@@ -456,7 +503,7 @@ def validate_projection_report_format(
         "draft_revision",
         "scene_definition_id",
         "variant_id",
-        "export_sha256",
+        "canonical_json_sha256",
     ):
         if not _nonempty(document[field]):
             _issue(issues, "TEXT_REQUIRED", f"{path}.{field}", "chaîne non vide attendue")
@@ -497,10 +544,21 @@ def load_workspace(
 ) -> dict[str, Any]:
     planning = load_planning_case(Path(plan_path))
     calibration = load_calibration_case("sandra")
+    foreign_calibrations = {
+        name: load_calibration_case(name)
+        for name in ("marie", "mathilde")
+    }
     workspace = {
         "planning": planning,
         "character_contract": copy.deepcopy(calibration["character"]),
         "relationship_register": copy.deepcopy(calibration["relationship"]),
+        "foreign_calibrations": {
+            name: {
+                "character": copy.deepcopy(foreign["character"]),
+                "relationship": copy.deepcopy(foreign["relationship"]),
+            }
+            for name, foreign in foreign_calibrations.items()
+        },
         "draft": _read_json(Path(draft_path)),
         "validation_report": _read_json(Path(report_path)),
         "approval": _read_json(Path(approval_path)),
@@ -521,6 +579,7 @@ def validation_fingerprint(workspace: Mapping[str, Any]) -> str:
         "validator_version": VALIDATOR_VERSION,
         "character_contract": workspace["character_contract"],
         "relationship_register": workspace["relationship_register"],
+        "foreign_calibrations": workspace["foreign_calibrations"],
         "planning_case": workspace["planning"],
         "draft": workspace["draft"],
     }
@@ -533,6 +592,7 @@ def composite_approval_fingerprint(workspace: Mapping[str, Any]) -> str:
         "validator_version": VALIDATOR_VERSION,
         "character_contract": workspace["character_contract"],
         "relationship_register": workspace["relationship_register"],
+        "foreign_calibrations": workspace["foreign_calibrations"],
         "planning_case": workspace["planning"],
         "draft": workspace["draft"],
         "validation_report": workspace["validation_report"],
@@ -575,6 +635,92 @@ def _validation_result(
         "blocking_errors": [issue.as_json() for issue in errors],
         "warnings": [issue.as_json() for issue in warnings],
         "human_approval": None,
+    }
+
+
+def _dialogue_calibration_case(workspace: Mapping[str, Any]) -> dict[str, Any]:
+    plan = workspace["planning"]["plan"]
+    messages = workspace["draft"]["messages"]
+    voice = workspace["character_contract"]["voice"]
+    evidence_specs = (
+        ("style_rules", 0, {"sandra_deflects_with_humor"}),
+        (
+            "style_rules",
+            1,
+            {"sandra_relaunches_shared_memory", "sandra_prolongs_without_claim"},
+        ),
+        ("style_rules", 2, {"sandra_prolongs_without_claim"}),
+        ("tone_markers", 0, {"sandra_prolongs_without_claim"}),
+        ("tone_markers", 1, {"sandra_deflects_with_humor"}),
+        ("tone_markers", 2, {"sandra_relaunches_shared_memory"}),
+    )
+    voice_evidence = []
+    for rule_group, rule_index, movement_ids in evidence_specs:
+        message_ids = [
+            message["message_id"]
+            for message in messages
+            if message["speaker_id"] == "sandra"
+            and message["conversation_move"] in movement_ids
+        ]
+        voice_evidence.append({
+            "rule_group": rule_group,
+            "rule_text": voice[rule_group][rule_index],
+            "message_ids": message_ids,
+        })
+    used_facts = {
+        fact_id
+        for message in messages
+        for fact_id in message["fact_refs"]
+    }
+    used_movements = {message["conversation_move"] for message in messages}
+    return {
+        "active_character_id": "sandra",
+        "active_relationship_id": plan["relationship_id"],
+        "local_state_id": plan["initial_state_id"],
+        "useful_fact_ids": [
+            fact_id
+            for fact_id in plan["fact_policy"]["usable_fact_ids"]
+            if fact_id in used_facts
+        ],
+        "useful_limit_ids": list(plan["required_limit_ids"]),
+        "expected_movement_ids": [
+            movement_id
+            for movement_id in plan["movement_ids"]
+            if movement_id in used_movements
+        ],
+        "voice_evidence": voice_evidence,
+        "messages": [
+            {
+                "message_id": message["message_id"],
+                "speaker_id": message["speaker_id"],
+                "text": message["text"],
+                "fact_refs": list(message["fact_refs"]),
+                "movement_refs": [message["conversation_move"]],
+            }
+            for message in messages
+        ],
+    }
+
+
+def dialogue_specificity(workspace: Mapping[str, Any]) -> dict[str, list[dict[str, str]]]:
+    case = _dialogue_calibration_case(workspace)
+    targets = {
+        "sandra": {
+            "character": workspace["character_contract"],
+            "relationship": workspace["relationship_register"],
+        },
+        **workspace["foreign_calibrations"],
+    }
+    return {
+        name: [
+            issue.as_json()
+            for issue in validate_calibration_compatibility(
+                case,
+                target["character"],
+                target["relationship"],
+            )
+        ]
+        for name, target in targets.items()
     }
 
 
@@ -662,6 +808,18 @@ def validate_draft(workspace: Mapping[str, Any]) -> dict[str, Any]:
                     _issue(errors, "REPLY_CROSSES_BRANCH", f"{path}.reply_to", str(reply_to))
         if len(message["text"]) > 120:
             _issue(warnings, "STYLE_LONG_BUBBLE", f"{path}.text", "bulle longue ou littéraire à relire")
+        if speaker == "player" and FOLDED_TICKET_FACT_ID in message["fact_refs"]:
+            possession_hits = _pattern_hits(
+                message["text"].casefold(),
+                PLAYER_FOLDED_TICKET_POSSESSION_PATTERNS,
+            )
+            if possession_hits:
+                _issue(
+                    errors,
+                    "FOLDED_TICKET_POSSESSION_CONTRADICTION",
+                    f"{path}.text",
+                    possession_hits[0],
+                )
 
     missing_beats = [beat_id for beat_id in beats if beat_id not in used_beats]
     if missing_beats:
@@ -901,8 +1059,61 @@ def validate_draft(workspace: Mapping[str, Any]) -> dict[str, Any]:
     }
     if hook_beats.issubset({"concrete_hook"}):
         _issue(warnings, "CONCRETE_DETAIL_WITHOUT_FUNCTION", "draft.messages", hook_fact)
-    if hook_fact != "sandra_folded_ticket":
-        _issue(warnings, "DIALOGUE_INTERCHANGEABLE", "draft.messages", "ancre Sandra spécifique absente")
+    sandra_dialogue = "\n".join(
+        message["text"].casefold()
+        for message in messages
+        if message["speaker_id"] == "sandra"
+    )
+    missing_text_signatures = [
+        signature_id
+        for signature_id, markers in SANDRA_DIALOGUE_TEXT_SIGNATURES.items()
+        if not any(marker in sandra_dialogue for marker in markers)
+    ]
+    if hook_fact != FOLDED_TICKET_FACT_ID or missing_text_signatures:
+        _issue(
+            errors,
+            "DIALOGUE_INTERCHANGEABLE",
+            "draft.messages",
+            ", ".join(missing_text_signatures) or hook_fact,
+        )
+    relationship_states = {
+        state["state_id"]: state
+        for state in workspace["relationship_register"]["relationship"]["local_states"]
+    }
+    active_strategy = relationship_states.get(plan["initial_state_id"], {}).get(
+        "strategy",
+        "",
+    ).casefold()
+    missing_strategy_signatures = [
+        signature_id
+        for signature_id, markers in SANDRA_RELATIONAL_STRATEGY_SIGNATURES.items()
+        if not any(marker in active_strategy for marker in markers)
+    ]
+    if missing_strategy_signatures:
+        _issue(
+            errors,
+            "DIALOGUE_RELATIONAL_STRATEGY_INCOMPATIBLE",
+            "relationship.local_states.strategy",
+            ", ".join(missing_strategy_signatures),
+        )
+    specificity = dialogue_specificity(workspace)
+    for issue in specificity["sandra"]:
+        _issue(
+            errors,
+            "DIALOGUE_SANDRA_CONTRACT_INCOMPATIBLE",
+            issue["path"],
+            f"{issue['code']}: {issue['message']}",
+        )
+    for foreign_name in ("marie", "mathilde"):
+        foreign_codes = {issue["code"] for issue in specificity[foreign_name]}
+        missing_codes = FOREIGN_DIALOGUE_SPECIFICITY_CODES - foreign_codes
+        if missing_codes:
+            _issue(
+                errors,
+                "DIALOGUE_INTERCHANGEABLE",
+                "draft.messages",
+                f"{foreign_name}: preuves absentes={sorted(missing_codes)}",
+            )
     if any(marker in "\n".join(message["text"].casefold() for message in messages if message["speaker_id"] == "sandra") for marker in ("je veux te voir", "j'ai des sentiments")):
         _issue(warnings, "SANDRA_TOO_DIRECT", "draft.messages", "Sandra devient trop déclarative")
 
@@ -1025,7 +1236,7 @@ def build_projection_report(
         "draft_revision": draft["revision"],
         "scene_definition_id": config["scene_definition_id"],
         "variant_id": config["variant_id"],
-        "export_sha256": _sha256(bundle),
+        "canonical_json_sha256": _sha256(bundle),
         "exported_elements": [
             {
                 "source": "planning.plan participant_ids and approved projection identity",
@@ -1141,6 +1352,10 @@ def run_smoke() -> dict[str, Any]:
         "choice_formulations": [option["formulation"] for option in workspace["draft"]["choice"]["options"]],
         "approval_fingerprint": workspace["approval"]["approval_fingerprint"],
         "a6_scene_definition_id": bundle["definitions"][0]["scene_definition_id"],
+        "dialogue_specificity": {
+            name: sorted({issue["code"] for issue in issues})
+            for name, issues in dialogue_specificity(workspace).items()
+        },
     }
 
 

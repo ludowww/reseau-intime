@@ -10,17 +10,19 @@
       {"question_id": "sandra_recognizable", "question": "Sandra est-elle reconnaissable sans son nom ?", "response": "YES", "notes": "Le détour, le ticket et la progression lente restent spécifiques à Sandra."},
       {"question_id": "player_indirect", "question": "Player reste-t-il discret et indirect ?", "response": "YES", "notes": "Ses réponses restent courtes et il n’exige aucune définition affective."},
       {"question_id": "all_beats_realized", "question": "Chaque battement est-il réellement réalisé ?", "response": "YES", "notes": "Les sept battements approuvés possèdent chacun des bulles traçables."},
-      {"question_id": "ticket_has_function", "question": "Le ticket plié sert-il la scène au-delà de l’accroche ?", "response": "YES", "notes": "Il porte le test, les deux réceptions et la sortie possible près du cinéma."},
+      {"question_id": "ticket_has_function", "question": "Le ticket plié sert-il la scène au-delà de l’accroche ?", "response": "YES", "notes": "Player se souvient du ticket conservé par Sandra ; elle confirme qu’il reste à elle, dans une boîte, avant la sortie possible près du cinéma."},
       {"question_id": "texture_natural", "question": "Les messages faibles et rafales semblent-ils naturels ?", "response": "YES", "notes": "Les quatre rafales ponctuent des hésitations concrètes sans devenir mécaniques."},
       {"question_id": "choice_visible_reception", "question": "Le choix produit-il une réception visible ?", "response": "YES", "notes": "Sandra répond différemment à l’aveu prudent et au maintien du détour."},
       {"question_id": "meeting_only_possible", "question": "Le rendez-vous reste-t-il seulement possible ?", "response": "YES", "notes": "Sandra passe peut-être près du cinéma et ne promet qu’une éventuelle relance."},
       {"question_id": "protective_close_valid", "question": "La fermeture protectrice reste-t-elle valide ?", "response": "YES", "notes": "Sandra ferme elle-même l’échange avant toute définition et garde sa réserve."},
-      {"question_id": "unplanned_information_added", "question": "Une information ou évolution absente du plan a-t-elle été ajoutée ?", "response": "NO", "notes": "Aucun fait, participant, média ou changement durable étranger n’est introduit."},
+      {"question_id": "unplanned_information_added", "question": "Une information ou évolution absente du plan a-t-elle été ajoutée ?", "response": "NO", "notes": "Aucun fait étranger n’est ajouté : Player se souvient et demande seulement ; Sandra reste l’unique détentrice, sans second ticket ni ambiguïté de possession."},
       {"question_id": "a6_without_false_promise", "question": "Le brouillon peut-il être projeté vers A6 sans fausse promesse ?", "response": "YES", "notes": "La projection garde uniquement les choix et réceptions locales et documente les pertes."}
     ],
     "notes": [
       "Approbation limitée à un export A6 synthétique, non canonique et chargé par chemin explicite.",
-      "Cette décision ne branche ni PortraitMain ni le runtime Saison 1."
+      "Cette décision ne branche ni PortraitMain ni le runtime Saison 1.",
+      "La possession est conforme au plan : Sandra détient toujours le ticket, désormais rangé dans une boîte ; Player ne le possède pas.",
+      "Aucun second ticket et aucune ambiguïté de possession ne sont introduits."
     ]
   },
   "projection_config": {
@@ -52,5 +54,5 @@
       }
     ]
   },
-  "approval_fingerprint": "a0a76d59147c4c70c34c468c1126e1fc50fc66a4eb2decc93e43749d2f4a6679"
+  "approval_fingerprint": "07d6c92278a1c6a59ca69cad752d559b8dc45efef2585bd6a4520d3192faa81e"
 }

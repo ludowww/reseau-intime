@@ -69,7 +69,7 @@ Les sept battements approuvés sont réalisés dans leur ordre :
 
 | Battement | Réalisation du brouillon |
 | --- | --- |
-| `concrete_hook` | Player retrouve le ticket du cinéma et Sandra reconnaît immédiatement l’archive commune |
+| `concrete_hook` | Player repense au ticket du cinéma conservé par Sandra et elle reconnaît immédiatement l’archive commune |
 | `calibration` | Sandra mesure les quatre jours de silence par le détour administratif |
 | `indirect_reopening` | Player distingue indirectement le ticket du moment récent sans réclamer de réponse |
 | `sandra_test` | Sandra lui demande ce qu’il vérifie et refuse que le silence définisse seul le lien |
@@ -77,9 +77,12 @@ Les sept battements approuvés sont réalisés dans leur ordre :
 | `reception` | Sandra reçoit séparément l’importance reconnue et le détour maintenu |
 | `protective_exit` | le ticket revient dans sa boîte et un passage près du cinéma reste seulement possible |
 
-Le ticket garde donc une fonction après l’accroche : il porte le test, les deux
-réceptions et la fermeture. Le rendez-vous n’est ni daté avec Player, ni
-accepté, ni acquis.
+Le ticket garde donc une fonction après l’accroche : Player se souvient de
+l’objet détenu par Sandra, lui demande ensuite si elle l’a toujours, puis
+Sandra confirme qu’il se trouve désormais dans une boîte. Il porte le test,
+les deux réceptions et la fermeture sans créer un second ticket ni transférer
+sa possession à Player. Le rendez-vous n’est ni daté avec Player, ni accepté,
+ni acquis.
 
 ## Choix et réceptions
 
@@ -100,15 +103,28 @@ sont distincts avant le retour au noyau commun.
 Les erreurs bloquantes couvrent notamment : plan A11.3 non approuvé ou périmé,
 message sans battement, acteur ou participant inattendu, objectif absent,
 mouvement inconnu ou attribué au mauvais acteur, état local incompatible, fait
-étranger, média malgré `NONE`, réponse traversant une branche, battement omis,
+étranger, possession du ticket attribuée à Player malgré
+`sandra_folded_ticket`, média malgré `NONE`, réponse traversant une branche, battement omis,
 rafale structurellement invalide, déclaration romantique directe, silence
 transformé en reproche, rendez-vous présenté comme acquis, conséquence durable,
-choix ou réception manquants et convergence non autorisée.
+choix ou réception manquants, dialogue interchangeable et convergence non
+autorisée.
 
 Les avertissements restent indépendants et non agrégés : messages faibles ou
 rafales absents/hors borne, bulle longue, Player trop bavard, redondance,
 formulation longue, réception cosmétique, ticket sans fonction après
-l’accroche, dialogue interchangeable et Sandra trop directe.
+l’accroche et Sandra trop directe.
+
+La continuité du ticket dispose d’une régression locale, sans moteur sémantique
+générique : elle refuse notamment « Je viens de retrouver le ticket dans ma
+poche. » pour Player et accepte le souvenir ou la question de Player suivis de
+la confirmation de Sandra. La non-interchangeabilité relit les messages réels
+et vérifie ensemble les marqueurs de la stratégie Sandra — détour protecteur,
+mémoire partagée, progression lente et réversible —, les mouvements, les faits,
+les limites et l’état relationnel. Le même dialogue et ses métadonnées sont
+compatibles avec Sandra, mais incompatibles avec les contrats Marie et Mathilde;
+la substitution des textes de leurs corpus dans les métadonnées Sandra est
+également bloquée.
 
 La fixture approuvée produit `READY`, sans erreur ni avertissement. Les
 mutations de tests démontrent séparément les refus et avertissements requis.
@@ -122,18 +138,20 @@ dix questions obligatoires; son rendu lisible est
 
 L’empreinte composite approuvée est :
 
-`a0a76d59147c4c70c34c468c1126e1fc50fc66a4eb2decc93e43749d2f4a6679`
+`07d6c92278a1c6a59ca69cad752d559b8dc45efef2585bd6a4520d3192faa81e`
 
 Elle couvre, sous une canonicalisation JSON déterministe :
 
-1. `a11-plan-draft-validator-1.1`;
+1. `a11-plan-draft-validator-1.2`;
 2. le contrat Sandra A11.2;
 3. le registre Player–Sandra A11.2;
-4. le cas A11.3 complet, donc diagnostic, sélection humaine, plan et relecture;
-5. le brouillon complet;
-6. le rapport de validation exact;
-7. la décision et les réponses de relecture;
-8. la configuration de projection A6.
+4. les contrats et registres Marie et Mathilde utilisés par la preuve de
+   non-interchangeabilité;
+5. le cas A11.3 complet, donc diagnostic, sélection humaine, plan et relecture;
+6. le brouillon complet;
+7. le rapport de validation exact;
+8. la décision et les réponses de relecture;
+9. la configuration de projection A6.
 
 Seul le champ qui stocke l’empreinte est exclu du calcul, ce qui évite une
 dépendance circulaire. Les mutations indépendantes du plan, du contrat, du
@@ -141,6 +159,10 @@ registre, d’une bulle, du choix, du rapport ou de la configuration révoquent
 l’approbation. Ce SHA-256 est un checksum de cohérence dont l’identité humaine
 repose sur la revue Git; il ne constitue pas une signature cryptographique
 indépendante.
+
+L’empreinte technique du rapport régénéré est :
+
+`23d84e5fcf3eef23bbfa249584e0dc9798f6d6f7e4dcfb73ccfc422f2bb11313`
 
 ## Projection A6
 
@@ -161,6 +183,12 @@ silencieusement :
 [`sandra_recontact_after_silence.projection_report.json`](../../narrative_tool/a11/drafting/sandra_recontact_after_silence.projection_report.json)
 énumère les éléments exportés, les éléments non représentables, leur raison et
 l’invariant préservé.
+
+Le champ `canonical_json_sha256` du rapport désigne précisément l’empreinte
+canonique du contenu JSON A6, et non le SHA-256 des octets du fichier. Sa valeur
+pour cette projection est :
+
+`ad3dc8aa5ed2f6b728f7cca946ed103681028558f098c7eed3a0d3a8c8198019`
 
 Le smoke Godot charge uniquement le chemin exact de cette fixture. Il
 instancie la bibliothèque A6, jamais une instance A5, puis vérifie identité,
