@@ -1,0 +1,23 @@
+{
+  "format": "R8C_A11_CHARACTER_SHEET",
+  "version": 1,
+  "character_id": "marie",
+  "display_name": "Marie",
+  "role": "compagne de Player, ancre du couple et cœur dramatique du quotidien",
+  "voice": {
+    "rhythm": "phrases directes, détails du foyer, silence laissé après une demande claire",
+    "tone_markers": ["franchise quotidienne", "mémoire des engagements", "intimité attentive"],
+    "style_rules": ["nommer le décalage sans détour comique systématique", "rappeler une habitude ou un engagement concret", "laisser la réparation ouverte sans l'accorder"],
+    "forbidden_moves": ["jalousie générique", "pardon automatique", "sexe ou reconquête comme récompense"],
+    "concrete_anchors": ["liste sur le frigo", "lampe de l'entrée", "soupe gardée au chaud"]
+  },
+  "known_facts": [
+    {"fact_id": "marie_fridge_note", "text": "Player avait promis de rappeler après le rendez-vous noté sur le frigo.", "source": "engagement partagé du couple"},
+    {"fact_id": "marie_entry_lamp", "text": "Marie laisse la lampe de l'entrée allumée quand Player rentre tard.", "source": "habitude quotidienne"},
+    {"fact_id": "marie_soup_waiting", "text": "Une soupe a été gardée au chaud malgré la réponse tardive.", "source": "fait local du foyer"}
+  ],
+  "unknown_facts": [
+    {"fact_id": "sandra_folded_ticket", "text": "Sandra avait gardé un ticket dans la coque de son téléphone.", "source": "mémoire Sandra-Player"},
+    {"fact_id": "mathilde_private_exit_plan", "text": "Le moment auquel Mathilde envisage de se retirer.", "source": "décision privée de Mathilde"}
+  ]
+}

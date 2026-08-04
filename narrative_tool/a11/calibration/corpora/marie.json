@@ -1,0 +1,28 @@
+{
+  "format": "R8C_A11_VOICE_CALIBRATION_CASE",
+  "version": 1,
+  "case_id": "a11_2_marie_delayed_reopening",
+  "active_character_id": "marie",
+  "active_relationship_id": "player_marie",
+  "local_state_id": "marie_daily_thread_strained",
+  "useful_fact_ids": ["marie_fridge_note", "marie_entry_lamp", "marie_soup_waiting"],
+  "useful_limit_ids": ["marie_intimacy_not_acquired", "marie_no_automatic_repair", "marie_no_rewarded_reconquest", "marie_not_generic_jealousy"],
+  "expected_movement_ids": ["marie_player_returns_plainly", "marie_names_delay_directly", "marie_recalls_shared_commitment", "marie_requests_concrete_presence", "marie_leaves_repair_unpromised"],
+  "voice_evidence": [
+    {"rule_group": "style_rules", "rule_text": "nommer le décalage sans détour comique systématique", "message_ids": ["m02"]},
+    {"rule_group": "style_rules", "rule_text": "rappeler une habitude ou un engagement concret", "message_ids": ["m04", "m06"]},
+    {"rule_group": "style_rules", "rule_text": "laisser la réparation ouverte sans l'accorder", "message_ids": ["m10"]}
+  ],
+  "messages": [
+    {"message_id": "m01", "speaker_id": "player", "text": "J'ai répondu trop tard. Je n'ai pas de bonne excuse.", "fact_refs": ["marie_fridge_note"], "movement_refs": ["marie_player_returns_plainly"]},
+    {"message_id": "m02", "speaker_id": "marie", "text": "Oui. Tu avais dit que tu rappellerais après le rendez-vous.", "fact_refs": ["marie_fridge_note"], "movement_refs": ["marie_names_delay_directly", "marie_recalls_shared_commitment"]},
+    {"message_id": "m03", "speaker_id": "player", "text": "Je sais. Je veux rouvrir la conversation sans faire comme si ça suffisait.", "fact_refs": ["marie_fridge_note"], "movement_refs": ["marie_player_returns_plainly"]},
+    {"message_id": "m04", "speaker_id": "marie", "text": "La note est encore sur le frigo. Moi aussi, d'ailleurs.", "fact_refs": ["marie_fridge_note"], "movement_refs": ["marie_recalls_shared_commitment"]},
+    {"message_id": "m05", "speaker_id": "player", "text": "Tu as gardé la soupe ?", "fact_refs": ["marie_soup_waiting"], "movement_refs": ["marie_player_returns_plainly"]},
+    {"message_id": "m06", "speaker_id": "marie", "text": "Oui. Et la lampe de l'entrée. Ce sont des habitudes, pas des preuves que tout va bien.", "fact_refs": ["marie_entry_lamp", "marie_soup_waiting"], "movement_refs": ["marie_recalls_shared_commitment", "marie_names_delay_directly"]},
+    {"message_id": "m07", "speaker_id": "player", "text": "Qu'est-ce qui serait utile maintenant ?", "fact_refs": ["marie_entry_lamp"], "movement_refs": ["marie_player_returns_plainly"]},
+    {"message_id": "m08", "speaker_id": "marie", "text": "Rentre avant que je range la cuisine. Assieds-toi dix minutes avec moi.", "fact_refs": ["marie_soup_waiting"], "movement_refs": ["marie_requests_concrete_presence"]},
+    {"message_id": "m09", "speaker_id": "player", "text": "D'accord. Sans promesse énorme.", "fact_refs": ["marie_soup_waiting"], "movement_refs": ["marie_player_returns_plainly"]},
+    {"message_id": "m10", "speaker_id": "marie", "text": "Sans conclusion non plus. Mais tu peux venir, et on parlera honnêtement.", "fact_refs": ["marie_soup_waiting"], "movement_refs": ["marie_leaves_repair_unpromised"]}
+  ]
+}

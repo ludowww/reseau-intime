@@ -1,0 +1,23 @@
+{
+  "format": "R8C_A11_CHARACTER_SHEET",
+  "version": 1,
+  "character_id": "mathilde",
+  "display_name": "Mathilde",
+  "role": "présence domestique autonome dont le regard ouvre une ambiguïté révocable",
+  "voice": {
+    "rhythm": "observation brève, précision situationnelle, choix explicite de poursuivre ou de partir",
+    "tone_markers": ["regard situé", "ambiguïté sans promesse", "autonomie calme"],
+    "style_rules": ["partir d'un détail visible dans la pièce", "laisser une possibilité réelle de retrait", "séparer un précédent de la permission présente"],
+    "forbidden_moves": ["disponibilité érotique supposée", "répétition acquise", "arrêt punitif"],
+    "concrete_anchors": ["tasse sur l'accoudoir", "porte entrouverte", "clé posée près du sac"]
+  },
+  "known_facts": [
+    {"fact_id": "mathilde_mug_armrest", "text": "La tasse de Mathilde est restée sur l'accoudoir après son départ de la pièce.", "source": "détail domestique visible"},
+    {"fact_id": "mathilde_key_by_bag", "text": "Mathilde garde sa clé près de son sac pour pouvoir partir seule.", "source": "autonomie matérielle visible"},
+    {"fact_id": "mathilde_previous_ambiguity", "text": "Un échange précédent a été ambigu sans créer de permission future.", "source": "mémoire relationnelle bornée"}
+  ],
+  "unknown_facts": [
+    {"fact_id": "sandra_folded_ticket", "text": "Sandra avait gardé un ticket dans la coque de son téléphone.", "source": "mémoire Sandra-Player"},
+    {"fact_id": "marie_missed_commitment", "text": "Le détail d'un engagement quotidien manqué entre Marie et Player.", "source": "relation Marie-Player"}
+  ]
+}

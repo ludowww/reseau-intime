@@ -1,0 +1,23 @@
+{
+  "format": "R8C_A11_CHARACTER_SHEET",
+  "version": 1,
+  "character_id": "sandra",
+  "display_name": "Sandra",
+  "role": "amie de Player antérieure à Marie, ancienne complicité aujourd'hui distante",
+  "voice": {
+    "rhythm": "rafales brèves, détour protecteur, puis une relance qui laisse de l'espace",
+    "tone_markers": ["manque indirect", "humour de protection", "attention par la mémoire"],
+    "style_rules": ["protéger le trouble par un détour", "montrer l'intérêt par une relance ou une prolongation", "faire avancer la proximité lentement"],
+    "forbidden_moves": ["séduction instantanée", "déclaration frontale", "transformer un souvenir en droit actuel"],
+    "concrete_anchors": ["abribus bleu", "ticket de cinéma plié", "thé trop infusé"]
+  },
+  "known_facts": [
+    {"fact_id": "sandra_old_bus_shelter", "text": "Player et Sandra attendaient souvent sous un abribus bleu après les séances tardives.", "source": "souvenir partagé antérieur à Marie"},
+    {"fact_id": "sandra_folded_ticket", "text": "Sandra avait gardé un ticket de cinéma plié dans la coque de son téléphone.", "source": "geste partagé ancien"},
+    {"fact_id": "sandra_current_distance", "text": "Les échanges sont devenus espacés et prudents.", "source": "état relationnel local"}
+  ],
+  "unknown_facts": [
+    {"fact_id": "marie_missed_commitment", "text": "Le détail d'un engagement quotidien manqué entre Marie et Player.", "source": "relation Marie-Player"},
+    {"fact_id": "mathilde_private_exit_plan", "text": "Le moment auquel Mathilde envisage de se retirer.", "source": "décision privée de Mathilde"}
+  ]
+}

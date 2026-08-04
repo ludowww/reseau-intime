@@ -1,0 +1,31 @@
+{
+  "format": "R8C_A11_RELATIONSHIP_CALIBRATION_REGISTER",
+  "version": 1,
+  "relationship": {
+    "relationship_id": "player_marie",
+    "participant_ids": ["player", "marie"],
+    "nature": "couple vivant, dense et quotidien, dont l'intimité demande encore présence et honnêteté",
+    "shared_facts": [
+      {"fact_id": "marie_fridge_note", "text": "Player avait promis de rappeler après le rendez-vous noté sur le frigo.", "known_by": ["player", "marie"]},
+      {"fact_id": "marie_entry_lamp", "text": "La lampe de l'entrée reste allumée quand Player rentre tard.", "known_by": ["player", "marie"]},
+      {"fact_id": "marie_soup_waiting", "text": "La soupe attend encore dans la cuisine.", "known_by": ["player", "marie"]}
+    ],
+    "limits": [
+      {"limit_id": "marie_intimacy_not_acquired", "text": "Le quotidien partagé ne rend jamais l'intimité acquise."},
+      {"limit_id": "marie_no_automatic_repair", "text": "Une parole honnête peut ouvrir une réparation, jamais un pardon automatique."},
+      {"limit_id": "marie_no_rewarded_reconquest", "text": "Aucun sexe ni reconquête ne récompense mécaniquement l'effort."},
+      {"limit_id": "marie_not_generic_jealousy", "text": "Le désaccord porte sur leurs habitudes et engagements, pas sur une jalousie générique."}
+    ],
+    "movements": [
+      {"movement_id": "marie_player_returns_plainly", "actor_id": "player", "text": "Reconnaître la réponse tardive sans la maquiller.", "requires_limit_ids": ["marie_no_automatic_repair"]},
+      {"movement_id": "marie_names_delay_directly", "actor_id": "marie", "text": "Nommer directement le silence et son effet dans le quotidien.", "requires_limit_ids": ["marie_not_generic_jealousy"]},
+      {"movement_id": "marie_recalls_shared_commitment", "actor_id": "marie", "text": "Rappeler une habitude ou un engagement précis du couple.", "requires_limit_ids": ["marie_intimacy_not_acquired"]},
+      {"movement_id": "marie_requests_concrete_presence", "actor_id": "marie", "text": "Demander un geste de présence concret plutôt qu'une promesse abstraite.", "requires_limit_ids": ["marie_intimacy_not_acquired"]},
+      {"movement_id": "marie_leaves_repair_unpromised", "actor_id": "marie", "text": "Reconnaître l'honnêteté sans accorder d'avance le pardon ou la reconquête.", "requires_limit_ids": ["marie_no_automatic_repair", "marie_no_rewarded_reconquest"]}
+    ],
+    "local_states": [
+      {"state_id": "marie_daily_thread_strained", "description": "Une promesse quotidienne a été manquée et la réponse arrive tard.", "strategy": "Nommer le retard, rappeler l'engagement, demander une présence vérifiable et laisser la réparation ouverte.", "movement_ids": ["marie_player_returns_plainly", "marie_names_delay_directly", "marie_recalls_shared_commitment", "marie_requests_concrete_presence", "marie_leaves_repair_unpromised"]},
+      {"state_id": "marie_repair_open_cautious", "description": "Player a déjà reconnu le manquement sans chercher à conclure vite.", "strategy": "Réduire le rappel du tort et vérifier la présence par un petit engagement actuel.", "movement_ids": ["marie_player_returns_plainly", "marie_requests_concrete_presence", "marie_leaves_repair_unpromised"]}
+    ]
+  }
+}

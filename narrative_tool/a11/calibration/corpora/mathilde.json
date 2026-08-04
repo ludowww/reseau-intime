@@ -1,0 +1,28 @@
+{
+  "format": "R8C_A11_VOICE_CALIBRATION_CASE",
+  "version": 1,
+  "case_id": "a11_2_mathilde_delayed_reopening",
+  "active_character_id": "mathilde",
+  "active_relationship_id": "player_mathilde",
+  "local_state_id": "mathilde_doorway_after_delay",
+  "useful_fact_ids": ["mathilde_mug_armrest", "mathilde_key_by_bag", "mathilde_previous_ambiguity"],
+  "useful_limit_ids": ["mathilde_no_assumed_permission", "mathilde_mb1_nonsexual", "mathilde_mb2_distinct_mb3", "mathilde_clean_nonpunitive_stop", "mathilde_mb3_independent_departure", "mathilde_no_acquired_repetition"],
+  "expected_movement_ids": ["mathilde_player_reopens_without_claim", "mathilde_observes_situation", "mathilde_names_present_choice", "mathilde_keeps_exit_real", "mathilde_prolongs_conditionally"],
+  "voice_evidence": [
+    {"rule_group": "style_rules", "rule_text": "partir d'un détail visible dans la pièce", "message_ids": ["t02", "t04"]},
+    {"rule_group": "style_rules", "rule_text": "laisser une possibilité réelle de retrait", "message_ids": ["t06", "t10"]},
+    {"rule_group": "style_rules", "rule_text": "séparer un précédent de la permission présente", "message_ids": ["t08"]}
+  ],
+  "messages": [
+    {"message_id": "t01", "speaker_id": "player", "text": "J'ai laissé ton message attendre. Ta tasse est toujours sur l'accoudoir.", "fact_refs": ["mathilde_mug_armrest"], "movement_refs": ["mathilde_player_reopens_without_claim"]},
+    {"message_id": "t02", "speaker_id": "mathilde", "text": "Je la vois depuis la porte. Elle a mieux tenu sa position que toi.", "fact_refs": ["mathilde_mug_armrest"], "movement_refs": ["mathilde_observes_situation"]},
+    {"message_id": "t03", "speaker_id": "player", "text": "Je voulais reprendre l'échange, pas décider de la suite à ta place.", "fact_refs": ["mathilde_previous_ambiguity"], "movement_refs": ["mathilde_player_reopens_without_claim"]},
+    {"message_id": "t04", "speaker_id": "mathilde", "text": "Ma clé est déjà près du sac. La situation est donc assez claire de ce côté-là.", "fact_refs": ["mathilde_key_by_bag"], "movement_refs": ["mathilde_observes_situation", "mathilde_keeps_exit_real"]},
+    {"message_id": "t05", "speaker_id": "player", "text": "Tu peux partir. Je ne te le reprocherai pas.", "fact_refs": ["mathilde_key_by_bag"], "movement_refs": ["mathilde_player_reopens_without_claim"]},
+    {"message_id": "t06", "speaker_id": "mathilde", "text": "Je sais. C'est justement pour ça que je peux encore répondre.", "fact_refs": ["mathilde_key_by_bag"], "movement_refs": ["mathilde_keeps_exit_real"]},
+    {"message_id": "t07", "speaker_id": "player", "text": "Et la dernière fois ?", "fact_refs": ["mathilde_previous_ambiguity"], "movement_refs": ["mathilde_player_reopens_without_claim"]},
+    {"message_id": "t08", "speaker_id": "mathilde", "text": "La dernière fois existe. Elle ne signe pas celle-ci.", "fact_refs": ["mathilde_previous_ambiguity"], "movement_refs": ["mathilde_names_present_choice"]},
+    {"message_id": "t09", "speaker_id": "player", "text": "Alors seulement maintenant : tu veux rester un peu ?", "fact_refs": ["mathilde_previous_ambiguity"], "movement_refs": ["mathilde_player_reopens_without_claim"]},
+    {"message_id": "t10", "speaker_id": "mathilde", "text": "Dix minutes. Porte ouverte. Ensuite je reprends ma clé, que la conversation soit bonne ou non.", "fact_refs": ["mathilde_key_by_bag"], "movement_refs": ["mathilde_prolongs_conditionally", "mathilde_keeps_exit_real"]}
+  ]
+}

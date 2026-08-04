@@ -1,0 +1,28 @@
+{
+  "format": "R8C_A11_VOICE_CALIBRATION_CASE",
+  "version": 1,
+  "case_id": "a11_2_sandra_delayed_reopening",
+  "active_character_id": "sandra",
+  "active_relationship_id": "player_sandra",
+  "local_state_id": "sandra_distant_after_silence",
+  "useful_fact_ids": ["sandra_old_bus_shelter", "sandra_folded_ticket", "sandra_current_distance"],
+  "useful_limit_ids": ["sandra_no_instant_seduction", "sandra_indirect_longing", "sandra_slow_progress"],
+  "expected_movement_ids": ["sandra_player_returns_carefully", "sandra_deflects_with_humor", "sandra_relaunches_shared_memory", "sandra_prolongs_without_claim"],
+  "voice_evidence": [
+    {"rule_group": "style_rules", "rule_text": "protéger le trouble par un détour", "message_ids": ["s02", "s08"]},
+    {"rule_group": "style_rules", "rule_text": "montrer l'intérêt par une relance ou une prolongation", "message_ids": ["s06", "s10"]},
+    {"rule_group": "tone_markers", "rule_text": "attention par la mémoire", "message_ids": ["s04", "s06"]}
+  ],
+  "messages": [
+    {"message_id": "s01", "speaker_id": "player", "text": "Désolé pour le silence. Je viens de passer devant l'ancien cinéma.", "fact_refs": ["sandra_old_bus_shelter"], "movement_refs": ["sandra_player_returns_carefully"]},
+    {"message_id": "s02", "speaker_id": "sandra", "text": "Ils ont enfin classé l'abribus bleu monument historique ?", "fact_refs": ["sandra_old_bus_shelter"], "movement_refs": ["sandra_deflects_with_humor"]},
+    {"message_id": "s03", "speaker_id": "player", "text": "Toujours pas. Il pleut toujours de travers dessous.", "fact_refs": ["sandra_old_bus_shelter"], "movement_refs": ["sandra_player_returns_carefully"]},
+    {"message_id": "s04", "speaker_id": "sandra", "text": "Donc rien n'a changé. C'est presque vexant.", "fact_refs": ["sandra_old_bus_shelter"], "movement_refs": ["sandra_relaunches_shared_memory"]},
+    {"message_id": "s05", "speaker_id": "player", "text": "J'ai repensé au ticket que tu gardais dans ta coque.", "fact_refs": ["sandra_folded_ticket"], "movement_refs": ["sandra_player_returns_carefully"]},
+    {"message_id": "s06", "speaker_id": "sandra", "text": "Je l'ai encore. Il protège très mal le téléphone, si tu veux mon avis.", "fact_refs": ["sandra_folded_ticket"], "movement_refs": ["sandra_relaunches_shared_memory", "sandra_deflects_with_humor"]},
+    {"message_id": "s07", "speaker_id": "player", "text": "Je voulais surtout savoir comment tu allais.", "fact_refs": ["sandra_current_distance"], "movement_refs": ["sandra_player_returns_carefully"]},
+    {"message_id": "s08", "speaker_id": "sandra", "text": "Technique risquée : répondre trois jours après et poser une vraie question.", "fact_refs": ["sandra_current_distance"], "movement_refs": ["sandra_deflects_with_humor"]},
+    {"message_id": "s09", "speaker_id": "player", "text": "Je peux tenter mieux la prochaine fois.", "fact_refs": ["sandra_current_distance"], "movement_refs": ["sandra_player_returns_carefully"]},
+    {"message_id": "s10", "speaker_id": "sandra", "text": "Commence par me dire si le cinéma sert toujours ce thé beaucoup trop infusé.", "fact_refs": ["sandra_old_bus_shelter"], "movement_refs": ["sandra_prolongs_without_claim"]}
+  ]
+}

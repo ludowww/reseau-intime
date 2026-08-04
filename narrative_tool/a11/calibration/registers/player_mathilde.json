@@ -1,0 +1,33 @@
+{
+  "format": "R8C_A11_RELATIONSHIP_CALIBRATION_REGISTER",
+  "version": 1,
+  "relationship": {
+    "relationship_id": "player_mathilde",
+    "participant_ids": ["player", "mathilde"],
+    "nature": "tension domestique fondée sur le regard et l'ambiguïté, toujours révocable",
+    "shared_facts": [
+      {"fact_id": "mathilde_mug_armrest", "text": "La tasse oubliée sur l'accoudoir donne un prétexte strictement situationnel.", "known_by": ["player", "mathilde"]},
+      {"fact_id": "mathilde_key_by_bag", "text": "La clé près du sac matérialise une possibilité réelle de partir seule.", "known_by": ["player", "mathilde"]},
+      {"fact_id": "mathilde_previous_ambiguity", "text": "Un échange ambigu a eu lieu sans créer de permission pour le suivant.", "known_by": ["player", "mathilde"]}
+    ],
+    "limits": [
+      {"limit_id": "mathilde_no_assumed_permission", "text": "Ni proximité ni précédent ne valent permission présente."},
+      {"limit_id": "mathilde_mb1_nonsexual", "text": "M-B1 reste sans sexualité."},
+      {"limit_id": "mathilde_mb2_distinct_mb3", "text": "M-B2 reste distinct de M-B3."},
+      {"limit_id": "mathilde_clean_nonpunitive_stop", "text": "Un arrêt ou retrait se clôt proprement, sans punition."},
+      {"limit_id": "mathilde_mb3_independent_departure", "text": "Même M-B3 conserve un départ indépendant."},
+      {"limit_id": "mathilde_no_acquired_repetition", "text": "Aucune répétition n'est acquise."}
+    ],
+    "movements": [
+      {"movement_id": "mathilde_player_reopens_without_claim", "actor_id": "player", "text": "Revenir après le silence par un détail domestique, sans invoquer de droit.", "requires_limit_ids": ["mathilde_no_assumed_permission"]},
+      {"movement_id": "mathilde_observes_situation", "actor_id": "mathilde", "text": "Répondre par ce qu'elle voit dans la pièce plutôt que par une disponibilité supposée.", "requires_limit_ids": ["mathilde_mb1_nonsexual"]},
+      {"movement_id": "mathilde_names_present_choice", "actor_id": "mathilde", "text": "Distinguer l'ambiguïté précédente du choix présent.", "requires_limit_ids": ["mathilde_no_assumed_permission", "mathilde_no_acquired_repetition"]},
+      {"movement_id": "mathilde_keeps_exit_real", "actor_id": "mathilde", "text": "Maintenir explicitement une possibilité de retrait autonome.", "requires_limit_ids": ["mathilde_clean_nonpunitive_stop", "mathilde_mb3_independent_departure"]},
+      {"movement_id": "mathilde_prolongs_conditionally", "actor_id": "mathilde", "text": "Prolonger l'échange seulement comme choix actuel et réversible.", "requires_limit_ids": ["mathilde_mb2_distinct_mb3", "mathilde_no_assumed_permission"]}
+    ],
+    "local_states": [
+      {"state_id": "mathilde_doorway_after_delay", "description": "Mathilde est encore dans l'espace domestique mais près de la porte après une réponse tardive.", "strategy": "Observer le détail présent, rappeler que rien n'est acquis, puis choisir de rester quelques minutes avec une sortie intacte.", "movement_ids": ["mathilde_player_reopens_without_claim", "mathilde_observes_situation", "mathilde_names_present_choice", "mathilde_keeps_exit_real", "mathilde_prolongs_conditionally"]},
+      {"state_id": "mathilde_distance_chosen", "description": "Mathilde a déjà choisi de réduire l'ambiguïté et prépare son départ.", "strategy": "Répondre une fois, confirmer la sortie et clore sans froideur punitive.", "movement_ids": ["mathilde_player_reopens_without_claim", "mathilde_keeps_exit_real"]}
+    ]
+  }
+}

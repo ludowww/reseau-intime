@@ -1,0 +1,29 @@
+{
+  "format": "R8C_A11_RELATIONSHIP_CALIBRATION_REGISTER",
+  "version": 1,
+  "relationship": {
+    "relationship_id": "player_sandra",
+    "participant_ids": ["player", "sandra"],
+    "nature": "complicité ancienne, antérieure au couple avec Marie, aujourd'hui tenue à distance",
+    "shared_facts": [
+      {"fact_id": "sandra_old_bus_shelter", "text": "Ils attendaient sous l'abribus bleu après les séances tardives.", "known_by": ["player", "sandra"]},
+      {"fact_id": "sandra_folded_ticket", "text": "Le ticket plié rappelle une soirée ancienne sans définir la relation actuelle.", "known_by": ["player", "sandra"]},
+      {"fact_id": "sandra_current_distance", "text": "Le fil est devenu irrégulier et prudent.", "known_by": ["player", "sandra"]}
+    ],
+    "limits": [
+      {"limit_id": "sandra_no_instant_seduction", "text": "Aucune séduction instantanée ni déclaration frontale."},
+      {"limit_id": "sandra_indirect_longing", "text": "Le manque reste indirect et protégé par l'humour ou le détour."},
+      {"limit_id": "sandra_slow_progress", "text": "Une relance ou un souvenir montre l'intérêt sans produire de rapprochement acquis."}
+    ],
+    "movements": [
+      {"movement_id": "sandra_player_returns_carefully", "actor_id": "player", "text": "Revenir après le silence sans réclamer d'accès immédiat.", "requires_limit_ids": ["sandra_slow_progress"]},
+      {"movement_id": "sandra_deflects_with_humor", "actor_id": "sandra", "text": "Protéger le manque par une remarque drôle et déniable.", "requires_limit_ids": ["sandra_indirect_longing"]},
+      {"movement_id": "sandra_relaunches_shared_memory", "actor_id": "sandra", "text": "Relancer par un souvenir précis que cette relation seule partage.", "requires_limit_ids": ["sandra_slow_progress"]},
+      {"movement_id": "sandra_prolongs_without_claim", "actor_id": "sandra", "text": "Prolonger légèrement l'échange sans séduction immédiate.", "requires_limit_ids": ["sandra_no_instant_seduction", "sandra_slow_progress"]}
+    ],
+    "local_states": [
+      {"state_id": "sandra_distant_after_silence", "description": "Le fil vient de connaître un silence et Sandra protège la distance actuelle.", "strategy": "Détourner d'abord, puis offrir une seule mémoire et une prolongation légère.", "movement_ids": ["sandra_player_returns_carefully", "sandra_deflects_with_humor", "sandra_relaunches_shared_memory", "sandra_prolongs_without_claim"]},
+      {"state_id": "sandra_warm_but_guarded", "description": "Sandra a déjà répondu chaleureusement mais refuse d'accélérer.", "strategy": "Réduire le détour et prolonger par une question concrète sans nommer le manque.", "movement_ids": ["sandra_player_returns_carefully", "sandra_prolongs_without_claim"]}
+    ]
+  }
+}
