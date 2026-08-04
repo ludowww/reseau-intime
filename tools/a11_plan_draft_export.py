@@ -99,7 +99,14 @@ FORMAT_N2_COMPARISON = "R8C_N2_NARRATIVE_COMPARISON_REPORT"
 VERSION = 1
 VALIDATOR_VERSION = "a11-plan-draft-validator-1.2"
 EDITORIAL_VALIDATOR_VERSION = "a11-first-editorial-pilot-validator-1.0"
-N2_VALIDATOR_VERSION = "r8c-n2-sandra-blue-chairs-validator-1.0"
+N2_VALIDATOR_VERSION = "r8c-n2-sandra-blue-chairs-validator-1.1"
+N2_REVIEWED_COMMIT = "128d49ffa210b58f698188860b247b5df6856aca"
+N2_FINAL_CANONICAL_CORRECTION = {
+    "message_id": "m91",
+    "before": "bonne soirée, Ludo",
+    "after": "bonne soirée",
+    "resolution": "FALLBACK_NO_CANONICAL_PLAYER_NAME_TOKEN",
+}
 REVIEW_STATUSES = {
     "DRAFT",
     "NEEDS_REVISION",
@@ -114,7 +121,7 @@ CANON_REVIEW_STATUSES = {
 }
 N2_REVIEW_STATUSES = {
     "NEEDS_NARRATIVE_REVISION",
-    "READY_FOR_FINAL_CANON_REVIEW",
+    "READY_FOR_FINAL_CANON_APPROVAL",
     "REJECTED",
 }
 N2_PROFILE = {
@@ -2373,6 +2380,44 @@ def parse_n2_locked_source(text: str | None = None) -> dict[str, Any]:
     }
 
 
+def apply_n2_final_canonical_correction(source: Mapping[str, Any]) -> dict[str, Any]:
+    corrected = copy.deepcopy(source)
+    matches = [
+        message
+        for message in corrected["convergence_messages"]
+        if message["message_id"] == N2_FINAL_CANONICAL_CORRECTION["message_id"]
+    ]
+    if len(matches) != 1 or matches[0]["text"] != N2_FINAL_CANONICAL_CORRECTION["before"]:
+        raise A114ValidationError([
+            Issue(
+                "N2_FINAL_CORRECTION_SOURCE_INVALID",
+                "source.m91",
+                "la réplique revue bonne soirée, Ludo est attendue exactement une fois",
+            )
+        ])
+    matches[0]["text"] = N2_FINAL_CANONICAL_CORRECTION["after"]
+    return corrected
+
+
+def validate_n2_final_canonical_correction(
+    reviewed_source: Mapping[str, Any],
+    candidate_source: Mapping[str, Any],
+) -> list[Issue]:
+    try:
+        expected = apply_n2_final_canonical_correction(reviewed_source)
+    except A114ValidationError as exc:
+        return exc.issues
+    if editorial_source_projection(expected) == editorial_source_projection(candidate_source):
+        return []
+    return [
+        Issue(
+            "N2_FINAL_CORRECTION_DIFF_INVALID",
+            "source",
+            "le diff narratif depuis le commit revu doit être limité au texte de m91",
+        )
+    ]
+
+
 def _build_n2_provenance(source: Mapping[str, Any]) -> dict[str, Any]:
     provenance = _read_json(PILOT_PROVENANCE_PATH)
     provenance["provenance_id"] = "r8c_n2_sandra_blue_chairs_provenance"
@@ -2383,8 +2428,13 @@ def _build_n2_provenance(source: Mapping[str, Any]) -> dict[str, Any]:
         "text": "Pont propre à l’option A, simplification des passages m64–m69 et m75–m78, sans perte des limites narratives.",
         "source_ref": "docs/narrative/R8C_N1_CANON_REVIEW_SANDRA_BLUE_CHAIRS.md",
     })
+    provenance["canonical_inputs"].append({
+        "input_id": "r8c_n2_final_player_name_review",
+        "text": "Aucun token auteur canonique et validable du prénom Player n’existe dans le dépôt; le repli autorisé retire le prénom historique de m91.",
+        "source_ref": "docs/decisions/DECISION_006_PLAYER_NAME_AND_THREAD_MODEL.md",
+    })
     provenance["limits"][0]["text"] = (
-        "Le texte R8C-N2 verrouillé ne peut différer d’A11.5 que par les ajouts, remplacements et retraits du manifeste fermé."
+        "La candidate corrigée ne peut différer du texte R8C-N2 verrouillé que par le repli fermé de m91: bonne soirée."
     )
     provenance["limits"][1]["text"] = (
         "Sandra reçoit et comprend que la reprise du contact compte pour Player; un déjeuner ultérieur reste seulement possible."
@@ -2542,8 +2592,8 @@ def validate_n2_manifest(
     issues: list[Issue] = []
     historical = _source_message_index(historical_source)
     candidate = _source_message_index(candidate_source)
-    changed_historical_ids = {"m52", "m64", "m65", "m66", "m67", "m68", "m69", "m70", "m71", "m75", "m76", "m77", "m78"}
-    changed_candidate_ids = {"m51A-2", "m51A-3", "m52B", "m64", "m65", "m66", "m67", "m75", "m76", "m77", "m78"}
+    changed_historical_ids = {"m52", "m64", "m65", "m66", "m67", "m68", "m69", "m70", "m71", "m75", "m76", "m77", "m78", "m91"}
+    changed_candidate_ids = {"m51A-2", "m51A-3", "m52B", "m64", "m65", "m66", "m67", "m75", "m76", "m77", "m78", "m91"}
     unchanged_ids = set(historical) - changed_historical_ids
     expected_candidate_ids = unchanged_ids | changed_candidate_ids
     if set(candidate) != expected_candidate_ids:
@@ -2587,6 +2637,11 @@ def validate_n2_manifest(
         _issue(issues, "N2_OLD_CONVERGENCE_PRESENT", "source.choice.converge_at_message_id", "m53 attendu")
     if "m52" in candidate or any(message_id in candidate for message_id in ("m68", "m69", "m70", "m71")):
         _issue(issues, "N2_RETIRED_SEQUENCE_PRESENT", "source", "ancienne convergence ou ancienne séquence encore présente")
+    expected_m91 = copy.deepcopy(historical.get("m91"))
+    if expected_m91 is not None:
+        expected_m91["text"] = N2_FINAL_CANONICAL_CORRECTION["after"]
+    if candidate.get("m91") != expected_m91:
+        _issue(issues, "N2_FINAL_CORRECTION_DIFF_INVALID", "source.m91", "repli exact bonne soirée attendu")
     return issues
 
 
@@ -2596,7 +2651,7 @@ def build_n2_comparison(
 ) -> dict[str, Any]:
     old = _source_message_index(historical_source)
     new = _source_message_index(candidate_source)
-    changed_old = {"m52", "m64", "m65", "m66", "m67", "m68", "m69", "m70", "m71", "m75", "m76", "m77", "m78"}
+    changed_old = {"m52", "m64", "m65", "m66", "m67", "m68", "m69", "m70", "m71", "m75", "m76", "m77", "m78", "m91"}
     unchanged_ids = [message_id for message_id in old if message_id not in changed_old]
     return {
         "format": FORMAT_N2_COMPARISON,
@@ -2627,6 +2682,12 @@ def build_n2_comparison(
                 "after": [new[message_id] for message_id in ("m75", "m76", "m77", "m78")],
                 "reason_from_n1": "Remplacer la formule composée par une incertitude prudente et assumée de Sandra.",
             },
+            {
+                "revision_id": "player_name_canonical_fallback",
+                "before": [old["m91"]],
+                "after": [new["m91"]],
+                "reason_from_final_review": "Retirer le prénom historique faute de token auteur canonique et validable pour le prénom choisi par le joueur.",
+            },
         ],
         "removals": [old[message_id] for message_id in ("m70", "m71")],
         "unchanged": [old[message_id] for message_id in unchanged_ids],
@@ -2642,6 +2703,17 @@ def build_n2_comparison(
             "careful_warmth": ["m51A", "m51A-2", "m51A-3", "m53"],
             "ironic_withdrawal": ["m51B", "m52B", "m53"],
             "common_convergence_starts_at": "m53",
+        },
+        "final_canonical_correction": {
+            "reviewed_commit": N2_REVIEWED_COMMIT,
+            "message_id": N2_FINAL_CANONICAL_CORRECTION["message_id"],
+            "before": N2_FINAL_CANONICAL_CORRECTION["before"],
+            "after": N2_FINAL_CANONICAL_CORRECTION["after"],
+            "resolution": N2_FINAL_CANONICAL_CORRECTION["resolution"],
+            "unexpected_changes": [
+                issue.as_json()
+                for issue in validate_n2_final_canonical_correction(parse_n2_locked_source(), candidate_source)
+            ],
         },
         "manifest_validation": {
             "content_compared": True,
@@ -2674,8 +2746,7 @@ def validate_n2_revision(workspace: Mapping[str, Any]) -> dict[str, Any]:
     except A114ValidationError as exc:
         errors.extend(exc.issues)
     else:
-        if editorial_source_projection(locked_projection) != editorial_source_projection(workspace["source"]):
-            _issue(errors, "N2_LOCKED_SOURCE_MISMATCH", "source", "projection différente du bloc ChatGPT verrouillé")
+        errors.extend(validate_n2_final_canonical_correction(locked_projection, workspace["source"]))
     errors.extend(validate_n2_manifest(_read_json(PILOT_SOURCE_PATH), workspace["source"]))
     return _editorial_validation_result(workspace, errors, warnings)
 
@@ -2685,13 +2756,13 @@ def validate_n2_decision(workspace: Mapping[str, Any], decision: Mapping[str, An
         workspace,
         decision,
         allowed_statuses=N2_REVIEW_STATUSES,
-        ready_status="READY_FOR_FINAL_CANON_REVIEW",
-        ready_action="FINAL_CANON_REVIEW",
+        ready_status="READY_FOR_FINAL_CANON_APPROVAL",
+        ready_action="FINAL_CANON_APPROVAL",
     )
 
 
 def generate_n2_artifacts() -> dict[str, Any]:
-    source = parse_n2_locked_source()
+    source = apply_n2_final_canonical_correction(parse_n2_locked_source())
     provenance = _build_n2_provenance(source)
     planning = _build_n2_plan(provenance)
     draft = _build_n2_draft(source, planning)

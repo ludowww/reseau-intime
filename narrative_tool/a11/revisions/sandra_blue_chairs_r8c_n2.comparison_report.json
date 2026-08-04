@@ -4,7 +4,7 @@
   "historical_source_id": "a11_5_sandra_blue_chairs_locked_source",
   "historical_source_content_sha256": "9167120abc55dbf4275ac67eb7b4f774a58322587d87c9310644e3bcf85982dd",
   "candidate_source_id": "r8c_n2_sandra_blue_chairs_locked_source",
-  "candidate_source_content_sha256": "e1acea2817267d47ffb5e1f6f628aeb03c16056ce5f2f100c0803dcc3cf93a98",
+  "candidate_source_content_sha256": "aac0ab82b735467e0d65df6d555f2ff62be2956e6acb5227e5b838112cfa5d77",
   "parent_decision": "R8C-N1 — NEEDS_MINOR_NARRATIVE_REVISION",
   "comparison_basis": "Contenu narratif complet (locuteur, type, texte et branche), pas seulement identifiants ou nombres.",
   "additions": [
@@ -187,6 +187,28 @@
         }
       ],
       "reason_from_n1": "Remplacer la formule composée par une incertitude prudente et assumée de Sandra."
+    },
+    {
+      "revision_id": "player_name_canonical_fallback",
+      "before": [
+        {
+          "message_id": "m91",
+          "speaker_id": "sandra",
+          "kind": "TEXT",
+          "text": "bonne soirée, Ludo",
+          "branch": "COMMON"
+        }
+      ],
+      "after": [
+        {
+          "message_id": "m91",
+          "speaker_id": "sandra",
+          "kind": "TEXT",
+          "text": "bonne soirée",
+          "branch": "COMMON"
+        }
+      ],
+      "reason_from_final_review": "Retirer le prénom historique faute de token auteur canonique et validable pour le prénom choisi par le joueur."
     }
   ],
   "removals": [
@@ -781,13 +803,6 @@
       "branch": "COMMON"
     },
     {
-      "message_id": "m91",
-      "speaker_id": "sandra",
-      "kind": "TEXT",
-      "text": "bonne soirée, Ludo",
-      "branch": "COMMON"
-    },
-    {
       "message_id": "m92",
       "speaker_id": "player",
       "kind": "TEXT",
@@ -833,6 +848,14 @@
       "m53"
     ],
     "common_convergence_starts_at": "m53"
+  },
+  "final_canonical_correction": {
+    "reviewed_commit": "128d49ffa210b58f698188860b247b5df6856aca",
+    "message_id": "m91",
+    "before": "bonne soirée, Ludo",
+    "after": "bonne soirée",
+    "resolution": "FALLBACK_NO_CANONICAL_PLAYER_NAME_TOKEN",
+    "unexpected_changes": []
   },
   "manifest_validation": {
     "content_compared": true,

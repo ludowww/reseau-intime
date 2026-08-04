@@ -1,8 +1,8 @@
 {
   "format": "R8C_A11_EDITORIAL_TRACEABILITY_REPORT",
   "version": 1,
-  "source_content_sha256": "e1acea2817267d47ffb5e1f6f628aeb03c16056ce5f2f100c0803dcc3cf93a98",
-  "validation_fingerprint": "e1c9a6d687d966c2d7941eb939599b5c37078e649aa958d2fd496f17a98d76de",
+  "source_content_sha256": "aac0ab82b735467e0d65df6d555f2ff62be2956e6acb5227e5b838112cfa5d77",
+  "validation_fingerprint": "fdfdf1f2228b973adec7c5164f4e96e8d4b21bba24cbc49600bd965e8caa37d2",
   "participant_ids": [
     "player",
     "sandra"
@@ -200,7 +200,8 @@
       "sandra_character_contract",
       "player_sandra_relationship",
       "sandra_current_distance",
-      "r8c_n1_minor_revision_decision"
+      "r8c_n1_minor_revision_decision",
+      "r8c_n2_final_player_name_review"
     ],
     "local_fact_ids": [
       "local_cafe",

@@ -390,7 +390,7 @@ Là je pose une limite
 
 [m91] **Voix A**
 
-bonne soirée, [Voix B]
+bonne soirée
 
 [m92] **Voix B**
 

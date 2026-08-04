@@ -3,7 +3,7 @@
   "version": 1,
   "provenance_id": "r8c_n2_sandra_blue_chairs_provenance",
   "source_id": "r8c_n2_sandra_blue_chairs_locked_source",
-  "source_content_sha256": "e1acea2817267d47ffb5e1f6f628aeb03c16056ce5f2f100c0803dcc3cf93a98",
+  "source_content_sha256": "aac0ab82b735467e0d65df6d555f2ff62be2956e6acb5227e5b838112cfa5d77",
   "canonical_inputs": [
     {
       "input_id": "sandra_character_contract",
@@ -24,6 +24,11 @@
       "input_id": "r8c_n1_minor_revision_decision",
       "text": "Pont propre à l’option A, simplification des passages m64–m69 et m75–m78, sans perte des limites narratives.",
       "source_ref": "docs/narrative/R8C_N1_CANON_REVIEW_SANDRA_BLUE_CHAIRS.md"
+    },
+    {
+      "input_id": "r8c_n2_final_player_name_review",
+      "text": "Aucun token auteur canonique et validable du prénom Player n’existe dans le dépôt; le repli autorisé retire le prénom historique de m91.",
+      "source_ref": "docs/decisions/DECISION_006_PLAYER_NAME_AND_THREAD_MODEL.md"
     }
   ],
   "local_facts": [
@@ -67,7 +72,7 @@
   "limits": [
     {
       "limit_id": "locked_source_text",
-      "text": "Le texte R8C-N2 verrouillé ne peut différer d’A11.5 que par les ajouts, remplacements et retraits du manifeste fermé."
+      "text": "La candidate corrigée ne peut différer du texte R8C-N2 verrouillé que par le repli fermé de m91: bonne soirée."
     },
     {
       "limit_id": "maximum_local_change",

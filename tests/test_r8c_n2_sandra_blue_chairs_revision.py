@@ -15,6 +15,7 @@ from tools.a11_plan_draft_export import (
     N2_LOCKED_SOURCE_PATH,
     N2_PLAN_PATH,
     N2_PROVENANCE_PATH,
+    N2_REVIEWED_COMMIT,
     N2_REVIEW_STATUSES,
     N2_SOURCE_PATH,
     N2_TRACEABILITY_PATH,
@@ -27,6 +28,7 @@ from tools.a11_plan_draft_export import (
     PILOT_SOURCE_PATH,
     PILOT_TRACEABILITY_PATH,
     PILOT_VALIDATION_PATH,
+    apply_n2_final_canonical_correction,
     build_n2_comparison,
     editorial_decision_fingerprint,
     editorial_draft_projection,
@@ -39,6 +41,7 @@ from tools.a11_plan_draft_export import (
     render_editorial_human_review,
     run_n2_smoke,
     validate_n2_decision,
+    validate_n2_final_canonical_correction,
     validate_n2_json_library,
     validate_n2_manifest,
     validate_n2_revision,
@@ -52,7 +55,7 @@ N1_DOC = ROOT / "docs/narrative/R8C_N1_CANON_REVIEW_SANDRA_BLUE_CHAIRS.md"
 BASELINE = "25e8cafac7e14487a2cf57e41c1b1d151873cbbb"
 BRANCH = "work/r8c-n2-sandra-blue-chairs-minor-narrative-revision"
 LOCKED_SHA256 = "af0e48812a160b701b7e60638407513f86b892bbae2258eea1050d7a6a70b404"
-SOURCE_SHA256 = "e1acea2817267d47ffb5e1f6f628aeb03c16056ce5f2f100c0803dcc3cf93a98"
+SOURCE_SHA256 = "aac0ab82b735467e0d65df6d555f2ff62be2956e6acb5227e5b838112cfa5d77"
 A115_SOURCE_SHA256 = "9167120abc55dbf4275ac67eb7b4f774a58322587d87c9310644e3bcf85982dd"
 
 
@@ -127,15 +130,43 @@ class R8CN2SandraBlueChairsRevisionTests(unittest.TestCase):
         self.assertEqual([], changed)
         self.assertEqual(A115_SOURCE_SHA256, editorial_source_content_sha256(self.historical))
 
-    def test_locked_markdown_and_json_are_exact_projections_of_chatgpt_source(self):
+    def test_locked_markdown_is_intact_and_candidate_has_only_the_m91_fallback(self):
         raw = N2_LOCKED_SOURCE_PATH.read_text(encoding="utf-8")
         self.assertEqual(LOCKED_SHA256, hashlib.sha256(raw.rstrip("\r\n").encode("utf-8")).hexdigest())
         self.assertEqual(LOCKED_SHA256, n2_locked_source_sha256())
         parsed = parse_n2_locked_source(raw)
         source = self.workspace["source"]
-        self.assertEqual(editorial_source_projection(parsed), editorial_source_projection(source))
+        self.assertEqual("bonne soirée, Ludo", next(
+            message["text"] for message in parsed["convergence_messages"] if message["message_id"] == "m91"
+        ))
+        self.assertEqual([], validate_n2_final_canonical_correction(parsed, source))
+        self.assertEqual(
+            editorial_source_projection(apply_n2_final_canonical_correction(parsed)),
+            editorial_source_projection(source),
+        )
         self.assertEqual(SOURCE_SHA256, editorial_source_content_sha256(source))
         self.assertEqual(editorial_source_projection(source), editorial_draft_projection(self.workspace))
+
+    def test_diff_from_reviewed_commit_changes_only_m91_text(self):
+        reviewed = json.loads(subprocess.check_output(
+            ["git", "show", f"{N2_REVIEWED_COMMIT}:narrative_tool/a11/revisions/sandra_blue_chairs_r8c_n2.source.json"],
+            cwd=ROOT,
+            text=True,
+            encoding="utf-8",
+        ))
+        current = self.workspace["source"]
+        expected = copy.deepcopy(reviewed)
+        by_id = {message["message_id"]: message for message in expected["convergence_messages"]}
+        self.assertEqual("bonne soirée, Ludo", by_id["m91"]["text"])
+        by_id["m91"]["text"] = "bonne soirée"
+        self.assertEqual(editorial_source_projection(expected), editorial_source_projection(current))
+        current_by_id = {message["message_id"]: message for message in current["convergence_messages"]}
+        self.assertEqual("bonne soirée", current_by_id["m91"]["text"])
+        for message_id in ("m92", "m93"):
+            self.assertEqual(
+                next(message for message in reviewed["convergence_messages"] if message["message_id"] == message_id),
+                current_by_id[message_id],
+            )
 
     def test_only_closed_manifest_changes_are_present(self):
         source = self.workspace["source"]
@@ -145,11 +176,14 @@ class R8CN2SandraBlueChairsRevisionTests(unittest.TestCase):
         self.assertTrue(comparison["manifest_validation"]["content_compared"])
         self.assertEqual(["m51A-2", "m51A-3"], [item["message_id"] for item in comparison["additions"]])
         self.assertEqual(["m70", "m71"], [item["message_id"] for item in comparison["removals"]])
-        self.assertEqual(85, len(comparison["unchanged"]))
+        self.assertEqual(84, len(comparison["unchanged"]))
         self.assertEqual(
-            ["option_b_specific_bridge", "limit_received_without_overwriting", "sandra_uncertainty"],
+            ["option_b_specific_bridge", "limit_received_without_overwriting", "sandra_uncertainty", "player_name_canonical_fallback"],
             [item["revision_id"] for item in comparison["replacements"]],
         )
+        self.assertEqual([], comparison["final_canonical_correction"]["unexpected_changes"])
+        self.assertEqual("bonne soirée, Ludo", comparison["final_canonical_correction"]["before"])
+        self.assertEqual("bonne soirée", comparison["final_canonical_correction"]["after"])
         stored = json.loads(N2_COMPARISON_PATH.read_text(encoding="utf-8"))
         self.assertEqual(comparison, stored)
 
@@ -250,11 +284,11 @@ class R8CN2SandraBlueChairsRevisionTests(unittest.TestCase):
     def test_decision_uses_only_n2_statuses_and_never_auto_approves_canon(self):
         decision = self.workspace["decision"]
         self.assertEqual(
-            {"NEEDS_NARRATIVE_REVISION", "READY_FOR_FINAL_CANON_REVIEW", "REJECTED"},
+            {"NEEDS_NARRATIVE_REVISION", "READY_FOR_FINAL_CANON_APPROVAL", "REJECTED"},
             N2_REVIEW_STATUSES,
         )
-        self.assertEqual("READY_FOR_FINAL_CANON_REVIEW", decision["status"])
-        self.assertEqual("FINAL_CANON_REVIEW", decision["decision"])
+        self.assertEqual("READY_FOR_FINAL_CANON_APPROVAL", decision["status"])
+        self.assertEqual("FINAL_CANON_APPROVAL", decision["decision"])
         self.assertNotEqual("CANON_APPROVED", decision["status"])
         self.assertEqual(editorial_decision_fingerprint(decision), decision["decision_fingerprint"])
         self.assertEqual([], validate_n2_decision(self.workspace, decision))

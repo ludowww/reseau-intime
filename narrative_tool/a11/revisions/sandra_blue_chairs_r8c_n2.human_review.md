@@ -1,9 +1,9 @@
 # R8C-N2 — Relecture humaine — Sandra — Les chaises bleues
 
 > **Brouillon :** `r8c_n2_sandra_blue_chairs_draft` — `R8C-N2_REVISION_CANDIDATE`
-> **Statut humain :** `READY_FOR_FINAL_CANON_REVIEW`
+> **Statut humain :** `READY_FOR_FINAL_CANON_APPROVAL`
 > **Relecteur :** `codex_manual_editorial_review_r8c_n2`
-> **Empreinte source :** `e1acea2817267d47ffb5e1f6f628aeb03c16056ce5f2f100c0803dcc3cf93a98`
+> **Empreinte source :** `aac0ab82b735467e0d65df6d555f2ff62be2956e6acb5227e5b838112cfa5d77`
 
 ## Lecture en aveugle complétée
 
@@ -29,6 +29,8 @@
 
 ## Remarques narratives
 
+- Aucun token auteur canonique et validable du prénom choisi par le joueur n’existe dans le dépôt; m91 applique le repli fermé bonne soirée.
+- Le diff narratif depuis le commit revu 128d49ffa210b58f698188860b247b5df6856aca est limité au texte de m91; m92 et m93 sont inchangés.
 - Les deux sorties de choix sont distinctes et convergent naturellement à m53.
 - La limite de Sandra est reçue clairement; Sandra demeure prudente et Player n’insiste pas.
 - Le déjeuner reste seulement possible, après le week-end, sans date, accord ni promesse.
@@ -38,6 +40,6 @@
 
 ## Décision
 
-- Action : `FINAL_CANON_REVIEW`
-- Suite : Soumettre N2 à ChatGPT pour la décision finale de canonisation, sans attribuer automatiquement CANON_APPROVED.
+- Action : `FINAL_CANON_APPROVAL`
+- Suite : Soumettre N2 à ChatGPT pour l’approbation canonique finale, sans attribuer automatiquement CANON_APPROVED.
 - Cette décision ne produit ni export A6, ni fait A1, ni branchement runtime.

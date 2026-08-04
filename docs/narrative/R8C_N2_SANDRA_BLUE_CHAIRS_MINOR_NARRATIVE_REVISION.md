@@ -2,9 +2,11 @@
 
 > **Candidate :** `R8C-N2_REVISION_CANDIDATE`
 >
-> **Statut :** `READY_FOR_FINAL_CANON_REVIEW`
+> **Statut :** `READY_FOR_FINAL_CANON_APPROVAL`
 >
-> **Parent exact :** `25e8cafac7e14487a2cf57e41c1b1d151873cbbb`
+> **Parent de la correction finale :** `128d49ffa210b58f698188860b247b5df6856aca`
+>
+> **Baseline stable :** `25e8cafac7e14487a2cf57e41c1b1d151873cbbb`
 >
 > **Tag stable parent :** `r8c-n1-canon-review-sandra-blue-chairs`
 >
@@ -12,12 +14,15 @@
 
 ## Résultat
 
-La source N2 fournie par ChatGPT est intégrée comme deuxième candidate distincte.
+La source N2 fournie par ChatGPT reste verrouillée comme deuxième candidate distincte.
+La projection structurée applique ensuite l’unique correction canonique autorisée
+à `m91`. Aucun token auteur canonique et validable du prénom choisi par le
+joueur n’existe dans le dépôt : le repli exact `bonne soirée` est donc utilisé.
 Les artefacts A11.5 restent la première candidate verrouillée et ne sont ni
 modifiés ni remplacés. N2 ne produit aucune canonisation automatique : la
 décision finale appartient à ChatGPT après revue.
 
-La recommandation de ce lot est `READY_FOR_FINAL_CANON_REVIEW`. Elle ne vaut
+La recommandation de ce lot est `READY_FOR_FINAL_CANON_APPROVAL`. Elle ne vaut
 pas `CANON_APPROVED`.
 
 ## Artefacts N2
@@ -25,7 +30,7 @@ pas `CANON_APPROVED`.
 Tous les artefacts N2 sont isolés sous `narrative_tool/a11/revisions/` :
 
 - `sandra_blue_chairs_r8c_n2.locked.md` : bloc ChatGPT verrouillé, incluant le manifeste ;
-- `sandra_blue_chairs_r8c_n2.source.json` : projection JSON exacte du dialogue ;
+- `sandra_blue_chairs_r8c_n2.source.json` : projection JSON corrigée par le seul repli fermé de `m91` ;
 - `sandra_blue_chairs_r8c_n2.provenance.json` : provenance et limites fermées ;
 - `sandra_blue_chairs_r8c_n2.plan_projection.json` : projection du plan limitée aux identités, au décompte et à la structure N2 ;
 - `sandra_blue_chairs_r8c_n2.draft.json` : brouillon N2 rattaché aux sept battements existants ;
@@ -41,13 +46,30 @@ Tous les artefacts N2 sont isolés sous `narrative_tool/a11/revisions/` :
 - document source verrouillé UTF-8 :
   `af0e48812a160b701b7e60638407513f86b892bbae2258eea1050d7a6a70b404` ;
 - contenu narratif N2 projeté :
-  `e1acea2817267d47ffb5e1f6f628aeb03c16056ce5f2f100c0803dcc3cf93a98` ;
+  `aac0ab82b735467e0d65df6d555f2ff62be2956e6acb5227e5b838112cfa5d77` ;
 - contenu narratif historique A11.5 :
   `9167120abc55dbf4275ac67eb7b4f774a58322587d87c9310644e3bcf85982dd`.
 
 La première empreinte couvre le bloc joint complet, manifeste inclus. La
 deuxième couvre le contenu jouable structuré : média, messages, formulations,
 branches et convergence.
+
+## Convention de prénom et correction finale
+
+La convention réelle est documentée dans
+`docs/decisions/DECISION_006_PLAYER_NAME_AND_THREAD_MODEL.md` : `player` est
+l’identifiant technique générique et le texte visible final doit employer le
+prénom choisi par le joueur. Le dépôt ne définit toutefois aucun token auteur
+interpolable pour ce prénom. `display_name` alimente les libellés d’auteur, pas
+les occurrences incluses dans le corps des répliques.
+
+Le correctif par rapport au commit revu
+`128d49ffa210b58f698188860b247b5df6856aca` est donc exactement :
+
+- `m91` — `bonne soirée, Ludo` → `bonne soirée`.
+
+`m92` et `m93` restent inchangés. La validation reconstruit cette projection
+depuis le Markdown verrouillé et refuse tout autre diff narratif.
 
 ## Comparaison exhaustive A11.5 → N2
 
@@ -103,8 +125,14 @@ Sandra exprimer une incertitude prudente qui lui convient.
 
 Sont strictement inchangés : le titre, le média, les deux formulations du
 choix, `m01–m51A` hors ajouts, `m47B–m51B`, `m53–m63`, `m72–m74` et
-`m79–m93`. Le rapport JSON énumère individuellement les 85 bulles inchangées
+`m79–m90` et `m92–m93`. Le rapport JSON énumère individuellement les 84 bulles inchangées
 avec leur contenu complet.
+
+### Correction canonique supplémentaire
+
+- `m91` — Sandra — « bonne soirée, Ludo » est remplacé par « bonne soirée » ;
+- raison : retrait de l’ancien prénom historique, faute de token auteur canonique et validable ;
+- aucune intention, ponctuation voisine, transition ou conséquence n’est modifiée.
 
 Toute bulle étrangère, toute modification d'un élément déclaré inchangé,
 toute ancienne convergence à `m52` ou toute réintroduction de `m68–m71` est
