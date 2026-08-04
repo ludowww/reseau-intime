@@ -1,0 +1,128 @@
+{
+  "format": "R8C_A6_SCENE_LIBRARY",
+  "version": 1,
+  "definitions": [
+    {
+      "scene_definition_id": "r8c_a6_distance_raphaelle_definition",
+      "variant_id": "raphaelle_distance",
+      "definition": {
+        "scene_id": "r8c_a6_distance_raphaelle_definition",
+        "version_contrat": "1.0.0-prototype",
+        "titre_interne": "Prototype modulaire de distance — Raphaëlle",
+        "nature": "MODULAIRE",
+        "structure_id": "r8c_a6_distance_conversation",
+        "fonction_principale": "OPPORTUNITE",
+        "participants_requis": [
+          {
+            "personnage_id": "raphaelle",
+            "role": "PERSONNE_TEMPORAIREMENT_ABSENTE"
+          }
+        ],
+        "conditions_dures": {
+          "actes_compatibles": [
+            "ACTE_SYNTHETIQUE_A6"
+          ],
+          "evenements_requis": [
+            "r8c-a6-raphaelle-away"
+          ]
+        },
+        "exclusions_dures": {
+          "evenements_interdits": [
+            "r8c-a6-raphaelle-deadline-passed"
+          ]
+        },
+        "contrat_temporel": {
+          "date_debut": "2030-04-09",
+          "date_fin": "2030-04-10",
+          "heure_ouverture": "12:00",
+          "heure_fermeture": "23:00",
+          "duree_minutes": 15,
+          "revalidation": "AVANT_PROPOSITION_ET_RESOLUTION"
+        },
+        "politique_unicite": "UNIQUE",
+        "resolutions": {}
+      }
+    },
+    {
+      "scene_definition_id": "r8c_a6_distance_sandra_definition",
+      "variant_id": "sandra_distance",
+      "definition": {
+        "scene_id": "r8c_a6_distance_sandra_definition",
+        "version_contrat": "1.0.0-prototype",
+        "titre_interne": "Prototype modulaire de distance — Sandra",
+        "nature": "MODULAIRE",
+        "structure_id": "r8c_a6_distance_conversation",
+        "fonction_principale": "ECHO",
+        "participants_requis": [
+          {
+            "personnage_id": "sandra",
+            "role": "PERSONNE_TEMPORAIREMENT_ABSENTE"
+          }
+        ],
+        "conditions_dures": {
+          "actes_compatibles": [
+            "ACTE_SYNTHETIQUE_A6"
+          ],
+          "evenements_requis": [
+            "r8c-a6-sandra-away"
+          ]
+        },
+        "exclusions_dures": {
+          "evenements_interdits": [
+            "r8c-a6-sandra-returned"
+          ]
+        },
+        "contrat_temporel": {
+          "date_debut": "2030-04-09",
+          "date_fin": "2030-04-10",
+          "heure_ouverture": "08:00",
+          "heure_fermeture": "20:00",
+          "duree_minutes": 10,
+          "revalidation": "AVANT_PROPOSITION_ET_RESOLUTION"
+        },
+        "politique_unicite": "REPETABLE",
+        "resolutions": {}
+      }
+    },
+    {
+      "scene_definition_id": "r8c_a6_signature_sandra_definition",
+      "variant_id": "sandra_signature",
+      "definition": {
+        "scene_id": "r8c_a6_signature_sandra_definition",
+        "version_contrat": "1.0.0-prototype",
+        "titre_interne": "Prototype signature — présence demandée par Sandra",
+        "nature": "SIGNATURE",
+        "fonction_principale": "RELATION",
+        "participants_requis": [
+          {
+            "personnage_id": "sandra",
+            "role": "INTERLOCUTRICE"
+          }
+        ],
+        "conditions_dures": {
+          "actes_compatibles": [
+            "ACTE_SYNTHETIQUE_A6"
+          ],
+          "evenements_requis": [
+            "r8c-a6-sandra-ready"
+          ]
+        },
+        "exclusions_dures": {
+          "evenements_interdits": [
+            "r8c-a6-sandra-signature-blocked"
+          ]
+        },
+        "contrat_temporel": {
+          "date_debut": "2030-04-08",
+          "date_fin": "2030-04-08",
+          "heure_ouverture": "18:00",
+          "heure_fermeture": "22:00",
+          "duree_minutes": 20,
+          "revalidation": "AVANT_PROPOSITION_ET_RESOLUTION"
+        },
+        "politique_unicite": "UNIQUE",
+        "resolutions": {}
+      }
+    }
+  ]
+}

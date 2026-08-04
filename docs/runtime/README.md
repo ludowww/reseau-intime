@@ -58,13 +58,14 @@ Smokes R8C ciblés :
 godot --headless --path game res://tests/R8CANarrativeStateSmokeTest.tscn
 godot --headless --path game res://tests/R8CAMinimalScenePrototypeSmokeTest.tscn
 godot --headless --path game res://tests/R8CAPersistentSceneRegistrySmokeTest.tscn
+godot --headless --path game res://tests/R8CAMinimalNarrativeLibrarySmokeTest.tscn
 ```
 
 Le smoke final A4 monte la vraie scène `PortraitMain` et couvre les surfaces
 Messages, Galerie et PhotoViewer sur J01, J09, J12, J15 et J21. Il vérifie
 également les choix, états de notification/non-lu, transitions temporelles,
 retours vers la liste, placeholders et navigation de séquence disponibles.
-Le lanceur exhaustif exécute en plus les 48 scènes `*SmokeTest.tscn` encore
+Le lanceur exhaustif exécute en plus les 50 scènes `*SmokeTest.tscn` encore
 présentes avec leurs arguments contractuels; aucune scène canonique n'est tenue
 hors gate.
 

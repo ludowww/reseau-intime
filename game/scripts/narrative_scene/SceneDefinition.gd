@@ -21,6 +21,47 @@ const CHAMPS_REQUIS := [
 	"politique_unicite",
 	"resolutions",
 ]
+const CHAMPS_OPTIONNELS := [
+	"titre_interne",
+	"relation_ou_question_focale",
+	"noyau_stable",
+	"structure_id",
+	"choix",
+	"politique_non_resolution",
+]
+const CHAMPS_AUTORISES := CHAMPS_REQUIS + CHAMPS_OPTIONNELS
+const CHAMPS_PARTICIPANT := ["personnage_id", "role"]
+const CHAMPS_CONDITIONS := ["actes_compatibles", "evenements_requis"]
+const CHAMPS_EXCLUSIONS := ["evenements_interdits"]
+const CHAMPS_CONTRAT_TEMPOREL := [
+	"date_debut",
+	"date_fin",
+	"heure_ouverture",
+	"heure_fermeture",
+	"duree_minutes",
+	"revalidation",
+]
+const CHAMPS_CHOIX := ["choix_id", "formulation", "signal_emis", "resolution_ids"]
+const CHAMPS_RESOLUTION := [
+	"personnage_id",
+	"portee_micro_signal",
+	"signal_recu",
+	"reception",
+	"interpretation",
+	"faits_relationnels",
+	"convergence",
+	"trace_temporaire",
+]
+const CHAMPS_TRACE_TEMPORAIRE := ["trace_id", "contenu"]
+const CHAMPS_FAIT_RELATIONNEL := [
+	"fait_id",
+	"nature",
+	"recu_par",
+	"permission_future",
+	"formulee_par",
+]
+const CHAMPS_POLITIQUE_NON_RESOLUTION := ["proposition_expire", "consequence_manquee"]
+const CHAMPS_CONSEQUENCE_MANQUEE := ["personnage_id", "fait_relationnel"]
 
 
 static func declarer(donnees: Dictionary) -> Dictionary:
@@ -40,7 +81,7 @@ static func valider(definition: Dictionary) -> String:
 	for champ in ["scene_id", "version_contrat"]:
 		if not _chaine_non_vide(definition[champ]):
 			return "definition de scene: %s doit etre une chaine non vide" % champ
-	for champ in ["titre_interne", "relation_ou_question_focale", "noyau_stable"]:
+	for champ in ["titre_interne", "relation_ou_question_focale", "noyau_stable", "structure_id"]:
 		if definition.has(champ) and not _chaine_non_vide(definition[champ]):
 			return "definition de scene: %s optionnel doit etre une chaine non vide" % champ
 	if definition["nature"] not in NATURES:
@@ -65,6 +106,91 @@ static func valider(definition: Dictionary) -> String:
 	if not erreur_choix.is_empty():
 		return erreur_choix
 	return _valider_politique_non_resolution(definition)
+
+
+static func valider_fermee(definition: Dictionary) -> String:
+	var erreur_champs := _valider_champs_fermes(definition)
+	if not erreur_champs.is_empty():
+		return erreur_champs
+	return valider(definition)
+
+
+static func _valider_champs_fermes(definition: Dictionary) -> String:
+	var erreur := _refuser_champs_inconnus(definition, CHAMPS_AUTORISES, "definition")
+	if not erreur.is_empty():
+		return erreur
+	var participants = definition.get("participants_requis")
+	if typeof(participants) == TYPE_ARRAY:
+		for participant in participants:
+			if typeof(participant) == TYPE_DICTIONARY:
+				erreur = _refuser_champs_inconnus(participant, CHAMPS_PARTICIPANT, "participant")
+				if not erreur.is_empty():
+					return erreur
+	for bloc in [
+		[definition.get("conditions_dures"), CHAMPS_CONDITIONS, "conditions_dures"],
+		[definition.get("exclusions_dures"), CHAMPS_EXCLUSIONS, "exclusions_dures"],
+		[definition.get("contrat_temporel"), CHAMPS_CONTRAT_TEMPOREL, "contrat_temporel"],
+	]:
+		if typeof(bloc[0]) == TYPE_DICTIONARY:
+			erreur = _refuser_champs_inconnus(bloc[0], bloc[1], bloc[2])
+			if not erreur.is_empty():
+				return erreur
+	var choix = definition.get("choix", [])
+	if typeof(choix) == TYPE_ARRAY:
+		for option in choix:
+			if typeof(option) == TYPE_DICTIONARY:
+				erreur = _refuser_champs_inconnus(option, CHAMPS_CHOIX, "choix")
+				if not erreur.is_empty():
+					return erreur
+	var resolutions = definition.get("resolutions")
+	if typeof(resolutions) == TYPE_DICTIONARY:
+		for resolution in resolutions.values():
+			if typeof(resolution) != TYPE_DICTIONARY:
+				continue
+			erreur = _refuser_champs_inconnus(resolution, CHAMPS_RESOLUTION, "resolution")
+			if not erreur.is_empty():
+				return erreur
+			var trace = resolution.get("trace_temporaire")
+			if typeof(trace) == TYPE_DICTIONARY:
+				erreur = _refuser_champs_inconnus(trace, CHAMPS_TRACE_TEMPORAIRE, "trace_temporaire")
+				if not erreur.is_empty():
+					return erreur
+			var faits = resolution.get("faits_relationnels", [])
+			if typeof(faits) == TYPE_ARRAY:
+				for fait in faits:
+					if typeof(fait) == TYPE_DICTIONARY:
+						erreur = _refuser_champs_inconnus(fait, CHAMPS_FAIT_RELATIONNEL, "fait_relationnel")
+						if not erreur.is_empty():
+							return erreur
+	var politique = definition.get("politique_non_resolution")
+	if typeof(politique) == TYPE_DICTIONARY:
+		erreur = _refuser_champs_inconnus(
+			politique, CHAMPS_POLITIQUE_NON_RESOLUTION, "politique_non_resolution"
+		)
+		if not erreur.is_empty():
+			return erreur
+		var consequence = politique.get("consequence_manquee")
+		if typeof(consequence) == TYPE_DICTIONARY:
+			erreur = _refuser_champs_inconnus(
+				consequence, CHAMPS_CONSEQUENCE_MANQUEE, "consequence_manquee"
+			)
+			if not erreur.is_empty():
+				return erreur
+			var fait_manque = consequence.get("fait_relationnel")
+			if typeof(fait_manque) == TYPE_DICTIONARY:
+				erreur = _refuser_champs_inconnus(
+					fait_manque, CHAMPS_FAIT_RELATIONNEL, "fait_relationnel"
+				)
+				if not erreur.is_empty():
+					return erreur
+	return ""
+
+
+static func _refuser_champs_inconnus(value: Dictionary, autorises: Array, contexte: String) -> String:
+	for champ in value:
+		if champ not in autorises:
+			return "definition de scene: %s contient un champ inconnu: %s" % [contexte, champ]
+	return ""
 
 
 static func _valider_participants(participants) -> String:
