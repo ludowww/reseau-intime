@@ -16,6 +16,7 @@ documents techniques qui le suivent.
 7. [`R8C_A3_PROTOTYPE_MINIMAL_SCENE_NARRATIVE.md`](R8C_A3_PROTOTYPE_MINIMAL_SCENE_NARRATIVE.md) — preuve technique synthétique, non canonique comme contenu.
 8. [`R8C_A4_CONSOLIDATION_CANONIQUE_ET_NETTOYAGE_LEGACY.md`](../maintenance/R8C_A4_CONSOLIDATION_CANONIQUE_ET_NETTOYAGE_LEGACY.md) — classement, suppressions et gate courante.
 9. [`R8C_A5_PERSISTANCE_MINIMALE_SCENES_ET_OPPORTUNITES.md`](R8C_A5_PERSISTANCE_MINIMALE_SCENES_ET_OPPORTUNITES.md) — snapshot current-only, registre d'instances et reprise idempotente.
+10. [`R8C_A6_BRIEF_BIBLIOTHEQUE_NARRATIVE_MINIMALE.md`](R8C_A6_BRIEF_BIBLIOTHEQUE_NARRATIVE_MINIMALE.md) — brief documentaire uniquement, non implémenté.
 
 ## Invariants de reprise
 
