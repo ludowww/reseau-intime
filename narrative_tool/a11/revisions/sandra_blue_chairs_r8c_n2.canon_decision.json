@@ -5,7 +5,7 @@
   "draft_revision": "R8C-N2_REVISION_CANDIDATE",
   "source_content_sha256": "aac0ab82b735467e0d65df6d555f2ff62be2956e6acb5227e5b838112cfa5d77",
   "validation_fingerprint": "fdfdf1f2228b973adec7c5164f4e96e8d4b21bba24cbc49600bd965e8caa37d2",
-  "status": "READY_FOR_FINAL_CANON_APPROVAL",
+  "status": "CANON_APPROVED",
   "reviewed_by": "codex_manual_editorial_review_r8c_n2",
   "blind_reading_result": {
     "voice_a_identification": "Sandra",
@@ -33,6 +33,8 @@
     ]
   },
   "narrative_remarks": [
+    "ChatGPT approuve N2 comme contenu narratif canonique, avec pour seule correction finale m91: bonne soirée, Ludo devient bonne soirée.",
+    "Cette canonisation narrative n’intègre pas la scène au runtime et ne lui attribue aucun jour, export A6, trace A1 ou média final.",
     "Aucun token auteur canonique et validable du prénom choisi par le joueur n’existe dans le dépôt; m91 applique le repli fermé bonne soirée.",
     "Le diff narratif depuis le commit revu 128d49ffa210b58f698188860b247b5df6856aca est limité au texte de m91; m92 et m93 sont inchangés.",
     "Les deux sorties de choix sont distinctes et convergent naturellement à m53.",
@@ -42,7 +44,7 @@
     "Aucun fait, conséquence persistante, désir mutuel, route ou futur intime supplémentaire n’est introduit.",
     "Les répétitions restantes sont audibles mais fonctionnelles et ne justifient pas une réécriture hors manifeste."
   ],
-  "decision": "FINAL_CANON_APPROVAL",
-  "next_action": "Soumettre N2 à ChatGPT pour l’approbation canonique finale, sans attribuer automatiquement CANON_APPROVED.",
-  "decision_fingerprint": "645cc5e78b8e4790f70c9127ca21808ce9fbe6aaa2d1668282ebcdd88cc8b2b1"
+  "decision": "CANON_APPROVED",
+  "next_action": "La canonisation narrative est verrouillée; elle n’autorise encore ni export A6 canonique, ni branchement Saison 1, ni positionnement dans un jour, ni trace A1, ni média final.",
+  "decision_fingerprint": "d67f61a2c768c12123b129cb6c0611bcae95ed099ac0a281eb63cc5d3d3acde1"
 }

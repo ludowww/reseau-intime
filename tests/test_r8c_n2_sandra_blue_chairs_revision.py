@@ -281,20 +281,21 @@ class R8CN2SandraBlueChairsRevisionTests(unittest.TestCase):
         self.assertEqual(render_editorial_blind_reading(self.workspace), blind)
         self.assertEqual(render_editorial_human_review(self.workspace, self.workspace["decision"]), review)
 
-    def test_decision_uses_only_n2_statuses_and_never_auto_approves_canon(self):
+    def test_decision_records_explicit_final_canon_approval_without_runtime_authority(self):
         decision = self.workspace["decision"]
         self.assertEqual(
-            {"NEEDS_NARRATIVE_REVISION", "READY_FOR_FINAL_CANON_APPROVAL", "REJECTED"},
+            {"NEEDS_NARRATIVE_REVISION", "CANON_APPROVED", "REJECTED"},
             N2_REVIEW_STATUSES,
         )
-        self.assertEqual("READY_FOR_FINAL_CANON_APPROVAL", decision["status"])
-        self.assertEqual("FINAL_CANON_APPROVAL", decision["decision"])
-        self.assertNotEqual("CANON_APPROVED", decision["status"])
+        self.assertEqual("CANON_APPROVED", decision["status"])
+        self.assertEqual("CANON_APPROVED", decision["decision"])
+        for boundary in ("export A6", "Saison 1", "jour", "trace A1", "média final"):
+            self.assertIn(boundary, decision["next_action"])
         self.assertEqual(editorial_decision_fingerprint(decision), decision["decision_fingerprint"])
         self.assertEqual([], validate_n2_decision(self.workspace, decision))
 
         invalid = copy.deepcopy(decision)
-        invalid["status"] = "CANON_APPROVED"
+        invalid["status"] = "READY_FOR_FINAL_CANON_APPROVAL"
         invalid["decision_fingerprint"] = editorial_decision_fingerprint(invalid)
         self.assertIn("CANON_REVIEW_STATUS_UNKNOWN", {issue.code for issue in validate_n2_decision(self.workspace, invalid)})
 

@@ -121,7 +121,7 @@ CANON_REVIEW_STATUSES = {
 }
 N2_REVIEW_STATUSES = {
     "NEEDS_NARRATIVE_REVISION",
-    "READY_FOR_FINAL_CANON_APPROVAL",
+    "CANON_APPROVED",
     "REJECTED",
 }
 N2_PROFILE = {
@@ -2756,8 +2756,8 @@ def validate_n2_decision(workspace: Mapping[str, Any], decision: Mapping[str, An
         workspace,
         decision,
         allowed_statuses=N2_REVIEW_STATUSES,
-        ready_status="READY_FOR_FINAL_CANON_APPROVAL",
-        ready_action="FINAL_CANON_APPROVAL",
+        ready_status="CANON_APPROVED",
+        ready_action="CANON_APPROVED",
     )
 
 

@@ -2,7 +2,7 @@
 
 > **Candidate :** `R8C-N2_REVISION_CANDIDATE`
 >
-> **Statut :** `READY_FOR_FINAL_CANON_APPROVAL`
+> **Statut :** `CANON_APPROVED`
 >
 > **Parent de la correction finale :** `128d49ffa210b58f698188860b247b5df6856aca`
 >
@@ -19,11 +19,11 @@ La projection structurée applique ensuite l’unique correction canonique autor
 à `m91`. Aucun token auteur canonique et validable du prénom choisi par le
 joueur n’existe dans le dépôt : le repli exact `bonne soirée` est donc utilisé.
 Les artefacts A11.5 restent la première candidate verrouillée et ne sont ni
-modifiés ni remplacés. N2 ne produit aucune canonisation automatique : la
-décision finale appartient à ChatGPT après revue.
+modifiés ni remplacés. Après revue finale, ChatGPT approuve N2 comme contenu
+narratif canonique.
 
-La recommandation de ce lot est `READY_FOR_FINAL_CANON_APPROVAL`. Elle ne vaut
-pas `CANON_APPROVED`.
+Le statut du lot est `CANON_APPROVED`. Cette approbation porte uniquement sur
+le contenu narratif et ne constitue pas une intégration au runtime.
 
 ## Artefacts N2
 
@@ -39,7 +39,20 @@ Tous les artefacts N2 sont isolés sous `narrative_tool/a11/revisions/` :
 - `sandra_blue_chairs_r8c_n2.traceability_report.json` : participants, battements, choix, média, faits et voix ;
 - `sandra_blue_chairs_r8c_n2.blind_reading.md` : lecture anonymisée sans notation ;
 - `sandra_blue_chairs_r8c_n2.human_review.md` : relecture éditoriale manuelle sans notation ;
-- `sandra_blue_chairs_r8c_n2.canon_decision.json` : décision de soumission à la revue canonique finale.
+- `sandra_blue_chairs_r8c_n2.canon_decision.json` : décision narrative finale `CANON_APPROVED` et limites d’intégration.
+
+## Verrouillage canonique
+
+La seule correction finale approuvée reste :
+
+- `m91` — `bonne soirée, Ludo` → `bonne soirée`.
+
+La canonisation narrative n’autorise encore aucun export A6 canonique, aucun
+branchement Saison 1, aucun positionnement dans un jour, aucune trace A1 et
+aucun média final. Ces opérations nécessitent un lot d’intégration distinct.
+
+Le tag de verrouillage est
+`r8c-n2-sandra-blue-chairs-canon-approved`.
 
 ## Empreintes
 

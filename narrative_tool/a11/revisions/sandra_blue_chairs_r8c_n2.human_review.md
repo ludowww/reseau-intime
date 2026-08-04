@@ -1,7 +1,7 @@
 # R8C-N2 — Relecture humaine — Sandra — Les chaises bleues
 
 > **Brouillon :** `r8c_n2_sandra_blue_chairs_draft` — `R8C-N2_REVISION_CANDIDATE`
-> **Statut humain :** `READY_FOR_FINAL_CANON_APPROVAL`
+> **Statut humain :** `CANON_APPROVED`
 > **Relecteur :** `codex_manual_editorial_review_r8c_n2`
 > **Empreinte source :** `aac0ab82b735467e0d65df6d555f2ff62be2956e6acb5227e5b838112cfa5d77`
 
@@ -29,6 +29,8 @@
 
 ## Remarques narratives
 
+- ChatGPT approuve N2 comme contenu narratif canonique, avec pour seule correction finale m91: bonne soirée, Ludo devient bonne soirée.
+- Cette canonisation narrative n’intègre pas la scène au runtime et ne lui attribue aucun jour, export A6, trace A1 ou média final.
 - Aucun token auteur canonique et validable du prénom choisi par le joueur n’existe dans le dépôt; m91 applique le repli fermé bonne soirée.
 - Le diff narratif depuis le commit revu 128d49ffa210b58f698188860b247b5df6856aca est limité au texte de m91; m92 et m93 sont inchangés.
 - Les deux sorties de choix sont distinctes et convergent naturellement à m53.
@@ -40,6 +42,6 @@
 
 ## Décision
 
-- Action : `FINAL_CANON_APPROVAL`
-- Suite : Soumettre N2 à ChatGPT pour l’approbation canonique finale, sans attribuer automatiquement CANON_APPROVED.
+- Action : `CANON_APPROVED`
+- Suite : La canonisation narrative est verrouillée; elle n’autorise encore ni export A6 canonique, ni branchement Saison 1, ni positionnement dans un jour, ni trace A1, ni média final.
 - Cette décision ne produit ni export A6, ni fait A1, ni branchement runtime.
