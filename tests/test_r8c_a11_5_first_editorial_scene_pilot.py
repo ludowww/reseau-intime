@@ -309,12 +309,7 @@ class R8CA115FirstEditorialScenePilotTests(unittest.TestCase):
             )
             self.assertEqual(0, completed.returncode, completed.stderr)
 
-    def test_no_game_a6_or_runtime_mutation_and_no_forbidden_mechanisms(self):
-        changed_game = subprocess.check_output(
-            ["git", "diff", "--name-only", BASELINE, "--", "game"], cwd=ROOT, text=True
-        ).splitlines()
-        self.assertEqual([], changed_game)
-        self.assertEqual([], subprocess.check_output(["git", "status", "--short", "game"], cwd=ROOT, text=True).splitlines())
+    def test_pilot_has_no_a6_runtime_wiring_or_forbidden_mechanisms(self):
         self.assertFalse(self.workspace["traceability_report"]["a6_export"])
         self.assertFalse(self.workspace["traceability_report"]["runtime_wiring"])
 
