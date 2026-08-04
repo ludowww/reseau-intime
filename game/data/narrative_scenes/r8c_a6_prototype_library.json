@@ -40,7 +40,10 @@
           "revalidation": "AVANT_PROPOSITION_ET_RESOLUTION"
         },
         "politique_unicite": "UNIQUE",
-        "resolutions": {}
+        "resolutions": {},
+        "politique_non_resolution": {
+          "proposition_expire": "MISSED"
+        }
       }
     },
     {
@@ -81,7 +84,10 @@
           "revalidation": "AVANT_PROPOSITION_ET_RESOLUTION"
         },
         "politique_unicite": "REPETABLE",
-        "resolutions": {}
+        "resolutions": {},
+        "politique_non_resolution": {
+          "proposition_expire": "MISSED"
+        }
       }
     },
     {
@@ -121,7 +127,10 @@
           "revalidation": "AVANT_PROPOSITION_ET_RESOLUTION"
         },
         "politique_unicite": "UNIQUE",
-        "resolutions": {}
+        "resolutions": {},
+        "politique_non_resolution": {
+          "proposition_expire": "MISSED"
+        }
       }
     }
   ]

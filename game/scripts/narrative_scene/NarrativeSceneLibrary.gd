@@ -11,9 +11,17 @@ const VERSION_BUNDLE := 1
 const MAX_DEFINITIONS := 32
 const CHAMPS_RACINE := ["format", "version", "definitions"]
 const CHAMPS_ENTREE := ["scene_definition_id", "variant_id", "definition"]
+const CHAMPS_CANDIDAT_ACTION := [
+	"scene_definition_id",
+	"definition_version",
+	"variant_id",
+	"revalidation_requise_avant",
+	"preuve_provenance",
+]
 
 var _entrees_triees: Array = []
 var _entrees_par_scene_id: Dictionary = {}
+var _secret_provenance := ""
 
 
 static func charger_depuis_json(path: String) -> Dictionary:
@@ -115,6 +123,42 @@ func obtenir_identites_triees() -> Array:
 	return resultat
 
 
+func verifier_candidat_action(candidat, contexte: Dictionary) -> Dictionary:
+	if typeof(candidat) != TYPE_DICTIONARY or not _cles_exactes(candidat, CHAMPS_CANDIDAT_ACTION):
+		return _verification_refusee("CANDIDAT_INVALIDE")
+	var scene_definition_id = candidat.get("scene_definition_id")
+	var variant_id = candidat.get("variant_id")
+	var definition_version = candidat.get("definition_version")
+	if (
+		not _identifiant_valide(scene_definition_id)
+		or not _identifiant_valide(variant_id)
+		or typeof(definition_version) != TYPE_STRING
+		or definition_version.is_empty()
+	):
+		return _verification_refusee("IDENTITE_CANDIDAT_INVALIDE")
+	var entree = _entrees_par_scene_id.get(scene_definition_id)
+	if entree == null:
+		return _verification_refusee("CANDIDAT_HORS_BUNDLE_CHARGE")
+	var definition: Dictionary = entree["definition"]
+	if (
+		entree["variant_id"] != variant_id
+		or definition["version_contrat"] != definition_version
+		or candidat["revalidation_requise_avant"] != _echeance_candidat(definition)
+	):
+		return _verification_refusee("IDENTITE_CANDIDAT_INCOHERENTE")
+	var preuve_attendue := _preuve_candidat(entree, contexte)
+	if candidat["preuve_provenance"] != preuve_attendue:
+		return _verification_refusee("CANDIDAT_PERIME_OU_CONTEXTE_CHANGE")
+	return {
+		"ok": true,
+		"erreur": "",
+		"definition": definition.duplicate(true),
+		"scene_definition_id": scene_definition_id,
+		"variant_id": variant_id,
+		"definition_version": definition_version,
+	}
+
+
 func query_candidates(moteur, etat_narratif, contexte: Dictionary) -> Dictionary:
 	return _query_candidates(moteur, etat_narratif, contexte, false)
 
@@ -134,6 +178,9 @@ func _publier(entrees_candidates: Array) -> void:
 	_entrees_par_scene_id.clear()
 	for entree in _entrees_triees:
 		_entrees_par_scene_id[entree["scene_definition_id"]] = entree
+	_secret_provenance = (
+		"r8c-a7:%s:%s" % [get_instance_id(), Time.get_ticks_usec()]
+	).sha256_text()
 
 
 func _query_candidates(
@@ -163,13 +210,14 @@ func _query_candidates(
 			"scene_definition_id": entree["scene_definition_id"],
 			"definition_version": definition["version_contrat"],
 			"variant_id": entree["variant_id"],
+			"preuve_provenance": _preuve_candidat(entree, contexte),
 		}
 		if diagnostic.get("eligible", false):
 			var candidat: Dictionary = identite.duplicate(true)
 			if inclure_diagnostics:
 				candidat["diagnostic"] = diagnostic.duplicate(true)
 			else:
-				candidat["revalidation_requise_avant"] = diagnostic.get("revalidation_requise_avant")
+				candidat["revalidation_requise_avant"] = _echeance_candidat(definition)
 			candidats.append(candidat)
 		elif inclure_diagnostics:
 			var refus: Dictionary = identite.duplicate(true)
@@ -179,6 +227,32 @@ func _query_candidates(
 	if inclure_diagnostics:
 		resultat["diagnostics_refuses"] = diagnostics_refuses
 	return resultat
+
+
+func _preuve_candidat(entree: Dictionary, contexte: Dictionary) -> String:
+	var definition: Dictionary = entree["definition"]
+	var contexte_canonique := JSON.stringify(contexte, "", true, true)
+	return (
+		"%s|%s|%s|%s|%s" % [
+			_secret_provenance,
+			entree["scene_definition_id"],
+			entree["variant_id"],
+			definition["version_contrat"],
+			contexte_canonique,
+		]
+	).sha256_text()
+
+
+static func _echeance_candidat(definition: Dictionary) -> String:
+	return (
+		"PROPOSITION_ET_RESOLUTION"
+		if definition["contrat_temporel"]["revalidation"] == "AVANT_PROPOSITION_ET_RESOLUTION"
+		else "PROPOSITION"
+	)
+
+
+static func _verification_refusee(erreur: String) -> Dictionary:
+	return {"ok": false, "erreur": erreur, "definition": {}}
 
 
 static func _cles_exactes(value: Dictionary, attendues: Array) -> bool:

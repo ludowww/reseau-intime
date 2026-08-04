@@ -43,6 +43,23 @@ func evaluer_definition(definition: Dictionary, etat_narratif, contexte: Diction
 
 
 func creer_instance(definition: Dictionary, diagnostic: Dictionary, contexte: Dictionary):
+	return _creer_instance_atomique(definition, diagnostic, contexte, false)
+
+
+func creer_instance_proposee_apres_revalidation(
+	definition: Dictionary,
+	diagnostic: Dictionary,
+	contexte: Dictionary
+):
+	return _creer_instance_atomique(definition, diagnostic, contexte, true)
+
+
+func _creer_instance_atomique(
+	definition: Dictionary,
+	diagnostic: Dictionary,
+	contexte: Dictionary,
+	proposer_initialement: bool
+):
 	_derniere_erreur_instance = ""
 	var erreur_definition := DefinitionModele.valider(definition)
 	if not erreur_definition.is_empty():
@@ -56,6 +73,15 @@ func creer_instance(definition: Dictionary, diagnostic: Dictionary, contexte: Di
 	if instance == null:
 		_derniere_erreur_instance = "INSTANCE_INVALIDE"
 		return null
+	if proposer_initialement:
+		var transition: Dictionary = instance.transitionner(
+			InstanceModele.PROPOSED,
+			"OPPORTUNITE_RENDUE_PERCEPTIBLE",
+			contexte["moment_diegetique"],
+		)
+		if not transition["ok"]:
+			_derniere_erreur_instance = "PROPOSITION_INITIALE_INVALIDE"
+			return null
 	var enregistrement: Dictionary = _registre.enregistrer(instance)
 	if not enregistrement["ok"]:
 		_derniere_erreur_instance = enregistrement["erreur"]

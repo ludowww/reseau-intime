@@ -26,7 +26,7 @@ Elle sert d'oracle de corpus et de comportement, pas de contrainte de modèle :
 - providers, runtime maps et conversations référencées J01–J21;
 - composants UI portrait, messages et galerie.
 
-Les modules R8C-A1/A3/A5/A6 restent isolés et testés par leurs scènes smoke. La
+Les modules R8C-A1/A3/A5/A6/A7 restent isolés et testés par leurs scènes smoke. La
 fixture A3 et le bundle prototype A6 ne sont jamais des sources de contenu canonique.
 
 ## Sauvegardes de développement
@@ -59,6 +59,7 @@ godot --headless --path game res://tests/R8CANarrativeStateSmokeTest.tscn
 godot --headless --path game res://tests/R8CAMinimalScenePrototypeSmokeTest.tscn
 godot --headless --path game res://tests/R8CAPersistentSceneRegistrySmokeTest.tscn
 godot --headless --path game res://tests/R8CAMinimalNarrativeLibrarySmokeTest.tscn
+godot --headless --path game res://tests/R8CACandidateReservationProposalSmokeTest.tscn
 ```
 
 Le smoke final A4 monte la vraie scène `PortraitMain` et couvre les surfaces

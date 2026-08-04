@@ -19,6 +19,7 @@ documents techniques qui le suivent.
 10. [`R8C_A6_BRIEF_BIBLIOTHEQUE_NARRATIVE_MINIMALE.md`](R8C_A6_BRIEF_BIBLIOTHEQUE_NARRATIVE_MINIMALE.md) — brief approuvé, encore non implémenté à son verrouillage documentaire.
 11. [`R8C_A6_DECISIONS_PRODUIT_ET_AUDIT_PREPARATOIRE.md`](R8C_A6_DECISIONS_PRODUIT_ET_AUDIT_PREPARATOIRE.md) — décisions produit validées, inventaire des 88 JSON et API minimale.
 12. [`R8C_A6_BIBLIOTHEQUE_NARRATIVE_MINIMALE_IMPLEMENTATION.md`](R8C_A6_BIBLIOTHEQUE_NARRATIVE_MINIMALE_IMPLEMENTATION.md) — schéma fermé, API de requête, diagnostics et limites de l'implémentation prototype.
+13. [`R8C_A7_RESERVATION_ET_PROPOSITION_CANDIDATS.md`](R8C_A7_RESERVATION_ET_PROPOSITION_CANDIDATS.md) — provenance fermée, revalidation et matérialisation explicite `RESERVE`/`PROPOSE`.
 
 ## Invariants de reprise
 
