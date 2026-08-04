@@ -1,6 +1,6 @@
 # R8C-A6 — Brief de bibliothèque narrative minimale
 
-> **Statut :** `BRIEF_ONLY_RECOMMENDATIONS_AWAITING_PRODUCT_APPROVAL`
+> **Statut :** `BRIEF_APPROVED_IMPLEMENTATION_AUTHORIZED`
 > **Dépendance :** R8C-A5 verrouillé au SHA `bf443e35edd563d87270ba8980736642794b9985`
 > **Objet :** préparer la bibliothèque de définitions et la requête de scènes compatibles, sans modifier le runtime.
 
@@ -34,9 +34,11 @@ Le futur lot réutilise sans les dupliquer :
    trace, transaction A1 ou mutation du registre A5.
 
 Un bundle de trois à cinq définitions synthétiques suffit pour développer le
-contrat. Aucun contenu narratif de production ni migration des 88 JSON actuels
-n'est demandé. `DataLoader` reste un lecteur générique : la bibliothèque A6
-porte seule la validation fermée de la racine et des définitions.
+contrat. Il contient au minimum une structure modulaire commune déclinée en
+variantes authored Sandra/Raphaëlle non interchangeables et une scène signature.
+Aucun contenu narratif de production ni migration des 88 JSON actuels n'est
+demandé. `DataLoader` reste un lecteur générique : la bibliothèque A6 porte
+seule la validation fermée de la racine et des définitions.
 
 Dans les résultats A6, `scene_definition_id` est le nom explicite de la valeur
 issue de `definition["scene_id"]`, déjà persistée sous ce nom par A5. Ce renommage
@@ -53,7 +55,7 @@ R8CSceneDefinitionLibrary.charger_depuis_json(path: String) -> Dictionary
 bibliotheque.obtenir_definition(scene_id: String) -> Dictionary
 bibliotheque.obtenir_ids_tries() -> Array[String]
 
-bibliotheque.requerir_compatibles(
+bibliotheque.query_candidates(
     moteur,
     etat_narratif,
     contexte: Dictionary
@@ -61,16 +63,16 @@ bibliotheque.requerir_compatibles(
 # {ok, erreur, candidats: [{scene_definition_id, definition_version,
 #  variant_id, diagnostic}]}
 
-bibliotheque.requerir_compatibles_dev(
+bibliotheque.query_candidates_dev(
     moteur,
     etat_narratif,
     contexte: Dictionary
 ) -> Dictionary
-# Même résultat, avec diagnostics_refuses; réservé aux builds de développement
-# et aux tests.
+# Même résultat, avec diagnostics_refuses; réservé aux builds de développement,
+# aux tests et aux outils d'auteur.
 ```
 
-`requerir_compatibles` appelle le moteur A3 pour chaque définition. Elle ne doit
+`query_candidates` appelle le moteur A3 pour chaque définition. Elle ne doit
 pas réimplémenter les fenêtres, participants, événements requis/interdits,
 revalidation, politiques `UNIQUE`/`REPETABLE` ou validité d'opportunité. Un tri
 par le tuple structuré `(scene_definition_id, variant_id)` rend le résultat
@@ -123,18 +125,20 @@ concaténation de chaînes ne fabrique une identité.
 - bibliothèque narrative définitive et contenu Saison 1 ;
 - branchement à `PortraitMain` ou remplacement du runtime canonique.
 
-## Recommandations produit en attente d'approbation
+## Décisions produit validées
 
 Le document complémentaire
 [`R8C_A6_DECISIONS_PRODUIT_ET_AUDIT_PREPARATOIRE.md`](R8C_A6_DECISIONS_PRODUIT_ET_AUDIT_PREPARATOIRE.md)
-recommande :
+verrouille :
 
-1. une source data-first JSON strictement validée sous `res://data/` ;
-2. les diagnostics refusés complets seulement en développement et dans les tests ;
+1. une source data-first JSON strictement validée sous
+   `res://data/narrative_scenes/` ;
+2. les diagnostics refusés complets seulement en développement, dans les tests
+   et les outils d'auteur, jamais côté joueur ;
 3. un `variant_id` stable et explicite, distinct de `scene_definition_id` ;
 4. la création d'une instance A5 seulement lors d'une réservation/proposition
    réelle, jamais pendant la recherche de compatibilité.
 
-Ces recommandations restent soumises à validation produit explicite. Aucune
-implémentation A6, connexion joueur ou évolution de snapshot A5 ne doit commencer
-avant cette approbation.
+Ces quatre décisions ont reçu la validation produit explicite. L'implémentation
+A6 peut commencer après verrouillage de ce brief, sans connexion joueur, sans
+évolution du snapshot A5 et sans démarrer R8C-A7.

@@ -1,8 +1,8 @@
 # R8C-A6 — Décisions produit et audit préparatoire
 
-> **Statut :** `DOCUMENTATION_ONLY_AWAITING_PRODUCT_APPROVAL`
+> **Statut :** `PRODUCT_DECISIONS_APPROVED`
 > **Base :** R8C-A5 verrouillé au SHA `bf443e35edd563d87270ba8980736642794b9985`
-> **Interdiction :** aucune implémentation runtime A6, aucun branchement joueur et aucun démarrage A7.
+> **Périmètre du présent lot :** documentation uniquement; aucun branchement joueur et aucun démarrage A7.
 
 ## Verdict recommandé
 
@@ -13,10 +13,10 @@
 | Identité des variantes | `variant_id` stable et explicite, distinct de `scene_definition_id`. | Identité structurée, sans concaténation fragile et sans modifier l'unicité A5 par accident. |
 | Passage candidat → instance | À la réservation/proposition réelle, après revalidation; jamais pendant la requête. | Une compatibilité non retenue ne crée ni identité persistée, ni absence narrative, ni consommation `UNIQUE`. |
 
-Ces quatre recommandations forment un ensemble cohérent. Elles gardent A6 comme
-frontière de lecture et laissent à un futur consommateur la responsabilité de
-réserver ou proposer une scène. Elles attendent encore une validation produit
-explicite avant toute implémentation.
+Ces quatre décisions validées forment un ensemble cohérent. Elles gardent A6
+comme frontière de lecture et laissent à un futur consommateur la responsabilité
+de réserver ou proposer une scène. Leur validation produit explicite autorise
+l'implémentation minimale après verrouillage du brief.
 
 ## 1. Source initiale des définitions
 
@@ -86,14 +86,14 @@ requête et les tris manipulent une structure avec ces champs séparés; ils ne
 fabriquent pas une clé par concaténation de chaînes.
 
 `scene_definition_id` reprend la valeur A3 `scene_id`; le nom correspond à sa
-projection persistée A5 et ne renomme pas le champ du contrat A3. En l'absence
-de variante, le résultat porte `variant_id: null`. Si une variante est ajoutée
-plus tard, son identifiant est une chaîne authored et non une clé dérivée.
+projection persistée A5 et ne renomme pas le champ du contrat A3. Chaque entrée
+du bundle porte aussi un `variant_id` authored non vide, stable et explicite,
+jamais une clé dérivée.
 
-Le lot A6 minimal n'a pas besoin d'inventer plusieurs variantes. Il doit
-seulement verrouiller la forme de l'identité afin qu'une extension ultérieure ne
-réinterprète pas `scene_id`. L'unicité A5 continue de porter sur la définition de
-scène; un `variant_id` ne permet jamais de contourner une politique `UNIQUE`.
+Le lot A6 minimal démontre cette identité avec une structure modulaire commune
+et deux variantes non interchangeables pour Sandra et Raphaëlle, ainsi qu'une
+scène signature. L'unicité A5 continue de porter sur la définition de scène; un
+`variant_id` ne permet jamais de contourner une politique `UNIQUE`.
 
 ### Justification
 
@@ -197,14 +197,16 @@ requête parcourt l'index stable, délègue chaque évaluation à
 retournés et trie par tuple structuré. Elle n'effectue aucune sélection,
 priorité, pondération, randomisation, instanciation ou mutation.
 
-## Gate produit restante
+## Validation produit enregistrée
 
-Avant toute implémentation A6, la validation produit doit confirmer ensemble :
+La validation produit confirme ensemble :
 
 - le bundle JSON data-first et son emplacement dédié ;
 - la séparation stricte entre diagnostics moteur et visibilité joueur ;
 - l'identité de variante structurée sans changement du snapshot A5 ;
 - la frontière candidat/instance au seul engagement réel de proposition.
 
-A6 restera non mergé et non tagué jusque-là. R8C-A7, le constructeur de journée,
-la sélection et toute évolution UX restent hors périmètre.
+Le brief A6 peut donc être verrouillé puis l'implémentation minimale menée sur
+une branche distincte, sans merge ni tag avant sa propre validation produit.
+R8C-A7, le constructeur de journée, la sélection et toute évolution UX restent
+hors périmètre.
