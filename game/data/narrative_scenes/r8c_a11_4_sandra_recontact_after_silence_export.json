@@ -1,0 +1,89 @@
+{
+  "format": "R8C_A6_SCENE_LIBRARY",
+  "version": 1,
+  "definitions": [
+    {
+      "scene_definition_id": "r8c_a11_4_sandra_recontact_after_silence_definition",
+      "variant_id": "sandra_recontact_after_silence_test",
+      "definition": {
+        "scene_id": "r8c_a11_4_sandra_recontact_after_silence_definition",
+        "version_contrat": "1.0.0-a11-4-test-prototype",
+        "titre_interne": "Reprise prudente après le silence",
+        "nature": "SIGNATURE",
+        "fonction_principale": "ECHO",
+        "participants_requis": [
+          {
+            "personnage_id": "player",
+            "role": "PARTICIPANT_AUTEUR"
+          },
+          {
+            "personnage_id": "sandra",
+            "role": "PARTICIPANT_AUTEUR"
+          }
+        ],
+        "conditions_dures": {
+          "actes_compatibles": [
+            "ACTE_SYNTHETIQUE_A11_4"
+          ],
+          "evenements_requis": []
+        },
+        "exclusions_dures": {
+          "evenements_interdits": []
+        },
+        "contrat_temporel": {
+          "date_debut": "2030-04-18",
+          "date_fin": "2030-04-18",
+          "heure_ouverture": "20:00",
+          "heure_fermeture": "23:00",
+          "duree_minutes": 20,
+          "revalidation": "AVANT_PROPOSITION_ET_RESOLUTION"
+        },
+        "politique_unicite": "REPETABLE",
+        "relation_ou_question_focale": "Reprendre un lien prudent et vérifier indirectement si le rapprochement récent peut avoir une suite locale.",
+        "noyau_stable": "Player rattache sa reprise de contact au souvenir concret du ticket de cinéma plié conservé par Sandra.",
+        "structure_id": "a11_3_sandra_recontact_after_silence_plan",
+        "choix": [
+          {
+            "choix_id": "acknowledge_importance_without_claim",
+            "formulation": "Parce que l'autre soir a compté.",
+            "signal_emis": "IMPORTANCE_RECONNUE_SANS_REVENDICATION",
+            "resolution_ids": [
+              "acknowledge_importance_without_claim_reception"
+            ]
+          },
+          {
+            "choix_id": "maintain_light_indirectness",
+            "formulation": "Parce que ce ticket méritait mieux.",
+            "signal_emis": "LIEN_REPRIS_PAR_DETOUR_LEGER",
+            "resolution_ids": [
+              "maintain_light_indirectness_reception"
+            ]
+          }
+        ],
+        "resolutions": {
+          "acknowledge_importance_without_claim_reception": {
+            "personnage_id": "sandra",
+            "portee_micro_signal": "LOCALE",
+            "signal_recu": "IMPORTANCE_RECONNUE_SANS_REVENDICATION",
+            "reception": "NON_PERSISTANTE",
+            "interpretation": "importance_entendue_rythme_protege",
+            "faits_relationnels": [],
+            "convergence": "RETOUR_NOYAU_COMMUN"
+          },
+          "maintain_light_indirectness_reception": {
+            "personnage_id": "sandra",
+            "portee_micro_signal": "LOCALE",
+            "signal_recu": "LIEN_REPRIS_PAR_DETOUR_LEGER",
+            "reception": "NON_PERSISTANTE",
+            "interpretation": "detour_accepte_portee_ambigue",
+            "faits_relationnels": [],
+            "convergence": "RETOUR_NOYAU_COMMUN"
+          }
+        },
+        "politique_non_resolution": {
+          "proposition_expire": "CANCELLED"
+        }
+      }
+    }
+  ]
+}

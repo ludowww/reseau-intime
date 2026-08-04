@@ -1,0 +1,54 @@
+{
+  "format": "R8C_A11_A6_PROJECTION_REPORT",
+  "version": 1,
+  "approval_fingerprint": "a0a76d59147c4c70c34c468c1126e1fc50fc66a4eb2decc93e43749d2f4a6679",
+  "draft_id": "a11_4_sandra_recontact_after_silence_draft",
+  "draft_revision": "rev_01",
+  "scene_definition_id": "r8c_a11_4_sandra_recontact_after_silence_definition",
+  "variant_id": "sandra_recontact_after_silence_test",
+  "export_sha256": "ad3dc8aa5ed2f6b728f7cca946ed103681028558f098c7eed3a0d3a8c8198019",
+  "exported_elements": [
+    {
+      "source": "planning.plan participant_ids and approved projection identity",
+      "target": "A6 definition identity, variant and participants_requis",
+      "detail": "Sandra and Player remain the only active participants."
+    },
+    {
+      "source": "draft.choice formulations and projection choice_mappings",
+      "target": "A6 choix and resolutions",
+      "detail": "Both attitudes keep distinct Sandra receptions before common convergence."
+    },
+    {
+      "source": "planning maximum_change and protective_close",
+      "target": "local non-persistent resolutions without relational facts",
+      "detail": "The possible meeting remains revocable and is not exported as an acquired fact."
+    }
+  ],
+  "unrepresentable_elements": [
+    {
+      "source": "draft.messages",
+      "reason": "The closed A6/A3 definition schema has no dialogue bubble collection.",
+      "preserved_in": "R8C_A11_DIALOGUE_DRAFT version 2"
+    },
+    {
+      "source": "message beat, objective, move, local state, burst, weak and reply metadata",
+      "reason": "A6 represents eligibility and local resolutions, not authoring traceability.",
+      "preserved_in": "A11.4 draft and validation report"
+    },
+    {
+      "source": "human review rationale and composite source evidence",
+      "reason": "Editorial approval evidence is intentionally excluded from player/runtime data.",
+      "preserved_in": "A11.4 composite approval and human review"
+    }
+  ],
+  "preserved_invariants": [
+    "synthetic non-canonical fixture loaded only by explicit path",
+    "scene and variant identities remain explicit and distinct",
+    "Sandra and Player are the only participants",
+    "exactly two authored choices map to two distinct Sandra receptions",
+    "all resolutions are local, non-persistent and contain no relational fact",
+    "both branches return to the common core",
+    "no meeting is acquired and no durable consequence is created",
+    "static validation creates no A5 instance"
+  ]
+}

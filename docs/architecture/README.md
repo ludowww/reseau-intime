@@ -26,6 +26,7 @@ documents techniques qui le suivent.
 17. [`R8C_A11_ATELIER_AUTEUR_ASSISTE_VERTICAL_SLICE.md`](R8C_A11_ATELIER_AUTEUR_ASSISTE_VERTICAL_SLICE.md) — atelier hors ligne, cinq formats fermés, approbation humaine liée à la révision et projection explicite A6.
 18. [`R8C_A11_2_BIBLIOTHEQUE_VOIX_CALIBRATION_RELATIONNELLE.md`](R8C_A11_2_BIBLIOTHEQUE_VOIX_CALIBRATION_RELATIONNELLE.md) — contrats de voix, registres Player et validation relationnelle croisée hors runtime.
 19. [`R8C_A11_3_PLANIFICATION_ASSISTEE_SCENE.md`](R8C_A11_3_PLANIFICATION_ASSISTEE_SCENE.md) — intention humaine, diagnostic, options bornées, sélection humaine, plan de scène et relecture sans brouillon ni export.
+20. [`R8C_A11_4_PLAN_BROUILLON_EXPORT_A6_TEST.md`](R8C_A11_4_PLAN_BROUILLON_EXPORT_A6_TEST.md) — passage auteur complet du plan Sandra approuvé au brouillon tracé, à la relecture composite et à la projection A6 synthétique.
 
 ## Invariants de reprise
 

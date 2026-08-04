@@ -23,6 +23,7 @@ FORMAT_PLAN = "R8C_A11_SCENE_PLAN"
 FORMAT_DRAFT = "R8C_A11_DIALOGUE_DRAFT"
 FORMAT_REPORT = "R8C_A11_VALIDATION_REPORT"
 VERSION = 1
+DRAFT_VERSIONS = {1, 2}
 VALIDATOR_VERSION = "a11-validator-1.1"
 
 ROOT_KEYS = {
@@ -50,6 +51,22 @@ VOICE_FORBIDDEN_MOTIFS = {
     "devenir un obstacle": ("tu n'as pas le droit de lui parler",),
     "accusation sans preuve": ("je sais que tu me trompes",),
     "parler comme Sandra": ("notre vieux déjeuner", "nos frites froides"),
+}
+
+DRAFT_MESSAGE_KEYS = {
+    1: {
+        "message_id", "speaker_id", "kind", "text", "fact_refs", "beat_id", "branch",
+        "burst_id", "strength", "media",
+    },
+    2: {
+        "message_id", "speaker_id", "kind", "beat_id", "objective_actor_id",
+        "conversation_move", "fact_refs", "local_state", "branch", "burst_id", "strength",
+        "text", "reply_to", "media",
+    },
+}
+DRAFT_CHOICE_OPTION_KEYS = {
+    1: {"option_id", "reception_message_ids"},
+    2: {"option_id", "formulation", "reception_message_ids"},
 }
 
 
@@ -344,35 +361,62 @@ def validate_plan(document: Any, path: str = "plan") -> list[Issue]:
 
 def validate_draft_format(document: Any, path: str = "draft") -> list[Issue]:
     issues: list[Issue] = []
-    if not _validate_header(document, FORMAT_DRAFT, path, issues):
+    if not _closed(document, ROOT_KEYS[FORMAT_DRAFT], path, issues):
+        return issues
+    if document["format"] != FORMAT_DRAFT:
+        _issue(issues, "FORMAT_UNKNOWN", f"{path}.format", FORMAT_DRAFT)
+    version = document["version"]
+    if type(version) is not int or version not in DRAFT_VERSIONS:
+        _issue(
+            issues,
+            "VERSION_UNKNOWN",
+            f"{path}.version",
+            ", ".join(str(item) for item in sorted(DRAFT_VERSIONS)),
+        )
         return issues
     for field in ("draft_id", "revision", "plan_id"):
         if not _nonempty(document[field]):
             _issue(issues, "TEXT_REQUIRED", f"{path}.{field}", "chaîne non vide attendue")
     messages = document["messages"]
-    message_keys = {
-        "message_id", "speaker_id", "kind", "text", "fact_refs", "beat_id", "branch",
-        "burst_id", "strength", "media",
-    }
     media_keys = {"media_id", "kind", "description", "justification", "linked_fact_id"}
     if not isinstance(messages, list):
         _issue(issues, "MESSAGE_LIST_REQUIRED", f"{path}.messages", "tableau attendu")
     else:
         for index, message in enumerate(messages):
             message_path = f"{path}.messages[{index}]"
-            if not _closed(message, message_keys, message_path, issues):
+            if not _closed(message, DRAFT_MESSAGE_KEYS[version], message_path, issues):
                 continue
             for field in ("message_id", "speaker_id", "kind", "text", "beat_id", "branch", "strength"):
                 if not _nonempty(message[field]):
                     _issue(issues, "TEXT_REQUIRED", f"{message_path}.{field}", "chaîne non vide attendue")
-            _string_list(message["fact_refs"], f"{message_path}.fact_refs", issues)
-            if message["kind"] not in {"TEXT", "IMAGE"}:
+            if version == 2:
+                for field in ("objective_actor_id", "conversation_move", "local_state"):
+                    if not _nonempty(message[field]):
+                        _issue(issues, "TEXT_REQUIRED", f"{message_path}.{field}", "chaîne non vide attendue")
+            _string_list(
+                message["fact_refs"],
+                f"{message_path}.fact_refs",
+                issues,
+                nonempty=version == 2,
+            )
+            allowed_kinds = {"TEXT"} if version == 2 else {"TEXT", "IMAGE"}
+            if message["kind"] not in allowed_kinds:
                 _issue(issues, "MESSAGE_KIND_UNKNOWN", f"{message_path}.kind", str(message["kind"]))
             if message["strength"] not in {"WEAK", "NORMAL"}:
                 _issue(issues, "MESSAGE_STRENGTH_UNKNOWN", f"{message_path}.strength", str(message["strength"]))
             if message["burst_id"] is not None and not _nonempty(message["burst_id"]):
                 _issue(issues, "BURST_ID_INVALID", f"{message_path}.burst_id", "null ou chaîne non vide attendu")
-            if message["kind"] == "IMAGE":
+            if version == 2:
+                if message["media"] is not None:
+                    _issue(issues, "MEDIA_FORBIDDEN", message_path, "texte sans média attendu")
+                if message["reply_to"] is not None and not _nonempty(message["reply_to"]):
+                    _issue(
+                        issues,
+                        "REFERENCE_INVALID",
+                        f"{message_path}.reply_to",
+                        "null ou chaîne non vide attendu",
+                    )
+            elif message["kind"] == "IMAGE":
                 if _closed(message["media"], media_keys, f"{message_path}.media", issues):
                     for field in media_keys:
                         if not _nonempty(message["media"][field]):
@@ -381,7 +425,6 @@ def validate_draft_format(document: Any, path: str = "draft") -> list[Issue]:
                 _issue(issues, "TEXT_MEDIA_FORBIDDEN", f"{message_path}.media", "null attendu pour un texte")
     choice = document["choice"]
     choice_keys = {"choice_id", "after_message_id", "converge_at_message_id", "options"}
-    option_keys = {"option_id", "reception_message_ids"}
     if _closed(choice, choice_keys, f"{path}.choice", issues):
         for field in choice_keys - {"options"}:
             if not _nonempty(choice[field]):
@@ -392,9 +435,11 @@ def validate_draft_format(document: Any, path: str = "draft") -> list[Issue]:
         else:
             for index, option in enumerate(options):
                 option_path = f"{path}.choice.options[{index}]"
-                if _closed(option, option_keys, option_path, issues):
+                if _closed(option, DRAFT_CHOICE_OPTION_KEYS[version], option_path, issues):
                     if not _nonempty(option["option_id"]):
                         _issue(issues, "TEXT_REQUIRED", f"{option_path}.option_id", "identité requise")
+                    if version == 2 and not _nonempty(option["formulation"]):
+                        _issue(issues, "TEXT_REQUIRED", f"{option_path}.formulation", "formulation requise")
                     _string_list(option["reception_message_ids"], f"{option_path}.reception_message_ids", issues, nonempty=True)
     return issues
 
@@ -683,6 +728,93 @@ def approve_report(
     return approved
 
 
+def build_a6_scene_library(
+    *,
+    scene_definition_id: str,
+    variant_id: str,
+    version_contract: str,
+    title: str,
+    nature: str,
+    function: str,
+    participant_ids: Sequence[str],
+    compatible_act_ids: Sequence[str],
+    required_event_ids: Sequence[str],
+    forbidden_event_ids: Sequence[str],
+    start_date: str,
+    end_date: str,
+    opening_time: str,
+    closing_time: str,
+    duration_minutes: int,
+    uniqueness: str,
+    relation_or_question: str,
+    stable_core: str,
+    structure_id: str,
+    choices: Sequence[Mapping[str, str]],
+    expiration_policy: str,
+    resolution_character_id: str = "sandra",
+) -> dict[str, Any]:
+    """Serialize one normalized A11 scene into the closed A6 test bundle shape."""
+    exported_choices: list[dict[str, Any]] = []
+    resolutions: dict[str, dict[str, Any]] = {}
+    for option in choices:
+        resolution_id = f"{option['option_id']}_reception"
+        exported_choices.append({
+            "choix_id": option["option_id"],
+            "formulation": option["formulation"],
+            "signal_emis": option["signal"],
+            "resolution_ids": [resolution_id],
+        })
+        resolutions[resolution_id] = {
+            "personnage_id": resolution_character_id,
+            "portee_micro_signal": "LOCALE",
+            "signal_recu": option["signal"],
+            "reception": "NON_PERSISTANTE",
+            "interpretation": option["reception_interpretation"],
+            "faits_relationnels": [],
+            "convergence": "RETOUR_NOYAU_COMMUN",
+        }
+    definition = {
+        "scene_id": scene_definition_id,
+        "version_contrat": version_contract,
+        "titre_interne": title,
+        "nature": nature,
+        "fonction_principale": function,
+        "participants_requis": [
+            {"personnage_id": participant_id, "role": "PARTICIPANT_AUTEUR"}
+            for participant_id in participant_ids
+        ],
+        "conditions_dures": {
+            "actes_compatibles": list(compatible_act_ids),
+            "evenements_requis": list(required_event_ids),
+        },
+        "exclusions_dures": {"evenements_interdits": list(forbidden_event_ids)},
+        "contrat_temporel": {
+            "date_debut": start_date,
+            "date_fin": end_date,
+            "heure_ouverture": opening_time,
+            "heure_fermeture": closing_time,
+            "duree_minutes": duration_minutes,
+            "revalidation": "AVANT_PROPOSITION_ET_RESOLUTION",
+        },
+        "politique_unicite": uniqueness,
+        "relation_ou_question_focale": relation_or_question,
+        "noyau_stable": stable_core,
+        "structure_id": structure_id,
+        "choix": exported_choices,
+        "resolutions": resolutions,
+        "politique_non_resolution": {"proposition_expire": expiration_policy},
+    }
+    return {
+        "format": "R8C_A6_SCENE_LIBRARY",
+        "version": VERSION,
+        "definitions": [{
+            "scene_definition_id": scene_definition_id,
+            "variant_id": variant_id,
+            "definition": definition,
+        }],
+    }
+
+
 def export_a6(workspace: Mapping[str, Any], report: Mapping[str, Any]) -> dict[str, Any]:
     draft = workspace["draft"]
     plan = workspace["plan"]
@@ -702,65 +834,38 @@ def export_a6(workspace: Mapping[str, Any], report: Mapping[str, Any]) -> dict[s
         raise A11ApprovalError("A6 export refused: exact approved revision required")
     projection = plan["a6_projection"]
     options = plan["choice"]["options"]
-    resolutions: dict[str, dict[str, Any]] = {}
-    choices: list[dict[str, Any]] = []
-    for option in options:
-        resolution_id = f"{option['option_id']}_reception"
-        choices.append({
-            "choix_id": option["option_id"],
+    normalized_choices = [
+        {
+            "option_id": option["option_id"],
             "formulation": option["formulation"],
-            "signal_emis": option["signal"],
-            "resolution_ids": [resolution_id],
-        })
-        resolutions[resolution_id] = {
-            "personnage_id": "sandra",
-            "portee_micro_signal": "LOCALE",
-            "signal_recu": option["signal"],
-            "reception": "NON_PERSISTANTE",
-            "interpretation": option["sandra_local_state"],
-            "faits_relationnels": [],
-            "convergence": "RETOUR_NOYAU_COMMUN",
+            "signal": option["signal"],
+            "reception_interpretation": option["sandra_local_state"],
         }
-    definition = {
-        "scene_id": projection["scene_definition_id"],
-        "version_contrat": projection["version_contract"],
-        "titre_interne": plan["title"],
-        "nature": projection["nature"],
-        "fonction_principale": projection["function"],
-        "participants_requis": [
-            {"personnage_id": participant_id, "role": "PARTICIPANT_AUTEUR"}
-            for participant_id in plan["participant_ids"]
-        ],
-        "conditions_dures": {
-            "actes_compatibles": projection["compatible_act_ids"],
-            "evenements_requis": projection["required_event_ids"],
-        },
-        "exclusions_dures": {"evenements_interdits": projection["forbidden_event_ids"]},
-        "contrat_temporel": {
-            "date_debut": projection["start_date"],
-            "date_fin": projection["end_date"],
-            "heure_ouverture": projection["opening_time"],
-            "heure_fermeture": projection["closing_time"],
-            "duree_minutes": projection["duration_minutes"],
-            "revalidation": "AVANT_PROPOSITION_ET_RESOLUTION",
-        },
-        "politique_unicite": projection["uniqueness"],
-        "relation_ou_question_focale": plan["premise"],
-        "noyau_stable": plan["shared_detail"],
-        "structure_id": plan["plan_id"],
-        "choix": choices,
-        "resolutions": resolutions,
-        "politique_non_resolution": {"proposition_expire": projection["expiration_policy"]},
-    }
-    return {
-        "format": "R8C_A6_SCENE_LIBRARY",
-        "version": 1,
-        "definitions": [{
-            "scene_definition_id": projection["scene_definition_id"],
-            "variant_id": projection["variant_id"],
-            "definition": definition,
-        }],
-    }
+        for option in options
+    ]
+    return build_a6_scene_library(
+        scene_definition_id=projection["scene_definition_id"],
+        variant_id=projection["variant_id"],
+        version_contract=projection["version_contract"],
+        title=plan["title"],
+        nature=projection["nature"],
+        function=projection["function"],
+        participant_ids=plan["participant_ids"],
+        compatible_act_ids=projection["compatible_act_ids"],
+        required_event_ids=projection["required_event_ids"],
+        forbidden_event_ids=projection["forbidden_event_ids"],
+        start_date=projection["start_date"],
+        end_date=projection["end_date"],
+        opening_time=projection["opening_time"],
+        closing_time=projection["closing_time"],
+        duration_minutes=projection["duration_minutes"],
+        uniqueness=projection["uniqueness"],
+        relation_or_question=plan["premise"],
+        stable_core=plan["shared_detail"],
+        structure_id=plan["plan_id"],
+        choices=normalized_choices,
+        expiration_policy=projection["expiration_policy"],
+    )
 
 
 def default_paths(*, invalid: bool = False) -> dict[str, Any]:
