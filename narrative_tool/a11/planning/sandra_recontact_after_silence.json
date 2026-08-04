@@ -1,0 +1,291 @@
+{
+  "format": "R8C_A11_ASSISTED_SCENE_PLANNING",
+  "version": 1,
+  "case_id": "a11_3_sandra_recontact_after_silence",
+  "active_character_id": "sandra",
+  "active_relationship_id": "player_sandra",
+  "intention": {
+    "author_text": "Player reprend contact avec Sandra après plusieurs jours de silence. Il veut vérifier que leur rapprochement récent n’était pas seulement un moment isolé, sans lui demander frontalement ce qu’elle ressent.",
+    "active_participant_ids": ["player", "sandra"],
+    "contextual_character_ids": ["marie"],
+    "desired_motion": "Reprendre un lien prudent et vérifier indirectement si le rapprochement récent peut avoir une suite locale.",
+    "indirectness_constraint": "Player ne demande pas à Sandra de déclarer ce qu’elle ressent et ne transforme pas le rapprochement récent en acquis."
+  },
+  "diagnostic": {
+    "present_information": [
+      {
+        "information_id": "participants_known",
+        "text": "Sandra et Player sont les seuls participants actifs; Marie reste contextuelle.",
+        "source_refs": ["intention.active_participant_ids", "intention.contextual_character_ids"]
+      },
+      {
+        "information_id": "recontact_after_silence",
+        "text": "Player reprend le contact après plusieurs jours de silence.",
+        "source_refs": ["intention.author_text", "sandra_current_distance"]
+      },
+      {
+        "information_id": "indirect_relational_goal",
+        "text": "Player cherche un indice de continuité sans réclamer une définition des sentiments.",
+        "source_refs": ["intention.desired_motion", "intention.indirectness_constraint"]
+      },
+      {
+        "information_id": "sandra_guarded_strategy",
+        "text": "Sandra protège la distance par le détour, puis peut relancer par une mémoire précise et prolonger légèrement.",
+        "source_refs": ["sandra_distant_after_silence", "sandra_deflects_with_humor", "sandra_relaunches_shared_memory", "sandra_prolongs_without_claim"]
+      }
+    ],
+    "selectable_information_gaps": [
+      {
+        "decision_id": "select_concrete_hook",
+        "question": "Quel détail partagé ouvre concrètement la reprise de contact ?",
+        "options": [
+          {
+            "option_id": "folded_ticket",
+            "label": "Le ticket de cinéma plié",
+            "plan_value": "folded_ticket",
+            "effect": "Ancrer la reprise dans une mémoire ancienne que Sandra peut détourner puis relancer."
+          },
+          {
+            "option_id": "old_bus_shelter",
+            "label": "L’ancien abribus bleu",
+            "plan_value": "old_bus_shelter",
+            "effect": "Faire partir l’échange d’un lieu partagé et d’une complicité passée."
+          },
+          {
+            "option_id": "overinfused_tea",
+            "label": "Le thé trop infusé",
+            "plan_value": "overinfused_tea",
+            "effect": "Ouvrir par un détail léger qui permet une esquive humoristique."
+          }
+        ]
+      },
+      {
+        "decision_id": "select_maximum_change",
+        "question": "Quel changement local maximal la scène peut-elle préparer ?",
+        "options": [
+          {
+            "option_id": "recontact_only",
+            "label": "Relance seulement",
+            "plan_value": "recontact",
+            "effect": "Rétablir un échange sans projection supplémentaire."
+          },
+          {
+            "option_id": "possible_meeting_later",
+            "label": "Rendez-vous possible",
+            "plan_value": "possible_meeting",
+            "effect": "Laisser possible un rendez-vous ultérieur sans le fixer ni l’acquérir."
+          },
+          {
+            "option_id": "small_importance_confirmation",
+            "label": "Petite confirmation d’importance",
+            "plan_value": "small_importance_confirmation",
+            "effect": "Permettre un indice limité que le rapprochement récent a compté."
+          }
+        ]
+      },
+      {
+        "decision_id": "select_choice_mode",
+        "question": "Le plan contient-il un positionnement humain de Player ?",
+        "options": [
+          {
+            "option_id": "no_scene_choice",
+            "label": "Aucun choix",
+            "plan_value": "NONE",
+            "effect": "Conserver une progression entièrement linéaire."
+          },
+          {
+            "option_id": "one_player_positioning_choice",
+            "label": "Un choix de positionnement",
+            "plan_value": "ONE",
+            "effect": "Prévoir deux attitudes de Player et la réception locale de Sandra, sans écrire leurs bulles."
+          }
+        ]
+      }
+    ],
+    "mandatory_human_decision_ids": [
+      "select_concrete_hook",
+      "select_maximum_change",
+      "select_choice_mode"
+    ]
+  },
+  "human_selection": {
+    "selected_by": "author_r8c_a11_3_fixture",
+    "decisions": [
+      {
+        "decision_id": "select_concrete_hook",
+        "selected_option_id": "folded_ticket"
+      },
+      {
+        "decision_id": "select_maximum_change",
+        "selected_option_id": "possible_meeting_later"
+      },
+      {
+        "decision_id": "select_choice_mode",
+        "selected_option_id": "one_player_positioning_choice"
+      }
+    ]
+  },
+  "plan": {
+    "plan_id": "a11_3_sandra_recontact_after_silence_plan",
+    "title": "Reprise prudente après le silence",
+    "participant_ids": ["player", "sandra"],
+    "relationship_id": "player_sandra",
+    "relationship_nature": "complicité ancienne, antérieure au couple avec Marie, aujourd'hui tenue à distance",
+    "hook": {
+      "selection_option_id": "folded_ticket",
+      "fact_id": "sandra_folded_ticket",
+      "description": "Player rattache sa reprise de contact au souvenir concret du ticket de cinéma plié conservé par Sandra.",
+      "concrete": true
+    },
+    "objectives": [
+      {
+        "actor_id": "player",
+        "intent": "Vérifier si le rapprochement récent garde une importance au-delà d’un moment isolé.",
+        "method": "Revenir par une mémoire partagée et reconnaître le silence sans demander à Sandra de définir ses sentiments."
+      },
+      {
+        "actor_id": "sandra",
+        "intent": "Évaluer si Player peut reprendre le lien sans transformer la proximité récente en droit acquis.",
+        "method": "Protéger d’abord la distance par un détour, tester sa manière de revenir, puis décider si elle prolonge légèrement l’échange."
+      }
+    ],
+    "local_risk": "L’indirection de Player peut sembler commode ou exigeante; Sandra peut alors réaffirmer la distance sans rompre le lien.",
+    "maximum_change": {
+      "selection_option_id": "possible_meeting_later",
+      "outcome_id": "possible_meeting",
+      "description": "Un rendez-vous ultérieur devient envisageable, sans date, promesse, intimité acquise ni conséquence durable."
+    },
+    "fact_policy": {
+      "usable_fact_ids": ["sandra_folded_ticket", "sandra_current_distance"],
+      "forbidden_fact_ids": ["marie_missed_commitment", "mathilde_private_exit_plan"]
+    },
+    "initial_state_id": "sandra_distant_after_silence",
+    "required_limit_ids": [
+      "sandra_no_instant_seduction",
+      "sandra_indirect_longing",
+      "sandra_slow_progress"
+    ],
+    "movement_ids": [
+      "sandra_player_returns_carefully",
+      "sandra_deflects_with_humor",
+      "sandra_relaunches_shared_memory",
+      "sandra_prolongs_without_claim"
+    ],
+    "beats": [
+      {
+        "beat_id": "concrete_hook",
+        "function": "accroche_concrete",
+        "driver_id": "player",
+        "summary": "Player reprend le fil par le souvenir matériel du ticket plié et rend son retour situable.",
+        "movement_refs": ["sandra_player_returns_carefully"],
+        "fact_refs": ["sandra_folded_ticket"]
+      },
+      {
+        "beat_id": "calibration",
+        "function": "calibration",
+        "driver_id": "sandra",
+        "summary": "Sandra signale le délai par un détour protecteur qui mesure si Player respecte encore la distance actuelle.",
+        "movement_refs": ["sandra_deflects_with_humor"],
+        "fact_refs": ["sandra_current_distance"]
+      },
+      {
+        "beat_id": "indirect_reopening",
+        "function": "relance_indirecte",
+        "driver_id": "player",
+        "summary": "Player relie le souvenir récent à l’ancienne complicité sans réclamer de confirmation affective.",
+        "movement_refs": ["sandra_player_returns_carefully"],
+        "fact_refs": ["sandra_folded_ticket"]
+      },
+      {
+        "beat_id": "sandra_test",
+        "function": "esquive_ou_test_de_sandra",
+        "driver_id": "sandra",
+        "summary": "Sandra déplace l’attention vers la manière dont Player revient et teste s’il peut reconnaître le silence sans demande implicite.",
+        "movement_refs": ["sandra_deflects_with_humor", "sandra_relaunches_shared_memory"],
+        "fact_refs": ["sandra_current_distance"]
+      },
+      {
+        "beat_id": "player_positioning",
+        "function": "positionnement_eventuel_de_player",
+        "driver_id": "player",
+        "summary": "Player choisit le degré d’explicitation de l’importance du rapprochement tout en maintenant l’absence de revendication.",
+        "movement_refs": ["sandra_player_returns_carefully"],
+        "fact_refs": []
+      },
+      {
+        "beat_id": "reception",
+        "function": "reception",
+        "driver_id": "sandra",
+        "summary": "Sandra reçoit l’attitude choisie, garde sa réserve et décide si une légère prolongation demeure possible.",
+        "movement_refs": ["sandra_relaunches_shared_memory", "sandra_prolongs_without_claim"],
+        "fact_refs": ["sandra_current_distance"]
+      },
+      {
+        "beat_id": "protective_exit",
+        "function": "sortie",
+        "driver_id": "sandra",
+        "summary": "Sandra clôt sur un repère concret et laisse l’hypothèse d’un rendez-vous ultérieur ouverte, sans engagement.",
+        "movement_refs": ["sandra_prolongs_without_claim"],
+        "fact_refs": []
+      }
+    ],
+    "choice_mode": "ONE",
+    "choice": {
+      "choice_id": "player_positioning_after_sandra_test",
+      "after_beat_id": "player_positioning",
+      "focus": "Choisir comment Player reconnaît l’importance du rapprochement sans demander de réciprocité.",
+      "options": [
+        {
+          "option_id": "acknowledge_importance_without_claim",
+          "attitude": "Reconnaître prudemment que le rapprochement a compté, sans solliciter une définition commune."
+        },
+        {
+          "option_id": "maintain_light_indirectness",
+          "attitude": "Maintenir une légèreté indirecte tout en laissant visible l’envie de reprendre le lien."
+        }
+      ],
+      "receptions": [
+        {
+          "option_id": "acknowledge_importance_without_claim",
+          "character_id": "sandra",
+          "description": "Sandra peut enregistrer l’importance accordée au moment tout en gardant le rythme lent et la distance actuelle.",
+          "movement_refs": ["sandra_relaunches_shared_memory", "sandra_prolongs_without_claim"]
+        },
+        {
+          "option_id": "maintain_light_indirectness",
+          "character_id": "sandra",
+          "description": "Sandra peut accepter la faible pression de l’échange tout en conservant l’ambiguïté sur sa portée.",
+          "movement_refs": ["sandra_deflects_with_humor", "sandra_prolongs_without_claim"]
+        }
+      ]
+    },
+    "expected_reception": {
+      "character_id": "sandra",
+      "description": "Sandra reconnaît que Player revient avec attention, mais conserve la maîtrise du rythme et n’accorde qu’une prolongation révocable.",
+      "movement_refs": ["sandra_deflects_with_humor", "sandra_prolongs_without_claim"]
+    },
+    "cautious_opening": "La sortie laisse possible une proposition ultérieure de rendez-vous, que Sandra pourra accepter, différer ou décliner.",
+    "protective_close": {
+      "description": "Sandra clôt avant que l’échange exige une définition affective et conserve une possibilité de reprise ultérieure.",
+      "protects": "Son autonomie, la distance actuelle et le caractère révocable de toute ouverture.",
+      "punitive": false
+    },
+    "media_requirement": {
+      "required": false,
+      "kind": null,
+      "linked_fact_id": null,
+      "justification": null
+    },
+    "planned_outcome_ids": ["possible_meeting"]
+  },
+  "human_review": {
+    "status": "APPROVED_FOR_DRAFT_GENERATION",
+    "reviewed_by": "reviewer_r8c_a11_3_fixture",
+    "plan_fingerprint": "155e7fefe6910b585fd3dbe6062148adf3d56c1e907254dad8678cb898c15774",
+    "notes": [
+      "Le plan reste limité à sept battements et ne contient aucune bulle finale.",
+      "Sandra conduit la calibration, le test, la réception et la fermeture protectrice.",
+      "Cette approbation autorise seulement une future génération de brouillon et ne déclenche aucun export."
+    ]
+  }
+}
