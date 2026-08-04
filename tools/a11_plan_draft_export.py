@@ -24,6 +24,7 @@ try:
     )
     from tools.a11_scene_planning import (
         load_planning_case,
+        planning_fingerprint,
         validate_scene_plan,
     )
     from tools.a11_voice_calibration import (
@@ -38,7 +39,11 @@ except ModuleNotFoundError:
         validate_draft_format,
         validate_report_format,
     )
-    from a11_scene_planning import load_planning_case, validate_scene_plan  # type: ignore
+    from a11_scene_planning import (  # type: ignore
+        load_planning_case,
+        planning_fingerprint,
+        validate_scene_plan,
+    )
     from a11_voice_calibration import (  # type: ignore
         load_case as load_calibration_case,
         validate_compatibility as validate_calibration_compatibility,
@@ -60,16 +65,139 @@ A6_FIXTURE_PATH = (
     / "narrative_scenes"
     / "r8c_a11_4_sandra_recontact_after_silence_export.json"
 )
+PILOT_DIR = ROOT / "narrative_tool" / "a11" / "pilots"
+PILOT_SOURCE_PATH = PILOT_DIR / "sandra_blue_chairs.source.json"
+PILOT_PROVENANCE_PATH = PILOT_DIR / "sandra_blue_chairs.provenance.json"
+PILOT_PLAN_PATH = ROOT / "narrative_tool" / "a11" / "planning" / "sandra_blue_chairs.json"
+PILOT_DRAFT_PATH = DRAFTING_DIR / "sandra_blue_chairs.draft.json"
+PILOT_VALIDATION_PATH = DRAFTING_DIR / "sandra_blue_chairs.validation_report.json"
+PILOT_TRACEABILITY_PATH = DRAFTING_DIR / "sandra_blue_chairs.traceability_report.json"
+PILOT_BLIND_READING_PATH = DRAFTING_DIR / "sandra_blue_chairs.blind_reading.md"
+PILOT_HUMAN_REVIEW_PATH = DRAFTING_DIR / "sandra_blue_chairs.human_review.md"
+PILOT_DECISION_PATH = DRAFTING_DIR / "sandra_blue_chairs.canon_decision.json"
 
 FORMAT_COMPOSITE_APPROVAL = "R8C_A11_COMPOSITE_APPROVAL"
 FORMAT_PROJECTION_REPORT = "R8C_A11_A6_PROJECTION_REPORT"
+FORMAT_EDITORIAL_SOURCE = "R8C_A11_EDITORIAL_SOURCE"
+FORMAT_NARRATIVE_PROVENANCE = "R8C_A11_NARRATIVE_PROVENANCE"
+FORMAT_EDITORIAL_VALIDATION = "R8C_A11_EDITORIAL_VALIDATION_REPORT"
+FORMAT_EDITORIAL_TRACEABILITY = "R8C_A11_EDITORIAL_TRACEABILITY_REPORT"
+FORMAT_CANON_DECISION = "R8C_A11_CANON_REVIEW_DECISION"
 VERSION = 1
 VALIDATOR_VERSION = "a11-plan-draft-validator-1.2"
+EDITORIAL_VALIDATOR_VERSION = "a11-first-editorial-pilot-validator-1.0"
 REVIEW_STATUSES = {
     "DRAFT",
     "NEEDS_REVISION",
     "APPROVED_FOR_A6_TEST_EXPORT",
     "REJECTED",
+}
+CANON_REVIEW_STATUSES = {
+    "DRAFT",
+    "NEEDS_NARRATIVE_REVISION",
+    "APPROVED_FOR_CANON_REVIEW",
+    "REJECTED",
+}
+EDITORIAL_BEAT_IDS = (
+    "concrete_photo",
+    "familiar_complicity",
+    "lightly_charged_memory",
+    "indirect_relaunch",
+    "sandra_test_and_choice",
+    "reception_and_limit",
+    "protective_exit",
+)
+EDITORIAL_SOURCE_KEYS = {
+    "format",
+    "version",
+    "source_id",
+    "title",
+    "media",
+    "pre_choice_messages",
+    "choice",
+    "convergence_messages",
+}
+EDITORIAL_SOURCE_MEDIA_KEYS = {"media_id", "kind", "description"}
+EDITORIAL_SOURCE_MESSAGE_KEYS = {"message_id", "speaker_id", "kind", "text"}
+EDITORIAL_SOURCE_CHOICE_KEYS = {
+    "choice_id",
+    "after_message_id",
+    "options",
+    "converge_at_message_id",
+}
+EDITORIAL_SOURCE_OPTION_KEYS = {
+    "option_id",
+    "formulation",
+    "reception_messages",
+}
+PROVENANCE_KEYS = {
+    "format",
+    "version",
+    "provenance_id",
+    "source_id",
+    "source_content_sha256",
+    "canonical_inputs",
+    "local_facts",
+    "limits",
+    "non_persistent_elements",
+}
+PROVENANCE_CANONICAL_KEYS = {"input_id", "text", "source_ref"}
+PROVENANCE_LOCAL_FACT_KEYS = {"fact_id", "text", "known_by", "persistence"}
+PROVENANCE_LIMIT_KEYS = {"limit_id", "text"}
+PROVENANCE_NON_PERSISTENT_KEYS = {"element_id", "description"}
+EDITORIAL_VALIDATION_KEYS = {
+    "format",
+    "version",
+    "validator_version",
+    "source_id",
+    "draft_id",
+    "draft_revision",
+    "source_content_sha256",
+    "validation_fingerprint",
+    "status",
+    "blocking_errors",
+    "warnings",
+    "counts",
+}
+EDITORIAL_COUNT_KEYS = {
+    "stored_message_elements",
+    "playable_path_elements",
+    "burst_groups_stored",
+    "burst_groups_by_path",
+    "weak_messages_stored",
+    "weak_messages_by_path",
+    "beat_count",
+}
+EDITORIAL_TRACEABILITY_KEYS = {
+    "format",
+    "version",
+    "source_content_sha256",
+    "validation_fingerprint",
+    "participant_ids",
+    "counts",
+    "beat_trace",
+    "choice_trace",
+    "media_trace",
+    "fact_trace",
+    "voice_validation",
+    "narrative_integrity",
+    "a6_export",
+    "runtime_wiring",
+}
+CANON_DECISION_KEYS = {
+    "format",
+    "version",
+    "draft_id",
+    "draft_revision",
+    "source_content_sha256",
+    "validation_fingerprint",
+    "status",
+    "reviewed_by",
+    "blind_reading_result",
+    "narrative_remarks",
+    "decision",
+    "next_action",
+    "decision_fingerprint",
 }
 
 REVIEW_QUESTIONS = (
@@ -1296,6 +1424,880 @@ def export_a6(workspace: Mapping[str, Any]) -> tuple[dict[str, Any], dict[str, A
     return bundle, build_projection_report(workspace, bundle)
 
 
+def validate_editorial_source_format(
+    document: Any,
+    path: str = "source",
+) -> list[Issue]:
+    issues: list[Issue] = []
+    if not _closed(document, EDITORIAL_SOURCE_KEYS, path, issues):
+        return issues
+    if document["format"] != FORMAT_EDITORIAL_SOURCE:
+        _issue(issues, "FORMAT_UNKNOWN", f"{path}.format", FORMAT_EDITORIAL_SOURCE)
+    if document["version"] != VERSION:
+        _issue(issues, "VERSION_UNKNOWN", f"{path}.version", str(VERSION))
+    for field in ("source_id", "title"):
+        if not _nonempty(document[field]):
+            _issue(issues, "TEXT_REQUIRED", f"{path}.{field}", "chaîne non vide attendue")
+    media = document["media"]
+    if _closed(media, EDITORIAL_SOURCE_MEDIA_KEYS, f"{path}.media", issues):
+        for field in EDITORIAL_SOURCE_MEDIA_KEYS:
+            if not _nonempty(media[field]):
+                _issue(issues, "TEXT_REQUIRED", f"{path}.media.{field}", "chaîne non vide attendue")
+
+    all_messages: list[Mapping[str, Any]] = []
+
+    def validate_messages(value: Any, value_path: str) -> None:
+        if not isinstance(value, list) or not value:
+            _issue(issues, "MESSAGE_LIST_REQUIRED", value_path, "tableau non vide attendu")
+            return
+        for index, message in enumerate(value):
+            message_path = f"{value_path}[{index}]"
+            if not _closed(message, EDITORIAL_SOURCE_MESSAGE_KEYS, message_path, issues):
+                continue
+            for field in EDITORIAL_SOURCE_MESSAGE_KEYS:
+                if not _nonempty(message[field]):
+                    _issue(issues, "TEXT_REQUIRED", f"{message_path}.{field}", "chaîne non vide attendue")
+            if message["speaker_id"] not in {"player", "sandra"}:
+                _issue(issues, "UNEXPECTED_PARTICIPANT", f"{message_path}.speaker_id", message["speaker_id"])
+            if message["kind"] not in {"TEXT", "IMAGE"}:
+                _issue(issues, "MESSAGE_KIND_UNKNOWN", f"{message_path}.kind", message["kind"])
+            all_messages.append(message)
+
+    validate_messages(document["pre_choice_messages"], f"{path}.pre_choice_messages")
+    choice = document["choice"]
+    if _closed(choice, EDITORIAL_SOURCE_CHOICE_KEYS, f"{path}.choice", issues):
+        for field in ("choice_id", "after_message_id", "converge_at_message_id"):
+            if not _nonempty(choice[field]):
+                _issue(issues, "TEXT_REQUIRED", f"{path}.choice.{field}", "chaîne non vide attendue")
+        options = choice["options"]
+        if not isinstance(options, list) or len(options) != 2:
+            _issue(issues, "CHOICE_OPTIONS_REQUIRED", f"{path}.choice.options", "deux options attendues")
+        else:
+            for index, option in enumerate(options):
+                option_path = f"{path}.choice.options[{index}]"
+                if not _closed(option, EDITORIAL_SOURCE_OPTION_KEYS, option_path, issues):
+                    continue
+                for field in ("option_id", "formulation"):
+                    if not _nonempty(option[field]):
+                        _issue(issues, "TEXT_REQUIRED", f"{option_path}.{field}", "chaîne non vide attendue")
+                validate_messages(option["reception_messages"], f"{option_path}.reception_messages")
+    validate_messages(document["convergence_messages"], f"{path}.convergence_messages")
+    message_ids = [message["message_id"] for message in all_messages]
+    if len(message_ids) != len(set(message_ids)):
+        _issue(issues, "MESSAGE_ID_DUPLICATE", path, "identités dupliquées")
+    image_ids = [message["message_id"] for message in all_messages if message["kind"] == "IMAGE"]
+    if image_ids != ["m01"]:
+        _issue(issues, "SOURCE_MEDIA_TOPOLOGY_INVALID", path, str(image_ids))
+    return issues
+
+
+def validate_provenance_format(
+    document: Any,
+    path: str = "provenance",
+) -> list[Issue]:
+    issues: list[Issue] = []
+    if not _closed(document, PROVENANCE_KEYS, path, issues):
+        return issues
+    if document["format"] != FORMAT_NARRATIVE_PROVENANCE:
+        _issue(issues, "FORMAT_UNKNOWN", f"{path}.format", FORMAT_NARRATIVE_PROVENANCE)
+    if document["version"] != VERSION:
+        _issue(issues, "VERSION_UNKNOWN", f"{path}.version", str(VERSION))
+    for field in ("provenance_id", "source_id", "source_content_sha256"):
+        if not _nonempty(document[field]):
+            _issue(issues, "TEXT_REQUIRED", f"{path}.{field}", "chaîne non vide attendue")
+    specs = (
+        ("canonical_inputs", PROVENANCE_CANONICAL_KEYS),
+        ("local_facts", PROVENANCE_LOCAL_FACT_KEYS),
+        ("limits", PROVENANCE_LIMIT_KEYS),
+        ("non_persistent_elements", PROVENANCE_NON_PERSISTENT_KEYS),
+    )
+    for field, keys in specs:
+        values = document[field]
+        if not isinstance(values, list) or not values:
+            _issue(issues, "OBJECT_LIST_REQUIRED", f"{path}.{field}", "tableau non vide attendu")
+            continue
+        for index, value in enumerate(values):
+            value_path = f"{path}.{field}[{index}]"
+            if not _closed(value, keys, value_path, issues):
+                continue
+            for key in keys - {"known_by"}:
+                if not _nonempty(value[key]):
+                    _issue(issues, "TEXT_REQUIRED", f"{value_path}.{key}", "chaîne non vide attendue")
+            if "known_by" in keys:
+                _string_list(value["known_by"], f"{value_path}.known_by", issues, nonempty=True)
+    local_ids = [
+        fact["fact_id"]
+        for fact in document["local_facts"]
+        if isinstance(fact, dict) and "fact_id" in fact
+    ]
+    if len(local_ids) != len(set(local_ids)):
+        _issue(issues, "LOCAL_FACT_DUPLICATE", f"{path}.local_facts", "identités dupliquées")
+    return issues
+
+
+def editorial_source_projection(source: Mapping[str, Any]) -> dict[str, Any]:
+    def normalized(message: Mapping[str, Any], branch: str) -> dict[str, str]:
+        return {
+            "message_id": message["message_id"],
+            "speaker_id": message["speaker_id"],
+            "kind": message["kind"],
+            "text": message["text"],
+            "branch": branch,
+        }
+
+    messages = [normalized(message, "COMMON") for message in source["pre_choice_messages"]]
+    options = []
+    for option in source["choice"]["options"]:
+        reception_ids = [message["message_id"] for message in option["reception_messages"]]
+        messages.extend(normalized(message, option["option_id"]) for message in option["reception_messages"])
+        options.append({
+            "option_id": option["option_id"],
+            "formulation": option["formulation"],
+            "reception_message_ids": reception_ids,
+        })
+    messages.extend(normalized(message, "COMMON") for message in source["convergence_messages"])
+    return {
+        "title": source["title"],
+        "media": copy.deepcopy(source["media"]),
+        "messages": messages,
+        "choice": {
+            "choice_id": source["choice"]["choice_id"],
+            "after_message_id": source["choice"]["after_message_id"],
+            "converge_at_message_id": source["choice"]["converge_at_message_id"],
+            "options": options,
+        },
+    }
+
+
+def editorial_draft_projection(workspace: Mapping[str, Any]) -> dict[str, Any]:
+    draft = workspace["draft"]
+    images = [message for message in draft["messages"] if message["kind"] == "IMAGE"]
+    media = images[0]["media"] if len(images) == 1 and isinstance(images[0]["media"], dict) else {}
+    return {
+        "title": workspace["planning"]["plan"]["title"],
+        "media": {
+            "media_id": media.get("media_id"),
+            "kind": media.get("kind"),
+            "description": media.get("description"),
+        },
+        "messages": [
+            {
+                "message_id": message["message_id"],
+                "speaker_id": message["speaker_id"],
+                "kind": message["kind"],
+                "text": message["text"],
+                "branch": message["branch"],
+            }
+            for message in draft["messages"]
+        ],
+        "choice": {
+            "choice_id": draft["choice"]["choice_id"],
+            "after_message_id": draft["choice"]["after_message_id"],
+            "converge_at_message_id": draft["choice"]["converge_at_message_id"],
+            "options": [
+                {
+                    "option_id": option["option_id"],
+                    "formulation": option["formulation"],
+                    "reception_message_ids": list(option["reception_message_ids"]),
+                }
+                for option in draft["choice"]["options"]
+            ],
+        },
+    }
+
+
+def editorial_source_content_sha256(source: Mapping[str, Any]) -> str:
+    return _sha256(editorial_source_projection(source))
+
+
+def _editorial_calibration(provenance: Mapping[str, Any]) -> dict[str, Any]:
+    calibration = load_calibration_case("sandra")
+    for fact in provenance["local_facts"]:
+        calibration["relationship"]["relationship"]["shared_facts"].append({
+            "fact_id": fact["fact_id"],
+            "text": fact["text"],
+            "known_by": list(fact["known_by"]),
+        })
+        calibration["character"]["known_facts"].append({
+            "fact_id": fact["fact_id"],
+            "text": fact["text"],
+            "source": "provenance locale R8C-A11.5 non persistante",
+        })
+    return calibration
+
+
+def default_editorial_paths() -> dict[str, Path]:
+    return {
+        "source_path": PILOT_SOURCE_PATH,
+        "provenance_path": PILOT_PROVENANCE_PATH,
+        "plan_path": PILOT_PLAN_PATH,
+        "draft_path": PILOT_DRAFT_PATH,
+        "validation_path": PILOT_VALIDATION_PATH,
+        "traceability_path": PILOT_TRACEABILITY_PATH,
+        "decision_path": PILOT_DECISION_PATH,
+    }
+
+
+def load_editorial_pilot_workspace(
+    source_path: Path = PILOT_SOURCE_PATH,
+    provenance_path: Path = PILOT_PROVENANCE_PATH,
+    plan_path: Path = PILOT_PLAN_PATH,
+    draft_path: Path = PILOT_DRAFT_PATH,
+    validation_path: Path = PILOT_VALIDATION_PATH,
+    traceability_path: Path = PILOT_TRACEABILITY_PATH,
+    decision_path: Path = PILOT_DECISION_PATH,
+    *,
+    include_outputs: bool = True,
+) -> dict[str, Any]:
+    source = _read_json(Path(source_path))
+    provenance = _read_json(Path(provenance_path))
+    planning = load_planning_case(Path(plan_path))
+    draft = _read_json(Path(draft_path))
+    issues = validate_editorial_source_format(source)
+    issues.extend(validate_provenance_format(provenance))
+    issues.extend(validate_draft_format(draft))
+    if issues:
+        raise A114ValidationError(issues)
+    calibration = _editorial_calibration(provenance)
+    workspace = {
+        "source": source,
+        "provenance": provenance,
+        "planning": planning,
+        "character_contract": calibration["character"],
+        "relationship_register": calibration["relationship"],
+        "foreign_calibrations": {
+            name: {
+                "character": foreign["character"],
+                "relationship": foreign["relationship"],
+            }
+            for name in ("marie", "mathilde")
+            for foreign in (load_calibration_case(name),)
+        },
+        "draft": draft,
+        "validation_report": None,
+        "traceability_report": None,
+        "decision": None,
+    }
+    if include_outputs:
+        workspace["validation_report"] = _read_json(Path(validation_path))
+        workspace["traceability_report"] = _read_json(Path(traceability_path))
+        workspace["decision"] = _read_json(Path(decision_path))
+    return copy.deepcopy(workspace)
+
+
+def editorial_validation_fingerprint(workspace: Mapping[str, Any]) -> str:
+    return _sha256({
+        "validator_version": EDITORIAL_VALIDATOR_VERSION,
+        "source": workspace.get("source"),
+        "provenance": workspace.get("provenance"),
+        "planning": workspace.get("planning"),
+        "draft": workspace.get("draft"),
+        "character_contract": workspace.get("character_contract"),
+        "relationship_register": workspace.get("relationship_register"),
+        "foreign_calibrations": workspace.get("foreign_calibrations"),
+    })
+
+
+def _editorial_counts(workspace: Mapping[str, Any]) -> dict[str, Any]:
+    draft = workspace.get("draft")
+    draft = draft if isinstance(draft, Mapping) else {}
+    messages = draft.get("messages")
+    messages = messages if isinstance(messages, list) else []
+    choice = draft.get("choice")
+    choice = choice if isinstance(choice, Mapping) else {}
+    options = choice.get("options")
+    options = options if isinstance(options, list) else []
+    option_ids = [
+        option["option_id"]
+        for option in options
+        if isinstance(option, Mapping) and _nonempty(option.get("option_id"))
+    ]
+
+    def path_messages(option_id: str) -> list[Mapping[str, Any]]:
+        return [
+            message
+            for message in messages
+            if isinstance(message, Mapping) and message.get("branch") in {"COMMON", option_id}
+        ]
+
+    def burst_count(values: Sequence[Mapping[str, Any]]) -> int:
+        return len({message.get("burst_id") for message in values if message.get("burst_id")})
+
+    valid_messages = [message for message in messages if isinstance(message, Mapping)]
+    planning = workspace.get("planning")
+    planning = planning if isinstance(planning, Mapping) else {}
+    plan = planning.get("plan")
+    plan = plan if isinstance(plan, Mapping) else {}
+    beats = plan.get("beats")
+    beats = beats if isinstance(beats, list) else []
+
+    return {
+        "stored_message_elements": len(messages),
+        "playable_path_elements": {option_id: len(path_messages(option_id)) for option_id in option_ids},
+        "burst_groups_stored": burst_count(valid_messages),
+        "burst_groups_by_path": {option_id: burst_count(path_messages(option_id)) for option_id in option_ids},
+        "weak_messages_stored": sum(message.get("strength") == "WEAK" for message in valid_messages),
+        "weak_messages_by_path": {
+            option_id: sum(message.get("strength") == "WEAK" for message in path_messages(option_id))
+            for option_id in option_ids
+        },
+        "beat_count": len(beats),
+    }
+
+
+def _editorial_validation_result(
+    workspace: Mapping[str, Any],
+    errors: Sequence[Issue],
+    warnings: Sequence[Issue],
+) -> dict[str, Any]:
+    source = workspace.get("source")
+    source = source if isinstance(source, Mapping) else {}
+    draft = workspace.get("draft")
+    draft = draft if isinstance(draft, Mapping) else {}
+    try:
+        source_hash = editorial_source_content_sha256(source)
+    except (KeyError, TypeError, IndexError):
+        source_hash = ""
+    return {
+        "format": FORMAT_EDITORIAL_VALIDATION,
+        "version": VERSION,
+        "validator_version": EDITORIAL_VALIDATOR_VERSION,
+        "source_id": source.get("source_id", ""),
+        "draft_id": draft.get("draft_id", ""),
+        "draft_revision": draft.get("revision", ""),
+        "source_content_sha256": source_hash,
+        "validation_fingerprint": editorial_validation_fingerprint(workspace),
+        "status": "BLOCKED" if errors else ("READY_WITH_WARNINGS" if warnings else "READY"),
+        "blocking_errors": [issue.as_json() for issue in errors],
+        "warnings": [issue.as_json() for issue in warnings],
+        "counts": _editorial_counts(workspace),
+    }
+
+
+def validate_editorial_pilot(workspace: Mapping[str, Any]) -> dict[str, Any]:
+    errors: list[Issue] = []
+    warnings: list[Issue] = []
+    source = workspace["source"]
+    provenance = workspace["provenance"]
+    planning = workspace["planning"]
+    draft = workspace["draft"]
+
+    errors.extend(validate_editorial_source_format(source))
+    errors.extend(validate_provenance_format(provenance))
+    errors.extend(validate_draft_format(draft))
+    if errors:
+        return _editorial_validation_result(workspace, errors, warnings)
+
+    plan = planning["plan"]
+    messages = draft["messages"]
+    relation = workspace["relationship_register"]["relationship"]
+
+    source_hash = editorial_source_content_sha256(source)
+    if provenance["source_id"] != source["source_id"]:
+        _issue(errors, "PROVENANCE_SOURCE_MISMATCH", "provenance.source_id", source["source_id"])
+    if provenance["source_content_sha256"] != source_hash:
+        _issue(errors, "SOURCE_FINGERPRINT_MISMATCH", "provenance.source_content_sha256", source_hash)
+    if editorial_draft_projection(workspace) != editorial_source_projection(source):
+        _issue(errors, "SOURCE_CONTENT_MISMATCH", "draft", "le contenu intégré diffère de la source verrouillée")
+
+    plan_report = validate_scene_plan(
+        planning,
+        {
+            "character": workspace["character_contract"],
+            "relationship": workspace["relationship_register"],
+        },
+        workspace["foreign_calibrations"],
+    )
+    for item in plan_report["blocking_errors"]:
+        _issue(errors, item["code"], item["path"], item["message"])
+    for item in plan_report["warnings"]:
+        _issue(warnings, item["code"], item["path"], item["message"])
+    if tuple(beat["beat_id"] for beat in plan["beats"]) != EDITORIAL_BEAT_IDS:
+        _issue(errors, "EDITORIAL_BEAT_ORDER_INVALID", "planning.plan.beats", ", ".join(EDITORIAL_BEAT_IDS))
+    if draft["plan_id"] != plan["plan_id"]:
+        _issue(errors, "DRAFT_PLAN_MISMATCH", "draft.plan_id", plan["plan_id"])
+    if set(plan["participant_ids"]) != {"player", "sandra"}:
+        _issue(errors, "UNEXPECTED_PARTICIPANT", "planning.plan.participant_ids", "Sandra et Player uniquement")
+
+    message_ids = [message["message_id"] for message in messages]
+    message_index = {message_id: index for index, message_id in enumerate(message_ids)}
+    if len(messages) != 98:
+        _issue(errors, "EDITORIAL_ELEMENT_COUNT_INVALID", "draft.messages", "98 éléments stockés attendus")
+    if len(message_ids) != len(set(message_ids)):
+        _issue(errors, "MESSAGE_ID_DUPLICATE", "draft.messages", "identités dupliquées")
+    beats = {beat["beat_id"]: beat for beat in plan["beats"]}
+    beat_order = {beat_id: index for index, beat_id in enumerate(EDITORIAL_BEAT_IDS)}
+    movements = {movement["movement_id"]: movement for movement in relation["movements"]}
+    states = {state["state_id"]: state for state in relation["local_states"]}
+    facts = {fact["fact_id"]: fact for fact in relation["shared_facts"]}
+    usable_facts = set(plan["fact_policy"]["usable_fact_ids"])
+    previous_beat = -1
+    used_beats: set[str] = set()
+    for index, message in enumerate(messages):
+        path = f"draft.messages[{index}]"
+        speaker = message["speaker_id"]
+        beat_id = message["beat_id"]
+        movement_id = message["conversation_move"]
+        if speaker not in {"player", "sandra"}:
+            _issue(errors, "UNEXPECTED_PARTICIPANT", f"{path}.speaker_id", speaker)
+        if message["objective_actor_id"] != speaker:
+            _issue(errors, "MESSAGE_OBJECTIVE_INVALID", f"{path}.objective_actor_id", speaker)
+        if beat_id not in beats:
+            _issue(errors, "MESSAGE_BEAT_UNKNOWN", f"{path}.beat_id", beat_id)
+        else:
+            used_beats.add(beat_id)
+            current_beat = beat_order[beat_id]
+            if current_beat < previous_beat:
+                _issue(errors, "BEAT_ORDER_REGRESSION", f"{path}.beat_id", beat_id)
+            previous_beat = max(previous_beat, current_beat)
+        movement = movements.get(movement_id)
+        if movement is None or movement["actor_id"] != speaker:
+            _issue(errors, "MESSAGE_MOVEMENT_INCOMPATIBLE", f"{path}.conversation_move", movement_id)
+        state = states.get(message["local_state"])
+        if state is None or movement_id not in state["movement_ids"]:
+            _issue(errors, "MESSAGE_LOCAL_STATE_INCOMPATIBLE", f"{path}.local_state", message["local_state"])
+        for fact_id in message["fact_refs"]:
+            fact = facts.get(fact_id)
+            if fact is None or fact_id not in usable_facts:
+                _issue(errors, "FACT_NOT_AUTHORIZED", f"{path}.fact_refs", fact_id)
+            elif speaker not in fact["known_by"]:
+                _issue(errors, "FACT_NOT_KNOWN_BY_SPEAKER", f"{path}.fact_refs", f"{speaker}: {fact_id}")
+        reply_to = message["reply_to"]
+        if reply_to is not None:
+            if reply_to not in message_index or message_index[reply_to] >= index:
+                _issue(errors, "REPLY_REFERENCE_INVALID", f"{path}.reply_to", str(reply_to))
+            else:
+                replied_branch = messages[message_index[reply_to]]["branch"]
+                if replied_branch != "COMMON" and replied_branch != message["branch"]:
+                    _issue(errors, "REPLY_CROSSES_BRANCH", f"{path}.reply_to", reply_to)
+        if len(message["text"]) > 120:
+            _issue(warnings, "STYLE_LONG_BUBBLE", f"{path}.text", "bulle longue à relire")
+    if set(EDITORIAL_BEAT_IDS) != used_beats:
+        _issue(errors, "REQUIRED_BEAT_MISSING", "draft.messages", ", ".join(sorted(set(EDITORIAL_BEAT_IDS) - used_beats)))
+
+    local_ids = {fact["fact_id"] for fact in provenance["local_facts"]}
+    if local_ids != {"local_cafe", "local_blue_chairs", "local_cold_fries", "local_terrace_photo"}:
+        _issue(errors, "LOCAL_FACT_SET_INVALID", "provenance.local_facts", ", ".join(sorted(local_ids)))
+    for index, fact in enumerate(provenance["local_facts"]):
+        if fact["persistence"] != "SCENE_LOCAL_ONLY":
+            _issue(errors, "LOCAL_FACT_BECAME_DURABLE", f"provenance.local_facts[{index}].persistence", fact["fact_id"])
+        if set(fact["known_by"]) != {"player", "sandra"}:
+            _issue(errors, "LOCAL_FACT_KNOWLEDGE_INVALID", f"provenance.local_facts[{index}].known_by", fact["fact_id"])
+
+    media_messages = [message for message in messages if message["kind"] == "IMAGE"]
+    requirement = plan["media_requirement"]
+    if requirement["media_decision"] != "REQUIRED" or len(media_messages) != 1:
+        _issue(errors, "MEDIA_REQUIRED", "draft.messages", "un média obligatoire attendu")
+    elif media_messages[0]["message_id"] != "m01" or not isinstance(media_messages[0]["media"], dict):
+        _issue(errors, "MEDIA_REQUIRED", "draft.messages", "m01 doit porter le média")
+    else:
+        media = media_messages[0]["media"]
+        expected_media = source["media"]
+        if (
+            media["media_id"] != expected_media["media_id"]
+            or media["kind"] != requirement["kind"]
+            or media["description"] != expected_media["description"]
+            or media["linked_fact_id"] != requirement["linked_fact_id"]
+            or media["justification"] != requirement["justification"]
+            or media["linked_fact_id"] not in media_messages[0]["fact_refs"]
+        ):
+            _issue(errors, "MEDIA_UNJUSTIFIED", "draft.messages[0].media", "média source, fait et justification exacts requis")
+
+    choice = draft["choice"]
+    option_ids = [option["option_id"] for option in choice["options"]]
+    plan_option_ids = [option["option_id"] for option in plan["choice"]["options"]]
+    if choice["choice_id"] != plan["choice"]["choice_id"] or option_ids != plan_option_ids:
+        _issue(errors, "CHOICE_OPTION_MISMATCH", "draft.choice", "choix du plan attendu")
+    if choice["after_message_id"] != "m46" or choice["converge_at_message_id"] != "m52":
+        _issue(errors, "CHOICE_MESSAGE_REFERENCE_INVALID", "draft.choice", "m46 puis m52 attendus")
+    if any(len(option["formulation"]) > 70 for option in choice["options"]):
+        _issue(errors, "CHOICE_FORMULATION_LONG", "draft.choice.options", "choix court requis")
+    receptions: list[tuple[tuple[str, str], ...]] = []
+    declared_receptions: set[str] = set()
+    for option in choice["options"]:
+        reception: list[tuple[str, str]] = []
+        for reception_id in option["reception_message_ids"]:
+            declared_receptions.add(reception_id)
+            if reception_id not in message_index:
+                _issue(errors, "CHOICE_RECEPTION_UNKNOWN", "draft.choice.options", reception_id)
+                continue
+            message = messages[message_index[reception_id]]
+            if message["branch"] != option["option_id"]:
+                _issue(errors, "CHOICE_RECEPTION_BRANCH_INVALID", "draft.choice.options", reception_id)
+            reception.append((message["speaker_id"], message["text"].casefold()))
+        receptions.append(tuple(reception))
+    if len(receptions) == 2 and receptions[0] == receptions[1]:
+        _issue(errors, "CHOICE_RECEPTION_NOT_DISTINCT", "draft.choice.options", "réceptions distinctes requises")
+    allowed_branches = {"COMMON", *option_ids}
+    for index, message in enumerate(messages):
+        if message["branch"] not in allowed_branches:
+            _issue(errors, "MESSAGE_BRANCH_UNKNOWN", f"draft.messages[{index}].branch", message["branch"])
+        if message["branch"] != "COMMON" and message["message_id"] not in declared_receptions:
+            _issue(errors, "BRANCHED_MESSAGE_NOT_DECLARED", f"draft.messages[{index}].message_id", message["message_id"])
+
+    counts = _editorial_counts(workspace)
+    if set(counts["playable_path_elements"].values()) != {93}:
+        _issue(errors, "PLAYABLE_PATH_COUNT_INVALID", "draft.messages", str(counts["playable_path_elements"]))
+    if not 8 <= counts["burst_groups_stored"] <= 16:
+        _issue(warnings, "BURST_COUNT_WARNING", "draft.messages", str(counts["burst_groups_stored"]))
+    burst_groups: dict[str, list[int]] = {}
+    for index, message in enumerate(messages):
+        if message["burst_id"]:
+            burst_groups.setdefault(message["burst_id"], []).append(index)
+    for burst_id, indexes in burst_groups.items():
+        speakers = {messages[index]["speaker_id"] for index in indexes}
+        branches = {messages[index]["branch"] for index in indexes}
+        if len(indexes) < 2 or len(speakers) != 1 or len(branches) != 1 or indexes != list(range(indexes[0], indexes[-1] + 1)):
+            _issue(errors, "BURST_INVALID", "draft.messages", burst_id)
+    if not 10 <= counts["weak_messages_stored"] <= 20:
+        _issue(warnings, "WEAK_MESSAGE_COUNT_WARNING", "draft.messages", str(counts["weak_messages_stored"]))
+
+    authored_text = "\n".join(message["text"].casefold() for message in messages)
+    authored_text += "\n" + "\n".join(option["formulation"].casefold() for option in choice["options"])
+    for phrase in _phrase_hits(authored_text, DIRECT_DECLARATIONS):
+        _issue(errors, "DIRECT_ROMANTIC_DECLARATION", "draft", phrase)
+    for phrase in _pattern_hits(authored_text, DIRECT_DECLARATION_PATTERNS):
+        _issue(errors, "DIRECT_ROMANTIC_DECLARATION", "draft", phrase)
+    for phrase in _phrase_hits(authored_text, ACQUIRED_MEETINGS):
+        _issue(errors, "MEETING_PRESENTED_AS_ACQUIRED", "draft", phrase)
+    for phrase in _pattern_hits(authored_text, ACQUIRED_MEETING_PATTERNS):
+        _issue(errors, "MEETING_PRESENTED_AS_ACQUIRED", "draft", phrase)
+    for phrase in _phrase_hits(authored_text, DURABLE_CONSEQUENCES):
+        _issue(errors, "DURABLE_CONSEQUENCE_FORBIDDEN", "draft", phrase)
+
+    repeated = sorted({
+        message["text"].casefold()
+        for message in messages
+        if sum(other["text"].casefold() == message["text"].casefold() for other in messages) > 1
+    })
+    if repeated:
+        _issue(warnings, "SOURCE_REPETITION_REVIEW", "draft.messages", ", ".join(repeated))
+
+    specificity = dialogue_specificity(workspace)
+    for issue in specificity["sandra"]:
+        _issue(errors, "DIALOGUE_SANDRA_CONTRACT_INCOMPATIBLE", issue["path"], issue["code"])
+    for name in ("marie", "mathilde"):
+        codes = {issue["code"] for issue in specificity[name]}
+        missing = FOREIGN_DIALOGUE_SPECIFICITY_CODES - codes
+        if missing:
+            _issue(errors, "DIALOGUE_INTERCHANGEABLE", "draft.messages", f"{name}: preuves absentes={sorted(missing)}")
+    return _editorial_validation_result(workspace, errors, warnings)
+
+
+def build_editorial_traceability(workspace: Mapping[str, Any]) -> dict[str, Any]:
+    report = validate_editorial_pilot(workspace)
+    draft = workspace["draft"]
+    plan = workspace["planning"]["plan"]
+    specificity = dialogue_specificity(workspace)
+    return {
+        "format": FORMAT_EDITORIAL_TRACEABILITY,
+        "version": VERSION,
+        "source_content_sha256": report["source_content_sha256"],
+        "validation_fingerprint": report["validation_fingerprint"],
+        "participant_ids": list(plan["participant_ids"]),
+        "counts": copy.deepcopy(report["counts"]),
+        "beat_trace": [
+            {
+                "position": index + 1,
+                "beat_id": beat["beat_id"],
+                "message_ids": [
+                    message["message_id"] for message in draft["messages"] if message["beat_id"] == beat["beat_id"]
+                ],
+            }
+            for index, beat in enumerate(plan["beats"])
+        ],
+        "choice_trace": {
+            "choice_id": draft["choice"]["choice_id"],
+            "after_message_id": draft["choice"]["after_message_id"],
+            "receptions": {
+                option["option_id"]: list(option["reception_message_ids"])
+                for option in draft["choice"]["options"]
+            },
+            "converge_at_message_id": draft["choice"]["converge_at_message_id"],
+        },
+        "media_trace": {
+            "message_id": "m01",
+            "media_id": workspace["source"]["media"]["media_id"],
+            "linked_fact_id": plan["media_requirement"]["linked_fact_id"],
+            "justification": plan["media_requirement"]["justification"],
+        },
+        "fact_trace": {
+            "canonical_input_ids": [item["input_id"] for item in workspace["provenance"]["canonical_inputs"]],
+            "local_fact_ids": [item["fact_id"] for item in workspace["provenance"]["local_facts"]],
+            "local_persistence": "SCENE_LOCAL_ONLY",
+            "durable_effect": False,
+        },
+        "voice_validation": {
+            "sandra": {
+                "compatible": not specificity["sandra"],
+                "issue_codes": sorted({issue["code"] for issue in specificity["sandra"]}),
+            },
+            "player": {
+                "compatible": all(
+                    message["conversation_move"] == "sandra_player_returns_carefully"
+                    for message in draft["messages"]
+                    if message["speaker_id"] == "player"
+                ),
+                "basis": "mouvement Player–Sandra indirect et absence de déclaration, pression ou promesse acquise",
+            },
+            "marie": {
+                "compatible": False,
+                "issue_codes": sorted({issue["code"] for issue in specificity["marie"]}),
+            },
+            "mathilde": {
+                "compatible": False,
+                "issue_codes": sorted({issue["code"] for issue in specificity["mathilde"]}),
+            },
+        },
+        "narrative_integrity": editorial_draft_projection(workspace) == editorial_source_projection(workspace["source"]),
+        "a6_export": False,
+        "runtime_wiring": False,
+    }
+
+
+def editorial_decision_fingerprint(decision: Mapping[str, Any]) -> str:
+    payload = {key: value for key, value in decision.items() if key != "decision_fingerprint"}
+    return _sha256({"validator_version": EDITORIAL_VALIDATOR_VERSION, "decision": payload})
+
+
+def validate_editorial_decision(
+    workspace: Mapping[str, Any],
+    decision: Mapping[str, Any],
+) -> list[Issue]:
+    issues: list[Issue] = []
+    if not _closed(decision, CANON_DECISION_KEYS, "decision", issues):
+        return issues
+    if decision["format"] != FORMAT_CANON_DECISION or decision["version"] != VERSION:
+        _issue(issues, "CANON_DECISION_FORMAT_INVALID", "decision", FORMAT_CANON_DECISION)
+    if decision["status"] not in CANON_REVIEW_STATUSES:
+        _issue(issues, "CANON_REVIEW_STATUS_UNKNOWN", "decision.status", str(decision["status"]))
+    for field in (
+        "draft_id",
+        "draft_revision",
+        "source_content_sha256",
+        "validation_fingerprint",
+        "reviewed_by",
+        "decision",
+        "next_action",
+        "decision_fingerprint",
+    ):
+        if not _nonempty(decision[field]):
+            _issue(issues, "TEXT_REQUIRED", f"decision.{field}", "chaîne non vide attendue")
+    report = validate_editorial_pilot(workspace)
+    if decision["draft_id"] != workspace["draft"]["draft_id"] or decision["draft_revision"] != workspace["draft"]["revision"]:
+        _issue(issues, "CANON_DECISION_DRAFT_MISMATCH", "decision", workspace["draft"]["draft_id"])
+    if decision["source_content_sha256"] != report["source_content_sha256"]:
+        _issue(issues, "CANON_DECISION_SOURCE_STALE", "decision.source_content_sha256", report["source_content_sha256"])
+    if decision["validation_fingerprint"] != report["validation_fingerprint"]:
+        _issue(issues, "CANON_DECISION_VALIDATION_STALE", "decision.validation_fingerprint", report["validation_fingerprint"])
+    if decision["status"] == "APPROVED_FOR_CANON_REVIEW" and report["status"] == "BLOCKED":
+        _issue(issues, "BLOCKED_DRAFT_APPROVED", "decision.status", report["status"])
+    if decision["status"] == "APPROVED_FOR_CANON_REVIEW" and decision["decision"] != "CANON_REVIEW":
+        _issue(issues, "CANON_DECISION_ACTION_INVALID", "decision.decision", "CANON_REVIEW")
+    blind = decision["blind_reading_result"]
+    blind_keys = {
+        "voice_a_identification",
+        "voice_b_identification",
+        "identifying_markers",
+        "too_written_passages",
+        "marie_or_mathilde_overlap",
+        "repetitions_to_discuss",
+    }
+    if _closed(blind, blind_keys, "decision.blind_reading_result", issues):
+        for field in ("voice_a_identification", "voice_b_identification"):
+            if not _nonempty(blind[field]):
+                _issue(issues, "TEXT_REQUIRED", f"decision.blind_reading_result.{field}", "réponse humaine requise")
+        for field in blind_keys - {"voice_a_identification", "voice_b_identification"}:
+            _string_list(blind[field], f"decision.blind_reading_result.{field}", issues, nonempty=True)
+    _string_list(decision["narrative_remarks"], "decision.narrative_remarks", issues, nonempty=True)
+    expected = editorial_decision_fingerprint(decision)
+    if decision["decision_fingerprint"] != expected:
+        _issue(issues, "CANON_DECISION_FINGERPRINT_STALE", "decision.decision_fingerprint", expected)
+    return issues
+
+
+def _blind_text(text: str) -> str:
+    return text.replace("Ludo", "[Voix B]").replace("Sandra", "[Voix A]")
+
+
+def render_editorial_blind_reading(workspace: Mapping[str, Any]) -> str:
+    draft = workspace["draft"]
+    messages = {message["message_id"]: message for message in draft["messages"]}
+
+    def render_message(message: Mapping[str, Any]) -> str:
+        voice = "Voix A" if message["speaker_id"] == "sandra" else "Voix B"
+        if message["kind"] == "IMAGE":
+            return (
+                f"[{message['message_id']}] **{voice}** — *{_blind_text(message['text'])}*\n\n"
+                "*[Média anonymisé : terrasse de café et chaises bleues]*"
+            )
+        return f"[{message['message_id']}] **{voice}**\n\n{_blind_text(message['text'])}"
+
+    source = workspace["source"]
+    lines = [
+        "# R8C-A11.5 — Lecture en aveugle — Les chaises bleues",
+        "",
+        "Les identités et le nom du média sont masqués. La dérivation ne modifie pas le brouillon intégré.",
+        "",
+        "## Tronc avant choix",
+        "",
+    ]
+    lines.extend(render_message(messages[item["message_id"]]) + "\n" for item in source["pre_choice_messages"])
+    lines.extend(["## Choix de Voix B", ""])
+    for option in draft["choice"]["options"]:
+        label = "Option A" if option["option_id"] == "careful_warmth" else "Option B"
+        lines.extend([f"### {label}", "", f"**{option['formulation']}**", ""])
+        lines.extend(render_message(messages[message_id]) + "\n" for message_id in option["reception_message_ids"])
+    lines.extend(["## Convergence", ""])
+    lines.extend(render_message(messages[item["message_id"]]) + "\n" for item in source["convergence_messages"])
+    lines.extend([
+        "## Fiche humaine",
+        "",
+        "- Quelle voix est Sandra ?",
+        "- Quels marqueurs permettent de l’identifier ?",
+        "- Quels passages semblent trop écrits ?",
+        "- Quels passages pourraient appartenir à Marie ou Mathilde ?",
+        "- Quelles répétitions doivent être discutées en revue narrative ?",
+        "",
+        "Aucune notation automatique n’est produite.",
+    ])
+    return "\n".join(lines) + "\n"
+
+
+def render_editorial_human_review(
+    workspace: Mapping[str, Any],
+    decision: Mapping[str, Any],
+) -> str:
+    blind = decision["blind_reading_result"]
+    lines = [
+        "# R8C-A11.5 — Relecture humaine — Sandra — Les chaises bleues",
+        "",
+        f"> **Brouillon :** `{decision['draft_id']}` — `{decision['draft_revision']}`",
+        f"> **Statut humain :** `{decision['status']}`",
+        f"> **Relecteur :** `{decision['reviewed_by']}`",
+        f"> **Empreinte source :** `{decision['source_content_sha256']}`",
+        "",
+        "## Lecture en aveugle complétée",
+        "",
+        f"- Voix A identifiée comme : **{blind['voice_a_identification']}**",
+        f"- Voix B identifiée comme : **{blind['voice_b_identification']}**",
+        "- Marqueurs d'identification :",
+    ]
+    lines.extend(f"  - {item}" for item in blind["identifying_markers"])
+    lines.append("- Passages semblant trop écrits :")
+    lines.extend(f"  - {item}" for item in blind["too_written_passages"])
+    lines.append("- Passages pouvant glisser vers Marie ou Mathilde :")
+    lines.extend(f"  - {item}" for item in blind["marie_or_mathilde_overlap"])
+    lines.append("- Répétitions à discuter :")
+    lines.extend(f"  - {item}" for item in blind["repetitions_to_discuss"])
+    lines.extend(["", "## Remarques narratives", ""])
+    lines.extend(f"- {item}" for item in decision["narrative_remarks"])
+    lines.extend([
+        "",
+        "## Décision",
+        "",
+        f"- Action : `{decision['decision']}`",
+        f"- Suite : {decision['next_action']}",
+        "- Cette décision ne produit ni export A6, ni fait A1, ni branchement runtime.",
+    ])
+    return "\n".join(lines) + "\n"
+
+
+def validate_editorial_json_library() -> dict[str, Any]:
+    workspace = load_editorial_pilot_workspace(**default_editorial_paths())
+    generated_validation = validate_editorial_pilot(workspace)
+    if generated_validation != workspace["validation_report"]:
+        raise A114ValidationError([Issue("EDITORIAL_VALIDATION_STALE", "validation_report", "rapport différent")])
+    generated_traceability = build_editorial_traceability(workspace)
+    if generated_traceability != workspace["traceability_report"]:
+        raise A114ValidationError([Issue("EDITORIAL_TRACEABILITY_STALE", "traceability_report", "rapport différent")])
+    decision_issues = validate_editorial_decision(workspace, workspace["decision"])
+    if decision_issues:
+        raise A114ValidationError(decision_issues)
+    if render_editorial_blind_reading(workspace) != PILOT_BLIND_READING_PATH.read_text(encoding="utf-8"):
+        raise A114ValidationError([Issue("BLIND_READING_STALE", str(PILOT_BLIND_READING_PATH), "rendu différent")])
+    if render_editorial_human_review(workspace, workspace["decision"]) != PILOT_HUMAN_REVIEW_PATH.read_text(encoding="utf-8"):
+        raise A114ValidationError([Issue("EDITORIAL_HUMAN_REVIEW_STALE", str(PILOT_HUMAN_REVIEW_PATH), "rendu différent")])
+    return {
+        "ok": True,
+        "draft_id": workspace["draft"]["draft_id"],
+        "status": workspace["decision"]["status"],
+        "source_content_sha256": generated_validation["source_content_sha256"],
+        "counts": generated_validation["counts"],
+    }
+
+
+def run_editorial_pilot_smoke() -> dict[str, Any]:
+    workspace = load_editorial_pilot_workspace(include_outputs=False)
+    first = validate_editorial_pilot(workspace)
+    second = validate_editorial_pilot(workspace)
+    if first != second or first["status"] == "BLOCKED":
+        raise AssertionError("validation A11.5 non déterministe ou bloquée")
+
+    def mutation_codes(mutant: Mapping[str, Any]) -> set[str]:
+        return {item["code"] for item in validate_editorial_pilot(mutant)["blocking_errors"]}
+
+    mutations: dict[str, set[str]] = {}
+    added = copy.deepcopy(workspace)
+    extra = copy.deepcopy(added["draft"]["messages"][-1])
+    extra["message_id"] = "m94"
+    extra["reply_to"] = "m93"
+    added["draft"]["messages"].append(extra)
+    mutations["added"] = mutation_codes(added)
+    removed = copy.deepcopy(workspace)
+    removed["draft"]["messages"].pop()
+    mutations["removed"] = mutation_codes(removed)
+    modified = copy.deepcopy(workspace)
+    modified["draft"]["messages"][1]["text"] += " !"
+    mutations["modified"] = mutation_codes(modified)
+    media_missing = copy.deepcopy(workspace)
+    media_missing["draft"]["messages"][0]["kind"] = "TEXT"
+    media_missing["draft"]["messages"][0]["media"] = None
+    mutations["media_missing"] = mutation_codes(media_missing)
+    acquired = copy.deepcopy(workspace)
+    acquired["draft"]["messages"][78]["text"] = "On se voit vendredi à 20 h"
+    mutations["acquired_meeting"] = mutation_codes(acquired)
+    marie = copy.deepcopy(workspace)
+    marie["planning"]["plan"]["participant_ids"].append("marie")
+    mutations["marie_participant"] = mutation_codes(marie)
+    identical = copy.deepcopy(workspace)
+    messages_by_id = {message["message_id"]: message for message in identical["draft"]["messages"]}
+    for a_id, b_id in zip(
+        identical["draft"]["choice"]["options"][0]["reception_message_ids"],
+        identical["draft"]["choice"]["options"][1]["reception_message_ids"],
+    ):
+        messages_by_id[b_id]["speaker_id"] = messages_by_id[a_id]["speaker_id"]
+        messages_by_id[b_id]["objective_actor_id"] = messages_by_id[a_id]["objective_actor_id"]
+        messages_by_id[b_id]["conversation_move"] = messages_by_id[a_id]["conversation_move"]
+        messages_by_id[b_id]["text"] = messages_by_id[a_id]["text"]
+    mutations["identical_reception"] = mutation_codes(identical)
+    durable = copy.deepcopy(workspace)
+    durable["provenance"]["local_facts"][0]["persistence"] = "A1_DURABLE_FACT"
+    mutations["durable_local_fact"] = mutation_codes(durable)
+    expected = {
+        "added": "EDITORIAL_ELEMENT_COUNT_INVALID",
+        "removed": "EDITORIAL_ELEMENT_COUNT_INVALID",
+        "modified": "SOURCE_CONTENT_MISMATCH",
+        "media_missing": "MEDIA_REQUIRED",
+        "acquired_meeting": "MEETING_PRESENTED_AS_ACQUIRED",
+        "marie_participant": "UNEXPECTED_PARTICIPANT",
+        "identical_reception": "CHOICE_RECEPTION_NOT_DISTINCT",
+        "durable_local_fact": "LOCAL_FACT_BECAME_DURABLE",
+    }
+    for name, expected_code in expected.items():
+        if expected_code not in mutations[name]:
+            raise AssertionError(f"mutation {name} non rejetée par {expected_code}: {sorted(mutations[name])}")
+    return {
+        "ok": True,
+        "source_content_sha256": first["source_content_sha256"],
+        "counts": first["counts"],
+        "warning_codes": [item["code"] for item in first["warnings"]],
+        "mutation_error_codes": {name: sorted(codes) for name, codes in mutations.items()},
+        "a6_export": False,
+        "runtime_wiring": False,
+    }
+
+
 def validate_json_library() -> dict[str, Any]:
     workspace = load_workspace(**default_paths())
     report = validate_draft(workspace)
@@ -1399,7 +2401,9 @@ def _write_export_pair(
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Offline R8C-A11.4 plan-to-draft and A6 test export")
+    parser = argparse.ArgumentParser(
+        description="Offline R8C-A11.4 plan-to-draft export and A11.5 editorial pilot review"
+    )
     subparsers = parser.add_subparsers(dest="command", required=True)
     subparsers.add_parser("validate-json")
     subparsers.add_parser("validate")
@@ -1409,30 +2413,44 @@ def main(argv: Sequence[str] | None = None) -> int:
     export_parser.add_argument("--output", type=Path)
     export_parser.add_argument("--projection-report-output", type=Path)
     subparsers.add_parser("smoke")
+    subparsers.add_parser("validate-pilot")
+    subparsers.add_parser("pilot-review")
+    subparsers.add_parser("pilot-blind")
+    subparsers.add_parser("pilot-smoke")
     args = parser.parse_args(argv)
     try:
-        workspace = load_workspace(**default_paths())
-        if args.command == "validate-json":
-            _emit(validate_json_library())
-        elif args.command == "validate":
-            _emit(validate_draft(workspace))
-        elif args.command == "review":
-            print(render_human_review(workspace), end="")
-        elif args.command == "export":
-            bundle, projection_report = export_a6(workspace)
-            if (args.output is None) != (args.projection_report_output is None):
-                raise A114ApprovalError("both export output paths are required together")
-            if args.output is not None and not args.dry_run:
-                _write_export_pair(
-                    bundle,
-                    projection_report,
-                    args.output,
-                    args.projection_report_output,
-                )
-            else:
-                _emit({"a6_bundle": bundle, "projection_report": projection_report})
+        if args.command == "validate-pilot":
+            _emit(validate_editorial_json_library())
+        elif args.command == "pilot-review":
+            workspace = load_editorial_pilot_workspace()
+            print(render_editorial_human_review(workspace, workspace["decision"]), end="")
+        elif args.command == "pilot-blind":
+            print(render_editorial_blind_reading(load_editorial_pilot_workspace()), end="")
+        elif args.command == "pilot-smoke":
+            _emit(run_editorial_pilot_smoke())
         else:
-            _emit(run_smoke())
+            workspace = load_workspace(**default_paths())
+            if args.command == "validate-json":
+                _emit(validate_json_library())
+            elif args.command == "validate":
+                _emit(validate_draft(workspace))
+            elif args.command == "review":
+                print(render_human_review(workspace), end="")
+            elif args.command == "export":
+                bundle, projection_report = export_a6(workspace)
+                if (args.output is None) != (args.projection_report_output is None):
+                    raise A114ApprovalError("both export output paths are required together")
+                if args.output is not None and not args.dry_run:
+                    _write_export_pair(
+                        bundle,
+                        projection_report,
+                        args.output,
+                        args.projection_report_output,
+                    )
+                else:
+                    _emit({"a6_bundle": bundle, "projection_report": projection_report})
+            else:
+                _emit(run_smoke())
     except (A114ValidationError, A114ApprovalError, AssertionError, OSError) as exc:
         print(f"A11.4_ERROR: {exc}", file=sys.stderr)
         return 1

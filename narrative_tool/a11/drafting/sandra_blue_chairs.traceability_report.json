@@ -1,0 +1,92 @@
+{
+  "format": "R8C_A11_EDITORIAL_TRACEABILITY_REPORT",
+  "version": 1,
+  "source_content_sha256": "9167120abc55dbf4275ac67eb7b4f774a58322587d87c9310644e3bcf85982dd",
+  "validation_fingerprint": "88d863416f78b03ce9faa187745005dbb763a4680bd5486ea3bd4d469a7909a7",
+  "participant_ids": ["player", "sandra"],
+  "counts": {
+    "stored_message_elements": 98,
+    "playable_path_elements": {"careful_warmth": 93, "ironic_withdrawal": 93},
+    "burst_groups_stored": 13,
+    "burst_groups_by_path": {"careful_warmth": 11, "ironic_withdrawal": 11},
+    "weak_messages_stored": 15,
+    "weak_messages_by_path": {"careful_warmth": 14, "ironic_withdrawal": 14},
+    "beat_count": 7
+  },
+  "beat_trace": [
+    {
+      "position": 1,
+      "beat_id": "concrete_photo",
+      "message_ids": ["m01", "m02", "m03", "m04", "m05", "m06", "m07", "m08", "m09", "m10"]
+    },
+    {
+      "position": 2,
+      "beat_id": "familiar_complicity",
+      "message_ids": ["m11", "m12", "m13", "m14", "m15", "m16", "m17", "m18", "m19", "m20", "m21", "m22"]
+    },
+    {
+      "position": 3,
+      "beat_id": "lightly_charged_memory",
+      "message_ids": ["m23", "m24", "m25", "m26", "m27", "m28", "m29", "m30", "m31", "m32", "m33", "m34", "m35"]
+    },
+    {
+      "position": 4,
+      "beat_id": "indirect_relaunch",
+      "message_ids": ["m36", "m37", "m38", "m39", "m40", "m41", "m42", "m43", "m44", "m45"]
+    },
+    {
+      "position": 5,
+      "beat_id": "sandra_test_and_choice",
+      "message_ids": ["m46", "m47A", "m48A", "m49A", "m50A", "m51A", "m47B", "m48B", "m49B", "m50B", "m51B"]
+    },
+    {
+      "position": 6,
+      "beat_id": "reception_and_limit",
+      "message_ids": ["m52", "m53", "m54", "m55", "m56", "m57", "m58", "m59", "m60", "m61", "m62", "m63", "m64", "m65", "m66", "m67", "m68", "m69", "m70", "m71", "m72", "m73", "m74", "m75", "m76", "m77", "m78"]
+    },
+    {
+      "position": 7,
+      "beat_id": "protective_exit",
+      "message_ids": ["m79", "m80", "m81", "m82", "m83", "m84", "m85", "m86", "m87", "m88", "m89", "m90", "m91", "m92", "m93"]
+    }
+  ],
+  "choice_trace": {
+    "choice_id": "player_response_to_sandra_test",
+    "after_message_id": "m46",
+    "receptions": {
+      "careful_warmth": ["m47A", "m48A", "m49A", "m50A", "m51A"],
+      "ironic_withdrawal": ["m47B", "m48B", "m49B", "m50B", "m51B"]
+    },
+    "converge_at_message_id": "m52"
+  },
+  "media_trace": {
+    "message_id": "m01",
+    "media_id": "photo_sandra_cafe_blue_chairs",
+    "linked_fact_id": "local_terrace_photo",
+    "justification": "La photo banale montre les nouvelles chaises, motive le premier message et déclenche la mémoire du dernier déjeuner."
+  },
+  "fact_trace": {
+    "canonical_input_ids": ["sandra_character_contract", "player_sandra_relationship", "sandra_current_distance"],
+    "local_fact_ids": ["local_cafe", "local_blue_chairs", "local_cold_fries", "local_terrace_photo"],
+    "local_persistence": "SCENE_LOCAL_ONLY",
+    "durable_effect": false
+  },
+  "voice_validation": {
+    "sandra": {"compatible": true, "issue_codes": []},
+    "player": {
+      "compatible": true,
+      "basis": "mouvement Player–Sandra indirect et absence de déclaration, pression ou promesse acquise"
+    },
+    "marie": {
+      "compatible": false,
+      "issue_codes": ["ACTIVE_CHARACTER_MISMATCH", "ACTIVE_RELATIONSHIP_MISMATCH", "FACT_UNAVAILABLE", "LIMIT_INCOMPATIBLE", "LOCAL_STATE_INCOMPATIBLE", "MESSAGE_FACT_INCOMPATIBLE", "MESSAGE_MOVEMENT_INCOMPATIBLE", "MESSAGE_SPEAKER_INCOMPATIBLE", "MOVEMENT_INCOMPATIBLE", "VOICE_RULE_INCOMPATIBLE"]
+    },
+    "mathilde": {
+      "compatible": false,
+      "issue_codes": ["ACTIVE_CHARACTER_MISMATCH", "ACTIVE_RELATIONSHIP_MISMATCH", "FACT_UNAVAILABLE", "LIMIT_INCOMPATIBLE", "LOCAL_STATE_INCOMPATIBLE", "MESSAGE_FACT_INCOMPATIBLE", "MESSAGE_MOVEMENT_INCOMPATIBLE", "MESSAGE_SPEAKER_INCOMPATIBLE", "MOVEMENT_INCOMPATIBLE", "VOICE_RULE_INCOMPATIBLE"]
+    }
+  },
+  "narrative_integrity": true,
+  "a6_export": false,
+  "runtime_wiring": false
+}

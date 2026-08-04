@@ -1,0 +1,37 @@
+{
+  "format": "R8C_A11_EDITORIAL_VALIDATION_REPORT",
+  "version": 1,
+  "validator_version": "a11-first-editorial-pilot-validator-1.0",
+  "source_id": "a11_5_sandra_blue_chairs_locked_source",
+  "draft_id": "a11_5_sandra_blue_chairs_draft",
+  "draft_revision": "rev_01",
+  "source_content_sha256": "9167120abc55dbf4275ac67eb7b4f774a58322587d87c9310644e3bcf85982dd",
+  "validation_fingerprint": "88d863416f78b03ce9faa187745005dbb763a4680bd5486ea3bd4d469a7909a7",
+  "status": "READY_WITH_WARNINGS",
+  "blocking_errors": [],
+  "warnings": [
+    {
+      "code": "SOURCE_REPETITION_REVIEW",
+      "path": "draft.messages",
+      "message": "je sais, non, sans promesse"
+    }
+  ],
+  "counts": {
+    "stored_message_elements": 98,
+    "playable_path_elements": {
+      "careful_warmth": 93,
+      "ironic_withdrawal": 93
+    },
+    "burst_groups_stored": 13,
+    "burst_groups_by_path": {
+      "careful_warmth": 11,
+      "ironic_withdrawal": 11
+    },
+    "weak_messages_stored": 15,
+    "weak_messages_by_path": {
+      "careful_warmth": 14,
+      "ironic_withdrawal": 14
+    },
+    "beat_count": 7
+  }
+}

@@ -62,7 +62,7 @@ REVIEW_STATUSES = {
     "REJECTED",
 }
 SCENE_KINDS = {"MODULAR", "SIGNATURE"}
-MEDIA_DECISIONS = {"NONE", "HUMAN_DECISION_PENDING"}
+MEDIA_DECISIONS = {"NONE", "HUMAN_DECISION_PENDING", "REQUIRED"}
 REQUIRED_PROTECTIVE_EFFECTS = {
     "humiliation_forbidden",
     "imposed_break_forbidden",
@@ -659,6 +659,7 @@ ADMINISTRATIVE_PLAN_TEXT_KEYS = {
     "plan_fingerprint",
     "scene_kind",
     "status",
+    "title",
     "version",
 }
 ADMINISTRATIVE_PLAN_TEXT_SUFFIXES = ("_id", "_ids", "_refs", "_fingerprint")
@@ -927,6 +928,14 @@ def _collect_scene_plan_issues(
                 "MEDIA_UNJUSTIFIED",
                 "plan.media_requirement",
                 "la décision humaine future reste sans type ni fait préassigné et doit être justifiée",
+            )
+    elif media["media_decision"] == "REQUIRED":
+        if not all(_nonempty(item) for item in media_payload):
+            _issue(
+                errors,
+                "MEDIA_UNJUSTIFIED",
+                "plan.media_requirement",
+                "un type, un fait relié et une justification sont requis",
             )
     elif media["media_decision"] not in MEDIA_DECISIONS:
         _issue(

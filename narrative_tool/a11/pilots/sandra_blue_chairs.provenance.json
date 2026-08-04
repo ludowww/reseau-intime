@@ -1,0 +1,78 @@
+{
+  "format": "R8C_A11_NARRATIVE_PROVENANCE",
+  "version": 1,
+  "provenance_id": "a11_5_sandra_blue_chairs_provenance",
+  "source_id": "a11_5_sandra_blue_chairs_locked_source",
+  "source_content_sha256": "9167120abc55dbf4275ac67eb7b4f774a58322587d87c9310644e3bcf85982dd",
+  "canonical_inputs": [
+    {
+      "input_id": "sandra_character_contract",
+      "text": "Sandra protège le trouble par un détour, montre l'intérêt par une relance et fait avancer la proximité lentement.",
+      "source_ref": "narrative_tool/a11/calibration/contracts/sandra.json"
+    },
+    {
+      "input_id": "player_sandra_relationship",
+      "text": "La relation est une complicité ancienne, antérieure au couple avec Marie, aujourd'hui tenue à distance.",
+      "source_ref": "narrative_tool/a11/calibration/registers/player_sandra.json"
+    },
+    {
+      "input_id": "sandra_current_distance",
+      "text": "Le fil est devenu irrégulier et prudent.",
+      "source_ref": "narrative_tool/a11/calibration/registers/player_sandra.json#sandra_current_distance"
+    }
+  ],
+  "local_facts": [
+    {
+      "fact_id": "local_cafe",
+      "text": "Le dernier déjeuner de Sandra et Player a eu lieu dans un café.",
+      "known_by": ["player", "sandra"],
+      "persistence": "SCENE_LOCAL_ONLY"
+    },
+    {
+      "fact_id": "local_blue_chairs",
+      "text": "Le café a remplacé ses anciennes chaises par des chaises bleues très voyantes.",
+      "known_by": ["player", "sandra"],
+      "persistence": "SCENE_LOCAL_ONLY"
+    },
+    {
+      "fact_id": "local_cold_fries",
+      "text": "Les frites du dernier déjeuner étaient froides.",
+      "known_by": ["player", "sandra"],
+      "persistence": "SCENE_LOCAL_ONLY"
+    },
+    {
+      "fact_id": "local_terrace_photo",
+      "text": "Sandra envoie une photo banale de la terrasse du café.",
+      "known_by": ["player", "sandra"],
+      "persistence": "SCENE_LOCAL_ONLY"
+    }
+  ],
+  "limits": [
+    {
+      "limit_id": "locked_source_text",
+      "text": "Aucun dialogue, choix ou élément narratif ne peut être ajouté, supprimé ou reformulé."
+    },
+    {
+      "limit_id": "maximum_local_change",
+      "text": "L'importance mutuelle peut être légèrement reconnue et un déjeuner ultérieur seulement possible."
+    },
+    {
+      "limit_id": "no_durable_effect",
+      "text": "Aucun fait local, choix, rapprochement ou projet de déjeuner ne persiste dans A1."
+    }
+  ],
+  "non_persistent_elements": [
+    {
+      "element_id": "local_scene_details",
+      "description": "Le café, les chaises bleues, les frites froides et la photo restent locaux à cette scène."
+    },
+    {
+      "element_id": "possible_lunch",
+      "description": "Le déjeuner ultérieur reste une possibilité sans date, accord ni promesse."
+    },
+    {
+      "element_id": "mutual_importance",
+      "description": "La reconnaissance d'importance reste légère, locale, révocable et non exportée."
+    }
+  ]
+}

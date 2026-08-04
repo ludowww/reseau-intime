@@ -1,0 +1,307 @@
+{
+  "format": "R8C_A11_ASSISTED_SCENE_PLANNING",
+  "version": 1,
+  "case_id": "a11_5_sandra_blue_chairs",
+  "active_character_id": "sandra",
+  "active_relationship_id": "player_sandra",
+  "intention": {
+    "author_text": "Sandra envoie la photo du café du dernier déjeuner. La complicité revient par les chaises et les frites, puis Sandra teste ce que Player voulait dire avant de maintenir une limite protectrice.",
+    "active_participant_ids": ["player", "sandra"],
+    "contextual_character_ids": [],
+    "desired_motion": "Reconnaître légèrement l'importance mutuelle et laisser seulement possible un déjeuner ultérieur.",
+    "indirectness_constraint": "Aucune déclaration romantique, reconnaissance de désir mutuel, jalousie, promesse, route verrouillée ou conséquence durable."
+  },
+  "diagnostic": {
+    "present_information": [
+      {
+        "information_id": "participants_locked",
+        "text": "Sandra et Player sont les seuls participants actifs et contextuels.",
+        "source_refs": ["source.pre_choice_messages", "source.choice", "source.convergence_messages"]
+      },
+      {
+        "information_id": "local_photo_hook",
+        "text": "La photo de la terrasse, les chaises bleues, le café et les frites froides sont des détails locaux non persistants.",
+        "source_refs": ["provenance.local_facts"]
+      },
+      {
+        "information_id": "locked_dialogue",
+        "text": "Les 98 éléments stockés et les deux formulations du choix sont verrouillés par la source.",
+        "source_refs": ["source", "provenance.limits.locked_source_text"]
+      },
+      {
+        "information_id": "bounded_change",
+        "text": "Le changement local maximal est une petite reconnaissance d'importance; le déjeuner reste seulement possible.",
+        "source_refs": ["provenance.limits.maximum_local_change"]
+      }
+    ],
+    "selectable_information_gaps": [
+      {
+        "decision_id": "select_concrete_hook",
+        "question": "Quel détail concret fourni par la source ouvre la scène ?",
+        "options": [
+          {
+            "option_id": "terrace_blue_chairs_photo",
+            "label": "Photo des chaises bleues",
+            "plan_value": "terrace_blue_chairs_photo",
+            "effect": "Déclencher la complicité et la mémoire du dernier déjeuner par un média banal."
+          }
+        ]
+      },
+      {
+        "decision_id": "select_maximum_change",
+        "question": "Quel changement local maximal la source autorise-t-elle ?",
+        "options": [
+          {
+            "option_id": "small_importance_confirmation",
+            "label": "Importance légèrement reconnue",
+            "plan_value": "small_importance_confirmation",
+            "effect": "Reconnaître légèrement l'importance mutuelle sans rendre le déjeuner acquis."
+          }
+        ]
+      },
+      {
+        "decision_id": "select_choice_mode",
+        "question": "Le texte source contient-il un positionnement humain de Player ?",
+        "options": [
+          {
+            "option_id": "one_player_positioning_choice",
+            "label": "Un choix à deux options",
+            "plan_value": "ONE",
+            "effect": "Conserver les deux formulations et leurs réceptions distinctes avant convergence."
+          }
+        ]
+      }
+    ],
+    "mandatory_human_decision_ids": [
+      "select_concrete_hook",
+      "select_maximum_change",
+      "select_choice_mode"
+    ]
+  },
+  "human_selection": {
+    "selected_by": "source_owner_r8c_a11_5",
+    "decisions": [
+      {"decision_id": "select_concrete_hook", "selected_option_id": "terrace_blue_chairs_photo"},
+      {"decision_id": "select_maximum_change", "selected_option_id": "small_importance_confirmation"},
+      {"decision_id": "select_choice_mode", "selected_option_id": "one_player_positioning_choice"}
+    ]
+  },
+  "plan": {
+    "plan_id": "a11_5_sandra_blue_chairs_plan",
+    "title": "Sandra — Les chaises bleues",
+    "participant_ids": ["player", "sandra"],
+    "relationship_id": "player_sandra",
+    "relationship_nature": "complicité ancienne, antérieure au couple avec Marie, aujourd'hui tenue à distance",
+    "hook": {
+      "selection_option_id": "terrace_blue_chairs_photo",
+      "fact_id": "local_terrace_photo",
+      "description": "Sandra envoie une photo banale de la terrasse montrant les nouvelles chaises bleues du café.",
+      "concrete": true
+    },
+    "objectives": [
+      {
+        "actor_id": "player",
+        "intent": "Rendre visible que l'ancien échange a compté sans demander de définition commune.",
+        "method": "Répondre par l'humour, puis rester indirect et respecter la limite formulée par Sandra."
+      },
+      {
+        "actor_id": "sandra",
+        "intent": "Vérifier si l'ancienne complicité reste accessible sans devenir un engagement acquis.",
+        "method": "Relancer par une trace concrète, tester l'intention de Player, nommer une limite et garder une sortie autonome."
+      }
+    ],
+    "local_risk": "La mémoire partagée peut rendre le sous-entendu trop lourd ou faire passer une possibilité de déjeuner pour un rendez-vous acquis.",
+    "maximum_change": {
+      "selection_option_id": "small_importance_confirmation",
+      "outcome_id": "small_importance_confirmation",
+      "description": "L'importance mutuelle est légèrement reconnue; un déjeuner ultérieur reste possible, sans date, promesse ni conséquence durable."
+    },
+    "fact_policy": {
+      "usable_fact_ids": [
+        "sandra_current_distance",
+        "local_cafe",
+        "local_blue_chairs",
+        "local_cold_fries",
+        "local_terrace_photo"
+      ],
+      "forbidden_fact_ids": ["marie_missed_commitment", "mathilde_private_exit_plan"]
+    },
+    "initial_state_id": "sandra_distant_after_silence",
+    "required_limit_ids": [
+      "sandra_no_instant_seduction",
+      "sandra_indirect_longing",
+      "sandra_slow_progress"
+    ],
+    "movement_ids": [
+      "sandra_player_returns_carefully",
+      "sandra_deflects_with_humor",
+      "sandra_relaunches_shared_memory",
+      "sandra_prolongs_without_claim"
+    ],
+    "beats": [
+      {
+        "beat_id": "concrete_photo",
+        "scene_kind": "SIGNATURE",
+        "function": "photo_concrete",
+        "narrative_moment": "Une trace visuelle banale rouvre le fil.",
+        "state_before": "Le contact est irrégulier et aucun nouveau mouvement n'est acquis.",
+        "possible_local_delta": "La photo devient un prétexte reconnu pour reprendre l'échange.",
+        "transition_condition": "Player accueille la photo sans surinterpréter son envoi.",
+        "forbidden_elements": ["symbolisme_ajoute", "media_non_justifie"],
+        "driver_id": "sandra",
+        "summary": "Sandra ouvre par la photo de la terrasse et déplace aussitôt l'attention vers les chaises bleues.",
+        "movement_refs": ["sandra_relaunches_shared_memory", "sandra_deflects_with_humor"],
+        "fact_refs": ["local_terrace_photo", "local_blue_chairs", "local_cafe"]
+      },
+      {
+        "beat_id": "familiar_complicity",
+        "scene_kind": "SIGNATURE",
+        "function": "complicite_familiere",
+        "narrative_moment": "L'humour sur le dernier déjeuner réinstalle un rythme commun.",
+        "state_before": "La photo est reçue comme un prétexte concret et encore léger.",
+        "possible_local_delta": "La complicité ancienne redevient perceptible sans progression affective acquise.",
+        "transition_condition": "Les deux voix peuvent prolonger la plaisanterie sans changer la portée du lien.",
+        "forbidden_elements": ["nostalgie_romantique", "fait_durable"],
+        "driver_id": "sandra",
+        "summary": "Sandra relance la mémoire des frites froides et laisse Player reprendre leur humour familier.",
+        "movement_refs": ["sandra_relaunches_shared_memory", "sandra_deflects_with_humor"],
+        "fact_refs": ["local_cold_fries", "local_cafe"]
+      },
+      {
+        "beat_id": "lightly_charged_memory",
+        "scene_kind": "SIGNATURE",
+        "function": "memoire_legerement_chargee",
+        "narrative_moment": "Le retour près du café donne un poids limité à la trace envoyée.",
+        "state_before": "La complicité est réinstallée par un souvenir dérisoire.",
+        "possible_local_delta": "Sandra admet indirectement que le lieu a réactivé un ancien réflexe.",
+        "transition_condition": "Player reconnaît la portée de l'envoi sans transformer la mémoire en demande.",
+        "forbidden_elements": ["manque_declare", "desir_mutuel_reconnu"],
+        "driver_id": "sandra",
+        "summary": "Sandra laisse apparaître que son passage près du café a rendu l'envoi moins anodin qu'elle ne le prétend.",
+        "movement_refs": ["sandra_prolongs_without_claim", "sandra_deflects_with_humor"],
+        "fact_refs": ["local_cafe", "local_terrace_photo", "sandra_current_distance"]
+      },
+      {
+        "beat_id": "indirect_relaunch",
+        "scene_kind": "MODULAR",
+        "function": "relance_indirecte",
+        "narrative_moment": "Player rend visible le problème du temps passé sans formuler de reproche.",
+        "state_before": "La photo a été reconnue comme une attention et la distance reste active.",
+        "possible_local_delta": "L'importance du fil devient lisible sans exiger de réponse affective.",
+        "transition_condition": "Sandra peut tester l'intention derrière l'indirection de Player.",
+        "forbidden_elements": ["reproche_de_silence", "declaration_romantique"],
+        "driver_id": "player",
+        "summary": "Player constate indirectement le temps écoulé et accepte que sa formulation reste imparfaite.",
+        "movement_refs": ["sandra_player_returns_carefully"],
+        "fact_refs": ["sandra_current_distance"]
+      },
+      {
+        "beat_id": "sandra_test_and_choice",
+        "scene_kind": "SIGNATURE",
+        "function": "test_de_sandra_et_choix",
+        "narrative_moment": "Sandra demande à Player de situer son sous-entendu, puis reçoit deux attitudes distinctes.",
+        "state_before": "Player a rendu son intention perceptible mais encore non définie.",
+        "possible_local_delta": "La manière de reconnaître le manque colore localement la réception de Sandra.",
+        "transition_condition": "Chaque option conserve l'indirection et revient vers une limite commune.",
+        "forbidden_elements": ["option_longue", "reception_identique", "route_verrouillee"],
+        "driver_id": "sandra",
+        "summary": "Sandra pousse Player à préciser sa position et différencie la chaleur prudente du retrait ironique.",
+        "movement_refs": ["sandra_deflects_with_humor", "sandra_prolongs_without_claim"],
+        "fact_refs": ["sandra_current_distance"]
+      },
+      {
+        "beat_id": "reception_and_limit",
+        "scene_kind": "SIGNATURE",
+        "function": "reception_et_limite",
+        "narrative_moment": "Les branches convergent vers une reconnaissance bornée et une limite explicite.",
+        "state_before": "Sandra a compris une partie du sous-entendu sans l'accepter comme grand changement.",
+        "possible_local_delta": "L'importance est légèrement reconnue tandis que la pression et les promesses sont refusées.",
+        "transition_condition": "Player ne pousse pas et laisse Sandra garder le contrôle du rythme.",
+        "forbidden_elements": ["accord_romantique", "promesse", "consequence_durable"],
+        "driver_id": "sandra",
+        "summary": "Sandra reconnaît le sous-entendu, refuse d'en faire un grand tournant et constate que Player ne pousse pas.",
+        "movement_refs": ["sandra_prolongs_without_claim", "sandra_deflects_with_humor"],
+        "fact_refs": ["sandra_current_distance", "local_terrace_photo"]
+      },
+      {
+        "beat_id": "protective_exit",
+        "scene_kind": "SIGNATURE",
+        "function": "sortie_protectrice",
+        "narrative_moment": "Une possibilité de déjeuner est différée, révocable et refermée par un détail léger.",
+        "state_before": "La reconnaissance locale existe sans promesse ni conséquence persistante.",
+        "possible_local_delta": "Un déjeuner ultérieur reste seulement possible après le week-end.",
+        "transition_condition": "Sandra conserve l'initiative, refuse la promesse et clôt elle-même l'échange.",
+        "forbidden_elements": ["rendez_vous_acquis", "date_fixee", "jalousie", "sanction_relationnelle"],
+        "driver_id": "sandra",
+        "summary": "Sandra diffère toute vérification de disponibilité, maintient l'absence de promesse et referme sur les chaises.",
+        "movement_refs": ["sandra_prolongs_without_claim", "sandra_deflects_with_humor"],
+        "fact_refs": ["local_cafe", "local_blue_chairs", "sandra_current_distance"]
+      }
+    ],
+    "choice_mode": "ONE",
+    "choice": {
+      "choice_id": "player_response_to_sandra_test",
+      "after_beat_id": "sandra_test_and_choice",
+      "focus": "Choisir entre une reconnaissance prudente du manque et un retrait ironique sans changer les limites de la scène.",
+      "options": [
+        {
+          "option_id": "careful_warmth",
+          "attitude": "Reconnaître prudemment que l'échange a manqué, sans demander de réciprocité."
+        },
+        {
+          "option_id": "ironic_withdrawal",
+          "attitude": "Déplacer l'aveu vers les agendas tout en laissant visible qu'il n'est pas entièrement ironique."
+        }
+      ],
+      "receptions": [
+        {
+          "option_id": "careful_warmth",
+          "character_id": "sandra",
+          "description": "Sandra accuse le poids de la formulation, refuse sa légèreté puis confirme qu'elle a compris.",
+          "movement_refs": ["sandra_prolongs_without_claim"]
+        },
+        {
+          "option_id": "ironic_withdrawal",
+          "character_id": "sandra",
+          "description": "Sandra identifie le détour par les agendas et nomme que la plaisanterie n'est pas complète.",
+          "movement_refs": ["sandra_deflects_with_humor"]
+        }
+      ]
+    },
+    "expected_reception": {
+      "character_id": "sandra",
+      "description": "Sandra reconnaît le sous-entendu, empêche qu'il devienne un grand tournant et conserve l'initiative d'une éventuelle suite.",
+      "movement_refs": ["sandra_deflects_with_humor", "sandra_prolongs_without_claim"]
+    },
+    "cautious_opening": "Sandra pourra regarder après le week-end si un déjeuner devient possible, sans promesse, date ni obligation.",
+    "protective_close": {
+      "description": "Sandra refuse toute promesse, garde l'initiative de la suite et clôt l'échange sur un détail léger.",
+      "protects": "Son autonomie, le rythme lent, le caractère révocable du déjeuner et l'absence de conséquence durable.",
+      "punitive": false,
+      "future_possibility": "REVOCABLE_RECONTACT",
+      "autonomous_exit_character_id": "sandra",
+      "forbidden_effect_ids": [
+        "humiliation_forbidden",
+        "imposed_break_forbidden",
+        "relational_sanction_forbidden"
+      ]
+    },
+    "media_requirement": {
+      "media_decision": "REQUIRED",
+      "kind": "PHOTO",
+      "linked_fact_id": "local_terrace_photo",
+      "justification": "La photo banale montre les nouvelles chaises, motive le premier message et déclenche la mémoire du dernier déjeuner."
+    },
+    "planned_outcome_ids": ["small_importance_confirmation"]
+  },
+  "human_review": {
+    "status": "APPROVED_FOR_DRAFT_GENERATION",
+    "reviewed_by": "source_owner_r8c_a11_5",
+    "plan_fingerprint": "26a010ee1d61e9dfe7cf63947317cd0b92f88846f07556bc65d0582dca10c117",
+    "notes": [
+      "Le plan contient exactement les sept battements demandés.",
+      "La source verrouillée fournit déjà tout le dialogue; cette approbation autorise uniquement son rattachement technique.",
+      "Le média et les quatre détails locaux ne persistent pas dans A1 et aucun export A6 n'est autorisé."
+    ]
+  }
+}

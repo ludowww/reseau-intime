@@ -23,7 +23,7 @@ FORMAT_PLAN = "R8C_A11_SCENE_PLAN"
 FORMAT_DRAFT = "R8C_A11_DIALOGUE_DRAFT"
 FORMAT_REPORT = "R8C_A11_VALIDATION_REPORT"
 VERSION = 1
-DRAFT_VERSIONS = {1, 2}
+DRAFT_VERSIONS = {1, 2, 3}
 VALIDATOR_VERSION = "a11-validator-1.1"
 
 ROOT_KEYS = {
@@ -63,10 +63,16 @@ DRAFT_MESSAGE_KEYS = {
         "conversation_move", "fact_refs", "local_state", "branch", "burst_id", "strength",
         "text", "reply_to", "media",
     },
+    3: {
+        "message_id", "speaker_id", "kind", "beat_id", "objective_actor_id",
+        "conversation_move", "fact_refs", "local_state", "branch", "burst_id", "strength",
+        "text", "reply_to", "media",
+    },
 }
 DRAFT_CHOICE_OPTION_KEYS = {
     1: {"option_id", "reception_message_ids"},
     2: {"option_id", "formulation", "reception_message_ids"},
+    3: {"option_id", "formulation", "reception_message_ids"},
 }
 
 
@@ -389,7 +395,7 @@ def validate_draft_format(document: Any, path: str = "draft") -> list[Issue]:
             for field in ("message_id", "speaker_id", "kind", "text", "beat_id", "branch", "strength"):
                 if not _nonempty(message[field]):
                     _issue(issues, "TEXT_REQUIRED", f"{message_path}.{field}", "chaîne non vide attendue")
-            if version == 2:
+            if version in {2, 3}:
                 for field in ("objective_actor_id", "conversation_move", "local_state"):
                     if not _nonempty(message[field]):
                         _issue(issues, "TEXT_REQUIRED", f"{message_path}.{field}", "chaîne non vide attendue")
@@ -406,9 +412,7 @@ def validate_draft_format(document: Any, path: str = "draft") -> list[Issue]:
                 _issue(issues, "MESSAGE_STRENGTH_UNKNOWN", f"{message_path}.strength", str(message["strength"]))
             if message["burst_id"] is not None and not _nonempty(message["burst_id"]):
                 _issue(issues, "BURST_ID_INVALID", f"{message_path}.burst_id", "null ou chaîne non vide attendu")
-            if version == 2:
-                if message["media"] is not None:
-                    _issue(issues, "MEDIA_FORBIDDEN", message_path, "texte sans média attendu")
+            if version in {2, 3}:
                 if message["reply_to"] is not None and not _nonempty(message["reply_to"]):
                     _issue(
                         issues,
@@ -416,6 +420,16 @@ def validate_draft_format(document: Any, path: str = "draft") -> list[Issue]:
                         f"{message_path}.reply_to",
                         "null ou chaîne non vide attendu",
                     )
+            if version == 2:
+                if message["media"] is not None:
+                    _issue(issues, "MEDIA_FORBIDDEN", message_path, "texte sans média attendu")
+            elif version == 3 and message["kind"] == "IMAGE":
+                if _closed(message["media"], media_keys, f"{message_path}.media", issues):
+                    for field in media_keys:
+                        if not _nonempty(message["media"][field]):
+                            _issue(issues, "MEDIA_FIELD_REQUIRED", f"{message_path}.media.{field}", "chaîne non vide attendue")
+            elif version == 3 and message["media"] is not None:
+                _issue(issues, "TEXT_MEDIA_FORBIDDEN", f"{message_path}.media", "null attendu pour un texte")
             elif message["kind"] == "IMAGE":
                 if _closed(message["media"], media_keys, f"{message_path}.media", issues):
                     for field in media_keys:
@@ -438,7 +452,7 @@ def validate_draft_format(document: Any, path: str = "draft") -> list[Issue]:
                 if _closed(option, DRAFT_CHOICE_OPTION_KEYS[version], option_path, issues):
                     if not _nonempty(option["option_id"]):
                         _issue(issues, "TEXT_REQUIRED", f"{option_path}.option_id", "identité requise")
-                    if version == 2 and not _nonempty(option["formulation"]):
+                    if version in {2, 3} and not _nonempty(option["formulation"]):
                         _issue(issues, "TEXT_REQUIRED", f"{option_path}.formulation", "formulation requise")
                     _string_list(option["reception_message_ids"], f"{option_path}.reception_message_ids", issues, nonempty=True)
     return issues
