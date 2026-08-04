@@ -52,7 +52,8 @@ Avec `AVANT_PROPOSITION_ET_RESOLUTION`, le contexte courant est réévalué just
 La séquence terminale est :
 
 1. validation définition, choix, résolution, signal et contexte ;
-2. construction des données terminales et de l'éventuelle trace temporaire ;
+2. construction des données terminales ; une trace de reprise temporaire active,
+   si une séquence en a déclaré une auparavant, sera nettoyée à la clôture ;
 3. préparation complète et sans mutation de la transition d'instance ;
 4. construction et vérification de la conséquence candidate si la portée est durable ;
 5. appel atomique unique à A1 si la portée est durable ;
@@ -66,14 +67,14 @@ L'identifiant `r8c-a3:<instance_id>:resolution:<resolution_id>` est déterminist
 
 `instance_id` identifie une occurrence et ne peut jamais être enregistré deux fois dans un même moteur.
 
-`UNIQUE` s'applique à la définition : le registre du moteur interdit deux instances non terminales simultanées. Après une résolution durable, la provenance A1 empêche aussi une nouvelle résolution par un autre moteur. `REPETABLE` permet plusieurs occurrences et plusieurs résolutions.
+`UNIQUE` s'applique à la définition : le registre persistant A5 interdit toute seconde occurrence durable de la même définition. Après une résolution durable, la provenance A1 protège aussi la reprise transactionnelle. `REPETABLE` permet plusieurs occurrences et plusieurs résolutions tant qu'aucune occurrence du même identifiant n'est déclarée `UNIQUE`.
 
-Limite assumée du prototype : une résolution UNIQUE purement LOCAL ou TEMPORAIRE n'écrit volontairement rien dans A1. Son unicité post-résolution est donc conservée par le moteur vivant, pas restaurée après reconstruction complète du moteur. Résoudre ce point demanderait un registre persistant d'instances, hors A3 et contradictoire avec l'interdiction de persister un signal local.
+Limite assumée du prototype A3 : une résolution UNIQUE purement LOCAL ou TEMPORAIRE n'écrit volontairement rien dans A1. Cette limite est levée par A5 au moyen d'un registre d'instances qui persiste l'identité et la terminaison, jamais le signal local lui-même.
 
 ## Trois portées de micro-signaux
 
 - `LOCALE` : aucune écriture A1 et aucune trace de séquence ; seul le diagnostic retourné décrit l'effet immédiat.
-- `TEMPORAIRE` : aucune écriture A1 ; une trace explicitement déclarée vit dans `SceneInstance` et peut être nettoyée à la fin de la courte séquence.
+- `TEMPORAIRE` : aucune écriture A1 ; une trace explicitement déclarée peut vivre dans une `SceneInstance` active et est nettoyée à sa clôture.
 - `DURABLE` : un événement relationnel A1 est produit avec provenance de scène, instance, choix, signal et résolution.
 
 `DURABLE + NON_PERSISTANTE` est invalide. Les branches convergent toutes vers `RETOUR_NOYAU_COMMUN`. Aucune accumulation, aucun score, aucun compteur ni profil psychologique ne relie ces branches.

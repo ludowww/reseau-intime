@@ -21,6 +21,7 @@ class R8CA3MinimalScenePrototypeStaticTests(unittest.TestCase):
             "game/scripts/narrative_scene/SceneDefinition.gd",
             "game/scripts/narrative_scene/SceneInstance.gd",
             "game/scripts/narrative_scene/MinimalSceneEngine.gd",
+            "game/scripts/narrative_scene/PersistentSceneRegistry.gd",
             "game/tests/fixtures/r8c_a3_minimal_scene_definitions.json",
         ]
         return {path: self.read(path) for path in paths}
@@ -127,6 +128,8 @@ class R8CA3MinimalScenePrototypeStaticTests(unittest.TestCase):
         self.assertEqual(self.definitions["signature_sandra"]["politique_unicite"], "UNIQUE")
         self.assertEqual(self.definitions["module_distance_sandra"]["politique_unicite"], "REPETABLE")
         engine = self.read("game/scripts/narrative_scene/MinimalSceneEngine.gd")
+        registry = self.read("game/scripts/narrative_scene/PersistentSceneRegistry.gd")
+        combined = engine + registry
         for token in [
             "_instances_par_id",
             "INSTANCE_ID_DUPLIQUE",
@@ -134,7 +137,8 @@ class R8CA3MinimalScenePrototypeStaticTests(unittest.TestCase):
             "SCENE_DEJA_RESOLUE_OU_INSTANCIEE",
             "CONDITION_SCENE_REPETABLE",
         ]:
-            self.assertIn(token, engine)
+            self.assertIn(token, combined)
+        self.assertIn("var _registre = RegistreModele.new()", engine)
 
     def test_three_micro_signal_scopes_have_distinct_storage(self):
         signature = self.definitions["signature_sandra"]["resolutions"]
@@ -185,10 +189,13 @@ class R8CA3MinimalScenePrototypeStaticTests(unittest.TestCase):
         self.assertNotEqual(sandra["participants_requis"], raphaelle["participants_requis"])
         self.assertNotEqual(sandra["resolutions"], raphaelle["resolutions"])
 
-    def test_a1_public_contract_is_unchanged(self):
+    def test_a1_public_contract_only_adds_snapshot_reconstruction(self):
         etat = self.read("game/scripts/narrative_state/EtatNarratif.gd")
         public_functions = re.findall(r"^(?:static )?func ([a-z][a-z0-9_]*)", etat, re.MULTILINE)
-        self.assertEqual(public_functions, ["creer_synthetique", "traiter_evenement", "obtenir_snapshot"])
+        self.assertEqual(
+            public_functions,
+            ["creer_synthetique", "creer_depuis_snapshot", "traiter_evenement", "obtenir_snapshot"],
+        )
         self.assertEqual(
             set(re.findall(r'"(R8C_A1_[A-Z_]+_SYNTHETIQUE)"', etat)),
             {"R8C_A1_RELATION_CENTRALE_SYNTHETIQUE", "R8C_A1_RELATION_SYNTHETIQUE"},

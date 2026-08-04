@@ -15,6 +15,7 @@ documents techniques qui le suivent.
 6. [`R8C_A2_CONTRAT_SCENE_MODULAIRE_ET_MOTEUR_NARRATIF.md`](R8C_A2_CONTRAT_SCENE_MODULAIRE_ET_MOTEUR_NARRATIF.md) — scènes, séquences et micro-signaux.
 7. [`R8C_A3_PROTOTYPE_MINIMAL_SCENE_NARRATIVE.md`](R8C_A3_PROTOTYPE_MINIMAL_SCENE_NARRATIVE.md) — preuve technique synthétique, non canonique comme contenu.
 8. [`R8C_A4_CONSOLIDATION_CANONIQUE_ET_NETTOYAGE_LEGACY.md`](../maintenance/R8C_A4_CONSOLIDATION_CANONIQUE_ET_NETTOYAGE_LEGACY.md) — classement, suppressions et gate courante.
+9. [`R8C_A5_PERSISTANCE_MINIMALE_SCENES_ET_OPPORTUNITES.md`](R8C_A5_PERSISTANCE_MINIMALE_SCENES_ET_OPPORTUNITES.md) — snapshot current-only, registre d'instances et reprise idempotente.
 
 ## Invariants de reprise
 
@@ -37,4 +38,5 @@ documents techniques qui le suivent.
 Le runtime portrait `Season1RuntimeProvider` J01–J21 reste l'oracle exécutable
 jusqu'à son remplacement par les lots R8C ultérieurs. Sa présence ne lui donne
 pas autorité sur le modèle futur et n'autorise aucune nouvelle compatibilité
-legacy. R8C-A4 ne démarre ni persistance R8C-A5, ni constructeur de journée.
+legacy. R8C-A5 ajoute la persistance minimale du nouveau moteur sans connecter
+ni modifier cet oracle et sans démarrer de constructeur de journée.

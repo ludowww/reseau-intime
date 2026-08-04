@@ -48,6 +48,15 @@ static func creer_synthetique(relation_centrale_initiale: Dictionary) -> EtatNar
 	return instance
 
 
+static func creer_depuis_snapshot(snapshot: Dictionary) -> EtatNarratif:
+	var candidat = new()
+	candidat._etat = snapshot.duplicate(true)
+	var erreur := candidat._valider_etat_complet(candidat._etat)
+	if not erreur.is_empty():
+		return null
+	return candidat
+
+
 func traiter_evenement(evenement: Dictionary) -> Dictionary:
 	var copie_evenement: Dictionary = evenement.duplicate(true)
 	var erreur_evenement := _valider_evenement(copie_evenement)
@@ -109,6 +118,8 @@ func _valider_etat_complet(etat: Dictionary) -> String:
 		"connaissances",
 		"livraison_medias",
 	]
+	if etat.size() != racines.size():
+		return "etat narratif: racines inattendues"
 	for racine in racines:
 		if not etat.has(racine) or typeof(etat[racine]) != TYPE_DICTIONARY:
 			return "etat narratif: racine invalide: %s" % racine

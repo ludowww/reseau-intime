@@ -48,7 +48,7 @@ class R8CA1NarrativeStateStaticTests(unittest.TestCase):
         etat = sources["game/scripts/narrative_state/EtatNarratif.gd"]
         public_functions = re.findall(r"^(?:static )?func ([a-z][a-z0-9_]*)", etat, re.MULTILINE)
         self.assertEqual(
-            ["creer_synthetique", "traiter_evenement", "obtenir_snapshot"],
+            ["creer_synthetique", "creer_depuis_snapshot", "traiter_evenement", "obtenir_snapshot"],
             public_functions,
         )
         self.assertIn("relation_centrale_initiale: Dictionary", etat)

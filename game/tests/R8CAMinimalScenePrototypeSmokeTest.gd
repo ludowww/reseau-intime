@@ -267,9 +267,13 @@ func _test_trace_temporaire_creee_puis_nettoyee() -> void:
 	var avant: Dictionary = etat.obtenir_snapshot()
 	var resultat: Dictionary = moteur.resoudre(instance, definition, "sobre", "echo_sandra_local", etat, contexte)
 	var traces: Dictionary = instance.obtenir_snapshot()["traces_temporaires"]
-	_expect(resultat["ok"] and traces.has("echo_concret_sandra_sequence_courte") and etat.obtenir_snapshot() == avant, "28 trace TEMPORAIRE dans instance seulement")
+	_expect(
+		resultat["ok"] and resultat["diagnostic_signal"]["portee_micro_signal"] == "TEMPORAIRE"
+		and traces.is_empty() and etat.obtenir_snapshot() == avant,
+		"28 trace TEMPORAIRE nettoyee a la cloture",
+	)
 	var nettoyees: int = instance.nettoyer_traces_temporaires()
-	_expect(nettoyees == 1 and instance.obtenir_snapshot()["traces_temporaires"].is_empty(), "29 trace TEMPORAIRE nettoyee")
+	_expect(nettoyees == 0 and instance.obtenir_snapshot()["traces_temporaires"].is_empty(), "29 nettoyage terminal idempotent")
 
 
 func _test_durable_exige_reception_interpretation() -> void:

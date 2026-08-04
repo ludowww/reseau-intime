@@ -5,9 +5,11 @@ class_name R8CMinimalSceneEngine
 const DefinitionModele := preload("res://scripts/narrative_scene/SceneDefinition.gd")
 const InstanceModele := preload("res://scripts/narrative_scene/SceneInstance.gd")
 const EtatNarratifModele := preload("res://scripts/narrative_state/EtatNarratif.gd")
+const EtatNarratifCodec := preload("res://scripts/narrative_scene/A5NarrativeStateCodec.gd")
+const RegistreModele := preload("res://scripts/narrative_scene/PersistentSceneRegistry.gd")
+const SNAPSHOT_VERSION := 1
 
-var _instances_par_id: Dictionary = {}
-var _scenes_uniques_resolues: Dictionary = {}
+var _registre = RegistreModele.new()
 var _derniere_erreur_instance := ""
 
 
@@ -50,22 +52,75 @@ func creer_instance(definition: Dictionary, diagnostic: Dictionary, contexte: Di
 	if typeof(instance_id) != TYPE_STRING or instance_id.strip_edges().is_empty():
 		_derniere_erreur_instance = "INSTANCE_ID_INVALIDE"
 		return null
-	if _instances_par_id.has(instance_id):
-		_derniere_erreur_instance = "INSTANCE_ID_DUPLIQUE"
-		return null
-	if definition["politique_unicite"] == "UNIQUE" and _scene_unique_concurrente(definition["scene_id"], ""):
-		_derniere_erreur_instance = "SCENE_UNIQUE_DEJA_INSTANCIEE"
-		return null
 	var instance = InstanceModele.creer(definition, diagnostic, contexte)
 	if instance == null:
 		_derniere_erreur_instance = "INSTANCE_INVALIDE"
 		return null
-	_instances_par_id[instance_id] = instance
+	var enregistrement: Dictionary = _registre.enregistrer(instance)
+	if not enregistrement["ok"]:
+		_derniere_erreur_instance = enregistrement["erreur"]
+		return null
 	return instance
 
 
 func obtenir_derniere_erreur_instance() -> String:
 	return _derniere_erreur_instance
+
+
+func obtenir_instance(instance_id: String):
+	return _registre.obtenir_instance(instance_id)
+
+
+func declarer_reprise_temporaire(
+	instance,
+	definition: Dictionary,
+	resolution_id: String,
+	trace_id: String,
+	contenu: String,
+	instant_diegetique: String
+) -> Dictionary:
+	if instance == null:
+		return {"ok": false, "erreur": "INSTANCE_ABSENTE", "statut": InstanceModele.INELIGIBLE}
+	var erreur_definition := DefinitionModele.valider(definition)
+	if not erreur_definition.is_empty():
+		return {"ok": false, "erreur": "DEFINITION_INVALIDE", "statut": instance.obtenir_statut()}
+	var erreur_lien := _valider_lien_instance(instance, definition)
+	if not erreur_lien.is_empty():
+		return {"ok": false, "erreur": erreur_lien, "statut": instance.obtenir_statut()}
+	var resolution = definition["resolutions"].get(resolution_id)
+	if typeof(resolution) != TYPE_DICTIONARY or resolution.get("portee_micro_signal") != "TEMPORAIRE":
+		return {"ok": false, "erreur": "RESOLUTION_NON_TEMPORAIRE", "statut": instance.obtenir_statut()}
+	return instance._declarer_reprise_temporaire_validee(
+		trace_id, contenu, resolution_id, instant_diegetique
+	)
+
+
+func obtenir_snapshot(etat_narratif) -> Dictionary:
+	if etat_narratif == null:
+		return {}
+	var etat_snapshot: Dictionary = etat_narratif.obtenir_snapshot()
+	if not EtatNarratifCodec.valider(etat_snapshot):
+		return {}
+	return {
+		"version": SNAPSHOT_VERSION,
+		"narrative_state": etat_snapshot,
+		"scene_registry": _registre.obtenir_snapshot(),
+	}
+
+
+static func creer_depuis_snapshot(value) -> Dictionary:
+	var erreur := _valider_enveloppe_snapshot(value)
+	if not erreur.is_empty():
+		return _resultat_restauration(false, erreur, null, null)
+	var etat_candidat = EtatNarratifCodec.creer_etat(value["narrative_state"])
+	if etat_candidat == null:
+		return _resultat_restauration(false, "ETAT_NARRATIF_INVALIDE", null, null)
+	var registre_candidat = RegistreModele.creer_depuis_snapshot(value["scene_registry"])
+	if registre_candidat == null:
+		return _resultat_restauration(false, "REGISTRE_SCENES_INVALIDE", null, null)
+	var moteur_candidat := new()
+	moteur_candidat._registre = registre_candidat
+	return _resultat_restauration(true, "", moteur_candidat, etat_candidat)
 
 
 func reevaluer_instance(instance, definition: Dictionary, etat_narratif, contexte: Dictionary) -> Dictionary:
@@ -126,12 +181,6 @@ func resoudre(
 	var erreur_definition := DefinitionModele.valider(definition)
 	if not erreur_definition.is_empty():
 		return _resultat_transaction(false, erreur_definition, {}, {}, {}, {})
-	var transaction_id := _transaction_id_resolution(instance, resolution_id)
-	var reprise := _verifier_reprise(instance, "RESOLUTION", transaction_id, choix_id, resolution_id)
-	if not reprise.is_empty():
-		return reprise
-	if instance.obtenir_statut() != InstanceModele.PROPOSED:
-		return _resultat_transaction(false, "INSTANCE_NON_PROPOSEE", {}, {}, {}, {})
 	if etat_narratif == null:
 		return _resultat_transaction(false, "ETAT_NARRATIF_ABSENT", {}, {}, {}, {})
 	var choix := _chercher_choix(definition, choix_id)
@@ -142,6 +191,18 @@ func resoudre(
 	var resolution: Dictionary = definition["resolutions"][resolution_id]
 	if choix["signal_emis"] != resolution["signal_recu"]:
 		return _resultat_transaction(false, "CHAINE_SIGNAL_INCOHERENTE", {}, {}, {}, {})
+	var transaction_id := _transaction_id_resolution(instance, resolution_id)
+	var reprise := _verifier_reprise(instance, "RESOLUTION", transaction_id, choix_id, resolution_id)
+	if not reprise.is_empty():
+		if not reprise["ok"]:
+			return reprise
+		if not _reprise_resolution_coherente(
+			instance, definition, choix_id, resolution_id, resolution, transaction_id, etat_narratif, contexte
+		):
+			return _resultat_transaction(false, "TERMINAISON_PERSISTEE_INCOHERENTE", {}, {}, {}, {})
+		return reprise
+	if instance.obtenir_statut() != InstanceModele.PROPOSED:
+		return _resultat_transaction(false, "INSTANCE_NON_PROPOSEE", {}, {}, {}, {})
 	var diagnostic_revalidation := {}
 	if definition["contrat_temporel"]["revalidation"] == "AVANT_PROPOSITION_ET_RESOLUTION":
 		var contexte_revalidation: Dictionary = contexte.duplicate(true)
@@ -172,18 +233,11 @@ func resoudre(
 		"resolution_id": resolution_id,
 		"portee_micro_signal": resolution["portee_micro_signal"],
 	}
-	var trace_temporaire := {}
-	if resolution["portee_micro_signal"] == "TEMPORAIRE":
-		trace_temporaire = resolution["trace_temporaire"].duplicate(true)
-		trace_temporaire["source_scene_instance_id"] = instance.obtenir_snapshot()["instance_id"]
-		trace_temporaire["source_resolution_id"] = resolution_id
-		trace_temporaire["moment_diegetique"] = contexte["moment_diegetique"]
 	var preparation: Dictionary = instance.preparer_transition(
 		InstanceModele.RESOLVED,
 		"RESOLUTION_PREPAREE_AVANT_TRANSACTION",
 		contexte["moment_diegetique"],
 		terminaison,
-		trace_temporaire,
 	)
 	if not preparation["ok"]:
 		return _resultat_transaction(false, "TRANSITION_NON_PREPARABLE", {}, {}, diagnostic_signal, diagnostic_revalidation)
@@ -203,7 +257,6 @@ func resoudre(
 			return _resultat_transaction(false, "CONSEQUENCE_NON_APPLICABLE", {}, {}, diagnostic_signal, diagnostic_revalidation)
 	return _finaliser(
 		instance,
-		definition,
 		preparation,
 		etat_narratif,
 		evenement,
@@ -223,17 +276,23 @@ func manquer(instance, definition: Dictionary, etat_narratif, contexte: Dictiona
 		return _resultat_transaction(false, erreur_definition, {}, {}, {}, {})
 	if etat_narratif == null:
 		return _resultat_transaction(false, "ETAT_NARRATIF_ABSENT", {}, {}, {}, {})
-	var instance_id: String = instance.obtenir_snapshot()["instance_id"]
+	var instance_id: String = instance.obtenir_instance_id()
 	var transaction_id := "r8c-a3:%s:missed" % instance_id
-	var reprise := _verifier_reprise(instance, "MANQUEE", transaction_id, "", "opportunite_manquee")
-	if not reprise.is_empty():
-		return reprise
-	if instance.obtenir_statut() != InstanceModele.PROPOSED:
-		return _resultat_transaction(false, "INSTANCE_NON_PROPOSEE", {}, {}, {}, {})
 	var politique = definition.get("politique_non_resolution")
 	if typeof(politique) != TYPE_DICTIONARY:
 		return _resultat_transaction(false, "POLITIQUE_NON_RESOLUTION_ABSENTE", {}, {}, {}, {})
 	var statut_cible: String = politique["proposition_expire"]
+	var reprise := _verifier_reprise(instance, "MANQUEE", transaction_id, "", "opportunite_manquee")
+	if not reprise.is_empty():
+		if not reprise["ok"]:
+			return reprise
+		if instance.obtenir_statut() != statut_cible or not _reprise_manquee_coherente(
+			instance, definition, politique, statut_cible, transaction_id, etat_narratif, contexte
+		):
+			return _resultat_transaction(false, "TERMINAISON_PERSISTEE_INCOHERENTE", {}, {}, {}, {})
+		return reprise
+	if instance.obtenir_statut() != InstanceModele.PROPOSED:
+		return _resultat_transaction(false, "INSTANCE_NON_PROPOSEE", {}, {}, {}, {})
 	if not _fenetre_depassee(definition["contrat_temporel"], contexte.get("moment_diegetique", "")):
 		return _resultat_transaction(false, "ECHEANCE_NON_FRANCHIE", {}, {}, {}, {})
 	var terminaison := {
@@ -264,7 +323,7 @@ func manquer(instance, definition: Dictionary, etat_narratif, contexte: Dictiona
 		)
 		if evenement.is_empty():
 			return _resultat_transaction(false, "CONSEQUENCE_NON_APPLICABLE", {}, {}, {}, {})
-	return _finaliser(instance, definition, preparation, etat_narratif, evenement, {}, {})
+	return _finaliser(instance, preparation, etat_narratif, evenement, {}, {})
 
 
 func annuler(instance, code_raison: String, moment_diegetique: String) -> Dictionary:
@@ -275,7 +334,6 @@ func annuler(instance, code_raison: String, moment_diegetique: String) -> Dictio
 
 func _finaliser(
 	instance,
-	definition: Dictionary,
 	preparation: Dictionary,
 	etat_narratif,
 	evenement: Dictionary,
@@ -295,8 +353,6 @@ func _finaliser(
 				diagnostic_revalidation,
 			)
 	instance.appliquer_transition_preparee(preparation)
-	if definition["politique_unicite"] == "UNIQUE" and preparation["statut"] == InstanceModele.RESOLVED:
-		_scenes_uniques_resolues[definition["scene_id"]] = true
 	return _resultat_transaction(
 		true,
 		"",
@@ -332,6 +388,58 @@ func _verifier_reprise(
 			{},
 		)
 	return _resultat_transaction(false, "RESOLUTION_TERMINALE_DIFFERENTE", {}, {}, {}, {})
+
+
+func _reprise_resolution_coherente(
+	instance,
+	definition: Dictionary,
+	choix_id: String,
+	resolution_id: String,
+	resolution: Dictionary,
+	transaction_id: String,
+	etat_narratif,
+	contexte: Dictionary
+) -> bool:
+	var evenements: Dictionary = etat_narratif.obtenir_snapshot()["evenements"]
+	if resolution["portee_micro_signal"] != "DURABLE":
+		return not evenements.has(transaction_id)
+	var contexte_persistant: Dictionary = contexte.duplicate(true)
+	contexte_persistant["moment_diegetique"] = instance.obtenir_dernier_instant()
+	return (
+		evenements.has(transaction_id)
+		and not _construire_evenement_resolution(
+			instance, definition, choix_id, resolution_id, resolution, transaction_id, etat_narratif, contexte_persistant, true
+		).is_empty()
+	)
+
+
+func _reprise_manquee_coherente(
+	instance,
+	definition: Dictionary,
+	politique: Dictionary,
+	statut_cible: String,
+	transaction_id: String,
+	etat_narratif,
+	contexte: Dictionary
+) -> bool:
+	var evenements: Dictionary = etat_narratif.obtenir_snapshot()["evenements"]
+	if not politique.has("consequence_manquee"):
+		return not evenements.has(transaction_id)
+	var contexte_persistant: Dictionary = contexte.duplicate(true)
+	contexte_persistant["moment_diegetique"] = instance.obtenir_dernier_instant()
+	return (
+		evenements.has(transaction_id)
+		and not _construire_evenement_manque(
+			instance,
+			definition,
+			politique["consequence_manquee"],
+			statut_cible,
+			transaction_id,
+			etat_narratif,
+			contexte_persistant,
+			true,
+		).is_empty()
+	)
 
 
 func _evaluer_acte(
@@ -418,7 +526,7 @@ func _evaluer_unicite(
 	var scene_id: String = definition["scene_id"]
 	var instance_id: String = contexte.get("instance_id", "")
 	var transaction_id_reprise: String = contexte.get("_transaction_id_reprise", "")
-	var disponible := not _scenes_uniques_resolues.has(scene_id)
+	var disponible := not _registre.scene_unique_connue(scene_id, instance_id)
 	if disponible:
 		for evenement in snapshot["evenements"].values():
 			var provenance = evenement.get("provenance", {})
@@ -435,8 +543,6 @@ func _evaluer_unicite(
 			):
 				disponible = false
 				break
-	if disponible and _scene_unique_concurrente(scene_id, instance_id):
-		disponible = false
 	_ajouter_condition(
 		"SCENE_UNIQUE_DISPONIBLE",
 		disponible,
@@ -445,18 +551,6 @@ func _evaluer_unicite(
 		echecs,
 		details,
 	)
-
-
-func _scene_unique_concurrente(scene_id: String, instance_id_ignore: String) -> bool:
-	for id in _instances_par_id:
-		if id == instance_id_ignore:
-			continue
-		var autre = _instances_par_id[id]
-		var snapshot: Dictionary = autre.obtenir_snapshot()
-		if snapshot["scene_id"] == scene_id and snapshot["statut"] not in InstanceModele.STATUTS_TERMINAUX:
-			return true
-	return false
-
 
 func _evaluer_fenetre(
 	definition: Dictionary,
@@ -537,7 +631,8 @@ func _construire_evenement_resolution(
 	resolution: Dictionary,
 	transaction_id: String,
 	etat_narratif,
-	contexte: Dictionary
+	contexte: Dictionary,
+	exiger_existant_coherent: bool = false
 ) -> Dictionary:
 	var snapshot: Dictionary = etat_narratif.obtenir_snapshot()
 	if snapshot["evenements"].has(transaction_id):
@@ -547,7 +642,11 @@ func _construire_evenement_resolution(
 		var changements = payload.get("changements", {})
 		var faits_existants: Array = changements.get("faits", []) if typeof(changements) == TYPE_DICTIONARY else []
 		if (
-			existant.get("event_type") == EtatNarratifModele.TYPE_RELATION
+			existant.size() == 4
+			and existant.get("event_type") == EtatNarratifModele.TYPE_RELATION
+			and provenance.size() == 8
+			and provenance.get("type") == "R8C_A3_SCENE_SYNTHETIQUE"
+			and provenance.get("id") == transaction_id
 			and provenance.get("source_scene_id") == definition["scene_id"]
 			and provenance.get("source_scene_instance_id") == instance.obtenir_snapshot()["instance_id"]
 			and provenance.get("source_resolution_id") == resolution_id
@@ -555,7 +654,9 @@ func _construire_evenement_resolution(
 			and provenance.get("source_signal_emis") == resolution["signal_recu"]
 			and provenance.get("scene_status") == InstanceModele.RESOLVED
 			and payload.get("personnage_id") == resolution["personnage_id"]
-			and _faits_sources_presents(
+			and payload.size() == 2
+			and changements.size() == 1
+			and _faits_sources_exactes(
 				faits_existants,
 				resolution["faits_relationnels"],
 				definition["scene_id"],
@@ -565,6 +666,8 @@ func _construire_evenement_resolution(
 			)
 		):
 			return existant.duplicate(true)
+		if exiger_existant_coherent:
+			return {}
 	var personnage_id: String = resolution["personnage_id"]
 	if not snapshot["relations"].has(personnage_id):
 		return {}
@@ -604,7 +707,8 @@ func _construire_evenement_manque(
 	statut_cible: String,
 	transaction_id: String,
 	etat_narratif,
-	contexte: Dictionary
+	contexte: Dictionary,
+	exiger_existant_coherent: bool = false
 ) -> Dictionary:
 	var snapshot: Dictionary = etat_narratif.obtenir_snapshot()
 	if snapshot["evenements"].has(transaction_id):
@@ -614,13 +718,19 @@ func _construire_evenement_manque(
 		var changements = payload.get("changements", {})
 		var faits_existants: Array = changements.get("faits", []) if typeof(changements) == TYPE_DICTIONARY else []
 		if (
-			existant.get("event_type") == EtatNarratifModele.TYPE_RELATION
+			existant.size() == 4
+			and existant.get("event_type") == EtatNarratifModele.TYPE_RELATION
+			and provenance.size() == 6
+			and provenance.get("type") == "R8C_A3_SCENE_SYNTHETIQUE"
+			and provenance.get("id") == transaction_id
 			and provenance.get("source_scene_id") == definition["scene_id"]
 			and provenance.get("source_scene_instance_id") == instance.obtenir_snapshot()["instance_id"]
 			and provenance.get("source_resolution_id") == "opportunite_manquee"
 			and provenance.get("scene_status") == statut_cible
 			and payload.get("personnage_id") == consequence["personnage_id"]
-			and _faits_sources_presents(
+			and payload.size() == 2
+			and changements.size() == 1
+			and _faits_sources_exactes(
 				faits_existants,
 				[consequence["fait_relationnel"]],
 				definition["scene_id"],
@@ -630,6 +740,8 @@ func _construire_evenement_manque(
 			)
 		):
 			return existant.duplicate(true)
+		if exiger_existant_coherent:
+			return {}
 	var personnage_id = consequence.get("personnage_id")
 	if typeof(personnage_id) != TYPE_STRING or not snapshot["relations"].has(personnage_id):
 		return {}
@@ -681,7 +793,7 @@ func _faits_sources(
 	return faits
 
 
-func _faits_sources_presents(
+func _faits_sources_exactes(
 	faits_existants: Array,
 	modeles: Array,
 	scene_id: String,
@@ -690,15 +802,16 @@ func _faits_sources_presents(
 	moment_diegetique: String
 ) -> bool:
 	var attendus := _faits_sources(modeles, scene_id, instance_id, resolution_id, moment_diegetique)
-	for attendu in attendus:
-		var present := false
-		for existant in faits_existants:
-			if _structures_identiques(existant, attendu):
-				present = true
-				break
-		if not present:
-			return false
-	return true
+	var sources_observees := []
+	for existant in faits_existants:
+		if (
+			typeof(existant) == TYPE_DICTIONARY
+			and existant.get("source_scene_id") == scene_id
+			and existant.get("source_scene_instance_id") == instance_id
+			and existant.get("source_resolution_id") == resolution_id
+		):
+			sources_observees.append(existant)
+	return _structures_identiques(sources_observees, attendus)
 
 
 func _structures_identiques(gauche, droite) -> bool:
@@ -729,7 +842,7 @@ func _chercher_choix(definition: Dictionary, choix_id: String) -> Dictionary:
 
 
 func _transaction_id_resolution(instance, resolution_id: String) -> String:
-	return "r8c-a3:%s:resolution:%s" % [instance.obtenir_snapshot()["instance_id"], resolution_id]
+	return "r8c-a3:%s:resolution:%s" % [instance.obtenir_instance_id(), resolution_id]
 
 
 func _valider_lien_instance(instance, definition: Dictionary) -> String:
@@ -738,6 +851,20 @@ func _valider_lien_instance(instance, definition: Dictionary) -> String:
 		return "DEFINITION_NON_INTERCHANGEABLE"
 	if snapshot.get("version_contrat") != definition.get("version_contrat"):
 		return "VERSION_DEFINITION_INCOHERENTE"
+	if snapshot.get("politique_unicite") != definition.get("politique_unicite"):
+		return "POLITIQUE_UNICITE_INCOHERENTE"
+	return ""
+
+
+static func _valider_enveloppe_snapshot(value) -> String:
+	if typeof(value) != TYPE_DICTIONARY:
+		return "SNAPSHOT_A5_STRUCTURE_INVALIDE"
+	if value.size() != 3 or not value.has("version") or not value.has("narrative_state") or not value.has("scene_registry"):
+		return "SNAPSHOT_A5_STRUCTURE_INVALIDE"
+	if typeof(value["version"]) != TYPE_INT or value["version"] != SNAPSHOT_VERSION:
+		return "SNAPSHOT_A5_VERSION_INCOMPATIBLE"
+	if typeof(value["narrative_state"]) != TYPE_DICTIONARY or typeof(value["scene_registry"]) != TYPE_ARRAY:
+		return "SNAPSHOT_A5_STRUCTURE_INVALIDE"
 	return ""
 
 
@@ -755,6 +882,10 @@ func _diagnostic_invalide(code: String, erreur: String, contexte: Dictionary) ->
 
 func _resultat_operation(ok: bool, erreur: String, transition: Dictionary, diagnostic: Dictionary) -> Dictionary:
 	return {"ok": ok, "erreur": erreur, "transition": transition, "diagnostic": diagnostic}
+
+
+static func _resultat_restauration(ok: bool, erreur: String, moteur, etat_narratif) -> Dictionary:
+	return {"ok": ok, "erreur": erreur, "moteur": moteur, "etat_narratif": etat_narratif}
 
 
 func _resultat_transaction(
