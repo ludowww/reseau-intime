@@ -17,6 +17,7 @@ documents techniques qui le suivent.
 8. [`R8C_A4_CONSOLIDATION_CANONIQUE_ET_NETTOYAGE_LEGACY.md`](../maintenance/R8C_A4_CONSOLIDATION_CANONIQUE_ET_NETTOYAGE_LEGACY.md) — classement, suppressions et gate courante.
 9. [`R8C_A5_PERSISTANCE_MINIMALE_SCENES_ET_OPPORTUNITES.md`](R8C_A5_PERSISTANCE_MINIMALE_SCENES_ET_OPPORTUNITES.md) — snapshot current-only, registre d'instances et reprise idempotente.
 10. [`R8C_A6_BRIEF_BIBLIOTHEQUE_NARRATIVE_MINIMALE.md`](R8C_A6_BRIEF_BIBLIOTHEQUE_NARRATIVE_MINIMALE.md) — brief documentaire uniquement, non implémenté.
+11. [`R8C_A6_DECISIONS_PRODUIT_ET_AUDIT_PREPARATOIRE.md`](R8C_A6_DECISIONS_PRODUIT_ET_AUDIT_PREPARATOIRE.md) — recommandations produit, inventaire des 88 JSON et API minimale, en attente d'approbation.
 
 ## Invariants de reprise
 
