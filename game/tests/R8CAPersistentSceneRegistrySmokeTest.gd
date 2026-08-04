@@ -36,6 +36,7 @@ func _executer() -> void:
 	_test_snapshots_invalides_sans_mutation_partielle()
 	_test_invariants_a1_apres_rechargement()
 	_test_durcissement_du_format_persistant()
+	_test_terminaison_bornee_avant_mutation()
 
 
 func _test_round_trip_des_quatre_statuts() -> void:
@@ -391,6 +392,25 @@ func _test_durcissement_du_format_persistant() -> void:
 		recharge_fait_minimal["ok"]
 		and recharge_fait_minimal["etat"].obtenir_snapshot()["relations"]["sandra"]["faits"] == [{"fait_id": "fait-synthetique"}],
 		"30 fait dictionnaire minimal A1 reste compatible avec le codec A5",
+	)
+
+
+func _test_terminaison_bornee_avant_mutation() -> void:
+	var instance_id := "i".repeat(500)
+	var paquet := _signature_proposee(instance_id)
+	var avant_etat: Dictionary = paquet["etat"].obtenir_snapshot()
+	var avant_instance: Dictionary = paquet["instance"].obtenir_snapshot()
+	var annulation: Dictionary = paquet["moteur"].annuler(
+		paquet["instance"], "r".repeat(500), "2030-04-08T19:01:00+02:00"
+	)
+	var snapshot: Dictionary = paquet["moteur"].obtenir_snapshot(paquet["etat"])
+	var recharge: Dictionary = MoteurModele.creer_depuis_snapshot(snapshot)
+	_expect(
+		not annulation["ok"] and annulation["erreur"] == "donnees terminales invalides"
+		and paquet["etat"].obtenir_snapshot() == avant_etat
+		and paquet["instance"].obtenir_snapshot() == avant_instance
+		and recharge["ok"],
+		"31 terminaison hors borne refusee avant mutation et snapshot toujours rechargeable",
 	)
 
 

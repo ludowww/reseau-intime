@@ -197,6 +197,8 @@ func preparer_transition(
 	if nouveau_statut in STATUTS_TERMINAUX:
 		if terminaison.is_empty() or not _donnees["terminaison"].is_empty():
 			return _rejet("transition terminale sans terminaison preparee ou deja presente")
+		if not _terminaison_preparee_valide(nouveau_statut, terminaison, obtenir_instance_id()):
+			return _rejet("donnees terminales invalides")
 	elif not terminaison.is_empty():
 		return _rejet("donnees terminales sur transition non terminale")
 	return {
@@ -301,6 +303,32 @@ static func _terminaison_valide(
 			and transaction_id.length() > ("r8c-a3:%s:annulation:" % instance_id).length()
 		)
 	return false
+
+
+static func _terminaison_preparee_valide(statut: String, terminaison: Dictionary, instance_id: String) -> bool:
+	var champs_requis := ["operation", "transaction_id", "choix_id", "resolution_id"]
+	var champs_autorises := champs_requis + ["portee_micro_signal"]
+	for champ in champs_requis:
+		if not terminaison.has(champ) or typeof(terminaison[champ]) != TYPE_STRING:
+			return false
+		if not terminaison[champ].is_empty() and not _chaine_non_vide(terminaison[champ]):
+			return false
+	for champ in terminaison:
+		if champ not in champs_autorises:
+			return false
+	if (
+		terminaison.has("portee_micro_signal")
+		and terminaison["portee_micro_signal"] not in ["LOCALE", "TEMPORAIRE", "DURABLE"]
+	):
+		return false
+	return _terminaison_valide(
+		statut,
+		terminaison["operation"],
+		terminaison["choix_id"],
+		terminaison["resolution_id"],
+		terminaison["transaction_id"],
+		instance_id,
+	)
 
 
 static func _champs_exacts(valeur: Dictionary, attendus: Array) -> bool:
