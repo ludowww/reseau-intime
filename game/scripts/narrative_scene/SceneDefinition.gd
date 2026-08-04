@@ -383,6 +383,31 @@ static func moment_valide(moment) -> bool:
 	)
 
 
+static func moment_normalise_valide(moment) -> bool:
+	if typeof(moment) != TYPE_STRING or moment.length() != 25 or not moment_valide(moment):
+		return false
+	if moment.substr(16, 1) != ":" or moment.substr(19, 1) not in ["+", "-"] or moment.substr(22, 1) != ":":
+		return false
+	var secondes: String = moment.substr(17, 2)
+	var heures_offset: String = moment.substr(20, 2)
+	var minutes_offset: String = moment.substr(23, 2)
+	if not secondes.is_valid_int() or not heures_offset.is_valid_int() or not minutes_offset.is_valid_int():
+		return false
+	var secondes_nombre := int(secondes)
+	var heures_offset_nombre := int(heures_offset)
+	var minutes_offset_nombre := int(minutes_offset)
+	return (
+		secondes_nombre >= 0 and secondes_nombre <= 59
+		and heures_offset_nombre >= 0 and heures_offset_nombre <= 14
+		and minutes_offset_nombre >= 0 and minutes_offset_nombre <= 59
+		and (heures_offset_nombre < 14 or minutes_offset_nombre == 0)
+	)
+
+
+static func meme_offset(premier: String, second: String) -> bool:
+	return moment_normalise_valide(premier) and moment_normalise_valide(second) and premier.substr(19, 6) == second.substr(19, 6)
+
+
 static func _date_valide(date) -> bool:
 	if typeof(date) != TYPE_STRING or date.length() != 10:
 		return false

@@ -20,6 +20,7 @@ documents techniques qui le suivent.
 11. [`R8C_A6_DECISIONS_PRODUIT_ET_AUDIT_PREPARATOIRE.md`](R8C_A6_DECISIONS_PRODUIT_ET_AUDIT_PREPARATOIRE.md) — décisions produit validées, inventaire des 88 JSON et API minimale.
 12. [`R8C_A6_BIBLIOTHEQUE_NARRATIVE_MINIMALE_IMPLEMENTATION.md`](R8C_A6_BIBLIOTHEQUE_NARRATIVE_MINIMALE_IMPLEMENTATION.md) — schéma fermé, API de requête, diagnostics et limites de l'implémentation prototype.
 13. [`R8C_A7_RESERVATION_ET_PROPOSITION_CANDIDATS.md`](R8C_A7_RESERVATION_ET_PROPOSITION_CANDIDATS.md) — provenance fermée, revalidation et matérialisation explicite `RESERVE`/`PROPOSE`.
+14. [`R8C_A8_FENETRES_OPPORTUNITE_ET_CONFLITS_EXCLUSIFS.md`](R8C_A8_FENETRES_OPPORTUNITE_ET_CONFLITS_EXCLUSIFS.md) — fenêtres éphémères, options explicites et trois politiques bornées de conflit exclusif.
 
 ## Invariants de reprise
 
