@@ -3,7 +3,7 @@
   "version": 1,
   "plan_id": "a11_sandra_last_lunch_detail",
   "title": "Prototype Sandra — le détail du dernier déjeuner",
-  "participant_ids": ["sandra", "marie", "player"],
+  "participant_ids": ["sandra", "player"],
   "premise": "Une photo banale du dernier déjeuner fait revenir un détail partagé et permet à Player de laisser entendre un manque sans le déclarer.",
   "shared_detail": "La petite fêlure en étoile du verre de Sandra, à côté des frites froides.",
   "required_beats": [
@@ -16,7 +16,7 @@
     {"beat_id": "attitude_choice", "goal": "Player choisit entre chaleur prudente et retrait ironique."},
     {"beat_id": "local_reception", "goal": "Sandra reçoit localement les deux attitudes de façon différente."},
     {"beat_id": "allowed_convergence", "goal": "Les micro-branches convergent sans effacer leur tonalité."},
-    {"beat_id": "ordinary_close", "goal": "Marie ramène la conversation vers un détail quotidien."}
+    {"beat_id": "ordinary_close", "goal": "Sandra ramène la conversation vers un détail quotidien."}
   ],
   "choice": {
     "choice_id": "player_attitude_after_detail",

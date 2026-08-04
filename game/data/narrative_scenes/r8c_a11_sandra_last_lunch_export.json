@@ -13,7 +13,6 @@
         "fonction_principale": "ECHO",
         "participants_requis": [
           {"personnage_id": "sandra", "role": "PARTICIPANT_AUTEUR"},
-          {"personnage_id": "marie", "role": "PARTICIPANT_AUTEUR"},
           {"personnage_id": "player", "role": "PARTICIPANT_AUTEUR"}
         ],
         "conditions_dures": {

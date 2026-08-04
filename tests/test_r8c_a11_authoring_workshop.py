@@ -6,7 +6,9 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
+import tools.a11_authoring_workshop as a11
 from tools.a11_authoring_workshop import (
     A11ApprovalError,
     A11ValidationError,
@@ -16,12 +18,12 @@ from tools.a11_authoring_workshop import (
     FORMAT_RELATIONSHIPS,
     FORMAT_REPORT,
     ROOT_KEYS,
+    approval_fingerprint,
     approve_report,
     compile_context,
     default_paths,
     export_a6,
     load_workspace,
-    revision_fingerprint,
     run_smoke,
     validate_character,
     validate_draft,
@@ -29,6 +31,7 @@ from tools.a11_authoring_workshop import (
     validate_plan,
     validate_relationships,
     validate_report_format,
+    validate_voice_sample,
 )
 
 
@@ -100,6 +103,10 @@ class R8CA11AuthoringWorkshopTests(unittest.TestCase):
         second = compile_context(load_workspace(**reversed_paths))
         self.assertEqual(first, second)
         self.assertIn("a11_sandra_last_lunch_detail", first)
+        self.assertIn("active_participants=sandra,player", first)
+        self.assertIn('"character_id":"marie"', first)
+        self.assertIn('"relation_id":"marie_player"', first)
+        self.assertIn('"relation_id":"sandra_marie"', first)
         self.assertNotIn("provider", first.casefold())
 
     def test_known_and_unknown_facts_are_enforced_by_explicit_identity(self):
@@ -115,10 +122,13 @@ class R8CA11AuthoringWorkshopTests(unittest.TestCase):
         draft = self.workspace["draft"]
         plan = self.workspace["plan"]
         self.assertEqual("a11_sandra_last_lunch_detail", plan["plan_id"])
+        self.assertEqual(["sandra", "player"], plan["participant_ids"])
         self.assertEqual(50, len(draft["messages"]))
+        self.assertEqual({"sandra", "player"}, {message["speaker_id"] for message in draft["messages"]})
         self.assertGreaterEqual(sum(message["burst_id"] is not None for message in draft["messages"]), 6)
         self.assertGreaterEqual(sum(message["strength"] == "WEAK" for message in draft["messages"]), 4)
         corpus = "\n".join(message["text"] for message in draft["messages"])
+        self.assertNotIn("Marie", corpus)
         for text in [
             "La petite étoile sur le bord",
             "Mais après c'était plus calme.",
@@ -129,6 +139,35 @@ class R8CA11AuthoringWorkshopTests(unittest.TestCase):
         sandra = next(character for character in self.workspace["characters"] if character["character_id"] == "sandra")
         marie = next(character for character in self.workspace["characters"] if character["character_id"] == "marie")
         self.assertNotEqual(sandra["voice"]["tone_markers"], marie["voice"]["tone_markers"])
+
+    def test_anonymous_voice_samples_are_qualitatively_non_interchangeable(self):
+        profiles = {character["character_id"]: character for character in self.workspace["characters"]}
+        first_anonymous_sample = [
+            "Cette photo du déjeuner est terrible.",
+            "Le verre fêlé avait au moins plus d'allure que les frites froides.",
+        ]
+        second_anonymous_sample = [
+            "Tu peux prendre du pain en rentrant ?",
+            "J'ai posé le café à côté du sac de courses.",
+        ]
+        self.assertEqual([], validate_voice_sample(profiles["sandra"], first_anonymous_sample))
+        self.assertEqual([], validate_voice_sample(profiles["marie"], second_anonymous_sample))
+        self.assertIn(
+            "VOICE_CONCRETE_ANCHOR_MISSING",
+            {issue.code for issue in validate_voice_sample(profiles["sandra"], second_anonymous_sample)},
+        )
+        self.assertIn(
+            "VOICE_CONCRETE_ANCHOR_MISSING",
+            {issue.code for issue in validate_voice_sample(profiles["marie"], first_anonymous_sample)},
+        )
+        self.assertIn(
+            "VOICE_FORBIDDEN_MOTIF",
+            {issue.code for issue in validate_voice_sample(profiles["sandra"], ["Je t'aime."])},
+        )
+        self.assertIn(
+            "VOICE_FORBIDDEN_MOTIF",
+            {issue.code for issue in validate_voice_sample(profiles["marie"], ["Nos frites froides."])},
+        )
 
     def test_choice_has_two_local_receptions_then_allowed_convergence(self):
         plan_options = {option["option_id"]: option for option in self.workspace["plan"]["choice"]["options"]}
@@ -163,7 +202,7 @@ class R8CA11AuthoringWorkshopTests(unittest.TestCase):
         report = validate_draft(self.workspace)
         with self.assertRaises(A11ApprovalError):
             export_a6(self.workspace, report)
-        approved = approve_report(report, self.workspace["draft"], "human_reviewer")
+        approved = approve_report(report, self.workspace, "human_reviewer")
         self.assertEqual("rev_01", approved["human_approval"]["draft_revision"])
         exported = export_a6(self.workspace, approved)
         self.assertEqual("R8C_A6_SCENE_LIBRARY", exported["format"])
@@ -171,6 +210,21 @@ class R8CA11AuthoringWorkshopTests(unittest.TestCase):
         changed["draft"]["revision"] = "rev_02"
         with self.assertRaises(A11ApprovalError):
             export_a6(changed, approved)
+        changed_plan = copy.deepcopy(self.workspace)
+        changed_plan["plan"]["title"] += " — modifié"
+        with self.assertRaises(A11ApprovalError):
+            export_a6(changed_plan, approved)
+        changed_character = copy.deepcopy(self.workspace)
+        changed_character["characters"][0]["role"] += " — modifié"
+        with self.assertRaises(A11ApprovalError):
+            export_a6(changed_character, approved)
+        changed_relationship = copy.deepcopy(self.workspace)
+        changed_relationship["relationships"]["relations"][0]["kind"] += " — modifié"
+        with self.assertRaises(A11ApprovalError):
+            export_a6(changed_relationship, approved)
+        with patch.object(a11, "VALIDATOR_VERSION", "a11-validator-next"):
+            with self.assertRaises(A11ApprovalError):
+                export_a6(self.workspace, approved)
 
     def test_a6_projection_matches_checked_fixture_and_closed_a3_shape(self):
         exported = export_a6(self.workspace, self.workspace["report"])
@@ -180,6 +234,10 @@ class R8CA11AuthoringWorkshopTests(unittest.TestCase):
         entry = exported["definitions"][0]
         self.assertEqual({"scene_definition_id", "variant_id", "definition"}, set(entry))
         definition = entry["definition"]
+        self.assertEqual(
+            ["sandra", "player"],
+            [participant["personnage_id"] for participant in definition["participants_requis"]],
+        )
         self.assertEqual(2, len(definition["choix"]))
         self.assertEqual(2, len(definition["resolutions"]))
         for resolution in definition["resolutions"].values():
@@ -188,12 +246,32 @@ class R8CA11AuthoringWorkshopTests(unittest.TestCase):
             self.assertEqual([], resolution["faits_relationnels"])
             self.assertEqual("RETOUR_NOYAU_COMMUN", resolution["convergence"])
 
-    def test_revision_fingerprint_covers_the_complete_draft(self):
-        fingerprint = revision_fingerprint(self.workspace["draft"])
-        self.assertEqual(fingerprint, self.workspace["report"]["revision_fingerprint"])
-        changed = copy.deepcopy(self.workspace["draft"])
-        changed["messages"][0]["text"] += "!"
-        self.assertNotEqual(fingerprint, revision_fingerprint(changed))
+    def test_approval_fingerprint_covers_all_editorial_inputs_and_validator(self):
+        fingerprint = approval_fingerprint(self.workspace)
+        self.assertEqual(fingerprint, self.workspace["report"]["approval_fingerprint"])
+        mutations = []
+        changed_draft = copy.deepcopy(self.workspace)
+        changed_draft["draft"]["messages"][0]["text"] += "!"
+        mutations.append(changed_draft)
+        changed_plan = copy.deepcopy(self.workspace)
+        changed_plan["plan"]["title"] += "!"
+        mutations.append(changed_plan)
+        changed_character = copy.deepcopy(self.workspace)
+        changed_character["characters"][0]["role"] += "!"
+        mutations.append(changed_character)
+        changed_relationship = copy.deepcopy(self.workspace)
+        changed_relationship["relationships"]["relations"][0]["kind"] += "!"
+        mutations.append(changed_relationship)
+        for mutant in mutations:
+            self.assertNotEqual(fingerprint, approval_fingerprint(mutant))
+        with patch.object(a11, "VALIDATOR_VERSION", "a11-validator-next"):
+            self.assertNotEqual(fingerprint, approval_fingerprint(self.workspace))
+
+    def test_documented_minimal_contract_names_fields_absences_reason_and_invariant(self):
+        contract = self.read("docs/architecture/R8C_A11_ATELIER_AUTEUR_ASSISTE_VERTICAL_SLICE.md")
+        self.assertIn("## A11.1 minimal contract", contract)
+        for token in ["Inclus", "Délibérément absent", "Pourquoi", "Invariant protégé"]:
+            self.assertIn(token, contract)
 
     def test_lot_has_no_runtime_connections_automatic_selection_or_numeric_evaluation(self):
         paths = [

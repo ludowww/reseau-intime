@@ -18,6 +18,12 @@ func _ready() -> void:
 		)
 		var definition: Dictionary = library.obtenir_definition("r8c_a11_sandra_last_lunch_definition")
 		_expect(definition["version_contrat"] == "1.0.0-prototype", "version prototype")
+		_expect(
+			definition["participants_requis"].map(
+				func(participant): return participant["personnage_id"]
+			) == ["sandra", "player"],
+			"participants actifs Sandra et Player uniquement",
+		)
 		_expect(definition["choix"].size() == 2, "deux attitudes")
 		_expect(definition["resolutions"].size() == 2, "deux receptions")
 		_expect(
@@ -34,11 +40,11 @@ func _ready() -> void:
 			),
 			"convergence A3",
 		)
-	if failures.is_empty() and checks == 8:
+	if failures.is_empty() and checks == 9:
 		print("R8C_A11_AUTHORING_EXPORT: OK (%d controles)" % checks)
 		get_tree().quit(0)
 	else:
-		push_error("R8C_A11_AUTHORING_EXPORT: ECHEC %s (%d/8)" % [failures, checks])
+		push_error("R8C_A11_AUTHORING_EXPORT: ECHEC %s (%d/9)" % [failures, checks])
 		get_tree().quit(1)
 
 

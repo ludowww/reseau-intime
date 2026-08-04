@@ -24,8 +24,8 @@ regroupe volontairement le petit pipeline pur :
 - une factory atomique qui ne rend aucun workspace partiel ;
 - une compilation de contexte texte canonique, triée et reproductible ;
 - une validation éditoriale séparant erreurs bloquantes et avertissements ;
-- une approbation portant l’identité, la révision et l’empreinte complète du
-  brouillon ;
+- une approbation portant l’identité, la révision et une empreinte composite
+  des personnages, relations, plan, brouillon et version du validateur ;
 - une projection A6 refusée si cette approbation ne correspond pas exactement.
 
 Il n’existe ni registre global, ni cache, ni nouvel état sérialisé. Les données
@@ -46,10 +46,30 @@ validés avant les références croisées.
 
 Le contexte compilé est un texte éphémère, pas un sixième format persistant.
 
+## A11.1 minimal contract
+
+Les schémas restent volontairement étroits. Le tableau donne le contrat exact,
+les omissions assumées, leur raison et l’invariant protégé.
+
+| Format | Inclus | Délibérément absent | Pourquoi | Invariant protégé |
+| --- | --- | --- | --- | --- |
+| fiche personnage | `format`, `version`, `character_id`, `display_name`, `role`, `voice`, `known_facts`, `unknown_facts` | biographie exhaustive, état runtime, valeurs relationnelles chiffrées | le prototype a seulement besoin de distinguer la parole et l’accès aux faits | aucune omniscience et aucune évaluation agrégée de la voix |
+| registre relationnel | `format`, `version`, `relations` ; chaque relation porte identité, paire, nature, faits partagés et limites | historique canonique, progression persistante, conséquences | A11 contextualise sans écrire l’état du jeu | les trois relations sont disponibles sans accès à A1/A3/A5/A7/A8/A9/A10 |
+| plan de scène | identité/titre, `participant_ids`, `premise`, `shared_detail`, `required_beats`, `choice`, `media_requirement`, `limits`, `a6_projection` | graphe de routes, configuration de génération, sélection automatique | le plan humain demeure l’unique intention source | aucune route verrouillée et aucune dépendance à un fournisseur |
+| brouillon de dialogue | identité/révision/plan, `messages` avec locuteur, type, texte, faits, beat, micro-branche, rafale, force et média, puis `choice` | temporisation runtime, état de lecture, effets persistants | A11 prépare une matière éditoriale, pas une conversation jouable | seuls les participants du plan parlent et toute référence factuelle est contrôlée |
+| rapport de validation | identité/révision, `approval_fingerprint`, `status`, `blocking_errors`, `warnings`, `human_approval` | horodatage, historique d’approbations, métriques et décision automatique | une seule preuve révisable suffit au slice hors ligne | tout changement éditorial ou de validateur révoque l’export |
+
+L’empreinte d’approbation est le SHA-256 canonique des trois fiches personnage
+triées par identité, du registre relationnel, du plan, du brouillon et de
+`a11-validator-1.1`. Le rapport n’entre pas dans sa propre empreinte. Une
+modification de l’un de ces éléments exige donc une nouvelle validation et une
+nouvelle approbation humaine.
+
 ## Prototype Sandra exact
 
 Le plan `a11_sandra_last_lunch_detail` produit un brouillon de 50 bulles avec
-Sandra, Marie et Player. Sandra ressort une photo banale de la table du dernier
+Sandra et Player comme seuls participants visibles. Sandra ressort une photo
+banale de la table du dernier
 déjeuner. Le détail concret est la petite fêlure en étoile de son verre, près de
 frites froides dont Player avait défendu la « cuisson lente ». Player écrit que
 l’après-déjeuner était « plus calme », puis « un peu trop peut-être ». Sandra
@@ -64,12 +84,22 @@ Après une clarification douce, le choix expose deux SMS :
   hommage aux frites molles. » ; Sandra reçoit localement
   `défensive_embarrassée`.
 
-Les deux branches convergent au message `m35`, quand Marie refuse simplement de
-retourner au restaurant. La fin revient au pain à acheter. Aucune déclaration,
+Les deux branches convergent au message `m35`, quand Sandra refuse simplement de
+retourner au restaurant. La fin revient à une question banale sur les horaires
+du café voisin. Aucune déclaration,
 séduction immédiate, conséquence majeure ou route verrouillée n’est produite.
 Le brouillon contient trois rafales identifiées et cinq messages `WEAK`. La voix
-de Sandra reste nostalgique et protectrice ; celle de Marie est pratique,
-familière et domestique.
+de Sandra reste nostalgique et protectrice. Marie ne parle pas, n’intervient pas
+dans le choix ou la convergence et n’est pas exportée vers A6 ; sa fiche et ses
+relations restent présentes dans le contexte comme calibration qualitative.
+
+La preuve de voix emploie deux corpus anonymes. Celui de Sandra s’ancre dans la
+photo du déjeuner, le verre fêlé et les frites froides ; celui de Marie dans le
+pain, le café et le sac de courses. Chaque corpus satisfait les garde-fous de sa
+fiche et échoue sur les ancrages de l’autre. Des exemples interdits démontrent
+également la détection d’une déclaration frontale pour Sandra et d’une reprise
+des motifs de Sandra par Marie. Cette preuve est qualitative : elle ne calcule
+ni note, ni classement, ni priorité.
 
 La fixture invalide fait employer à Sandra `marie_private_concern`, fait marqué
 comme inconnu pour elle. Le rapport est donc `BLOCKED` et l’export impossible.
@@ -107,8 +137,7 @@ godot --headless --path game res://tests/R8CA11AuthoringExportSmokeTest.tscn
 git diff --check
 ```
 
-La gate finale ajoute la validation JSON du jeu, la simulation existante, la
-suite Python globale et le démarrage Godot headless standard. Les smokes Portrait
-et la résolution 1280×720 restent hors périmètre puisque aucun fichier joueur,
-UI ou runtime Saison 1 n’est modifié.
-
+La gate finale ajoute la validation JSON du jeu, la simulation existante et la
+suite Python globale. Les smokes Portrait, le démarrage Godot standard et la
+résolution 1280×720 restent hors périmètre puisque aucun chargeur Godot, fichier
+joueur, UI ou runtime Saison 1 n’est modifié.

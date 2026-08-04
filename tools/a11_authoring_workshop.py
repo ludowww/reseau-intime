@@ -23,6 +23,7 @@ FORMAT_PLAN = "R8C_A11_SCENE_PLAN"
 FORMAT_DRAFT = "R8C_A11_DIALOGUE_DRAFT"
 FORMAT_REPORT = "R8C_A11_VALIDATION_REPORT"
 VERSION = 1
+VALIDATOR_VERSION = "a11-validator-1.1"
 
 ROOT_KEYS = {
     FORMAT_CHARACTER: {
@@ -37,9 +38,18 @@ ROOT_KEYS = {
     },
     FORMAT_DRAFT: {"format", "version", "draft_id", "revision", "plan_id", "messages", "choice"},
     FORMAT_REPORT: {
-        "format", "version", "draft_id", "draft_revision", "revision_fingerprint",
+        "format", "version", "draft_id", "draft_revision", "approval_fingerprint",
         "status", "blocking_errors", "warnings", "human_approval",
     },
+}
+
+VOICE_FORBIDDEN_MOTIFS = {
+    "déclaration frontale": ("je t'aime", "tu me manques"),
+    "séduction immédiate": ("embrasse-moi maintenant", "viens chez moi maintenant"),
+    "culpabilisation de Player": ("c'est ta faute", "tu me fais souffrir"),
+    "devenir un obstacle": ("tu n'as pas le droit de lui parler",),
+    "accusation sans preuve": ("je sais que tu me trompes",),
+    "parler comme Sandra": ("notre vieux déjeuner", "nos frites froides"),
 }
 
 
@@ -67,8 +77,48 @@ def _canonical(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
 
 
-def revision_fingerprint(draft: Mapping[str, Any]) -> str:
-    return hashlib.sha256(_canonical(draft).encode("utf-8")).hexdigest()
+def approval_fingerprint(workspace: Mapping[str, Any]) -> str:
+    characters = sorted(
+        workspace["characters"], key=lambda character: character["character_id"]
+    )
+    editorial_contract = {
+        "characters": characters,
+        "relationships": workspace["relationships"],
+        "plan": workspace["plan"],
+        "draft": workspace["draft"],
+        "validator_version": VALIDATOR_VERSION,
+    }
+    return hashlib.sha256(_canonical(editorial_contract).encode("utf-8")).hexdigest()
+
+
+def validate_voice_sample(
+    character: Mapping[str, Any], messages: Sequence[str]
+) -> list[Issue]:
+    issues: list[Issue] = []
+    if not messages or any(not _nonempty(message) for message in messages):
+        _issue(issues, "VOICE_SAMPLE_INVALID", "messages", "messages anonymisés non vides requis")
+        return issues
+    voice = character["voice"]
+    corpus = "\n".join(messages).casefold()
+    anchors = [anchor.casefold() for anchor in voice["concrete_anchors"]]
+    if not any(anchor in corpus for anchor in anchors):
+        _issue(
+            issues,
+            "VOICE_CONCRETE_ANCHOR_MISSING",
+            "messages",
+            character["character_id"],
+        )
+    for forbidden_move in voice["forbidden_moves"]:
+        for motif in VOICE_FORBIDDEN_MOTIFS.get(forbidden_move, ()):
+            if motif in corpus:
+                _issue(
+                    issues,
+                    "VOICE_FORBIDDEN_MOTIF",
+                    "messages",
+                    forbidden_move,
+                )
+                break
+    return issues
 
 
 def _issue(issues: list[Issue], code: str, path: str, message: str) -> None:
@@ -353,7 +403,7 @@ def validate_report_format(document: Any, path: str = "report") -> list[Issue]:
     issues: list[Issue] = []
     if not _validate_header(document, FORMAT_REPORT, path, issues):
         return issues
-    for field in ("draft_id", "draft_revision", "revision_fingerprint", "status"):
+    for field in ("draft_id", "draft_revision", "approval_fingerprint", "status"):
         if not _nonempty(document[field]):
             _issue(issues, "TEXT_REQUIRED", f"{path}.{field}", "chaîne non vide attendue")
     if document["status"] not in {"BLOCKED", "READY", "READY_WITH_WARNINGS"}:
@@ -371,7 +421,7 @@ def validate_report_format(document: Any, path: str = "report") -> list[Issue]:
                     if not _nonempty(value[key]):
                         _issue(issues, "ISSUE_INVALID", f"{value_path}.{key}", "chaîne non vide attendue")
     approval = document["human_approval"]
-    approval_keys = {"decision", "approved_by", "draft_revision", "revision_fingerprint"}
+    approval_keys = {"decision", "approved_by", "draft_revision", "approval_fingerprint"}
     if approval is not None and _closed(approval, approval_keys, f"{path}.human_approval", issues):
         if approval["decision"] != "APPROVED":
             _issue(issues, "APPROVAL_DECISION_INVALID", f"{path}.human_approval.decision", "APPROVED attendu")
@@ -457,34 +507,32 @@ def _validate_references(workspace: Mapping[str, Any]) -> list[Issue]:
             _issue(issues, "REPORT_DRAFT_MISMATCH", "report.draft_id", draft["draft_id"])
         if report["draft_revision"] != draft["revision"]:
             _issue(issues, "REPORT_REVISION_MISMATCH", "report.draft_revision", draft["revision"])
-        if report["revision_fingerprint"] != revision_fingerprint(draft):
-            _issue(issues, "REPORT_FINGERPRINT_MISMATCH", "report.revision_fingerprint", "empreinte de révision différente")
+        fingerprint = approval_fingerprint(workspace)
+        if report["approval_fingerprint"] != fingerprint:
+            _issue(issues, "REPORT_FINGERPRINT_MISMATCH", "report.approval_fingerprint", "empreinte éditoriale différente")
         approval = report["human_approval"]
         if approval is not None:
             if approval["draft_revision"] != draft["revision"]:
                 _issue(issues, "APPROVAL_REVISION_MISMATCH", "report.human_approval.draft_revision", draft["revision"])
-            if approval["revision_fingerprint"] != revision_fingerprint(draft):
-                _issue(issues, "APPROVAL_FINGERPRINT_MISMATCH", "report.human_approval.revision_fingerprint", "empreinte de révision différente")
+            if approval["approval_fingerprint"] != fingerprint:
+                _issue(issues, "APPROVAL_FINGERPRINT_MISMATCH", "report.human_approval.approval_fingerprint", "empreinte éditoriale différente")
     return issues
 
 
 def compile_context(workspace: Mapping[str, Any]) -> str:
     plan = workspace["plan"]
-    participant_ids = set(plan["participant_ids"])
     characters = sorted(
-        (character for character in workspace["characters"] if character["character_id"] in participant_ids),
+        workspace["characters"],
         key=lambda character: character["character_id"],
     )
     relations = sorted(
-        (
-            relation for relation in workspace["relationships"]["relations"]
-            if set(relation["participant_ids"]).issubset(participant_ids)
-        ),
+        workspace["relationships"]["relations"],
         key=lambda relation: relation["relation_id"],
     )
     sections = [
         "# A11 deterministic authoring context",
         f"plan={plan['plan_id']}",
+        "active_participants=" + ",".join(plan["participant_ids"]),
         "## plan",
         _canonical({key: plan[key] for key in sorted(plan) if key not in {"format", "version"}}),
         "## characters",
@@ -599,7 +647,7 @@ def validate_draft(workspace: Mapping[str, Any]) -> dict[str, Any]:
         "version": VERSION,
         "draft_id": draft["draft_id"],
         "draft_revision": draft["revision"],
-        "revision_fingerprint": revision_fingerprint(draft),
+        "approval_fingerprint": approval_fingerprint(workspace),
         "status": status,
         "blocking_errors": [issue.as_json() for issue in errors],
         "warnings": [issue.as_json() for issue in warnings],
@@ -607,19 +655,22 @@ def validate_draft(workspace: Mapping[str, Any]) -> dict[str, Any]:
     }
 
 
-def approve_report(report: Mapping[str, Any], draft: Mapping[str, Any], approved_by: str) -> dict[str, Any]:
+def approve_report(
+    report: Mapping[str, Any], workspace: Mapping[str, Any], approved_by: str
+) -> dict[str, Any]:
     issues = validate_report_format(report)
     if issues:
         raise A11ValidationError(issues)
     if not _nonempty(approved_by):
         raise A11ApprovalError("approved_by must be a non-empty human identifier")
-    fingerprint = revision_fingerprint(draft)
+    draft = workspace["draft"]
+    fingerprint = approval_fingerprint(workspace)
     if (
         report["status"] == "BLOCKED"
         or report["blocking_errors"]
         or report["draft_id"] != draft["draft_id"]
         or report["draft_revision"] != draft["revision"]
-        or report["revision_fingerprint"] != fingerprint
+        or report["approval_fingerprint"] != fingerprint
     ):
         raise A11ApprovalError("report is not approvable for this draft revision")
     approved = copy.deepcopy(report)
@@ -627,7 +678,7 @@ def approve_report(report: Mapping[str, Any], draft: Mapping[str, Any], approved
         "decision": "APPROVED",
         "approved_by": approved_by,
         "draft_revision": draft["revision"],
-        "revision_fingerprint": fingerprint,
+        "approval_fingerprint": fingerprint,
     }
     return approved
 
@@ -635,18 +686,18 @@ def approve_report(report: Mapping[str, Any], draft: Mapping[str, Any], approved
 def export_a6(workspace: Mapping[str, Any], report: Mapping[str, Any]) -> dict[str, Any]:
     draft = workspace["draft"]
     plan = workspace["plan"]
-    fingerprint = revision_fingerprint(draft)
+    fingerprint = approval_fingerprint(workspace)
     approval = report.get("human_approval")
     if (
         report.get("status") == "BLOCKED"
         or report.get("blocking_errors")
         or report.get("draft_id") != draft["draft_id"]
         or report.get("draft_revision") != draft["revision"]
-        or report.get("revision_fingerprint") != fingerprint
+        or report.get("approval_fingerprint") != fingerprint
         or not isinstance(approval, dict)
         or approval.get("decision") != "APPROVED"
         or approval.get("draft_revision") != draft["revision"]
-        or approval.get("revision_fingerprint") != fingerprint
+        or approval.get("approval_fingerprint") != fingerprint
     ):
         raise A11ApprovalError("A6 export refused: exact approved revision required")
     projection = plan["a6_projection"]

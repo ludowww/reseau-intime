@@ -3,7 +3,7 @@
   "version": 1,
   "draft_id": "a11_sandra_last_lunch_detail_draft",
   "draft_revision": "rev_01",
-  "revision_fingerprint": "c96e715f80f40c20fcaab7e645307bf6baeabcbd2ec78d027a68b71a3474418d",
+  "approval_fingerprint": "0de945eaa8844a916055035c5164d19e3c97dd3592e88bde8c70d8d11ec93bd7",
   "status": "READY_WITH_WARNINGS",
   "blocking_errors": [],
   "warnings": [
@@ -17,6 +17,6 @@
     "decision": "APPROVED",
     "approved_by": "reviewer_a11_fixture",
     "draft_revision": "rev_01",
-    "revision_fingerprint": "c96e715f80f40c20fcaab7e645307bf6baeabcbd2ec78d027a68b71a3474418d"
+    "approval_fingerprint": "0de945eaa8844a916055035c5164d19e3c97dd3592e88bde8c70d8d11ec93bd7"
   }
 }
