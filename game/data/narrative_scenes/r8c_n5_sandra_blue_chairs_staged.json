@@ -1,0 +1,112 @@
+{
+  "format": "R8C_A6_SCENE_LIBRARY",
+  "version": 1,
+  "definitions": [
+    {
+      "scene_definition_id": "sandra_blue_chairs_definition",
+      "variant_id": "sandra_blue_chairs_canonical",
+      "definition": {
+        "scene_id": "sandra_blue_chairs_definition",
+        "version_contrat": "1.0.0-n5-staged",
+        "titre_interne": "Sandra — Les chaises bleues",
+        "nature": "MODULAIRE",
+        "fonction_principale": "RELATION",
+        "participants_requis": [
+          {
+            "personnage_id": "player",
+            "role": "INTERLOCUTEUR"
+          },
+          {
+            "personnage_id": "sandra",
+            "role": "INITIATRICE"
+          }
+        ],
+        "conditions_dures": {
+          "actes_compatibles": [
+            "SANDRA_REOPENING_SEQUENCE"
+          ],
+          "evenements_requis": [
+            "sandra_recontact_reactivated",
+            "sandra_first_complicity_restored",
+            "sandra_shared_lunch_memory_available",
+            "sandra_short_pause_after_recontact_elapsed"
+          ]
+        },
+        "exclusions_dures": {
+          "evenements_interdits": [
+            "sandra_distance_requested",
+            "sandra_conflict_active",
+            "sandra_new_lunch_agreed",
+            "sandra_progression_advanced",
+            "sandra_explicit_intimacy_established",
+            "sandra_route_locked"
+          ]
+        },
+        "contrat_temporel": {
+          "date_debut": "2030-04-12",
+          "date_fin": "2030-04-12",
+          "heure_ouverture": "16:30",
+          "heure_fermeture": "18:05",
+          "duree_minutes": 90,
+          "revalidation": "AVANT_PROPOSITION"
+        },
+        "politique_unicite": "UNIQUE",
+        "relation_ou_question_focale": "Sandra vérifie si Player rend lisible l’importance de la reprise du contact sans transformer cette reconnaissance en promesse.",
+        "noyau_stable": "Sandra relance le lien par la photo des chaises bleues, reçoit la réponse de Player, maintient sa limite et ferme chaleureusement.",
+        "structure_id": "sandra_blue_chairs_canonical_dialogue",
+        "choix": [
+          {
+            "choix_id": "careful_warmth",
+            "formulation": "Que ça m’avait manqué.",
+            "signal_emis": "RECONTACT_IMPORTANCE_STATED_CAREFULLY",
+            "resolution_ids": [
+              "careful_warmth_received"
+            ]
+          },
+          {
+            "choix_id": "ironic_withdrawal",
+            "formulation": "Que nos agendas sont nuls.",
+            "signal_emis": "RECONTACT_IMPORTANCE_STATED_INDIRECTLY",
+            "resolution_ids": [
+              "ironic_withdrawal_received"
+            ]
+          }
+        ],
+        "resolutions": {
+          "careful_warmth_received": {
+            "personnage_id": "sandra",
+            "portee_micro_signal": "DURABLE",
+            "signal_recu": "RECONTACT_IMPORTANCE_STATED_CAREFULLY",
+            "reception": "RECUE_INTERPRETEE",
+            "interpretation": "SANDRA_RECEIVED_AND_UNDERSTOOD_RECONTACT_MATTERS_TO_PLAYER",
+            "faits_relationnels": [
+              {
+                "fait_id": "sandra_recontact_importance_received_understood",
+                "nature": "SIGNAL_RECU_ET_INTERPRETE",
+                "recu_par": "sandra",
+                "permission_future": false
+              }
+            ],
+            "convergence": "RETOUR_NOYAU_COMMUN"
+          },
+          "ironic_withdrawal_received": {
+            "personnage_id": "sandra",
+            "portee_micro_signal": "DURABLE",
+            "signal_recu": "RECONTACT_IMPORTANCE_STATED_INDIRECTLY",
+            "reception": "RECUE_INTERPRETEE",
+            "interpretation": "SANDRA_RECEIVED_AND_UNDERSTOOD_RECONTACT_MATTERS_TO_PLAYER",
+            "faits_relationnels": [
+              {
+                "fait_id": "sandra_recontact_importance_received_understood",
+                "nature": "SIGNAL_RECU_ET_INTERPRETE",
+                "recu_par": "sandra",
+                "permission_future": false
+              }
+            ],
+            "convergence": "RETOUR_NOYAU_COMMUN"
+          }
+        }
+      }
+    }
+  ]
+}

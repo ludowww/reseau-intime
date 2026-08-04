@@ -1,0 +1,206 @@
+{
+  "format": "R8C_N5_STAGED_SEASON_PROJECTION_REPORT",
+  "version": 1,
+  "status": "RUNTIME_PROJECTION_STAGED",
+  "baseline": "2bd49d728fb1e812a16fc18b7fdd844d74f51dbf",
+  "canonical_source": {
+    "path": "narrative_tool/a11/revisions/sandra_blue_chairs_r8c_n2.source.json",
+    "decision_path": "narrative_tool/a11/revisions/sandra_blue_chairs_r8c_n2.canon_decision.json",
+    "decision": "CANON_APPROVED",
+    "source_content_sha256": "aac0ab82b735467e0d65df6d555f2ff62be2956e6acb5227e5b838112cfa5d77"
+  },
+  "staged_bundle": {
+    "path": "game/data/narrative_scenes/r8c_n5_sandra_blue_chairs_staged.json",
+    "load_mode": "EXPLICIT_PATH_TESTS_AND_SMOKES_ONLY",
+    "scene_definition_id": "sandra_blue_chairs_definition",
+    "variant_id": "sandra_blue_chairs_canonical",
+    "player_provider_reference": false
+  },
+  "canonical_identity": {
+    "scene_definition_id": "sandra_blue_chairs_definition",
+    "variant_id": "sandra_blue_chairs_canonical",
+    "nature_doctrine": "MODULAR",
+    "nature_a6": "MODULAIRE",
+    "uniqueness": "UNIQUE",
+    "participants": [
+      "player",
+      "sandra"
+    ],
+    "contains_day": false,
+    "contains_time": false,
+    "contains_chapter_04": false
+  },
+  "a6_projection": {
+    "represented": [
+      {
+        "source": "N3.type",
+        "target": "definition.nature",
+        "detail": "MODULAR est projeté vers l’enum A6 existant MODULAIRE."
+      },
+      {
+        "source": "N3.occurrence",
+        "target": "definition.politique_unicite",
+        "detail": "UNIQUE"
+      },
+      {
+        "source": "N2.choice.options",
+        "target": "definition.choix",
+        "detail": "Les deux identifiants et formulations sont conservés exactement."
+      },
+      {
+        "source": "N2.choice.reception_messages",
+        "target": "definition.resolutions",
+        "detail": "Chaque branche garde une réception distincte avant la convergence commune."
+      },
+      {
+        "source": "N3.trace_durable_potentielle",
+        "target": "definition.resolutions.*.faits_relationnels",
+        "detail": "Les deux branches écrivent le même et unique fait A1 après résolution complète."
+      }
+    ],
+    "not_representable": [
+      {
+        "source": "N2.messages_and_reception_text",
+        "reason": "A6 ne possède aucun champ de transcript ou de bulle.",
+        "preserved_in": "narrative_tool/a11/revisions/sandra_blue_chairs_r8c_n2.source.json"
+      },
+      {
+        "source": "N2.media",
+        "reason": "A6 ne possède aucun champ média ni état de livraison.",
+        "preserved_in": "media_gate"
+      },
+      {
+        "source": "N2.author_metadata",
+        "reason": "Le schéma A6 fermé ne représente pas les preuves et métadonnées auteur.",
+        "preserved_in": "canonical_source"
+      },
+      {
+        "source": "N4.1.current_runtime_projection",
+        "reason": "La projection Saison 1 est révisable et ne fait pas partie de l’identité canonique.",
+        "preserved_in": "runtime_projection"
+      }
+    ]
+  },
+  "a1_a3_prerequisites": {
+    "required_events": [
+      {
+        "event_id": "sandra_recontact_reactivated",
+        "kind": "MINIMAL_DISCRETE_BRIDGE_EVENT",
+        "season_1_provenance": [
+          "fact_sandra_preexisting_friendship",
+          "Season1State.sandra_state=RECONNECTION_OPEN"
+        ]
+      },
+      {
+        "event_id": "sandra_first_complicity_restored",
+        "kind": "MINIMAL_DISCRETE_BRIDGE_EVENT",
+        "season_1_provenance": [
+          "Season1State.sandra_j03_echo_outcome=RESPONDED"
+        ]
+      },
+      {
+        "event_id": "sandra_shared_lunch_memory_available",
+        "kind": "MINIMAL_DISCRETE_BRIDGE_EVENT",
+        "season_1_provenance": [
+          "fact_player_saw_sandra_lunch_photo",
+          "j01_sandra_lunch_memory_soft"
+        ]
+      },
+      {
+        "event_id": "sandra_short_pause_after_recontact_elapsed",
+        "kind": "MINIMAL_DISCRETE_BRIDGE_EVENT",
+        "season_1_provenance": [
+          "chapter_03_sandra_continuity completed or answered",
+          "current runtime time reached 16:30 in the audited projection"
+        ]
+      }
+    ],
+    "forbidden_events": [
+      "sandra_distance_requested",
+      "sandra_conflict_active",
+      "sandra_new_lunch_agreed",
+      "sandra_progression_advanced",
+      "sandra_explicit_intimacy_established",
+      "sandra_route_locked"
+    ],
+    "activation_bridge_implemented": false,
+    "note": "Les événements de pont n’existent que dans le harness staged; aucun adaptateur Season1State vers A1 n’est ajouté par N5."
+  },
+  "runtime_projection": {
+    "scope": "CURRENT_SEASON_1_REVISION_ONLY",
+    "runtime_day": "J04",
+    "harness_reference_date": "2030-04-12",
+    "opens_at": "16:30",
+    "last_schedulable_minute": "18:04",
+    "hard_next_scene_starts_at": "18:05",
+    "previous_scene_id": "chapter_04_nico_saved_seat_followup",
+    "next_scene_id": "chapter_04_marie_household_report",
+    "author_order": [
+      "chapter_04_nico_saved_seat_followup",
+      "sandra_blue_chairs_definition",
+      "chapter_04_marie_household_report"
+    ],
+    "duration_minutes": 90,
+    "planned_start": "16:30",
+    "planned_end": "18:00",
+    "buffer_before_next_scene_minutes": 4,
+    "identity_depends_on_projection": false
+  },
+  "a8_policy": {
+    "before_proposal": "CLOSE_SILENTLY",
+    "before_proposal_result": "NOT_SELECTED_WITHOUT_A5_INSTANCE",
+    "after_proposal": "KEEP_PROPOSED_INSTANCE_PLAYABLE_UNTIL_RESOLUTION",
+    "mark_missed_if_proposed": "REJECTED_FOR_THIS_SCENE",
+    "missed_relation_consequence": false,
+    "a1_trace_on_expiration": false,
+    "known_activation_blocker": "A8 has no public operation that silently closes an otherwise untouched window solely because its closing instant was reached."
+  },
+  "a9_slot": {
+    "moment": "LATE_AFTERNOON",
+    "starts_at": "16:30",
+    "ends_at": "18:04",
+    "not_before": "16:30",
+    "not_after": "18:04",
+    "duration_minutes": 90,
+    "reject_end_at_or_after": "18:05",
+    "numeric_priority": false
+  },
+  "j05_incompatibility": {
+    "conversation_id": "chapter_05_sandra_photo_continuity",
+    "stable_scene_id": "sandra_saturday_photo_continuity_01",
+    "if_n2_proposed": "SILENTLY_INELIGIBLE_BEFORE_PROPOSAL",
+    "if_n2_never_proposed": "EVALUATE_NORMALLY",
+    "missed": false,
+    "absence_narrative": false,
+    "relation_consequence": false,
+    "runtime_bridge_implemented": false
+  },
+  "durable_trace": {
+    "fact_id": "sandra_recontact_importance_received_understood",
+    "text": "Sandra a reçu et compris que la reprise du contact compte pour Player.",
+    "created_only_after_complete_resolution": true,
+    "created_at_eligibility": false,
+    "created_at_reservation": false,
+    "created_at_proposal": false,
+    "created_at_window_open": false,
+    "created_at_expiration": false,
+    "permission_future": false,
+    "score_or_accumulator": false
+  },
+  "media_gate": {
+    "media_id": "photo_sandra_cafe_blue_chairs",
+    "status": "ASSET_REQUIRED_NOT_READY",
+    "final_asset_present": false,
+    "visible_placeholder": false,
+    "old_asset_reused": false,
+    "gallery_unlock": false,
+    "player_activation_allowed": false
+  },
+  "player_reachability": {
+    "season_1_provider": false,
+    "portrait_main": false,
+    "visible_conversations": false,
+    "notifications": false,
+    "active_day_data": false
+  }
+}

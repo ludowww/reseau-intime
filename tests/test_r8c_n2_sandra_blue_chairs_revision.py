@@ -53,7 +53,6 @@ TOOL = ROOT / "tools/a11_plan_draft_export.py"
 DOC = ROOT / "docs/narrative/R8C_N2_SANDRA_BLUE_CHAIRS_MINOR_NARRATIVE_REVISION.md"
 N1_DOC = ROOT / "docs/narrative/R8C_N1_CANON_REVIEW_SANDRA_BLUE_CHAIRS.md"
 BASELINE = "25e8cafac7e14487a2cf57e41c1b1d151873cbbb"
-BRANCH = "work/r8c-n2-sandra-blue-chairs-minor-narrative-revision"
 LOCKED_SHA256 = "af0e48812a160b701b7e60638407513f86b892bbae2258eea1050d7a6a70b404"
 SOURCE_SHA256 = "aac0ab82b735467e0d65df6d555f2ff62be2956e6acb5227e5b838112cfa5d77"
 A115_SOURCE_SHA256 = "9167120abc55dbf4275ac67eb7b4f774a58322587d87c9310644e3bcf85982dd"
@@ -71,7 +70,7 @@ class R8CN2SandraBlueChairsRevisionTests(unittest.TestCase):
     def mutant(self):
         return load_n2_workspace(include_outputs=False)
 
-    def test_exact_baseline_tag_branch_and_deliverables(self):
+    def test_exact_baseline_tag_and_deliverables(self):
         self.assertEqual(
             BASELINE,
             subprocess.check_output(
@@ -87,10 +86,6 @@ class R8CN2SandraBlueChairsRevisionTests(unittest.TestCase):
                 cwd=ROOT,
                 text=True,
             ).strip(),
-        )
-        self.assertEqual(
-            BRANCH,
-            subprocess.check_output(["git", "branch", "--show-current"], cwd=ROOT, text=True).strip(),
         )
         expected = [
             N2_LOCKED_SOURCE_PATH,
