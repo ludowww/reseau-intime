@@ -1,6 +1,6 @@
 # R8C-A6 — Bibliothèque narrative minimale : implémentation
 
-> **Statut :** `IMPLEMENTED_AWAITING_PRODUCT_VALIDATION`
+> **Statut :** `IMPLEMENTATION_VALIDATED_LOCKED`
 > **Base :** brief A6 verrouillé sur `e78b0b3babcef5aa66b2a65046bad59212893c3b`
 > **Contenu :** prototype synthétique non canonique, sans connexion joueur.
 

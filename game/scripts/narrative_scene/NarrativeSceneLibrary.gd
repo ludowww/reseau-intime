@@ -5,7 +5,7 @@ class_name R8CNarrativeSceneLibrary
 const DefinitionModele := preload("res://scripts/narrative_scene/SceneDefinition.gd")
 const DataLoaderModele := preload("res://scripts/core/DataLoader.gd")
 
-const DOSSIER_CANONIQUE := "res://data/narrative_scenes/"
+const DOSSIER_BUNDLES_NARRATIFS := "res://data/narrative_scenes/"
 const FORMAT_BUNDLE := "R8C_A6_SCENE_LIBRARY"
 const VERSION_BUNDLE := 1
 const MAX_DEFINITIONS := 32
@@ -20,10 +20,10 @@ static func charger_depuis_json(path: String) -> Dictionary:
 	var chemin := path.simplify_path()
 	if (
 		path.is_empty()
-		or not chemin.begins_with(DOSSIER_CANONIQUE)
+		or not chemin.begins_with(DOSSIER_BUNDLES_NARRATIFS)
 		or not chemin.ends_with(".json")
 	):
-		return _echec("CHEMIN_BUNDLE_INVALIDE", "bundle hors du dossier narratif canonique")
+		return _echec("CHEMIN_BUNDLE_INVALIDE", "bundle hors du dossier narratif autorise")
 	var lecteur = DataLoaderModele.new()
 	var bundle: Dictionary = lecteur.load_json(chemin)
 	var erreurs: Array = lecteur.load_errors.duplicate()

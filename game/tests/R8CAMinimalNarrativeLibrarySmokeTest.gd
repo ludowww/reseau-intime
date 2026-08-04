@@ -26,7 +26,7 @@ func _executer() -> void:
 	var charge: Dictionary = BibliothequeModele.charger_depuis_json(BUNDLE_PATH)
 	_expect(
 		charge["ok"] and charge["bibliotheque"] != null,
-		"01 bundle canonique charge: %s %s" % [charge.get("erreur"), charge.get("details")],
+		"01 bundle prototype charge: %s %s" % [charge.get("erreur"), charge.get("details")],
 	)
 	if not charge["ok"]:
 		return

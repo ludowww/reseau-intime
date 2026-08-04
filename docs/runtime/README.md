@@ -26,8 +26,8 @@ Elle sert d'oracle de corpus et de comportement, pas de contrainte de modèle :
 - providers, runtime maps et conversations référencées J01–J21;
 - composants UI portrait, messages et galerie.
 
-Les modules R8C-A1/A3/A5 restent isolés et testés par leurs scènes smoke. La fixture
-A3 sous `game/tests/fixtures/` n'est jamais une source de contenu canonique.
+Les modules R8C-A1/A3/A5/A6 restent isolés et testés par leurs scènes smoke. La
+fixture A3 et le bundle prototype A6 ne sont jamais des sources de contenu canonique.
 
 ## Sauvegardes de développement
 

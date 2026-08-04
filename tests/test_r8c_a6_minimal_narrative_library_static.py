@@ -76,7 +76,9 @@ class R8CA6MinimalNarrativeLibraryStaticTests(unittest.TestCase):
 
     def test_loader_uses_one_explicit_path_and_atomic_factory(self):
         library = self.read("game/scripts/narrative_scene/NarrativeSceneLibrary.gd")
-        self.assertIn('const DOSSIER_CANONIQUE := "res://data/narrative_scenes/"', library)
+        self.assertIn(
+            'const DOSSIER_BUNDLES_NARRATIFS := "res://data/narrative_scenes/"', library
+        )
         self.assertIn("static func charger_depuis_json", library)
         self.assertIn("static func charger_depuis_bundle", library)
         self.assertIn("entrees_candidates", library)
