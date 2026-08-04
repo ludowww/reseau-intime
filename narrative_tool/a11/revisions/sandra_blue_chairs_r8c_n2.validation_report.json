@@ -1,0 +1,37 @@
+{
+  "format": "R8C_A11_EDITORIAL_VALIDATION_REPORT",
+  "version": 1,
+  "validator_version": "r8c-n2-sandra-blue-chairs-validator-1.0",
+  "source_id": "r8c_n2_sandra_blue_chairs_locked_source",
+  "draft_id": "r8c_n2_sandra_blue_chairs_draft",
+  "draft_revision": "R8C-N2_REVISION_CANDIDATE",
+  "source_content_sha256": "e1acea2817267d47ffb5e1f6f628aeb03c16056ce5f2f100c0803dcc3cf93a98",
+  "validation_fingerprint": "e1c9a6d687d966c2d7941eb939599b5c37078e649aa958d2fd496f17a98d76de",
+  "status": "READY_WITH_WARNINGS",
+  "blocking_errors": [],
+  "warnings": [
+    {
+      "code": "SOURCE_REPETITION_REVIEW",
+      "path": "draft.messages",
+      "message": "d’accord, je sais, non, sans promesse"
+    }
+  ],
+  "counts": {
+    "stored_message_elements": 96,
+    "playable_path_elements": {
+      "careful_warmth": 90,
+      "ironic_withdrawal": 89
+    },
+    "burst_groups_stored": 12,
+    "burst_groups_by_path": {
+      "careful_warmth": 10,
+      "ironic_withdrawal": 10
+    },
+    "weak_messages_stored": 15,
+    "weak_messages_by_path": {
+      "careful_warmth": 14,
+      "ironic_withdrawal": 13
+    },
+    "beat_count": 7
+  }
+}

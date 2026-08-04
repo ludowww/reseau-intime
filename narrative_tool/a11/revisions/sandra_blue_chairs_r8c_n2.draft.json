@@ -1,0 +1,1780 @@
+{
+  "format": "R8C_A11_DIALOGUE_DRAFT",
+  "version": 3,
+  "draft_id": "r8c_n2_sandra_blue_chairs_draft",
+  "revision": "R8C-N2_REVISION_CANDIDATE",
+  "plan_id": "r8c_n2_sandra_blue_chairs_plan",
+  "messages": [
+    {
+      "message_id": "m01",
+      "speaker_id": "sandra",
+      "kind": "IMAGE",
+      "beat_id": "concrete_photo",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_relaunches_shared_memory",
+      "fact_refs": [
+        "local_terrace_photo",
+        "local_blue_chairs",
+        "local_cafe"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": "burst_initial_photo",
+      "strength": "NORMAL",
+      "text": "envoie la photo",
+      "reply_to": null,
+      "media": {
+        "media_id": "photo_sandra_cafe_blue_chairs",
+        "kind": "PHOTO",
+        "description": "Photo banale de la terrasse du café du dernier déjeuner. Les anciennes chaises ont été remplacées par des chaises bleues très voyantes.",
+        "justification": "La photo banale montre les nouvelles chaises, motive le premier message et déclenche la mémoire du dernier déjeuner.",
+        "linked_fact_id": "local_terrace_photo"
+      }
+    },
+    {
+      "message_id": "m02",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "concrete_photo",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_deflects_with_humor",
+      "fact_refs": [
+        "local_blue_chairs"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": "burst_initial_photo",
+      "strength": "NORMAL",
+      "text": "Ils ont changé les chaises",
+      "reply_to": "m01",
+      "media": null
+    },
+    {
+      "message_id": "m03",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "concrete_photo",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_deflects_with_humor",
+      "fact_refs": [
+        "local_blue_chairs"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": "burst_initial_photo",
+      "strength": "NORMAL",
+      "text": "c’est atroce",
+      "reply_to": "m02",
+      "media": null
+    },
+    {
+      "message_id": "m04",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "concrete_photo",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_deflects_with_humor",
+      "fact_refs": [
+        "local_blue_chairs"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": "burst_initial_photo",
+      "strength": "NORMAL",
+      "text": "ou alors je deviens vieille 😅",
+      "reply_to": "m03",
+      "media": null
+    },
+    {
+      "message_id": "m05",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "concrete_photo",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "local_blue_chairs"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "Les deux sont possibles",
+      "reply_to": "m04",
+      "media": null
+    },
+    {
+      "message_id": "m06",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "concrete_photo",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_deflects_with_humor",
+      "fact_refs": [],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "merci pour le soutien",
+      "reply_to": "m05",
+      "media": null
+    },
+    {
+      "message_id": "m07",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "concrete_photo",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_deflects_with_humor",
+      "fact_refs": [],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "vraiment",
+      "reply_to": "m06",
+      "media": null
+    },
+    {
+      "message_id": "m08",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "concrete_photo",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "Je préfère être honnête",
+      "reply_to": "m07",
+      "media": null
+    },
+    {
+      "message_id": "m09",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "concrete_photo",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_deflects_with_humor",
+      "fact_refs": [],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "tu préfères surtout survivre à tes blagues",
+      "reply_to": "m08",
+      "media": null
+    },
+    {
+      "message_id": "m10",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "concrete_photo",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "Ça marche depuis longtemps",
+      "reply_to": "m09",
+      "media": null
+    },
+    {
+      "message_id": "m11",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "familiar_complicity",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_relaunches_shared_memory",
+      "fact_refs": [
+        "local_cafe",
+        "local_terrace_photo"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": "burst_lunch_memory",
+      "strength": "NORMAL",
+      "text": "J’étais à côté",
+      "reply_to": "m10",
+      "media": null
+    },
+    {
+      "message_id": "m12",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "familiar_complicity",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_relaunches_shared_memory",
+      "fact_refs": [
+        "local_cafe",
+        "local_terrace_photo"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": "burst_lunch_memory",
+      "strength": "NORMAL",
+      "text": "j’ai pensé à notre déjeuner",
+      "reply_to": "m11",
+      "media": null
+    },
+    {
+      "message_id": "m13",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "familiar_complicity",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_deflects_with_humor",
+      "fact_refs": [
+        "local_cold_fries"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": "burst_lunch_memory",
+      "strength": "NORMAL",
+      "text": "enfin surtout aux frites",
+      "reply_to": "m12",
+      "media": null
+    },
+    {
+      "message_id": "m14",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "familiar_complicity",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "local_cold_fries"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "Elles avaient abandonné",
+      "reply_to": "m13",
+      "media": null
+    },
+    {
+      "message_id": "m15",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "familiar_complicity",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_deflects_with_humor",
+      "fact_refs": [
+        "local_cold_fries"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "elles étaient froides avant d’arriver",
+      "reply_to": "m14",
+      "media": null
+    },
+    {
+      "message_id": "m16",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "familiar_complicity",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "local_cold_fries"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "Un exploit",
+      "reply_to": "m15",
+      "media": null
+    },
+    {
+      "message_id": "m17",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "familiar_complicity",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_deflects_with_humor",
+      "fact_refs": [
+        "local_cold_fries"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "et pourtant t’as fini",
+      "reply_to": "m16",
+      "media": null
+    },
+    {
+      "message_id": "m18",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "familiar_complicity",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "local_cold_fries"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "J’avais payé",
+      "reply_to": "m17",
+      "media": null
+    },
+    {
+      "message_id": "m19",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "familiar_complicity",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_deflects_with_humor",
+      "fact_refs": [
+        "local_cold_fries"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "WEAK",
+      "text": "ah oui",
+      "reply_to": "m18",
+      "media": null
+    },
+    {
+      "message_id": "m20",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "familiar_complicity",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_deflects_with_humor",
+      "fact_refs": [
+        "local_cold_fries"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "le grand principe",
+      "reply_to": "m19",
+      "media": null
+    },
+    {
+      "message_id": "m21",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "familiar_complicity",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "local_cold_fries"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "Je tiens à mes valeurs",
+      "reply_to": "m20",
+      "media": null
+    },
+    {
+      "message_id": "m22",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "familiar_complicity",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_deflects_with_humor",
+      "fact_refs": [
+        "local_cold_fries"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "WEAK",
+      "text": "hm",
+      "reply_to": "m21",
+      "media": null
+    },
+    {
+      "message_id": "m23",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "lightly_charged_memory",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "local_cafe",
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "ça m’a fait bizarre de repasser là",
+      "reply_to": "m22",
+      "media": null
+    },
+    {
+      "message_id": "m24",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "lightly_charged_memory",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "local_cafe",
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "Bizarre comment",
+      "reply_to": "m23",
+      "media": null
+    },
+    {
+      "message_id": "m25",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "lightly_charged_memory",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": "burst_old_reflex",
+      "strength": "WEAK",
+      "text": "juste…",
+      "reply_to": "m24",
+      "media": null
+    },
+    {
+      "message_id": "m26",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "lightly_charged_memory",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": "burst_old_reflex",
+      "strength": "NORMAL",
+      "text": "vieux réflexe",
+      "reply_to": "m25",
+      "media": null
+    },
+    {
+      "message_id": "m27",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "lightly_charged_memory",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "local_terrace_photo",
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": "burst_old_reflex",
+      "strength": "NORMAL",
+      "text": "je me suis dit que j’allais t’envoyer ça",
+      "reply_to": "m26",
+      "media": null
+    },
+    {
+      "message_id": "m28",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "lightly_charged_memory",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "local_terrace_photo",
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "Tu as bien fait",
+      "reply_to": "m27",
+      "media": null
+    },
+    {
+      "message_id": "m29",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "lightly_charged_memory",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_deflects_with_humor",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "ne t’emballe pas",
+      "reply_to": "m28",
+      "media": null
+    },
+    {
+      "message_id": "m30",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "lightly_charged_memory",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_deflects_with_humor",
+      "fact_refs": [
+        "local_terrace_photo",
+        "local_blue_chairs"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "c’est une photo de chaises moches",
+      "reply_to": "m29",
+      "media": null
+    },
+    {
+      "message_id": "m31",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "lightly_charged_memory",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "local_terrace_photo",
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "Je parlais pas des chaises",
+      "reply_to": "m30",
+      "media": null
+    },
+    {
+      "message_id": "m32",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "lightly_charged_memory",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_deflects_with_humor",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "évidemment",
+      "reply_to": "m31",
+      "media": null
+    },
+    {
+      "message_id": "m33",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "lightly_charged_memory",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "local_terrace_photo",
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "Ça m’a fait plaisir",
+      "reply_to": "m32",
+      "media": null
+    },
+    {
+      "message_id": "m34",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "lightly_charged_memory",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_deflects_with_humor",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "oui bon",
+      "reply_to": "m33",
+      "media": null
+    },
+    {
+      "message_id": "m35",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "lightly_charged_memory",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "ça faisait un moment",
+      "reply_to": "m34",
+      "media": null
+    },
+    {
+      "message_id": "m36",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "indirect_relaunch",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "C’est un peu le problème",
+      "reply_to": "m35",
+      "media": null
+    },
+    {
+      "message_id": "m37",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "indirect_relaunch",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "WEAK",
+      "text": "ah",
+      "reply_to": "m36",
+      "media": null
+    },
+    {
+      "message_id": "m38",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "indirect_relaunch",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "tu me fais un reproche ?",
+      "reply_to": "m37",
+      "media": null
+    },
+    {
+      "message_id": "m39",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "indirect_relaunch",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "Non",
+      "reply_to": "m38",
+      "media": null
+    },
+    {
+      "message_id": "m40",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "indirect_relaunch",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "Je constate mal",
+      "reply_to": "m39",
+      "media": null
+    },
+    {
+      "message_id": "m41",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "indirect_relaunch",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_deflects_with_humor",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "ça veut rien dire",
+      "reply_to": "m40",
+      "media": null
+    },
+    {
+      "message_id": "m42",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "indirect_relaunch",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "WEAK",
+      "text": "Je sais",
+      "reply_to": "m41",
+      "media": null
+    },
+    {
+      "message_id": "m43",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "indirect_relaunch",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "et pourtant tu l’as envoyé",
+      "reply_to": "m42",
+      "media": null
+    },
+    {
+      "message_id": "m44",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "indirect_relaunch",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "C’était plus simple que d’écrire un truc clair",
+      "reply_to": "m43",
+      "media": null
+    },
+    {
+      "message_id": "m45",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "indirect_relaunch",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_relaunches_shared_memory",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "ça, je te reconnais",
+      "reply_to": "m44",
+      "media": null
+    },
+    {
+      "message_id": "m46",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "sandra_test_and_choice",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "tu voulais dire quoi, alors ?",
+      "reply_to": "m45",
+      "media": null
+    },
+    {
+      "message_id": "m47A",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "sandra_test_and_choice",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "careful_warmth",
+      "burst_id": "burst_reception_a_open",
+      "strength": "WEAK",
+      "text": "…",
+      "reply_to": "m46",
+      "media": null
+    },
+    {
+      "message_id": "m48A",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "sandra_test_and_choice",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_deflects_with_humor",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "careful_warmth",
+      "burst_id": "burst_reception_a_open",
+      "strength": "NORMAL",
+      "text": "tu sais faire léger, toi",
+      "reply_to": "m47A",
+      "media": null
+    },
+    {
+      "message_id": "m49A",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "sandra_test_and_choice",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "careful_warmth",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "J’essaie",
+      "reply_to": "m48A",
+      "media": null
+    },
+    {
+      "message_id": "m50A",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "sandra_test_and_choice",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_deflects_with_humor",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "careful_warmth",
+      "burst_id": "burst_reception_a_close",
+      "strength": "NORMAL",
+      "text": "non",
+      "reply_to": "m49A",
+      "media": null
+    },
+    {
+      "message_id": "m51A",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "sandra_test_and_choice",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "careful_warmth",
+      "burst_id": "burst_reception_a_close",
+      "strength": "NORMAL",
+      "text": "mais j’ai compris",
+      "reply_to": "m50A",
+      "media": null
+    },
+    {
+      "message_id": "m51A-2",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "sandra_test_and_choice",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "careful_warmth",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "Pas tout",
+      "reply_to": "m51A",
+      "media": null
+    },
+    {
+      "message_id": "m51A-3",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "sandra_test_and_choice",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "careful_warmth",
+      "burst_id": null,
+      "strength": "WEAK",
+      "text": "assez",
+      "reply_to": "m51A-2",
+      "media": null
+    },
+    {
+      "message_id": "m47B",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "sandra_test_and_choice",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_deflects_with_humor",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "ironic_withdrawal",
+      "burst_id": "burst_reception_b_open",
+      "strength": "WEAK",
+      "text": "bien sûr",
+      "reply_to": "m46",
+      "media": null
+    },
+    {
+      "message_id": "m48B",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "sandra_test_and_choice",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_deflects_with_humor",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "ironic_withdrawal",
+      "burst_id": "burst_reception_b_open",
+      "strength": "NORMAL",
+      "text": "les agendas",
+      "reply_to": "m47B",
+      "media": null
+    },
+    {
+      "message_id": "m49B",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "sandra_test_and_choice",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "ironic_withdrawal",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "Je leur en veux beaucoup",
+      "reply_to": "m48B",
+      "media": null
+    },
+    {
+      "message_id": "m50B",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "sandra_test_and_choice",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_deflects_with_humor",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "ironic_withdrawal",
+      "burst_id": "burst_reception_b_close",
+      "strength": "NORMAL",
+      "text": "tu plaisantes",
+      "reply_to": "m49B",
+      "media": null
+    },
+    {
+      "message_id": "m51B",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "sandra_test_and_choice",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "ironic_withdrawal",
+      "burst_id": "burst_reception_b_close",
+      "strength": "NORMAL",
+      "text": "mais pas complètement",
+      "reply_to": "m50B",
+      "media": null
+    },
+    {
+      "message_id": "m52B",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "sandra_test_and_choice",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "ironic_withdrawal",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "Pas complètement",
+      "reply_to": "m51B",
+      "media": null
+    },
+    {
+      "message_id": "m53",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "reception_and_limit",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": "burst_limit",
+      "strength": "WEAK",
+      "text": "ok",
+      "reply_to": null,
+      "media": null
+    },
+    {
+      "message_id": "m54",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "reception_and_limit",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": "burst_limit",
+      "strength": "NORMAL",
+      "text": "je vais pas faire semblant de pas comprendre",
+      "reply_to": "m53",
+      "media": null
+    },
+    {
+      "message_id": "m55",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "reception_and_limit",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": "burst_limit",
+      "strength": "NORMAL",
+      "text": "mais je veux pas non plus qu’on transforme ça en grand truc",
+      "reply_to": "m54",
+      "media": null
+    },
+    {
+      "message_id": "m56",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "reception_and_limit",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "Moi non plus",
+      "reply_to": "m55",
+      "media": null
+    },
+    {
+      "message_id": "m57",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "reception_and_limit",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "tu dis ça maintenant",
+      "reply_to": "m56",
+      "media": null
+    },
+    {
+      "message_id": "m58",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "reception_and_limit",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "Je peux le redire demain",
+      "reply_to": "m57",
+      "media": null
+    },
+    {
+      "message_id": "m59",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "reception_and_limit",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "ne promets rien, déjà",
+      "reply_to": "m58",
+      "media": null
+    },
+    {
+      "message_id": "m60",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "reception_and_limit",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "WEAK",
+      "text": "D’accord",
+      "reply_to": "m59",
+      "media": null
+    },
+    {
+      "message_id": "m61",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "reception_and_limit",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "merci",
+      "reply_to": "m60",
+      "media": null
+    },
+    {
+      "message_id": "m62",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "reception_and_limit",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "Pour quoi",
+      "reply_to": "m61",
+      "media": null
+    },
+    {
+      "message_id": "m63",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "reception_and_limit",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "pour ne pas pousser",
+      "reply_to": "m62",
+      "media": null
+    },
+    {
+      "message_id": "m64",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "reception_and_limit",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "J’avais pas l’impression de pousser",
+      "reply_to": "m63",
+      "media": null
+    },
+    {
+      "message_id": "m65",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "reception_and_limit",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": "burst_limit_received",
+      "strength": "WEAK",
+      "text": "je sais",
+      "reply_to": "m64",
+      "media": null
+    },
+    {
+      "message_id": "m66",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "reception_and_limit",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": "burst_limit_received",
+      "strength": "NORMAL",
+      "text": "c’est pour ça que je te le dis",
+      "reply_to": "m65",
+      "media": null
+    },
+    {
+      "message_id": "m67",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "reception_and_limit",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "D’accord",
+      "reply_to": "m66",
+      "media": null
+    },
+    {
+      "message_id": "m72",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "reception_and_limit",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "local_terrace_photo",
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "c’est aussi pour ça que je t’ai envoyé la photo",
+      "reply_to": "m67",
+      "media": null
+    },
+    {
+      "message_id": "m73",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "reception_and_limit",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "local_terrace_photo",
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "Pour vérifier que j’étais toujours pénible",
+      "reply_to": "m72",
+      "media": null
+    },
+    {
+      "message_id": "m74",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "reception_and_limit",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "entre autres",
+      "reply_to": "m73",
+      "media": null
+    },
+    {
+      "message_id": "m75",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "reception_and_limit",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "Et le reste",
+      "reply_to": "m74",
+      "media": null
+    },
+    {
+      "message_id": "m76",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "reception_and_limit",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": "burst_uncertainty",
+      "strength": "WEAK",
+      "text": "je sais pas encore",
+      "reply_to": "m75",
+      "media": null
+    },
+    {
+      "message_id": "m77",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "reception_and_limit",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": "burst_uncertainty",
+      "strength": "NORMAL",
+      "text": "et c’est très bien comme ça",
+      "reply_to": "m76",
+      "media": null
+    },
+    {
+      "message_id": "m78",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "reception_and_limit",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "D’accord",
+      "reply_to": "m77",
+      "media": null
+    },
+    {
+      "message_id": "m79",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "protective_exit",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "local_cafe",
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "On pourrait refaire un déjeuner",
+      "reply_to": "m78",
+      "media": null
+    },
+    {
+      "message_id": "m80",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "protective_exit",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "local_cafe",
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "on pourrait",
+      "reply_to": "m79",
+      "media": null
+    },
+    {
+      "message_id": "m81",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "protective_exit",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "pas cette semaine",
+      "reply_to": "m80",
+      "media": null
+    },
+    {
+      "message_id": "m82",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "protective_exit",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "Je n’avais pas demandé cette semaine",
+      "reply_to": "m81",
+      "media": null
+    },
+    {
+      "message_id": "m83",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "protective_exit",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": "burst_preemptive_limit",
+      "strength": "WEAK",
+      "text": "je sais",
+      "reply_to": "m82",
+      "media": null
+    },
+    {
+      "message_id": "m84",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "protective_exit",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": "burst_preemptive_limit",
+      "strength": "NORMAL",
+      "text": "mais je préfère le dire avant que tu constates mal",
+      "reply_to": "m83",
+      "media": null
+    },
+    {
+      "message_id": "m85",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "protective_exit",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "WEAK",
+      "text": "Compris",
+      "reply_to": "m84",
+      "media": null
+    },
+    {
+      "message_id": "m86",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "protective_exit",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": "burst_no_promise",
+      "strength": "NORMAL",
+      "text": "je regarde après le week-end",
+      "reply_to": "m85",
+      "media": null
+    },
+    {
+      "message_id": "m87",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "protective_exit",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": "burst_no_promise",
+      "strength": "NORMAL",
+      "text": "sans promesse",
+      "reply_to": "m86",
+      "media": null
+    },
+    {
+      "message_id": "m88",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "protective_exit",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "Sans promesse",
+      "reply_to": "m87",
+      "media": null
+    },
+    {
+      "message_id": "m89",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "protective_exit",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_deflects_with_humor",
+      "fact_refs": [
+        "local_blue_chairs"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "et sans ces chaises",
+      "reply_to": "m88",
+      "media": null
+    },
+    {
+      "message_id": "m90",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "protective_exit",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "local_blue_chairs"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "Là je pose une limite",
+      "reply_to": "m89",
+      "media": null
+    },
+    {
+      "message_id": "m91",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "protective_exit",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "bonne soirée, Ludo",
+      "reply_to": "m90",
+      "media": null
+    },
+    {
+      "message_id": "m92",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "beat_id": "protective_exit",
+      "objective_actor_id": "player",
+      "conversation_move": "sandra_player_returns_carefully",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "NORMAL",
+      "text": "Bonne soirée Sandra",
+      "reply_to": "m91",
+      "media": null
+    },
+    {
+      "message_id": "m93",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "beat_id": "protective_exit",
+      "objective_actor_id": "sandra",
+      "conversation_move": "sandra_prolongs_without_claim",
+      "fact_refs": [
+        "sandra_current_distance"
+      ],
+      "local_state": "sandra_distant_after_silence",
+      "branch": "COMMON",
+      "burst_id": null,
+      "strength": "WEAK",
+      "text": "🙂",
+      "reply_to": "m92",
+      "media": null
+    }
+  ],
+  "choice": {
+    "choice_id": "player_response_to_sandra_test",
+    "after_message_id": "m46",
+    "converge_at_message_id": "m53",
+    "options": [
+      {
+        "option_id": "careful_warmth",
+        "formulation": "Que ça m’avait manqué.",
+        "reception_message_ids": [
+          "m47A",
+          "m48A",
+          "m49A",
+          "m50A",
+          "m51A",
+          "m51A-2",
+          "m51A-3"
+        ]
+      },
+      {
+        "option_id": "ironic_withdrawal",
+        "formulation": "Que nos agendas sont nuls.",
+        "reception_message_ids": [
+          "m47B",
+          "m48B",
+          "m49B",
+          "m50B",
+          "m51B",
+          "m52B"
+        ]
+      }
+    ]
+  }
+}

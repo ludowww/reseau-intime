@@ -75,6 +75,18 @@ PILOT_TRACEABILITY_PATH = DRAFTING_DIR / "sandra_blue_chairs.traceability_report
 PILOT_BLIND_READING_PATH = DRAFTING_DIR / "sandra_blue_chairs.blind_reading.md"
 PILOT_HUMAN_REVIEW_PATH = DRAFTING_DIR / "sandra_blue_chairs.human_review.md"
 PILOT_DECISION_PATH = DRAFTING_DIR / "sandra_blue_chairs.canon_decision.json"
+N2_DIR = ROOT / "narrative_tool" / "a11" / "revisions"
+N2_LOCKED_SOURCE_PATH = N2_DIR / "sandra_blue_chairs_r8c_n2.locked.md"
+N2_SOURCE_PATH = N2_DIR / "sandra_blue_chairs_r8c_n2.source.json"
+N2_PROVENANCE_PATH = N2_DIR / "sandra_blue_chairs_r8c_n2.provenance.json"
+N2_PLAN_PATH = N2_DIR / "sandra_blue_chairs_r8c_n2.plan_projection.json"
+N2_DRAFT_PATH = N2_DIR / "sandra_blue_chairs_r8c_n2.draft.json"
+N2_VALIDATION_PATH = N2_DIR / "sandra_blue_chairs_r8c_n2.validation_report.json"
+N2_COMPARISON_PATH = N2_DIR / "sandra_blue_chairs_r8c_n2.comparison_report.json"
+N2_TRACEABILITY_PATH = N2_DIR / "sandra_blue_chairs_r8c_n2.traceability_report.json"
+N2_BLIND_READING_PATH = N2_DIR / "sandra_blue_chairs_r8c_n2.blind_reading.md"
+N2_HUMAN_REVIEW_PATH = N2_DIR / "sandra_blue_chairs_r8c_n2.human_review.md"
+N2_DECISION_PATH = N2_DIR / "sandra_blue_chairs_r8c_n2.canon_decision.json"
 
 FORMAT_COMPOSITE_APPROVAL = "R8C_A11_COMPOSITE_APPROVAL"
 FORMAT_PROJECTION_REPORT = "R8C_A11_A6_PROJECTION_REPORT"
@@ -83,9 +95,11 @@ FORMAT_NARRATIVE_PROVENANCE = "R8C_A11_NARRATIVE_PROVENANCE"
 FORMAT_EDITORIAL_VALIDATION = "R8C_A11_EDITORIAL_VALIDATION_REPORT"
 FORMAT_EDITORIAL_TRACEABILITY = "R8C_A11_EDITORIAL_TRACEABILITY_REPORT"
 FORMAT_CANON_DECISION = "R8C_A11_CANON_REVIEW_DECISION"
+FORMAT_N2_COMPARISON = "R8C_N2_NARRATIVE_COMPARISON_REPORT"
 VERSION = 1
 VALIDATOR_VERSION = "a11-plan-draft-validator-1.2"
 EDITORIAL_VALIDATOR_VERSION = "a11-first-editorial-pilot-validator-1.0"
+N2_VALIDATOR_VERSION = "r8c-n2-sandra-blue-chairs-validator-1.0"
 REVIEW_STATUSES = {
     "DRAFT",
     "NEEDS_REVISION",
@@ -97,6 +111,19 @@ CANON_REVIEW_STATUSES = {
     "NEEDS_NARRATIVE_REVISION",
     "APPROVED_FOR_CANON_REVIEW",
     "REJECTED",
+}
+N2_REVIEW_STATUSES = {
+    "NEEDS_NARRATIVE_REVISION",
+    "READY_FOR_FINAL_CANON_REVIEW",
+    "REJECTED",
+}
+N2_PROFILE = {
+    "lot_label": "R8C-N2",
+    "validator_version": N2_VALIDATOR_VERSION,
+    "expected_stored_count": 96,
+    "expected_path_counts": {"careful_warmth": 90, "ironic_withdrawal": 89},
+    "expected_after_message_id": "m46",
+    "expected_converge_at_message_id": "m53",
 }
 EDITORIAL_BEAT_IDS = (
     "concrete_photo",
@@ -1686,7 +1713,7 @@ def load_editorial_pilot_workspace(
 
 
 def editorial_validation_fingerprint(workspace: Mapping[str, Any]) -> str:
-    return _sha256({
+    payload = {
         "validator_version": EDITORIAL_VALIDATOR_VERSION,
         "source": workspace.get("source"),
         "provenance": workspace.get("provenance"),
@@ -1695,7 +1722,12 @@ def editorial_validation_fingerprint(workspace: Mapping[str, Any]) -> str:
         "character_contract": workspace.get("character_contract"),
         "relationship_register": workspace.get("relationship_register"),
         "foreign_calibrations": workspace.get("foreign_calibrations"),
-    })
+    }
+    profile = workspace.get("editorial_profile")
+    if isinstance(profile, Mapping):
+        payload["validator_version"] = profile.get("validator_version", EDITORIAL_VALIDATOR_VERSION)
+        payload["editorial_profile"] = profile
+    return _sha256(payload)
 
 
 def _editorial_counts(workspace: Mapping[str, Any]) -> dict[str, Any]:
@@ -1758,10 +1790,12 @@ def _editorial_validation_result(
         source_hash = editorial_source_content_sha256(source)
     except (KeyError, TypeError, IndexError):
         source_hash = ""
+    profile = workspace.get("editorial_profile")
+    profile = profile if isinstance(profile, Mapping) else {}
     return {
         "format": FORMAT_EDITORIAL_VALIDATION,
         "version": VERSION,
-        "validator_version": EDITORIAL_VALIDATOR_VERSION,
+        "validator_version": profile.get("validator_version", EDITORIAL_VALIDATOR_VERSION),
         "source_id": source.get("source_id", ""),
         "draft_id": draft.get("draft_id", ""),
         "draft_revision": draft.get("revision", ""),
@@ -1777,6 +1811,15 @@ def _editorial_validation_result(
 def validate_editorial_pilot(workspace: Mapping[str, Any]) -> dict[str, Any]:
     errors: list[Issue] = []
     warnings: list[Issue] = []
+    profile = workspace.get("editorial_profile")
+    profile = profile if isinstance(profile, Mapping) else {}
+    expected_stored_count = int(profile.get("expected_stored_count", 98))
+    expected_path_counts = profile.get(
+        "expected_path_counts",
+        {"careful_warmth": 93, "ironic_withdrawal": 93},
+    )
+    expected_after_message_id = profile.get("expected_after_message_id", "m46")
+    expected_converge_at_message_id = profile.get("expected_converge_at_message_id", "m52")
     source = workspace["source"]
     provenance = workspace["provenance"]
     planning = workspace["planning"]
@@ -1821,8 +1864,13 @@ def validate_editorial_pilot(workspace: Mapping[str, Any]) -> dict[str, Any]:
 
     message_ids = [message["message_id"] for message in messages]
     message_index = {message_id: index for index, message_id in enumerate(message_ids)}
-    if len(messages) != 98:
-        _issue(errors, "EDITORIAL_ELEMENT_COUNT_INVALID", "draft.messages", "98 éléments stockés attendus")
+    if len(messages) != expected_stored_count:
+        _issue(
+            errors,
+            "EDITORIAL_ELEMENT_COUNT_INVALID",
+            "draft.messages",
+            f"{expected_stored_count} éléments stockés attendus",
+        )
     if len(message_ids) != len(set(message_ids)):
         _issue(errors, "MESSAGE_ID_DUPLICATE", "draft.messages", "identités dupliquées")
     beats = {beat["beat_id"]: beat for beat in plan["beats"]}
@@ -1908,8 +1956,16 @@ def validate_editorial_pilot(workspace: Mapping[str, Any]) -> dict[str, Any]:
     plan_option_ids = [option["option_id"] for option in plan["choice"]["options"]]
     if choice["choice_id"] != plan["choice"]["choice_id"] or option_ids != plan_option_ids:
         _issue(errors, "CHOICE_OPTION_MISMATCH", "draft.choice", "choix du plan attendu")
-    if choice["after_message_id"] != "m46" or choice["converge_at_message_id"] != "m52":
-        _issue(errors, "CHOICE_MESSAGE_REFERENCE_INVALID", "draft.choice", "m46 puis m52 attendus")
+    if (
+        choice["after_message_id"] != expected_after_message_id
+        or choice["converge_at_message_id"] != expected_converge_at_message_id
+    ):
+        _issue(
+            errors,
+            "CHOICE_MESSAGE_REFERENCE_INVALID",
+            "draft.choice",
+            f"{expected_after_message_id} puis {expected_converge_at_message_id} attendus",
+        )
     if any(len(option["formulation"]) > 70 for option in choice["options"]):
         _issue(errors, "CHOICE_FORMULATION_LONG", "draft.choice.options", "choix court requis")
     receptions: list[tuple[tuple[str, str], ...]] = []
@@ -1936,7 +1992,7 @@ def validate_editorial_pilot(workspace: Mapping[str, Any]) -> dict[str, Any]:
             _issue(errors, "BRANCHED_MESSAGE_NOT_DECLARED", f"draft.messages[{index}].message_id", message["message_id"])
 
     counts = _editorial_counts(workspace)
-    if set(counts["playable_path_elements"].values()) != {93}:
+    if counts["playable_path_elements"] != expected_path_counts:
         _issue(errors, "PLAYABLE_PATH_COUNT_INVALID", "draft.messages", str(counts["playable_path_elements"]))
     if not 8 <= counts["burst_groups_stored"] <= 16:
         _issue(warnings, "BURST_COUNT_WARNING", "draft.messages", str(counts["burst_groups_stored"]))
@@ -2063,13 +2119,17 @@ def editorial_decision_fingerprint(decision: Mapping[str, Any]) -> str:
 def validate_editorial_decision(
     workspace: Mapping[str, Any],
     decision: Mapping[str, Any],
+    *,
+    allowed_statuses: set[str] = CANON_REVIEW_STATUSES,
+    ready_status: str = "APPROVED_FOR_CANON_REVIEW",
+    ready_action: str = "CANON_REVIEW",
 ) -> list[Issue]:
     issues: list[Issue] = []
     if not _closed(decision, CANON_DECISION_KEYS, "decision", issues):
         return issues
     if decision["format"] != FORMAT_CANON_DECISION or decision["version"] != VERSION:
         _issue(issues, "CANON_DECISION_FORMAT_INVALID", "decision", FORMAT_CANON_DECISION)
-    if decision["status"] not in CANON_REVIEW_STATUSES:
+    if decision["status"] not in allowed_statuses:
         _issue(issues, "CANON_REVIEW_STATUS_UNKNOWN", "decision.status", str(decision["status"]))
     for field in (
         "draft_id",
@@ -2090,10 +2150,10 @@ def validate_editorial_decision(
         _issue(issues, "CANON_DECISION_SOURCE_STALE", "decision.source_content_sha256", report["source_content_sha256"])
     if decision["validation_fingerprint"] != report["validation_fingerprint"]:
         _issue(issues, "CANON_DECISION_VALIDATION_STALE", "decision.validation_fingerprint", report["validation_fingerprint"])
-    if decision["status"] == "APPROVED_FOR_CANON_REVIEW" and report["status"] == "BLOCKED":
+    if decision["status"] == ready_status and report["status"] == "BLOCKED":
         _issue(issues, "BLOCKED_DRAFT_APPROVED", "decision.status", report["status"])
-    if decision["status"] == "APPROVED_FOR_CANON_REVIEW" and decision["decision"] != "CANON_REVIEW":
-        _issue(issues, "CANON_DECISION_ACTION_INVALID", "decision.decision", "CANON_REVIEW")
+    if decision["status"] == ready_status and decision["decision"] != ready_action:
+        _issue(issues, "CANON_DECISION_ACTION_INVALID", "decision.decision", ready_action)
     blind = decision["blind_reading_result"]
     blind_keys = {
         "voice_a_identification",
@@ -2134,8 +2194,11 @@ def render_editorial_blind_reading(workspace: Mapping[str, Any]) -> str:
         return f"[{message['message_id']}] **{voice}**\n\n{_blind_text(message['text'])}"
 
     source = workspace["source"]
+    profile = workspace.get("editorial_profile")
+    profile = profile if isinstance(profile, Mapping) else {}
+    lot_label = profile.get("lot_label", "R8C-A11.5")
     lines = [
-        "# R8C-A11.5 — Lecture en aveugle — Les chaises bleues",
+        f"# {lot_label} — Lecture en aveugle — Les chaises bleues",
         "",
         "Les identités et le nom du média sont masqués. La dérivation ne modifie pas le brouillon intégré.",
         "",
@@ -2169,8 +2232,11 @@ def render_editorial_human_review(
     decision: Mapping[str, Any],
 ) -> str:
     blind = decision["blind_reading_result"]
+    profile = workspace.get("editorial_profile")
+    profile = profile if isinstance(profile, Mapping) else {}
+    lot_label = profile.get("lot_label", "R8C-A11.5")
     lines = [
-        "# R8C-A11.5 — Relecture humaine — Sandra — Les chaises bleues",
+        f"# {lot_label} — Relecture humaine — Sandra — Les chaises bleues",
         "",
         f"> **Brouillon :** `{decision['draft_id']}` — `{decision['draft_revision']}`",
         f"> **Statut humain :** `{decision['status']}`",
@@ -2201,6 +2267,561 @@ def render_editorial_human_review(
         "- Cette décision ne produit ni export A6, ni fait A1, ni branchement runtime.",
     ])
     return "\n".join(lines) + "\n"
+
+
+def n2_locked_source_sha256(text: str | None = None) -> str:
+    content = N2_LOCKED_SOURCE_PATH.read_text(encoding="utf-8") if text is None else text
+    return hashlib.sha256(content.rstrip("\r\n").encode("utf-8")).hexdigest()
+
+
+def parse_n2_locked_source(text: str | None = None) -> dict[str, Any]:
+    content = N2_LOCKED_SOURCE_PATH.read_text(encoding="utf-8") if text is None else text
+    required_markers = (
+        "# Sandra — Les chaises bleues",
+        "`R8C-N2_REVISION_CANDIDATE`",
+        "`R8C-A11.5`",
+        "`R8C-N1 — NEEDS_MINOR_NARRATIVE_REVISION`",
+        "# Manifeste de révision",
+        "Les anciens `m64–m69` sont remplacés par les nouveaux `m64–m67`.",
+        "Les anciens `m70–m71` sont retirés, car ils dépendaient directement de la plaisanterie supprimée sur la phrase notée puis réutilisée.",
+        "Les anciens `m75–m78` sont remplacés par les nouveaux `m75–m78`.",
+    )
+    missing = [marker for marker in required_markers if marker not in content]
+    if missing:
+        raise A114ValidationError(
+            [Issue("N2_LOCKED_SOURCE_INCOMPLETE", str(N2_LOCKED_SOURCE_PATH), marker) for marker in missing]
+        )
+    lines = content.splitlines()
+    choice_index = lines.index("## Choix Player")
+    option_a_index = lines.index("### Option A — chaleur prudente")
+    option_b_index = lines.index("### Option B — retrait ironique")
+    convergence_index = lines.index("## Convergence")
+    manifest_index = lines.index("# Manifeste de révision")
+    message_pattern = re.compile(
+        r"^\[([^\]]+)\]\s+\*\*(Sandra|Player)\*\*(?:\s+—\s+\*(.*)\*)?\s*$"
+    )
+
+    def messages_between(start: int, end: int) -> list[dict[str, str]]:
+        result: list[dict[str, str]] = []
+        index = start
+        while index < end:
+            match = message_pattern.match(lines[index])
+            if match is None:
+                index += 1
+                continue
+            message_id, speaker, inline_text = match.groups()
+            if inline_text is None:
+                text_index = index + 1
+                while text_index < end and not lines[text_index].strip():
+                    text_index += 1
+                if text_index >= end:
+                    raise A114ValidationError(
+                        [Issue("N2_MESSAGE_TEXT_MISSING", message_id, "texte de bulle attendu")]
+                    )
+                message_text = lines[text_index]
+            else:
+                message_text = inline_text
+            result.append({
+                "message_id": message_id,
+                "speaker_id": speaker.casefold(),
+                "kind": "IMAGE" if message_id == "m01" else "TEXT",
+                "text": message_text,
+            })
+            index += 1
+        return result
+
+    def formulation_after(heading_index: int, end: int) -> str:
+        for line in lines[heading_index + 1:end]:
+            stripped = line.strip()
+            if stripped.startswith("**") and stripped.endswith("**"):
+                return stripped[2:-2]
+        raise A114ValidationError(
+            [Issue("N2_CHOICE_FORMULATION_MISSING", str(heading_index), "formulation attendue")]
+        )
+
+    media_id_index = lines.index("`photo_sandra_cafe_blue_chairs`")
+    media_description = next(line for line in lines[media_id_index + 1:] if line.strip())
+    return {
+        "format": FORMAT_EDITORIAL_SOURCE,
+        "version": VERSION,
+        "source_id": "r8c_n2_sandra_blue_chairs_locked_source",
+        "title": "Sandra — Les chaises bleues",
+        "media": {
+            "media_id": "photo_sandra_cafe_blue_chairs",
+            "kind": "PHOTO",
+            "description": media_description,
+        },
+        "pre_choice_messages": messages_between(0, choice_index),
+        "choice": {
+            "choice_id": "player_response_to_sandra_test",
+            "after_message_id": "m46",
+            "options": [
+                {
+                    "option_id": "careful_warmth",
+                    "formulation": formulation_after(option_a_index, option_b_index),
+                    "reception_messages": messages_between(option_a_index, option_b_index),
+                },
+                {
+                    "option_id": "ironic_withdrawal",
+                    "formulation": formulation_after(option_b_index, convergence_index),
+                    "reception_messages": messages_between(option_b_index, convergence_index),
+                },
+            ],
+            "converge_at_message_id": "m53",
+        },
+        "convergence_messages": messages_between(convergence_index, manifest_index),
+    }
+
+
+def _build_n2_provenance(source: Mapping[str, Any]) -> dict[str, Any]:
+    provenance = _read_json(PILOT_PROVENANCE_PATH)
+    provenance["provenance_id"] = "r8c_n2_sandra_blue_chairs_provenance"
+    provenance["source_id"] = source["source_id"]
+    provenance["source_content_sha256"] = editorial_source_content_sha256(source)
+    provenance["canonical_inputs"].append({
+        "input_id": "r8c_n1_minor_revision_decision",
+        "text": "Pont propre à l’option A, simplification des passages m64–m69 et m75–m78, sans perte des limites narratives.",
+        "source_ref": "docs/narrative/R8C_N1_CANON_REVIEW_SANDRA_BLUE_CHAIRS.md",
+    })
+    provenance["limits"][0]["text"] = (
+        "Le texte R8C-N2 verrouillé ne peut différer d’A11.5 que par les ajouts, remplacements et retraits du manifeste fermé."
+    )
+    provenance["limits"][1]["text"] = (
+        "Sandra reçoit et comprend que la reprise du contact compte pour Player; un déjeuner ultérieur reste seulement possible."
+    )
+    return provenance
+
+
+def _build_n2_plan(provenance: Mapping[str, Any]) -> dict[str, Any]:
+    planning = _read_json(PILOT_PLAN_PATH)
+    planning["case_id"] = "r8c_n2_sandra_blue_chairs"
+    planning["human_selection"]["selected_by"] = "chatgpt_source_owner_r8c_n2"
+    planning["plan"]["plan_id"] = "r8c_n2_sandra_blue_chairs_plan"
+    planning["diagnostic"]["present_information"][2]["text"] = (
+        "Les 96 éléments stockés et les deux formulations du choix sont verrouillés par la source N2."
+    )
+    planning["human_review"]["reviewed_by"] = "codex_plan_projection_r8c_n2"
+    planning["human_review"]["notes"] = [
+        "Les sept battements A11.5 restent inchangés.",
+        "La projection ne change que les identités techniques, le nombre d’éléments et la structure de branche requise par N2.",
+        "Le média et les quatre détails locaux ne persistent pas dans A1 et aucun export A6 n’est autorisé.",
+    ]
+    calibration = _editorial_calibration(provenance)
+    planning["human_review"]["plan_fingerprint"] = planning_fingerprint(planning, calibration)
+    return planning
+
+
+def _build_n2_draft(
+    source: Mapping[str, Any],
+    planning: Mapping[str, Any],
+) -> dict[str, Any]:
+    base = _read_json(PILOT_DRAFT_PATH)
+    templates = {message["message_id"]: message for message in base["messages"]}
+    messages: list[dict[str, Any]] = []
+
+    def materialize(
+        source_message: Mapping[str, Any],
+        branch: str,
+        reply_to: str | None,
+    ) -> dict[str, Any]:
+        message_id = source_message["message_id"]
+        template_id = "m52" if message_id == "m52B" else message_id
+        template = copy.deepcopy(templates.get(template_id, templates["m63"]))
+        template.update({
+            "message_id": message_id,
+            "speaker_id": source_message["speaker_id"],
+            "kind": source_message["kind"],
+            "text": source_message["text"],
+            "branch": branch,
+            "reply_to": reply_to,
+            "media": copy.deepcopy(templates["m01"]["media"]) if message_id == "m01" else None,
+        })
+        if branch != "COMMON":
+            template["beat_id"] = "sandra_test_and_choice"
+        if message_id in {"m51A-2", "m52B"}:
+            template.update({
+                "objective_actor_id": "player",
+                "conversation_move": "sandra_player_returns_carefully",
+                "fact_refs": ["sandra_current_distance"],
+                "burst_id": None,
+                "strength": "NORMAL",
+            })
+        elif message_id == "m51A-3":
+            template.update({
+                "objective_actor_id": "sandra",
+                "conversation_move": "sandra_prolongs_without_claim",
+                "fact_refs": ["sandra_current_distance"],
+                "burst_id": None,
+                "strength": "WEAK",
+            })
+        elif message_id in {"m64", "m67", "m75", "m78"}:
+            template.update({
+                "objective_actor_id": "player",
+                "conversation_move": "sandra_player_returns_carefully",
+                "fact_refs": ["sandra_current_distance"],
+                "burst_id": None,
+                "strength": "NORMAL",
+            })
+        elif message_id in {"m65", "m66", "m76", "m77"}:
+            template.update({
+                "objective_actor_id": "sandra",
+                "conversation_move": "sandra_prolongs_without_claim",
+                "fact_refs": ["sandra_current_distance"],
+                "burst_id": "burst_limit_received" if message_id in {"m65", "m66"} else "burst_uncertainty",
+                "strength": "WEAK" if message_id in {"m65", "m76"} else "NORMAL",
+            })
+        elif message_id == "m72":
+            template["burst_id"] = None
+        return template
+
+    previous: str | None = None
+    for source_message in source["pre_choice_messages"]:
+        messages.append(materialize(source_message, "COMMON", previous))
+        previous = source_message["message_id"]
+    reception_ids: dict[str, list[str]] = {}
+    for option in source["choice"]["options"]:
+        previous = source["choice"]["after_message_id"]
+        reception_ids[option["option_id"]] = []
+        for source_message in option["reception_messages"]:
+            messages.append(materialize(source_message, option["option_id"], previous))
+            reception_ids[option["option_id"]].append(source_message["message_id"])
+            previous = source_message["message_id"]
+    previous = None
+    for source_message in source["convergence_messages"]:
+        messages.append(materialize(source_message, "COMMON", previous))
+        previous = source_message["message_id"]
+    return {
+        "format": base["format"],
+        "version": base["version"],
+        "draft_id": "r8c_n2_sandra_blue_chairs_draft",
+        "revision": "R8C-N2_REVISION_CANDIDATE",
+        "plan_id": planning["plan"]["plan_id"],
+        "messages": messages,
+        "choice": {
+            "choice_id": source["choice"]["choice_id"],
+            "after_message_id": source["choice"]["after_message_id"],
+            "converge_at_message_id": source["choice"]["converge_at_message_id"],
+            "options": [
+                {
+                    "option_id": option["option_id"],
+                    "formulation": option["formulation"],
+                    "reception_message_ids": reception_ids[option["option_id"]],
+                }
+                for option in source["choice"]["options"]
+            ],
+        },
+    }
+
+
+def _source_message_index(source: Mapping[str, Any]) -> dict[str, dict[str, str]]:
+    result: dict[str, dict[str, str]] = {}
+
+    def add(message: Mapping[str, Any], branch: str) -> None:
+        result[message["message_id"]] = {
+            "message_id": message["message_id"],
+            "speaker_id": message["speaker_id"],
+            "kind": message["kind"],
+            "text": message["text"],
+            "branch": branch,
+        }
+
+    for message in source["pre_choice_messages"]:
+        add(message, "COMMON")
+    for option in source["choice"]["options"]:
+        for message in option["reception_messages"]:
+            add(message, option["option_id"])
+    for message in source["convergence_messages"]:
+        add(message, "COMMON")
+    return result
+
+
+def validate_n2_manifest(
+    historical_source: Mapping[str, Any],
+    candidate_source: Mapping[str, Any],
+) -> list[Issue]:
+    issues: list[Issue] = []
+    historical = _source_message_index(historical_source)
+    candidate = _source_message_index(candidate_source)
+    changed_historical_ids = {"m52", "m64", "m65", "m66", "m67", "m68", "m69", "m70", "m71", "m75", "m76", "m77", "m78"}
+    changed_candidate_ids = {"m51A-2", "m51A-3", "m52B", "m64", "m65", "m66", "m67", "m75", "m76", "m77", "m78"}
+    unchanged_ids = set(historical) - changed_historical_ids
+    expected_candidate_ids = unchanged_ids | changed_candidate_ids
+    if set(candidate) != expected_candidate_ids:
+        _issue(
+            issues,
+            "N2_MANIFEST_ELEMENT_SET_INVALID",
+            "source",
+            f"manquants={sorted(expected_candidate_ids - set(candidate))}; étrangers={sorted(set(candidate) - expected_candidate_ids)}",
+        )
+    expected_order: list[str] = []
+    for message_id in historical:
+        if message_id in {"m52", "m68", "m69", "m70", "m71"}:
+            continue
+        expected_order.append(message_id)
+        if message_id == "m51A":
+            expected_order.extend(("m51A-2", "m51A-3"))
+        elif message_id == "m51B":
+            expected_order.append("m52B")
+    if list(candidate) != expected_order:
+        _issue(
+            issues,
+            "N2_MESSAGE_ORDER_INVALID",
+            "source",
+            "ordre narratif A11.5 attendu avec seules insertions et suppressions du manifeste",
+        )
+    for message_id in sorted(unchanged_ids & set(candidate)):
+        if historical[message_id] != candidate[message_id]:
+            _issue(issues, "N2_UNLISTED_NARRATIVE_CHANGE", f"source.{message_id}", "contenu A11.5 inchangé attendu")
+    if historical_source["media"] != candidate_source["media"]:
+        _issue(issues, "N2_UNLISTED_NARRATIVE_CHANGE", "source.media", "média A11.5 inchangé attendu")
+    for field in ("choice_id", "after_message_id"):
+        if historical_source["choice"][field] != candidate_source["choice"][field]:
+            _issue(issues, "N2_UNLISTED_NARRATIVE_CHANGE", f"source.choice.{field}", "valeur A11.5 attendue")
+    old_options = historical_source["choice"]["options"]
+    new_options = candidate_source["choice"]["options"]
+    if [item["option_id"] for item in old_options] != [item["option_id"] for item in new_options]:
+        _issue(issues, "N2_UNLISTED_NARRATIVE_CHANGE", "source.choice.options", "options A11.5 attendues")
+    if [item["formulation"] for item in old_options] != [item["formulation"] for item in new_options]:
+        _issue(issues, "N2_UNLISTED_NARRATIVE_CHANGE", "source.choice.options.formulation", "formulations A11.5 attendues")
+    if candidate_source["choice"]["converge_at_message_id"] != "m53":
+        _issue(issues, "N2_OLD_CONVERGENCE_PRESENT", "source.choice.converge_at_message_id", "m53 attendu")
+    if "m52" in candidate or any(message_id in candidate for message_id in ("m68", "m69", "m70", "m71")):
+        _issue(issues, "N2_RETIRED_SEQUENCE_PRESENT", "source", "ancienne convergence ou ancienne séquence encore présente")
+    return issues
+
+
+def build_n2_comparison(
+    historical_source: Mapping[str, Any],
+    candidate_source: Mapping[str, Any],
+) -> dict[str, Any]:
+    old = _source_message_index(historical_source)
+    new = _source_message_index(candidate_source)
+    changed_old = {"m52", "m64", "m65", "m66", "m67", "m68", "m69", "m70", "m71", "m75", "m76", "m77", "m78"}
+    unchanged_ids = [message_id for message_id in old if message_id not in changed_old]
+    return {
+        "format": FORMAT_N2_COMPARISON,
+        "version": VERSION,
+        "historical_source_id": historical_source["source_id"],
+        "historical_source_content_sha256": editorial_source_content_sha256(historical_source),
+        "candidate_source_id": candidate_source["source_id"],
+        "candidate_source_content_sha256": editorial_source_content_sha256(candidate_source),
+        "parent_decision": "R8C-N1 — NEEDS_MINOR_NARRATIVE_REVISION",
+        "comparison_basis": "Contenu narratif complet (locuteur, type, texte et branche), pas seulement identifiants ou nombres.",
+        "additions": [new[message_id] for message_id in ("m51A-2", "m51A-3")],
+        "replacements": [
+            {
+                "revision_id": "option_b_specific_bridge",
+                "before": [old["m52"]],
+                "after": [new["m52B"]],
+                "reason_from_n1": "Rendre distinctes les deux sorties de choix avant une convergence naturelle à m53.",
+            },
+            {
+                "revision_id": "limit_received_without_overwriting",
+                "before": [old[message_id] for message_id in ("m64", "m65", "m66", "m67", "m68", "m69")],
+                "after": [new[message_id] for message_id in ("m64", "m65", "m66", "m67")],
+                "reason_from_n1": "Simplifier la limite reçue sans dialogue trop construit et préserver un Player non insistant.",
+            },
+            {
+                "revision_id": "sandra_uncertainty",
+                "before": [old[message_id] for message_id in ("m75", "m76", "m77", "m78")],
+                "after": [new[message_id] for message_id in ("m75", "m76", "m77", "m78")],
+                "reason_from_n1": "Remplacer la formule composée par une incertitude prudente et assumée de Sandra.",
+            },
+        ],
+        "removals": [old[message_id] for message_id in ("m70", "m71")],
+        "unchanged": [old[message_id] for message_id in unchanged_ids],
+        "unchanged_structural_elements": {
+            "title": historical_source["title"],
+            "media": historical_source["media"],
+            "choice_id": historical_source["choice"]["choice_id"],
+            "after_message_id": historical_source["choice"]["after_message_id"],
+            "option_ids": [option["option_id"] for option in historical_source["choice"]["options"]],
+            "option_formulations": [option["formulation"] for option in historical_source["choice"]["options"]],
+        },
+        "choice_transitions": {
+            "careful_warmth": ["m51A", "m51A-2", "m51A-3", "m53"],
+            "ironic_withdrawal": ["m51B", "m52B", "m53"],
+            "common_convergence_starts_at": "m53",
+        },
+        "manifest_validation": {
+            "content_compared": True,
+            "unexpected_changes": [issue.as_json() for issue in validate_n2_manifest(historical_source, candidate_source)],
+        },
+    }
+
+
+def load_n2_workspace(*, include_outputs: bool = True) -> dict[str, Any]:
+    workspace = load_editorial_pilot_workspace(
+        source_path=N2_SOURCE_PATH,
+        provenance_path=N2_PROVENANCE_PATH,
+        plan_path=N2_PLAN_PATH,
+        draft_path=N2_DRAFT_PATH,
+        validation_path=N2_VALIDATION_PATH,
+        traceability_path=N2_TRACEABILITY_PATH,
+        decision_path=N2_DECISION_PATH,
+        include_outputs=include_outputs,
+    )
+    workspace["editorial_profile"] = copy.deepcopy(N2_PROFILE)
+    return workspace
+
+
+def validate_n2_revision(workspace: Mapping[str, Any]) -> dict[str, Any]:
+    base = validate_editorial_pilot(workspace)
+    errors = [Issue(item["code"], item["path"], item["message"]) for item in base["blocking_errors"]]
+    warnings = [Issue(item["code"], item["path"], item["message"]) for item in base["warnings"]]
+    try:
+        locked_projection = parse_n2_locked_source()
+    except A114ValidationError as exc:
+        errors.extend(exc.issues)
+    else:
+        if editorial_source_projection(locked_projection) != editorial_source_projection(workspace["source"]):
+            _issue(errors, "N2_LOCKED_SOURCE_MISMATCH", "source", "projection différente du bloc ChatGPT verrouillé")
+    errors.extend(validate_n2_manifest(_read_json(PILOT_SOURCE_PATH), workspace["source"]))
+    return _editorial_validation_result(workspace, errors, warnings)
+
+
+def validate_n2_decision(workspace: Mapping[str, Any], decision: Mapping[str, Any]) -> list[Issue]:
+    return validate_editorial_decision(
+        workspace,
+        decision,
+        allowed_statuses=N2_REVIEW_STATUSES,
+        ready_status="READY_FOR_FINAL_CANON_REVIEW",
+        ready_action="FINAL_CANON_REVIEW",
+    )
+
+
+def generate_n2_artifacts() -> dict[str, Any]:
+    source = parse_n2_locked_source()
+    provenance = _build_n2_provenance(source)
+    planning = _build_n2_plan(provenance)
+    draft = _build_n2_draft(source, planning)
+    calibration = _editorial_calibration(provenance)
+    workspace = {
+        "source": source,
+        "provenance": provenance,
+        "planning": planning,
+        "character_contract": calibration["character"],
+        "relationship_register": calibration["relationship"],
+        "foreign_calibrations": {
+            name: {"character": foreign["character"], "relationship": foreign["relationship"]}
+            for name in ("marie", "mathilde")
+            for foreign in (load_calibration_case(name),)
+        },
+        "draft": draft,
+        "validation_report": None,
+        "traceability_report": None,
+        "decision": None,
+        "editorial_profile": copy.deepcopy(N2_PROFILE),
+    }
+    validation = validate_n2_revision(workspace)
+    traceability = build_editorial_traceability(workspace)
+    comparison = build_n2_comparison(_read_json(PILOT_SOURCE_PATH), source)
+    if validation["status"] == "BLOCKED":
+        raise A114ValidationError(
+            [
+                Issue(item["code"], item["path"], item["message"])
+                for item in validation["blocking_errors"]
+            ]
+        )
+    if comparison["manifest_validation"]["unexpected_changes"]:
+        raise A114ValidationError(
+            [
+                Issue(item["code"], item["path"], item["message"])
+                for item in comparison["manifest_validation"]["unexpected_changes"]
+            ]
+        )
+    artifacts = {
+        N2_SOURCE_PATH: source,
+        N2_PROVENANCE_PATH: provenance,
+        N2_PLAN_PATH: planning,
+        N2_DRAFT_PATH: draft,
+        N2_VALIDATION_PATH: validation,
+        N2_COMPARISON_PATH: comparison,
+        N2_TRACEABILITY_PATH: traceability,
+    }
+    for path, value in artifacts.items():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
+    N2_BLIND_READING_PATH.write_text(render_editorial_blind_reading(workspace), encoding="utf-8", newline="\n")
+    return {
+        "ok": True,
+        "locked_source_sha256": n2_locked_source_sha256(),
+        "source_content_sha256": validation["source_content_sha256"],
+        "counts": validation["counts"],
+    }
+
+
+def validate_n2_json_library() -> dict[str, Any]:
+    workspace = load_n2_workspace()
+    generated_validation = validate_n2_revision(workspace)
+    if generated_validation != workspace["validation_report"]:
+        raise A114ValidationError([Issue("N2_VALIDATION_STALE", "validation_report", "rapport différent")])
+    generated_traceability = build_editorial_traceability(workspace)
+    if generated_traceability != workspace["traceability_report"]:
+        raise A114ValidationError([Issue("N2_TRACEABILITY_STALE", "traceability_report", "rapport différent")])
+    generated_comparison = build_n2_comparison(_read_json(PILOT_SOURCE_PATH), workspace["source"])
+    if generated_comparison != _read_json(N2_COMPARISON_PATH):
+        raise A114ValidationError([Issue("N2_COMPARISON_STALE", "comparison_report", "rapport différent")])
+    decision_issues = validate_n2_decision(workspace, workspace["decision"])
+    if decision_issues:
+        raise A114ValidationError(decision_issues)
+    if render_editorial_blind_reading(workspace) != N2_BLIND_READING_PATH.read_text(encoding="utf-8"):
+        raise A114ValidationError([Issue("N2_BLIND_READING_STALE", str(N2_BLIND_READING_PATH), "rendu différent")])
+    if render_editorial_human_review(workspace, workspace["decision"]) != N2_HUMAN_REVIEW_PATH.read_text(encoding="utf-8"):
+        raise A114ValidationError([Issue("N2_HUMAN_REVIEW_STALE", str(N2_HUMAN_REVIEW_PATH), "rendu différent")])
+    return {
+        "ok": True,
+        "status": workspace["decision"]["status"],
+        "locked_source_sha256": n2_locked_source_sha256(),
+        "source_content_sha256": generated_validation["source_content_sha256"],
+        "counts": generated_validation["counts"],
+        "a6_export": False,
+        "runtime_wiring": False,
+    }
+
+
+def run_n2_smoke() -> dict[str, Any]:
+    workspace = load_n2_workspace(include_outputs=False)
+    first = validate_n2_revision(workspace)
+    second = validate_n2_revision(workspace)
+    if first != second or first["status"] == "BLOCKED":
+        raise AssertionError("validation R8C-N2 non déterministe ou bloquée")
+
+    def mutation_codes(mutant: Mapping[str, Any]) -> set[str]:
+        return {item["code"] for item in validate_n2_revision(mutant)["blocking_errors"]}
+
+    mutations: dict[str, set[str]] = {}
+    foreign = copy.deepcopy(workspace)
+    foreign["draft"]["messages"][1]["text"] += " !"
+    mutations["foreign_bubble_change"] = mutation_codes(foreign)
+    old_convergence = copy.deepcopy(workspace)
+    old_convergence["draft"]["choice"]["converge_at_message_id"] = "m52"
+    mutations["old_convergence"] = mutation_codes(old_convergence)
+    acquired = copy.deepcopy(workspace)
+    by_id = {message["message_id"]: message for message in acquired["draft"]["messages"]}
+    by_id["m79"]["text"] = "On déjeune vendredi à 20 h"
+    mutations["acquired_meeting"] = mutation_codes(acquired)
+    foreign_participant = copy.deepcopy(workspace)
+    foreign_participant["planning"]["plan"]["participant_ids"].append("marie")
+    mutations["foreign_participant"] = mutation_codes(foreign_participant)
+    expected = {
+        "foreign_bubble_change": "SOURCE_CONTENT_MISMATCH",
+        "old_convergence": "CHOICE_MESSAGE_REFERENCE_INVALID",
+        "acquired_meeting": "MEETING_PRESENTED_AS_ACQUIRED",
+        "foreign_participant": "UNEXPECTED_PARTICIPANT",
+    }
+    for name, expected_code in expected.items():
+        if expected_code not in mutations[name]:
+            raise AssertionError(f"mutation {name} non rejetée par {expected_code}: {sorted(mutations[name])}")
+    return {
+        "ok": True,
+        "source_content_sha256": first["source_content_sha256"],
+        "counts": first["counts"],
+        "warning_codes": [item["code"] for item in first["warnings"]],
+        "mutation_error_codes": {name: sorted(codes) for name, codes in mutations.items()},
+        "a6_export": False,
+        "runtime_wiring": False,
+    }
 
 
 def validate_editorial_json_library() -> dict[str, Any]:
@@ -2401,6 +3022,10 @@ def _write_export_pair(
 
 
 def main(argv: Sequence[str] | None = None) -> int:
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
+    if hasattr(sys.stderr, "reconfigure"):
+        sys.stderr.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(
         description="Offline R8C-A11.4 plan-to-draft export and A11.5 editorial pilot review"
     )
@@ -2417,6 +3042,11 @@ def main(argv: Sequence[str] | None = None) -> int:
     subparsers.add_parser("pilot-review")
     subparsers.add_parser("pilot-blind")
     subparsers.add_parser("pilot-smoke")
+    subparsers.add_parser("n2-generate")
+    subparsers.add_parser("validate-n2")
+    subparsers.add_parser("n2-review")
+    subparsers.add_parser("n2-blind")
+    subparsers.add_parser("n2-smoke")
     args = parser.parse_args(argv)
     try:
         if args.command == "validate-pilot":
@@ -2428,6 +3058,17 @@ def main(argv: Sequence[str] | None = None) -> int:
             print(render_editorial_blind_reading(load_editorial_pilot_workspace()), end="")
         elif args.command == "pilot-smoke":
             _emit(run_editorial_pilot_smoke())
+        elif args.command == "n2-generate":
+            _emit(generate_n2_artifacts())
+        elif args.command == "validate-n2":
+            _emit(validate_n2_json_library())
+        elif args.command == "n2-review":
+            workspace = load_n2_workspace()
+            print(render_editorial_human_review(workspace, workspace["decision"]), end="")
+        elif args.command == "n2-blind":
+            print(render_editorial_blind_reading(load_n2_workspace()), end="")
+        elif args.command == "n2-smoke":
+            _emit(run_n2_smoke())
         else:
             workspace = load_workspace(**default_paths())
             if args.command == "validate-json":

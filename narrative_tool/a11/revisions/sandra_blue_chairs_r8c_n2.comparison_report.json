@@ -1,0 +1,841 @@
+{
+  "format": "R8C_N2_NARRATIVE_COMPARISON_REPORT",
+  "version": 1,
+  "historical_source_id": "a11_5_sandra_blue_chairs_locked_source",
+  "historical_source_content_sha256": "9167120abc55dbf4275ac67eb7b4f774a58322587d87c9310644e3bcf85982dd",
+  "candidate_source_id": "r8c_n2_sandra_blue_chairs_locked_source",
+  "candidate_source_content_sha256": "e1acea2817267d47ffb5e1f6f628aeb03c16056ce5f2f100c0803dcc3cf93a98",
+  "parent_decision": "R8C-N1 — NEEDS_MINOR_NARRATIVE_REVISION",
+  "comparison_basis": "Contenu narratif complet (locuteur, type, texte et branche), pas seulement identifiants ou nombres.",
+  "additions": [
+    {
+      "message_id": "m51A-2",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Pas tout",
+      "branch": "careful_warmth"
+    },
+    {
+      "message_id": "m51A-3",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "assez",
+      "branch": "careful_warmth"
+    }
+  ],
+  "replacements": [
+    {
+      "revision_id": "option_b_specific_bridge",
+      "before": [
+        {
+          "message_id": "m52",
+          "speaker_id": "player",
+          "kind": "TEXT",
+          "text": "Pas complètement",
+          "branch": "COMMON"
+        }
+      ],
+      "after": [
+        {
+          "message_id": "m52B",
+          "speaker_id": "player",
+          "kind": "TEXT",
+          "text": "Pas complètement",
+          "branch": "ironic_withdrawal"
+        }
+      ],
+      "reason_from_n1": "Rendre distinctes les deux sorties de choix avant une convergence naturelle à m53."
+    },
+    {
+      "revision_id": "limit_received_without_overwriting",
+      "before": [
+        {
+          "message_id": "m64",
+          "speaker_id": "player",
+          "kind": "TEXT",
+          "text": "Je savais pas que j’étais en train de freiner",
+          "branch": "COMMON"
+        },
+        {
+          "message_id": "m65",
+          "speaker_id": "sandra",
+          "kind": "TEXT",
+          "text": "tu vois",
+          "branch": "COMMON"
+        },
+        {
+          "message_id": "m66",
+          "speaker_id": "sandra",
+          "kind": "TEXT",
+          "text": "ça c’était presque une bonne phrase",
+          "branch": "COMMON"
+        },
+        {
+          "message_id": "m67",
+          "speaker_id": "player",
+          "kind": "TEXT",
+          "text": "Je la note",
+          "branch": "COMMON"
+        },
+        {
+          "message_id": "m68",
+          "speaker_id": "sandra",
+          "kind": "TEXT",
+          "text": "surtout pas",
+          "branch": "COMMON"
+        },
+        {
+          "message_id": "m69",
+          "speaker_id": "sandra",
+          "kind": "TEXT",
+          "text": "après tu vas la réutiliser",
+          "branch": "COMMON"
+        }
+      ],
+      "after": [
+        {
+          "message_id": "m64",
+          "speaker_id": "player",
+          "kind": "TEXT",
+          "text": "J’avais pas l’impression de pousser",
+          "branch": "COMMON"
+        },
+        {
+          "message_id": "m65",
+          "speaker_id": "sandra",
+          "kind": "TEXT",
+          "text": "je sais",
+          "branch": "COMMON"
+        },
+        {
+          "message_id": "m66",
+          "speaker_id": "sandra",
+          "kind": "TEXT",
+          "text": "c’est pour ça que je te le dis",
+          "branch": "COMMON"
+        },
+        {
+          "message_id": "m67",
+          "speaker_id": "player",
+          "kind": "TEXT",
+          "text": "D’accord",
+          "branch": "COMMON"
+        }
+      ],
+      "reason_from_n1": "Simplifier la limite reçue sans dialogue trop construit et préserver un Player non insistant."
+    },
+    {
+      "revision_id": "sandra_uncertainty",
+      "before": [
+        {
+          "message_id": "m75",
+          "speaker_id": "player",
+          "kind": "TEXT",
+          "text": "Et le reste",
+          "branch": "COMMON"
+        },
+        {
+          "message_id": "m76",
+          "speaker_id": "sandra",
+          "kind": "TEXT",
+          "text": "le reste reste le reste",
+          "branch": "COMMON"
+        },
+        {
+          "message_id": "m77",
+          "speaker_id": "player",
+          "kind": "TEXT",
+          "text": "Très clair",
+          "branch": "COMMON"
+        },
+        {
+          "message_id": "m78",
+          "speaker_id": "sandra",
+          "kind": "TEXT",
+          "text": "parfait",
+          "branch": "COMMON"
+        }
+      ],
+      "after": [
+        {
+          "message_id": "m75",
+          "speaker_id": "player",
+          "kind": "TEXT",
+          "text": "Et le reste",
+          "branch": "COMMON"
+        },
+        {
+          "message_id": "m76",
+          "speaker_id": "sandra",
+          "kind": "TEXT",
+          "text": "je sais pas encore",
+          "branch": "COMMON"
+        },
+        {
+          "message_id": "m77",
+          "speaker_id": "sandra",
+          "kind": "TEXT",
+          "text": "et c’est très bien comme ça",
+          "branch": "COMMON"
+        },
+        {
+          "message_id": "m78",
+          "speaker_id": "player",
+          "kind": "TEXT",
+          "text": "D’accord",
+          "branch": "COMMON"
+        }
+      ],
+      "reason_from_n1": "Remplacer la formule composée par une incertitude prudente et assumée de Sandra."
+    }
+  ],
+  "removals": [
+    {
+      "message_id": "m70",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Je recycle",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m71",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "je sais",
+      "branch": "COMMON"
+    }
+  ],
+  "unchanged": [
+    {
+      "message_id": "m01",
+      "speaker_id": "sandra",
+      "kind": "IMAGE",
+      "text": "envoie la photo",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m02",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "Ils ont changé les chaises",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m03",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "c’est atroce",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m04",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "ou alors je deviens vieille 😅",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m05",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Les deux sont possibles",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m06",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "merci pour le soutien",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m07",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "vraiment",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m08",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Je préfère être honnête",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m09",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "tu préfères surtout survivre à tes blagues",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m10",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Ça marche depuis longtemps",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m11",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "J’étais à côté",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m12",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "j’ai pensé à notre déjeuner",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m13",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "enfin surtout aux frites",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m14",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Elles avaient abandonné",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m15",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "elles étaient froides avant d’arriver",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m16",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Un exploit",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m17",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "et pourtant t’as fini",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m18",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "J’avais payé",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m19",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "ah oui",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m20",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "le grand principe",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m21",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Je tiens à mes valeurs",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m22",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "hm",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m23",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "ça m’a fait bizarre de repasser là",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m24",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Bizarre comment",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m25",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "juste…",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m26",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "vieux réflexe",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m27",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "je me suis dit que j’allais t’envoyer ça",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m28",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Tu as bien fait",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m29",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "ne t’emballe pas",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m30",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "c’est une photo de chaises moches",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m31",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Je parlais pas des chaises",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m32",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "évidemment",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m33",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Ça m’a fait plaisir",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m34",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "oui bon",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m35",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "ça faisait un moment",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m36",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "C’est un peu le problème",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m37",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "ah",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m38",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "tu me fais un reproche ?",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m39",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Non",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m40",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Je constate mal",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m41",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "ça veut rien dire",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m42",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Je sais",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m43",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "et pourtant tu l’as envoyé",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m44",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "C’était plus simple que d’écrire un truc clair",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m45",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "ça, je te reconnais",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m46",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "tu voulais dire quoi, alors ?",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m47A",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "…",
+      "branch": "careful_warmth"
+    },
+    {
+      "message_id": "m48A",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "tu sais faire léger, toi",
+      "branch": "careful_warmth"
+    },
+    {
+      "message_id": "m49A",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "J’essaie",
+      "branch": "careful_warmth"
+    },
+    {
+      "message_id": "m50A",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "non",
+      "branch": "careful_warmth"
+    },
+    {
+      "message_id": "m51A",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "mais j’ai compris",
+      "branch": "careful_warmth"
+    },
+    {
+      "message_id": "m47B",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "bien sûr",
+      "branch": "ironic_withdrawal"
+    },
+    {
+      "message_id": "m48B",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "les agendas",
+      "branch": "ironic_withdrawal"
+    },
+    {
+      "message_id": "m49B",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Je leur en veux beaucoup",
+      "branch": "ironic_withdrawal"
+    },
+    {
+      "message_id": "m50B",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "tu plaisantes",
+      "branch": "ironic_withdrawal"
+    },
+    {
+      "message_id": "m51B",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "mais pas complètement",
+      "branch": "ironic_withdrawal"
+    },
+    {
+      "message_id": "m53",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "ok",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m54",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "je vais pas faire semblant de pas comprendre",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m55",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "mais je veux pas non plus qu’on transforme ça en grand truc",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m56",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Moi non plus",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m57",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "tu dis ça maintenant",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m58",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Je peux le redire demain",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m59",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "ne promets rien, déjà",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m60",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "D’accord",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m61",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "merci",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m62",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Pour quoi",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m63",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "pour ne pas pousser",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m72",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "c’est aussi pour ça que je t’ai envoyé la photo",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m73",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Pour vérifier que j’étais toujours pénible",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m74",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "entre autres",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m79",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "On pourrait refaire un déjeuner",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m80",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "on pourrait",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m81",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "pas cette semaine",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m82",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Je n’avais pas demandé cette semaine",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m83",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "je sais",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m84",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "mais je préfère le dire avant que tu constates mal",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m85",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Compris",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m86",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "je regarde après le week-end",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m87",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "sans promesse",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m88",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Sans promesse",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m89",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "et sans ces chaises",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m90",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Là je pose une limite",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m91",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "bonne soirée, Ludo",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m92",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Bonne soirée Sandra",
+      "branch": "COMMON"
+    },
+    {
+      "message_id": "m93",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "🙂",
+      "branch": "COMMON"
+    }
+  ],
+  "unchanged_structural_elements": {
+    "title": "Sandra — Les chaises bleues",
+    "media": {
+      "media_id": "photo_sandra_cafe_blue_chairs",
+      "kind": "PHOTO",
+      "description": "Photo banale de la terrasse du café du dernier déjeuner. Les anciennes chaises ont été remplacées par des chaises bleues très voyantes."
+    },
+    "choice_id": "player_response_to_sandra_test",
+    "after_message_id": "m46",
+    "option_ids": [
+      "careful_warmth",
+      "ironic_withdrawal"
+    ],
+    "option_formulations": [
+      "Que ça m’avait manqué.",
+      "Que nos agendas sont nuls."
+    ]
+  },
+  "choice_transitions": {
+    "careful_warmth": [
+      "m51A",
+      "m51A-2",
+      "m51A-3",
+      "m53"
+    ],
+    "ironic_withdrawal": [
+      "m51B",
+      "m52B",
+      "m53"
+    ],
+    "common_convergence_starts_at": "m53"
+  },
+  "manifest_validation": {
+    "content_compared": true,
+    "unexpected_changes": []
+  }
+}

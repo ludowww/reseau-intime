@@ -79,10 +79,18 @@ class R8CA115FirstEditorialScenePilotTests(unittest.TestCase):
             ).strip(),
         )
         self.assertEqual(
-            "work/r8c-a11-5-first-editorial-scene-pilot",
-            subprocess.check_output(
-                ["git", "branch", "--show-current"], cwd=ROOT, text=True
-            ).strip(),
+            0,
+            subprocess.run(
+                [
+                    "git",
+                    "merge-base",
+                    "--is-ancestor",
+                    "r8c-a11-5-first-editorial-scene-pilot^{}",
+                    "HEAD",
+                ],
+                cwd=ROOT,
+                check=False,
+            ).returncode,
         )
 
     def test_source_is_byte_for_byte_equivalent_to_integrated_narrative(self):

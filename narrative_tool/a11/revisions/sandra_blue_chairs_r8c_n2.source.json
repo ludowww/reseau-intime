@@ -1,0 +1,610 @@
+{
+  "format": "R8C_A11_EDITORIAL_SOURCE",
+  "version": 1,
+  "source_id": "r8c_n2_sandra_blue_chairs_locked_source",
+  "title": "Sandra — Les chaises bleues",
+  "media": {
+    "media_id": "photo_sandra_cafe_blue_chairs",
+    "kind": "PHOTO",
+    "description": "Photo banale de la terrasse du café du dernier déjeuner. Les anciennes chaises ont été remplacées par des chaises bleues très voyantes."
+  },
+  "pre_choice_messages": [
+    {
+      "message_id": "m01",
+      "speaker_id": "sandra",
+      "kind": "IMAGE",
+      "text": "envoie la photo"
+    },
+    {
+      "message_id": "m02",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "Ils ont changé les chaises"
+    },
+    {
+      "message_id": "m03",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "c’est atroce"
+    },
+    {
+      "message_id": "m04",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "ou alors je deviens vieille 😅"
+    },
+    {
+      "message_id": "m05",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Les deux sont possibles"
+    },
+    {
+      "message_id": "m06",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "merci pour le soutien"
+    },
+    {
+      "message_id": "m07",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "vraiment"
+    },
+    {
+      "message_id": "m08",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Je préfère être honnête"
+    },
+    {
+      "message_id": "m09",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "tu préfères surtout survivre à tes blagues"
+    },
+    {
+      "message_id": "m10",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Ça marche depuis longtemps"
+    },
+    {
+      "message_id": "m11",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "J’étais à côté"
+    },
+    {
+      "message_id": "m12",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "j’ai pensé à notre déjeuner"
+    },
+    {
+      "message_id": "m13",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "enfin surtout aux frites"
+    },
+    {
+      "message_id": "m14",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Elles avaient abandonné"
+    },
+    {
+      "message_id": "m15",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "elles étaient froides avant d’arriver"
+    },
+    {
+      "message_id": "m16",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Un exploit"
+    },
+    {
+      "message_id": "m17",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "et pourtant t’as fini"
+    },
+    {
+      "message_id": "m18",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "J’avais payé"
+    },
+    {
+      "message_id": "m19",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "ah oui"
+    },
+    {
+      "message_id": "m20",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "le grand principe"
+    },
+    {
+      "message_id": "m21",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Je tiens à mes valeurs"
+    },
+    {
+      "message_id": "m22",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "hm"
+    },
+    {
+      "message_id": "m23",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "ça m’a fait bizarre de repasser là"
+    },
+    {
+      "message_id": "m24",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Bizarre comment"
+    },
+    {
+      "message_id": "m25",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "juste…"
+    },
+    {
+      "message_id": "m26",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "vieux réflexe"
+    },
+    {
+      "message_id": "m27",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "je me suis dit que j’allais t’envoyer ça"
+    },
+    {
+      "message_id": "m28",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Tu as bien fait"
+    },
+    {
+      "message_id": "m29",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "ne t’emballe pas"
+    },
+    {
+      "message_id": "m30",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "c’est une photo de chaises moches"
+    },
+    {
+      "message_id": "m31",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Je parlais pas des chaises"
+    },
+    {
+      "message_id": "m32",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "évidemment"
+    },
+    {
+      "message_id": "m33",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Ça m’a fait plaisir"
+    },
+    {
+      "message_id": "m34",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "oui bon"
+    },
+    {
+      "message_id": "m35",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "ça faisait un moment"
+    },
+    {
+      "message_id": "m36",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "C’est un peu le problème"
+    },
+    {
+      "message_id": "m37",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "ah"
+    },
+    {
+      "message_id": "m38",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "tu me fais un reproche ?"
+    },
+    {
+      "message_id": "m39",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Non"
+    },
+    {
+      "message_id": "m40",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Je constate mal"
+    },
+    {
+      "message_id": "m41",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "ça veut rien dire"
+    },
+    {
+      "message_id": "m42",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Je sais"
+    },
+    {
+      "message_id": "m43",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "et pourtant tu l’as envoyé"
+    },
+    {
+      "message_id": "m44",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "C’était plus simple que d’écrire un truc clair"
+    },
+    {
+      "message_id": "m45",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "ça, je te reconnais"
+    },
+    {
+      "message_id": "m46",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "tu voulais dire quoi, alors ?"
+    }
+  ],
+  "choice": {
+    "choice_id": "player_response_to_sandra_test",
+    "after_message_id": "m46",
+    "options": [
+      {
+        "option_id": "careful_warmth",
+        "formulation": "Que ça m’avait manqué.",
+        "reception_messages": [
+          {
+            "message_id": "m47A",
+            "speaker_id": "sandra",
+            "kind": "TEXT",
+            "text": "…"
+          },
+          {
+            "message_id": "m48A",
+            "speaker_id": "sandra",
+            "kind": "TEXT",
+            "text": "tu sais faire léger, toi"
+          },
+          {
+            "message_id": "m49A",
+            "speaker_id": "player",
+            "kind": "TEXT",
+            "text": "J’essaie"
+          },
+          {
+            "message_id": "m50A",
+            "speaker_id": "sandra",
+            "kind": "TEXT",
+            "text": "non"
+          },
+          {
+            "message_id": "m51A",
+            "speaker_id": "sandra",
+            "kind": "TEXT",
+            "text": "mais j’ai compris"
+          },
+          {
+            "message_id": "m51A-2",
+            "speaker_id": "player",
+            "kind": "TEXT",
+            "text": "Pas tout"
+          },
+          {
+            "message_id": "m51A-3",
+            "speaker_id": "sandra",
+            "kind": "TEXT",
+            "text": "assez"
+          }
+        ]
+      },
+      {
+        "option_id": "ironic_withdrawal",
+        "formulation": "Que nos agendas sont nuls.",
+        "reception_messages": [
+          {
+            "message_id": "m47B",
+            "speaker_id": "sandra",
+            "kind": "TEXT",
+            "text": "bien sûr"
+          },
+          {
+            "message_id": "m48B",
+            "speaker_id": "sandra",
+            "kind": "TEXT",
+            "text": "les agendas"
+          },
+          {
+            "message_id": "m49B",
+            "speaker_id": "player",
+            "kind": "TEXT",
+            "text": "Je leur en veux beaucoup"
+          },
+          {
+            "message_id": "m50B",
+            "speaker_id": "sandra",
+            "kind": "TEXT",
+            "text": "tu plaisantes"
+          },
+          {
+            "message_id": "m51B",
+            "speaker_id": "sandra",
+            "kind": "TEXT",
+            "text": "mais pas complètement"
+          },
+          {
+            "message_id": "m52B",
+            "speaker_id": "player",
+            "kind": "TEXT",
+            "text": "Pas complètement"
+          }
+        ]
+      }
+    ],
+    "converge_at_message_id": "m53"
+  },
+  "convergence_messages": [
+    {
+      "message_id": "m53",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "ok"
+    },
+    {
+      "message_id": "m54",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "je vais pas faire semblant de pas comprendre"
+    },
+    {
+      "message_id": "m55",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "mais je veux pas non plus qu’on transforme ça en grand truc"
+    },
+    {
+      "message_id": "m56",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Moi non plus"
+    },
+    {
+      "message_id": "m57",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "tu dis ça maintenant"
+    },
+    {
+      "message_id": "m58",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Je peux le redire demain"
+    },
+    {
+      "message_id": "m59",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "ne promets rien, déjà"
+    },
+    {
+      "message_id": "m60",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "D’accord"
+    },
+    {
+      "message_id": "m61",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "merci"
+    },
+    {
+      "message_id": "m62",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Pour quoi"
+    },
+    {
+      "message_id": "m63",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "pour ne pas pousser"
+    },
+    {
+      "message_id": "m64",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "J’avais pas l’impression de pousser"
+    },
+    {
+      "message_id": "m65",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "je sais"
+    },
+    {
+      "message_id": "m66",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "c’est pour ça que je te le dis"
+    },
+    {
+      "message_id": "m67",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "D’accord"
+    },
+    {
+      "message_id": "m72",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "c’est aussi pour ça que je t’ai envoyé la photo"
+    },
+    {
+      "message_id": "m73",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Pour vérifier que j’étais toujours pénible"
+    },
+    {
+      "message_id": "m74",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "entre autres"
+    },
+    {
+      "message_id": "m75",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Et le reste"
+    },
+    {
+      "message_id": "m76",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "je sais pas encore"
+    },
+    {
+      "message_id": "m77",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "et c’est très bien comme ça"
+    },
+    {
+      "message_id": "m78",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "D’accord"
+    },
+    {
+      "message_id": "m79",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "On pourrait refaire un déjeuner"
+    },
+    {
+      "message_id": "m80",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "on pourrait"
+    },
+    {
+      "message_id": "m81",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "pas cette semaine"
+    },
+    {
+      "message_id": "m82",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Je n’avais pas demandé cette semaine"
+    },
+    {
+      "message_id": "m83",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "je sais"
+    },
+    {
+      "message_id": "m84",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "mais je préfère le dire avant que tu constates mal"
+    },
+    {
+      "message_id": "m85",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Compris"
+    },
+    {
+      "message_id": "m86",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "je regarde après le week-end"
+    },
+    {
+      "message_id": "m87",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "sans promesse"
+    },
+    {
+      "message_id": "m88",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Sans promesse"
+    },
+    {
+      "message_id": "m89",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "et sans ces chaises"
+    },
+    {
+      "message_id": "m90",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Là je pose une limite"
+    },
+    {
+      "message_id": "m91",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "bonne soirée, Ludo"
+    },
+    {
+      "message_id": "m92",
+      "speaker_id": "player",
+      "kind": "TEXT",
+      "text": "Bonne soirée Sandra"
+    },
+    {
+      "message_id": "m93",
+      "speaker_id": "sandra",
+      "kind": "TEXT",
+      "text": "🙂"
+    }
+  ]
+}
