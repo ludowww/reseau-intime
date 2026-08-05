@@ -86,7 +86,7 @@
             "choices": [
                 {
                     "id": "choice_j17_reconquest",
-                    "text": "je veux rester activement et arr\u00eater les versions fausses",
+                    "text": "je veux essayer encore ici : aucun faux horaire, aucun faux lieu et aucune nouvelle progression ext\u00e9rieure avant notre prochain point",
                     "next_messages": [
                         {
                             "id": "msg_j17_reconquest_001",
@@ -98,7 +98,7 @@
                 },
                 {
                     "id": "choice_j17_provisional",
-                    "text": "je demande un accord provisoire avec des r\u00e8gles r\u00e9visables",
+                    "text": "je reconnais ce qui a exist\u00e9 dehors ; aucune nouvelle \u00e9tape avant notre prochain point. ce n\u2019est ni une ouverture ni une permission r\u00e9troactive, personne d\u2019autre n\u2019est engag\u00e9 et tu peux refuser toute reconfiguration",
                     "next_messages": [
                         {
                             "id": "msg_j17_provisional_001",
@@ -147,5 +147,83 @@
                 }
             ]
         }
-    ]
+    ],
+    "micro_returns": {
+        "mathilde": {
+            "help_ordinary": {
+                "id": "msg_j17_mathilde_micro_help_ordinary",
+                "sender": "mathilde",
+                "time_label": "17:32",
+                "text": "Les affaires sont parties. Ton aide s’arrête là ; je garde la suite pratique."
+            },
+            "distance_ordinary": {
+                "id": "msg_j17_mathilde_micro_distance_ordinary",
+                "sender": "mathilde",
+                "time_label": "17:32",
+                "text": "Les affaires sont parties. La distance reste en place ; Marie garde seulement le relais pratique."
+            },
+            "help_aftercare_paid": {
+                "id": "msg_j17_mathilde_micro_help_aftercare_paid",
+                "sender": "mathilde",
+                "time_label": "17:32",
+                "text": "Les affaires sont parties. Tu as tenu l’après et aidé au départ ; cela ne promet rien pour la suite."
+            },
+            "distance_aftercare_paid": {
+                "id": "msg_j17_mathilde_micro_distance_aftercare_paid",
+                "sender": "mathilde",
+                "time_label": "17:32",
+                "text": "Les affaires sont parties. Tu as tenu l’après ; maintenant la distance et le relais pratique restent en place."
+            },
+            "help_aftercare_failed": {
+                "id": "msg_j17_mathilde_micro_help_aftercare_failed",
+                "sender": "mathilde",
+                "time_label": "17:32",
+                "text": "Les affaires sont parties. L’après n’a pas été tenu ; ton aide au départ n’efface pas cette conséquence."
+            },
+            "distance_aftercare_failed": {
+                "id": "msg_j17_mathilde_micro_distance_aftercare_failed",
+                "sender": "mathilde",
+                "time_label": "17:32",
+                "text": "Les affaires sont parties. L’après n’a pas été tenu ; la distance reste une conséquence, pas une ouverture."
+            }
+        },
+        "marie": {
+            "SEPARATION": {
+                "id": "msg_j17_marie_micro_separation",
+                "sender": "marie",
+                "time_label": "21:46",
+                "text": "On est séparés. Demain, on fixe les objets et le logement ; rien d’autre ne s’ouvre."
+            },
+            "FRACTURE": {
+                "id": "msg_j17_marie_micro_fracture",
+                "sender": "marie",
+                "time_label": "21:46",
+                "text": "L’ancien cadre est retiré. On garde seulement la limite pratique, puis on décidera entre une nouvelle réparation et la séparation."
+            },
+            "DOUBLE_LIFE_FRAGILE": {
+                "id": "msg_j17_marie_micro_double_life_fragile",
+                "sender": "marie",
+                "time_label": "21:46",
+                "text": "On reste matériellement ensemble, mais la contradiction n’est pas réglée. Aucune nouvelle étape avant qu’elle soit dite ou payée."
+            },
+            "PROVISIONAL_AGREEMENT": {
+                "id": "msg_j17_marie_micro_provisional_agreement",
+                "sender": "marie",
+                "time_label": "21:46",
+                "text": "C’est provisoire : espaces séparés et aucune nouvelle étape extérieure. On revoit ça jeudi prochain à 20 h 30."
+            },
+            "RECONQUEST_ACTIVE": {
+                "id": "msg_j17_marie_micro_reconquest_active",
+                "sender": "marie",
+                "time_label": "21:46",
+                "text": "On essaie encore ici, sans pardon automatique : aucun faux horaire, aucun faux lieu, aucune progression extérieure avant notre prochain point. Demain, tu fais les courses."
+            },
+            "RECONFIGURATION_NEGOTIATION": {
+                "id": "msg_j17_marie_micro_reconfiguration_negotiation",
+                "sender": "marie",
+                "time_label": "21:46",
+                "text": "On n’a rien ouvert. Jusqu’à jeudi prochain, 20 h 30 : aucune nouvelle étape avec personne. Ensuite je peux encore refuser toute reconfiguration."
+            }
+        }
+    }
 }

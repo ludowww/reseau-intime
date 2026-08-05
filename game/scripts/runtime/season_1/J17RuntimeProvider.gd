@@ -1,19 +1,23 @@
 extends "res://scripts/runtime/season_1/J16RuntimeProvider.gd"
 class_name J17RuntimeProvider
 const J17_MAP_PATH:="res://data/runtime/season_1/j17_runtime_map.json"
+var micro_returns:Dictionary={}
 func initialize(shared_state,cumulative_transcripts:Dictionary,cumulative_ids:Dictionary,cumulative_threads:Array,cumulative_gallery_ids:Array)->bool:
 	if not super.initialize(shared_state,cumulative_transcripts,cumulative_ids,cumulative_threads,cumulative_gallery_ids):return false
 	runtime_map=DataLoader.load_json(J17_MAP_PATH); segments_by_id={}; var c:Dictionary=DataLoader.load_json(str(runtime_map.get("conversation_paths",{}).get("chapter_17_departure_and_couple","")))
 	for segment in c.get("segments",[]): segments_by_id[str(segment.get("id",""))]=segment
-	current_time_minutes=NARRATIVE_TIME.parse_narrative_time(str(runtime_map.get("initial_time",""))); selected_pivot=""; phase="day_start_pending"; return not c.is_empty()
+	micro_returns=c.get("micro_returns",{}).duplicate(true);current_time_minutes=NARRATIVE_TIME.parse_narrative_time(str(runtime_map.get("initial_time",""))); selected_pivot=""; phase="day_start_pending"; return not c.is_empty() and not micro_returns.is_empty()
 func start_day()->Dictionary:
 	if phase!="day_start_pending" or not state.begin_j17():return {"accepted":false}
 	selected_pivot=state.j16_departure_state; _schedule_transition("to_departure"); return _transition_result()
 func apply_choice(thread_id:String,choice_id:String)->Dictionary:
 	if not pending_transition.is_empty() or not pending_choice_ids_by_thread.get(thread_id,[]).has(choice_id):return {"accepted":false}
-	var selected:=_choice_by_id(choice_id); var accepted:bool=state.apply_j17_couple_choice(choice_id) if phase=="couple_choice" else state.apply_j17_departure_choice(choice_id.trim_suffix("_required"))
+	var selected:=_choice_by_id(choice_id);var couple_choice:=phase=="couple_choice";var accepted:bool=state.apply_j17_couple_choice(choice_id,"J17 "+current_narrative_time_text(),_has_message_id("msg_j17_mathilde_micro_")) if couple_choice else state.apply_j17_departure_choice(choice_id.trim_suffix("_required"))
 	if selected.is_empty() or not accepted:return {"accepted":false}
-	pending_choice_ids_by_thread[thread_id]=[]; var before:=transcript_for(thread_id).size(); _append(thread_id,{"message_id":choice_id+"_player","author_id":"player","timestamp":current_narrative_time_text(),"content_type":"TEXT","text":str(selected.get("text","")),"media_ref":"","is_player":true,"is_read":true,"source_day":17}); _append_messages(thread_id,selected.get("next_messages",[])); _schedule_transition("day_close" if phase=="couple_choice" else "to_couple"); return {"accepted":true,"new_messages":transcript_for(thread_id).slice(before),"choices":[],"transition":pending_transition.duplicate(true)}
+	pending_choice_ids_by_thread[thread_id]=[];var before:=transcript_for(thread_id).size();_append(thread_id,{"message_id":choice_id+"_player","author_id":"player","timestamp":current_narrative_time_text(),"content_type":"TEXT","text":str(selected.get("text","")),"media_ref":"","is_player":true,"is_read":true,"source_day":17});_append_messages(thread_id,selected.get("next_messages",[]))
+	if couple_choice:_deliver_marie_micro_return()
+	else:_deliver_mathilde_micro_return()
+	_schedule_transition("day_close" if couple_choice else "to_couple");return {"accepted":true,"new_messages":transcript_for(thread_id).slice(before),"choices":[],"transition":pending_transition.duplicate(true)}
 func confirm_transition()->Dictionary:
 	if pending_transition.is_empty():return {"accepted":false}
 	var kind:=str(pending_transition.get("kind","")); pending_transition={}
@@ -31,6 +35,17 @@ func mark_thread_batch_presented(thread_id:String)->bool:
 func _append_messages(thread_id:String,messages:Array)->void:
 	for m in messages:
 		var a:=str(m.get("sender","system")); _append(thread_id,{"message_id":str(m.get("id","")),"author_id":a,"timestamp":str(m.get("time_label","")),"content_type":"TEXT","text":str(m.get("text","")),"media_ref":"","is_player":false,"is_read":false,"source_day":17})
+func _deliver_mathilde_micro_return()->void:
+	var aftercare:=str(state.obligations.get("aftercare_mathilde_j11",{}).get("status",""));var suffix:="_aftercare_"+aftercare.to_lower() if state.j11_physical_level in ["MATHILDE_M_B2","MATHILDE_M_B3"] and aftercare in ["PAID","FAILED"] else "_ordinary";var key:=("distance" if state.j17_departure_outcome=="DISTANCE" else "help")+suffix
+	_append_messages("thread_mathilde_private",[micro_returns.get("mathilde",{}).get(key,{})])
+func _deliver_marie_micro_return()->void:
+	var message:Dictionary=micro_returns.get("marie",{}).get(state.couple_state,{})
+	if message.is_empty() or not _append("thread_marie_private",{"message_id":str(message.get("id","")),"author_id":str(message.get("sender","marie")),"timestamp":str(message.get("time_label","")),"content_type":"TEXT","text":str(message.get("text","")),"media_ref":"","is_player":false,"is_read":false,"source_day":17}):return
+	state.mark_j17_marie_micro_return_delivered()
+func _has_message_id(prefix:String)->bool:
+	for id in produced_message_ids:
+		if str(id).begins_with(prefix):return true
+	return false
 func restore_snapshot(value:Dictionary)->bool:
 	if int(value.get("version",-1))!=J15_SNAPSHOT_VERSION or str(value.get("phase","")) not in ["day_start_pending","to_departure","departure_incoming","departure_choice","to_couple","couple_incoming","couple_choice","day_close","complete"]:return false
 	for key in ["transcripts_by_thread","produced_message_ids","pending_choice_ids_by_thread","pending_transition","presented_time_message_ids"]:
@@ -39,6 +54,8 @@ func restore_snapshot(value:Dictionary)->bool:
 func _restored_phase_consistent()->bool:
 	if phase=="day_start_pending":return state.current_day=="J16" and state.day_status=="COMPLETE"
 	if state.current_day!="J17":return false
+	var record:Dictionary=state.traces.get("j17_couple_definition_record_01",{})
+	if not record.is_empty() and (bool(record.get("mathilde_micro_return_delivered",false))!=_has_message_id("msg_j17_mathilde_micro_") or bool(record.get("marie_micro_return_delivered",false))!=_has_message_id("msg_j17_marie_micro_")):return false
 	return state.day_status=="COMPLETE" if phase=="complete" else state.day_status=="ACTIVE"
 func _thread_presentation(id:String)->Dictionary:
 	var s:Dictionary=super._thread_presentation(id)

@@ -4,6 +4,9 @@ class_name Season1State
 
 const SNAPSHOT_VERSION := 25
 const J12_LAVERRIERE_EXPLICIT_SUBJECTS := ["Marie", "Player", "Pauline", "Bastien", "Élodie"]
+const J17_COUPLE_STATES := ["SEPARATION", "FRACTURE", "DOUBLE_LIFE_FRAGILE", "PROVISIONAL_AGREEMENT", "RECONQUEST_ACTIVE", "RECONFIGURATION_NEGOTIATION"]
+const J17_GUARD_FACT_IDS := ["fact_mathilde_physical_event_occurred", "aftercare_mathilde_j11", "fact_witness_saw_limited_trace", "j14_inform_trace_controller", "fact_trace_controller_not_informed", "fact_trace_controller_informed_of_audience_breach", "fact_player_explanation_to_witness", "fact_j15_obligation_resolution", "j16_priority_consequence_payment", "j16_consequence_payment_record_01", "choice_j11_mathilde_m_b2_hold", "choice_j11_mathilde_m_b3_accept", "choice_j11_raphaelle_meeting_accept"]
+const J17_CONSTRUCTIVE_CONDITION_IDS := ["J17_REPEATED_MARIE_ACTS_PROVEN", "J17_SUFFICIENT_TRUTH_PROVEN", "J17_NO_ACTIVE_VIOLATION", "J17_CONCRETE_RULE_PROVEN", "J17_EXTERNAL_DESIRE_ACKNOWLEDGED", "J17_AUDIENCES_SAFE_OR_REPAIRED", "J17_EXTERNAL_PROGRESSION_PAUSE_ACCEPTED", "J17_MARIE_FULL_REFUSAL_RIGHT_EXPLICITLY_ACKNOWLEDGED"]
 
 var current_day := "J01"
 var day_status := "ACTIVE"
@@ -2165,15 +2168,155 @@ func apply_j17_departure_choice(choice_id:String)->bool:
 	if j16_departure_state=="DISTANCE" and choice_id!="choice_j17_distance": return false
 	selected_choice_ids.append(choice_id); j17_departure_outcome=choice_id.trim_prefix("choice_j17_").to_upper(); mathilde_state="DISTANCE" if choice_id.ends_with("distance") else "FAMILY_RELATION_PRESERVED"
 	knowledge["fact_mathilde_left_household"]={"fact_id":"fact_mathilde_left_household","source_type":"DIRECT_OBSERVATION","source_ref":choice_id,"initial_knowers":["Mathilde","Marie","Player"],"certainty":"CONFIRMED","shareability":"HOUSEHOLD","source_day":"J17"}; return true
-func apply_j17_couple_choice(choice_id:String)->bool:
-	if current_day!="J17" or j17_departure_outcome=="UNESTABLISHED" or j17_couple_outcome!="UNESTABLISHED": return false
-	var discussion:Dictionary=promises.get("marie_j16_couple_conversation_j17",{}); var due:=str(discussion.get("status",""))=="ACTIVE"
-	var allowed:=["choice_j17_reconquest","choice_j17_provisional","choice_j17_separation"] if due else ["choice_j17_refused_acknowledge"]
-	if choice_id not in allowed:return false
-	selected_choice_ids.append(choice_id); j17_couple_outcome=choice_id.trim_prefix("choice_j17_").to_upper()
-	if due: discussion["status"]="PAID"; discussion["paid_or_closed_at"]="J17 21:30"; discussion["paid_or_closed_by"]="Player et Marie"; promises["marie_j16_couple_conversation_j17"]=discussion
-	couple_state={"RECONQUEST":"RECONQUEST_ACTIVE","PROVISIONAL":"PROVISIONAL_AGREEMENT","SEPARATION":"SEPARATION","REFUSED_ACKNOWLEDGE":"FRACTURE"}.get(j17_couple_outcome,"FRACTURE")
-	traces["j17_couple_definition_record_01"]={"trace_id":"j17_couple_definition_record_01","record_type":"FACT_RECORD","source_day":"J17","couple_state":couple_state,"discussion_was_due":due,"current_state":"ACTIVE","visual_asset":"none"}; knowledge["fact_couple_state_defined"]={"fact_id":"fact_couple_state_defined","source_type":"DIRECT_STATEMENT","source_ref":"j17_couple_definition_record_01","initial_knowers":["Marie","Player"],"certainty":"CONFIRMED","shareability":"PRIVATE","source_day":"J17"}; return true
+func apply_j17_couple_choice(choice_id:String,resolved_at:String="",mathilde_micro_return_delivered:bool=false)->bool:
+	if current_day!="J17" or day_status!="ACTIVE" or j17_departure_outcome=="UNESTABLISHED" or j17_couple_outcome!="UNESTABLISHED" or resolved_at=="" or not resolved_at.begins_with("J17 ") or not mathilde_micro_return_delivered:return false
+	var input:=snapshot();var resolution:=_resolve_j17_couple_state(input,choice_id)
+	if not bool(resolution.get("accepted",false)):return false
+	var due:=bool(resolution["discussion_was_due"]);var discussion:Dictionary=promises.get("marie_j16_couple_conversation_j17",{})
+	selected_choice_ids.append(choice_id);j17_couple_outcome=choice_id.trim_prefix("choice_j17_").to_upper()
+	if due:discussion["status"]="PAID";discussion["paid_or_closed_at"]="J17 21:30";discussion["paid_or_closed_by"]="Player et Marie";promises["marie_j16_couple_conversation_j17"]=discussion
+	couple_state=str(resolution["couple_state"])
+	traces["j17_couple_definition_record_01"]={"trace_id":"j17_couple_definition_record_01","record_type":"FACT_RECORD","source_day":"J17","choice_id":choice_id,"couple_state":couple_state,"discussion_was_due":due,"triggered_guard_fact_ids":resolution["triggered_guard_fact_ids"],"satisfied_constructive_condition_ids":resolution["satisfied_constructive_condition_ids"],"mathilde_micro_return_delivered":true,"marie_micro_return_delivered":false,"temporal_projection":{"day_id":"J17","departure_at":"J17 17:30","couple_discussion_due_at":"J17 20:30–21:30" if due else "","resolved_at":resolved_at},"current_state":"ACTIVE","visual_asset":"none"}
+	knowledge["fact_couple_state_defined"]={"fact_id":"fact_couple_state_defined","source_type":"DIRECT_STATEMENT","source_ref":"j17_couple_definition_record_01","initial_knowers":["Marie","Player"],"certainty":"CONFIRMED","shareability":"PRIVATE","source_day":"J17"};return true
+func mark_j17_marie_micro_return_delivered()->bool:
+	var record:Dictionary=traces.get("j17_couple_definition_record_01",{})
+	if record.is_empty() or bool(record.get("marie_micro_return_delivered",false)):return false
+	record["marie_micro_return_delivered"]=true;traces["j17_couple_definition_record_01"]=record;return true
+func j17_sufficient_truth_proven()->bool:return _j17_sufficient_truth_proven(snapshot())
+func j17_no_active_violation()->bool:return _j17_no_active_violation(snapshot())
+func _resolve_j17_couple_state(value:Dictionary,choice_id:String)->Dictionary:
+	if not _j17_structural_input_valid(value):return {"accepted":false}
+	var discussion_state:=_j17_discussion_state(value)
+	if choice_id not in ["choice_j17_reconquest","choice_j17_provisional","choice_j17_separation","choice_j17_refused_acknowledge"]:return {"accepted":false}
+	if choice_id=="choice_j17_refused_acknowledge" and discussion_state!="NOT_DUE":return {"accepted":false}
+	if choice_id!="choice_j17_refused_acknowledge" and discussion_state!="DUE":return {"accepted":false}
+	var severe:=_j17_marie_known_severe_violation_unrepaired(value);var material:=_j17_material_fact_hidden(value);var incompatible:=_j17_incompatible_version_active(value);var resolved_state:=""
+	# Rule 1: explicit separation.
+	if choice_id=="choice_j17_separation":resolved_state="SEPARATION"
+	# Rule 2: refused or not-due discussion.
+	elif choice_id=="choice_j17_refused_acknowledge":resolved_state="FRACTURE"
+	# Rule 3: known severe violation, unrepaired.
+	elif severe:resolved_state="FRACTURE"
+	# Rule 4: hidden material fact or active incompatible version.
+	elif material or incompatible:resolved_state="DOUBLE_LIFE_FRAGILE"
+	# Rule 5: reconquest with every closed constructive condition.
+	elif choice_id=="choice_j17_reconquest" and _j17_repeated_marie_acts_proven(value) and _j17_sufficient_truth_proven(value) and _j17_no_active_violation(value) and _j17_concrete_rule_proven(value,choice_id):resolved_state="RECONQUEST_ACTIVE"
+	# Rule 6: reconquest fallback.
+	elif choice_id=="choice_j17_reconquest":resolved_state="PROVISIONAL_AGREEMENT"
+	# Rule 7: reconfiguration with every closed constructive condition.
+	elif choice_id=="choice_j17_provisional" and _j17_external_desire_acknowledged(value,choice_id) and _j17_audiences_safe_or_repaired(value) and _j17_external_progression_pause_accepted(value,choice_id) and _j17_marie_full_refusal_right_explicitly_acknowledged(value,choice_id):resolved_state="RECONFIGURATION_NEGOTIATION"
+	# Rule 8: provisional fallback.
+	elif choice_id=="choice_j17_provisional":resolved_state="PROVISIONAL_AGREEMENT"
+	if resolved_state=="":return {"accepted":false}
+	return {"accepted":true,"couple_state":resolved_state,"discussion_was_due":discussion_state=="DUE","triggered_guard_fact_ids":_j17_triggered_guard_fact_ids(value,resolved_state,choice_id),"satisfied_constructive_condition_ids":_j17_satisfied_constructive_condition_ids(value,choice_id)}
+func _j17_structural_input_valid(value:Dictionary)->bool:
+	if str(value.get("current_day","")) not in ["J17","J18","J19","J20","J21"] or str(value.get("j17_departure_outcome","UNESTABLISHED")) not in ["HELP","DISTANCE"]:return false
+	if str(value.get("j14_variant","")) not in ["PAULINE","SANDRA","MATHILDE","RAPHAELLE","NICO","S27_MUTATION_NO_DISCOVERY"] or str(value.get("j14_outcome","UNESTABLISHED")) not in ["TRUTH_LIMITED","MINIMIZE_OR_LIE","PROTECT_AND_DEFER","PROTECT_AND_ANSWER_NOW","S27_MUTATION_NO_DISCOVERY"]:return false
+	if str(value.get("j15_outcome","UNESTABLISHED")) not in ["DUE_PAY","DUE_CANCEL","DUE_FAIL","REPAIR_TRUTH","REPAIR_LIE","OPEN_ANSWER","OPEN_REFUSE","OPEN_LIE","CLEAN_ACKNOWLEDGE"]:return false
+	if str(value.get("j16_priority","UNESTABLISHED")) not in ["MARIE","MATHILDE","FALLBACK"] or str(value.get("j16_consequence_outcome","UNESTABLISHED")) not in ["MARIE_RESTITUTE","MARIE_PRACTICAL","MARIE_CONTEST","MATHILDE_RESTITUTE","MATHILDE_PRACTICAL","MATHILDE_CONTEST","FALLBACK_CONFIRM"] or str(value.get("j16_departure_state","UNESTABLISHED")) not in ["ORDINARY","DISTANCE"]:return false
+	if _j17_discussion_state(value)=="INVALID":return false
+	var restored_knowledge:Dictionary=value.get("knowledge",{});var restored_obligations:Dictionary=value.get("obligations",{});var restored_promises:Dictionary=value.get("promises",{});var restored_traces:Dictionary=value.get("traces",{});var choices:Array=value.get("selected_choice_ids",[])
+	if str(value.get("j14_variant",""))=="S27_MUTATION_NO_DISCOVERY":
+		if str(value.get("j14_outcome",""))!="S27_MUTATION_NO_DISCOVERY" or str(value.get("j14_witness",""))!="" or restored_knowledge.has("fact_witness_saw_limited_trace") or restored_traces.has("j14_discovery_event_01"):return false
+	elif not _j17_witness_fact_coherent(value):return false
+	if restored_knowledge.has("fact_witness_saw_limited_trace") and not _j17_witness_fact_coherent(value):return false
+	var notice:Dictionary=restored_promises.get("j14_inform_trace_controller",{});var notice_status:=str(notice.get("status",""));var notice_paid_fact:=restored_knowledge.has("fact_trace_controller_informed_of_audience_breach");var notice_failed_fact:=restored_knowledge.has("fact_trace_controller_not_informed")
+	if not notice.is_empty() and notice_status not in ["PAID","FAILED"]:return false
+	if notice_status=="PAID" and (not bool(value.get("j14_controller_notified",false)) or not notice_paid_fact or notice_failed_fact):return false
+	if notice_status=="FAILED" and (bool(value.get("j14_controller_notified",false)) or notice_paid_fact or not notice_failed_fact):return false
+	if notice.is_empty() and (notice_paid_fact or notice_failed_fact):return false
+	var physical:=str(value.get("j11_physical_level","NONE"));var physical_fact:Dictionary=restored_knowledge.get("fact_mathilde_physical_event_occurred",{});var aftercare:Dictionary=restored_obligations.get("aftercare_mathilde_j11",{})
+	if physical in ["MATHILDE_M_B2","MATHILDE_M_B3"]:
+		if str(physical_fact.get("physical_level",""))!=physical or str(aftercare.get("status","")) not in ["PAID","FAILED"]:return false
+		if (physical=="MATHILDE_M_B2" and not choices.has("choice_j11_mathilde_m_b2_hold")) or (physical=="MATHILDE_M_B3" and not choices.has("choice_j11_mathilde_m_b3_accept")):return false
+	elif not physical_fact.is_empty() or not aftercare.is_empty():return false
+	if physical=="RAPHAELLE_FIRST_KISS" and (str(value.get("j11_pivot",""))!="RAPHAELLE" or str(value.get("j11_pivot_outcome",""))!="FIRST_KISS" or not choices.has("choice_j11_raphaelle_meeting_accept")):return false
+	var priority:=str(value.get("j16_priority",""));var consequence:=str(value.get("j16_consequence_outcome",""));var payment:Dictionary=restored_promises.get("j16_priority_consequence_payment",{});var payment_record:Dictionary=restored_traces.get("j16_consequence_payment_record_01",{})
+	if payment_record.is_empty():return false
+	if priority=="FALLBACK":
+		if consequence!="FALLBACK_CONFIRM" or not payment.is_empty() or str(payment_record.get("consequence_outcome",""))!="DIRECT_TO_MATHILDE_MARIE_J17_PREPARATION":return false
+	else:
+		var contested:=consequence.ends_with("_CONTEST")
+		if not consequence.begins_with(priority+"_") or str(payment.get("status",""))!=("FAILED" if contested else "PAID") or str(payment_record.get("consequence_outcome",""))!=("CONSEQUENCE_FAILED" if contested else "CONSEQUENCE_PAID"):return false
+	return true
+func _j17_discussion_state(value:Dictionary)->String:
+	var outcome:=str(value.get("j16_j17_outcome","UNESTABLISHED"));var restored_promises:Dictionary=value.get("promises",{});var has_promise:=restored_promises.has("marie_j16_couple_conversation_j17");var status:=str(restored_promises.get("marie_j16_couple_conversation_j17",{}).get("status",""));var resolved:=str(value.get("j17_couple_outcome","UNESTABLISHED"))!="UNESTABLISHED"
+	if outcome=="ACCEPT" and has_promise and status==("PAID" if resolved else "ACTIVE"):return "DUE"
+	if outcome in ["REFUSE","ALTERNATIVE"] and not has_promise:return "NOT_DUE"
+	return "INVALID"
+func _j17_witness_fact_coherent(value:Dictionary)->bool:
+	var restored_knowledge:Dictionary=value.get("knowledge",{});var restored_traces:Dictionary=value.get("traces",{});var fact:Dictionary=restored_knowledge.get("fact_witness_saw_limited_trace",{});var discovery:Dictionary=restored_traces.get("j14_discovery_event_01",{});var witness:=str(value.get("j14_witness",""));var trace_id:=str(fact.get("discovered_trace_id",""))
+	return not fact.is_empty() and not discovery.is_empty() and witness!="" and str(fact.get("source_ref",""))=="j14_discovery_event_01" and str(fact.get("witness_id",""))==witness and fact.get("current_knowers",[]).has(witness) and trace_id!="" and str(discovery.get("discovered_trace_id",""))==trace_id
+func _j17_d1_aftercare_failed_and_known(value:Dictionary)->bool:
+	var restored_knowledge:Dictionary=value.get("knowledge",{});var restored_obligations:Dictionary=value.get("obligations",{});var fact:Dictionary=restored_knowledge.get("fact_witness_saw_limited_trace",{})
+	return str(value.get("j11_physical_level","")) in ["MATHILDE_M_B2","MATHILDE_M_B3"] and str(restored_obligations.get("aftercare_mathilde_j11",{}).get("status",""))=="FAILED" and str(value.get("j14_variant",""))=="MATHILDE" and str(value.get("j14_witness",""))=="Marie" and str(fact.get("discovered_trace_id",""))=="j11_mathilde_physical_aftercare_01" and fact.get("current_knowers",[]).has("Marie")
+func _j17_d1_audience_breach_notice_failed(value:Dictionary)->bool:
+	var restored_knowledge:Dictionary=value.get("knowledge",{});var restored_promises:Dictionary=value.get("promises",{});var witness_fact:Dictionary=restored_knowledge.get("fact_witness_saw_limited_trace",{});var failure:Dictionary=restored_knowledge.get("fact_trace_controller_not_informed",{})
+	return str(value.get("j14_witness",""))=="Marie" and witness_fact.get("current_knowers",[]).has("Marie") and str(restored_promises.get("j14_inform_trace_controller",{}).get("status",""))=="FAILED" and str(failure.get("source_ref",""))=="j14_inform_trace_controller"
+func _j17_d1_repeated_deception_then_contested(value:Dictionary)->bool:
+	var restored_promises:Dictionary=value.get("promises",{});var restored_traces:Dictionary=value.get("traces",{})
+	return str(value.get("j14_witness",""))=="Marie" and str(value.get("j15_outcome","")) in ["DUE_FAIL","REPAIR_LIE","OPEN_LIE"] and str(value.get("j16_priority",""))=="MARIE" and str(value.get("j16_consequence_outcome",""))=="MARIE_CONTEST" and str(restored_promises.get("j16_priority_consequence_payment",{}).get("status",""))=="FAILED" and str(restored_traces.get("j16_consequence_payment_record_01",{}).get("consequence_outcome",""))=="CONSEQUENCE_FAILED"
+func _j17_marie_known_severe_violation_unrepaired(value:Dictionary)->bool:return _j17_d1_aftercare_failed_and_known(value) or _j17_d1_audience_breach_notice_failed(value) or _j17_d1_repeated_deception_then_contested(value)
+func _j17_material_fact_hidden(value:Dictionary)->bool:
+	var restored_knowledge:Dictionary=value.get("knowledge",{});var physical:=str(restored_knowledge.get("fact_mathilde_physical_event_occurred",{}).get("physical_level",""))
+	return physical in ["MATHILDE_M_B2","MATHILDE_M_B3"] or (str(value.get("j11_pivot",""))=="RAPHAELLE" and str(value.get("j11_pivot_outcome",""))=="FIRST_KISS" and str(value.get("j11_physical_level",""))=="RAPHAELLE_FIRST_KISS")
+func _j17_incompatible_version_active(value:Dictionary)->bool:
+	var restored_promises:Dictionary=value.get("promises",{});var restored_traces:Dictionary=value.get("traces",{})
+	return str(value.get("j15_outcome","")) in ["DUE_FAIL","REPAIR_LIE","OPEN_LIE"] and str(value.get("j16_priority","")) in ["MARIE","MATHILDE"] and str(value.get("j16_consequence_outcome","")) in ["MARIE_CONTEST","MATHILDE_CONTEST"] and str(restored_promises.get("j16_priority_consequence_payment",{}).get("status",""))=="FAILED" and str(restored_traces.get("j16_consequence_payment_record_01",{}).get("consequence_outcome",""))=="CONSEQUENCE_FAILED"
+func _j17_repeated_marie_acts_proven(value:Dictionary)->bool:
+	var restored_promises:Dictionary=value.get("promises",{});var shared_evening:=str(restored_promises.get("marie_j01_shared_evening",{}).get("status",""))=="PAID" and str(value.get("marie_j08_household_resolution",""))=="PAID" and str(restored_promises.get("marie_j07_household_request",{}).get("status",""))=="PAID"
+	var shared_meal:=str(value.get("marie_j03_return_outcome","")) in ["ACTIVE","BOUNDED"] and (str(restored_promises.get("marie_j09_dinner_j10_2030",{}).get("status",""))=="PAID" or str(restored_promises.get("marie_j09_dinner_friday_2030",{}).get("status",""))=="PAID")
+	var shared_hour:=str(value.get("marie_j05_shared_hour_resolution",""))=="PAID" and str(restored_promises.get("marie_j05_shared_hour",{}).get("status",""))=="PAID" and str(restored_promises.get("marie_j12_laverriere_presence",{}).get("status",""))=="PAID"
+	var reconnection:=str(value.get("marie_j09_presence_outcome","")) in ["presence_active","presence_playful_useful","presence_late_active","presence_bounded_reliable","absence_honest"] and str(value.get("j11_pivot",""))=="MARIE" and str(value.get("j11_pivot_outcome","")) in ["MARIE_ADULT_RECONQUEST","MARIE_NON_ADULT_RECONNECTION","MARIE_SEX_NOT_USED_AS_BANDAGE","MARIE_HONEST_REFUSAL"]
+	return shared_evening or shared_meal or shared_hour or reconnection
+func _j17_sufficient_truth_proven(value:Dictionary)->bool:return _j17_structural_input_valid(value) and not _j17_material_fact_hidden(value) and not _j17_incompatible_version_active(value)
+func _j17_no_active_violation(value:Dictionary)->bool:return not _j17_marie_known_severe_violation_unrepaired(value) and not _j17_material_fact_hidden(value) and not _j17_incompatible_version_active(value)
+func _j17_concrete_rule_proven(value:Dictionary,choice_id:String)->bool:return _j17_structural_input_valid(value) and choice_id=="choice_j17_reconquest"
+func _j17_external_desire_acknowledged(value:Dictionary,choice_id:String)->bool:
+	var source_present:=(str(value.get("j11_pivot",""))=="SANDRA" and str(value.get("j11_pivot_outcome",""))=="SANDRA_DESIRE_BOUNDED") or (str(value.get("j11_pivot",""))=="RAPHAELLE" and str(value.get("j11_pivot_outcome",""))=="RESULT_SENT_ATTRACTION_NAMED")
+	return _j17_structural_input_valid(value) and source_present and choice_id=="choice_j17_provisional"
+func _j17_audiences_safe_or_repaired(value:Dictionary)->bool:
+	if not _j17_structural_input_valid(value):return false
+	if str(value.get("j14_variant",""))=="S27_MUTATION_NO_DISCOVERY":return true
+	var restored_promises:Dictionary=value.get("promises",{});var restored_knowledge:Dictionary=value.get("knowledge",{})
+	return _j17_witness_fact_coherent(value) and str(restored_promises.get("j14_inform_trace_controller",{}).get("status",""))=="PAID" and bool(value.get("j14_controller_notified",false)) and restored_knowledge.has("fact_trace_controller_informed_of_audience_breach") and not restored_knowledge.has("fact_trace_controller_not_informed")
+func _j17_external_progression_pause_accepted(value:Dictionary,choice_id:String)->bool:return _j17_structural_input_valid(value) and choice_id=="choice_j17_provisional"
+func _j17_marie_full_refusal_right_explicitly_acknowledged(value:Dictionary,choice_id:String)->bool:return _j17_structural_input_valid(value) and choice_id=="choice_j17_provisional"
+func _j17_satisfied_constructive_condition_ids(value:Dictionary,choice_id:String)->Array[String]:
+	var ids:Array[String]=[]
+	if _j17_repeated_marie_acts_proven(value):ids.append("J17_REPEATED_MARIE_ACTS_PROVEN")
+	if _j17_sufficient_truth_proven(value):ids.append("J17_SUFFICIENT_TRUTH_PROVEN")
+	if _j17_no_active_violation(value):ids.append("J17_NO_ACTIVE_VIOLATION")
+	if _j17_concrete_rule_proven(value,choice_id):ids.append("J17_CONCRETE_RULE_PROVEN")
+	if _j17_external_desire_acknowledged(value,choice_id):ids.append("J17_EXTERNAL_DESIRE_ACKNOWLEDGED")
+	if _j17_audiences_safe_or_repaired(value):ids.append("J17_AUDIENCES_SAFE_OR_REPAIRED")
+	if _j17_external_progression_pause_accepted(value,choice_id):ids.append("J17_EXTERNAL_PROGRESSION_PAUSE_ACCEPTED")
+	if _j17_marie_full_refusal_right_explicitly_acknowledged(value,choice_id):ids.append("J17_MARIE_FULL_REFUSAL_RIGHT_EXPLICITLY_ACKNOWLEDGED")
+	return ids
+func _j17_guard_reference_exists(value:Dictionary,id:String)->bool:
+	if id.begins_with("choice_"):return value.get("selected_choice_ids",[]).has(id)
+	if id in ["aftercare_mathilde_j11"]:return value.get("obligations",{}).has(id)
+	if id in ["j14_inform_trace_controller","j16_priority_consequence_payment"]:return value.get("promises",{}).has(id)
+	if id in ["j16_consequence_payment_record_01"]:return value.get("traces",{}).has(id)
+	return value.get("knowledge",{}).has(id)
+func _j17_add_guard_reference(value:Dictionary,ids:Array[String],id:String)->void:
+	if J17_GUARD_FACT_IDS.has(id) and _j17_guard_reference_exists(value,id) and not ids.has(id):ids.append(id)
+func _j17_triggered_guard_fact_ids(value:Dictionary,resolved_state:String,choice_id:String)->Array[String]:
+	var ids:Array[String]=[]
+	if choice_id in ["choice_j17_separation","choice_j17_refused_acknowledge"]:return ids
+	if resolved_state=="FRACTURE":
+		if _j17_d1_aftercare_failed_and_known(value):
+			for id in ["fact_mathilde_physical_event_occurred","aftercare_mathilde_j11","fact_witness_saw_limited_trace","choice_j11_mathilde_m_b2_hold","choice_j11_mathilde_m_b3_accept"]:_j17_add_guard_reference(value,ids,id)
+		if _j17_d1_audience_breach_notice_failed(value):
+			for id in ["fact_witness_saw_limited_trace","j14_inform_trace_controller","fact_trace_controller_not_informed"]:_j17_add_guard_reference(value,ids,id)
+		if _j17_d1_repeated_deception_then_contested(value):
+			for id in ["fact_player_explanation_to_witness","fact_j15_obligation_resolution","j16_priority_consequence_payment","j16_consequence_payment_record_01"]:_j17_add_guard_reference(value,ids,id)
+	elif resolved_state=="DOUBLE_LIFE_FRAGILE":
+		if _j17_material_fact_hidden(value):
+			for id in ["fact_mathilde_physical_event_occurred","choice_j11_mathilde_m_b2_hold","choice_j11_mathilde_m_b3_accept","choice_j11_raphaelle_meeting_accept"]:_j17_add_guard_reference(value,ids,id)
+		if _j17_incompatible_version_active(value):
+			for id in ["fact_player_explanation_to_witness","fact_j15_obligation_resolution","j16_priority_consequence_payment","j16_consequence_payment_record_01"]:_j17_add_guard_reference(value,ids,id)
+	return ids
 func complete_j17()->bool:
 	if current_day!="J17" or j17_departure_outcome=="UNESTABLISHED" or j17_couple_outcome=="UNESTABLISHED":return false
 	if not complete_conversation("chapter_17_departure_and_couple","marie","departure_and_couple_definition"):return false
@@ -4208,12 +4351,37 @@ func _j16_records_consistent(value: Dictionary) -> bool:
 	return true
 
 func _j17_records_consistent(value:Dictionary)->bool:
-	var day:=str(value.get("current_day","")); var departure:=str(value.get("j17_departure_outcome","UNESTABLISHED")); var couple:=str(value.get("j17_couple_outcome","UNESTABLISHED")); var restored_traces:Dictionary=value.get("traces",{}); var restored_knowledge:Dictionary=value.get("knowledge",{})
+	var day:=str(value.get("current_day",""));var departure:=str(value.get("j17_departure_outcome","UNESTABLISHED"));var couple:=str(value.get("j17_couple_outcome","UNESTABLISHED"));var restored_traces:Dictionary=value.get("traces",{});var restored_knowledge:Dictionary=value.get("knowledge",{})
 	if day not in ["J17","J18","J19","J20","J21"]:return departure=="UNESTABLISHED" and couple=="UNESTABLISHED" and not restored_traces.has("j17_couple_definition_record_01") and not restored_knowledge.has("fact_mathilde_left_household") and not restored_knowledge.has("fact_couple_state_defined")
-	if departure=="UNESTABLISHED":return couple=="UNESTABLISHED"
-	if not restored_knowledge.has("fact_mathilde_left_household"):return false
-	if couple=="UNESTABLISHED":return not restored_traces.has("j17_couple_definition_record_01")
-	if str(restored_knowledge.get("fact_couple_state_defined",{}).get("source_ref",""))!="j17_couple_definition_record_01":return false
+	if departure=="UNESTABLISHED":return couple=="UNESTABLISHED" and not restored_traces.has("j17_couple_definition_record_01")
+	if departure not in ["HELP","DISTANCE"] or not restored_knowledge.has("fact_mathilde_left_household"):return false
+	if couple=="UNESTABLISHED":return not restored_traces.has("j17_couple_definition_record_01") and not restored_knowledge.has("fact_couple_state_defined")
+	if couple not in ["RECONQUEST","PROVISIONAL","SEPARATION","REFUSED_ACKNOWLEDGE"] or str(restored_knowledge.get("fact_couple_state_defined",{}).get("source_ref",""))!="j17_couple_definition_record_01":return false
+	var record:Dictionary=restored_traces.get("j17_couple_definition_record_01",{});var required_keys:=["trace_id","record_type","source_day","choice_id","couple_state","discussion_was_due","triggered_guard_fact_ids","satisfied_constructive_condition_ids","mathilde_micro_return_delivered","marie_micro_return_delivered","temporal_projection","current_state","visual_asset"]
+	if record.size()!=required_keys.size():return false
+	for key in required_keys:
+		if not record.has(key):return false
+	var choice_id:=str(record.get("choice_id",""));var expected_choice:="choice_j17_"+couple.to_lower()
+	if str(record.get("trace_id",""))!="j17_couple_definition_record_01" or str(record.get("record_type",""))!="FACT_RECORD" or str(record.get("source_day",""))!="J17" or choice_id!=expected_choice or not value.get("selected_choice_ids",[]).has(choice_id):return false
+	if str(record.get("current_state",""))!="ACTIVE" or str(record.get("visual_asset",""))!="none" or typeof(record.get("discussion_was_due"))!=TYPE_BOOL or typeof(record.get("mathilde_micro_return_delivered"))!=TYPE_BOOL or typeof(record.get("marie_micro_return_delivered"))!=TYPE_BOOL:return false
+	if not bool(record.get("mathilde_micro_return_delivered",false)):return false
+	if str(value.get("day_status",""))=="COMPLETE" and not bool(record.get("marie_micro_return_delivered",false)):return false
+	var temporal:Dictionary=record.get("temporal_projection",{})
+	if temporal.size()!=4 or str(temporal.get("day_id",""))!="J17" or str(temporal.get("departure_at",""))!="J17 17:30" or not str(temporal.get("resolved_at","")).begins_with("J17 "):return false
+	var due:=_j17_discussion_state(value)=="DUE"
+	if bool(record.get("discussion_was_due",not due))!=due or str(temporal.get("couple_discussion_due_at",""))!=("J17 20:30–21:30" if due else ""):return false
+	var expected:=_resolve_j17_couple_state(value,choice_id)
+	if not bool(expected.get("accepted",false)) or str(record.get("couple_state",""))!=str(value.get("couple_state","")) or str(record.get("couple_state",""))!=str(expected.get("couple_state","")) or str(record.get("couple_state","")) not in J17_COUPLE_STATES:return false
+	if typeof(record.get("triggered_guard_fact_ids"))!=TYPE_ARRAY or typeof(record.get("satisfied_constructive_condition_ids"))!=TYPE_ARRAY:return false
+	var guard_ids:Array=record.get("triggered_guard_fact_ids",[]);var constructive_ids:Array=record.get("satisfied_constructive_condition_ids",[])
+	if guard_ids!=expected.get("triggered_guard_fact_ids",[]) or constructive_ids!=expected.get("satisfied_constructive_condition_ids",[]):return false
+	var seen_ids:Array=[]
+	for id in guard_ids:
+		if seen_ids.has(id) or id not in J17_GUARD_FACT_IDS or not _j17_guard_reference_exists(value,str(id)):return false
+		seen_ids.append(id)
+	for id in constructive_ids:
+		if seen_ids.has(id) or id not in J17_CONSTRUCTIVE_CONDITION_IDS:return false
+		seen_ids.append(id)
 	return true
 
 func _j18_records_consistent(value:Dictionary)->bool:
