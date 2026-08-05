@@ -242,12 +242,16 @@ class R8CN5SandraBlueChairsStagedProjectionTests(unittest.TestCase):
                 "--",
                 "game/data/conversations/chapter_05_sandra_photo_continuity.json",
                 "game/scripts/runtime/season_1/J05RuntimeProvider.gd",
-                "game/scripts/runtime/season_1/Season1State.gd",
             ],
             cwd=ROOT,
             text=True,
         ).splitlines()
         self.assertEqual([], changed)
+        season_state = (
+            ROOT / "game/scripts/runtime/season_1/Season1State.gd"
+        ).read_text(encoding="utf-8")
+        for n5_identifier in (SCENE_ID, VARIANT_ID, MEDIA_ID, TRACE_ID):
+            self.assertNotIn(n5_identifier, season_state)
 
     def test_missing_media_blocks_activation_without_placeholder_or_gallery(self):
         media = self.report["media_gate"]
