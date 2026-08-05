@@ -8,9 +8,9 @@
 >
 > **Nature :** contrat documentaire et architectural ; aucune implémentation
 >
-> **Statut Codex :** `UNIFIED_CONTENT_EXECUTOR_PROJECTION_CONTRACT_READY_FOR_PRODUCT_REVIEW`
+> **Statut Codex :** `UNIFIED_CONTENT_EXECUTOR_PROJECTION_CONTRACT_APPROVED`
 >
-> **Statut produit cible, non attribué par N11 :** `UNIFIED_CONTENT_EXECUTOR_PROJECTION_CONTRACT_APPROVED`
+> **Approbation produit :** commit revu `add3a7b3cdb525fb3a1f2ac165c4a468478ee35d` ; approuvé sans réserve ; date de référence août 2026
 >
 > **Tranche de référence :** Mathilde M-B3, `FIRST_TARGET_VERTICAL_SLICE_SELECTED`
 
@@ -52,8 +52,7 @@ classement `Archive` maintient le document comme source de provenance sans lui
 conférer d'autorité normative sur la cible.
 
 Ces décisions ferment les trois conflits de gouvernance sans ouvrir d'autre
-décision d'architecture. Le contrat est prêt pour revue produit ; seul le produit
-peut encore lui attribuer le statut `APPROVED`.
+décision d'architecture. Le produit approuve le présent contrat sans réserve.
 
 ## 2. Autorités et inventaire réel
 
@@ -940,8 +939,7 @@ Effets thématiques :
 - [x] Critères N16 et découpage N12–N16 définis.
 - [x] Aucune double écriture, dépendance legacy ou quatrième asset autorisé.
 - [x] Trois classements documentaires arbitrés par le produit.
-- [x] Statut `UNIFIED_CONTENT_EXECUTOR_PROJECTION_CONTRACT_READY_FOR_PRODUCT_REVIEW` attribué.
-- [ ] Statut `UNIFIED_CONTENT_EXECUTOR_PROJECTION_CONTRACT_APPROVED` attribué par le produit.
+- [x] Statut `UNIFIED_CONTENT_EXECUTOR_PROJECTION_CONTRACT_APPROVED` attribué par le produit.
 
 ### 18.2 Non-objectifs confirmés
 
@@ -953,10 +951,9 @@ import de sauvegarde legacy.
 ### 18.3 Verdict
 
 Le contrat authored, l'exécuteur mince, les projections, le snapshot, le cycle
-média, le bootstrap et la cible Mathilde M-B3 sont suffisamment définis pour une
-revue produit. Les trois conflits de gouvernance documentaire sont résolus. Le
-statut `APPROVED` reste réservé à une décision produit ultérieure.
+média, le bootstrap et la cible Mathilde M-B3 sont approuvés sans réserve. Les
+trois conflits de gouvernance documentaire sont résolus.
 
 Le statut de livraison N11 est donc :
 
-`UNIFIED_CONTENT_EXECUTOR_PROJECTION_CONTRACT_READY_FOR_PRODUCT_REVIEW`
+`UNIFIED_CONTENT_EXECUTOR_PROJECTION_CONTRACT_APPROVED`
