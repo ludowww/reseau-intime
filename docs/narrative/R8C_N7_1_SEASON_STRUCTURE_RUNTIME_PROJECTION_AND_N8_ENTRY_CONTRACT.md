@@ -4,7 +4,7 @@
 > **Tag stable vérifié :** `r8c-n7-written-payoff-aftercare-reconciliation`
 > **Branche de livraison :** `work/r8c-n7-1-season-structure-runtime-projection-contract`
 > **Nature :** contrat documentaire ; aucun changement de dialogue, runtime, test, asset, JSON ou A1–A10
-> **Statut du document :** `SEASON_RUNTIME_PROJECTION_CONTRACT_BLOCKED`
+> **Statut du document :** `SEASON_RUNTIME_PROJECTION_CONTRACT_READY_FOR_PRODUCT_REVIEW`
 > **Statut produit possible après revue et verrouillage seulement :** `SEASON_RUNTIME_PROJECTION_CONTRACT_APPROVED`
 
 ## 1. Verdict et autorité
@@ -16,13 +16,19 @@ de personnage ni les dialogues signés ; il prévaut, pour l’entrée N8, sur l
 anciens découpages par jours, sur les anciennes lectures de J17 comme finale et sur
 les anciens vocabulaires d’état incompatibles.
 
-Le contrat n’est pas prêt à être approuvé. Le runtime permet de calculer exactement
-la disponibilité de la discussion J17 et de vérifier les quatre choix, mais il ne
-porte pas assez de preuves fermées pour calculer sans décision produit les gardes de
-dommage et les conditions constructives des six sorties. Les décisions manquantes
-sont isolées en `BLOCKED_PRODUCT_DECISION` dans la section 7. Conformément à la
-règle de sécurité, une donnée obligatoire absente ou contradictoire invalide la
-résolution ; elle ne choisit ni un fallback favorable, ni `FRACTURE` par défaut.
+Les douze décisions produit requises ont été intégrées comme listes fermées,
+formules exactes et responsabilités de preuve dans les sections 7, 9, 12 et 14. Le
+runtime inspecté ne les contredit pas : il expose les faits nécessaires, tandis que
+les deux formulations J17 qui ne prouvent encore rien sur la baseline sont
+explicitement resserrées dans le périmètre N8. Le contrat est donc prêt pour revue
+produit, mais n’est pas approuvé et n’autorise encore aucune implémentation N8.
+
+Conformément à la règle de sécurité, l’absence d’un fait dommageable dans un
+snapshot structurellement valide vaut `false`; l’absence d’une preuve constructive
+vaut également `false` et peut mener au fallback propre au choix. Seule une
+incohérence de structure ou une référence de preuve annoncée mais absente invalide
+la résolution. Une entrée invalide ne choisit ni fallback favorable, ni `FRACTURE`
+par défaut.
 
 N8 demeure un correctif ciblé du runtime historique de Saison 1. Aucun cutover,
 adaptateur, exécuteur de séquences, projection A6, double écriture ou migration vers
@@ -155,7 +161,7 @@ explicitement ; il ne crée, ne suspend et ne retire jamais ce droit.
 | `DOUBLE_LIFE_FRAGILE` | Couple matériellement maintenu alors qu’un fait important caché ou une version incompatible reste actif. | Contradiction active ; confiance contestée ; conséquence future nécessaire. | Contrat sain, succès propre, vérité complète, pardon. | Fait caché, personne qui sait quoi, preuve, dette et fermeture possible. | Ensemble matériellement, divulgation compromise. | Ne pas aggraver ; payer ou révéler la contradiction existante. | Oui, comme matière de révélation, décision ou séparation. | Accepté par snapshot/J21 mais jamais produit par le résolveur J17 actuel ; adaptation N8. |
 | `PROVISIONAL_AGREEMENT` | Le couple évite la rupture immédiate avec des règles temporaires et une revue bornée. | Problème reconnu ; ancien cadre non restauré ; aucune permission rétroactive. | Résolution finale, ouverture implicite, oubli de l’historique. | Règle exacte, espaces, divulgation, date de revue et obligations. | Ensemble sous accord provisoire. | Règle temporaire et checkpoint explicite ; progression extérieure contenue. | Oui, la finale doit décider ou définir un provisoire complet. | Produit par `choice_j17_provisional` et fallback de reconquête ; record/règle à enrichir en N8. |
 | `RECONQUEST_ACTIVE` | Marie et Player essaient encore activement, par des actes antérieurs prouvés et une règle concrète. | Choix du couple ; vérité suffisante ; absence de violation active ; acte ordinaire à répéter. | Pardon total, retour intact à l’ancien cadre, nouvelle progression extérieure non clarifiée. | Actes précis, règle, dommages réparés, obligations et divulgation. | Ensemble en reconquête. | Aucun faux horaire ou lieu ; aucune nouvelle progression extérieure avant clarification ; acte ordinaire concret. | Oui, sans transformer la reconquête en absolution. | Produit trop directement par le choix homonyme ; N8 doit appliquer les gardes et conditions. |
-| `RECONFIGURATION_NEGOTIATION` | Négociation réelle du contrat, sans ouverture automatique ni engagement d’un tiers. | Désir extérieur reconnu ; audiences sûres ou réparées ; pause ; refus de Marie explicitement reconnu. | Permission rétroactive, couple déjà ouvert, tiers engagé, disponibilité automatique d’une personne. | Désirs exacts, limites, partenaires libres, date de revue et résultat de la négociation. | En clarification/négociation. | Aucune nouvelle étape ; droit de refus intact ; checkpoint borné. | Oui, la finale peut conclure refus, autre contrat ou séparation. | Accepté par snapshot/J21 mais jamais produit par J17 ; adaptation N8 et preuves manquantes. |
+| `RECONFIGURATION_NEGOTIATION` | Négociation réelle du contrat, sans ouverture automatique ni engagement d’un tiers. | Désir extérieur reconnu ; audiences sûres ou réparées ; pause ; refus de Marie explicitement reconnu. | Permission rétroactive, couple déjà ouvert, tiers engagé, disponibilité automatique d’une personne. | Désirs exacts, limites, partenaires libres, date de revue et résultat de la négociation. | En clarification/négociation. | Aucune nouvelle étape ; droit de refus intact ; checkpoint borné. | Oui, la finale peut conclure refus, autre contrat ou séparation. | Accepté par snapshot/J21 mais jamais produit par J17 ; adaptation N8 et preuves authored à matérialiser. |
 
 Aucun de ces états n’est un résumé exhaustif de l’histoire. Le record de continuité
 reste la preuve de ce qui a déclenché l’état et de ce qui demeure ouvert.
@@ -187,26 +193,21 @@ Tous les champs ci-dessous sont déclarés et snapshotés dans
 | `selected_choice_ids` | `Array[String]` | identifiants exacts des choix acceptés | Toutes les méthodes `apply_*`; J17 y conserve le choix de départ et le choix de couple. |
 | `traces["j17_couple_definition_record_01"]` | `Dictionary` | actuellement `trace_id`, `record_type`, `source_day`, `couple_state`, `discussion_was_due`, `current_state`, `visual_asset` | `apply_j17_couple_choice`. |
 
-### 5.1 Faits authored candidats pour les actes envers Marie
+### 5.1 Combinaisons authored fermées d’actes répétés envers Marie
 
-Le runtime contient des preuves distinctes, mais aucun sous-ensemble produit n’est
-désigné comme « actes Marie répétés ». Les candidats fermés, sans compteur, sont :
+`J17_REPEATED_MARIE_ACTS_PROVEN` ne repose ni sur un score, ni sur un compteur. Il
+vaut `true` si au moins une des quatre combinaisons nommées suivantes est vraie :
 
-| Groupe authored distinct | Champs/preuves | Fonctions d’écriture |
-|---|---|---|
-| Présence initiale | `promises["marie_j01_shared_evening"].status/outcome` | `apply_choice`, `pay_marie_promise` |
-| Place faite au foyer | `marie_make_room_outcome` | `apply_j02_choice` |
-| Retour J03 | `marie_j03_return_outcome` | `apply_j03_choice` |
-| Heure partagée | `marie_j05_shared_hour_outcome/resolution`, promesse associée | `apply_j05_marie_choice`, `resolve_j05_marie_hour` |
-| Retour concret J06/J07 | `marie_j06_return_outcome/due_at/resolution` | `apply_j06_marie_choice`, résolution J07 |
-| Demande du foyer J07/J08 | `marie_j07_household_outcome`, `marie_j08_household_resolution`, `marie_j08_echo_outcome`, promesse associée | `apply_j07_marie_choice`, méthodes de résolution J08 |
-| Présence et dîner J09–J11 | `marie_j09_presence_choice/outcome`, `marie_j09_dinner_outcome`, `marie_j10_dinner_resolution`, promesses dîner | `apply_j09_presence_choice`, `apply_j09_presence_quality`, `apply_j09_dinner_choice`, méthodes J10 et `apply_j11_p10_choice`/`pay_j11_p10` |
-| Retour Marie J11 | `j11_pivot == MARIE`, `j11_pivot_outcome`, `j11_physical_level`, aftercare Marie | `set_j11_semantic_outcome`, `establish_j11_marie_adult_event`, `pay_j12_marie_aftercare` |
-| Présence La Verrière J12 | `promises["marie_j12_laverriere_presence"].status == PAID` | `apply_j12_choice`, `pay_j12_laverriere_presence` |
-| Vérité/conséquence J14–J16 | `j14_witness`, `j14_outcome`, `j15_outcome`, `j16_priority`, `j16_consequence_outcome` | fonctions J14–J16 listées ci-dessus |
+| Combinaison fermée | Formule exacte |
+|---|---|
+| `MARIE_SHARED_EVENING_AND_HOUSEHOLD` | `promises["marie_j01_shared_evening"].status == PAID AND marie_j08_household_resolution == PAID AND promises["marie_j07_household_request"].status == PAID` |
+| `MARIE_RETURN_AND_SHARED_MEAL` | `marie_j03_return_outcome IN {ACTIVE, BOUNDED} AND (promises["marie_j09_dinner_j10_2030"].status == PAID OR promises["marie_j09_dinner_friday_2030"].status == PAID)` |
+| `MARIE_SHARED_HOUR_AND_LAVERRIERE` | `marie_j05_shared_hour_resolution == PAID AND promises["marie_j05_shared_hour"].status == PAID AND promises["marie_j12_laverriere_presence"].status == PAID` |
+| `MARIE_PRESENCE_AND_J11_RECONNECTION` | `marie_j09_presence_outcome IN {presence_active, presence_playful_useful, presence_late_active, presence_bounded_reliable, absence_honest} AND j11_pivot == MARIE AND j11_pivot_outcome IN {MARIE_ADULT_RECONQUEST, MARIE_NON_ADULT_RECONNECTION, MARIE_SEX_NOT_USED_AS_BANDAGE, MARIE_HONEST_REFUSAL}` |
 
-Ces groupes sont un inventaire, pas une formule. Les combiner par nombre, poids,
-seuil ou somme est interdit.
+Sont exclus : dérive, attente manquée, `presence_distracted`,
+`presence_spectator`, toute promesse échouée, annulée ou refusée,
+`MARIE_NO_RECONQUEST` et le choix J17 lui-même.
 
 ## 6. Règles de calcul et invalidité
 
@@ -224,8 +225,11 @@ entrée structurellement valide
 ```
 
 Une preuve constructive absente vaut `false`. Une violation vaut `true` seulement
-si un fait existant l’établit explicitement. Une donnée obligatoire absente,
-contradictoire ou impossible invalide l’entrée et empêche toute sortie.
+si un fait existant l’établit explicitement. Dans un snapshot structurellement
+valide, l’absence d’un fait dommageable de la liste fermée vaut `false`, jamais
+« inconnu » ou invalide. Une donnée contradictoire ou impossible, un champ requis
+encore `UNESTABLISHED`, ou une preuve annoncée mais absente invalide l’entrée et
+empêche toute sortie.
 
 Cas d’entrée invalides minimaux :
 
@@ -284,142 +288,145 @@ AND promises["marie_j16_couple_conversation_j17"].status == ACTIVE
 ### 7.2 Violation grave connue de Marie et non réparée
 
 - **Nom stable :** `J17_MARIE_KNOWN_SEVERE_VIOLATION_UNREPAIRED`.
-- **Définition :** un fait de sécurité, audience ou responsabilité classé grave est
-  réellement connu de Marie et sa réparation requise a explicitement échoué ou
-  reste impossible.
-- **Runtime disponible :** `j11_physical_level: String`, aftercare Mathilde
-  optionnel et son `status: String`, `j14_witness: String`,
-  `knowledge["fact_witness_saw_limited_trace"]: Dictionary`,
-  `j14_controller_notified: bool`, statuts des promesses J14/J16,
-  `j15_outcome: String`, `j16_priority: String` et
-  `j16_consequence_outcome: String`. Les écrivains sont les fonctions J11,
-  `establish_j14_discovery`, les résolutions J14, `apply_j15_choice` et
-  `apply_j16_consequence_choice`.
-- **Valeurs explicitement dommageables observées :** aftercare `FAILED`, notice
-  contrôleur `FAILED`, `DUE_FAIL`, `REPAIR_LIE`, `OPEN_LIE`, et sorties J16
-  `*_CONTEST`. Elles prouvent chacune leur fait local, pas automatiquement gravité,
-  connaissance de Marie et absence globale de réparation.
-- **Valeurs potentiellement réparatrices observées :** aftercare `PAID`, notice
-  `PAID`, `DUE_PAY`, `REPAIR_TRUTH`, `OPEN_ANSWER`, `*_RESTITUTE` et
-  `*_PRACTICAL`; leur suffisance n’est pas définie.
-- **Formule exacte :** `BLOCKED_PRODUCT_DECISION`.
-- **Comportement si manque :** la garde ne peut pas être déclarée vraie ; si cette
-  qualification est nécessaire pour départager `FRACTURE` d’une autre sortie,
-  l’entrée est invalide et le résolveur refuse.
-- **Décision/donnée absente :** liste fermée des faits « graves », preuve exacte que
-  Marie les connaît et matrice fermée acte dommageable → réparation suffisante.
-- **Source canonique :** N7-RP-04, script J17 sections de reconquête/fracture et
-  contrat d’état Saison 1.
-- **Conséquence N8 :** aucun codage avant arbitrage ; ne pas assimiler tout échec à
-  une violation grave ni toute restitution à une réparation.
-- **Statut :** `BLOCKED_PRODUCT_DECISION`.
+- **Formule normative :** `D1_A OR D1_B OR D1_C`, avec les trois familles fermées
+  ci-dessous. Aucun autre échec n’est promu en violation grave.
+
+`D1_A — AFTERCARE_MATHILDE_FAILED_AND_KNOWN` :
+
+```text
+j11_physical_level IN {MATHILDE_M_B2, MATHILDE_M_B3}
+AND obligations["aftercare_mathilde_j11"].status == FAILED
+AND j14_variant == MATHILDE
+AND j14_witness == Marie
+AND knowledge["fact_witness_saw_limited_trace"].discovered_trace_id
+    == j11_mathilde_physical_aftercare_01
+AND Marie IN knowledge["fact_witness_saw_limited_trace"].current_knowers
+```
+
+L’échec d’aftercare est terminal en Saison 1. La restitution de distance J16 ne le
+répare pas.
+
+`D1_B — AUDIENCE_BREACH_KNOWN_CONTROLLER_NOTICE_FAILED` :
+
+```text
+j14_witness == Marie
+AND Marie IN knowledge["fact_witness_saw_limited_trace"].current_knowers
+AND promises["j14_inform_trace_controller"].status == FAILED
+AND knowledge["fact_trace_controller_not_informed"].source_ref
+    == j14_inform_trace_controller
+```
+
+La réparation suffisante et exclusive de cette famille est la conjonction : notice
+`PAID`, `j14_controller_notified == true` et fait cohérent
+`fact_trace_controller_informed_of_audience_breach`.
+
+`D1_C — REPEATED_DECEPTION_TO_MARIE_THEN_CONTESTED` :
+
+```text
+j14_witness == Marie
+AND j15_outcome IN {DUE_FAIL, REPAIR_LIE, OPEN_LIE}
+AND j16_priority == MARIE
+AND j16_consequence_outcome == MARIE_CONTEST
+AND promises["j16_priority_consequence_payment"].status == FAILED
+AND traces["j16_consequence_payment_record_01"].consequence_outcome
+    == CONSEQUENCE_FAILED
+```
+
+Cette famille est réparée par `MARIE_RESTITUTE` ou `MARIE_PRACTICAL`, avec promesse
+`PAID` et record `CONSEQUENCE_PAID`.
+
+Sont explicitement exclus de D1 : aftercare `PAID`, notice contrôleur `PAID`,
+`TRUTH_LIMITED`, `PROTECT_AND_DEFER`, `DUE_CANCEL`, `OPEN_REFUSE`, tous les
+`*_RESTITUTE` et `*_PRACTICAL`, le refus honnête et la clôture propre.
+- **Comportement si absence :** dans une structure valide, chaque famille absente
+  vaut `false`; aucune invalidité et aucune fracture par prudence.
+- **Statut :** décision produit fermée et calculable à partir du runtime existant.
 
 ### 7.3 Fait matériel caché
 
 - **Nom stable :** `J17_MATERIAL_FACT_HIDDEN`.
-- **Définition :** un fait qui change raisonnablement le contrat du couple existe,
-  Player le connaît et Marie ne le connaît pas suffisamment.
-- **Runtime disponible :** `j11_physical_level: String`, faits/traces J11,
-  `j14_variant/outcome/witness: String`, `j14_visible_values: Dictionary`,
-  `j15_outcome: String` et connaissances à audience bornée. Les scènes et écrivains
-  sont les payoffs J11, `establish_j14_discovery`, `apply_j14_choice` et
-  `apply_j15_choice`.
-- **Valeurs observées candidates :** `MATHILDE_M_B2`, `MATHILDE_M_B3`,
-  `RAPHAELLE_FIRST_KISS`, une explication `MINIMIZE_OR_LIE`, ou une vérité limitée.
-  Le runtime ne dit pas lesquelles sont matériellement dues au couple ni lesquelles
-  ont ensuite été intégralement divulguées à Marie.
-- **Valeurs satisfaisantes/incompatibles :** aucune liste produit fermée.
-- **Formule exacte :** `BLOCKED_PRODUCT_DECISION`.
-- **Comportement si manque :** une trace privée n’est pas automatiquement un secret
-  dû à Marie ; l’absence de champ de divulgation interdit aussi de conclure que le
-  fait est révélé. Le cas est invalide s’il influence la sortie.
-- **Décision/donnée absente :** liste fermée des faits matériels et preuve de
-  divulgation par fait et par destinataire.
-- **Source canonique :** contrat final du document `14`, N7-RP-04 et règles
-  d’audience J11–J14.
-- **Conséquence N8 :** décision produit requise ; ne pas créer un booléen vague
-  `has_secret`.
-- **Statut :** `BLOCKED_PRODUCT_DECISION`.
+- **Liste fermée :** seuls les trois passages physiques extérieurs suivants sont
+  matériels pour ce contrat : Mathilde M-B2, Mathilde M-B3 et le premier baiser
+  Raphaëlle.
+- **Formule exacte :**
+
+```text
+knowledge["fact_mathilde_physical_event_occurred"].physical_level
+    == MATHILDE_M_B2
+OR knowledge["fact_mathilde_physical_event_occurred"].physical_level
+    == MATHILDE_M_B3
+OR (
+  j11_pivot == RAPHAELLE
+  AND j11_pivot_outcome == FIRST_KISS
+  AND j11_physical_level == RAPHAELLE_FIRST_KISS
+)
+```
+
+Le runtime ne porte aucune preuve que Marie a acquis le fait physique exact. Le
+coup d’œil borné J14 ne l’ajoute pas aux knowers du fait source. Chacun de ces faits
+présent est donc caché sur la baseline et dans le périmètre N8; N8 ne fabrique aucune
+divulgation.
+
+`PROXIMITY_ONLY`, image privée, attraction nommée, désir borné, version Pauline et
+message Nico ne sont pas matériels à eux seuls. Les mensonges et brèches relèvent de
+D1, D3 ou D9.
+- **Comportement si absence :** `false` dans une structure valide.
+- **Statut :** décision produit fermée et calculable.
 
 ### 7.4 Version incompatible encore active
 
 - **Nom stable :** `J17_INCOMPATIBLE_VERSION_ACTIVE`.
-- **Définition :** deux affirmations ou une affirmation et un fait matériel ne
-  peuvent être vrais ensemble, et aucune clôture explicite n’a retiré la
-  contradiction.
-- **Runtime disponible :** `j14_outcome/player_explanation: String`,
-  `knowledge["fact_player_explanation_to_witness"]: Dictionary`, `j15_outcome:
-  String`, `j16_consequence_outcome: String`. `existing_contradiction_id` n’est
-  calculé qu’à l’entrée J21 à partir d’un `couple_state` déjà résolu ou de Pauline ;
-  il ne peut pas servir à résoudre J17 sans circularité.
-- **Valeurs candidates actives :** `MINIMIZE_OR_LIE`, `REPAIR_LIE`, `OPEN_LIE`,
-  `*_CONTEST`. Les valeurs `TRUTH_LIMITED`, `REPAIR_TRUTH`, `OPEN_ANSWER`,
-  `*_RESTITUTE` ou `*_PRACTICAL` n’ont pas de règle fermée de clôture.
-- **Formule exacte :** `BLOCKED_PRODUCT_DECISION`.
-- **Comportement si manque :** ne pas déduire l’activité d’une contradiction d’un
-  simple texte de branche ni utiliser le futur `couple_state` comme entrée ; refuser
-  la résolution si ce prédicat départage la sortie.
-- **Décision/donnée absente :** couples fermés version/fait, identifiant de leur
-  source et événement exact de clôture.
-- **Source canonique :** N7-RP-04, registre de contradictions du contrat d’état et
-  script J17.
-- **Conséquence N8 :** un record borné de preuves peut être ajouté après décision ;
-  aucun journal générique.
-- **Statut :** `BLOCKED_PRODUCT_DECISION`.
+- **Formule exacte :**
+
+```text
+j15_outcome IN {DUE_FAIL, REPAIR_LIE, OPEN_LIE}
+AND j16_priority IN {MARIE, MATHILDE}
+AND j16_consequence_outcome IN {MARIE_CONTEST, MATHILDE_CONTEST}
+AND promises["j16_priority_consequence_payment"].status == FAILED
+AND traces["j16_consequence_payment_record_01"].consequence_outcome
+    == CONSEQUENCE_FAILED
+```
+
+La paire incompatible est identifiée par la source J14
+`j14_source_trace_id` et `fact_player_explanation_to_witness`, puis par
+`fact_j15_obligation_resolution` et le record J16. Elle est fermée par
+`REPAIR_TRUTH`, tout `*_RESTITUTE` ou `*_PRACTICAL`, `DUE_CANCEL` ou
+`OPEN_REFUSE`. `FALLBACK_CONFIRM` ne crée aucune contradiction. Le futur
+`existing_contradiction_id` J21 n’entre jamais dans cette formule.
+- **Comportement si absence :** `false` dans une structure valide.
+- **Statut :** décision produit fermée et calculable.
 
 ### 7.5 Actes Marie répétés
 
 - **Nom stable :** `J17_REPEATED_MARIE_ACTS_PROVEN`.
-- **Définition :** au moins une combinaison authored fermée de plusieurs actes
-  distincts envers Marie montre une continuité antérieure à J17 ; le choix J17 seul
-  ne suffit pas.
-- **Runtime disponible :** groupes distincts de la section 5.1, sous forme de
-  `String`, `Dictionary` de promesse et faits de connaissance ; écrivains J01–J16.
-- **Valeurs candidates :** présences payées, alternatives précises, refus honnêtes,
-  retours accomplis, dîner payé, reconnection J11 et présence J12. Certaines valeurs
-  sont positives dans leur scène sans prouver une reconquête globale.
-- **Combinaisons fermées satisfaisantes/incompatibles :** non décidées. Un total ou
-  un test « au moins N » est interdit.
-- **Formule exacte :** `BLOCKED_PRODUCT_DECISION`.
-- **Comportement si manque :** `false` comme condition constructive ; si les autres
-  preuves sont cohérentes, la branche reconquête tombe sur son fallback
-  `PROVISIONAL_AGREEMENT`.
-- **Décision/donnée absente :** liste explicite d’ensembles, par exemple des couples
-  ou triplets nommés d’actes distincts, et leurs valeurs admises ; aucun compteur.
-- **Source canonique :** script J17, matrice d’atteignabilité et N7-RP-04.
-- **Conséquence N8 :** produit doit valider les combinaisons exactes avant code.
-- **Statut :** `BLOCKED_PRODUCT_DECISION`.
+- **Formule exacte :** disjonction des quatre combinaisons fermées de la section
+  5.1. Le choix J17 n’entre dans aucune combinaison.
+- **Comportement si absence :** `false`; une entrée de reconquête valide tombe sur
+  `PROVISIONAL_AGREEMENT` si les gardes dommageables sont fausses.
+- **Statut :** décision produit fermée et calculable sans score ni compteur.
 
 ### 7.6 Vérité suffisante
 
 - **Nom stable :** `J17_SUFFICIENT_TRUTH_PROVEN`.
-- **Définition :** tous les faits matériels dus à Marie pour la posture considérée
-  ont une divulgation explicite compatible avec ce qu’elle sait réellement.
-- **Runtime disponible :** `j14_outcome/player_explanation`,
-  `fact_player_explanation_to_witness`, résolutions J15/J16 et promesses associées ;
-  types `String`/`Dictionary`.
-- **Valeurs candidates :** `TRUTH_LIMITED`, `REPAIR_TRUTH`, `OPEN_ANSWER`,
-  `DUE_PAY`, `*_RESTITUTE`, `*_PRACTICAL`. Aucun champ ne relie ces actes à une
-  liste fermée de faits matériels dus.
-- **Valeurs incompatibles candidates :** `MINIMIZE_OR_LIE`, `REPAIR_LIE`,
-  `OPEN_LIE`, `*_CONTEST`; leur portée exacte reste locale.
-- **Formule exacte :** `BLOCKED_PRODUCT_DECISION`.
-- **Comportement si manque :** `false` comme condition constructive ; aucune
-  reconquête active ne peut être prouvée.
-- **Décision/donnée absente :** liste des faits matériels et relation
-  fait → divulgation complète/partielle/non due.
-- **Source canonique :** document `14`, script J17 et N7-RP-04.
-- **Conséquence N8 :** ne pas assimiler une vérité limitée unique à la vérité
-  suffisante globale.
-- **Statut :** `BLOCKED_PRODUCT_DECISION`.
+- **Faits dus :** exactement les trois faits matériels de la section 7.3.
+- **Formule exacte :**
+
+```text
+STRUCTURAL_INPUT_VALID
+AND NOT J17_MATERIAL_FACT_HIDDEN
+AND NOT J17_INCOMPATIBLE_VERSION_ACTIVE
+```
+
+Une vérité limitée ou une notification de contrôleur n’est pas une divulgation
+complète. La présence de l’un des trois faits physiques extérieurs rend donc ce
+prédicat faux sur la baseline et dans N8, faute de preuve de divulgation exacte.
+- **Statut :** décision produit fermée et dérivée.
 
 ### 7.7 Aucune violation active
 
 - **Nom stable :** `J17_NO_ACTIVE_VIOLATION`.
 - **Définition :** aucune violation explicitement établie ne demeure active après
   application des réparations reconnues.
-- **Runtime disponible :** mêmes champs et écrivains que les trois gardes
-  dommageables précédentes.
 - **Nature :** prédicat dérivé, jamais un nouveau champ destiné uniquement à
   matérialiser une négation.
 - **Formule normative :**
@@ -430,120 +437,145 @@ AND NOT J17_MATERIAL_FACT_HIDDEN
 AND NOT J17_INCOMPATIBLE_VERSION_ACTIVE
 ```
 
-- **Valeurs satisfaisantes/incompatibles :** dépendent des trois décisions produit
-  non fermées ; l’absence de preuve d’une violation ne constitue pas à elle seule
-  une preuve constructive générale, mais une violation ne devient jamais vraie sans
-  fait explicite.
-- **Comportement si manque :** prédicat non calculable ; l’entrée constructive est
-  bloquée, sans nouveau champ de négation.
-- **Source canonique :** ordre N7 des gardes avant conditions constructives.
-- **Conséquence N8 :** dériver après validation des gardes, ne rien persister de
-  redondant.
-- **Statut :** `BLOCKED_PRODUCT_DECISION` par dépendance.
+- **Comportement si absence :** les trois gardes valent `false` lorsque leurs faits
+  sont absents d’une structure valide; le prédicat vaut alors `true` sans stocker un
+  nouveau booléen.
+- **Statut :** décision produit fermée et dérivée.
 
 ### 7.8 Règle concrète
 
 - **Nom stable :** `J17_CONCRETE_RULE_PROVEN`.
-- **Définition :** une règle actuelle, observable et applicable est acceptée ; une
-  promesse abstraite de « faire mieux » ne suffit pas.
-- **Runtime disponible :** `selected_choice_ids: Array[String]`, choix J17 et
-  `j17_couple_definition_record_01: Dictionary`. La phrase du choix reconquête
-  mentionne l’arrêt des versions fausses, mais aucune règle normalisée n’est stockée.
-- **Valeurs satisfaisantes/incompatibles :** aucune valeur runtime fermée. Le choix
-  favorable seul est explicitement insuffisant selon N7.
-- **Formule exacte :** `BLOCKED_PRODUCT_DECISION`.
-- **Comportement si manque :** `false`; la reconquête valide utilise le fallback
-  `PROVISIONAL_AGREEMENT` si aucune autre donnée n’est invalide.
-- **Décision/donnée absente :** vocabulaire fermé des règles et événement authored
-  qui prouve leur acceptation avant résolution.
-- **Source canonique :** script J17, contrat d’état et N7-RP-04.
-- **Conséquence N8 :** enrichissement borné du record après arbitrage ; pas de texte
-  libre servant de pseudo-règle.
-- **Statut :** `BLOCKED_PRODUCT_DECISION`.
+- **Identifiant fermé de règle :**
+  `J17_RULE_RECONQUEST_NO_FALSE_TIME_PLACE_OR_EXTERNAL_PROGRESSION`.
+- **Sémantique exacte :** aucun faux horaire, aucun faux lieu et aucune nouvelle
+  progression extérieure avant le prochain checkpoint du couple.
+- **Preuve authored :** la formulation actuelle de `choice_j17_reconquest` est
+  insuffisante. N8 doit en resserrer strictement le texte, sans changer son ID, son
+  ordre UI ni son sens fondamental, afin d’énoncer les trois éléments avant la
+  dérivation. Le test statique verrouille cette formulation sémantique.
+- **Précondition statique N8 :** le build est invalide si le texte associé à
+  `choice_j17_reconquest` ne prouve pas exactement la règle fermée ci-dessus.
+- **Formule runtime exacte après validation de cette précondition :**
+
+```text
+STRUCTURAL_INPUT_VALID
+AND choice_id == choice_j17_reconquest
+```
+
+La sémantique du choix est un invariant de build vérifié statiquement, pas une chaîne
+libre évaluée au runtime ni un nouveau champ. Une fois le texte verrouillé,
+l’acceptation de ce choix est l’acte authored explicite et le nom stable du prédicat est enregistré dans
+`satisfied_constructive_condition_ids`.
+- **Baseline :** `false` tant que la formulation n’est pas resserrée.
+- **Statut :** décision produit fermée; preuve à matérialiser dans les données N8.
 
 ### 7.9 Désir extérieur reconnu
 
 - **Nom stable :** `J17_EXTERNAL_DESIRE_ACKNOWLEDGED`.
-- **Définition :** un désir extérieur précis est nommé comme désir, sans imposer la
-  personne concernée ni transformer l’acte passé en permission.
-- **Runtime disponible :** `j11_pivot_outcome: String`, `j11_physical_level: String`,
-  traces/connaissances de routes et explications J14. Des valeurs comme
-  `SANDRA_DESIRE_BOUNDED` ou `RESULT_SENT_ATTRACTION_NAMED` nomment un désir dans
-  leur scène, mais aucune preuve ne dit que Marie et Player l’ont reconnu dans la
-  proposition de reconfiguration.
-- **Valeurs satisfaisantes/incompatibles :** non fermées.
-- **Formule exacte :** `BLOCKED_PRODUCT_DECISION`.
-- **Comportement si manque :** `false`; la reconfiguration tombe sur
-  `PROVISIONAL_AGREEMENT` si l’entrée reste cohérente.
-- **Décision/donnée absente :** liste des désirs admissibles et acte de
-  reconnaissance par Marie/Player, distinct de l’existence d’une route.
-- **Source canonique :** script J17 et N7-RP-04.
-- **Conséquence N8 :** ne pas utiliser un niveau physique comme substitut à une
-  reconnaissance.
-- **Statut :** `BLOCKED_PRODUCT_DECISION`.
+- **Source de désir fermée :**
+
+```text
+J17_EXTERNAL_DESIRE_SOURCE_PRESENT =
+  (j11_pivot == SANDRA AND j11_pivot_outcome == SANDRA_DESIRE_BOUNDED)
+  OR
+  (j11_pivot == RAPHAELLE
+   AND j11_pivot_outcome == RESULT_SENT_ATTRACTION_NAMED)
+```
+
+- **Preuve authored :** N8 resserre strictement le texte de
+  `choice_j17_provisional` pour reconnaître « ce qui a existé dehors », sans engager
+  la personne concernée, sans permission et sans réécriture rétroactive.
+- **Précondition statique N8 :** le build est invalide si le texte associé à
+  `choice_j17_provisional` ne reconnaît pas explicitement le désir extérieur selon
+  la sémantique ci-dessus.
+- **Formule runtime exacte après validation de cette précondition :**
+
+```text
+STRUCTURAL_INPUT_VALID
+AND J17_EXTERNAL_DESIRE_SOURCE_PRESENT
+AND choice_id == choice_j17_provisional
+```
+
+La sémantique du choix est un invariant de build, pas un champ. `FIRST_KISS` et
+Mathilde M-B2/M-B3 sont
+arrêtés auparavant par `J17_MATERIAL_FACT_HIDDEN`; un niveau physique ne sert jamais
+de substitut à la reconnaissance.
+- **Baseline :** `false` tant que la formulation provisoire n’est pas resserrée.
+- **Statut :** décision produit fermée; preuve à matérialiser dans les données N8.
 
 ### 7.10 Audiences sûres ou réparées
 
 - **Nom stable :** `J17_AUDIENCES_SAFE_OR_REPAIRED`.
-- **Définition :** chaque audience privée pertinente est restée conforme ou sa
-  violation explicite a reçu la réparation reconnue par son contrôleur.
-- **Runtime disponible :** `traces[*].current_audience/current_state`,
-  `fact_witness_saw_limited_trace`, promesse de notification contrôleur,
-  `j14_controller_notified: bool`, résolutions J15/J16 ; types `Array`, `String`,
-  `bool`, `Dictionary`.
-- **Valeurs candidates :** absence d’événement de découverte, notice `PAID`, trace
-  retirée ou audience inchangée. Informer le contrôleur ne définit pas à lui seul
-  toute la réparation, et l’absence de découverte J14 ne prouve pas la sûreté de
-  toutes les audiences.
-- **Valeurs incompatibles candidates :** notice `FAILED`, mensonge renouvelé,
-  contestation ; portée produit non fermée.
-- **Formule exacte :** `BLOCKED_PRODUCT_DECISION`.
-- **Comportement si manque :** `false` comme condition constructive ; ne pas
-  conclure par absence d’incident observé.
-- **Décision/donnée absente :** ensemble fermé des traces pertinentes et événement
-  de réparation suffisant par type de brèche.
-- **Source canonique :** registres d’audience, script J17 et N7-RP-04.
-- **Conséquence N8 :** aucune agrégation ou compteur d’audiences.
-- **Statut :** `BLOCKED_PRODUCT_DECISION`.
+- **Événement pertinent unique :** `j14_discovery_event_01` et son unique
+  `discovered_trace_id`. Les validateurs structurels couvrent les autres traces; N8
+  n’ajoute aucun second agrégat d’audiences.
+- **Formule exacte :**
+
+```text
+STRUCTURAL_INPUT_VALID
+AND (
+  j14_variant == S27_MUTATION_NO_DISCOVERY
+  OR (
+    knowledge["fact_witness_saw_limited_trace"] IS_COHERENT
+    AND promises["j14_inform_trace_controller"].status == PAID
+    AND j14_controller_notified == true
+    AND knowledge.has("fact_trace_controller_informed_of_audience_breach")
+  )
+)
+```
+
+`IS_COHERENT` reprend le contrat de structure J14 existant : `source_ref` vers
+`j14_discovery_event_01`, witness/knowers, `discovered_trace_id`, champs visibles et
+valeurs cohérents. Le prédicat vaut `false` si la notice a échoué, si le fait
+`fact_trace_controller_not_informed` existe, ou si la réparation requise n’est pas
+payée. Une corruption structurelle invalide l’entrée.
+- **Statut :** décision produit fermée et calculable sans compteur.
 
 ### 7.11 Pause acceptée
 
 - **Nom stable :** `J17_EXTERNAL_PROGRESSION_PAUSE_ACCEPTED`.
-- **Définition :** Marie et Player acceptent explicitement qu’aucune nouvelle étape
-  extérieure n’ait lieu avant le checkpoint.
-- **Runtime disponible :** choix `choice_j17_provisional`,
-  `j17_couple_outcome: String` et record J17. Le texte actuel demande des règles
-  révisables mais ne nomme ni pause ni checkpoint.
-- **Valeurs satisfaisantes/incompatibles :** aucune preuve runtime actuelle ; la
-  condition vaut donc `false` sur la baseline.
-- **Formule actuelle exacte :** `false` faute de preuve explicite.
-- **Comportement si manque :** `false`; fallback `PROVISIONAL_AGREEMENT`.
-- **Décision/donnée absente :** acte authored autorisé par le périmètre N8 qui
-  établit la pause avant la dérivation, ou décision que le choix existant la porte —
-  décision qui n’est pas prise ici.
-- **Source canonique :** script J17 et N7-RP-04.
-- **Conséquence N8 :** la branche de reconfiguration est inatteignable tant que la
-  preuve n’est pas validée.
-- **Statut :** `BLOCKED_PRODUCT_DECISION` pour rendre la condition atteignable.
+- **Preuve authored :** N8 resserre `choice_j17_provisional` pour dire explicitement
+  qu’aucune nouvelle étape extérieure n’a lieu avant le checkpoint.
+- **Précondition statique N8 :** le build est invalide si le texte provisoire ne
+  contient pas cette pause explicite.
+- **Formule runtime exacte après validation de cette précondition :**
+
+```text
+STRUCTURAL_INPUT_VALID
+AND choice_id == choice_j17_provisional
+```
+
+La sémantique du choix est un invariant de build, pas un champ. Sa sélection est
+l’acte authored préalable à la dérivation.
+- **Baseline :** exactement `false`; le texte actuel ne prouve ni pause ni
+  checkpoint.
+- **Comportement si absence :** `false`; fallback `PROVISIONAL_AGREEMENT`.
+- **Statut :** décision produit fermée; preuve à matérialiser dans les données N8.
 
 ### 7.12 Droit complet de refus de Marie explicitement reconnu
 
 - **Nom stable :** `J17_MARIE_FULL_REFUSAL_RIGHT_EXPLICITLY_ACKNOWLEDGED`.
-- **Définition :** la proposition de reconfiguration reconnaît explicitement que
-  Marie peut refuser la reconfiguration sans perdre ce droit préexistant.
-- **Runtime disponible :** choix `choice_j17_provisional` et record J17 ; aucun
-  champ ni fait n’enregistre cette reconnaissance.
-- **Valeurs satisfaisantes/incompatibles :** aucune preuve runtime actuelle ; la
-  condition vaut `false` sur la baseline. Le droit lui-même demeure vrai dans tous
-  les états.
-- **Formule actuelle exacte :** `false` faute de preuve explicite.
-- **Comportement si manque :** `false`; fallback `PROVISIONAL_AGREEMENT`.
-- **Décision/donnée absente :** événement authored précis de reconnaissance avant
-  dérivation, distinct du droit invariant.
-- **Source canonique :** script J17, contrat d’état et N7-RP-04.
-- **Conséquence N8 :** ne jamais créer ou retirer le droit en calculant le prédicat ;
-  la branche reste inatteignable avant validation de la preuve.
-- **Statut :** `BLOCKED_PRODUCT_DECISION` pour rendre la condition atteignable.
+- **Preuve authored :** le même resserrement de `choice_j17_provisional` doit dire
+  que Marie peut refuser toute reconfiguration, qu’il ne s’agit ni d’une ouverture
+  ni d’une permission rétroactive, et qu’aucune personne extérieure n’est engagée.
+- **Précondition statique N8 :** le build est invalide si le texte provisoire omet
+  le droit complet de refus, crée une ouverture ou une permission rétroactive, ou
+  engage une personne extérieure.
+- **Formule runtime exacte après validation de cette précondition :**
+
+```text
+STRUCTURAL_INPUT_VALID
+AND choice_id == choice_j17_provisional
+```
+
+La sémantique du choix est un invariant de build, pas un champ. Sa sélection est
+l’acte explicite avant dérivation.
+- **Baseline :** exactement `false`; le texte actuel ne prouve aucune des deux
+  conditions distinctes de pause et de refus.
+- **Invariant :** le droit de refus lui-même demeure vrai dans les six états; le
+  prédicat ne le crée, ne le suspend et ne le retire jamais.
+- **Comportement si absence :** `false`; fallback `PROVISIONAL_AGREEMENT`.
+- **Statut :** décision produit fermée; preuve à matérialiser dans les données N8.
 
 ## 8. Table exhaustive et ordonnée : quatre choix vers six états
 
@@ -557,24 +589,35 @@ La condition « entrée valide » inclut la cohérence structurelle de la sectio
 Les gardes dommageables précèdent les conditions constructives ; les gardes
 spécifiques précèdent le fallback du choix.
 
+N8 resserre strictement les formulations de `choice_j17_reconquest` et
+`choice_j17_provisional` pour matérialiser les preuves authored des sections
+7.8–7.12. Leurs identifiants, leur ordre et les quatre choix UI restent inchangés :
+aucune option, aucun layout et aucun point UI n’est ajouté, et leur sens fondamental
+n’est pas modifié.
+
 | Ordre | Choix et validité | Prédicats exacts | Sortie | Justification et fallback | Cas contradictoire | Test N8 ciblé |
 |---:|---|---|---|---|---|---|
 | 1 | `choice_j17_separation`; valide seulement si discussion due | Aucun prédicat narratif supplémentaire après validation | `SEPARATION` | Le choix explicite de fin prime ; aucun fallback. | Choix reçu sans promesse active ou avec résultat J16 refus/alternative : entrée invalide. | Séparation due ; historique conservé ; record/logistique présents. |
 | 2 | `choice_j17_refused_acknowledge`; uniquement `J17_DISCUSSION_REFUSED_OR_NOT_DUE` | Formule section 7.1 | `FRACTURE` | Reconnaît que l’ancien cadre n’est plus disponible ; aucun fallback. | Si discussion due, refuser explicitement l’entrée et ne pas muter l’état. | Cas `REFUSE`, cas `ALTERNATIVE`, puis cas dû rejeté. |
-| 3 | `choice_j17_reconquest` ou `choice_j17_provisional`; discussion due | `J17_MARIE_KNOWN_SEVERE_VIOLATION_UNREPAIRED` | `FRACTURE` | Une formulation favorable n’efface pas une violation grave non réparée. | Preuve absente/ambiguë : résolution bloquée, pas `FRACTURE` arbitraire. | Chaque fait grave approuvé ; priorité sur toutes les lignes suivantes ; cas de preuve incomplète rejeté. |
-| 4 | Même validité que ligne 3 | `J17_MATERIAL_FACT_HIDDEN OR J17_INCOMPATIBLE_VERSION_ACTIVE` | `DOUBLE_LIFE_FRAGILE` | Couple matériellement maintenu sous contradiction ; après la ligne 3. | Si ligne 3 vraie aussi, ligne 3 gagne ; fait non qualifié matériel invalide le départage. | Fait caché seul, version active seule, les deux, et concurrence avec ligne 3. |
+| 3 | `choice_j17_reconquest` ou `choice_j17_provisional`; discussion due | `J17_MARIE_KNOWN_SEVERE_VIOLATION_UNREPAIRED` | `FRACTURE` | Une formulation favorable n’efface pas une violation grave non réparée. | Un fait fermé absent vaut faux; structure incohérente ou référence annoncée absente invalide sans `FRACTURE` arbitraire. | Chaque famille D1-A/B/C ; priorité sur toutes les lignes suivantes ; référence annoncée absente rejetée. |
+| 4 | Même validité que ligne 3 | `J17_MATERIAL_FACT_HIDDEN OR J17_INCOMPATIBLE_VERSION_ACTIVE` | `DOUBLE_LIFE_FRAGILE` | Couple matériellement maintenu sous contradiction ; après la ligne 3. | Si ligne 3 vraie aussi, ligne 3 gagne ; tout fait hors liste D2 vaut non matériel pour ce contrat. | Chaque fait D2, D3 seul, les deux, et concurrence avec ligne 3. |
 | 5 | `choice_j17_reconquest`; discussion due | `J17_REPEATED_MARIE_ACTS_PROVEN AND J17_SUFFICIENT_TRUTH_PROVEN AND J17_NO_ACTIVE_VIOLATION AND J17_CONCRETE_RULE_PROVEN` | `RECONQUEST_ACTIVE` | Les quatre preuves sont nécessaires ; le choix seul ne suffit pas. | Condition annoncée vraie sans preuve : entrée invalide. | Cas nominal ; une variante par condition constructive fausse ; guards précédents prioritaires. |
-| 6 | `choice_j17_reconquest`; discussion due ; lignes 3–5 non retenues | Négation évaluée des gardes et au moins une condition constructive de ligne 5 fausse | `PROVISIONAL_AGREEMENT` | Fallback propre à la reconquête, jamais fallback d’une entrée invalide. | Prédicat non calculable n’est pas simplement faux si sa donnée est structurellement obligatoire. | Fallback pour chaque condition absente de façon valide ; données corrompues rejetées. |
+| 6 | `choice_j17_reconquest`; discussion due ; lignes 3–5 non retenues | Négation évaluée des gardes et au moins une condition constructive de ligne 5 fausse | `PROVISIONAL_AGREEMENT` | Fallback propre à la reconquête, jamais fallback d’une entrée invalide. | Champ requis `UNESTABLISHED`, incohérence ou preuve annoncée absente invalide ; une condition constructive simplement absente vaut faux. | Fallback pour chaque condition absente de façon valide ; données corrompues rejetées. |
 | 7 | `choice_j17_provisional`; discussion due | `J17_EXTERNAL_DESIRE_ACKNOWLEDGED AND J17_AUDIENCES_SAFE_OR_REPAIRED AND J17_EXTERNAL_PROGRESSION_PAUSE_ACCEPTED AND J17_MARIE_FULL_REFUSAL_RIGHT_EXPLICITLY_ACKNOWLEDGED` | `RECONFIGURATION_NEGOTIATION` | Négociation sans ouverture automatique ; quatre preuves requises. | Droit ou pause supposé par le label du choix : interdit ; guards 3–4 restent prioritaires. | Cas nominal ; une variante par condition fausse ; aucune permission de tiers créée. |
 | 8 | `choice_j17_provisional`; discussion due ; lignes 3, 4 et 7 non retenues | Négation évaluée des gardes et au moins une condition constructive de ligne 7 fausse | `PROVISIONAL_AGREEMENT` | Fallback propre au choix provisoire. | Entrée invalide ou preuve obligatoire contradictoire : aucun fallback. | Fallback par condition constructive ; corruption et choix inconnu rejetés. |
 
 Un identifiant de choix inconnu est refusé explicitement. Il ne produit aucun état.
 
-### 8.1 Situation exécutable actuelle
+### 8.1 Situation exécutable contractuelle
 
-La ligne 1 et la validité de la ligne 2 sont calculables. Les lignes 3 à 8 ne sont
-pas implémentables de façon complète tant que les décisions de la section 7 ne sont
-pas fermées. N8 ne peut donc pas commencer sur ce contrat au statut actuel.
+Les huit lignes sont désormais spécifiées par des formules fermées. Les lignes 1 à
+4 utilisent exclusivement les données existantes. Les lignes 5 à 8 utilisent aussi
+les deux formulations authored que N8 doit resserrer et verrouiller statiquement
+avant la dérivation. Jusqu’à ce resserrement, la règle concrète, le désir reconnu,
+la pause et la reconnaissance du droit de refus valent exactement `false` sur la
+baseline; les fallbacks restent donc les seules sorties constructives atteignables
+hors gardes dommageables. L’implémentation N8 attend encore l’approbation produit de
+ce contrat.
 
 ## 9. Record de continuité minimal attendu pour N8
 
@@ -591,8 +634,8 @@ générique.
 | `choice_id` | `String` | absent | Ajouter l’identifiant exact parmi les quatre choix de couple. |
 | `couple_state` | `String` | existe | Stocker exactement l’un des six états canoniques. |
 | `discussion_was_due` | `bool` | existe | Conserver ; doit correspondre au résultat J16 et à la promesse. |
-| `triggered_guard_fact_ids` | `Array[String]` | absent | Ajouter une liste fermée de faits réellement présents ayant déclenché les lignes 3 ou 4 ; vide pour les autres sorties. Les identifiants admissibles restent bloqués par les décisions produit de la section 7. |
-| `satisfied_constructive_condition_ids` | `Array[String]` | absent | Ajouter uniquement les noms stables des conditions effectivement prouvées ; aucune condition implicite. |
+| `triggered_guard_fact_ids` | `Array[String]` | absent | Ajouter uniquement les identifiants autorisés de la liste fermée ci-dessous qui sont réellement présents et ont déclenché les lignes 3 ou 4 ; vide pour les autres sorties. |
+| `satisfied_constructive_condition_ids` | `Array[String]` | absent | Ajouter uniquement les noms stables de la liste fermée ci-dessous dont les preuves sont effectivement satisfaites ; aucune condition implicite. |
 | `mathilde_micro_return_delivered` | `bool` | absent | Ajouter ; `true` seulement après insertion effective du micro-retour dans le fil Mathilde. |
 | `marie_micro_return_delivered` | `bool` | absent | Ajouter ; `true` seulement après insertion effective du micro-retour dans le fil Marie. |
 | `temporal_projection` | `Dictionary` fermé | absent ; seul `source_day` existe | Ajouter `day_id`, `departure_at`, `couple_discussion_due_at` et `resolved_at`. `day_id` vaut `J17`, `departure_at` reprend `J17 17:30`, la fenêtre due reprend `J17 20:30–21:30` ou reste absente si non due, et `resolved_at` est l’horloge effective du provider au succès, jamais une heure inventée par le résolveur. |
@@ -604,7 +647,48 @@ disque, ni un résumé psychologique. Les tableaux `promises`, `obligations`, `t
 et `knowledge` restent les sources des preuves ; le record référence les faits qui
 ont effectivement décidé J17 et ne les recopie pas en prose.
 
-### 9.1 Contrat des deux micro-retours
+### 9.1 Références de preuve fermées
+
+`triggered_guard_fact_ids` accepte seulement les identifiants effectivement présents
+parmi :
+
+```text
+fact_mathilde_physical_event_occurred
+aftercare_mathilde_j11
+fact_witness_saw_limited_trace
+j14_inform_trace_controller
+fact_trace_controller_not_informed
+fact_trace_controller_informed_of_audience_breach
+fact_player_explanation_to_witness
+fact_j15_obligation_resolution
+j16_priority_consequence_payment
+j16_consequence_payment_record_01
+choice_j11_mathilde_m_b2_hold
+choice_j11_mathilde_m_b3_accept
+choice_j11_raphaelle_meeting_accept
+```
+
+Les trois identifiants `choice_*` doivent exister dans `selected_choice_ids`; les
+autres doivent exister dans le registre correspondant parmi `knowledge`,
+`promises`, `obligations` ou `traces`.
+
+`satisfied_constructive_condition_ids` accepte seulement :
+
+```text
+J17_REPEATED_MARIE_ACTS_PROVEN
+J17_SUFFICIENT_TRUTH_PROVEN
+J17_NO_ACTIVE_VIOLATION
+J17_CONCRETE_RULE_PROVEN
+J17_EXTERNAL_DESIRE_ACKNOWLEDGED
+J17_AUDIENCES_SAFE_OR_REPAIRED
+J17_EXTERNAL_PROGRESSION_PAUSE_ACCEPTED
+J17_MARIE_FULL_REFUSAL_RIGHT_EXPLICITLY_ACKNOWLEDGED
+```
+
+Une référence annoncée mais absente de sa source invalide l’entrée. Toute chaîne
+libre, score, compteur ou résumé psychologique est interdit.
+
+### 9.2 Contrat des deux micro-retours
 
 | Retour | Position | Contenu fonctionnel obligatoire | Interdits | Marqueur |
 |---|---|---|---|---|
@@ -663,7 +747,7 @@ Les statuts de cette table sont ceux exigés par N7.1 : `Canon`, `Runtime`,
 
 | Document réel | Statut | Autorité retenue et usage encore valide | Éléments supersédés | Effet sur N8 |
 |---|---|---|---|---|
-| `docs/narrative/R8C_N7_1_SEASON_STRUCTURE_RUNTIME_PROJECTION_AND_N8_ENTRY_CONTRACT.md` | Canon | Autorité N7.1 sur structure, projection J17, vocabulaire, blockers et entrée N8 ; statut produit encore bloqué. | Aucun document antérieur ne peut compléter silencieusement une formule manquante. | N8 attend sa revue et la fermeture des décisions. |
+| `docs/narrative/R8C_N7_1_SEASON_STRUCTURE_RUNTIME_PROJECTION_AND_N8_ENTRY_CONTRACT.md` | Canon | Autorité N7.1 sur structure, projection J17, vocabulaire, formules fermées et entrée N8 ; prêt pour revue produit, non approuvé. | Aucun document antérieur ne peut compléter ou élargir silencieusement une formule. | N8 attend l’approbation produit de ce contrat. |
 | `docs/canon/PROJECT_DOCUMENTATION_GOVERNANCE.md` | Canon | Autorité sur les sources et statuts documentaires. | Aucun. | Impose code/données/tests comme vérité d’exécution. |
 | `docs/canon/bible/14_CONTRAT_NARRATIF_SAISON_1_RECONCILIE.md` | Canon | Autorité supérieure sur cinq mouvements, centralité Marie/Player et ordre final. | Ancienne finale confondue avec J17/J21. | Interdit de faire de J17 une finale et interdit le cutover opportuniste. |
 | `docs/canon/bible/04_TRAME_PRINCIPALE_ET_ACTES_SAISON_1.md` | À réécrire | Conserve phrase directrice et matière dramatique. | Quotas/ancienne formulation d’actes lorsque contradictoires avec `14`. | Aucune implémentation directe. |
@@ -689,8 +773,8 @@ Les statuts de cette table sont ceux exigés par N7.1 : `Canon`, `Runtime`,
 | `docs/canon/dialogues/NAR_PROD_06_PAQUET_PRODUCTION_ACTE_V_J17_J21.md` | À réécrire | Budget/production de l’ancien acte V ; verdict visuel `NO_NEW_ASSET` encore utile. | J21 `READY` ne prouve pas la présence de la finale autonome. | Confirme qu’aucun asset N8 n’est requis. |
 | `docs/narrative/R8C_N6_CANONICAL_SCENE_PORTFOLIO_INVENTORY.md` | Canon | Inventaire de scènes et mouvements, état de production. | Ne décide ni runtime ni prédicats J17. | Borne le portefeuille ; aucune migration. |
 | `docs/narrative/R8C_N6_CONTENT_PRODUCTION_FORECAST_AND_ROADMAP.md` | À réécrire | Prévision N6 et dépendances de production encore traçables. | Ordre antérieur à N7/N7.1. | Ne gouverne pas l’entrée N8. |
-| `docs/narrative/R8C_N7_J17_J21_CONTINUITY_AND_AFTERCARE_PLAN.md` | Canon | Décide quatre choix, six sorties, deux micro-retours et ordre final. | Notions de prédicats non traduites en formules runtime ; identité finale non fixée. | Source produit, complétée et bloquée par N7.1. |
-| `docs/narrative/R8C_N7_REVISION_PACKETS_AND_ACCEPTANCE_GATES.md` | Canon | Décide le paquet N7-RP-04, l’ordre des huit lignes et le périmètre. | `READY_FOR_SCRIPTING` ne suffit pas à l’entrée runtime sans données fermées. | N8 attend les décisions de prédicats. |
+| `docs/narrative/R8C_N7_J17_J21_CONTINUITY_AND_AFTERCARE_PLAN.md` | Canon | Décide quatre choix, six sorties, deux micro-retours et ordre final. | Notions de prédicats non traduites en formules runtime ; identité finale non fixée. | Source produit complétée par les formules N7.1. |
+| `docs/narrative/R8C_N7_REVISION_PACKETS_AND_ACCEPTANCE_GATES.md` | Canon | Décide le paquet N7-RP-04, l’ordre des huit lignes et le périmètre. | `READY_FOR_SCRIPTING` ne vaut pas approbation du présent contrat. | N8 attend la revue produit N7.1. |
 | `docs/narrative/R8C_N7_W4_PAYOFF_WRITTEN_RECONCILIATION.md` | Canon | Autorité N7 sur les payoffs W4 et aftercares associés. | Aucun effet d’autorisation sur N8. | Payoffs W4 explicitement hors périmètre. |
 | `ROADMAP.md` | À réécrire | Mémoire de l’ordre A4/cutover. | Baseline et roadmap ne mentionnent pas N7/N8. | Ne peut pas élargir N8 ni déclencher A1–A10. |
 | `docs/PROJECT_STATE.md` | À réécrire | Constate le runtime J01–J21 et l’absence de sauvegarde fichier. | Baseline/phase A4 anciennes. | Confirme seulement l’oracle historique. |
@@ -706,7 +790,7 @@ Aucun fichier dédié ne porte encore l’identité
 `14`, les sources J17/J21 et N7. Ce document n’en crée pas et ne s’attribue pas
 l’approbation produit.
 
-## 12. Décision d’architecture et proposition d’allowlist N8
+## 12. Décision d’architecture et allowlist N8
 
 ### 12.1 Décision
 
@@ -715,20 +799,29 @@ plus durable mais reste déconnecté de Messages, Galerie, PhotoViewer et de la 
 1 active. N8 corrige donc exclusivement la projection J17 de `Season1State` et son
 provider. Il ne prépare aucun cutover.
 
-### 12.2 Allowlist proposée, à valider produit
+### 12.2 Allowlist N8 fermée, à approuver par le produit
 
 | Chemin réel | Modification N8 strictement autorisable |
 |---|---|
 | `game/scripts/runtime/season_1/Season1State.gd` | Résolveur ordonné, validation des quatre choix, six sorties, enrichissement/validation/snapshot du record J17. |
 | `game/scripts/runtime/season_1/J17RuntimeProvider.gd` | Livraison conditionnelle et idempotente des deux micro-retours, sans nouveau point UI. |
-| `game/data/conversations/chapter_17_departure_and_couple.json` | Données textuelles strictement nécessaires aux deux micro-retours dans les fils existants ; aucun nouveau choix/segment autonome/asset. |
-| `tests/test_runtime_s1_17_j17_playable_static.py` | Contrat statique des quatre choix, six états, record et interdits. |
-| `game/tests/RUNTIME_S1_17J17PlayableSmokeDriver.gd` | Cas ciblés du résolveur, micro-retours et absence de mutation sur entrée invalide. |
-| `game/tests/RUNTIME_S1_J16J21ProviderSnapshotSmokeDriver.gd` | Round-trip ciblé des marqueurs et du record enrichi, sans modification J21. |
+| `game/data/conversations/chapter_17_departure_and_couple.json` | Deux micro-retours et resserrement strict des formulations de `choice_j17_reconquest` et `choice_j17_provisional` exigé par les sections 7.8–7.12 ; mêmes IDs, même ordre, quatre choix UI, aucun segment autonome, asset ou point UI nouveau. |
+| `tests/test_runtime_s1_17_j17_playable_static.py` | Contrat statique des quatre choix et de leur ordre, des six états, des huit règles, des formulations sémantiques resserrées, du record et des interdits. |
+| `game/tests/RUNTIME_S1_17J17PlayableSmokeDriver.gd` | Cas détaillés du résolveur, post-résolution, micro-retours, round-trip J17 du record/marqueurs/transcripts et absence de mutation sur entrée invalide. |
 
-Cette allowlist n’est pas une autorisation d’implémenter : elle devient applicable
-seulement après validation produit et fermeture des blockers. Aucun nouveau fichier
-de test n’est nécessaire dans la proposition actuelle.
+Cette allowlist contient exactement cinq fichiers modifiables. Elle n’est pas une
+autorisation d’implémenter : elle devient applicable seulement après approbation
+produit. Aucun nouveau fichier de test n’est nécessaire.
+
+`game/tests/RUNTIME_S1_J16J21ProviderSnapshotSmokeDriver.gd` est **exécutable mais
+non modifiable**. Il vérifie seulement le round-trip générique de début de journée et
+la non-régression de la projection environnante J16–J21. Les transcripts et le record
+d’état sont déjà inclus dans les snapshots; aucun nouveau champ provider n’est
+nécessaire. Tout round-trip détaillé post-résolution J17 et des micro-retours appartient
+au driver dédié `RUNTIME_S1_17J17PlayableSmokeDriver.gd`.
+
+Tout besoin réel de modifier un sixième fichier impose une demande explicite
+d’élargissement de périmètre avant changement.
 
 ### 12.3 Denylist N8
 
@@ -750,19 +843,28 @@ Sans lancer N8 dans ce lot, la future validation doit couvrir :
 3. les six sorties, aucune septième valeur et aucun fallback pour choix inconnu ;
 4. refus explicite de `choice_j17_refused_acknowledge` lorsque la discussion est due ;
 5. refus des trois choix due-only lorsque la discussion est refusée/non due ;
-6. refus sans mutation pour promesse/champ/preuve absent ou contradictoire ;
+6. absence valide de chaque fait dommageable évaluée à `false`, et refus sans
+   mutation pour champ requis `UNESTABLISHED`, structure contradictoire ou référence
+   annoncée mais absente ;
 7. reconquête positive avec toutes les preuves et fallback pour chaque condition
    constructive fausse dans une entrée valide ;
 8. reconfiguration positive avec les quatre preuves et fallback pour chaque
    condition fausse ;
-9. historique dommageable jamais effacé par le libellé du choix ;
-10. droit de refus de Marie invariant dans les six états ;
-11. record contenant choix exact, état, faits de garde, conditions prouvées,
+9. verrouillage statique de la règle
+   `J17_RULE_RECONQUEST_NO_FALSE_TIME_PLACE_OR_EXTERNAL_PROGRESSION` et des quatre
+   garanties du choix provisoire : reconnaissance extérieure, pause, absence
+   d’ouverture/permission rétroactive et droit complet de refus sans tiers engagé ;
+10. historique dommageable jamais effacé par le libellé du choix ;
+11. droit de refus de Marie invariant dans les six états ;
+12. record contenant choix exact, état, références autorisées réellement présentes,
+    conditions prouvées,
     marqueurs et projection temporelle ;
-12. micro-retour Mathilde puis micro-retour Marie, chacun exactement une fois,
+13. rejet de toute référence libre, inconnue ou annoncée mais absente ;
+14. micro-retour Mathilde puis micro-retour Marie, chacun exactement une fois,
     idempotents après snapshot/restore et sans choix supplémentaire ;
-13. round-trip de snapshot du record enrichi et rejet d’un record mal formé ;
-14. aucun changement de J18–J21, A1–A10, Galerie, PhotoViewer, UI ou assets.
+15. round-trip détaillé du record, des marqueurs et des transcripts dans le driver
+    J17 dédié, plus exécution inchangée du snapshot générique J16–J21 ;
+16. aucun changement de J18–J21, A1–A10, Galerie, PhotoViewer, UI ou assets.
 
 ## 14. Gates d’entrée N8
 
@@ -773,41 +875,53 @@ Sans lancer N8 dans ce lot, la future validation doit couvrir :
 | Identité finale distincte | Fixée | Section 3.2 ; aucune collision. |
 | Six états | Fixés | Section 4. |
 | Mapping champs réels | Audité | Sections 5 et 7. |
-| Formules exactes des prédicats | Bloqué | Une seule notion pleinement calculable ; décisions section 7. |
-| Table quatre choix/six états | Fixée normativement, non exécutable | Section 8. |
+| Formules exactes des prédicats | Fixées | Douze décisions intégrées ; sections 5.1, 7 et 9.1. |
+| Table quatre choix/six états | Fixée normativement | Huit règles ordonnées, fallbacks propres et rejet des entrées invalides ; section 8. |
 | Cas invalides/données absentes | Fixés | Sections 6–8. |
-| Record minimal | Fixé sous réserve des identifiants de preuve | Section 9. |
-| Deux micro-retours | Fixés fonctionnellement | Section 9.1. |
+| Record minimal | Fixé avec deux listes fermées | Sections 9 et 9.1. |
+| Deux micro-retours | Fixés fonctionnellement | Section 9.2. |
 | Projection J01–J21 informative | Fixée | Section 10. |
 | Gouvernance documentaire | Fixée | Section 11. |
-| Allowlist N8 | Proposée, à valider | Section 12.2. |
+| Allowlist N8 | Fermée à cinq fichiers, à approuver | Section 12.2 ; driver snapshot execute-only. |
 | Tests ciblés | Fixés | Section 13. |
 | Aucun cutover A1–A10 | Fixé | Sections 1 et 12. |
 
-### 14.1 Décisions produit bloquantes consolidées
+### 14.1 Douze décisions produit intégrées
 
-Le produit doit valider, sans score ni compteur :
+Les décisions sont fermées dans le présent contrat, sans score ni compteur :
 
-1. la liste fermée des violations graves, la preuve de connaissance par Marie et
-   la réparation suffisante pour chacune ;
-2. la liste fermée des faits matériels, leur obligation de divulgation et leur
-   preuve de divulgation ;
-3. les paires version/fait incompatibles et leurs événements de clôture ;
-4. les combinaisons authored fermées d’actes répétés envers Marie ;
-5. la définition de vérité suffisante par faits dus ;
-6. le vocabulaire fermé et la preuve d’acceptation d’une règle concrète ;
-7. la preuve que le désir extérieur a été reconnu par Marie/Player ;
-8. l’ensemble d’audiences pertinent et la réparation suffisante par brèche ;
-9. l’acte authored, antérieur à la dérivation, qui prouve la pause ;
-10. l’acte authored, antérieur à la dérivation, qui prouve la reconnaissance
-    explicite du droit de refus ;
-11. les identifiants de preuve fermés autorisés dans le record ;
-12. l’allowlist proposée.
+1. D1-A/B/C définissent exhaustivement la violation grave connue de Marie, leurs
+   réparations suffisantes et les cas exclus — section 7.2.
+2. Mathilde M-B2/M-B3 et le premier baiser Raphaëlle sont les seuls faits matériels
+   dus; ils restent cachés faute de divulgation exacte — section 7.3.
+3. D3 définit la version incompatible active et ses clôtures — section 7.4.
+4. Quatre combinaisons authored fermées prouvent les actes Marie répétés — sections
+   5.1 et 7.5.
+5. La vérité suffisante est la structure valide sans fait matériel caché ni version
+   incompatible active — section 7.6.
+6. L’absence de violation active est la négation dérivée des trois gardes, jamais un
+   nouveau champ — section 7.7.
+7. La règle de reconquête porte l’identifiant fermé
+   `J17_RULE_RECONQUEST_NO_FALSE_TIME_PLACE_OR_EXTERNAL_PROGRESSION` et exige le
+   resserrement authored du choix existant — section 7.8.
+8. Le désir extérieur reconnu ne peut provenir que de Sandra
+   `SANDRA_DESIRE_BOUNDED` ou Raphaëlle `RESULT_SENT_ATTRACTION_NAMED`, avec
+   reconnaissance explicite dans le choix provisoire resserré — section 7.9.
+9. La sûreté des audiences se calcule uniquement sur l’événement de découverte J14
+   ou son absence canonique, avec notice contrôleur payée — section 7.10.
+10. La pause et la reconnaissance du droit complet de refus sont deux preuves
+    distinctes du choix provisoire resserré; le droit reste invariant — sections
+    7.11 et 7.12.
+11. Les références de gardes et les conditions constructives du record utilisent
+    deux listes fermées; toute référence annoncée absente est invalide — section 9.1.
+12. L’allowlist contient exactement cinq fichiers modifiables; le driver snapshot
+    J16–J21 est execute-only et le détail J17 appartient au driver dédié — section
+    12.2.
 
-Tant que ces décisions ne sont pas verrouillées, le statut reste :
+Le statut de livraison est donc :
 
-`SEASON_RUNTIME_PROJECTION_CONTRACT_BLOCKED`
+`SEASON_RUNTIME_PROJECTION_CONTRACT_READY_FOR_PRODUCT_REVIEW`
 
 Le statut `SEASON_RUNTIME_PROJECTION_CONTRACT_APPROVED` ne peut être attribué que
-par la revue produit. Aucun travail N8 ou A1–A10 n’est autorisé par la présente
+par la revue produit. Aucun travail N8, J21 ou A1–A10 n’est autorisé par la présente
 livraison.
