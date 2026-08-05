@@ -12,7 +12,7 @@
 >
 > **Statut produit visé après revue seulement :** `LEGACY_FREEZE_AND_NEW_RUNTIME_CUTOVER_CONTRACT_APPROVED`
 >
-> **Décision de tranche verticale :** `BLOCKED_PRODUCT_DECISION`
+> **Décision de tranche verticale :** `FIRST_TARGET_VERTICAL_SLICE_SELECTED`
 
 ## 1. Décision, portée et autorité
 
@@ -175,6 +175,7 @@ la présentation réutilisable, malgré son emplacement actuel.
 | `game/scripts/ui/messages/MessagesDemoData.gd`, `game/scripts/ui/gallery/GalleryDemoData.gd` | Fixtures de démonstration UI. | Fixtures de non-régression présentation. | Conserver hors production. | Écrans UI. | Faible. |
 | `game/tests/T_UI_*`, `tests/test_t_ui_*`, `game/tests/VisualDeliveryPipelineSmoke*`, `tests/test_visual_delivery_pipeline_static.py` | Preuves autonomes du shell, Messages, transitions, Galerie et PhotoViewer. | Suite de non-régression des surfaces réutilisées. | Conserver ; compléter plus tard avec une source cible. | UI et fixtures demo. | Faible. |
 | `game/tests/UI_MSG_04*`, `tests/test_ui_msg_04*`, `tools/test_ui_msg_04*` | Tests UI montant aujourd'hui `PortraitMain`/runtime_s1. | Tests de présentation après recâblage. | Adapter lors du cutover, sans figer le provider historique. | Entrée production legacy. | Moyen. |
+| `game/tests/R8CA4FinalPortraitUXSmokeDriver.gd`, `game/tests/R8CA4FinalPortraitUXSmokeTest.tscn`, `tools/test_r8c_a4_final_portrait_ux.sh` | Smoke A4 principalement player-facing : `PortraitMain`, Shell, Messages, Galerie, PhotoViewer et navigation, avec dépendances legacy de montage. | Non-régression des surfaces de présentation lors du recâblage cible. | Conserver dans la suite présentation ; ne pas le classer comme preuve du domaine A1–A10. | UI portrait et runtime legacy actuel. | Moyen : son préfixe A4 ne décrit pas une preuve de domaine. |
 
 ### 4.3 `TARGET_DOMAIN`
 
@@ -191,10 +192,21 @@ la présentation réutilisable, malgré son emplacement actuel.
 | `game/scripts/narrative_scene/ControlledNarrativeSlotCompositionCoordinator.gd` | A9, plan éphémère `earliest-fit`. | Composition contrôlée issue de l'ordre auteur. | Conserver comme calcul, pas comme calendrier Saison. | A8. | Faible à moyen. |
 | `game/scripts/narrative_scene/NarrativeOrchestrationFacade.gd` | A10, façade A1–A9 et snapshot A5 mémoire. | Façade d'orchestration sous l'exécuteur. | Conserver ; ne pas y ajouter contenu, UI ou second domaine. | A1–A9. | Moyen : reprise d'activation éphémère. |
 | `game/data/narrative_scenes/r8c_a6_prototype_library.json` | Trois définitions synthétiques A6. | Fixture de contrat, pas corpus produit. | Conserver comme fixture ou déplacer plus tard vers les tests. | A6. | Faible si non indexé en production. |
-| `game/data/narrative_scenes/r8c_n5_sandra_blue_chairs_staged.json` | Définition canonique staged chargée explicitement par tests. | Source A6 possible d'une tranche, sous décision produit et enrichissement authored séparé. | Conserver staged ; ne pas activer par bridge legacy. | A6–A10, source N2/N5. | Moyen : dialogues et média hors schéma. |
-| `game/data/narrative_scenes/r8c_a11_4_sandra_recontact_after_silence_export.json`, `r8c_a11_sandra_last_lunch_export.json` | Exports A6 de test/prototype. | Fixtures de validation du pipeline auteur. | Conserver hors catalogue produit. | A6/A11. | Faible si leur statut prototype reste explicite. |
-| `game/tests/R8CA*`, `tests/test_r8c_a*`, `game/tests/R8CN5SandraBlueChairsStagedProjectionSmoke*`, `tests/test_r8c_n5_sandra_blue_chairs_staged_projection.py` | Preuves A1–A10 et projection staged. | Régressions du domaine et de l'orchestration cible. | Conserver. | A1–A10 et bundles fixtures. | Faible ; ne pas les confondre avec une preuve player-facing. |
+| `game/tests/R8CANarrativeStateSmokeTest.gd` et `.tscn`, `tests/test_r8c_a1_narrative_state_static.py` | Preuves automatisées A1. | Régression du domaine durable. | Conserver. | A1. | Faible. |
+| `game/tests/R8CAMinimalScenePrototypeSmokeTest.gd` et `.tscn`, `tests/test_r8c_a3_minimal_scene_prototype_static.py` | Preuves automatisées A3. | Régression du noyau de scène cible. | Conserver. | A1–A3. | Faible. |
+| `game/tests/R8CAPersistentSceneRegistrySmokeTest.gd` et `.tscn`, `tests/test_r8c_a5_persistent_scene_registry_static.py` | Preuves automatisées A5. | Régression du registre et du codec cible. | Conserver. | A1, A3, A5. | Faible. |
+| `game/tests/R8CAMinimalNarrativeLibrarySmokeTest.gd` et `.tscn`, `tests/test_r8c_a6_minimal_narrative_library_static.py` | Preuves automatisées A6. | Régression de la bibliothèque cible. | Conserver. | A1, A3, A6. | Faible. |
+| `game/tests/R8CACandidateReservationProposalSmokeTest.gd` et `.tscn`, `tests/test_r8c_a7_candidate_reservation_proposal_static.py` | Preuves automatisées A7. | Régression de la proposition/réservation cible. | Conserver. | A1, A3, A6, A7. | Faible. |
+| `game/tests/R8CAOpportunityWindowsExclusiveConflictsSmokeTest.gd` et `.tscn`, `tests/test_r8c_a8_opportunity_windows_exclusive_conflicts_static.py` | Preuves automatisées A8. | Régression des fenêtres et conflits cible. | Conserver. | A1, A3, A6–A8. | Faible. |
+| `game/tests/R8CAControlledNarrativeSlotCompositionSmokeTest.gd` et `.tscn`, `tests/test_r8c_a9_controlled_narrative_slot_composition_static.py` | Preuves automatisées A9. | Régression de la composition cible. | Conserver. | A1, A3, A6–A9. | Faible. |
+| `game/tests/R8CAVerticalSliceOrchestrationSmokeTest.gd` et `.tscn`, `tests/test_r8c_a10_vertical_slice_orchestration_static.py` | Preuves automatisées A10. | Régression de la façade d'orchestration cible. | Conserver. | A1, A3, A5–A10. | Faible. |
 | `game/scripts/core/DataLoader.gd` | Lecture JSON partagée par runtime et A6. | Infrastructure technique de chargement validé. | Conserver si les callers cibles bornent leurs chemins et formats. | Données JSON. | Faible à moyen. |
+
+A2 est un contrat sans test automatisé dédié. A4 ne possède pas de famille de
+test de domaine distincte dans le dépôt : le smoke préfixé A4 inventorié en
+`REUSABLE_PRESENTATION` vérifie l'UX portrait et ses projections, pas le domaine.
+Cette absence n'autorise ni à classer l'UI comme `TARGET_DOMAIN`, ni à élargir
+les familles ci-dessus par des motifs englobant A4 UI ou A11.
 
 ### 4.4 `TARGET_MISSING`
 
@@ -219,6 +231,9 @@ la présentation réutilisable, malgré son emplacement actuel.
 | Chemin réel ou famille fermée | Fonction actuelle | Fonction future | Sort | Dépendances | Risque de dette |
 | --- | --- | --- | --- | --- | --- |
 | `narrative_tool/a11/**` | Planification, brouillons, calibration, exports A6 et rapports Sandra. | Atelier authored et support de migration hors runtime. | Conserver hors build ; exports soumis au contrat cible et à revue humaine. | Canon, profils, A6. | Élevé s'il devient une source runtime implicite. |
+| `tests/test_r8c_a11_authoring_workshop.py`, `tests/test_r8c_a11_2_voice_relationship_calibration.py`, `tests/test_r8c_a11_3_assisted_scene_planning.py`, `tests/test_r8c_a11_4_plan_draft_a6_export.py`, `tests/test_r8c_a11_5_first_editorial_scene_pilot.py` | Gardes de l'atelier, des rapports, des comparaisons et des exports A11. | Validation hors ligne du support de migration authored. | Conserver hors suite du runtime cible. | `narrative_tool/a11`, `tools/a11_*.py`. | Faible si leur portée hors runtime reste explicite. |
+| `game/tests/R8CA11AuthoringExportSmokeTest.gd` et `.tscn`, `game/tests/R8CA114PlanDraftA6ExportSmokeTest.gd` et `.tscn`, `game/data/narrative_scenes/r8c_a11_4_sandra_recontact_after_silence_export.json`, `game/data/narrative_scenes/r8c_a11_sandra_last_lunch_export.json` | Smokes et fixtures d'exports A11 ; ils prouvent la lisibilité technique d'un export, pas son activation produit. | Validation hors ligne du pipeline auteur/migration. | Conserver hors catalogue et bootstrap produit. | A6/A11. | Moyen si un export est pris pour du contenu canonique activé. |
+| `tests/test_r8c_n2_sandra_blue_chairs_revision.py`, `tests/test_r8c_n5_sandra_blue_chairs_staged_projection.py`, `game/tests/R8CN5SandraBlueChairsStagedProjectionSmokeTest.gd` et `.tscn`, `game/data/narrative_scenes/r8c_n5_sandra_blue_chairs_staged.json` | Comparaison, projection et harness staged « Chaises bleues », avec lecture de sources legacy et activation explicite de fixture. | Pilote technique et oracle de migration hors runtime produit. | Conserver staged ; ne pas le classer comme preuve player-facing ni l'activer par bridge legacy. | N2/N5, A1/A6–A10, corpus legacy. | Moyen : le harness traverse le domaine cible sans constituer une tranche produit. |
 | `narrative_tool/routes/**`, `memory/**`, `scene_contracts/**`, `benchmarks/**`, `drafts/**`, `reviews/**`, `reports/**` | Analyse éditoriale, mémoire, QA et provenance historiques. | Sources de comparaison et de réécriture. | Conserver/archiver selon autorité ; jamais charger au runtime final. | Corpus et outils Python. | Moyen : statuts hétérogènes et doublons. |
 | `tools/a11_*.py` | CLI d'atelier et d'export. | Génération/validation hors ligne du contenu authored. | Conserver comme tooling. | `narrative_tool/a11`. | Faible si aucune dépendance production. |
 | `tools/*check*.py`, `tools/*report*.py`, `tools/simulate_route_paths.py`, `tools/scenario_pivot_check.py`, `tools/run_dialogue_qa.py` | QA, simulations et rapports sur corpus. | Comparaison, parité et rapports de migration. | Conserver hors runtime ; adapter aux sources cibles dans des lots dédiés. | Documents et JSON historiques. | Moyen : une règle historique peut être prise pour le canon cible. |
@@ -512,36 +527,63 @@ la tranche complète avec les données et décisions existantes. Lui donner une
 entrée Galerie contredirait son contrat actuel de média conversation-only et
 constituerait une décision narrative/produit nouvelle, interdite en N10.
 
-### 12.2 Candidats alternatifs réels
+Son statut est donc `TECHNICAL_ORCHESTRATION_PILOT` : le staged demeure une
+fixture technique de comparaison et d'orchestration, pas la première tranche
+player-facing.
 
-Deux alternatives maximum sont retenues pour décision produit :
+### 12.2 Statuts des candidats réels
 
-| Candidat | Couverture déjà prouvée dans le legacy | Manques pour la cible | Coût relatif | Couverture attendue |
-| --- | --- | --- | --- | --- |
-| Sandra J01 — `chapter_01_sandra_trace` / photo du déjeuner | Messages, vrai choix, image-message, PhotoViewer, observation idempotente, trace/connaissance, snapshot/reprise et retour J05/J10. | Aucun A6–A10 ; Galerie J01 vide ; asset final absent ; tout effet est dans `Season1State`. | Moyen pour authored/domain, élevé si Galerie doit être ajoutée car elle n'existe pas dans le comportement actuel. | Bonne pour Messages, choix, viewer, reprise et retour ; insuffisante pour Galerie sans décision. |
-| Mathilde J11 M-B3 — `MATHILDE_J11_SECRET_INTIMACY` | Messages/choix, séquence physique, triplet média, Galerie parent/enfants, PhotoViewer, trace/fait, obligation/aftercare, retours J12/J13 et checkpoints exacts. | Aucun A6–A10 ; six assets finaux absents ; logique et reprise entièrement legacy ; migration d'une séquence sensible plus complexe. | Élevé, mais la couverture fonctionnelle existe déjà et est testée. | La plus complète pour prouver Messages + physique + média + Galerie + Viewer + conséquence + reprise. |
+La tranche sélectionnée et le candidat de suivi sont classés ainsi :
 
-### 12.3 Recommandation et blocage produit
+| Candidat | Statut | Couverture déjà prouvée dans le legacy | Manques pour la cible | Coût relatif | Couverture attendue |
+| --- | --- | --- | --- | --- | --- |
+| Sandra J01 — `chapter_01_sandra_trace` / photo du déjeuner | `FOLLOW_UP_MESSAGES_SLICE_CANDIDATE` | Messages, vrai choix, image-message, PhotoViewer, observation idempotente, trace/connaissance, snapshot/reprise et retour J05/J10. | Aucun A6–A10 ; Galerie J01 vide ; asset final absent ; tout effet est dans `Season1State`. | Moyen pour authored/domain, élevé si Galerie doit être ajoutée car elle n'existe pas dans le comportement actuel. | Bonne candidate de suivi simplifiée pour Messages, choix, viewer, reprise et retour ; insuffisante pour Galerie sans nouvelle décision. |
+| Mathilde J11 M-B3 — projection temporelle legacy `MATHILDE_J11_SECRET_INTIMACY` | `FIRST_TARGET_VERTICAL_SLICE_SELECTED` | Messages/choix, séquence physique, triplet média, Galerie parent/enfants, PhotoViewer, trace/fait, obligation/aftercare, retours J12/J13 et checkpoints exacts. | Aucun A6–A10 ; trois visuels enfants finaux absents ; logique et reprise entièrement legacy ; migration d'une séquence sensible plus complexe. | Élevé, mais la couverture fonctionnelle existe déjà et est testée. | La plus complète pour prouver Messages + physique + média + Galerie + Viewer + conséquence + reprise. |
 
-Recommandation N10 : sélectionner **Mathilde J11 M-B3** comme première tranche
-verticale si la priorité est de prouver en une fois toutes les surfaces et le
-cycle média ; son coût est supérieur, mais aucun nouveau beat n'est nécessaire
-et le comportement joueur, l'aftercare, les retours et la reprise ont déjà des
-oracles précis.
+### 12.3 Sélection produit et couverture normative
 
-« Les chaises bleues » reste le meilleur pilote de fondation technique si le
-produit accepte soit de séparer la preuve Galerie d'un média conversation-only,
-soit de modifier explicitement son contrat d'accès. N10 ne prend aucune de ces
-décisions.
+Le produit sélectionne **Mathilde J11 M-B3** comme première tranche verticale :
 
-La sélection finale de la tranche demeure :
+`FIRST_TARGET_VERTICAL_SLICE_SELECTED`
 
-`BLOCKED_PRODUCT_DECISION`
+Cette sélection est normative. La tranche doit couvrir ensemble :
 
-Ce blocage local n'empêche pas le contrat global d'être
-`LEGACY_FREEZE_AND_NEW_RUNTIME_CUTOVER_CONTRACT_READY_FOR_PRODUCT_REVIEW`.
+- Messages alimenté par la source cible ;
+- des choix authored ;
+- un beat physique ;
+- une résolution qualitative, sans score relationnel ;
+- une conséquence durable A1–A5 ;
+- une obligation d'aftercare ;
+- un retour joueur ultérieur influencé par cette conséquence ;
+- le triplet média réel de la séquence ;
+- Galerie et PhotoViewer alimentés par la source cible ;
+- sauvegarde et reprise à l'intérieur de la séquence ;
+- aucune lecture ni écriture métier du legacy.
 
-### 12.4 Critères de réussite non négociables
+La référence J11 reste une projection temporelle et un alias de provenance. La
+séquence cible doit recevoir une identité canonique indépendante, à inventorier
+et proposer dans un lot ultérieur ; N10 ne crée pas d'identité cible fondée sur
+J11.
+
+### 12.4 Dette média Mathilde M-B3
+
+La dette de production finale comprend exactement trois visuels enfants, dans
+l'ordre canonique :
+
+1. `S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01_PROXIMITY` — `SPECIFIED_NOT_PRODUCED` ;
+2. `S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_CENTRAL_01` — `SPECIFIED_NOT_PRODUCED` ;
+3. `S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_AFTERCARE_01` — `SPECIFIED_NOT_PRODUCED`.
+
+Le parent Galerie `S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01` est une tuile
+logique ouvrant ce triplet, pas un quatrième payoff ni un quatrième fichier
+physique présumé. Son thumbnail/full asset est actuellement vide et rendu en
+placeholder. Le statut de planification initial du parent/thumbnail cible est
+`DERIVED_OR_REUSED_NOT_SEPARATELY_PRODUCED` : il doit dériver ou réutiliser l'un
+des trois enfants si possible, avec zéro asset parent supplémentaire présumé.
+Si un fichier distinct devient réellement nécessaire, ce besoin devra être
+prouvé et décidé explicitement dans un lot ultérieur ; N10 n'invente aucun asset.
+
+### 12.5 Critères de réussite non négociables
 
 La tranche choisie est réussie seulement si :
 
@@ -566,28 +608,35 @@ constitue pas le cutover.
 N10 : approbation du présent contrat, classement des composants et ouverture du
 registre de décisions produit. Aucun code.
 
-### Phase 1 — Fondation player-facing
+### Phase 1 — Fondations player-facing de la tranche Mathilde
 
 - contrat de contenu unifié versionné ;
-- exécuteur minimal sans logique de Saison ;
-- taxonomie/reducers réels strictement nécessaires à la tranche ;
+- exécuteur de séquence minimal sans logique de Saison ;
 - projection Messages et port d'intentions ;
-- sauvegarde disque minimale dans un nouveau namespace ;
-- cycle média minimal et projections Galerie/PhotoViewer ;
+- projection du beat physique et reprise de l'exécution ;
+- taxonomie et reducers réels pour la conséquence durable et l'obligation d'aftercare ;
+- lifecycle du triplet média, avec audiences et accès explicites ;
+- projections Galerie et PhotoViewer ;
+- sauvegarde/reprise intra-séquence dans un nouveau namespace ;
 - bootstrap cible sans chargement du legacy.
 
-### Phase 2 — Première tranche verticale
+### Phase 2 — Mathilde M-B3, première tranche verticale
 
-- une séquence réelle choisie par le produit ;
-- choix, résolution, événement durable et retour ;
-- média, audience, Galerie et PhotoViewer ;
-- sauvegarde/reprise et idempotence ;
-- preuve automatisée player-facing sans provider JNN.
+- implémenter la couverture normative de Mathilde M-B3 définie en 12.3 ;
+- produire et intégrer le triplet média défini en 12.4, sans présumer un quatrième asset parent ;
+- prouver choix, beat physique, résolution qualitative, conséquence A1–A5, aftercare et retour ultérieur ;
+- prouver Galerie, PhotoViewer, sauvegarde/reprise intra-séquence et idempotence ;
+- livrer une preuve player-facing sans provider JNN ni lecture/écriture métier legacy.
 
-### Phase 3 — Bibliothèque canonique
+J11 ne sert que de projection temporelle et d'alias de provenance. L'identité
+canonique cible de la séquence reste indépendante ; son inventaire et sa
+proposition appartiennent à un lot ultérieur.
 
-- trier le Mouvement I unité par unité ;
-- migrer ou réécrire après validation des voix ;
+### Phase 3 — Suivi Messages et début du Mouvement I
+
+- réaliser Sandra J01 comme `FOLLOW_UP_MESSAGES_SLICE_CANDIDATE` simplifiée ;
+- conserver « Les chaises bleues » comme fixture `TECHNICAL_ORCHESTRATION_PILOT` ;
+- commencer la migration du Mouvement I unité par unité après validation des voix ;
 - établir les alias de provenance sans reprendre les identités JNN ;
 - refuser toute migration massive automatique.
 
@@ -819,10 +868,11 @@ confirmer explicitement :
 - la stratégie média, sauvegarde et migration ;
 - la feuille de route et les critères de suppression ;
 - le traitement N7.1/N8/N9 ;
-- séparément, le candidat de tranche verticale.
+- Mathilde M-B3 comme tranche `FIRST_TARGET_VERTICAL_SLICE_SELECTED`, sa
+  couverture normative et sa dette exacte de trois visuels enfants.
 
-La décision de tranche peut rester `BLOCKED_PRODUCT_DECISION` pendant la revue
-du contrat, mais aucune phase 2 ne commence sans sa résolution.
+La revue ne transforme pas cette sélection en implémentation autorisée : la
+phase 2 ne commence qu'après livraison et validation des fondations de phase 1.
 
 ### 18.2 Gate documentaire N10
 
@@ -835,7 +885,9 @@ du contrat, mais aucune phase 2 ne commence sans sa résolution.
 - [x] Cycle média et sauvegarde/reprise couverts.
 - [x] Stratégie de migration couverte.
 - [x] Sandra « Chaises bleues » analysée sans invention.
-- [x] Deux alternatives réelles maximum comparées.
+- [x] Mathilde M-B3 sélectionnée et deux candidats de suivi/pilote classés.
+- [x] Dette Mathilde bornée à trois enfants ; parent sans quatrième asset présumé.
+- [x] Preuves de domaine, A4 UI et A11/N5 migration classées par chemins étroits.
 - [x] Feuille de route et critères de suppression couverts.
 - [x] Gouvernance documentaire couverte sans modifier les sources.
 - [x] Aucun placeholder dans le contrat.
@@ -849,6 +901,10 @@ extrait. A1–A10 reste le `TARGET_DOMAIN`; les liaisons player-facing, le contr
 authored complet, les reducers réels, le lifecycle média, la sauvegarde disque
 et le corpus migré sont `TARGET_MISSING`. Les outils auteur et de comparaison
 restent `MIGRATION_SUPPORT_ONLY` et hors runtime.
+
+Mathilde M-B3 est la première tranche verticale sélectionnée ; Sandra J01 reste
+le candidat de suivi Messages et « Les chaises bleues » le pilote technique
+d'orchestration.
 
 Le statut de livraison du présent document est :
 
