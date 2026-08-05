@@ -20,7 +20,7 @@ La Saison 1 est écrite, structurée et jouable textuellement. La production res
 | Réponses guidées dans ce sous-ensemble QA | **18** | Principalement J01 et J08. |
 | Contenus visuels principaux à livrer | **63** | Parents logiques. |
 | Fichiers visuels finaux à produire | **84** | 59 images de scène, 16 photos, 9 frames de sets. |
-| Fichiers V3–V4 | **5** | 2 V3 et 3 V4. |
+| Fichiers NV3–NV4 | **5** | 2 NV3 et 3 NV4. |
 | Nouveaux fichiers adultes introduits par les addenda | **8** | 6 images de scène + 2 photos diégétiques ; inclus dans les 84. |
 | Prototypes physiques existants | **14** | Aucun ne compte comme fichier final. |
 | Asset N5 hors manifeste | **1 optionnel** | Photo des chaises bleues, seulement si activation. |
@@ -48,7 +48,7 @@ La différence `84 - 63 = 21` est entièrement expliquée : huit variantes, cinq
 | Mathilde J11 | payoff canonique Mathilde | Écrire une version W4 du premier passage borné, sans pénétration, avec arrêt et panique/reprise de contrôle. | Indépendance matérielle, Marie réelle, logement non traité comme accès. |
 | Sandra J18 | payoff canonique Sandra | Écrire une version W4 explicite complète, tardive et relationnelle. | Aucune caméra diégétique automatique, Jeff réel, sélection/audience intactes. |
 
-Ces révisions peuvent rester optionnelles au niveau de contenu explicite joueur, mais elles sont nécessaires si la première grande version prétend réellement couvrir W4. Sans elles, la valeur W4 reste vide et les trois V4 reposent sur des briefs sans équivalent écrit.
+Ces révisions peuvent rester optionnelles au niveau de contenu explicite joueur, mais elles sont nécessaires si la première grande version prétend réellement couvrir W4. Sans elles, la valeur W4 reste vide et les trois NV4 reposent sur des briefs sans équivalent écrit.
 
 ### 3.2 Deux raccords de structure/finale
 
@@ -89,13 +89,15 @@ Le manifeste final ne contient aucun média strictement « conversation uniqueme
 
 ### 4.2 Par intensité
 
+`NV` signifie **N6 Visual Audit**. Cette agrégation de production `NV0–NV4` ne remplace pas l'échelle canonique normative `V0–V5` : elle sert seulement à ordonner les 84 fichiers par fonction et plafond de payoff. La correspondance détaillée figure dans l'audit visuel et la carte de progression.
+
 | Intensité | À produire | Usage |
 |---|---:|---|
-| V0 | 40 | contexte, monde, conséquence |
-| V1 | 25 | attirance et présence chargée |
-| V2 | 14 | intimité, entrée et aftercare |
-| V3 | 2 | photos adultes Pauline/Raphaëlle |
-| V4 | 3 | centres pornographiques Marie/Mathilde/Sandra |
+| NV0 | 40 | contexte, monde, conséquence |
+| NV1 | 25 | attirance et présence chargée |
+| NV2 | 14 | intimité, entrée et aftercare |
+| NV3 | 2 | photos adultes Pauline/Raphaëlle |
+| NV4 | 3 | centres pornographiques Marie/Mathilde/Sandra |
 | **Total** | **84** |  |
 
 ### 4.3 Par personnage
@@ -104,12 +106,12 @@ Les apparitions se chevauchent dans les groupes.
 
 | Personnage | Fichiers où le sujet est nommé | Maximum | Besoin spécifique |
 |---|---:|---|---|
-| Marie | 32 | V4 | cohérence foyer/La Verrière, séquence conjugale, finale |
-| Sandra | 10 | V4 | contrôle de représentation, séquence J18 ; +1 asset N5 optionnel |
-| Mathilde | 16 | V4 | continuité foyer, tenue, séquence J11 et départ |
-| Pauline | 9 | V3 | surface publique, version privée, photo adulte |
-| Raphaëlle | 11 | V3 | processus, Maud, rôle et après-rôle |
-| Nico | 6 | V1 | monde propre, regard et conséquence sans érotisation Nico/Player |
+| Marie | 32 | NV4 | cohérence foyer/La Verrière, séquence conjugale, finale |
+| Sandra | 10 | NV4 | contrôle de représentation, séquence J18 ; +1 asset N5 optionnel |
+| Mathilde | 16 | NV4 | continuité foyer, tenue, séquence J11 et départ |
+| Pauline | 9 | NV3 | surface publique, version privée, photo adulte |
+| Raphaëlle | 11 | NV3 | processus, Maud, rôle et après-rôle |
+| Nico | 6 | NV1 | monde propre, regard et conséquence sans érotisation Nico/Player |
 
 ### 4.4 Dépendances d'assets
 
@@ -142,6 +144,8 @@ Les apparitions se chevauchent dans les groupes.
 
 La roadmap contient dix lots maximum. Les actes servent ici de regroupements de continuité et de fichiers, pas d'architecture d'écriture par jour.
 
+La cible de trois contenus visuels distincts par journée reste une règle produit pour la projection actuelle J01–J21 et pour la vérification de sa couverture. Elle n’est pas une topologie obligatoire du futur moteur narratif, qui reste conçu par arcs, séquences et scènes. La prévision vérifie donc chaque journée actuelle, refuse trois contenus artificiels ou décoratifs comme couverture suffisante, autorise le déplacement ou la fusion de jours futurs, n'invente aucune scène pour remplir une case et ne confond jamais projection de livraison et identité de scène.
+
 ### Lot 1 — Réconciliation écrite bornée
 
 - trois révisions W4 ;
@@ -163,7 +167,7 @@ La roadmap contient dix lots maximum. Les actes servent ici de regroupements de 
 ### Lot 3 — Références lieux et pilote de pipeline
 
 - appartement, La Verrière, L'Annexe, SentryCore, atelier et extérieurs Sandra ;
-- trois fichiers pilotes déjà pris dans les 84 : un V0, un V2, un V4 ;
+- trois fichiers pilotes déjà pris dans les 84 : un NV0, un NV2, un NV4 ;
 - validation verticale, identité, lumière, anatomie et métadonnées.
 
 **Sortie :** méthode prouvée sans créer trois assets supplémentaires hors budget.
@@ -173,7 +177,7 @@ La roadmap contient dix lots maximum. Les actes servent ici de regroupements de 
 - 15 fichiers ;
 - set J04 de trois frames ;
 - contrôle de la photo Sandra J01 ;
-- couverture V0–V1 et Galerie J01–J04.
+- couverture NV0–NV1 et Galerie J01–J04.
 
 ### Lot 5 — Mouvement II / attirances
 
@@ -186,20 +190,20 @@ La roadmap contient dix lots maximum. Les actes servent ici de regroupements de 
 
 - 30 fichiers ;
 - Marie J09, alternatives J10, séquences Marie/Mathilde J11, sets J12 ;
-- deux V4 ;
+- deux NV4 ;
 - contrôle strict des exclusivités et de l'aftercare.
 
 ### Lot 7 — Mouvement IV / conséquences
 
 - 12 fichiers ;
-- photo adulte Raphaëlle V3 ;
+- photo adulte Raphaëlle NV3 ;
 - découverte, audience, autonomies J15 et préparation J16 ;
 - aucune nouvelle intensification après dette impayée.
 
 ### Lot 8 — Mouvement V / clarification
 
 - 13 fichiers ;
-- Sandra V4, Pauline V3 ;
+- Sandra NV4, Pauline NV3 ;
 - variantes couple/Sandra ;
 - J21 à zéro nouveau fichier, avec sélection de réutilisations admissibles.
 
@@ -214,7 +218,7 @@ La roadmap contient dix lots maximum. Les actes servent ici de regroupements de 
 ### Lot 10 — Option N5 séparée
 
 - décision explicite d'activer ou non **Les chaises bleues** ;
-- si oui : un asset V0 causal hors des 84, ponts et incompatibilité J05 ;
+- si oui : un asset NV0 causal hors des 84, ponts et incompatibilité J05 ;
 - si non : conserver la scène staged, sans la compter comme manque de la Saison 1.
 
 Ce lot est volontairement dernier et optionnel. Il ne doit pas retarder la livraison du portefeuille principal.
@@ -224,7 +228,7 @@ Ce lot est volontairement dernier et optionnel. Il ne doit pas retarder la livra
 ```text
 réconciliation écrite
 → références personnages/lieux
-→ pilote V0/V2/V4
+→ pilote NV0/NV2/NV4
 → vagues par mouvement
 → livraison Galerie/conversation
 → QA branches, consentement, retrait et finale
@@ -249,13 +253,13 @@ Une vague ne passe pas à la suivante seulement parce que son nombre de fichiers
 | Conversations runtime | 46 | 46 auditées | 46 sources média potentielles | 46 |
 | Nœuds de progression | — | 40 | — | 40 |
 | Parents visuels | 63 | — | 63 | 63 |
-| Fichiers physiques | 84 | 84 comme surface V | 84 | 84 |
-| V0/V1/V2/V3/V4 | — | maxima par route | 40/25/14/2/3 | 40/25/14/2/3 |
+| Fichiers physiques | 84 | 84 comme surface NV | 84 | 84 |
+| NV0/NV1/NV2/NV3/NV4 | — | maxima par route | 40/25/14/2/3 | 40/25/14/2/3 |
 | Assets finaux existants | 0 | 0 payoff livré | 0 | 0 |
 | Assets finaux manquants | 84 | 5 explicites/pornographiques inclus | 84 | 84 |
 | Nouvelles scènes requises | 0 | 0 | 0 | 0 |
 | Révisions écrites | — | 3 W4 + 2 finale | — | 5 |
-| Asset N5 optionnel | 1 hors budget | 1 V0 | 1 | 1 si activation |
+| Asset N5 optionnel | 1 hors budget | 1 NV0 | 1 | 1 si activation |
 
 ## 9. Hypothèses conservatrices
 
@@ -263,7 +267,7 @@ Une vague ne passe pas à la suivante seulement parce que son nombre de fichiers
 - Les 14 PNG V0.95/V0.96 sont des prototypes et ne réduisent pas le manque.
 - Les trois révisions W4 restent dans les scènes existantes et ne changent pas les 66 positions.
 - Les deux raccords J17/J21 ne créent pas une seconde finale.
-- Pauline et Raphaëlle n'ont pas besoin d'un V4 pour être complètes en Saison 1.
+- Pauline et Raphaëlle n'ont pas besoin d'un NV4 pour être complètes en Saison 1.
 - Nico n'a besoin d'aucune scène sexuelle Player/Nico.
 - J21 produit zéro nouveau fichier ; toute absence est un état, pas un asset.
 - Les comptes par personnage se chevauchent et ne doivent pas être sommés.
@@ -272,4 +276,4 @@ Une vague ne passe pas à la suivante seulement parce que son nombre de fichiers
 
 ## 10. État attendu après roadmap
 
-La première grande version jouable est prête lorsque les cinq révisions écrites sont validées, les 84 fichiers finaux sont livrés sous leurs identifiants, les 63 parents sont présentés sans spoiler ni fuite d'audience, les 66 beats de couverture sont servis selon les branches, les payoffs W3/W4 et V3/V4 conservent consentement et conséquences, et J21 recontextualise seulement des contenus réellement vécus. L'option N5 peut alors être acceptée ou laissée staged sans remettre en cause cette complétude.
+La première grande version jouable est prête lorsque les cinq révisions écrites sont validées, les 84 fichiers finaux sont livrés sous leurs identifiants, les 63 parents sont présentés sans spoiler ni fuite d'audience, les 66 beats de couverture sont servis selon les branches, les payoffs W3/W4 et NV3/NV4 conservent consentement et conséquences, et J21 recontextualise seulement des contenus réellement vécus. L'option N5 peut alors être acceptée ou laissée staged sans remettre en cause cette complétude.

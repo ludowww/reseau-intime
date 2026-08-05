@@ -50,7 +50,20 @@ Les 66 positions sont donc un inventaire de service éditorial, pas 66 scènes s
 | `r8c_n5_sandra_blue_chairs_staged.json` | `STAGED` | Canon narratif projeté techniquement, non indexé et hors joueur. |
 | Bundles A6/A11 synthétiques | `CANDIDATE/PROTOTYPE` | Preuves d'outillage, pas des scènes de Saison 1. |
 | `docs/V0_*`, anciens plans racine, `docs/story_state/` | `HISTORIQUE` | Provenance seulement, sauf renvoi actif explicite. |
-| `docs/canon/bible/11_*` et plans `12*` | `CANON HISTORIQUE / PARTIELLEMENT CONTRADICTOIRE` | Utiles pour densité et fonctions ; les constats runtime obsolètes ne sont pas retenus. |
+| `docs/canon/bible/11_*` et plans `12*` | voir la matrice source par source ci-dessous | Le statut déclaré est conservé ; l'usage N6 est borné par les autorités plus récentes. |
+
+### 2.3 Statut détaillé des sources `11` et `12*`
+
+Les catégories de gouvernance retenues ici sont limitées à `Canon`, `Runtime`, `Archive` et `À réécrire`. Elles ne remplacent jamais le statut déclaré dans le document. En particulier, une source qui se déclare `Canon` reste signalée comme telle même si une autorité plus récente borne son usage.
+
+| Chemin exact | Statut déclaré dans la source | Gouvernance retenue N6 | Autorité plus récente qui confirme, borne ou supersède | Information utilisable | Information rejetée ou contradictoire | Effet sur les comptes N6 |
+|---|---|---|---|---|---|---|
+| `docs/canon/bible/11_DISTRIBUTION_SEQUENCES_SCENES_IMAGES_CONSEQUENCES_JOURNEES.md` | `Catégorie : Canon` ; calendrier narratif et rythme de production | **Canon**, usage borné | `docs/canon/bible/14_CONTRAT_NARRATIF_SAISON_1_RECONCILIE.md` borne J01–J21 à une projection et rend les cinq mouvements souples ; scripts signés et paquets `NAR-PROD-02–06` confirment les fonctions effectivement retenues. | Densité, fonctions quotidiennes, conséquences, contrat visuel et projection J01–J21 comme grille de contrôle. | Toute lecture imposant 21 jours, un ordre fixe jour/fonction ou une topologie du futur moteur. | Aucun ajout : contribue à vérifier les 66 positions et la couverture, sans être recompté. |
+| `docs/canon/bible/12_PLANS_SCENES_AUDIT_RUNTIME_J01_J08.md` | `Catégorie : Canon` ; audit de l'ouverture et cartes J05–J08 | **Canon**, usage borné | `docs/canon/dialogues/J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md`, scripts consolidés J01–J08, registres et runtime de la baseline confirment ou remplacent les constats d'implémentation. | Fonctions de scène, provenance de l'ouverture, diagnostics d'adaptation et slots visuels J01–J08. | Constats runtime datés, notamment toute absence supposée de chaîne active au-delà de l'ouverture. | Aucun ajout : fonctions rapprochées des JSON et des paquets de production, jamais comptées deux fois. |
+| `docs/canon/bible/12B_PLANS_SCENES_J09_J12.md` | `Catégorie : Canon` ; plans détaillés J09–J12 | **Canon**, usage borné | Scripts signés J09–J12, `NAR_PROD_04_PAQUET_PRODUCTION_ACTE_III_J09_J12.md`, amendement J10–J12 et `ASSET-01` fixent le corpus et les fichiers retenus. | Fonctions de pivots, exclusivités, convergence et slots visuels J09–J12. | Jours ou variantes traités comme topologie obligatoire ; anciens budgets divergents des 84 fichiers. | Aucun ajout : sert à qualifier les positions et alternatives déjà incluses dans 66/63/84. |
+| `docs/canon/bible/12C_PLANS_SCENES_J13_J16.md` | `Catégorie : Canon` ; plans détaillés J13–J16 | **Canon**, usage borné | Scripts signés J13–J16, `NAR_PROD_05_PAQUET_PRODUCTION_ACTE_IV_J13_J16.md`, registres d'état et `ASSET-01` fixent l'état actuel. | Découverte située, audiences, autonomies, conséquences et handoff tardif. | Toute connaissance globale automatique, tout jour fixe du futur moteur et tout budget antérieur divergent du manifeste. | Aucun ajout : confirme les beats existants et leurs branches ; zéro nouvelle unité. |
+| `docs/canon/bible/12D_PLANS_SCENES_J17_J21.md` | `Catégorie : Canon` ; résolution provisoire de la saison | **À réécrire**, ciblé | `docs/canon/bible/14_CONTRAT_NARRATIF_SAISON_1_RECONCILIE.md` classe J17 et J21 en réécriture ciblée : clarification provisoire puis conversation finale Marie/Player obligatoire. | Résolutions de routes, départ Mathilde, conséquences, traces et matière de la finale. | J17 comme finale, J21 comme trace suffisante, ou dates obligatoires du futur moteur. | Aucun ajout : explique exactement deux des cinq révisions, sans créer de scène ni modifier 66/84. |
+| `docs/canon/bible/12E_AUDIT_GLOBAL_COHERENCE_J01_J21.md` | En-tête `STATUT HISTORIQUE / SUPERSÉDÉ`, tout en conservant à l'intérieur `Catégorie : Canon` | **Archive** | Son propre en-tête désigne les scripts consolidés, registres et contrat d'état comme autorités de remplacement ; le contrat `14` et le signoff final les matérialisent. | Provenance de l'architecture, liste des risques historiques et vérification rétrospective des intentions. | Ancien statut de production, constats runtime et toute validation contredite par les scripts/registres actuels. | Aucun : source de traçabilité uniquement, exclue de tous les totaux. |
 
 ## 3. Sources importantes et statut
 
@@ -93,6 +106,8 @@ Les graines `SX-MARIE`, `SX-SANDRA`, `SX-MATHILDE`, `SX-RAPHAËLLE`, `SX-PAULINE
 ## 5. Inventaire de service J01–J21
 
 Les jours ci-dessous sont une projection de densité. La colonne « parents » compte le catalogue visuel, pas les médias simultanément affichés. J10, J11, J13 et J19 contiennent des alternatives mutuellement exclusives.
+
+La cible de trois contenus visuels distincts par journée reste une règle produit pour la projection actuelle J01–J21 et pour la vérification de sa couverture. Elle n’est pas une topologie obligatoire du futur moteur narratif, qui reste conçu par arcs, séquences et scènes. Les 21 journées actuelles restent donc toutes auditées ; trois contenus artificiels ou décoratifs ne suffisent pas, les futurs jours peuvent être déplacés ou fusionnés, et aucune scène n'est inventée pour remplir une case. La projection de livraison n'identifie jamais une scène.
 
 | Jour | Mouvement | Séquence/fonction projetée | Beats servis | JSON actifs | Parents visuels | Fichiers | Statut principal |
 |---|---|---|---:|---:|---:|---:|---|
@@ -148,7 +163,7 @@ Un choix est signalé comme **cosmétique potentiel** lorsqu'il ne porte dans so
 
 Les comptes de conversations et d'assets se chevauchent : une scène ou une image multi-personnages est attribuée à chaque personne concernée. Ils ne doivent donc pas être additionnés entre personnages.
 
-| Personnage | Fichiers de conversation le mentionnant | Jours concernés | Fichiers visuels où le sujet est nommé | Rôle dramatique du portefeuille |
+| Personnage | Fichiers de conversation où le personnage apparaît comme `sender` | Jours concernés | Fichiers visuels où le sujet est nommé | Rôle dramatique du portefeuille |
 |---|---:|---|---:|---|
 | Marie | 22 | J01–J17, puis J21 | 32 | Centre du couple, autonomie sociale, reconquête, limite et finale. |
 | Sandra | 13 | J01, J03, J05, J10–J14, J18, J21 | 10 | Représentation choisie, confiance, désir retenu, intimité tardive ou retrait. |
@@ -156,6 +171,8 @@ Les comptes de conversations et d'assets se chevauchent : une scène ou une imag
 | Pauline | 7 | J04, J12–J14, J19, J21 | 9 | Surface publique, compartiment, preuve et dette envers Bastien/Marie. |
 | Raphaëlle | 11 | J03, J07–J14, J19, J21 | 11 | Travail, processus, version choisie, cadre et après-rôle. |
 | Nico | 10 | J04, J07–J14, J20, J21 | 6 | Ami, garde-fou, rival, témoin, regard partagé ou complice ; aucun désir Player/Nico. |
+
+Ces comptes portent exclusivement sur les fichiers où le personnage apparaît comme valeur de `sender`. Ils ne mesurent pas les mentions globales : les références faites par d'autres locuteurs sont exclues. Les nombres existants sont conservés.
 
 ## 8. Scènes staged, candidates et prototypes
 
@@ -174,7 +191,7 @@ Les comptes de conversations et d'assets se chevauchent : une scène ou une imag
 - une décision à deux options, réceptions distinctes puis convergence ;
 - média requis : `photo_sandra_cafe_blue_chairs` ;
 - rôle média : `NARRATIVE_TRIGGER`, secondaire `RELATIONSHIP_PROOF` ;
-- niveau visuel : V0 contexte ; Sandra ne doit pas être clairement visible ;
+- niveau visuel canonique : V0 (`Trace ordinaire`) ; classement d'audit N6 : NV0 ; Sandra ne doit pas être clairement visible ;
 - Galerie : aucune entrée automatique ;
 - projection runtime actuelle : J04 16:30–18:04, révisable et non identitaire ;
 - état : `RUNTIME_PROJECTION_STAGED`, `ASSET_REQUIRED_NOT_READY` ;
@@ -197,7 +214,7 @@ Les comptes de conversations et d'assets se chevauchent : une scène ou une imag
 | Contradiction | Décision conservatrice N6 |
 |---|---|
 | Les anciens documents annoncent parfois J05–J21 non jouables. | Le code, les 21 runtime maps et les tests de la baseline prouvent une chaîne J01–J21 active ; l'ancien constat reste historique. |
-| Le plan historique impose « au moins trois contenus visuels par jour ». | La cible est auditée comme couverture, jamais comme quota de création. Les paquets récents servent 66 beats avec réutilisations et alternatives. |
+| Le canon produit impose « au moins trois contenus visuels par jour » dans la projection actuelle J01–J21. | Règle produit de couverture, pas topologie obligatoire du futur moteur ni quota de nouvelles scènes. Trois contenus artificiels/décoratifs ne suffisent pas ; réutilisations et alternatives restent admissibles si leur fonction est réelle. |
 | `J01_J21_FINAL_NARRATIVE_CORPUS_SIGNOFF.md` annonce aucun bloqueur narratif, tandis que le contrat R8C demande un raccord J17/J21. | Le corpus reste signé ; deux adaptations ciblées de structure/finale sont à prévoir sans rouvrir toute la saison. |
 | Les 14 PNG prototypes peuvent sembler être des assets existants. | Ils sont comptés comme prototypes physiques, jamais comme l'un des 84 livrables finaux. |
 | J10 contient sept parents et J11 douze fichiers. | Ce sont des catalogues alternatifs ; la partie sert trois beats. Aucun diagnostic de surcharge joueur ne repose sur le catalogue brut. |
