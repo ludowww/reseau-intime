@@ -8,9 +8,9 @@
 >
 > **Branche de livraison :** `work/r8c-n9-w4-payoff-aftercare-j21-continuity-contract`
 >
-> **Statut livré :** `W4_PAYOFF_AFTERCARE_J21_CONTINUITY_CONTRACT_READY_FOR_PRODUCT_REVIEW`
+> **Statut final :** `W4_PAYOFF_AFTERCARE_J21_CONTINUITY_CONTRACT_APPROVED`
 >
-> **Statut réservé à la revue produit :** `W4_PAYOFF_AFTERCARE_J21_CONTINUITY_CONTRACT_APPROVED`
+> **Approbation produit :** commit revu `81ba4070d5b032c935b5c85c67b3f560c1c9c101` ; approuvé sans réserve ; août 2026.
 >
 > **Nature :** contrat documentaire autoritatif ; aucune écriture finale W4, aucun dialogue final, aucune implémentation J21.
 
@@ -778,13 +778,12 @@ elle borne seulement son autorité pour les futurs lots.
 
 ## 17. Statut
 
-Le contrat est livré avec le statut :
-
-`W4_PAYOFF_AFTERCARE_J21_CONTINUITY_CONTRACT_READY_FOR_PRODUCT_REVIEW`
-
-Le statut suivant ne peut être attribué que par la revue produit :
+Le contrat est approuvé sans réserve avec le statut :
 
 `W4_PAYOFF_AFTERCARE_J21_CONTINUITY_CONTRACT_APPROVED`
+
+Approbation produit : commit revu `81ba4070d5b032c935b5c85c67b3f560c1c9c101` ;
+août 2026.
 
 Blocages produit : aucun. Si une future revue demande un quatrième payoff, la
 suppression d'un payoff, un autre acte Sandra, un média diégétique, une scène comme
