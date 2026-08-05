@@ -322,7 +322,7 @@ cette branche, ni son état, ni son aftercare ; N9 ne prétend pas le contraire.
 - Vérifications : consentement écrit avant la rencontre ; confirmation gestuelle ou verbale avant la pénétration ; maintien lisible par initiative/rythme de Sandra ; contrôle explicite après tout ralentissement ou hésitation.
 - Signaux de maintien : Sandra ajuste volontairement la distance et le rythme, répond à Player et reconfirme l'étape présente. Ils ne valent jamais pour une étape future.
 - Signaux d'arrêt : retrait verbal/gestuel, immobilité non reconfirmée, éloignement, changement d'avis ou demande de départ. Player cesse immédiatement, rend l'espace et part si demandé.
-- Si l'arrêt précède la sexualité, `#079` n'est pas servi. Si la rencontre a commencé, seule l'entrée et éventuellement une version de sortie qui ne prétend pas l'acte peuvent être servies. Si l'arrêt suit une intimité vécue, seules les étapes réellement vécues sont conservées.
+- Si l'arrêt précède l'atteinte de `#079`, `#079` n'est pas servi et `#080` est `NOT_APPLICABLE`; l'aftercare reste néanmoins `DUE` sous la forme adaptée à l'arrêt précoce définie en section 7.5. Si l'arrêt suit une intimité vécue, seules les étapes réellement vécues sont conservées.
 - Sont exclus : autre acte substitué au centre canonique, Sandra passive/capturée, Player contrôlant le rythme, violence, humiliation, ivresse, pose triomphale, cadrage de performance, Jeff participant ou permission, Marie effacée, appareil, photographie, fichier, répétition promise ou route automatique.
 
 ### 7.4 Cadrage, sortie émotionnelle et séparation des promesses
@@ -341,21 +341,88 @@ commun à cogérer.
 
 ### 7.5 Aftercare J18/J19, faits et conséquences
 
+L'obligation d'aftercare devient `DUE` dès le début de la rencontre intime. Son
+contenu et l'applicabilité des médias dépendent ensuite de ce qui a réellement été
+atteint. Aucun identifiant runtime n'existe sur la baseline.
+
+#### 7.5.1 Branche A — arrêt précoce avant `#079`
+
+Cette branche couvre tout arrêt ou retrait avant que le payoff pénétratif complet et
+son média `#079` soient atteints.
+
+- `#079` n'est pas produit.
+- `#080` est `NOT_APPLICABLE`.
+- L'absence de `#080` ne peut pas provoquer à elle seule un statut `FAILED`.
+- L'aftercare reste `DUE` sous une forme adaptée à l'arrêt précoce.
+
+L'aftercare est `PAID` uniquement si tous les éléments suivants sont présents :
+
+- l'arrêt est respecté immédiatement ;
+- aucune tentative de reprise ou négociation n'est exercée ;
+- Sandra reçoit un check-in centré sur son état présent ;
+- Player lui offre explicitement de l'espace ou une sortie ;
+- aucune reassurance, promesse ou absolution n'est exigée d'elle ;
+- la clôture reconnaît qu'aucun droit futur n'a été créé.
+
+L'aftercare est `FAILED` si au moins un des éléments suivants est présent :
+
+- pression pour continuer ;
+- insistance ou négociation après l'arrêt ;
+- froideur punitive ou retrait destiné à la culpabiliser ;
+- demande de reassurance ;
+- traitement de l'arrêt comme une dette ou un rejet personnel ;
+- absence complète de check-in ou de clôture.
+
+#### 7.5.2 Branche B — payoff `#079` atteint
+
+Lorsque le payoff `#079` est atteint :
+
+- `#080` devient une sortie d'intensité obligatoire ;
+- l'absence injustifiée de `#080` rend l'aftercare `FAILED` ;
+- la présence de `#080` ne suffit pas seule à rendre l'aftercare `PAID` ;
+- le suivi J19 reste obligatoire.
+
+L'aftercare est `PAID` uniquement si tous les éléments suivants sont présents :
+
+- `#080` remplit sa fonction de sortie d'intensité ;
+- Sandra conserve une capacité d'arrêt et de retrait lisible ;
+- le suivi J19 centre son état présent et son autonomie ;
+- Player n'exige aucune confirmation que la scène était acceptable ;
+- aucun droit futur, exclusivité ou promesse de répétition n'est déduit.
+
+L'aftercare est `FAILED` si au moins un des éléments suivants est présent :
+
+- `#080` manque alors que `#079` a été atteint ;
+- la sortie d'intensité est brusque, froide ou centrée sur la satisfaction de Player ;
+- J19 demande à Sandra de rassurer ou d'absoudre Player ;
+- Player transforme la scène en promesse relationnelle ;
+- Player suppose une disponibilité future ;
+- les limites ou l'autonomie de Sandra sont minimisées.
+
+#### 7.5.3 Posture J19 « demander si elle regrette »
+
+La posture authored actuelle « demander si elle regrette » est classée `FAILED`.
+Elle demande à Sandra de statuer rétrospectivement sur la scène et de rassurer
+implicitement Player ; elle ne constitue pas un check-in suffisamment centré sur son
+état présent, ses besoins ou son autonomie. Elle n'est jamais `PAID`
+conditionnellement.
+
+Une future formulation ouverte et distincte, centrée sur la manière dont Sandra se
+sent maintenant, pourrait appartenir à un chemin `PAID`. Elle ne doit pas être
+confondue avec la posture authored actuelle.
+
+#### 7.5.4 Faits et conséquences transportables
+
 | Élément | Contrat fermé |
 |---|---|
-| Sortie d'intensité immédiate | fin de la pénétration, vérification claire, proximité ou distance choisie par Sandra, départ de Player si demandé |
-| Aftercare physique | eau/vêtement/espace/temps selon Sandra ; aucune relance sexuelle ; téléphone seulement pour écrire ensuite, jamais photographier |
-| Aftercare émotionnel | reconnaître l'acte sans demander regret, définition, répétition ou simplification ; respecter le silence éventuel |
-| Clarification relationnelle | « aucune prochaine fois prévue » et absence de regret distincte de toute permission future |
+| Aftercare physique | espace, sortie, eau/vêtement/temps selon Sandra ; aucune relance sexuelle ; téléphone seulement pour écrire ensuite, jamais photographier |
+| Aftercare émotionnel | check-in centré sur l'état présent et l'autonomie ; aucune reassurance, définition, répétition, simplification ou absolution exigée |
+| Clarification relationnelle | aucun droit futur ; « aucune prochaine fois prévue » si `#079` est atteint ; l'arrêt précoce ne devient ni dette ni rejet personnel |
 | Réparation antérieure | aucune ; dette envers Marie, vérité du couple, Jeff et audiences gardent leurs conséquences propres |
-| Aftercare authored | sortie `#080`, messages immédiats puis module prioritaire Sandra de `docs/canon/dialogues/J19_SCRIPT_NARRATIF_COMPLET.md` section 6 ; aucun identifiant runtime n'existe sur la baseline |
-| État initial | `DUE` sémantique dès qu'une rencontre physique commence ; il demeure dû même si `#079` n'est pas atteint, ajusté à ce qui a été vécu |
-| `PAID` | arrêt/sortie respectés, `#080` cohérent servi, Sandra ouvre J19 avant Pauline/Raphaëlle, Player reconnaît sans réclamer et respecte contrôle de Sandra sur Jeff/récit et toute demande de silence |
-| `FAILED` | sortie omise, arrêt contesté, relance/répétition réclamée, absence de regret traitée comme permission, secret proposé comme projet commun, contrôle du récit de Sandra contesté ou module J19 remplacé/omis |
-| Fait durable | Sandra et Player ont pu partager l'acte canonique ; ou une rencontre a commencé puis s'est arrêtée ; la distinction doit rester exacte |
-| Trace durable | fait authored privé connu de Sandra/Player + statut de l'aftercare ; `#079/#080` ne sont pas des traces diégétiques |
-| Effet immédiat | non-regret possible, trouble ou recul ; aucune prochaine fois ; décision future de Sandra envers Jeff et dette possible envers Marie |
-| Effet différé | J19 : après-coup assumé, recul protecteur ou relation parallèle sombre ; J21 : conséquence/posture seulement, sans flashback ni nouveau média |
+| Fait durable | Sandra et Player ont pu partager l'acte canonique ; ou une rencontre a commencé puis s'est arrêtée avant `#079` ; la distinction doit rester exacte |
+| Trace durable | fait authored privé connu de Sandra/Player + branche et statut de l'aftercare ; `#079/#080` ne sont pas des traces diégétiques |
+| Effet immédiat | autonomie et état présent de Sandra ; aucune prochaine fois ; décision future de Sandra envers Jeff et dette possible envers Marie |
+| Effet différé | J19 transporte la branche exacte et le statut ; J21 transporte conséquence/posture seulement, sans flashback ni nouveau média |
 
 ### 7.6 Marie, Jeff et J21
 
@@ -378,7 +445,8 @@ ne constituent ni fait révélé, ni violation active, ni incompatibilité de ve
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | Marie `#051` | souffle, check, proximité/espace choisi | `aftercare_marie_j11`; visuel `#052` | Marie et Player | immédiat puis matin J12, avant route extérieure/convergence | soin corporel, quotidien partagé, distinction sexe/conflit | `DUE` | sortie + raccord matinal J12 servis | refus/omission ou convergence prématurée | désir réel, conflit non résolu | statut obligation + `MARIE_ADULT_RECONQUEST`; comportement J12/J17/J21 | Marie/Player ; média joueur | l'aftercare peut être payé ; les fautes antérieures exigent leur propre réparation | J12, J17, J21 |
 | Mathilde `#045` | fin nette du contact et séparation de la décision de couchage | `aftercare_mathilde_j11`; visuel `#046` | Mathilde et Player | immédiat, avant toute progression/convergence J12 | espace/geste pratique, départ libre, non-définition ou responsabilité Marie | `DUE` | MA1/MA2 : ne pas définir ou reconnaître Marie + sortie respectée | MA3 répétition, refus/pression/entrave/omission | secret reconnu, départ réel | `fact_mathilde_physical_event_occurred`, `j11_mathilde_physical_aftercare_01`; priorité J12, micro-retour J17 | Mathilde/Player ; trace privée ; média joueur | aftercare réparable tant que dû ; échec déjà produit reste un fait ; autre faute séparée | J12, J17, J21 |
-| Sandra `#079` | fin de l'acte/rencontre, check, distance/proximité, départ | sortie `#080` + module authored prioritaire J19 | Sandra et Player | immédiat J18 puis ouverture J19 avant Pauline/Raphaëlle | respecter arrêt, non-regret sans droit, récit Jeff/Marie non cogéré | `DUE` sémantique dès rencontre commencée | sortie fidèle + J19 prioritaire + posture sans réclamer | arrêt/sortie contestés, permission future inférée, secret cogéré ou J19 omis | acte/arrêt reconnu, aucune prochaine fois | fait privé + état assumed/protective/dark ; dette éventuelle | Sandra/Player ; médias joueur | silence/limite peuvent être respectés ensuite ; violation antérieure garde sa réparation propre | J19, J21 |
+| Sandra — arrêt avant `#079` | arrêt immédiat, check-in, espace ou sortie | `#080` `NOT_APPLICABLE`; aftercare adapté à l'arrêt | Sandra et Player | immédiat J18 ; état transporté à J19 | respecter l'arrêt sans reprise/négociation, centrer l'état présent, n'exiger aucune reassurance | `DUE` dès rencontre commencée | tous les critères de 7.5.1 réunis | au moins un critère d'échec de 7.5.1 ; l'absence de `#080` seule ne suffit jamais | arrêt reconnu sans dette ni rejet personnel | fait privé d'arrêt + statut exact ; aucune image `#079/#080` | Sandra/Player ; aucun média de payoff/aftercare | une limite ultérieurement respectée n'efface pas un échec déjà produit | J19, J21 |
+| Sandra — `#079` atteint | `#080` obligatoire puis check-in/autonomie | `#080` + module authored prioritaire J19 | Sandra et Player | immédiat J18 puis ouverture J19 avant Pauline/Raphaëlle | sortie fidèle, état présent, aucune confirmation/absolution, aucun droit futur | `DUE` dès rencontre commencée | tous les critères de 7.5.2 réunis | `#080` absent ou au moins un critère d'échec de 7.5.2 ; « demander si elle regrette » est `FAILED` | acte reconnu, aucune prochaine fois | fait privé + statut J19 ; dette éventuelle | Sandra/Player ; médias joueur | les limites peuvent être respectées ensuite ; violation antérieure garde sa réparation propre | J19, J21 |
 
 ### 8.1 Fonctions non interchangeables
 
@@ -395,17 +463,19 @@ promesse rompue, une obligation impayée ou une version incompatible.
 
 ## 9. Contrat des six médias W4
 
-Tous les niveaux ci-dessous emploient l'échelle canonique `V0–V5`. Le statut W4
-qualifie l'écriture du payoff, pas un droit automatique au fichier.
+L'échelle d'inventaire N6 `NV0–NV4` et l'échelle visuelle canonique `V0–V5`
+restent distinctes. Aucune ne remplace l'autre.
 
-| Média | Personnage / fonction / niveau | Moment et cadrage | Obligatoire | Interdit | Player / continuité / espace / émotion | Dialogue, aftercare, production, description auteur et nécessité |
-|---|---|---|---|---|---|---|
-| `#045` `S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_CENTRAL_01` | Mathilde ; `PORNOGRAPHIC_PAYOFF`; W4, V5 ; non diégétique | milieu du contact mutuel M-B3 réellement atteint ; Mathilde sujet actif ; décor du foyer crédible, jamais studio | nudité explicite ; contact mutuel lisible ; non-pénétration incontestable ; autonomie/arrêt lisibles | pénétration, sommeil, ivresse, dépendance, voyeurisme, humiliation de Marie, caméra/téléphone, victoire sur le foyer | Player non identifiable ; vêtements issus de l'entrée et accessibles ; Mathilde désirante, concentrée, capable de corriger | suit le consentement étape par étape ; précède la séparation/#046 ; dépend références Mathilde/Player, décor, continuité vêtements et script M-B3 ; **description auteur :** Mathilde guide un contact sexuel mutuel explicite dans le foyer, sans pénétration, avec sortie possible ; existe pour rendre le premier interdit sexuel réel sans créer une disponibilité |
-| `#046` `S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_AFTERCARE_01` | Mathilde ; `TRUST_OR_INTIMACY_REWARD`; sortie/aftercare, V4 ; non diégétique | après séparation réelle, Player absent, dans le couchage indépendant ou un espace autonome | vêtements repris partiellement/entièrement ; sac, clés, téléphone/transport accessibles ; désir, gêne et réflexion | nouvel acte, victime, conquête, Player présent comme pression, photo prise dans la fiction | Player absent/non identifiable ; continuité directe #045 ; espace de repli réel ; autonomie lisible | correspond à MA1/MA2/MA3 et à `PAID/FAILED`; dépend du lieu de couchage, accessoires, version d'aftercare ; **description auteur :** Mathilde, seule après la scène, reprend ses affaires et mesure désir, secret et responsabilité ; existe pour matérialiser le départ libre et la dette d'aftercare |
-| `#051` `S1_A3_J11_SCN_MARIE_RECONQUEST_ADULT_PAYOFF_01` | Marie ; `PORNOGRAPHIC_PAYOFF`; W4, V5 ; non diégétique | point culminant d'une progression conjugale explicite réellement atteinte ; Marie centrale et active ; espace du couple | acte central/position corporelle lisibles ; réciprocité ; familiarité spécifique du couple ; autonomie de Marie | passivité-récompense, humiliation, jalousie, pose pour audience, caméra, pardon visuel, ouverture implicite | Player non identifiable ; continuité entrée/vêtements/lieu ; désir mutuel sans bonheur définitif | suit le check de consentement et précède la sortie/#052 ; dépend références couple, décor commun, acte choisi au futur script et continuité ; **description auteur :** Marie et Player reprennent une sexualité explicite choisie dans leur espace commun, sans résoudre leur conflit ; existe pour distinguer intimité réelle et réparation |
-| `#052` `S1_A3_J11_SCN_MARIE_RECONQUEST_AFTERCARE_01` | Marie ; `TRUST_OR_INTIMACY_REWARD`; sortie/aftercare, V4 ; non diégétique | retombée immédiate ou matin J12 ; Marie engagée dans une action ordinaire | vêtements repris ou drap non théâtral ; café/cuisine/préparation ; proximité réelle ; problème toujours lisible | nouvel acte, béatitude finale, tristesse punitive, possession, preuve publique | Player hors champ/non identifiable ; continuité corporelle/vêtements #051 ; espace du couple ; calme concret | paie `aftercare_marie_j11` avec le raccord J12 ; dépend décor quotidien et script de retombée ; **description auteur :** Marie revient au quotidien avec une proximité réelle, sans que la nuit ait réparé le couple ; existe pour faire de l'aftercare une conséquence narrative |
-| `#079` `S1_A5_J18_SCN_SANDRA_LATE_INTIMACY_CENTRAL_01` | Sandra ; `PORNOGRAPHIC_PAYOFF`; W4, V5 ; non diégétique | milieu du rapport vaginal pénétratif ; Sandra au-dessus, tournée vers Player, contrôle le rythme ; point de vue sans appareil | acte canonique sans ambiguïté ; Sandra active ; rythme/arrêt lisibles ; téléphone hors d'usage | autre acte substitué, Sandra passive, Player identifiable/triomphal, violence, humiliation, appareil, pose détachée, Jeff/Marie effacés | Player partiellement cadré non identifiable ; continuité entrée/vêtements/espace ordinaire ; confiance, désir et contrôle | seulement après consentement maintenu ; précède séparation/#080 ; dépend références Sandra/Player, anatomie/position, décor et continuité ; **description auteur :** Sandra contrôle un rapport vaginal au milieu de l'acte, face à Player, sans caméra ni droit futur ; existe pour payer confiance et tentation par une intimité propre à Sandra |
-| `#080` `S1_A5_J18_SCN_SANDRA_FINAL_STATE_01_LATE_INTIMACY_AFTERCARE` | Sandra ; `TRUST_OR_INTIMACY_REWARD`; sortie d'intensité, V4 ; non diégétique | après rencontre, Player parti ou distinct ; espace ordinaire de Sandra ; réutilisable seule à J19 | distance/proximité choisie ; vêtements/plaid/boisson/livre possibles ; Jeff conséquence invisible ; aucune prochaine fois | nouvel acte, flashback, regret forcé, joie de conquête, téléphone-caméra ; composition prétendant #079 si centre non atteint | Player absent ou distinct/non identifiable ; continuité ajustée au vécu réel ; calme, fatigue, trouble ou réflexion | porte messages J18 et module J19 ; dépend de la variante réellement vécue et du retour ordinaire ; **description auteur :** Sandra reprend son espace après la rencontre et conserve contrôle, calme ou recul sans promettre la suite ; existe pour sortir de l'intensité et porter l'aftercare |
+> `W4` décrit la maturité de l'écriture du payoff. Il ne signifie ni que le média existe, ni qu'il a été généré, validé ou intégré. Les six médias restent `SPECIFIED_NOT_PRODUCED`.
+
+| Média | N6 inventory level | Canonical visual level | Production status | Writing maturity | Personnage / fonction / statut | Moment et cadrage | Obligatoire | Interdit | Player / continuité / espace / émotion | Dialogue, aftercare, production, description auteur et nécessité |
+|---|---|---|---|---|---|---|---|---|---|---|
+| `#045` `S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_CENTRAL_01` | `NV4` | `V5` | `SPECIFIED_NOT_PRODUCED` | `W4` | Mathilde ; `PORNOGRAPHIC_PAYOFF`; non diégétique | milieu du contact mutuel M-B3 réellement atteint ; Mathilde sujet actif ; décor du foyer crédible, jamais studio | nudité explicite ; contact mutuel lisible ; non-pénétration incontestable ; autonomie/arrêt lisibles | pénétration, sommeil, ivresse, dépendance, voyeurisme, humiliation de Marie, caméra/téléphone, victoire sur le foyer | Player non identifiable ; vêtements issus de l'entrée et accessibles ; Mathilde désirante, concentrée, capable de corriger | suit le consentement étape par étape ; précède la séparation/#046 ; dépend références Mathilde/Player, décor, continuité vêtements et script M-B3 ; **description auteur :** Mathilde guide un contact sexuel mutuel explicite dans le foyer, sans pénétration, avec sortie possible ; existe pour rendre le premier interdit sexuel réel sans créer une disponibilité |
+| `#046` `S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_AFTERCARE_01` | `NV2` | `V4` | `SPECIFIED_NOT_PRODUCED` | aftercare défini dans le contrat W4 | Mathilde ; `TRUST_OR_INTIMACY_REWARD`; sortie/aftercare ; non diégétique | après séparation réelle, Player absent, dans le couchage indépendant ou un espace autonome | vêtements repris partiellement/entièrement ; sac, clés, téléphone/transport accessibles ; désir, gêne et réflexion | nouvel acte, victime, conquête, Player présent comme pression, photo prise dans la fiction | Player absent/non identifiable ; continuité directe #045 ; espace de repli réel ; autonomie lisible | correspond à MA1/MA2/MA3 et à `PAID/FAILED`; dépend du lieu de couchage, accessoires, version d'aftercare ; **description auteur :** Mathilde, seule après la scène, reprend ses affaires et mesure désir, secret et responsabilité ; existe pour matérialiser le départ libre et la dette d'aftercare |
+| `#051` `S1_A3_J11_SCN_MARIE_RECONQUEST_ADULT_PAYOFF_01` | `NV4` | `V5` | `SPECIFIED_NOT_PRODUCED` | `W4` | Marie ; `PORNOGRAPHIC_PAYOFF`; non diégétique | point culminant d'une progression conjugale explicite réellement atteinte ; Marie centrale et active ; espace du couple | acte central/position corporelle lisibles ; réciprocité ; familiarité spécifique du couple ; autonomie de Marie | passivité-récompense, humiliation, jalousie, pose pour audience, caméra, pardon visuel, ouverture implicite | Player non identifiable ; continuité entrée/vêtements/lieu ; désir mutuel sans bonheur définitif | suit le check de consentement et précède la sortie/#052 ; dépend références couple, décor commun, acte choisi au futur script et continuité ; **description auteur :** Marie et Player reprennent une sexualité explicite choisie dans leur espace commun, sans résoudre leur conflit ; existe pour distinguer intimité réelle et réparation |
+| `#052` `S1_A3_J11_SCN_MARIE_RECONQUEST_AFTERCARE_01` | `NV2` | `V4` | `SPECIFIED_NOT_PRODUCED` | aftercare défini dans le contrat W4 | Marie ; `TRUST_OR_INTIMACY_REWARD`; sortie/aftercare ; non diégétique | retombée immédiate ou matin J12 ; Marie engagée dans une action ordinaire | vêtements repris ou drap non théâtral ; café/cuisine/préparation ; proximité réelle ; problème toujours lisible | nouvel acte, béatitude finale, tristesse punitive, possession, preuve publique | Player hors champ/non identifiable ; continuité corporelle/vêtements #051 ; espace du couple ; calme concret | paie `aftercare_marie_j11` avec le raccord J12 ; dépend décor quotidien et script de retombée ; **description auteur :** Marie revient au quotidien avec une proximité réelle, sans que la nuit ait réparé le couple ; existe pour faire de l'aftercare une conséquence narrative |
+| `#079` `S1_A5_J18_SCN_SANDRA_LATE_INTIMACY_CENTRAL_01` | `NV4` | `V5` | `SPECIFIED_NOT_PRODUCED` | `W4` | Sandra ; `PORNOGRAPHIC_PAYOFF`; non diégétique | milieu du rapport vaginal pénétratif ; Sandra au-dessus, tournée vers Player, contrôle le rythme ; point de vue sans appareil | acte canonique sans ambiguïté ; Sandra active ; rythme/arrêt lisibles ; téléphone hors d'usage | autre acte substitué, Sandra passive, Player identifiable/triomphal, violence, humiliation, appareil, pose détachée, Jeff/Marie effacés | Player partiellement cadré non identifiable ; continuité entrée/vêtements/espace ordinaire ; confiance, désir et contrôle | seulement après consentement maintenu ; précède séparation/#080 ; dépend références Sandra/Player, anatomie/position, décor et continuité ; **description auteur :** Sandra contrôle un rapport vaginal au milieu de l'acte, face à Player, sans caméra ni droit futur ; existe pour payer confiance et tentation par une intimité propre à Sandra |
+| `#080` `S1_A5_J18_SCN_SANDRA_FINAL_STATE_01_LATE_INTIMACY_AFTERCARE` | `NV2` | `V4` | `SPECIFIED_NOT_PRODUCED` | aftercare défini dans le contrat W4 | Sandra ; `TRUST_OR_INTIMACY_REWARD`; sortie d'intensité ; non diégétique | après `#079`, Player parti ou distinct ; espace ordinaire de Sandra ; réutilisable seule à J19 | distance/proximité choisie ; vêtements/plaid/boisson/livre possibles ; Jeff conséquence invisible ; aucune prochaine fois | nouvel acte, flashback, regret forcé, joie de conquête, téléphone-caméra ; composition prétendant #079 si centre non atteint | Player absent ou distinct/non identifiable ; continuité directe du payoff atteint ; calme, fatigue, trouble ou réflexion | porte messages J18 et module J19 quand `#079` est atteint ; dépend de la branche réellement vécue et du retour ordinaire ; `NOT_APPLICABLE` lors d'un arrêt précoce avant `#079` ; **description auteur :** Sandra reprend son espace après le payoff atteint et conserve contrôle, calme ou recul sans promettre la suite ; existe pour sortir de l'intensité et porter l'aftercare |
 
 ### 9.1 Contraintes de production communes
 
@@ -465,13 +535,13 @@ qualifie l'écriture du payoff, pas un droit automatique au fichier.
 | Fait encore caché | rencontre et dette envers Marie/Jeff tant qu'elles ne sont pas révélées ; médias incapables de révéler |
 | Trace durable | fait authored privé de rencontre/acte/arrêt + statut J18/J19 ; aucun identifiant runtime sur la baseline |
 | Promesse | aucune prochaine fois, relation, exclusivité ou secret commun promis |
-| Obligation | sortie immédiate puis aftercare prioritaire J19 ; vérité de Player envers Marie selon état du couple, récit Sandra/Jeff sous contrôle de Sandra |
-| Aftercare | `#080` puis module J19 ; `PAID`/`FAILED` selon section 7.5 |
+| Obligation | `DUE` dès le début de la rencontre ; arrêt précoce : check-in/espace/sortie sans `#080`; `#079` atteint : `#080` obligatoire puis suivi J19 ; vérité de Player envers Marie selon état du couple, récit Sandra/Jeff sous contrôle de Sandra |
+| Aftercare | branche arrêt précoce : `#080` `NOT_APPLICABLE`, `PAID/FAILED` selon 7.5.1 ; branche `#079` atteint : `#080` + J19, `PAID/FAILED` selon 7.5.2 ; « demander si elle regrette » est `FAILED` |
 | Audience | fait Sandra/Player ; Marie/Jeff seulement par révélation authored ; médias joueur |
 | Conséquence immédiate | aucune prochaine fois ; Jeff revient ; Sandra décide son récit ; dette envers Marie possible |
 | Disponible à J17 | aucun fait de `#079` car la projection actuelle est postérieure ; J17 fournit seulement l'état qui autorise ou bloque la future scène |
-| Disponible à J19 | priorité absolue du module Sandra ; `#080` seule réutilisation ; après-coup assumé, recul protecteur ou relation parallèle sombre |
-| Disponible à J21 | fait révélé/caché, aftercare, dette et posture ; jamais `#079`, flashback, preuve ou répétition |
+| Disponible à J19 | priorité absolue du module Sandra dans les deux branches ; arrêt précoce : état présent/autonomie sans `#080`; `#079` atteint : `#080` seule réutilisation et suivi obligatoire ; « demander si elle regrette » reste `FAILED` |
+| Disponible à J21 | branche exacte, statut `PAID/FAILED`, fait révélé/caché, dette et posture ; `#080` absent car `NOT_APPLICABLE` n'est jamais un échec à lui seul ; jamais `#079`, flashback, preuve ou répétition |
 
 ### 10.4 Lecture obligatoire de N8 et ordre J21
 
@@ -536,7 +606,7 @@ narrative ou perte de progression par défaut.
 | Vérité insuffisante | statut du couple falsifié ou double vie non consciemment reconnue | scène bloquée ; contradiction transportée |
 | Opportunité non proposée | Sandra ne propose pas | aucune dette, aucun accès futur |
 | Proposition refusée | refus Player | désir reconnu sans compensation ni nouvelle proposition automatique |
-| Scène interrompue | avant rencontre : aucune image ; après entrée : entrée et sortie fidèle possibles ; avant centre : pas de `#079` | aftercare reste dû selon ce qui a commencé ; pas de complétion inventée |
+| Scène interrompue | avant rencontre : aucune image et aucune obligation ; après début de rencontre mais avant `#079` : `#079` non produit et `#080` `NOT_APPLICABLE` | aftercare `DUE` adapté à l'arrêt précoce ; absence de `#080` jamais `FAILED` à elle seule ; critères `PAID/FAILED` de 7.5.1 ; pas de complétion inventée |
 | Branche différente | résolution standard/protective/trust broken | `C18-02` standard et conséquences propres ; aucun contenu adulte compensatoire |
 
 ## 12. Contrats des futurs lots de scriptage
@@ -668,7 +738,7 @@ elle borne seulement son autorité pour les futurs lots.
 4. Ne jamais persister un score de consentement/confiance/désir ou une permission future dérivée.
 5. Une trace média non diégétique n'entre pas dans `traces` comme photographie ; seul un fait/record authored peut être transporté.
 6. À J17, employer exclusivement les six états et huit règles N8. Les payoffs n'ajoutent ni règle, ni choix, ni priorité.
-7. À J19, l'aftercare Sandra précède tout autre foreground si la rencontre a commencé ; `#080` est la seule réutilisation adulte autorisée.
+7. À J19, l'aftercare Sandra précède tout autre foreground si la rencontre a commencé ; après arrêt précoce, `#080` est `NOT_APPLICABLE`; si `#079` a été atteint, `#080` est la seule réutilisation adulte autorisée.
 8. À J21, lire les états terminaux (`PAID`, `FAILED`, retrait, révélation, dette) sans les rouvrir et sans servir un média jamais atteint.
 9. `s1_m5_marie_player_final_conversation` reste une future séquence authored autonome ; elle n'est ni J17, ni la trace, ni un résumé des payoffs.
 10. Aucune connexion ou migration A1–A10 n'est autorisée par ce contrat.
@@ -694,7 +764,8 @@ elle borne seulement son autorité pour les futurs lots.
 
 ### 16.3 Gate média et production
 
-- [x] Les six médias ont personnage, fonction, V, statut W4, diégèse, moment, cadrage, obligatoires/interdits, identification Player, continuité, espace, émotion, autonomie, relations dialogue/aftercare, dépendances, description auteur et justification.
+- [x] Les six médias ont personnage, fonction, niveau d'inventaire N6, niveau visuel canonique, statut de production, maturité d'écriture, diégèse, moment, cadrage, obligatoires/interdits, identification Player, continuité, espace, émotion, autonomie, relations dialogue/aftercare, dépendances, description auteur et justification.
+- [x] Les six médias sont `SPECIFIED_NOT_PRODUCED`; `W4` qualifie l'écriture du payoff et ne prouve ni existence, ni génération, ni validation, ni intégration du média.
 - [x] Aucun média n'a été généré et aucun prompt graphique définitif n'est fourni.
 - [x] Aucun média non diégétique n'est traité comme preuve ou fichier de la fiction.
 
