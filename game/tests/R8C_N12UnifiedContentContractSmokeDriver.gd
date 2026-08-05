@@ -52,6 +52,9 @@ class FakeProjectionPort extends ProjectionPort:
 		var request := _request_for_presentation(receipt["presentation_id"])
 		if request.is_empty():
 			return _error_result("NONE", "RECEIPT_WITHOUT_OPEN")
+		var linkage: Dictionary = ProjectionContracts.validate_receipt_against_request(receipt, request)
+		if not linkage["valid"]:
+			return _error_result(request["projection_target"], "RECEIPT_IDENTITY_MISMATCH")
 		for existing in receipts:
 			if existing == receipt:
 				return _accepted_result(request["projection_target"], receipt["presentation_id"], true)
@@ -79,6 +82,9 @@ class FakeProjectionPort extends ProjectionPort:
 			var request: Dictionary = open_requests[index]
 			if ProjectionContracts.presentation_id_for(request) == presentation_id:
 				open_requests.remove_at(index)
+				for receipt_index in range(receipts.size() - 1, -1, -1):
+					if receipts[receipt_index]["presentation_id"] == presentation_id:
+						receipts.remove_at(receipt_index)
 				return _accepted_result(request["projection_target"], presentation_id, false)
 		return _error_result("NONE", "PROJECTION_NOT_OPEN")
 
@@ -161,6 +167,20 @@ func _apply_authored_mutation(candidate: Dictionary, mutation: String) -> void:
 			candidate["beats"][0]["next"]["beat_id"] = "missing_beat"
 		"set_unknown_choice_resolution":
 			candidate["beats"][6]["content"]["choices"][0]["resolution_id"] = "missing_resolution"
+		"set_choice_resolution_from_other_choice":
+			candidate["beats"][6]["content"]["choices"][0]["resolution_id"] = "resolution_stop"
+		"set_option_resolution_target_mismatch":
+			candidate["beats"][6]["content"]["choices"][0]["next_beat_id"] = "beat_transition"
+		"add_orphan_resolution":
+			var orphan: Dictionary = candidate["resolutions"]["resolution_start"].duplicate(true)
+			orphan["resolution_id"] = "resolution_orphan"
+			candidate["resolutions"]["resolution_orphan"] = orphan
+		"reuse_resolution_for_two_choices":
+			candidate["beats"][6]["content"]["choices"][1]["resolution_id"] = "resolution_complete"
+		"remove_return_resolution":
+			candidate["beats"][7]["content"]["eligible_resolution_ids"].erase("resolution_complete")
+		"add_foreign_return_resolution":
+			candidate["beats"][7]["content"]["eligible_resolution_ids"].append("resolution_start")
 		"set_unknown_media_reference":
 			candidate["beats"][4]["content"]["media_id"] = "missing_media"
 		"set_unknown_terminal_checkpoint":
@@ -175,9 +195,30 @@ func _apply_authored_mutation(candidate: Dictionary, mutation: String) -> void:
 			candidate["canonical_status"] = "DRAFT"
 		"add_legacy_current_day":
 			candidate["current_day"] = 12
+		"set_schema_version_float":
+			candidate["schema_version"] = 1.0
+		"add_unknown_beat_field":
+			candidate["beats"][0]["unexpected"] = true
+		"add_unknown_choice_field":
+			candidate["beats"][6]["content"]["choices"][0]["unexpected"] = true
+		"add_unknown_resolution_field":
+			candidate["resolutions"]["resolution_complete"]["unexpected"] = true
+		"add_unknown_media_field":
+			candidate["media"]["synthetic_media"]["unexpected"] = true
+		"add_unknown_a6_field":
+			candidate["orchestration"]["a6_entry"]["definition"]["unexpected"] = true
+		"add_unknown_a8_field":
+			candidate["orchestration"]["a8_window"]["unexpected"] = true
+		"add_unknown_a9_field":
+			candidate["orchestration"]["a9_slot"]["unexpected"] = true
+		"add_unknown_temporal_field":
+			candidate["temporal_projection"]["unexpected"] = true
+		"add_unknown_participant_field":
+			candidate["orchestration"]["a6_entry"]["definition"]["participants_requis"][0]["unexpected"] = true
 
 
 func _test_execution_contract(execution: Dictionary, valid_sequence: Dictionary) -> void:
+	_expect(SequenceExecution.validate_structure(execution)["valid"], "execution structure valid")
 	var valid_result: Dictionary = SequenceExecution.validate(execution, valid_sequence)
 	_expect(valid_result["valid"], "execution fixture valid: %s" % [valid_result["errors"]])
 
@@ -208,6 +249,74 @@ func _test_execution_contract(execution: Dictionary, valid_sequence: Dictionary)
 		_contains_error(SequenceExecution.validate(duplicate_choice, valid_sequence)["errors"], "duplicate"),
 		"execution rejects duplicate choice",
 	)
+	var unknown_choice: Dictionary = execution.duplicate(true)
+	unknown_choice["consumed_choice_ids"] = ["missing_choice"]
+	_expect(
+		_contains_error(SequenceExecution.validate_against_sequence(unknown_choice, valid_sequence)["errors"], "unknown_reference"),
+		"execution rejects unknown consumed choice",
+	)
+	var non_choice_consumption: Dictionary = execution.duplicate(true)
+	non_choice_consumption["consumed_choice_ids"] = ["beat_message"]
+	_expect(
+		_contains_error(SequenceExecution.validate(non_choice_consumption, valid_sequence)["errors"], "unknown_reference"),
+		"execution rejects consumed identifier from non-choice beat",
+	)
+	var non_choice_input: Dictionary = execution.duplicate(true)
+	non_choice_input["current_beat_id"] = "beat_message"
+	non_choice_input["checkpoint_id"] = "checkpoint_message_presented"
+	non_choice_input["pending_player_input"]["beat_id"] = "beat_message"
+	_expect(
+		_contains_error(SequenceExecution.validate(non_choice_input, valid_sequence)["errors"], "choice_input_requires_choice_beat"),
+		"execution rejects choice input on non-choice beat",
+	)
+	var waiting_without_open: Dictionary = execution.duplicate(true)
+	waiting_without_open["execution_status"] = "WAITING_FOR_PROJECTION_ACK"
+	waiting_without_open["pending_player_input"] = null
+	waiting_without_open["opened_projection_ids"] = []
+	waiting_without_open["projection_receipts"] = {}
+	_expect(
+		_contains_error(SequenceExecution.validate(waiting_without_open, valid_sequence)["errors"], "waiting_without_open_projection"),
+		"execution rejects projection wait without open projection",
+	)
+	var waiting_after_ack: Dictionary = execution.duplicate(true)
+	waiting_after_ack["execution_status"] = "WAITING_FOR_PROJECTION_ACK"
+	waiting_after_ack["pending_player_input"] = null
+	waiting_after_ack["opened_projection_ids"] = ["synthetic_instance__beat_root_choice__MESSAGES"]
+	waiting_after_ack["projection_receipts"] = {"synthetic_instance__beat_root_choice__MESSAGES": "PRESENTED"}
+	_expect(
+		_contains_error(SequenceExecution.validate(waiting_after_ack, valid_sequence)["errors"], "waiting_without_pending_ack"),
+		"execution rejects projection wait after every ack",
+	)
+	var other_instance_projection: Dictionary = waiting_without_open.duplicate(true)
+	other_instance_projection["opened_projection_ids"] = ["foreign_instance__beat_root_choice__MESSAGES"]
+	_expect(
+		_contains_error(SequenceExecution.validate(other_instance_projection, valid_sequence)["errors"], "instance_mismatch"),
+		"execution rejects projection opened for another instance",
+	)
+	var other_beat_projection: Dictionary = waiting_without_open.duplicate(true)
+	other_beat_projection["opened_projection_ids"] = ["synthetic_instance__beat_message__MESSAGES"]
+	_expect(
+		_contains_error(SequenceExecution.validate(other_beat_projection, valid_sequence)["errors"], "waiting_without_open_projection"),
+		"execution rejects projection wait for another beat",
+	)
+	var mismatched_checkpoint: Dictionary = execution.duplicate(true)
+	mismatched_checkpoint["checkpoint_id"] = "checkpoint_message_presented"
+	_expect(
+		_contains_error(SequenceExecution.validate(mismatched_checkpoint, valid_sequence)["errors"], "current_beat_checkpoint_mismatch"),
+		"execution rejects checkpoint from another beat",
+	)
+	var unknown_execution_field: Dictionary = execution.duplicate(true)
+	unknown_execution_field["unexpected"] = true
+	_expect(
+		_contains_error(SequenceExecution.validate_structure(unknown_execution_field)["errors"], "unknown_field"),
+		"execution rejects unknown root field",
+	)
+	var unknown_pending_field: Dictionary = execution.duplicate(true)
+	unknown_pending_field["pending_player_input"]["unexpected"] = true
+	_expect(
+		_contains_error(SequenceExecution.validate_structure(unknown_pending_field)["errors"], "unknown_field"),
+		"execution rejects unknown pending input field",
+	)
 	var impossible_complete: Dictionary = execution.duplicate(true)
 	impossible_complete["execution_status"] = "COMPLETE"
 	_expect(
@@ -224,7 +333,7 @@ func _test_projection_contracts_and_port(valid_sequence: Dictionary) -> void:
 		"beat_id": "beat_message",
 		"beat_type": "MESSAGE",
 		"projection_target": "MESSAGES",
-		"presentation_state": {},
+		"presentation_state": [],
 	}
 	var command := {
 		"command_id": "synthetic_command",
@@ -237,13 +346,49 @@ func _test_projection_contracts_and_port(valid_sequence: Dictionary) -> void:
 	var receipt := {
 		"presentation_id": presentation_id,
 		"instance_id": "synthetic_instance",
+		"sequence_id": valid_sequence["sequence_id"],
+		"authored_version": valid_sequence["authored_version"],
 		"beat_id": "beat_message",
+		"beat_type": "MESSAGE",
+		"projection_target": "MESSAGES",
 		"kind": "PRESENTED",
 		"subject_id": "synthetic_message",
 	}
 	_expect(ProjectionContracts.validate_projection_request(request)["valid"], "projection request valid")
 	_expect(ProjectionContracts.validate_projection_command(command)["valid"], "projection command valid")
 	_expect(ProjectionContracts.validate_presentation_receipt(receipt)["valid"], "presentation receipt valid")
+	_expect(ProjectionContracts.validate_receipt_against_request(receipt, request)["valid"], "receipt linked to request")
+
+	var other_instance_receipt: Dictionary = receipt.duplicate(true)
+	other_instance_receipt["instance_id"] = "foreign_instance"
+	_expect(
+		not ProjectionContracts.validate_receipt_against_request(other_instance_receipt, request)["valid"],
+		"same presentation id with another instance rejected",
+	)
+	var other_beat_receipt: Dictionary = receipt.duplicate(true)
+	other_beat_receipt["beat_id"] = "beat_root_choice"
+	_expect(
+		not ProjectionContracts.validate_receipt_against_request(other_beat_receipt, request)["valid"],
+		"same presentation id with another beat rejected",
+	)
+	var other_sequence_receipt: Dictionary = receipt.duplicate(true)
+	other_sequence_receipt["sequence_id"] = "foreign_sequence"
+	_expect(
+		not ProjectionContracts.validate_receipt_against_request(other_sequence_receipt, request)["valid"],
+		"same presentation id with another sequence rejected",
+	)
+	var other_projection_type_receipt: Dictionary = receipt.duplicate(true)
+	other_projection_type_receipt["projection_target"] = "MEDIA"
+	_expect(
+		not ProjectionContracts.validate_receipt_against_request(other_projection_type_receipt, request)["valid"],
+		"same presentation id with another projection type rejected",
+	)
+	var foreign_state_request: Dictionary = request.duplicate(true)
+	foreign_state_request["presentation_state"] = [other_beat_receipt]
+	_expect(
+		not ProjectionContracts.validate_projection_request(foreign_state_request)["valid"],
+		"foreign receipt in presentation state rejected",
+	)
 
 	var abstract_port = ProjectionPort.new()
 	var abstract_result: Dictionary = abstract_port.open(request)
@@ -256,11 +401,36 @@ func _test_projection_contracts_and_port(valid_sequence: Dictionary) -> void:
 	_expect(fake_port.open(request)["idempotent"], "fake port open is idempotent")
 	_expect(fake_port.submit(command)["accepted"], "fake port accepts command")
 	_expect(fake_port.acknowledge(receipt)["accepted"], "fake port acknowledges presentation")
+	_expect(not fake_port.acknowledge(other_instance_receipt)["accepted"], "fake port rejects other instance receipt")
+	_expect(not fake_port.acknowledge(other_beat_receipt)["accepted"], "fake port rejects other beat receipt")
 	var saved: Dictionary = fake_port.snapshot()
 	_expect(saved["accepted"] and ProjectionContracts.validate_port_snapshot(saved["snapshot"])["valid"], "fake port snapshot valid")
+	var foreign_snapshot: Dictionary = saved["snapshot"].duplicate(true)
+	foreign_snapshot["receipts"][0]["beat_id"] = "beat_root_choice"
+	_expect(not ProjectionContracts.validate_port_snapshot(foreign_snapshot)["valid"], "foreign receipt in snapshot rejected")
+	var duplicate_snapshot_receipt: Dictionary = saved["snapshot"].duplicate(true)
+	duplicate_snapshot_receipt["receipts"].append(receipt.duplicate(true))
+	_expect(not ProjectionContracts.validate_port_snapshot(duplicate_snapshot_receipt)["valid"], "duplicate snapshot receipt rejected")
 	_expect(fake_port.close(presentation_id)["accepted"], "fake port closes projection")
+	_expect(not fake_port.acknowledge(receipt)["accepted"], "receipt for closed projection rejected")
 	_expect(fake_port.restore(saved["snapshot"])["accepted"], "fake port restores snapshot")
 	_expect(fake_port.snapshot()["snapshot"] == saved["snapshot"], "fake port restoration exact")
+
+	var unknown_request: Dictionary = request.duplicate(true)
+	unknown_request["unexpected"] = true
+	_expect(not ProjectionContracts.validate_projection_request(unknown_request)["valid"], "request rejects unknown field")
+	var unknown_command: Dictionary = command.duplicate(true)
+	unknown_command["unexpected"] = true
+	_expect(not ProjectionContracts.validate_projection_command(unknown_command)["valid"], "command rejects unknown field")
+	var unknown_receipt: Dictionary = receipt.duplicate(true)
+	unknown_receipt["unexpected"] = true
+	_expect(not ProjectionContracts.validate_presentation_receipt(unknown_receipt)["valid"], "receipt rejects unknown field")
+	var result := fake_port.open(request)
+	result["unexpected"] = true
+	_expect(not ProjectionContracts.validate_projection_result(result)["valid"], "result rejects unknown field")
+	var unknown_snapshot: Dictionary = saved["snapshot"].duplicate(true)
+	unknown_snapshot["unexpected"] = true
+	_expect(not ProjectionContracts.validate_port_snapshot(unknown_snapshot)["valid"], "snapshot rejects unknown field")
 
 
 func _valid_execution(valid_sequence: Dictionary) -> Dictionary:
@@ -289,7 +459,31 @@ func _valid_execution(valid_sequence: Dictionary) -> Dictionary:
 
 func _load_dictionary(path: String) -> Dictionary:
 	var parsed = JSON.parse_string(FileAccess.get_file_as_string(path))
-	return parsed if typeof(parsed) == TYPE_DICTIONARY else {}
+	if typeof(parsed) != TYPE_DICTIONARY:
+		return {}
+	if path == VALID_FIXTURE_PATH:
+		_restore_fixture_integer_types_after_json_parse(parsed)
+	return parsed
+
+
+func _restore_fixture_integer_types_after_json_parse(sequence: Dictionary) -> void:
+	sequence["schema_version"] = int(sequence["schema_version"])
+	var orchestration: Dictionary = sequence["orchestration"]
+	orchestration["a6_entry"]["definition"]["contrat_temporel"]["duree_minutes"] = int(
+		orchestration["a6_entry"]["definition"]["contrat_temporel"]["duree_minutes"]
+	)
+	orchestration["a9_slot"]["duration_minutes"] = int(orchestration["a9_slot"]["duration_minutes"])
+	orchestration["a9_slot"]["relative_order"] = int(orchestration["a9_slot"]["relative_order"])
+	sequence["temporal_projection"]["offset_minutes"] = int(sequence["temporal_projection"]["offset_minutes"])
+	sequence["temporal_projection"]["relative_order"] = int(sequence["temporal_projection"]["relative_order"])
+	if sequence["temporal_projection"]["delay"]["value"] != null:
+		sequence["temporal_projection"]["delay"]["value"] = int(sequence["temporal_projection"]["delay"]["value"])
+	for beat in sequence["beats"]:
+		if beat["type"] == "MESSAGE":
+			for message in beat["content"]["messages"]:
+				message["relative_order"] = int(message["relative_order"])
+		if beat["type"] == "RETURN" and beat["content"]["delay"]["value"] != null:
+			beat["content"]["delay"]["value"] = int(beat["content"]["delay"]["value"])
 
 
 func _contains_error(errors: Array, expected: String) -> bool:

@@ -159,7 +159,7 @@
           {
             "choice_id": "choice_start",
             "text": "Start synthetic flow",
-            "resolution_id": null,
+            "resolution_id": "resolution_start",
             "next_beat_id": "beat_transition"
           }
         ]
@@ -326,6 +326,22 @@
     }
   ],
   "resolutions": {
+    "resolution_start": {
+      "resolution_id": "resolution_start",
+      "choice_id": "choice_start",
+      "a10_choice_id": "choice_start",
+      "terminal_checkpoint_id": "checkpoint_root_choice",
+      "event_refs": [],
+      "fact_ids": [],
+      "knowledge_ids": [],
+      "trace_ids": [],
+      "promise_effects": [],
+      "obligation_effects": [],
+      "consequence_ids": [],
+      "media_effects": [],
+      "convergence": "COMMON_EXIT",
+      "next_beat_id": "beat_transition"
+    },
     "resolution_complete": {
       "resolution_id": "resolution_complete",
       "choice_id": "choice_complete",

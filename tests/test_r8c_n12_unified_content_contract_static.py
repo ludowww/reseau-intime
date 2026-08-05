@@ -68,6 +68,7 @@ CONTENT_FIELDS = {
     "RETURN": {"return_id", "content_ref", "delay", "eligible_resolution_ids"},
 }
 INVALID_CASE_IDS = {
+    "forbidden_dependency",
     "unknown_key",
     "missing_required_field",
     "forbidden_beat_type",
@@ -82,7 +83,43 @@ INVALID_CASE_IDS = {
     "invalid_canonical_status",
     "legacy_field",
     "execution_receipt_before_open",
+    "choice_uses_other_resolution",
+    "option_resolution_target_mismatch",
+    "orphan_resolution",
+    "resolution_reused",
+    "return_without_reciprocal_resolution",
+    "return_with_foreign_resolution",
+    "integer_as_float",
+    "nested_unknown_beat",
+    "nested_unknown_choice",
+    "nested_unknown_resolution",
+    "nested_unknown_media",
+    "nested_unknown_a6",
+    "nested_unknown_a8",
+    "nested_unknown_a9",
+    "nested_unknown_temporal",
+    "nested_unknown_participant",
+    "execution_choice_non_choice_beat",
+    "execution_unknown_choice",
+    "execution_waiting_without_open",
+    "execution_projection_other_instance",
+    "nested_unknown_execution",
+    "projection_ack_other_beat",
+    "projection_foreign_state_receipt",
+    "projection_foreign_snapshot_receipt",
+    "nested_unknown_projection_request",
+    "nested_unknown_projection_command",
+    "nested_unknown_projection_receipt",
+    "nested_unknown_projection_result",
+    "nested_unknown_snapshot",
 }
+PRODUCTION_N12_FILES = (
+    "game/scripts/unified_runtime/contracts/AuthoredSequenceV1.gd",
+    "game/scripts/unified_runtime/contracts/AuthoredSequenceValidator.gd",
+    "game/scripts/unified_runtime/contracts/SequenceExecutionV1.gd",
+    "game/scripts/unified_runtime/contracts/PlayerProjectionContracts.gd",
+    "game/scripts/unified_runtime/contracts/PlayerProjectionPort.gd",
+)
 
 
 class R8CN12UnifiedContentContractStaticTests(unittest.TestCase):
@@ -173,12 +210,32 @@ class R8CN12UnifiedContentContractStaticTests(unittest.TestCase):
                 self.assertEqual({"mode": "TERMINAL", "beat_id": None}, beat["next"])
 
         self.assertEqual(len(choices), len(set(choices)))
+        claimed_resolutions = {}
+        for choice_id, choice in choices.items():
+            resolution_id = choice["resolution_id"]
+            self.assertIsNotNone(resolution_id)
+            self.assertNotIn(resolution_id, claimed_resolutions)
+            claimed_resolutions[resolution_id] = choice_id
+            resolution = self.valid["resolutions"][resolution_id]
+            self.assertEqual(choice_id, resolution["choice_id"])
+            self.assertEqual(choice["next_beat_id"], resolution["next_beat_id"])
         for resolution_id, resolution in self.valid["resolutions"].items():
             self.assertEqual(resolution_id, resolution["resolution_id"])
             self.assertIn(resolution["choice_id"], choices)
             self.assertIn(resolution["terminal_checkpoint_id"], checkpoints)
             self.assertIn(resolution["next_beat_id"], beats)
-            self.assertEqual("RETURN", beats[resolution["next_beat_id"]]["type"])
+            self.assertEqual(resolution_id, choices[resolution["choice_id"]]["resolution_id"])
+        self.assertEqual(set(self.valid["resolutions"]), set(claimed_resolutions))
+        for beat_id, beat in beats.items():
+            if beat["type"] != "RETURN":
+                continue
+            declared = set(beat["content"]["eligible_resolution_ids"])
+            targeted = {
+                resolution_id
+                for resolution_id, resolution in self.valid["resolutions"].items()
+                if resolution["next_beat_id"] == beat_id
+            }
+            self.assertEqual(targeted, declared)
         for beat in beats.values():
             if beat["type"] == "MEDIA_REVEAL":
                 self.assertIn(beat["content"]["media_id"], self.valid["media"])
@@ -238,7 +295,10 @@ class R8CN12UnifiedContentContractStaticTests(unittest.TestCase):
             self.assertEqual(
                 {"case_id", "target", "mutation", "expected_error"}, set(case)
             )
-            self.assertIn(case["target"], {"authored_sequence", "sequence_execution"})
+            self.assertIn(
+                case["target"],
+                {"static", "authored_sequence", "sequence_execution", "projection_contract"},
+            )
             self.assertTrue(case["expected_error"])
 
     def test_validator_has_structural_referential_and_graph_validation(self):
@@ -261,6 +321,41 @@ class R8CN12UnifiedContentContractStaticTests(unittest.TestCase):
         self.assertIn('return {"valid": errors.is_empty(), "errors": errors.duplicate()}', source)
         self.assertIn("errors.sort()", source)
         self.assertNotIn("assert(", source)
+        self.assertNotIn("SceneDefinition", source)
+        self.assertIn("_validate_choice_resolution_reciprocity", source)
+        self.assertIn("return typeof(value) == TYPE_INT", source)
+        self.assertNotIn("TYPE_INT, TYPE_FLOAT", source)
+
+    def test_integer_fields_are_json_integers_and_float_mutation_is_covered(self):
+        self.assertIs(type(self.valid["schema_version"]), int)
+        self.assertIs(
+            type(self.valid["orchestration"]["a6_entry"]["definition"]["contrat_temporel"]["duree_minutes"]),
+            int,
+        )
+        self.assertIs(type(self.valid["orchestration"]["a9_slot"]["duration_minutes"]), int)
+        self.assertIs(type(self.valid["temporal_projection"]["offset_minutes"]), int)
+        self.assertIn("integer_as_float", {case["case_id"] for case in self.invalid["cases"]})
+
+    def test_nested_unknown_field_mutations_cover_every_closed_family(self):
+        mutations = {case["mutation"] for case in self.invalid["cases"]}
+        required = {
+            "add_unknown_beat_field",
+            "add_unknown_choice_field",
+            "add_unknown_resolution_field",
+            "add_unknown_media_field",
+            "add_unknown_a6_field",
+            "add_unknown_a8_field",
+            "add_unknown_a9_field",
+            "add_unknown_temporal_field",
+            "add_unknown_participant_field",
+            "add_unknown_execution_field",
+            "add_unknown_projection_request_field",
+            "add_unknown_projection_command_field",
+            "add_unknown_projection_receipt_field",
+            "add_unknown_projection_result_field",
+            "add_unknown_snapshot_field",
+        }
+        self.assertTrue(required.issubset(mutations))
 
     def test_sequence_execution_is_closed_operational_state_only(self):
         source = self.read(
@@ -293,6 +388,11 @@ class R8CN12UnifiedContentContractStaticTests(unittest.TestCase):
         }
         self.assertTrue(forbidden.isdisjoint(expected_fields))
         self.assertNotRegex(source, r"func\s+(advance|execute|run_sequence|resolve_scene)\b")
+        self.assertRegex(source, r"static func\s+validate_structure\b")
+        self.assertRegex(source, r"static func\s+validate_against_sequence\b")
+        self.assertIn("waiting_without_open_projection", source)
+        self.assertIn("waiting_without_pending_ack", source)
+        self.assertIn("choice_input_requires_choice_beat", source)
 
     def test_projection_contracts_and_abstract_port_are_closed(self):
         contracts = self.read(
@@ -306,6 +406,23 @@ class R8CN12UnifiedContentContractStaticTests(unittest.TestCase):
         self.assertIn("PRESENTATION_RECEIPT_FIELDS", contracts)
         self.assertIn("PROJECTION_RESULT_FIELDS", contracts)
         self.assertIn("PORT_SNAPSHOT_FIELDS", contracts)
+        self.assertEqual(
+            {
+                "presentation_id",
+                "instance_id",
+                "sequence_id",
+                "authored_version",
+                "beat_id",
+                "beat_type",
+                "projection_target",
+                "kind",
+                "subject_id",
+            },
+            set(self.gdscript_const_strings(contracts, "PRESENTATION_RECEIPT_FIELDS")),
+        )
+        self.assertIn("validate_receipt_against_request", contracts)
+        self.assertIn("_validate_receipt_identity", contracts)
+        self.assertIn("duplicate_receipt", contracts)
         self.assertIn("const ABSTRACT_PORT := true", port)
         methods = set(re.findall(r"^func\s+([a-z_]+)", port, re.M))
         self.assertEqual(
@@ -324,11 +441,15 @@ class R8CN12UnifiedContentContractStaticTests(unittest.TestCase):
 
     def test_production_contracts_have_no_ui_legacy_score_or_durable_write(self):
         sources = "\n".join(
-            path.read_text(encoding="utf-8")
-            for path in sorted(CONTRACT_DIR.glob("*.gd"))
+            self.read(path)
+            for path in PRODUCTION_N12_FILES
         )
         forbidden_patterns = [
+            r"narrative_state",
+            r"narrative_scene",
             r"scripts/runtime/season_1",
+            r"\bseason_1\b",
+            r"\bJNN\w*Provider\b",
             r"J\d{2}RuntimeProvider",
             r"Season1State",
             r"MessagesScreen",
@@ -344,6 +465,15 @@ class R8CN12UnifiedContentContractStaticTests(unittest.TestCase):
         ]
         for pattern in forbidden_patterns:
             self.assertNotRegex(sources, pattern)
+        for path in PRODUCTION_N12_FILES:
+            source = self.read(path)
+            for preload_path in re.findall(r'preload\("res://([^\"]+)"\)', source):
+                self.assertTrue(
+                    preload_path.startswith("scripts/unified_runtime/contracts/"),
+                    f"forbidden production dependency in {path}: {preload_path}",
+                )
+        dependency_probe = 'preload("res://scripts/narrative_state/Forbidden.gd")'
+        self.assertRegex(dependency_probe, r"narrative_state")
         port = self.read(
             "game/scripts/unified_runtime/contracts/PlayerProjectionPort.gd"
         )

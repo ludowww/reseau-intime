@@ -1,89 +1,49 @@
 {
   "fixture_kind": "SYNTHETIC_NON_CANONICAL_INVALID_CASES",
   "cases": [
-    {
-      "case_id": "unknown_key",
-      "target": "authored_sequence",
-      "mutation": "add_root_unknown_key",
-      "expected_error": "root.unexpected: unknown_field"
-    },
-    {
-      "case_id": "missing_required_field",
-      "target": "authored_sequence",
-      "mutation": "remove_entry_beat_id",
-      "expected_error": "root.entry_beat_id: missing_required_field"
-    },
-    {
-      "case_id": "forbidden_beat_type",
-      "target": "authored_sequence",
-      "mutation": "set_forbidden_beat_type",
-      "expected_error": "unknown_beat_type"
-    },
-    {
-      "case_id": "duplicate_identifier",
-      "target": "authored_sequence",
-      "mutation": "duplicate_beat_id",
-      "expected_error": "duplicate"
-    },
-    {
-      "case_id": "missing_transition_target",
-      "target": "authored_sequence",
-      "mutation": "set_unknown_direct_target",
-      "expected_error": "unknown_beat"
-    },
-    {
-      "case_id": "missing_resolution",
-      "target": "authored_sequence",
-      "mutation": "set_unknown_choice_resolution",
-      "expected_error": "unknown_resolution"
-    },
-    {
-      "case_id": "missing_media",
-      "target": "authored_sequence",
-      "mutation": "set_unknown_media_reference",
-      "expected_error": "unknown_media"
-    },
-    {
-      "case_id": "missing_checkpoint",
-      "target": "authored_sequence",
-      "mutation": "set_unknown_terminal_checkpoint",
-      "expected_error": "unknown_checkpoint"
-    },
-    {
-      "case_id": "cycle",
-      "target": "authored_sequence",
-      "mutation": "create_return_cycle",
-      "expected_error": "cycle_detected"
-    },
-    {
-      "case_id": "day_based_identifier",
-      "target": "authored_sequence",
-      "mutation": "set_day_based_sequence_id",
-      "expected_error": "day_based_identifier_forbidden"
-    },
-    {
-      "case_id": "invalid_version",
-      "target": "authored_sequence",
-      "mutation": "set_invalid_authored_version",
-      "expected_error": "expected_major_minor_patch"
-    },
-    {
-      "case_id": "invalid_canonical_status",
-      "target": "authored_sequence",
-      "mutation": "set_invalid_canonical_status",
-      "expected_error": "expected_canon_approved"
-    },
-    {
-      "case_id": "legacy_field",
-      "target": "authored_sequence",
-      "mutation": "add_legacy_current_day",
-      "expected_error": "root.current_day: unknown_field"
-    },
-    {
-      "case_id": "execution_receipt_before_open",
-      "target": "sequence_execution",
-      "mutation": "add_receipt_without_open",
-      "expected_error": "receipt_without_open"
-    }
+    {"case_id":"forbidden_dependency","target":"static","mutation":"inject_forbidden_production_dependency","expected_error":"forbidden_dependency"},
+    {"case_id":"unknown_key","target":"authored_sequence","mutation":"add_root_unknown_key","expected_error":"root.unexpected: unknown_field"},
+    {"case_id":"missing_required_field","target":"authored_sequence","mutation":"remove_entry_beat_id","expected_error":"root.entry_beat_id: missing_required_field"},
+    {"case_id":"forbidden_beat_type","target":"authored_sequence","mutation":"set_forbidden_beat_type","expected_error":"unknown_beat_type"},
+    {"case_id":"duplicate_identifier","target":"authored_sequence","mutation":"duplicate_beat_id","expected_error":"duplicate"},
+    {"case_id":"missing_transition_target","target":"authored_sequence","mutation":"set_unknown_direct_target","expected_error":"unknown_beat"},
+    {"case_id":"missing_resolution","target":"authored_sequence","mutation":"set_unknown_choice_resolution","expected_error":"unknown_resolution"},
+    {"case_id":"missing_media","target":"authored_sequence","mutation":"set_unknown_media_reference","expected_error":"unknown_media"},
+    {"case_id":"missing_checkpoint","target":"authored_sequence","mutation":"set_unknown_terminal_checkpoint","expected_error":"unknown_checkpoint"},
+    {"case_id":"cycle","target":"authored_sequence","mutation":"create_return_cycle","expected_error":"cycle_detected"},
+    {"case_id":"day_based_identifier","target":"authored_sequence","mutation":"set_day_based_sequence_id","expected_error":"day_based_identifier_forbidden"},
+    {"case_id":"invalid_version","target":"authored_sequence","mutation":"set_invalid_authored_version","expected_error":"expected_major_minor_patch"},
+    {"case_id":"invalid_canonical_status","target":"authored_sequence","mutation":"set_invalid_canonical_status","expected_error":"expected_canon_approved"},
+    {"case_id":"legacy_field","target":"authored_sequence","mutation":"add_legacy_current_day","expected_error":"root.current_day: unknown_field"},
+    {"case_id":"choice_uses_other_resolution","target":"authored_sequence","mutation":"set_choice_resolution_from_other_choice","expected_error":"resolution_choice_mismatch"},
+    {"case_id":"option_resolution_target_mismatch","target":"authored_sequence","mutation":"set_option_resolution_target_mismatch","expected_error":"resolution_target_mismatch"},
+    {"case_id":"orphan_resolution","target":"authored_sequence","mutation":"add_orphan_resolution","expected_error":"orphan_resolution"},
+    {"case_id":"resolution_reused","target":"authored_sequence","mutation":"reuse_resolution_for_two_choices","expected_error":"resolution_reused"},
+    {"case_id":"return_without_reciprocal_resolution","target":"authored_sequence","mutation":"remove_return_resolution","expected_error":"return_missing_reciprocal_resolution"},
+    {"case_id":"return_with_foreign_resolution","target":"authored_sequence","mutation":"add_foreign_return_resolution","expected_error":"foreign_resolution"},
+    {"case_id":"integer_as_float","target":"authored_sequence","mutation":"set_schema_version_float","expected_error":"expected_integer_1"},
+    {"case_id":"nested_unknown_beat","target":"authored_sequence","mutation":"add_unknown_beat_field","expected_error":"unknown_field"},
+    {"case_id":"nested_unknown_choice","target":"authored_sequence","mutation":"add_unknown_choice_field","expected_error":"unknown_field"},
+    {"case_id":"nested_unknown_resolution","target":"authored_sequence","mutation":"add_unknown_resolution_field","expected_error":"unknown_field"},
+    {"case_id":"nested_unknown_media","target":"authored_sequence","mutation":"add_unknown_media_field","expected_error":"unknown_field"},
+    {"case_id":"nested_unknown_a6","target":"authored_sequence","mutation":"add_unknown_a6_field","expected_error":"unknown_field"},
+    {"case_id":"nested_unknown_a8","target":"authored_sequence","mutation":"add_unknown_a8_field","expected_error":"unknown_field"},
+    {"case_id":"nested_unknown_a9","target":"authored_sequence","mutation":"add_unknown_a9_field","expected_error":"unknown_field"},
+    {"case_id":"nested_unknown_temporal","target":"authored_sequence","mutation":"add_unknown_temporal_field","expected_error":"unknown_field"},
+    {"case_id":"nested_unknown_participant","target":"authored_sequence","mutation":"add_unknown_participant_field","expected_error":"unknown_field"},
+    {"case_id":"execution_receipt_before_open","target":"sequence_execution","mutation":"add_receipt_without_open","expected_error":"receipt_without_open"},
+    {"case_id":"execution_choice_non_choice_beat","target":"sequence_execution","mutation":"consume_identifier_from_non_choice_beat","expected_error":"unknown_reference"},
+    {"case_id":"execution_unknown_choice","target":"sequence_execution","mutation":"add_unknown_consumed_choice","expected_error":"unknown_reference"},
+    {"case_id":"execution_waiting_without_open","target":"sequence_execution","mutation":"wait_without_open_projection","expected_error":"waiting_without_open_projection"},
+    {"case_id":"execution_projection_other_instance","target":"sequence_execution","mutation":"open_projection_for_other_instance","expected_error":"instance_mismatch"},
+    {"case_id":"nested_unknown_execution","target":"sequence_execution","mutation":"add_unknown_execution_field","expected_error":"unknown_field"},
+    {"case_id":"projection_ack_other_beat","target":"projection_contract","mutation":"ack_same_presentation_other_beat","expected_error":"request_identity_mismatch"},
+    {"case_id":"projection_foreign_state_receipt","target":"projection_contract","mutation":"inject_foreign_state_receipt","expected_error":"request_identity_mismatch"},
+    {"case_id":"projection_foreign_snapshot_receipt","target":"projection_contract","mutation":"inject_foreign_snapshot_receipt","expected_error":"request_identity_mismatch"},
+    {"case_id":"nested_unknown_projection_request","target":"projection_contract","mutation":"add_unknown_projection_request_field","expected_error":"unknown_field"},
+    {"case_id":"nested_unknown_projection_command","target":"projection_contract","mutation":"add_unknown_projection_command_field","expected_error":"unknown_field"},
+    {"case_id":"nested_unknown_projection_receipt","target":"projection_contract","mutation":"add_unknown_projection_receipt_field","expected_error":"unknown_field"},
+    {"case_id":"nested_unknown_projection_result","target":"projection_contract","mutation":"add_unknown_projection_result_field","expected_error":"unknown_field"},
+    {"case_id":"nested_unknown_snapshot","target":"projection_contract","mutation":"add_unknown_snapshot_field","expected_error":"unknown_field"}
   ]
 }

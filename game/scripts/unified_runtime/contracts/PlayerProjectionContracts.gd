@@ -14,7 +14,17 @@ const PROJECTION_REQUEST_FIELDS := [
 	"presentation_state",
 ]
 const PROJECTION_COMMAND_FIELDS := ["command_id", "instance_id", "beat_id", "kind", "choice_id"]
-const PRESENTATION_RECEIPT_FIELDS := ["presentation_id", "instance_id", "beat_id", "kind", "subject_id"]
+const PRESENTATION_RECEIPT_FIELDS := [
+	"presentation_id",
+	"instance_id",
+	"sequence_id",
+	"authored_version",
+	"beat_id",
+	"beat_type",
+	"projection_target",
+	"kind",
+	"subject_id",
+]
 const PROJECTION_RESULT_FIELDS := [
 	"accepted",
 	"idempotent",
@@ -42,7 +52,7 @@ static func validate_projection_request(value) -> Dictionary:
 		_add_error(errors, "projection_request.beat_type", "unknown_value")
 	if value["projection_target"] not in AuthoredContract.PROJECTION_TARGETS:
 		_add_error(errors, "projection_request.projection_target", "unknown_value")
-	_validate_presentation_state(value["presentation_state"], errors)
+	_validate_presentation_state(value["presentation_state"], value, errors)
 	return _result(errors)
 
 
@@ -67,10 +77,30 @@ static func validate_presentation_receipt(value) -> Dictionary:
 		return _result(errors)
 	_validate_non_empty_string(value["presentation_id"], "presentation_receipt.presentation_id", errors)
 	_validate_identifier(value["instance_id"], "presentation_receipt.instance_id", errors)
+	_validate_identifier(value["sequence_id"], "presentation_receipt.sequence_id", errors)
+	if not _is_semver(value["authored_version"]):
+		_add_error(errors, "presentation_receipt.authored_version", "expected_major_minor_patch")
 	_validate_identifier(value["beat_id"], "presentation_receipt.beat_id", errors)
+	if value["beat_type"] not in AuthoredContract.BEAT_TYPES:
+		_add_error(errors, "presentation_receipt.beat_type", "unknown_value")
+	if value["projection_target"] not in AuthoredContract.PROJECTION_TARGETS:
+		_add_error(errors, "presentation_receipt.projection_target", "unknown_value")
 	if value["kind"] not in RECEIPT_KINDS:
 		_add_error(errors, "presentation_receipt.kind", "unknown_value")
 	_validate_non_empty_string(value["subject_id"], "presentation_receipt.subject_id", errors)
+	return _result(errors)
+
+
+static func validate_receipt_against_request(receipt, request) -> Dictionary:
+	var errors: Array[String] = []
+	var receipt_result := validate_presentation_receipt(receipt)
+	for error in receipt_result["errors"]:
+		_add_error(errors, "receipt", error)
+	var request_result := validate_projection_request(request)
+	for error in request_result["errors"]:
+		_add_error(errors, "request", error)
+	if receipt_result["valid"] and request_result["valid"]:
+		_validate_receipt_identity(receipt, request, "receipt", errors)
 	return _result(errors)
 
 
@@ -104,6 +134,7 @@ static func validate_port_snapshot(value) -> Dictionary:
 	if typeof(value["snapshot_version"]) != TYPE_INT or value["snapshot_version"] != 1:
 		_add_error(errors, "port_snapshot.snapshot_version", "expected_integer_1")
 	var open_ids := {}
+	var open_requests := {}
 	if typeof(value["open_requests"]) != TYPE_ARRAY:
 		_add_error(errors, "port_snapshot.open_requests", "expected_array")
 	else:
@@ -117,14 +148,26 @@ static func validate_port_snapshot(value) -> Dictionary:
 				if open_ids.has(presentation_id):
 					_add_error(errors, "port_snapshot.open_requests[%d]" % index, "duplicate_projection")
 				open_ids[presentation_id] = true
+				open_requests[presentation_id] = request
 	if typeof(value["receipts"]) == TYPE_ARRAY:
+		var receipt_signatures := {}
 		for index in value["receipts"].size():
 			var receipt = value["receipts"][index]
 			var receipt_validation := validate_presentation_receipt(receipt)
 			for error in receipt_validation["errors"]:
 				_add_error(errors, "port_snapshot.receipts[%d]" % index, error)
-			if receipt_validation["valid"] and not open_ids.has(receipt["presentation_id"]):
-				_add_error(errors, "port_snapshot.receipts[%d]" % index, "receipt_without_open")
+			if receipt_validation["valid"]:
+				var receipt_path := "port_snapshot.receipts[%d]" % index
+				if not open_ids.has(receipt["presentation_id"]):
+					_add_error(errors, receipt_path, "receipt_without_open")
+				else:
+					_validate_receipt_identity(
+						receipt, open_requests[receipt["presentation_id"]], receipt_path, errors
+					)
+				var signature := JSON.stringify(receipt)
+				if receipt_signatures.has(signature):
+					_add_error(errors, receipt_path, "duplicate_receipt")
+				receipt_signatures[signature] = true
 	else:
 		_add_error(errors, "port_snapshot.receipts", "expected_array")
 	return _result(errors)
@@ -133,6 +176,10 @@ static func validate_port_snapshot(value) -> Dictionary:
 static func presentation_id_for(request: Dictionary) -> String:
 	if not validate_projection_request(request)["valid"]:
 		return ""
+	return _presentation_id_unchecked(request)
+
+
+static func _presentation_id_unchecked(request: Dictionary) -> String:
 	return "%s__%s__%s" % [request["instance_id"], request["beat_id"], request["projection_target"]]
 
 
@@ -149,22 +196,43 @@ static func not_implemented_result(projection_target := "NONE") -> Dictionary:
 	}
 
 
-static func _validate_presentation_state(value, errors: Array[String]) -> void:
-	if typeof(value) != TYPE_DICTIONARY:
-		_add_error(errors, "projection_request.presentation_state", "expected_dictionary")
+static func _validate_presentation_state(
+	value,
+	request: Dictionary,
+	errors: Array[String]
+) -> void:
+	if typeof(value) != TYPE_ARRAY:
+		_add_error(errors, "projection_request.presentation_state", "expected_array")
 		return
-	var presentation_ids: Array = value.keys()
-	presentation_ids.sort()
-	for presentation_id in presentation_ids:
-		_validate_non_empty_string(
-			presentation_id, "projection_request.presentation_state", errors
-		)
-		if value[presentation_id] not in RECEIPT_KINDS:
-			_add_error(
-				errors,
-				"projection_request.presentation_state.%s" % presentation_id,
-				"unknown_receipt_kind",
-			)
+	var signatures := {}
+	for index in value.size():
+		var path := "projection_request.presentation_state[%d]" % index
+		var receipt = value[index]
+		var validation := validate_presentation_receipt(receipt)
+		for error in validation["errors"]:
+			_add_error(errors, path, error)
+		if not validation["valid"]:
+			continue
+		_validate_receipt_identity(receipt, request, path, errors)
+		var signature := JSON.stringify(receipt)
+		if signatures.has(signature):
+			_add_error(errors, path, "duplicate_receipt")
+		signatures[signature] = true
+
+
+static func _validate_receipt_identity(
+	receipt: Dictionary,
+	request: Dictionary,
+	path: String,
+	errors: Array[String]
+) -> void:
+	if receipt["presentation_id"] != _presentation_id_unchecked(request):
+		_add_error(errors, path + ".presentation_id", "request_identity_mismatch")
+	for field in [
+		"instance_id", "sequence_id", "authored_version", "beat_id", "beat_type", "projection_target",
+	]:
+		if receipt[field] != request[field]:
+			_add_error(errors, path + "." + field, "request_identity_mismatch")
 
 
 static func _validate_enum_array(value, allowed: Array, path: String, errors: Array[String]) -> void:

@@ -3,7 +3,42 @@ extends RefCounted
 class_name R8CAuthoredSequenceValidator
 
 const Contract := preload("res://scripts/unified_runtime/contracts/AuthoredSequenceV1.gd")
-const SceneDefinition := preload("res://scripts/narrative_scene/SceneDefinition.gd")
+
+const A6_DEFINITION_REQUIRED_FIELDS := [
+	"scene_id", "version_contrat", "nature", "fonction_principale", "participants_requis",
+	"conditions_dures", "exclusions_dures", "contrat_temporel", "politique_unicite", "resolutions",
+]
+const A6_DEFINITION_OPTIONAL_FIELDS := [
+	"titre_interne", "relation_ou_question_focale", "noyau_stable", "structure_id", "choix",
+	"politique_non_resolution",
+]
+const A6_PARTICIPANT_FIELDS := ["personnage_id", "role"]
+const A6_CONDITION_FIELDS := ["actes_compatibles", "evenements_requis"]
+const A6_EXCLUSION_FIELDS := ["evenements_interdits"]
+const A6_TEMPORAL_FIELDS := [
+	"date_debut", "date_fin", "heure_ouverture", "heure_fermeture", "duree_minutes", "revalidation",
+]
+const A6_CHOICE_FIELDS := ["choix_id", "formulation", "signal_emis", "resolution_ids"]
+const A6_RESOLUTION_FIELDS := [
+	"personnage_id", "portee_micro_signal", "signal_recu", "reception", "interpretation",
+	"faits_relationnels", "convergence", "trace_temporaire",
+]
+const A6_RESOLUTION_REQUIRED_FIELDS := [
+	"personnage_id", "portee_micro_signal", "signal_recu", "reception", "interpretation",
+	"faits_relationnels", "convergence",
+]
+const A6_TRACE_FIELDS := ["trace_id", "contenu"]
+const A6_RELATIONAL_FACT_FIELDS := [
+	"fait_id", "nature", "recu_par", "permission_future", "formulee_par",
+]
+const A6_NON_RESOLUTION_FIELDS := ["proposition_expire", "consequence_manquee"]
+const A6_MISSED_CONSEQUENCE_FIELDS := ["personnage_id", "fait_relationnel"]
+const A6_NATURES := ["SIGNATURE", "MODULAIRE"]
+const A6_FUNCTIONS := ["RELATION", "OPPORTUNITE", "ECHO", "RESPIRATION"]
+const A6_UNIQUENESS_POLICIES := ["UNIQUE", "REPETABLE"]
+const A6_SIGNAL_SCOPES := ["LOCALE", "TEMPORAIRE", "DURABLE"]
+const A6_RECEPTIONS := ["NON_PERSISTANTE", "RECUE_INTERPRETEE", "LIMITE_EXPLICITE"]
+const A6_REVALIDATION_POLICIES := ["AVANT_PROPOSITION", "AVANT_PROPOSITION_ET_RESOLUTION"]
 
 
 static func validate(value) -> Dictionary:
@@ -121,9 +156,9 @@ static func _validate_orchestration(value, errors: Array[String]) -> void:
 		else:
 			if a6["definition"].get("scene_id") != a6["scene_definition_id"]:
 				_add_error(errors, "root.orchestration.a6_entry.definition.scene_id", "identity_mismatch")
-			var scene_error: String = SceneDefinition.valider_fermee(a6["definition"])
-			if not scene_error.is_empty():
-				_add_error(errors, "root.orchestration.a6_entry.definition", "invalid_a3_definition_%s" % scene_error)
+			_validate_a6_definition(
+				a6["definition"], "root.orchestration.a6_entry.definition", errors
+			)
 	var a8 = value["a8_window"]
 	if _validate_dictionary(a8, Contract.A8_WINDOW_FIELDS, "root.orchestration.a8_window", errors):
 		_validate_business_id(a8["window_id"], "root.orchestration.a8_window.window_id", errors)
@@ -157,16 +192,16 @@ static func _validate_temporal_projection(value, orchestration, errors: Array[St
 		return
 	var opens_at = value["resolved_window"]["opens_at"]
 	var closes_at = value["resolved_window"]["closes_at"]
-	if not SceneDefinition.moment_normalise_valide(opens_at):
+	if not _normalized_moment_valid(opens_at):
 		_add_error(errors, "root.temporal_projection.resolved_window.opens_at", "invalid_normalized_moment")
-	if not SceneDefinition.moment_normalise_valide(closes_at):
+	if not _normalized_moment_valid(closes_at):
 		_add_error(errors, "root.temporal_projection.resolved_window.closes_at", "invalid_normalized_moment")
 	if (
 		typeof(opens_at) == TYPE_STRING
 		and typeof(closes_at) == TYPE_STRING
-		and SceneDefinition.moment_normalise_valide(opens_at)
-		and SceneDefinition.moment_normalise_valide(closes_at)
-		and (opens_at >= closes_at or not SceneDefinition.meme_offset(opens_at, closes_at))
+		and _normalized_moment_valid(opens_at)
+		and _normalized_moment_valid(closes_at)
+		and (opens_at >= closes_at or not _same_offset(opens_at, closes_at))
 	):
 		_add_error(errors, "root.temporal_projection.resolved_window", "incoherent_window")
 	if typeof(orchestration) == TYPE_DICTIONARY:
@@ -363,7 +398,7 @@ static func _validate_message_content(value, path: String, participant_context: 
 		if typeof(message["author_id"]) == TYPE_STRING and not participant_context["all_ids"].has(message["author_id"]):
 			_add_error(errors, message_path + ".author_id", "unknown_participant")
 		_validate_non_empty_string(message["text"], message_path + ".text", errors)
-		if not SceneDefinition.moment_normalise_valide(message["diegetic_at"]):
+		if not _normalized_moment_valid(message["diegetic_at"]):
 			_add_error(errors, message_path + ".diegetic_at", "invalid_normalized_moment")
 		_validate_non_negative_integer(message["relative_order"], message_path + ".relative_order", errors)
 		if message_ids.has(message["message_id"]):
@@ -396,10 +431,8 @@ static func _validate_choice_content(
 			continue
 		_validate_business_id(choice["choice_id"], choice_path + ".choice_id", errors)
 		_validate_non_empty_string(choice["text"], choice_path + ".text", errors)
-		_validate_nullable_identifier(choice["resolution_id"], choice_path + ".resolution_id", errors)
-		_validate_nullable_identifier(choice["next_beat_id"], choice_path + ".next_beat_id", errors)
-		if choice["resolution_id"] == null and choice["next_beat_id"] == null:
-			_add_error(errors, choice_path, "choice_without_resolution_or_next_beat")
+		_validate_business_id(choice["resolution_id"], choice_path + ".resolution_id", errors)
+		_validate_business_id(choice["next_beat_id"], choice_path + ".next_beat_id", errors)
 		if local_choices.has(choice["choice_id"]):
 			_add_error(errors, choice_path + ".choice_id", "duplicate")
 		local_choices[choice["choice_id"]] = true
@@ -671,6 +704,8 @@ static func _validate_references(
 					if not resolutions.has(resolution_id):
 						_add_error(errors, path + ".content.eligible_resolution_ids", "unknown_resolution_%s" % resolution_id)
 
+	_validate_choice_resolution_reciprocity(beats, choices, resolutions, errors)
+
 	var a10_choice_ids := {}
 	var orchestration = sequence.get("orchestration")
 	var a6_entry = orchestration.get("a6_entry", {}) if typeof(orchestration) == TYPE_DICTIONARY else {}
@@ -692,11 +727,8 @@ static func _validate_references(
 			_add_error(errors, path + ".a10_choice_id", "unknown_a6_choice")
 		if not checkpoints.has(resolution["terminal_checkpoint_id"]):
 			_add_error(errors, path + ".terminal_checkpoint_id", "unknown_checkpoint")
-		if resolution["next_beat_id"] != null:
-			if not beats.has(resolution["next_beat_id"]):
-				_add_error(errors, path + ".next_beat_id", "unknown_beat")
-			elif beats[resolution["next_beat_id"]]["type"] != "RETURN":
-				_add_error(errors, path + ".next_beat_id", "expected_return_beat")
+		if resolution["next_beat_id"] != null and not beats.has(resolution["next_beat_id"]):
+			_add_error(errors, path + ".next_beat_id", "unknown_beat")
 		if typeof(resolution["media_effects"]) != TYPE_ARRAY:
 			continue
 		for effect in resolution["media_effects"]:
@@ -712,6 +744,72 @@ static func _validate_references(
 			_add_error(errors, path + ".parent_media_id", "unknown_media")
 		if item["thumbnail_media_id"] != null and not media.has(item["thumbnail_media_id"]):
 			_add_error(errors, path + ".thumbnail_media_id", "unknown_media")
+
+
+static func _validate_choice_resolution_reciprocity(
+	beats: Dictionary,
+	choices: Dictionary,
+	resolutions: Dictionary,
+	errors: Array[String]
+) -> void:
+	var claimed_resolutions := {}
+	var choice_ids: Array = choices.keys()
+	choice_ids.sort()
+	for choice_id in choice_ids:
+		var choice_context: Dictionary = choices[choice_id]
+		var option: Dictionary = choice_context["choice"]
+		var path := "root.beats.%s.content.choices.%s" % [choice_context["beat_id"], choice_id]
+		var resolution_id = option.get("resolution_id")
+		if not resolutions.has(resolution_id):
+			continue
+		if claimed_resolutions.has(resolution_id):
+			_add_error(errors, path + ".resolution_id", "resolution_reused")
+		else:
+			claimed_resolutions[resolution_id] = choice_id
+		var resolution: Dictionary = resolutions[resolution_id]
+		if resolution.get("choice_id") != choice_id:
+			_add_error(errors, path + ".resolution_id", "resolution_choice_mismatch")
+		if resolution.get("next_beat_id") != option.get("next_beat_id"):
+			_add_error(errors, path + ".next_beat_id", "resolution_target_mismatch")
+
+	var return_claims := {}
+	var beat_ids: Array = beats.keys()
+	beat_ids.sort()
+	for beat_id in beat_ids:
+		var beat: Dictionary = beats[beat_id]
+		if beat.get("type") != "RETURN" or typeof(beat.get("content")) != TYPE_DICTIONARY:
+			continue
+		var declared = beat["content"].get("eligible_resolution_ids")
+		if typeof(declared) != TYPE_ARRAY:
+			continue
+		for resolution_id in declared:
+			var path := "root.beats.%s.content.eligible_resolution_ids" % beat_id
+			if not resolutions.has(resolution_id):
+				continue
+			if return_claims.has(resolution_id):
+				_add_error(errors, path, "resolution_declared_by_multiple_returns_%s" % resolution_id)
+			else:
+				return_claims[resolution_id] = beat_id
+			if resolutions[resolution_id].get("next_beat_id") != beat_id:
+				_add_error(errors, path, "foreign_resolution_%s" % resolution_id)
+
+	var resolution_ids: Array = resolutions.keys()
+	resolution_ids.sort()
+	for resolution_id in resolution_ids:
+		var resolution: Dictionary = resolutions[resolution_id]
+		var path := "root.resolutions.%s" % resolution_id
+		if not claimed_resolutions.has(resolution_id):
+			_add_error(errors, path, "orphan_resolution")
+		var target_id = resolution.get("next_beat_id")
+		if not beats.has(target_id):
+			continue
+		if beats[target_id].get("type") == "RETURN":
+			if not return_claims.has(resolution_id):
+				_add_error(errors, path + ".next_beat_id", "return_missing_reciprocal_resolution")
+			elif return_claims[resolution_id] != target_id:
+				_add_error(errors, path + ".next_beat_id", "return_resolution_mismatch")
+		elif return_claims.has(resolution_id):
+			_add_error(errors, path + ".next_beat_id", "non_return_resolution_declared_by_return")
 
 
 static func _validate_next_references(
@@ -832,6 +930,332 @@ static func _collect_reachable(node: String, adjacency: Dictionary, reachable: D
 			_collect_reachable(target, adjacency, reachable)
 
 
+static func _validate_a6_definition(value: Dictionary, path: String, errors: Array[String]) -> void:
+	var allowed_fields := A6_DEFINITION_REQUIRED_FIELDS + A6_DEFINITION_OPTIONAL_FIELDS
+	_validate_closed_dictionary(value, allowed_fields, A6_DEFINITION_REQUIRED_FIELDS, path, errors)
+	if not _has_required_fields(value, A6_DEFINITION_REQUIRED_FIELDS):
+		return
+	_validate_business_id(value["scene_id"], path + ".scene_id", errors)
+	if not _is_semver(value["version_contrat"]):
+		_add_error(errors, path + ".version_contrat", "expected_major_minor_patch")
+	if value["nature"] not in A6_NATURES:
+		_add_error(errors, path + ".nature", "unknown_value")
+	if value["fonction_principale"] not in A6_FUNCTIONS:
+		_add_error(errors, path + ".fonction_principale", "unknown_value")
+	if value["politique_unicite"] not in A6_UNIQUENESS_POLICIES:
+		_add_error(errors, path + ".politique_unicite", "unknown_value")
+	for field in ["titre_interne", "relation_ou_question_focale", "noyau_stable", "structure_id"]:
+		if value.has(field):
+			_validate_non_empty_string(value[field], path + "." + field, errors)
+	var participant_ids := _validate_a6_participants(value["participants_requis"], path, errors)
+	_validate_a6_conditions(value["conditions_dures"], value["exclusions_dures"], path, errors)
+	_validate_a6_temporal(value["contrat_temporel"], path + ".contrat_temporel", errors)
+	var resolution_signals := _validate_a6_resolutions(
+		value["resolutions"], participant_ids, path + ".resolutions", errors
+	)
+	_validate_a6_choices(value.get("choix", []), resolution_signals, path + ".choix", errors)
+	if value.has("politique_non_resolution"):
+		_validate_a6_non_resolution(
+			value["politique_non_resolution"], participant_ids, path + ".politique_non_resolution", errors
+		)
+
+
+static func _validate_a6_participants(value, path: String, errors: Array[String]) -> Dictionary:
+	var participant_ids := {}
+	path += ".participants_requis"
+	if typeof(value) != TYPE_ARRAY or value.is_empty():
+		_add_error(errors, path, "expected_non_empty_array")
+		return participant_ids
+	for index in value.size():
+		var item_path := path + "[%d]" % index
+		var participant = value[index]
+		if not _validate_dictionary(participant, A6_PARTICIPANT_FIELDS, item_path, errors):
+			continue
+		_validate_business_id(participant["personnage_id"], item_path + ".personnage_id", errors)
+		_validate_non_empty_string(participant["role"], item_path + ".role", errors)
+		if participant_ids.has(participant["personnage_id"]):
+			_add_error(errors, item_path + ".personnage_id", "duplicate")
+		participant_ids[participant["personnage_id"]] = true
+	return participant_ids
+
+
+static func _validate_a6_conditions(conditions, exclusions, path: String, errors: Array[String]) -> void:
+	if _validate_dictionary(conditions, A6_CONDITION_FIELDS, path + ".conditions_dures", errors):
+		_validate_non_empty_string_array(
+			conditions["actes_compatibles"], path + ".conditions_dures.actes_compatibles", errors
+		)
+		_validate_string_array(
+			conditions["evenements_requis"], path + ".conditions_dures.evenements_requis", errors
+		)
+	if _validate_dictionary(exclusions, A6_EXCLUSION_FIELDS, path + ".exclusions_dures", errors):
+		_validate_string_array(
+			exclusions["evenements_interdits"], path + ".exclusions_dures.evenements_interdits", errors
+		)
+
+
+static func _validate_a6_temporal(value, path: String, errors: Array[String]) -> void:
+	if not _validate_dictionary(value, A6_TEMPORAL_FIELDS, path, errors):
+		return
+	if not _date_valid(value["date_debut"]):
+		_add_error(errors, path + ".date_debut", "invalid_date")
+	if not _date_valid(value["date_fin"]):
+		_add_error(errors, path + ".date_fin", "invalid_date")
+	var opens := _time_in_minutes(value["heure_ouverture"])
+	var closes := _time_in_minutes(value["heure_fermeture"])
+	if opens < 0:
+		_add_error(errors, path + ".heure_ouverture", "invalid_time")
+	if closes < 0:
+		_add_error(errors, path + ".heure_fermeture", "invalid_time")
+	if _date_valid(value["date_debut"]) and _date_valid(value["date_fin"]):
+		if value["date_debut"] > value["date_fin"] or opens >= closes:
+			_add_error(errors, path, "incoherent_window")
+	_validate_positive_integer(value["duree_minutes"], path + ".duree_minutes", errors)
+	if value["revalidation"] not in A6_REVALIDATION_POLICIES:
+		_add_error(errors, path + ".revalidation", "unknown_value")
+
+
+static func _validate_a6_resolutions(
+	value,
+	participant_ids: Dictionary,
+	path: String,
+	errors: Array[String]
+) -> Dictionary:
+	var signals := {}
+	if typeof(value) != TYPE_DICTIONARY:
+		_add_error(errors, path, "expected_dictionary")
+		return signals
+	var resolution_ids: Array = value.keys()
+	resolution_ids.sort()
+	for resolution_id in resolution_ids:
+		var item_path := path + "." + str(resolution_id)
+		_validate_business_id(resolution_id, path, errors)
+		var resolution = value[resolution_id]
+		if typeof(resolution) != TYPE_DICTIONARY:
+			_add_error(errors, item_path, "expected_dictionary")
+			continue
+		_validate_closed_dictionary(
+			resolution, A6_RESOLUTION_FIELDS, A6_RESOLUTION_REQUIRED_FIELDS, item_path, errors
+		)
+		if not _has_required_fields(resolution, A6_RESOLUTION_REQUIRED_FIELDS):
+			continue
+		_validate_business_id(resolution["personnage_id"], item_path + ".personnage_id", errors)
+		if not participant_ids.has(resolution["personnage_id"]):
+			_add_error(errors, item_path + ".personnage_id", "unknown_participant")
+		if resolution["portee_micro_signal"] not in A6_SIGNAL_SCOPES:
+			_add_error(errors, item_path + ".portee_micro_signal", "unknown_value")
+		if resolution["reception"] not in A6_RECEPTIONS:
+			_add_error(errors, item_path + ".reception", "unknown_value")
+		_validate_non_empty_string(resolution["signal_recu"], item_path + ".signal_recu", errors)
+		_validate_non_empty_string(resolution["interpretation"], item_path + ".interpretation", errors)
+		if resolution["convergence"] != "RETOUR_NOYAU_COMMUN":
+			_add_error(errors, item_path + ".convergence", "unknown_value")
+		_validate_a6_relational_facts(resolution["faits_relationnels"], item_path, errors)
+		var scope = resolution["portee_micro_signal"]
+		var reception = resolution["reception"]
+		if scope == "LOCALE" and reception != "NON_PERSISTANTE":
+			_add_error(errors, item_path, "local_signal_must_be_non_persistent")
+		if scope in ["LOCALE", "TEMPORAIRE"] and typeof(resolution["faits_relationnels"]) == TYPE_ARRAY and not resolution["faits_relationnels"].is_empty():
+			_add_error(errors, item_path + ".faits_relationnels", "durable_fact_forbidden")
+		var trace_valid := false
+		if resolution.has("trace_temporaire"):
+			var trace = resolution["trace_temporaire"]
+			if typeof(trace) != TYPE_DICTIONARY:
+				_add_error(errors, item_path + ".trace_temporaire", "expected_dictionary")
+			elif _validate_dictionary(trace, A6_TRACE_FIELDS, item_path + ".trace_temporaire", errors):
+				trace_valid = true
+				_validate_business_id(trace["trace_id"], item_path + ".trace_temporaire.trace_id", errors)
+				_validate_non_empty_string(trace["contenu"], item_path + ".trace_temporaire.contenu", errors)
+		if scope == "TEMPORAIRE":
+			if not trace_valid:
+				_add_error(errors, item_path + ".trace_temporaire", "required_for_temporary_signal")
+		if scope == "DURABLE" and (
+			reception == "NON_PERSISTANTE"
+			or typeof(resolution["faits_relationnels"]) != TYPE_ARRAY
+			or resolution["faits_relationnels"].is_empty()
+		):
+			_add_error(errors, item_path, "durable_signal_requires_fact")
+		signals[resolution_id] = resolution["signal_recu"]
+	return signals
+
+
+static func _validate_a6_relational_facts(value, path: String, errors: Array[String]) -> void:
+	path += ".faits_relationnels"
+	if typeof(value) != TYPE_ARRAY:
+		_add_error(errors, path, "expected_array")
+		return
+	var fact_ids := {}
+	for index in value.size():
+		var item_path := path + "[%d]" % index
+		var fact = value[index]
+		if typeof(fact) != TYPE_DICTIONARY:
+			_add_error(errors, item_path, "expected_dictionary")
+			continue
+		_validate_closed_dictionary(fact, A6_RELATIONAL_FACT_FIELDS, ["fait_id"], item_path, errors)
+		if not fact.has("fait_id"):
+			continue
+		_validate_business_id(fact["fait_id"], item_path + ".fait_id", errors)
+		if fact_ids.has(fact["fait_id"]):
+			_add_error(errors, item_path + ".fait_id", "duplicate")
+		fact_ids[fact["fait_id"]] = true
+
+
+static func _validate_a6_choices(value, resolution_signals: Dictionary, path: String, errors: Array[String]) -> void:
+	if typeof(value) != TYPE_ARRAY or value.size() > 3:
+		_add_error(errors, path, "expected_zero_to_three_choices")
+		return
+	if value.is_empty() and not resolution_signals.is_empty():
+		_add_error(errors, path, "orphan_resolutions")
+	var choice_ids := {}
+	var claimed_resolutions := {}
+	for index in value.size():
+		var item_path := path + "[%d]" % index
+		var choice = value[index]
+		if not _validate_dictionary(choice, A6_CHOICE_FIELDS, item_path, errors):
+			continue
+		_validate_business_id(choice["choix_id"], item_path + ".choix_id", errors)
+		_validate_non_empty_string(choice["formulation"], item_path + ".formulation", errors)
+		_validate_non_empty_string(choice["signal_emis"], item_path + ".signal_emis", errors)
+		if choice_ids.has(choice["choix_id"]):
+			_add_error(errors, item_path + ".choix_id", "duplicate")
+		choice_ids[choice["choix_id"]] = true
+		var resolution_ids := _validate_id_array(
+			choice["resolution_ids"], item_path + ".resolution_ids", errors, true
+		)
+		for resolution_id in resolution_ids:
+			if not resolution_signals.has(resolution_id):
+				_add_error(errors, item_path + ".resolution_ids", "unknown_resolution_%s" % resolution_id)
+			elif resolution_signals[resolution_id] != choice["signal_emis"]:
+				_add_error(errors, item_path + ".resolution_ids", "signal_mismatch_%s" % resolution_id)
+			if claimed_resolutions.has(resolution_id):
+				_add_error(errors, item_path + ".resolution_ids", "resolution_reused_%s" % resolution_id)
+			claimed_resolutions[resolution_id] = true
+	for resolution_id in resolution_signals:
+		if not claimed_resolutions.has(resolution_id):
+			_add_error(errors, path, "orphan_resolution_%s" % resolution_id)
+
+
+static func _validate_a6_non_resolution(
+	value,
+	participant_ids: Dictionary,
+	path: String,
+	errors: Array[String]
+) -> void:
+	if typeof(value) != TYPE_DICTIONARY:
+		_add_error(errors, path, "expected_dictionary")
+		return
+	_validate_closed_dictionary(value, A6_NON_RESOLUTION_FIELDS, ["proposition_expire"], path, errors)
+	if not value.has("proposition_expire"):
+		return
+	if value["proposition_expire"] not in ["MISSED", "CANCELLED"]:
+		_add_error(errors, path + ".proposition_expire", "unknown_value")
+	if value.has("consequence_manquee") and value["consequence_manquee"] != null:
+		var consequence = value["consequence_manquee"]
+		if not _validate_dictionary(consequence, A6_MISSED_CONSEQUENCE_FIELDS, path + ".consequence_manquee", errors):
+			return
+		if not participant_ids.has(consequence["personnage_id"]):
+			_add_error(errors, path + ".consequence_manquee.personnage_id", "unknown_participant")
+		var fact = consequence["fait_relationnel"]
+		if typeof(fact) != TYPE_DICTIONARY:
+			_add_error(errors, path + ".consequence_manquee.fait_relationnel", "expected_dictionary")
+		else:
+			_validate_closed_dictionary(
+				fact, A6_RELATIONAL_FACT_FIELDS, ["fait_id"], path + ".consequence_manquee.fait_relationnel", errors
+			)
+
+
+static func _validate_closed_dictionary(
+	value: Dictionary,
+	allowed_fields: Array,
+	required_fields: Array,
+	path: String,
+	errors: Array[String]
+) -> void:
+	for field in required_fields:
+		if not value.has(field):
+			_add_error(errors, path + "." + field, "missing_required_field")
+	var actual_fields: Array = value.keys()
+	actual_fields.sort()
+	for field in actual_fields:
+		if field not in allowed_fields:
+			_add_error(errors, path + "." + str(field), "unknown_field")
+
+
+static func _validate_string_array(value, path: String, errors: Array[String]) -> void:
+	if typeof(value) != TYPE_ARRAY:
+		_add_error(errors, path, "expected_array")
+		return
+	var seen := {}
+	for index in value.size():
+		_validate_non_empty_string(value[index], path + "[%d]" % index, errors)
+		if seen.has(value[index]):
+			_add_error(errors, path + "[%d]" % index, "duplicate")
+		seen[value[index]] = true
+
+
+static func _normalized_moment_valid(value) -> bool:
+	if typeof(value) != TYPE_STRING or value.length() != 25:
+		return false
+	if value.substr(10, 1) != "T" or value.substr(16, 1) != ":":
+		return false
+	if value.substr(19, 1) not in ["+", "-"] or value.substr(22, 1) != ":":
+		return false
+	if not _date_valid(value.substr(0, 10)) or _time_in_minutes(value.substr(11, 5)) < 0:
+		return false
+	var seconds: String = value.substr(17, 2)
+	var offset_hours: String = value.substr(20, 2)
+	var offset_minutes: String = value.substr(23, 2)
+	if not seconds.is_valid_int() or not offset_hours.is_valid_int() or not offset_minutes.is_valid_int():
+		return false
+	var second_value := int(seconds)
+	var hour_value := int(offset_hours)
+	var minute_value := int(offset_minutes)
+	return (
+		second_value >= 0 and second_value <= 59
+		and hour_value >= 0 and hour_value <= 14
+		and minute_value >= 0 and minute_value <= 59
+		and (hour_value < 14 or minute_value == 0)
+	)
+
+
+static func _same_offset(first: String, second: String) -> bool:
+	return _normalized_moment_valid(first) and _normalized_moment_valid(second) and first.substr(19, 6) == second.substr(19, 6)
+
+
+static func _time_in_minutes(value) -> int:
+	if typeof(value) != TYPE_STRING:
+		return -1
+	var parts: PackedStringArray = value.split(":")
+	if parts.size() != 2 or parts[0].length() != 2 or parts[1].length() != 2:
+		return -1
+	if not parts[0].is_valid_int() or not parts[1].is_valid_int():
+		return -1
+	var hours := int(parts[0])
+	var minutes := int(parts[1])
+	if hours < 0 or hours > 23 or minutes < 0 or minutes > 59:
+		return -1
+	return hours * 60 + minutes
+
+
+static func _date_valid(value) -> bool:
+	if typeof(value) != TYPE_STRING or value.length() != 10:
+		return false
+	var parts: PackedStringArray = value.split("-")
+	if parts.size() != 3 or parts[0].length() != 4 or parts[1].length() != 2 or parts[2].length() != 2:
+		return false
+	for part in parts:
+		if not part.is_valid_int():
+			return false
+	var year := int(parts[0])
+	var month := int(parts[1])
+	var day := int(parts[2])
+	if year < 1 or month < 1 or month > 12:
+		return false
+	var days := [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+	if month == 2 and (year % 400 == 0 or (year % 4 == 0 and year % 100 != 0)):
+		days[1] = 29
+	return day >= 1 and day <= days[month - 1]
+
+
 static func _validate_dictionary(value, fields: Array, path: String, errors: Array[String]) -> bool:
 	if typeof(value) != TYPE_DICTIONARY:
 		_add_error(errors, path, "expected_dictionary")
@@ -923,25 +1347,21 @@ static func _validate_nullable_media_id(value, path: String, errors: Array[Strin
 
 
 static func _validate_positive_integer(value, path: String, errors: Array[String]) -> void:
-	if not _is_integer_value(value) or float(value) <= 0.0:
+	if not _is_integer_value(value) or value <= 0:
 		_add_error(errors, path, "expected_positive_integer")
 
 
 static func _validate_non_negative_integer(value, path: String, errors: Array[String]) -> void:
-	if not _is_integer_value(value) or float(value) < 0.0:
+	if not _is_integer_value(value) or value < 0:
 		_add_error(errors, path, "expected_non_negative_integer")
 
 
 static func _is_integer_value(value) -> bool:
-	return (
-		typeof(value) in [TYPE_INT, TYPE_FLOAT]
-		and is_finite(float(value))
-		and float(value) == floor(float(value))
-	)
+	return typeof(value) == TYPE_INT
 
 
 static func _integer_equals(value, expected: int) -> bool:
-	return _is_integer_value(value) and int(value) == expected
+	return _is_integer_value(value) and value == expected
 
 
 static func _is_business_id(value) -> bool:

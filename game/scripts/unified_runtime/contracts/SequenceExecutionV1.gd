@@ -37,9 +37,48 @@ const SCHEDULED_RETURN_FIELDS := ["beat_id", "resolution_id", "presentation_id"]
 
 
 static func validate(value, authored_sequence) -> Dictionary:
+	return validate_against_sequence(value, authored_sequence)
+
+
+static func validate_structure(value) -> Dictionary:
 	var errors: Array[String] = []
 	if typeof(value) != TYPE_DICTIONARY:
 		_add_error(errors, "execution", "expected_dictionary")
+		return _result(errors)
+	var execution: Dictionary = value
+	_validate_exact_fields(execution, FIELDS, "execution", errors)
+	if not _has_fields(execution, FIELDS):
+		return _result(errors)
+	_validate_identifier(execution["instance_id"], "execution.instance_id", errors)
+	_validate_identifier(execution["sequence_id"], "execution.sequence_id", errors)
+	if not _is_semver(execution["authored_version"]):
+		_add_error(errors, "execution.authored_version", "expected_major_minor_patch")
+	if execution["execution_status"] not in EXECUTION_STATUSES:
+		_add_error(errors, "execution.execution_status", "unknown_value")
+	_validate_nullable_identifier(execution["checkpoint_id"], "execution.checkpoint_id", errors)
+	_validate_nullable_identifier(execution["current_beat_id"], "execution.current_beat_id", errors)
+	_validate_identifier_array(execution["consumed_choice_ids"], "execution.consumed_choice_ids", errors)
+	_validate_identifier_array(execution["reached_checkpoint_ids"], "execution.reached_checkpoint_ids", errors)
+	var opened := _validate_opened_projection_structure(execution["opened_projection_ids"], errors)
+	_validate_projection_receipts(
+		execution["projection_receipts"], opened, "execution.projection_receipts", errors
+	)
+	_validate_pending_input_structure(execution["pending_player_input"], execution, errors)
+	_validate_scheduled_returns_structure(execution["scheduled_returns"], errors)
+	_validate_nullable_identifier(
+		execution["selected_resolution_id"], "execution.selected_resolution_id", errors
+	)
+	if execution["durable_commit_status"] not in DURABLE_COMMIT_STATUSES:
+		_add_error(errors, "execution.durable_commit_status", "unknown_value")
+	_validate_state_combinations(execution, errors)
+	return _result(errors)
+
+
+static func validate_against_sequence(value, authored_sequence) -> Dictionary:
+	var errors: Array[String] = []
+	var structure_result: Dictionary = validate_structure(value)
+	errors.append_array(structure_result["errors"])
+	if not structure_result["valid"]:
 		return _result(errors)
 	if typeof(authored_sequence) != TYPE_DICTIONARY:
 		_add_error(errors, "authored_sequence", "expected_dictionary")
@@ -49,18 +88,12 @@ static func validate(value, authored_sequence) -> Dictionary:
 		_add_error(errors, "authored_sequence", "invalid_contract")
 		return _result(errors)
 	var execution: Dictionary = value
-	_validate_exact_fields(execution, FIELDS, "execution", errors)
-	if not _has_fields(execution, FIELDS):
-		return _result(errors)
 
 	var index := _build_authored_index(authored_sequence)
-	_validate_identifier(execution["instance_id"], "execution.instance_id", errors)
 	if execution["sequence_id"] != authored_sequence["sequence_id"]:
 		_add_error(errors, "execution.sequence_id", "authored_identity_mismatch")
 	if execution["authored_version"] != authored_sequence["authored_version"]:
 		_add_error(errors, "execution.authored_version", "authored_version_mismatch")
-	if execution["execution_status"] not in EXECUTION_STATUSES:
-		_add_error(errors, "execution.execution_status", "unknown_value")
 	_validate_nullable_reference(execution["checkpoint_id"], index["checkpoints"], "execution.checkpoint_id", errors)
 	_validate_nullable_reference(execution["current_beat_id"], index["beats"], "execution.current_beat_id", errors)
 
@@ -72,6 +105,7 @@ static func validate(value, authored_sequence) -> Dictionary:
 	)
 	if execution["checkpoint_id"] != null and execution["checkpoint_id"] not in reached_checkpoints:
 		_add_error(errors, "execution.checkpoint_id", "not_reached")
+	_validate_current_checkpoint(execution, index, errors)
 
 	var opened_projection_ids := _validate_projection_ids(
 		execution["opened_projection_ids"], execution, index, errors
@@ -87,9 +121,8 @@ static func validate(value, authored_sequence) -> Dictionary:
 		"execution.selected_resolution_id",
 		errors,
 	)
-	if execution["durable_commit_status"] not in DURABLE_COMMIT_STATUSES:
-		_add_error(errors, "execution.durable_commit_status", "unknown_value")
-	_validate_state_combinations(execution, errors)
+	_validate_selected_resolution(execution, index, consumed_choices, errors)
+	_validate_projection_wait(execution, opened_projection_ids, errors)
 	return _result(errors)
 
 
@@ -100,18 +133,24 @@ static func _build_authored_index(authored_sequence: Dictionary) -> Dictionary:
 		"checkpoints": {},
 		"resolutions": {},
 		"beat_targets": {},
+		"beat_types": {},
 	}
 	for beat in authored_sequence["beats"]:
 		index["beats"][beat["beat_id"]] = beat
 		index["beat_targets"][beat["beat_id"]] = beat["projection_target"]
+		index["beat_types"][beat["beat_id"]] = beat["type"]
 		for checkpoint_field in ["checkpoint_before", "checkpoint_after"]:
 			if beat[checkpoint_field] != null:
-				index["checkpoints"][beat[checkpoint_field]] = true
+				index["checkpoints"][beat[checkpoint_field]] = {
+					"beat_id": beat["beat_id"], "position": checkpoint_field,
+				}
 		if beat["type"] == "CHOICE":
 			for choice in beat["content"]["choices"]:
-				index["choices"][choice["choice_id"]] = true
+				index["choices"][choice["choice_id"]] = {
+					"beat_id": beat["beat_id"], "choice": choice,
+				}
 	for resolution_id in authored_sequence["resolutions"]:
-		index["resolutions"][resolution_id] = true
+		index["resolutions"][resolution_id] = authored_sequence["resolutions"][resolution_id]
 	return index
 
 
@@ -120,8 +159,8 @@ static func _validate_projection_ids(
 	execution: Dictionary,
 	index: Dictionary,
 	errors: Array[String]
-) -> Array:
-	var result: Array = []
+) -> Dictionary:
+	var result := {}
 	if typeof(value) != TYPE_ARRAY:
 		_add_error(errors, "execution.opened_projection_ids", "expected_array")
 		return result
@@ -136,7 +175,7 @@ static func _validate_projection_ids(
 			_add_error(errors, path, "duplicate")
 		else:
 			seen[presentation_id] = true
-			result.append(presentation_id)
+			result[presentation_id] = {}
 		var parts: PackedStringArray = presentation_id.split("__", false)
 		if parts.size() != 3:
 			_add_error(errors, path, "invalid_presentation_id")
@@ -147,12 +186,14 @@ static func _validate_projection_ids(
 			_add_error(errors, path, "unknown_beat")
 		elif index["beat_targets"][parts[1]] != parts[2]:
 			_add_error(errors, path, "projection_target_mismatch")
+		else:
+			result[presentation_id] = {"beat_id": parts[1], "projection_target": parts[2]}
 	return result
 
 
 static func _validate_projection_receipts(
 	value,
-	opened_projection_ids: Array,
+	opened_projection_ids: Dictionary,
 	path: String,
 	errors: Array[String]
 ) -> void:
@@ -162,7 +203,7 @@ static func _validate_projection_receipts(
 	var presentation_ids: Array = value.keys()
 	presentation_ids.sort()
 	for presentation_id in presentation_ids:
-		if presentation_id not in opened_projection_ids:
+		if not opened_projection_ids.has(presentation_id):
 			_add_error(errors, path + "." + str(presentation_id), "receipt_without_open")
 		if value[presentation_id] not in RECEIPT_KINDS:
 			_add_error(errors, path + "." + str(presentation_id), "unknown_receipt_kind")
@@ -192,6 +233,10 @@ static func _validate_pending_input(
 	_validate_reference(value["beat_id"], index["beats"], "execution.pending_player_input.beat_id", errors)
 	if value["beat_id"] != execution["current_beat_id"]:
 		_add_error(errors, "execution.pending_player_input.beat_id", "current_beat_mismatch")
+	if index["beats"].has(value["beat_id"]):
+		var input_beat: Dictionary = index["beats"][value["beat_id"]]
+		if value["kind"] in ["SELECT_CHOICE", "WITHDRAW"] and input_beat["type"] != "CHOICE":
+			_add_error(errors, "execution.pending_player_input.beat_id", "choice_input_requires_choice_beat")
 	var allowed := _validate_reference_array(
 		value["allowed_choice_ids"],
 		index["choices"],
@@ -199,6 +244,8 @@ static func _validate_pending_input(
 		errors,
 	)
 	for choice_id in allowed:
+		if index["choices"].has(choice_id) and index["choices"][choice_id]["beat_id"] != value["beat_id"]:
+			_add_error(errors, "execution.pending_player_input.allowed_choice_ids", "choice_from_other_beat_%s" % choice_id)
 		if choice_id in consumed_choices:
 			_add_error(errors, "execution.pending_player_input.allowed_choice_ids", "already_consumed_%s" % choice_id)
 
@@ -227,6 +274,122 @@ static func _validate_scheduled_returns(
 			var authored_beat: Dictionary = index["beats"][item["beat_id"]]
 			if authored_beat["type"] != "RETURN":
 				_add_error(errors, path + ".beat_id", "expected_return_beat")
+		if index["resolutions"].has(item["resolution_id"]):
+			if index["resolutions"][item["resolution_id"]]["next_beat_id"] != item["beat_id"]:
+				_add_error(errors, path + ".resolution_id", "return_resolution_mismatch")
+		if typeof(item["presentation_id"]) != TYPE_STRING or item["presentation_id"].is_empty():
+			_add_error(errors, path + ".presentation_id", "invalid_presentation_id")
+		elif presentation_ids.has(item["presentation_id"]):
+			_add_error(errors, path + ".presentation_id", "duplicate")
+		presentation_ids[item["presentation_id"]] = true
+
+
+static func _validate_current_checkpoint(
+	execution: Dictionary,
+	index: Dictionary,
+	errors: Array[String]
+) -> void:
+	var checkpoint_id = execution["checkpoint_id"]
+	var current_beat_id = execution["current_beat_id"]
+	if checkpoint_id == null or current_beat_id == null or not index["checkpoints"].has(checkpoint_id):
+		return
+	if index["checkpoints"][checkpoint_id]["beat_id"] != current_beat_id:
+		_add_error(errors, "execution.checkpoint_id", "current_beat_checkpoint_mismatch")
+
+
+static func _validate_selected_resolution(
+	execution: Dictionary,
+	index: Dictionary,
+	consumed_choices: Array,
+	errors: Array[String]
+) -> void:
+	var resolution_id = execution["selected_resolution_id"]
+	if resolution_id == null or not index["resolutions"].has(resolution_id):
+		return
+	var choice_id = index["resolutions"][resolution_id]["choice_id"]
+	if choice_id not in consumed_choices:
+		_add_error(errors, "execution.selected_resolution_id", "source_choice_not_consumed")
+
+
+static func _validate_projection_wait(
+	execution: Dictionary,
+	opened_projection_ids: Dictionary,
+	errors: Array[String]
+) -> void:
+	if execution["execution_status"] != "WAITING_FOR_PROJECTION_ACK":
+		return
+	var current_open := 0
+	var pending_ack := 0
+	for presentation_id in opened_projection_ids:
+		if opened_projection_ids[presentation_id].get("beat_id") != execution["current_beat_id"]:
+			continue
+		current_open += 1
+		if not execution["projection_receipts"].has(presentation_id):
+			pending_ack += 1
+	if current_open == 0:
+		_add_error(errors, "execution.execution_status", "waiting_without_open_projection")
+	elif pending_ack == 0:
+		_add_error(errors, "execution.execution_status", "waiting_without_pending_ack")
+
+
+static func _validate_opened_projection_structure(value, errors: Array[String]) -> Dictionary:
+	var result := {}
+	if typeof(value) != TYPE_ARRAY:
+		_add_error(errors, "execution.opened_projection_ids", "expected_array")
+		return result
+	for index in value.size():
+		var path := "execution.opened_projection_ids[%d]" % index
+		var presentation_id = value[index]
+		if typeof(presentation_id) != TYPE_STRING or presentation_id.is_empty():
+			_add_error(errors, path, "invalid_presentation_id")
+			continue
+		if result.has(presentation_id):
+			_add_error(errors, path, "duplicate")
+		result[presentation_id] = true
+	return result
+
+
+static func _validate_pending_input_structure(
+	value,
+	execution: Dictionary,
+	errors: Array[String]
+) -> void:
+	if value == null:
+		if execution["execution_status"] == "WAITING_FOR_PLAYER":
+			_add_error(errors, "execution.pending_player_input", "required_while_waiting_for_player")
+		return
+	if typeof(value) != TYPE_DICTIONARY:
+		_add_error(errors, "execution.pending_player_input", "expected_dictionary_or_null")
+		return
+	_validate_exact_fields(value, PENDING_PLAYER_INPUT_FIELDS, "execution.pending_player_input", errors)
+	if not _has_fields(value, PENDING_PLAYER_INPUT_FIELDS):
+		return
+	if execution["execution_status"] != "WAITING_FOR_PLAYER":
+		_add_error(errors, "execution.pending_player_input", "unexpected_for_execution_status")
+	if value["kind"] not in PLAYER_INPUT_KINDS:
+		_add_error(errors, "execution.pending_player_input.kind", "unknown_value")
+	_validate_identifier(value["beat_id"], "execution.pending_player_input.beat_id", errors)
+	_validate_identifier_array(
+		value["allowed_choice_ids"], "execution.pending_player_input.allowed_choice_ids", errors
+	)
+
+
+static func _validate_scheduled_returns_structure(value, errors: Array[String]) -> void:
+	if typeof(value) != TYPE_ARRAY:
+		_add_error(errors, "execution.scheduled_returns", "expected_array")
+		return
+	var presentation_ids := {}
+	for index in value.size():
+		var path := "execution.scheduled_returns[%d]" % index
+		var item = value[index]
+		if typeof(item) != TYPE_DICTIONARY:
+			_add_error(errors, path, "expected_dictionary")
+			continue
+		_validate_exact_fields(item, SCHEDULED_RETURN_FIELDS, path, errors)
+		if not _has_fields(item, SCHEDULED_RETURN_FIELDS):
+			continue
+		_validate_identifier(item["beat_id"], path + ".beat_id", errors)
+		_validate_identifier(item["resolution_id"], path + ".resolution_id", errors)
 		if typeof(item["presentation_id"]) != TYPE_STRING or item["presentation_id"].is_empty():
 			_add_error(errors, path + ".presentation_id", "invalid_presentation_id")
 		elif presentation_ids.has(item["presentation_id"]):
@@ -274,9 +437,31 @@ static func _validate_reference_array(value, allowed: Dictionary, path: String, 
 	return result
 
 
+static func _validate_identifier_array(value, path: String, errors: Array[String]) -> Array:
+	var result: Array = []
+	if typeof(value) != TYPE_ARRAY:
+		_add_error(errors, path, "expected_array")
+		return result
+	var seen := {}
+	for index in value.size():
+		var item = value[index]
+		_validate_identifier(item, path + "[%d]" % index, errors)
+		if seen.has(item):
+			_add_error(errors, path + "[%d]" % index, "duplicate")
+		else:
+			seen[item] = true
+			result.append(item)
+	return result
+
+
 static func _validate_nullable_reference(value, allowed: Dictionary, path: String, errors: Array[String]) -> void:
 	if value != null:
 		_validate_reference(value, allowed, path, errors)
+
+
+static func _validate_nullable_identifier(value, path: String, errors: Array[String]) -> void:
+	if value != null:
+		_validate_identifier(value, path, errors)
 
 
 static func _validate_reference(value, allowed: Dictionary, path: String, errors: Array[String]) -> void:
@@ -293,6 +478,18 @@ static func _validate_identifier(value, path: String, errors: Array[String]) -> 
 		if value.substr(index, 1) not in "abcdefghijklmnopqrstuvwxyz0123456789_":
 			_add_error(errors, path, "invalid_identifier")
 			return
+
+
+static func _is_semver(value) -> bool:
+	if typeof(value) != TYPE_STRING:
+		return false
+	var parts: PackedStringArray = value.split(".", false)
+	if parts.size() != 3:
+		return false
+	for part in parts:
+		if not part.is_valid_int() or int(part) < 0 or (part.length() > 1 and part.begins_with("0")):
+			return false
+	return true
 
 
 static func _validate_exact_fields(value: Dictionary, fields: Array, path: String, errors: Array[String]) -> void:
