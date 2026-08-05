@@ -4,8 +4,9 @@
 > **Tag stable vérifié :** `r8c-n7-written-payoff-aftercare-reconciliation`
 > **Branche de livraison :** `work/r8c-n7-1-season-structure-runtime-projection-contract`
 > **Nature :** contrat documentaire ; aucun changement de dialogue, runtime, test, asset, JSON ou A1–A10
-> **Statut du document :** `SEASON_RUNTIME_PROJECTION_CONTRACT_READY_FOR_PRODUCT_REVIEW`
+> **Statut du document :** `SEASON_RUNTIME_PROJECTION_CONTRACT_APPROVED`
 > **Statut produit possible après revue et verrouillage seulement :** `SEASON_RUNTIME_PROJECTION_CONTRACT_APPROVED`
+> **Approbation produit :** commit revu `c3869e3e5a5365de864fe7a8696d8d8d20a105ee` ; verdict approuvé sans bloqueur ; date de référence août 2026
 
 ## 1. Verdict et autorité
 
@@ -920,7 +921,7 @@ Les décisions sont fermées dans le présent contrat, sans score ni compteur :
 
 Le statut de livraison est donc :
 
-`SEASON_RUNTIME_PROJECTION_CONTRACT_READY_FOR_PRODUCT_REVIEW`
+`SEASON_RUNTIME_PROJECTION_CONTRACT_APPROVED`
 
 Le statut `SEASON_RUNTIME_PROJECTION_CONTRACT_APPROVED` ne peut être attribué que
 par la revue produit. Aucun travail N8, J21 ou A1–A10 n’est autorisé par la présente
