@@ -2214,6 +2214,7 @@ func _j17_structural_input_valid(value:Dictionary)->bool:
 	if str(value.get("j14_variant","")) not in ["PAULINE","SANDRA","MATHILDE","RAPHAELLE","NICO","S27_MUTATION_NO_DISCOVERY"] or str(value.get("j14_outcome","UNESTABLISHED")) not in ["TRUTH_LIMITED","MINIMIZE_OR_LIE","PROTECT_AND_DEFER","PROTECT_AND_ANSWER_NOW","S27_MUTATION_NO_DISCOVERY"]:return false
 	if str(value.get("j15_outcome","UNESTABLISHED")) not in ["DUE_PAY","DUE_CANCEL","DUE_FAIL","REPAIR_TRUTH","REPAIR_LIE","OPEN_ANSWER","OPEN_REFUSE","OPEN_LIE","CLEAN_ACKNOWLEDGE"]:return false
 	if str(value.get("j16_priority","UNESTABLISHED")) not in ["MARIE","MATHILDE","FALLBACK"] or str(value.get("j16_consequence_outcome","UNESTABLISHED")) not in ["MARIE_RESTITUTE","MARIE_PRACTICAL","MARIE_CONTEST","MATHILDE_RESTITUTE","MATHILDE_PRACTICAL","MATHILDE_CONTEST","FALLBACK_CONFIRM"] or str(value.get("j16_departure_state","UNESTABLISHED")) not in ["ORDINARY","DISTANCE"]:return false
+	if not _j17_couple_promise_structurally_valid(value) or not _j17_consequence_record_structurally_valid(value):return false
 	if _j17_discussion_state(value)=="INVALID":return false
 	var restored_knowledge:Dictionary=value.get("knowledge",{});var restored_obligations:Dictionary=value.get("obligations",{});var restored_promises:Dictionary=value.get("promises",{});var restored_traces:Dictionary=value.get("traces",{});var choices:Array=value.get("selected_choice_ids",[])
 	if str(value.get("j14_variant",""))=="S27_MUTATION_NO_DISCOVERY":
@@ -2231,18 +2232,67 @@ func _j17_structural_input_valid(value:Dictionary)->bool:
 		if (physical=="MATHILDE_M_B2" and not choices.has("choice_j11_mathilde_m_b2_hold")) or (physical=="MATHILDE_M_B3" and not choices.has("choice_j11_mathilde_m_b3_accept")):return false
 	elif not physical_fact.is_empty() or not aftercare.is_empty():return false
 	if physical=="RAPHAELLE_FIRST_KISS" and (str(value.get("j11_pivot",""))!="RAPHAELLE" or str(value.get("j11_pivot_outcome",""))!="FIRST_KISS" or not choices.has("choice_j11_raphaelle_meeting_accept")):return false
-	var priority:=str(value.get("j16_priority",""));var consequence:=str(value.get("j16_consequence_outcome",""));var payment:Dictionary=restored_promises.get("j16_priority_consequence_payment",{});var payment_record:Dictionary=restored_traces.get("j16_consequence_payment_record_01",{})
-	if payment_record.is_empty():return false
-	if priority=="FALLBACK":
-		if consequence!="FALLBACK_CONFIRM" or not payment.is_empty() or str(payment_record.get("consequence_outcome",""))!="DIRECT_TO_MATHILDE_MARIE_J17_PREPARATION":return false
-	else:
-		var contested:=consequence.ends_with("_CONTEST")
-		if not consequence.begins_with(priority+"_") or str(payment.get("status",""))!=("FAILED" if contested else "PAID") or str(payment_record.get("consequence_outcome",""))!=("CONSEQUENCE_FAILED" if contested else "CONSEQUENCE_PAID"):return false
 	return true
+func _j17_dictionary_has_exact_keys(value:Dictionary,required_keys:Array[String])->bool:
+	if value.size()!=required_keys.size():return false
+	for key in required_keys:
+		if not value.has(key):return false
+	return true
+func _j17_couple_promise_structurally_valid(value:Dictionary)->bool:
+	var promises_value=value.get("promises",{});var choices_value=value.get("selected_choice_ids",[])
+	if typeof(promises_value)!=TYPE_DICTIONARY or typeof(choices_value)!=TYPE_ARRAY or typeof(value.get("j16_j17_outcome"))!=TYPE_STRING or typeof(value.get("j17_couple_outcome"))!=TYPE_STRING:return false
+	var restored_promises:Dictionary=promises_value;var choices:Array=choices_value;var outcome:String=value.get("j16_j17_outcome");var resolved:=str(value.get("j17_couple_outcome"))!="UNESTABLISHED";var promise_id:="marie_j16_couple_conversation_j17";var expected_choice:="choice_j16_j17_"+outcome.to_lower()
+	if outcome not in ["ACCEPT","REFUSE","ALTERNATIVE"] or not choices.has(expected_choice):return false
+	var j16_choice_count:=0
+	for choice_id in ["choice_j16_j17_accept","choice_j16_j17_refuse","choice_j16_j17_alternative"]:
+		if choices.has(choice_id):j16_choice_count+=1
+	if j16_choice_count!=1:return false
+	if outcome in ["REFUSE","ALTERNATIVE"]:return not restored_promises.has(promise_id)
+	if not restored_promises.has(promise_id) or typeof(restored_promises[promise_id])!=TYPE_DICTIONARY:return false
+	var promise:Dictionary=restored_promises[promise_id];var required_keys:Array[String]=["promise_id","promise_type","status","created_at","accepted_at","accepted_by_player","source_signed_ref","concerned_person","action_due","due_at"]
+	if resolved:required_keys.append_array(["paid_or_closed_at","paid_or_closed_by"])
+	if not _j17_dictionary_has_exact_keys(promise,required_keys):return false
+	for key in ["promise_id","promise_type","status","created_at","accepted_at","source_signed_ref","concerned_person","action_due","due_at"]:
+		if typeof(promise.get(key))!=TYPE_STRING:return false
+	if typeof(promise.get("accepted_by_player"))!=TYPE_BOOL or not bool(promise.get("accepted_by_player")):return false
+	if str(promise.get("promise_id"))!=promise_id or str(promise.get("promise_type"))!="COUPLE_REVIEW" or str(promise.get("created_at"))!="J16 19:19" or str(promise.get("accepted_at"))!="J16 19:19" or str(promise.get("source_signed_ref"))!="choice_j16_j17_accept":return false
+	if str(promise.get("concerned_person"))!="Marie" or str(promise.get("action_due"))!="discussion de couple après le départ de Mathilde" or str(promise.get("due_at"))!="J17 20:30–21:30":return false
+	if str(promise.get("status"))!=("PAID" if resolved else "ACTIVE"):return false
+	if resolved:
+		if typeof(promise.get("paid_or_closed_at"))!=TYPE_STRING or typeof(promise.get("paid_or_closed_by"))!=TYPE_STRING:return false
+		if str(promise.get("paid_or_closed_at"))!="J17 21:30" or str(promise.get("paid_or_closed_by"))!="Player et Marie":return false
+	return true
+func _j17_consequence_record_structurally_valid(value:Dictionary)->bool:
+	var traces_value=value.get("traces",{});var promises_value=value.get("promises",{});var choices_value=value.get("selected_choice_ids",[])
+	if typeof(traces_value)!=TYPE_DICTIONARY or typeof(promises_value)!=TYPE_DICTIONARY or typeof(choices_value)!=TYPE_ARRAY:return false
+	var restored_traces:Dictionary=traces_value;var restored_promises:Dictionary=promises_value;var choices:Array=choices_value;var record_id:="j16_consequence_payment_record_01"
+	if not restored_traces.has(record_id) or typeof(restored_traces[record_id])!=TYPE_DICTIONARY:return false
+	var record:Dictionary=restored_traces[record_id];var required_keys:Array[String]=["trace_id","record_type","source_day","source_t21_id","source_collision_mode","source_promise_ids","p17_created","consequence_outcome","urgent_consequence_remaining","next_priority","current_state","visual_asset"]
+	if not _j17_dictionary_has_exact_keys(record,required_keys):return false
+	for key in ["trace_id","record_type","source_day","source_t21_id","source_collision_mode","consequence_outcome","current_state","visual_asset"]:
+		if typeof(record.get(key))!=TYPE_STRING:return false
+	if typeof(record.get("source_promise_ids"))!=TYPE_ARRAY or typeof(record.get("p17_created"))!=TYPE_BOOL or typeof(record.get("urgent_consequence_remaining"))!=TYPE_BOOL or typeof(record.get("next_priority"))!=TYPE_INT:return false
+	if str(record.get("trace_id"))!=record_id or str(record.get("record_type"))!="FACT_RECORD" or str(record.get("source_day"))!="J16" or bool(record.get("urgent_consequence_remaining")) or int(record.get("next_priority"))!=8 or str(record.get("current_state"))!="ACTIVE" or str(record.get("visual_asset"))!="none":return false
+	if str(record.get("source_t21_id")) not in ["","j15_obligation_collision_record_01"] or str(record.get("source_collision_mode")) not in ["FULL_COLLISION","NO_COLLISION"] or str(record.get("consequence_outcome")) not in ["CONSEQUENCE_PAID","CONSEQUENCE_FAILED","NO_URGENT_CONSEQUENCE","DIRECT_TO_MATHILDE_MARIE_J17_PREPARATION"]:return false
+	var has_t21:=restored_traces.has("j15_obligation_collision_record_01");var expected_t21_id:="j15_obligation_collision_record_01" if has_t21 else ""
+	if str(record.get("source_t21_id"))!=expected_t21_id:return false
+	if has_t21:
+		if typeof(restored_traces["j15_obligation_collision_record_01"])!=TYPE_DICTIONARY:return false
+		var source_t21:Dictionary=restored_traces["j15_obligation_collision_record_01"]
+		if typeof(source_t21.get("collision_mode"))!=TYPE_STRING or str(source_t21.get("collision_mode"))!=str(record.get("source_collision_mode")):return false
+	elif str(record.get("source_collision_mode"))!="NO_COLLISION":return false
+	var priority:=str(value.get("j16_priority",""));var consequence:=str(value.get("j16_consequence_outcome",""));var payment_id:="j16_priority_consequence_payment";var expected_choice:="choice_j16_"+consequence.to_lower()
+	if not choices.has(expected_choice):return false
+	if priority=="FALLBACK":
+		return consequence=="FALLBACK_CONFIRM" and not restored_promises.has(payment_id) and record.get("source_promise_ids")==[] and not bool(record.get("p17_created")) and str(record.get("consequence_outcome"))=="DIRECT_TO_MATHILDE_MARIE_J17_PREPARATION"
+	if not consequence.begins_with(priority+"_") or not has_t21 or not restored_promises.has(payment_id) or typeof(restored_promises[payment_id])!=TYPE_DICTIONARY:return false
+	var payment:Dictionary=restored_promises[payment_id];var contested:=consequence.ends_with("_CONTEST")
+	return record.get("source_promise_ids")==[payment_id] and bool(record.get("p17_created")) and typeof(payment.get("status"))==TYPE_STRING and str(payment.get("status"))==("FAILED" if contested else "PAID") and str(record.get("consequence_outcome"))==("CONSEQUENCE_FAILED" if contested else "CONSEQUENCE_PAID")
 func _j17_discussion_state(value:Dictionary)->String:
-	var outcome:=str(value.get("j16_j17_outcome","UNESTABLISHED"));var restored_promises:Dictionary=value.get("promises",{});var has_promise:=restored_promises.has("marie_j16_couple_conversation_j17");var status:=str(restored_promises.get("marie_j16_couple_conversation_j17",{}).get("status",""));var resolved:=str(value.get("j17_couple_outcome","UNESTABLISHED"))!="UNESTABLISHED"
-	if outcome=="ACCEPT" and has_promise and status==("PAID" if resolved else "ACTIVE"):return "DUE"
-	if outcome in ["REFUSE","ALTERNATIVE"] and not has_promise:return "NOT_DUE"
+	if not _j17_couple_promise_structurally_valid(value):return "INVALID"
+	var outcome:=str(value.get("j16_j17_outcome","UNESTABLISHED"))
+	if outcome=="ACCEPT":return "DUE"
+	if outcome in ["REFUSE","ALTERNATIVE"]:return "NOT_DUE"
 	return "INVALID"
 func _j17_witness_fact_coherent(value:Dictionary)->bool:
 	var restored_knowledge:Dictionary=value.get("knowledge",{});var restored_traces:Dictionary=value.get("traces",{});var fact:Dictionary=restored_knowledge.get("fact_witness_saw_limited_trace",{});var discovery:Dictionary=restored_traces.get("j14_discovery_event_01",{});var witness:=str(value.get("j14_witness",""));var trace_id:=str(fact.get("discovered_trace_id",""))

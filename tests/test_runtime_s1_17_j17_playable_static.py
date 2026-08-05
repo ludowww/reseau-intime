@@ -94,6 +94,48 @@ class J17N8StaticContractTests(unittest.TestCase):
         )
         self.assertNotRegex(state, r"var\s+j17_no_active_violation")
 
+    def test_j17_structural_inputs_are_closed_before_rules(self):
+        state = self.read(STATE_PATH)
+        resolver = state[state.index("func _resolve_j17_couple_state") : state.index("func _j17_structural_input_valid")]
+        self.assertLess(resolver.index("_j17_structural_input_valid(value)"), resolver.index("# Rule 1:"))
+        self.assertIn("func _j17_couple_promise_structurally_valid", state)
+        self.assertIn("func _j17_consequence_record_structurally_valid", state)
+        promise = state[state.index("func _j17_couple_promise_structurally_valid") : state.index("func _j17_consequence_record_structurally_valid")]
+        for field in (
+            "promise_id",
+            "promise_type",
+            "status",
+            "created_at",
+            "accepted_at",
+            "accepted_by_player",
+            "source_signed_ref",
+            "concerned_person",
+            "action_due",
+            "due_at",
+            "paid_or_closed_at",
+            "paid_or_closed_by",
+        ):
+            self.assertIn(f'"{field}"', promise)
+        record = state[state.index("func _j17_consequence_record_structurally_valid") : state.index("func _j17_discussion_state")]
+        for field in (
+            "trace_id",
+            "record_type",
+            "source_day",
+            "source_t21_id",
+            "source_collision_mode",
+            "source_promise_ids",
+            "p17_created",
+            "consequence_outcome",
+            "urgent_consequence_remaining",
+            "next_priority",
+            "current_state",
+            "visual_asset",
+        ):
+            self.assertIn(f'"{field}"', record)
+        for type_name in ("TYPE_STRING", "TYPE_BOOL", "TYPE_ARRAY", "TYPE_INT", "TYPE_DICTIONARY"):
+            self.assertIn(type_name, promise + record)
+        self.assertIn("_j17_dictionary_has_exact_keys", promise + record)
+
     def test_record_schema_and_vocabularies_are_closed(self):
         state = self.read(STATE_PATH)
         for field in (

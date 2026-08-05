@@ -25,6 +25,8 @@ func _test_eight_rules_and_six_states() -> void:
 	var refused_with_history: RefCounted = _severe_violation_state("choice_j17_refused_acknowledge")
 	refused_with_history.j16_j17_outcome = "REFUSE"
 	refused_with_history.promises.erase("marie_j16_couple_conversation_j17")
+	refused_with_history.selected_choice_ids.erase("choice_j16_j17_accept")
+	refused_with_history.selected_choice_ids.append("choice_j16_j17_refuse")
 	_expect_state(refused_with_history, "choice_j17_refused_acknowledge", "FRACTURE", "rule 2 precedes guards")
 	_expect(refused_with_history.traces["j17_couple_definition_record_01"].triggered_guard_fact_ids.is_empty(), "rule 2 has no triggered guard facts")
 	_expect_state(_severe_violation_state("choice_j17_reconquest"), "choice_j17_reconquest", "FRACTURE", "rule 3 reconquest severe")
@@ -59,6 +61,12 @@ func _test_invalid_inputs_do_not_mutate() -> void:
 	before = incomplete.snapshot()
 	_expect(not incomplete.apply_j17_couple_choice("choice_j17_provisional", "J17 20:30", true), "unestablished input rejected")
 	_expect(incomplete.snapshot() == before, "unestablished input no mutation")
+	var malformed_promise: RefCounted = _base_state(true)
+	malformed_promise.promises["marie_j16_couple_conversation_j17"] = {"status":"ACTIVE"}
+	_expect_structural_rejection_without_mutation(malformed_promise, "incomplete J17 promise")
+	var malformed_record: RefCounted = _base_state(true)
+	malformed_record.traces["j16_consequence_payment_record_01"] = {"consequence_outcome":"DIRECT_TO_MATHILDE_MARIE_J17_PREPARATION"}
+	_expect_structural_rejection_without_mutation(malformed_record, "incomplete J16 record")
 
 func _test_derived_formulas_and_guard_priority() -> void:
 	var clean: RefCounted = _base_state(true)
@@ -159,8 +167,20 @@ func _base_state(discussion_due: bool) -> RefCounted:
 	state.j17_departure_outcome = "HELP"
 	state.j17_couple_outcome = "UNESTABLISHED"
 	state.knowledge["fact_mathilde_left_household"] = {"fact_id":"fact_mathilde_left_household", "source_ref":"choice_j17_help"}
-	state.traces["j16_consequence_payment_record_01"] = {"consequence_outcome":"DIRECT_TO_MATHILDE_MARIE_J17_PREPARATION"}
-	if discussion_due: state.promises["marie_j16_couple_conversation_j17"] = {"status":"ACTIVE"}
+	state.selected_choice_ids.append("choice_j16_fallback_confirm")
+	state.selected_choice_ids.append("choice_j16_j17_accept" if discussion_due else "choice_j16_j17_refuse")
+	state.traces["j16_consequence_payment_record_01"] = {
+		"trace_id":"j16_consequence_payment_record_01", "record_type":"FACT_RECORD", "source_day":"J16",
+		"source_t21_id":"", "source_collision_mode":"NO_COLLISION", "source_promise_ids":[], "p17_created":false,
+		"consequence_outcome":"DIRECT_TO_MATHILDE_MARIE_J17_PREPARATION", "urgent_consequence_remaining":false,
+		"next_priority":8, "current_state":"ACTIVE", "visual_asset":"none",
+	}
+	if discussion_due: state.promises["marie_j16_couple_conversation_j17"] = {
+		"promise_id":"marie_j16_couple_conversation_j17", "promise_type":"COUPLE_REVIEW", "status":"ACTIVE",
+		"created_at":"J16 19:19", "accepted_at":"J16 19:19", "accepted_by_player":true,
+		"source_signed_ref":"choice_j16_j17_accept", "concerned_person":"Marie",
+		"action_due":"discussion de couple après le départ de Mathilde", "due_at":"J17 20:30–21:30",
+	}
 	else: state.promises.erase("marie_j16_couple_conversation_j17")
 	return state
 
@@ -191,8 +211,17 @@ func _incompatible_version_state() -> RefCounted:
 	state.j15_outcome = "OPEN_LIE"
 	state.j16_priority = "MATHILDE"
 	state.j16_consequence_outcome = "MATHILDE_CONTEST"
+	state.selected_choice_ids.erase("choice_j16_fallback_confirm")
+	state.selected_choice_ids.append("choice_j16_mathilde_contest")
 	state.promises["j16_priority_consequence_payment"] = {"status":"FAILED"}
-	state.traces["j16_consequence_payment_record_01"] = {"consequence_outcome":"CONSEQUENCE_FAILED"}
+	state.traces["j15_obligation_collision_record_01"] = {"collision_mode":"NO_COLLISION"}
+	state.traces["j16_consequence_payment_record_01"] = {
+		"trace_id":"j16_consequence_payment_record_01", "record_type":"FACT_RECORD", "source_day":"J16",
+		"source_t21_id":"j15_obligation_collision_record_01", "source_collision_mode":"NO_COLLISION",
+		"source_promise_ids":["j16_priority_consequence_payment"], "p17_created":true,
+		"consequence_outcome":"CONSEQUENCE_FAILED", "urgent_consequence_remaining":false,
+		"next_priority":8, "current_state":"ACTIVE", "visual_asset":"none",
+	}
 	return state
 
 func _add_repeated_marie_acts(state: RefCounted) -> void:
@@ -205,6 +234,14 @@ func _expect_state(state: RefCounted, choice_id: String, expected_state: String,
 	_expect(state.couple_state == expected_state, label + " state")
 	var record: Dictionary = state.traces.get("j17_couple_definition_record_01", {})
 	_expect(record.get("couple_state", "") == expected_state, label + " record")
+
+func _expect_structural_rejection_without_mutation(state: RefCounted, label: String) -> void:
+	var before: Dictionary = state.snapshot()
+	_expect(not state.apply_j17_couple_choice("choice_j17_provisional", "J17 20:30", true), label + " rejected")
+	_expect(state.snapshot() == before, label + " full snapshot unchanged")
+	_expect(state.j17_couple_outcome == "UNESTABLISHED", label + " writes no J17 outcome")
+	_expect(state.couple_state == str(before.get("couple_state", "")), label + " writes no relationship fallback")
+	_expect(not state.traces.has("j17_couple_definition_record_01"), label + " writes no J17 record or micro-return marker")
 
 func _present(provider, thread_id: String) -> void:
 	for message in provider.transcript_for(thread_id):
