@@ -17,6 +17,7 @@ const VARIANT_ID := "sandra_blue_chairs_canonical"
 const CONTROL_SCENE_ID := "n5_smoke_control_definition"
 const CONTROL_VARIANT_ID := "n5_smoke_control"
 const TRACE_ID := "sandra_recontact_importance_received_understood"
+const COMMON_TRACE_EVENT_ID := "r8c-n5:sandra-blue-chairs:common-resolution-trace"
 const REQUIRED_EVENTS := [
 	"sandra_recontact_reactivated",
 	"sandra_first_complicity_restored",
@@ -65,6 +66,21 @@ func _test_explicit_staged_bundle() -> void:
 		"quatre prerequis A1 A3 discrets",
 	)
 	_expect(definition["choix"].size() == 2, "deux choix canoniques")
+	_expect(
+		definition["resolutions"].values().all(
+			func(resolution): return resolution["portee_micro_signal"] == "LOCALE"
+		),
+		"deux signaux optionnels LOCALE",
+	)
+	_expect(
+		definition["resolutions"].values().all(
+			func(resolution): return (
+				resolution["reception"] == "NON_PERSISTANTE"
+				and resolution["faits_relationnels"].is_empty()
+			)
+		),
+		"aucun evenement A1 durable specifique aux choix",
+	)
 	_expect(
 		definition["choix"].map(func(choice): return choice["formulation"]) == [
 			"Que ça m’avait manqué.",
@@ -131,6 +147,11 @@ func _test_complete_a10_resolution_chain() -> void:
 	_expect(not _has_fact(after_proposal, TRACE_ID), "aucune trace a la proposition")
 	_expect(not _has_state(after_proposal, "MISSED"), "aucun MISSED apres proposition")
 	_expect(not _j05_evaluable(after_proposal), "J05 ineligible apres proposition N2")
+	var early_trace: Dictionary = _record_common_trace_after_resolution(
+		env, "n5_complete_blue_chairs_instance"
+	)
+	_expect(not early_trace.get("ok", false), "trace commune refusee avant resolution complete")
+	_expect(not _has_fact(env["facade"].save_state(), TRACE_ID), "refus precoce sans trace A1")
 	var resolution_context := _context("2030-04-12T18:10:00+02:00")
 	var resolution: Dictionary = env["facade"].resolve_scene(
 		"n5_complete_blue_chairs_instance",
@@ -140,9 +161,27 @@ func _test_complete_a10_resolution_chain() -> void:
 	)
 	_expect(resolution.get("ok", false), "resolution complete apres fermeture de fenetre")
 	_expect(resolution.get("state") == "RESOLVED", "instance A5 RESOLVED")
-	_expect(resolution.get("transaction_status") == "APPLIQUE", "fait A1 applique")
+	_expect(resolution.get("transaction_status") == "NON_PERSISTE", "attitude locale non persistee")
+	var resolved_without_trace: Dictionary = env["facade"].save_state()
+	_expect(not _j05_evaluable(resolved_without_trace), "J05 ineligible apres resolution N2")
+	_expect(not _has_fact(resolved_without_trace, TRACE_ID), "aucune trace par la resolution locale")
+	_expect(
+		not resolved_without_trace["narrative_state"]["evenements"].has(
+			"r8c-a3:n5_complete_blue_chairs_instance:resolution:careful_warmth_received"
+		),
+		"aucun evenement A1 durable specifique au choix A",
+	)
+	var common_trace: Dictionary = _record_common_trace_after_resolution(
+		env, "n5_complete_blue_chairs_instance"
+	)
+	_expect(common_trace.get("statut") == "APPLIQUE", "trace A1 commune appliquee apres RESOLVED")
 	var resolved: Dictionary = env["facade"].save_state()
-	_expect(_fact_count(resolved, TRACE_ID) == 1, "trace durable exacte creee une fois")
+	_expect(_fact_count(resolved, TRACE_ID) == 1, "trace durable commune creee une fois")
+	var provenance: Dictionary = resolved["narrative_state"]["evenements"][COMMON_TRACE_EVENT_ID]["provenance"]
+	_expect(
+		provenance.keys().size() == 2 and not provenance.has("source_choix_id") and not provenance.has("source_signal_emis"),
+		"trace commune sans provenance de choix ou signal",
+	)
 	var replay: Dictionary = env["facade"].resolve_scene(
 		"n5_complete_blue_chairs_instance",
 		"careful_warmth",
@@ -150,6 +189,10 @@ func _test_complete_a10_resolution_chain() -> void:
 		resolution_context,
 	)
 	_expect(replay.get("ok", false) and replay.get("idempotent", false), "resolution idempotente")
+	var trace_replay: Dictionary = _record_common_trace_after_resolution(
+		env, "n5_complete_blue_chairs_instance"
+	)
+	_expect(trace_replay.get("statut") == "IDEMPOTENT", "trace commune idempotente")
 	_expect(env["facade"].save_state() == resolved, "replay sans seconde trace")
 
 
@@ -242,7 +285,7 @@ func _environment(missing_event: String = "", forbidden_event: String = "") -> D
 	var facade = FacadeModele.create(loaded["bibliotheque"], state)
 	if facade == null:
 		return {}
-	return {"facade": facade, "library": loaded["bibliotheque"]}
+	return {"facade": facade, "library": loaded["bibliotheque"], "state": state}
 
 
 func _coordinator_environment() -> Dictionary:
@@ -374,6 +417,35 @@ func _add_event(state, event_id: String) -> bool:
 		"payload": {"personnage_id": "sandra", "changements": {"faits": facts}},
 	})
 	return result.get("ok", false)
+
+
+func _record_common_trace_after_resolution(env: Dictionary, instance_id: String) -> Dictionary:
+	var snapshot: Dictionary = env["facade"].save_state()
+	var resolved := false
+	for instance in snapshot.get("scene_registry", []):
+		if instance.get("instance_id") == instance_id and instance.get("state") == "RESOLVED":
+			resolved = true
+			break
+	if not resolved:
+		return {"ok": false, "statut": "REFUSE", "erreur": "INSTANCE_NON_RESOLUE"}
+	var state = env["state"]
+	var facts: Array = state.obtenir_snapshot()["relations"]["sandra"]["faits"].duplicate(true)
+	if not facts.any(func(fact): return typeof(fact) == TYPE_DICTIONARY and fact.get("fait_id") == TRACE_ID):
+		facts.append({
+			"fait_id": TRACE_ID,
+			"nature": "SIGNAL_RECU_ET_INTERPRETE",
+			"recu_par": "sandra",
+			"permission_future": false,
+		})
+	return state.traiter_evenement({
+		"event_id": COMMON_TRACE_EVENT_ID,
+		"event_type": EtatNarratifModele.TYPE_RELATION,
+		"provenance": {
+			"type": "R8C_N5_STAGED_COMMON_RESOLUTION_TRACE",
+			"id": COMMON_TRACE_EVENT_ID,
+		},
+		"payload": {"personnage_id": "sandra", "changements": {"faits": facts}},
+	})
 
 
 func _new_state():

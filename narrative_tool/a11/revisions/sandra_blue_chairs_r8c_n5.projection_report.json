@@ -1,6 +1,7 @@
 {
   "format": "R8C_N5_STAGED_SEASON_PROJECTION_REPORT",
   "version": 1,
+  "revision": "R8C-N5.1",
   "status": "RUNTIME_PROJECTION_STAGED",
   "baseline": "2bd49d728fb1e812a16fc18b7fdd844d74f51dbf",
   "canonical_source": {
@@ -14,6 +15,7 @@
     "load_mode": "EXPLICIT_PATH_TESTS_AND_SMOKES_ONLY",
     "scene_definition_id": "sandra_blue_chairs_definition",
     "variant_id": "sandra_blue_chairs_canonical",
+    "contract_version": "1.0.1-n5.1-staged",
     "player_provider_reference": false
   },
   "canonical_identity": {
@@ -50,12 +52,7 @@
       {
         "source": "N2.choice.reception_messages",
         "target": "definition.resolutions",
-        "detail": "Chaque branche garde une réception distincte avant la convergence commune."
-      },
-      {
-        "source": "N3.trace_durable_potentielle",
-        "target": "definition.resolutions.*.faits_relationnels",
-        "detail": "Les deux branches écrivent le même et unique fait A1 après résolution complète."
+        "detail": "Chaque branche garde une réception immédiate distincte, LOCALE et NON_PERSISTANTE, avant la convergence commune."
       }
     ],
     "not_representable": [
@@ -78,8 +75,27 @@
         "source": "N4.1.current_runtime_projection",
         "reason": "La projection Saison 1 est révisable et ne fait pas partie de l’identité canonique.",
         "preserved_in": "runtime_projection"
+      },
+      {
+        "source": "N3.trace_durable_potentielle",
+        "reason": "Le schéma A6 fermé lie tout fait durable à une résolution, un choix et un signal; la trace commune indépendante des attitudes est donc appliquée séparément après RESOLVED dans le harness staged.",
+        "preserved_in": "durable_trace"
       }
     ]
+  },
+  "option_signal_scope": {
+    "careful_warmth_received": {
+      "scope": "LOCALE",
+      "reception": "NON_PERSISTANTE",
+      "distinct_immediate_reception": true,
+      "choice_specific_a1_event": false
+    },
+    "ironic_withdrawal_received": {
+      "scope": "LOCALE",
+      "reception": "NON_PERSISTANTE",
+      "distinct_immediate_reception": true,
+      "choice_specific_a1_event": false
+    }
   },
   "a1_a3_prerequisites": {
     "required_events": [
@@ -169,6 +185,7 @@
     "conversation_id": "chapter_05_sandra_photo_continuity",
     "stable_scene_id": "sandra_saturday_photo_continuity_01",
     "if_n2_proposed": "SILENTLY_INELIGIBLE_BEFORE_PROPOSAL",
+    "if_n2_resolved": "SILENTLY_INELIGIBLE_BEFORE_PROPOSAL",
     "if_n2_never_proposed": "EVALUATE_NORMALLY",
     "missed": false,
     "absence_narrative": false,
@@ -176,8 +193,15 @@
     "runtime_bridge_implemented": false
   },
   "durable_trace": {
+    "event_id": "r8c-n5:sandra-blue-chairs:common-resolution-trace",
     "fact_id": "sandra_recontact_importance_received_understood",
     "text": "Sandra a reçu et compris que la reprise du contact compte pour Player.",
+    "producer": "STAGED_POST_RESOLUTION_COMMON_A1_EVENT",
+    "provenance_type": "R8C_N5_STAGED_COMMON_RESOLUTION_TRACE",
+    "choice_specific": false,
+    "signal_specific": false,
+    "staged_harness_implemented": true,
+    "runtime_bridge_implemented": false,
     "created_only_after_complete_resolution": true,
     "created_at_eligibility": false,
     "created_at_reservation": false,

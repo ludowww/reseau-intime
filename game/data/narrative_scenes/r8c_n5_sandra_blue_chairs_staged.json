@@ -7,7 +7,7 @@
       "variant_id": "sandra_blue_chairs_canonical",
       "definition": {
         "scene_id": "sandra_blue_chairs_definition",
-        "version_contrat": "1.0.0-n5-staged",
+        "version_contrat": "1.0.1-n5.1-staged",
         "titre_interne": "Sandra — Les chaises bleues",
         "nature": "MODULAIRE",
         "fonction_principale": "RELATION",
@@ -75,34 +75,20 @@
         "resolutions": {
           "careful_warmth_received": {
             "personnage_id": "sandra",
-            "portee_micro_signal": "DURABLE",
+            "portee_micro_signal": "LOCALE",
             "signal_recu": "RECONTACT_IMPORTANCE_STATED_CAREFULLY",
-            "reception": "RECUE_INTERPRETEE",
+            "reception": "NON_PERSISTANTE",
             "interpretation": "SANDRA_RECEIVED_AND_UNDERSTOOD_RECONTACT_MATTERS_TO_PLAYER",
-            "faits_relationnels": [
-              {
-                "fait_id": "sandra_recontact_importance_received_understood",
-                "nature": "SIGNAL_RECU_ET_INTERPRETE",
-                "recu_par": "sandra",
-                "permission_future": false
-              }
-            ],
+            "faits_relationnels": [],
             "convergence": "RETOUR_NOYAU_COMMUN"
           },
           "ironic_withdrawal_received": {
             "personnage_id": "sandra",
-            "portee_micro_signal": "DURABLE",
+            "portee_micro_signal": "LOCALE",
             "signal_recu": "RECONTACT_IMPORTANCE_STATED_INDIRECTLY",
-            "reception": "RECUE_INTERPRETEE",
+            "reception": "NON_PERSISTANTE",
             "interpretation": "SANDRA_RECEIVED_AND_UNDERSTOOD_RECONTACT_MATTERS_TO_PLAYER",
-            "faits_relationnels": [
-              {
-                "fait_id": "sandra_recontact_importance_received_understood",
-                "nature": "SIGNAL_RECU_ET_INTERPRETE",
-                "recu_par": "sandra",
-                "permission_future": false
-              }
-            ],
+            "faits_relationnels": [],
             "convergence": "RETOUR_NOYAU_COMMUN"
           }
         }

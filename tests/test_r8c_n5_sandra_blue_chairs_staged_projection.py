@@ -127,6 +127,8 @@ class R8CN5SandraBlueChairsStagedProjectionTests(unittest.TestCase):
             self.assertNotIn(forbidden_field, self.definition)
         self.assertEqual("RUNTIME_PROJECTION_STAGED", self.report["status"])
         self.assertEqual("EXPLICIT_PATH_TESTS_AND_SMOKES_ONLY", self.report["staged_bundle"]["load_mode"])
+        self.assertEqual("1.0.1-n5.1-staged", self.definition["version_contrat"])
+        self.assertEqual("R8C-N5.1", self.report["revision"])
 
     def test_a1_a3_prerequisites_are_discrete_and_bounded(self):
         expected_required = [
@@ -151,21 +153,39 @@ class R8CN5SandraBlueChairsStagedProjectionTests(unittest.TestCase):
         self.assertTrue(all(mapping["season_1_provenance"] for mapping in mappings))
         self.assertFalse(self.report["a1_a3_prerequisites"]["activation_bridge_implemented"])
 
-    def test_only_one_durable_fact_can_be_written_after_resolution(self):
+    def test_option_signals_are_local_and_only_common_trace_is_durable(self):
         resolutions = self.definition["resolutions"]
         self.assertEqual({"careful_warmth_received", "ironic_withdrawal_received"}, set(resolutions))
+        self.assertEqual(
+            {
+                "RECONTACT_IMPORTANCE_STATED_CAREFULLY",
+                "RECONTACT_IMPORTANCE_STATED_INDIRECTLY",
+            },
+            {resolution["signal_recu"] for resolution in resolutions.values()},
+        )
         for resolution in resolutions.values():
-            self.assertEqual("DURABLE", resolution["portee_micro_signal"])
-            self.assertEqual("RECUE_INTERPRETEE", resolution["reception"])
+            self.assertEqual("LOCALE", resolution["portee_micro_signal"])
+            self.assertEqual("NON_PERSISTANTE", resolution["reception"])
             self.assertEqual("RETOUR_NOYAU_COMMUN", resolution["convergence"])
-            self.assertEqual(1, len(resolution["faits_relationnels"]))
-            fact = resolution["faits_relationnels"][0]
-            self.assertEqual(TRACE_ID, fact["fait_id"])
-            self.assertEqual("sandra", fact["recu_par"])
-            self.assertFalse(fact["permission_future"])
+            self.assertEqual([], resolution["faits_relationnels"])
+
+        scopes = self.report["option_signal_scope"]
+        self.assertEqual(set(resolutions), set(scopes))
+        for scope in scopes.values():
+            self.assertEqual("LOCALE", scope["scope"])
+            self.assertEqual("NON_PERSISTANTE", scope["reception"])
+            self.assertTrue(scope["distinct_immediate_reception"])
+            self.assertFalse(scope["choice_specific_a1_event"])
+
         trace = self.report["durable_trace"]
+        self.assertEqual("r8c-n5:sandra-blue-chairs:common-resolution-trace", trace["event_id"])
         self.assertEqual(TRACE_ID, trace["fact_id"])
         self.assertEqual(TRACE_TEXT, trace["text"])
+        self.assertEqual("STAGED_POST_RESOLUTION_COMMON_A1_EVENT", trace["producer"])
+        self.assertFalse(trace["choice_specific"])
+        self.assertFalse(trace["signal_specific"])
+        self.assertTrue(trace["staged_harness_implemented"])
+        self.assertFalse(trace["runtime_bridge_implemented"])
         self.assertTrue(trace["created_only_after_complete_resolution"])
         for phase in (
             "created_at_eligibility",
@@ -207,6 +227,7 @@ class R8CN5SandraBlueChairsStagedProjectionTests(unittest.TestCase):
         self.assertEqual("chapter_05_sandra_photo_continuity", rule["conversation_id"])
         self.assertEqual("sandra_saturday_photo_continuity_01", rule["stable_scene_id"])
         self.assertEqual("SILENTLY_INELIGIBLE_BEFORE_PROPOSAL", rule["if_n2_proposed"])
+        self.assertEqual("SILENTLY_INELIGIBLE_BEFORE_PROPOSAL", rule["if_n2_resolved"])
         self.assertEqual("EVALUATE_NORMALLY", rule["if_n2_never_proposed"])
         self.assertFalse(rule["missed"])
         self.assertFalse(rule["absence_narrative"])

@@ -8,6 +8,8 @@
 >
 > **Statut du lot :** `RUNTIME_PROJECTION_STAGED`
 >
+> **Révision corrective :** `R8C-N5.1`
+>
 > **État média :** `ASSET_REQUIRED_NOT_READY`
 
 ## Décision
@@ -115,15 +117,21 @@ Les contrôles N5 verrouillent notamment :
 | incompatibilités | `exclusions_dures.evenements_interdits` |
 | placement courant | `contrat_temporel`, explicitement non identitaire |
 | deux options N2 | `choix` avec formulations exactes |
-| réceptions distinctes | deux résolutions distinctes |
+| réceptions distinctes | deux résolutions `LOCALE`, `NON_PERSISTANTE` |
 | convergence | `RETOUR_NOYAU_COMMUN` |
-| conséquence locale | interprétation distincte du signal de chaque option |
-| trace durable bornée | un seul `fait_relationnel` identique après résolution |
+| conséquence locale | signal distinct reçu et interprété localement, sans `fait_relationnel` |
+| trace durable bornée | hors résolution A6 : un événement A1 commun staged après `RESOLVED` |
 
 A6 ne contient pas et ne prétend pas contenir les bulles, les identifiants de
 réception N2, les métadonnées auteur, le statut staged, l’état de production du
 média, l’ordre Nico/Marie ou la règle J05. Le rapport JSON conserve ces éléments
 et pointe vers leur source d’autorité.
+
+Le schéma A6 fermé associe obligatoirement tout `fait_relationnel` durable à la
+résolution, donc au choix et au signal. N5.1 n’utilise pas cette voie : les deux
+attitudes sont strictement locales et le harness staged applique séparément la
+trace commune, seulement après avoir observé l’état A5 `RESOLVED`. Cette preuve
+n’ajoute aucun pont au runtime joueur.
 
 ## A1 / A3 — prérequis projetés
 
@@ -200,7 +208,8 @@ Le smoke charge le bundle staged par son chemin explicite, puis exerce :
 ```text
 A1 events → A3 eligibility → A6 candidate
 → A7 proposal → A8 conflict closure → A9 plan
-→ A10 activation → A5 PROPOSED → A10 resolution → A1 durable fact
+→ A10 activation → A5 PROPOSED → A10 local resolution → A5 RESOLVED
+→ staged common post-resolution event → A1 durable fact
 ```
 
 L’option de contrôle nécessaire au minimum de deux options A8 est créée
@@ -223,6 +232,9 @@ Règle projetée :
 - aucun `MISSED`, aucune absence narrative, aucune sanction et aucune trace A1
   ne sont créés.
 
+Le smoke vérifie séparément les trois cas : `PROPOSED` → inéligible,
+`RESOLVED` → inéligible et aucune instance N2 → évaluation normale.
+
 N5 ne modifie ni la conversation, ni `Season1State`, ni `J05RuntimeProvider`.
 Le pont A5 → éligibilité J05 reste un bloqueur explicite du futur lot
 d’activation.
@@ -233,19 +245,25 @@ Le seul fait durable autorisé est :
 
 | Élément | Valeur |
 | --- | --- |
+| événement staged commun | `r8c-n5:sandra-blue-chairs:common-resolution-trace` |
 | identifiant technique | `sandra_recontact_importance_received_understood` |
 | texte canonique | `Sandra a reçu et compris que la reprise du contact compte pour Player.` |
-| réception | `RECUE_INTERPRETEE` |
+| portées des attitudes | `LOCALE`, `NON_PERSISTANTE` |
+| provenance de choix ou signal | aucune |
 | permission future | `false` |
 
-Les deux choix écrivent ce même fait, chacun par sa résolution complète. Le
-fait n’existe pas à l’éligibilité, la réservation, l’ouverture A8, la
-composition A9, la proposition, l’expiration ou la fermeture silencieuse.
-Le replay exact de la résolution est idempotent et ne duplique pas le fait.
+Après l’une ou l’autre attitude, la résolution A6 reste locale et n’écrit aucun
+événement A1. Le harness staged observe ensuite la résolution complète et
+applique le même événement commun, indépendant du choix et du signal. Le fait
+n’existe pas à l’éligibilité, la réservation, l’ouverture A8, la composition
+A9, la proposition, l’expiration ou la fermeture silencieuse. Le replay exact
+de la résolution puis de l’événement commun est idempotent et ne duplique pas le
+fait.
 
 Le mécanisme technique existant stocke cette « trace » éditoriale comme un fait
-relationnel A1 sourcé dans `relations.sandra.faits`. N5 ne prétend pas l’écrire
-dans `traces_narratives`, racine que le codec A5 exige encore vide.
+relationnel A1 dans `relations.sandra.faits`. Sa provenance staged ne contient
+ni choix, ni signal, ni résolution optionnelle. N5 ne prétend pas l’écrire dans
+`traces_narratives`, racine que le codec A5 exige encore vide.
 
 ## Média et blocage d’activation
 
@@ -288,7 +306,7 @@ N5 n’autorise aucun lot d’activation. Une activation future devra au minimum
 2. relire le texte N2 dans son contexte mobile sans le modifier ;
 3. concevoir le pont borné `Season1State` → événements A1/A3 ;
 4. fournir une vraie fermeture silencieuse à l’expiration avant proposition ;
-5. relier la preuve A5 `PROPOSED` à l’inéligibilité silencieuse J05 ;
+5. relier les preuves A5 `PROPOSED` et `RESOLVED` à l’inéligibilité silencieuse J05 ;
 6. revalider J04, 16:30–18:04, Nico, Marie et la durée ;
 7. commencer un lot d’activation séparé et explicitement autorisé.
 
