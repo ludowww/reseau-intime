@@ -5,6 +5,7 @@
 > **Portée :** raccords J17/J21 et aftercares Marie, Mathilde, Sandra
 > **Nature :** plan de révision ; aucun dialogue définitif
 > **Repérage :** les jours localisent le runtime actuel ; les positions de séquence restent autoritatives
+> **Statut global :** `WRITTEN_RECONCILIATION_PLANNED`
 
 ## 1. Verdict
 
@@ -13,8 +14,9 @@ de nouveaux assets.
 
 - **J17** possède déjà les deux événements nécessaires — départ réel de Mathilde,
   puis clarification du couple — mais le runtime en réduit les états et la portée.
-  Le raccord recommandé est court : quelques messages de confirmation après la
-  co-présence, un record de règle provisoire et une conséquence praticable. Une
+  Le raccord validé est court : un micro-retour Mathilde après le départ, puis un
+  micro-retour Marie après le choix de couple, dans leurs fils existants. Le record
+  distingue état, règle, divulgation incomplète et prochaine conséquence. Une
   nouvelle scène complète ferait doublon avec le script canonique détaillé.
 - **J21** possède déjà le matin Marie, la trace et la posture Player, mais le runtime
   termine dans le fil du contrôleur de la trace. Il manque la conversation autonome
@@ -27,13 +29,12 @@ de nouveaux assets.
 
 | Raccord | Forme recommandée | Média | Statut N7 |
 |---|---|---|---|
-| `N7-CONT-J17-PROVISIONAL` | quelques messages + trace + conséquence ; aucune nouvelle scène complète | `RELATIONSHIP_PROOF` et `CONSEQUENCE_OR_ECHO` | `NEEDS_CANON_DECISION` |
+| `N7-CONT-J17-PROVISIONAL` | deux micro-retours dans les fils existants + record déterministe ; aucune nouvelle scène | `RELATIONSHIP_PROOF` et `CONSEQUENCE_OR_ECHO` | `READY_FOR_SCRIPTING` |
 | `N7-CONT-J21-FINAL` | conversation Marie/Player dans la séquence finale existante, après conséquences/trace ; trois réutilisations | `CONSEQUENCE_OR_ECHO` principal | `READY_FOR_SCRIPTING` |
 
-J17 reste `NEEDS_CANON_DECISION` parce que le contrat narratif le plus récent note
-explicitement la granularité de sa réécriture comme ouverte. N7 recommande le
-raccord court ; une approbation canonique doit confirmer ce format et la table de
-six états avant écriture définitive.
+Le format du raccord court et la projection vers six sorties sont désormais validés.
+J17 passe à `READY_FOR_SCRIPTING` sans nouveau choix UI : les quatre choix de couple
+runtime restent inchangés et l’historique détermine leur sortie canonique.
 
 ## 2. Sources et frontières d’autorité
 
@@ -80,42 +81,57 @@ clôture de saison.
 | Règle de suivi | checkpoint/délai/limites si provisoire ; logistique si séparation | record `j17_couple_definition_record_01`, sans promesse de revue créée | Le record dit un état, mais pas ce qu’il oblige ensuite. |
 | Fonction de saison | clarification provisoire | titre et fermeture peuvent se lire comme définition suffisante | J21 hérite d’un état sans contrat/divulgation/logistique complets. |
 
-### 3.3 Forme minimale suffisante
+### 3.3 Deux micro-retours dans les fils existants
 
-Le raccord recommandé ne remplace pas le départ ni la conversation existante. Il
-ajoute une **fermeture courte de séquence** après la co-présence et le choix :
+Le raccord ne remplace ni le départ ni la conversation existante et ne crée aucune
+scène. Il ajoute exactement deux micro-retours :
 
-1. un retour de Mathilde confirmant seulement l’état matériel et relationnel qu’elle
-   peut légitimement connaître ;
-2. un constat Marie sur le foyer transformé ;
-3. une confirmation Marie/Player de la règle **actuelle**, de sa limite et, lorsque
-   nécessaire, de son prochain point de revue ;
-4. un record de couple séparant statut, règle provisoire et divulgation encore
-   incomplète ;
-5. une conséquence future lisible : comportement attendu, espace, heure, promesse
-   de revue ou logistique de séparation.
+1. **Retour Mathilde, après le départ** : confirmer uniquement que le départ est
+   accompli ; préciser l’aide, la distance ou l’état pratique ; ne pas ajouter de
+   choix ; ne pas réinterpréter la relation.
+2. **Retour Marie, après le choix de couple** : fermer selon l’état réellement résolu ;
+   indiquer si cet état est provisoire ou actif, la règle courante et le prochain
+   checkpoint ou la prochaine logistique. Les mots « reconquête » ou « provisoire »
+   ne sont jamais appliqués automatiquement avant résolution des faits accumulés.
 
-Ces fonctions peuvent tenir dans quelques messages et un record. Une nouvelle scène
-complète n’est justifiée que si l’approbation canonique refuse de réutiliser la
-conversation J17 signée ; N7 ne la recommande pas.
+Le record `j17_couple_definition_record_01` doit distinguer quatre champs
+fonctionnels : `couple_state`, règle courante, divulgation incomplète et prochaine
+conséquence. Les deux retours tiennent dans les fils existants, sans asset, bouton ou
+séquence autonome supplémentaire.
 
-### 3.4 Table des sorties à préserver
+### 3.4 Table décisionnelle exacte J17
 
-| Sortie canonique | Preuve écrite minimale | Conséquence autorisée | Interdit |
-|---|---|---|---|
-| `RECONQUEST_ACTIVE` | comportement concret à tenir maintenant | présence et actes vérifiables ; aucune absolution | retour automatique à l’ancien couple |
-| `PROVISIONAL_AGREEMENT` | règle actuelle + limite + date/condition de revue | `couple_review_due_at` active | report indéfini ou permission extérieure |
-| `RECONFIGURATION_NEGOTIATING` | suspension explicite des nouvelles étapes + sujets à décider | espace et checkpoint | traiter la négociation comme contrat ouvert |
-| `DOUBLE_LIFE_FRAGILE` | contradiction reconnue comme instable | dette et risque de découverte | résultat optimal ou contrat sain |
-| `FRACTURE` | distance/foyer/finances concrètes | organisation temporaire | disponibilité automatique des routes extérieures |
-| `SEPARATION` | départ, objets, horaires et limites | relation résiduelle à définir plus tard | scène de consolation immédiate |
+Les quatre choix de couple runtime existants sont conservés. Ils alimentent, avec
+les faits accumulés, la table ordonnée suivante ; aucun cinquième ou sixième choix UI
+n’est créé.
+
+| Choix runtime | Faits accumulés | Sortie canonique |
+|---|---|---|
+| `choice_j17_separation` | tous | `SEPARATION` |
+| `choice_j17_refused_acknowledge` | discussion J16 refusée ou non due | `FRACTURE` |
+| `choice_j17_reconquest` ou `choice_j17_provisional` | violation grave connue de Marie et non réparée | `FRACTURE` |
+| `choice_j17_reconquest` ou `choice_j17_provisional` | fait matériel caché ou version incompatible encore active | `DOUBLE_LIFE_FRAGILE` |
+| `choice_j17_reconquest` | actes Marie répétés + vérité suffisante + aucune violation active + règle concrète | `RECONQUEST_ACTIVE` |
+| `choice_j17_reconquest` | sinon | `PROVISIONAL_AGREEMENT` |
+| `choice_j17_provisional` | désir extérieur reconnu + audiences sûres ou réparées + pause acceptée + droit complet de refus de Marie | `RECONFIGURATION_NEGOTIATION` |
+| `choice_j17_provisional` | sinon | `PROVISIONAL_AGREEMENT` |
+
+Les faits admis proviennent uniquement des données existantes : niveau physique J11,
+aftercare Mathilde, mensonge ou minimisation J14, notification d’audience, résolution
+J15, paiement ou contestation J16, actes et promesses envers Marie.
+
+L’évaluation suit strictement l’ordre des lignes, sans priorité numérique, sans
+hasard et sans score. Chaque entrée valide produit exactement un état ; une
+formulation favorable en J17 n’efface jamais l’historique, et toute contradiction ou
+violation active empêche une sortie plus favorable.
 
 ### 3.5 Choix, réception et consentement média
 
-Les choix existants restent le socle : aide/distance pour le départ ; reconquête,
-provisoire ou séparation si l’heure est due ; reconnaissance de la fracture si elle
-ne l’est pas. Leur réception doit être recalibrée par l’accumulation, jamais par une
-bonne phrase unique.
+Les choix existants restent le socle : aide/distance pour le départ ; puis les quatre
+choix de couple `choice_j17_reconquest`, `choice_j17_provisional`,
+`choice_j17_separation` et `choice_j17_refused_acknowledge` distribués entre les deux
+variantes exclusives. Leur réception est déterminée par la table précédente, jamais
+par une bonne phrase unique. Les micro-retours n’ajoutent aucun point de choix.
 
 J17 n’est pas un payoff sexuel. Ses images de scène du départ, du foyer et du couple
 n’appellent pas une classification sexuelle. Toute photo ordinaire éventuelle de
@@ -134,13 +150,7 @@ jamais preuve de disponibilité. Les rôles principaux restent :
 J21 est la séquence finale après les résolutions personnelles et la sélection
 invisible d’une trace. Son ordre canonique obligatoire est :
 
-```text
-conséquences pertinentes
-→ trace et posture
-→ conversation autonome Marie/Player
-→ décision du couple et organisation concrète
-→ courts épilogues compatibles
-```
+`conséquences → trace/posture → conversation Marie/Player → décision/logistique → épilogues`
 
 Les numéros de jour peuvent disparaître dans un futur moteur ; cet ordre ne le peut
 pas.
@@ -166,15 +176,15 @@ sans champs complets de contrat, divulgation ou relation après séparation.
 Le raccord J21 réutilise les branches du soir déjà présentes dans le script
 pré-runtime comme matière, mais les réordonne sous le contrat `14` :
 
-1. lire le statut provisoire J17, les faits de routes et la posture finale ;
-2. limiter Marie à ce qu’elle sait réellement ;
-3. ouvrir un échange privé Marie/Player distinct du fil de la trace ;
-4. produire une décision actuelle : ensemble, séparés ou clarification strictement
+1. lire le statut provisoire J17 et les faits de routes ;
+2. servir la trace et la posture, en limitant Marie à ce qu’elle sait réellement ;
+3. ouvrir ensuite un échange privé Marie/Player distinct du fil de la trace ;
+4. produire après cet échange une décision actuelle : ensemble, séparés ou clarification strictement
    bornée ;
 5. si ensemble, établir un contrat explicite et séparer son état de divulgation ;
 6. si séparés, établir la logistique et la relation résiduelle ;
 7. si provisoire, fixer règle, limites, date/condition et obligations de suivi ;
-8. seulement ensuite servir la conséquence visuelle finale et les épilogues courts.
+8. seulement ensuite servir les épilogues courts compatibles.
 
 Aucun nombre de messages n’est imposé. La conversation doit être assez longue pour
 porter une décision réelle et assez courte pour ne pas résumer vingt jours.
@@ -187,7 +197,8 @@ porter une décision réelle et assez courte pour ne pas résumer vingt jours.
 | `J21-B2` | photo/photo-set accessible, ou état/absence d’une trace | porter la règle, la perte ou la dette sans révélation nouvelle | selon source : `RELATIONSHIP_PROOF`, `TRUST_OR_INTIMACY_REWARD` ou `CONSEQUENCE_OR_ECHO` | même audience, aucun retrait annulé, garde de type |
 | `J21-B3` | contenu existant de vie après décision | montrer le comportement ou la conséquence finale, puis laisser les arcs continuer | `CONSEQUENCE_OR_ECHO` | pas de pose-récompense, pas de nouvelle route |
 
-Les anciennes mentions J21 « À PRODUIRE PLUS TARD » sont `REFERENCE_ONLY` et
+Les trois beats sont des rappels existants mis en scène dans l’étape
+`trace/posture`, pas trois nouveaux assets. Les anciennes mentions J21 « À PRODUIRE PLUS TARD » sont `REFERENCE_ONLY` et
 `NO_NEW_ASSET`. Un `TEXT_MESSAGE`, `FACT_RECORD`, `ACCESS_GRANT`,
 `ACCESS_REVOCATION` ou `ABSENCE_MARKER` peut déterminer le sens ou la sélection,
 mais ne devient jamais « la dernière photo ».
@@ -277,7 +288,7 @@ Marie doit être autonome et compatible avec ses connaissances.
 | Le signoff J01–J21 annonce le corpus complet ; le contrat `14` exige J17/J21 ciblés. | Le corpus historique reste signé ; la structure/finale plus récente exige deux raccords, pas une réouverture globale. |
 | `NAR_PROD_06` déclare J21 `READY`. | Son verdict est valide pour le budget visuel `NO_NEW_ASSET`; il ne prouve pas la présence de la conversation finale R8C. |
 | Le script J21 contient des branches du soir ; le runtime finit après la réponse du contrôleur de trace. | La matière existe en canon, son ordre et son service runtime ne satisfont pas le contrat final. |
-| Le script J17 prévoit six états ; le runtime en produit quatre. | Les deux états manquants et les obligations de suivi doivent être représentés ou explicitement repliés par décision canonique. |
+| Le script J17 prévoit six états ; le runtime expose quatre choix de couple. | La table déterministe transforme ces quatre choix et l’historique en six sorties, sans nouveau bouton. |
 | Les plans anciens traitent J17/J21 comme jours fixes. | Les jours ne sont que localisateurs du runtime ; l’ordre relatif de séquence est le contrat durable. |
 | J21 possède zéro nouveau fichier alors que trois beats sont requis. | Les trois beats sont trois réutilisations fonctionnelles, pas trois productions. |
 | Sandra possède un aftercare canonique ; J19 runtime foreground Pauline/Raphaëlle seulement. | Gap runtime réel, sans annulation du canon adulte. |
@@ -286,15 +297,23 @@ Marie doit être autonome et compatible avec ses connaissances.
 
 - J17 est présenté comme clarification provisoire, jamais finale.
 - Le départ de Mathilde précède la clarification du couple et reflète l’aftercare.
+- Les deux micro-retours restent dans les fils Mathilde et Marie existants et
+  n’ajoutent ni scène, ni asset, ni bouton.
+- Les quatre choix de couple runtime produisent exactement une des six sorties selon
+  la table ordonnée, avec `RECONFIGURATION_NEGOTIATION` comme identifiant uniforme.
 - Une sortie J17 produit une règle actuelle, une limite et une conséquence concrète.
 - Un état provisoire possède une revue bornée ; une séparation possède une logistique.
-- J21 place conséquences/trace avant la conversation Marie/Player.
+- J21 respecte partout l’ordre `conséquences → trace/posture → conversation
+  Marie/Player → décision/logistique → épilogues`.
+- La gate refuse une conversation Marie/Player avant la trace/posture, une
+  décision/logistique avant cette conversation et des épilogues avant la décision
+  finale.
 - La conversation finale est autonome et décide le couple ; la posture de trace ne
   la remplace pas.
 - Les trois beats J21 réutilisent des contenus réellement vécus et admissibles.
 - Aucun nouveau fichier, trace, photographie ou audience J21 n’est créé.
 - Une absence reste une absence ; un type non photographique ne devient pas image.
 - Les aftercares Marie, Mathilde et Sandra restent attribuables, conditionnels et
-  porteurs de conséquence.
+  porteurs de conséquence ; J21 les transporte sans rejouer les payoffs.
 - Aucun sixième travail narratif n’est créé : les gaps runtime sont des dépendances
   futures des cinq paquets N7, pas de nouveaux paquets.

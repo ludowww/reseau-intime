@@ -5,6 +5,7 @@
 > **Portée :** Marie J11 `#051`, Mathilde J11 `#045`, Sandra J18 `#079`
 > **Nature :** audit et brief de révision ; aucun dialogue définitif
 > **Taxonomie W :** éditoriale N7 uniquement, jamais destinée au runtime
+> **Statut global :** `WRITTEN_RECONCILIATION_PLANNED`
 
 ## 1. Verdict
 
@@ -24,12 +25,13 @@ payoff ; le W4 ne les remplace pas.
 |---|---|---:|---:|---|---|---|
 | `N7-PAY-MARIE-J11-051` | mouvement III ; pivot J11 Marie ; `C11-06` ; séquence `MARIE_J11_RECONQUEST` | canon W3 ; runtime W2 + scène placeholder | W4 | `#051` — `PORNOGRAPHIC_PAYOFF` | `CONSENTED_PRIVATE` | `READY_FOR_SCRIPTING` |
 | `N7-PAY-MATHILDE-J11-045` | mouvement III ; pivot J11 Mathilde ; `C11-03` ; plafond M-B3 | canon W3 ; runtime W2 + scène placeholder | W4 | `#045` — `PORNOGRAPHIC_PAYOFF` | `CONSENTED_PRIVATE` | `READY_FOR_SCRIPTING` |
-| `N7-PAY-SANDRA-J18-079` | mouvement V ; après `C18-01` ; branche adulte de `C18-02` | canon W3 ; branche absente du runtime | W4 | `#079` — `PORNOGRAPHIC_PAYOFF` | `CONSENTED_PRIVATE` | `NEEDS_CANON_DECISION` |
+| `N7-PAY-SANDRA-J18-079` | mouvement V ; après `C18-01` ; branche adulte de `C18-02` | canon W3 ; branche absente du runtime | W4 | `#079` — `PORNOGRAPHIC_PAYOFF` | `CONSENTED_PRIVATE` | `READY_FOR_SCRIPTING` |
 
-La décision encore requise pour Sandra est bornée : le canon autorise une sexualité
-complète et dit explicitement que le type d’acte central n’est pas verrouillé. Un
-acte central unique doit être approuvé avant prose W4 afin que le texte et `#079`
-décrivent le même événement sans devenir un catalogue interchangeable.
+La décision Sandra est désormais verrouillée : `#079` représente, au milieu d’un
+rapport vaginal pénétratif consensuel, Sandra au-dessus de Player, active, tournée
+vers lui et contrôlant explicitement le rythme. Player reste partiellement cadré et
+non identifiable. Le téléphone est hors d’usage, la capacité d’arrêt reste lisible
+et l’image n’est jamais une pose pornographique détachée de la relation.
 
 ## 2. Autorité et état des sources
 
@@ -253,22 +255,23 @@ fondent.
 ### 6.2 Progression écrite et transition manquante
 
 Le canon fixe une invitation tardive, une acceptation sans programme demandé, le
-droit de retirer la proposition, une sexualité complète possible, la séparation et
-l’aftercare. Il fixe aussi la fonction spécifique : Sandra vit une intimité qu’elle
-choisit de ne pas transformer en fichier. Le type d’acte central reste explicitement
-non verrouillé.
+droit de retirer la proposition, la séparation et l’aftercare. La décision produit
+complémentaire verrouille le centre : **rapport vaginal pénétratif consensuel,
+Sandra au-dessus de Player**. Sandra reste active et tournée vers Player, contrôle
+explicitement le rythme et conserve une capacité d’arrêt lisible ; Player reste
+partiellement cadré et non identifiable.
 
-Avant écriture W4, une décision canonique doit sélectionner **un seul acte central**
-compatible avec : Sandra active, consentement continu, représentation lisible dans
-une image forte, Player non identifiable, aucune caméra et aucune lecture triomphale
-de la double vie. Après ce choix, la révision doit :
+La fonction principale de `#079` est `PORNOGRAPHIC_PAYOFF`. Sa fonction secondaire
+est de matérialiser l’aboutissement du manque, de la confiance et de la tentation
+lente. L’image saisit un moment au milieu de l’acte, jamais une pose détachée de la
+relation. La révision doit :
 
 - faire de la mise hors d’usage du téléphone une action de Sandra, pas un symbole
   décoratif ;
 - montrer l’entrée interrompable de `#078`, puis le basculement physique exact qui
-  autorise `#079` ;
+  autorise le rapport pénétratif et `#079` ;
 - garder l’ancienne proximité, le contrôle de représentation et la précision de
-  Sandra présents dans les gestes ;
+  Sandra présents dans les gestes, le rythme et son orientation vers Player ;
 - ne servir `#079` que si l’acte central a réellement été atteint ;
 - joindre la séparation à `#080`, puis aux messages immédiats J18 et au module
   prioritaire J19 ;
@@ -283,8 +286,9 @@ transition vers une brutalité générique. La prose doit être plus crue que se
 messages, tout en restant attentive à qui dirige, à ce qui est vu et à ce qui ne
 devient pas une image.
 
-À rendre explicite après décision : nudité, acte central choisi, initiative et
-réponse de Sandra, plaisir et fin physique de la rencontre. À garder implicite :
+À rendre explicite : nudité, rapport vaginal pénétratif, position de Sandra au-dessus,
+contrôle du rythme, réponse de Player, plaisir et fin physique de la rencontre. À
+garder implicite :
 catalogue d’actes, spectacle pour une audience, détails de ce qu’elle dira à Jeff,
 promesse de prochaine fois et tout consentement supposé de Jeff ou de Marie.
 
@@ -294,12 +298,18 @@ promesse de prochaine fois et tout consentement supposé de Jeff ou de Marie.
   proposition ; refuser honnêtement. Le runtime ne les contient pas encore.
 - Réception : Sandra confirme le cadre, retire sans négociation ou accepte le refus
   sans compensation ; un arrêt en rencontre limite les images à ce qui a eu lieu.
+- Agence interne hors UI : ralentir, interrompre, retirer son accord, reformuler une
+  limite, confirmer, continuer et réagir après l’acte restent possibles pendant la
+  co-présence sans devenir de nouveaux boutons.
 - Réaction immédiate : séparation, absence de regret simpliste, absence de droit
   futur et retour de la réalité Jeff/Marie.
 - Aftercare écrit : après-coup immédiat J18 et module prioritaire J19 avec trois
   postures Player ; aucun projet secret commun.
 - Aftercare prévu : `#080`, `TRUST_OR_INTIMACY_REWARD`, seule image adulte réutilisable
   en J19 ; une tuile `Moment vécu` C18-02 contenant uniquement les enfants servis.
+- Chaîne verrouillée : `#079` seulement si l’acte central est atteint ; `#080` porte
+  la sortie d’intensité et la distance ou proximité choisie ; J19 reste l’aftercare
+  prioritaire.
 - Aftercare manquant : toute la livraison runtime J18/J19, la Galerie et les fichiers
   finaux ; cette absence n’est pas volontaire et bloque la branche adulte propre.
 - Fait durable autorisé : intimité atteinte ou arrêt exact, aucune photo sexuelle,
@@ -308,9 +318,10 @@ promesse de prochaine fois et tout consentement supposé de Jeff ou de Marie.
 ### 6.5 Média et consentement
 
 `#079` est une `IMAGE_DE_SCÈNE`, jamais une photographie diégétique. Rôle principal :
-`PORNOGRAPHIC_PAYOFF`. Classe : `CONSENTED_PRIVATE`. Création d’une photo sexuelle,
-possession par Player, consultation par un tiers et diffusion restent quatre actes
-distincts et tous absents. Toute future création non consentie relèverait de
+`PORNOGRAPHIC_PAYOFF`. Fonction secondaire : aboutissement du manque, de la confiance
+et de la tentation lente. Classe : `CONSENTED_PRIVATE`. Le téléphone est hors d’usage.
+Création d’une photo sexuelle, possession par Player, consultation par un tiers et
+diffusion restent quatre actes distincts et tous absents. Toute future création non consentie relèverait de
 `NON_CONSENTED_OR_DIFFUSED`, donc d’une route sombre à conséquences, jamais de ce
 payoff propre.
 
@@ -346,6 +357,5 @@ jamais audience, sauvegarde, consultation, transfert ou permission future.
 - L’aftercare et la mémoire sont servis selon ce qui a réellement eu lieu.
 - Aucun centre de scène ne devient photo, preuve ou permission.
 - Les trois voix restent distinguables sans nom.
-- Sandra reste bloquée avant scripting central tant que l’acte unique n’est pas
-  arbitré ; les parties préparation/aftercare peuvent être préparées sans prose
-  définitive.
+- Les trois payoffs sont `READY_FOR_SCRIPTING` ; aucun droit futur, aucune promesse
+  de répétition et aucune route automatique ne découle de leur centre W4.
