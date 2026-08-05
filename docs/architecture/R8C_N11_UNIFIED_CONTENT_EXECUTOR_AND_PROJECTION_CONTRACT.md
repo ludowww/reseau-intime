@@ -8,13 +8,13 @@
 >
 > **Nature :** contrat documentaire et architectural ; aucune implémentation
 >
-> **Statut Codex :** `UNIFIED_CONTENT_EXECUTOR_PROJECTION_CONTRACT_BLOCKED`
+> **Statut Codex :** `UNIFIED_CONTENT_EXECUTOR_PROJECTION_CONTRACT_READY_FOR_PRODUCT_REVIEW`
 >
 > **Statut produit cible, non attribué par N11 :** `UNIFIED_CONTENT_EXECUTOR_PROJECTION_CONTRACT_APPROVED`
 >
 > **Tranche de référence :** Mathilde M-B3, `FIRST_TARGET_VERTICAL_SLICE_SELECTED`
 
-## 1. Décision, portée et blocages produit
+## 1. Décision et portée
 
 N11 ferme le contrat cible entre une séquence authored, A6–A10, un futur
 exécuteur mince, A1–A5 et les surfaces joueur existantes. Il ne crée ni runtime,
@@ -37,18 +37,23 @@ Définition authored immuable
   → projections player-facing
 ```
 
-Le contrat technique est fermé. Son approbation produit reste bloquée uniquement
-par trois classements documentaires incompatibles entre les autorités fournies :
+Le contrat technique est fermé. Les trois arbitrages produit de gouvernance
+documentaire sont intégrés comme suit :
 
-| Marqueur | Chemin | Autorité A | Autorité B | Question minimale |
-|---|---|---|---|---|
-| `BLOCKED_PRODUCT_DECISION` | `docs/canon/dialogues/J11_SCRIPT_NARRATIF_COMPLET.md` | N9 le classe `À réécrire` (`docs/narrative/R8C_N9_W4_PAYOFF_AFTERCARE_AND_J21_CONTINUITY_CONTRACT.md:717`). | N10 le classe `Canon` (`docs/architecture/R8C_N10_LEGACY_FREEZE_AND_NEW_RUNTIME_CUTOVER_CONTRACT.md:800`). | N11 doit-il retenir `À réécrire` ou `Canon` ? |
-| `BLOCKED_PRODUCT_DECISION` | `docs/canon/dialogues/NAR_PROD_04_PAQUET_PRODUCTION_ACTE_III_J09_J12.md` | N7.1 le classe `Archive` (`docs/narrative/R8C_N7_1_SEASON_STRUCTURE_RUNTIME_PROJECTION_AND_N8_ENTRY_CONTRACT.md:772`). | N9 le classe `Canon` (`docs/narrative/R8C_N9_W4_PAYOFF_AFTERCARE_AND_J21_CONTINUITY_CONTRACT.md:705`). | N11 doit-il retenir `Archive` ou `Canon` ? |
-| `BLOCKED_PRODUCT_DECISION` | `docs/canon/runtime/SEASON_1_NARRATIVE_STATE_CONTRACT.md` | N7.1 le classe `À réécrire` (`docs/narrative/R8C_N7_1_SEASON_STRUCTURE_RUNTIME_PROJECTION_AND_N8_ENTRY_CONTRACT.md:769`). | N9 le classe `Canon` (`docs/narrative/R8C_N9_W4_PAYOFF_AFTERCARE_AND_J21_CONTINUITY_CONTRACT.md:716`). | N11 doit-il retenir `À réécrire` ou `Canon` ? |
+| Chemin | Classement N11 | Autorité conservée | Éléments supersédés et suite |
+|---|---|---|---|
+| `docs/canon/dialogues/J11_SCRIPT_NARRATIF_COMPLET.md` | `À réécrire` | Matière éditoriale canonique, voix, choix existants, limites, conséquences et entrées/sorties utiles à Mathilde M-B3. | J11 comme identité de séquence, la journée comme unité de composition, la continuation exclusive par pivot journalier, le format messagerie-only comme cible et le centre antérieur à `AuthoredSequenceV1` et aux contrats W4/N11 sont supersédés. La matière Mathilde utile sera recomposée dans `mathilde_returns_with_chosen_intent_01`, sans dépendance sémantique à `J11`. |
+| `docs/canon/dialogues/NAR_PROD_04_PAQUET_PRODUCTION_ACTE_III_J09_J12.md` | `Archive` | Provenance historique, anciennes justifications de production et mémoire des identifiants et comptages antérieurs. | L'Acte III défini par J09–J12, les jours comme structure de production, les quatorze beats servis, le manifeste de trente fichiers et la classification de dette média antérieure à N6/N9/N10 sont supersédés. N6 gouverne l'inventaire, N9 les payoffs, aftercares et médias W4, N10 le cutover et N11 le format et les projections cibles. |
+| `docs/canon/runtime/SEASON_1_NARRATIVE_STATE_CONTRACT.md` | `À réécrire` | Absence de scores relationnels, faits observables, états qualitatifs bornés, séparation entre faits, traces, connaissances, promesses, obligations et conséquences, et principe qu'un état résumé ne remplace jamais l'historique. | L'exécution J01–J21, `current_day` comme axe métier durable, les champs saisonniers monolithiques, `RECONFIGURATION_NEGOTIATING`, le contrat de finale calendaire et le stockage cible implicite antérieur à A1–A10 sont supersédés. A1–A5 gouvernent l'état durable, A6–A10 l'orchestration, N10 le gel du legacy et N11 l'état authored, l'exécution et les projections. |
 
-Ces questions ne permettent pas à Codex de choisir une autorité à la place du
-produit. Elles n'ouvrent aucune autre décision d'architecture. Après réponse et
-revue du présent contrat, seul le produit peut attribuer le statut `APPROVED`.
+Le classement `À réécrire` retire au document son rôle de contrat cible sans
+invalider la matière éditoriale explicitement conservée comme canonique. Le
+classement `Archive` maintient le document comme source de provenance sans lui
+conférer d'autorité normative sur la cible.
+
+Ces décisions ferment les trois conflits de gouvernance sans ouvrir d'autre
+décision d'architecture. Le contrat est prêt pour revue produit ; seul le produit
+peut encore lui attribuer le statut `APPROVED`.
 
 ## 2. Autorités et inventaire réel
 
@@ -890,8 +895,8 @@ schéma, mécanisme durable et contenu sensible exigent des revues distinctes.
 
 ## 17. Gouvernance documentaire après N11
 
-N11 ne modifie aucun document de cette table. Les trois lignes bloquées restent
-sans classement final jusqu'à décision produit.
+N11 ne modifie aucun autre document de cette table. Il fixe ici le classement
+des trois sources arbitrées par le produit.
 
 | Classement | Chemins pertinents | Effet de N11 |
 |---|---|---|
@@ -900,9 +905,8 @@ sans classement final jusqu'à décision produit.
 | Reusable Presentation | `docs/canon/ui/UI_01_VERTICAL_SMARTPHONE_SYSTEM.md`, `UI_02_SCREEN_ARCHITECTURE_AND_STATES.md`, `UI_03_INTEGRATION_HANDOFF_AND_MOCKUP_STATUS.md`, `docs/runtime/T_UI_01_PORTRAIT_SHELL_PLAN.md`, `V0_86A_TEMPORAL_UX_NOTIFICATION_POLISH_PLAN.md` | Conserver UX et surfaces ; remplacer les sources provider/jour par les ports cible. |
 | Legacy Reference | `docs/runtime/README.md`, `SEASON_1_J01_J04_RUNTIME_BASELINE_AND_FORWARD_CONTRACT.md`, plans `V0_81` à `V0_94` classés ainsi par N10 ; `game/data/conversations/*.json`, providers/maps J01–J21 comme références techniques non documentaires | Aucune autorité sur le nouveau format, la sauvegarde ou le bootstrap ; sources de parité/migration seulement. |
 | Migration Support | A11/A11.2/A11.3/A11.4/A11.5 ; `docs/canon/dialogues/J01_J21_REACHABILITY_MATRIX.md`; documents N1–N5 de migration Sandra | Outils/provenance hors runtime ; aucun export A6 n'est un contenu player-facing complet. |
-| Archive | `docs/architecture/R8C_A6_BRIEF_BIBLIOTHEQUE_NARRATIVE_MINIMALE.md`; `docs/canon/bible/12E_AUDIT_GLOBAL_COHERENCE_J01_J21.md`; `docs/runtime/V0_86_PR_REVIEW_NOTES.md` | Aucune autorité cible. |
-| À réécrire | `docs/narrative/R8C_N6_CONTENT_PRODUCTION_FORECAST_AND_ROADMAP.md`; anciens plans/distributions obligatoires par jour ; `docs/CURRENT_NARRATIVE_SOURCE_OF_TRUTH.md`; scripts J17/J18/J19/J21 déjà classés ainsi par N10 | Réécrire par séquence/mouvement et vers la cible, jamais en ajoutant des providers. |
-| `BLOCKED_PRODUCT_DECISION` | Les trois chemins de la section 1 | Choisir un classement unique par chemin avant approbation N11. |
+| Archive | `docs/architecture/R8C_A6_BRIEF_BIBLIOTHEQUE_NARRATIVE_MINIMALE.md`; `docs/canon/bible/12E_AUDIT_GLOBAL_COHERENCE_J01_J21.md`; `docs/runtime/V0_86_PR_REVIEW_NOTES.md`; `docs/canon/dialogues/NAR_PROD_04_PAQUET_PRODUCTION_ACTE_III_J09_J12.md` | Aucune autorité normative cible. Un document archivé peut rester une source de provenance historique, notamment pour les anciennes justifications, identifiants et comptages. |
+| À réécrire | `docs/narrative/R8C_N6_CONTENT_PRODUCTION_FORECAST_AND_ROADMAP.md`; anciens plans/distributions obligatoires par jour ; `docs/CURRENT_NARRATIVE_SOURCE_OF_TRUTH.md`; scripts J17/J18/J19/J21 déjà classés ainsi par N10 ; `docs/canon/dialogues/J11_SCRIPT_NARRATIF_COMPLET.md`; `docs/canon/runtime/SEASON_1_NARRATIVE_STATE_CONTRACT.md` | Réécrire par séquence/mouvement et vers la cible, jamais en ajoutant des providers. Un document à réécrire peut conserver une matière éditoriale canonique explicitement identifiée sans constituer le contrat cible. |
 
 Effets thématiques :
 
@@ -935,7 +939,8 @@ Effets thématiques :
 - [x] Identité Mathilde indépendante du jour proposée.
 - [x] Critères N16 et découpage N12–N16 définis.
 - [x] Aucune double écriture, dépendance legacy ou quatrième asset autorisé.
-- [ ] Trois classements documentaires arbitrés par le produit.
+- [x] Trois classements documentaires arbitrés par le produit.
+- [x] Statut `UNIFIED_CONTENT_EXECUTOR_PROJECTION_CONTRACT_READY_FOR_PRODUCT_REVIEW` attribué.
 - [ ] Statut `UNIFIED_CONTENT_EXECUTOR_PROJECTION_CONTRACT_APPROVED` attribué par le produit.
 
 ### 18.2 Non-objectifs confirmés
@@ -949,9 +954,9 @@ import de sauvegarde legacy.
 
 Le contrat authored, l'exécuteur mince, les projections, le snapshot, le cycle
 média, le bootstrap et la cible Mathilde M-B3 sont suffisamment définis pour une
-revue produit. Les trois conflits de gouvernance documentaire empêchent Codex de
-déclarer le contrat prêt sans réserve et, a fortiori, de l'approuver.
+revue produit. Les trois conflits de gouvernance documentaire sont résolus. Le
+statut `APPROVED` reste réservé à une décision produit ultérieure.
 
 Le statut de livraison N11 est donc :
 
-`UNIFIED_CONTENT_EXECUTOR_PROJECTION_CONTRACT_BLOCKED`
+`UNIFIED_CONTENT_EXECUTOR_PROJECTION_CONTRACT_READY_FOR_PRODUCT_REVIEW`
