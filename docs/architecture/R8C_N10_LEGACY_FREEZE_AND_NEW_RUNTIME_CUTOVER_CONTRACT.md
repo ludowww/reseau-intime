@@ -8,9 +8,9 @@
 >
 > **Nature :** contrat documentaire et architectural ; aucune implémentation de cutover
 >
-> **Statut Codex :** `LEGACY_FREEZE_AND_NEW_RUNTIME_CUTOVER_CONTRACT_READY_FOR_PRODUCT_REVIEW`
+> **Statut produit :** `LEGACY_FREEZE_AND_NEW_RUNTIME_CUTOVER_CONTRACT_APPROVED`
 >
-> **Statut produit visé après revue seulement :** `LEGACY_FREEZE_AND_NEW_RUNTIME_CUTOVER_CONTRACT_APPROVED`
+> **Approbation de référence :** commit produit revu `e75a13d16a30bac8f3617459540510e55310c923` ; approuvé sans réserve ; août 2026
 >
 > **Décision de tranche verticale :** `FIRST_TARGET_VERTICAL_SLICE_SELECTED`
 
@@ -47,8 +47,8 @@ les contrats N7.1/N8/N9 ni les règles d'audience et de consentement. Il remplac
 leur ancienne destination technique : toute implémentation future vise le
 contrat authored cible, jamais le runtime journées.
 
-Codex ne s'attribue pas le statut `APPROVED`. Le présent statut est uniquement
-`LEGACY_FREEZE_AND_NEW_RUNTIME_CUTOVER_CONTRACT_READY_FOR_PRODUCT_REVIEW`.
+La revue produit a attribué le statut
+`LEGACY_FREEZE_AND_NEW_RUNTIME_CUTOVER_CONTRACT_APPROVED` sans réserve.
 
 ## 2. Diagnostic conservé
 
@@ -908,7 +908,7 @@ d'orchestration.
 
 Le statut de livraison du présent document est :
 
-`LEGACY_FREEZE_AND_NEW_RUNTIME_CUTOVER_CONTRACT_READY_FOR_PRODUCT_REVIEW`
+`LEGACY_FREEZE_AND_NEW_RUNTIME_CUTOVER_CONTRACT_APPROVED`
 
-Le statut `LEGACY_FREEZE_AND_NEW_RUNTIME_CUTOVER_CONTRACT_APPROVED` appartient
-exclusivement à la revue produit.
+Ce statut résulte de la revue produit du commit
+`e75a13d16a30bac8f3617459540510e55310c923`, approuvé sans réserve en août 2026.
