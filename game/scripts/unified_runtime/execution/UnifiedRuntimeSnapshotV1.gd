@@ -96,18 +96,104 @@ static func restore_into(facade, projection_port, authored_sequence, snapshot) -
 	var validation := validate(snapshot, authored_sequence)
 	if not validation["valid"]:
 		return _failure("INVALID_RUNTIME_SNAPSHOT", validation["errors"])
+	var initial_state := _capture_initial_state(facade, projection_port)
+	if not initial_state["ok"]:
+		return _failure(initial_state["error_code"], initial_state["errors"])
 	var domain_restore = facade.restore_state(snapshot["domain"].duplicate(true))
 	if typeof(domain_restore) != TYPE_DICTIONARY or not domain_restore.get("ok", false):
-		return _failure("DOMAIN_RESTORE_REFUSED")
+		return _restore_failure_with_rollback(
+			"DOMAIN_RESTORE_REFUSED", facade, projection_port, initial_state
+		)
 	var port_restore = projection_port.restore(snapshot["projection_port"].duplicate(true))
 	if typeof(port_restore) != TYPE_DICTIONARY or not port_restore.get("accepted", false):
-		return _failure("PORT_RESTORE_REFUSED")
+		return _restore_failure_with_rollback(
+			"PORT_RESTORE_REFUSED", facade, projection_port, initial_state
+		)
 	return {
 		"ok": true,
 		"error_code": null,
 		"errors": [],
 		"execution": snapshot["execution"].duplicate(true),
 	}
+
+
+static func _capture_initial_state(facade, projection_port) -> Dictionary:
+	var initial_domain = facade.save_state()
+	if not _domain_snapshot_shape_valid(initial_domain):
+		return _failure("DOMAIN_SNAPSHOT_REFUSED")
+	var initial_port_result = projection_port.snapshot()
+	if (
+		typeof(initial_port_result) != TYPE_DICTIONARY
+		or not initial_port_result.get("accepted", false)
+		or typeof(initial_port_result.get("snapshot")) != TYPE_DICTIONARY
+		or not ProjectionContracts.validate_port_snapshot(initial_port_result["snapshot"])["valid"]
+	):
+		return _failure("PORT_SNAPSHOT_REFUSED")
+	return {
+		"ok": true,
+		"error_code": null,
+		"errors": [],
+		"domain": initial_domain.duplicate(true),
+		"projection_port": initial_port_result["snapshot"].duplicate(true),
+	}
+
+
+static func _restore_failure_with_rollback(
+	failure_code: String, facade, projection_port, initial_state: Dictionary
+) -> Dictionary:
+	var rollback := _rollback_initial_state(facade, projection_port, initial_state)
+	if rollback["ok"]:
+		return _failure(failure_code)
+	var errors: Array = [failure_code]
+	errors.append_array(rollback["errors"])
+	return _failure("RESTORE_ROLLBACK_FAILED", errors)
+
+
+static func _rollback_initial_state(facade, projection_port, initial_state: Dictionary) -> Dictionary:
+	var errors: Array[String] = []
+	var domain_rollback = facade.restore_state(initial_state["domain"].duplicate(true))
+	if typeof(domain_rollback) != TYPE_DICTIONARY or not domain_rollback.get("ok", false):
+		errors.append("domain_rollback_refused")
+	var port_rollback = projection_port.restore(initial_state["projection_port"].duplicate(true))
+	if typeof(port_rollback) != TYPE_DICTIONARY or not port_rollback.get("accepted", false):
+		errors.append("port_rollback_refused")
+
+	var current_domain = facade.save_state()
+	if not _domain_snapshot_shape_valid(current_domain):
+		errors.append("domain_rollback_snapshot_refused")
+	elif current_domain != initial_state["domain"]:
+		errors.append("domain_rollback_mismatch")
+	var current_port_result = projection_port.snapshot()
+	if (
+		typeof(current_port_result) != TYPE_DICTIONARY
+		or not current_port_result.get("accepted", false)
+		or typeof(current_port_result.get("snapshot")) != TYPE_DICTIONARY
+	):
+		errors.append("port_rollback_snapshot_refused")
+	else:
+		var current_port: Dictionary = current_port_result["snapshot"]
+		if not ProjectionContracts.validate_port_snapshot(current_port)["valid"]:
+			errors.append("port_rollback_snapshot_invalid")
+		elif current_port != initial_state["projection_port"]:
+			errors.append("port_rollback_mismatch")
+	return {"ok": errors.is_empty(), "errors": errors}
+
+
+static func _domain_snapshot_shape_valid(value) -> bool:
+	if typeof(value) != TYPE_DICTIONARY:
+		return false
+	var domain: Dictionary = value
+	var keys: Array = domain.keys()
+	keys.sort()
+	var expected: Array = DOMAIN_FIELDS.duplicate()
+	expected.sort()
+	return (
+		keys == expected
+		and typeof(domain["version"]) == TYPE_INT
+		and domain["version"] == 1
+		and typeof(domain["narrative_state"]) == TYPE_DICTIONARY
+		and typeof(domain["scene_registry"]) == TYPE_ARRAY
+	)
 
 
 static func _validate_domain(

@@ -26,6 +26,12 @@ class FakeProjectionPort extends ProjectionPort:
 	var receipts: Array = []
 	var beat_types_seen: Array = []
 	var unsupported_target := ""
+	var reject_restore_after_mutation_once := false
+	var restore_mutation_observed := false
+	var target_port_state_observed_before_refusal := false
+	var target_domain_observed_before_refusal := false
+	var facade_to_observe
+	var expected_domain_during_refusal: Dictionary = {}
 
 	func supports_projection(projection_target: String) -> Dictionary:
 		var supported: bool = (
@@ -88,6 +94,18 @@ class FakeProjectionPort extends ProjectionPort:
 			return {"accepted": false, "error_code": "INVALID_SNAPSHOT"}
 		open_requests = snapshot_data["open_requests"].duplicate(true)
 		receipts = snapshot_data["receipts"].duplicate(true)
+		if reject_restore_after_mutation_once:
+			reject_restore_after_mutation_once = false
+			restore_mutation_observed = true
+			target_port_state_observed_before_refusal = (
+				open_requests == snapshot_data["open_requests"]
+				and receipts == snapshot_data["receipts"]
+			)
+			target_domain_observed_before_refusal = (
+				facade_to_observe != null
+				and facade_to_observe.save_state() == expected_domain_during_refusal
+			)
+			return {"accepted": false, "error_code": "TEST_LATE_RESTORE_REFUSAL"}
 		return {"accepted": true, "error_code": null}
 
 	func close(presentation_id: String) -> Dictionary:
@@ -131,6 +149,35 @@ class FakeProjectionPort extends ProjectionPort:
 		}
 
 
+class RealIdempotentFacadeProxy extends RefCounted:
+	var delegate
+	var first_resolution_result: Dictionary = {}
+	var second_resolution_result: Dictionary = {}
+
+	func _init(real_facade) -> void:
+		delegate = real_facade
+
+	func save_state() -> Dictionary:
+		return delegate.save_state()
+
+	func restore_state(snapshot) -> Dictionary:
+		return delegate.restore_state(snapshot)
+
+	func resolve_scene(
+		instance_id: String,
+		choice_id: String,
+		resolution_id: String,
+		context: Dictionary
+	) -> Dictionary:
+		first_resolution_result = delegate.resolve_scene(
+			instance_id, choice_id, resolution_id, context.duplicate(true)
+		)
+		second_resolution_result = delegate.resolve_scene(
+			instance_id, choice_id, resolution_id, context.duplicate(true)
+		)
+		return second_resolution_result.duplicate(true)
+
+
 func _ready() -> void:
 	_run()
 	_finish()
@@ -154,6 +201,9 @@ func _run() -> void:
 		_expect(continuous["port"].beat_types_seen == EXPECTED_BEAT_TYPES, "sept types projetes")
 		_expect(_count_relation_fact(continuous["domain"]) == 1, "fait relationnel durable unique")
 		_expect(_count_resolution_events(continuous["domain"]) == 1, "evenement A1 durable unique")
+	_test_transactional_restore_rollback(sequence)
+	_test_real_a10_idempotence(sequence)
+	_test_executor_receives_real_a10_idempotence(sequence)
 	_test_negative_cases(sequence)
 
 
@@ -220,6 +270,114 @@ func _run_complete(sequence: Dictionary, with_restores: bool) -> Dictionary:
 	}
 
 
+func _test_transactional_restore_rollback(sequence: Dictionary) -> void:
+	var target_environment := _executor_waiting_for_choice(sequence)
+	if target_environment.is_empty():
+		_expect(false, "snapshot cible valide pour refus tardif cree")
+		return
+	var target_result: Dictionary = target_environment["executor"].snapshot()
+	if not target_result["ok"]:
+		_expect(false, "snapshot cible valide pour refus tardif capture")
+		return
+	var target_snapshot: Dictionary = target_result["payload"]["snapshot"]
+	var destination := _new_graph(sequence)
+	var initial_domain: Dictionary = destination["facade"].save_state().duplicate(true)
+	var initial_port_result: Dictionary = destination["port"].snapshot()
+	var initial_port: Dictionary = initial_port_result["snapshot"].duplicate(true)
+	_expect(initial_domain != target_snapshot["domain"], "domaine initial distinct de la cible")
+	_expect(initial_port != target_snapshot["projection_port"], "port initial distinct de la cible")
+
+	var late_refusal_port: FakeProjectionPort = destination["port"]
+	late_refusal_port.facade_to_observe = destination["facade"]
+	late_refusal_port.expected_domain_during_refusal = target_snapshot["domain"].duplicate(true)
+	late_refusal_port.reject_restore_after_mutation_once = true
+	var restored: Dictionary = SequenceExecutor.restore(
+		destination["facade"], late_refusal_port, sequence, target_snapshot
+	)
+	_expect(not restored["ok"] and restored["error_code"] == "PORT_RESTORE_REFUSED", "refus tardif port conserve")
+	_expect(restored["executor"] == null, "aucun executeur publie apres refus tardif")
+	_expect(late_refusal_port.restore_mutation_observed, "faux port mute avant refus")
+	_expect(
+		late_refusal_port.target_port_state_observed_before_refusal,
+		"snapshot port cible observe avant refus",
+	)
+	_expect(
+		late_refusal_port.target_domain_observed_before_refusal,
+		"domaine cible restaure avant refus du port",
+	)
+	_expect(destination["facade"].save_state() == initial_domain, "rollback domaine initial exact")
+	var current_port_result: Dictionary = late_refusal_port.snapshot()
+	_expect(current_port_result["accepted"], "snapshot port accepte apres rollback")
+	_expect(current_port_result["snapshot"] == initial_port, "rollback port initial exact")
+
+
+func _test_real_a10_idempotence(sequence: Dictionary) -> void:
+	var environment := _activated_environment(sequence)
+	if environment.is_empty():
+		_expect(false, "environnement rejeu A10 direct cree")
+		return
+	var resolution_context := _context()
+	var first: Dictionary = environment["facade"].resolve_scene(
+		INSTANCE_ID, "a10_choice_commit", "a10_resolution_commit", resolution_context
+	)
+	var after_first: Dictionary = environment["facade"].save_state()
+	var second: Dictionary = environment["facade"].resolve_scene(
+		INSTANCE_ID, "a10_choice_commit", "a10_resolution_commit", resolution_context
+	)
+	var after_second: Dictionary = environment["facade"].save_state()
+	_expect(first["ok"] and first["transaction_status"] == "APPLIQUE", "A10 direct applique au premier passage")
+	_expect(
+		second["ok"] and second["transaction_status"] == "IDEMPOTENT" and second["idempotent"],
+		"A10 direct retourne un vrai IDEMPOTENT",
+	)
+	_expect(after_second == after_first, "rejeu A10 direct sans seconde mutation")
+	_expect(_count_relation_fact(after_second) == 1, "rejeu A10 direct conserve un fait")
+	_expect(_count_resolution_events(after_second) == 1, "rejeu A10 direct conserve un evenement")
+
+
+func _test_executor_receives_real_a10_idempotence(sequence: Dictionary) -> void:
+	var environment := _activated_environment(sequence)
+	if environment.is_empty():
+		_expect(false, "environnement proxy A10 cree")
+		return
+	var proxy := RealIdempotentFacadeProxy.new(environment["facade"])
+	var created := SequenceExecutor.create(proxy, environment["port"], sequence, environment["activation"])
+	if not created["ok"]:
+		_expect(false, "executeur proxy A10 cree")
+		return
+	var executor = created["executor"]
+	if not executor.start()["ok"]:
+		_expect(false, "executeur proxy A10 demarre")
+		return
+	while executor.current_beat().get("type") != "CHOICE":
+		if not _present_and_command(executor, null):
+			_expect(false, "executeur proxy atteint le choix")
+			return
+	if not _open_and_ack(executor):
+		_expect(false, "choix proxy presente")
+		return
+	if not executor.receive_command(_command_for(executor, "SELECT_CHOICE", "choice_finish"))["ok"]:
+		_expect(false, "choix proxy consomme")
+		return
+	var committed: Dictionary = executor.commit_resolution(_context())
+	_expect(proxy.first_resolution_result.get("transaction_status") == "APPLIQUE", "proxy observe APPLIQUE reel")
+	_expect(proxy.second_resolution_result.get("transaction_status") == "IDEMPOTENT", "proxy observe IDEMPOTENT reel")
+	_expect(committed["ok"] and committed["idempotent"], "executeur accepte IDEMPOTENT reel")
+	_expect(
+		committed.get("payload", {}).get("a10_result", {}).get("transaction_status") == "IDEMPOTENT",
+		"resultat executeur expose IDEMPOTENT A10",
+	)
+	_expect(
+		executor.execution_state()["durable_commit_status"] == "IDEMPOTENT",
+		"execution enregistre IDEMPOTENT",
+	)
+	var committed_domain: Dictionary = proxy.save_state()
+	_expect(_count_relation_fact(committed_domain) == 1, "proxy produit un seul fait durable")
+	_expect(_count_resolution_events(committed_domain) == 1, "proxy produit un seul evenement durable")
+	_expect(_present_and_command(executor, null), "retour apres IDEMPOTENT progresse")
+	_expect(executor.execution_state()["execution_status"] == "COMPLETE", "sequence IDEMPOTENT complete")
+
+
 func _test_negative_cases(sequence: Dictionary) -> void:
 	var invalid_authored := sequence.duplicate(true)
 	invalid_authored["unknown"] = true
@@ -271,6 +429,35 @@ func _test_negative_cases(sequence: Dictionary) -> void:
 	_expect(
 		not ResolutionEnvelope.validate(mismapped, sequence, executor.execution_state())["valid"],
 		"mapping authored A10 incoherent refuse",
+	)
+	var incompatible_sequence := sequence.duplicate(true)
+	var incompatible_definition: Dictionary = incompatible_sequence["orchestration"]["a6_entry"]["definition"]
+	var other_resolution: Dictionary = incompatible_definition["resolutions"]["a10_resolution_commit"].duplicate(true)
+	other_resolution["signal_recu"] = "SYNTHETIC_N13_OTHER_SIGNAL"
+	incompatible_definition["resolutions"]["a10_resolution_other"] = other_resolution
+	incompatible_definition["choix"].append({
+		"choix_id": "a10_choice_other",
+		"formulation": "Synthetic N13 other choice",
+		"signal_emis": "SYNTHETIC_N13_OTHER_SIGNAL",
+		"resolution_ids": ["a10_resolution_other"],
+	})
+	incompatible_sequence["resolutions"]["resolution_complete"]["a10_choice_id"] = "a10_choice_other"
+	incompatible_sequence["resolutions"]["resolution_complete"]["a10_resolution_id"] = "a10_resolution_commit"
+	_expect(
+		incompatible_definition["resolutions"].has("a10_resolution_commit")
+		and incompatible_definition["resolutions"].has("a10_resolution_other"),
+		"deux resolutions A10 existantes pour mapping incompatible",
+	)
+	_expect(
+		incompatible_definition["choix"][0]["resolution_ids"] == ["a10_resolution_commit"]
+		and incompatible_definition["choix"][1]["resolution_ids"] == ["a10_resolution_other"],
+		"deux couples A10 individuellement valides",
+	)
+	var incompatible_validation: Dictionary = AuthoredValidator.validate(incompatible_sequence)
+	_expect(
+		not incompatible_validation["valid"]
+		and _errors_contain_code(incompatible_validation["errors"], "a10_resolution_choice_mismatch"),
+		"a10_resolution_choice_mismatch avec identifiants existants",
 	)
 
 	var commit: Dictionary = executor.commit_resolution(_context())
@@ -558,6 +745,13 @@ func _count_resolution_events(domain: Dictionary) -> int:
 		if event.get("provenance", {}).get("source_scene_instance_id") == INSTANCE_ID:
 			count += 1
 	return count
+
+
+func _errors_contain_code(errors: Array, code: String) -> bool:
+	for error in errors:
+		if str(error).ends_with(": " + code):
+			return true
+	return false
 
 
 func _expect(condition: bool, message: String) -> void:

@@ -7,8 +7,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 BASELINE = "f7f81d866fa7f573f6fca4d7da62ccf9cfc4b859"
+OLD_N13_SHA = "6870344bd555cdeb548aff75a5eca6e0276cb3a5"
 EXECUTION_DIR = ROOT / "game/scripts/unified_runtime/execution"
 FIXTURE = ROOT / "game/tests/fixtures/unified_runtime/n13_a10_durable_integration_valid.json"
+CORRECTIVE_FILES = {
+    "game/scripts/unified_runtime/execution/UnifiedRuntimeSnapshotV1.gd",
+    "game/tests/R8C_N13MinimalSequenceExecutorSmokeDriver.gd",
+    "tests/test_r8c_n13_minimal_sequence_executor_static.py",
+}
 PRODUCTION_FILES = {
     "SequenceResolutionEnvelopeV1.gd",
     "UnifiedRuntimeSnapshotV1.gd",
@@ -52,6 +58,23 @@ class R8CN13MinimalSequenceExecutorStaticTests(unittest.TestCase):
         )
         self.assertIsNotNone(match, name)
         return re.findall(r'"([A-Za-z0-9_]+)"', match.group(1))
+
+    def gdscript_function(self, source: str, name: str) -> str:
+        matches = list(
+            re.finditer(r"^(\s*)(?:static\s+)?func\s+([a-z0-9_]+)\s*\(", source, re.M)
+        )
+        for index, match in enumerate(matches):
+            if match.group(2) != name:
+                continue
+            indent = len(match.group(1).replace("\t", "    "))
+            end = len(source)
+            for following in matches[index + 1 :]:
+                following_indent = len(following.group(1).replace("\t", "    "))
+                if following_indent <= indent:
+                    end = following.start()
+                    break
+            return source[match.start() : end]
+        self.fail(f"missing GDScript function: {name}")
 
     def test_exact_n13_files_exist_and_production_directory_is_closed(self):
         expected = {
@@ -154,6 +177,44 @@ class R8CN13MinimalSequenceExecutorStaticTests(unittest.TestCase):
         self.assertNotIn("FileAccess", source)
         self.assertNotIn("DirAccess", source)
 
+    def test_restore_captures_and_compensates_both_dependencies_transactionally(self):
+        source = self.read(
+            "game/scripts/unified_runtime/execution/UnifiedRuntimeSnapshotV1.gd"
+        )
+        restore = self.gdscript_function(source, "restore_into")
+        capture = self.gdscript_function(source, "_capture_initial_state")
+        rollback = self.gdscript_function(source, "_rollback_initial_state")
+        failure = self.gdscript_function(source, "_restore_failure_with_rollback")
+
+        self.assertLess(
+            restore.index("_capture_initial_state(facade, projection_port)"),
+            restore.index('facade.restore_state(snapshot["domain"].duplicate(true))'),
+        )
+        self.assertIn("initial_domain = facade.save_state()", capture)
+        self.assertIn("initial_port_result = projection_port.snapshot()", capture)
+        self.assertIn('"domain": initial_domain.duplicate(true)', capture)
+        self.assertIn(
+            '"projection_port": initial_port_result["snapshot"].duplicate(true)', capture
+        )
+        self.assertIn(
+            'facade.restore_state(initial_state["domain"].duplicate(true))', rollback
+        )
+        self.assertIn(
+            'projection_port.restore(initial_state["projection_port"].duplicate(true))',
+            rollback,
+        )
+        self.assertIn("current_domain = facade.save_state()", rollback)
+        self.assertIn("current_port_result = projection_port.snapshot()", rollback)
+        self.assertIn('current_domain != initial_state["domain"]', rollback)
+        self.assertIn('current_port != initial_state["projection_port"]', rollback)
+        self.assertIn("ProjectionContracts.validate_port_snapshot(current_port)", rollback)
+        self.assertIn('_failure("RESTORE_ROLLBACK_FAILED", errors)', failure)
+        self.assertIn("failure_code", failure)
+        self.assertNotRegex(
+            restore,
+            r'port_restore.*?not port_restore\.get\("accepted".*?return _failure\("PORT_RESTORE_REFUSED"\)',
+        )
+
     def test_executor_api_is_compact_and_calls_only_a10_resolution_boundary(self):
         source = self.read("game/scripts/unified_runtime/execution/SequenceExecutor.gd")
         functions = set(re.findall(r"^(?:static )?func\s+([a-z0-9_]+)\s*\(", source, re.M))
@@ -252,6 +313,85 @@ class R8CN13MinimalSequenceExecutorStaticTests(unittest.TestCase):
             self.assertIn(f'"{message}"', source)
         self.assertIn("R8C_N13_MINIMAL_SEQUENCE_EXECUTOR: OK", source)
         self.assertIn("controls", source)
+
+    def test_smoke_executes_late_port_refusal_after_real_mutation_and_exact_rollback(self):
+        source = self.read("game/tests/R8C_N13MinimalSequenceExecutorSmokeDriver.gd")
+        fake_restore = self.gdscript_function(source, "restore")
+        scenario = self.gdscript_function(source, "_test_transactional_restore_rollback")
+        self.assertLess(
+            fake_restore.index('open_requests = snapshot_data["open_requests"].duplicate(true)'),
+            fake_restore.index("if reject_restore_after_mutation_once"),
+        )
+        self.assertLess(
+            fake_restore.index('receipts = snapshot_data["receipts"].duplicate(true)'),
+            fake_restore.index('return {"accepted": false, "error_code": "TEST_LATE_RESTORE_REFUSAL"}'),
+        )
+        self.assertIn("reject_restore_after_mutation_once = false", fake_restore)
+        self.assertIn("facade_to_observe.save_state() == expected_domain_during_refusal", fake_restore)
+        self.assertIn("initial_domain", scenario)
+        self.assertIn("initial_port", scenario)
+        self.assertIn("SequenceExecutor.restore(", scenario)
+        self.assertIn('restored["error_code"] == "PORT_RESTORE_REFUSED"', scenario)
+        self.assertIn('restored["executor"] == null', scenario)
+        self.assertIn("target_domain_observed_before_refusal", scenario)
+        self.assertIn("target_port_state_observed_before_refusal", scenario)
+        self.assertIn('destination["facade"].save_state() == initial_domain', scenario)
+        self.assertIn('current_port_result["snapshot"] == initial_port', scenario)
+
+    def test_smoke_proves_real_a10_idempotence_directly_and_through_executor(self):
+        source = self.read("game/tests/R8C_N13MinimalSequenceExecutorSmokeDriver.gd")
+        direct = self.gdscript_function(source, "_test_real_a10_idempotence")
+        proxy_resolve = self.gdscript_function(source, "resolve_scene")
+        executor_path = self.gdscript_function(
+            source, "_test_executor_receives_real_a10_idempotence"
+        )
+        self.assertEqual(2, direct.count('["facade"].resolve_scene('))
+        self.assertIn('first["transaction_status"] == "APPLIQUE"', direct)
+        self.assertIn('second["transaction_status"] == "IDEMPOTENT"', direct)
+        self.assertIn('second["idempotent"]', direct)
+        self.assertIn("_count_relation_fact(after_second) == 1", direct)
+        self.assertIn("_count_resolution_events(after_second) == 1", direct)
+        self.assertEqual(2, proxy_resolve.count("delegate.resolve_scene("))
+        self.assertIn("return second_resolution_result.duplicate(true)", proxy_resolve)
+        self.assertIn("executor.commit_resolution(_context())", executor_path)
+        self.assertIn('committed["ok"] and committed["idempotent"]', executor_path)
+        self.assertIn('get("transaction_status") == "IDEMPOTENT"', executor_path)
+        self.assertIn('["durable_commit_status"] == "IDEMPOTENT"', executor_path)
+        self.assertIn('["execution_status"] == "COMPLETE"', executor_path)
+
+    def test_smoke_mapping_mismatch_uses_existing_choices_and_resolutions(self):
+        source = self.read("game/tests/R8C_N13MinimalSequenceExecutorSmokeDriver.gd")
+        negatives = self.gdscript_function(source, "_test_negative_cases")
+        self.assertIn('"a10_resolution_other"', negatives)
+        self.assertIn('"a10_choice_other"', negatives)
+        self.assertIn(
+            'incompatible_definition["resolutions"].has("a10_resolution_commit")',
+            negatives,
+        )
+        self.assertIn(
+            'incompatible_definition["resolutions"].has("a10_resolution_other")',
+            negatives,
+        )
+        self.assertIn(
+            'incompatible_definition["choix"][0]["resolution_ids"] == ["a10_resolution_commit"]',
+            negatives,
+        )
+        self.assertIn(
+            'incompatible_definition["choix"][1]["resolution_ids"] == ["a10_resolution_other"]',
+            negatives,
+        )
+        self.assertIn("AuthoredValidator.validate(incompatible_sequence)", negatives)
+        self.assertIn('"a10_resolution_choice_mismatch"', negatives)
+
+    def test_corrective_scope_is_exactly_the_three_allowlisted_files(self):
+        result = subprocess.run(
+            ["git", "diff", "--name-only", OLD_N13_SHA],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=True,
+        )
+        self.assertEqual(CORRECTIVE_FILES, set(result.stdout.splitlines()))
 
 
 if __name__ == "__main__":
