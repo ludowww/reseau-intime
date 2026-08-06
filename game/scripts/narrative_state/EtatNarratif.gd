@@ -10,6 +10,7 @@ const PERSONNAGES := ["marie", "sandra", "mathilde", "pauline", "raphaelle", "ni
 const TYPE_RELATION_CENTRALE := "R8C_A1_RELATION_CENTRALE_SYNTHETIQUE"
 const TYPE_RELATION := "R8C_A1_RELATION_SYNTHETIQUE"
 const TYPES_EVENEMENTS := [TYPE_RELATION_CENTRALE, TYPE_RELATION]
+const FORMAT_VERSION := 2
 
 var _etat: Dictionary = {}
 
@@ -25,6 +26,7 @@ static func creer_synthetique(relation_centrale_initiale: Dictionary) -> EtatNar
 		relations[personnage_id] = EtatRelationModele.creer_synthetique(personnage_id)
 	var instance := new()
 	instance._etat = {
+		"format_version": FORMAT_VERSION,
 		"progression_saison": {
 			"acte_courant": null,
 			"evenements_structurants": [],
@@ -108,6 +110,7 @@ func _valider_evenement(evenement: Dictionary) -> String:
 
 func _valider_etat_complet(etat: Dictionary) -> String:
 	var racines := [
+		"format_version",
 		"progression_saison",
 		"relation_centrale",
 		"relations",
@@ -120,7 +123,9 @@ func _valider_etat_complet(etat: Dictionary) -> String:
 	]
 	if etat.size() != racines.size():
 		return "etat narratif: racines inattendues"
-	for racine in racines:
+	if typeof(etat.get("format_version")) != TYPE_INT or etat["format_version"] != FORMAT_VERSION:
+		return "etat narratif: format_version doit etre strictement 2"
+	for racine in racines.slice(1):
 		if not etat.has(racine) or typeof(etat[racine]) != TYPE_DICTIONARY:
 			return "etat narratif: racine invalide: %s" % racine
 	var erreur_centrale := EtatRelationCentraleModele.valider(etat["relation_centrale"])

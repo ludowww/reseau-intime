@@ -7,8 +7,21 @@ const EtatRelationModele := preload("res://scripts/narrative_state/EtatRelation.
 const EtatRelationCentraleModele := preload("res://scripts/narrative_state/EtatRelationCentrale.gd")
 const DefinitionModele := preload("res://scripts/narrative_scene/SceneDefinition.gd")
 
-const RACINES_VIDES := ["promesses", "obligations", "traces_narratives", "connaissances", "livraison_medias"]
+const FORMAT_VERSION := 2
+const REGISTRES_DURABLES := ["promesses", "obligations", "traces_narratives", "connaissances", "livraison_medias"]
+const CHAMPS_ETAT_V1 := [
+	"progression_saison",
+	"relation_centrale",
+	"relations",
+	"evenements",
+	"promesses",
+	"obligations",
+	"traces_narratives",
+	"connaissances",
+	"livraison_medias",
+]
 const CHAMPS_ETAT := [
+	"format_version",
 	"progression_saison",
 	"relation_centrale",
 	"relations",
@@ -47,21 +60,70 @@ const CHAMPS_FAIT := [
 	"formulee_par",
 	"permission_future",
 ]
+const CHAMPS_PROVENANCE_DURABLE := [
+	"event_id", "source_scene_id", "source_scene_instance_id", "source_a10_choice_id",
+	"source_a10_resolution_id", "source_sequence_id", "source_authored_version", "source_resolution_id",
+	"moment_diegetique",
+]
+const CHAMPS_CONNAISSANCE := ["knowledge_id", "subject_id", "holder_ids", "status", "provenance"]
+const CHAMPS_TRACE_NARRATIVE := [
+	"trace_id", "creator_id", "audience_ids", "controller_ids", "accessible_to_ids", "status", "provenance",
+	"withdrawn_at",
+]
+const CHAMPS_PROMESSE := [
+	"promise_id", "author_id", "beneficiary_ids", "content_ref", "status", "provenance", "resolved_at",
+]
+const CHAMPS_OBLIGATION := [
+	"obligation_id", "debtor_id", "beneficiary_ids", "kind", "status", "provenance", "resolved_at",
+]
+const CHAMPS_LIVRAISON_MEDIA := [
+	"media_id", "diegetic_status", "fictional_audience_ids", "access_status", "gallery_status",
+	"withdrawal_status", "provenance",
+]
 const MAX_EVENEMENTS := 4096
 const MAX_FAITS_PAR_RELATION := 512
 const MAX_LONGUEUR_CHAINE := 512
+const MAX_RECORDS_PAR_REGISTRE := 4096
 
 
 static func creer_etat(snapshot):
-	if not valider(snapshot):
+	var normalise := _normaliser(snapshot)
+	if normalise.is_empty():
 		return null
-	return EtatNarratifModele.creer_depuis_snapshot(snapshot)
+	return EtatNarratifModele.creer_depuis_snapshot(normalise)
 
 
 static func valider(etat) -> bool:
+	return not _normaliser(etat).is_empty()
+
+
+static func _normaliser(etat) -> Dictionary:
 	if typeof(etat) != TYPE_DICTIONARY:
-		return false
+		return {}
+	var candidat: Dictionary = etat.duplicate(true)
+	if candidat.has("format_version"):
+		if typeof(candidat["format_version"]) != TYPE_INT or candidat["format_version"] != FORMAT_VERSION:
+			return {}
+	elif _champs_autorises(candidat, CHAMPS_ETAT_V1):
+		for registre in REGISTRES_DURABLES:
+			if candidat.has(registre) and (
+				typeof(candidat[registre]) != TYPE_DICTIONARY or not candidat[registre].is_empty()
+			):
+				return {}
+			if not candidat.has(registre):
+				candidat[registre] = {}
+		candidat["format_version"] = FORMAT_VERSION
+	else:
+		return {}
+	if not _valider_v2(candidat):
+		return {}
+	return candidat
+
+
+static func _valider_v2(etat: Dictionary) -> bool:
 	if not _champs_exacts(etat, CHAMPS_ETAT):
+		return false
+	if typeof(etat["format_version"]) != TYPE_INT or etat["format_version"] != FORMAT_VERSION:
 		return false
 	var progression = etat.get("progression_saison")
 	if typeof(progression) != TYPE_DICTIONARY or not _champs_exacts(progression, CHAMPS_PROGRESSION):
@@ -70,9 +132,6 @@ static func valider(etat) -> bool:
 		return false
 	for champ in CHAMPS_PROGRESSION.slice(1):
 		if typeof(progression[champ]) != TYPE_ARRAY or not progression[champ].is_empty():
-			return false
-	for racine in RACINES_VIDES:
-		if typeof(etat.get(racine)) != TYPE_DICTIONARY or not etat[racine].is_empty():
 			return false
 	if typeof(etat.get("relation_centrale")) != TYPE_DICTIONARY or not _champs_exacts(
 		etat["relation_centrale"], EtatRelationCentraleModele.CHAMPS_MUTABLES
@@ -101,6 +160,166 @@ static func valider(etat) -> bool:
 		return false
 	for event_id in evenements:
 		if not _evenement_valide(event_id, evenements[event_id]):
+			return false
+	return (
+		_connaissances_valides(etat["connaissances"])
+		and _traces_valides(etat["traces_narratives"])
+		and _promesses_valides(etat["promesses"])
+		and _obligations_valides(etat["obligations"])
+		and _livraisons_medias_valides(etat["livraison_medias"])
+	)
+
+
+static func _connaissances_valides(registre) -> bool:
+	if typeof(registre) != TYPE_DICTIONARY or registre.size() > MAX_RECORDS_PAR_REGISTRE:
+		return false
+	for knowledge_id in registre:
+		var record = registre[knowledge_id]
+		if (
+			not _chaine_bornee(knowledge_id)
+			or typeof(record) != TYPE_DICTIONARY
+			or not _champs_exacts(record, CHAMPS_CONNAISSANCE)
+			or record["knowledge_id"] != knowledge_id
+			or not _chaine_bornee(record["subject_id"])
+			or not _tableau_identifiants_valide(record["holder_ids"], true)
+			or record["status"] != "KNOWN"
+			or not _provenance_durable_valide(record["provenance"])
+		):
+			return false
+	return true
+
+
+static func _traces_valides(registre) -> bool:
+	if typeof(registre) != TYPE_DICTIONARY or registre.size() > MAX_RECORDS_PAR_REGISTRE:
+		return false
+	for trace_id in registre:
+		var record = registre[trace_id]
+		if (
+			not _chaine_bornee(trace_id)
+			or typeof(record) != TYPE_DICTIONARY
+			or not _champs_exacts(record, CHAMPS_TRACE_NARRATIVE)
+			or record["trace_id"] != trace_id
+			or not _chaine_bornee(record["creator_id"])
+			or not _tableau_identifiants_valide(record["audience_ids"], false)
+			or not _tableau_identifiants_valide(record["controller_ids"], false)
+			or not _tableau_identifiants_valide(record["accessible_to_ids"], false)
+			or record["status"] not in ["ACTIVE", "WITHDRAWN"]
+			or not _provenance_durable_valide(record["provenance"])
+		):
+			return false
+		if record["status"] == "ACTIVE" and record["withdrawn_at"] != null:
+			return false
+		if record["status"] == "WITHDRAWN" and not _moment_normalise_valide(record["withdrawn_at"]):
+			return false
+	return true
+
+
+static func _promesses_valides(registre) -> bool:
+	if typeof(registre) != TYPE_DICTIONARY or registre.size() > MAX_RECORDS_PAR_REGISTRE:
+		return false
+	for promise_id in registre:
+		var record = registre[promise_id]
+		if (
+			not _chaine_bornee(promise_id)
+			or typeof(record) != TYPE_DICTIONARY
+			or not _champs_exacts(record, CHAMPS_PROMESSE)
+			or record["promise_id"] != promise_id
+			or not _chaine_bornee(record["author_id"])
+			or not _tableau_identifiants_valide(record["beneficiary_ids"], true)
+			or not _chaine_bornee(record["content_ref"])
+			or record["status"] not in ["ACTIVE", "PAID", "FAILED"]
+			or not _provenance_durable_valide(record["provenance"])
+		):
+			return false
+		if record["status"] == "ACTIVE" and record["resolved_at"] != null:
+			return false
+		if record["status"] in ["PAID", "FAILED"] and not _moment_normalise_valide(record["resolved_at"]):
+			return false
+	return true
+
+
+static func _obligations_valides(registre) -> bool:
+	if typeof(registre) != TYPE_DICTIONARY or registre.size() > MAX_RECORDS_PAR_REGISTRE:
+		return false
+	for obligation_id in registre:
+		var record = registre[obligation_id]
+		if (
+			not _chaine_bornee(obligation_id)
+			or typeof(record) != TYPE_DICTIONARY
+			or not _champs_exacts(record, CHAMPS_OBLIGATION)
+			or record["obligation_id"] != obligation_id
+			or not _chaine_bornee(record["debtor_id"])
+			or not _tableau_identifiants_valide(record["beneficiary_ids"], true)
+			or not _chaine_bornee(record["kind"])
+			or record["status"] not in ["DUE", "PAID", "FAILED"]
+			or not _provenance_durable_valide(record["provenance"])
+		):
+			return false
+		if record["status"] == "DUE" and record["resolved_at"] != null:
+			return false
+		if record["status"] in ["PAID", "FAILED"] and not _moment_normalise_valide(record["resolved_at"]):
+			return false
+	return true
+
+
+static func _livraisons_medias_valides(registre) -> bool:
+	if typeof(registre) != TYPE_DICTIONARY or registre.size() > MAX_RECORDS_PAR_REGISTRE:
+		return false
+	for media_id in registre:
+		var record = registre[media_id]
+		if (
+			not _chaine_bornee(media_id)
+			or typeof(record) != TYPE_DICTIONARY
+			or not _champs_exacts(record, CHAMPS_LIVRAISON_MEDIA)
+			or record["media_id"] != media_id
+			or record["diegetic_status"] not in ["NOT_APPLICABLE", "CREATED"]
+			or not _tableau_identifiants_valide(record["fictional_audience_ids"], false)
+			or record["access_status"] not in ["LOCKED", "ACCESSIBLE", "REVOKED"]
+			or record["gallery_status"] not in ["HIDDEN", "AVAILABLE"]
+			or record["withdrawal_status"] not in ["ACTIVE", "WITHDRAWN"]
+			or not _provenance_durable_valide(record["provenance"])
+		):
+			return false
+		if record["gallery_status"] == "AVAILABLE" and record["access_status"] != "ACCESSIBLE":
+			return false
+		if record["withdrawal_status"] == "WITHDRAWN" and (
+			record["gallery_status"] != "HIDDEN" or record["access_status"] == "ACCESSIBLE"
+		):
+			return false
+	return true
+
+
+static func _provenance_durable_valide(value) -> bool:
+	if typeof(value) != TYPE_DICTIONARY or not _champs_exacts(value, CHAMPS_PROVENANCE_DURABLE):
+		return false
+	for field in CHAMPS_PROVENANCE_DURABLE:
+		if field == "moment_diegetique":
+			if not _moment_normalise_valide(value[field]):
+				return false
+		elif not _chaine_bornee(value[field]):
+			return false
+	return _version_authored_valide(value["source_authored_version"])
+
+
+static func _tableau_identifiants_valide(value, require_non_empty: bool) -> bool:
+	if typeof(value) != TYPE_ARRAY or (require_non_empty and value.is_empty()) or value.size() > MAX_FAITS_PAR_RELATION:
+		return false
+	var seen := {}
+	for item in value:
+		if not _chaine_bornee(item) or seen.has(item):
+			return false
+		seen[item] = true
+	return true
+
+
+static func _version_authored_valide(value) -> bool:
+	if typeof(value) != TYPE_STRING:
+		return false
+	var parts: PackedStringArray = value.split(".", false)
+	if parts.size() != 3:
+		return false
+	for part in parts:
+		if not part.is_valid_int() or int(part) < 0 or (part.length() > 1 and part.begins_with("0")):
 			return false
 	return true
 
