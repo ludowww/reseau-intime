@@ -167,7 +167,7 @@ func _prepare_expected(
 		"operation": "RESOLVE_SCENE",
 		"transaction_id": event["event_id"],
 		"event_id": event["event_id"],
-		"choice_id": choice_id,
+		"choice_id": envelope["choice_id"],
 		"resolution_id": resolution_id,
 		"a10_choice_id": envelope["a10_choice_id"],
 		"a10_resolution_id": envelope["a10_resolution_id"],

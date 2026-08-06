@@ -126,7 +126,7 @@ static func creer_depuis_snapshot_persistant(snapshot: Dictionary) -> R8CSceneIn
 			if (
 				receipt["operation"] != operation
 				or receipt["transaction_id"] != transaction_id
-				or receipt["choice_id"] != choix_id
+				or receipt["a10_choice_id"] != choix_id
 				or receipt["resolution_id"] != resolution_id
 			):
 				return null
@@ -159,7 +159,7 @@ func obtenir_snapshot() -> Dictionary:
 
 func obtenir_snapshot_persistant() -> Dictionary:
 	var terminaison: Dictionary = _donnees.get("terminaison", {})
-	var choix_terminal = terminaison.get("choice_id", terminaison.get("choix_id", ""))
+	var choix_terminal = terminaison.get("a10_choice_id", terminaison.get("choix_id", ""))
 	var traces := {}
 	if obtenir_statut() == PROPOSED:
 		traces = _donnees.get("traces_temporaires", {}).duplicate(true)
@@ -388,7 +388,6 @@ static func _recu_resolution_sequence_valide(value, instance_id: String) -> bool
 	if (
 		value["operation"] != "RESOLVE_SCENE"
 		or value["transaction_id"] != value["event_id"]
-		or value["choice_id"] != value["a10_choice_id"]
 		or value["resolution_id"] != value["a10_resolution_id"]
 		or value["event_id"] != "r8c-a1:%s:sequence-resolution:%s" % [
 			instance_id,
