@@ -1,8 +1,11 @@
 # R8C-N12.1 — Liaison des résolutions authored à A10 et contrat d'entrée N13
 
-> **Statut : `N12_1_READY_FOR_PRODUCT_REVIEW`**
+> **Statut : `AUTHORED_A10_RESOLUTION_BINDING_CONTRACT_APPROVED`**
 > **Baseline obligatoire :** `5571086d80ebffefaa54dc6c6b6e16f0af18d8d6`
 > **Tag stable :** `r8c-n12-authored-schema-validation-projection-ports`
+
+> **Approbation produit :** commit `ec005dde6e6cc1e8e72a01c6eca5ce1d2ebf799b`
+> revu et approuvé sans réserve, date de référence : août 2026.
 
 ## 1. Portée de l'amendement
 
