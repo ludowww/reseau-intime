@@ -97,6 +97,37 @@ var runtime_pending_transition_by_thread: Dictionary = {}
 func configure_content_source(source: Dictionary, provider = null) -> void:
 	content_source = source.duplicate(true)
 	runtime_provider = provider
+	if _runtime_has("attach_messages_screen"):
+		runtime_provider.call("attach_messages_screen", self)
+
+func _runtime_has(capability: String) -> bool:
+	return runtime_provider != null and runtime_provider.has_method(capability)
+
+func _runtime_messages_enabled() -> bool:
+	return _runtime_has("presentation_source")
+
+func _runtime_has_all(capabilities: Array) -> bool:
+	for capability in capabilities:
+		if not _runtime_has(str(capability)):
+			return false
+	return true
+
+func _runtime_time_flow_enabled() -> bool:
+	return _runtime_has_all([
+		"current_narrative_time_minutes",
+		"current_narrative_time_text",
+		"commit_narrative_time",
+		"complete_pending_transition_flow",
+		"confirm_day_transition",
+		"confirm_transition",
+		"automatic_day_handoff",
+		"content_end",
+	])
+
+func _runtime_notify(capability: String, arguments: Array = []):
+	if not _runtime_has(capability):
+		return null
+	return runtime_provider.callv(capability, arguments)
 
 func _set_screen_mode(mode: String) -> void:
 	if screen_mode == mode:
@@ -124,14 +155,16 @@ func _ready() -> void:
 	size_flags_vertical = Control.SIZE_EXPAND_FILL
 	if content_source.is_empty():
 		_load_demo_data()
-	elif runtime_provider != null:
+	elif _runtime_messages_enabled():
 		_initialize_runtime_source(content_source)
 	else:
 		_apply_content_source(content_source)
 	_build()
 	visibility_changed.connect(_on_visibility_changed)
-	if runtime_provider != null:
+	_runtime_notify("on_messages_ui_ready")
+	if _runtime_has("pending_transition_flow"):
 		call_deferred("_resume_authoritative_transition_flow")
+	if _runtime_has("pending_scene_sequence"):
 		call_deferred("_resume_authoritative_scene_sequence")
 
 func focus_first_conversation() -> void:
@@ -155,14 +188,15 @@ func open_thread(thread_id: String) -> void:
 	var choices := _dictionary_array(available_choices.get(thread_id, []))
 	var position := int(reading_positions.get(thread_id, -1))
 	conversation_screen.configure(selected, messages, choices, characters, PORTRAIT_THEME, position, first_unread_message_id)
+	_notify_runtime_choices_presented(thread_id, choices)
 	conversation_screen.set_narrative_day_short(_authoritative_narrative_day_short())
 	conversation_screen.set_narrative_time(_authoritative_narrative_time_text())
 	conversation_screen.set_compact_height_mode(compact_height_mode)
 	_set_screen_mode("conversation")
 	_sync_active_typing()
-	if runtime_provider == null or _dictionary_array(runtime_pending_messages_by_thread.get(thread_id, [])).is_empty():
+	if not _runtime_messages_enabled() or _dictionary_array(runtime_pending_messages_by_thread.get(thread_id, [])).is_empty():
 		_mark_thread_read(thread_id)
-	if runtime_provider != null:
+	if _runtime_messages_enabled():
 		call_deferred("_start_pending_delivery_for_thread", thread_id)
 
 func return_to_list() -> void:
@@ -174,7 +208,7 @@ func return_to_list() -> void:
 	conversation_screen.visible = false
 	conversation_list.visible = true
 	conversation_list.call_deferred("focus_thread", active_thread_id)
-	if runtime_provider != null:
+	if _runtime_has("on_thread_returned"):
 		var transition: Dictionary = runtime_provider.on_thread_returned(active_thread_id)
 		if not transition.is_empty():
 			call_deferred("_start_narrative_clock_transition", transition)
@@ -312,7 +346,7 @@ func finish_off_phone_transition() -> void:
 		return
 	if not is_off_phone_transition_active():
 		return
-	if runtime_provider != null:
+	if _runtime_has("confirm_transition"):
 		_finish_runtime_off_phone_transition()
 		return
 	var saved_state := off_phone_state.duplicate(false)
@@ -377,7 +411,7 @@ func start_day_transition(from_day: int, to_day: int) -> void:
 func finish_day_transition() -> void:
 	if not is_day_transition_active():
 		return
-	if runtime_provider != null:
+	if _runtime_has("confirm_day_transition"):
 		_finish_runtime_day_transition()
 		return
 	var saved_state := day_transition_state.duplicate(false)
@@ -399,7 +433,7 @@ func finish_day_transition() -> void:
 	conversation_list.call_deferred("focus_thread", focus_thread_id)
 
 func finish_secondary_day_transition() -> void:
-	if not is_day_transition_active() or runtime_provider == null:
+	if not is_day_transition_active() or not _runtime_has("confirm_secondary_day_transition"):
 		return
 	var result: Dictionary = runtime_provider.confirm_secondary_day_transition()
 	if not bool(result.get("accepted", false)):
@@ -409,6 +443,8 @@ func finish_secondary_day_transition() -> void:
 	_start_narrative_clock_transition(result.get("transition", {}))
 
 func _finish_runtime_day_transition() -> void:
+	if not _runtime_has("confirm_day_transition"):
+		return
 	var result: Dictionary = runtime_provider.confirm_day_transition()
 	if not bool(result.get("accepted", false)):
 		day_transition.reset_surface()
@@ -600,7 +636,7 @@ func total_presentation_count() -> int:
 	return count
 
 func refresh_from_runtime(source: Dictionary = {}) -> void:
-	if runtime_provider == null or runtime_delivery_active:
+	if not _runtime_messages_enabled() or runtime_delivery_active:
 		return
 	var next_source: Dictionary = runtime_provider.presentation_source() if source.is_empty() else source
 	_reconcile_runtime_source(next_source)
@@ -618,10 +654,28 @@ func _initialize_runtime_source(source: Dictionary) -> void:
 	_normalize_threads_unread_state()
 	transcripts.clear()
 	available_choices.clear()
+	var seeded_ids_by_thread: Dictionary = {}
+	if _runtime_has("presented_message_ids_by_thread"):
+		var raw_seeded_ids = runtime_provider.call("presented_message_ids_by_thread")
+		if raw_seeded_ids is Dictionary:
+			seeded_ids_by_thread = raw_seeded_ids
 	for raw_thread_id in source.get("messages_by_thread", {}):
 		var thread_id := str(raw_thread_id)
-		transcripts[thread_id] = []
-		runtime_presented_message_ids_by_thread[thread_id] = []
+		var provider_messages := _dictionary_array(source["messages_by_thread"][raw_thread_id])
+		var seeded_ids: Array = seeded_ids_by_thread.get(thread_id, [])
+		var seeded_messages: Array[Dictionary] = []
+		var valid_seed := seeded_ids.size() <= provider_messages.size()
+		for index in range(seeded_ids.size()):
+			if str(provider_messages[index].get("message_id", "")) != str(seeded_ids[index]):
+				valid_seed = false
+				break
+			seeded_messages.append(provider_messages[index].duplicate(true))
+		if not valid_seed:
+			push_error("Runtime presented message IDs are not a provider prefix")
+			seeded_ids = []
+			seeded_messages = []
+		transcripts[thread_id] = seeded_messages
+		runtime_presented_message_ids_by_thread[thread_id] = seeded_ids.duplicate()
 	_reconcile_runtime_source(source)
 
 func _reconcile_runtime_source(source: Dictionary) -> bool:
@@ -674,7 +728,7 @@ func _runtime_presented_ids_match_visual_sequence(thread_id: String, visual_mess
 	return presented_ids == visual_ids
 
 func _start_pending_delivery_for_thread(thread_id: String) -> void:
-	if runtime_provider == null or runtime_delivery_active or screen_mode != "conversation" or active_thread_id != thread_id:
+	if not _runtime_messages_enabled() or runtime_delivery_active or screen_mode != "conversation" or active_thread_id != thread_id:
 		return
 	var pending := _dictionary_array(runtime_pending_messages_by_thread.get(thread_id, []))
 	if pending.is_empty():
@@ -703,12 +757,13 @@ func replace_runtime_choices(choice_presentations: Array[Dictionary]) -> void:
 	available_choices[active_thread_id] = choice_presentations.duplicate(true)
 	if conversation_screen != null:
 		conversation_screen.replace_choices(choice_presentations)
+	_notify_runtime_choices_presented(active_thread_id, choice_presentations)
 
 func unlock_runtime_thread(_thread_id: String) -> void:
 	refresh_from_runtime()
 
 func apply_runtime_choice(choice_id: String) -> bool:
-	if runtime_provider == null or runtime_delivery_active:
+	if not _runtime_has("apply_choice") or runtime_delivery_active:
 		return false
 	var thread_id := active_thread_id
 	var previous_choices := _dictionary_array(available_choices.get(thread_id, []))
@@ -847,9 +902,9 @@ func _mark_runtime_message_presented(thread_id: String, message: Dictionary) -> 
 	if message_id != "" and not ids.has(message_id):
 		ids.append(message_id)
 	runtime_presented_message_ids_by_thread[thread_id] = ids
-	if runtime_provider != null:
+	if _runtime_has("mark_message_presented"):
 		runtime_provider.mark_message_presented(message_id)
-		if conversation_screen != null:
+		if conversation_screen != null and _runtime_has("current_narrative_time_text"):
 			conversation_screen.set_narrative_time(runtime_provider.current_narrative_time_text())
 	runtime_message_delivered.emit(thread_id, message_id)
 
@@ -882,7 +937,7 @@ func _finish_runtime_delivery(request_id: int, thread_id: String) -> void:
 		return
 	if not _runtime_delivery_request_is_current(request_id, thread_id):
 		return
-	if runtime_provider != null:
+	if _runtime_has("mark_thread_batch_presented"):
 		runtime_provider.mark_thread_batch_presented(thread_id)
 	if not _sync_runtime_delivery_provider(thread_id):
 		return
@@ -913,6 +968,7 @@ func _finish_runtime_delivery(request_id: int, thread_id: String) -> void:
 	_complete_runtime_delivery(true)
 
 func _complete_runtime_delivery(unblock_navigation: bool) -> void:
+	var completed_thread_id := runtime_delivery_thread_id
 	runtime_delivery_active = false
 	runtime_delivery_thread_id = ""
 	runtime_delivery_queue.clear()
@@ -923,11 +979,14 @@ func _complete_runtime_delivery(unblock_navigation: bool) -> void:
 		_set_runtime_delivery_interactions_blocked(false)
 	elif conversation_screen != null and conversation_screen.back_button != null:
 		conversation_screen.back_button.disabled = false
+	_runtime_notify("on_messages_delivery_completed", [completed_thread_id])
 
 func _runtime_delivery_request_is_current(request_id: int, thread_id: String) -> bool:
 	return is_inside_tree() and not runtime_delivery_cancelled and runtime_delivery_active and request_id == runtime_delivery_request_id and thread_id == runtime_delivery_thread_id and active_thread_id == thread_id
 
 func _sync_runtime_delivery_provider(thread_id: String) -> bool:
+	if not _runtime_messages_enabled():
+		return false
 	var source: Dictionary = runtime_provider.presentation_source()
 	var provider_messages := _normalized_runtime_transcript(_dictionary_array(source.get("messages_by_thread", {}).get(thread_id, [])))
 	var visual_messages := _normalized_runtime_transcript(conversation_screen.timeline.messages.duplicate(true))
@@ -997,7 +1056,7 @@ func _exit_tree() -> void:
 
 func _start_runtime_transition_after_layout(request_id: int, thread_id: String, transition: Dictionary) -> bool:
 	await get_tree().process_frame
-	if not _runtime_delivery_request_is_current(request_id, thread_id) or runtime_provider == null:
+	if not _runtime_delivery_request_is_current(request_id, thread_id) or not _runtime_time_flow_enabled():
 		return false
 	await _start_time_passage_flow(transition)
 	await get_tree().process_frame
@@ -1009,7 +1068,7 @@ func _start_narrative_clock_transition(transition: Dictionary) -> void:
 	await _start_time_passage_flow(transition)
 
 func _resume_authoritative_transition_flow() -> void:
-	if runtime_provider == null or transition_flow_active or not is_inside_tree():
+	if not _runtime_has("pending_transition_flow") or transition_flow_active or not is_inside_tree():
 		return
 	authoritative_resume_request_id += 1
 	var request_id := authoritative_resume_request_id
@@ -1025,7 +1084,7 @@ func _run_narrative_clock(_request_id: int) -> void:
 	await get_tree().process_frame
 
 func _start_time_passage_flow(transition: Dictionary) -> void:
-	if runtime_provider == null or transition_flow_active or transition.is_empty():
+	if not _runtime_time_flow_enabled() or transition_flow_active or transition.is_empty():
 		return
 	transition_flow_request_id += 1
 	var request_id := transition_flow_request_id
@@ -1138,7 +1197,7 @@ func _apply_time_passage_result(result: Dictionary, transition: Dictionary) -> v
 			_show_notification(unlocked_thread, str(notification.get("body", "")), runtime_provider.current_narrative_time_text())
 
 func complete_runtime_scene_sequence() -> bool:
-	if runtime_provider == null:
+	if not _runtime_has("confirm_scene_sequence"):
 		return false
 	var result: Dictionary = runtime_provider.confirm_scene_sequence()
 	if not bool(result.get("accepted", false)):
@@ -1152,7 +1211,7 @@ func complete_runtime_scene_sequence() -> bool:
 	return true
 
 func _resume_authoritative_scene_sequence() -> void:
-	if runtime_provider == null:
+	if not _runtime_has("pending_scene_sequence"):
 		return
 	var pending: Dictionary = runtime_provider.pending_scene_sequence()
 	var sequence := _dictionary_array(pending.get("sequence", []))
@@ -1161,7 +1220,7 @@ func _resume_authoritative_scene_sequence() -> void:
 		scene_sequence_requested.emit(sequence, provenance)
 
 func _refresh_after_clock_only(result: Dictionary) -> void:
-	if narrative_clock_animation_active or runtime_provider == null:
+	if narrative_clock_animation_active or not _runtime_messages_enabled():
 		return
 	refresh_from_runtime()
 	var destination := str(result.get("destination", ""))
@@ -1186,12 +1245,12 @@ func _set_clock_interactions_blocked(blocked: bool) -> void:
 		if shell.gallery_button != null: shell.gallery_button.disabled = blocked
 
 func _authoritative_narrative_day_short() -> String:
-	if runtime_provider != null:
+	if _runtime_has("current_narrative_day_short"):
 		return runtime_provider.current_narrative_day_short()
 	return str(content_source.get("narrative_day_short", ""))
 
 func _authoritative_narrative_time_text() -> String:
-	if runtime_provider != null:
+	if _runtime_has("current_narrative_time_text"):
 		return runtime_provider.current_narrative_time_text()
 	return str(content_source.get("narrative_time", ""))
 
@@ -1219,6 +1278,8 @@ func _apply_content_source(source: Dictionary) -> void:
 		available_choices[str(thread_id)] = _dictionary_array(source["choices_by_thread"][thread_id])
 
 func _finish_runtime_off_phone_transition() -> void:
+	if not _runtime_has("confirm_transition"):
+		return
 	var result: Dictionary = runtime_provider.confirm_transition()
 	if not bool(result.get("accepted", false)):
 		return
@@ -1436,7 +1497,7 @@ func _on_choice_selected(choice: Dictionary) -> void:
 			break
 	if accepted_choice.is_empty():
 		return
-	if runtime_provider != null:
+	if _runtime_has("apply_choice"):
 		apply_runtime_choice(choice_id)
 		return
 	available_choices[active_thread_id] = []
@@ -1447,6 +1508,42 @@ func _on_choice_selected(choice: Dictionary) -> void:
 		push_error("A demo choice must append exactly one Player message")
 	transcripts[active_thread_id] = conversation_screen.timeline.messages.duplicate(true)
 	reading_positions[active_thread_id] = conversation_screen.get_reading_position()
+
+func _notify_runtime_choices_presented(thread_id: String, choices: Array[Dictionary]) -> void:
+	if choices.is_empty() or not _runtime_has("on_choices_presented"):
+		return
+	if (
+		conversation_screen == null
+		or screen_mode != "conversation"
+		or active_thread_id != thread_id
+		or conversation_screen.choice_bar == null
+		or not conversation_screen.choice_bar.is_visible_in_tree()
+		or conversation_screen.choice_bar.choice_count() != choices.size()
+	):
+		return
+	var choice_ids: Array = []
+	for choice in choices:
+		choice_ids.append(str(choice.get("choice_id", "")))
+	_runtime_notify("on_choices_presented", [thread_id, choice_ids])
+
+func present_runtime_notification(thread_id: String, message_id: String) -> bool:
+	if not _runtime_messages_enabled() or thread_id.is_empty() or message_id.is_empty():
+		return false
+	var thread := _thread_for(thread_id)
+	if thread.is_empty() or not thread_has_unread_content(thread_id):
+		return false
+	var provider_messages := _dictionary_array(runtime_provider_transcript_by_thread.get(thread_id, []))
+	for message in provider_messages:
+		if str(message.get("message_id", "")) != message_id or bool(message.get("is_read", false)):
+			continue
+		_show_notification(
+			thread,
+			str(message.get("text", "")),
+			str(message.get("timestamp", "")),
+			message_id,
+		)
+		return _notification_targets(thread_id)
+	return false
 
 func _on_notification_open_requested(thread_id: String, generation: int) -> void:
 	if _notification_presentation_blocked() or active_notification.is_empty():
@@ -1463,9 +1560,11 @@ func _on_notification_dismiss_requested(generation: int) -> void:
 		return
 	if int(active_notification.get("_generation", -1)) != generation:
 		return
+	var dismissed_notification := active_notification.duplicate(true)
 	active_notification_generation += 1
 	active_notification = {}
 	_hide_notification_presenters()
+	_runtime_notify("on_notification_dismissed", [dismissed_notification])
 	call_deferred("_restore_notification_focus")
 
 func _show_notification(thread: Dictionary, _preview: String, timestamp: String, message_id := "") -> void:
@@ -1529,10 +1628,14 @@ func _present_notification(restart_timer := false) -> void:
 	var generation := int(active_notification.get("_generation", active_notification_generation))
 	if screen_mode == "conversation" and conversation_screen != null and conversation_screen.visible:
 		conversation_screen.show_header_notification(active_notification, _reduced_motion_enabled(), remaining_seconds, generation)
+		if _notification_visible():
+			_runtime_notify("on_notification_presented", [active_notification.duplicate(true)])
 		return
 	if screen_mode == "list" and list_notification_host != null and conversation_list != null and conversation_list.visible:
 		list_notification_host.visible = true
 		notification_banner.configure(active_notification, PORTRAIT_THEME, _reduced_motion_enabled(), true, remaining_seconds, generation)
+		if _notification_visible():
+			_runtime_notify("on_notification_presented", [active_notification.duplicate(true)])
 
 func _defer_active_notification() -> void:
 	if not active_notification.is_empty():
@@ -1695,7 +1798,7 @@ func _portrait_shell():
 	return null
 
 func _refresh_runtime_gallery() -> void:
-	if runtime_provider == null:
+	if not _runtime_has("gallery_source"):
 		return
 	var shell = _portrait_shell()
 	if shell != null and shell.gallery_screen != null:
@@ -1735,7 +1838,10 @@ func _first_unread_message_id(thread_id: String) -> String:
 
 func _mark_thread_read(thread_id: String) -> void:
 	var updated_messages := _dictionary_array(transcripts.get(thread_id, []))
+	var last_read_message_id := ""
 	for message in updated_messages:
+		if not bool(message.get("is_player", false)) and not bool(message.get("is_read", true)):
+			last_read_message_id = str(message.get("message_id", ""))
 		message["is_read"] = true
 	transcripts[thread_id] = updated_messages
 	if conversation_screen != null and active_thread_id == thread_id:
@@ -1745,6 +1851,8 @@ func _mark_thread_read(thread_id: String) -> void:
 		thread["unread_count"] = 0
 		thread["has_unread_content"] = false
 		conversation_list.update_thread_presentation(thread)
+	if last_read_message_id != "":
+		_runtime_notify("on_thread_read", [thread_id, last_read_message_id])
 
 func _save_reading_position() -> void:
 	if active_thread_id != "" and conversation_screen != null and screen_mode == "conversation" and conversation_screen.timeline != null:
