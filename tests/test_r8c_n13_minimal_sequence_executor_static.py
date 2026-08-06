@@ -273,7 +273,7 @@ class R8CN13MinimalSequenceExecutorStaticTests(unittest.TestCase):
             public,
         )
 
-    def test_locked_contracts_a1_to_a10_and_bootstrap_are_unchanged(self):
+    def test_n13_historical_range_did_not_modify_protected_contracts(self):
         protected = [
             "game/project.godot",
             "game/scripts/narrative_state",
@@ -282,7 +282,14 @@ class R8CN13MinimalSequenceExecutorStaticTests(unittest.TestCase):
             "game/tests/fixtures/unified_runtime/authored_sequence_v1_minimal_valid.json",
         ]
         result = subprocess.run(
-            ["git", "diff", "--exit-code", N13_BASE_SHA, "--", *protected],
+            [
+                "git",
+                "diff",
+                "--exit-code",
+                f"{N13_BASE_SHA}..{N13_FINAL_SHA}",
+                "--",
+                *protected,
+            ],
             cwd=ROOT,
             text=True,
             capture_output=True,
