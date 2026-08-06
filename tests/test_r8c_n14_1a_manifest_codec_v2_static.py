@@ -6,7 +6,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-BASELINE = "103c9f9084d92b32ce6b60def7f21e6bdd8ba3e6"
+N14_1A_BASE_SHA = "103c9f9084d92b32ce6b60def7f21e6bdd8ba3e6"
+N14_1A_FINAL_SHA = "df698afc5cf8366f78c2a84524794d2a7ade1c63"
 FIXTURE_DIR = ROOT / "game/tests/fixtures/unified_runtime"
 MANIFEST_FIELDS = {
     "binding",
@@ -336,10 +337,50 @@ class R8CN141AManifestCodecV2StaticTests(unittest.TestCase):
         self.assertIn("get_tree().quit(0)", smoke)
         self.assertIn("get_tree().quit(1)", smoke)
 
-    def test_n13_protected_files_are_unchanged_and_scope_is_allowlisted(self):
+    def test_n14_1a_historical_scope_is_allowlisted_and_n13_protected(self):
+        for label, sha in (
+            ("N14.1a base", N14_1A_BASE_SHA),
+            ("N14.1a final", N14_1A_FINAL_SHA),
+        ):
+            exists = subprocess.run(
+                ["git", "cat-file", "-e", f"{sha}^{{commit}}"],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(exists.returncode, 0, f"missing historical commit: {label} {sha}")
+        base_to_final = subprocess.run(
+            ["git", "merge-base", "--is-ancestor", N14_1A_BASE_SHA, N14_1A_FINAL_SHA],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(
+            base_to_final.returncode,
+            0,
+            "invalid N14.1a history: base is not an ancestor of final",
+        )
+        final_to_head = subprocess.run(
+            ["git", "merge-base", "--is-ancestor", N14_1A_FINAL_SHA, "HEAD"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(
+            final_to_head.returncode,
+            0,
+            "invalid N14.1a history: final is not an ancestor of HEAD",
+        )
         changed = set(
             subprocess.check_output(
-                ["git", "diff", "--name-only", BASELINE], cwd=ROOT, text=True
+                [
+                    "git",
+                    "diff",
+                    "--name-only",
+                    f"{N14_1A_BASE_SHA}..{N14_1A_FINAL_SHA}",
+                ],
+                cwd=ROOT,
+                text=True,
             ).splitlines()
         )
         self.assertFalse(changed & PROTECTED_N13, changed & PROTECTED_N13)
@@ -357,7 +398,14 @@ class R8CN141AManifestCodecV2StaticTests(unittest.TestCase):
             "game/scripts/narrative_state/EtatNarratif.gd",
         )
         diff = subprocess.check_output(
-            ["git", "diff", "--unified=0", BASELINE, "--", *production_paths],
+            [
+                "git",
+                "diff",
+                "--unified=0",
+                f"{N14_1A_BASE_SHA}..{N14_1A_FINAL_SHA}",
+                "--",
+                *production_paths,
+            ],
             cwd=ROOT,
             text=True,
         )
