@@ -6,6 +6,9 @@ const EtatNarratifModele := preload("res://scripts/narrative_state/EtatNarratif.
 const EtatRelationModele := preload("res://scripts/narrative_state/EtatRelation.gd")
 const EtatRelationCentraleModele := preload("res://scripts/narrative_state/EtatRelationCentrale.gd")
 const DefinitionModele := preload("res://scripts/narrative_scene/SceneDefinition.gd")
+const SequenceResolutionEvent := preload(
+	"res://scripts/narrative_state/SequenceResolutionEventV1.gd"
+)
 
 const FORMAT_VERSION := 2
 const REGISTRES_DURABLES := ["promesses", "obligations", "traces_narratives", "connaissances", "livraison_medias"]
@@ -331,6 +334,8 @@ static func _evenement_valide(event_id, evenement) -> bool:
 		return false
 	if evenement["event_id"] != event_id or evenement["event_type"] not in EtatNarratifModele.TYPES_EVENEMENTS:
 		return false
+	if evenement["event_type"] == EtatNarratifModele.TYPE_SEQUENCE_RESOLUTION:
+		return SequenceResolutionEvent.validate(evenement)
 	var provenance = evenement["provenance"]
 	if (
 		typeof(provenance) != TYPE_DICTIONARY

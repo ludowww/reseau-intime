@@ -5,11 +5,15 @@ class_name EtatNarratif
 const EtatRelationModele := preload("res://scripts/narrative_state/EtatRelation.gd")
 const EtatRelationCentraleModele := preload("res://scripts/narrative_state/EtatRelationCentrale.gd")
 const ReducerRelationModele := preload("res://scripts/narrative_state/ReducerRelation.gd")
+const SequenceResolutionEvent := preload(
+	"res://scripts/narrative_state/SequenceResolutionEventV1.gd"
+)
 
 const PERSONNAGES := ["marie", "sandra", "mathilde", "pauline", "raphaelle", "nico"]
 const TYPE_RELATION_CENTRALE := "R8C_A1_RELATION_CENTRALE_SYNTHETIQUE"
 const TYPE_RELATION := "R8C_A1_RELATION_SYNTHETIQUE"
-const TYPES_EVENEMENTS := [TYPE_RELATION_CENTRALE, TYPE_RELATION]
+const TYPE_SEQUENCE_RESOLUTION := "R8C_A1_SEQUENCE_RESOLUTION_V1"
+const TYPES_EVENEMENTS := [TYPE_RELATION_CENTRALE, TYPE_RELATION, TYPE_SEQUENCE_RESOLUTION]
 const FORMAT_VERSION := 2
 
 var _etat: Dictionary = {}
@@ -86,6 +90,10 @@ func obtenir_snapshot() -> Dictionary:
 	return _etat.duplicate(true)
 
 
+func _publier_candidat_prepare(candidat: Dictionary) -> void:
+	_etat = candidat
+
+
 func _valider_evenement(evenement: Dictionary) -> String:
 	var event_id = evenement.get("event_id")
 	if typeof(event_id) != TYPE_STRING or event_id.strip_edges().is_empty():
@@ -93,6 +101,8 @@ func _valider_evenement(evenement: Dictionary) -> String:
 	var event_type = evenement.get("event_type")
 	if typeof(event_type) != TYPE_STRING or event_type not in TYPES_EVENEMENTS:
 		return "event_type synthetique non autorise"
+	if event_type == TYPE_SEQUENCE_RESOLUTION:
+		return "" if SequenceResolutionEvent.validate(evenement) else "evenement de resolution de sequence invalide"
 	var provenance = evenement.get("provenance")
 	if typeof(provenance) != TYPE_DICTIONARY:
 		return "provenance doit etre un dictionnaire"
