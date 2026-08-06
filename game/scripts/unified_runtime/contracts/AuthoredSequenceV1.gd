@@ -118,6 +118,7 @@ const RESOLUTION_FIELDS := [
 	"resolution_id",
 	"choice_id",
 	"a10_choice_id",
+	"a10_resolution_id",
 	"terminal_checkpoint_id",
 	"event_refs",
 	"fact_ids",

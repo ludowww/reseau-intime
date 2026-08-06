@@ -9,6 +9,10 @@ CONTRACT_DIR = ROOT / "game/scripts/unified_runtime/contracts"
 FIXTURE_DIR = ROOT / "game/tests/fixtures/unified_runtime"
 VALID_FIXTURE = FIXTURE_DIR / "authored_sequence_v1_minimal_valid.json"
 INVALID_FIXTURE = FIXTURE_DIR / "authored_sequence_v1_invalid_cases.json"
+ARCHITECTURE_CONTRACT = (
+    ROOT
+    / "docs/architecture/R8C_N12_1_AUTHORED_A10_RESOLUTION_BINDING_AND_N13_ENTRY_CONTRACT.md"
+)
 
 BEAT_TYPES = {
     "MESSAGE",
@@ -67,6 +71,23 @@ CONTENT_FIELDS = {
     "AFTERCARE": {"aftercare_id", "content_ref", "obligation_id"},
     "RETURN": {"return_id", "content_ref", "delay", "eligible_resolution_ids"},
 }
+RESOLUTION_FIELDS = {
+    "resolution_id",
+    "choice_id",
+    "a10_choice_id",
+    "a10_resolution_id",
+    "terminal_checkpoint_id",
+    "event_refs",
+    "fact_ids",
+    "knowledge_ids",
+    "trace_ids",
+    "promise_effects",
+    "obligation_effects",
+    "consequence_ids",
+    "media_effects",
+    "convergence",
+    "next_beat_id",
+}
 INVALID_CASE_IDS = {
     "forbidden_dependency",
     "unknown_key",
@@ -75,6 +96,12 @@ INVALID_CASE_IDS = {
     "duplicate_identifier",
     "missing_transition_target",
     "missing_resolution",
+    "missing_a10_resolution_mapping",
+    "invalid_a10_resolution_mapping_type",
+    "unknown_a10_resolution_mapping",
+    "incompatible_a10_resolution_mapping",
+    "duplicate_a10_resolution_mapping",
+    "durable_effect_without_a10_mapping",
     "missing_media",
     "missing_checkpoint",
     "cycle",
@@ -141,6 +168,7 @@ class R8CN12UnifiedContentContractStaticTests(unittest.TestCase):
 
     def test_expected_files_exist_in_isolated_n12_locations(self):
         expected = [
+            "docs/architecture/R8C_N12_1_AUTHORED_A10_RESOLUTION_BINDING_AND_N13_ENTRY_CONTRACT.md",
             "game/scripts/unified_runtime/contracts/AuthoredSequenceV1.gd",
             "game/scripts/unified_runtime/contracts/AuthoredSequenceValidator.gd",
             "game/scripts/unified_runtime/contracts/SequenceExecutionV1.gd",
@@ -152,6 +180,24 @@ class R8CN12UnifiedContentContractStaticTests(unittest.TestCase):
             "game/tests/R8C_N12UnifiedContentContractSmokeTest.tscn",
         ]
         self.assertEqual([], [path for path in expected if not (ROOT / path).is_file()])
+
+    def test_n12_1_architecture_contract_records_preproduction_exception_and_n13_entry(self):
+        source = ARCHITECTURE_CONTRACT.read_text(encoding="utf-8")
+        for required in (
+            "resolution_id",
+            "a10_choice_id",
+            "a10_resolution_id",
+            "sequence_resolution",
+            "sequence_entered",
+            "n13_a10_durable_integration_valid.json",
+            "schema_id = reseau_intime.authored_sequence",
+            "schema_version = 1",
+            "exception explicitement autorisée avant production",
+            "N13_REMAINS_STOPPED",
+        ):
+            self.assertIn(required, source)
+        self.assertIn("aucune huitième opération", source)
+        self.assertRegex(source, r"N14.*codec A5")
 
     def test_root_schema_is_exact_closed_and_versioned(self):
         self.assertEqual(ROOT_FIELDS, set(self.valid))
@@ -180,6 +226,98 @@ class R8CN12UnifiedContentContractStaticTests(unittest.TestCase):
         )
         self.assertEqual(BEAT_TYPES, set(self.gdscript_const_strings(source, "BEAT_TYPES")))
         self.assertNotIn("SCRIPT", BEAT_TYPES)
+
+    def test_initial_sequence_entered_checkpoint_is_materialized(self):
+        self.assertEqual(
+            "sequence_entered", self.valid["beats"][0]["checkpoint_before"]
+        )
+
+    def test_authored_resolutions_have_closed_explicit_nullable_a10_binding(self):
+        source = self.read(
+            "game/scripts/unified_runtime/contracts/AuthoredSequenceV1.gd"
+        )
+        self.assertEqual(
+            RESOLUTION_FIELDS,
+            set(self.gdscript_const_strings(source, "RESOLUTION_FIELDS")),
+        )
+
+        resolutions = self.valid["resolutions"]
+        self.assertTrue(all(set(resolution) == RESOLUTION_FIELDS for resolution in resolutions.values()))
+        self.assertIsNone(resolutions["resolution_start"]["a10_resolution_id"])
+        self.assertEqual(
+            "a3_resolution_continue",
+            resolutions["resolution_complete"]["a10_resolution_id"],
+        )
+        self.assertEqual(
+            "a3_resolution_stop",
+            resolutions["resolution_stop"]["a10_resolution_id"],
+        )
+        self.assertTrue(
+            all(
+                resolution["a10_resolution_id"] is None
+                or isinstance(resolution["a10_resolution_id"], str)
+                for resolution in resolutions.values()
+            )
+        )
+
+        definition = self.valid["orchestration"]["a6_entry"]["definition"]
+        a10_choices = {
+            choice["choix_id"]: set(choice["resolution_ids"])
+            for choice in definition["choix"]
+        }
+        claimed = set()
+        for resolution in resolutions.values():
+            a10_resolution_id = resolution["a10_resolution_id"]
+            if a10_resolution_id is None:
+                continue
+            self.assertIn(a10_resolution_id, definition["resolutions"])
+            self.assertIn(a10_resolution_id, a10_choices[resolution["a10_choice_id"]])
+            self.assertNotIn(a10_resolution_id, claimed)
+            claimed.add(a10_resolution_id)
+
+        durable_fields = {
+            "event_refs",
+            "fact_ids",
+            "knowledge_ids",
+            "trace_ids",
+            "promise_effects",
+            "obligation_effects",
+            "consequence_ids",
+            "media_effects",
+        }
+        for resolution in resolutions.values():
+            if any(resolution[field] for field in durable_fields):
+                self.assertIsNotNone(resolution["a10_resolution_id"])
+        self.assertTrue(
+            all(not resolutions["resolution_start"][field] for field in durable_fields)
+        )
+
+    def test_validator_closes_every_a10_resolution_mapping_failure(self):
+        source = self.read(
+            "game/scripts/unified_runtime/contracts/AuthoredSequenceValidator.gd"
+        )
+        self.assertIn(
+            'resolution["a10_resolution_id"], path + ".a10_resolution_id", errors',
+            source,
+        )
+        for error_code in (
+            "unknown_a6_resolution",
+            "a10_resolution_choice_mismatch",
+            "a10_resolution_reused",
+            "durable_effect_requires_a10_resolution",
+        ):
+            self.assertIn(error_code, source)
+        cases = {case["case_id"]: case for case in self.invalid["cases"]}
+        expected_mutations = {
+            "missing_a10_resolution_mapping": "remove_a10_resolution_id",
+            "invalid_a10_resolution_mapping_type": "set_a10_resolution_id_integer",
+            "unknown_a10_resolution_mapping": "set_unknown_a10_resolution_id",
+            "incompatible_a10_resolution_mapping": "set_incompatible_a10_resolution_choice",
+            "duplicate_a10_resolution_mapping": "reuse_a10_resolution_id",
+            "durable_effect_without_a10_mapping": "clear_durable_a10_resolution_id",
+        }
+        for case_id, mutation in expected_mutations.items():
+            self.assertEqual(mutation, cases[case_id]["mutation"])
 
     def test_valid_fixture_graph_is_referentially_complete_acyclic_and_reachable(self):
         beats = {beat["beat_id"]: beat for beat in self.valid["beats"]}

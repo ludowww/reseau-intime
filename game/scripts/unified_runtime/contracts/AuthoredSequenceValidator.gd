@@ -39,6 +39,16 @@ const A6_UNIQUENESS_POLICIES := ["UNIQUE", "REPETABLE"]
 const A6_SIGNAL_SCOPES := ["LOCALE", "TEMPORAIRE", "DURABLE"]
 const A6_RECEPTIONS := ["NON_PERSISTANTE", "RECUE_INTERPRETEE", "LIMITE_EXPLICITE"]
 const A6_REVALIDATION_POLICIES := ["AVANT_PROPOSITION", "AVANT_PROPOSITION_ET_RESOLUTION"]
+const AUTHORED_DURABLE_EFFECT_FIELDS := [
+	"event_refs",
+	"fact_ids",
+	"knowledge_ids",
+	"trace_ids",
+	"promise_effects",
+	"obligation_effects",
+	"consequence_ids",
+	"media_effects",
+]
 
 
 static func validate(value) -> Dictionary:
@@ -522,6 +532,9 @@ static func _validate_resolutions(value, errors: Array[String]) -> Dictionary:
 			_add_error(errors, path + ".resolution_id", "identity_mismatch")
 		_validate_business_id(resolution["choice_id"], path + ".choice_id", errors)
 		_validate_business_id(resolution["a10_choice_id"], path + ".a10_choice_id", errors)
+		_validate_nullable_identifier(
+			resolution["a10_resolution_id"], path + ".a10_resolution_id", errors
+		)
 		_validate_business_id(resolution["terminal_checkpoint_id"], path + ".terminal_checkpoint_id", errors)
 		_validate_event_refs(resolution["event_refs"], path, errors)
 		_validate_id_array(resolution["fact_ids"], path + ".fact_ids", errors, false)
@@ -706,14 +719,23 @@ static func _validate_references(
 
 	_validate_choice_resolution_reciprocity(beats, choices, resolutions, errors)
 
-	var a10_choice_ids := {}
+	var a10_choice_resolution_ids := {}
+	var a10_resolution_ids := {}
 	var orchestration = sequence.get("orchestration")
 	var a6_entry = orchestration.get("a6_entry", {}) if typeof(orchestration) == TYPE_DICTIONARY else {}
 	var definition = a6_entry.get("definition", {}) if typeof(a6_entry) == TYPE_DICTIONARY else {}
+	if typeof(definition) == TYPE_DICTIONARY and typeof(definition.get("resolutions")) == TYPE_DICTIONARY:
+		for a10_resolution_id in definition["resolutions"]:
+			a10_resolution_ids[a10_resolution_id] = true
 	if typeof(definition) == TYPE_DICTIONARY and typeof(definition.get("choix", [])) == TYPE_ARRAY:
 		for option in definition.get("choix", []):
 			if typeof(option) == TYPE_DICTIONARY:
-				a10_choice_ids[option.get("choix_id")] = true
+				var choice_resolution_ids := {}
+				if typeof(option.get("resolution_ids")) == TYPE_ARRAY:
+					for a10_resolution_id in option["resolution_ids"]:
+						choice_resolution_ids[a10_resolution_id] = true
+				a10_choice_resolution_ids[option.get("choix_id")] = choice_resolution_ids
+	var claimed_a10_resolutions := {}
 	var resolution_ids: Array = resolutions.keys()
 	resolution_ids.sort()
 	for resolution_id in resolution_ids:
@@ -723,8 +745,29 @@ static func _validate_references(
 			_add_error(errors, path + ".choice_id", "unknown_choice")
 		elif choices[resolution["choice_id"]]["checkpoint_after"] != resolution["terminal_checkpoint_id"]:
 			_add_error(errors, path + ".terminal_checkpoint_id", "choice_checkpoint_mismatch")
-		if not a10_choice_ids.has(resolution["a10_choice_id"]):
+		var a10_choice_id = resolution["a10_choice_id"]
+		var a10_resolution_id = resolution["a10_resolution_id"]
+		if not a10_choice_resolution_ids.has(a10_choice_id):
 			_add_error(errors, path + ".a10_choice_id", "unknown_a6_choice")
+		if a10_resolution_id == null:
+			if _has_authored_durable_effects(resolution):
+				_add_error(
+					errors,
+					path + ".a10_resolution_id",
+					"durable_effect_requires_a10_resolution",
+				)
+		elif typeof(a10_resolution_id) == TYPE_STRING:
+			if not a10_resolution_ids.has(a10_resolution_id):
+				_add_error(errors, path + ".a10_resolution_id", "unknown_a6_resolution")
+			elif (
+				a10_choice_resolution_ids.has(a10_choice_id)
+				and not a10_choice_resolution_ids[a10_choice_id].has(a10_resolution_id)
+			):
+				_add_error(errors, path + ".a10_resolution_id", "a10_resolution_choice_mismatch")
+			if claimed_a10_resolutions.has(a10_resolution_id):
+				_add_error(errors, path + ".a10_resolution_id", "a10_resolution_reused")
+			else:
+				claimed_a10_resolutions[a10_resolution_id] = resolution_id
 		if not checkpoints.has(resolution["terminal_checkpoint_id"]):
 			_add_error(errors, path + ".terminal_checkpoint_id", "unknown_checkpoint")
 		if resolution["next_beat_id"] != null and not beats.has(resolution["next_beat_id"]):
@@ -744,6 +787,14 @@ static func _validate_references(
 			_add_error(errors, path + ".parent_media_id", "unknown_media")
 		if item["thumbnail_media_id"] != null and not media.has(item["thumbnail_media_id"]):
 			_add_error(errors, path + ".thumbnail_media_id", "unknown_media")
+
+
+static func _has_authored_durable_effects(resolution: Dictionary) -> bool:
+	for field in AUTHORED_DURABLE_EFFECT_FIELDS:
+		var effects = resolution.get(field)
+		if typeof(effects) == TYPE_ARRAY and not effects.is_empty():
+			return true
+	return false
 
 
 static func _validate_choice_resolution_reciprocity(

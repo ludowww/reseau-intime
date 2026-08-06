@@ -129,6 +129,11 @@ func _ready() -> void:
 	var valid_result: Dictionary = AuthoredValidator.validate(valid_sequence)
 	_expect(valid_result["valid"], "03 valid authored fixture: %s" % [valid_result["errors"]])
 	_expect(valid_result["errors"].is_empty(), "04 valid fixture has no errors")
+	_expect(AuthoredContract.RESOLUTION_FIELDS.has("a10_resolution_id"), "a10 resolution field closed")
+	_expect(valid_sequence["resolutions"]["resolution_start"]["a10_resolution_id"] == null, "local resolution mapping accepted")
+	_expect(valid_sequence["resolutions"]["resolution_complete"]["a10_resolution_id"] == "a3_resolution_continue", "complete resolution mapping explicit")
+	_expect(valid_sequence["resolutions"]["resolution_stop"]["a10_resolution_id"] == "a3_resolution_stop", "stop resolution mapping explicit")
+	_expect(valid_sequence["beats"][0]["checkpoint_before"] == "sequence_entered", "initial checkpoint materialized")
 	_test_invalid_cases(valid_sequence, invalid_cases)
 	var execution := _valid_execution(valid_sequence)
 	_test_execution_contract(execution, valid_sequence)
@@ -167,6 +172,25 @@ func _apply_authored_mutation(candidate: Dictionary, mutation: String) -> void:
 			candidate["beats"][0]["next"]["beat_id"] = "missing_beat"
 		"set_unknown_choice_resolution":
 			candidate["beats"][6]["content"]["choices"][0]["resolution_id"] = "missing_resolution"
+		"remove_a10_resolution_id":
+			candidate["resolutions"]["resolution_complete"].erase("a10_resolution_id")
+		"set_a10_resolution_id_integer":
+			candidate["resolutions"]["resolution_complete"]["a10_resolution_id"] = 42
+		"set_unknown_a10_resolution_id":
+			candidate["resolutions"]["resolution_complete"]["a10_resolution_id"] = "missing_a3_resolution"
+		"set_incompatible_a10_resolution_choice":
+			var a6_definition: Dictionary = candidate["orchestration"]["a6_entry"]["definition"]
+			a6_definition["choix"][0]["resolution_ids"] = ["a3_resolution_continue"]
+			a6_definition["choix"].append({
+				"choix_id": "choice_other",
+				"formulation": "Synthetic alternate mapping",
+				"signal_emis": "synthetic_signal",
+				"resolution_ids": ["a3_resolution_stop"],
+			})
+		"reuse_a10_resolution_id":
+			candidate["resolutions"]["resolution_stop"]["a10_resolution_id"] = "a3_resolution_continue"
+		"clear_durable_a10_resolution_id":
+			candidate["resolutions"]["resolution_complete"]["a10_resolution_id"] = null
 		"set_choice_resolution_from_other_choice":
 			candidate["beats"][6]["content"]["choices"][0]["resolution_id"] = "resolution_stop"
 		"set_option_resolution_target_mismatch":
