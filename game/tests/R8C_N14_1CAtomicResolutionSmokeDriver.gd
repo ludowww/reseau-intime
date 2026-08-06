@@ -20,6 +20,7 @@ func _ready() -> void:
 	_test_success_replay_restore(sequence)
 	_test_closed_rejections(sequence)
 	_test_persisted_inconsistencies(sequence)
+	_test_restored_event_payload_rejections(sequence)
 	_test_preparation_failures(sequence)
 	_test_additional_negative_matrix(sequence)
 	_test_non_reentrant_guard(sequence)
@@ -191,6 +192,170 @@ func _test_persisted_inconsistencies(sequence: Dictionary) -> void:
 	)
 
 
+func _test_restored_event_payload_rejections(sequence: Dictionary) -> void:
+	var source := _activated_environment(sequence)
+	var envelope := _envelope(sequence)
+	var resolved_result: Dictionary = source["facade"].resolve_scene(
+		INSTANCE_ID,
+		"a10_choice_commit",
+		"a10_resolution_commit",
+		_context_with_envelope(envelope),
+	)
+	_expect(resolved_result["ok"], "resolved snapshot source built for restored payload rejection matrix")
+	var resolved: Dictionary = source["facade"].save_state()
+	var event_id: String = resolved["scene_registry"][0]["resolution_receipt"]["event_id"]
+	var cases: Array = []
+	var falsified: Dictionary
+
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["facts"] = [42]
+	cases.append([falsified, "scalar facts entry"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["knowledge"] = [42]
+	cases.append([falsified, "scalar knowledge entry"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["traces"] = [42]
+	cases.append([falsified, "scalar traces entry"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["promises"] = [42]
+	cases.append([falsified, "scalar promises entry"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["obligations"] = [42]
+	cases.append([falsified, "scalar obligations entry"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["media_deliveries"] = [42]
+	cases.append([falsified, "scalar media entry"])
+
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["facts"][0]["fact"]["unexpected"] = true
+	cases.append([falsified, "unknown nested fact field"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["knowledge"][0]["unexpected"] = true
+	cases.append([falsified, "unknown knowledge field"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["traces"][0]["unexpected"] = true
+	cases.append([falsified, "unknown trace field"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["promises"][0]["unexpected"] = true
+	cases.append([falsified, "unknown promise field"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["obligations"][0]["unexpected"] = true
+	cases.append([falsified, "unknown obligation field"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["media_deliveries"][0]["unexpected"] = true
+	cases.append([falsified, "unknown media field"])
+
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["knowledge"][0]["effect"] = "UNKNOWN"
+	cases.append([falsified, "unknown knowledge effect"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["traces"][0]["effect"] = "UNKNOWN"
+	cases.append([falsified, "unknown trace effect"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["promises"][0]["effect"] = "UNKNOWN"
+	cases.append([falsified, "unknown promise effect"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["obligations"][0]["effect"] = "UNKNOWN"
+	cases.append([falsified, "unknown obligation effect"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["media_deliveries"][0]["effect"] = "UNKNOWN"
+	cases.append([falsified, "unknown media effect"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["traces"][0]["effect"] = "WITHDRAW"
+	cases.append([falsified, "trace shape incompatible with effect"])
+
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["facts"][0]["event_key"] = ""
+	cases.append([falsified, "empty event_key"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["knowledge"][0]["event_key"] = " spaced_event_key "
+	cases.append([falsified, "event_key with surrounding spaces"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["traces"][0]["event_key"] = "A_NOT_DURABLE_KEY"
+	cases.append([falsified, "event_key outside durable identifier alphabet"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["promises"][0]["event_key"] = "x".repeat(97)
+	cases.append([falsified, "event_key above durable identifier limit"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["facts"].append(
+		falsified["narrative_state"]["evenements"][event_id]["payload"]["facts"][0].duplicate(true)
+	)
+	cases.append([falsified, "duplicate event_key within category"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["knowledge"][0]["event_key"] = "n14_1c_fact"
+	cases.append([falsified, "duplicate event_key across categories"])
+
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["knowledge"][0].erase("knowledge_id")
+	cases.append([falsified, "missing mandatory business identifier"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["knowledge"][0]["holder_ids"] = "player"
+	cases.append([falsified, "identifier list with wrong type"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["knowledge"][0]["holder_ids"] = ["player", "player"]
+	cases.append([falsified, "duplicate identifier in list"])
+	falsified = resolved.duplicate(true)
+	var duplicate_business_entry: Dictionary = falsified["narrative_state"]["evenements"][event_id]["payload"]["knowledge"][0].duplicate(true)
+	duplicate_business_entry["event_key"] = "n14_1c_knowledge_second_operation"
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["knowledge"].append(duplicate_business_entry)
+	cases.append([falsified, "duplicate business identifier within category"])
+
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["facts"][0]["scope"] = "UNKNOWN"
+	cases.append([falsified, "unknown fact scope"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["facts"][0].erase("personnage_id")
+	cases.append([falsified, "RELATION without personnage_id"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["facts"][0]["scope"] = "RELATION_CENTRALE"
+	cases.append([falsified, "RELATION_CENTRALE with personnage_id"])
+
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["promises"][0]["effect"] = "NONE"
+	cases.append([falsified, "NONE promise effect"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["obligations"][0]["effect"] = "NONE"
+	cases.append([falsified, "NONE obligation effect"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["media_deliveries"][0]["effect"] = "NONE"
+	cases.append([falsified, "NONE media effect"])
+
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["media_deliveries"][0] = {
+		"event_key": "n14_1c_media",
+		"effect": "GRANT_ACCESS",
+		"media_id": "n14_1c_media",
+		"diegetic_status": "CREATED",
+		"fictional_audience_ids": [],
+		"gallery_status": "UNKNOWN",
+	}
+	cases.append([falsified, "unknown gallery_status"])
+	falsified = resolved.duplicate(true)
+	falsified["narrative_state"]["evenements"][event_id]["payload"]["media_deliveries"][0] = {
+		"event_key": "n14_1c_media",
+		"effect": "GRANT_ACCESS",
+		"media_id": "n14_1c_media",
+		"diegetic_status": "UNKNOWN",
+		"fictional_audience_ids": [],
+		"gallery_status": "AVAILABLE",
+	}
+	cases.append([falsified, "unknown diegetic_status"])
+
+	for case in cases:
+		_assert_payload_restore_rejection(sequence, case[0], case[1])
+
+	var invalid_event: Dictionary = resolved["narrative_state"]["evenements"][event_id].duplicate(true)
+	invalid_event["payload"]["facts"] = [42]
+	_expect(ResolutionEvent.event_keys(invalid_event).is_empty(), "event_keys safely rejects scalar payload entry")
+	var empty_event: Dictionary = resolved["narrative_state"]["evenements"][event_id].duplicate(true)
+	for category in CATEGORIES:
+		empty_event["payload"][category] = []
+	_expect(
+		ResolutionEvent.validate(empty_event) and ResolutionEvent.event_keys(empty_event).is_empty(),
+		"globally empty event payload policy preserved",
+	)
+
+
 func _test_preparation_failures(sequence: Dictionary) -> void:
 	var env := _activated_environment(sequence)
 	var envelope := _envelope(sequence)
@@ -337,6 +502,21 @@ func _assert_restore_rejection(sequence: Dictionary, snapshot: Dictionary, label
 	var before: Dictionary = facade.save_state()
 	var result: Dictionary = facade.restore_state(snapshot)
 	_expect(not result["ok"] and facade.save_state() == before, label + " rejected before publication")
+
+
+func _assert_payload_restore_rejection(sequence: Dictionary, snapshot: Dictionary, label: String) -> void:
+	var facade = _new_facade(sequence)
+	var before: Dictionary = facade.save_state()
+	var narrative_before: Dictionary = before["narrative_state"].duplicate(true)
+	var ledger_before: Dictionary = narrative_before["evenements"].duplicate(true)
+	var registry_before: Array = before["scene_registry"].duplicate(true)
+	var result: Dictionary = facade.restore_state(snapshot)
+	var after: Dictionary = facade.save_state()
+	_expect(not result["ok"], label + " restore_state rejected")
+	_expect(after["narrative_state"] == narrative_before, label + " narrative target unchanged")
+	_expect(after["narrative_state"]["evenements"] == ledger_before, label + " ledger unchanged and no event added")
+	_expect(after["scene_registry"] == registry_before, label + " A5 registry and instances unchanged")
+	_expect(after == before, label + " complete target state unchanged")
 
 
 func _assert_restored_replay_rejection(

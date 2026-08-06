@@ -151,6 +151,80 @@ class R8CN141CAtomicResolutionStaticTests(unittest.TestCase):
         ]:
             self.assertNotIn(forbidden.casefold(), production.casefold(), forbidden)
 
+    def test_event_payload_uses_six_specialized_closed_effect_validators(self):
+        source = self.read(EVENT)
+        for validator in [
+            "_validate_facts", "_validate_knowledge", "_validate_traces",
+            "_validate_promises", "_validate_obligations", "_validate_media_deliveries",
+        ]:
+            self.assertIn(f"static func {validator}", source)
+            self.assertIn(f'{validator}(payload["', source)
+        for fields in [
+            "FACT_RELATION_FIELDS", "FACT_CENTRAL_FIELDS", "KNOWLEDGE_FIELDS",
+            "TRACE_CREATE_FIELDS", "TRACE_ACCESS_FIELDS", "TRACE_TERMINAL_FIELDS",
+            "PROMISE_CREATE_FIELDS", "PROMISE_TERMINAL_FIELDS",
+            "OBLIGATION_CREATE_FIELDS", "OBLIGATION_TERMINAL_FIELDS",
+            "MEDIA_CREATE_FIELDS", "MEDIA_GRANT_FIELDS", "MEDIA_TERMINAL_FIELDS",
+        ]:
+            self.assertIn(f"const {fields} :=", source)
+        for effect in [
+            "ACQUIRE", "CREATE", "GRANT_ACCESS", "REVOKE_ACCESS", "WITHDRAW",
+            "PAY", "FAIL", "CREATE_DUE", "CREATE_DIEGETIC",
+        ]:
+            self.assertIn(f'"{effect}"', source)
+        self.assertNotIn('"NONE"', source)
+
+    def test_event_payload_enforces_global_and_business_uniqueness_and_durable_ids(self):
+        source = self.read(EVENT)
+        self.assertIn("const MAX_DURABLE_IDENTIFIER_LENGTH := 96", source)
+        self.assertIn("var seen_event_keys := {}", source)
+        self.assertGreaterEqual(source.count("var seen_business_ids := {}"), 6)
+        registration = source[source.index("static func _register_identifiers") : source.index("static func _valid_identifier_array")]
+        self.assertIn("seen_event_keys.has(event_key)", registration)
+        self.assertIn("seen_business_ids.has(business_id)", registration)
+        identifier = source[source.index("static func _valid_durable_identifier") : source.index("static func _valid_durable_string")]
+        self.assertIn('"abcdefghijklmnopqrstuvwxyz0123456789_"', identifier)
+        self.assertIn("value.length() > MAX_DURABLE_IDENTIFIER_LENGTH", identifier)
+        self.assertIn('part.begins_with("j")', identifier)
+        self.assertIn('part == "chapter"', identifier)
+
+    def test_event_keys_is_safe_for_invalid_payload_entries(self):
+        source = self.read(EVENT)
+        event_keys = source[source.index("static func event_keys") : source.index("static func _validate_facts")]
+        self.assertLess(event_keys.index("if not validate(event):"), event_keys.index("for category in PAYLOAD_FIELDS:"))
+        self.assertIn("return keys", event_keys)
+        self.assertIn('keys.append(effect["event_key"])', event_keys)
+        self.assertNotIn('.get("event_key")', event_keys)
+
+    def test_smoke_falsifies_and_rejects_closed_restored_event_payloads(self):
+        smoke = self.read(SMOKE)
+        required = [
+            "scalar facts entry", "scalar knowledge entry", "scalar traces entry",
+            "scalar promises entry", "scalar obligations entry", "scalar media entry",
+            "unknown nested fact field", "unknown knowledge field", "unknown trace field",
+            "unknown promise field", "unknown obligation field", "unknown media field",
+            "unknown knowledge effect", "unknown trace effect", "unknown promise effect",
+            "unknown obligation effect", "unknown media effect", "trace shape incompatible with effect",
+            "empty event_key", "event_key with surrounding spaces",
+            "duplicate event_key within category", "duplicate event_key across categories",
+            "missing mandatory business identifier", "identifier list with wrong type",
+            "duplicate identifier in list", "unknown fact scope", "RELATION without personnage_id",
+            "RELATION_CENTRALE with personnage_id", "NONE promise effect", "NONE obligation effect",
+            "NONE media effect", "unknown gallery_status", "unknown diegetic_status",
+            "event_keys safely rejects scalar payload entry", "globally empty event payload policy preserved",
+        ]
+        self.assertEqual([], [token for token in required if token not in smoke])
+        helper = smoke[
+            smoke.index("func _assert_payload_restore_rejection") :
+            smoke.index("func _assert_restored_replay_rejection")
+        ]
+        for token in [
+            "facade.restore_state(snapshot)", "narrative target unchanged",
+            "ledger unchanged and no event added", "A5 registry and instances unchanged",
+            "complete target state unchanged",
+        ]:
+            self.assertIn(token, helper)
+
     def test_smoke_names_positive_negative_atomicity_and_replay_controls(self):
         smoke = self.read(SMOKE)
         required = [

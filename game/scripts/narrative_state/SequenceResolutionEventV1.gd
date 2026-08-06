@@ -25,6 +25,29 @@ const PAYLOAD_FIELDS := [
 	"obligations",
 	"media_deliveries",
 ]
+const FACT_RELATION_FIELDS := ["event_key", "scope", "personnage_id", "fact"]
+const FACT_CENTRAL_FIELDS := ["event_key", "scope", "fact"]
+const KNOWLEDGE_FIELDS := ["event_key", "effect", "knowledge_id", "subject_id", "holder_ids"]
+const TRACE_CREATE_FIELDS := [
+	"event_key", "effect", "trace_id", "creator_id", "audience_ids", "controller_ids", "accessible_to_ids",
+]
+const TRACE_ACCESS_FIELDS := ["event_key", "effect", "trace_id", "accessible_to_ids"]
+const TRACE_TERMINAL_FIELDS := ["event_key", "effect", "trace_id"]
+const PROMISE_CREATE_FIELDS := [
+	"event_key", "effect", "promise_id", "author_id", "beneficiary_ids", "content_ref",
+]
+const PROMISE_TERMINAL_FIELDS := ["event_key", "effect", "promise_id"]
+const OBLIGATION_CREATE_FIELDS := [
+	"event_key", "effect", "obligation_id", "debtor_id", "beneficiary_ids", "kind",
+]
+const OBLIGATION_TERMINAL_FIELDS := ["event_key", "effect", "obligation_id"]
+const MEDIA_CREATE_FIELDS := ["event_key", "effect", "media_id", "fictional_audience_ids"]
+const MEDIA_GRANT_FIELDS := [
+	"event_key", "effect", "media_id", "diegetic_status", "fictional_audience_ids", "gallery_status",
+]
+const MEDIA_TERMINAL_FIELDS := ["event_key", "effect", "media_id"]
+const FACT_FIELDS := ["fait_id", "nature", "recu_par", "permission_future", "formulee_par"]
+const MAX_DURABLE_IDENTIFIER_LENGTH := 96
 const MAX_STRING_LENGTH := 512
 
 
@@ -87,18 +110,272 @@ static func validate(value) -> bool:
 	var payload = event["payload"]
 	if typeof(payload) != TYPE_DICTIONARY or not _exact(payload, PAYLOAD_FIELDS):
 		return false
+	if not _structural_value(payload):
+		return false
 	for category in PAYLOAD_FIELDS:
-		if typeof(payload[category]) != TYPE_ARRAY or not _structural_value(payload[category]):
+		if typeof(payload[category]) != TYPE_ARRAY:
 			return false
-	return true
+	var seen_event_keys := {}
+	return (
+		_validate_facts(payload["facts"], seen_event_keys)
+		and _validate_knowledge(payload["knowledge"], seen_event_keys)
+		and _validate_traces(payload["traces"], seen_event_keys)
+		and _validate_promises(payload["promises"], seen_event_keys)
+		and _validate_obligations(payload["obligations"], seen_event_keys)
+		and _validate_media_deliveries(payload["media_deliveries"], seen_event_keys)
+	)
 
 
 static func event_keys(event: Dictionary) -> Array:
 	var keys: Array = []
+	if not validate(event):
+		return keys
 	for category in PAYLOAD_FIELDS:
 		for effect in event["payload"][category]:
-			keys.append(effect.get("event_key"))
+			keys.append(effect["event_key"])
 	return keys
+
+
+static func _validate_facts(entries: Array, seen_event_keys: Dictionary) -> bool:
+	var seen_business_ids := {}
+	for value in entries:
+		if typeof(value) != TYPE_DICTIONARY:
+			return false
+		var entry: Dictionary = value
+		var fields: Array = []
+		if entry.get("scope") == "RELATION":
+			fields = FACT_RELATION_FIELDS
+		elif entry.get("scope") == "RELATION_CENTRALE":
+			fields = FACT_CENTRAL_FIELDS
+		if fields.is_empty() or not _exact(entry, fields):
+			return false
+		var fact = entry["fact"]
+		if typeof(fact) != TYPE_DICTIONARY:
+			return false
+		if not fact.has("fait_id") or not _allowed(fact, FACT_FIELDS):
+			return false
+		if not _register_identifiers(
+			entry["event_key"], fact["fait_id"], seen_event_keys, seen_business_ids
+		):
+			return false
+		if entry["scope"] == "RELATION" and not _valid_durable_identifier(entry["personnage_id"]):
+			return false
+		for field in fact:
+			if field == "permission_future":
+				if typeof(fact[field]) != TYPE_BOOL:
+					return false
+			elif field == "fait_id":
+				if not _valid_durable_identifier(fact[field]):
+					return false
+			elif not _valid_durable_string(fact[field]):
+				return false
+	return true
+
+
+static func _validate_knowledge(entries: Array, seen_event_keys: Dictionary) -> bool:
+	var seen_business_ids := {}
+	for value in entries:
+		if typeof(value) != TYPE_DICTIONARY:
+			return false
+		var entry: Dictionary = value
+		if entry.get("effect") != "ACQUIRE" or not _exact(entry, KNOWLEDGE_FIELDS):
+			return false
+		if not _register_identifiers(
+			entry["event_key"], entry["knowledge_id"], seen_event_keys, seen_business_ids
+		):
+			return false
+		if (
+			not _valid_durable_identifier(entry["subject_id"])
+			or not _valid_identifier_array(entry["holder_ids"], true)
+		):
+			return false
+	return true
+
+
+static func _validate_traces(entries: Array, seen_event_keys: Dictionary) -> bool:
+	var seen_business_ids := {}
+	for value in entries:
+		if typeof(value) != TYPE_DICTIONARY:
+			return false
+		var entry: Dictionary = value
+		var effect = entry.get("effect")
+		var fields: Array = []
+		if effect == "CREATE":
+			fields = TRACE_CREATE_FIELDS
+		elif effect in ["GRANT_ACCESS", "REVOKE_ACCESS"]:
+			fields = TRACE_ACCESS_FIELDS
+		elif effect == "WITHDRAW":
+			fields = TRACE_TERMINAL_FIELDS
+		if fields.is_empty() or not _exact(entry, fields):
+			return false
+		if not _register_identifiers(
+			entry["event_key"], entry["trace_id"], seen_event_keys, seen_business_ids
+		):
+			return false
+		if effect == "CREATE":
+			if not _valid_durable_identifier(entry["creator_id"]):
+				return false
+			for field in ["audience_ids", "controller_ids", "accessible_to_ids"]:
+				if not _valid_identifier_array(entry[field], false):
+					return false
+		elif effect in ["GRANT_ACCESS", "REVOKE_ACCESS"]:
+			if not _valid_identifier_array(entry["accessible_to_ids"], true):
+				return false
+	return true
+
+
+static func _validate_promises(entries: Array, seen_event_keys: Dictionary) -> bool:
+	var seen_business_ids := {}
+	for value in entries:
+		if typeof(value) != TYPE_DICTIONARY:
+			return false
+		var entry: Dictionary = value
+		var effect = entry.get("effect")
+		var fields: Array = []
+		if effect == "CREATE":
+			fields = PROMISE_CREATE_FIELDS
+		elif effect in ["PAY", "FAIL"]:
+			fields = PROMISE_TERMINAL_FIELDS
+		if fields.is_empty() or not _exact(entry, fields):
+			return false
+		if not _register_identifiers(
+			entry["event_key"], entry["promise_id"], seen_event_keys, seen_business_ids
+		):
+			return false
+		if effect == "CREATE" and (
+			not _valid_durable_identifier(entry["author_id"])
+			or not _valid_identifier_array(entry["beneficiary_ids"], true)
+			or not _valid_durable_string(entry["content_ref"])
+		):
+			return false
+	return true
+
+
+static func _validate_obligations(entries: Array, seen_event_keys: Dictionary) -> bool:
+	var seen_business_ids := {}
+	for value in entries:
+		if typeof(value) != TYPE_DICTIONARY:
+			return false
+		var entry: Dictionary = value
+		var effect = entry.get("effect")
+		var fields: Array = []
+		if effect == "CREATE_DUE":
+			fields = OBLIGATION_CREATE_FIELDS
+		elif effect in ["PAY", "FAIL"]:
+			fields = OBLIGATION_TERMINAL_FIELDS
+		if fields.is_empty() or not _exact(entry, fields):
+			return false
+		if not _register_identifiers(
+			entry["event_key"], entry["obligation_id"], seen_event_keys, seen_business_ids
+		):
+			return false
+		if effect == "CREATE_DUE" and (
+			not _valid_durable_identifier(entry["debtor_id"])
+			or not _valid_identifier_array(entry["beneficiary_ids"], true)
+			or not _valid_durable_string(entry["kind"])
+		):
+			return false
+	return true
+
+
+static func _validate_media_deliveries(entries: Array, seen_event_keys: Dictionary) -> bool:
+	var seen_business_ids := {}
+	for value in entries:
+		if typeof(value) != TYPE_DICTIONARY:
+			return false
+		var entry: Dictionary = value
+		var effect = entry.get("effect")
+		var fields: Array = []
+		if effect == "CREATE_DIEGETIC":
+			fields = MEDIA_CREATE_FIELDS
+		elif effect == "GRANT_ACCESS":
+			fields = MEDIA_GRANT_FIELDS
+		elif effect in ["REVOKE_ACCESS", "WITHDRAW"]:
+			fields = MEDIA_TERMINAL_FIELDS
+		if fields.is_empty() or not _exact(entry, fields):
+			return false
+		if not _register_identifiers(
+			entry["event_key"], entry["media_id"], seen_event_keys, seen_business_ids
+		):
+			return false
+		if effect in ["CREATE_DIEGETIC", "GRANT_ACCESS"] and not _valid_identifier_array(
+			entry["fictional_audience_ids"], false
+		):
+			return false
+		if effect == "GRANT_ACCESS" and (
+			entry["diegetic_status"] not in ["CREATED", "NOT_APPLICABLE"]
+			or entry["gallery_status"] not in ["HIDDEN", "AVAILABLE"]
+		):
+			return false
+	return true
+
+
+static func _register_identifiers(
+	event_key,
+	business_id,
+	seen_event_keys: Dictionary,
+	seen_business_ids: Dictionary
+) -> bool:
+	if (
+		not _valid_durable_identifier(event_key)
+		or seen_event_keys.has(event_key)
+		or not _valid_durable_identifier(business_id)
+		or seen_business_ids.has(business_id)
+	):
+		return false
+	seen_event_keys[event_key] = true
+	seen_business_ids[business_id] = true
+	return true
+
+
+static func _valid_identifier_array(value, require_non_empty: bool) -> bool:
+	if typeof(value) != TYPE_ARRAY or (require_non_empty and value.is_empty()):
+		return false
+	var seen := {}
+	for identifier in value:
+		if not _valid_durable_identifier(identifier) or seen.has(identifier):
+			return false
+		seen[identifier] = true
+	return true
+
+
+static func _valid_durable_identifier(value) -> bool:
+	if (
+		typeof(value) != TYPE_STRING
+		or value.is_empty()
+		or value.length() > MAX_DURABLE_IDENTIFIER_LENGTH
+		or value != value.strip_edges()
+	):
+		return false
+	for index in value.length():
+		if value.substr(index, 1) not in "abcdefghijklmnopqrstuvwxyz0123456789_":
+			return false
+	var parts: PackedStringArray = value.to_lower().split("_", false)
+	for index in parts.size():
+		var part: String = parts[index]
+		if part.length() == 3 and part.begins_with("j") and part.substr(1, 2).is_valid_int():
+			return false
+		if part == "chapter" and index + 1 < parts.size():
+			var number: String = parts[index + 1]
+			if number.length() == 2 and number.is_valid_int():
+				return false
+	return true
+
+
+static func _valid_durable_string(value) -> bool:
+	return (
+		typeof(value) == TYPE_STRING
+		and not value.is_empty()
+		and value == value.strip_edges()
+		and value.length() <= MAX_STRING_LENGTH
+	)
+
+
+static func _allowed(value: Dictionary, fields: Array) -> bool:
+	for field in value:
+		if field not in fields:
+			return false
+	return true
 
 
 static func structures_identical(left, right) -> bool:
