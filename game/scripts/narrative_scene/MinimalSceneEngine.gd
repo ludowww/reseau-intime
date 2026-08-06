@@ -587,7 +587,7 @@ func _evaluer_unicite(
 	var scene_id: String = definition["scene_id"]
 	var instance_id: String = contexte.get("instance_id", "")
 	var transaction_id_reprise: String = contexte.get("_transaction_id_reprise", "")
-	var disponible := not _registre.scene_unique_connue(scene_id, instance_id)
+	var disponible: bool = not _registre.scene_unique_connue(scene_id, instance_id)
 	if disponible:
 		for evenement in snapshot["evenements"].values():
 			var provenance = evenement.get("provenance", {})

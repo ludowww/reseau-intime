@@ -12,12 +12,16 @@ const CoordinateurA8Modele := preload(
 const CoordinateurA9Modele := preload(
 	"res://scripts/narrative_scene/ControlledNarrativeSlotCompositionCoordinator.gd"
 )
+const CoordinateurResolutionModele := preload(
+	"res://scripts/narrative_scene/SequenceResolutionCommitCoordinator.gd"
+)
 
 var _bibliotheque
 var _moteur
 var _etat_narratif
 var _coordinateur_a8
 var _coordinateur_a9
+var _coordinateur_resolution
 var _reprises_activation: Dictionary = {}
 
 
@@ -178,6 +182,25 @@ func resolve_scene(
 	)
 	if definition.is_empty():
 		return _echec_resolution(instance_id)
+	if context.has("sequence_resolution"):
+		var resolution_sequence: Dictionary = _coordinateur_resolution.resolve(
+			_moteur,
+			_etat_narratif,
+			instance,
+			definition,
+			choice_id,
+			resolution_id,
+			context,
+		)
+		return {
+			"ok": resolution_sequence["ok"],
+			"erreur": resolution_sequence["erreur"],
+			"instance_id": instance_id,
+			"state": resolution_sequence["state"],
+			"transaction_status": resolution_sequence["transaction_status"],
+			"idempotent": resolution_sequence["idempotent"],
+			"statut": resolution_sequence["statut"],
+		}
 	var contexte_resolution: Dictionary = context.duplicate(true)
 	contexte_resolution["instance_id"] = instance_id
 	var resolution: Dictionary = _moteur.resoudre(
@@ -217,12 +240,14 @@ func _installer_dependances(moteur, etat_narratif) -> bool:
 	var coordinateur_a7 = CoordinateurA7Modele.creer(_bibliotheque, moteur)
 	var coordinateur_a8 = CoordinateurA8Modele.creer(_bibliotheque, moteur, coordinateur_a7)
 	var coordinateur_a9 = CoordinateurA9Modele.creer(coordinateur_a8)
+	var coordinateur_resolution = CoordinateurResolutionModele.new()
 	if coordinateur_a7 == null or coordinateur_a8 == null or coordinateur_a9 == null:
 		return false
 	_moteur = moteur
 	_etat_narratif = etat_narratif
 	_coordinateur_a8 = coordinateur_a8
 	_coordinateur_a9 = coordinateur_a9
+	_coordinateur_resolution = coordinateur_resolution
 	return true
 
 
