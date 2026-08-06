@@ -173,6 +173,12 @@ func receive_ack(receipt) -> Dictionary:
 			"beat_id": beat["beat_id"],
 			"allowed_choice_ids": allowed_choice_ids,
 		}
+	elif beat["type"] == "PHYSICAL_BEAT":
+		_execution["pending_player_input"] = {
+			"kind": "CONTINUE",
+			"beat_id": beat["beat_id"],
+			"allowed_choice_ids": beat["content"]["withdrawal_choice_ids"].duplicate(),
+		}
 	else:
 		_execution["pending_player_input"] = {
 			"kind": "CONTINUE",
@@ -192,21 +198,36 @@ func receive_command(command) -> Dictionary:
 	var validation := ProjectionContracts.validate_projection_command(command)
 	if not validation["valid"]:
 		return _result(false, "INVALID_COMMAND")
-	if command["instance_id"] != _execution["instance_id"] or command["beat_id"] != _execution["current_beat_id"]:
+	if command["instance_id"] != _execution["instance_id"]:
 		return _result(false, "COMMAND_BEAT_MISMATCH")
 	if command["choice_id"] != null and command["choice_id"] in _execution["consumed_choice_ids"]:
-		return _result(true, null, true)
+		if command["beat_id"] == _execution["current_beat_id"] or _is_consumed_withdrawal_replay(command):
+			return _result(true, null, true)
+		return _result(false, "COMMAND_BEAT_MISMATCH")
+	if command["beat_id"] != _execution["current_beat_id"]:
+		return _result(false, "COMMAND_BEAT_MISMATCH")
 	if _execution["execution_status"] != "WAITING_FOR_PLAYER":
 		return _result(false, "EXECUTION_NOT_WAITING_FOR_COMMAND")
 	var pending: Dictionary = _execution["pending_player_input"]
-	if command["kind"] != pending["kind"]:
+	var is_withdrawal: bool = (
+		command["kind"] == "WITHDRAW"
+		and pending["kind"] == "CONTINUE"
+		and current_beat()["type"] == "PHYSICAL_BEAT"
+	)
+	if command["kind"] != pending["kind"] and not is_withdrawal:
 		return _result(false, "COMMAND_KIND_MISMATCH")
-	var selected_choice := {}
-	if command["kind"] == "SELECT_CHOICE":
+	var selected_choice_context := {}
+	if command["kind"] in ["SELECT_CHOICE", "WITHDRAW"]:
 		if command["choice_id"] not in pending["allowed_choice_ids"]:
 			return _result(false, "UNKNOWN_CHOICE")
-		selected_choice = _choice_by_id(current_beat(), command["choice_id"])
-		if selected_choice.is_empty():
+		selected_choice_context = _choice_with_owner_by_id(command["choice_id"])
+		if (
+			selected_choice_context.is_empty()
+			or (
+				command["kind"] == "SELECT_CHOICE"
+				and selected_choice_context["owner_beat"]["beat_id"] != current_beat()["beat_id"]
+			)
+		):
 			return _result(false, "UNKNOWN_CHOICE")
 	var submitted = _projection_port.submit(command)
 	if not ProjectionContracts.validate_projection_result(submitted)["valid"] or not submitted["accepted"]:
@@ -216,14 +237,8 @@ func receive_command(command) -> Dictionary:
 	if not ProjectionContracts.validate_projection_result(closed)["valid"] or not closed["accepted"]:
 		return _result(false, "PORT_CLOSE_REFUSED")
 	_execution["pending_player_input"] = null
-	if command["kind"] == "SELECT_CHOICE":
-		_execution["consumed_choice_ids"].append(command["choice_id"])
-		var resolution: Dictionary = _authored_sequence["resolutions"][selected_choice["resolution_id"]]
-		if resolution["a10_resolution_id"] != null:
-			_execution["selected_resolution_id"] = resolution["resolution_id"]
-			_execution["execution_status"] = "RESOLUTION_READY"
-		else:
-			_advance_to(selected_choice["next_beat_id"])
+	if command["kind"] in ["SELECT_CHOICE", "WITHDRAW"]:
+		_consume_choice_selection(selected_choice_context)
 	elif current_beat()["type"] == "RETURN":
 		_complete_execution()
 	else:
@@ -357,6 +372,46 @@ func _choice_by_id(beat: Dictionary, choice_id: String) -> Dictionary:
 		if choice["choice_id"] == choice_id:
 			return choice
 	return {}
+
+
+func _choice_with_owner_by_id(choice_id: String) -> Dictionary:
+	for beat in _authored_sequence["beats"]:
+		var choice := _choice_by_id(beat, choice_id)
+		if not choice.is_empty():
+			return {"choice": choice, "owner_beat": beat}
+	return {}
+
+
+func _consume_choice_selection(choice_context: Dictionary) -> void:
+	var choice: Dictionary = choice_context["choice"]
+	var owner_beat: Dictionary = choice_context["owner_beat"]
+	if choice["choice_id"] not in _execution["consumed_choice_ids"]:
+		_execution["consumed_choice_ids"].append(choice["choice_id"])
+	_execution["current_beat_id"] = owner_beat["beat_id"]
+	_reach_checkpoint(owner_beat["checkpoint_after"])
+	var resolution: Dictionary = _authored_sequence["resolutions"][choice["resolution_id"]]
+	if resolution["a10_resolution_id"] != null:
+		_execution["selected_resolution_id"] = resolution["resolution_id"]
+		_execution["execution_status"] = "RESOLUTION_READY"
+	else:
+		_advance_to(choice["next_beat_id"])
+
+
+func _is_consumed_withdrawal_replay(command: Dictionary) -> bool:
+	if command["kind"] != "WITHDRAW" or _execution["execution_status"] != "RESOLUTION_READY":
+		return false
+	var physical_beat := _beat_by_id(command["beat_id"])
+	if (
+		physical_beat.is_empty()
+		or physical_beat["type"] != "PHYSICAL_BEAT"
+		or command["choice_id"] not in physical_beat["content"]["withdrawal_choice_ids"]
+	):
+		return false
+	var choice_context := _choice_with_owner_by_id(command["choice_id"])
+	if choice_context.is_empty() or choice_context["owner_beat"]["beat_id"] != _execution["current_beat_id"]:
+		return false
+	var resolution: Dictionary = _authored_sequence["resolutions"][choice_context["choice"]["resolution_id"]]
+	return resolution["resolution_id"] == _execution["selected_resolution_id"]
 
 
 func _presentation_id_for_beat(beat: Dictionary) -> String:

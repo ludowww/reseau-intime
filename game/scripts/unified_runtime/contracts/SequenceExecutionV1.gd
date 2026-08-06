@@ -243,8 +243,18 @@ static func _validate_pending_input(
 		"execution.pending_player_input.allowed_choice_ids",
 		errors,
 	)
+	var physical_withdrawal_pending := false
+	if index["beats"].has(value["beat_id"]):
+		var input_beat: Dictionary = index["beats"][value["beat_id"]]
+		physical_withdrawal_pending = input_beat["type"] == "PHYSICAL_BEAT" and value["kind"] == "CONTINUE"
+		if physical_withdrawal_pending and allowed != input_beat["content"]["withdrawal_choice_ids"]:
+			_add_error(errors, "execution.pending_player_input.allowed_choice_ids", "physical_withdrawal_set_mismatch")
 	for choice_id in allowed:
-		if index["choices"].has(choice_id) and index["choices"][choice_id]["beat_id"] != value["beat_id"]:
+		if (
+			not physical_withdrawal_pending
+			and index["choices"].has(choice_id)
+			and index["choices"][choice_id]["beat_id"] != value["beat_id"]
+		):
 			_add_error(errors, "execution.pending_player_input.allowed_choice_ids", "choice_from_other_beat_%s" % choice_id)
 		if choice_id in consumed_choices:
 			_add_error(errors, "execution.pending_player_input.allowed_choice_ids", "already_consumed_%s" % choice_id)
