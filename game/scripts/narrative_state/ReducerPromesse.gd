@@ -36,7 +36,11 @@ static func _preparer_effet(candidat: Dictionary, effet, provenance: Dictionary)
 static func _creer(candidat: Dictionary, effet: Dictionary, provenance: Dictionary) -> Dictionary:
 	if not _champs_exacts(effet, CREATE_FIELDS):
 		return _rejet("forme CREATE promesse invalide")
-	if not _identifiant_valide(effet["promise_id"]) or not _identifiant_valide(effet["author_id"]):
+	if (
+		not _identifiant_valide(effet["event_key"])
+		or not _identifiant_valide(effet["promise_id"])
+		or not _identifiant_valide(effet["author_id"])
+	):
 		return _rejet("identifiant promesse invalide")
 	if not _ids_valides(effet["beneficiary_ids"], true) or not _identifiant_valide(effet["content_ref"]):
 		return _rejet("contenu promesse invalide")
@@ -60,7 +64,11 @@ static func _creer(candidat: Dictionary, effet: Dictionary, provenance: Dictiona
 
 
 static func _terminaliser(candidat: Dictionary, effet: Dictionary, provenance: Dictionary) -> Dictionary:
-	if not _champs_exacts(effet, TERMINAL_FIELDS) or not _identifiant_valide(effet["promise_id"]):
+	if (
+		not _champs_exacts(effet, TERMINAL_FIELDS)
+		or not _identifiant_valide(effet["event_key"])
+		or not _identifiant_valide(effet["promise_id"])
+	):
 		return _rejet("forme terminale promesse invalide")
 	var registre: Dictionary = candidat["promesses"]
 	if not registre.has(effet["promise_id"]):
@@ -88,7 +96,12 @@ static func _champs_exacts(value: Dictionary, fields: Array) -> bool:
 
 
 static func _identifiant_valide(value) -> bool:
-	return typeof(value) == TYPE_STRING and not value.strip_edges().is_empty() and value.length() <= 512
+	return (
+		typeof(value) == TYPE_STRING
+		and not value.is_empty()
+		and value == value.strip_edges()
+		and value.length() <= 512
+	)
 
 
 static func _ids_valides(value, require_non_empty: bool) -> bool:

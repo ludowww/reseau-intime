@@ -13,6 +13,7 @@ const CENTRAL_FACT_FIELDS := ["event_key", "scope", "fact"]
 const FACT_PROVENANCE_FIELDS := [
 	"source_scene_id", "source_scene_instance_id", "source_resolution_id", "moment_diegetique",
 ]
+const MAX_STRING_LENGTH := 512
 
 
 static func preparer_mutations(etat_candidat: Dictionary, evenement: Dictionary) -> Dictionary:
@@ -48,22 +49,26 @@ static func _preparer_fait(candidat: Dictionary, payload, provenance: Dictionary
 	var attendu := RELATION_FACT_FIELDS if scope == "RELATION" else CENTRAL_FACT_FIELDS if scope == "RELATION_CENTRALE" else []
 	if attendu.is_empty() or not _champs_exacts(payload, attendu):
 		return _rejet_durable("forme de fait durable invalide")
+	if not _chaine_durable_valide(payload["event_key"]):
+		return _rejet_durable("event_key invalide")
 	var fact = payload.get("fact")
-	if typeof(fact) != TYPE_DICTIONARY or not _champs_exacts(fact, FACT_FIELDS):
+	if (
+		typeof(fact) != TYPE_DICTIONARY
+		or not fact.has("fait_id")
+		or not _champs_autorises(fact, FACT_FIELDS)
+	):
 		return _rejet_durable("fact authored invalide")
-	if typeof(fact["fait_id"]) != TYPE_STRING or fact["fait_id"].strip_edges().is_empty():
+	if not _chaine_durable_valide(fact["fait_id"]):
 		return _rejet_durable("fait_id invalide")
-	if typeof(fact["nature"]) != TYPE_STRING or fact["nature"].strip_edges().is_empty():
-		return _rejet_durable("nature invalide")
-	for field in ["recu_par", "formulee_par"]:
-		if typeof(fact[field]) != TYPE_STRING or fact[field].strip_edges().is_empty():
+	for field in ["nature", "recu_par", "formulee_par"]:
+		if fact.has(field) and not _chaine_durable_valide(fact[field]):
 			return _rejet_durable("champ de fait invalide: %s" % field)
-	if typeof(fact["permission_future"]) != TYPE_BOOL:
+	if fact.has("permission_future") and typeof(fact["permission_future"]) != TYPE_BOOL:
 		return _rejet_durable("permission_future invalide")
 	var relation: Dictionary
 	if scope == "RELATION":
 		var personnage_id = payload.get("personnage_id")
-		if typeof(personnage_id) != TYPE_STRING or personnage_id.strip_edges().is_empty():
+		if not _chaine_durable_valide(personnage_id):
 			return _rejet_durable("RELATION exige un personnage_id")
 		if not candidat["relations"].has(personnage_id):
 			return _rejet_durable("relation inconnue: %s" % personnage_id)
@@ -149,6 +154,22 @@ static func _champs_exacts(value: Dictionary, fields: Array) -> bool:
 		if not value.has(field):
 			return false
 	return true
+
+
+static func _champs_autorises(value: Dictionary, fields: Array) -> bool:
+	for field in value:
+		if typeof(field) != TYPE_STRING or field not in fields:
+			return false
+	return true
+
+
+static func _chaine_durable_valide(value) -> bool:
+	return (
+		typeof(value) == TYPE_STRING
+		and not value.is_empty()
+		and value == value.strip_edges()
+		and value.length() <= MAX_STRING_LENGTH
+	)
 
 
 static func _structures_identiques(left, right) -> bool:

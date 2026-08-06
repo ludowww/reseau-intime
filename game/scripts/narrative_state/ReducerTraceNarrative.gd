@@ -41,7 +41,11 @@ static func _preparer_effet(candidat: Dictionary, effet, provenance: Dictionary)
 static func _creer(candidat: Dictionary, effet: Dictionary, provenance: Dictionary) -> Dictionary:
 	if not _champs_exacts(effet, CREATE_FIELDS):
 		return _rejet("forme CREATE trace invalide")
-	if not _identifiant_valide(effet["trace_id"]) or not _identifiant_valide(effet["creator_id"]):
+	if (
+		not _identifiant_valide(effet["event_key"])
+		or not _identifiant_valide(effet["trace_id"])
+		or not _identifiant_valide(effet["creator_id"])
+	):
 		return _rejet("identifiant trace invalide")
 	for field in ["audience_ids", "controller_ids", "accessible_to_ids"]:
 		if not _ids_valides(effet[field], false):
@@ -69,7 +73,11 @@ static func _creer(candidat: Dictionary, effet: Dictionary, provenance: Dictiona
 static func _acces(candidat: Dictionary, effet: Dictionary) -> Dictionary:
 	if not _champs_exacts(effet, ACCESS_FIELDS):
 		return _rejet("forme acces trace invalide")
-	if not _identifiant_valide(effet["trace_id"]) or not _ids_valides(effet["accessible_to_ids"], true):
+	if (
+		not _identifiant_valide(effet["event_key"])
+		or not _identifiant_valide(effet["trace_id"])
+		or not _ids_valides(effet["accessible_to_ids"], true)
+	):
 		return _rejet("acces trace invalide")
 	var registre: Dictionary = candidat["traces_narratives"]
 	if not registre.has(effet["trace_id"]):
@@ -101,7 +109,11 @@ static func _acces(candidat: Dictionary, effet: Dictionary) -> Dictionary:
 
 
 static func _retirer(candidat: Dictionary, effet: Dictionary, provenance: Dictionary) -> Dictionary:
-	if not _champs_exacts(effet, WITHDRAW_FIELDS) or not _identifiant_valide(effet["trace_id"]):
+	if (
+		not _champs_exacts(effet, WITHDRAW_FIELDS)
+		or not _identifiant_valide(effet["event_key"])
+		or not _identifiant_valide(effet["trace_id"])
+	):
 		return _rejet("forme retrait trace invalide")
 	var registre: Dictionary = candidat["traces_narratives"]
 	if not registre.has(effet["trace_id"]):
@@ -111,6 +123,8 @@ static func _retirer(candidat: Dictionary, effet: Dictionary, provenance: Dictio
 		if record["withdrawn_at"] == provenance["moment_diegetique"]:
 			return _succes("IDEMPOTENT")
 		return _rejet("retrait trace divergent")
+	if record["status"] != "ACTIVE":
+		return _rejet("transition retrait trace impossible")
 	record["status"] = "WITHDRAWN"
 	record["withdrawn_at"] = provenance["moment_diegetique"]
 	registre[effet["trace_id"]] = record
@@ -128,7 +142,12 @@ static func _champs_exacts(value: Dictionary, fields: Array) -> bool:
 
 
 static func _identifiant_valide(value) -> bool:
-	return typeof(value) == TYPE_STRING and not value.strip_edges().is_empty() and value.length() <= 512
+	return (
+		typeof(value) == TYPE_STRING
+		and not value.is_empty()
+		and value == value.strip_edges()
+		and value.length() <= 512
+	)
 
 
 static func _ids_valides(value, require_non_empty: bool) -> bool:

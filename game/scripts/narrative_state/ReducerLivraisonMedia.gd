@@ -1,70 +1,197 @@
 extends RefCounted
+
 class_name ReducerLivraisonMedia
 
 const CREATE_FIELDS := ["event_key", "effect", "media_id", "fictional_audience_ids"]
-const GRANT_FIELDS := ["event_key", "effect", "media_id", "diegetic_status", "fictional_audience_ids", "gallery_status"]
+const GRANT_FIELDS := [
+	"event_key", "effect", "media_id", "diegetic_status", "fictional_audience_ids", "gallery_status",
+]
 const SIMPLE_FIELDS := ["event_key", "effect", "media_id"]
+const GALLERY_STATUSES := ["HIDDEN", "AVAILABLE"]
+const DIEGETIC_STATUSES := ["CREATED", "NOT_APPLICABLE"]
 
-static func preparer_mutations(etat_candidat: Dictionary, effets, p: Dictionary) -> Dictionary:
-	if typeof(effets) != TYPE_ARRAY: return _reject("media_deliveries doit etre un tableau")
-	var c := etat_candidat.duplicate(true); var s := "IDEMPOTENT"
+
+static func preparer_mutations(etat_candidat: Dictionary, effets, provenance: Dictionary) -> Dictionary:
+	if typeof(effets) != TYPE_ARRAY:
+		return _reject("media_deliveries doit etre un tableau")
+	var candidat := etat_candidat.duplicate(true)
+	var statut := "IDEMPOTENT"
 	for item in effets:
-		var r := _one(c, item, p)
-		if not r.ok: return r
-		if r.statut == "APPLIQUE": s = "APPLIQUE"
-	etat_candidat.clear(); etat_candidat.merge(c, true); return _ok(s)
+		var resultat := _preparer_effet(candidat, item, provenance)
+		if not resultat["ok"]:
+			return resultat
+		if resultat["statut"] == "APPLIQUE":
+			statut = "APPLIQUE"
+	etat_candidat.clear()
+	etat_candidat.merge(candidat, true)
+	return _ok(statut)
 
-static func _one(c: Dictionary, item, p: Dictionary) -> Dictionary:
-	if typeof(item) != TYPE_DICTIONARY: return _reject("forme media invalide")
-	var id = item.media_id; if not _id(id): return _reject("media_id invalide")
-	var effect: String = item.effect
+
+static func _preparer_effet(candidat: Dictionary, item, provenance: Dictionary) -> Dictionary:
+	if typeof(item) != TYPE_DICTIONARY:
+		return _reject("forme media invalide")
+	var effect = item.get("effect")
 	if effect == "CREATE_DIEGETIC":
-		if not _exact(item, CREATE_FIELDS) or not _ids(item.fictional_audience_ids): return _reject("creation media invalide")
-		var rec := {"media_id":id,"diegetic_status":"CREATED","fictional_audience_ids":item.fictional_audience_ids.duplicate(true),"access_status":"LOCKED","gallery_status":"HIDDEN","withdrawal_status":"ACTIVE","provenance":p.duplicate(true)}
-		if c.livraison_medias.has(id): return _same(c.livraison_medias[id], rec)
-		c.livraison_medias[id] = rec; return _ok("APPLIQUE")
+		return _create(candidat, item, provenance)
 	if effect == "GRANT_ACCESS":
-		if not _exact(item, GRANT_FIELDS) or not _ids(item.fictional_audience_ids) or item.diegetic_status not in ["CREATED", "NOT_APPLICABLE"]: return _reject("grant media invalide")
-		if not c.livraison_medias.has(id):
-			if item.gallery_status == "AVAILABLE":
-				c.livraison_medias[id] = {"media_id":id,"diegetic_status":item.diegetic_status,"fictional_audience_ids":item.fictional_audience_ids.duplicate(true),"access_status":"ACCESSIBLE","gallery_status":"AVAILABLE","withdrawal_status":"ACTIVE","provenance":p.duplicate(true)}
-			else:
-				c.livraison_medias[id] = {"media_id":id,"diegetic_status":item.diegetic_status,"fictional_audience_ids":item.fictional_audience_ids.duplicate(true),"access_status":"ACCESSIBLE","gallery_status":"HIDDEN","withdrawal_status":"ACTIVE","provenance":p.duplicate(true)}
-			return _ok("APPLIQUE")
-		var rec: Dictionary = c.livraison_medias[id]
-		if rec.withdrawal_status != "ACTIVE" or rec.diegetic_status != item.diegetic_status or rec.fictional_audience_ids != item.fictional_audience_ids: return _reject("grant divergent ou retrait")
-		if item.gallery_status == "AVAILABLE" and rec.access_status != "ACCESSIBLE": rec.access_status = "ACCESSIBLE"
-		elif item.gallery_status not in ["HIDDEN", "AVAILABLE"]: return _reject("gallery_status invalide")
-		rec.access_status = "ACCESSIBLE"; rec.gallery_status = item.gallery_status; c.livraison_medias[id] = rec; return _ok("APPLIQUE")
+		return _grant(candidat, item, provenance)
 	if effect == "REVOKE_ACCESS":
-		if not _exact(item, SIMPLE_FIELDS): return _reject("forme revoke media invalide")
-		if not c.livraison_medias.has(id): return _reject("media absent")
-		var rec: Dictionary = c.livraison_medias[id]
-		if rec.withdrawal_status != "ACTIVE": return _reject("media retire")
-		if rec.access_status == "REVOKED" and rec.gallery_status == "HIDDEN": return _ok("IDEMPOTENT")
-		rec.access_status = "REVOKED"; rec.gallery_status = "HIDDEN"; c.livraison_medias[id] = rec; return _ok("APPLIQUE")
+		return _revoke(candidat, item)
 	if effect == "WITHDRAW":
-		if not _exact(item, SIMPLE_FIELDS): return _reject("forme withdraw media invalide")
-		if not c.livraison_medias.has(id): return _reject("media absent")
-		var rec: Dictionary = c.livraison_medias[id]
-		if rec.withdrawal_status == "WITHDRAWN" and rec.gallery_status == "HIDDEN" and rec.access_status != "ACCESSIBLE": return _ok("IDEMPOTENT")
-		if rec.withdrawal_status != "ACTIVE": return _reject("retrait media divergent")
-		rec.withdrawal_status = "WITHDRAWN"; rec.gallery_status = "HIDDEN"; if rec.access_status == "ACCESSIBLE": rec.access_status = "REVOKED"
-		c.livraison_medias[id] = rec; return _ok("APPLIQUE")
+		return _withdraw(candidat, item)
 	return _reject("effet media inconnu")
 
-static func _id(v) -> bool: return typeof(v) == TYPE_STRING and not v.strip_edges().is_empty() and v.length() <= 512
-static func _ids(v) -> bool:
-	if typeof(v) != TYPE_ARRAY or v.is_empty(): return false
-	var seen := {}; for x in v:
-		if not _id(x) or seen.has(x): return false
-		seen[x] = true
+
+static func _create(candidat: Dictionary, item: Dictionary, provenance: Dictionary) -> Dictionary:
+	if not _exact(item, CREATE_FIELDS):
+		return _reject("forme creation media invalide")
+	if (
+		not _id(item["event_key"])
+		or not _id(item["media_id"])
+		or not _ids(item["fictional_audience_ids"], false)
+	):
+		return _reject("creation media invalide")
+	var record := {
+		"media_id": item["media_id"],
+		"diegetic_status": "CREATED",
+		"fictional_audience_ids": item["fictional_audience_ids"].duplicate(true),
+		"access_status": "LOCKED",
+		"gallery_status": "HIDDEN",
+		"withdrawal_status": "ACTIVE",
+		"provenance": provenance.duplicate(true),
+	}
+	var registry: Dictionary = candidat["livraison_medias"]
+	if registry.has(item["media_id"]):
+		return _same_or_reject(registry[item["media_id"]], record)
+	registry[item["media_id"]] = record
+	candidat["livraison_medias"] = registry
+	return _ok("APPLIQUE")
+
+
+static func _grant(candidat: Dictionary, item: Dictionary, provenance: Dictionary) -> Dictionary:
+	if not _exact(item, GRANT_FIELDS):
+		return _reject("forme grant media invalide")
+	if (
+		not _id(item["event_key"])
+		or not _id(item["media_id"])
+		or not _ids(item["fictional_audience_ids"], false)
+		or item["diegetic_status"] not in DIEGETIC_STATUSES
+		or item["gallery_status"] not in GALLERY_STATUSES
+	):
+		return _reject("grant media invalide")
+	var registry: Dictionary = candidat["livraison_medias"]
+	if not registry.has(item["media_id"]):
+		registry[item["media_id"]] = {
+			"media_id": item["media_id"],
+			"diegetic_status": item["diegetic_status"],
+			"fictional_audience_ids": item["fictional_audience_ids"].duplicate(true),
+			"access_status": "ACCESSIBLE",
+			"gallery_status": item["gallery_status"],
+			"withdrawal_status": "ACTIVE",
+			"provenance": provenance.duplicate(true),
+		}
+		candidat["livraison_medias"] = registry
+		return _ok("APPLIQUE")
+	var record: Dictionary = registry[item["media_id"]]
+	if record["withdrawal_status"] != "ACTIVE":
+		return _reject("acces interdit sur media retire")
+	if record["diegetic_status"] != item["diegetic_status"]:
+		return _reject("diegetic_status divergent")
+	if record["fictional_audience_ids"] != item["fictional_audience_ids"]:
+		return _reject("audience media divergente")
+	if record["gallery_status"] == "AVAILABLE" and item["gallery_status"] == "HIDDEN":
+		return _reject("baisse galerie interdite")
+	if record["access_status"] == "ACCESSIBLE" and record["gallery_status"] == item["gallery_status"]:
+		return _ok("IDEMPOTENT")
+	record["access_status"] = "ACCESSIBLE"
+	record["gallery_status"] = item["gallery_status"]
+	registry[item["media_id"]] = record
+	candidat["livraison_medias"] = registry
+	return _ok("APPLIQUE")
+
+
+static func _revoke(candidat: Dictionary, item: Dictionary) -> Dictionary:
+	if not _exact(item, SIMPLE_FIELDS):
+		return _reject("forme revoke media invalide")
+	if not _id(item["event_key"]) or not _id(item["media_id"]):
+		return _reject("revoke media invalide")
+	var registry: Dictionary = candidat["livraison_medias"]
+	if not registry.has(item["media_id"]):
+		return _reject("media absent")
+	var record: Dictionary = registry[item["media_id"]]
+	if record["withdrawal_status"] != "ACTIVE":
+		return _reject("media retire")
+	if record["access_status"] == "REVOKED" and record["gallery_status"] == "HIDDEN":
+		return _ok("IDEMPOTENT")
+	record["access_status"] = "REVOKED"
+	record["gallery_status"] = "HIDDEN"
+	registry[item["media_id"]] = record
+	candidat["livraison_medias"] = registry
+	return _ok("APPLIQUE")
+
+
+static func _withdraw(candidat: Dictionary, item: Dictionary) -> Dictionary:
+	if not _exact(item, SIMPLE_FIELDS):
+		return _reject("forme withdraw media invalide")
+	if not _id(item["event_key"]) or not _id(item["media_id"]):
+		return _reject("withdraw media invalide")
+	var registry: Dictionary = candidat["livraison_medias"]
+	if not registry.has(item["media_id"]):
+		return _reject("media absent")
+	var record: Dictionary = registry[item["media_id"]]
+	if record["withdrawal_status"] == "WITHDRAWN":
+		if record["gallery_status"] == "HIDDEN" and record["access_status"] != "ACCESSIBLE":
+			return _ok("IDEMPOTENT")
+		return _reject("retrait media divergent")
+	if record["withdrawal_status"] != "ACTIVE":
+		return _reject("transition retrait media impossible")
+	record["withdrawal_status"] = "WITHDRAWN"
+	record["gallery_status"] = "HIDDEN"
+	if record["access_status"] == "ACCESSIBLE":
+		record["access_status"] = "REVOKED"
+	registry[item["media_id"]] = record
+	candidat["livraison_medias"] = registry
+	return _ok("APPLIQUE")
+
+
+static func _id(value) -> bool:
+	return (
+		typeof(value) == TYPE_STRING
+		and not value.is_empty()
+		and value == value.strip_edges()
+		and value.length() <= 512
+	)
+
+
+static func _ids(value, require_non_empty: bool) -> bool:
+	if typeof(value) != TYPE_ARRAY or (require_non_empty and value.is_empty()):
+		return false
+	var seen := {}
+	for identifier in value:
+		if not _id(identifier) or seen.has(identifier):
+			return false
+		seen[identifier] = true
 	return true
-static func _exact(d: Dictionary, fields: Array) -> bool:
-	if d.size() != fields.size(): return false
-	for f in fields:
-		if not d.has(f): return false
+
+
+static func _exact(value: Dictionary, fields: Array) -> bool:
+	if value.size() != fields.size():
+		return false
+	for field in fields:
+		if not value.has(field):
+			return false
 	return true
-static func _same(a, b) -> Dictionary: return _ok("IDEMPOTENT") if a == b else _reject("media_id deja utilise avec contenu different")
-static func _ok(s: String) -> Dictionary: return {"ok":true,"statut":s,"erreur":""}
-static func _reject(e: String) -> Dictionary: return {"ok":false,"statut":"REJETE","erreur":e}
+
+
+static func _same_or_reject(left, right) -> Dictionary:
+	if left == right:
+		return _ok("IDEMPOTENT")
+	return _reject("media_id deja utilise avec contenu different")
+
+
+static func _ok(status: String) -> Dictionary:
+	return {"ok": true, "statut": status, "erreur": ""}
+
+
+static func _reject(error: String) -> Dictionary:
+	return {"ok": false, "statut": "REJETE", "erreur": error}

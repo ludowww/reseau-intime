@@ -24,6 +24,8 @@ static func preparer_mutations(etat_candidat: Dictionary, effets, provenance: Di
 static func _preparer_effet(candidat: Dictionary, effet, provenance: Dictionary) -> Dictionary:
 	if typeof(effet) != TYPE_DICTIONARY or not _champs_exacts(effet, EFFECT_FIELDS):
 		return _rejet("forme connaissance invalide")
+	if not _identifiant_valide(effet["event_key"]):
+		return _rejet("event_key invalide")
 	if effet["effect"] != "ACQUIRE":
 		return _rejet("effet connaissance inconnu")
 	if not _identifiant_valide(effet["knowledge_id"]) or not _identifiant_valide(effet["subject_id"]):
@@ -57,7 +59,12 @@ static func _champs_exacts(value: Dictionary, fields: Array) -> bool:
 
 
 static func _identifiant_valide(value) -> bool:
-	return typeof(value) == TYPE_STRING and not value.strip_edges().is_empty() and value.length() <= 512
+	return (
+		typeof(value) == TYPE_STRING
+		and not value.is_empty()
+		and value == value.strip_edges()
+		and value.length() <= 512
+	)
 
 
 static func _ids_valides(value, require_non_empty: bool) -> bool:
