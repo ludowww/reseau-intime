@@ -6,13 +6,17 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-BASELINE = "f7f81d866fa7f573f6fca4d7da62ccf9cfc4b859"
-OLD_N13_SHA = "6870344bd555cdeb548aff75a5eca6e0276cb3a5"
+N13_BASE_SHA = "f7f81d866fa7f573f6fca4d7da62ccf9cfc4b859"
+N13_FINAL_SHA = "fa6adc55420df0fadc4ff2b14e17c795680951d5"
 EXECUTION_DIR = ROOT / "game/scripts/unified_runtime/execution"
 FIXTURE = ROOT / "game/tests/fixtures/unified_runtime/n13_a10_durable_integration_valid.json"
-CORRECTIVE_FILES = {
+N13_FILES = {
+    "game/scripts/unified_runtime/execution/SequenceExecutor.gd",
+    "game/scripts/unified_runtime/execution/SequenceResolutionEnvelopeV1.gd",
     "game/scripts/unified_runtime/execution/UnifiedRuntimeSnapshotV1.gd",
     "game/tests/R8C_N13MinimalSequenceExecutorSmokeDriver.gd",
+    "game/tests/R8C_N13MinimalSequenceExecutorSmokeTest.tscn",
+    "game/tests/fixtures/unified_runtime/n13_a10_durable_integration_valid.json",
     "tests/test_r8c_n13_minimal_sequence_executor_static.py",
 }
 PRODUCTION_FILES = {
@@ -278,7 +282,7 @@ class R8CN13MinimalSequenceExecutorStaticTests(unittest.TestCase):
             "game/tests/fixtures/unified_runtime/authored_sequence_v1_minimal_valid.json",
         ]
         result = subprocess.run(
-            ["git", "diff", "--exit-code", BASELINE, "--", *protected],
+            ["git", "diff", "--exit-code", N13_BASE_SHA, "--", *protected],
             cwd=ROOT,
             text=True,
             capture_output=True,
@@ -383,15 +387,48 @@ class R8CN13MinimalSequenceExecutorStaticTests(unittest.TestCase):
         self.assertIn("AuthoredValidator.validate(incompatible_sequence)", negatives)
         self.assertIn('"a10_resolution_choice_mismatch"', negatives)
 
-    def test_corrective_scope_is_exactly_the_three_allowlisted_files(self):
+    def test_locked_n13_scope_is_exact_and_ancestor_of_head(self):
+        for sha in (N13_BASE_SHA, N13_FINAL_SHA):
+            result = subprocess.run(
+                ["git", "rev-parse", "--verify", "--quiet", f"{sha}^{{commit}}"],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(
+                0,
+                result.returncode,
+                result.stdout + result.stderr or f"missing Git commit: {sha}",
+            )
+
+        for ancestor, descendant in (
+            (N13_BASE_SHA, N13_FINAL_SHA),
+            (N13_FINAL_SHA, "HEAD"),
+        ):
+            result = subprocess.run(
+                ["git", "merge-base", "--is-ancestor", ancestor, descendant],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(
+                0,
+                result.returncode,
+                result.stdout + result.stderr
+                or f"{ancestor} is not an ancestor of {descendant}",
+            )
+
         result = subprocess.run(
-            ["git", "diff", "--name-only", OLD_N13_SHA],
+            ["git", "diff", "--name-only", f"{N13_BASE_SHA}..{N13_FINAL_SHA}"],
             cwd=ROOT,
             text=True,
             capture_output=True,
-            check=True,
+            check=False,
         )
-        self.assertEqual(CORRECTIVE_FILES, set(result.stdout.splitlines()))
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertEqual(N13_FILES, set(result.stdout.splitlines()))
 
 
 if __name__ == "__main__":
