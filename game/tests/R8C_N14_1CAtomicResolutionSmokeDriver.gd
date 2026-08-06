@@ -99,7 +99,7 @@ func _test_success_replay_restore(sequence: Dictionary) -> void:
 	_assert_terminal_rejection(
 		facade,
 		_context_with_envelope(divergent_keys),
-		"RESOLUTION_REFUSEE",
+		"RESOLUTION_TERMINALE_DIFFERENTE",
 		"terminal ordered event keys divergence",
 	)
 
@@ -177,6 +177,9 @@ func _test_persisted_inconsistencies(sequence: Dictionary) -> void:
 	var extra_receipt := resolved.duplicate(true)
 	extra_receipt["scene_registry"][0]["resolution_receipt"]["unexpected"] = true
 	_assert_restore_rejection(sequence, extra_receipt, "terminal receipt unknown field")
+	var receipt_on_proposed := proposed.duplicate(true)
+	receipt_on_proposed["scene_registry"][0]["resolution_receipt"] = resolved["scene_registry"][0]["resolution_receipt"].duplicate(true)
+	_assert_restore_rejection(sequence, receipt_on_proposed, "terminal receipt on non RESOLVED instance")
 	var divergent_receipt := resolved.duplicate(true)
 	divergent_receipt["scene_registry"][0]["resolution_receipt"]["terminal_checkpoint_id"] = "checkpoint_other"
 	_assert_restored_replay_rejection(

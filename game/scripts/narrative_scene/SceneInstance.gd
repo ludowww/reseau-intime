@@ -110,6 +110,8 @@ static func creer_depuis_snapshot_persistant(snapshot: Dictionary) -> R8CSceneIn
 	var transaction_id: String = snapshot["transaction_id"]
 	if not _terminaison_valide(statut, operation, choix_id, resolution_id, transaction_id, snapshot["instance_id"]):
 		return null
+	if snapshot.has("resolution_receipt") and statut != RESOLVED:
+		return null
 	var traces = snapshot["temporary_traces"]
 	if typeof(traces) != TYPE_DICTIONARY or not _traces_temporaires_valides(
 		traces, snapshot["instance_id"], snapshot["created_at"], snapshot["last_transition_at"]

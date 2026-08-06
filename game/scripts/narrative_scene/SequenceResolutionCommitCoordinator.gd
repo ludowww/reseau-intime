@@ -55,6 +55,12 @@ func resolve(
 		instance, definition, choice_id, resolution_id, context
 	)
 	if not prepared["ok"]:
+		if (
+			instance != null
+			and instance.obtenir_statut() == InstanceModele.RESOLVED
+			and _closed_sequence_request(context)
+		):
+			return _failure(instance, ERROR_TERMINAL_DIFFERENT)
 		return _failure(instance, prepared["erreur"])
 	var expected_event: Dictionary = prepared["event"]
 	var expected_receipt: Dictionary = prepared["receipt"]
@@ -220,6 +226,14 @@ static func _exact(value: Dictionary, fields: Array) -> bool:
 
 static func _valid_string(value) -> bool:
 	return typeof(value) == TYPE_STRING and not value.is_empty() and value == value.strip_edges()
+
+
+static func _closed_sequence_request(context) -> bool:
+	return (
+		typeof(context) == TYPE_DICTIONARY
+		and typeof(context.get("sequence_resolution")) == TYPE_DICTIONARY
+		and _exact(context["sequence_resolution"], ENVELOPE_FIELDS)
+	)
 
 
 static func _preparation_failure(error: String) -> Dictionary:
