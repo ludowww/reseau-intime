@@ -8,7 +8,9 @@
 >
 > **Nature :** contrat documentaire et architectural uniquement ; aucune implémentation
 >
-> **Statut du document :** `DURABLE_REGISTRIES_ATOMIC_RESOLUTION_CONTRACT_READY_FOR_PRODUCT_REVIEW`
+> **Statut du document :** `DURABLE_REGISTRIES_ATOMIC_RESOLUTION_CONTRACT_APPROVED`
+>
+> **Approbation produit :** commit revu `257dead5fab17795bcc457359206765ce1fa5cb0` ; approuvé sans réserve bloquante ; date de référence août 2026
 
 ## 1. Décision, portée et autorités
 
@@ -43,8 +45,8 @@ player-facing et ne change aucune autre frontière N11/N12/N13.
 La première revue produit demande et le présent correctif intègre cinq
 fermetures supplémentaires : l'effet média `WITHDRAW`, la vérification d'un
 replay avant toute exigence `PROPOSED`, l'union fermée des faits, l'ordre strict
-des `event_keys` et une publication finale synchrone et non réentrante. Le
-statut reste prêt pour revue produit et n'est pas encore un statut approuvé.
+des `event_keys` et une publication finale synchrone et non réentrante. Ces
+décisions sont désormais approuvées sans réserve bloquante.
 
 ## 2. Diagnostic du runtime verrouillé
 
@@ -871,7 +873,7 @@ La future gate doit couvrir au minimum :
 - ordre divergent entre enveloppe et manifeste ;
 - effet inconnu ;
 - registre inconnu ;
-- même identifiant avec contenu différent ;
+- même event_id, payload différent ;
 - `personnage_id` absent pour un fait `RELATION` ;
 - `personnage_id` présent pour un fait `RELATION_CENTRALE` ;
 - `scope` de fait inconnu ;
@@ -963,8 +965,8 @@ ni N15.
 ### 23.2 Verdict
 
 Le contrat des registres durables, de leur version narrative et du commit
-atomique A1 + A5 est complet et prêt pour revue produit.
+atomique A1 + A5 est approuvé sans réserve bloquante.
 
 Le statut de livraison N14 est :
 
-`N14_CONTRACT_READY_FOR_PRODUCT_REVIEW`
+`N14_CONTRACT_APPROVED_READY_FOR_LOCK`
