@@ -21,7 +21,7 @@ const A6_TEMPORAL_FIELDS := [
 const A6_CHOICE_FIELDS := ["choix_id", "formulation", "signal_emis", "resolution_ids"]
 const A6_RESOLUTION_FIELDS := [
 	"personnage_id", "portee_micro_signal", "signal_recu", "reception", "interpretation",
-	"faits_relationnels", "convergence", "trace_temporaire",
+	"faits_relationnels", "convergence", "trace_temporaire", "durable_manifest",
 ]
 const A6_RESOLUTION_REQUIRED_FIELDS := [
 	"personnage_id", "portee_micro_signal", "signal_recu", "reception", "interpretation",
@@ -49,6 +49,33 @@ const AUTHORED_DURABLE_EFFECT_FIELDS := [
 	"consequence_ids",
 	"media_effects",
 ]
+const A6_DURABLE_MANIFEST_FIELDS := [
+	"binding", "facts", "knowledge", "traces", "promises", "obligations", "media_deliveries",
+]
+const A6_DURABLE_BINDING_FIELDS := ["sequence_id", "authored_version", "resolution_id"]
+const A6_DURABLE_CATEGORIES := ["facts", "knowledge", "traces", "promises", "obligations", "media_deliveries"]
+const A6_DURABLE_FACT_RELATION_FIELDS := ["event_key", "scope", "personnage_id", "fact"]
+const A6_DURABLE_FACT_CENTRAL_FIELDS := ["event_key", "scope", "fact"]
+const A6_DURABLE_KNOWLEDGE_FIELDS := ["event_key", "effect", "knowledge_id", "subject_id", "holder_ids"]
+const A6_DURABLE_TRACE_CREATE_FIELDS := [
+	"event_key", "effect", "trace_id", "creator_id", "audience_ids", "controller_ids", "accessible_to_ids",
+]
+const A6_DURABLE_TRACE_ACCESS_FIELDS := ["event_key", "effect", "trace_id", "accessible_to_ids"]
+const A6_DURABLE_TRACE_TERMINAL_FIELDS := ["event_key", "effect", "trace_id"]
+const A6_DURABLE_PROMISE_CREATE_FIELDS := [
+	"event_key", "effect", "promise_id", "author_id", "beneficiary_ids", "content_ref",
+]
+const A6_DURABLE_PROMISE_TERMINAL_FIELDS := ["event_key", "effect", "promise_id"]
+const A6_DURABLE_OBLIGATION_CREATE_FIELDS := [
+	"event_key", "effect", "obligation_id", "debtor_id", "beneficiary_ids", "kind",
+]
+const A6_DURABLE_OBLIGATION_TERMINAL_FIELDS := ["event_key", "effect", "obligation_id"]
+const A6_DURABLE_MEDIA_CREATE_FIELDS := ["event_key", "effect", "media_id", "fictional_audience_ids"]
+const A6_DURABLE_MEDIA_GRANT_FIELDS := [
+	"event_key", "effect", "media_id", "diegetic_status", "fictional_audience_ids", "gallery_status",
+]
+const A6_DURABLE_MEDIA_TERMINAL_FIELDS := ["event_key", "effect", "media_id"]
+const A6_DURABLE_FACT_FIELDS := ["fait_id", "nature", "recu_par", "permission_future", "formulee_par"]
 
 
 static func validate(value) -> Dictionary:
@@ -721,12 +748,14 @@ static func _validate_references(
 
 	var a10_choice_resolution_ids := {}
 	var a10_resolution_ids := {}
+	var a10_resolutions := {}
 	var orchestration = sequence.get("orchestration")
 	var a6_entry = orchestration.get("a6_entry", {}) if typeof(orchestration) == TYPE_DICTIONARY else {}
 	var definition = a6_entry.get("definition", {}) if typeof(a6_entry) == TYPE_DICTIONARY else {}
 	if typeof(definition) == TYPE_DICTIONARY and typeof(definition.get("resolutions")) == TYPE_DICTIONARY:
 		for a10_resolution_id in definition["resolutions"]:
 			a10_resolution_ids[a10_resolution_id] = true
+			a10_resolutions[a10_resolution_id] = definition["resolutions"][a10_resolution_id]
 	if typeof(definition) == TYPE_DICTIONARY and typeof(definition.get("choix", [])) == TYPE_ARRAY:
 		for option in definition.get("choix", []):
 			if typeof(option) == TYPE_DICTIONARY:
@@ -768,6 +797,10 @@ static func _validate_references(
 				_add_error(errors, path + ".a10_resolution_id", "a10_resolution_reused")
 			else:
 				claimed_a10_resolutions[a10_resolution_id] = resolution_id
+			if a10_resolutions.has(a10_resolution_id) and typeof(a10_resolutions[a10_resolution_id]) == TYPE_DICTIONARY:
+				_validate_a6_manifest_binding(
+					a10_resolutions[a10_resolution_id], sequence, resolution_id, path, errors
+				)
 		if not checkpoints.has(resolution["terminal_checkpoint_id"]):
 			_add_error(errors, path + ".terminal_checkpoint_id", "unknown_checkpoint")
 		if resolution["next_beat_id"] != null and not beats.has(resolution["next_beat_id"]):
@@ -1125,8 +1158,192 @@ static func _validate_a6_resolutions(
 			or resolution["faits_relationnels"].is_empty()
 		):
 			_add_error(errors, item_path, "durable_signal_requires_fact")
+		var durable_manifest = resolution.get("durable_manifest", {})
+		_validate_a6_durable_manifest(durable_manifest, item_path + ".durable_manifest", errors)
+		if scope != "DURABLE" and typeof(durable_manifest) == TYPE_DICTIONARY and not durable_manifest.is_empty():
+			_add_error(errors, item_path + ".durable_manifest", "forbidden_for_local_resolution")
 		signals[resolution_id] = resolution["signal_recu"]
 	return signals
+
+
+static func _validate_a6_manifest_binding(
+	a6_resolution: Dictionary,
+	sequence: Dictionary,
+	resolution_id,
+	path: String,
+	errors: Array[String]
+) -> void:
+	var manifest = a6_resolution.get("durable_manifest")
+	if typeof(manifest) != TYPE_DICTIONARY or manifest.is_empty():
+		_add_error(errors, path + ".a10_resolution_id", "non_empty_durable_manifest_required")
+		return
+	var binding = manifest.get("binding")
+	if typeof(binding) != TYPE_DICTIONARY:
+		return
+	if binding.get("sequence_id") != sequence.get("sequence_id"):
+		_add_error(errors, path + ".a10_resolution_id", "durable_manifest_sequence_binding_mismatch")
+	if binding.get("authored_version") != sequence.get("authored_version"):
+		_add_error(errors, path + ".a10_resolution_id", "durable_manifest_version_binding_mismatch")
+	if binding.get("resolution_id") != resolution_id:
+		_add_error(errors, path + ".a10_resolution_id", "durable_manifest_resolution_binding_mismatch")
+
+
+static func _validate_a6_durable_manifest(value, path: String, errors: Array[String]) -> void:
+	if typeof(value) != TYPE_DICTIONARY:
+		_add_error(errors, path, "expected_dictionary")
+		return
+	if value.is_empty():
+		return
+	_validate_closed_dictionary(value, A6_DURABLE_MANIFEST_FIELDS, A6_DURABLE_MANIFEST_FIELDS, path, errors)
+	if not _has_required_fields(value, A6_DURABLE_MANIFEST_FIELDS):
+		return
+	var binding = value["binding"]
+	if _validate_dictionary(binding, A6_DURABLE_BINDING_FIELDS, path + ".binding", errors):
+		_validate_business_id(binding["sequence_id"], path + ".binding.sequence_id", errors)
+		if not _is_semver(binding["authored_version"]):
+			_add_error(errors, path + ".binding.authored_version", "expected_major_minor_patch")
+		_validate_business_id(binding["resolution_id"], path + ".binding.resolution_id", errors)
+	var event_keys := {}
+	for category in A6_DURABLE_CATEGORIES:
+		var entries = value[category]
+		var category_path: String = path + "." + str(category)
+		if typeof(entries) != TYPE_ARRAY:
+			_add_error(errors, category_path, "expected_array")
+			continue
+		var business_ids := {}
+		for index in entries.size():
+			var item_path: String = category_path + "[%d]" % index
+			var entry = entries[index]
+			if typeof(entry) != TYPE_DICTIONARY:
+				_add_error(errors, item_path, "expected_dictionary")
+				continue
+			var fields := _a6_durable_effect_fields(category, entry)
+			if fields.is_empty():
+				_add_error(errors, item_path, "unknown_effect")
+				continue
+			_validate_exact_fields(entry, fields, item_path, errors)
+			if not _has_required_fields(entry, fields):
+				continue
+			_validate_business_id(entry["event_key"], item_path + ".event_key", errors)
+			if event_keys.has(entry["event_key"]):
+				_add_error(errors, item_path + ".event_key", "duplicate_across_manifest")
+			else:
+				event_keys[entry["event_key"]] = true
+			_validate_a6_durable_effect(category, entry, item_path, errors)
+			var business_id = _a6_durable_business_id(category, entry)
+			if business_id == null:
+				continue
+			_validate_business_id(business_id, item_path + ".business_id", errors)
+			if business_ids.has(business_id):
+				_add_error(errors, item_path + ".business_id", "duplicate")
+			else:
+				business_ids[business_id] = true
+
+
+static func _a6_durable_effect_fields(category: String, entry: Dictionary) -> Array:
+	if category == "facts":
+		if entry.get("scope") == "RELATION":
+			return A6_DURABLE_FACT_RELATION_FIELDS
+		if entry.get("scope") == "RELATION_CENTRALE":
+			return A6_DURABLE_FACT_CENTRAL_FIELDS
+		return []
+	var effect = entry.get("effect")
+	if category == "knowledge":
+		return A6_DURABLE_KNOWLEDGE_FIELDS if effect == "ACQUIRE" else []
+	if category == "traces":
+		if effect == "CREATE":
+			return A6_DURABLE_TRACE_CREATE_FIELDS
+		if effect in ["GRANT_ACCESS", "REVOKE_ACCESS"]:
+			return A6_DURABLE_TRACE_ACCESS_FIELDS
+		return A6_DURABLE_TRACE_TERMINAL_FIELDS if effect == "WITHDRAW" else []
+	if category == "promises":
+		return A6_DURABLE_PROMISE_CREATE_FIELDS if effect == "CREATE" else (
+			A6_DURABLE_PROMISE_TERMINAL_FIELDS if effect in ["PAY", "FAIL"] else []
+		)
+	if category == "obligations":
+		return A6_DURABLE_OBLIGATION_CREATE_FIELDS if effect == "CREATE_DUE" else (
+			A6_DURABLE_OBLIGATION_TERMINAL_FIELDS if effect in ["PAY", "FAIL"] else []
+		)
+	if category == "media_deliveries":
+		if effect == "CREATE_DIEGETIC":
+			return A6_DURABLE_MEDIA_CREATE_FIELDS
+		if effect == "GRANT_ACCESS":
+			return A6_DURABLE_MEDIA_GRANT_FIELDS
+		return A6_DURABLE_MEDIA_TERMINAL_FIELDS if effect in ["REVOKE_ACCESS", "WITHDRAW"] else []
+	return []
+
+
+static func _validate_a6_durable_effect(
+	category: String,
+	entry: Dictionary,
+	path: String,
+	errors: Array[String]
+) -> void:
+	if category == "facts":
+		if entry["scope"] == "RELATION":
+			_validate_business_id(entry["personnage_id"], path + ".personnage_id", errors)
+		elif entry.has("personnage_id"):
+			_add_error(errors, path + ".personnage_id", "forbidden_for_central_relation")
+		var fact = entry["fact"]
+		if typeof(fact) != TYPE_DICTIONARY:
+			_add_error(errors, path + ".fact", "expected_dictionary")
+		else:
+			_validate_closed_dictionary(fact, A6_DURABLE_FACT_FIELDS, ["fait_id"], path + ".fact", errors)
+			if fact.has("fait_id"):
+				_validate_business_id(fact["fait_id"], path + ".fact.fait_id", errors)
+			for field in fact:
+				if field == "permission_future":
+					if typeof(fact[field]) != TYPE_BOOL:
+						_add_error(errors, path + ".fact.permission_future", "expected_boolean")
+				else:
+					_validate_non_empty_string(fact[field], path + ".fact." + field, errors)
+		return
+	if category == "knowledge":
+		_validate_business_id(entry["knowledge_id"], path + ".knowledge_id", errors)
+		_validate_business_id(entry["subject_id"], path + ".subject_id", errors)
+		_validate_id_array(entry["holder_ids"], path + ".holder_ids", errors, true)
+		return
+	if category == "traces":
+		_validate_business_id(entry["trace_id"], path + ".trace_id", errors)
+		if entry["effect"] == "CREATE":
+			_validate_business_id(entry["creator_id"], path + ".creator_id", errors)
+			for field in ["audience_ids", "controller_ids", "accessible_to_ids"]:
+				_validate_id_array(entry[field], path + "." + field, errors, false)
+		elif entry["effect"] in ["GRANT_ACCESS", "REVOKE_ACCESS"]:
+			_validate_id_array(entry["accessible_to_ids"], path + ".accessible_to_ids", errors, true)
+		return
+	if category == "promises":
+		_validate_business_id(entry["promise_id"], path + ".promise_id", errors)
+		if entry["effect"] == "CREATE":
+			_validate_business_id(entry["author_id"], path + ".author_id", errors)
+			_validate_id_array(entry["beneficiary_ids"], path + ".beneficiary_ids", errors, true)
+			_validate_non_empty_string(entry["content_ref"], path + ".content_ref", errors)
+		return
+	if category == "obligations":
+		_validate_business_id(entry["obligation_id"], path + ".obligation_id", errors)
+		if entry["effect"] == "CREATE_DUE":
+			_validate_business_id(entry["debtor_id"], path + ".debtor_id", errors)
+			_validate_id_array(entry["beneficiary_ids"], path + ".beneficiary_ids", errors, true)
+			_validate_non_empty_string(entry["kind"], path + ".kind", errors)
+		return
+	_validate_business_id(entry["media_id"], path + ".media_id", errors)
+	if entry["effect"] in ["CREATE_DIEGETIC", "GRANT_ACCESS"]:
+		_validate_id_array(entry["fictional_audience_ids"], path + ".fictional_audience_ids", errors, false)
+	if entry["effect"] == "GRANT_ACCESS":
+		if entry["diegetic_status"] not in ["NOT_APPLICABLE", "CREATED"]:
+			_add_error(errors, path + ".diegetic_status", "unknown_value")
+		if entry["gallery_status"] not in ["HIDDEN", "AVAILABLE"]:
+			_add_error(errors, path + ".gallery_status", "unknown_value")
+
+
+static func _a6_durable_business_id(category: String, entry: Dictionary):
+	if category == "facts":
+		return entry["fact"].get("fait_id") if typeof(entry.get("fact")) == TYPE_DICTIONARY else null
+	var fields := {
+		"knowledge": "knowledge_id", "traces": "trace_id", "promises": "promise_id",
+		"obligations": "obligation_id", "media_deliveries": "media_id",
+	}
+	return entry.get(fields.get(category, ""))
 
 
 static func _validate_a6_relational_facts(value, path: String, errors: Array[String]) -> void:

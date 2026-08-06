@@ -51,6 +51,7 @@ const CHAMPS_RESOLUTION := [
 	"faits_relationnels",
 	"convergence",
 	"trace_temporaire",
+	"durable_manifest",
 ]
 const CHAMPS_TRACE_TEMPORAIRE := ["trace_id", "contenu"]
 const CHAMPS_FAIT_RELATIONNEL := [
@@ -62,6 +63,34 @@ const CHAMPS_FAIT_RELATIONNEL := [
 ]
 const CHAMPS_POLITIQUE_NON_RESOLUTION := ["proposition_expire", "consequence_manquee"]
 const CHAMPS_CONSEQUENCE_MANQUEE := ["personnage_id", "fait_relationnel"]
+const CHAMPS_DURABLE_MANIFEST := [
+	"binding", "facts", "knowledge", "traces", "promises", "obligations", "media_deliveries",
+]
+const CHAMPS_DURABLE_BINDING := ["sequence_id", "authored_version", "resolution_id"]
+const CATEGORIES_DURABLES := ["facts", "knowledge", "traces", "promises", "obligations", "media_deliveries"]
+const CHAMPS_DURABLE_FACT_RELATION := ["event_key", "scope", "personnage_id", "fact"]
+const CHAMPS_DURABLE_FACT_CENTRALE := ["event_key", "scope", "fact"]
+const CHAMPS_DURABLE_KNOWLEDGE := ["event_key", "effect", "knowledge_id", "subject_id", "holder_ids"]
+const CHAMPS_DURABLE_TRACE_CREATE := [
+	"event_key", "effect", "trace_id", "creator_id", "audience_ids", "controller_ids", "accessible_to_ids",
+]
+const CHAMPS_DURABLE_TRACE_ACCESS := ["event_key", "effect", "trace_id", "accessible_to_ids"]
+const CHAMPS_DURABLE_TRACE_TERMINAL := ["event_key", "effect", "trace_id"]
+const CHAMPS_DURABLE_PROMISE_CREATE := [
+	"event_key", "effect", "promise_id", "author_id", "beneficiary_ids", "content_ref",
+]
+const CHAMPS_DURABLE_PROMISE_TERMINAL := ["event_key", "effect", "promise_id"]
+const CHAMPS_DURABLE_OBLIGATION_CREATE := [
+	"event_key", "effect", "obligation_id", "debtor_id", "beneficiary_ids", "kind",
+]
+const CHAMPS_DURABLE_OBLIGATION_TERMINAL := ["event_key", "effect", "obligation_id"]
+const CHAMPS_DURABLE_MEDIA_CREATE := ["event_key", "effect", "media_id", "fictional_audience_ids"]
+const CHAMPS_DURABLE_MEDIA_GRANT := [
+	"event_key", "effect", "media_id", "diegetic_status", "fictional_audience_ids", "gallery_status",
+]
+const CHAMPS_DURABLE_MEDIA_TERMINAL := ["event_key", "effect", "media_id"]
+const CHAMPS_DURABLE_FACT := ["fait_id", "nature", "recu_par", "permission_future", "formulee_par"]
+const MAX_LONGUEUR_IDENTIFIANT_DURABLE := 96
 
 
 static func declarer(donnees: Dictionary) -> Dictionary:
@@ -162,6 +191,11 @@ static func _valider_champs_fermes(definition: Dictionary) -> String:
 						erreur = _refuser_champs_inconnus(fait, CHAMPS_FAIT_RELATIONNEL, "fait_relationnel")
 						if not erreur.is_empty():
 							return erreur
+			var manifeste = resolution.get("durable_manifest")
+			if typeof(manifeste) == TYPE_DICTIONARY and not manifeste.is_empty():
+				erreur = _valider_fermeture_manifeste_durable(manifeste)
+				if not erreur.is_empty():
+					return erreur
 	var politique = definition.get("politique_non_resolution")
 	if typeof(politique) == TYPE_DICTIONARY:
 		erreur = _refuser_champs_inconnus(
@@ -299,7 +333,251 @@ static func _valider_resolutions(definition: Dictionary) -> String:
 		if portee == "DURABLE":
 			if reception == "NON_PERSISTANTE" or faits.is_empty():
 				return "definition de scene: durable exige reception, interpretation et fait explicites"
+		var erreur_manifeste := _valider_manifeste_durable(resolution.get("durable_manifest", {}))
+		if not erreur_manifeste.is_empty():
+			return erreur_manifeste
 	return ""
+
+
+static func _valider_fermeture_manifeste_durable(manifeste: Dictionary) -> String:
+	var erreur := _refuser_champs_inconnus(manifeste, CHAMPS_DURABLE_MANIFEST, "durable_manifest")
+	if not erreur.is_empty():
+		return erreur
+	var binding = manifeste.get("binding")
+	if typeof(binding) == TYPE_DICTIONARY:
+		erreur = _refuser_champs_inconnus(binding, CHAMPS_DURABLE_BINDING, "durable_manifest.binding")
+		if not erreur.is_empty():
+			return erreur
+	for categorie in CATEGORIES_DURABLES:
+		var entrees = manifeste.get(categorie)
+		if typeof(entrees) != TYPE_ARRAY:
+			continue
+		for entree in entrees:
+			if typeof(entree) != TYPE_DICTIONARY:
+				continue
+			var champs := _champs_effet_durable(categorie, entree)
+			if champs.is_empty():
+				continue
+			erreur = _refuser_champs_inconnus(entree, champs, "durable_manifest.%s" % categorie)
+			if not erreur.is_empty():
+				return erreur
+			if categorie == "facts" and typeof(entree.get("fact")) == TYPE_DICTIONARY:
+				erreur = _refuser_champs_inconnus(
+					entree["fact"], CHAMPS_DURABLE_FACT, "durable_manifest.facts.fact"
+				)
+				if not erreur.is_empty():
+					return erreur
+	return ""
+
+
+static func _valider_manifeste_durable(manifeste) -> String:
+	if typeof(manifeste) != TYPE_DICTIONARY:
+		return "definition de scene: durable_manifest doit etre un dictionnaire"
+	if manifeste.is_empty():
+		return ""
+	if not _champs_exacts_durables(manifeste, CHAMPS_DURABLE_MANIFEST):
+		return "definition de scene: durable_manifest incomplet"
+	var binding = manifeste["binding"]
+	if typeof(binding) != TYPE_DICTIONARY or not _champs_exacts_durables(binding, CHAMPS_DURABLE_BINDING):
+		return "definition de scene: durable_manifest binding invalide"
+	if not _identifiant_durable(binding["sequence_id"]):
+		return "definition de scene: durable_manifest binding sequence invalide"
+	if not _version_authored_durable(binding["authored_version"]):
+		return "definition de scene: durable_manifest binding version invalide"
+	if not _identifiant_durable(binding["resolution_id"]):
+		return "definition de scene: durable_manifest binding resolution invalide"
+	var event_keys := {}
+	for categorie in CATEGORIES_DURABLES:
+		var entrees = manifeste[categorie]
+		if typeof(entrees) != TYPE_ARRAY:
+			return "definition de scene: categorie durable doit etre un tableau: %s" % categorie
+		var identifiants := {}
+		for entree in entrees:
+			if typeof(entree) != TYPE_DICTIONARY:
+				return "definition de scene: effet durable invalide: %s" % categorie
+			var event_key = entree.get("event_key")
+			if not _identifiant_durable(event_key):
+				return "definition de scene: event_key durable vide"
+			if event_keys.has(event_key):
+				return "definition de scene: event_key durable duplique"
+			event_keys[event_key] = true
+			var erreur_effet := _valider_effet_durable(categorie, entree)
+			if not erreur_effet.is_empty():
+				return erreur_effet
+			var identifiant = _identifiant_effet_durable(categorie, entree)
+			if not _identifiant_durable(identifiant):
+				return "definition de scene: identifiant metier durable vide"
+			if identifiants.has(identifiant):
+				return "definition de scene: identifiant metier durable duplique"
+			identifiants[identifiant] = true
+	return ""
+
+
+static func _valider_effet_durable(categorie: String, entree: Dictionary) -> String:
+	var champs := _champs_effet_durable(categorie, entree)
+	if champs.is_empty() or not _champs_exacts_durables(entree, champs):
+		return "definition de scene: effet durable inconnu ou incoherent: %s" % categorie
+	if categorie == "facts":
+		return _valider_fait_durable(entree)
+	if categorie == "knowledge":
+		if entree["effect"] != "ACQUIRE" or not _identifiant_durable(entree.get("subject_id")):
+			return "definition de scene: effet knowledge invalide"
+		return _valider_tableau_identifiants_durables(entree.get("holder_ids"), true)
+	if categorie == "traces":
+		if entree["effect"] == "CREATE":
+			if not _identifiant_durable(entree.get("creator_id")):
+				return "definition de scene: create trace incomplet"
+			for champ in ["audience_ids", "controller_ids", "accessible_to_ids"]:
+				var erreur := _valider_tableau_identifiants_durables(entree.get(champ), false)
+				if not erreur.is_empty():
+					return erreur
+		elif entree["effect"] in ["GRANT_ACCESS", "REVOKE_ACCESS"]:
+			return _valider_tableau_identifiants_durables(entree.get("accessible_to_ids"), true)
+		return ""
+	if categorie == "promises":
+		if entree["effect"] == "CREATE":
+			if not _identifiant_durable(entree.get("author_id")) or not _chaine_non_vide(entree.get("content_ref")):
+				return "definition de scene: create promise incomplet"
+			return _valider_tableau_identifiants_durables(entree.get("beneficiary_ids"), true)
+		return ""
+	if categorie == "obligations":
+		if entree["effect"] == "CREATE_DUE":
+			if not _identifiant_durable(entree.get("debtor_id")) or not _chaine_non_vide(entree.get("kind")):
+				return "definition de scene: create obligation incomplete"
+			return _valider_tableau_identifiants_durables(entree.get("beneficiary_ids"), true)
+		return ""
+	if categorie == "media_deliveries":
+		if entree["effect"] in ["CREATE_DIEGETIC", "GRANT_ACCESS"]:
+			var erreur := _valider_tableau_identifiants_durables(entree.get("fictional_audience_ids"), false)
+			if not erreur.is_empty():
+				return erreur
+		if entree["effect"] == "GRANT_ACCESS" and (
+			entree.get("diegetic_status") not in ["NOT_APPLICABLE", "CREATED"]
+			or entree.get("gallery_status") not in ["HIDDEN", "AVAILABLE"]
+		):
+			return "definition de scene: grant access media invalide"
+	return ""
+
+
+static func _champs_effet_durable(categorie: String, entree: Dictionary) -> Array:
+	if categorie == "facts":
+		if entree.get("scope") == "RELATION":
+			return CHAMPS_DURABLE_FACT_RELATION
+		if entree.get("scope") == "RELATION_CENTRALE":
+			return CHAMPS_DURABLE_FACT_CENTRALE
+		return []
+	var effet = entree.get("effect")
+	if categorie == "knowledge":
+		return CHAMPS_DURABLE_KNOWLEDGE if effet == "ACQUIRE" else []
+	if categorie == "traces":
+		if effet == "CREATE":
+			return CHAMPS_DURABLE_TRACE_CREATE
+		if effet in ["GRANT_ACCESS", "REVOKE_ACCESS"]:
+			return CHAMPS_DURABLE_TRACE_ACCESS
+		return CHAMPS_DURABLE_TRACE_TERMINAL if effet == "WITHDRAW" else []
+	if categorie == "promises":
+		return CHAMPS_DURABLE_PROMISE_CREATE if effet == "CREATE" else (
+			CHAMPS_DURABLE_PROMISE_TERMINAL if effet in ["PAY", "FAIL"] else []
+		)
+	if categorie == "obligations":
+		return CHAMPS_DURABLE_OBLIGATION_CREATE if effet == "CREATE_DUE" else (
+			CHAMPS_DURABLE_OBLIGATION_TERMINAL if effet in ["PAY", "FAIL"] else []
+		)
+	if categorie == "media_deliveries":
+		if effet == "CREATE_DIEGETIC":
+			return CHAMPS_DURABLE_MEDIA_CREATE
+		if effet == "GRANT_ACCESS":
+			return CHAMPS_DURABLE_MEDIA_GRANT
+		return CHAMPS_DURABLE_MEDIA_TERMINAL if effet in ["REVOKE_ACCESS", "WITHDRAW"] else []
+	return []
+
+
+static func _valider_fait_durable(entree: Dictionary) -> String:
+	if entree["scope"] == "RELATION":
+		if not _identifiant_durable(entree.get("personnage_id")):
+			return "definition de scene: personnage_id requis pour RELATION"
+	elif entree.has("personnage_id"):
+		return "definition de scene: personnage_id interdit pour RELATION_CENTRALE"
+	var fait = entree.get("fact")
+	if typeof(fait) != TYPE_DICTIONARY or not _champs_autorises_durables(fait, CHAMPS_DURABLE_FACT):
+		return "definition de scene: forme de fait durable incoherente"
+	if not _identifiant_durable(fait.get("fait_id")):
+		return "definition de scene: fait durable sans identifiant"
+	for champ in fait:
+		if champ == "permission_future":
+			if typeof(fait[champ]) != TYPE_BOOL:
+				return "definition de scene: permission_future durable invalide"
+		elif not _chaine_non_vide(fait[champ]):
+			return "definition de scene: champ de fait durable vide"
+	return ""
+
+
+static func _identifiant_effet_durable(categorie: String, entree: Dictionary):
+	if categorie == "facts":
+		var fait = entree.get("fact")
+		return fait.get("fait_id") if typeof(fait) == TYPE_DICTIONARY else null
+	var champs := {
+		"knowledge": "knowledge_id", "traces": "trace_id", "promises": "promise_id",
+		"obligations": "obligation_id", "media_deliveries": "media_id",
+	}
+	return entree.get(champs.get(categorie, ""))
+
+
+static func _valider_tableau_identifiants_durables(value, non_vide: bool) -> String:
+	if typeof(value) != TYPE_ARRAY or (non_vide and value.is_empty()):
+		return "definition de scene: tableau d'identifiants durable invalide"
+	var vus := {}
+	for identifiant in value:
+		if not _identifiant_durable(identifiant) or vus.has(identifiant):
+			return "definition de scene: tableau d'identifiants durable invalide"
+		vus[identifiant] = true
+	return ""
+
+
+static func _champs_exacts_durables(value: Dictionary, attendus: Array) -> bool:
+	return value.size() == attendus.size() and _champs_autorises_durables(value, attendus)
+
+
+static func _champs_autorises_durables(value: Dictionary, autorises: Array) -> bool:
+	for champ in value:
+		if champ not in autorises:
+			return false
+	return true
+
+
+static func _identifiant_durable(value) -> bool:
+	if (
+		typeof(value) != TYPE_STRING
+		or value.is_empty()
+		or value.length() > MAX_LONGUEUR_IDENTIFIANT_DURABLE
+		or value != value.strip_edges()
+	):
+		return false
+	for index in value.length():
+		if value.substr(index, 1) not in "abcdefghijklmnopqrstuvwxyz0123456789_":
+			return false
+	var morceaux: PackedStringArray = value.to_lower().split("_", false)
+	for index in morceaux.size():
+		var morceau: String = morceaux[index]
+		if morceau.length() == 3 and morceau.begins_with("j") and morceau.substr(1, 2).is_valid_int():
+			return false
+		if morceau == "chapter" and index + 1 < morceaux.size():
+			var numero: String = morceaux[index + 1]
+			if numero.length() == 2 and numero.is_valid_int():
+				return false
+	return true
+
+
+static func _version_authored_durable(value) -> bool:
+	if typeof(value) != TYPE_STRING:
+		return false
+	var morceaux: PackedStringArray = value.split(".", false)
+	if morceaux.size() != 3:
+		return false
+	for morceau in morceaux:
+		if not morceau.is_valid_int() or int(morceau) < 0 or (morceau.length() > 1 and morceau.begins_with("0")):
+			return false
+	return true
 
 
 static func _valider_choix(definition: Dictionary) -> String:

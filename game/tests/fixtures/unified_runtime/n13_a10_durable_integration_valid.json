@@ -74,7 +74,31 @@
                 "recu_par": "sandra"
               }
             ],
-            "convergence": "RETOUR_NOYAU_COMMUN"
+            "convergence": "RETOUR_NOYAU_COMMUN",
+            "durable_manifest": {
+              "binding": {
+                "sequence_id": "synthetic_n13_durable_sequence",
+                "authored_version": "1.0.0",
+                "resolution_id": "resolution_complete"
+              },
+              "facts": [
+                {
+                  "event_key": "synthetic_n13_relation_fact",
+                  "scope": "RELATION",
+                  "personnage_id": "sandra",
+                  "fact": {
+                    "fait_id": "synthetic_n13_relation_fact",
+                    "nature": "SYNTHETIC_TEST_ONLY",
+                    "recu_par": "sandra"
+                  }
+                }
+              ],
+              "knowledge": [],
+              "traces": [],
+              "promises": [],
+              "obligations": [],
+              "media_deliveries": []
+            }
           }
         },
         "choix": [

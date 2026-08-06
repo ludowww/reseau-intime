@@ -63,21 +63,93 @@
         "resolutions": {
           "a3_resolution_continue": {
             "personnage_id": "synthetic_actor",
-            "portee_micro_signal": "LOCALE",
+            "portee_micro_signal": "DURABLE",
             "signal_recu": "synthetic_signal",
-            "reception": "NON_PERSISTANTE",
+            "reception": "RECUE_INTERPRETEE",
             "interpretation": "synthetic_continue",
-            "faits_relationnels": [],
-            "convergence": "RETOUR_NOYAU_COMMUN"
+            "faits_relationnels": [
+              {
+                "fait_id": "synthetic_continue_fact",
+                "nature": "SYNTHETIC_TEST_ONLY",
+                "recu_par": "synthetic_actor"
+              }
+            ],
+            "convergence": "RETOUR_NOYAU_COMMUN",
+            "durable_manifest": {
+              "binding": {
+                "sequence_id": "synthetic_projection_contract_01",
+                "authored_version": "1.0.0",
+                "resolution_id": "resolution_complete"
+              },
+              "facts": [
+                {
+                  "event_key": "synthetic_continue_fact",
+                  "scope": "RELATION",
+                  "personnage_id": "synthetic_actor",
+                  "fact": {
+                    "fait_id": "synthetic_continue_fact",
+                    "nature": "SYNTHETIC_TEST_ONLY",
+                    "recu_par": "synthetic_actor"
+                  }
+                }
+              ],
+              "knowledge": [],
+              "traces": [],
+              "promises": [],
+              "obligations": [
+                {
+                  "event_key": "synthetic_obligation_paid",
+                  "effect": "PAY",
+                  "obligation_id": "synthetic_obligation"
+                }
+              ],
+              "media_deliveries": []
+            }
           },
           "a3_resolution_stop": {
             "personnage_id": "synthetic_actor",
-            "portee_micro_signal": "LOCALE",
+            "portee_micro_signal": "DURABLE",
             "signal_recu": "synthetic_signal",
-            "reception": "NON_PERSISTANTE",
+            "reception": "RECUE_INTERPRETEE",
             "interpretation": "synthetic_stop",
-            "faits_relationnels": [],
-            "convergence": "RETOUR_NOYAU_COMMUN"
+            "faits_relationnels": [
+              {
+                "fait_id": "synthetic_stop_fact",
+                "nature": "SYNTHETIC_TEST_ONLY",
+                "recu_par": "synthetic_actor"
+              }
+            ],
+            "convergence": "RETOUR_NOYAU_COMMUN",
+            "durable_manifest": {
+              "binding": {
+                "sequence_id": "synthetic_projection_contract_01",
+                "authored_version": "1.0.0",
+                "resolution_id": "resolution_stop"
+              },
+              "facts": [
+                {
+                  "event_key": "synthetic_stop_fact",
+                  "scope": "RELATION",
+                  "personnage_id": "synthetic_actor",
+                  "fact": {
+                    "fait_id": "synthetic_stop_fact",
+                    "nature": "SYNTHETIC_TEST_ONLY",
+                    "recu_par": "synthetic_actor"
+                  }
+                }
+              ],
+              "knowledge": [],
+              "traces": [],
+              "promises": [],
+              "obligations": [
+                {
+                  "event_key": "synthetic_obligation_failed",
+                  "effect": "FAIL",
+                  "obligation_id": "synthetic_obligation"
+                }
+              ],
+              "media_deliveries": []
+            }
           }
         },
         "choix": [
@@ -350,7 +422,9 @@
       "a10_resolution_id": "a3_resolution_continue",
       "terminal_checkpoint_id": "checkpoint_resolution_ready",
       "event_refs": [],
-      "fact_ids": [],
+      "fact_ids": [
+        "synthetic_continue_fact"
+      ],
       "knowledge_ids": [],
       "trace_ids": [],
       "promise_effects": [],
@@ -377,7 +451,9 @@
       "a10_resolution_id": "a3_resolution_stop",
       "terminal_checkpoint_id": "checkpoint_resolution_ready",
       "event_refs": [],
-      "fact_ids": [],
+      "fact_ids": [
+        "synthetic_stop_fact"
+      ],
       "knowledge_ids": [],
       "trace_ids": [],
       "promise_effects": [],
