@@ -1204,6 +1204,7 @@ static func _validate_a6_durable_manifest(value, path: String, errors: Array[Str
 			_add_error(errors, path + ".binding.authored_version", "expected_major_minor_patch")
 		_validate_business_id(binding["resolution_id"], path + ".binding.resolution_id", errors)
 	var event_keys := {}
+	var effect_count := 0
 	for category in A6_DURABLE_CATEGORIES:
 		var entries = value[category]
 		var category_path: String = path + "." + str(category)
@@ -1212,6 +1213,7 @@ static func _validate_a6_durable_manifest(value, path: String, errors: Array[Str
 			continue
 		var business_ids := {}
 		for index in entries.size():
+			effect_count += 1
 			var item_path: String = category_path + "[%d]" % index
 			var entry = entries[index]
 			if typeof(entry) != TYPE_DICTIONARY:
@@ -1238,6 +1240,8 @@ static func _validate_a6_durable_manifest(value, path: String, errors: Array[Str
 				_add_error(errors, item_path + ".business_id", "duplicate")
 			else:
 				business_ids[business_id] = true
+	if effect_count == 0:
+		_add_error(errors, path, "non_empty_effect_set_required")
 
 
 static func _a6_durable_effect_fields(category: String, entry: Dictionary) -> Array:
@@ -1296,7 +1300,7 @@ static func _validate_a6_durable_effect(
 					if typeof(fact[field]) != TYPE_BOOL:
 						_add_error(errors, path + ".fact.permission_future", "expected_boolean")
 				else:
-					_validate_non_empty_string(fact[field], path + ".fact." + field, errors)
+					_validate_durable_string(fact[field], path + ".fact." + field, errors)
 		return
 	if category == "knowledge":
 		_validate_business_id(entry["knowledge_id"], path + ".knowledge_id", errors)
@@ -1317,14 +1321,14 @@ static func _validate_a6_durable_effect(
 		if entry["effect"] == "CREATE":
 			_validate_business_id(entry["author_id"], path + ".author_id", errors)
 			_validate_id_array(entry["beneficiary_ids"], path + ".beneficiary_ids", errors, true)
-			_validate_non_empty_string(entry["content_ref"], path + ".content_ref", errors)
+			_validate_durable_string(entry["content_ref"], path + ".content_ref", errors)
 		return
 	if category == "obligations":
 		_validate_business_id(entry["obligation_id"], path + ".obligation_id", errors)
 		if entry["effect"] == "CREATE_DUE":
 			_validate_business_id(entry["debtor_id"], path + ".debtor_id", errors)
 			_validate_id_array(entry["beneficiary_ids"], path + ".beneficiary_ids", errors, true)
-			_validate_non_empty_string(entry["kind"], path + ".kind", errors)
+			_validate_durable_string(entry["kind"], path + ".kind", errors)
 		return
 	_validate_business_id(entry["media_id"], path + ".media_id", errors)
 	if entry["effect"] in ["CREATE_DIEGETIC", "GRANT_ACCESS"]:
@@ -1553,6 +1557,16 @@ static func _has_required_fields(value: Dictionary, fields: Array) -> bool:
 static func _validate_non_empty_string(value, path: String, errors: Array[String]) -> void:
 	if typeof(value) != TYPE_STRING or value.is_empty() or value != value.strip_edges():
 		_add_error(errors, path, "expected_non_empty_string")
+
+
+static func _validate_durable_string(value, path: String, errors: Array[String]) -> void:
+	if (
+		typeof(value) != TYPE_STRING
+		or value.is_empty()
+		or value.length() > 512
+		or value != value.strip_edges()
+	):
+		_add_error(errors, path, "invalid_durable_string")
 
 
 static func _validate_non_empty_string_array(value, path: String, errors: Array[String]) -> void:

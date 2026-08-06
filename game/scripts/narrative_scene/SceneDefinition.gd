@@ -333,9 +333,12 @@ static func _valider_resolutions(definition: Dictionary) -> String:
 		if portee == "DURABLE":
 			if reception == "NON_PERSISTANTE" or faits.is_empty():
 				return "definition de scene: durable exige reception, interpretation et fait explicites"
-		var erreur_manifeste := _valider_manifeste_durable(resolution.get("durable_manifest", {}))
+		var manifeste_durable = resolution.get("durable_manifest", {})
+		var erreur_manifeste := _valider_manifeste_durable(manifeste_durable)
 		if not erreur_manifeste.is_empty():
 			return erreur_manifeste
+		if portee != "DURABLE" and not manifeste_durable.is_empty():
+			return "definition de scene: durable_manifest non vide interdit pour resolution locale"
 	return ""
 
 
@@ -387,12 +390,14 @@ static func _valider_manifeste_durable(manifeste) -> String:
 	if not _identifiant_durable(binding["resolution_id"]):
 		return "definition de scene: durable_manifest binding resolution invalide"
 	var event_keys := {}
+	var nombre_effets := 0
 	for categorie in CATEGORIES_DURABLES:
 		var entrees = manifeste[categorie]
 		if typeof(entrees) != TYPE_ARRAY:
 			return "definition de scene: categorie durable doit etre un tableau: %s" % categorie
 		var identifiants := {}
 		for entree in entrees:
+			nombre_effets += 1
 			if typeof(entree) != TYPE_DICTIONARY:
 				return "definition de scene: effet durable invalide: %s" % categorie
 			var event_key = entree.get("event_key")
@@ -410,6 +415,8 @@ static func _valider_manifeste_durable(manifeste) -> String:
 			if identifiants.has(identifiant):
 				return "definition de scene: identifiant metier durable duplique"
 			identifiants[identifiant] = true
+	if nombre_effets == 0:
+		return "definition de scene: durable_manifest sans effet"
 	return ""
 
 
@@ -436,13 +443,13 @@ static func _valider_effet_durable(categorie: String, entree: Dictionary) -> Str
 		return ""
 	if categorie == "promises":
 		if entree["effect"] == "CREATE":
-			if not _identifiant_durable(entree.get("author_id")) or not _chaine_non_vide(entree.get("content_ref")):
+			if not _identifiant_durable(entree.get("author_id")) or not _chaine_durable(entree.get("content_ref")):
 				return "definition de scene: create promise incomplet"
 			return _valider_tableau_identifiants_durables(entree.get("beneficiary_ids"), true)
 		return ""
 	if categorie == "obligations":
 		if entree["effect"] == "CREATE_DUE":
-			if not _identifiant_durable(entree.get("debtor_id")) or not _chaine_non_vide(entree.get("kind")):
+			if not _identifiant_durable(entree.get("debtor_id")) or not _chaine_durable(entree.get("kind")):
 				return "definition de scene: create obligation incomplete"
 			return _valider_tableau_identifiants_durables(entree.get("beneficiary_ids"), true)
 		return ""
@@ -507,7 +514,7 @@ static func _valider_fait_durable(entree: Dictionary) -> String:
 		if champ == "permission_future":
 			if typeof(fait[champ]) != TYPE_BOOL:
 				return "definition de scene: permission_future durable invalide"
-		elif not _chaine_non_vide(fait[champ]):
+		elif not _chaine_durable(fait[champ]):
 			return "definition de scene: champ de fait durable vide"
 	return ""
 
@@ -566,6 +573,15 @@ static func _identifiant_durable(value) -> bool:
 			if numero.length() == 2 and numero.is_valid_int():
 				return false
 	return true
+
+
+static func _chaine_durable(value) -> bool:
+	return (
+		typeof(value) == TYPE_STRING
+		and not value.is_empty()
+		and value.length() <= 512
+		and value == value.strip_edges()
+	)
 
 
 static func _version_authored_durable(value) -> bool:
