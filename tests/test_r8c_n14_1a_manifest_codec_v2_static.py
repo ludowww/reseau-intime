@@ -18,6 +18,14 @@ MANIFEST_FIELDS = {
     "media_deliveries",
 }
 BINDING_FIELDS = {"sequence_id", "authored_version", "resolution_id"}
+DURABLE_CATEGORIES = (
+    "facts",
+    "knowledge",
+    "traces",
+    "promises",
+    "obligations",
+    "media_deliveries",
+)
 NARRATIVE_ROOTS_V2 = {
     "format_version",
     "progression_saison",
@@ -32,15 +40,18 @@ NARRATIVE_ROOTS_V2 = {
 }
 ALLOWED_PATHS = {
     "game/scripts/narrative_scene/SceneDefinition.gd",
+    "game/scripts/unified_runtime/contracts/AuthoredSequenceV1.gd",
     "game/scripts/unified_runtime/contracts/AuthoredSequenceValidator.gd",
     "game/scripts/narrative_scene/A5NarrativeStateCodec.gd",
     "game/scripts/narrative_state/EtatNarratif.gd",
     "game/tests/fixtures/unified_runtime/authored_sequence_v1_minimal_valid.json",
     "game/tests/fixtures/unified_runtime/n13_a10_durable_integration_valid.json",
     "tests/test_r8c_n12_unified_content_contract_static.py",
+    "tests/test_r8c_n13_minimal_sequence_executor_static.py",
     "tests/test_r8c_n14_1a_manifest_codec_v2_static.py",
     "game/tests/R8C_N14_1AManifestCodecV2SmokeDriver.gd",
     "game/tests/R8C_N14_1AManifestCodecV2SmokeTest.tscn",
+    "game/tests/R8C_N13MinimalSequenceExecutorSmokeDriver.gd",
 }
 PROTECTED_N13 = {
     "game/scripts/unified_runtime/execution/SequenceExecutor.gd",
@@ -69,6 +80,7 @@ class R8CN141AManifestCodecV2StaticTests(unittest.TestCase):
         }
         for path in required | {
             "game/scripts/narrative_scene/SceneDefinition.gd",
+            "game/scripts/unified_runtime/contracts/AuthoredSequenceV1.gd",
             "game/scripts/unified_runtime/contracts/AuthoredSequenceValidator.gd",
             "game/scripts/narrative_scene/A5NarrativeStateCodec.gd",
             "game/scripts/narrative_state/EtatNarratif.gd",
@@ -100,6 +112,43 @@ class R8CN141AManifestCodecV2StaticTests(unittest.TestCase):
                         "resolution_id": resolution_id,
                     },
                 )
+                entries = [
+                    entry
+                    for category in DURABLE_CATEGORIES
+                    for entry in manifest[category]
+                ]
+                self.assertEqual(
+                    [entry["event_key"] for entry in entries],
+                    [event_ref["event_key"] for event_ref in resolution["event_refs"]],
+                )
+                self.assertEqual(
+                    [entry["fact"]["fait_id"] for entry in manifest["facts"]],
+                    resolution["fact_ids"],
+                )
+                self.assertEqual(
+                    [entry["knowledge_id"] for entry in manifest["knowledge"]],
+                    resolution["knowledge_ids"],
+                )
+                self.assertEqual(
+                    [entry["trace_id"] for entry in manifest["traces"]],
+                    resolution["trace_ids"],
+                )
+                for category, authored_field, id_field in (
+                    ("promises", "promise_effects", "promise_id"),
+                    ("obligations", "obligation_effects", "obligation_id"),
+                    ("media_deliveries", "media_effects", "media_id"),
+                ):
+                    self.assertEqual(
+                        [
+                            {id_field: entry[id_field], "effect": entry["effect"]}
+                            for entry in manifest[category]
+                        ],
+                        [
+                            effect
+                            for effect in resolution[authored_field]
+                            if effect["effect"] != "NONE"
+                        ],
+                    )
             self.assertGreater(linked, 0)
 
     def test_both_a6_validators_duplicate_the_same_closed_manifest_contract(self):
@@ -126,9 +175,27 @@ class R8CN141AManifestCodecV2StaticTests(unittest.TestCase):
             "_validate_a6_durable_manifest",
             "_validate_a6_durable_effect",
             "_validate_a6_manifest_binding",
+            "_validate_a6_manifest_authored_effects",
+            "_authored_non_none_effects",
         ):
             self.assertIn(f"static func {function}", authored)
         self.assertNotIn("SceneDefinition", authored)
+
+    def test_authored_media_withdraw_keeps_schema_v1(self):
+        contract = self.read("game/scripts/unified_runtime/contracts/AuthoredSequenceV1.gd")
+        self.assertIn("const SCHEMA_VERSION := 1", contract)
+        media_effects = re.search(r"const MEDIA_EFFECTS := \[(.*?)\]", contract)
+        self.assertIsNotNone(media_effects)
+        self.assertEqual(
+            [
+                "CREATE_DIEGETIC",
+                "GRANT_ACCESS",
+                "REVOKE_ACCESS",
+                "WITHDRAW",
+                "NONE",
+            ],
+            re.findall(r'"([A-Z_]+)"', media_effects.group(1)),
+        )
 
     def test_manifest_validation_preserves_authored_order_and_has_no_generic_architecture(self):
         scene = self.read("game/scripts/narrative_scene/SceneDefinition.gd")
@@ -211,6 +278,7 @@ class R8CN141AManifestCodecV2StaticTests(unittest.TestCase):
             "local manifest absent accepted",
             "local empty manifest accepted",
             "minimal durable manifest valid",
+            "local authored NONE has no manifest entry or event_key",
             "six ordered categories accepted",
             "unknown manifest category rejected",
             "incomplete binding rejected",
@@ -221,7 +289,7 @@ class R8CN141AManifestCodecV2StaticTests(unittest.TestCase):
             "committable resolution requires manifest",
             "committable effectless manifest rejected with parity",
             "non-empty local manifest rejected",
-            "unknown and NONE effect rejected",
+            "NONE present in manifest rejected",
             "manifest provenance rejected",
             "derived status rejected",
             "empty event key rejected",
@@ -230,6 +298,19 @@ class R8CN141AManifestCodecV2StaticTests(unittest.TestCase):
             "RELATION requires personnage_id",
             "RELATION_CENTRALE forbids personnage_id even null",
             "authored category and entry order preserved",
+            "missing authored event_ref rejected",
+            "extra authored event_ref rejected",
+            "duplicate authored event_ref rejected",
+            "divergent authored event_ref order rejected",
+            "divergent authored fact_ids rejected",
+            "divergent authored knowledge_ids rejected",
+            "divergent authored trace_ids rejected",
+            "divergent authored promise effect rejected",
+            "divergent authored obligation effect rejected",
+            "divergent authored media effect rejected",
+            "manifest effect without authored representation rejected",
+            "coherent authored manifest WITHDRAW accepted",
+            "divergent authored manifest WITHDRAW rejected",
             "empty v2 snapshot valid",
             "v2 with all five registries valid",
             "v1 with missing registries accepted",

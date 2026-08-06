@@ -799,7 +799,7 @@ static func _validate_references(
 				claimed_a10_resolutions[a10_resolution_id] = resolution_id
 			if a10_resolutions.has(a10_resolution_id) and typeof(a10_resolutions[a10_resolution_id]) == TYPE_DICTIONARY:
 				_validate_a6_manifest_binding(
-					a10_resolutions[a10_resolution_id], sequence, resolution_id, path, errors
+					a10_resolutions[a10_resolution_id], sequence, resolution, resolution_id, path, errors
 				)
 		if not checkpoints.has(resolution["terminal_checkpoint_id"]):
 			_add_error(errors, path + ".terminal_checkpoint_id", "unknown_checkpoint")
@@ -1169,6 +1169,7 @@ static func _validate_a6_resolutions(
 static func _validate_a6_manifest_binding(
 	a6_resolution: Dictionary,
 	sequence: Dictionary,
+	authored_resolution: Dictionary,
 	resolution_id,
 	path: String,
 	errors: Array[String]
@@ -1186,6 +1187,108 @@ static func _validate_a6_manifest_binding(
 		_add_error(errors, path + ".a10_resolution_id", "durable_manifest_version_binding_mismatch")
 	if binding.get("resolution_id") != resolution_id:
 		_add_error(errors, path + ".a10_resolution_id", "durable_manifest_resolution_binding_mismatch")
+	_validate_a6_manifest_authored_effects(manifest, authored_resolution, path, errors)
+
+
+static func _validate_a6_manifest_authored_effects(
+	manifest: Dictionary,
+	resolution: Dictionary,
+	path: String,
+	errors: Array[String]
+) -> void:
+	var expected := {
+		"event_keys": [],
+		"fact_ids": [],
+		"knowledge_ids": [],
+		"trace_ids": [],
+		"promise_effects": [],
+		"obligation_effects": [],
+		"media_effects": [],
+	}
+	for category in A6_DURABLE_CATEGORIES:
+		var entries = manifest.get(category)
+		if typeof(entries) != TYPE_ARRAY:
+			continue
+		for entry in entries:
+			if typeof(entry) != TYPE_DICTIONARY:
+				continue
+			expected["event_keys"].append(entry.get("event_key"))
+			if category == "facts":
+				var fact = entry.get("fact")
+				expected["fact_ids"].append(
+					fact.get("fait_id") if typeof(fact) == TYPE_DICTIONARY else null
+				)
+			elif category == "knowledge":
+				expected["knowledge_ids"].append(entry.get("knowledge_id"))
+			elif category == "traces":
+				expected["trace_ids"].append(entry.get("trace_id"))
+			elif category == "promises":
+				expected["promise_effects"].append({
+					"promise_id": entry.get("promise_id"), "effect": entry.get("effect"),
+				})
+			elif category == "obligations":
+				expected["obligation_effects"].append({
+					"obligation_id": entry.get("obligation_id"), "effect": entry.get("effect"),
+				})
+			elif category == "media_deliveries":
+				expected["media_effects"].append({
+					"media_id": entry.get("media_id"), "effect": entry.get("effect"),
+				})
+
+	var authored_event_keys: Array = []
+	var event_refs = resolution.get("event_refs")
+	if typeof(event_refs) == TYPE_ARRAY:
+		for event_ref in event_refs:
+			if typeof(event_ref) == TYPE_DICTIONARY:
+				authored_event_keys.append(event_ref.get("event_key"))
+	_validate_a6_authored_projection(
+		authored_event_keys, expected["event_keys"], path + ".event_refs", "durable_manifest_event_keys_mismatch", errors
+	)
+	for field in ["fact_ids", "knowledge_ids", "trace_ids"]:
+		_validate_a6_authored_projection(
+			resolution.get(field),
+			expected[field],
+			path + "." + field,
+			"durable_manifest_%s_mismatch" % field,
+			errors,
+		)
+	for effect_binding in [
+		["promise_effects", "promise_id"],
+		["obligation_effects", "obligation_id"],
+		["media_effects", "media_id"],
+	]:
+		var field: String = effect_binding[0]
+		_validate_a6_authored_projection(
+			_authored_non_none_effects(resolution.get(field), effect_binding[1]),
+			expected[field],
+			path + "." + field,
+			"durable_manifest_%s_mismatch" % field,
+			errors,
+		)
+
+
+static func _authored_non_none_effects(value, id_field: String) -> Array:
+	var result: Array = []
+	if typeof(value) != TYPE_ARRAY:
+		return result
+	for item in value:
+		if typeof(item) != TYPE_DICTIONARY or item.get("effect") == "NONE":
+			continue
+		var projected := {"effect": item.get("effect")}
+		projected[id_field] = item.get(id_field)
+		result.append(projected)
+	return result
+
+
+static func _validate_a6_authored_projection(
+	actual,
+	expected: Array,
+	path: String,
+	reason: String,
+	errors: Array[String]
+) -> void:
+	if actual != expected:
+		_add_error(errors, path, reason)
 
 
 static func _validate_a6_durable_manifest(value, path: String, errors: Array[String]) -> void:

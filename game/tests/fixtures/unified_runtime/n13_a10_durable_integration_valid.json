@@ -316,7 +316,13 @@
       "a10_choice_id": "a10_choice_commit",
       "a10_resolution_id": "a10_resolution_commit",
       "terminal_checkpoint_id": "checkpoint_resolution_ready",
-      "event_refs": [],
+      "event_refs": [
+        {
+          "event_type": "durable_manifest_event",
+          "event_key": "synthetic_n13_relation_fact",
+          "reducer_id": "a6_durable_manifest"
+        }
+      ],
       "fact_ids": [
         "synthetic_n13_relation_fact"
       ],

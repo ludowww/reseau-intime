@@ -26,6 +26,14 @@ func _test_manifests() -> void:
 		return
 	_expect(AuthoredValidator.validate(sequence)["valid"], "minimal durable manifest valid")
 	_expect(_definition_valid(sequence), "minimal durable manifest valid in A6")
+	_expect(
+		sequence["resolutions"]["resolution_complete"]["media_effects"] == [{
+			"media_id": "synthetic_media", "effect": "NONE",
+		}]
+		and _manifest(sequence)["media_deliveries"].is_empty()
+		and not _authored_event_keys(sequence, "resolution_complete").has("synthetic_media"),
+		"local authored NONE has no manifest entry or event_key",
+	)
 
 	var local_absent: Dictionary = sequence["orchestration"]["a6_entry"]["definition"].duplicate(true)
 	_make_resolution_local(local_absent["resolutions"]["a3_resolution_continue"])
@@ -37,11 +45,56 @@ func _test_manifests() -> void:
 
 	var full := sequence.duplicate(true)
 	full["orchestration"]["a6_entry"]["definition"]["resolutions"]["a3_resolution_continue"]["durable_manifest"] = _full_manifest()
+	_bind_authored_effects_to_manifest(full, "resolution_complete")
 	_expect(AuthoredValidator.validate(full)["valid"] and _definition_valid(full), "six ordered categories accepted")
 	var order_before: Dictionary = _manifest(full).duplicate(true)
 	AuthoredValidator.validate(full)
 	SceneDefinition.valider_fermee(full["orchestration"]["a6_entry"]["definition"])
 	_expect(_manifest(full) == order_before, "authored category and entry order preserved")
+
+	var missing_event_ref := full.duplicate(true)
+	missing_event_ref["resolutions"]["resolution_complete"]["event_refs"].remove_at(0)
+	_expect(not AuthoredValidator.validate(missing_event_ref)["valid"], "missing authored event_ref rejected")
+	var extra_event_ref := full.duplicate(true)
+	extra_event_ref["resolutions"]["resolution_complete"]["event_refs"].append({
+		"event_type": "durable_manifest_event",
+		"event_key": "unexpected_manifest_event",
+		"reducer_id": "a6_durable_manifest",
+	})
+	_expect(not AuthoredValidator.validate(extra_event_ref)["valid"], "extra authored event_ref rejected")
+	var duplicate_event_ref := full.duplicate(true)
+	duplicate_event_ref["resolutions"]["resolution_complete"]["event_refs"].append(
+		duplicate_event_ref["resolutions"]["resolution_complete"]["event_refs"][0].duplicate(true)
+	)
+	_expect(not AuthoredValidator.validate(duplicate_event_ref)["valid"], "duplicate authored event_ref rejected")
+	var divergent_event_order := full.duplicate(true)
+	var reordered_refs: Array = divergent_event_order["resolutions"]["resolution_complete"]["event_refs"]
+	var first_ref = reordered_refs[0]
+	reordered_refs[0] = reordered_refs[1]
+	reordered_refs[1] = first_ref
+	_expect(not AuthoredValidator.validate(divergent_event_order)["valid"], "divergent authored event_ref order rejected")
+
+	var divergent_fact_ids := full.duplicate(true)
+	divergent_fact_ids["resolutions"]["resolution_complete"]["fact_ids"][0] = "other_fact"
+	_expect(not AuthoredValidator.validate(divergent_fact_ids)["valid"], "divergent authored fact_ids rejected")
+	var divergent_knowledge_ids := full.duplicate(true)
+	divergent_knowledge_ids["resolutions"]["resolution_complete"]["knowledge_ids"][0] = "other_knowledge"
+	_expect(not AuthoredValidator.validate(divergent_knowledge_ids)["valid"], "divergent authored knowledge_ids rejected")
+	var divergent_trace_ids := full.duplicate(true)
+	divergent_trace_ids["resolutions"]["resolution_complete"]["trace_ids"][0] = "other_trace"
+	_expect(not AuthoredValidator.validate(divergent_trace_ids)["valid"], "divergent authored trace_ids rejected")
+	var divergent_promise := full.duplicate(true)
+	divergent_promise["resolutions"]["resolution_complete"]["promise_effects"][0]["effect"] = "PAY"
+	_expect(not AuthoredValidator.validate(divergent_promise)["valid"], "divergent authored promise effect rejected")
+	var divergent_obligation := full.duplicate(true)
+	divergent_obligation["resolutions"]["resolution_complete"]["obligation_effects"][0]["effect"] = "FAIL"
+	_expect(not AuthoredValidator.validate(divergent_obligation)["valid"], "divergent authored obligation effect rejected")
+	var divergent_media := full.duplicate(true)
+	divergent_media["resolutions"]["resolution_complete"]["media_effects"][0]["effect"] = "REVOKE_ACCESS"
+	_expect(not AuthoredValidator.validate(divergent_media)["valid"], "divergent authored media effect rejected")
+	var unrepresented_manifest_effect := full.duplicate(true)
+	unrepresented_manifest_effect["resolutions"]["resolution_complete"]["promise_effects"] = []
+	_expect(not AuthoredValidator.validate(unrepresented_manifest_effect)["valid"], "manifest effect without authored representation rejected")
 
 	var extra_category := full.duplicate(true)
 	_manifest(extra_category)["unknown_category"] = []
@@ -74,7 +127,7 @@ func _test_manifests() -> void:
 
 	var unknown_effect := full.duplicate(true)
 	_manifest(unknown_effect)["promises"][0]["effect"] = "NONE"
-	_expect(_both_reject(unknown_effect), "unknown and NONE effect rejected with parity")
+	_expect(_both_reject(unknown_effect), "NONE present in manifest rejected with parity")
 	var unknown_field := full.duplicate(true)
 	_manifest(unknown_field)["knowledge"][0]["provenance"] = {}
 	_expect(_both_reject(unknown_field), "manifest provenance rejected with parity")
@@ -108,6 +161,18 @@ func _test_manifests() -> void:
 		and _manifest(full)["facts"][1]["scope"] == "RELATION_CENTRALE",
 		"RELATION and RELATION_CENTRALE valid forms covered",
 	)
+
+	var withdraw := full.duplicate(true)
+	_manifest(withdraw)["media_deliveries"] = [{
+		"event_key": "manifest_media",
+		"effect": "WITHDRAW",
+		"media_id": "synthetic_media",
+	}]
+	_bind_authored_effects_to_manifest(withdraw, "resolution_complete")
+	_expect(AuthoredValidator.validate(withdraw)["valid"] and _definition_valid(withdraw), "coherent authored manifest WITHDRAW accepted")
+	var divergent_withdraw := withdraw.duplicate(true)
+	divergent_withdraw["resolutions"]["resolution_complete"]["media_effects"][0]["effect"] = "REVOKE_ACCESS"
+	_expect(not AuthoredValidator.validate(divergent_withdraw)["valid"], "divergent authored manifest WITHDRAW rejected")
 
 
 func _test_codec_v2() -> void:
@@ -232,6 +297,51 @@ func _full_manifest() -> Dictionary:
 			"diegetic_status": "NOT_APPLICABLE", "fictional_audience_ids": [], "gallery_status": "HIDDEN",
 		}],
 	}
+
+
+func _bind_authored_effects_to_manifest(sequence: Dictionary, resolution_id: String) -> void:
+	var resolution: Dictionary = sequence["resolutions"][resolution_id]
+	var a10_resolution_id: String = resolution["a10_resolution_id"]
+	var manifest: Dictionary = sequence["orchestration"]["a6_entry"]["definition"]["resolutions"][a10_resolution_id]["durable_manifest"]
+	resolution["event_refs"] = []
+	resolution["fact_ids"] = []
+	resolution["knowledge_ids"] = []
+	resolution["trace_ids"] = []
+	resolution["promise_effects"] = []
+	resolution["obligation_effects"] = []
+	resolution["media_effects"] = []
+	for category in DURABLE_CATEGORIES:
+		for entry in manifest[category]:
+			resolution["event_refs"].append({
+				"event_type": "durable_manifest_event",
+				"event_key": entry["event_key"],
+				"reducer_id": "a6_durable_manifest",
+			})
+			if category == "facts":
+				resolution["fact_ids"].append(entry["fact"]["fait_id"])
+			elif category == "knowledge":
+				resolution["knowledge_ids"].append(entry["knowledge_id"])
+			elif category == "traces":
+				resolution["trace_ids"].append(entry["trace_id"])
+			elif category == "promises":
+				resolution["promise_effects"].append({
+					"promise_id": entry["promise_id"], "effect": entry["effect"],
+				})
+			elif category == "obligations":
+				resolution["obligation_effects"].append({
+					"obligation_id": entry["obligation_id"], "effect": entry["effect"],
+				})
+			elif category == "media_deliveries":
+				resolution["media_effects"].append({
+					"media_id": entry["media_id"], "effect": entry["effect"],
+				})
+
+
+func _authored_event_keys(sequence: Dictionary, resolution_id: String) -> Array:
+	var event_keys: Array = []
+	for event_ref in sequence["resolutions"][resolution_id]["event_refs"]:
+		event_keys.append(event_ref["event_key"])
+	return event_keys
 
 
 func _populate_registries(snapshot: Dictionary) -> void:

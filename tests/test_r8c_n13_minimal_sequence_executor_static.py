@@ -121,8 +121,21 @@ class R8CN13MinimalSequenceExecutorStaticTests(unittest.TestCase):
         self.assertEqual("a10_choice_commit", resolution["a10_choice_id"])
         self.assertEqual("a10_resolution_commit", resolution["a10_resolution_id"])
         self.assertEqual(["synthetic_n13_relation_fact"], resolution["fact_ids"])
+        self.assertEqual(
+            [
+                {
+                    "event_type": "durable_manifest_event",
+                    "event_key": "synthetic_n13_relation_fact",
+                    "reducer_id": "a6_durable_manifest",
+                }
+            ],
+            resolution["event_refs"],
+        )
+        self.assertEqual(
+            ["synthetic_n13_relation_fact"],
+            [event_ref["event_key"] for event_ref in resolution["event_refs"]],
+        )
         for field in (
-            "event_refs",
             "knowledge_ids",
             "trace_ids",
             "promise_effects",

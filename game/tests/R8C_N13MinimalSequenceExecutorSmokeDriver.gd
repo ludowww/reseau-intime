@@ -16,6 +16,7 @@ const INSTANCE_ID := "synthetic_n13_instance"
 const EXPECTED_BEAT_TYPES := [
 	"MESSAGE", "TRANSITION", "PHYSICAL_BEAT", "MEDIA_REVEAL", "AFTERCARE", "CHOICE", "RETURN",
 ]
+const DURABLE_CATEGORIES := ["facts", "knowledge", "traces", "promises", "obligations", "media_deliveries"]
 
 var failures: Array[String] = []
 var controls := 0
@@ -189,7 +190,7 @@ func _run() -> void:
 	if not fixture_validation["valid"]:
 		print("R8C_N13_FIXTURE_ERRORS: ", fixture_validation["errors"])
 	_expect(fixture_validation["valid"], "fixture N13 authored valide")
-	_expect(_closed_fixture_effects(sequence), "fixture sans effets N14")
+	_expect(_fixture_event_refs_match_manifests(sequence), "fixture event_refs egaux aux manifestes")
 	var continuous := _run_complete(sequence, false)
 	var restored := _run_complete(sequence, true)
 	_expect(not continuous.is_empty(), "flux continu termine")
@@ -250,6 +251,11 @@ func _run_complete(sequence: Dictionary, with_restores: bool) -> Dictionary:
 	_expect(committed["payload"]["a10_result"]["transaction_status"] == "APPLIQUE", "commit A10 applique")
 	_expect(committed["payload"]["sequence_resolution"]["resolution_id"] == "resolution_complete", "resolution authored conservee")
 	_expect(committed["payload"]["sequence_resolution"]["a10_resolution_id"] == "a10_resolution_commit", "resolution A10 explicite")
+	_expect(
+		committed["payload"]["sequence_resolution"]["event_keys"]
+		== _manifest_event_keys(sequence, "resolution_complete"),
+		"enveloppe contient exactement les event_keys du manifeste",
+	)
 	if with_restores:
 		var third := _restore_executor(sequence, executor.snapshot()["payload"]["snapshot"])
 		if third.is_empty():
@@ -716,19 +722,28 @@ func _restore_integer_types(sequence: Dictionary) -> void:
 			beat["content"]["delay"]["value"] = int(beat["content"]["delay"]["value"])
 
 
-func _closed_fixture_effects(sequence: Dictionary) -> bool:
-	for resolution in sequence["resolutions"].values():
-		if (
-			not resolution["event_refs"].is_empty()
-			or not resolution["knowledge_ids"].is_empty()
-			or not resolution["trace_ids"].is_empty()
-			or not resolution["promise_effects"].is_empty()
-			or not resolution["obligation_effects"].is_empty()
-			or not resolution["consequence_ids"].is_empty()
-			or not resolution["media_effects"].is_empty()
-		):
+func _fixture_event_refs_match_manifests(sequence: Dictionary) -> bool:
+	for resolution_id in sequence["resolutions"]:
+		var resolution: Dictionary = sequence["resolutions"][resolution_id]
+		if resolution["a10_resolution_id"] == null:
+			continue
+		var authored_event_keys: Array = []
+		for event_ref in resolution["event_refs"]:
+			authored_event_keys.append(event_ref["event_key"])
+		if authored_event_keys != _manifest_event_keys(sequence, resolution_id):
 			return false
 	return true
+
+
+func _manifest_event_keys(sequence: Dictionary, resolution_id: String) -> Array:
+	var resolution: Dictionary = sequence["resolutions"][resolution_id]
+	var definition: Dictionary = sequence["orchestration"]["a6_entry"]["definition"]
+	var manifest: Dictionary = definition["resolutions"][resolution["a10_resolution_id"]]["durable_manifest"]
+	var event_keys: Array = []
+	for category in DURABLE_CATEGORIES:
+		for entry in manifest[category]:
+			event_keys.append(entry["event_key"])
+	return event_keys
 
 
 func _count_relation_fact(domain: Dictionary) -> int:

@@ -421,7 +421,18 @@
       "a10_choice_id": "choice_start",
       "a10_resolution_id": "a3_resolution_continue",
       "terminal_checkpoint_id": "checkpoint_resolution_ready",
-      "event_refs": [],
+      "event_refs": [
+        {
+          "event_type": "durable_manifest_event",
+          "event_key": "synthetic_continue_fact",
+          "reducer_id": "a6_durable_manifest"
+        },
+        {
+          "event_type": "durable_manifest_event",
+          "event_key": "synthetic_obligation_paid",
+          "reducer_id": "a6_durable_manifest"
+        }
+      ],
       "fact_ids": [
         "synthetic_continue_fact"
       ],
@@ -450,7 +461,18 @@
       "a10_choice_id": "choice_start",
       "a10_resolution_id": "a3_resolution_stop",
       "terminal_checkpoint_id": "checkpoint_resolution_ready",
-      "event_refs": [],
+      "event_refs": [
+        {
+          "event_type": "durable_manifest_event",
+          "event_key": "synthetic_stop_fact",
+          "reducer_id": "a6_durable_manifest"
+        },
+        {
+          "event_type": "durable_manifest_event",
+          "event_key": "synthetic_obligation_failed",
+          "reducer_id": "a6_durable_manifest"
+        }
+      ],
       "fact_ids": [
         "synthetic_stop_fact"
       ],
