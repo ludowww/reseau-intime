@@ -38,6 +38,14 @@ En cas de conflit sur la source technique des mutations d'un commit unifié, la
 décision N14 prévaut. Elle ne retire pas à la résolution authored son autorité
 player-facing et ne change aucune autre frontière N11/N12/N13.
 
+### 1.1 Corrections après première revue produit
+
+La première revue produit demande et le présent correctif intègre cinq
+fermetures supplémentaires : l'effet média `WITHDRAW`, la vérification d'un
+replay avant toute exigence `PROPOSED`, l'union fermée des faits, l'ordre strict
+des `event_keys` et une publication finale synchrone et non réentrante. Le
+statut reste prêt pour revue produit et n'est pas encore un statut approuvé.
+
 ## 2. Diagnostic du runtime verrouillé
 
 Le diagnostic de départ est fermé et vérifié sur la baseline :
@@ -193,6 +201,13 @@ L'ordre interne de chaque tableau est préservé. `sequence_resolution.event_key
 doit être strictement égal à cette liste : mêmes valeurs, même cardinal, même
 ordre, aucune clé absente, supplémentaire ou dupliquée.
 
+`event_keys` est un tableau ordonné, jamais un ensemble. Le validateur ne le
+trie pas et ne normalise pas un ordre erroné. Il refuse avant toute mutation :
+
+- une clé manquante, supplémentaire, dupliquée ou inconnue ;
+- les mêmes clés présentées dans un ordre différent ;
+- tout ordre divergent entre l'enveloppe et l'ordre canonique du manifeste A6.
+
 Les effets authored `NONE` restent admis par le contrat authored existant, mais
 ne produisent aucune entrée de manifeste, aucune `event_key` et aucune mutation.
 
@@ -204,7 +219,8 @@ construit depuis l'instance, le binding et le contexte validés.
 
 | Catégorie | Forme fermée |
 |---|---|
-| `facts` | `{event_key,target,personnage_id,fact}` ; `target = RELATION|RELATION_CENTRALE`, `personnage_id` est requis seulement pour `RELATION`, et `fact` respecte la structure de fait A1/A5 existante avec son `fait_id` |
+| `facts` `RELATION` | `{event_key,scope,personnage_id,fact}` ; `scope = RELATION`, `personnage_id` est obligatoire et non nul |
+| `facts` `RELATION_CENTRALE` | `{event_key,scope,fact}` ; `scope = RELATION_CENTRALE` et `personnage_id` est absent |
 | `knowledge` | `{event_key,effect,knowledge_id,subject_id,holder_ids}` avec `effect = ACQUIRE` |
 | `traces` `CREATE` | `{event_key,effect,trace_id,creator_id,audience_ids,controller_ids,accessible_to_ids}` |
 | `traces` `WITHDRAW` | `{event_key,effect,trace_id}` |
@@ -216,6 +232,7 @@ construit depuis l'instance, le binding et le contexte validés.
 | `media_deliveries` `CREATE_DIEGETIC` | `{event_key,effect,media_id,fictional_audience_ids}` |
 | `media_deliveries` `GRANT_ACCESS` | `{event_key,effect,media_id,diegetic_status,fictional_audience_ids,gallery_status}` |
 | `media_deliveries` `REVOKE_ACCESS` | `{event_key,effect,media_id}` |
+| `media_deliveries` `WITHDRAW` | `{event_key,effect,media_id}` |
 
 Pour un `GRANT_ACCESS` qui matérialise un média non encore enregistré,
 `diegetic_status`, `fictional_audience_ids` et `gallery_status` fournissent
@@ -468,8 +485,8 @@ Valeurs autorisées :
 | `gallery_status` | `HIDDEN`, `AVAILABLE` |
 | `withdrawal_status` | `ACTIVE`, `WITHDRAWN` |
 
-Effets authored existants : `CREATE_DIEGETIC`, `GRANT_ACCESS`,
-`REVOKE_ACCESS`, `NONE`.
+Effets authored : `CREATE_DIEGETIC`, `GRANT_ACCESS`, `REVOKE_ACCESS`,
+`WITHDRAW`, `NONE`.
 
 Règles :
 
@@ -483,13 +500,36 @@ Règles :
   demande explicitement et si l'accès résultant est `ACCESSIBLE` ;
 - `REVOKE_ACCESS` conserve le record et sa provenance, fixe
   `access_status = REVOKED` et `gallery_status = HIDDEN` ;
-- un média `WITHDRAWN` ne peut pas recevoir un nouvel accès sans un nouvel effet
-  authored explicitement autorisé par un futur contrat ; N14 ne définit pas cet
-  effet de réactivation ;
+- `WITHDRAW` exige un record existant avec `withdrawal_status = ACTIVE`, conserve
+  `media_id` et la provenance d'origine, puis applique exactement
+  `ACTIVE → WITHDRAWN` ;
+- `WITHDRAW` fixe `withdrawal_status = WITHDRAWN`, fixe
+  `gallery_status = HIDDEN` et fixe `access_status = REVOKED` si l'accès était
+  encore `ACCESSIBLE` ;
+- `WITHDRAW` ne modifie pas rétroactivement `fictional_audience_ids`, ne supprime
+  ni l'existence diégétique ni le fichier technique, et ne crée aucune audience
+  ou accès ;
+- l'événement A1 source conserve l'historique durable de la transition, tandis
+  que le record reste présent et conserve sa provenance d'origine ;
+- un nouveau `WITHDRAW` strictement identique sur le même média déjà
+  `WITHDRAWN` rend `IDEMPOTENT`, sans second record, seconde mutation, nouvelle
+  provenance ou réouverture de transaction ;
+- `WITHDRAW` sur un identifiant absent est refusé ; combiner création et retrait
+  du même média dans un manifeste initial est également interdit ;
+- `GRANT_ACCESS`, `CREATE_DIEGETIC` ou tout changement de `WITHDRAWN` vers
+  `ACTIVE` sont refusés comme tentatives de réactivation ;
+- un retrait rejoué sous le même identifiant d'événement avec contenu ou
+  provenance divergente est rejeté avant mutation ;
 - `VIEWED` reste un reçu de présentation N13/N16 et n'appartient pas à ce
   registre ;
 - l'existence du fichier technique, son chargement ou un placeholder restent
   hors du registre et ne donnent aucun droit.
+
+`REVOKE_ACCESS` et `WITHDRAW` sont distincts. `REVOKE_ACCESS` retire seulement
+l'accès joueur et laisse `withdrawal_status = ACTIVE`. `WITHDRAW` ferme
+durablement le média authored et interdit tout nouvel accès sans une nouvelle
+décision de contrat/version. La version initiale ne possède aucun effet
+`RESTORE`, `REACTIVATE` ou `UNWITHDRAW`.
 
 N14 ne connecte ni Galerie, ni PhotoViewer.
 
@@ -500,10 +540,24 @@ Les faits relationnels restent exclusivement dans les structures actuelles :
 - `relations` pour un personnage ;
 - `relation_centrale` pour la relation centrale.
 
-Le manifeste peut déclarer des faits et leur cible, mais il ne crée aucune
-troisième racine de faits. Les records continuent d'utiliser la structure A1/A5
-existante ; la provenance commune est construite et injectée par A3 selon les
-champs compatibles du record de fait.
+Le manifeste peut déclarer des faits, mais il ne crée aucune troisième racine
+de faits. Le payload atomique `facts` utilise exclusivement l'union fermée :
+
+```text
+{scope: RELATION, personnage_id, fact}
+{scope: RELATION_CENTRALE, fact}
+```
+
+Pour `RELATION`, `personnage_id` est obligatoire et non nul. Pour
+`RELATION_CENTRALE`, le champ `personnage_id` doit être absent, jamais présent
+avec la valeur `null`. Le reducer choisit la destination exclusivement via
+`scope`. Il refuse un `scope` inconnu, toute forme incohérente et tout fait
+dirigé vers une troisième racine.
+
+Le `event_key` commun du descripteur de manifeste enveloppe cette mutation ; il
+n'ajoute aucune variante à l'union du payload `facts`. Les records continuent
+d'utiliser la structure A1/A5 existante ; la provenance commune est construite
+et injectée par A3 selon les champs compatibles du record de fait.
 
 Dans N14.1, `consequence_ids` reste limité aux conséquences qualitatives déjà
 représentables par les relations ou les faits. Aucun reducer générique de
@@ -536,14 +590,26 @@ obligations
 media_deliveries
 ```
 
-Chaque valeur est la copie profonde, ordonnée et validée de la catégorie
-correspondante du manifeste ; aucune catégorie libre n'est admise. Le binding
-n'est pas recopié dans le payload parce que ses identités sont déjà validées et
-portées par la provenance.
+Chaque valeur est la projection profonde, ordonnée et validée de la catégorie
+correspondante du manifeste ; aucune catégorie libre n'est admise. Pour
+`facts`, le `event_key` du descripteur est validé contre l'enveloppe, puis
+l'objet placé dans le payload possède exactement l'une des deux formes fermées
+de la section 12, sans champ supplémentaire. Le binding n'est pas recopié dans
+le payload parce que ses identités sont déjà validées et portées par la
+provenance.
 
 L'événement est construit par A3 depuis `durable_manifest`. Il n'est jamais
 fourni directement par l'UI, le port de projection, l'exécuteur ou
 `sequence_resolution`.
+
+Le conflit d'identifiant est vérifié avant tout reducer et avant toute mutation :
+
+- même `event_id` et payload strictement identique : `IDEMPOTENT` ;
+- même `event_id` et payload différent : `REJETE`.
+
+La comparaison inclut l'enveloppe, la provenance et les six catégories
+ordonnées. Le runtime ne trie ni ne normalise le payload reçu pour transformer
+une divergence en rejeu valide.
 
 ## 14. Reducers ciblés et état candidat
 
@@ -572,39 +638,95 @@ interpréteur de payload libre, ni un système de plugins.
 
 ## 15. Protocole atomique A1 + A5
 
-### 15.1 Phase de préparation
+### 15.1 Ordre normatif de `resolve_scene`
 
-Avant toute mutation visible, A3/A5 doivent effectuer dans cet ordre :
+Le flux est strictement :
 
-1. valider l'instance A5 et relire sa définition A6 exacte ;
-2. valider la forme fermée de `context.sequence_resolution` ;
-3. vérifier le lien instance/définition, le choix A10, la résolution A10 et le
-   binding authored/A10 ;
-4. comparer les `event_keys` au manifeste A6 ;
-5. construire `R8C_A1_SEQUENCE_RESOLUTION_V1` depuis ce manifeste ;
-6. copier l'état narratif courant et préparer toutes les mutations A1 sur ce
+```text
+valider les identités stables
+→ rechercher et revalider une terminaison persistée
+→ retourner IDEMPOTENT si elle est strictement identique
+→ sinon exiger PROPOSED pour un nouveau commit
+→ préparer A1 et A5
+→ publier A1 et A5 sans observation intermédiaire
+```
+
+L'idempotence n'est pas une exception à la machine d'état. Elle constate qu'un
+commit identique a déjà été entièrement publié.
+
+### 15.2 Étape 1 — validation d'identité stable
+
+Avant toute exigence sur le statut courant et sans mutation, A3/A5 vérifient :
+
+1. l'instance présente et sa définition A6 liée ;
+2. la version de définition ;
+3. le choix A10 et la résolution A10 ;
+4. la forme fermée de `context.sequence_resolution` ;
+5. le binding de `durable_manifest` ;
+6. l'identifiant déterministe de transaction ;
+7. l'ordre strict et l'unicité des `event_keys`.
+
+### 15.3 Étape 2 — terminaison persistée et replay
+
+Avant de vérifier `instance.state == PROPOSED`, le runtime recherche une
+terminaison persistée portant le même identifiant de transaction.
+
+Si l'instance est déjà `RESOLVED`, le replay rend `IDEMPOTENT` seulement si les
+éléments suivants correspondent exactement :
+
+- même opération et même transaction ;
+- même choix A10 et même résolution A10 ;
+- même binding authored ;
+- mêmes `event_keys`, dans le même ordre ;
+- même événement A1, même provenance et même payload durable ;
+- même état final A5.
+
+Ce retour n'effectue aucune nouvelle préparation, publication ou mutation et ne
+rouvre aucune transaction. Si l'identité terminale diffère, le résultat est
+`RESOLUTION_TERMINALE_DIFFERENTE`. Si l'identité paraît identique mais que
+l'événement A1, le payload ou l'état A5 retrouvé diverge, le résultat est
+`TERMINAISON_PERSISTEE_INCOHERENTE`. Un événement A1 sans terminaison A5, ou une
+terminaison A5 sans événement A1, est incohérent et ne peut jamais être réparé
+par un replay.
+
+### 15.4 Étape 3 — préparation d'un nouveau commit
+
+L'exigence `instance.state == PROPOSED` s'applique uniquement lorsqu'aucune
+terminaison persistée correspondante n'existe. Ensuite seulement :
+
+1. construire `R8C_A1_SEQUENCE_RESOLUTION_V1` depuis le manifeste A6 ;
+2. copier l'état narratif courant et préparer toutes les mutations A1 sur un
    candidat commun ;
-7. valider entièrement le candidat avec le codec A5 v2 ;
-8. préparer, sans l'appliquer, la transition de l'instance A5 vers `RESOLVED`.
+3. valider entièrement le candidat avec le codec A5 v2 ;
+4. préparer, sans l'appliquer, la transition A5 vers `RESOLVED`.
 
 Aucune mutation réelle, aucun remplacement d'état, aucun ajout d'événement et
 aucune transition d'instance ne se produit pendant cette phase.
 
-### 15.2 Phase de commit
+### 15.5 Publication finale synchrone et non réentrante
 
-Le commit commence seulement lorsque les deux préparations sont valides. Il
-effectue exactement :
+Le commit commence seulement lorsque les deux préparations sont valides. Dans
+le même appel `resolve_scene`, il effectue exactement :
 
-1. la publication de l'état narratif candidat déjà validé ;
-2. l'application de la transition d'instance A5 déjà préparée.
+1. publier l'état narratif candidat A1 déjà validé ;
+2. appliquer immédiatement la transition A5 déjà préparée ;
+3. seulement après les deux opérations, construire et retourner la quittance
+   publique.
 
-Ces deux opérations finales doivent être infallibles après préparation : aucune
-validation, allocation métier, lookup externe, callback UI ou écriture disque
-ne reste dans la phase de commit. Si N14.1 ne peut pas garantir qu'une
-publication ne refusera plus, son implémentation doit être déclarée bloquée ;
-elle ne doit ni simuler l'atomicité, ni ajouter un rollback général.
+Cette phase est synchrone, non réentrante, sans `await`, callback externe,
+émission de signal, notification, projection UI, hook plugin ou publication
+intermédiaire observable. Aucun observateur externe ne peut lire l'état entre
+les étapes 1 et 2. Les deux opérations sont déjà validées, sans branche de refus,
+allocation métier ou dépendance externe encore susceptible d'échouer.
 
-### 15.3 Rejet et invariants
+Si ces garanties ne peuvent pas être obtenues avec les primitives disponibles,
+N14.1 doit être déclaré `N14_1_BLOCKED_ATOMIC_PUBLICATION`. Il est interdit de
+compenser après qu'une mutation est devenue observable. D'éventuels signaux,
+notifications ou projections ne peuvent survenir qu'après le succès complet ;
+ils restent hors transaction durable. N14.1 n'ajoute toutefois aucun signal ni
+event bus.
+
+### 15.6 Rejet et invariants
 
 Tout échec avant publication conserve bit pour bit ou structurellement à
 l'identique :
@@ -612,11 +734,13 @@ l'identique :
 - l'état narratif initial ;
 - le registre A5 initial ;
 - l'instance initiale ;
-- son statut `PROPOSED`.
+- son statut initial : `PROPOSED` pour un nouveau commit ou `RESOLVED` pour la
+  revalidation d'un replay terminal.
 
 Le même événement et la même terminaison rendent `IDEMPOTENT`. Le même
-`event_id` avec un contenu différent rend `REJETE`. Une instance déjà résolue
-avec une autre résolution rend `RESOLUTION_TERMINALE_DIFFERENTE`.
+`event_id` avec un payload strictement identique rend `IDEMPOTENT` ; avec un
+payload différent, il rend `REJETE` avant toute mutation. Une instance déjà
+résolue avec une autre résolution rend `RESOLUTION_TERMINALE_DIFFERENTE`.
 
 Il n'existe aucune deuxième écriture durable après `resolve_scene` et aucun
 effet intermédiaire visible entre A1 et A5.
@@ -638,9 +762,10 @@ terminal_checkpoint_id
 event_keys
 ```
 
-La validation vérifie :
+La validation d'identité vérifie :
 
-- l'instance exacte et son statut `PROPOSED` ;
+- l'instance exacte ; son statut `PROPOSED` n'est exigé qu'après la recherche
+  d'une terminaison persistée correspondante ;
 - `scene_definition_id` et `definition_version` contre la définition A6 liée ;
 - `sequence_id` et `authored_version` contre `durable_manifest.binding` ;
 - `resolution_id` contre le binding unique ;
@@ -740,9 +865,17 @@ La future gate doit couvrir au minimum :
 - binding authored différent ;
 - `event_keys` incomplets ;
 - `event_keys` supplémentaires ;
+- `event_keys` dupliqués ;
+- mêmes `event_keys` dans un ordre différent ;
+- `event_key` inconnu ;
+- ordre divergent entre enveloppe et manifeste ;
 - effet inconnu ;
 - registre inconnu ;
 - même identifiant avec contenu différent ;
+- `personnage_id` absent pour un fait `RELATION` ;
+- `personnage_id` présent pour un fait `RELATION_CENTRALE` ;
+- `scope` de fait inconnu ;
+- fait dirigé vers une troisième racine ;
 - promesse payée avant création ;
 - promesse terminale modifiée ;
 - obligation payée avant `DUE` ;
@@ -750,11 +883,24 @@ La future gate doit couvrir au minimum :
 - trace retirée puis accès accordé ;
 - média accessible sans `GRANT_ACCESS` ;
 - Galerie `AVAILABLE` sans accès `ACCESSIBLE` ;
+- retrait d'un média inexistant ;
+- double retrait strictement identique idempotent ;
+- double retrait divergent rejeté ;
+- accès accordé après retrait ;
+- Galerie rendue disponible après retrait ;
+- réactivation implicite d'un média retiré ;
+- `REVOKE_ACCESS` confondu avec `WITHDRAW` ;
 - audience fictionnelle créée par simple présentation ;
 - snapshot v2 mal formé ;
 - snapshot v1 non migrable ;
 - échec du dernier reducer sans mutation partielle ;
 - transition A5 non préparée sans mutation A1 ;
+- instance `RESOLVED` avec même transaction et payload différent ;
+- instance `RESOLVED` avec même transaction et `event_keys` différents ;
+- événement A1 présent mais terminaison A5 absente ;
+- terminaison A5 présente mais événement A1 absent ;
+- instance `RESOLVED` avec un autre choix ou une autre résolution ;
+- instance non `PROPOSED` sans terminaison correspondante ;
 - rejeu strictement identique idempotent ;
 - résolution divergente rejetée avec
   `RESOLUTION_TERMINALE_DIFFERENTE`.
@@ -798,13 +944,16 @@ ni N15.
 - [x] Autorité technique du `durable_manifest` A6 fermée.
 - [x] Amendement N11/N12.1 explicite et catalogue authored absent d'A10.
 - [x] Binding, catégories et `event_keys` fermés.
+- [x] Ordre et unicité des `event_keys` stricts, sans tri ni normalisation.
 - [x] Cinq registres, statuts, effets et transitions définis.
+- [x] Retrait média `WITHDRAW` distinct de `REVOKE_ACCESS`, terminal et idempotent.
 - [x] Aftercare exclusivement représenté par une obligation.
-- [x] Faits conservés dans les deux racines relationnelles existantes.
+- [x] Union fermée des faits et conservation des deux racines relationnelles existantes.
 - [x] `format_version = 2` et compatibilité v1 technique fermés.
 - [x] Provenance commune sans jour, score ou texte UI.
 - [x] Événement `R8C_A1_SEQUENCE_RESOLUTION_V1` fermé.
-- [x] Préparation et commit A1 + A5 infallible fermés.
+- [x] Replay terminal revalidé avant toute exigence `PROPOSED`.
+- [x] Publication A1 + A5 synchrone, non réentrante et sans signal intermédiaire.
 - [x] Compatibilité du flux synthétique historique sans fallback.
 - [x] Allowlist, fixture et cas négatifs N14.1 définis.
 - [x] Aucun code, test, fixture, donnée, A1–A10, N13, UI, legacy ou contenu
