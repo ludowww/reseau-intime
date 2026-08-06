@@ -22,7 +22,7 @@ class R8CN152MessagesUIProjectionStaticTests(unittest.TestCase):
 
     def gdscript_function(self, source: str, name: str) -> str:
         match = re.search(
-            rf"^(?:static )?func {re.escape(name)}\([^\n]*\)(?: -> [^:]+)?:\n(.*?)(?=^(?:static )?func |\Z)",
+            rf"^(?:static )?func {re.escape(name)}\([\s\S]*?\)(?: -> [^:\n]+)?:\n(.*?)(?=^(?:static )?func |\Z)",
             source,
             re.M | re.S,
         )
@@ -102,29 +102,34 @@ class R8CN152MessagesUIProjectionStaticTests(unittest.TestCase):
         for field in ["characters", "threads", "messages_by_thread", "choices_by_thread"]:
             self.assertIn(f'"{field}"', empty_source)
         project = self.gdscript_function(source, "_project_messages")
+        self.assertIn("_authored_message_dto(authored_message, _active)", project)
+        mapping_helper = self.gdscript_function(source, "_authored_message_dto")
         for mapping in [
-            '"message_id": message_id',
+            '"message_id": str(authored_message.get("message_id", ""))',
             '"author_id": author_id',
             '"text": str(authored_message.get("text", ""))',
             '"timestamp": _timestamp_for_diegetic(diegetic_at)',
             '"diegetic_at": diegetic_at',
             '"content_type": "TEXT"',
             '"media_ref": ""',
-            '"sequence_id": _active["sequence_id"]',
-            '"beat_id": _active["beat_id"]',
-            '"presentation_id": _active["presentation_id"]',
+            '"sequence_id": active["sequence_id"]',
+            '"beat_id": active["beat_id"]',
+            '"presentation_id": active["presentation_id"]',
         ]:
-            self.assertIn(mapping, project)
-        self.assertNotIn('"source_day"', project)
+            self.assertIn(mapping, mapping_helper)
+        self.assertNotIn('"source_day"', mapping_helper)
 
     def test_choice_mapping_is_authored_enabled_and_does_not_invent_confirmation(self):
-        project = self.gdscript_function(self.read(ADAPTER), "_project_choices")
-        self.assertIn('"choice_id": choice_id', project)
-        self.assertIn('"text": str(authored_choice.get("text", ""))', project)
-        self.assertIn('"enabled": true', project)
-        self.assertNotIn("confirmation_required", project)
+        source = self.read(ADAPTER)
+        project = self.gdscript_function(source, "_project_choices")
+        self.assertIn("_choice_dto(authored_choice, _active)", project)
+        mapping_helper = self.gdscript_function(source, "_choice_dto")
+        self.assertIn('"choice_id": str(authored_choice.get("choice_id", ""))', mapping_helper)
+        self.assertIn('"text": str(authored_choice.get("text", ""))', mapping_helper)
+        self.assertIn('"enabled": true', mapping_helper)
+        self.assertNotIn("confirmation_required", mapping_helper)
         for forbidden in ["resolution_id", "score", "route", "preference"]:
-            self.assertNotIn(forbidden, project)
+            self.assertNotIn(forbidden, mapping_helper)
 
     def test_thread_resolution_is_exact_and_refuses_zero_or_many(self):
         resolve = self.gdscript_function(self.read(ADAPTER), "_resolve_thread")
@@ -165,8 +170,10 @@ class R8CN152MessagesUIProjectionStaticTests(unittest.TestCase):
         apply_choice = self.gdscript_function(source, "apply_choice")
         self.assertIn('_command("SELECT_CHOICE", choice_id)', apply_choice)
         self.assertEqual(1, apply_choice.count("_executor.receive_command"))
-        self.assertIn('"is_player": true', apply_choice)
-        self.assertIn('"timestamp": ""', apply_choice)
+        self.assertIn("_player_bubble_dto(selected_choice, _active)", apply_choice)
+        bubble = self.gdscript_function(source, "_player_bubble_dto")
+        self.assertIn('"is_player": true', bubble)
+        self.assertIn('"timestamp": ""', bubble)
         identity = self.gdscript_function(source, "_player_bubble_id")
         self.assertIn('"%s__choice__%s__player"', identity)
         for forbidden in ["rand", "ticks", "unix", "uuid"]:
@@ -219,11 +226,59 @@ class R8CN152MessagesUIProjectionStaticTests(unittest.TestCase):
         self.assertIn('"presented_message_ids_by_thread"', snapshot)
         restore = self.gdscript_function(source, "restore")
         self.assertLess(restore.index("_source_matches_metadata"), restore.index("_source ="))
+        self.assertLess(restore.index("_presented_ids_match_source"), restore.index("_source ="))
         self.assertLess(restore.index("_active_matches_execution"), restore.index("_active ="))
         port = self.gdscript_function(self.read(PORT), "snapshot")
         self.assertIn('"snapshot_version": 1', port)
         runtime_snapshot = self.read("game/scripts/unified_runtime/execution/UnifiedRuntimeSnapshotV1.gd")
         self.assertIn("const SCHEMA_VERSION := 1", runtime_snapshot)
+
+    def test_snapshot_candidate_shape_prefix_and_active_are_closed(self):
+        source = self.read(ADAPTER)
+        source_validation = self.gdscript_function(source, "_source_matches_metadata")
+        for proof in [
+            "_has_exact_keys(candidate, expected_source.keys())",
+            "_thread_snapshot_matches_catalog",
+            "_messages_are_closed",
+            "_choices_are_closed",
+            "_thread_mutable_fields_match_messages",
+        ]:
+            self.assertIn(proof, source_validation)
+        presented = self.gdscript_function(source, "_presented_ids_match_source")
+        self.assertIn("_has_exact_keys(candidate, thread_ids)", presented)
+        self.assertIn("source_ids.slice(0, presented.size())", presented)
+        active = self.gdscript_function(source, "_active_matches_execution")
+        self.assertIn("_executor.current_beat()", active)
+        self.assertIn("request != expected_request", active)
+        self.assertIn('candidate.get("thread_id") != thread_id', active)
+        closed_choice = self.gdscript_function(source, "_active_choice_matches")
+        self.assertIn('execution.get("execution_status") == "RESOLUTION_READY"', closed_choice)
+        self.assertIn("_player_bubble_dto(authored_choice, candidate)", closed_choice)
+        self.assertIn('selected_choice_id in execution.get("consumed_choice_ids", [])', closed_choice)
+
+    def test_snapshot_smoke_covers_refusals_and_transactional_state(self):
+        smoke = self.read(SMOKE)
+        for proof in [
+            '"thread inconnu ajoute"',
+            '"thread connu retire"',
+            '"participants immuables falsifies"',
+            '"titre immutable falsifie"',
+            '"avatar immutable falsifie"',
+            '"cle messages_by_thread inconnue"',
+            '"cle choices_by_thread inconnue"',
+            '"message authored falsifie"',
+            '"message injecte refuse"',
+            '"ID presente inconnu"',
+            '"ordre prefixe presente falsifie"',
+            '"active.thread_id falsifie"',
+            '"active.message_ids MESSAGE falsifie"',
+            '"active.choice_ids CHOICE falsifie"',
+            '"selected_choice_id ferme divergeant"',
+            '"player_bubble_id ferme divergeant"',
+            '"snapshot CHOICE ferme coherent accepte"',
+            "sans mutation adaptateur",
+        ]:
+            self.assertIn(proof, smoke)
 
     def test_smoke_covers_real_message_choice_refusals_and_no_early_write(self):
         smoke = self.read(SMOKE)

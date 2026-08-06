@@ -24,6 +24,7 @@ const FIXTURE_PATH := "res://tests/fixtures/unified_runtime/n15_messages_physica
 const INSTANCE_ID := "synthetic_n15_2_instance"
 const THREAD_ID := "synthetic_n15_thread"
 const MESSAGE_ID := "synthetic_n15_message"
+const SECOND_MESSAGE_ID := "synthetic_n15_message_second"
 const CHOICE_ID := "choice_finish"
 
 var failures: Array[String] = []
@@ -189,7 +190,9 @@ func _test_real_messages_ui(sequence: Dictionary) -> void:
 
 
 func _test_snapshot_restore(sequence: Dictionary) -> void:
-	var environment := _started_environment(sequence)
+	var snapshot_sequence := _snapshot_sequence(sequence)
+	_expect(AuthoredValidator.validate(snapshot_sequence)["valid"], "fixture snapshot multi-message valide")
+	var environment := _started_environment(snapshot_sequence)
 	_expect(not environment.is_empty(), "environnement snapshot cree")
 	if environment.is_empty():
 		return
@@ -200,17 +203,18 @@ func _test_snapshot_restore(sequence: Dictionary) -> void:
 	var adapter = created["adapter"]
 	_expect(adapter.open_current_projection()["ok"], "projection snapshot ouverte")
 	var notification := {
-		"notification_id": "%s::%s" % [THREAD_ID, MESSAGE_ID],
+		"notification_id": "%s::%s" % [THREAD_ID, SECOND_MESSAGE_ID],
 		"thread_id": THREAD_ID,
-		"message_id": MESSAGE_ID,
+		"message_id": SECOND_MESSAGE_ID,
 	}
 	_expect(adapter.on_notification_presented(notification)["ok"], "receipt ouvert avant snapshot")
 	var runtime_snapshot: Dictionary = environment["executor"].snapshot()
 	var adapter_snapshot: Dictionary = adapter.snapshot()
 	_expect(runtime_snapshot["ok"] and adapter_snapshot["accepted"], "snapshots runtime et UI acceptes")
-	var restored_port = ProjectionPort.new(sequence)
+	_test_open_message_snapshot_refusals(adapter, adapter_snapshot["snapshot"])
+	var restored_port = ProjectionPort.new(snapshot_sequence)
 	var restored_executor_result: Dictionary = SequenceExecutor.restore(
-		environment["facade"], restored_port, sequence, runtime_snapshot["payload"]["snapshot"]
+		environment["facade"], restored_port, snapshot_sequence, runtime_snapshot["payload"]["snapshot"]
 	)
 	_expect(restored_executor_result["ok"], "executeur restaure")
 	if not restored_executor_result["ok"]:
@@ -238,9 +242,89 @@ func _test_snapshot_restore(sequence: Dictionary) -> void:
 	await _wait_for(func(): return not restored_screen.runtime_delivery_active, 240)
 	await _frames(3)
 	_expect(restored_screen.presentation_count_by_id(MESSAGE_ID) == 1, "reprise sans duplication de bulle")
+	_expect(restored_screen.presentation_count_by_id(SECOND_MESSAGE_ID) == 1, "second message restaure sans duplication")
 	_expect(restored_screen.describe_state()["typing_instance_count"] == 0, "reprise sans typing residuel")
+	await _wait_for(func(): return restored_executor_result["executor"].current_beat().get("type") == "CHOICE", 120)
+	await _wait_for(func(): return restored_screen.thread_choice_count(THREAD_ID) == 1, 120)
+	var choice_snapshot: Dictionary = restored.snapshot()["snapshot"]
+	var forged_choice_ids := choice_snapshot.duplicate(true)
+	forged_choice_ids["active"]["choice_ids"] = ["forged_choice"]
+	_expect_invalid_snapshot_unchanged(restored, forged_choice_ids, "active.choice_ids CHOICE falsifie")
+	var selected: Dictionary = restored.apply_choice(THREAD_ID, CHOICE_ID)
+	_expect(selected["accepted"], "choix ferme disponible pour snapshot")
+	var closed_snapshot: Dictionary = restored.snapshot()["snapshot"]
+	_expect(restored.restore(closed_snapshot)["ok"], "snapshot CHOICE ferme coherent accepte")
+	var forged_selected := closed_snapshot.duplicate(true)
+	forged_selected["active"]["selected_choice_id"] = "forged_choice"
+	_expect_invalid_snapshot_unchanged(restored, forged_selected, "selected_choice_id ferme divergeant")
+	var forged_bubble := closed_snapshot.duplicate(true)
+	forged_bubble["active"]["player_bubble_id"] = "forged_player_bubble"
+	_expect_invalid_snapshot_unchanged(restored, forged_bubble, "player_bubble_id ferme divergeant")
 	restored_screen.queue_free()
 	await _frames(2)
+
+
+func _test_open_message_snapshot_refusals(adapter, valid_snapshot: Dictionary) -> void:
+	var unknown_thread := valid_snapshot.duplicate(true)
+	var injected_thread: Dictionary = unknown_thread["source"]["threads"][0].duplicate(true)
+	injected_thread["thread_id"] = "unknown_thread"
+	unknown_thread["source"]["threads"].append(injected_thread)
+	_expect_invalid_snapshot_unchanged(adapter, unknown_thread, "thread inconnu ajoute")
+
+	var missing_thread := valid_snapshot.duplicate(true)
+	missing_thread["source"]["threads"].clear()
+	_expect_invalid_snapshot_unchanged(adapter, missing_thread, "thread connu retire")
+
+	var forged_participants := valid_snapshot.duplicate(true)
+	forged_participants["source"]["threads"][0]["participant_ids"] = ["sandra"]
+	_expect_invalid_snapshot_unchanged(adapter, forged_participants, "participants immuables falsifies")
+	var forged_title := valid_snapshot.duplicate(true)
+	forged_title["source"]["threads"][0]["title"] = "Forged title"
+	_expect_invalid_snapshot_unchanged(adapter, forged_title, "titre immutable falsifie")
+	var forged_avatar := valid_snapshot.duplicate(true)
+	forged_avatar["source"]["threads"][0]["avatar_ref"] = "X"
+	_expect_invalid_snapshot_unchanged(adapter, forged_avatar, "avatar immutable falsifie")
+
+	var unknown_messages_key := valid_snapshot.duplicate(true)
+	unknown_messages_key["source"]["messages_by_thread"]["unknown_thread"] = []
+	_expect_invalid_snapshot_unchanged(adapter, unknown_messages_key, "cle messages_by_thread inconnue")
+	var unknown_choices_key := valid_snapshot.duplicate(true)
+	unknown_choices_key["source"]["choices_by_thread"]["unknown_thread"] = []
+	_expect_invalid_snapshot_unchanged(adapter, unknown_choices_key, "cle choices_by_thread inconnue")
+
+	var forged_message := valid_snapshot.duplicate(true)
+	forged_message["source"]["messages_by_thread"][THREAD_ID][0]["text"] = "Forged text"
+	_expect_invalid_snapshot_unchanged(adapter, forged_message, "message authored falsifie")
+	var injected_message := valid_snapshot.duplicate(true)
+	var fake: Dictionary = injected_message["source"]["messages_by_thread"][THREAD_ID][-1].duplicate(true)
+	fake["message_id"] = "injected_message"
+	fake["text"] = "Injected text"
+	fake["relative_order"] = 2
+	injected_message["source"]["messages_by_thread"][THREAD_ID].append(fake)
+	injected_message["source"]["threads"][0]["last_preview"] = fake["text"]
+	injected_message["source"]["threads"][0]["unread_count"] = 3
+	_expect_invalid_snapshot_unchanged(adapter, injected_message, "message injecte refuse")
+
+	var unknown_presented := valid_snapshot.duplicate(true)
+	unknown_presented["presented_message_ids_by_thread"][THREAD_ID] = ["unknown_message"]
+	_expect_invalid_snapshot_unchanged(adapter, unknown_presented, "ID presente inconnu")
+	var wrong_prefix := valid_snapshot.duplicate(true)
+	wrong_prefix["presented_message_ids_by_thread"][THREAD_ID] = [SECOND_MESSAGE_ID, MESSAGE_ID]
+	_expect_invalid_snapshot_unchanged(adapter, wrong_prefix, "ordre prefixe presente falsifie")
+
+	var forged_active_thread := valid_snapshot.duplicate(true)
+	forged_active_thread["active"]["thread_id"] = "unknown_thread"
+	_expect_invalid_snapshot_unchanged(adapter, forged_active_thread, "active.thread_id falsifie")
+	var forged_message_ids := valid_snapshot.duplicate(true)
+	forged_message_ids["active"]["message_ids"] = [SECOND_MESSAGE_ID, MESSAGE_ID]
+	_expect_invalid_snapshot_unchanged(adapter, forged_message_ids, "active.message_ids MESSAGE falsifie")
+
+
+func _expect_invalid_snapshot_unchanged(adapter, candidate: Dictionary, label: String) -> void:
+	var before: Dictionary = adapter.snapshot()["snapshot"]
+	var refused: Dictionary = adapter.restore(candidate)
+	_expect(not refused["ok"] and refused["error_code"] == "INVALID_SNAPSHOT", "%s refuse INVALID_SNAPSHOT" % label)
+	_expect(adapter.snapshot()["snapshot"] == before, "%s sans mutation adaptateur" % label)
 
 
 func _test_preflight_refusals() -> void:
@@ -441,6 +525,21 @@ func _message_choice_sequence(sequence: Dictionary) -> Dictionary:
 	for beat in result["beats"]:
 		if beat["beat_id"] == "beat_message":
 			beat["next"]["beat_id"] = "beat_choice"
+	return result
+
+
+func _snapshot_sequence(sequence: Dictionary) -> Dictionary:
+	var result := sequence.duplicate(true)
+	for beat in result["beats"]:
+		if beat.get("beat_id") != "beat_message":
+			continue
+		var second_message: Dictionary = beat["content"]["messages"][0].duplicate(true)
+		second_message["message_id"] = SECOND_MESSAGE_ID
+		second_message["text"] = "Synthetic second snapshot message."
+		second_message["diegetic_at"] = "2032-03-04T10:02:00+01:00"
+		second_message["relative_order"] = 1
+		beat["content"]["messages"].append(second_message)
+		break
 	return result
 
 
