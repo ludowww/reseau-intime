@@ -7,6 +7,9 @@ const InstanceModele := preload("res://scripts/narrative_scene/SceneInstance.gd"
 const EtatNarratifModele := preload("res://scripts/narrative_state/EtatNarratif.gd")
 const EtatNarratifCodec := preload("res://scripts/narrative_scene/A5NarrativeStateCodec.gd")
 const RegistreModele := preload("res://scripts/narrative_scene/PersistentSceneRegistry.gd")
+const SequenceResolutionEvent := preload(
+	"res://scripts/narrative_state/SequenceResolutionEventV1.gd"
+)
 const SNAPSHOT_VERSION := 1
 
 var _registre = RegistreModele.new()
@@ -95,6 +98,36 @@ func obtenir_derniere_erreur_instance() -> String:
 
 func obtenir_instance(instance_id: String):
 	return _registre.obtenir_instance(instance_id)
+
+
+func preparer_registre_resolution_sequence(
+	instance_id: String,
+	moment_diegetique: String,
+	receipt: Dictionary
+) -> Dictionary:
+	var registre_candidat = RegistreModele.creer_depuis_snapshot(_registre.obtenir_snapshot())
+	if registre_candidat == null:
+		return {"ok": false, "erreur": "REGISTRE_SCENES_INVALIDE", "registre": null}
+	var instance_candidate = registre_candidat.obtenir_instance(instance_id)
+	if instance_candidate == null:
+		return {"ok": false, "erreur": "INSTANCE_ABSENTE", "registre": null}
+	var preparation: Dictionary = instance_candidate.preparer_transition(
+		InstanceModele.RESOLVED,
+		"RESOLUTION_SEQUENCE_PREPAREE",
+		moment_diegetique,
+		receipt,
+	)
+	if not preparation["ok"]:
+		return {"ok": false, "erreur": "TRANSITION_NON_PREPARABLE", "registre": null}
+	instance_candidate.appliquer_transition_preparee(preparation)
+	var registre_valide = RegistreModele.creer_depuis_snapshot(registre_candidat.obtenir_snapshot())
+	if registre_valide == null:
+		return {"ok": false, "erreur": "REGISTRE_SCENES_CANDIDAT_INVALIDE", "registre": null}
+	return {"ok": true, "erreur": "", "registre": registre_valide}
+
+
+func _publier_registre_prepare(registre_candidat) -> void:
+	_registre = registre_candidat
 
 
 func declarer_reprise_temporaire(
@@ -886,7 +919,12 @@ func _valider_lien_instance(instance, definition: Dictionary) -> String:
 
 
 static func _registre_coherent_avec_evenements(registre, etat_narratif) -> bool:
-	for evenement in etat_narratif.obtenir_snapshot()["evenements"].values():
+	var evenements: Dictionary = etat_narratif.obtenir_snapshot()["evenements"]
+	for evenement in evenements.values():
+		if evenement.get("event_type") == SequenceResolutionEvent.EVENT_TYPE:
+			if not _resolution_sequence_coherente(registre, evenement):
+				return false
+			continue
 		var provenance: Dictionary = evenement.get("provenance", {})
 		if provenance.get("type") != "R8C_A3_SCENE_SYNTHETIQUE":
 			continue
@@ -909,7 +947,37 @@ static func _registre_coherent_avec_evenements(registre, etat_narratif) -> bool:
 				return false
 		elif terminaison.get("operation") != "MANQUEE" or terminaison.get("choix_id") != "":
 			return false
+	for instance_snapshot in registre.obtenir_snapshot():
+		if not instance_snapshot.has("resolution_receipt"):
+			continue
+		var receipt: Dictionary = instance_snapshot["resolution_receipt"]
+		if not evenements.has(receipt.get("event_id")):
+			return false
+		if not _resolution_sequence_coherente(registre, evenements[receipt["event_id"]]):
+			return false
 	return true
+
+
+static func _resolution_sequence_coherente(registre, evenement: Dictionary) -> bool:
+	if not SequenceResolutionEvent.validate(evenement):
+		return false
+	var provenance: Dictionary = evenement["provenance"]
+	var instance = registre.obtenir_instance(provenance["source_scene_instance_id"])
+	if instance == null or instance.obtenir_statut() != InstanceModele.RESOLVED:
+		return false
+	var receipt: Dictionary = instance.obtenir_recu_resolution()
+	return (
+		not receipt.is_empty()
+		and instance.obtenir_scene_definition_id() == provenance["source_scene_id"]
+		and receipt.get("event_id") == evenement["event_id"]
+		and receipt.get("transaction_id") == evenement["event_id"]
+		and receipt.get("a10_choice_id") == provenance["source_a10_choice_id"]
+		and receipt.get("a10_resolution_id") == provenance["source_a10_resolution_id"]
+		and receipt.get("sequence_id") == provenance["source_sequence_id"]
+		and receipt.get("authored_version") == provenance["source_authored_version"]
+		and receipt.get("authored_resolution_id") == provenance["source_resolution_id"]
+		and receipt.get("event_keys") == SequenceResolutionEvent.event_keys(evenement)
+	)
 
 
 static func _valider_enveloppe_snapshot(value) -> String:

@@ -35,6 +35,20 @@ const CHAMPS_TRACE_TEMPORAIRE := [
 	"source_resolution_id",
 	"created_at",
 ]
+const CHAMPS_RECU_RESOLUTION_SEQUENCE := [
+	"operation",
+	"transaction_id",
+	"event_id",
+	"choice_id",
+	"resolution_id",
+	"a10_choice_id",
+	"a10_resolution_id",
+	"sequence_id",
+	"authored_version",
+	"authored_resolution_id",
+	"terminal_checkpoint_id",
+	"event_keys",
+]
 const MAX_TRACES_TEMPORAIRES := 16
 const MAX_LONGUEUR_CHAINE := 512
 
@@ -70,7 +84,10 @@ static func creer(definition: Dictionary, diagnostic: Dictionary, contexte: Dict
 
 
 static func creer_depuis_snapshot_persistant(snapshot: Dictionary) -> R8CSceneInstance:
-	if not _champs_exacts(snapshot, CHAMPS_SNAPSHOT_PERSISTANT):
+	var champs_attendus: Array = CHAMPS_SNAPSHOT_PERSISTANT.duplicate()
+	if snapshot.has("resolution_receipt"):
+		champs_attendus.append("resolution_receipt")
+	if not _champs_exacts(snapshot, champs_attendus):
 		return null
 	for champ in ["instance_id", "scene_definition_id", "definition_version", "created_at", "last_transition_at"]:
 		if not _chaine_non_vide(snapshot.get(champ)):
@@ -102,12 +119,25 @@ static func creer_depuis_snapshot_persistant(snapshot: Dictionary) -> R8CSceneIn
 		return null
 	var terminaison := {}
 	if statut in STATUTS_TERMINAUX:
-		terminaison = {
-			"operation": operation,
-			"transaction_id": transaction_id,
-			"choix_id": choix_id,
-			"resolution_id": resolution_id,
-		}
+		if snapshot.has("resolution_receipt"):
+			var receipt = snapshot["resolution_receipt"]
+			if not _recu_resolution_sequence_valide(receipt, snapshot["instance_id"]):
+				return null
+			if (
+				receipt["operation"] != operation
+				or receipt["transaction_id"] != transaction_id
+				or receipt["choice_id"] != choix_id
+				or receipt["resolution_id"] != resolution_id
+			):
+				return null
+			terminaison = receipt.duplicate(true)
+		else:
+			terminaison = {
+				"operation": operation,
+				"transaction_id": transaction_id,
+				"choix_id": choix_id,
+				"resolution_id": resolution_id,
+			}
 	var instance := new()
 	instance._donnees = {
 		"instance_id": snapshot["instance_id"],
@@ -129,10 +159,11 @@ func obtenir_snapshot() -> Dictionary:
 
 func obtenir_snapshot_persistant() -> Dictionary:
 	var terminaison: Dictionary = _donnees.get("terminaison", {})
+	var choix_terminal = terminaison.get("choice_id", terminaison.get("choix_id", ""))
 	var traces := {}
 	if obtenir_statut() == PROPOSED:
 		traces = _donnees.get("traces_temporaires", {}).duplicate(true)
-	return {
+	var snapshot := {
 		"instance_id": obtenir_instance_id(),
 		"scene_definition_id": obtenir_scene_definition_id(),
 		"definition_version": _donnees["version_contrat"],
@@ -141,11 +172,14 @@ func obtenir_snapshot_persistant() -> Dictionary:
 		"created_at": _donnees["created_at"],
 		"last_transition_at": _donnees["last_transition_at"],
 		"operation": str(terminaison.get("operation", "")),
-		"choice_id": str(terminaison.get("choix_id", "")),
+		"choice_id": str(choix_terminal),
 		"resolution_id": str(terminaison.get("resolution_id", "")),
 		"transaction_id": str(terminaison.get("transaction_id", "")),
 		"temporary_traces": traces,
 	}
+	if terminaison.get("operation") == "RESOLVE_SCENE":
+		snapshot["resolution_receipt"] = terminaison.duplicate(true)
+	return snapshot
 
 
 func obtenir_instance_id() -> String:
@@ -170,6 +204,11 @@ func obtenir_statut() -> String:
 
 func obtenir_terminaison() -> Dictionary:
 	return _donnees.get("terminaison", {}).duplicate(true)
+
+
+func obtenir_recu_resolution() -> Dictionary:
+	var terminaison: Dictionary = _donnees.get("terminaison", {})
+	return terminaison.duplicate(true) if terminaison.get("operation") == "RESOLVE_SCENE" else {}
 
 
 func preparer_transition(
@@ -291,6 +330,11 @@ static func _terminaison_valide(
 			statut == RESOLVED and not choix_id.is_empty() and not resolution_id.is_empty()
 			and transaction_id == "r8c-a3:%s:resolution:%s" % [instance_id, resolution_id]
 		)
+	if operation == "RESOLVE_SCENE":
+		return (
+			statut == RESOLVED and not choix_id.is_empty() and not resolution_id.is_empty()
+			and transaction_id == "r8c-a1:%s:sequence-resolution:%s" % [instance_id, resolution_id]
+		)
 	if operation == "MANQUEE":
 		return (
 			statut in [MISSED, CANCELLED] and choix_id.is_empty() and resolution_id == "opportunite_manquee"
@@ -306,6 +350,8 @@ static func _terminaison_valide(
 
 
 static func _terminaison_preparee_valide(statut: String, terminaison: Dictionary, instance_id: String) -> bool:
+	if terminaison.get("operation") == "RESOLVE_SCENE":
+		return statut == RESOLVED and _recu_resolution_sequence_valide(terminaison, instance_id)
 	var champs_requis := ["operation", "transaction_id", "choix_id", "resolution_id"]
 	var champs_autorises := champs_requis + ["portee_micro_signal"]
 	for champ in champs_requis:
@@ -329,6 +375,47 @@ static func _terminaison_preparee_valide(statut: String, terminaison: Dictionary
 		terminaison["transaction_id"],
 		instance_id,
 	)
+
+
+static func _recu_resolution_sequence_valide(value, instance_id: String) -> bool:
+	if typeof(value) != TYPE_DICTIONARY or not _champs_exacts(value, CHAMPS_RECU_RESOLUTION_SEQUENCE):
+		return false
+	for field in CHAMPS_RECU_RESOLUTION_SEQUENCE:
+		if field == "event_keys":
+			continue
+		if not _chaine_non_vide(value[field]):
+			return false
+	if (
+		value["operation"] != "RESOLVE_SCENE"
+		or value["transaction_id"] != value["event_id"]
+		or value["choice_id"] != value["a10_choice_id"]
+		or value["resolution_id"] != value["a10_resolution_id"]
+		or value["event_id"] != "r8c-a1:%s:sequence-resolution:%s" % [
+			instance_id,
+			value["a10_resolution_id"],
+		]
+		or not _version_authored_valide(value["authored_version"])
+	):
+		return false
+	var event_keys = value["event_keys"]
+	if typeof(event_keys) != TYPE_ARRAY or event_keys.is_empty():
+		return false
+	var vus := {}
+	for event_key in event_keys:
+		if not _chaine_non_vide(event_key) or vus.has(event_key):
+			return false
+		vus[event_key] = true
+	return true
+
+
+static func _version_authored_valide(value: String) -> bool:
+	var parts := value.split(".", false)
+	if parts.size() != 3:
+		return false
+	for part in parts:
+		if not part.is_valid_int() or int(part) < 0 or (part.length() > 1 and part.begins_with("0")):
+			return false
+	return true
 
 
 static func _champs_exacts(valeur: Dictionary, attendus: Array) -> bool:
