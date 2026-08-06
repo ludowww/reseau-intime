@@ -168,6 +168,10 @@ class R8CN141CAtomicResolutionStaticTests(unittest.TestCase):
             "incomplete terminal receipt", "terminal receipt unknown field", "first reducer failure",
             "last reducer failure", "A5 preparation failure", "non reentrant call rejected",
             "historical synthetic A1 path remains green", "A1 and A5 visible together",
+            "divergent scene definition rejected", "divergent definition version rejected",
+            "instance non PROPOSED without termination rejected", "already RESOLVED with other A10 choice",
+            "already RESOLVED with other A10 resolution", "invalid A1 candidate rejected",
+            "invalid A5 registry candidate rejected", "same event_id divergent without A5 termination",
         ]
         self.assertEqual([], [token for token in required if token not in smoke])
         self.assertIn("R8C_N14_1C_ATOMIC_RESOLUTION: OK (%d controls)", smoke)

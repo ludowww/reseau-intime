@@ -21,6 +21,7 @@ func _ready() -> void:
 	_test_closed_rejections(sequence)
 	_test_persisted_inconsistencies(sequence)
 	_test_preparation_failures(sequence)
+	_test_additional_negative_matrix(sequence)
 	_test_non_reentrant_guard(sequence)
 	_test_historical_path()
 	_finish()
@@ -160,6 +161,9 @@ func _test_persisted_inconsistencies(sequence: Dictionary) -> void:
 	var event_without_a5 := resolved.duplicate(true)
 	event_without_a5["scene_registry"] = proposed["scene_registry"].duplicate(true)
 	_assert_restore_rejection(sequence, event_without_a5, "A1 event present without A5 termination")
+	var divergent_event_without_a5 := event_without_a5.duplicate(true)
+	divergent_event_without_a5["narrative_state"]["evenements"][event_id]["payload"]["knowledge"][0]["subject_id"] = "other_subject"
+	_assert_restore_rejection(sequence, divergent_event_without_a5, "same event_id divergent without A5 termination")
 	var a5_without_event := resolved.duplicate(true)
 	a5_without_event["narrative_state"]["evenements"].erase(event_id)
 	_assert_restore_rejection(sequence, a5_without_event, "A5 termination present without A1 event")
@@ -208,6 +212,72 @@ func _test_preparation_failures(sequence: Dictionary) -> void:
 	payload["media_deliveries"] = [{"event_key": "last_reducer_failure", "effect": "WITHDRAW", "media_id": "absent_media"}]
 	var last_failure: Dictionary = Reducer.preparer(state_before, payload, _expected_provenance("synthetic_failure"))
 	_expect(not last_failure["ok"] and state.obtenir_snapshot() == state_before, "last reducer failure changes no real state")
+
+
+func _test_additional_negative_matrix(sequence: Dictionary) -> void:
+	var envelope := _envelope(sequence)
+	var env := _activated_environment(sequence)
+	var facade = env["facade"]
+	var instance = facade._moteur.obtenir_instance(INSTANCE_ID)
+	var definition: Dictionary = facade._bibliotheque.obtenir_definition(instance.obtenir_scene_definition_id())
+	var before: Dictionary = facade.save_state()
+	var wrong_definition := definition.duplicate(true)
+	wrong_definition["scene_id"] = "other_definition"
+	var definition_result: Dictionary = facade._coordinateur_resolution.resolve(
+		facade._moteur, facade._etat_narratif, instance, wrong_definition,
+		"a10_choice_commit", "a10_resolution_commit", _context_with_envelope(envelope)
+	)
+	_expect(not definition_result["ok"] and facade.save_state() == before, "divergent scene definition rejected without mutation")
+	var wrong_version := definition.duplicate(true)
+	wrong_version["version_contrat"] = "2.0.0"
+	var version_result: Dictionary = facade._coordinateur_resolution.resolve(
+		facade._moteur, facade._etat_narratif, instance, wrong_version,
+		"a10_choice_commit", "a10_resolution_commit", _context_with_envelope(envelope)
+	)
+	_expect(not version_result["ok"] and facade.save_state() == before, "divergent definition version rejected without mutation")
+
+	var proposed: Dictionary = before.duplicate(true)
+	proposed["scene_registry"][0]["state"] = "ELIGIBLE"
+	var non_proposed = _new_facade(sequence)
+	_expect(non_proposed.restore_state(proposed)["ok"], "non PROPOSED fixture restored without termination")
+	var non_proposed_before: Dictionary = non_proposed.save_state()
+	var non_proposed_result: Dictionary = non_proposed.resolve_scene(
+		INSTANCE_ID, "a10_choice_commit", "a10_resolution_commit", _context_with_envelope(envelope)
+	)
+	_expect(not non_proposed_result["ok"] and non_proposed.save_state() == non_proposed_before, "instance non PROPOSED without termination rejected without mutation")
+
+	facade.resolve_scene(INSTANCE_ID, "a10_choice_commit", "a10_resolution_commit", _context_with_envelope(envelope))
+	var terminal_before: Dictionary = facade.save_state()
+	var other_choice: Dictionary = facade.resolve_scene(
+		INSTANCE_ID, "other_choice", "a10_resolution_commit", _context_with_envelope(envelope)
+	)
+	_expect(not other_choice["ok"] and other_choice["erreur"] == "RESOLUTION_TERMINALE_DIFFERENTE" and facade.save_state() == terminal_before, "already RESOLVED with other A10 choice rejected without mutation")
+	var other_resolution: Dictionary = facade.resolve_scene(
+		INSTANCE_ID, "a10_choice_commit", "other_resolution", _context_with_envelope(envelope)
+	)
+	_expect(not other_resolution["ok"] and other_resolution["erreur"] == "RESOLUTION_TERMINALE_DIFFERENTE" and facade.save_state() == terminal_before, "already RESOLVED with other A10 resolution rejected without mutation")
+
+	var invalid_a1 := _activated_environment(sequence)
+	var invalid_a1_facade = invalid_a1["facade"]
+	invalid_a1_facade._etat_narratif._etat["format_version"] = 99
+	var invalid_a1_state: Dictionary = invalid_a1_facade._etat_narratif.obtenir_snapshot()
+	var invalid_a1_registry: Array = invalid_a1_facade._moteur._registre.obtenir_snapshot()
+	var invalid_a1_result: Dictionary = invalid_a1_facade.resolve_scene(
+		INSTANCE_ID, "a10_choice_commit", "a10_resolution_commit", _context_with_envelope(envelope)
+	)
+	_expect(not invalid_a1_result["ok"] and invalid_a1_facade._etat_narratif.obtenir_snapshot() == invalid_a1_state, "invalid A1 candidate rejected without A1 mutation")
+	_expect(invalid_a1_facade._moteur._registre.obtenir_snapshot() == invalid_a1_registry, "invalid A1 candidate leaves A5 PROPOSED")
+
+	var invalid_a5 := _activated_environment(sequence)
+	var invalid_a5_facade = invalid_a5["facade"]
+	invalid_a5_facade._moteur.obtenir_instance(INSTANCE_ID)._donnees["created_at"] = "INVALID"
+	var invalid_a5_state: Dictionary = invalid_a5_facade._etat_narratif.obtenir_snapshot()
+	var invalid_a5_registry: Array = invalid_a5_facade._moteur._registre.obtenir_snapshot()
+	var invalid_a5_result: Dictionary = invalid_a5_facade.resolve_scene(
+		INSTANCE_ID, "a10_choice_commit", "a10_resolution_commit", _context_with_envelope(envelope)
+	)
+	_expect(not invalid_a5_result["ok"] and invalid_a5_facade._etat_narratif.obtenir_snapshot() == invalid_a5_state, "invalid A5 registry candidate rejected without A1 mutation")
+	_expect(invalid_a5_facade._moteur._registre.obtenir_snapshot() == invalid_a5_registry, "invalid A5 registry candidate leaves real registry unchanged")
 
 
 func _test_non_reentrant_guard(sequence: Dictionary) -> void:
