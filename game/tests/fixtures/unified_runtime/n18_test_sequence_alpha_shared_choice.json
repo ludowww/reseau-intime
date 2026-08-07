@@ -1,0 +1,127 @@
+{
+  "schema_id": "reseau_intime.authored_sequence",
+  "schema_version": 1,
+  "sequence_id": "test_sequence_alpha",
+  "authored_version": "1.0.0",
+  "season_id": "synthetic_n18",
+  "dramatic_movement_id": "movement_i",
+  "narrative_function": "RELATION",
+  "canonical_status": "CANON_APPROVED",
+  "author_provenance": {
+    "source_document_paths": ["tests/fixtures/unified_runtime/n18_test_sequence_alpha_shared_choice"],
+    "source_sequence_ids": ["test_sequence_alpha"],
+    "approval_ref": "R8C_N18_TEST_ONLY",
+    "authoring_tool_ref": null
+  },
+  "participants": {
+    "present_character_ids": ["alpha_actor"],
+    "concerned_absent_character_ids": [],
+    "initial_audiences": {"player_only": []},
+    "player_role": "PARTICIPANT"
+  },
+  "orchestration": {
+    "a6_entry": {
+      "scene_definition_id": "test_sequence_alpha_scene",
+      "variant_id": "test_sequence_alpha_variant",
+      "definition": {
+        "scene_id": "test_sequence_alpha_scene",
+        "version_contrat": "1.0.0",
+        "nature": "SIGNATURE",
+        "fonction_principale": "RELATION",
+        "participants_requis": [{"personnage_id": "alpha_actor", "role": "SYNTHETIC_TEST_ONLY"}],
+        "conditions_dures": {"actes_compatibles": ["SYNTHETIC_N18"], "evenements_requis": []},
+        "exclusions_dures": {"evenements_interdits": []},
+        "contrat_temporel": {
+          "date_debut": "2033-01-01",
+          "date_fin": "2033-01-01",
+          "heure_ouverture": "10:00",
+          "heure_fermeture": "11:00",
+          "duree_minutes": 60,
+          "revalidation": "AVANT_PROPOSITION_ET_RESOLUTION"
+        },
+        "politique_unicite": "UNIQUE",
+        "resolutions": {
+          "alpha_a10_resolution": {
+            "personnage_id": "alpha_actor",
+            "portee_micro_signal": "DURABLE",
+            "signal_recu": "ALPHA_COMPLETE",
+            "reception": "RECUE_INTERPRETEE",
+            "interpretation": "Synthetic alpha completion.",
+            "faits_relationnels": [{"fait_id": "alpha_completed_fact", "nature": "SYNTHETIC_TEST_ONLY", "recu_par": "alpha_actor"}],
+            "convergence": "RETOUR_NOYAU_COMMUN",
+            "durable_manifest": {
+              "binding": {"sequence_id": "test_sequence_alpha", "authored_version": "1.0.0", "resolution_id": "resolution_complete"},
+              "facts": [{"event_key": "alpha_completed_fact", "scope": "RELATION_CENTRALE", "fact": {"fait_id": "alpha_completed_fact", "nature": "SYNTHETIC_TEST_ONLY", "recu_par": "alpha_actor"}}],
+              "knowledge": [],
+              "traces": [],
+              "promises": [],
+              "obligations": [],
+              "media_deliveries": [{"event_key": "alpha_media_access", "effect": "GRANT_ACCESS", "media_id": "test_alpha_media", "diegetic_status": "NOT_APPLICABLE", "fictional_audience_ids": [], "gallery_status": "AVAILABLE"}]
+            }
+          }
+        },
+        "choix": [{"choix_id": "alpha_a10_choice", "formulation": "Complete alpha", "signal_emis": "ALPHA_COMPLETE", "resolution_ids": ["alpha_a10_resolution"]}],
+        "politique_non_resolution": {"proposition_expire": "CANCELLED"}
+      }
+    },
+    "a8_window": {"window_id": "test_sequence_alpha_window", "conflict_policy": "CLOSE_SILENTLY"},
+    "a9_slot": {"slot_role": "test_sequence_alpha_slot", "duration_minutes": 60, "relative_order": 0, "not_before_anchor": null, "not_after_anchor": null}
+  },
+  "temporal_projection": {
+    "anchor_id": "test_sequence_alpha_anchor",
+    "offset_minutes": 0,
+    "relative_order": 0,
+    "delay": {"mode": "NONE", "value": null},
+    "resolved_window": {"opens_at": "2033-01-01T10:00:00+01:00", "closes_at": "2033-01-01T11:00:00+01:00"}
+  },
+  "entry_beat_id": "alpha_message",
+  "beats": [
+    {
+      "beat_id": "alpha_message", "type": "MESSAGE",
+      "content": {"thread_id": "alpha_thread", "messages": [{"message_id": "alpha_message_01", "author_id": "alpha_actor", "text": "Alpha starts.", "diegetic_at": "2033-01-01T10:01:00+01:00", "relative_order": 0}]},
+      "participant_ids": ["alpha_actor"], "local_conditions": [], "projection_target": "MESSAGES",
+      "checkpoint_before": "alpha_entered", "checkpoint_after": "alpha_message_presented",
+      "next": {"mode": "DIRECT", "beat_id": "alpha_physical"}
+    },
+    {
+      "beat_id": "alpha_physical", "type": "PHYSICAL_BEAT",
+      "content": {"physical_beat_id": "alpha_physical_prompt", "content_ref": "alpha_physical_content", "withdrawal_choice_ids": ["shared_choice"]},
+      "participant_ids": ["alpha_actor"], "local_conditions": [], "projection_target": "PHYSICAL",
+      "checkpoint_before": null, "checkpoint_after": "alpha_physical_presented",
+      "next": {"mode": "DIRECT", "beat_id": "alpha_media"}
+    },
+    {
+      "beat_id": "alpha_media", "type": "MEDIA_REVEAL",
+      "content": {"media_id": "test_alpha_media", "reveal_context": {}, "requires_ack": true},
+      "participant_ids": ["alpha_actor"], "local_conditions": [], "projection_target": "MEDIA",
+      "checkpoint_before": null, "checkpoint_after": "alpha_media_presented",
+      "next": {"mode": "DIRECT", "beat_id": "alpha_choice"}
+    },
+    {
+      "beat_id": "alpha_choice", "type": "CHOICE",
+      "content": {"thread_id": "alpha_thread", "choices": [{"choice_id": "shared_choice", "text": "Alpha choice", "resolution_id": "resolution_complete", "next_beat_id": "alpha_return"}]},
+      "participant_ids": ["alpha_actor"], "local_conditions": [], "projection_target": "MESSAGES",
+      "checkpoint_before": null, "checkpoint_after": "alpha_resolution_ready",
+      "next": {"mode": "BRANCH", "branches": {"shared_choice": "alpha_return"}}
+    },
+    {
+      "beat_id": "alpha_return", "type": "RETURN",
+      "content": {"return_id": "alpha_return_id", "content_ref": "alpha_return_content", "delay": {"mode": "NONE", "value": null}, "eligible_resolution_ids": ["resolution_complete"]},
+      "participant_ids": ["alpha_actor"], "local_conditions": [], "projection_target": "MESSAGES",
+      "checkpoint_before": null, "checkpoint_after": "alpha_return_presented",
+      "next": {"mode": "TERMINAL", "beat_id": null}
+    }
+  ],
+  "resolutions": {
+    "resolution_complete": {
+      "resolution_id": "resolution_complete", "choice_id": "shared_choice", "a10_choice_id": "alpha_a10_choice", "a10_resolution_id": "alpha_a10_resolution", "terminal_checkpoint_id": "alpha_resolution_ready",
+      "event_refs": [{"event_type": "durable_manifest_event", "event_key": "alpha_completed_fact", "reducer_id": "a6_durable_manifest"}, {"event_type": "durable_manifest_event", "event_key": "alpha_media_access", "reducer_id": "a6_durable_manifest"}],
+      "fact_ids": ["alpha_completed_fact"], "knowledge_ids": [], "trace_ids": [], "promise_effects": [], "obligation_effects": [], "consequence_ids": [],
+      "media_effects": [{"media_id": "test_alpha_media", "effect": "GRANT_ACCESS"}],
+      "convergence": "POST_RESOLUTION_RETURN", "next_beat_id": "alpha_return"
+    }
+  },
+  "media": {
+    "test_alpha_media": {"media_id": "test_alpha_media", "visual_level": "V1", "analytic_level": null, "production_status": "SPECIFIED_NOT_PRODUCED", "diegesis": "NON_DIEGETIC", "audience_ids": ["player_only"], "gallery_policy": "ON_ACCESS", "parent_media_id": null, "thumbnail_policy": "SELF", "thumbnail_media_id": null, "removal_policy": "NEVER"}
+  }
+}

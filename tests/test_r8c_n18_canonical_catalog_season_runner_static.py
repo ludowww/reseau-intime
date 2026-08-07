@@ -69,6 +69,80 @@ class R8CN18CanonicalCatalogSeasonRunnerStaticTests(unittest.TestCase):
         self.assertNotIn("DirAccess", loader)
         self.assertNotIn("get_files", loader.lower())
 
+    def test_production_entry_is_closed_and_test_injection_is_explicit(self):
+        portrait = self.read(GAME / "scripts/ui/PortraitMain.gd")
+        runner = self.read(APP / "UnifiedSeasonRunner.gd")
+        self.assertNotIn("unified_catalog_path_override", portrait)
+        self.assertNotIn("create_for_test", portrait)
+        self.assertNotIn("n18_catalog_alpha_beta", portrait)
+        self.assertIn("UnifiedSeasonRunner.create(", portrait)
+        for proof in [
+            'const PRODUCTION_CATALOG_PATH := "res://data/unified_runtime/catalogs/season_1_v1.json"',
+            'const PRODUCTION_CATALOG_ID := "season_1_v1"',
+            'const PRODUCTION_SEASON_ID := "season_1"',
+            "static func create_for_test(",
+            "PRODUCTION_CATALOG_PATH,",
+            "PRODUCTION_CATALOG_ID,",
+            "PRODUCTION_SEASON_ID,",
+        ]:
+            self.assertIn(proof, runner)
+        smoke = self.read(GAME / "tests/R8C_N18CanonicalCatalogSeasonRunnerSmokeDriver.gd")
+        self.assertIn("SeasonRunner.create_for_test", smoke)
+        self.assertIn("PortraitShellScene.instantiate()", smoke)
+        self.assertNotIn("main.unified_catalog_path_override", smoke)
+
+    def test_sequence_and_choice_indexes_are_globally_fail_closed(self):
+        validator = self.read(CONTRACTS / "AuthoredSequenceCatalogValidator.gd")
+        loader = self.read(APP / "AuthoredSequenceCatalogLoader.gd")
+        for proof in [
+            "var sequence_ids := {}",
+            'errors.append(path + ".sequence_id:duplicate")',
+            "var sequence_versions := {}",
+            "var choice_ids := {}",
+            "_register_global_choice_identities",
+            '"choice_id",',
+        ]:
+            self.assertIn(proof, validator)
+        sequence_guard = loader.index("if package_by_sequence_id.has(sequence_id):")
+        sequence_write = loader.index("package_by_sequence_id[sequence_id] = package")
+        choice_guard = loader.index("if choice_definitions.has(choice_id):")
+        choice_write = loader.index("choice_definitions[choice_id] = {")
+        self.assertLess(sequence_guard, sequence_write)
+        self.assertLess(choice_guard, choice_write)
+        self.assertIn('return _failure("DUPLICATE_SEQUENCE_ID")', loader)
+        self.assertIn('"error_code": "DUPLICATE_GLOBAL_CHOICE_ID"', loader)
+
+    def test_collision_fixtures_lock_sequence_and_choice_identity(self):
+        duplicate_sequence = self.load(FIXTURES / "n18_catalog_duplicate_sequence_id.json")
+        self.assertEqual(
+            [("foo", "1.0.0"), ("foo", "2.0.0")],
+            [
+                (package["sequence_id"], package["authored_version"])
+                for package in duplicate_sequence["packages"]
+            ],
+        )
+        duplicate_choice = self.load(FIXTURES / "n18_catalog_duplicate_choice_id.json")
+        shared_choices = []
+        shared_texts = []
+        for package in duplicate_choice["packages"]:
+            sequence = self.load(GAME / package["sequence_path"].removeprefix("res://"))
+            choices = [
+                choice
+                for beat in sequence["beats"] if beat["type"] == "CHOICE"
+                for choice in beat["content"]["choices"]
+            ]
+            shared_choices.extend(choice["choice_id"] for choice in choices)
+            shared_texts.extend(choice["text"] for choice in choices)
+        self.assertEqual(["shared_choice", "shared_choice"], shared_choices)
+        self.assertEqual(2, len(set(shared_texts)))
+        smoke = self.read(GAME / "tests/R8C_N18CanonicalCatalogSeasonRunnerSmokeDriver.gd")
+        for proof in [
+            "chaque package shared_choice reste valide isolément",
+            "duplicate_global_choice_id:shared_choice",
+            "le snapshot Saison reste valide pendant le handoff Alpha vers Beta",
+        ]:
+            self.assertIn(proof, smoke)
+
     def test_runner_is_single_active_and_selects_in_manifest_order(self):
         runner = self.read(APP / "UnifiedSeasonRunner.gd")
         for proof in [

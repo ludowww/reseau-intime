@@ -51,9 +51,11 @@ static func validate(value, expected_catalog_id := "", expected_season_id := "")
 		return _result(errors, loaded_packages)
 
 	var package_ids := {}
+	var sequence_ids := {}
 	var sequence_versions := {}
 	var candidate_keys := {}
 	var message_ids := {}
+	var choice_ids := {}
 	var content_refs := {}
 	var thread_definitions := {}
 	var media_ids := {}
@@ -71,6 +73,10 @@ static func validate(value, expected_catalog_id := "", expected_season_id := "")
 		if package_ids.has(package_id):
 			errors.append(path + ".package_id:duplicate")
 		package_ids[package_id] = true
+		var sequence_id := str(package["sequence_id"])
+		if sequence_ids.has(sequence_id):
+			errors.append(path + ".sequence_id:duplicate")
+		sequence_ids[sequence_id] = true
 		var sequence_version := "%s@%s" % [package["sequence_id"], package["authored_version"]]
 		if sequence_versions.has(sequence_version):
 			errors.append(path + ":duplicate_sequence_version")
@@ -90,7 +96,7 @@ static func validate(value, expected_catalog_id := "", expected_season_id := "")
 			continue
 		_validate_loaded_package(
 			catalog, package, files, path, errors, candidate_keys, message_ids,
-			content_refs, thread_definitions, media_ids
+			choice_ids, content_refs, thread_definitions, media_ids
 		)
 		loaded_packages.append({
 			"manifest": package.duplicate(true),
@@ -110,6 +116,7 @@ static func _validate_loaded_package(
 	errors: Array[String],
 	candidate_keys: Dictionary,
 	message_ids: Dictionary,
+	choice_ids: Dictionary,
 	content_refs: Dictionary,
 	thread_definitions: Dictionary,
 	media_ids: Dictionary,
@@ -147,6 +154,7 @@ static func _validate_loaded_package(
 		errors.append(path + ".sequence_path:duplicate_a6_identity")
 	candidate_keys[candidate_key] = true
 	_register_global_message_identities(sequence, messages, path, errors, message_ids, content_refs)
+	_register_global_choice_identities(sequence, path, errors, choice_ids)
 	_register_global_threads(messages, path, errors, thread_definitions)
 	for media_id in sequence["media"]:
 		if media_ids.has(media_id):
@@ -170,6 +178,25 @@ static func _register_global_message_identities(
 		_register_unique(content_refs, entry["content_ref"], path + ".messages_path", "content_ref", errors)
 		for message in entry["messages"]:
 			_register_unique(message_ids, message["message_id"], path + ".messages_path", "message_id", errors)
+
+
+static func _register_global_choice_identities(
+	sequence: Dictionary,
+	path: String,
+	errors: Array[String],
+	choice_ids: Dictionary,
+) -> void:
+	for beat in sequence["beats"]:
+		if beat["type"] != "CHOICE":
+			continue
+		for choice in beat["content"]["choices"]:
+			_register_unique(
+				choice_ids,
+				choice["choice_id"],
+				path + ".sequence_path",
+				"choice_id",
+				errors,
+			)
 
 
 static func _register_global_threads(

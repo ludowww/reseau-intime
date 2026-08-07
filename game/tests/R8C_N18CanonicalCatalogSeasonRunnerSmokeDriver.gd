@@ -1,6 +1,7 @@
 extends Node
 
 const PortraitMainScene := preload("res://scenes/portrait/PortraitMain.tscn")
+const PortraitShellScene := preload("res://scenes/portrait/PortraitShell.tscn")
 const CatalogLoader := preload(
 	"res://scripts/unified_runtime/application/AuthoredSequenceCatalogLoader.gd"
 )
@@ -28,8 +29,22 @@ const JsonNormalizer := preload(
 
 const CATALOG_ALPHA_BETA := "res://tests/fixtures/unified_runtime/n18_catalog_alpha_beta.json"
 const CATALOG_BETA_ALPHA := "res://tests/fixtures/unified_runtime/n18_catalog_beta_alpha.json"
-const PRODUCTION_CATALOG := "res://data/unified_runtime/catalogs/season_1_v1.json"
+const CATALOG_DUPLICATE_SEQUENCE := (
+	"res://tests/fixtures/unified_runtime/n18_catalog_duplicate_sequence_id.json"
+)
+const CATALOG_DUPLICATE_CHOICE := (
+	"res://tests/fixtures/unified_runtime/n18_catalog_duplicate_choice_id.json"
+)
 const SAVE_ROOT := "user://r8c_n18_smoke/"
+
+class TestRuntimeHost:
+	var shell
+	var season_runner
+	var runtime_session
+
+	func queue_free() -> void:
+		if shell != null:
+			shell.queue_free()
 
 var failures: Array[String] = []
 var controls := 0
@@ -37,6 +52,8 @@ var controls := 0
 
 func _ready() -> void:
 	_test_catalog_contract_and_fingerprint()
+	_test_global_identity_collisions()
+	await _test_production_catalog_boundary()
 	await _test_authored_order_override()
 	await _test_handoff_save_restore_and_idle()
 	await _test_n17_v2_migration()
@@ -141,10 +158,78 @@ func _test_catalog_contract_and_fingerprint() -> void:
 		)
 
 
+func _test_global_identity_collisions() -> void:
+	var duplicate_sequence: Dictionary = _load(CATALOG_DUPLICATE_SEQUENCE)
+	var sequence_validation: Dictionary = CatalogValidator.validate(duplicate_sequence)
+	_expect(
+		not sequence_validation["valid"]
+		and sequence_validation["errors"].any(
+			func(error): return ".sequence_id:duplicate" in str(error)
+		),
+		"sequence_id reste globalement unique même entre versions authored distinctes",
+	)
+	_expect(
+		not CatalogLoader.load_catalog(CATALOG_DUPLICATE_SEQUENCE)["ok"],
+		"le loader refuse le catalogue à sequence_id dupliquée sans index partiel",
+	)
+	_expect(
+		not SeasonRunner.create_for_test(CATALOG_DUPLICATE_SEQUENCE, self)["ok"],
+		"aucun runner TEST_ONLY n’est créé depuis une sequence_id ambiguë",
+	)
+	var duplicate_choice: Dictionary = _load(CATALOG_DUPLICATE_CHOICE)
+	for package in duplicate_choice["packages"]:
+		var single_package: Dictionary = duplicate_choice.duplicate(true)
+		single_package["catalog_id"] = "n18_single_" + package["package_id"]
+		single_package["packages"] = [package.duplicate(true)]
+		_expect(
+			CatalogValidator.validate(single_package)["valid"],
+			"chaque package shared_choice reste valide isolément",
+		)
+	var choice_validation: Dictionary = CatalogValidator.validate(duplicate_choice)
+	_expect(
+		not choice_validation["valid"]
+		and choice_validation["errors"].any(
+			func(error): return "duplicate_global_choice_id:shared_choice" in str(error)
+		),
+		"choice_id est globalement unique entre packages",
+	)
+	_expect(
+		not CatalogLoader.load_catalog(CATALOG_DUPLICATE_CHOICE)["ok"],
+		"le loader refuse le catalogue à choice_id dupliqué sans overwrite",
+	)
+	_expect(
+		not SeasonRunner.create_for_test(CATALOG_DUPLICATE_CHOICE, self)["ok"],
+		"aucun runner TEST_ONLY n’est créé depuis un choice_id ambigu",
+	)
+
+
+func _test_production_catalog_boundary() -> void:
+	var save_path := SAVE_ROOT + "production_boundary.json"
+	_remove_save(save_path)
+	var main = await _new_production_main(save_path)
+	if main == null:
+		return
+	var property_names: Array = main.get_property_list().map(func(property): return property["name"])
+	_expect(
+		"unified_catalog_path_override" not in property_names,
+		"le vrai PortraitMain n’expose aucune propriété d’injection catalogue",
+	)
+	_expect(
+		main.season_runner.catalog["catalog_id"] == "season_1_v1"
+		and main.season_runner.catalog["season_id"] == "season_1"
+		and main.season_runner.catalog["manifest"]["packages"].size() == 1
+		and main.season_runner.active_sequence_id == "mathilde_returns_with_chosen_intent_01",
+		"le vrai PortraitMain reste lié au catalogue canonique Mathilde-only",
+	)
+	main.queue_free()
+	await get_tree().process_frame
+	_remove_save(save_path)
+
+
 func _test_authored_order_override() -> void:
 	var save_path := SAVE_ROOT + "beta_alpha.json"
 	_remove_save(save_path)
-	var main = await _new_main(CATALOG_BETA_ALPHA, save_path)
+	var main = await _new_test_runtime(CATALOG_BETA_ALPHA, save_path)
 	if main == null:
 		return
 	_expect(
@@ -163,7 +248,7 @@ func _test_authored_order_override() -> void:
 func _test_handoff_save_restore_and_idle() -> void:
 	var save_path := SAVE_ROOT + "alpha_beta.json"
 	_remove_save(save_path)
-	var main = await _new_main(CATALOG_ALPHA_BETA, save_path)
+	var main = await _new_test_runtime(CATALOG_ALPHA_BETA, save_path)
 	if main == null:
 		return
 	var runner = main.season_runner
@@ -183,7 +268,7 @@ func _test_handoff_save_restore_and_idle() -> void:
 	var alpha_presented: Dictionary = alpha_session.presented_message_ids_by_thread()
 	main.queue_free()
 	await get_tree().process_frame
-	main = await _new_main(CATALOG_ALPHA_BETA, save_path)
+	main = await _new_test_runtime(CATALOG_ALPHA_BETA, save_path)
 	if main == null:
 		return
 	runner = main.season_runner
@@ -222,10 +307,16 @@ func _test_handoff_save_restore_and_idle() -> void:
 		runner.active_session.gallery_source().get("fixtures", {}).has("alpha_actor"),
 		"la Galerie alpha durable reste résolue pendant beta",
 	)
+	var beta_saved: Dictionary = SaveStore.create(save_path)["store"].load_snapshot()
+	_expect(
+		beta_saved.get("ok", false)
+		and SeasonSnapshot.validate(beta_saved.get("snapshot", {}), runner.catalog)["valid"],
+		"le snapshot Saison reste valide pendant le handoff Alpha vers Beta",
+	)
 	var beta_execution: Dictionary = runner.active_session.execution_state()
 	main.queue_free()
 	await get_tree().process_frame
-	main = await _new_main(CATALOG_ALPHA_BETA, save_path)
+	main = await _new_test_runtime(CATALOG_ALPHA_BETA, save_path)
 	if main == null:
 		return
 	runner = main.season_runner
@@ -255,7 +346,7 @@ func _test_handoff_save_restore_and_idle() -> void:
 	)
 	main.queue_free()
 	await get_tree().process_frame
-	main = await _new_main(CATALOG_ALPHA_BETA, save_path)
+	main = await _new_test_runtime(CATALOG_ALPHA_BETA, save_path)
 	if main == null:
 		return
 	_expect(
@@ -272,7 +363,7 @@ func _test_handoff_save_restore_and_idle() -> void:
 func _test_n17_v2_migration() -> void:
 	var save_path := SAVE_ROOT + "n17_mathilde_migration.json"
 	_remove_save(save_path)
-	var main = await _new_main(PRODUCTION_CATALOG, save_path)
+	var main = await _new_production_main(save_path)
 	if main == null:
 		return
 	var session = main.season_runner.active_session
@@ -308,7 +399,7 @@ func _test_n17_v2_migration() -> void:
 	_expect(store.save_snapshot(n17_v2)["ok"], "la sauvegarde brute N17 V2 est installée")
 	main.queue_free()
 	await get_tree().process_frame
-	main = await _new_main(PRODUCTION_CATALOG, save_path)
+	main = await _new_production_main(save_path)
 	if main == null:
 		return
 	session = main.season_runner.active_session
@@ -412,9 +503,8 @@ func _select_choice(session, thread_id: String, choice_id: String) -> bool:
 	return true
 
 
-func _new_main(catalog_path: String, save_path: String):
+func _new_production_main(save_path: String):
 	var main = PortraitMainScene.instantiate()
-	main.unified_catalog_path_override = catalog_path
 	main.unified_save_path_override = save_path
 	add_child(main)
 	await _frames(4)
@@ -425,6 +515,58 @@ func _new_main(catalog_path: String, save_path: String):
 		return null
 	main.shell.messages_screen.runtime_delivery_time_scale = 0.001
 	return main
+
+
+func _new_test_runtime(catalog_path: String, save_path: String):
+	var host := TestRuntimeHost.new()
+	host.shell = PortraitShellScene.instantiate()
+	host.shell.content_mode = "unified"
+	add_child(host.shell)
+	await _frames(3)
+	var created: Dictionary = SeasonRunner.create_for_test(catalog_path, host.shell, save_path)
+	_expect(created["ok"], "la factory TEST_ONLY compose le catalogue synthétique")
+	if not created["ok"]:
+		host.queue_free()
+		await get_tree().process_frame
+		return null
+	host.season_runner = created["runner"]
+	host.runtime_session = host.season_runner.active_session
+	host.season_runner.active_session_changed.connect(
+		_on_test_active_session_changed.bind(host)
+	)
+	if host.runtime_session != null and not host.shell.configure_unified_runtime(host.runtime_session):
+		_expect(false, "le shell TEST_ONLY accepte la session synthétique")
+		host.queue_free()
+		await get_tree().process_frame
+		return null
+	var begun: Dictionary = host.season_runner.begin()
+	_expect(begun["ok"], "le runner TEST_ONLY démarre")
+	if not begun["ok"]:
+		host.queue_free()
+		await get_tree().process_frame
+		return null
+	host.shell.messages_screen.runtime_delivery_time_scale = 0.001
+	return host
+
+
+func _on_test_active_session_changed(_previous_session, next_session, host: TestRuntimeHost) -> void:
+	host.runtime_session = next_session
+	if next_session == null:
+		host.shell.clear_unified_runtime(
+			host.season_runner.presentation_source(),
+			host.season_runner.gallery_source(),
+			host.season_runner,
+		)
+		return
+	host.shell.clear_unified_runtime(
+		host.season_runner.presentation_source(),
+		host.season_runner.gallery_source(),
+		host.season_runner,
+	)
+	_expect(
+		host.shell.configure_unified_runtime(next_session),
+		"le handoff TEST_ONLY injecte uniquement la nouvelle session",
+	)
 
 
 func _wait_for_status(session, expected: String, max_frames := 40) -> bool:

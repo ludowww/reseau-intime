@@ -57,9 +57,12 @@ static func load_catalog(path: String, expected_catalog_id := "", expected_seaso
 		var candidate_identity := candidate_key(a6["scene_definition_id"], a6["variant_id"])
 		package["candidate_key"] = candidate_identity
 		var package_id: String = package["manifest"]["package_id"]
+		var sequence_id: String = sequence["sequence_id"]
+		if package_by_sequence_id.has(sequence_id):
+			return _failure("DUPLICATE_SEQUENCE_ID")
 		packages.append(package)
 		package_by_id[package_id] = package
-		package_by_sequence_id[sequence["sequence_id"]] = package
+		package_by_sequence_id[sequence_id] = package
 		package_by_candidate_key[candidate_identity] = package
 		definitions.append(a6.duplicate(true))
 		var merged_metadata := _merge_messages_metadata(
@@ -67,7 +70,9 @@ static func load_catalog(path: String, expected_catalog_id := "", expected_seaso
 		)
 		if not merged_metadata["ok"]:
 			return _failure(str(merged_metadata["error_code"]))
-		_index_messages(package, message_definitions, choice_definitions)
+		var indexed := _index_messages(package, message_definitions, choice_definitions)
+		if not indexed["ok"]:
+			return _failure(str(indexed["error_code"]))
 	var library_result := LibraryModel.charger_depuis_bundle({
 		"format": "R8C_A6_SCENE_LIBRARY",
 		"version": 1,
@@ -123,7 +128,7 @@ static func _merge_messages_metadata(
 
 static func _index_messages(
 	package: Dictionary, message_definitions: Dictionary, choice_definitions: Dictionary
-) -> void:
+) -> Dictionary:
 	var sequence: Dictionary = package["sequence"]
 	var sequence_id: String = sequence["sequence_id"]
 	var referenced_by_ref := {}
@@ -146,13 +151,17 @@ static func _index_messages(
 			message_definitions[message["message_id"]] = definition
 		if beat["type"] == "CHOICE":
 			for choice in beat["content"]["choices"]:
-				choice_definitions[choice["choice_id"]] = {
-					"choice_id": choice["choice_id"],
+				var choice_id: String = choice["choice_id"]
+				if choice_definitions.has(choice_id):
+					return {"ok": false, "error_code": "DUPLICATE_GLOBAL_CHOICE_ID"}
+				choice_definitions[choice_id] = {
+					"choice_id": choice_id,
 					"text": choice["text"],
 					"sequence_id": sequence_id,
 					"beat_id": beat["beat_id"],
 					"thread_id": thread_id,
 				}
+	return {"ok": true, "error_code": null}
 
 
 static func _valid_manifest_path(path: String) -> bool:

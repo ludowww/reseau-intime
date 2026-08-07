@@ -5,10 +5,8 @@ class_name PortraitMain
 const UnifiedSeasonRunner := preload(
 	"res://scripts/unified_runtime/application/UnifiedSeasonRunner.gd"
 )
-const PRODUCTION_CATALOG_PATH := "res://data/unified_runtime/catalogs/season_1_v1.json"
 
 @export var unified_save_path_override := ""
-@export var unified_catalog_path_override := ""
 
 @onready var shell := get_node_or_null("PortraitShell")
 
@@ -21,16 +19,8 @@ func _ready() -> void:
 	if shell != null:
 		shell.set_anchors_preset(Control.PRESET_FULL_RECT)
 		if shell.content_mode == "unified":
-			var catalog_path := (
-				PRODUCTION_CATALOG_PATH
-				if unified_catalog_path_override.is_empty() else unified_catalog_path_override
-			)
 			unified_runtime_result = UnifiedSeasonRunner.create(
-				catalog_path,
-				shell,
-				unified_save_path_override,
-				"season_1_v1" if unified_catalog_path_override.is_empty() else "",
-				"season_1" if unified_catalog_path_override.is_empty() else "",
+				shell, unified_save_path_override
 			)
 			if not unified_runtime_result.get("ok", false):
 				push_error(

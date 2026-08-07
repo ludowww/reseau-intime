@@ -33,6 +33,9 @@ const DurableGallery := preload(
 
 const ACTIVE_SEQUENCE := "ACTIVE_SEQUENCE"
 const IDLE_NO_ELIGIBLE_SEQUENCE := "IDLE_NO_ELIGIBLE_SEQUENCE"
+const PRODUCTION_CATALOG_PATH := "res://data/unified_runtime/catalogs/season_1_v1.json"
+const PRODUCTION_CATALOG_ID := "season_1_v1"
+const PRODUCTION_SEASON_ID := "season_1"
 
 var catalog: Dictionary = {}
 var completed_sequence_ids: Array = []
@@ -47,11 +50,32 @@ var _last_result := _result(false, "NOT_INITIALIZED")
 
 
 static func create(
+	portrait_shell,
+	save_path_override := "",
+) -> Dictionary:
+	return _create_from_catalog(
+		PRODUCTION_CATALOG_PATH,
+		portrait_shell,
+		save_path_override,
+		PRODUCTION_CATALOG_ID,
+		PRODUCTION_SEASON_ID,
+	)
+
+
+static func create_for_test(
 	catalog_path: String,
 	portrait_shell,
 	save_path_override := "",
-	expected_catalog_id := "",
-	expected_season_id := "",
+) -> Dictionary:
+	return _create_from_catalog(catalog_path, portrait_shell, save_path_override, "", "")
+
+
+static func _create_from_catalog(
+	catalog_path: String,
+	portrait_shell,
+	save_path_override: String,
+	expected_catalog_id: String,
+	expected_season_id: String,
 ) -> Dictionary:
 	if portrait_shell == null:
 		return _creation_failure("PORTRAIT_SHELL_NOT_READY")
