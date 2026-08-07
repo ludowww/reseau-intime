@@ -1,0 +1,163 @@
+{
+  "schema_id": "reseau_intime.authored_sequence",
+  "schema_version": 1,
+  "sequence_id": "sandra_sentrycore_button_echo_01",
+  "authored_version": "1.0.0",
+  "season_id": "season_1",
+  "dramatic_movement_id": "movement_i",
+  "narrative_function": "ECHO",
+  "canonical_status": "CANON_APPROVED",
+  "author_provenance": {
+    "source_document_paths": [
+      "game/data/conversations/chapter_03_sandra_continuity.json",
+      "docs/canon/dialogues/NAR_PROD_02_PAQUET_PRODUCTION_ACTE_I_J01_J04.md",
+      "docs/canon/bible/12_PLANS_SCENES_AUDIT_RUNTIME_J01_J08.md",
+      "docs/canon/characters/SANDRA_CANON_FULL.md"
+    ],
+    "source_sequence_ids": ["chapter_03_sandra_continuity"],
+    "approval_ref": "R8C-N19",
+    "authoring_tool_ref": null
+  },
+  "participants": {
+    "present_character_ids": ["sandra", "player"],
+    "concerned_absent_character_ids": [],
+    "initial_audiences": {"player_only": []},
+    "player_role": "PARTICIPANT"
+  },
+  "orchestration": {
+    "a6_entry": {
+      "scene_definition_id": "sandra_sentrycore_button_echo_01",
+      "variant_id": "sandra_sentrycore_button_echo_canonical",
+      "definition": {
+        "scene_id": "sandra_sentrycore_button_echo_01",
+        "version_contrat": "1.0.0",
+        "nature": "MODULAIRE",
+        "fonction_principale": "ECHO",
+        "participants_requis": [
+          {"personnage_id": "sandra", "role": "INITIATIVE_ECHO_TRAVAIL"}
+        ],
+        "conditions_dures": {
+          "actes_compatibles": ["SANDRA_SENTRYCORE_BUTTON_ECHO"],
+          "evenements_requis": []
+        },
+        "exclusions_dures": {"evenements_interdits": []},
+        "contrat_temporel": {
+          "date_debut": "2032-03-05",
+          "date_fin": "2032-03-05",
+          "heure_ouverture": "13:50",
+          "heure_fermeture": "13:54",
+          "duree_minutes": 4,
+          "revalidation": "AVANT_PROPOSITION_ET_RESOLUTION"
+        },
+        "politique_unicite": "UNIQUE",
+        "resolutions": {
+          "sandra_button_echo_resolution": {
+            "personnage_id": "sandra",
+            "portee_micro_signal": "DURABLE",
+            "signal_recu": "COMPLICITE_LEGERE_RECUE",
+            "reception": "RECUE_INTERPRETEE",
+            "interpretation": "La réponse de Player à l’écho est reçue et la complicité légère est constatée.",
+            "faits_relationnels": [
+              {"fait_id": "sandra_first_complicity_restored", "nature": "COMPLICITE_LEGERE_RETABLIE", "recu_par": "sandra"}
+            ],
+            "convergence": "RETOUR_NOYAU_COMMUN",
+            "durable_manifest": {
+              "binding": {"sequence_id": "sandra_sentrycore_button_echo_01", "authored_version": "1.0.0", "resolution_id": "resolution_sandra_button_echo"},
+              "facts": [
+                {"event_key": "sandra_first_complicity_restored", "scope": "RELATION", "personnage_id": "sandra", "fact": {"fait_id": "sandra_first_complicity_restored", "nature": "COMPLICITE_LEGERE_RETABLIE", "recu_par": "sandra"}}
+              ],
+              "knowledge": [],
+              "traces": [],
+              "promises": [],
+              "obligations": [],
+              "media_deliveries": []
+            }
+          }
+        },
+        "choix": [
+          {"choix_id": "sandra_button_echo_choice", "formulation": "Journée sauvée alors.", "signal_emis": "COMPLICITE_LEGERE_RECUE", "resolution_ids": ["sandra_button_echo_resolution"]}
+        ],
+        "politique_non_resolution": {"proposition_expire": "CANCELLED"}
+      }
+    },
+    "a8_window": {"window_id": "sandra_sentrycore_button_echo_window", "conflict_policy": "CLOSE_SILENTLY"},
+    "a9_slot": {"slot_role": "sandra_sentrycore_button_echo", "duration_minutes": 4, "relative_order": 1, "not_before_anchor": null, "not_after_anchor": null}
+  },
+  "temporal_projection": {
+    "anchor_id": "sandra_sentrycore_button_echo_anchor",
+    "offset_minutes": 0,
+    "relative_order": 1,
+    "delay": {"mode": "NONE", "value": null},
+    "resolved_window": {"opens_at": "2032-03-05T13:50:00+01:00", "closes_at": "2032-03-05T13:54:00+01:00"}
+  },
+  "entry_beat_id": "sandra_button_echo_message",
+  "beats": [
+    {
+      "beat_id": "sandra_button_echo_message",
+      "type": "MESSAGE",
+      "content": {
+        "thread_id": "sandra_thread",
+        "messages": [
+          {"message_id": "sandra_button_echo_01", "author_id": "sandra", "text": "Poste du matin terminé.", "diegetic_at": "2032-03-05T13:50:00+01:00", "relative_order": 0},
+          {"message_id": "sandra_button_echo_02", "author_id": "sandra", "text": "Le bouton est revenu.", "diegetic_at": "2032-03-05T13:50:05+01:00", "relative_order": 1},
+          {"message_id": "sandra_button_echo_03", "author_id": "sandra", "text": "J'hésite entre miracle et menace.", "diegetic_at": "2032-03-05T13:51:00+01:00", "relative_order": 2}
+        ]
+      },
+      "participant_ids": ["sandra"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": "sandra_button_echo_entered",
+      "checkpoint_after": "sandra_button_echo_messages_presented",
+      "next": {"mode": "DIRECT", "beat_id": "sandra_button_echo_choice"}
+    },
+    {
+      "beat_id": "sandra_button_echo_choice",
+      "type": "CHOICE",
+      "content": {
+        "thread_id": "sandra_thread",
+        "choices": [
+          {"choice_id": "sandra_button_echo_reply", "text": "Journée sauvée alors.", "resolution_id": "resolution_sandra_button_echo", "next_beat_id": "sandra_button_echo_return"}
+        ]
+      },
+      "participant_ids": ["sandra"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "sandra_button_echo_resolution_ready",
+      "next": {"mode": "BRANCH", "branches": {"sandra_button_echo_reply": "sandra_button_echo_return"}}
+    },
+    {
+      "beat_id": "sandra_button_echo_return",
+      "type": "RETURN",
+      "content": {"return_id": "sandra_button_echo_return_id", "content_ref": "sandra_button_echo_return_content", "delay": {"mode": "NONE", "value": null}, "eligible_resolution_ids": ["resolution_sandra_button_echo"]},
+      "participant_ids": ["sandra"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "sandra_button_echo_return_presented",
+      "next": {"mode": "TERMINAL", "beat_id": null}
+    }
+  ],
+  "resolutions": {
+    "resolution_sandra_button_echo": {
+      "resolution_id": "resolution_sandra_button_echo",
+      "choice_id": "sandra_button_echo_reply",
+      "a10_choice_id": "sandra_button_echo_choice",
+      "a10_resolution_id": "sandra_button_echo_resolution",
+      "terminal_checkpoint_id": "sandra_button_echo_resolution_ready",
+      "event_refs": [
+        {"event_type": "durable_manifest_event", "event_key": "sandra_first_complicity_restored", "reducer_id": "a6_durable_manifest"}
+      ],
+      "fact_ids": ["sandra_first_complicity_restored"],
+      "knowledge_ids": [],
+      "trace_ids": [],
+      "promise_effects": [],
+      "obligation_effects": [],
+      "consequence_ids": [],
+      "media_effects": [],
+      "convergence": "POST_RESOLUTION_RETURN",
+      "next_beat_id": "sandra_button_echo_return"
+    }
+  },
+  "media": {}
+}

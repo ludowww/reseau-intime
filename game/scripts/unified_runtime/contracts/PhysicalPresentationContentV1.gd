@@ -39,8 +39,8 @@ static func schema_contract() -> Dictionary:
 
 
 static func _validate_entries(value, errors: Array[String]) -> void:
-	if typeof(value) != TYPE_ARRAY or value.is_empty():
-		_add_error(errors, "root.entries", "expected_non_empty_array")
+	if typeof(value) != TYPE_ARRAY:
+		_add_error(errors, "root.entries", "expected_array")
 		return
 	var content_refs := {}
 	for index in value.size():

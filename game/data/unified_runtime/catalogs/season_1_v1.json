@@ -12,6 +12,15 @@
       "messages_path": "res://data/unified_runtime/presentation/mathilde_returns_with_chosen_intent_01_messages.json",
       "physical_path": "res://data/unified_runtime/presentation/mathilde_returns_with_chosen_intent_01_physical.json",
       "media_path": "res://data/unified_runtime/presentation/mathilde_returns_with_chosen_intent_01_media.json"
+    },
+    {
+      "package_id": "sandra_sentrycore_button_echo_01",
+      "sequence_id": "sandra_sentrycore_button_echo_01",
+      "authored_version": "1.0.0",
+      "sequence_path": "res://data/unified_runtime/sequences/sandra_sentrycore_button_echo_01.json",
+      "messages_path": "res://data/unified_runtime/presentation/sandra_sentrycore_button_echo_01_messages.json",
+      "physical_path": "res://data/unified_runtime/presentation/sandra_sentrycore_button_echo_01_physical.json",
+      "media_path": "res://data/unified_runtime/presentation/sandra_sentrycore_button_echo_01_media.json"
     }
   ]
 }

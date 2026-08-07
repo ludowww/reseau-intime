@@ -34,6 +34,11 @@ static func create(authored_sequence, physical_catalog, allow_chained_returns :=
 	for entry in physical_catalog["entries"]:
 		resolver._entries_by_ref[entry["content_ref"]] = entry.duplicate(true)
 	for beat in authored_sequence["beats"]:
+		if (
+			beat["type"] == "PHYSICAL_BEAT"
+			and not resolver._entries_by_ref.has(beat["content"]["content_ref"])
+		):
+			return _creation_failure("UNRESOLVED_CONTENT_REF")
 		if beat["type"] != "CHOICE":
 			continue
 		for choice in beat["content"]["choices"]:

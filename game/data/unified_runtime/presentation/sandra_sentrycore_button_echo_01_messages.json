@@ -1,0 +1,40 @@
+{
+  "schema_id": "reseau_intime.referenced_messages_catalog",
+  "schema_version": 1,
+  "sequence_id": "sandra_sentrycore_button_echo_01",
+  "authored_version": "1.0.0",
+  "presentation_metadata": {
+    "characters": {
+      "sandra": {"character_id": "sandra", "display_name": "Sandra", "accent_color": "#20C7C9", "avatar_ref": "S"},
+      "player": {"character_id": "player", "display_name": "Player", "accent_color": "#8D63E6", "avatar_ref": "P"}
+    },
+    "threads": [
+      {
+        "thread_id": "sandra_thread",
+        "title": "Sandra",
+        "participant_ids": ["sandra", "player"],
+        "last_preview": "",
+        "last_timestamp": "",
+        "unread_count": 0,
+        "has_unread_content": false,
+        "availability_state": "AVAILABLE",
+        "is_group": false,
+        "is_archived": false,
+        "avatar_ref": "S",
+        "accent_color": "#20C7C9"
+      }
+    ],
+    "narrative_day_short": "Jeu.",
+    "narrative_time": "13:50"
+  },
+  "entries": [
+    {
+      "content_ref": "sandra_button_echo_return_content",
+      "beat_type": "RETURN",
+      "thread_id": "sandra_thread",
+      "messages": [
+        {"message_id": "sandra_button_echo_return_01", "author_id": "sandra", "text": "N'allons pas jusque-là.", "diegetic_at": "2032-03-05T13:53:00+01:00", "relative_order": 0}
+      ]
+    }
+  ]
+}

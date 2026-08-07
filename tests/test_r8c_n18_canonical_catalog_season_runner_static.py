@@ -47,9 +47,14 @@ class R8CN18CanonicalCatalogSeasonRunnerStaticTests(unittest.TestCase):
         )
         self.assertEqual("season_1_v1", catalog["catalog_id"])
         self.assertEqual("season_1", catalog["season_id"])
-        self.assertEqual(1, len(catalog["packages"]))
-        package = catalog["packages"][0]
-        self.assertEqual("mathilde_returns_with_chosen_intent_01", package["sequence_id"])
+        self.assertEqual(2, len(catalog["packages"]))
+        self.assertEqual(
+            [
+                "mathilde_returns_with_chosen_intent_01",
+                "sandra_sentrycore_button_echo_01",
+            ],
+            [package["sequence_id"] for package in catalog["packages"]],
+        )
         self.assertNotIn("tests/fixtures", json.dumps(catalog))
         self.assertNotIn("data/runtime/season_1", json.dumps(catalog))
 
@@ -220,7 +225,7 @@ class R8CN18CanonicalCatalogSeasonRunnerStaticTests(unittest.TestCase):
             media_ids = set(sequence["media"])
             self.assertTrue(global_media.isdisjoint(media_ids))
             global_media |= media_ids
-        self.assertEqual(1, len(self.load(PRODUCTION_CATALOG)["packages"]))
+        self.assertEqual(2, len(self.load(PRODUCTION_CATALOG)["packages"]))
 
     def test_handoff_disconnects_old_ui_providers_and_physical_is_session_local(self):
         session = self.read(APP / "UnifiedPlayerRuntimeSession.gd")

@@ -659,8 +659,8 @@ static func _validate_media_effects(value, path: String, context: Dictionary, er
 
 static func _validate_media(value, participant_context: Dictionary, errors: Array[String]) -> Dictionary:
 	var context := {"media": {}}
-	if typeof(value) != TYPE_DICTIONARY or value.is_empty():
-		_add_error(errors, "root.media", "expected_non_empty_dictionary")
+	if typeof(value) != TYPE_DICTIONARY:
+		_add_error(errors, "root.media", "expected_dictionary")
 		return context
 	var media_ids: Array = value.keys()
 	media_ids.sort()
