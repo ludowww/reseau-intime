@@ -448,7 +448,7 @@ static func _valider_effet_durable(categorie: String, entree: Dictionary) -> Str
 			return _valider_tableau_identifiants_durables(entree.get("beneficiary_ids"), true)
 		return ""
 	if categorie == "obligations":
-		if entree["effect"] == "CREATE_DUE":
+		if entree["effect"] in ["CREATE_DUE", "CREATE_PAID", "CREATE_FAILED"]:
 			if not _identifiant_durable(entree.get("debtor_id")) or not _chaine_durable(entree.get("kind")):
 				return "definition de scene: create obligation incomplete"
 			return _valider_tableau_identifiants_durables(entree.get("beneficiary_ids"), true)
@@ -487,7 +487,7 @@ static func _champs_effet_durable(categorie: String, entree: Dictionary) -> Arra
 			CHAMPS_DURABLE_PROMISE_TERMINAL if effet in ["PAY", "FAIL"] else []
 		)
 	if categorie == "obligations":
-		return CHAMPS_DURABLE_OBLIGATION_CREATE if effet == "CREATE_DUE" else (
+		return CHAMPS_DURABLE_OBLIGATION_CREATE if effet in ["CREATE_DUE", "CREATE_PAID", "CREATE_FAILED"] else (
 			CHAMPS_DURABLE_OBLIGATION_TERMINAL if effet in ["PAY", "FAIL"] else []
 		)
 	if categorie == "media_deliveries":

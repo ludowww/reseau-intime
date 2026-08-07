@@ -259,7 +259,7 @@ static func _validate_obligations(entries: Array, seen_event_keys: Dictionary) -
 		var entry: Dictionary = value
 		var effect = entry.get("effect")
 		var fields: Array = []
-		if effect == "CREATE_DUE":
+		if effect in ["CREATE_DUE", "CREATE_PAID", "CREATE_FAILED"]:
 			fields = OBLIGATION_CREATE_FIELDS
 		elif effect in ["PAY", "FAIL"]:
 			fields = OBLIGATION_TERMINAL_FIELDS
@@ -269,7 +269,7 @@ static func _validate_obligations(entries: Array, seen_event_keys: Dictionary) -
 			entry["event_key"], entry["obligation_id"], seen_event_keys, seen_business_ids
 		):
 			return false
-		if effect == "CREATE_DUE" and (
+		if effect in ["CREATE_DUE", "CREATE_PAID", "CREATE_FAILED"] and (
 			not _valid_durable_identifier(entry["debtor_id"])
 			or not _valid_identifier_array(entry["beneficiary_ids"], true)
 			or not _valid_durable_string(entry["kind"])

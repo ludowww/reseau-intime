@@ -18,7 +18,7 @@ static func _one(c: Dictionary, item, p: Dictionary) -> Dictionary:
 	if typeof(item) != TYPE_DICTIONARY:
 		return _reject("forme obligation invalide")
 	var effect = item.get("effect")
-	if effect == "CREATE_DUE":
+	if effect in ["CREATE_DUE", "CREATE_PAID", "CREATE_FAILED"]:
 		if not _exact(item, CREATE_FIELDS):
 			return _reject("forme creation obligation invalide")
 		if (
@@ -29,14 +29,15 @@ static func _one(c: Dictionary, item, p: Dictionary) -> Dictionary:
 			or not _id(item["kind"])
 		):
 			return _reject("obligation invalide")
+		var terminal_status := "PAID" if effect == "CREATE_PAID" else "FAILED"
 		var rec := {
 			"obligation_id": item["obligation_id"],
 			"debtor_id": item["debtor_id"],
 			"beneficiary_ids": item["beneficiary_ids"].duplicate(true),
 			"kind": item["kind"],
-			"status": "DUE",
+			"status": "DUE" if effect == "CREATE_DUE" else terminal_status,
 			"provenance": p.duplicate(true),
-			"resolved_at": null,
+			"resolved_at": null if effect == "CREATE_DUE" else p["moment_diegetique"],
 		}
 		if c["obligations"].has(item["obligation_id"]):
 			return _same_or_reject(c["obligations"][item["obligation_id"]], rec)
@@ -55,6 +56,8 @@ static func _one(c: Dictionary, item, p: Dictionary) -> Dictionary:
 	var rec: Dictionary = c["obligations"][item["obligation_id"]]
 	var target := "PAID" if effect == "PAY" else "FAILED"
 	if rec["status"] == target and rec["resolved_at"] == p["moment_diegetique"]:
+		if rec["resolved_at"] == rec["provenance"]["moment_diegetique"]:
+			return _reject("transition obligation impossible")
 		return _ok("IDEMPOTENT")
 	if rec["status"] != "DUE":
 		return _reject("transition obligation impossible")

@@ -87,8 +87,11 @@ func _ready() -> void:
 	_expect(promise_failed["ok"] and promise_failed["candidat"]["promesses"]["promise_two"]["status"] == "FAILED", "promise created then failed separately")
 
 	var obligation_pay := _single("obligations", [{"event_key": "obligation_pay", "effect": "PAY", "obligation_id": "obligation_one"}])
-	var obligation_paid := Reducer.preparer(candidate, obligation_pay, _provenance("2032-03-04T10:39:00+01:00"))
+	var obligation_pay_provenance := _provenance("2032-03-04T10:39:00+01:00")
+	var obligation_paid := Reducer.preparer(candidate, obligation_pay, obligation_pay_provenance)
 	_expect(obligation_paid["ok"] and obligation_paid["candidat"]["obligations"]["obligation_one"]["status"] == "PAID", "obligation created then paid")
+	var obligation_pay_replay := Reducer.preparer(obligation_paid["candidat"], obligation_pay, obligation_pay_provenance)
+	_expect(obligation_pay_replay["ok"] and obligation_pay_replay["statut"] == "IDEMPOTENT", "CREATE_DUE then PAY identical replay remains idempotent")
 	_expect_rejected(obligation_paid["candidat"], obligation_pay, _provenance("2032-03-04T10:39:01+01:00"), "obligation terminal replay different moment rejected")
 	var obligation_change_terminal := _single("obligations", [{"event_key": "obligation_change_terminal", "effect": "FAIL", "obligation_id": "obligation_one"}])
 	_expect_rejected(obligation_paid["candidat"], obligation_change_terminal, _provenance("2032-03-04T10:39:00+01:00"), "obligation terminal status change rejected")
@@ -99,8 +102,47 @@ func _ready() -> void:
 	var obligation_two_create := _single("obligations", [{"event_key": "obligation_two_create", "effect": "CREATE_DUE", "obligation_id": "obligation_two", "debtor_id": "player", "beneficiary_ids": ["sandra"], "kind": "FOLLOW_UP"}])
 	var obligation_two_due: Dictionary = Reducer.preparer(candidate, obligation_two_create, _provenance("2032-03-04T10:40:00+01:00"))["candidat"]
 	var obligation_fail := _single("obligations", [{"event_key": "obligation_fail", "effect": "FAIL", "obligation_id": "obligation_two"}])
-	var obligation_failed := Reducer.preparer(obligation_two_due, obligation_fail, _provenance("2032-03-04T10:41:00+01:00"))
+	var obligation_fail_provenance := _provenance("2032-03-04T10:41:00+01:00")
+	var obligation_failed := Reducer.preparer(obligation_two_due, obligation_fail, obligation_fail_provenance)
 	_expect(obligation_failed["ok"] and obligation_failed["candidat"]["obligations"]["obligation_two"]["status"] == "FAILED", "obligation created then failed separately")
+	var obligation_fail_replay := Reducer.preparer(obligation_failed["candidat"], obligation_fail, obligation_fail_provenance)
+	_expect(obligation_fail_replay["ok"] and obligation_fail_replay["statut"] == "IDEMPOTENT", "CREATE_DUE then FAIL identical replay remains idempotent")
+
+	var create_paid_provenance := _provenance("2032-03-04T10:41:30+01:00")
+	var obligation_create_paid := _single("obligations", [{"event_key": "obligation_create_paid", "effect": "CREATE_PAID", "obligation_id": "obligation_paid_at_creation", "debtor_id": "player", "beneficiary_ids": ["marie"], "kind": "AFTERCARE"}])
+	var obligation_created_paid := Reducer.preparer(source, obligation_create_paid, create_paid_provenance)
+	var paid_record: Dictionary = obligation_created_paid["candidat"]["obligations"]["obligation_paid_at_creation"]
+	_expect(obligation_created_paid["ok"] and obligation_created_paid["statut"] == "APPLIQUE", "CREATE_PAID creates obligation from fresh state")
+	_expect(paid_record["status"] == "PAID" and paid_record["resolved_at"] == create_paid_provenance["moment_diegetique"], "CREATE_PAID record is terminal at provenance moment")
+	_expect(paid_record["debtor_id"] == "player" and paid_record["beneficiary_ids"] == ["marie"] and paid_record["kind"] == "AFTERCARE" and paid_record["provenance"] == create_paid_provenance, "CREATE_PAID record preserves metadata and provenance")
+	var create_paid_replay := Reducer.preparer(obligation_created_paid["candidat"], obligation_create_paid, create_paid_provenance)
+	_expect(create_paid_replay["ok"] and create_paid_replay["statut"] == "IDEMPOTENT", "CREATE_PAID identical replay idempotent")
+	_expect_rejected(obligation_created_paid["candidat"], obligation_create_paid, _provenance("2032-03-04T10:41:31+01:00"), "CREATE_PAID replay different moment rejected")
+	var paid_to_failed := _single("obligations", [{"event_key": "obligation_paid_to_failed", "effect": "CREATE_FAILED", "obligation_id": "obligation_paid_at_creation", "debtor_id": "player", "beneficiary_ids": ["marie"], "kind": "AFTERCARE"}])
+	_expect_rejected(obligation_created_paid["candidat"], paid_to_failed, create_paid_provenance, "CREATE_PAID to CREATE_FAILED status change rejected")
+	var divergent_paid_debtor := _single("obligations", [{"event_key": "obligation_paid_other_debtor", "effect": "CREATE_PAID", "obligation_id": "obligation_paid_at_creation", "debtor_id": "marie", "beneficiary_ids": ["marie"], "kind": "AFTERCARE"}])
+	_expect_rejected(obligation_created_paid["candidat"], divergent_paid_debtor, create_paid_provenance, "CREATE_PAID divergent debtor rejected")
+	var divergent_paid_beneficiaries := _single("obligations", [{"event_key": "obligation_paid_other_beneficiaries", "effect": "CREATE_PAID", "obligation_id": "obligation_paid_at_creation", "debtor_id": "player", "beneficiary_ids": ["sandra"], "kind": "AFTERCARE"}])
+	_expect_rejected(obligation_created_paid["candidat"], divergent_paid_beneficiaries, create_paid_provenance, "CREATE_PAID divergent beneficiaries rejected")
+	var divergent_paid_kind := _single("obligations", [{"event_key": "obligation_paid_other_kind", "effect": "CREATE_PAID", "obligation_id": "obligation_paid_at_creation", "debtor_id": "player", "beneficiary_ids": ["marie"], "kind": "FOLLOW_UP"}])
+	_expect_rejected(obligation_created_paid["candidat"], divergent_paid_kind, create_paid_provenance, "CREATE_PAID divergent kind rejected")
+	var pay_created_paid := _single("obligations", [{"event_key": "pay_created_paid", "effect": "PAY", "obligation_id": "obligation_paid_at_creation"}])
+	_expect_rejected(obligation_created_paid["candidat"], pay_created_paid, create_paid_provenance, "PAY on CREATE_PAID obligation rejected")
+	var different_pay_provenance := create_paid_provenance.duplicate(true)
+	different_pay_provenance["event_id"] = "synthetic_n14_1b_different_event"
+	_expect_rejected(obligation_created_paid["candidat"], pay_created_paid, different_pay_provenance, "PAY on CREATE_PAID obligation rejected with different provenance")
+
+	var create_failed_provenance := _provenance("2032-03-04T10:41:45+01:00")
+	var obligation_create_failed := _single("obligations", [{"event_key": "obligation_create_failed", "effect": "CREATE_FAILED", "obligation_id": "obligation_failed_at_creation", "debtor_id": "player", "beneficiary_ids": ["sandra"], "kind": "AFTERCARE"}])
+	var obligation_created_failed := Reducer.preparer(source, obligation_create_failed, create_failed_provenance)
+	var failed_record: Dictionary = obligation_created_failed["candidat"]["obligations"]["obligation_failed_at_creation"]
+	_expect(obligation_created_failed["ok"] and obligation_created_failed["statut"] == "APPLIQUE", "CREATE_FAILED creates obligation from fresh state")
+	_expect(failed_record["status"] == "FAILED" and failed_record["resolved_at"] == create_failed_provenance["moment_diegetique"], "CREATE_FAILED record is terminal at provenance moment")
+	_expect(failed_record["debtor_id"] == "player" and failed_record["beneficiary_ids"] == ["sandra"] and failed_record["kind"] == "AFTERCARE" and failed_record["provenance"] == create_failed_provenance, "CREATE_FAILED record preserves metadata and provenance")
+	var create_failed_replay := Reducer.preparer(obligation_created_failed["candidat"], obligation_create_failed, create_failed_provenance)
+	_expect(create_failed_replay["ok"] and create_failed_replay["statut"] == "IDEMPOTENT", "CREATE_FAILED identical replay idempotent")
+	var fail_created_failed := _single("obligations", [{"event_key": "fail_created_failed", "effect": "FAIL", "obligation_id": "obligation_failed_at_creation"}])
+	_expect_rejected(obligation_created_failed["candidat"], fail_created_failed, create_failed_provenance, "FAIL on CREATE_FAILED obligation rejected")
 
 	var media_grant_hidden := _single("media_deliveries", [{"event_key": "media_grant_hidden", "effect": "GRANT_ACCESS", "media_id": "media_one", "diegetic_status": "CREATED", "fictional_audience_ids": [], "gallery_status": "HIDDEN"}])
 	var media_hidden := Reducer.preparer(candidate, media_grant_hidden, _provenance("2032-03-04T10:42:00+01:00"))
@@ -162,6 +204,11 @@ func _ready() -> void:
 		{"event_key": "promise_dup_pay", "effect": "PAY", "promise_id": "promise_dup"},
 	])
 	_expect_rejected(source, duplicate_business, provenance, "duplicate business identifier rejected")
+	var duplicate_obligation_business := _single("obligations", [
+		{"event_key": "obligation_duplicate_create", "effect": "CREATE_DUE", "obligation_id": "obligation_duplicate", "debtor_id": "player", "beneficiary_ids": ["marie"], "kind": "FOLLOW_UP"},
+		{"event_key": "obligation_duplicate_pay", "effect": "PAY", "obligation_id": "obligation_duplicate"},
+	])
+	_expect_rejected(source, duplicate_obligation_business, provenance, "CREATE_DUE and PAY same obligation rejected as duplicate business identifier")
 	var bad_fact := _single("facts", [{"event_key": "bad_fact", "scope": "RELATION_CENTRALE", "fact": {"fait_id": "bad_fact", "unknown": "value"}}])
 	_expect_rejected(source, bad_fact, provenance, "incoherent fact rejected")
 	var absent_trace := _single("traces", [{"event_key": "absent_trace", "effect": "WITHDRAW", "trace_id": "absent_trace"}])
@@ -170,6 +217,8 @@ func _ready() -> void:
 	_expect_rejected(source, promise_before_create, provenance, "promise paid before creation rejected")
 	var obligation_before_due := _single("obligations", [{"event_key": "obligation_before_due", "effect": "PAY", "obligation_id": "absent_obligation"}])
 	_expect_rejected(source, obligation_before_due, provenance, "obligation paid before due rejected")
+	var obligation_fail_before_due := _single("obligations", [{"event_key": "obligation_fail_before_due", "effect": "FAIL", "obligation_id": "absent_obligation"}])
+	_expect_rejected(source, obligation_fail_before_due, provenance, "obligation failed before due rejected")
 	var absent_media := _single("media_deliveries", [{"event_key": "absent_media", "effect": "WITHDRAW", "media_id": "absent_media"}])
 	_expect_rejected(source, absent_media, provenance, "absent media rejected")
 	var unknown_gallery := _single("media_deliveries", [{"event_key": "unknown_gallery", "effect": "GRANT_ACCESS", "media_id": "unknown_gallery", "diegetic_status": "CREATED", "fictional_audience_ids": [], "gallery_status": "UNKNOWN"}])

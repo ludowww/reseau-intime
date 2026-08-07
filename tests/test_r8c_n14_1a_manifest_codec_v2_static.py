@@ -198,6 +198,15 @@ class R8CN141AManifestCodecV2StaticTests(unittest.TestCase):
             re.findall(r'"([A-Z_]+)"', media_effects.group(1)),
         )
 
+    def test_authored_terminal_obligation_creation_effects_are_exact(self):
+        contract = self.read("game/scripts/unified_runtime/contracts/AuthoredSequenceV1.gd")
+        obligation_effects = re.search(r"const OBLIGATION_EFFECTS := \[(.*?)\]", contract, re.S)
+        self.assertIsNotNone(obligation_effects)
+        self.assertEqual(
+            ["CREATE_DUE", "CREATE_PAID", "CREATE_FAILED", "PAY", "FAIL", "NONE"],
+            re.findall(r'"([A-Z_]+)"', obligation_effects.group(1)),
+        )
+
     def test_manifest_validation_preserves_authored_order_and_has_no_generic_architecture(self):
         scene = self.read("game/scripts/narrative_scene/SceneDefinition.gd")
         authored = self.read("game/scripts/unified_runtime/contracts/AuthoredSequenceValidator.gd")
@@ -281,6 +290,12 @@ class R8CN141AManifestCodecV2StaticTests(unittest.TestCase):
             "minimal durable manifest valid",
             "local authored NONE has no manifest entry or event_key",
             "six ordered categories accepted",
+            "CREATE_PAID complete obligation accepted with authored projection",
+            "CREATE_FAILED complete obligation accepted with authored projection",
+            "CREATE_PAID terminal short shape rejected with parity",
+            "CREATE_FAILED unknown field rejected with parity",
+            "unknown obligation effect rejected with parity",
+            "duplicate obligation business id rejected with parity",
             "unknown manifest category rejected",
             "incomplete binding rejected",
             "binding unknown field rejected",

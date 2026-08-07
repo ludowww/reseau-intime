@@ -1368,7 +1368,7 @@ static func _a6_durable_effect_fields(category: String, entry: Dictionary) -> Ar
 			A6_DURABLE_PROMISE_TERMINAL_FIELDS if effect in ["PAY", "FAIL"] else []
 		)
 	if category == "obligations":
-		return A6_DURABLE_OBLIGATION_CREATE_FIELDS if effect == "CREATE_DUE" else (
+		return A6_DURABLE_OBLIGATION_CREATE_FIELDS if effect in ["CREATE_DUE", "CREATE_PAID", "CREATE_FAILED"] else (
 			A6_DURABLE_OBLIGATION_TERMINAL_FIELDS if effect in ["PAY", "FAIL"] else []
 		)
 	if category == "media_deliveries":
@@ -1428,7 +1428,7 @@ static func _validate_a6_durable_effect(
 		return
 	if category == "obligations":
 		_validate_business_id(entry["obligation_id"], path + ".obligation_id", errors)
-		if entry["effect"] == "CREATE_DUE":
+		if entry["effect"] in ["CREATE_DUE", "CREATE_PAID", "CREATE_FAILED"]:
 			_validate_business_id(entry["debtor_id"], path + ".debtor_id", errors)
 			_validate_id_array(entry["beneficiary_ids"], path + ".beneficiary_ids", errors, true)
 			_validate_durable_string(entry["kind"], path + ".kind", errors)

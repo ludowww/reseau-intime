@@ -136,7 +136,14 @@ const PROMISE_EFFECT_FIELDS := ["promise_id", "effect"]
 const OBLIGATION_EFFECT_FIELDS := ["obligation_id", "effect"]
 const MEDIA_EFFECT_FIELDS := ["media_id", "effect"]
 const PROMISE_EFFECTS := ["CREATE", "PAY", "FAIL", "NONE"]
-const OBLIGATION_EFFECTS := ["CREATE_DUE", "PAY", "FAIL", "NONE"]
+const OBLIGATION_EFFECTS := [
+	"CREATE_DUE",
+	"CREATE_PAID",
+	"CREATE_FAILED",
+	"PAY",
+	"FAIL",
+	"NONE",
+]
 const MEDIA_EFFECTS := ["CREATE_DIEGETIC", "GRANT_ACCESS", "REVOKE_ACCESS", "WITHDRAW", "NONE"]
 const CONVERGENCES := ["COMMON_EXIT", "POST_RESOLUTION_RETURN", "COMPLETE"]
 

@@ -47,6 +47,39 @@ func _test_manifests() -> void:
 	full["orchestration"]["a6_entry"]["definition"]["resolutions"]["a3_resolution_continue"]["durable_manifest"] = _full_manifest()
 	_bind_authored_effects_to_manifest(full, "resolution_complete")
 	_expect(AuthoredValidator.validate(full)["valid"] and _definition_valid(full), "six ordered categories accepted")
+	var create_paid := full.duplicate(true)
+	_manifest(create_paid)["obligations"][0] = {
+		"event_key": "manifest_obligation", "effect": "CREATE_PAID", "obligation_id": "synthetic_obligation",
+		"debtor_id": "synthetic_actor", "beneficiary_ids": ["player"], "kind": "FOLLOW_UP",
+	}
+	_bind_authored_effects_to_manifest(create_paid, "resolution_complete")
+	_expect(AuthoredValidator.validate(create_paid)["valid"] and _definition_valid(create_paid), "CREATE_PAID complete obligation accepted with authored projection")
+	var create_failed := full.duplicate(true)
+	_manifest(create_failed)["obligations"][0] = {
+		"event_key": "manifest_obligation", "effect": "CREATE_FAILED", "obligation_id": "synthetic_obligation",
+		"debtor_id": "synthetic_actor", "beneficiary_ids": ["player"], "kind": "FOLLOW_UP",
+	}
+	_bind_authored_effects_to_manifest(create_failed, "resolution_complete")
+	_expect(AuthoredValidator.validate(create_failed)["valid"] and _definition_valid(create_failed), "CREATE_FAILED complete obligation accepted with authored projection")
+	var create_paid_short := full.duplicate(true)
+	_manifest(create_paid_short)["obligations"][0] = {
+		"event_key": "manifest_obligation", "effect": "CREATE_PAID", "obligation_id": "synthetic_obligation",
+	}
+	_bind_authored_effects_to_manifest(create_paid_short, "resolution_complete")
+	_expect(_both_reject(create_paid_short), "CREATE_PAID terminal short shape rejected with parity")
+	var create_failed_unknown_field := create_failed.duplicate(true)
+	_manifest(create_failed_unknown_field)["obligations"][0]["unknown"] = true
+	_expect(_both_reject(create_failed_unknown_field), "CREATE_FAILED unknown field rejected with parity")
+	var unknown_obligation_effect := create_paid.duplicate(true)
+	_manifest(unknown_obligation_effect)["obligations"][0]["effect"] = "CREATE_UNKNOWN"
+	_bind_authored_effects_to_manifest(unknown_obligation_effect, "resolution_complete")
+	_expect(_both_reject(unknown_obligation_effect), "unknown obligation effect rejected with parity")
+	var duplicate_obligation_effect := create_paid.duplicate(true)
+	_manifest(duplicate_obligation_effect)["obligations"].append({
+		"event_key": "manifest_obligation_pay", "effect": "PAY", "obligation_id": "synthetic_obligation",
+	})
+	_bind_authored_effects_to_manifest(duplicate_obligation_effect, "resolution_complete")
+	_expect(_both_reject(duplicate_obligation_effect), "duplicate obligation business id rejected with parity")
 	var order_before: Dictionary = _manifest(full).duplicate(true)
 	AuthoredValidator.validate(full)
 	SceneDefinition.valider_fermee(full["orchestration"]["a6_entry"]["definition"])

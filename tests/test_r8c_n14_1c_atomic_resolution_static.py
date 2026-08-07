@@ -169,7 +169,7 @@ class R8CN141CAtomicResolutionStaticTests(unittest.TestCase):
             self.assertIn(f"const {fields} :=", source)
         for effect in [
             "ACQUIRE", "CREATE", "GRANT_ACCESS", "REVOKE_ACCESS", "WITHDRAW",
-            "PAY", "FAIL", "CREATE_DUE", "CREATE_DIEGETIC",
+            "PAY", "FAIL", "CREATE_DUE", "CREATE_PAID", "CREATE_FAILED", "CREATE_DIEGETIC",
         ]:
             self.assertIn(f'"{effect}"', source)
         self.assertNotIn('"NONE"', source)
@@ -231,6 +231,7 @@ class R8CN141CAtomicResolutionStaticTests(unittest.TestCase):
             "instance PROPOSED prepared", "event type exact", "deterministic event id exact",
             "provenance exact", "payload six categories exact and ordered", "knowledge registry published",
             "traces registry published", "promises registry published", "obligations registry published",
+            "terminal obligation paid atomically at provenance moment",
             "media registry published", "closed terminal receipt persisted", "public receipt resolved after publication",
             "immediate terminal replay idempotent", "replay adds no event reducer call receipt or A5 mutation",
             "replay after restoration idempotent", "missing sequence_resolution rejected",

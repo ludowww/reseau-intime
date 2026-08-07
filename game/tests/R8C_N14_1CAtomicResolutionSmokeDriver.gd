@@ -55,6 +55,8 @@ func _test_success_replay_restore(sequence: Dictionary) -> void:
 	_expect(after["narrative_state"]["traces_narratives"].has("n14_1c_trace"), "traces registry published")
 	_expect(after["narrative_state"]["promesses"].has("n14_1c_promise"), "promises registry published")
 	_expect(after["narrative_state"]["obligations"].has("n14_1c_obligation"), "obligations registry published")
+	var obligation: Dictionary = after["narrative_state"]["obligations"]["n14_1c_obligation"]
+	_expect(obligation["status"] == "PAID" and obligation["resolved_at"] == event["provenance"]["moment_diegetique"], "terminal obligation paid atomically at provenance moment")
 	_expect(after["narrative_state"]["livraison_medias"].has("n14_1c_media"), "media registry published")
 	var persistent_instance: Dictionary = after["scene_registry"][0]
 	var receipt: Dictionary = persistent_instance["resolution_receipt"]
@@ -598,7 +600,7 @@ func _full_manifest_payload() -> Dictionary:
 		"knowledge": [{"event_key": "n14_1c_knowledge", "effect": "ACQUIRE", "knowledge_id": "n14_1c_knowledge", "subject_id": "n14_1c_subject", "holder_ids": ["player", "sandra"]}],
 		"traces": [{"event_key": "n14_1c_trace", "effect": "CREATE", "trace_id": "n14_1c_trace", "creator_id": "sandra", "audience_ids": [], "controller_ids": [], "accessible_to_ids": []}],
 		"promises": [{"event_key": "n14_1c_promise", "effect": "CREATE", "promise_id": "n14_1c_promise", "author_id": "sandra", "beneficiary_ids": ["player"], "content_ref": "n14_1c_content"}],
-		"obligations": [{"event_key": "n14_1c_obligation", "effect": "CREATE_DUE", "obligation_id": "n14_1c_obligation", "debtor_id": "player", "beneficiary_ids": ["sandra"], "kind": "FOLLOW_UP"}],
+		"obligations": [{"event_key": "n14_1c_obligation", "effect": "CREATE_PAID", "obligation_id": "n14_1c_obligation", "debtor_id": "player", "beneficiary_ids": ["sandra"], "kind": "FOLLOW_UP"}],
 		"media_deliveries": [{"event_key": "n14_1c_media", "effect": "CREATE_DIEGETIC", "media_id": "n14_1c_media", "fictional_audience_ids": []}],
 	}
 
