@@ -6,7 +6,7 @@
 
 ## Frontière A8
 
-`R8COpportunityWindowExclusiveConflictCoordinator` regroupe plusieurs
+`R8COpportunityWindowExclusiveConflictCoordinator` regroupe un ou plusieurs
 candidats A6 dans une fenêtre éphémère, puis délègue toute réservation ou
 proposition au coordinateur A7. Il ne choisit aucune option : l’appelant fournit
 explicitement `window_id`, `option_id` et l’intention `RESERVE` ou `PROPOSE`,
@@ -14,7 +14,8 @@ puis peut fermer le conflit avec un `option_id` retenu explicite.
 
 Une fenêtre possède des bornes ISO date/heure, un contexte fermé
 (`acte_courant`, disponibilités des participants, validité de l’opportunité) et
-au moins deux options. Chaque option déclare séparément `option_id`,
+une ou plusieurs options. Une fenêtre à une option représente une opportunité
+unique. Chaque option déclare séparément `option_id`,
 `scene_definition_id`, `variant_id`, `instance_id` et sa politique de conflit.
 Les identités sont authored, uniques dans la fenêtre et ne sont jamais dérivées
 d’un ordre, d’un poids ou d’un total. Un même `instance_id` ne peut appartenir
@@ -57,6 +58,9 @@ devient jamais une absence. Seule une instance déjà `PROPOSED` peut devenir
   identité sans transférer le cache interne A8.
 
 Aucune autre politique n’est reconnue.
+
+Ces politiques restent obligatoires dans une fenêtre mono-option, mais elles
+n’ont aucun perdant auquel s’appliquer lorsque l’unique option est retenue.
 
 ## Revalidation, atomicité et idempotence
 

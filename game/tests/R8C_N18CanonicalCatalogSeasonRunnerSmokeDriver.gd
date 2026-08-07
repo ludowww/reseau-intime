@@ -285,10 +285,11 @@ func _test_handoff_save_restore_and_idle() -> void:
 	await _frames(4)
 	_expect(
 		runner.completed_sequence_ids == ["test_sequence_alpha"]
-		and runner.active_sequence_id == "test_sequence_beta"
-		and runner.active_session != alpha_session
-		and runner.describe_state()["active_session_count"] == 1,
-		"handoff alpha vers beta est déterministe et mono-actif",
+		and runner.active_sequence_id.is_empty()
+		and runner.active_session == null
+		and runner.status() == SeasonRunner.OPPORTUNITY_AVAILABLE
+		and runner.describe_state()["opportunity"]["sequence_id"] == "test_sequence_beta",
+		"handoff alpha expose une opportunité beta déterministe sans session",
 	)
 	var post_alpha_domain: Dictionary = runner.catalog["facade"].save_state()
 	runner._on_active_sequence_completed(alpha_session)
@@ -297,23 +298,24 @@ func _test_handoff_save_restore_and_idle() -> void:
 		and runner.catalog["facade"].save_state() == post_alpha_domain,
 		"replay du handoff alpha est idempotent sans second A10",
 	)
-	var beta_source: Dictionary = runner.active_session.presentation_source()
+	var opportunity_source: Dictionary = runner.presentation_source()
 	_expect(
-		_message_ids(beta_source).count("alpha_message_01") == 1
-		and _message_ids(beta_source).count("alpha_return_01") == 1,
-		"le transcript alpha persiste sans duplication pendant beta",
+		_message_ids(opportunity_source).count("alpha_message_01") == 1
+		and _message_ids(opportunity_source).count("alpha_return_01") == 1,
+		"le transcript alpha persiste sans duplication pendant l offre beta",
 	)
 	_expect(
-		runner.active_session.gallery_source().get("fixtures", {}).has("alpha_actor"),
-		"la Galerie alpha durable reste résolue pendant beta",
+		runner.gallery_source().get("fixtures", {}).has("alpha_actor"),
+		"la Galerie alpha durable reste résolue pendant l offre beta",
 	)
 	var beta_saved: Dictionary = SaveStore.create(save_path)["store"].load_snapshot()
 	_expect(
 		beta_saved.get("ok", false)
-		and SeasonSnapshot.validate(beta_saved.get("snapshot", {}), runner.catalog)["valid"],
-		"le snapshot Saison reste valide pendant le handoff Alpha vers Beta",
+		and SeasonSnapshot.validate(beta_saved.get("snapshot", {}), runner.catalog)["valid"]
+		and beta_saved["snapshot"]["active_sequence_id"] == "test_sequence_alpha"
+		and beta_saved["snapshot"]["active_runtime_snapshot"]["execution"]["execution_status"] == "COMPLETE",
+		"le checkpoint COMPLETE alpha reste sur disque pendant l offre beta",
 	)
-	var beta_execution: Dictionary = runner.active_session.execution_state()
 	main.queue_free()
 	await get_tree().process_frame
 	main = await _new_test_runtime(CATALOG_ALPHA_BETA, save_path)
@@ -322,9 +324,18 @@ func _test_handoff_save_restore_and_idle() -> void:
 	runner = main.season_runner
 	_expect(
 		runner.completed_sequence_ids == ["test_sequence_alpha"]
-		and runner.active_sequence_id == "test_sequence_beta"
-		and runner.active_session.execution_state() == beta_execution,
-		"reload pendant beta conserve completed, active et exécution exacts",
+		and runner.active_sequence_id.is_empty()
+		and runner.active_session == null
+		and runner.status() == SeasonRunner.OPPORTUNITY_AVAILABLE,
+		"reload du checkpoint COMPLETE reconstruit l offre beta sans session",
+	)
+	_expect(runner.activate_opportunity("beta_thread")["ok"], "activation explicite beta acceptée")
+	await _frames(4)
+	_expect(
+		runner.active_sequence_id == "test_sequence_beta"
+		and runner.active_session != null
+		and runner.status() == SeasonRunner.ACTIVE_SEQUENCE,
+		"beta démarre une seule fois après activation explicite",
 	)
 	_expect(await _complete_sequence(main, "beta_thread", "beta_finish"), "beta atteint COMPLETE")
 	await _frames(4)

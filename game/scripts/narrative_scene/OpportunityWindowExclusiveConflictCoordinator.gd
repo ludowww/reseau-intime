@@ -746,7 +746,7 @@ func _valider_specification(specification) -> String:
 	):
 		return "CONTEXTE_FENETRE_INVALIDE"
 	var options = specification["options"]
-	if typeof(options) != TYPE_ARRAY or options.size() < 2 or options.size() > MAX_OPTIONS:
+	if typeof(options) != TYPE_ARRAY or options.is_empty() or options.size() > MAX_OPTIONS:
 		return "OPTIONS_FENETRE_INVALIDES"
 	var option_ids := {}
 	var instance_ids := {}

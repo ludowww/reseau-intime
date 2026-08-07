@@ -379,16 +379,18 @@ func _test_production_flow() -> void:
 	)
 	refused_shell.queue_free()
 	await get_tree().process_frame
-	var boundary_main = await _new_production_main(boundary_path)
-	if boundary_main != null:
-		_expect(
-			boundary_main.season_runner.completed_sequence_ids == [MATHILDE_ID, SANDRA_ID]
-			and boundary_main.season_runner.active_sequence_id == MARIE_ID
-			and boundary_main.season_runner.describe_state()["active_session_count"] == 1,
-			"frontière Sandra COMPLETE recharge Marie exactement une fois",
-		)
-		boundary_main.queue_free()
-		await get_tree().process_frame
+	var boundary_shell = PortraitShellScene.instantiate()
+	boundary_shell.content_mode = "unified"
+	add_child(boundary_shell)
+	await _frames(3)
+	var boundary_restore := SeasonRunner.create(boundary_shell, boundary_path)
+	_expect(
+		not boundary_restore["ok"]
+		and boundary_restore["error_code"] == "UNRESTORABLE_INCOMPLETE_HANDOFF_SAVE",
+		"frontière active-null incomplète est refusée fail-closed",
+	)
+	boundary_shell.queue_free()
+	await get_tree().process_frame
 
 	_expect(session.save_now()["ok"], "save après messages d'ouverture")
 	main.queue_free()
@@ -551,6 +553,16 @@ func _drive_mathilde_and_sandra(main) -> bool:
 	if not await _complete_current_messages(session):
 		return false
 	await _frames(5)
+	if not (
+		main.season_runner.active_sequence_id.is_empty()
+		and main.season_runner.active_session == null
+		and main.season_runner.status() == SeasonRunner.OPPORTUNITY_AVAILABLE
+		and main.season_runner.describe_state()["opportunity"]["thread_id"] == "sandra_thread"
+	):
+		return false
+	if not main.season_runner.activate_opportunity("sandra_thread")["ok"]:
+		return false
+	await _frames(4)
 	if main.season_runner.active_sequence_id != SANDRA_ID:
 		return false
 	session = main.runtime_session
@@ -561,6 +573,16 @@ func _drive_mathilde_and_sandra(main) -> bool:
 	if not await _complete_current_messages(session):
 		return false
 	await _frames(5)
+	if not (
+		main.season_runner.active_sequence_id.is_empty()
+		and main.season_runner.active_session == null
+		and main.season_runner.status() == SeasonRunner.OPPORTUNITY_AVAILABLE
+		and main.season_runner.describe_state()["opportunity"]["thread_id"] == "marie_thread"
+	):
+		return false
+	if not main.season_runner.activate_opportunity("marie_thread")["ok"]:
+		return false
+	await _frames(4)
 	return main.season_runner.active_sequence_id == MARIE_ID
 
 

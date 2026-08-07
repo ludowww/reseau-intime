@@ -160,9 +160,12 @@ func _run_paid_path(choice_id: String, expected_status: String, save_path: Strin
 	_expect(session.execution_state()["execution_status"] == "COMPLETE", "%s termine la séquence" % choice_id)
 	await _frames(2)
 	_expect(
-		portrait_main.season_runner.active_sequence_id == "sandra_sentrycore_button_echo_01"
-		and portrait_main.season_runner.active_session != null,
-		"Mathilde complète passe au contenu canonique suivant sans contenu synthétique",
+		portrait_main.season_runner.active_sequence_id.is_empty()
+		and portrait_main.season_runner.active_session == null
+		and portrait_main.season_runner.status() == portrait_main.season_runner.OPPORTUNITY_AVAILABLE
+		and portrait_main.season_runner.describe_state()["opportunity"]["sequence_id"]
+		== "sandra_sentrycore_button_echo_01",
+		"Mathilde complète expose le contenu canonique suivant sans le démarrer",
 	)
 	portrait_main.queue_free()
 	await get_tree().process_frame

@@ -134,13 +134,13 @@ class R8CN19SandraSentryCoreButtonEchoStaticTests(unittest.TestCase):
         for proof in [
             "Mathilde active au démarrage et Sandra inactive",
             "aucun handoff Sandra avant le RETURN Mathilde de 09:06",
-            "frontière handoff inactive recharge Sandra exactement une fois",
+            "frontière handoff active-null incomplète est refusée fail-closed",
             "trois messages Sandra et choix unique conservés après reload",
             "commit A10 Sandra exactement une fois",
-            "Galerie Mathilde reste ouvrable pendant Sandra",
+            "Galerie Mathilde reste ouvrable pendant l offre Sandra",
             "ancien save N18 refusé par fingerprint",
-			"Sandra COMPLETE handoff vers Marie",
-			"reload après Sandra conserve Marie active exactement une fois",
+			"Sandra COMPLETE expose l opportunité Marie",
+			"reload après Sandra reconstruit une seule offre Marie",
         ]:
             self.assertIn(proof, source)
         scene = (GAME / "tests/R8C_N19SandraSentryCoreButtonEchoSmokeTest.tscn").read_text(encoding="utf-8")

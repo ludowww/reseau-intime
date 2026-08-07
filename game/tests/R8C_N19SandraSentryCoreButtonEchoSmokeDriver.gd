@@ -230,35 +230,41 @@ func _test_production_mathilde_sandra_flow() -> void:
 	_expect(await _complete_current_messages(session), "Mathilde atteint COMPLETE réel")
 	await _frames(5)
 	runner = main.season_runner
+	_expect(
+		runner.completed_sequence_ids == [MATHILDE_ID]
+		and runner.active_sequence_id.is_empty()
+		and runner.active_session == null
+		and runner.status() == SeasonRunner.OPPORTUNITY_AVAILABLE
+		and runner.describe_state()["opportunity"]["sequence_id"] == SANDRA_ID,
+		"handoff Mathilde expose Sandra sans démarrage automatique",
+	)
+	var opportunity_source: Dictionary = runner.presentation_source()
+	_expect(
+		_message_ids_for_thread(opportunity_source, "mathilde_thread") == mathilde_ids_before
+		and opportunity_source["choices_by_thread"]["mathilde_thread"].is_empty()
+		and _texts_for_thread(opportunity_source, "sandra_thread").is_empty(),
+		"transcript Mathilde intact et transcript Sandra vide pendant l offre",
+	)
+	_expect(
+		_gallery_triplet_valid(runner.gallery_source())
+		and runner.gallery_source() == gallery_before_sandra
+		and _gallery_triplet_openable(main),
+		"Galerie Mathilde reste ouvrable pendant l offre Sandra",
+	)
+	_expect(runner.activate_opportunity("sandra_thread")["ok"], "clic Sandra active l opportunité")
+	await _frames(5)
 	session = main.runtime_session
 	if session == null:
-		_expect(false, "handoff Sandra compose une session active")
+		_expect(false, "activation Sandra compose une session active")
 		main.queue_free()
 		return
 	_expect(
-		runner.completed_sequence_ids == [MATHILDE_ID]
-		and runner.active_sequence_id == SANDRA_ID
+		runner.active_sequence_id == SANDRA_ID
 		and runner.describe_state()["active_session_count"] == 1
 		and session.narrative_time() == "2032-03-05T13:50:00+01:00",
-		"handoff Mathilde vers Sandra est réel, mono-actif et démarre au premier message authored",
+		"Sandra démarre au premier message authored après clic",
 	)
 	var sandra_source: Dictionary = session.presentation_source()
-	_expect(
-		_message_ids_for_thread(sandra_source, "mathilde_thread") == mathilde_ids_before
-		and sandra_source["choices_by_thread"]["mathilde_thread"].is_empty()
-		and _texts_for_thread(sandra_source, "sandra_thread") == [
-			"Poste du matin terminé.",
-			"Le bouton est revenu.",
-			"J'hésite entre miracle et menace.",
-		],
-		"transcript Mathilde intact et trois messages Sandra ajoutés sans ancien choix",
-	)
-	_expect(
-		_gallery_triplet_valid(session.gallery_source())
-		and session.gallery_source() == gallery_before_sandra
-		and _gallery_triplet_openable(main),
-		"Galerie Mathilde reste ouvrable pendant Sandra",
-	)
 	var physical_button = main.shell.messages_screen.find_child("PhysicalContinue", true, false)
 	_expect(
 		physical_button == null or not physical_button.visible,
@@ -277,16 +283,18 @@ func _test_production_mathilde_sandra_flow() -> void:
 		and SaveStore.create(boundary_path)["store"].save_snapshot(boundary["snapshot"])["ok"],
 		"Mathilde COMPLETE est sauvegardée avant composition Sandra",
 	)
-	var boundary_main = await _new_production_main(boundary_path)
-	if boundary_main != null:
-		_expect(
-			boundary_main.season_runner.completed_sequence_ids == [MATHILDE_ID]
-			and boundary_main.season_runner.active_sequence_id == SANDRA_ID
-			and boundary_main.season_runner.describe_state()["active_session_count"] == 1,
-			"frontière handoff inactive recharge Sandra exactement une fois",
-		)
-		boundary_main.queue_free()
-		await get_tree().process_frame
+	var boundary_shell = PortraitShellScene.instantiate()
+	boundary_shell.content_mode = "unified"
+	add_child(boundary_shell)
+	await _frames(3)
+	var boundary_refused := SeasonRunner.create(boundary_shell, boundary_path)
+	_expect(
+		not boundary_refused["ok"]
+		and boundary_refused["error_code"] == "UNRESTORABLE_INCOMPLETE_HANDOFF_SAVE",
+		"frontière handoff active-null incomplète est refusée fail-closed",
+	)
+	boundary_shell.queue_free()
+	await get_tree().process_frame
 
 	var old_manifest: Dictionary = runner.catalog["manifest"].duplicate(true)
 	old_manifest["packages"] = [old_manifest["packages"][0].duplicate(true)]
@@ -383,10 +391,10 @@ func _test_production_mathilde_sandra_flow() -> void:
 	var handoff_ids := _all_message_ids(marie_source)
 	_expect(
 		runner.completed_sequence_ids == [MATHILDE_ID, SANDRA_ID]
-		and runner.active_sequence_id == MARIE_ID
-		and runner.active_session != null
-		and runner.status() == SeasonRunner.ACTIVE_SEQUENCE,
-		"Sandra COMPLETE handoff vers Marie",
+		and runner.active_sequence_id.is_empty()
+		and runner.active_session == null
+		and runner.status() == SeasonRunner.OPPORTUNITY_AVAILABLE,
+		"Sandra COMPLETE expose l opportunité Marie",
 	)
 	_expect(
 		handoff_ids.size() == _unique_count(handoff_ids)
@@ -398,25 +406,29 @@ func _test_production_mathilde_sandra_flow() -> void:
 			"Journée sauvée alors.",
 			"N'allons pas jusque-là.",
 		]
-		and _texts_for_thread(marie_source, "marie_thread") == [
-			"Tu rentres vers quelle heure ?",
-			"Mathilde a retrouvé son chargeur. Enfin un chargeur.",
-		]
+		and _texts_for_thread(marie_source, "marie_thread").is_empty()
 		and marie_source["choices_by_thread"]["mathilde_thread"].is_empty()
 		and marie_source["choices_by_thread"]["sandra_thread"].is_empty(),
-		"transcripts Mathilde et Sandra restent consultables pendant Marie",
+		"transcripts Mathilde et Sandra restent consultables pendant l offre Marie",
 	)
 	main.queue_free()
 	await get_tree().process_frame
-	main = await _new_production_main(save_path)
+	main = await _new_production_main(save_path, false)
 	if main != null:
 		_expect(
 			main.season_runner.completed_sequence_ids == [MATHILDE_ID, SANDRA_ID]
-			and main.season_runner.active_sequence_id == MARIE_ID
-			and main.season_runner.status() == SeasonRunner.ACTIVE_SEQUENCE
-			and main.runtime_session != null
+			and main.season_runner.active_sequence_id.is_empty()
+			and main.season_runner.status() == SeasonRunner.OPPORTUNITY_AVAILABLE
+			and main.runtime_session == null
 			and main.season_runner.presentation_source() == marie_source,
-			"reload après Sandra conserve Marie active exactement une fois",
+			"reload après Sandra reconstruit une seule offre Marie",
+		)
+		_expect(main.season_runner.activate_opportunity("marie_thread")["ok"], "clic Marie active l opportunité")
+		await _frames(4)
+		_expect(
+			main.season_runner.active_sequence_id == MARIE_ID
+			and main.runtime_session != null,
+			"Marie démarre exactement une fois après clic",
 		)
 		main.queue_free()
 		await get_tree().process_frame
@@ -529,7 +541,7 @@ func _gallery_triplet_openable(main) -> bool:
 	var gallery = main.shell.gallery_screen
 	if gallery == null:
 		return false
-	gallery.refresh_content_source(main.runtime_session.gallery_source())
+	gallery.refresh_content_source(main.season_runner.gallery_source())
 	gallery.select_character("mathilde")
 	var items: Array = gallery.fixtures.get("mathilde", {}).get("items", [])
 	if items.size() != 1:

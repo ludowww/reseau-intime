@@ -90,6 +90,15 @@ class UIMsg04AConversationHeaderResponsiveStaticTests(unittest.TestCase):
         driver = self.read("game/tests/UI_MSG_04AConversationHeaderResponsiveSmokeDriver.gd")
         runner = self.read("tools/test_ui_msg_04a_conversation_header_responsive.sh")
         self.assertIn('preload("res://scenes/portrait/PortraitMain.tscn")', driver)
+        self.assertIn('preload("res://scripts/ui/messages/MessagesDemoData.gd")', driver)
+        self.assertIn('main.unified_save_path_override = SAVE_PATH', driver)
+        self.assertIn('MessagesDemoData.build()', driver)
+        self.assertIn('messages._apply_content_source(demo_source)', driver)
+        self.assertIn('"demo_private_marie"', driver)
+        self.assertIn('"demo_group_verriere"', driver)
+        self.assertNotIn('"thread_marie_private"', driver)
+        self.assertIn('if not _press_thread_card', driver)
+        self.assertIn('return ""', driver)
         self.assertIn('emit_signal("pressed")', driver)
         for phrase in [
             "list global header visible", "conversation global header hidden",

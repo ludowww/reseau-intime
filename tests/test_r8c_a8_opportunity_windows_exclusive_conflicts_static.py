@@ -26,6 +26,11 @@ class R8CA8OpportunityWindowsExclusiveConflictsStaticTests(unittest.TestCase):
         self.assertIn("const CHAMPS_FENETRE", coordinator)
         self.assertIn("const CHAMPS_OPTION", coordinator)
         self.assertIn("const MAX_OPTIONS := 32", coordinator)
+        self.assertIn(
+            "typeof(options) != TYPE_ARRAY or options.is_empty() or options.size() > MAX_OPTIONS",
+            coordinator,
+        )
+        self.assertNotIn("options.size() < 2", coordinator)
         self.assertIn("DefinitionModele.moment_normalise_valide", coordinator)
         self.assertIn('specification["opens_at"] >= specification["closes_at"]', coordinator)
         self.assertIn('option_ids.has(option["option_id"])', coordinator)
@@ -135,6 +140,15 @@ class R8CA8OpportunityWindowsExclusiveConflictsStaticTests(unittest.TestCase):
     def test_smoke_names_all_required_regressions(self):
         smoke = self.read("game/tests/R8CAOpportunityWindowsExclusiveConflictsSmokeTest.gd")
         required = [
+            "zero option reste refuse avec OPTIONS_FENETRE_INVALIDES",
+            "une option ouvre CANDIDATE sans instance A5",
+            "MAX_OPTIONS options restent acceptees",
+            "MAX_OPTIONS plus une option reste refuse",
+            "cycle mono-option PROPOSE ferme sans perdant",
+            "cycle mono-option RESERVE ferme sans perdant",
+            "mono-option cree une seule A5 sans consequence durable de conflit",
+            "abandon mono-option retire ownership sans A5",
+            "mono-option refuse instance A5 preexistante",
             "creation fenetre valide avec plusieurs candidats",
             "candidat non retenu sans instance ni absence",
             "reservation sans proposition ni absence",
@@ -158,7 +172,7 @@ class R8CA8OpportunityWindowsExclusiveConflictsStaticTests(unittest.TestCase):
         ]
         for token in required:
             self.assertIn(token, smoke)
-        self.assertIn("controles != 68", smoke)
+        self.assertIn("controles != 94", smoke)
         self.assertIn("get_tree().quit(0)", smoke)
         self.assertIn("get_tree().quit(1)", smoke)
 

@@ -198,7 +198,7 @@ class R8CN20MarieEveningReturnStaticTests(unittest.TestCase):
             "choix guidé avance sans aucun appel A10",
             "V2 accepte RETURN vers PHYSICAL terminal et V1 le refuse",
             "ancien save N19 refusé par fingerprint",
-            "frontière Sandra COMPLETE recharge Marie exactement une fois",
+            "frontière active-null incomplète est refusée fail-closed",
             "reload au RETURN ne rejoue pas A10 Marie",
             "reload au PHYSICAL reprend le seul outcome choisi",
             "branches ACTIVE BOUNDED DRIFT convergent chacune sans second A10",

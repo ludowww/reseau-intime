@@ -1,6 +1,8 @@
 extends Node
 
 const MAIN_SCENE := preload("res://scenes/portrait/PortraitMain.tscn")
+const MessagesDemoData := preload("res://scripts/ui/messages/MessagesDemoData.gd")
+const SAVE_PATH := "user://ui_msg_04a_smoke/runtime.json"
 
 var failures: Array[String] = []
 
@@ -11,13 +13,24 @@ func _run() -> void:
 	var size := _parse_size(_arg("--runtime-size", "540x960"))
 	var safe_area := _arg("--safe-area", "none")
 	get_window().size = size
+	_remove_save(SAVE_PATH)
 	var main = MAIN_SCENE.instantiate()
+	main.unified_save_path_override = SAVE_PATH
 	add_child(main)
 	await _frames(5)
 	var shell = main.shell
 	shell.set_reduced_motion_enabled(true)
 	shell.set_safe_area_preset(safe_area)
 	var messages = shell.messages_screen
+	var demo_source: Dictionary = MessagesDemoData.build()
+	messages.configure_content_source(demo_source, null)
+	messages._apply_content_source(demo_source)
+	messages.conversation_list.configure(
+		messages.threads, messages.characters, messages.PORTRAIT_THEME, false
+	)
+	messages.conversation_screen.visible = false
+	messages.conversation_list.visible = true
+	messages._set_screen_mode("list")
 	messages.runtime_delivery_time_scale = 0.01
 	await _frames(5)
 
@@ -29,7 +42,9 @@ func _run() -> void:
 	_expect(list_layout.bottom_navigation_visible, "list bottom navigation visible")
 	var list_content_top: float = list_layout.content_rect.position.y
 
-	_press_thread_card(messages, "thread_marie_private")
+	if not _press_thread_card(messages, "demo_private_marie"):
+		_finish(size, safe_area)
+		return
 	await _frames(4)
 	var conversation_layout: Dictionary = shell.describe_layout()
 	var conversation = messages.conversation_screen
@@ -47,6 +62,7 @@ func _run() -> void:
 	_press_speed(shell, "×1", 1.0)
 	_press_speed(shell, "×3", 3.0)
 	_expect(conversation.timeline.size_flags_vertical == Control.SIZE_EXPAND_FILL, "timeline keeps remaining scrollable space")
+	conversation.set_narrative_day_short("Mar.")
 	conversation.set_narrative_time("")
 	_expect(not conversation.narrative_time_label.visible and conversation.narrative_time_label.custom_minimum_size.y == 0.0, "empty narrative time has no residual height")
 	conversation.set_narrative_time("18:20")
@@ -56,19 +72,22 @@ func _run() -> void:
 	_expect(conversation.choice_bar.visible and conversation.choice_bar.choice_count() > 0, "choices remain accessible")
 	_expect(conversation.timeline.reading_position_coherent(), "reading position remains coherent")
 
-	var marie_count: int = messages.thread_message_count("thread_marie_private")
+	var marie_count: int = messages.thread_message_count("demo_private_marie")
 	conversation.back_button.emit_signal("pressed")
 	await _frames(4)
 	_expect(shell.header_panel.is_visible_in_tree(), "return restores global header")
 	_expect(_visible_speed_buttons(shell).is_empty(), "return removes speed from visible surface")
 	_expect(not conversation.visible and messages.conversation_list.visible, "return restores list")
 	_expect(messages.conversation_list.first_card_has_focus(), "return restores card focus")
-	var next_thread_id: String = _another_thread_id(messages, "thread_marie_private")
-	_press_thread_card(messages, next_thread_id)
+	var next_thread_id: String = _another_thread_id(messages, "demo_private_marie")
+	_expect(next_thread_id == "demo_group_verriere", "second TEST_ONLY thread available")
+	if not _press_thread_card(messages, next_thread_id):
+		_finish(size, safe_area)
+		return
 	await _wait_delivery(messages)
 	_expect(shell.reading_speed_multiplier == 3.0 and messages.conversation_screen.reading_speed_button.text == "×3", "speed persists across threads")
 	_expect(next_thread_id != "" and messages.conversation_screen.title_label.text != "", "new thread updates identity")
-	_expect(messages.thread_message_count("thread_marie_private") == marie_count, "thread change does not replay or duplicate Marie transcript")
+	_expect(messages.thread_message_count("demo_private_marie") == marie_count, "thread change does not replay or duplicate Marie transcript")
 
 	await _assert_transition_layout(shell, messages)
 	messages._set_screen_mode("conversation")
@@ -127,19 +146,20 @@ func _visible_speed_buttons(shell) -> Array:
 			result.append(node)
 	return result
 
-func _press_thread_card(messages, thread_id: String) -> void:
+func _press_thread_card(messages, thread_id: String) -> bool:
 	for index in range(messages.conversation_list.threads.size()):
 		if str(messages.conversation_list.threads[index].get("thread_id", "")) == thread_id:
 			messages.conversation_list.cards[index].emit_signal("pressed")
-			return
+			return true
 	_expect(false, "thread card unavailable: " + thread_id)
+	return false
 
 func _another_thread_id(messages, excluded_id: String) -> String:
 	for thread in messages.conversation_list.threads:
 		var thread_id := str(thread.get("thread_id", ""))
 		if thread_id != excluded_id:
 			return thread_id
-	return excluded_id
+	return ""
 
 func _wait_delivery(messages) -> void:
 	for _index in range(2400):
@@ -171,6 +191,7 @@ func _expect(condition: bool, message: String) -> void:
 		failures.append(message)
 
 func _finish(size: Vector2i, safe_area: String) -> void:
+	_remove_save(SAVE_PATH)
 	if failures.is_empty():
 		print("UI-MSG-04A conversation header responsive smoke %dx%d %s: OK" % [size.x, size.y, safe_area])
 		get_tree().quit(0)
@@ -179,3 +200,10 @@ func _finish(size: Vector2i, safe_area: String) -> void:
 		push_error(failure)
 	print("UI-MSG-04A conversation header responsive smoke: FAILED (%d)" % failures.size())
 	get_tree().quit(1)
+
+
+func _remove_save(save_path: String) -> void:
+	for suffix in ["", ".tmp", ".previous", ".corrupt"]:
+		var path: String = save_path + suffix
+		if FileAccess.file_exists(path):
+			DirAccess.remove_absolute(ProjectSettings.globalize_path(path))

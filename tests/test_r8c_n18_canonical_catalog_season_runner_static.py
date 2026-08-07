@@ -145,7 +145,7 @@ class R8CN18CanonicalCatalogSeasonRunnerStaticTests(unittest.TestCase):
         for proof in [
             "chaque package shared_choice reste valide isolément",
             "duplicate_global_choice_id:shared_choice",
-            "le snapshot Saison reste valide pendant le handoff Alpha vers Beta",
+            "handoff alpha expose une opportunité beta déterministe sans session",
         ]:
             self.assertIn(proof, smoke)
 

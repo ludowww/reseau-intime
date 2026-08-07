@@ -190,6 +190,16 @@ func open_thread(thread_id: String) -> void:
 	var selected := _thread_for(thread_id)
 	if selected.is_empty():
 		return
+	if str(selected.get("availability_state", "")) == "OPPORTUNITY_AVAILABLE":
+		if not _runtime_has("activate_opportunity"):
+			return
+		var activated = runtime_provider.call("activate_opportunity", thread_id)
+		if typeof(activated) != TYPE_DICTIONARY or not activated.get("ok", false):
+			return
+		refresh_from_runtime()
+		selected = _thread_for(thread_id)
+		if selected.is_empty():
+			return
 	_save_reading_position()
 	var first_unread_message_id := _first_unread_message_id(thread_id)
 	active_thread_id = thread_id
@@ -663,7 +673,7 @@ func refresh_from_runtime(source: Dictionary = {}) -> void:
 func _initialize_runtime_source(source: Dictionary) -> void:
 	content_source = source.duplicate(true)
 	characters = source.get("characters", {}).duplicate(true)
-	threads = _dictionary_array(source.get("threads", []))
+	threads = _visible_runtime_threads(source)
 	_normalize_threads_unread_state()
 	transcripts.clear()
 	available_choices.clear()
@@ -694,7 +704,7 @@ func _initialize_runtime_source(source: Dictionary) -> void:
 func _reconcile_runtime_source(source: Dictionary) -> bool:
 	content_source = source.duplicate(true)
 	characters = source.get("characters", {}).duplicate(true)
-	threads = _dictionary_array(source.get("threads", []))
+	threads = _visible_runtime_threads(source)
 	_normalize_threads_unread_state()
 	var provider_by_thread: Dictionary = source.get("messages_by_thread", {})
 	var choices_by_thread: Dictionary = source.get("choices_by_thread", {})
@@ -1875,6 +1885,21 @@ func _normalize_threads_unread_state() -> void:
 	for thread in threads:
 		if not thread.has("has_unread_content"):
 			thread["has_unread_content"] = int(thread.get("unread_count", 0)) > 0
+
+func _visible_runtime_threads(source: Dictionary) -> Array[Dictionary]:
+	var visible: Array[Dictionary] = []
+	var messages_by_thread: Dictionary = source.get("messages_by_thread", {})
+	var choices_by_thread: Dictionary = source.get("choices_by_thread", {})
+	for thread in _dictionary_array(source.get("threads", [])):
+		var thread_id := str(thread.get("thread_id", ""))
+		if (
+			not _dictionary_array(messages_by_thread.get(thread_id, [])).is_empty()
+			or not _dictionary_array(choices_by_thread.get(thread_id, [])).is_empty()
+			or str(thread.get("availability_state", "")) == "OPPORTUNITY_AVAILABLE"
+		):
+			visible.append(thread.duplicate(true))
+	return visible
+
 
 func _thread_for(thread_id: String) -> Dictionary:
 	for thread in threads:

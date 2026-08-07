@@ -13,8 +13,8 @@ var controles := 0
 
 func _ready() -> void:
 	_executer()
-	if controles != 68:
-		failures.append("nombre de controles inattendu: %d/68" % controles)
+	if controles != 94:
+		failures.append("nombre de controles inattendu: %d/94" % controles)
 	if failures.is_empty():
 		print("R8C_A8_OPPORTUNITY_WINDOWS_EXCLUSIVE_CONFLICTS: OK (%d controles)" % controles)
 		get_tree().quit(0)
@@ -25,6 +25,7 @@ func _ready() -> void:
 
 
 func _executer() -> void:
+	_test_fenetres_mono_option_et_bornes()
 	_test_creation_reservation_proposition_et_fermeture_silencieuse()
 	_test_mark_missed_if_proposed()
 	_test_defer_ephemere_reevaluable()
@@ -32,6 +33,210 @@ func _executer() -> void:
 	_test_expiration_et_contexte_change_atomiques()
 	_test_unique_repetable_provenance_et_diagnostics()
 	_test_politiques_incompatibles_atomiques()
+
+
+func _test_fenetres_mono_option_et_bornes() -> void:
+	var contexte := _contexte("2030-04-09T13:50:00+02:00", {"raphaelle": true, "sandra": true})
+	var zero := _environnement()
+	_preparer_distance(zero)
+	var zero_result: Dictionary = zero["a8"].ouvrir_fenetre_dev(
+		_fenetre("a8_window_zero", []), zero["etat"], contexte
+	)
+	_expect(
+		not zero_result["ok"] and zero_result["diagnostic"]["code"] == "OPTIONS_FENETRE_INVALIDES",
+		"zero option reste refuse avec OPTIONS_FENETRE_INVALIDES",
+	)
+
+	var bounded := _environnement()
+	_preparer_distance(bounded)
+	var max_options: Array = []
+	for index in range(CoordinateurA8Modele.MAX_OPTIONS):
+		max_options.append(_option(
+			"bounded_%02d" % index,
+			"r8c_a6_distance_sandra_definition",
+			"sandra_distance",
+			"a8_bounded_%02d" % index,
+			CoordinateurA8Modele.CLOSE_SILENTLY,
+		))
+	_expect(
+		bounded["a8"].ouvrir_fenetre(
+			_fenetre("a8_window_max", max_options), bounded["etat"], contexte
+		)["ok"],
+		"MAX_OPTIONS options restent acceptees",
+	)
+	var too_many := max_options.duplicate(true)
+	too_many.append(_option(
+		"bounded_overflow",
+		"r8c_a6_distance_sandra_definition",
+		"sandra_distance",
+		"a8_bounded_overflow",
+		CoordinateurA8Modele.CLOSE_SILENTLY,
+	))
+	var overflow: Dictionary = bounded["a8"].ouvrir_fenetre_dev(
+		_fenetre("a8_window_overflow", too_many), bounded["etat"], contexte
+	)
+	_expect(
+		not overflow["ok"] and overflow["diagnostic"]["code"] == "OPTIONS_FENETRE_INVALIDES",
+		"MAX_OPTIONS plus une option reste refuse",
+	)
+
+	var proposed := _environnement()
+	_preparer_distance(proposed)
+	var proposed_spec := _fenetre("a8_window_single_propose", [
+		_option(
+			"single_propose",
+			"r8c_a6_distance_sandra_definition",
+			"sandra_distance",
+			"a8_single_propose",
+			CoordinateurA8Modele.MARK_MISSED_IF_PROPOSED,
+		),
+	])
+	var opened: Dictionary = proposed["a8"].ouvrir_fenetre(proposed_spec, proposed["etat"], contexte)
+	var opened_replay: Dictionary = proposed["a8"].ouvrir_fenetre(proposed_spec, proposed["etat"], contexte)
+	_expect(
+		opened["ok"] and opened["window"]["options"].size() == 1
+		and _etat_option(opened["window"], "single_propose") == CoordinateurA8Modele.CANDIDATE
+		and proposed["moteur"].obtenir_snapshot(proposed["etat"])["scene_registry"].is_empty(),
+		"une option ouvre CANDIDATE sans instance A5",
+	)
+	_expect(opened_replay["ok"] and opened_replay["idempotent"], "ouverture mono-option rejouee idempotente")
+	var premature: Dictionary = proposed["a8"].fermer_conflit_exclusif_dev(
+		"a8_window_single_propose", "single_propose", proposed["etat"], contexte
+	)
+	_expect(
+		not premature["ok"] and premature["diagnostic"]["code"] == "OPTION_RETENUE_NON_MATERIALISEE",
+		"fermeture mono-option CANDIDATE reste refusee",
+	)
+	var action: Dictionary = proposed["a8"].agir_sur_option(
+		"a8_window_single_propose", "single_propose", proposed["etat"], contexte,
+		CoordinateurA7Modele.PROPOSE
+	)
+	var action_replay: Dictionary = proposed["a8"].agir_sur_option(
+		"a8_window_single_propose", "single_propose", proposed["etat"], contexte,
+		CoordinateurA7Modele.PROPOSE
+	)
+	_expect(action["ok"] and action["state"] == CoordinateurA8Modele.PROPOSED, "cycle mono-option PROPOSE materialise A5")
+	_expect(action_replay["ok"] and action_replay["idempotent"], "PROPOSE mono-option rejoue idempotent")
+	var closed: Dictionary = proposed["a8"].fermer_conflit_exclusif(
+		"a8_window_single_propose", "single_propose", proposed["etat"], contexte
+	)
+	var closed_replay: Dictionary = proposed["a8"].fermer_conflit_exclusif(
+		"a8_window_single_propose", "single_propose", proposed["etat"], contexte
+	)
+	_expect(
+		closed["ok"] and closed["window"]["state"] == CoordinateurA8Modele.CLOSED
+		and closed["window"]["selected_option_id"] == "single_propose"
+		and _etat_option(closed["window"], "single_propose") == CoordinateurA8Modele.PROPOSED,
+		"cycle mono-option PROPOSE ferme sans perdant",
+	)
+	_expect(
+		proposed["moteur"].obtenir_snapshot(proposed["etat"])["scene_registry"].size() == 1
+		and proposed["etat"].obtenir_snapshot()["evenements"].size() == 2,
+		"mono-option cree une seule A5 sans consequence durable de conflit",
+	)
+	_expect(closed_replay["ok"] and closed_replay["idempotent"], "fermeture mono-option rejouee idempotente")
+	_expect(
+		not proposed["a8"].fermer_conflit_exclusif(
+			"a8_window_single_propose", "option_absente", proposed["etat"], contexte
+		)["ok"],
+		"fermeture mono-option avec autre option reste refusee",
+	)
+
+	var reserved := _environnement()
+	_preparer_distance(reserved)
+	var reserved_spec := _fenetre("a8_window_single_reserve", [
+		_option(
+			"single_reserve",
+			"r8c_a6_distance_sandra_definition",
+			"sandra_distance",
+			"a8_single_reserve",
+			CoordinateurA8Modele.DEFER,
+		),
+	])
+	_expect(reserved["a8"].ouvrir_fenetre(reserved_spec, reserved["etat"], contexte)["ok"], "fenetre mono-option RESERVE ouverte")
+	_expect(
+		reserved["a8"].agir_sur_option(
+			"a8_window_single_reserve", "single_reserve", reserved["etat"], contexte,
+			CoordinateurA7Modele.RESERVE
+		)["state"] == CoordinateurA8Modele.RESERVED,
+		"cycle mono-option RESERVE materialise ELIGIBLE",
+	)
+	var reserved_closed: Dictionary = reserved["a8"].fermer_conflit_exclusif(
+		"a8_window_single_reserve", "single_reserve", reserved["etat"], contexte
+	)
+	_expect(
+		reserved_closed["ok"]
+		and _etat_option(reserved_closed["window"], "single_reserve") == CoordinateurA8Modele.RESERVED
+		and reserved["moteur"].obtenir_snapshot(reserved["etat"])["scene_registry"].size() == 1,
+		"cycle mono-option RESERVE ferme sans perdant",
+	)
+
+	var abandoned := _environnement()
+	_preparer_distance(abandoned)
+	var abandoned_spec := _fenetre("a8_window_single_abandoned", [
+		_option(
+			"single_abandoned",
+			"r8c_a6_distance_sandra_definition",
+			"sandra_distance",
+			"a8_single_abandoned",
+			CoordinateurA8Modele.CLOSE_SILENTLY,
+		),
+	])
+	_expect(abandoned["a8"].ouvrir_fenetre(abandoned_spec, abandoned["etat"], contexte)["ok"], "fenetre mono-option abandonnable ouverte")
+	_expect(
+		abandoned["a8"].abandonner_fenetre_non_materialisee("a8_window_single_abandoned")["ok"]
+		and abandoned["a8"].obtenir_fenetre("a8_window_single_abandoned").is_empty()
+		and abandoned["moteur"].obtenir_snapshot(abandoned["etat"])["scene_registry"].is_empty(),
+		"abandon mono-option retire ownership sans A5",
+	)
+
+	var invalid := _environnement()
+	_preparer_distance(invalid)
+	var invalid_identity := _fenetre("a8_window_single_invalid_identity", [
+		_option("invalid_identity", "r8c_a6_distance_sandra_definition", "sandra_distance", "", CoordinateurA8Modele.CLOSE_SILENTLY),
+	])
+	_expect(not invalid["a8"].ouvrir_fenetre(invalid_identity, invalid["etat"], contexte)["ok"], "mono-option refuse identite instance invalide")
+	var invalid_policy := _fenetre("a8_window_single_invalid_policy", [
+		_option("invalid_policy", "r8c_a6_distance_sandra_definition", "sandra_distance", "a8_invalid_policy", "UNKNOWN"),
+	])
+	_expect(not invalid["a8"].ouvrir_fenetre(invalid_policy, invalid["etat"], contexte)["ok"], "mono-option refuse policy inconnue")
+	var ineligible := _fenetre("a8_window_single_ineligible", [
+		_option("ineligible", "r8c_a6_distance_sandra_definition", "variante_fabriquee", "a8_single_ineligible", CoordinateurA8Modele.CLOSE_SILENTLY),
+	])
+	_expect(not invalid["a8"].ouvrir_fenetre(ineligible, invalid["etat"], contexte)["ok"], "mono-option refuse candidat A6 ineligible")
+	var divergent_spec := _fenetre("a8_window_single_divergent", [
+		_option("divergent", "r8c_a6_distance_sandra_definition", "sandra_distance", "a8_single_divergent", CoordinateurA8Modele.CLOSE_SILENTLY),
+	])
+	_expect(invalid["a8"].ouvrir_fenetre(divergent_spec, invalid["etat"], contexte)["ok"], "mono-option negative ouverte avant revalidations")
+	var divergent := _contexte("2030-04-09T13:50:00+02:00", {"raphaelle": true, "sandra": false})
+	_expect(not invalid["a8"].agir_sur_option("a8_window_single_divergent", "divergent", invalid["etat"], divergent, CoordinateurA7Modele.PROPOSE)["ok"], "mono-option refuse contexte divergent")
+	var expired := _contexte("2030-04-09T18:00:00+02:00", {"raphaelle": true, "sandra": true})
+	_expect(not invalid["a8"].agir_sur_option("a8_window_single_divergent", "divergent", invalid["etat"], expired, CoordinateurA7Modele.PROPOSE)["ok"], "mono-option refuse fenetre expiree")
+	_expect(not invalid["a8"].agir_sur_option("a8_window_single_divergent", "option_absente", invalid["etat"], contexte, CoordinateurA7Modele.PROPOSE)["ok"], "mono-option refuse action sur option inconnue")
+
+	var preexisting := _environnement()
+	_preparer_distance(preexisting)
+	var preexisting_context := contexte.duplicate(true)
+	preexisting_context["instance_id"] = "a8_single_preexisting"
+	var preexisting_candidates: Dictionary = preexisting["bibliotheque"].query_candidates(
+		preexisting["moteur"], preexisting["etat"], preexisting_context
+	)
+	var preexisting_candidate := {}
+	for candidate in preexisting_candidates.get("candidats", []):
+		if candidate.get("variant_id") == "sandra_distance":
+			preexisting_candidate = candidate
+			break
+	_expect(
+		preexisting["a7"].executer(
+			preexisting_candidate,
+			preexisting["etat"], preexisting_context, CoordinateurA7Modele.PROPOSE
+		)["ok"],
+		"fixture mono-option cree A5 preexistante",
+	)
+	var preexisting_spec := _fenetre("a8_window_single_preexisting", [
+		_option("preexisting", "r8c_a6_distance_sandra_definition", "sandra_distance", "a8_single_preexisting", CoordinateurA8Modele.CLOSE_SILENTLY),
+	])
+	_expect(not preexisting["a8"].ouvrir_fenetre(preexisting_spec, preexisting["etat"], contexte)["ok"], "mono-option refuse instance A5 preexistante")
 
 
 func _test_creation_reservation_proposition_et_fermeture_silencieuse() -> void:

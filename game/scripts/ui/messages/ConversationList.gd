@@ -32,7 +32,9 @@ func update_thread_presentation(thread: Dictionary) -> void:
 	var display_name: Label = view.get("display_name")
 	var preview: Label = view.get("preview")
 	var timestamp: Label = view.get("timestamp")
+	var opportunity_action: Label = view.get("opportunity_action")
 	_apply_thread_read_style(thread, display_name, preview)
+	_apply_opportunity_style(thread, opportunity_action)
 	timestamp.text = str(thread.get("last_timestamp", ""))
 
 func focus_first_card() -> void:
@@ -135,6 +137,11 @@ func _build_conversation_card(thread: Dictionary) -> PanelContainer:
 	last_preview.max_lines_visible = 3
 	text_column.add_child(last_preview)
 	_apply_thread_read_style(thread, display_name, last_preview)
+	var opportunity_action := _label("", 14, PORTRAIT_THEME.PLAYER_ACCENT)
+	opportunity_action.name = "OpportunityActionLabel"
+	opportunity_action.visible = false
+	text_column.add_child(opportunity_action)
+	_apply_opportunity_style(thread, opportunity_action)
 	var metadata := VBoxContainer.new()
 	metadata.custom_minimum_size = Vector2(72, 0)
 	metadata.add_theme_constant_override("separation", 8)
@@ -148,6 +155,7 @@ func _build_conversation_card(thread: Dictionary) -> PanelContainer:
 		"display_name": display_name,
 		"preview": last_preview,
 		"timestamp": last_timestamp,
+		"opportunity_action": opportunity_action,
 	}
 	return card
 
@@ -158,6 +166,13 @@ func _apply_thread_read_style(thread: Dictionary, display_name: Label, preview: 
 	preview.add_theme_color_override("font_color", PORTRAIT_THEME.TEXT_PRIMARY if has_unread_content else PORTRAIT_THEME.TEXT_SECONDARY)
 	_set_bold(display_name, has_unread_content)
 	_set_bold(preview, has_unread_content)
+
+func _apply_opportunity_style(thread: Dictionary, label: Label) -> void:
+	var available := str(thread.get("availability_state", "")) == "OPPORTUNITY_AVAILABLE"
+	label.text = str(thread.get("opportunity_action_label", "")) if available else ""
+	label.visible = available and not label.text.is_empty()
+	_set_bold(label, label.visible)
+
 
 func _set_bold(label: Label, enabled: bool) -> void:
 	label.remove_theme_font_override("font")

@@ -103,6 +103,7 @@ static func compose_package(
 	persistent_messages_state: Dictionary = {},
 	catalog_messages_metadata: Dictionary = {},
 	catalog_media_resolver = null,
+	activation_receipt = null,
 ) -> Dictionary:
 	if portrait_shell == null or portrait_shell.photo_viewer == null:
 		return _failure("PORTRAIT_SHELL_NOT_READY")
@@ -141,7 +142,11 @@ static func compose_package(
 		restored_messages_snapshot = restored_executor["messages_adapter"]
 		narrative_time = restored_executor["narrative_time"]
 	else:
-		var activation := _activate_sequence(facade, sequence)
+		var activation = activation_receipt
+		if activation == null:
+			activation = _activate_sequence(facade, sequence)
+		if typeof(activation) != TYPE_DICTIONARY:
+			return _failure("INVALID_ACTIVATION_RECEIPT")
 		if not activation.get("ok", false):
 			return _failure(str(activation.get("error_code", "A6_ACTIVATION_REFUSED")))
 		var created_executor := ExecutorV2.create(facade, projection_port, sequence, activation)
@@ -251,11 +256,13 @@ static func _new_domain_graph_from_library(library) -> Dictionary:
 	return {"facade": facade} if facade != null else {}
 
 
-static func _activate_sequence(facade, sequence: Dictionary) -> Dictionary:
+static func prepare_sequence(facade, sequence: Dictionary) -> Dictionary:
+	if facade == null or not facade.has_method("find_candidates") or not facade.has_method("compose_slot"):
+		return _preparation_failure("INVALID_PREPARATION_DEPENDENCY")
 	var context := _activation_context(sequence)
 	var candidates: Dictionary = facade.find_candidates(context)
 	if not candidates.get("ok", false):
-		return {"ok": false, "error_code": "A6_CANDIDATE_QUERY_REFUSED"}
+		return _preparation_failure("A6_CANDIDATE_QUERY_REFUSED")
 	var entry: Dictionary = sequence["orchestration"]["a6_entry"]
 	var candidate := {}
 	for candidate_value in candidates.get("candidats", []):
@@ -266,7 +273,7 @@ static func _activate_sequence(facade, sequence: Dictionary) -> Dictionary:
 			candidate = candidate_value.duplicate(true)
 			break
 	if candidate.is_empty():
-		return {"ok": false, "error_code": "A6_PACKAGE_NOT_ELIGIBLE"}
+		return _preparation_failure("A6_PACKAGE_NOT_ELIGIBLE")
 	var temporal: Dictionary = sequence["temporal_projection"]["resolved_window"]
 	var composition: Dictionary = facade.compose_slot({
 		"slot_id": sequence["orchestration"]["a9_slot"]["slot_role"],
@@ -288,26 +295,52 @@ static func _activate_sequence(facade, sequence: Dictionary) -> Dictionary:
 					"instance_id": "unified_player_" + sequence["sequence_id"],
 					"conflict_policy": sequence["orchestration"]["a8_window"]["conflict_policy"],
 				},
-				{
-					"option_id": "alternative_option",
-					"candidate": candidate.duplicate(true),
-					"instance_id": "unified_player_alternative_" + sequence["sequence_id"],
-					"conflict_policy": sequence["orchestration"]["a8_window"]["conflict_policy"],
-				},
 			],
 		},
 	})
 	if not composition.get("ok", false):
-		return {
-			"ok": false,
-			"error_code": "A9_COMPOSITION_REFUSED:%s"
-			% str(composition.get("erreur", composition.get("error_code", "UNKNOWN"))),
-		}
-	return facade.activate_option(
-		composition["plan"],
-		"primary_option",
-		{"intention": "PROPOSE", "context": context},
+		return _preparation_failure(
+			"A9_COMPOSITION_REFUSED:%s"
+			% str(composition.get("erreur", composition.get("error_code", "UNKNOWN")))
+		)
+	if composition.get("window", {}).get("options", []).size() != 1:
+		return _preparation_failure("SINGLE_OPTION_WINDOW_REFUSED")
+	return {
+		"ok": true,
+		"error_code": null,
+		"sequence_id": sequence["sequence_id"],
+		"prepared_plan": composition["plan"].duplicate(true),
+		"option_id": "primary_option",
+		"activation_context": context.duplicate(true),
+		"window": composition["window"].duplicate(true),
+	}
+
+
+static func activate_prepared_sequence(facade, prepared: Dictionary) -> Dictionary:
+	if (
+		facade == null
+		or not facade.has_method("activate_option")
+		or not prepared.get("ok", false)
+		or prepared.get("option_id") != "primary_option"
+		or typeof(prepared.get("prepared_plan")) != TYPE_DICTIONARY
+		or typeof(prepared.get("activation_context")) != TYPE_DICTIONARY
+	):
+		return {"ok": false, "error_code": "INVALID_PREPARED_SEQUENCE"}
+	var activated: Dictionary = facade.activate_option(
+		prepared["prepared_plan"],
+		prepared["option_id"],
+		{"intention": "PROPOSE", "context": prepared["activation_context"]},
 	)
+	if not activated.get("ok", false):
+		return {"ok": false, "error_code": "A7_A8_A9_ACTIVATION_REFUSED"}
+	return activated
+
+
+static func _activate_sequence(facade, sequence: Dictionary) -> Dictionary:
+	var prepared := prepare_sequence(facade, sequence)
+	if not prepared["ok"]:
+		return prepared
+	return activate_prepared_sequence(facade, prepared)
 
 
 static func _resolution_context(sequence: Dictionary, narrative_time: String) -> Dictionary:
@@ -349,3 +382,15 @@ static func _load_json(path: String) -> Dictionary:
 
 static func _failure(error_code: String) -> Dictionary:
 	return {"ok": false, "error_code": error_code, "session": null, "sequence": {}, "restored": false}
+
+
+static func _preparation_failure(error_code: String) -> Dictionary:
+	return {
+		"ok": false,
+		"error_code": error_code,
+		"sequence_id": "",
+		"prepared_plan": {},
+		"option_id": "",
+		"activation_context": {},
+		"window": {},
+	}
