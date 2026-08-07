@@ -1,0 +1,376 @@
+{
+  "schema_id": "reseau_intime.authored_sequence",
+  "schema_version": 1,
+  "sequence_id": "marie_evening_return_01",
+  "authored_version": "1.0.0",
+  "season_id": "season_1",
+  "dramatic_movement_id": "movement_i",
+  "narrative_function": "RELATION",
+  "canonical_status": "CANON_APPROVED",
+  "author_provenance": {
+    "source_document_paths": [
+      "game/data/conversations/chapter_03_marie_evening_return.json",
+      "docs/canon/dialogues/NAR_PROD_02_PAQUET_PRODUCTION_ACTE_I_J01_J04.md",
+      "docs/canon/characters/MARIE_CANON_FULL.md",
+      "game/data/runtime/season_1/j03_runtime_map.json"
+    ],
+    "source_sequence_ids": ["chapter_03_marie_evening_return", "O4_MARIE_RETURN"],
+    "approval_ref": "R8C-N20",
+    "authoring_tool_ref": null
+  },
+  "participants": {
+    "present_character_ids": ["marie", "player"],
+    "concerned_absent_character_ids": ["mathilde"],
+    "initial_audiences": {"player_only": []},
+    "player_role": "PARTICIPANT"
+  },
+  "orchestration": {
+    "a6_entry": {
+      "scene_definition_id": "marie_evening_return_01",
+      "variant_id": "marie_evening_return_canonical",
+      "definition": {
+        "scene_id": "marie_evening_return_01",
+        "version_contrat": "1.0.0",
+        "nature": "MODULAIRE",
+        "fonction_principale": "RELATION",
+        "participants_requis": [
+          {"personnage_id": "marie", "role": "INITIATIVE_REPAS_COMMUN"}
+        ],
+        "conditions_dures": {
+          "actes_compatibles": ["MARIE_EVENING_RETURN"],
+          "evenements_requis": []
+        },
+        "exclusions_dures": {"evenements_interdits": []},
+        "contrat_temporel": {
+          "date_debut": "2032-03-05",
+          "date_fin": "2032-03-05",
+          "heure_ouverture": "18:20",
+          "heure_fermeture": "20:31",
+          "duree_minutes": 131,
+          "revalidation": "AVANT_PROPOSITION_ET_RESOLUTION"
+        },
+        "politique_unicite": "UNIQUE",
+        "resolutions": {
+          "marie_evening_active_resolution": {
+            "personnage_id": "marie",
+            "portee_micro_signal": "DURABLE",
+            "signal_recu": "PRESENCE_COMMUNE_CHOISIE",
+            "reception": "RECUE_INTERPRETEE",
+            "interpretation": "Player choisit explicitement de rentrer pour le repas commun et annonce un geste concret.",
+            "faits_relationnels": [
+              {"fait_id": "marie_evening_shared_presence_chosen", "nature": "PRESENCE_COMMUNE_CHOISIE", "recu_par": "marie"}
+            ],
+            "convergence": "RETOUR_NOYAU_COMMUN",
+            "durable_manifest": {
+              "binding": {"sequence_id": "marie_evening_return_01", "authored_version": "1.0.0", "resolution_id": "resolution_active"},
+              "facts": [
+                {"event_key": "marie_evening_shared_presence_chosen", "scope": "RELATION", "personnage_id": "marie", "fact": {"fait_id": "marie_evening_shared_presence_chosen", "nature": "PRESENCE_COMMUNE_CHOISIE", "recu_par": "marie"}}
+              ],
+              "knowledge": [],
+              "traces": [],
+              "promises": [],
+              "obligations": [],
+              "media_deliveries": [
+                {"event_key": "marie_evening_active_media_access", "effect": "GRANT_ACCESS", "media_id": "S1_A1_J03_SCN_MARIE_HOME_FROM_LAVERRIERE_01", "diegetic_status": "NOT_APPLICABLE", "fictional_audience_ids": [], "gallery_status": "AVAILABLE"}
+              ]
+            }
+          },
+          "marie_evening_bounded_resolution": {
+            "personnage_id": "marie",
+            "portee_micro_signal": "DURABLE",
+            "signal_recu": "DISPONIBILITE_BORNEE_ANNONCEE",
+            "reception": "RECUE_INTERPRETEE",
+            "interpretation": "Player ne promet pas une disponibilité immédiate mais borne précisément son retour.",
+            "faits_relationnels": [
+              {"fait_id": "marie_evening_bounded_return_chosen", "nature": "DISPONIBILITE_BORNEE_ANNONCEE", "recu_par": "marie"}
+            ],
+            "convergence": "RETOUR_NOYAU_COMMUN",
+            "durable_manifest": {
+              "binding": {"sequence_id": "marie_evening_return_01", "authored_version": "1.0.0", "resolution_id": "resolution_bounded"},
+              "facts": [
+                {"event_key": "marie_evening_bounded_return_chosen", "scope": "RELATION", "personnage_id": "marie", "fact": {"fait_id": "marie_evening_bounded_return_chosen", "nature": "DISPONIBILITE_BORNEE_ANNONCEE", "recu_par": "marie"}}
+              ],
+              "knowledge": [],
+              "traces": [],
+              "promises": [],
+              "obligations": [],
+              "media_deliveries": [
+                {"event_key": "marie_evening_bounded_media_access", "effect": "GRANT_ACCESS", "media_id": "S1_A1_J03_SCN_MARIE_HOME_FROM_LAVERRIERE_01", "diegetic_status": "NOT_APPLICABLE", "fictional_audience_ids": [], "gallery_status": "AVAILABLE"}
+              ]
+            }
+          },
+          "marie_evening_drift_resolution": {
+            "personnage_id": "marie",
+            "portee_micro_signal": "DURABLE",
+            "signal_recu": "SOIREE_CONTINUE_SANS_PLAYER",
+            "reception": "RECUE_INTERPRETEE",
+            "interpretation": "Player laisse explicitement Marie et Mathilde continuer la soirée sans l’attendre.",
+            "faits_relationnels": [
+              {"fait_id": "marie_evening_household_continues_without_player", "nature": "SOIREE_CONTINUE_SANS_PLAYER", "recu_par": "marie"}
+            ],
+            "convergence": "RETOUR_NOYAU_COMMUN",
+            "durable_manifest": {
+              "binding": {"sequence_id": "marie_evening_return_01", "authored_version": "1.0.0", "resolution_id": "resolution_drift"},
+              "facts": [
+                {"event_key": "marie_evening_household_continues_without_player", "scope": "RELATION", "personnage_id": "marie", "fact": {"fait_id": "marie_evening_household_continues_without_player", "nature": "SOIREE_CONTINUE_SANS_PLAYER", "recu_par": "marie"}}
+              ],
+              "knowledge": [],
+              "traces": [],
+              "promises": [],
+              "obligations": [],
+              "media_deliveries": [
+                {"event_key": "marie_evening_drift_media_access", "effect": "GRANT_ACCESS", "media_id": "S1_A1_J03_SCN_MARIE_HOME_FROM_LAVERRIERE_01", "diegetic_status": "NOT_APPLICABLE", "fictional_audience_ids": [], "gallery_status": "AVAILABLE"}
+              ]
+            }
+          }
+        },
+        "choix": [
+          {"choix_id": "marie_evening_active_choice", "formulation": "Je rentre à 19 h. Je prends quelque chose avec la soupe.", "signal_emis": "PRESENCE_COMMUNE_CHOISIE", "resolution_ids": ["marie_evening_active_resolution"]},
+          {"choix_id": "marie_evening_bounded_choice", "formulation": "Je finis ça et je rentre à 19 h 30.", "signal_emis": "DISPONIBILITE_BORNEE_ANNONCEE", "resolution_ids": ["marie_evening_bounded_resolution"]},
+          {"choix_id": "marie_evening_drift_choice", "formulation": "Je sais pas encore. Commencez sans moi.", "signal_emis": "SOIREE_CONTINUE_SANS_PLAYER", "resolution_ids": ["marie_evening_drift_resolution"]}
+        ],
+        "politique_non_resolution": {"proposition_expire": "CANCELLED"}
+      }
+    },
+    "a8_window": {"window_id": "marie_evening_return_window", "conflict_policy": "CLOSE_SILENTLY"},
+    "a9_slot": {"slot_role": "marie_evening_return", "duration_minutes": 131, "relative_order": 2, "not_before_anchor": null, "not_after_anchor": null}
+  },
+  "temporal_projection": {
+    "anchor_id": "marie_evening_return_anchor",
+    "offset_minutes": 0,
+    "relative_order": 2,
+    "delay": {"mode": "NONE", "value": null},
+    "resolved_window": {"opens_at": "2032-03-05T18:20:00+01:00", "closes_at": "2032-03-05T20:31:00+01:00"}
+  },
+  "entry_beat_id": "marie_evening_opening",
+  "beats": [
+    {
+      "beat_id": "marie_evening_opening",
+      "type": "MESSAGE",
+      "content": {
+        "thread_id": "marie_thread",
+        "messages": [
+          {"message_id": "marie_evening_opening_01", "author_id": "marie", "text": "Tu rentres vers quelle heure ?", "diegetic_at": "2032-03-05T18:20:00+01:00", "relative_order": 0},
+          {"message_id": "marie_evening_opening_02", "author_id": "marie", "text": "Mathilde a retrouvé son chargeur. Enfin un chargeur.", "diegetic_at": "2032-03-05T18:20:05+01:00", "relative_order": 1}
+        ]
+      },
+      "participant_ids": ["marie"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": "marie_evening_entered",
+      "checkpoint_after": "marie_evening_opening_presented",
+      "next": {"mode": "DIRECT", "beat_id": "marie_evening_guided_choice"}
+    },
+    {
+      "beat_id": "marie_evening_guided_choice",
+      "type": "CHOICE",
+      "content": {
+        "thread_id": "marie_thread",
+        "choices": [
+          {"choice_id": "marie_evening_guided_reply", "text": "Vers 19 h. Pourquoi ?", "resolution_id": "resolution_guided_reply", "next_beat_id": "marie_evening_meal_messages"}
+        ]
+      },
+      "participant_ids": ["marie"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "marie_evening_guided_reply_consumed",
+      "next": {"mode": "BRANCH", "branches": {"marie_evening_guided_reply": "marie_evening_meal_messages"}}
+    },
+    {
+      "beat_id": "marie_evening_meal_messages",
+      "type": "MESSAGE",
+      "content": {
+        "thread_id": "marie_thread",
+        "messages": [
+          {"message_id": "marie_evening_meal_01", "author_id": "marie", "text": "J'ai laissé une soupe au frigo.", "diegetic_at": "2032-03-05T18:21:00+01:00", "relative_order": 0},
+          {"message_id": "marie_evening_meal_02", "author_id": "marie", "text": "Et j'aimerais bien qu'on mange ensemble sans déplacer ça à demain.", "diegetic_at": "2032-03-05T18:21:05+01:00", "relative_order": 1}
+        ]
+      },
+      "participant_ids": ["marie"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "marie_evening_meal_messages_presented",
+      "next": {"mode": "DIRECT", "beat_id": "marie_evening_posture_choice"}
+    },
+    {
+      "beat_id": "marie_evening_posture_choice",
+      "type": "CHOICE",
+      "content": {
+        "thread_id": "marie_thread",
+        "choices": [
+          {"choice_id": "marie_evening_active", "text": "Je rentre à 19 h. Je prends quelque chose avec la soupe.", "resolution_id": "resolution_active", "next_beat_id": "return_active"},
+          {"choice_id": "marie_evening_bounded", "text": "Je finis ça et je rentre à 19 h 30.", "resolution_id": "resolution_bounded", "next_beat_id": "return_bounded"},
+          {"choice_id": "marie_evening_drift", "text": "Je sais pas encore. Commencez sans moi.", "resolution_id": "resolution_drift", "next_beat_id": "return_drift"}
+        ]
+      },
+      "participant_ids": ["marie"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "marie_evening_posture_resolution_ready",
+      "next": {"mode": "BRANCH", "branches": {"marie_evening_active": "return_active", "marie_evening_bounded": "return_bounded", "marie_evening_drift": "return_drift"}}
+    },
+    {
+      "beat_id": "return_active",
+      "type": "RETURN",
+      "content": {"return_id": "marie_evening_active_return", "content_ref": "marie_evening_active_return_content", "delay": {"mode": "NONE", "value": null}, "eligible_resolution_ids": ["resolution_active"]},
+      "participant_ids": ["marie"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "marie_evening_active_return_presented",
+      "next": {"mode": "DIRECT", "beat_id": "marie_evening_active_outcome"}
+    },
+    {
+      "beat_id": "marie_evening_active_outcome",
+      "type": "PHYSICAL_BEAT",
+      "content": {"physical_beat_id": "marie_evening_active_outcome", "content_ref": "marie_evening_active_outcome", "withdrawal_choice_ids": []},
+      "participant_ids": ["marie", "mathilde"],
+      "local_conditions": [],
+      "projection_target": "PHYSICAL",
+      "checkpoint_before": null,
+      "checkpoint_after": "marie_evening_active_outcome_presented",
+      "next": {"mode": "TERMINAL", "beat_id": null}
+    },
+    {
+      "beat_id": "return_bounded",
+      "type": "RETURN",
+      "content": {"return_id": "marie_evening_bounded_return", "content_ref": "marie_evening_bounded_return_content", "delay": {"mode": "NONE", "value": null}, "eligible_resolution_ids": ["resolution_bounded"]},
+      "participant_ids": ["marie"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "marie_evening_bounded_return_presented",
+      "next": {"mode": "DIRECT", "beat_id": "marie_evening_bounded_outcome"}
+    },
+    {
+      "beat_id": "marie_evening_bounded_outcome",
+      "type": "PHYSICAL_BEAT",
+      "content": {"physical_beat_id": "marie_evening_bounded_outcome", "content_ref": "marie_evening_bounded_outcome", "withdrawal_choice_ids": []},
+      "participant_ids": ["marie", "mathilde"],
+      "local_conditions": [],
+      "projection_target": "PHYSICAL",
+      "checkpoint_before": null,
+      "checkpoint_after": "marie_evening_bounded_outcome_presented",
+      "next": {"mode": "TERMINAL", "beat_id": null}
+    },
+    {
+      "beat_id": "return_drift",
+      "type": "RETURN",
+      "content": {"return_id": "marie_evening_drift_return", "content_ref": "marie_evening_drift_return_content", "delay": {"mode": "NONE", "value": null}, "eligible_resolution_ids": ["resolution_drift"]},
+      "participant_ids": ["marie"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "marie_evening_drift_return_presented",
+      "next": {"mode": "DIRECT", "beat_id": "marie_evening_drift_outcome"}
+    },
+    {
+      "beat_id": "marie_evening_drift_outcome",
+      "type": "PHYSICAL_BEAT",
+      "content": {"physical_beat_id": "marie_evening_drift_outcome", "content_ref": "marie_evening_drift_outcome", "withdrawal_choice_ids": []},
+      "participant_ids": ["marie", "mathilde"],
+      "local_conditions": [],
+      "projection_target": "PHYSICAL",
+      "checkpoint_before": null,
+      "checkpoint_after": "marie_evening_drift_outcome_presented",
+      "next": {"mode": "TERMINAL", "beat_id": null}
+    }
+  ],
+  "resolutions": {
+    "resolution_guided_reply": {
+      "resolution_id": "resolution_guided_reply",
+      "choice_id": "marie_evening_guided_reply",
+      "a10_choice_id": null,
+      "a10_resolution_id": null,
+      "terminal_checkpoint_id": "marie_evening_guided_reply_consumed",
+      "event_refs": [],
+      "fact_ids": [],
+      "knowledge_ids": [],
+      "trace_ids": [],
+      "promise_effects": [],
+      "obligation_effects": [],
+      "consequence_ids": [],
+      "media_effects": [],
+      "convergence": "COMMON_EXIT",
+      "next_beat_id": "marie_evening_meal_messages"
+    },
+    "resolution_active": {
+      "resolution_id": "resolution_active",
+      "choice_id": "marie_evening_active",
+      "a10_choice_id": "marie_evening_active_choice",
+      "a10_resolution_id": "marie_evening_active_resolution",
+      "terminal_checkpoint_id": "marie_evening_posture_resolution_ready",
+      "event_refs": [
+        {"event_type": "durable_manifest_event", "event_key": "marie_evening_shared_presence_chosen", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "marie_evening_active_media_access", "reducer_id": "a6_durable_manifest"}
+      ],
+      "fact_ids": ["marie_evening_shared_presence_chosen"],
+      "knowledge_ids": [],
+      "trace_ids": [],
+      "promise_effects": [],
+      "obligation_effects": [],
+      "consequence_ids": [],
+      "media_effects": [{"media_id": "S1_A1_J03_SCN_MARIE_HOME_FROM_LAVERRIERE_01", "effect": "GRANT_ACCESS"}],
+      "convergence": "POST_RESOLUTION_RETURN",
+      "next_beat_id": "return_active"
+    },
+    "resolution_bounded": {
+      "resolution_id": "resolution_bounded",
+      "choice_id": "marie_evening_bounded",
+      "a10_choice_id": "marie_evening_bounded_choice",
+      "a10_resolution_id": "marie_evening_bounded_resolution",
+      "terminal_checkpoint_id": "marie_evening_posture_resolution_ready",
+      "event_refs": [
+        {"event_type": "durable_manifest_event", "event_key": "marie_evening_bounded_return_chosen", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "marie_evening_bounded_media_access", "reducer_id": "a6_durable_manifest"}
+      ],
+      "fact_ids": ["marie_evening_bounded_return_chosen"],
+      "knowledge_ids": [],
+      "trace_ids": [],
+      "promise_effects": [],
+      "obligation_effects": [],
+      "consequence_ids": [],
+      "media_effects": [{"media_id": "S1_A1_J03_SCN_MARIE_HOME_FROM_LAVERRIERE_01", "effect": "GRANT_ACCESS"}],
+      "convergence": "POST_RESOLUTION_RETURN",
+      "next_beat_id": "return_bounded"
+    },
+    "resolution_drift": {
+      "resolution_id": "resolution_drift",
+      "choice_id": "marie_evening_drift",
+      "a10_choice_id": "marie_evening_drift_choice",
+      "a10_resolution_id": "marie_evening_drift_resolution",
+      "terminal_checkpoint_id": "marie_evening_posture_resolution_ready",
+      "event_refs": [
+        {"event_type": "durable_manifest_event", "event_key": "marie_evening_household_continues_without_player", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "marie_evening_drift_media_access", "reducer_id": "a6_durable_manifest"}
+      ],
+      "fact_ids": ["marie_evening_household_continues_without_player"],
+      "knowledge_ids": [],
+      "trace_ids": [],
+      "promise_effects": [],
+      "obligation_effects": [],
+      "consequence_ids": [],
+      "media_effects": [{"media_id": "S1_A1_J03_SCN_MARIE_HOME_FROM_LAVERRIERE_01", "effect": "GRANT_ACCESS"}],
+      "convergence": "POST_RESOLUTION_RETURN",
+      "next_beat_id": "return_drift"
+    }
+  },
+  "media": {
+    "S1_A1_J03_SCN_MARIE_HOME_FROM_LAVERRIERE_01": {
+      "media_id": "S1_A1_J03_SCN_MARIE_HOME_FROM_LAVERRIERE_01",
+      "visual_level": "V0",
+      "analytic_level": null,
+      "production_status": "SPECIFIED_NOT_PRODUCED",
+      "diegesis": "NON_DIEGETIC",
+      "audience_ids": ["player_only"],
+      "gallery_policy": "ON_ACCESS",
+      "parent_media_id": null,
+      "thumbnail_policy": "SELF",
+      "thumbnail_media_id": null,
+      "removal_policy": "NEVER"
+    }
+  }
+}

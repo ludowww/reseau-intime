@@ -217,7 +217,7 @@ func _test_production_catalog_boundary() -> void:
 	_expect(
 		main.season_runner.catalog["catalog_id"] == "season_1_v1"
 		and main.season_runner.catalog["season_id"] == "season_1"
-		and main.season_runner.catalog["manifest"]["packages"].size() == 2
+		and main.season_runner.catalog["manifest"]["packages"].size() == 3
 		and main.season_runner.active_sequence_id == "mathilde_returns_with_chosen_intent_01",
 		"le vrai PortraitMain reste lié au catalogue canonique et démarre Mathilde",
 	)

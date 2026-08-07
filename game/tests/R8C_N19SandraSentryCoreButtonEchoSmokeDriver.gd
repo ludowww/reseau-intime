@@ -42,6 +42,7 @@ const SANDRA_MEDIA := (
 )
 const MATHILDE_ID := "mathilde_returns_with_chosen_intent_01"
 const SANDRA_ID := "sandra_sentrycore_button_echo_01"
+const MARIE_ID := "marie_evening_return_01"
 const SANDRA_FACT := "sandra_first_complicity_restored"
 const SAVE_ROOT := "user://r8c_n19_smoke/"
 
@@ -178,7 +179,7 @@ func _test_production_mathilde_sandra_flow() -> void:
 	var runner = main.season_runner
 	var session = main.runtime_session
 	_expect(
-		runner.catalog["manifest"]["packages"].size() == 2
+		runner.catalog["manifest"]["packages"].size() == 3
 		and runner.active_sequence_id == MATHILDE_ID
 		and runner.completed_sequence_ids.is_empty()
 		and _message_ids_for_thread(session.presentation_source(), "sandra_thread").is_empty(),
@@ -378,40 +379,44 @@ func _test_production_mathilde_sandra_flow() -> void:
 	_expect(await _complete_current_messages(session), "RETURN Sandra présenté et COMPLETE atteint")
 	await _frames(5)
 	runner = main.season_runner
-	var idle_source: Dictionary = runner.presentation_source()
-	var idle_ids := _all_message_ids(idle_source)
+	var marie_source: Dictionary = runner.presentation_source()
+	var handoff_ids := _all_message_ids(marie_source)
 	_expect(
 		runner.completed_sequence_ids == [MATHILDE_ID, SANDRA_ID]
-		and runner.active_sequence_id.is_empty()
-		and runner.active_session == null
-		and runner.status() == SeasonRunner.IDLE_NO_ELIGIBLE_SEQUENCE,
-		"Sandra COMPLETE mène à IDLE_NO_ELIGIBLE_SEQUENCE",
+		and runner.active_sequence_id == MARIE_ID
+		and runner.active_session != null
+		and runner.status() == SeasonRunner.ACTIVE_SEQUENCE,
+		"Sandra COMPLETE handoff vers Marie",
 	)
 	_expect(
-		idle_ids.size() == _unique_count(idle_ids)
-		and _texts_for_thread(idle_source, "mathilde_thread").size() > 0
-		and _texts_for_thread(idle_source, "sandra_thread") == [
+		handoff_ids.size() == _unique_count(handoff_ids)
+		and _texts_for_thread(marie_source, "mathilde_thread").size() > 0
+		and _texts_for_thread(marie_source, "sandra_thread") == [
 			"Poste du matin terminé.",
 			"Le bouton est revenu.",
 			"J'hésite entre miracle et menace.",
 			"Journée sauvée alors.",
 			"N'allons pas jusque-là.",
 		]
-		and idle_source["choices_by_thread"]["mathilde_thread"].is_empty()
-		and idle_source["choices_by_thread"]["sandra_thread"].is_empty(),
-		"transcripts Mathilde et Sandra restent consultables sans collision en idle",
+		and _texts_for_thread(marie_source, "marie_thread") == [
+			"Tu rentres vers quelle heure ?",
+			"Mathilde a retrouvé son chargeur. Enfin un chargeur.",
+		]
+		and marie_source["choices_by_thread"]["mathilde_thread"].is_empty()
+		and marie_source["choices_by_thread"]["sandra_thread"].is_empty(),
+		"transcripts Mathilde et Sandra restent consultables pendant Marie",
 	)
 	main.queue_free()
 	await get_tree().process_frame
-	main = await _new_production_main(save_path, false)
+	main = await _new_production_main(save_path)
 	if main != null:
 		_expect(
 			main.season_runner.completed_sequence_ids == [MATHILDE_ID, SANDRA_ID]
-			and main.season_runner.active_sequence_id.is_empty()
-			and main.season_runner.status() == SeasonRunner.IDLE_NO_ELIGIBLE_SEQUENCE
-			and main.runtime_session == null
-			and main.season_runner.presentation_source() == idle_source,
-			"idle final exact après reload",
+			and main.season_runner.active_sequence_id == MARIE_ID
+			and main.season_runner.status() == SeasonRunner.ACTIVE_SEQUENCE
+			and main.runtime_session != null
+			and main.season_runner.presentation_source() == marie_source,
+			"reload après Sandra conserve Marie active exactement une fois",
 		)
 		main.queue_free()
 		await get_tree().process_frame

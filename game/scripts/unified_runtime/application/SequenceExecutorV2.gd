@@ -84,9 +84,11 @@ func receive_command(command) -> Dictionary:
 	if not _started or _execution.get("execution_status") == "COMPLETE":
 		return super.receive_command(command)
 	var beat := current_beat()
-	if beat.get("type") != "RETURN" or beat.get("next", {}).get("mode") != "DIRECT":
-		return super.receive_command(command)
-	return _receive_chained_return_command(command, beat)
+	if beat.get("type") == "RETURN" and beat.get("next", {}).get("mode") == "DIRECT":
+		return _receive_chained_return_command(command, beat)
+	if beat.get("type") == "PHYSICAL_BEAT" and beat.get("next", {}).get("mode") == "TERMINAL":
+		return _receive_terminal_physical_command(command, beat)
+	return super.receive_command(command)
 
 
 func commit_resolution(context) -> Dictionary:
@@ -186,16 +188,20 @@ func _receive_chained_return_command(command, beat: Dictionary) -> Dictionary:
 	if command["kind"] != "CONTINUE" or command["kind"] != pending["kind"]:
 		return _result(false, "COMMAND_KIND_MISMATCH")
 	var next_beat := _beat_by_id(beat["next"]["beat_id"])
-	if next_beat.get("type") != "RETURN":
+	var advances_to_return: bool = next_beat.get("type") == "RETURN"
+	var advances_to_terminal_physical: bool = _is_terminal_post_resolution_physical(next_beat)
+	if not advances_to_return and not advances_to_terminal_physical:
 		return _result(false, "INVALID_RETURN_CHAIN")
 	var schedules: Array = _execution.get("scheduled_returns", [])
 	if schedules.size() != 1 or not Moment.validate(schedules[0].get("eligible_at")):
 		return _result(false, "INVALID_RETURN_CHAIN")
-	var planned_schedule := _schedule_return(
-		next_beat, str(_execution["selected_resolution_id"]), schedules[0]["eligible_at"]
-	)
-	if planned_schedule.is_empty():
-		return _result(false, "INVALID_RETURN_DELAY")
+	var planned_schedule := {}
+	if advances_to_return:
+		planned_schedule = _schedule_return(
+			next_beat, str(_execution["selected_resolution_id"]), schedules[0]["eligible_at"]
+		)
+		if planned_schedule.is_empty():
+			return _result(false, "INVALID_RETURN_DELAY")
 	var submitted = _projection_port.submit(command)
 	if not ProjectionContracts.validate_projection_result(submitted)["valid"] or not submitted["accepted"]:
 		return _result(false, "PORT_COMMAND_REFUSED")
@@ -208,11 +214,59 @@ func _receive_chained_return_command(command, beat: Dictionary) -> Dictionary:
 	_execution["checkpoint_id"] = next_beat["checkpoint_before"]
 	if next_beat["checkpoint_before"] != null:
 		_reach_checkpoint(next_beat["checkpoint_before"])
-	_execution["execution_status"] = "RESOLVED_RETURN_PENDING"
-	_execution["scheduled_returns"] = [planned_schedule]
+	if advances_to_return:
+		_execution["execution_status"] = "RESOLVED_RETURN_PENDING"
+		_execution["scheduled_returns"] = [planned_schedule]
+	else:
+		_execution["execution_status"] = "ACTIVE"
+		_execution["scheduled_returns"] = []
 	if not _execution_valid():
 		return _result(false, "INVALID_EXECUTION_TRANSITION")
 	return _result(true, null, submitted["idempotent"], {"port_result": submitted})
+
+
+func _receive_terminal_physical_command(command, beat: Dictionary) -> Dictionary:
+	var validation := ProjectionContracts.validate_projection_command(command)
+	if not validation["valid"]:
+		return _result(false, "INVALID_COMMAND")
+	if (
+		command["instance_id"] != _execution["instance_id"]
+		or command["beat_id"] != _execution["current_beat_id"]
+	):
+		return _result(false, "COMMAND_BEAT_MISMATCH")
+	if _execution["execution_status"] != "WAITING_FOR_PLAYER":
+		return _result(false, "EXECUTION_NOT_WAITING_FOR_COMMAND")
+	var pending: Dictionary = _execution["pending_player_input"]
+	if (
+		command["kind"] != "CONTINUE"
+		or command["kind"] != pending["kind"]
+		or not pending["allowed_choice_ids"].is_empty()
+	):
+		return _result(false, "COMMAND_KIND_MISMATCH")
+	var submitted = _projection_port.submit(command)
+	if not ProjectionContracts.validate_projection_result(submitted)["valid"] or not submitted["accepted"]:
+		return _result(false, "PORT_COMMAND_REFUSED")
+	var presentation_id := ProjectionContracts.presentation_id_for(_projection_request(beat))
+	var closed = _projection_port.close(presentation_id)
+	if not ProjectionContracts.validate_projection_result(closed)["valid"] or not closed["accepted"]:
+		return _result(false, "PORT_CLOSE_REFUSED")
+	_complete_execution()
+	if not _execution_valid():
+		return _result(false, "INVALID_EXECUTION_TRANSITION")
+	return _result(true, null, submitted["idempotent"], {"port_result": submitted})
+
+
+func _is_terminal_post_resolution_physical(beat) -> bool:
+	if typeof(beat) != TYPE_DICTIONARY or beat.get("type") != "PHYSICAL_BEAT":
+		return false
+	var next = beat.get("next")
+	return (
+		typeof(next) == TYPE_DICTIONARY
+		and next.get("mode") == "TERMINAL"
+		and next.get("beat_id") == null
+		and beat.get("content", {}).get("withdrawal_choice_ids") == []
+		and beat.get("local_conditions") == []
+	)
 
 
 func _schedule_return(beat: Dictionary, resolution_id: String, scheduled_from: String) -> Dictionary:

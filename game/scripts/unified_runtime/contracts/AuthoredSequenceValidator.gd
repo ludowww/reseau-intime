@@ -102,7 +102,14 @@ static func validate(value, allow_chained_returns := false) -> Dictionary:
 	)
 	var resolution_context := _validate_resolutions(sequence["resolutions"], errors)
 	var media_context := _validate_media(sequence["media"], participant_context, errors)
-	_validate_references(sequence, graph_context, resolution_context, media_context, errors)
+	_validate_references(
+		sequence,
+		graph_context,
+		resolution_context,
+		media_context,
+		errors,
+		bool(allow_chained_returns),
+	)
 	_validate_graph(sequence.get("entry_beat_id"), graph_context, errors)
 	return _result(errors)
 
@@ -519,7 +526,7 @@ static func _validate_physical_content(value, path: String, context: Dictionary,
 	_validate_business_id(value["physical_beat_id"], path + ".physical_beat_id", errors)
 	_validate_non_empty_string(value["content_ref"], path + ".content_ref", errors)
 	var withdrawal_ids := _validate_id_array(
-		value["withdrawal_choice_ids"], path + ".withdrawal_choice_ids", errors, true
+		value["withdrawal_choice_ids"], path + ".withdrawal_choice_ids", errors, false
 	)
 	context["withdrawal_choice_ids"].append_array(withdrawal_ids)
 
@@ -575,7 +582,9 @@ static func _validate_resolutions(value, errors: Array[String]) -> Dictionary:
 		if resolution["resolution_id"] != resolution_id:
 			_add_error(errors, path + ".resolution_id", "identity_mismatch")
 		_validate_business_id(resolution["choice_id"], path + ".choice_id", errors)
-		_validate_business_id(resolution["a10_choice_id"], path + ".a10_choice_id", errors)
+		_validate_nullable_identifier(
+			resolution["a10_choice_id"], path + ".a10_choice_id", errors
+		)
 		_validate_nullable_identifier(
 			resolution["a10_resolution_id"], path + ".a10_resolution_id", errors
 		)
@@ -709,7 +718,8 @@ static func _validate_references(
 	graph_context: Dictionary,
 	resolution_context: Dictionary,
 	media_context: Dictionary,
-	errors: Array[String]
+	errors: Array[String],
+	allow_chained_returns: bool,
 ) -> void:
 	var beats: Dictionary = graph_context["beats"]
 	var choices: Dictionary = graph_context["choices"]
@@ -724,7 +734,9 @@ static func _validate_references(
 	for beat_id in beat_ids:
 		var beat: Dictionary = beats[beat_id]
 		var path := "root.beats.%s" % beat_id
-		_validate_next_references(beat, beats, choices, path, errors)
+		_validate_next_references(
+			beat, beats, choices, path, errors, allow_chained_returns
+		)
 		_validate_local_condition_references(beat, choices, checkpoints, resolutions, path, errors)
 		var content = beat.get("content")
 		if typeof(content) != TYPE_DICTIONARY:
@@ -793,7 +805,7 @@ static func _validate_references(
 			_add_error(errors, path + ".terminal_checkpoint_id", "choice_checkpoint_mismatch")
 		var a10_choice_id = resolution["a10_choice_id"]
 		var a10_resolution_id = resolution["a10_resolution_id"]
-		if not a10_choice_resolution_ids.has(a10_choice_id):
+		if a10_choice_id != null and not a10_choice_resolution_ids.has(a10_choice_id):
 			_add_error(errors, path + ".a10_choice_id", "unknown_a6_choice")
 		if a10_resolution_id == null:
 			if _has_authored_durable_effects(resolution):
@@ -802,7 +814,15 @@ static func _validate_references(
 					path + ".a10_resolution_id",
 					"durable_effect_requires_a10_resolution",
 				)
+			if a10_choice_id == null and resolution.get("next_beat_id") == null:
+				_add_error(errors, path + ".next_beat_id", "local_resolution_requires_next_beat")
 		elif typeof(a10_resolution_id) == TYPE_STRING:
+			if a10_choice_id == null:
+				_add_error(
+					errors,
+					path + ".a10_choice_id",
+					"a10_choice_required_for_durable_resolution",
+				)
 			if not a10_resolution_ids.has(a10_resolution_id):
 				_add_error(errors, path + ".a10_resolution_id", "unknown_a6_resolution")
 			elif (
@@ -919,7 +939,8 @@ static func _validate_next_references(
 	beats: Dictionary,
 	choices: Dictionary,
 	path: String,
-	errors: Array[String]
+	errors: Array[String],
+	allow_chained_returns: bool,
 ) -> void:
 	var next = beat.get("next")
 	if typeof(next) != TYPE_DICTIONARY:
@@ -928,8 +949,18 @@ static func _validate_next_references(
 		"DIRECT":
 			if not beats.has(next.get("beat_id")):
 				_add_error(errors, path + ".next.beat_id", "unknown_beat")
-			elif beat.get("type") == "RETURN" and beats[next["beat_id"]].get("type") != "RETURN":
-				_add_error(errors, path + ".next.beat_id", "return_direct_requires_return")
+			elif beat.get("type") == "RETURN":
+				var target: Dictionary = beats[next["beat_id"]]
+				if target.get("type") == "RETURN":
+					pass
+				elif allow_chained_returns and _is_terminal_post_resolution_physical(target):
+					pass
+				else:
+					_add_error(
+						errors,
+						path + ".next.beat_id",
+						"return_direct_requires_return_or_terminal_physical",
+					)
 		"BRANCH":
 			var content_choices := {}
 			if beat["type"] == "CHOICE" and typeof(beat["content"]) == TYPE_DICTIONARY:
@@ -988,8 +1019,26 @@ static func _return_chain_has_resolution_coverage(
 			return true
 		if next.get("mode") != "DIRECT":
 			return false
+		var next_beat = beats.get(next.get("beat_id"), {})
+		if typeof(next_beat) == TYPE_DICTIONARY and _is_terminal_post_resolution_physical(next_beat):
+			return true
 		current_id = next.get("beat_id")
 	return false
+
+
+static func _is_terminal_post_resolution_physical(beat) -> bool:
+	if typeof(beat) != TYPE_DICTIONARY or beat.get("type") != "PHYSICAL_BEAT":
+		return false
+	var next = beat.get("next")
+	var content = beat.get("content")
+	return (
+		typeof(next) == TYPE_DICTIONARY
+		and next.get("mode") == "TERMINAL"
+		and next.get("beat_id") == null
+		and typeof(content) == TYPE_DICTIONARY
+		and content.get("withdrawal_choice_ids") == []
+		and beat.get("local_conditions") == []
+	)
 
 
 static func _validate_local_condition_references(

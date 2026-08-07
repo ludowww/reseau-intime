@@ -51,7 +51,11 @@ class R8CN19SandraSentryCoreButtonEchoStaticTests(unittest.TestCase):
             self.assertIn(source, provenance)
         catalog = self.load(CATALOG)
         self.assertEqual(
-            ["mathilde_returns_with_chosen_intent_01", "sandra_sentrycore_button_echo_01"],
+            [
+				"mathilde_returns_with_chosen_intent_01",
+				"sandra_sentrycore_button_echo_01",
+				"marie_evening_return_01",
+			],
             [package["sequence_id"] for package in catalog["packages"]],
         )
         self.assertNotIn("tests/fixtures", json.dumps(catalog))
@@ -135,7 +139,8 @@ class R8CN19SandraSentryCoreButtonEchoStaticTests(unittest.TestCase):
             "commit A10 Sandra exactement une fois",
             "Galerie Mathilde reste ouvrable pendant Sandra",
             "ancien save N18 refusé par fingerprint",
-            "idle final exact après reload",
+			"Sandra COMPLETE handoff vers Marie",
+			"reload après Sandra conserve Marie active exactement une fois",
         ]:
             self.assertIn(proof, source)
         scene = (GAME / "tests/R8C_N19SandraSentryCoreButtonEchoSmokeTest.tscn").read_text(encoding="utf-8")

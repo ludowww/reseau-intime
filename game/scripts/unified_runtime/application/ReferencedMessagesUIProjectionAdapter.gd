@@ -87,3 +87,48 @@ func _is_message_beat_type(beat_type) -> bool:
 
 func _should_automatically_open_next_projection() -> bool:
 	return false
+
+
+func _active_matches_execution(
+	candidate: Dictionary,
+	source: Dictionary,
+	presented: Dictionary,
+	notification_presented: bool,
+	notification_dismissed: bool,
+	progression_ack_sent: bool,
+	progression_command_sent: bool,
+) -> bool:
+	if candidate.is_empty() and _executor.current_beat().get("projection_target") != "MESSAGES":
+		var port_snapshot: Dictionary = _projection_port.snapshot()
+		if not bool(port_snapshot.get("accepted", false)):
+			return false
+		var port_data = port_snapshot.get("snapshot")
+		if (
+			typeof(port_data) != TYPE_DICTIONARY
+			or typeof(port_data.get("open_requests")) != TYPE_ARRAY
+			or typeof(port_data.get("receipts")) != TYPE_ARRAY
+			or not _all_choices_empty(source)
+			or notification_presented
+			or notification_dismissed
+			or progression_ack_sent
+			or progression_command_sent
+		):
+			return false
+		for request in port_data["open_requests"]:
+			if request.get("projection_target") == "MESSAGES":
+				return false
+		for receipt in port_data["receipts"]:
+			if receipt.get("projection_target") == "MESSAGES":
+				return false
+		return _executor.execution_state().get("execution_status") in [
+			"ACTIVE", "WAITING_FOR_PROJECTION_ACK", "WAITING_FOR_PLAYER",
+		]
+	return super._active_matches_execution(
+		candidate,
+		source,
+		presented,
+		notification_presented,
+		notification_dismissed,
+		progression_ack_sent,
+		progression_command_sent,
+	)

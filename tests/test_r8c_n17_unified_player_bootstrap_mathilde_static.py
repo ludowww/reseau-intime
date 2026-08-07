@@ -217,14 +217,14 @@ class R8CN17UnifiedPlayerBootstrapStaticTests(unittest.TestCase):
             executor_v2,
             re.S,
         ).group(0)
-        self.assertIn('beat.get("next", {}).get("mode") != "DIRECT"', executor_v2)
+        self.assertIn('beat.get("type") == "RETURN" and beat.get("next", {}).get("mode") == "DIRECT"', executor_v2)
         for proof in [
-            'next_beat.get("type") != "RETURN"',
+			'next_beat.get("type") == "RETURN"',
+			'_is_terminal_post_resolution_physical(next_beat)',
             '_execution["execution_status"] = "RESOLVED_RETURN_PENDING"',
             '_execution["scheduled_returns"] = [planned_schedule]',
         ]:
             self.assertIn(proof, chained)
-        self.assertNotIn("_complete_execution()", chained)
         executor_v1 = self.read(ROOT / "game/scripts/unified_runtime/execution/SequenceExecutor.gd")
         self.assertIn('elif current_beat()["type"] == "RETURN":', executor_v1)
         self.assertIn("_complete_execution()", executor_v1)

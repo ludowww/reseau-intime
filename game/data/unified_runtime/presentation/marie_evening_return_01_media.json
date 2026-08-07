@@ -1,0 +1,15 @@
+{
+  "sequence_id": "marie_evening_return_01",
+  "authored_version": "1.0.0",
+  "entries": [
+    {
+      "media_id": "S1_A1_J03_SCN_MARIE_HOME_FROM_LAVERRIERE_01",
+      "visual_ref": "",
+      "display_name": "Retour au foyer",
+      "context_label": "La soupe n'attend pas demain",
+      "caption": "Marie revient de La Verrière et ramène la journée vers le foyer.",
+      "placeholder_label": "Visuel non livré",
+      "gallery_character_ids": ["marie"]
+    }
+  ]
+}
