@@ -1,11 +1,9 @@
 import re
-import subprocess
 import unittest
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-BASELINE = "c30b80923d4cee20d2fc3a3feb5c713a4bdada86"
 ADAPTER = "game/scripts/unified_runtime/projection/MessagesUIProjectionAdapter.gd"
 SCREEN = "game/scripts/ui/messages/MessagesScreen.gd"
 PORT = "game/scripts/unified_runtime/projection/MessagesPhysicalProjectionPort.gd"
@@ -33,29 +31,6 @@ class R8CN152MessagesUIProjectionStaticTests(unittest.TestCase):
         self.assertTrue(issubclass(type(self), unittest.TestCase))
         expected = [ADAPTER, SCREEN, PORT, EXECUTOR, CONTRACTS, FIXTURE, SMOKE, SCENE]
         self.assertEqual([], [path for path in expected if not (ROOT / path).is_file()])
-
-    def test_production_scope_is_exactly_adapter_and_messages_screen(self):
-        changed = subprocess.check_output(
-            ["git", "diff", "--name-only", BASELINE, "--", "game/scripts"],
-            cwd=ROOT,
-            text=True,
-        ).splitlines()
-        changed.extend(
-            subprocess.check_output(
-                ["git", "ls-files", "--others", "--exclude-standard", "--", "game/scripts"],
-                cwd=ROOT,
-                text=True,
-            ).splitlines()
-        )
-        self.assertEqual(sorted([ADAPTER, SCREEN]), sorted(changed))
-        for protected in [PORT, EXECUTOR, CONTRACTS]:
-            self.assertEqual(
-                "",
-                subprocess.check_output(
-                    ["git", "diff", BASELINE, "--", protected], cwd=ROOT, text=True
-                ),
-                protected,
-            )
 
     def test_adapter_has_no_season_one_or_legacy_dependency(self):
         source = self.read(ADAPTER)

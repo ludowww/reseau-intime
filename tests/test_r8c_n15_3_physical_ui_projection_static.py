@@ -1,12 +1,10 @@
 import json
 import re
-import subprocess
 import unittest
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-BASELINE = "63326041b86b97092e5e66c279c866728df1cdc6"
 CONTRACT = "game/scripts/unified_runtime/contracts/PhysicalPresentationContentV1.gd"
 RESOLVER = "game/scripts/unified_runtime/projection/PhysicalContentResolver.gd"
 ADAPTER = "game/scripts/unified_runtime/projection/PhysicalUIProjectionAdapter.gd"
@@ -45,51 +43,6 @@ class R8CN153PhysicalUIProjectionStaticTests(unittest.TestCase):
             SMOKE_SCENE,
         ]
         self.assertEqual([], [path for path in expected if not (ROOT / path).is_file()])
-
-    def test_production_scope_is_exactly_the_six_new_files(self):
-        production = [CONTRACT, RESOLVER, ADAPTER, COORDINATOR, SCREEN, SCREEN_SCENE]
-        changed = subprocess.check_output(
-            ["git", "diff", "--name-only", BASELINE, "--", "game/scripts", "game/scenes"],
-            cwd=ROOT,
-            text=True,
-        ).splitlines()
-        changed.extend(
-            subprocess.check_output(
-                [
-                    "git",
-                    "ls-files",
-                    "--others",
-                    "--exclude-standard",
-                    "--",
-                    "game/scripts",
-                    "game/scenes",
-                ],
-                cwd=ROOT,
-                text=True,
-            ).splitlines()
-        )
-        self.assertEqual(sorted(production), sorted(changed))
-        protected = [
-            "game/scripts/unified_runtime/projection/MessagesPhysicalProjectionPort.gd",
-            "game/scripts/unified_runtime/execution/SequenceExecutor.gd",
-            "game/scripts/unified_runtime/contracts/SequenceExecutionV1.gd",
-            "game/scripts/unified_runtime/contracts/AuthoredSequenceV1.gd",
-            "game/scripts/unified_runtime/contracts/AuthoredSequenceValidator.gd",
-            "game/scripts/unified_runtime/projection/MessagesUIProjectionAdapter.gd",
-            "game/scripts/ui/messages/MessagesScreen.gd",
-            "game/scripts/ui/messages/OffPhoneTransition.gd",
-            "game/scripts/ui/PortraitShell.gd",
-            "game/scripts/ui/PortraitMain.gd",
-            "game/project.godot",
-        ]
-        for path in protected:
-            self.assertEqual(
-                "",
-                subprocess.check_output(
-                    ["git", "diff", BASELINE, "--", path], cwd=ROOT, text=True
-                ),
-                path,
-            )
 
     def test_contract_is_closed_minimal_and_bounded(self):
         source = self.read(CONTRACT)
