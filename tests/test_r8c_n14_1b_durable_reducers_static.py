@@ -76,6 +76,8 @@ class R8CN141BDurableReducersStaticTests(unittest.TestCase):
         self.assertIn('const GALLERY_STATUSES := ["HIDDEN", "AVAILABLE"]', media)
         self.assertIn('record["gallery_status"] == "AVAILABLE" and item["gallery_status"] == "HIDDEN"', media)
         self.assertIn("_ids(item[\"fictional_audience_ids\"], false)", media)
+        obligation = self.read(REDUCERS[4])
+        self.assertNotIn('rec["resolved_at"] == rec["provenance"]["moment_diegetique"]', obligation)
 
     def test_no_publication_dynamic_dispatch_or_forbidden_dependencies(self):
         production = "\n".join(self.read(path) for path in (*REDUCERS, ORCHESTRATOR))
@@ -117,6 +119,10 @@ class R8CN141BDurableReducersStaticTests(unittest.TestCase):
             "CREATE_DUE then PAY identical replay remains idempotent",
             "obligation created then failed separately",
             "CREATE_DUE then FAIL identical replay remains idempotent",
+            "CREATE_DUE then PAY at same moment applies",
+            "CREATE_DUE then PAY at same moment replay idempotent",
+            "CREATE_DUE then FAIL at same moment applies",
+            "CREATE_DUE then FAIL at same moment replay idempotent",
             "CREATE_PAID creates obligation from fresh state",
             "CREATE_PAID record is terminal at provenance moment",
             "CREATE_PAID identical replay idempotent",
@@ -125,12 +131,9 @@ class R8CN141BDurableReducersStaticTests(unittest.TestCase):
             "CREATE_PAID divergent debtor rejected",
             "CREATE_PAID divergent beneficiaries rejected",
             "CREATE_PAID divergent kind rejected",
-            "PAY on CREATE_PAID obligation rejected",
-            "PAY on CREATE_PAID obligation rejected with different provenance",
             "CREATE_FAILED creates obligation from fresh state",
             "CREATE_FAILED record is terminal at provenance moment",
             "CREATE_FAILED identical replay idempotent",
-            "FAIL on CREATE_FAILED obligation rejected",
             "CREATE_DUE and PAY same obligation rejected as duplicate business identifier",
             "obligation paid before due rejected",
             "obligation failed before due rejected",

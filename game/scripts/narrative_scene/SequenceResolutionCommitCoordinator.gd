@@ -89,6 +89,11 @@ func resolve(
 		return _failure(instance, "RESOLUTION_REFUSEE")
 	if instance.obtenir_statut() != InstanceModele.PROPOSED:
 		return _failure(instance, "INSTANCE_NON_PROPOSEE")
+	if not _terminal_obligation_effects_valid_for_new_transaction(
+		state_snapshot,
+		expected_event["payload"],
+	):
+		return _failure(instance, "RESOLUTION_REFUSEE")
 
 	var reduction: Dictionary = Reducer.preparer(
 		state_snapshot,
@@ -206,6 +211,28 @@ static func _manifest_event_keys(manifest: Dictionary) -> Array:
 		for effect in manifest[category]:
 			event_keys.append(effect["event_key"])
 	return event_keys
+
+
+static func _terminal_obligation_effects_valid_for_new_transaction(
+	state_snapshot: Dictionary,
+	payload: Dictionary,
+) -> bool:
+	var obligations = state_snapshot.get("obligations")
+	var obligation_effects = payload.get("obligations")
+	if typeof(obligations) != TYPE_DICTIONARY or typeof(obligation_effects) != TYPE_ARRAY:
+		return false
+	for effect in obligation_effects:
+		if typeof(effect) != TYPE_DICTIONARY:
+			return false
+		if effect.get("effect") not in ["PAY", "FAIL"]:
+			continue
+		var obligation_id = effect.get("obligation_id")
+		if not obligations.has(obligation_id):
+			return false
+		var obligation = obligations[obligation_id]
+		if typeof(obligation) != TYPE_DICTIONARY or obligation.get("status") != "DUE":
+			return false
+	return true
 
 
 static func _find_choice(definition: Dictionary, choice_id: String) -> Dictionary:

@@ -108,6 +108,30 @@ func _ready() -> void:
 	var obligation_fail_replay := Reducer.preparer(obligation_failed["candidat"], obligation_fail, obligation_fail_provenance)
 	_expect(obligation_fail_replay["ok"] and obligation_fail_replay["statut"] == "IDEMPOTENT", "CREATE_DUE then FAIL identical replay remains idempotent")
 
+	var same_moment := "2032-03-04T10:41:15+01:00"
+	var same_moment_due_provenance := _provenance(same_moment)
+	same_moment_due_provenance["event_id"] = "same_moment_due_create_event"
+	var same_moment_due := _single("obligations", [{"event_key": "same_moment_due_create", "effect": "CREATE_DUE", "obligation_id": "obligation_same_moment_paid", "debtor_id": "player", "beneficiary_ids": ["marie"], "kind": "FOLLOW_UP"}])
+	var same_moment_due_state := Reducer.preparer(source, same_moment_due, same_moment_due_provenance)
+	var same_moment_pay_provenance := _provenance(same_moment)
+	same_moment_pay_provenance["event_id"] = "same_moment_pay_event"
+	var same_moment_pay := _single("obligations", [{"event_key": "same_moment_pay", "effect": "PAY", "obligation_id": "obligation_same_moment_paid"}])
+	var same_moment_paid := Reducer.preparer(same_moment_due_state["candidat"], same_moment_pay, same_moment_pay_provenance)
+	_expect(same_moment_paid["ok"] and same_moment_paid["statut"] == "APPLIQUE", "CREATE_DUE then PAY at same moment applies")
+	var same_moment_pay_replay := Reducer.preparer(same_moment_paid["candidat"], same_moment_pay, same_moment_pay_provenance)
+	_expect(same_moment_pay_replay["ok"] and same_moment_pay_replay["statut"] == "IDEMPOTENT", "CREATE_DUE then PAY at same moment replay idempotent")
+	var same_moment_fail_due_provenance := _provenance(same_moment)
+	same_moment_fail_due_provenance["event_id"] = "same_moment_fail_due_create_event"
+	var same_moment_fail_due := _single("obligations", [{"event_key": "same_moment_fail_due_create", "effect": "CREATE_DUE", "obligation_id": "obligation_same_moment_failed", "debtor_id": "player", "beneficiary_ids": ["sandra"], "kind": "FOLLOW_UP"}])
+	var same_moment_fail_due_state := Reducer.preparer(source, same_moment_fail_due, same_moment_fail_due_provenance)
+	var same_moment_fail_provenance := _provenance(same_moment)
+	same_moment_fail_provenance["event_id"] = "same_moment_fail_event"
+	var same_moment_fail := _single("obligations", [{"event_key": "same_moment_fail", "effect": "FAIL", "obligation_id": "obligation_same_moment_failed"}])
+	var same_moment_failed := Reducer.preparer(same_moment_fail_due_state["candidat"], same_moment_fail, same_moment_fail_provenance)
+	_expect(same_moment_failed["ok"] and same_moment_failed["statut"] == "APPLIQUE", "CREATE_DUE then FAIL at same moment applies")
+	var same_moment_fail_replay := Reducer.preparer(same_moment_failed["candidat"], same_moment_fail, same_moment_fail_provenance)
+	_expect(same_moment_fail_replay["ok"] and same_moment_fail_replay["statut"] == "IDEMPOTENT", "CREATE_DUE then FAIL at same moment replay idempotent")
+
 	var create_paid_provenance := _provenance("2032-03-04T10:41:30+01:00")
 	var obligation_create_paid := _single("obligations", [{"event_key": "obligation_create_paid", "effect": "CREATE_PAID", "obligation_id": "obligation_paid_at_creation", "debtor_id": "player", "beneficiary_ids": ["marie"], "kind": "AFTERCARE"}])
 	var obligation_created_paid := Reducer.preparer(source, obligation_create_paid, create_paid_provenance)
@@ -126,12 +150,6 @@ func _ready() -> void:
 	_expect_rejected(obligation_created_paid["candidat"], divergent_paid_beneficiaries, create_paid_provenance, "CREATE_PAID divergent beneficiaries rejected")
 	var divergent_paid_kind := _single("obligations", [{"event_key": "obligation_paid_other_kind", "effect": "CREATE_PAID", "obligation_id": "obligation_paid_at_creation", "debtor_id": "player", "beneficiary_ids": ["marie"], "kind": "FOLLOW_UP"}])
 	_expect_rejected(obligation_created_paid["candidat"], divergent_paid_kind, create_paid_provenance, "CREATE_PAID divergent kind rejected")
-	var pay_created_paid := _single("obligations", [{"event_key": "pay_created_paid", "effect": "PAY", "obligation_id": "obligation_paid_at_creation"}])
-	_expect_rejected(obligation_created_paid["candidat"], pay_created_paid, create_paid_provenance, "PAY on CREATE_PAID obligation rejected")
-	var different_pay_provenance := create_paid_provenance.duplicate(true)
-	different_pay_provenance["event_id"] = "synthetic_n14_1b_different_event"
-	_expect_rejected(obligation_created_paid["candidat"], pay_created_paid, different_pay_provenance, "PAY on CREATE_PAID obligation rejected with different provenance")
-
 	var create_failed_provenance := _provenance("2032-03-04T10:41:45+01:00")
 	var obligation_create_failed := _single("obligations", [{"event_key": "obligation_create_failed", "effect": "CREATE_FAILED", "obligation_id": "obligation_failed_at_creation", "debtor_id": "player", "beneficiary_ids": ["sandra"], "kind": "AFTERCARE"}])
 	var obligation_created_failed := Reducer.preparer(source, obligation_create_failed, create_failed_provenance)
@@ -141,9 +159,6 @@ func _ready() -> void:
 	_expect(failed_record["debtor_id"] == "player" and failed_record["beneficiary_ids"] == ["sandra"] and failed_record["kind"] == "AFTERCARE" and failed_record["provenance"] == create_failed_provenance, "CREATE_FAILED record preserves metadata and provenance")
 	var create_failed_replay := Reducer.preparer(obligation_created_failed["candidat"], obligation_create_failed, create_failed_provenance)
 	_expect(create_failed_replay["ok"] and create_failed_replay["statut"] == "IDEMPOTENT", "CREATE_FAILED identical replay idempotent")
-	var fail_created_failed := _single("obligations", [{"event_key": "fail_created_failed", "effect": "FAIL", "obligation_id": "obligation_failed_at_creation"}])
-	_expect_rejected(obligation_created_failed["candidat"], fail_created_failed, create_failed_provenance, "FAIL on CREATE_FAILED obligation rejected")
-
 	var media_grant_hidden := _single("media_deliveries", [{"event_key": "media_grant_hidden", "effect": "GRANT_ACCESS", "media_id": "media_one", "diegetic_status": "CREATED", "fictional_audience_ids": [], "gallery_status": "HIDDEN"}])
 	var media_hidden := Reducer.preparer(candidate, media_grant_hidden, _provenance("2032-03-04T10:42:00+01:00"))
 	_expect(media_hidden["ok"] and media_hidden["candidat"]["livraison_medias"]["media_one"]["access_status"] == "ACCESSIBLE", "media access hidden granted")

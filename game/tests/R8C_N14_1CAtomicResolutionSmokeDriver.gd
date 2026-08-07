@@ -18,6 +18,7 @@ func _ready() -> void:
 	var sequence := _load_sequence()
 	sequence["orchestration"]["a6_entry"]["definition"]["resolutions"]["a10_resolution_commit"]["durable_manifest"] = _full_manifest()
 	_test_success_replay_restore(sequence)
+	_test_terminal_obligation_transaction_boundary(sequence)
 	_test_closed_rejections(sequence)
 	_test_persisted_inconsistencies(sequence)
 	_test_restored_event_payload_rejections(sequence)
@@ -106,6 +107,78 @@ func _test_success_replay_restore(sequence: Dictionary) -> void:
 		"RESOLUTION_TERMINALE_DIFFERENTE",
 		"terminal ordered event keys divergence",
 	)
+
+
+func _test_terminal_obligation_transaction_boundary(sequence: Dictionary) -> void:
+	for create_effect in ["CREATE_PAID", "CREATE_FAILED"]:
+		var suffix: String = String(create_effect).to_lower()
+		var obligation_id := "n14_1c_%s_transaction" % suffix
+		var create_instance_id := "synthetic_n14_1c_%s_instance" % suffix
+		var create_sequence := _obligation_sequence(sequence, create_effect, obligation_id)
+		var create_env := _activated_environment(create_sequence, create_instance_id)
+		_expect(not create_env.is_empty(), "%s transaction prepared" % create_effect)
+		if create_env.is_empty():
+			continue
+		var create_facade = create_env["facade"]
+		var create_context := _context_with_envelope(_envelope(create_sequence, create_instance_id))
+		var create_result: Dictionary = create_facade.resolve_scene(
+			create_instance_id, "a10_choice_commit", "a10_resolution_commit", create_context
+		)
+		_expect(
+			create_result["ok"] and create_result["transaction_status"] == "APPLIQUE",
+			"%s first transaction applies" % create_effect,
+		)
+		var created_state: Dictionary = create_facade.save_state()
+		var expected_status: String = "PAID" if create_effect == "CREATE_PAID" else "FAILED"
+		_expect(
+			created_state["narrative_state"]["obligations"][obligation_id]["status"] == expected_status,
+			"%s creates terminal obligation" % create_effect,
+		)
+		var replay_before := created_state.duplicate(true)
+		var replay: Dictionary = create_facade.resolve_scene(
+			create_instance_id, "a10_choice_commit", "a10_resolution_commit", create_context
+		)
+		_expect(
+			replay["ok"] and replay["transaction_status"] == "IDEMPOTENT",
+			"%s first transaction exact replay idempotent" % create_effect,
+		)
+		_expect(
+			create_facade.save_state() == replay_before,
+			"%s first transaction replay leaves state unchanged" % create_effect,
+		)
+		for terminal_effect in ["PAY", "FAIL"]:
+			var attempt_instance_id := "%s_%s_attempt" % [
+				create_instance_id,
+				String(terminal_effect).to_lower(),
+			]
+			var attempt_sequence := _obligation_sequence(sequence, terminal_effect, obligation_id)
+			var attempt_env := _activated_environment(
+				attempt_sequence,
+				attempt_instance_id,
+				created_state["narrative_state"],
+			)
+			_expect(
+				not attempt_env.is_empty(),
+				"%s followed by new %s transaction prepared" % [create_effect, terminal_effect],
+			)
+			if attempt_env.is_empty():
+				continue
+			var attempt_facade = attempt_env["facade"]
+			var attempt_before: Dictionary = attempt_facade.save_state()
+			var attempt_result: Dictionary = attempt_facade.resolve_scene(
+				attempt_instance_id,
+				"a10_choice_commit",
+				"a10_resolution_commit",
+				_context_with_envelope(_envelope(attempt_sequence, attempt_instance_id)),
+			)
+			_expect(
+				not attempt_result["ok"] and attempt_result["erreur"] == "RESOLUTION_REFUSEE",
+				"%s followed by new %s transaction rejected" % [create_effect, terminal_effect],
+			)
+			_expect(
+				attempt_facade.save_state() == attempt_before,
+				"%s followed by new %s transaction changes no state" % [create_effect, terminal_effect],
+			)
 
 
 func _test_closed_rejections(sequence: Dictionary) -> void:
@@ -537,15 +610,21 @@ func _assert_restored_replay_rejection(
 	_expect(facade.save_state() == before, label + " changes no restored state")
 
 
-func _activated_environment(sequence: Dictionary) -> Dictionary:
-	var facade = _new_facade(sequence)
+func _activated_environment(
+	sequence: Dictionary,
+	instance_id: String = INSTANCE_ID,
+	narrative_snapshot: Dictionary = {},
+) -> Dictionary:
+	var facade = _new_facade(sequence, narrative_snapshot)
 	if facade == null:
 		return {}
 	var candidates: Dictionary = facade.find_candidates(_context())
 	if not candidates.get("ok", false) or candidates["candidats"].size() != 1:
 		print("N14_1C candidates failure: ", candidates)
 		return {}
-	var composition: Dictionary = facade.compose_slot(_slot_request(candidates["candidats"][0]))
+	var composition: Dictionary = facade.compose_slot(
+		_slot_request(candidates["candidats"][0], instance_id)
+	)
 	if not composition.get("ok", false):
 		print("N14_1C composition failure: ", composition)
 		return {}
@@ -558,7 +637,7 @@ func _activated_environment(sequence: Dictionary) -> Dictionary:
 	return {"facade": facade, "activation": activation}
 
 
-func _new_facade(sequence: Dictionary):
+func _new_facade(sequence: Dictionary, narrative_snapshot: Dictionary = {}):
 	var entry: Dictionary = sequence["orchestration"]["a6_entry"]
 	var loaded := LibraryModel.charger_depuis_bundle({
 		"format": "R8C_A6_SCENE_LIBRARY", "version": 1, "definitions": [entry.duplicate(true)],
@@ -566,17 +645,20 @@ func _new_facade(sequence: Dictionary):
 	if not loaded.get("ok", false):
 		print("N14_1C library failure: ", loaded)
 		return null
-	return FacadeModel.create(loaded["bibliotheque"], NarrativeStateModel.creer_synthetique(_central_state()))
+	var narrative_state = NarrativeStateModel.creer_synthetique(_central_state())
+	if not narrative_snapshot.is_empty():
+		narrative_state = NarrativeStateModel.creer_depuis_snapshot(narrative_snapshot)
+	return FacadeModel.create(loaded["bibliotheque"], narrative_state)
 
 
-func _envelope(sequence: Dictionary) -> Dictionary:
+func _envelope(sequence: Dictionary, instance_id: String = INSTANCE_ID) -> Dictionary:
 	var manifest: Dictionary = sequence["orchestration"]["a6_entry"]["definition"]["resolutions"]["a10_resolution_commit"]["durable_manifest"]
 	var keys: Array = []
 	for category in CATEGORIES:
 		for effect in manifest[category]:
 			keys.append(effect["event_key"])
 	return {
-		"instance_id": INSTANCE_ID,
+		"instance_id": instance_id,
 		"sequence_id": manifest["binding"]["sequence_id"],
 		"authored_version": manifest["binding"]["authored_version"],
 		"choice_id": "choice_finish",
@@ -603,6 +685,38 @@ func _full_manifest_payload() -> Dictionary:
 		"obligations": [{"event_key": "n14_1c_obligation", "effect": "CREATE_PAID", "obligation_id": "n14_1c_obligation", "debtor_id": "player", "beneficiary_ids": ["sandra"], "kind": "FOLLOW_UP"}],
 		"media_deliveries": [{"event_key": "n14_1c_media", "effect": "CREATE_DIEGETIC", "media_id": "n14_1c_media", "fictional_audience_ids": []}],
 	}
+
+
+func _obligation_sequence(
+	sequence: Dictionary,
+	effect: String,
+	obligation_id: String,
+) -> Dictionary:
+	var variant := sequence.duplicate(true)
+	var obligation := {
+		"event_key": "%s_%s" % [obligation_id, effect.to_lower()],
+		"effect": effect,
+		"obligation_id": obligation_id,
+	}
+	if effect.begins_with("CREATE_"):
+		obligation["debtor_id"] = "player"
+		obligation["beneficiary_ids"] = ["sandra"]
+		obligation["kind"] = "FOLLOW_UP"
+	var manifest := {
+		"binding": {
+			"sequence_id": "synthetic_n13_durable_sequence",
+			"authored_version": "1.0.0",
+			"resolution_id": "resolution_complete",
+		},
+		"facts": [],
+		"knowledge": [],
+		"traces": [],
+		"promises": [],
+		"obligations": [obligation],
+		"media_deliveries": [],
+	}
+	variant["orchestration"]["a6_entry"]["definition"]["resolutions"]["a10_resolution_commit"]["durable_manifest"] = manifest
+	return variant
 
 
 func _expected_provenance(event_id: String) -> Dictionary:
@@ -633,11 +747,11 @@ func _central_state() -> Dictionary:
 	return {"statut_couple": "EN_CLARIFICATION", "contrat_couple": null, "etat_divulgation": "PARTIEL", "etat_foyer": null, "relation_apres_separation": null, "dernier_evenement_majeur_id": null, "faits": [], "cadre_provisoire": null}
 
 
-func _slot_request(candidate: Dictionary) -> Dictionary:
+func _slot_request(candidate: Dictionary, instance_id: String = INSTANCE_ID) -> Dictionary:
 	return {
 		"slot_id": "synthetic_n13_slot", "narrative_date": "2032-03-04", "starts_at": "2032-03-04T10:30:00+01:00", "ends_at": "2032-03-04T11:00:00+01:00", "context": _context(),
 		"window": {"window_id": "synthetic_n13_window", "opens_at": "2032-03-04T10:00:00+01:00", "closes_at": "2032-03-04T11:00:00+01:00", "duration_minutes": 20, "not_before": "2032-03-04T10:30:00+01:00", "not_after": "2032-03-04T11:00:00+01:00", "options": [
-			{"option_id": "primary_option", "candidate": candidate.duplicate(true), "instance_id": INSTANCE_ID, "conflict_policy": "CLOSE_SILENTLY"},
+			{"option_id": "primary_option", "candidate": candidate.duplicate(true), "instance_id": instance_id, "conflict_policy": "CLOSE_SILENTLY"},
 			{"option_id": "alternative_option", "candidate": candidate.duplicate(true), "instance_id": "synthetic_n13_alternative_instance", "conflict_policy": "CLOSE_SILENTLY"},
 		]},
 	}

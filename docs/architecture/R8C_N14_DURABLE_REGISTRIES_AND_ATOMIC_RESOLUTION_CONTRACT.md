@@ -48,6 +48,16 @@ replay avant toute exigence `PROPOSED`, l'union fermée des faits, l'ordre stric
 des `event_keys` et une publication finale synchrone et non réentrante. Ces
 décisions sont désormais approuvées sans réserve bloquante.
 
+### 1.2 Amendement N14.1d — création terminale et identité transactionnelle
+
+N14.1d supprime toute assimilation entre identité de transaction et égalité de
+`moment_diegetique`. Le reducer d'obligations reste state-based ; l'autorité qui
+distingue le replay exact d'une nouvelle tentative terminale appartient au
+coordinateur atomique A1/A5. Cet amendement ajoute les créations terminales
+fermées `CREATE_PAID` et `CREATE_FAILED` et la prévalidation des nouveaux effets
+`PAY`/`FAIL` décrite aux sections 10 et 15, sans modifier le record, le codec ou
+le format de snapshot.
+
 ## 2. Diagnostic du runtime verrouillé
 
 Le diagnostic de départ est fermé et vérifié sur la baseline :
@@ -192,6 +202,17 @@ conservés dans l'ordre authored. Une catégorie ne contient pas deux opération
 sur le même identifiant dans une résolution ; les transitions successives
 réelles utilisent des résolutions/commits distincts.
 
+Exception fermée pour les obligations : `CREATE_PAID` et `CREATE_FAILED`
+représentent chacun une création déjà terminale en une seule opération et un
+seul commit atomique. Ils ne sont pas la concaténation de `CREATE_DUE` avec
+`PAY` ou `FAIL`, n'autorisent pas deux entrées portant le même `obligation_id`
+et ne peuvent pas être suivis d'un second commit terminal. Cette exception est
+autorisée uniquement si l'obligation naît dans la résolution authored courante,
+y est entièrement résolue et ne possède aucun état `DUE` player-facing ou
+durable devant être observable entre création et terminaison. Si une phase
+`DUE` est réellement observable, la règle générale de deux résolutions/commits
+distincts demeure obligatoire.
+
 La liste applicable des clés est la concaténation, dans cet ordre fixe, des
 `event_key` de :
 
@@ -230,6 +251,8 @@ construit depuis l'instance, le binding et le contexte validés.
 | `promises` `CREATE` | `{event_key,effect,promise_id,author_id,beneficiary_ids,content_ref}` |
 | `promises` terminal | `{event_key,effect,promise_id}` avec `effect = PAY|FAIL` |
 | `obligations` `CREATE_DUE` | `{event_key,effect,obligation_id,debtor_id,beneficiary_ids,kind}` |
+| `obligations` `CREATE_PAID` | `{event_key,effect,obligation_id,debtor_id,beneficiary_ids,kind}` |
+| `obligations` `CREATE_FAILED` | `{event_key,effect,obligation_id,debtor_id,beneficiary_ids,kind}` |
 | `obligations` terminal | `{event_key,effect,obligation_id}` avec `effect = PAY|FAIL` |
 | `media_deliveries` `CREATE_DIEGETIC` | `{event_key,effect,media_id,fictional_audience_ids}` |
 | `media_deliveries` `GRANT_ACCESS` | `{event_key,effect,media_id,diegetic_status,fictional_audience_ids,gallery_status}` |
@@ -431,29 +454,49 @@ resolved_at
 
 Statuts : `DUE`, `PAID`, `FAILED`.
 
-Effets authored existants : `CREATE_DUE`, `PAY`, `FAIL`, `NONE`.
+Effets authored existants : `CREATE_DUE`, `CREATE_PAID`, `CREATE_FAILED`,
+`PAY`, `FAIL`, `NONE`.
 
 Transitions autorisées :
 
 ```text
 absente → DUE      par CREATE_DUE
+absente → PAID     par CREATE_PAID
+absente → FAILED   par CREATE_FAILED
 DUE     → PAID     par PAY
 DUE     → FAILED   par FAIL
 ```
 
-`CREATE_DUE` exige des `beneficiary_ids` non vides et sans doublon, initialise
-`resolved_at = null` et fixe la provenance de création. `PAY` ou `FAIL` fixe
-`resolved_at` au `moment_diegetique` de l'événement. Le rejeu strictement
-identique est idempotent. Toute autre transition ou modification d'un statut
-terminal est refusée sans mutation. `NONE` n'écrit rien.
+Les trois créations exigent des `beneficiary_ids` non vides et sans doublon et
+fixent la provenance de création. `CREATE_DUE` initialise `resolved_at = null` ;
+`CREATE_PAID` et `CREATE_FAILED` fixent immédiatement `resolved_at` au
+`moment_diegetique` du commit. `PAY` ou `FAIL` fixe ce même champ depuis une
+obligation `DUE`.
+
+Le reducer reste déterministe par rapport au record et à la provenance : le
+rejeu strictement identique d'une transition déjà matérialisée est idempotent.
+Cette propriété locale n'autorise toutefois pas une nouvelle transaction. Pour
+tout nouveau commit, le coordinateur vérifie avant les reducers qu'un effet
+`PAY` ou `FAIL` cible un identifiant existant dont le statut courant est
+exactement `DUE`. Une obligation déjà `PAID` ou `FAILED` est donc refusée même
+si le nouvel effet porte le même `moment_diegetique`. Le replay du commit
+terminal original est reconnu plus tôt par son événement A1 et sa quittance A5
+strictement identiques. Toute autre transition est refusée sans mutation.
+`NONE` n'écrit rien.
 
 ### 10.1 Aftercare
 
 L'aftercare est représenté exclusivement par une obligation :
 
 - payoff et aftercare restent deux faits narratifs distincts ;
-- l'obligation d'aftercare devient `DUE` au checkpoint authored approprié ;
-- un choix final authored peut la faire passer à `PAID` ou `FAILED` ;
+- lorsqu'une phase durable intermédiaire est réellement observable, le flux
+  général reste `payoff → obligation aftercare DUE → résolution ultérieure
+  PAY|FAIL` ;
+- lorsque le contrat authored ne requiert aucun état intermédiaire observable,
+  présente l'aftercare et son choix terminal dans la même résolution atomique,
+  le commit final utilise directement `CREATE_PAID` ou `CREATE_FAILED` ; cette
+  création terminale ne doit pas être décomposée artificiellement en deux
+  commits ;
 - une question demandant à l'autre personnage de rassurer Player peut être
   authored comme `FAILED`, mais le reducer ne fait aucune déduction libre ;
 - l'absence d'un média d'aftercare ne change jamais le statut de l'obligation ;
@@ -649,6 +692,7 @@ valider les identités stables
 → rechercher et revalider une terminaison persistée
 → retourner IDEMPOTENT si elle est strictement identique
 → sinon exiger PROPOSED pour un nouveau commit
+→ prévalider chaque PAY/FAIL d'obligation contre un record courant DUE
 → préparer A1 et A5
 → publier A1 et A5 sans observation intermédiaire
 ```
@@ -696,11 +740,20 @@ par un replay.
 L'exigence `instance.state == PROPOSED` s'applique uniquement lorsqu'aucune
 terminaison persistée correspondante n'existe. Ensuite seulement :
 
-1. construire `R8C_A1_SEQUENCE_RESOLUTION_V1` depuis le manifeste A6 ;
-2. copier l'état narratif courant et préparer toutes les mutations A1 sur un
+1. prévalider, dans le snapshot courant et sans mutation, chaque effet
+   d'obligation `PAY` ou `FAIL` : l'identifiant doit exister et son statut doit
+   être exactement `DUE` ;
+2. construire `R8C_A1_SEQUENCE_RESOLUTION_V1` depuis le manifeste A6 ;
+3. copier l'état narratif courant et préparer toutes les mutations A1 sur un
    candidat commun ;
-3. valider entièrement le candidat avec le codec A5 v2 ;
-4. préparer, sans l'appliquer, la transition A5 vers `RESOLVED`.
+4. valider entièrement le candidat avec le codec A5 v2 ;
+5. préparer, sans l'appliquer, la transition A5 vers `RESOLVED`.
+
+Cette prévalidation est une frontière de transaction, jamais une heuristique
+temporelle : elle ne compare pas `resolved_at` à `moment_diegetique`. Elle ne
+s'applique pas au replay terminal exact, déjà retourné à l'étape 2, et ne
+restreint pas `CREATE_PAID` ou `CREATE_FAILED`, qui créent un nouvel identifiant
+directement dans son état terminal.
 
 Aucune mutation réelle, aucun remplacement d'état, aucun ajout d'événement et
 aucune transition d'instance ne se produit pendant cette phase.
@@ -849,15 +902,18 @@ canonique porteur de contenu réel. La gate complète doit démontrer :
 - une connaissance ;
 - une trace ;
 - une promesse créée puis terminalisée dans une résolution ou instance dédiée ;
-- une obligation créée `DUE`, puis `PAID` ou `FAILED` ;
+- une obligation créée `DUE`, puis `PAID` ou `FAILED`, ainsi qu'une création
+  terminale atomique `CREATE_PAID` ou `CREATE_FAILED` ;
 - un accès média durable ;
 - l'instance A5 `RESOLVED` ;
 - l'atomicité de chaque commit qui combine ses effets A1 et sa terminaison A5.
 
-Il est interdit de forcer artificiellement création et toutes transitions
-terminales dans une même résolution. Plusieurs instances synthétiques ciblées
-sont admises si la gate couvre toutes les catégories et si chaque commit reste
-atomique.
+Il est interdit de forcer artificiellement deux opérations sur le même
+identifiant dans une résolution. Les formes fermées `CREATE_PAID` et
+`CREATE_FAILED` constituent l'exception normative : chacune matérialise la
+création terminale en une opération unique. Plusieurs instances synthétiques
+ciblées sont admises si la gate couvre toutes les catégories et si chaque
+commit reste atomique.
 
 ## 20. Cas négatifs obligatoires de N14.1
 
@@ -882,6 +938,9 @@ La future gate doit couvrir au minimum :
 - promesse terminale modifiée ;
 - obligation payée avant `DUE` ;
 - obligation terminale modifiée ;
+- `CREATE_PAID` suivi d'un nouveau commit `PAY` ou `FAIL` ;
+- `CREATE_FAILED` suivi d'un nouveau commit `FAIL` ou `PAY` ;
+- rejeu exact du premier commit `CREATE_PAID` ou `CREATE_FAILED` non idempotent ;
 - trace retirée puis accès accordé ;
 - média accessible sans `GRANT_ACCESS` ;
 - Galerie `AVAILABLE` sans accès `ACCESSIBLE` ;
@@ -948,6 +1007,8 @@ ni N15.
 - [x] Binding, catégories et `event_keys` fermés.
 - [x] Ordre et unicité des `event_keys` stricts, sans tri ni normalisation.
 - [x] Cinq registres, statuts, effets et transitions définis.
+- [x] Créations terminales `CREATE_PAID` et `CREATE_FAILED` définies comme une
+  opération atomique, sans double entrée ni second commit terminal.
 - [x] Retrait média `WITHDRAW` distinct de `REVOKE_ACCESS`, terminal et idempotent.
 - [x] Aftercare exclusivement représenté par une obligation.
 - [x] Union fermée des faits et conservation des deux racines relationnelles existantes.
@@ -955,6 +1016,8 @@ ni N15.
 - [x] Provenance commune sans jour, score ou texte UI.
 - [x] Événement `R8C_A1_SEQUENCE_RESOLUTION_V1` fermé.
 - [x] Replay terminal revalidé avant toute exigence `PROPOSED`.
+- [x] Frontière transactionnelle des obligations : tout nouveau `PAY`/`FAIL`
+  exige un record courant `DUE`, sans heuristique sur l'instant diégétique.
 - [x] Publication A1 + A5 synchrone, non réentrante et sans signal intermédiaire.
 - [x] Compatibilité du flux synthétique historique sans fallback.
 - [x] Allowlist, fixture et cas négatifs N14.1 définis.

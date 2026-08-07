@@ -13,6 +13,7 @@ STATE = "game/scripts/narrative_state/EtatNarratif.gd"
 CODEC = "game/scripts/narrative_scene/A5NarrativeStateCodec.gd"
 SMOKE = "game/tests/R8C_N14_1CAtomicResolutionSmokeDriver.gd"
 SCENE = "game/tests/R8C_N14_1CAtomicResolutionSmokeTest.tscn"
+CONTRACT = "docs/architecture/R8C_N14_DURABLE_REGISTRIES_AND_ATOMIC_RESOLUTION_CONTRACT.md"
 
 
 class R8CN141CAtomicResolutionStaticTests(unittest.TestCase):
@@ -21,7 +22,7 @@ class R8CN141CAtomicResolutionStaticTests(unittest.TestCase):
 
     def test_unittest_discover_collects_real_test_case_and_expected_files(self):
         self.assertTrue(issubclass(type(self), unittest.TestCase))
-        expected = [EVENT, COORDINATOR, FACADE, INSTANCE, ENGINE, STATE, CODEC, SMOKE, SCENE]
+        expected = [EVENT, COORDINATOR, FACADE, INSTANCE, ENGINE, STATE, CODEC, SMOKE, SCENE, CONTRACT]
         self.assertEqual([], [path for path in expected if not (ROOT / path).is_file()])
 
     def test_closed_a1_event_and_deterministic_identifier(self):
@@ -87,12 +88,50 @@ class R8CN141CAtomicResolutionStaticTests(unittest.TestCase):
 
     def test_a1_and_a5_are_fully_prepared_before_publication(self):
         source = self.read(COORDINATOR)
+        resolve = source[source.index("func resolve(") : source.index("func _prepare_expected")]
+        self.assertLess(
+            resolve.index("_terminal_obligation_effects_valid_for_new_transaction("),
+            resolve.index("Reducer.preparer("),
+        )
         self.assertLess(source.index("Reducer.preparer("), source.index("Codec.valider(candidate_a1)"))
         self.assertLess(source.index("Codec.valider(candidate_a1)"), source.index("preparer_registre_resolution_sequence("))
         self.assertLess(source.index("preparer_registre_resolution_sequence("), source.index("_publish(etat_narratif"))
         engine = self.read(ENGINE)
         self.assertIn("RegistreModele.creer_depuis_snapshot(_registre.obtenir_snapshot())", engine)
         self.assertIn("RegistreModele.creer_depuis_snapshot(registre_candidat.obtenir_snapshot())", engine)
+
+    def test_new_terminal_obligation_transactions_require_due_source_state(self):
+        source = self.read(COORDINATOR)
+        guard = source[
+            source.index("static func _terminal_obligation_effects_valid_for_new_transaction") :
+            source.index("static func _find_choice")
+        ]
+        for token in [
+            'effect.get("effect") not in ["PAY", "FAIL"]',
+            'obligations.has(obligation_id)',
+            'obligation.get("status") != "DUE"',
+        ]:
+            self.assertIn(token, guard)
+        self.assertNotIn("moment_diegetique", guard)
+
+    def test_contract_documents_terminal_creation_and_transaction_boundary(self):
+        contract = self.read(CONTRACT)
+        for token in [
+            "Amendement N14.1d — création terminale et identité transactionnelle",
+            "Exception fermée pour les obligations : `CREATE_PAID` et `CREATE_FAILED`",
+            "représentent chacun une création déjà terminale en une seule opération",
+            "| `obligations` `CREATE_PAID` |",
+            "| `obligations` `CREATE_FAILED` |",
+            "absente → PAID     par CREATE_PAID",
+            "absente → FAILED   par CREATE_FAILED",
+            "Cette propriété locale n'autorise toutefois pas une nouvelle transaction.",
+            "tout nouveau commit, le coordinateur vérifie avant les reducers qu'un effet",
+            "exactement `DUE`. Une obligation déjà `PAID` ou `FAILED` est donc refusée",
+            "Cette prévalidation est une frontière de transaction, jamais une heuristique",
+            "`CREATE_PAID` suivi d'un nouveau commit `PAY` ou `FAIL`",
+            "`CREATE_FAILED` suivi d'un nouveau commit `FAIL` ou `PAY`",
+        ]:
+            self.assertIn(token, contract)
 
     def test_publication_zone_is_synchronous_non_reentrant_and_branch_free(self):
         source = self.read(COORDINATOR)
@@ -247,8 +286,14 @@ class R8CN141CAtomicResolutionStaticTests(unittest.TestCase):
             "instance non PROPOSED without termination rejected", "already RESOLVED with other A10 choice",
             "already RESOLVED with other A10 resolution", "invalid A1 candidate rejected",
             "invalid A5 registry candidate rejected", "same event_id divergent without A5 termination",
+            '%s first transaction applies',
+            '%s first transaction exact replay idempotent',
+            '%s followed by new %s transaction rejected',
+            '%s followed by new %s transaction changes no state',
         ]
         self.assertEqual([], [token for token in required if token not in smoke])
+        self.assertIn('for create_effect in ["CREATE_PAID", "CREATE_FAILED"]:', smoke)
+        self.assertIn('for terminal_effect in ["PAY", "FAIL"]:', smoke)
         self.assertIn("R8C_N14_1C_ATOMIC_RESOLUTION: OK (%d controls)", smoke)
 
 

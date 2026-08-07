@@ -56,8 +56,6 @@ static func _one(c: Dictionary, item, p: Dictionary) -> Dictionary:
 	var rec: Dictionary = c["obligations"][item["obligation_id"]]
 	var target := "PAID" if effect == "PAY" else "FAILED"
 	if rec["status"] == target and rec["resolved_at"] == p["moment_diegetique"]:
-		if rec["resolved_at"] == rec["provenance"]["moment_diegetique"]:
-			return _reject("transition obligation impossible")
 		return _ok("IDEMPOTENT")
 	if rec["status"] != "DUE":
 		return _reject("transition obligation impossible")
