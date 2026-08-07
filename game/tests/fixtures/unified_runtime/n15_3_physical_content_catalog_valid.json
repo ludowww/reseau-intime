@@ -1,0 +1,18 @@
+{
+  "schema_id": "reseau_intime.physical_presentation_catalog",
+  "schema_version": 1,
+  "sequence_id": "synthetic_n15_durable_sequence",
+  "authored_version": "1.0.0",
+  "entries": [
+    {
+      "content_ref": "synthetic_n15_physical_reference",
+      "title": "Synthetic off-phone exercise",
+      "body": "A test-only physical prompt with no canonical narrative data.",
+      "steps": [
+        "Place the test device face down.",
+        "Complete the synthetic exercise together."
+      ],
+      "continue_label": "Continue the synthetic sequence"
+    }
+  ]
+}
