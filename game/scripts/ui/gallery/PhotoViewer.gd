@@ -4,6 +4,7 @@ class_name PhotoViewer
 
 signal close_requested
 signal current_photo_changed(photo_id: String)
+signal media_presented(media_id: String, display_status: String)
 
 const MEDIA_RESOLVER := preload("res://scripts/ui/media/VisualMediaResolver.gd")
 const IMAGE_RATIO := 0.75
@@ -39,7 +40,8 @@ func configure(sequence: Array[Dictionary], start_index: int, portrait_theme) ->
 	var expected_source := str(sequence[start_index].get("source_kind", ""))
 	var expected_character := str(sequence[start_index].get("character_id", ""))
 	if expected_source not in ["messages", "gallery", "scene"]:
-		return false
+		if expected_source != "media":
+			return false
 	for presentation in sequence:
 		var photo_id := str(presentation.get("photo_id", ""))
 		var source := str(presentation.get("source_kind", ""))
@@ -49,7 +51,7 @@ func configure(sequence: Array[Dictionary], start_index: int, portrait_theme) ->
 			return false
 		if expected_source in ["gallery", "scene"] and str(presentation.get("character_id", "")) != expected_character:
 			return false
-	if expected_source == "messages" and sequence.size() != 1:
+	if expected_source in ["messages", "media"] and sequence.size() != 1:
 		return false
 	presentations.clear()
 	for presentation in sequence:
@@ -111,7 +113,7 @@ func next_enabled() -> bool:
 	return next_visible() and not next_button.disabled
 
 func action_count() -> int:
-	return 1 if source_kind() == "messages" else 3 if source_kind() in ["gallery", "scene"] else 0
+	return 1 if source_kind() in ["messages", "media"] else 3 if source_kind() in ["gallery", "scene"] else 0
 
 func visual_ratio() -> float:
 	var rect := visual_global_rect()
@@ -245,7 +247,9 @@ func _build() -> void:
 func _refresh() -> void:
 	var presentation := current_presentation()
 	placeholder_label = str(presentation.get("placeholder_label", "Photo de démonstration"))
-	var resolved := MEDIA_RESOLVER.resolve(str(presentation.get("visual_ref", "")))
+	var resolved = presentation.get("resolved_media")
+	if typeof(resolved) != TYPE_DICTIONARY:
+		resolved = MEDIA_RESOLVER.resolve(str(presentation.get("visual_ref", "")))
 	media_status = str(resolved.get("status", MEDIA_RESOLVER.STATUS_LOAD_FAILED))
 	if media_status == MEDIA_RESOLVER.STATUS_LOADED:
 		visual_texture.texture = resolved.get("texture")
@@ -255,7 +259,7 @@ func _refresh() -> void:
 	else:
 		visual_texture.texture = null
 		visual_texture.visible = false
-		visual_label.text = MEDIA_RESOLVER.NOT_DELIVERED_LABEL
+		visual_label.text = str(resolved.get("status_label", MEDIA_RESOLVER.NOT_DELIVERED_LABEL))
 		visual_label.visible = true
 	var accent: Color = presentation.get("accent_color", PORTRAIT_THEME.GALLERY_ACCENT)
 	name_label.text = str(presentation.get("display_name", ""))
@@ -264,7 +268,11 @@ func _refresh() -> void:
 	context_label.text = context + (" · " + timestamp if timestamp != "" else "")
 	caption_label.text = str(presentation.get("caption", ""))
 	caption_label.visible = caption_label.text != ""
-	access_label.text = "Moment vécu" if source_kind() == "scene" else "Accessible"
+	access_label.text = (
+		"Moment vécu"
+		if source_kind() == "scene"
+		else "Révélation narrative" if source_kind() == "media" else "Accessible"
+	)
 	visual_panel.add_theme_stylebox_override("panel", PORTRAIT_THEME.button_style(Color(0.045, 0.06, 0.12), accent, 18))
 	var sequence_source := source_kind() in ["gallery", "scene"]
 	var scene_source := source_kind() == "scene"
@@ -273,6 +281,8 @@ func _refresh() -> void:
 	previous_button.focus_mode = Control.FOCUS_ALL if sequence_source else Control.FOCUS_NONE
 	next_button.focus_mode = Control.FOCUS_ALL if sequence_source else Control.FOCUS_NONE
 	back_button.text = "Continuer" if scene_source else "Retour"
+	if source_kind() == "media":
+		back_button.text = "Continuer"
 	back_button.disabled = scene_source and current_index < presentations.size() - 1
 	var previous_had_focus := previous_button.has_focus()
 	var next_had_focus := next_button.has_focus()
@@ -286,6 +296,20 @@ func _refresh() -> void:
 		else:
 			(previous_button if not previous_button.disabled else back_button).grab_focus()
 	call_deferred("_update_visual_size")
+	if source_kind() == "media":
+		call_deferred("_emit_media_presented_if_visible", current_photo_id(), media_status)
+
+
+func _emit_media_presented_if_visible(media_id: String, display_status: String) -> void:
+	if (
+		media_id == current_photo_id()
+		and source_kind() == "media"
+		and visible
+		and is_visible_in_tree()
+		and visual_panel != null
+		and visual_panel.is_visible_in_tree()
+	):
+		media_presented.emit(media_id, display_status)
 
 func _update_visual_size() -> void:
 	if visual_panel == null or not is_instance_valid(visual_panel):

@@ -1,0 +1,52 @@
+{
+  "media_definitions": {
+    "synthetic_n16_produced": {
+      "media_id": "synthetic_n16_produced",
+      "visual_level": "V2",
+      "analytic_level": null,
+      "production_status": "PRODUCED",
+      "diegesis": "DIEGETIC",
+      "audience_ids": ["player_only"],
+      "gallery_policy": "ON_ACCESS",
+      "parent_media_id": null,
+      "thumbnail_policy": "SELF",
+      "thumbnail_media_id": null,
+      "removal_policy": "AUTHORED_RESOLUTION_ONLY"
+    },
+    "synthetic_n16_validated": {
+      "media_id": "synthetic_n16_validated",
+      "visual_level": "V3",
+      "analytic_level": "NV1",
+      "production_status": "VALIDATED",
+      "diegesis": "NON_DIEGETIC",
+      "audience_ids": ["player_only"],
+      "gallery_policy": "ON_ACCESS",
+      "parent_media_id": null,
+      "thumbnail_policy": "SELF",
+      "thumbnail_media_id": null,
+      "removal_policy": "NEVER"
+    }
+  },
+  "presentation_catalog": {
+    "sequence_id": "synthetic_n15_durable_sequence",
+    "authored_version": "1.0.0",
+    "entries": [
+      {
+        "media_id": "synthetic_n16_produced",
+        "visual_ref": "res://tests/fixtures/visual_delivery_test_pattern.svg",
+        "display_name": "Média produit synthétique",
+        "context_label": "Révélation N16",
+        "caption": "Fixture de test uniquement",
+        "placeholder_label": "Placeholder dev N16"
+      },
+      {
+        "media_id": "synthetic_n16_validated",
+        "visual_ref": "res://tests/fixtures/visual_delivery_test_pattern.svg",
+        "display_name": "Média validé synthétique",
+        "context_label": "Galerie N16",
+        "caption": "Fixture de test uniquement",
+        "placeholder_label": "Placeholder dev N16"
+      }
+    ]
+  }
+}

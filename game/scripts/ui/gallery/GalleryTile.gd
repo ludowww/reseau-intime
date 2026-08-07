@@ -13,6 +13,7 @@ var _access_state := "UNLOCKED"
 var _is_new := false
 var _thumbnail_label := ""
 var _thumbnail_ref := ""
+var _resolved_thumbnail
 var media_status := ""
 var new_badge: Label
 
@@ -23,6 +24,7 @@ func configure(item: Dictionary, accent: Color, portrait_theme, index: int) -> v
 	_is_new = _access_state == "UNLOCKED" and bool(item.get("is_new", false))
 	_thumbnail_label = "" if is_locked() else str(item.get("thumbnail_label", ""))
 	_thumbnail_ref = "" if is_locked() else str(item.get("thumbnail_ref", ""))
+	_resolved_thumbnail = null if is_locked() else item.get("resolved_thumbnail")
 	name = "GalleryTile_%s" % item_id
 	focus_mode = Control.FOCUS_ALL
 	custom_minimum_size = Vector2(96, 128)
@@ -107,15 +109,18 @@ func _refresh_presentation(accent: Color, portrait_theme) -> void:
 		add_theme_stylebox_override("hover", _tile_style(locked_fill, neutral))
 		add_theme_stylebox_override("pressed", _tile_style(locked_fill, neutral))
 	else:
-		var resolved := MEDIA_RESOLVER.resolve(_thumbnail_ref)
+		var resolved = _resolved_thumbnail
+		if typeof(resolved) != TYPE_DICTIONARY:
+			resolved = MEDIA_RESOLVER.resolve(_thumbnail_ref)
 		media_status = str(resolved.get("status", MEDIA_RESOLVER.STATUS_LOAD_FAILED))
 		if media_status == MEDIA_RESOLVER.STATUS_LOADED:
 			icon = resolved.get("texture")
 			text = ""
 			tooltip_text = _thumbnail_label
 		else:
-			text = MEDIA_RESOLVER.NOT_DELIVERED_LABEL
-			tooltip_text = MEDIA_RESOLVER.NOT_DELIVERED_LABEL
+			var status_label := str(resolved.get("status_label", MEDIA_RESOLVER.NOT_DELIVERED_LABEL))
+			text = status_label
+			tooltip_text = status_label
 		expand_icon = true
 		mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		add_theme_stylebox_override("normal", _tile_style(Color(0.08, 0.11, 0.18), accent))

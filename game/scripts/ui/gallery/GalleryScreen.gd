@@ -142,6 +142,7 @@ func viewer_sequence_for_selected_character() -> Array[Dictionary]:
 			"timestamp": "",
 			"caption": "",
 			"placeholder_label": str(item.get("placeholder_label", "Photo de démonstration")),
+			"resolved_media": item.get("resolved_media"),
 		})
 	return sequence
 
@@ -446,6 +447,7 @@ func _viewer_presentation(item: Dictionary, character: Dictionary) -> Dictionary
 		"timestamp": "",
 		"caption": "",
 		"placeholder_label": str(item.get("placeholder_label", "Photo de démonstration")),
+		"resolved_media": item.get("resolved_media"),
 	}
 
 func _item_count(character_id: String, state: String, new_only: bool) -> int:
