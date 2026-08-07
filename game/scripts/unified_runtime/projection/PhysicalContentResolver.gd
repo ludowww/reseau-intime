@@ -15,10 +15,10 @@ var _entries_by_ref: Dictionary = {}
 var _choices_by_id: Dictionary = {}
 
 
-static func create(authored_sequence, physical_catalog) -> Dictionary:
+static func create(authored_sequence, physical_catalog, allow_chained_returns := false) -> Dictionary:
 	if typeof(authored_sequence) != TYPE_DICTIONARY:
 		return _creation_failure("INVALID_AUTHORED_SEQUENCE")
-	if not AuthoredValidator.validate(authored_sequence)["valid"]:
+	if not AuthoredValidator.validate(authored_sequence, allow_chained_returns)["valid"]:
 		return _creation_failure("INVALID_AUTHORED_SEQUENCE")
 	if typeof(physical_catalog) != TYPE_DICTIONARY:
 		return _creation_failure("INVALID_PHYSICAL_CATALOG")

@@ -24,10 +24,10 @@ var _open_requests: Array = []
 var _receipts: Array = []
 
 
-func _init(authored_sequence = {}) -> void:
+func _init(authored_sequence = {}, allow_chained_returns := false) -> void:
 	if (
 		typeof(authored_sequence) == TYPE_DICTIONARY
-		and AuthoredValidator.validate(authored_sequence)["valid"]
+		and AuthoredValidator.validate(authored_sequence, allow_chained_returns)["valid"]
 	):
 		_authored_sequence = authored_sequence.duplicate(true)
 

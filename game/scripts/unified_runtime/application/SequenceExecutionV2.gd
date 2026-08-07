@@ -3,6 +3,9 @@ extends RefCounted
 class_name R8CSequenceExecutionV2
 
 const V1 := preload("res://scripts/unified_runtime/contracts/SequenceExecutionV1.gd")
+const AuthoredValidator := preload(
+	"res://scripts/unified_runtime/contracts/AuthoredSequenceValidator.gd"
+)
 const Moment := preload("res://scripts/unified_runtime/application/NarrativeMoment.gd")
 
 const SCHEMA_VERSION := 2
@@ -29,12 +32,42 @@ static func validate_structure(value) -> Dictionary:
 
 static func validate_against_sequence(value, authored_sequence) -> Dictionary:
 	var errors: Array[String] = []
-	var base := V1.validate_against_sequence(to_v1_shape(value), authored_sequence)
+	var base := _validate_v1_core(value, authored_sequence)
 	for error in base.get("errors", []):
-		errors.append(str(error))
+		if not accepts_v1_compatibility_error(str(error), value, authored_sequence):
+			errors.append(str(error))
 	_validate_v2_schedules(value, authored_sequence, true, errors)
 	_validate_schedule_binding(value, authored_sequence, true, errors)
 	return _result(errors)
+
+
+static func is_chained_return_schedule(value, authored_sequence) -> bool:
+	if (
+		typeof(value) != TYPE_DICTIONARY
+		or typeof(authored_sequence) != TYPE_DICTIONARY
+		or typeof(value.get("scheduled_returns")) != TYPE_ARRAY
+		or value["scheduled_returns"].size() != 1
+	):
+		return false
+	var schedule = value["scheduled_returns"][0]
+	if typeof(schedule) != TYPE_DICTIONARY:
+		return false
+	var resolution = authored_sequence.get("resolutions", {}).get(schedule.get("resolution_id"))
+	if typeof(resolution) != TYPE_DICTIONARY:
+		return false
+	var root_id = resolution.get("next_beat_id")
+	return root_id != schedule.get("beat_id") and _return_chain_contains(
+		authored_sequence, root_id, schedule.get("beat_id"), schedule.get("resolution_id")
+	)
+
+
+static func accepts_v1_compatibility_error(error: String, value, authored_sequence) -> bool:
+	return (
+		error.ends_with(
+			"execution.scheduled_returns[0].resolution_id: return_resolution_mismatch"
+		)
+		and is_chained_return_schedule(value, authored_sequence)
+	)
 
 
 static func migrate_v1_execution(value, authored_sequence, scheduled_from) -> Dictionary:
@@ -124,6 +157,61 @@ static func _validate_v2_schedules(
 			_validate_authored_schedule(schedule, authored_sequence, path, errors)
 
 
+static func _validate_v1_core(value, authored_sequence) -> Dictionary:
+	var errors: Array[String] = []
+	var execution_v1 = to_v1_shape(value)
+	var structure_result: Dictionary = V1.validate_structure(execution_v1)
+	errors.append_array(structure_result["errors"])
+	if not structure_result["valid"]:
+		return _result(errors)
+	if (
+		typeof(authored_sequence) != TYPE_DICTIONARY
+		or not AuthoredValidator.validate(authored_sequence, true)["valid"]
+	):
+		_add_error(errors, "authored_sequence", "invalid_contract")
+		return _result(errors)
+	var execution: Dictionary = execution_v1
+	var index: Dictionary = V1._build_authored_index(authored_sequence)
+	if execution["sequence_id"] != authored_sequence["sequence_id"]:
+		_add_error(errors, "execution.sequence_id", "authored_identity_mismatch")
+	if execution["authored_version"] != authored_sequence["authored_version"]:
+		_add_error(errors, "execution.authored_version", "authored_version_mismatch")
+	V1._validate_nullable_reference(
+		execution["checkpoint_id"], index["checkpoints"], "execution.checkpoint_id", errors
+	)
+	V1._validate_nullable_reference(
+		execution["current_beat_id"], index["beats"], "execution.current_beat_id", errors
+	)
+	var consumed_choices: Array = V1._validate_reference_array(
+		execution["consumed_choice_ids"], index["choices"], "execution.consumed_choice_ids", errors
+	)
+	var reached_checkpoints: Array = V1._validate_reference_array(
+		execution["reached_checkpoint_ids"], index["checkpoints"],
+		"execution.reached_checkpoint_ids", errors
+	)
+	if execution["checkpoint_id"] != null and execution["checkpoint_id"] not in reached_checkpoints:
+		_add_error(errors, "execution.checkpoint_id", "not_reached")
+	V1._validate_current_checkpoint(execution, index, errors)
+	var opened_projection_ids: Dictionary = V1._validate_projection_ids(
+		execution["opened_projection_ids"], execution, index, errors
+	)
+	V1._validate_projection_receipts(
+		execution["projection_receipts"], opened_projection_ids,
+		"execution.projection_receipts", errors
+	)
+	V1._validate_pending_input(
+		execution["pending_player_input"], execution, index, consumed_choices, errors
+	)
+	V1._validate_scheduled_returns(execution["scheduled_returns"], index, errors)
+	V1._validate_nullable_reference(
+		execution["selected_resolution_id"], index["resolutions"],
+		"execution.selected_resolution_id", errors
+	)
+	V1._validate_selected_resolution(execution, index, consumed_choices, errors)
+	V1._validate_projection_wait(execution, opened_projection_ids, errors)
+	return _result(errors)
+
+
 static func _validate_authored_schedule(
 	schedule: Dictionary,
 	authored_sequence,
@@ -139,6 +227,10 @@ static func _validate_authored_schedule(
 			break
 	if return_beat.get("type") != "RETURN":
 		return
+	if schedule["resolution_id"] not in return_beat.get("content", {}).get(
+		"eligible_resolution_ids", []
+	):
+		_add_error(errors, path + ".resolution_id", "return_resolution_not_eligible")
 	var delay: Dictionary = return_beat.get("content", {}).get("delay", {})
 	if schedule["delay_mode"] != delay.get("mode"):
 		_add_error(errors, path + ".delay_mode", "authored_delay_mismatch")
@@ -196,6 +288,36 @@ static func _validate_schedule_binding(
 	]
 	if schedule.get("presentation_id") != expected_presentation_id:
 		_add_error(errors, "execution.scheduled_returns[0].presentation_id", "deterministic_identity_mismatch")
+
+
+static func _return_chain_contains(
+	authored_sequence: Dictionary, root_id, target_id, resolution_id
+) -> bool:
+	var beats := {}
+	for beat in authored_sequence.get("beats", []):
+		if typeof(beat) == TYPE_DICTIONARY:
+			beats[beat.get("beat_id")] = beat
+	var current_id = root_id
+	var seen := {}
+	while typeof(current_id) == TYPE_STRING and beats.has(current_id) and not seen.has(current_id):
+		seen[current_id] = true
+		var beat: Dictionary = beats[current_id]
+		if (
+			beat.get("type") != "RETURN"
+			or resolution_id not in beat.get("content", {}).get("eligible_resolution_ids", [])
+		):
+			return false
+		if current_id == target_id:
+			return true
+		var next = beat.get("next")
+		if (
+			beat.get("type") != "RETURN"
+			or typeof(next) != TYPE_DICTIONARY
+			or next.get("mode") != "DIRECT"
+		):
+			return false
+		current_id = next.get("beat_id")
+	return false
 
 
 static func _exact(value: Dictionary, fields: Array) -> bool:

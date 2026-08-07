@@ -426,7 +426,7 @@ func _viewer_sequence_for_parent(parent: Dictionary, character: Dictionary) -> A
 			return []
 		if str(child.get("asset_id", "")) != child_id or str(child.get("parent_asset_id", "")) != parent_id:
 			return []
-		if str(child.get("character_id", "")) != selected_character_id or str(child.get("source_kind", "")) != "gallery":
+		if str(child.get("source_kind", "")) != "gallery":
 			return []
 		if str(child.get("full_ref", "")) == "" and str(child.get("placeholder_label", "")) == "":
 			return []

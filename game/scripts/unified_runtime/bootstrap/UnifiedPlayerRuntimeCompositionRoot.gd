@@ -23,6 +23,7 @@ const RuntimeSession := preload(
 const JsonNormalizer := preload(
 	"res://scripts/unified_runtime/application/JsonValueNormalizer.gd"
 )
+const Moment := preload("res://scripts/unified_runtime/application/NarrativeMoment.gd")
 const ReferencedMessagesResolver := preload(
 	"res://scripts/unified_runtime/application/ReferencedMessagesContentResolver.gd"
 )
@@ -62,7 +63,6 @@ const SEQUENCE_PATH := "res://data/unified_runtime/sequences/mathilde_returns_wi
 const MESSAGES_PATH := "res://data/unified_runtime/presentation/mathilde_returns_with_chosen_intent_01_messages.json"
 const PHYSICAL_PATH := "res://data/unified_runtime/presentation/mathilde_returns_with_chosen_intent_01_physical.json"
 const MEDIA_PATH := "res://data/unified_runtime/presentation/mathilde_returns_with_chosen_intent_01_media.json"
-const INITIAL_NARRATIVE_TIME := "2032-03-04T21:52:00+01:00"
 
 
 static func compose(portrait_shell, save_path_override := "") -> Dictionary:
@@ -72,11 +72,14 @@ static func compose(portrait_shell, save_path_override := "") -> Dictionary:
 	var messages_catalog := _load_json(MESSAGES_PATH)
 	var physical_catalog := _load_json(PHYSICAL_PATH)
 	var media_catalog := _load_json(MEDIA_PATH)
-	if not AuthoredValidator.validate(sequence)["valid"]:
+	if not AuthoredValidator.validate(sequence, true)["valid"]:
 		return _failure("INVALID_AUTHORED_SEQUENCE")
-	var messages_resolver_result := ReferencedMessagesResolver.create(sequence, messages_catalog)
-	var physical_resolver_result := PhysicalResolver.create(sequence, physical_catalog)
-	var media_resolver_result := MediaResolver.create(sequence, media_catalog)
+	var initial_narrative_time := _initial_narrative_time(sequence)
+	if not Moment.validate(initial_narrative_time):
+		return _failure("INVALID_INITIAL_NARRATIVE_TIME")
+	var messages_resolver_result := ReferencedMessagesResolver.create(sequence, messages_catalog, true)
+	var physical_resolver_result := PhysicalResolver.create(sequence, physical_catalog, true)
+	var media_resolver_result := MediaResolver.create(sequence, media_catalog, true)
 	if not messages_resolver_result.get("ok", false):
 		return _failure("REFERENCED_MESSAGES_RESOLVER_REFUSED")
 	if not physical_resolver_result.get("ok", false):
@@ -89,15 +92,15 @@ static func compose(portrait_shell, save_path_override := "") -> Dictionary:
 	var graph := _new_domain_graph(sequence)
 	if graph.is_empty():
 		return _failure("A6_A10_GRAPH_REFUSED")
-	var messages_port = MessagesPort.new(sequence)
-	var media_port = MediaPort.new(sequence)
+	var messages_port = MessagesPort.new(sequence, true)
+	var media_port = MediaPort.new(sequence, true)
 	var composite_result := CompositePort.create(messages_port, media_port)
 	if not composite_result.get("ok", false):
 		return _failure("COMPOSITE_PORT_REFUSED")
 	var projection_port = composite_result["port"]
 	var store = store_result["store"]
 	var restored := false
-	var narrative_time := INITIAL_NARRATIVE_TIME
+	var narrative_time := initial_narrative_time
 	var executor
 	var restored_messages_snapshot: Dictionary = {}
 	if store.exists():
@@ -176,7 +179,7 @@ static func compose(portrait_shell, save_path_override := "") -> Dictionary:
 		"media_resolver": media_resolver_result["resolver"],
 		"save_store": store,
 		"authored_sequence": sequence,
-		"resolution_context": _resolution_context(sequence),
+		"resolution_context": _resolution_context(sequence, narrative_time),
 		"narrative_time": narrative_time,
 		"restored": restored,
 	})
@@ -263,23 +266,36 @@ static func _activate_sequence(facade, sequence: Dictionary) -> Dictionary:
 	)
 
 
-static func _resolution_context(sequence: Dictionary) -> Dictionary:
+static func _resolution_context(sequence: Dictionary, narrative_time: String) -> Dictionary:
 	var definition: Dictionary = sequence["orchestration"]["a6_entry"]["definition"]
 	var participants := {}
 	for participant_id in sequence["participants"]["present_character_ids"]:
 		participants[participant_id] = true
 	return {
 		"acte_courant": definition["conditions_dures"]["actes_compatibles"][0],
-		"moment_diegetique": INITIAL_NARRATIVE_TIME,
+		"moment_diegetique": narrative_time,
 		"participants_disponibles": participants,
 		"opportunite_valide": true,
 	}
 
 
 static func _activation_context(sequence: Dictionary) -> Dictionary:
-	var context := _resolution_context(sequence)
-	context["moment_diegetique"] = sequence["temporal_projection"]["resolved_window"]["opens_at"]
+	var activation_time: String = sequence["temporal_projection"]["resolved_window"]["opens_at"]
+	var context := _resolution_context(sequence, activation_time)
 	return context
+
+
+static func _initial_narrative_time(sequence: Dictionary) -> String:
+	var entry_beat_id := str(sequence.get("entry_beat_id", ""))
+	for beat in sequence.get("beats", []):
+		if str(beat.get("beat_id", "")) != entry_beat_id:
+			continue
+		var messages = beat.get("content", {}).get("messages")
+		if typeof(messages) != TYPE_ARRAY or messages.is_empty():
+			return ""
+		var first: Dictionary = messages[0]
+		return str(first.get("diegetic_at", ""))
+	return ""
 
 
 static func _load_json(path: String) -> Dictionary:

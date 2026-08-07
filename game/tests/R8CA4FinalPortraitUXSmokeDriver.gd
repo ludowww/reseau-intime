@@ -26,6 +26,7 @@ func _ready() -> void:
 func _run() -> void:
 	get_window().size = Vector2i(720, 1280)
 	main = MAIN_SCENE.instantiate()
+	main.get_node("PortraitShell").content_mode = "runtime_s1"
 	add_child(main)
 	await _frames(6)
 	shell = main.shell

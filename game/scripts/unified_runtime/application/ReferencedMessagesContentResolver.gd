@@ -22,8 +22,8 @@ var _catalog: Dictionary = {}
 var _entries_by_ref: Dictionary = {}
 
 
-static func create(authored_sequence, catalog) -> Dictionary:
-	var validation := validate_catalog(authored_sequence, catalog)
+static func create(authored_sequence, catalog, allow_chained_returns := false) -> Dictionary:
+	var validation := validate_catalog(authored_sequence, catalog, allow_chained_returns)
 	if not validation["valid"]:
 		return {
 			"ok": false,
@@ -39,9 +39,12 @@ static func create(authored_sequence, catalog) -> Dictionary:
 	return {"ok": true, "error_code": null, "errors": [], "resolver": resolver}
 
 
-static func validate_catalog(authored_sequence, catalog) -> Dictionary:
+static func validate_catalog(authored_sequence, catalog, allow_chained_returns := false) -> Dictionary:
 	var errors: Array[String] = []
-	if typeof(authored_sequence) != TYPE_DICTIONARY or not AuthoredValidator.validate(authored_sequence)["valid"]:
+	if (
+		typeof(authored_sequence) != TYPE_DICTIONARY
+		or not AuthoredValidator.validate(authored_sequence, allow_chained_returns)["valid"]
+	):
 		return _result(["catalog:invalid_authored_sequence"])
 	if typeof(catalog) != TYPE_DICTIONARY:
 		return _result(["catalog:expected_dictionary"])

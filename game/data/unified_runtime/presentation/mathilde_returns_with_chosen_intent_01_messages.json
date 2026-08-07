@@ -57,6 +57,16 @@
       ]
     },
     {
+      "content_ref": "mathilde_mb3_ma3_immediate_return_content",
+      "beat_type": "RETURN",
+      "thread_id": "mathilde_thread",
+      "messages": [
+        {"message_id": "mathilde_mb3_ma3_immediate_return_01", "author_id": "mathilde", "text": "Non.", "diegetic_at": "2032-03-04T21:52:00+01:00", "relative_order": 0},
+        {"message_id": "mathilde_mb3_ma3_immediate_return_02", "author_id": "mathilde", "text": "Pas cette question maintenant.", "diegetic_at": "2032-03-04T21:52:00+01:00", "relative_order": 1},
+        {"message_id": "mathilde_mb3_ma3_immediate_return_03", "author_id": "mathilde", "text": "Je vais dormir.", "diegetic_at": "2032-03-04T21:52:00+01:00", "relative_order": 2}
+      ]
+    },
+    {
       "content_ref": "mathilde_mb3_failed_return_content",
       "beat_type": "RETURN",
       "thread_id": "mathilde_thread",

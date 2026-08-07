@@ -39,6 +39,32 @@
       "thumbnail_media_id": null,
       "removal_policy": "NEVER"
     },
+    "photo_multi_child_one": {
+      "media_id": "photo_multi_child_one",
+      "visual_level": "V2",
+      "analytic_level": null,
+      "production_status": "PRODUCED",
+      "diegesis": "DIEGETIC",
+      "audience_ids": ["player_only"],
+      "gallery_policy": "ON_ACCESS",
+      "parent_media_id": "photo_multi_character",
+      "thumbnail_policy": "SELF",
+      "thumbnail_media_id": null,
+      "removal_policy": "NEVER"
+    },
+    "photo_multi_child_two": {
+      "media_id": "photo_multi_child_two",
+      "visual_level": "V2",
+      "analytic_level": null,
+      "production_status": "PRODUCED",
+      "diegesis": "DIEGETIC",
+      "audience_ids": ["player_only"],
+      "gallery_policy": "ON_ACCESS",
+      "parent_media_id": "photo_multi_character",
+      "thumbnail_policy": "SELF",
+      "thumbnail_media_id": null,
+      "removal_policy": "NEVER"
+    },
     "photo_audience_separated": {
       "media_id": "photo_audience_separated",
       "visual_level": "V2",
@@ -81,6 +107,24 @@
         "display_name": "Photo multi-personnage",
         "context_label": "Galerie N16",
         "caption": "Fixture multi-onglets",
+        "placeholder_label": "Placeholder dev N16",
+        "gallery_character_ids": ["marie", "pauline"]
+      },
+      {
+        "media_id": "photo_multi_child_one",
+        "visual_ref": "res://tests/fixtures/visual_delivery_test_pattern.svg",
+        "display_name": "Premier enfant multi-personnage",
+        "context_label": "Galerie N16",
+        "caption": "Fixture enfant partagé",
+        "placeholder_label": "Placeholder dev N16",
+        "gallery_character_ids": ["marie", "pauline"]
+      },
+      {
+        "media_id": "photo_multi_child_two",
+        "visual_ref": "res://tests/fixtures/visual_delivery_test_pattern.svg",
+        "display_name": "Second enfant multi-personnage",
+        "context_label": "Galerie N16",
+        "caption": "Fixture enfant partagé",
         "placeholder_label": "Placeholder dev N16",
         "gallery_character_ids": ["marie", "pauline"]
       },

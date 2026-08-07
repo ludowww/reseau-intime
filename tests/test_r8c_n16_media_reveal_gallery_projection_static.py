@@ -141,9 +141,12 @@ class R8CN16MediaRevealGalleryProjectionStaticTests(unittest.TestCase):
         self.assertNotIn('"player_only"', content_source)
         self.assertIn('full_presentation["gallery_character_ids"]', content_source)
         self.assertIn("for character_id in gallery_character_ids", content_source)
+        self.assertNotIn("SEQUENCED_MEDIA_REQUIRES_SINGLE_GALLERY_CHARACTER", content_source)
         self.assertIn('definition["gallery_policy"] == "NEVER"', content_source)
         self.assertIn('"AVAILABLE_MEDIA_FORBIDDEN_BY_GALLERY_POLICY"', content_source)
         gallery = self.read(GALLERY_SCREEN)
+        parent_sequence = self.function(gallery, "_viewer_sequence_for_parent")
+        self.assertNotIn('child.get("character_id")', parent_sequence)
         mark_viewed = self.function(gallery, "mark_viewed")
         self.assertIn('item["is_new"] = false', mark_viewed)
         self.assertNotIn("livraison_medias", gallery + self.read(GALLERY_TILE) + self.read(PHOTO_VIEWER))
@@ -173,6 +176,13 @@ class R8CN16MediaRevealGalleryProjectionStaticTests(unittest.TestCase):
                 if entry["media_id"] == "photo_multi_character"
             ),
         )
+        self.assertEqual(
+            ["photo_multi_character", "photo_multi_character"],
+            [
+                fixture["media_definitions"][media_id]["parent_media_id"]
+                for media_id in ["photo_multi_child_one", "photo_multi_child_two"]
+            ],
+        )
         audience_separated = fixture["media_definitions"]["photo_audience_separated"]
         self.assertEqual(["player_only"], audience_separated["audience_ids"])
         self.assertEqual(
@@ -194,7 +204,10 @@ class R8CN16MediaRevealGalleryProjectionStaticTests(unittest.TestCase):
             '"reprise WAITING_FOR_PLAYER reconstruit viewer"',
             '"GRANT_ACCESS AVAILABLE rend media visible"',
             '"meme media visible dans Marie et Pauline"',
-            '"multi-onglets conserve un media_id et un record durable"',
+            '"multi-onglets conserve le meme item_id et les memes enfants"',
+            '"catalogue enfants global character-neutral"',
+            '"multi-onglets conserve exactement les trois records durables sans duplication"',
+            '"PhotoViewer ouvre la sequence depuis l\'onglet " + character_id',
             '"audience player_only projetee sous Sandra sans onglet audience"',
             '"AVAILABLE avec gallery_policy NEVER refuse sans affichage"',
             '"incoherence gallery_policy refusee sans mutation durable"',

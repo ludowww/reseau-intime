@@ -19,10 +19,12 @@ var _livraison_medias: Dictionary = {}
 var _resolver
 
 
-static func create(authored_sequence, livraison_medias, resolver) -> Dictionary:
+static func create(
+	authored_sequence, livraison_medias, resolver, allow_chained_returns := false
+) -> Dictionary:
 	if (
 		typeof(authored_sequence) != TYPE_DICTIONARY
-		or not AuthoredValidator.validate(authored_sequence)["valid"]
+		or not AuthoredValidator.validate(authored_sequence, allow_chained_returns)["valid"]
 	):
 		return _creation_failure("INVALID_AUTHORED_SEQUENCE")
 	if typeof(livraison_medias) != TYPE_DICTIONARY:
@@ -90,12 +92,27 @@ func content_source() -> Dictionary:
 				if candidate.get("gallery_policy") == "NEVER":
 					return _source_failure("AVAILABLE_MEDIA_FORBIDDEN_BY_GALLERY_POLICY")
 				child_ids.append(candidate_id)
-		if not child_ids.is_empty() and gallery_character_ids.size() != 1:
-			return _source_failure("SEQUENCED_MEDIA_REQUIRES_SINGLE_GALLERY_CHARACTER")
 		var thumbnail: Dictionary = _resolver.resolve_thumbnail(media_id, child_ids)
 		if not bool(thumbnail.get("ok", false)):
 			return _source_failure(str(thumbnail.get("error_code", "THUMBNAIL_RESOLUTION_FAILED")))
 		var thumbnail_presentation: Dictionary = thumbnail["presentation"]
+		var sequence_child_ids: Array = []
+		if not child_ids.is_empty():
+			sequence_child_ids = [media_id]
+			sequence_child_ids.append_array(child_ids)
+			for sequence_child_id in sequence_child_ids:
+				var child_result: Dictionary = _resolver.resolve(sequence_child_id)
+				if not bool(child_result.get("ok", false)):
+					return _source_failure(str(child_result.get("error_code", "MEDIA_RESOLUTION_FAILED")))
+				var child_presentation: Dictionary = child_result["presentation"]
+				children_by_id[sequence_child_id] = {
+					"asset_id": sequence_child_id,
+					"parent_asset_id": media_id,
+					"source_kind": "gallery",
+					"full_ref": child_presentation["visual_ref"],
+					"placeholder_label": child_presentation["placeholder_label"],
+					"resolved_media": _viewer_resolution(child_presentation),
+				}
 		for character_id in gallery_character_ids:
 			if not fixtures.has(character_id):
 				fixtures[character_id] = {
@@ -118,24 +135,8 @@ func content_source() -> Dictionary:
 				"resolved_thumbnail": _viewer_resolution(thumbnail_presentation),
 				"resolved_media": _viewer_resolution(full_presentation),
 			}
-			if not child_ids.is_empty():
-				var sequence_child_ids: Array = [media_id]
-				sequence_child_ids.append_array(child_ids)
-				item["sequence_child_ids"] = sequence_child_ids
-				for sequence_child_id in sequence_child_ids:
-					var child_result: Dictionary = _resolver.resolve(sequence_child_id)
-					if not bool(child_result.get("ok", false)):
-						return _source_failure(str(child_result.get("error_code", "MEDIA_RESOLUTION_FAILED")))
-					var child_presentation: Dictionary = child_result["presentation"]
-					children_by_id[sequence_child_id] = {
-						"asset_id": sequence_child_id,
-						"parent_asset_id": media_id,
-						"character_id": character_id,
-						"source_kind": "gallery",
-						"full_ref": child_presentation["visual_ref"],
-						"placeholder_label": child_presentation["placeholder_label"],
-						"resolved_media": _viewer_resolution(child_presentation),
-					}
+			if not sequence_child_ids.is_empty():
+				item["sequence_child_ids"] = sequence_child_ids.duplicate()
 			fixtures[character_id]["items"].append(item)
 	character_order.sort()
 	return {

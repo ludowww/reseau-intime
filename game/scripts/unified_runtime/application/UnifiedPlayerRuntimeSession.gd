@@ -156,6 +156,8 @@ func on_messages_ui_ready() -> void:
 func mark_message_presented(message_id: String) -> bool:
 	var accepted: bool = bool(_messages_adapter.mark_message_presented(message_id))
 	if accepted:
+		if not _advance_narrative_time_from_message(message_id):
+			return false
 		return bool(save_now()["ok"])
 	return accepted
 
@@ -268,7 +270,7 @@ func _gallery_source_from_domain() -> Dictionary:
 	var registry = domain.get("narrative_state", {}).get("livraison_medias")
 	if typeof(registry) != TYPE_DICTIONARY:
 		return _publish(false, "INVALID_DURABLE_MEDIA_REGISTRY")
-	var created := DurableGallery.create(_authored_sequence, registry, _media_resolver)
+	var created := DurableGallery.create(_authored_sequence, registry, _media_resolver, true)
 	if not created.get("ok", false):
 		return _publish(false, str(created.get("error_code", "GALLERY_PROJECTION_REFUSED")))
 	var source_result: Dictionary = created["projection"].content_source()
@@ -348,6 +350,25 @@ func _messages_have_unpresented_content() -> bool:
 		var messages: Array = source["messages_by_thread"][thread_id]
 		if presented.get(thread_id, []).size() < messages.size():
 			return true
+	return false
+
+
+func _advance_narrative_time_from_message(message_id: String) -> bool:
+	var source: Dictionary = _messages_adapter.presentation_source()
+	for thread_id in source.get("messages_by_thread", {}):
+		for message in source["messages_by_thread"][thread_id]:
+			if str(message.get("message_id", "")) != message_id:
+				continue
+			if not message.has("diegetic_at"):
+				return true
+			var presented_at := str(message["diegetic_at"])
+			if not Moment.validate(presented_at) or not Moment.same_offset(_narrative_time, presented_at):
+				_publish(false, "INVALID_PRESENTED_MESSAGE_TIME")
+				return false
+			if Moment.compare(presented_at, _narrative_time) > 0:
+				_narrative_time = presented_at
+			return true
+	_publish(false, "PRESENTED_MESSAGE_NOT_FOUND")
 	return false
 
 

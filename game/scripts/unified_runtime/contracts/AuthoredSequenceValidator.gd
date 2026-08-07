@@ -81,7 +81,7 @@ const A6_DURABLE_MEDIA_TERMINAL_FIELDS := ["event_key", "effect", "media_id"]
 const A6_DURABLE_FACT_FIELDS := ["fait_id", "nature", "recu_par", "permission_future", "formulee_par"]
 
 
-static func validate(value) -> Dictionary:
+static func validate(value, allow_chained_returns := false) -> Dictionary:
 	var errors: Array[String] = []
 	if typeof(value) != TYPE_DICTIONARY:
 		_add_error(errors, "root", "expected_dictionary")
@@ -97,7 +97,9 @@ static func validate(value) -> Dictionary:
 	_validate_orchestration(sequence["orchestration"], errors)
 	_validate_temporal_projection(sequence["temporal_projection"], sequence["orchestration"], errors)
 
-	var graph_context := _validate_beats(sequence["beats"], participant_context, errors)
+	var graph_context := _validate_beats(
+		sequence["beats"], participant_context, errors, bool(allow_chained_returns)
+	)
 	var resolution_context := _validate_resolutions(sequence["resolutions"], errors)
 	var media_context := _validate_media(sequence["media"], participant_context, errors)
 	_validate_references(sequence, graph_context, resolution_context, media_context, errors)
@@ -278,7 +280,12 @@ static func _validate_delay(value, path: String, errors: Array[String]) -> void:
 			_validate_business_id(value["value"], path + ".value", errors)
 
 
-static func _validate_beats(value, participant_context: Dictionary, errors: Array[String]) -> Dictionary:
+static func _validate_beats(
+	value,
+	participant_context: Dictionary,
+	errors: Array[String],
+	allow_chained_returns: bool,
+) -> Dictionary:
 	var context := {
 		"beats": {},
 		"choices": {},
@@ -309,7 +316,9 @@ static func _validate_beats(value, participant_context: Dictionary, errors: Arra
 			_add_error(errors, path + ".projection_target", "unknown_value")
 		_validate_checkpoint_declaration(beat["checkpoint_before"], path + ".checkpoint_before", context, errors)
 		_validate_checkpoint_declaration(beat["checkpoint_after"], path + ".checkpoint_after", context, errors)
-		_validate_next(beat["next"], beat.get("type"), path + ".next", errors)
+		_validate_next(
+			beat["next"], beat.get("type"), path + ".next", errors, allow_chained_returns
+		)
 		_validate_beat_content(beat, path, participant_context, context, errors)
 	return context
 
@@ -354,7 +363,9 @@ static func _validate_checkpoint_declaration(value, path: String, context: Dicti
 		context["checkpoints"][value] = path
 
 
-static func _validate_next(value, beat_type, path: String, errors: Array[String]) -> void:
+static func _validate_next(
+	value, beat_type, path: String, errors: Array[String], allow_chained_returns: bool
+) -> void:
 	if typeof(value) != TYPE_DICTIONARY:
 		_add_error(errors, path, "expected_dictionary")
 		return
@@ -386,8 +397,11 @@ static func _validate_next(value, beat_type, path: String, errors: Array[String]
 				_add_error(errors, path + ".beat_id", "expected_null")
 	if beat_type == "CHOICE" and mode != "BRANCH":
 		_add_error(errors, path, "choice_requires_branch")
-	if beat_type == "RETURN" and mode != "TERMINAL":
-		_add_error(errors, path, "return_requires_terminal")
+	if beat_type == "RETURN":
+		if allow_chained_returns and mode not in ["DIRECT", "TERMINAL"]:
+			_add_error(errors, path, "return_requires_direct_or_terminal")
+		elif not allow_chained_returns and mode != "TERMINAL":
+			_add_error(errors, path, "return_requires_terminal")
 
 
 static func _validate_beat_content(
@@ -873,12 +887,11 @@ static func _validate_choice_resolution_reciprocity(
 			var path := "root.beats.%s.content.eligible_resolution_ids" % beat_id
 			if not resolutions.has(resolution_id):
 				continue
-			if return_claims.has(resolution_id):
-				_add_error(errors, path, "resolution_declared_by_multiple_returns_%s" % resolution_id)
-			else:
-				return_claims[resolution_id] = beat_id
-			if resolutions[resolution_id].get("next_beat_id") != beat_id:
+			var chain_root = resolutions[resolution_id].get("next_beat_id")
+			if not _return_chain_contains(beats, chain_root, beat_id):
 				_add_error(errors, path, "foreign_resolution_%s" % resolution_id)
+			else:
+				return_claims[resolution_id] = chain_root
 
 	var resolution_ids: Array = resolutions.keys()
 	resolution_ids.sort()
@@ -895,6 +908,8 @@ static func _validate_choice_resolution_reciprocity(
 				_add_error(errors, path + ".next_beat_id", "return_missing_reciprocal_resolution")
 			elif return_claims[resolution_id] != target_id:
 				_add_error(errors, path + ".next_beat_id", "return_resolution_mismatch")
+			elif not _return_chain_has_resolution_coverage(beats, target_id, resolution_id):
+				_add_error(errors, path + ".next_beat_id", "return_chain_resolution_gap")
 		elif return_claims.has(resolution_id):
 			_add_error(errors, path + ".next_beat_id", "non_return_resolution_declared_by_return")
 
@@ -913,6 +928,8 @@ static func _validate_next_references(
 		"DIRECT":
 			if not beats.has(next.get("beat_id")):
 				_add_error(errors, path + ".next.beat_id", "unknown_beat")
+			elif beat.get("type") == "RETURN" and beats[next["beat_id"]].get("type") != "RETURN":
+				_add_error(errors, path + ".next.beat_id", "return_direct_requires_return")
 		"BRANCH":
 			var content_choices := {}
 			if beat["type"] == "CHOICE" and typeof(beat["content"]) == TYPE_DICTIONARY:
@@ -932,6 +949,47 @@ static func _validate_next_references(
 						_add_error(errors, path + ".next.branches.%s" % choice_id, "choice_target_mismatch")
 				if branch_ids.size() != content_choices.size():
 					_add_error(errors, path + ".next.branches", "choice_set_mismatch")
+
+
+static func _return_chain_contains(beats: Dictionary, root_id, target_id) -> bool:
+	var current_id = root_id
+	var seen := {}
+	while typeof(current_id) == TYPE_STRING and beats.has(current_id) and not seen.has(current_id):
+		if current_id == target_id:
+			return true
+		seen[current_id] = true
+		var beat: Dictionary = beats[current_id]
+		var next = beat.get("next")
+		if (
+			beat.get("type") != "RETURN"
+			or typeof(next) != TYPE_DICTIONARY
+			or next.get("mode") != "DIRECT"
+		):
+			return false
+		current_id = next.get("beat_id")
+	return false
+
+
+static func _return_chain_has_resolution_coverage(
+	beats: Dictionary, root_id, resolution_id
+) -> bool:
+	var current_id = root_id
+	var seen := {}
+	while typeof(current_id) == TYPE_STRING and beats.has(current_id) and not seen.has(current_id):
+		seen[current_id] = true
+		var beat: Dictionary = beats[current_id]
+		if (
+			beat.get("type") != "RETURN"
+			or resolution_id not in beat.get("content", {}).get("eligible_resolution_ids", [])
+		):
+			return false
+		var next = beat.get("next")
+		if typeof(next) != TYPE_DICTIONARY or next.get("mode") == "TERMINAL":
+			return true
+		if next.get("mode") != "DIRECT":
+			return false
+		current_id = next.get("beat_id")
+	return false
 
 
 static func _validate_local_condition_references(
@@ -1715,11 +1773,15 @@ static func _validate_business_id(value, path: String, errors: Array[String]) ->
 
 
 static func _validate_media_id(value, path: String, errors: Array[String]) -> void:
+	if DurableMediaIdentifier.validate(value):
+		return
 	if not DurableMediaIdentifier.format_valid(value):
 		_add_error(errors, path, "invalid_media_identifier")
 		return
 	if DurableMediaIdentifier.forbidden_day_identity(value):
 		_add_error(errors, path, "day_based_identifier_forbidden")
+		return
+	_add_error(errors, path, "invalid_media_identifier")
 
 
 static func _validate_nullable_identifier(value, path: String, errors: Array[String]) -> void:

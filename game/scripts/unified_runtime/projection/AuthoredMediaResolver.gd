@@ -23,10 +23,12 @@ var _media_by_id: Dictionary = {}
 var _entries_by_id: Dictionary = {}
 
 
-static func create(authored_sequence, presentation_catalog_or_assets) -> Dictionary:
+static func create(
+	authored_sequence, presentation_catalog_or_assets, allow_chained_returns := false
+) -> Dictionary:
 	if (
 		typeof(authored_sequence) != TYPE_DICTIONARY
-		or not AuthoredValidator.validate(authored_sequence)["valid"]
+		or not AuthoredValidator.validate(authored_sequence, allow_chained_returns)["valid"]
 	):
 		return _creation_failure("INVALID_AUTHORED_SEQUENCE")
 	var catalog_error := _validate_catalog(presentation_catalog_or_assets)

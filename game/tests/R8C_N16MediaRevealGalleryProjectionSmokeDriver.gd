@@ -295,8 +295,13 @@ func _test_durable_gallery(base: Dictionary, fixture: Dictionary) -> void:
 	var source: Dictionary = source_result["source"]
 	_expect(source["fixtures"]["marie"]["items"].size() == 1, "GRANT_ACCESS AVAILABLE rend media visible")
 
-	var multi_record := _record("photo_multi_character", "ACCESSIBLE", "AVAILABLE", "ACTIVE")
-	var multi_result: Dictionary = DurableGallery.create(sequence, {"photo_multi_character": multi_record}, resolver)
+	var multi_registry := {
+		"photo_multi_character": _record("photo_multi_character", "ACCESSIBLE", "AVAILABLE", "ACTIVE"),
+		"photo_multi_child_one": _record("photo_multi_child_one", "ACCESSIBLE", "AVAILABLE", "ACTIVE"),
+		"photo_multi_child_two": _record("photo_multi_child_two", "ACCESSIBLE", "AVAILABLE", "ACTIVE"),
+	}
+	var multi_registry_before: Dictionary = multi_registry.duplicate(true)
+	var multi_result: Dictionary = DurableGallery.create(sequence, multi_registry, resolver)
 	var multi_source_result: Dictionary = multi_result["projection"].content_source()
 	var multi_source: Dictionary = multi_source_result["source"]
 	_expect(multi_source_result["ok"], "projection multi-personnage resolue")
@@ -308,9 +313,49 @@ func _test_durable_gallery(base: Dictionary, fixture: Dictionary) -> void:
 	_expect(
 		multi_source["fixtures"]["marie"]["items"][0]["item_id"] == "photo_multi_character"
 		and multi_source["fixtures"]["pauline"]["items"][0]["item_id"] == "photo_multi_character"
-		and multi_result["projection"].durable_registry_snapshot().size() == 1,
-		"multi-onglets conserve un media_id et un record durable"
+		and multi_source["fixtures"]["marie"]["items"][0]["sequence_child_ids"] == [
+			"photo_multi_character", "photo_multi_child_one", "photo_multi_child_two",
+		]
+		and multi_source["fixtures"]["pauline"]["items"][0]["sequence_child_ids"] == [
+			"photo_multi_character", "photo_multi_child_one", "photo_multi_child_two",
+		],
+		"multi-onglets conserve le meme item_id et les memes enfants"
 	)
+	_expect(
+		multi_source["children_by_id"].size() == 3
+		and multi_source["children_by_id"].values().all(
+			func(child): return not child.has("character_id")
+		),
+		"catalogue enfants global character-neutral"
+	)
+	_expect(
+		multi_result["projection"].durable_registry_snapshot() == multi_registry_before,
+		"multi-onglets conserve exactement les trois records durables sans duplication"
+	)
+	var multi_gallery = GalleryScreenScene.instantiate()
+	multi_gallery.configure_content_source(multi_source)
+	add_child(multi_gallery)
+	await get_tree().process_frame
+	for character_id in ["marie", "pauline"]:
+		multi_gallery.select_character(character_id)
+		var viewer_sequence: Array[Dictionary] = multi_gallery.viewer_sequence_for_item(
+			"photo_multi_character"
+		)
+		_expect(
+			viewer_sequence.size() == 3
+			and viewer_sequence.all(
+				func(presentation): return presentation["character_id"] == character_id
+			),
+			"sequence viewer projetee depuis l'onglet " + character_id
+		)
+		var multi_viewer = await _new_viewer()
+		_expect(
+			multi_viewer.configure(viewer_sequence, 0, PortraitTheme.new()),
+			"PhotoViewer ouvre la sequence depuis l'onglet " + character_id
+		)
+		_dispose(multi_viewer)
+	multi_gallery.queue_free()
+	await get_tree().process_frame
 
 	var separated_record := _record("photo_audience_separated", "ACCESSIBLE", "AVAILABLE", "ACTIVE")
 	var separated_result: Dictionary = DurableGallery.create(

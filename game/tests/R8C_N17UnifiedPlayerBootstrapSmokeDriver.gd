@@ -18,9 +18,24 @@ const NarrativeMoment := preload(
 const RuntimeSnapshotV2 := preload(
 	"res://scripts/unified_runtime/application/UnifiedRuntimeSnapshotV2.gd"
 )
+const ExecutorV2 := preload("res://scripts/unified_runtime/application/SequenceExecutorV2.gd")
+const CompositionRoot := preload(
+	"res://scripts/unified_runtime/bootstrap/UnifiedPlayerRuntimeCompositionRoot.gd"
+)
+const MessagesPhysicalPort := preload(
+	"res://scripts/unified_runtime/projection/MessagesPhysicalProjectionPort.gd"
+)
+const MediaPort := preload("res://scripts/unified_runtime/projection/MediaProjectionPort.gd")
+const CompositePort := preload(
+	"res://scripts/unified_runtime/projection/CompositePlayerProjectionPort.gd"
+)
+const ProjectionContracts := preload(
+	"res://scripts/unified_runtime/contracts/PlayerProjectionContracts.gd"
+)
 const SaveStore := preload(
 	"res://scripts/unified_runtime/application/UnifiedPlayerRuntimeSaveStore.gd"
 )
+const DurableMediaIdentifier := preload("res://scripts/shared/DurableMediaIdentifier.gd")
 const JsonNormalizer := preload(
 	"res://scripts/unified_runtime/application/JsonValueNormalizer.gd"
 )
@@ -32,21 +47,47 @@ const PHYSICAL_PATH := "res://data/unified_runtime/presentation/mathilde_returns
 const MEDIA_PATH := "res://data/unified_runtime/presentation/mathilde_returns_with_chosen_intent_01_media.json"
 const SAVE_ROOT := "user://r8c_n17_smoke/"
 
+class CountingFacade:
+	extends RefCounted
+
+	var delegate
+	var resolve_scene_calls := 0
+
+	func _init(value) -> void:
+		delegate = value
+
+	func resolve_scene(instance_id: String, choice_id: String, resolution_id: String, context: Dictionary) -> Dictionary:
+		resolve_scene_calls += 1
+		return delegate.resolve_scene(instance_id, choice_id, resolution_id, context)
+
+	func save_state() -> Dictionary:
+		return delegate.save_state()
+
+	func restore_state(snapshot: Dictionary) -> Dictionary:
+		return delegate.restore_state(snapshot)
+
+
 var failures: Array[String] = []
 var controls := 0
 
 
 func _ready() -> void:
 	var sequence := _load(SEQUENCE_PATH)
-	var validation := AuthoredValidator.validate(sequence)
-	_expect(validation["valid"], "séquence Mathilde conforme: %s" % [validation["errors"]])
-	var messages := MessagesResolver.create(sequence, _load(MESSAGES_PATH))
+	var validation := AuthoredValidator.validate(sequence, true)
+	_expect(
+		validation["valid"] and not AuthoredValidator.validate(sequence)["valid"],
+		"séquence Mathilde conforme en V2 et refusée par le contrat V1",
+	)
+	var messages := MessagesResolver.create(sequence, _load(MESSAGES_PATH), true)
 	_expect(
 		messages["ok"],
 		"catalogue AFTERCARE/RETURN conforme: %s" % [messages.get("errors", [])],
 	)
-	_expect(PhysicalResolver.create(sequence, _load(PHYSICAL_PATH))["ok"], "catalogue Physical conforme")
-	_expect(MediaResolver.create(sequence, _load(MEDIA_PATH))["ok"], "catalogue Media conforme")
+	_expect(
+		PhysicalResolver.create(sequence, _load(PHYSICAL_PATH), true)["ok"],
+		"catalogue Physical conforme",
+	)
+	_expect(MediaResolver.create(sequence, _load(MEDIA_PATH), true)["ok"], "catalogue Media conforme")
 	_expect(
 		not SaveStore.create("user://../r8c_n17_escape.json")["ok"],
 		"save store refuse la traversée hors user://",
@@ -56,7 +97,9 @@ func _ready() -> void:
 		and not NarrativeMoment.validate("2032-03-04T21:52:00+14:01"),
 		"temps narratif accepte les offsets normalisés signés et borne ±14:00",
 	)
+	_test_durable_media_identifiers()
 	_test_save_recovery()
+	_test_resolution_ready_snapshot()
 	await _run_paid_path("mathilde_mb3_ma1", "PAID", SAVE_ROOT + "ma1.json")
 	await _run_paid_path("mathilde_mb3_ma2", "PAID", SAVE_ROOT + "ma2.json")
 	await _run_failed_deferred_path(SAVE_ROOT + "ma3.json")
@@ -126,12 +169,72 @@ func _run_failed_deferred_path(save_path: String) -> void:
 	if portrait_main == null:
 		return
 	var session = portrait_main.runtime_session
-	var reached_choice := await _drive_to_aftercare_choice(portrait_main)
+	_expect(
+		session.narrative_time() == "2032-03-04T21:06:00+01:00",
+		"runtime démarre au premier moment authored réellement présenté",
+	)
+	var early_checkpoint := await _present_current_messages_through(
+		session, "mathilde_mb3_open_08"
+	)
+	_expect(early_checkpoint, "messages initiaux présentés jusqu’à 21:08:05")
+	_expect(
+		session.narrative_time() == "2032-03-04T21:08:05+01:00",
+		"temps narratif suit le dernier message initial présenté",
+	)
+	var early_source: Dictionary = session.presentation_source()
+	var early_presented: Dictionary = session.presented_message_ids_by_thread()
+	var early_store = SaveStore.create(save_path)["store"]
+	var early_snapshot: Dictionary = early_store.load_snapshot()
+	_expect(
+		early_snapshot["ok"]
+		and early_snapshot["snapshot"]["narrative_time"] == "2032-03-04T21:08:05+01:00",
+		"snapshot Messages initial ne contient plus 21:52",
+	)
+	portrait_main.queue_free()
+	await get_tree().process_frame
+	portrait_main = await _new_portrait_main(save_path)
+	if portrait_main == null:
+		return
+	session = portrait_main.runtime_session
+	_expect(
+		session.narrative_time() == "2032-03-04T21:08:05+01:00"
+		and session.presentation_source() == early_source
+		and session.presented_message_ids_by_thread() == early_presented,
+		"reload Messages conserve transcript, présentations et temps exacts",
+	)
+	_expect(await _complete_current_messages(session), "messages d’entrée terminés après reload")
+	_expect(
+		session.narrative_time() == "2032-03-04T21:14:30+01:00",
+		"temps narratif atteint 21:14:30 après les messages d’entrée",
+	)
+	var reached_choice := await _drive_to_aftercare_choice(portrait_main, false)
 	_expect(reached_choice, "MA3 atteint le choix aftercare")
 	if not reached_choice:
 		portrait_main.queue_free()
 		await get_tree().process_frame
 		return
+	_expect(
+		session.narrative_time() == "2032-03-04T21:52:00+01:00",
+		"temps narratif atteint 21:52 après l’aftercare commun",
+	)
+	var choices_before: Array = session.presentation_source()["choices_by_thread"]["mathilde_thread"].duplicate(true)
+	_expect(session.save_now()["ok"], "sauvegarde avant choix aftercare")
+	portrait_main.queue_free()
+	await get_tree().process_frame
+	portrait_main = await _new_portrait_main(save_path)
+	if portrait_main == null:
+		return
+	session = portrait_main.runtime_session
+	var choices_after: Array = session.presentation_source()["choices_by_thread"]["mathilde_thread"]
+	var choice_ids_after: Array = choices_after.map(func(choice): return choice["choice_id"])
+	_expect(
+		choices_after == choices_before
+		and choice_ids_after == ["mathilde_mb3_ma1", "mathilde_mb3_ma2", "mathilde_mb3_ma3"],
+		"reload avant choix conserve les trois choix une seule fois",
+	)
+	var counting_facade := CountingFacade.new(session._facade)
+	session._facade = counting_facade
+	session._executor._facade = counting_facade
 	var selected: Dictionary = await _select_aftercare_choice(session, "mathilde_mb3_ma3")
 	_expect(selected.get("accepted", false), "MA3 accepté par l’UI Messages")
 	_expect(
@@ -144,6 +247,28 @@ func _run_failed_deferred_path(save_path: String) -> void:
 		"MA3 crée atomiquement CREATE_FAILED",
 	)
 	_expect(_gallery_triplet_valid(session.gallery_source()), "MA3 débloque une tuile et trois enfants")
+	var committed_domain: Dictionary = session.durable_state()
+	var immediate: Dictionary = session.execution_state()
+	var immediate_schedule: Dictionary = immediate.get("scheduled_returns", [{}])[0]
+	_expect(
+		immediate.get("current_beat_id") == "mathilde_mb3_ma3_immediate_return"
+		and immediate_schedule.get("delay_mode") == "NONE"
+		and immediate_schedule.get("scheduled_from") == "2032-03-04T21:52:00+01:00",
+		"MA3 ouvre d’abord le RETURN canonique immédiat",
+	)
+	_expect(
+		await _complete_current_messages(session)
+		and _messages_for_beat(session, "mathilde_mb3_ma3_immediate_return").map(
+			func(message): return message["text"]
+		) == ["Non.", "Pas cette question maintenant.", "Je vais dormir."],
+		"réponse immédiate MA3 respecte les trois messages canoniques",
+	)
+	_expect(
+		counting_facade.resolve_scene_calls == 1
+		and session.durable_state() == committed_domain
+		and session.execution_state().get("durable_commit_status") == "APPLIED",
+		"passage au second RETURN conserve exactement un appel A10 et aucun durable muté",
+	)
 	var pending: Dictionary = session.execution_state()
 	var schedule: Dictionary = pending.get("scheduled_returns", [{}])[0]
 	_expect(
@@ -166,7 +291,25 @@ func _run_failed_deferred_path(save_path: String) -> void:
 			not RuntimeSnapshotV2.validate(tampered, _load(SEQUENCE_PATH))["valid"],
 			"snapshot V2 refuse un schedule RETURN lié à une autre résolution",
 		)
-	var committed_domain: Dictionary = session.durable_state()
+		var tampered_origin: Dictionary = stored["snapshot"].duplicate(true)
+		tampered_origin["execution"]["scheduled_returns"][0]["scheduled_from"] = "2032-03-04T20:52:00+01:00"
+		tampered_origin["execution"]["scheduled_returns"][0]["eligible_at"] = "2032-03-05T08:06:00+01:00"
+		_expect(
+			not RuntimeSnapshotV2.validate(tampered_origin, _load(SEQUENCE_PATH))["valid"],
+			"snapshot V2 lie le schedule RETURN au moment durable A10",
+		)
+		var delayed_chain_sequence: Dictionary = _load(SEQUENCE_PATH)
+		for beat in delayed_chain_sequence["beats"]:
+			if beat["beat_id"] == "mathilde_mb3_ma3_immediate_return":
+				beat["content"]["delay"] = {"mode": "DIEGETIC_MINUTES", "value": 5}
+		var delayed_chain_snapshot: Dictionary = stored["snapshot"].duplicate(true)
+		delayed_chain_snapshot["narrative_time"] = "2032-03-04T21:57:00+01:00"
+		delayed_chain_snapshot["execution"]["scheduled_returns"][0]["scheduled_from"] = "2032-03-04T21:57:00+01:00"
+		delayed_chain_snapshot["execution"]["scheduled_returns"][0]["eligible_at"] = "2032-03-05T09:11:00+01:00"
+		_expect(
+			RuntimeSnapshotV2.validate(delayed_chain_snapshot, delayed_chain_sequence)["valid"],
+			"snapshot V2 dérive l’origine d’un maillon après un RETURN retardé",
+		)
 	portrait_main.queue_free()
 	await get_tree().process_frame
 	portrait_main = await _new_portrait_main(save_path)
@@ -211,9 +354,9 @@ func _new_portrait_main(save_path: String):
 	return portrait_main
 
 
-func _drive_to_aftercare_choice(portrait_main) -> bool:
+func _drive_to_aftercare_choice(portrait_main, complete_opening := true) -> bool:
 	var session = portrait_main.runtime_session
-	if not await _complete_current_messages(session):
+	if complete_opening and not await _complete_current_messages(session):
 		return false
 	if not await _continue_physical(portrait_main):
 		return false
@@ -246,14 +389,43 @@ func _complete_current_messages(session) -> bool:
 				active_messages.append(message)
 	if active_messages.is_empty():
 		return false
+	var presented: Dictionary = session.presented_message_ids_by_thread()
+	var presented_in_thread: Array = presented.get(thread_id, [])
 	for message in active_messages:
+		if message["message_id"] in presented_in_thread:
+			continue
 		if not session.mark_message_presented(str(message["message_id"])):
+			print("R8C_N17_MESSAGE_PRESENT_REFUSED: ", message["message_id"], " ", session.describe_state())
 			return false
 	var result: Dictionary = session.on_thread_read(thread_id, str(active_messages[-1]["message_id"]))
 	if not result.get("ok", false):
+		print("R8C_N17_THREAD_READ_REFUSED: ", result, " ", session.describe_state())
 		return false
 	await _frames(3)
 	return true
+
+
+func _present_current_messages_through(session, terminal_message_id: String) -> bool:
+	if not await _wait_for_status(session, "WAITING_FOR_PROJECTION_ACK"):
+		return false
+	var beat_id: String = session.execution_state()["current_beat_id"]
+	var messages := _messages_for_beat(session, beat_id)
+	for message in messages:
+		if not session.mark_message_presented(str(message["message_id"])):
+			return false
+		if str(message["message_id"]) == terminal_message_id:
+			return true
+	return false
+
+
+func _messages_for_beat(session, beat_id: String) -> Array:
+	var result: Array = []
+	var source: Dictionary = session.presentation_source()
+	for thread_id in source.get("messages_by_thread", {}):
+		for message in source["messages_by_thread"][thread_id]:
+			if str(message.get("beat_id", "")) == beat_id:
+				result.append(message)
+	return result
 
 
 func _continue_physical(portrait_main) -> bool:
@@ -312,6 +484,141 @@ func _gallery_triplet_valid(source: Dictionary) -> bool:
 		"S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_CENTRAL_01",
 		"S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_AFTERCARE_01",
 	]
+
+
+func _test_resolution_ready_snapshot() -> void:
+	var sequence := _load(SEQUENCE_PATH)
+	var graph: Dictionary = CompositionRoot._new_domain_graph(sequence)
+	_expect(not graph.is_empty(), "graphe A6/A10 direct créé")
+	if graph.is_empty():
+		return
+	var activation: Dictionary = CompositionRoot._activate_sequence(graph["facade"], sequence)
+	var port_result: Dictionary = _projection_port(sequence)
+	_expect(activation.get("ok", false) and port_result.get("ok", false), "activation et port V2 directs créés")
+	if not activation.get("ok", false) or not port_result.get("ok", false):
+		return
+	var created: Dictionary = ExecutorV2.create(
+		graph["facade"], port_result["port"], sequence, activation
+	)
+	_expect(created["ok"] and created["executor"].start()["ok"], "executor V2 direct démarré")
+	if not created["ok"]:
+		return
+	var executor = created["executor"]
+	for _index in range(16):
+		if executor.execution_state()["execution_status"] == "RESOLUTION_READY":
+			break
+		var beat: Dictionary = executor.current_beat()
+		var opened: Dictionary = executor.open_current_projection()
+		if not opened["ok"]:
+			break
+		var request: Dictionary = opened["payload"]["request"]
+		var receipt := {
+			"presentation_id": ProjectionContracts.presentation_id_for(request),
+			"instance_id": request["instance_id"],
+			"sequence_id": request["sequence_id"],
+			"authored_version": request["authored_version"],
+			"beat_id": request["beat_id"],
+			"beat_type": request["beat_type"],
+			"projection_target": request["projection_target"],
+			"kind": "VIEWED" if beat["type"] == "MEDIA_REVEAL" else "PRESENTED",
+			"subject_id": beat["content"]["media_id"] if beat["type"] == "MEDIA_REVEAL" else beat["beat_id"],
+		}
+		if not executor.receive_ack(receipt)["ok"]:
+			break
+		var is_choice: bool = beat["type"] == "CHOICE"
+		var command := {
+			"command_id": "n17_resolution_ready_" + beat["beat_id"],
+			"instance_id": request["instance_id"],
+			"beat_id": beat["beat_id"],
+			"kind": "SELECT_CHOICE" if is_choice else "CONTINUE",
+			"choice_id": "mathilde_mb3_ma3" if is_choice else null,
+		}
+		if not executor.receive_command(command)["ok"]:
+			break
+	var ready: Dictionary = executor.execution_state()
+	_expect(
+		ready["execution_status"] == "RESOLUTION_READY"
+		and ready["selected_resolution_id"] == "resolution_ma3"
+		and ready["consumed_choice_ids"] == ["mathilde_mb3_ma3"],
+		"frontière executor V2 consomme le choix avant commit",
+	)
+	var snapshot_result: Dictionary = executor.snapshot(
+		_empty_messages_snapshot(), "2032-03-04T21:52:00+01:00"
+	)
+	_expect(snapshot_result["ok"], "snapshot V2 accepté à RESOLUTION_READY")
+	if not snapshot_result["ok"]:
+		return
+	var restore_graph: Dictionary = CompositionRoot._new_domain_graph(sequence)
+	var restore_port: Dictionary = _projection_port(sequence)
+	var restored: Dictionary = ExecutorV2.restore(
+		restore_graph["facade"], restore_port["port"], sequence,
+		snapshot_result["payload"]["snapshot"]
+	)
+	_expect(
+		restored["ok"]
+		and restored["executor"].execution_state() == ready
+		and restored["narrative_time"] == "2032-03-04T21:52:00+01:00",
+		"restore RESOLUTION_READY conserve sélection et temps exacts",
+	)
+	if not restored["ok"]:
+		return
+	var counting_facade := CountingFacade.new(restore_graph["facade"])
+	restored["executor"]._facade = counting_facade
+	var commit_context := {
+		"moment_diegetique": "2032-03-04T21:52:00+01:00",
+		"acte_courant": "MATHILDE_M_B3_CANONICAL",
+		"participants_disponibles": {"mathilde": true, "player": true},
+		"opportunite_valide": true,
+	}
+	var committed: Dictionary = restored["executor"].commit_resolution(commit_context)
+	var replayed: Dictionary = restored["executor"].commit_resolution(commit_context)
+	_expect(
+		committed["ok"]
+		and committed["payload"]["a10_result"]["transaction_status"] == "APPLIQUE",
+		"restore RESOLUTION_READY applique A10",
+	)
+	_expect(
+		replayed["ok"] and replayed["idempotent"] and counting_facade.resolve_scene_calls == 1,
+		"commit V2 rejoué ne rappelle pas resolve_scene après l’unique appel A10",
+	)
+
+
+func _projection_port(sequence: Dictionary) -> Dictionary:
+	return CompositePort.create(MessagesPhysicalPort.new(sequence, true), MediaPort.new(sequence, true))
+
+
+func _empty_messages_snapshot() -> Dictionary:
+	return {
+		"active": {},
+		"notification_dismissed": false,
+		"notification_presented": false,
+		"presented_message_ids_by_thread": {},
+		"progression_ack_sent": false,
+		"progression_command_sent": false,
+		"snapshot_version": 1,
+		"source": {},
+	}
+
+
+func _test_durable_media_identifiers() -> void:
+	for media_id in [
+		"normal_media_identifier",
+		"S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01_PROXIMITY",
+		"S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_CENTRAL_01",
+		"S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_AFTERCARE_01",
+	]:
+		_expect(DurableMediaIdentifier.validate(media_id), "media_id canonique accepté: " + media_id)
+	for media_id in [
+		"new_j11_media", "new_J11_media", "J11_NEW_MEDIA", "SOMETHING_J12_NEW",
+		"chapter_11_media", "CHAPTER_11_NEW_MEDIA",
+	]:
+		_expect(not DurableMediaIdentifier.validate(media_id), "media_id jour refusé: " + media_id)
+	for media_id in [
+		"S2_A3_J11_SCN_MEDIA", "S1_A03_J11_SCN_MEDIA", "S1_A3_J1_SCN_MEDIA",
+		"S1_A3_J11_SCENE_MEDIA", "S1_A3_J11_SCN_media", "S1_A3_J11_SCN__MEDIA",
+		"ARBITRARY_UPPERCASE_MEDIA",
+	]:
+		_expect(not DurableMediaIdentifier.validate(media_id), "famille legacy mal formée refusée: " + media_id)
 
 
 func _wait_for_status(session, expected: String, max_frames := 30) -> bool:

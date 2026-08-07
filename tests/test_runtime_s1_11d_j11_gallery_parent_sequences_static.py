@@ -108,10 +108,12 @@ class RuntimeS111DGalleryParentSequencesStaticTests(unittest.TestCase):
         self.assertIn("_viewer_sequence_for_parent", scoped)
         for token in [
             'content_source.get("children_by_id", {})', 'child.get("parent_asset_id", "")',
-            'child.get("character_id", "")', 'child.get("source_kind", "")',
+            'child.get("source_kind", "")',
             "seen_ids.has(child_id)", "return []",
         ]:
             self.assertIn(token, grouped)
+        self.assertNotIn('child.get("character_id", "")', grouped)
+        self.assertIn('"character_id": selected_character_id', screen)
         self.assertIn('"parent_sequence"', screen)
         self.assertIn("focus_item_id := origin_item_id if parent_sequence", screen)
 

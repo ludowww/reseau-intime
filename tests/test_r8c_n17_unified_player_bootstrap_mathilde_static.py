@@ -82,6 +82,8 @@ class R8CN17UnifiedPlayerBootstrapStaticTests(unittest.TestCase):
             '_gallery_source_from_domain()',
             'ReturnGate.evaluate',
             'advance_narrative_time(explicit_moment',
+            '_advance_narrative_time_from_message(message_id)',
+            'Moment.compare(presented_at, _narrative_time) > 0',
         ]:
             self.assertIn(proof, session)
         production = "\n".join(
@@ -101,10 +103,13 @@ class R8CN17UnifiedPlayerBootstrapStaticTests(unittest.TestCase):
             '"intention": "PROPOSE"',
             "CompositePort.create",
             "RuntimeSession.create",
+            "_initial_narrative_time(sequence)",
         ]:
             self.assertIn(proof, root)
         self.assertNotIn("DataLoader", root)
         self.assertNotIn("runtime/season_1", root)
+        self.assertNotIn("const INITIAL_NARRATIVE_TIME", root)
+        self.assertNotIn("2032-03-04T21:52:00+01:00", root)
         self.assertNotIn("mathilde", re.sub(r"mathilde_returns_with_chosen_intent_01", "", root, flags=re.I).lower())
 
     def test_canonical_sequence_and_terminal_obligation_manifests(self):
@@ -159,9 +164,24 @@ class R8CN17UnifiedPlayerBootstrapStaticTests(unittest.TestCase):
 
     def test_ma3_return_and_save_restore_are_explicit(self):
         sequence = json.loads(self.read(SEQUENCE))
+        immediate = next(item for item in sequence["beats"] if item["beat_id"] == "mathilde_mb3_ma3_immediate_return")
         beat = next(item for item in sequence["beats"] if item["beat_id"] == "mathilde_mb3_failed_return")
+        self.assertEqual({"mode": "NONE", "value": None}, immediate["content"]["delay"])
+        self.assertEqual({"mode": "DIRECT", "beat_id": "mathilde_mb3_failed_return"}, immediate["next"])
         self.assertEqual({"mode": "DIEGETIC_MINUTES", "value": 674}, beat["content"]["delay"])
         catalog = json.loads(self.read(MESSAGES))
+        immediate_content = next(
+            item for item in catalog["entries"]
+            if item["content_ref"] == "mathilde_mb3_ma3_immediate_return_content"
+        )
+        self.assertEqual(
+            ["Non.", "Pas cette question maintenant.", "Je vais dormir."],
+            [item["text"] for item in immediate_content["messages"]],
+        )
+        self.assertEqual(
+            ["2032-03-04T21:52:00+01:00"] * 3,
+            [item["diegetic_at"] for item in immediate_content["messages"]],
+        )
         failed = next(item for item in catalog["entries"] if item["content_ref"] == "mathilde_mb3_failed_return_content")
         self.assertEqual(
             [
@@ -181,10 +201,33 @@ class R8CN17UnifiedPlayerBootstrapStaticTests(unittest.TestCase):
         for proof in [
             '"RETURN invisible à 09:05"',
             '"RETURN devient visible exactement à 09:06"',
-            '"reload après commit ne rappelle jamais A10"',
+            '"passage au second RETURN conserve exactement un appel A10 et aucun durable muté"',
             '"second reload conserve le schedule"',
+            '"snapshot Messages initial ne contient plus 21:52"',
+            '"reload Messages conserve transcript, présentations et temps exacts"',
+            '"reload avant choix conserve les trois choix une seule fois"',
+            '"snapshot V2 accepté à RESOLUTION_READY"',
         ]:
             self.assertIn(proof, smoke)
+
+    def test_return_chaining_is_v2_only_and_keeps_one_schedule(self):
+        executor_v2 = self.read(APP / "SequenceExecutorV2.gd")
+        chained = re.search(
+            r"func _receive_chained_return_command\(.*?(?=\n\nfunc )",
+            executor_v2,
+            re.S,
+        ).group(0)
+        self.assertIn('beat.get("next", {}).get("mode") != "DIRECT"', executor_v2)
+        for proof in [
+            'next_beat.get("type") != "RETURN"',
+            '_execution["execution_status"] = "RESOLVED_RETURN_PENDING"',
+            '_execution["scheduled_returns"] = [planned_schedule]',
+        ]:
+            self.assertIn(proof, chained)
+        self.assertNotIn("_complete_execution()", chained)
+        executor_v1 = self.read(ROOT / "game/scripts/unified_runtime/execution/SequenceExecutor.gd")
+        self.assertIn('elif current_beat()["type"] == "RETURN":', executor_v1)
+        self.assertIn("_complete_execution()", executor_v1)
 
     def test_portrait_main_is_unified_without_eager_season_runtime(self):
         scene = self.read(ROOT / "game/scenes/portrait/PortraitMain.tscn")
@@ -206,6 +249,25 @@ class R8CN17UnifiedPlayerBootstrapStaticTests(unittest.TestCase):
         self.assertIn("_validate_media_id(business_id", authored)
         self.assertIn("_identifiant_media_durable", scene)
         self.assertIn("_register_media_identifiers", event)
+        helper = self.read(ROOT / "game/scripts/shared/DurableMediaIdentifier.gd")
+        for proof in [
+            "modern_valid(value)", "frozen_legacy_valid(value)",
+            'parts[0] != "S1"', 'parts[3] != "SCN"',
+            '_prefixed_number(parts[2], "J", 2)',
+        ]:
+            self.assertIn(proof, helper)
+        smoke = self.read(SMOKE)
+        for media_id in [
+            "normal_media_identifier",
+            *MEDIA_IDS,
+            "new_j11_media", "new_J11_media", "J11_NEW_MEDIA",
+            "SOMETHING_J12_NEW", "chapter_11_media", "CHAPTER_11_NEW_MEDIA",
+            "S2_A3_J11_SCN_MEDIA", "S1_A03_J11_SCN_MEDIA", "S1_A3_J1_SCN_MEDIA",
+            "S1_A3_J11_SCENE_MEDIA", "S1_A3_J11_SCN_media",
+            "S1_A3_J11_SCN__MEDIA", "ARBITRARY_UPPERCASE_MEDIA",
+        ]:
+            self.assertIn(media_id, smoke)
+        self.assertIn("counting_facade.resolve_scene_calls == 1", smoke)
 
 
 if __name__ == "__main__":

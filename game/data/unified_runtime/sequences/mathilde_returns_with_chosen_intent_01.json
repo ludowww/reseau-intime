@@ -227,10 +227,10 @@
       "content": {"thread_id": "mathilde_thread", "choices": [
         {"choice_id": "mathilde_mb3_ma1", "text": "on n’a pas besoin de décider ce soir", "resolution_id": "resolution_ma1", "next_beat_id": "mathilde_mb3_ma1_return"},
         {"choice_id": "mathilde_mb3_ma2", "text": "ça change déjà quelque chose avec Marie. même si elle ne sait pas", "resolution_id": "resolution_ma2", "next_beat_id": "mathilde_mb3_ma2_return"},
-        {"choice_id": "mathilde_mb3_ma3", "text": "on recommence quand", "resolution_id": "resolution_ma3", "next_beat_id": "mathilde_mb3_failed_return"}
+        {"choice_id": "mathilde_mb3_ma3", "text": "on recommence quand", "resolution_id": "resolution_ma3", "next_beat_id": "mathilde_mb3_ma3_immediate_return"}
       ]},
       "participant_ids": ["mathilde"], "local_conditions": [], "projection_target": "MESSAGES", "checkpoint_before": null, "checkpoint_after": "mathilde_mb3_resolution_ready",
-      "next": {"mode": "BRANCH", "branches": {"mathilde_mb3_ma1": "mathilde_mb3_ma1_return", "mathilde_mb3_ma2": "mathilde_mb3_ma2_return", "mathilde_mb3_ma3": "mathilde_mb3_failed_return"}}
+      "next": {"mode": "BRANCH", "branches": {"mathilde_mb3_ma1": "mathilde_mb3_ma1_return", "mathilde_mb3_ma2": "mathilde_mb3_ma2_return", "mathilde_mb3_ma3": "mathilde_mb3_ma3_immediate_return"}}
     },
     {
       "beat_id": "mathilde_mb3_ma1_return", "type": "RETURN",
@@ -243,6 +243,12 @@
       "content": {"return_id": "mathilde_mb3_ma2_aftercare_return", "content_ref": "mathilde_mb3_ma2_return_content", "delay": {"mode": "NONE", "value": null}, "eligible_resolution_ids": ["resolution_ma2"]},
       "participant_ids": ["mathilde"], "local_conditions": [], "projection_target": "MESSAGES", "checkpoint_before": null, "checkpoint_after": "mathilde_mb3_ma2_return_presented",
       "next": {"mode": "TERMINAL", "beat_id": null}
+    },
+    {
+      "beat_id": "mathilde_mb3_ma3_immediate_return", "type": "RETURN",
+      "content": {"return_id": "mathilde_mb3_ma3_immediate_aftercare_return", "content_ref": "mathilde_mb3_ma3_immediate_return_content", "delay": {"mode": "NONE", "value": null}, "eligible_resolution_ids": ["resolution_ma3"]},
+      "participant_ids": ["mathilde"], "local_conditions": [], "projection_target": "MESSAGES", "checkpoint_before": null, "checkpoint_after": "mathilde_mb3_ma3_immediate_return_presented",
+      "next": {"mode": "DIRECT", "beat_id": "mathilde_mb3_failed_return"}
     },
     {
       "beat_id": "mathilde_mb3_failed_return", "type": "RETURN",
@@ -304,7 +310,7 @@
         {"media_id": "S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_CENTRAL_01", "effect": "GRANT_ACCESS"},
         {"media_id": "S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_AFTERCARE_01", "effect": "GRANT_ACCESS"}
       ],
-      "convergence": "POST_RESOLUTION_RETURN", "next_beat_id": "mathilde_mb3_failed_return"
+      "convergence": "POST_RESOLUTION_RETURN", "next_beat_id": "mathilde_mb3_ma3_immediate_return"
     }
   },
   "media": {

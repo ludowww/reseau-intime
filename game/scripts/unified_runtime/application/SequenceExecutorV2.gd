@@ -15,7 +15,7 @@ static func create(facade, projection_port, authored_sequence, activation_receip
 	var dependency_error := _validate_dependencies(facade, projection_port)
 	if not dependency_error.is_empty():
 		return {"ok": false, "error_code": dependency_error, "executor": null}
-	if not AuthoredValidator.validate(authored_sequence)["valid"]:
+	if not AuthoredValidator.validate(authored_sequence, true)["valid"]:
 		return {"ok": false, "error_code": "INVALID_AUTHORED_SEQUENCE", "executor": null}
 	var activation_error := _validate_activation(facade, authored_sequence, activation_receipt)
 	if not activation_error.is_empty():
@@ -80,6 +80,15 @@ func start() -> Dictionary:
 	return _result(true)
 
 
+func receive_command(command) -> Dictionary:
+	if not _started or _execution.get("execution_status") == "COMPLETE":
+		return super.receive_command(command)
+	var beat := current_beat()
+	if beat.get("type") != "RETURN" or beat.get("next", {}).get("mode") != "DIRECT":
+		return super.receive_command(command)
+	return _receive_chained_return_command(command, beat)
+
+
 func commit_resolution(context) -> Dictionary:
 	if not _started:
 		return _result(false, "NOT_STARTED")
@@ -92,10 +101,9 @@ func commit_resolution(context) -> Dictionary:
 		return _result(true, null, true, {"sequence_resolution": committed_envelope})
 	if _execution["execution_status"] != "RESOLUTION_READY":
 		return _result(false, "RESOLUTION_NOT_READY")
-	var built := ResolutionEnvelope.create(_authored_sequence, _execution)
-	if not built["ok"]:
-		return _result(false, built["error_code"])
-	var envelope: Dictionary = built["envelope"]
+	var envelope: Dictionary = _envelope_from_selection()
+	if envelope.is_empty():
+		return _result(false, "RESOLUTION_NOT_SELECTED")
 	if context.has("sequence_resolution") and context["sequence_resolution"] != envelope:
 		return _result(false, "DIVERGENT_COMMIT")
 	var authored_resolution: Dictionary = _authored_sequence["resolutions"][envelope["resolution_id"]]
@@ -164,8 +172,53 @@ func snapshot(messages_adapter_snapshot: Dictionary = {}, narrative_time = null)
 	return _result(true, null, false, {"snapshot": built["snapshot"]})
 
 
+func _receive_chained_return_command(command, beat: Dictionary) -> Dictionary:
+	var validation := ProjectionContracts.validate_projection_command(command)
+	if not validation["valid"]:
+		return _result(false, "INVALID_COMMAND")
+	if command["instance_id"] != _execution["instance_id"]:
+		return _result(false, "COMMAND_BEAT_MISMATCH")
+	if command["beat_id"] != _execution["current_beat_id"]:
+		return _result(false, "COMMAND_BEAT_MISMATCH")
+	if _execution["execution_status"] != "WAITING_FOR_PLAYER":
+		return _result(false, "EXECUTION_NOT_WAITING_FOR_COMMAND")
+	var pending: Dictionary = _execution["pending_player_input"]
+	if command["kind"] != "CONTINUE" or command["kind"] != pending["kind"]:
+		return _result(false, "COMMAND_KIND_MISMATCH")
+	var next_beat := _beat_by_id(beat["next"]["beat_id"])
+	if next_beat.get("type") != "RETURN":
+		return _result(false, "INVALID_RETURN_CHAIN")
+	var schedules: Array = _execution.get("scheduled_returns", [])
+	if schedules.size() != 1 or not Moment.validate(schedules[0].get("eligible_at")):
+		return _result(false, "INVALID_RETURN_CHAIN")
+	var planned_schedule := _schedule_return(
+		next_beat, str(_execution["selected_resolution_id"]), schedules[0]["eligible_at"]
+	)
+	if planned_schedule.is_empty():
+		return _result(false, "INVALID_RETURN_DELAY")
+	var submitted = _projection_port.submit(command)
+	if not ProjectionContracts.validate_projection_result(submitted)["valid"] or not submitted["accepted"]:
+		return _result(false, "PORT_COMMAND_REFUSED")
+	var presentation_id := ProjectionContracts.presentation_id_for(_projection_request(beat))
+	var closed = _projection_port.close(presentation_id)
+	if not ProjectionContracts.validate_projection_result(closed)["valid"] or not closed["accepted"]:
+		return _result(false, "PORT_CLOSE_REFUSED")
+	_execution["pending_player_input"] = null
+	_execution["current_beat_id"] = next_beat["beat_id"]
+	_execution["checkpoint_id"] = next_beat["checkpoint_before"]
+	if next_beat["checkpoint_before"] != null:
+		_reach_checkpoint(next_beat["checkpoint_before"])
+	_execution["execution_status"] = "RESOLVED_RETURN_PENDING"
+	_execution["scheduled_returns"] = [planned_schedule]
+	if not _execution_valid():
+		return _result(false, "INVALID_EXECUTION_TRANSITION")
+	return _result(true, null, submitted["idempotent"], {"port_result": submitted})
+
+
 func _schedule_return(beat: Dictionary, resolution_id: String, scheduled_from: String) -> Dictionary:
 	if beat.get("type") != "RETURN":
+		return {}
+	if resolution_id not in beat.get("content", {}).get("eligible_resolution_ids", []):
 		return {}
 	var delay: Dictionary = beat.get("content", {}).get("delay", {})
 	var mode := str(delay.get("mode", ""))
