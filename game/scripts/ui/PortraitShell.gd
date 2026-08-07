@@ -7,7 +7,7 @@ const SAFE_AREA_SCRIPT := preload("res://scripts/ui/SafeAreaContainer.gd")
 const MESSAGES_SCREEN_SCENE := preload("res://scenes/portrait/messages/MessagesScreen.tscn")
 const GALLERY_SCREEN_SCENE := preload("res://scenes/portrait/gallery/GalleryScreen.tscn")
 const PHOTO_VIEWER_SCENE := preload("res://scenes/portrait/gallery/PhotoViewer.tscn")
-const SEASON_RUNTIME_PROVIDER_SCRIPT := preload("res://scripts/runtime/season_1/Season1RuntimeProvider.gd")
+const SEASON_RUNTIME_PROVIDER_PATH := "res://scripts/runtime/season_1/Season1RuntimeProvider.gd"
 const TAG_MESSAGES := "messages"
 const TAG_GALLERY := "gallery"
 const READING_SPEEDS := [1.0, 3.0, 8.0]
@@ -19,7 +19,7 @@ const READING_SPEED_TOOLTIPS := [
 ]
 const READING_SPEED_MINIMUM_SIZE := Vector2(44, 44)
 
-@export_enum("demo", "runtime_s1") var content_mode := "demo"
+@export_enum("demo", "runtime_s1", "unified") var content_mode := "demo"
 
 var safe_area_container
 var shell_column: VBoxContainer
@@ -222,9 +222,12 @@ func _build_shell() -> void:
 	if content_mode == "demo":
 		runtime_provider = null
 	elif content_mode == "runtime_s1":
-		runtime_provider = SEASON_RUNTIME_PROVIDER_SCRIPT.new()
+		var season_runtime_provider_script = load(SEASON_RUNTIME_PROVIDER_PATH)
+		runtime_provider = season_runtime_provider_script.new()
 		if not runtime_provider.initialize():
 			push_error("Unable to initialize Season 1 runtime provider")
+	else:
+		runtime_provider = null
 	messages_panel = _build_messages_panel()
 	content_stack.add_child(messages_panel)
 
@@ -272,11 +275,39 @@ func _build_shell() -> void:
 func is_photo_viewer_active() -> bool:
 	return photo_viewer != null and photo_viewer.visible and not photo_viewer_state.is_empty()
 
+
+func configure_unified_runtime(session) -> bool:
+	if content_mode != "unified" or session == null or messages_screen == null or gallery_screen == null:
+		return false
+	runtime_provider = session
+	messages_screen.activate_runtime_content_source(session.presentation_source(), session)
+	gallery_screen.refresh_content_source(session.gallery_source())
+	if not session.gallery_source_changed.is_connected(_on_unified_gallery_source_changed):
+		session.gallery_source_changed.connect(_on_unified_gallery_source_changed)
+	return true
+
+
+func clear_unified_runtime() -> void:
+	runtime_provider = null
+	if messages_screen != null:
+		messages_screen.configure_content_source({}, null)
+	if gallery_screen != null:
+		gallery_screen.refresh_content_source({})
+
+
+func _on_unified_gallery_source_changed(source: Dictionary) -> void:
+	if gallery_screen != null:
+		gallery_screen.refresh_content_source(source)
+
 func _on_message_photo_requested(presentation: Dictionary, provenance: Dictionary) -> void:
 	if active_tab != TAG_MESSAGES or str(provenance.get("source_kind", "")) != TAG_MESSAGES or str(presentation.get("source_kind", "")) != TAG_MESSAGES:
 		return
 	var sequence: Array[Dictionary] = [presentation]
-	if _open_photo_viewer(sequence, 0, provenance) and runtime_provider != null:
+	if (
+		_open_photo_viewer(sequence, 0, provenance)
+		and runtime_provider != null
+		and runtime_provider.has_method("mark_photo_opened")
+	):
 		runtime_provider.mark_photo_opened()
 
 func _on_scene_sequence_requested(sequence: Array[Dictionary], provenance: Dictionary) -> void:

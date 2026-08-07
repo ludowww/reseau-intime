@@ -16,7 +16,7 @@ const NOTIFICATION_BANNER_SCRIPT := preload("res://scripts/ui/messages/Notificat
 const OFF_PHONE_TRANSITION_SCRIPT := preload("res://scripts/ui/messages/OffPhoneTransition.gd")
 const DAY_TRANSITION_SCRIPT := preload("res://scripts/ui/messages/DayTransition.gd")
 const TIME_PASSAGE_OVERLAY_SCENE := preload("res://scenes/portrait/messages/TimePassageOverlay.tscn")
-const NARRATIVE_TIME := preload("res://scripts/runtime/season_1/NarrativeTime.gd")
+const NARRATIVE_TIME := preload("res://scripts/shared/NarrativeTime.gd")
 const INTER_MESSAGE_PAUSE_SECONDS := 0.30
 const IMAGE_TYPING_DURATION_SECONDS := 1.50
 const MIN_TYPING_SECONDS_X3 := 0.35
@@ -99,6 +99,19 @@ func configure_content_source(source: Dictionary, provider = null) -> void:
 	runtime_provider = provider
 	if _runtime_has("attach_messages_screen"):
 		runtime_provider.call("attach_messages_screen", self)
+
+
+func activate_runtime_content_source(source: Dictionary, provider) -> void:
+	configure_content_source(source, provider)
+	_initialize_runtime_source(source)
+	if conversation_list != null:
+		conversation_list.configure(threads, characters, PORTRAIT_THEME, false)
+	if conversation_screen != null:
+		conversation_screen.visible = false
+	if conversation_list != null:
+		conversation_list.visible = true
+	_set_screen_mode("list")
+	call_deferred("_present_notification", false)
 
 func _runtime_has(capability: String) -> bool:
 	return runtime_provider != null and runtime_provider.has_method(capability)

@@ -160,6 +160,7 @@ func _present_sandra_opening(provider) -> void:
 
 func _exercise_real_portrait_path() -> void:
 	var main = MAIN_SCENE.instantiate()
+	main.get_node("PortraitShell").content_mode = "runtime_s1"
 	add_child(main)
 	await _frames(6)
 	var shell = main.shell

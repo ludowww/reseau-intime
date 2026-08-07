@@ -2,6 +2,9 @@ extends RefCounted
 
 class_name R8CSceneDefinition
 
+const DurableMediaIdentifier := preload(
+	"res://scripts/shared/DurableMediaIdentifier.gd"
+)
 const NATURES := ["SIGNATURE", "MODULAIRE"]
 const FONCTIONS := ["RELATION", "OPPORTUNITE", "ECHO", "RESPIRATION"]
 const POLITIQUES_UNICITE := ["UNIQUE", "REPETABLE"]
@@ -410,7 +413,12 @@ static func _valider_manifeste_durable(manifeste) -> String:
 			if not erreur_effet.is_empty():
 				return erreur_effet
 			var identifiant = _identifiant_effet_durable(categorie, entree)
-			if not _identifiant_durable(identifiant):
+			var identifiant_valide := (
+				_identifiant_media_durable(identifiant)
+				if categorie == "media_deliveries"
+				else _identifiant_durable(identifiant)
+			)
+			if not identifiant_valide:
 				return "definition de scene: identifiant metier durable vide"
 			if identifiants.has(identifiant):
 				return "definition de scene: identifiant metier durable duplique"
@@ -573,6 +581,10 @@ static func _identifiant_durable(value) -> bool:
 			if numero.length() == 2 and numero.is_valid_int():
 				return false
 	return true
+
+
+static func _identifiant_media_durable(value) -> bool:
+	return DurableMediaIdentifier.validate(value)
 
 
 static func _chaine_durable(value) -> bool:

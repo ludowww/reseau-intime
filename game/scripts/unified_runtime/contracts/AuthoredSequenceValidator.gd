@@ -3,6 +3,9 @@ extends RefCounted
 class_name R8CAuthoredSequenceValidator
 
 const Contract := preload("res://scripts/unified_runtime/contracts/AuthoredSequenceV1.gd")
+const DurableMediaIdentifier := preload(
+	"res://scripts/shared/DurableMediaIdentifier.gd"
+)
 
 const A6_DEFINITION_REQUIRED_FIELDS := [
 	"scene_id", "version_contrat", "nature", "fonction_principale", "participants_requis",
@@ -1338,7 +1341,10 @@ static func _validate_a6_durable_manifest(value, path: String, errors: Array[Str
 			var business_id = _a6_durable_business_id(category, entry)
 			if business_id == null:
 				continue
-			_validate_business_id(business_id, item_path + ".business_id", errors)
+			if category == "media_deliveries":
+				_validate_media_id(business_id, item_path + ".business_id", errors)
+			else:
+				_validate_business_id(business_id, item_path + ".business_id", errors)
 			if business_ids.has(business_id):
 				_add_error(errors, item_path + ".business_id", "duplicate")
 			else:
@@ -1433,7 +1439,7 @@ static func _validate_a6_durable_effect(
 			_validate_id_array(entry["beneficiary_ids"], path + ".beneficiary_ids", errors, true)
 			_validate_durable_string(entry["kind"], path + ".kind", errors)
 		return
-	_validate_business_id(entry["media_id"], path + ".media_id", errors)
+	_validate_media_id(entry["media_id"], path + ".media_id", errors)
 	if entry["effect"] in ["CREATE_DIEGETIC", "GRANT_ACCESS"]:
 		_validate_id_array(entry["fictional_audience_ids"], path + ".fictional_audience_ids", errors, false)
 	if entry["effect"] == "GRANT_ACCESS":
@@ -1709,15 +1715,10 @@ static func _validate_business_id(value, path: String, errors: Array[String]) ->
 
 
 static func _validate_media_id(value, path: String, errors: Array[String]) -> void:
-	if typeof(value) != TYPE_STRING or value.is_empty() or value.length() > 160 or value != value.strip_edges():
+	if not DurableMediaIdentifier.format_valid(value):
 		_add_error(errors, path, "invalid_media_identifier")
 		return
-	for index in value.length():
-		var character: String = value.substr(index, 1)
-		if character not in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_":
-			_add_error(errors, path, "invalid_media_identifier")
-			return
-	if value == value.to_lower() and _contains_day_identity(value):
+	if DurableMediaIdentifier.forbidden_day_identity(value):
 		_add_error(errors, path, "day_based_identifier_forbidden")
 
 

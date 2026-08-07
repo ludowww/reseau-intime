@@ -51,14 +51,26 @@ static func create(authored_sequence, livraison_medias, resolver) -> Dictionary:
 func content_source() -> Dictionary:
 	var fixtures := {}
 	var character_order: Array[String] = []
+	var children_by_id := {}
 	var accessible_ids: Array = []
 	for media_id in _livraison_medias:
 		var record: Dictionary = _livraison_medias[media_id]
 		if _is_gallery_accessible(record):
 			accessible_ids.append(media_id)
-	accessible_ids.sort()
-	for index in accessible_ids.size():
-		var media_id: String = accessible_ids[index]
+	accessible_ids = _ordered_media_ids(accessible_ids)
+	var root_ids: Array = []
+	for media_id in accessible_ids:
+		var candidate_definition: Dictionary = _resolver.media_definition(media_id)
+		if candidate_definition.is_empty():
+			return _source_failure("UNKNOWN_AUTHORED_MEDIA")
+		if candidate_definition.get("parent_media_id") == null:
+			root_ids.append(media_id)
+	for media_id in accessible_ids:
+		var candidate_definition: Dictionary = _resolver.media_definition(media_id)
+		if candidate_definition.get("parent_media_id") != null and candidate_definition["parent_media_id"] not in root_ids:
+			return _source_failure("ORPHAN_ACCESSIBLE_MEDIA")
+	for index in root_ids.size():
+		var media_id: String = root_ids[index]
 		var definition: Dictionary = _resolver.media_definition(media_id)
 		if definition.is_empty():
 			return _source_failure("UNKNOWN_AUTHORED_MEDIA")
@@ -75,7 +87,11 @@ func content_source() -> Dictionary:
 		for candidate_id in accessible_ids:
 			var candidate: Dictionary = _resolver.media_definition(candidate_id)
 			if candidate.get("parent_media_id") == media_id:
+				if candidate.get("gallery_policy") == "NEVER":
+					return _source_failure("AVAILABLE_MEDIA_FORBIDDEN_BY_GALLERY_POLICY")
 				child_ids.append(candidate_id)
+		if not child_ids.is_empty() and gallery_character_ids.size() != 1:
+			return _source_failure("SEQUENCED_MEDIA_REQUIRES_SINGLE_GALLERY_CHARACTER")
 		var thumbnail: Dictionary = _resolver.resolve_thumbnail(media_id, child_ids)
 		if not bool(thumbnail.get("ok", false)):
 			return _source_failure(str(thumbnail.get("error_code", "THUMBNAIL_RESOLUTION_FAILED")))
@@ -88,7 +104,7 @@ func content_source() -> Dictionary:
 					"items": [],
 				}
 				character_order.append(character_id)
-			fixtures[character_id]["items"].append({
+			var item := {
 				"item_id": media_id,
 				"asset_id": media_id,
 				"character_id": character_id,
@@ -101,7 +117,26 @@ func content_source() -> Dictionary:
 				"placeholder_label": full_presentation["placeholder_label"],
 				"resolved_thumbnail": _viewer_resolution(thumbnail_presentation),
 				"resolved_media": _viewer_resolution(full_presentation),
-			})
+			}
+			if not child_ids.is_empty():
+				var sequence_child_ids: Array = [media_id]
+				sequence_child_ids.append_array(child_ids)
+				item["sequence_child_ids"] = sequence_child_ids
+				for sequence_child_id in sequence_child_ids:
+					var child_result: Dictionary = _resolver.resolve(sequence_child_id)
+					if not bool(child_result.get("ok", false)):
+						return _source_failure(str(child_result.get("error_code", "MEDIA_RESOLUTION_FAILED")))
+					var child_presentation: Dictionary = child_result["presentation"]
+					children_by_id[sequence_child_id] = {
+						"asset_id": sequence_child_id,
+						"parent_asset_id": media_id,
+						"character_id": character_id,
+						"source_kind": "gallery",
+						"full_ref": child_presentation["visual_ref"],
+						"placeholder_label": child_presentation["placeholder_label"],
+						"resolved_media": _viewer_resolution(child_presentation),
+					}
+			fixtures[character_id]["items"].append(item)
 	character_order.sort()
 	return {
 		"ok": true,
@@ -109,7 +144,7 @@ func content_source() -> Dictionary:
 		"source": {
 			"fixtures": fixtures,
 			"character_order": character_order,
-			"children_by_id": {},
+			"children_by_id": children_by_id,
 			"empty_label": "Aucun média accessible",
 		},
 	}
@@ -117,6 +152,22 @@ func content_source() -> Dictionary:
 
 func durable_registry_snapshot() -> Dictionary:
 	return _livraison_medias.duplicate(true)
+
+
+func _ordered_media_ids(accessible_ids: Array) -> Array:
+	var authored_order := {}
+	var index := 0
+	for beat in _authored_sequence["beats"]:
+		if beat.get("type") == "MEDIA_REVEAL":
+			authored_order[beat["content"]["media_id"]] = index
+			index += 1
+	var result: Array = accessible_ids.duplicate()
+	result.sort_custom(func(left, right):
+		var left_order := int(authored_order.get(left, 1000000))
+		var right_order := int(authored_order.get(right, 1000000))
+		return left_order < right_order if left_order != right_order else str(left) < str(right)
+	)
+	return result
 
 
 static func _is_gallery_accessible(record: Dictionary) -> bool:

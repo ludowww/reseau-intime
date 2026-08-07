@@ -13,6 +13,7 @@ func _run() -> void:
 	var expected_size := _parse_size(_arg("--runtime-size", "720x1280"))
 	get_window().size = expected_size
 	var main = MAIN_SCENE.instantiate()
+	main.get_node("PortraitShell").content_mode = "runtime_s1"
 	add_child(main)
 	await _frames(4)
 	var shell = main.shell

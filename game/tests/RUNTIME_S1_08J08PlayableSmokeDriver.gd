@@ -326,6 +326,7 @@ func _ui_thread_matches_provider_with_pending(messages, provider, thread_id: Str
 
 func _exercise_real_portrait_surfaces(size: Vector2i) -> void:
 	var main = MAIN_SCENE.instantiate()
+	main.get_node("PortraitShell").content_mode = "runtime_s1"
 	add_child(main)
 	await _frames(6)
 	var shell = main.shell

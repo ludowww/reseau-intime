@@ -41,6 +41,7 @@ func _exercise_pauline_outcome_snapshot_contracts() -> void:
 
 func _exercise_real_portrait_path(label: String, echo_order: Array, exercise_photo: bool) -> void:
 	var main = MAIN_SCENE.instantiate()
+	main.get_node("PortraitShell").content_mode = "runtime_s1"
 	tested_mains.append(main)
 	add_child(main)
 	await _frames(6)

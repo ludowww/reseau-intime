@@ -1,0 +1,70 @@
+{
+  "schema_id": "reseau_intime.referenced_messages_catalog",
+  "schema_version": 1,
+  "sequence_id": "mathilde_returns_with_chosen_intent_01",
+  "authored_version": "1.0.0",
+  "presentation_metadata": {
+    "characters": {
+      "mathilde": {"character_id": "mathilde", "display_name": "Mathilde", "accent_color": "#C76AA8", "avatar_ref": "M"},
+      "player": {"character_id": "player", "display_name": "Player", "accent_color": "#8D63E6", "avatar_ref": "P"}
+    },
+    "threads": [
+      {
+        "thread_id": "mathilde_thread",
+        "title": "Mathilde",
+        "participant_ids": ["mathilde", "player"],
+        "last_preview": "",
+        "last_timestamp": "",
+        "unread_count": 0,
+        "has_unread_content": false,
+        "availability_state": "AVAILABLE",
+        "is_group": false,
+        "is_archived": false,
+        "avatar_ref": "M",
+        "accent_color": "#C76AA8"
+      }
+    ],
+    "narrative_day_short": "Mer.",
+    "narrative_time": "21:06"
+  },
+  "entries": [
+    {
+      "content_ref": "mathilde_mb3_aftercare_content",
+      "beat_type": "AFTERCARE",
+      "thread_id": "mathilde_thread",
+      "messages": [
+        {"message_id": "mathilde_mb3_aftercare_01", "author_id": "mathilde", "text": "Je suis arrivée.", "diegetic_at": "2032-03-04T21:51:00+01:00", "relative_order": 0},
+        {"message_id": "mathilde_mb3_aftercare_02", "author_id": "mathilde", "text": "Je ne regrette pas.", "diegetic_at": "2032-03-04T21:51:05+01:00", "relative_order": 1},
+        {"message_id": "mathilde_mb3_aftercare_03", "author_id": "mathilde", "text": "Je ne sais pas encore ce que ça change.", "diegetic_at": "2032-03-04T21:52:00+01:00", "relative_order": 2}
+      ]
+    },
+    {
+      "content_ref": "mathilde_mb3_ma1_return_content",
+      "beat_type": "RETURN",
+      "thread_id": "mathilde_thread",
+      "messages": [
+        {"message_id": "mathilde_mb3_ma1_return_01", "author_id": "mathilde", "text": "Bien.", "diegetic_at": "2032-03-04T21:53:00+01:00", "relative_order": 0},
+        {"message_id": "mathilde_mb3_ma1_return_02", "author_id": "mathilde", "text": "Mais demain, tu ne fais pas comme si rien ne s’était passé.", "diegetic_at": "2032-03-04T21:53:05+01:00", "relative_order": 1}
+      ]
+    },
+    {
+      "content_ref": "mathilde_mb3_ma2_return_content",
+      "beat_type": "RETURN",
+      "thread_id": "mathilde_thread",
+      "messages": [
+        {"message_id": "mathilde_mb3_ma2_return_01", "author_id": "mathilde", "text": "Oui.", "diegetic_at": "2032-03-04T21:53:00+01:00", "relative_order": 0},
+        {"message_id": "mathilde_mb3_ma2_return_02", "author_id": "mathilde", "text": "Merci de ne pas appeler ça juste un moment.", "diegetic_at": "2032-03-04T21:53:05+01:00", "relative_order": 1}
+      ]
+    },
+    {
+      "content_ref": "mathilde_mb3_failed_return_content",
+      "beat_type": "RETURN",
+      "thread_id": "mathilde_thread",
+      "messages": [
+        {"message_id": "mathilde_mb3_failed_return_01", "author_id": "mathilde", "text": "Hier, tu as demandé la suite avant de vérifier comment j’étais.", "diegetic_at": "2032-03-05T09:06:00+01:00", "relative_order": 0},
+        {"message_id": "mathilde_mb3_failed_return_02", "author_id": "mathilde", "text": "Je ne viens pas ce soir.", "diegetic_at": "2032-03-05T09:07:00+01:00", "relative_order": 1},
+        {"message_id": "mathilde_mb3_failed_return_03", "author_id": "mathilde", "text": "Et on ne recommence rien.", "diegetic_at": "2032-03-05T09:07:05+01:00", "relative_order": 2}
+      ]
+    }
+  ]
+}

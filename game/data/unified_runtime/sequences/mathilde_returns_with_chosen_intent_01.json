@@ -1,0 +1,315 @@
+{
+  "schema_id": "reseau_intime.authored_sequence",
+  "schema_version": 1,
+  "sequence_id": "mathilde_returns_with_chosen_intent_01",
+  "authored_version": "1.0.0",
+  "season_id": "season_1",
+  "dramatic_movement_id": "movement_iii",
+  "narrative_function": "RELATION",
+  "canonical_status": "CANON_APPROVED",
+  "author_provenance": {
+    "source_document_paths": [
+      "docs/canon/dialogues/J11_SCRIPT_NARRATIF_COMPLET.md",
+      "docs/canon/dialogues/J12_SCRIPT_NARRATIF_COMPLET.md"
+    ],
+    "source_sequence_ids": ["mathilde_returns_with_chosen_intent_01"],
+    "approval_ref": "R8C-N17",
+    "authoring_tool_ref": null
+  },
+  "participants": {
+    "present_character_ids": ["mathilde", "player"],
+    "concerned_absent_character_ids": ["marie"],
+    "initial_audiences": {"player_only": []},
+    "player_role": "PARTICIPANT"
+  },
+  "orchestration": {
+    "a6_entry": {
+      "scene_definition_id": "mathilde_returns_with_chosen_intent_01",
+      "variant_id": "mathilde_returns_with_chosen_intent_canonical",
+      "definition": {
+        "scene_id": "mathilde_returns_with_chosen_intent_01",
+        "version_contrat": "1.0.0",
+        "nature": "SIGNATURE",
+        "fonction_principale": "RELATION",
+        "participants_requis": [
+          {"personnage_id": "mathilde", "role": "INITIATIVE_CONSENTIE_BORNEE"}
+        ],
+        "conditions_dures": {
+          "actes_compatibles": ["MATHILDE_M_B3_CANONICAL"],
+          "evenements_requis": []
+        },
+        "exclusions_dures": {"evenements_interdits": []},
+        "contrat_temporel": {
+          "date_debut": "2032-03-04",
+          "date_fin": "2032-03-04",
+          "heure_ouverture": "21:00",
+          "heure_fermeture": "23:00",
+          "duree_minutes": 120,
+          "revalidation": "AVANT_PROPOSITION_ET_RESOLUTION"
+        },
+        "politique_unicite": "UNIQUE",
+        "resolutions": {
+          "mathilde_mb3_ma1_resolution": {
+            "personnage_id": "mathilde",
+            "portee_micro_signal": "DURABLE",
+            "signal_recu": "AFTERCARE_SANS_DEFINITION_IMMEDIATE",
+            "reception": "RECUE_INTERPRETEE",
+            "interpretation": "Clarification reportée sans nier le moment vécu.",
+            "faits_relationnels": [
+              {"fait_id": "mathilde_mb3_ma1_aftercare_acknowledged", "nature": "AFTERCARE_RECONNUE", "recu_par": "mathilde"}
+            ],
+            "convergence": "RETOUR_NOYAU_COMMUN",
+            "durable_manifest": {
+              "binding": {"sequence_id": "mathilde_returns_with_chosen_intent_01", "authored_version": "1.0.0", "resolution_id": "resolution_ma1"},
+              "facts": [
+                {"event_key": "mathilde_mb3_ma1_aftercare_acknowledged", "scope": "RELATION", "personnage_id": "mathilde", "fact": {"fait_id": "mathilde_mb3_ma1_aftercare_acknowledged", "nature": "AFTERCARE_RECONNUE", "recu_par": "mathilde"}}
+              ],
+              "knowledge": [],
+              "traces": [],
+              "promises": [],
+              "obligations": [
+                {"event_key": "mathilde_mb3_aftercare_paid_ma1", "effect": "CREATE_PAID", "obligation_id": "mathilde_secret_intimacy_aftercare", "debtor_id": "player", "beneficiary_ids": ["mathilde"], "kind": "AFTERCARE"}
+              ],
+              "media_deliveries": [
+                {"event_key": "mathilde_mb3_ma1_media_proximity", "effect": "GRANT_ACCESS", "media_id": "S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01_PROXIMITY", "diegetic_status": "NOT_APPLICABLE", "fictional_audience_ids": [], "gallery_status": "AVAILABLE"},
+                {"event_key": "mathilde_mb3_ma1_media_central", "effect": "GRANT_ACCESS", "media_id": "S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_CENTRAL_01", "diegetic_status": "NOT_APPLICABLE", "fictional_audience_ids": [], "gallery_status": "AVAILABLE"},
+                {"event_key": "mathilde_mb3_ma1_media_aftercare", "effect": "GRANT_ACCESS", "media_id": "S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_AFTERCARE_01", "diegetic_status": "NOT_APPLICABLE", "fictional_audience_ids": [], "gallery_status": "AVAILABLE"}
+              ]
+            }
+          },
+          "mathilde_mb3_ma2_resolution": {
+            "personnage_id": "mathilde",
+            "portee_micro_signal": "DURABLE",
+            "signal_recu": "RESPONSABILITE_ENVERS_MARIE_RECONNUE",
+            "reception": "RECUE_INTERPRETEE",
+            "interpretation": "Le secret et sa conséquence sont nommés.",
+            "faits_relationnels": [
+              {"fait_id": "mathilde_mb3_ma2_consequence_acknowledged", "nature": "SECRET_ET_RESPONSABILITE_RECONNUS", "recu_par": "mathilde"}
+            ],
+            "convergence": "RETOUR_NOYAU_COMMUN",
+            "durable_manifest": {
+              "binding": {"sequence_id": "mathilde_returns_with_chosen_intent_01", "authored_version": "1.0.0", "resolution_id": "resolution_ma2"},
+              "facts": [
+                {"event_key": "mathilde_mb3_ma2_consequence_acknowledged", "scope": "RELATION", "personnage_id": "mathilde", "fact": {"fait_id": "mathilde_mb3_ma2_consequence_acknowledged", "nature": "SECRET_ET_RESPONSABILITE_RECONNUS", "recu_par": "mathilde"}}
+              ],
+              "knowledge": [],
+              "traces": [],
+              "promises": [],
+              "obligations": [
+                {"event_key": "mathilde_mb3_aftercare_paid_ma2", "effect": "CREATE_PAID", "obligation_id": "mathilde_secret_intimacy_aftercare", "debtor_id": "player", "beneficiary_ids": ["mathilde"], "kind": "AFTERCARE"}
+              ],
+              "media_deliveries": [
+                {"event_key": "mathilde_mb3_ma2_media_proximity", "effect": "GRANT_ACCESS", "media_id": "S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01_PROXIMITY", "diegetic_status": "NOT_APPLICABLE", "fictional_audience_ids": [], "gallery_status": "AVAILABLE"},
+                {"event_key": "mathilde_mb3_ma2_media_central", "effect": "GRANT_ACCESS", "media_id": "S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_CENTRAL_01", "diegetic_status": "NOT_APPLICABLE", "fictional_audience_ids": [], "gallery_status": "AVAILABLE"},
+                {"event_key": "mathilde_mb3_ma2_media_aftercare", "effect": "GRANT_ACCESS", "media_id": "S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_AFTERCARE_01", "diegetic_status": "NOT_APPLICABLE", "fictional_audience_ids": [], "gallery_status": "AVAILABLE"}
+              ]
+            }
+          },
+          "mathilde_mb3_ma3_resolution": {
+            "personnage_id": "mathilde",
+            "portee_micro_signal": "DURABLE",
+            "signal_recu": "REPETITION_IMMEDIATE_DEMANDEE",
+            "reception": "LIMITE_EXPLICITE",
+            "interpretation": "L’aftercare échoue et toute répétition est refusée.",
+            "faits_relationnels": [
+              {"fait_id": "mathilde_mb3_ma3_repetition_refused", "nature": "REPETITION_NON_AUTORISEE", "recu_par": "mathilde", "permission_future": false}
+            ],
+            "convergence": "RETOUR_NOYAU_COMMUN",
+            "durable_manifest": {
+              "binding": {"sequence_id": "mathilde_returns_with_chosen_intent_01", "authored_version": "1.0.0", "resolution_id": "resolution_ma3"},
+              "facts": [
+                {"event_key": "mathilde_mb3_ma3_repetition_refused", "scope": "RELATION", "personnage_id": "mathilde", "fact": {"fait_id": "mathilde_mb3_ma3_repetition_refused", "nature": "REPETITION_NON_AUTORISEE", "recu_par": "mathilde", "permission_future": false}}
+              ],
+              "knowledge": [],
+              "traces": [],
+              "promises": [],
+              "obligations": [
+                {"event_key": "mathilde_mb3_aftercare_failed_ma3", "effect": "CREATE_FAILED", "obligation_id": "mathilde_secret_intimacy_aftercare", "debtor_id": "player", "beneficiary_ids": ["mathilde"], "kind": "AFTERCARE"}
+              ],
+              "media_deliveries": [
+                {"event_key": "mathilde_mb3_ma3_media_proximity", "effect": "GRANT_ACCESS", "media_id": "S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01_PROXIMITY", "diegetic_status": "NOT_APPLICABLE", "fictional_audience_ids": [], "gallery_status": "AVAILABLE"},
+                {"event_key": "mathilde_mb3_ma3_media_central", "effect": "GRANT_ACCESS", "media_id": "S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_CENTRAL_01", "diegetic_status": "NOT_APPLICABLE", "fictional_audience_ids": [], "gallery_status": "AVAILABLE"},
+                {"event_key": "mathilde_mb3_ma3_media_aftercare", "effect": "GRANT_ACCESS", "media_id": "S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_AFTERCARE_01", "diegetic_status": "NOT_APPLICABLE", "fictional_audience_ids": [], "gallery_status": "AVAILABLE"}
+              ]
+            }
+          }
+        },
+        "choix": [
+          {"choix_id": "mathilde_mb3_ma1_choice", "formulation": "Ne pas réclamer de définition", "signal_emis": "AFTERCARE_SANS_DEFINITION_IMMEDIATE", "resolution_ids": ["mathilde_mb3_ma1_resolution"]},
+          {"choix_id": "mathilde_mb3_ma2_choice", "formulation": "Reconnaître la conséquence envers Marie", "signal_emis": "RESPONSABILITE_ENVERS_MARIE_RECONNUE", "resolution_ids": ["mathilde_mb3_ma2_resolution"]},
+          {"choix_id": "mathilde_mb3_ma3_choice", "formulation": "Demander immédiatement une répétition", "signal_emis": "REPETITION_IMMEDIATE_DEMANDEE", "resolution_ids": ["mathilde_mb3_ma3_resolution"]}
+        ],
+        "politique_non_resolution": {"proposition_expire": "CANCELLED"}
+      }
+    },
+    "a8_window": {"window_id": "mathilde_mb3_evening_window", "conflict_policy": "CLOSE_SILENTLY"},
+    "a9_slot": {"slot_role": "mathilde_mb3_private_evening", "duration_minutes": 120, "relative_order": 0, "not_before_anchor": null, "not_after_anchor": null}
+  },
+  "temporal_projection": {
+    "anchor_id": "mathilde_mb3_evening_anchor",
+    "offset_minutes": 0,
+    "relative_order": 0,
+    "delay": {"mode": "NONE", "value": null},
+    "resolved_window": {"opens_at": "2032-03-04T21:00:00+01:00", "closes_at": "2032-03-04T23:00:00+01:00"}
+  },
+  "entry_beat_id": "mathilde_mb3_opening",
+  "beats": [
+    {
+      "beat_id": "mathilde_mb3_opening",
+      "type": "MESSAGE",
+      "content": {
+        "thread_id": "mathilde_thread",
+        "messages": [
+          {"message_id": "mathilde_mb3_open_01", "author_id": "mathilde", "text": "Je suis en bas.", "diegetic_at": "2032-03-04T21:06:00+01:00", "relative_order": 0},
+          {"message_id": "mathilde_mb3_open_02", "author_id": "mathilde", "text": "Je remonte dans deux minutes.", "diegetic_at": "2032-03-04T21:06:05+01:00", "relative_order": 1},
+          {"message_id": "mathilde_mb3_open_03", "author_id": "mathilde", "text": "Et je porte la première tenue.", "diegetic_at": "2032-03-04T21:06:10+01:00", "relative_order": 2},
+          {"message_id": "mathilde_mb3_open_04", "author_id": "mathilde", "text": "Oui, exprès.", "diegetic_at": "2032-03-04T21:07:00+01:00", "relative_order": 3},
+          {"message_id": "mathilde_mb3_open_05", "author_id": "mathilde", "text": "Je préfère te prévenir avant de voir ta tête.", "diegetic_at": "2032-03-04T21:07:05+01:00", "relative_order": 4},
+          {"message_id": "mathilde_mb3_open_06", "author_id": "player", "text": "j’ai compris", "diegetic_at": "2032-03-04T21:07:30+01:00", "relative_order": 5},
+          {"message_id": "mathilde_mb3_open_07", "author_id": "mathilde", "text": "Tu as compris une partie.", "diegetic_at": "2032-03-04T21:08:00+01:00", "relative_order": 6},
+          {"message_id": "mathilde_mb3_open_08", "author_id": "mathilde", "text": "Je veux que tu regardes.", "diegetic_at": "2032-03-04T21:08:05+01:00", "relative_order": 7},
+          {"message_id": "mathilde_mb3_open_09", "author_id": "mathilde", "text": "Le reste, je ne l’ai pas décidé.", "diegetic_at": "2032-03-04T21:09:00+01:00", "relative_order": 8},
+          {"message_id": "mathilde_mb3_consent_01", "author_id": "mathilde", "text": "Tu peux m’embrasser.", "diegetic_at": "2032-03-04T21:12:00+01:00", "relative_order": 9},
+          {"message_id": "mathilde_mb3_consent_02", "author_id": "mathilde", "text": "Rien d’autre sans me demander.", "diegetic_at": "2032-03-04T21:12:05+01:00", "relative_order": 10},
+          {"message_id": "mathilde_mb3_consent_03", "author_id": "player", "text": "je t’embrasse seulement. si tu veux autre chose, tu me le dis. tu peux arrêter quand tu veux", "diegetic_at": "2032-03-04T21:12:20+01:00", "relative_order": 11},
+          {"message_id": "mathilde_mb3_consent_04", "author_id": "mathilde", "text": "Oui.", "diegetic_at": "2032-03-04T21:13:00+01:00", "relative_order": 12},
+          {"message_id": "mathilde_mb3_consent_05", "author_id": "mathilde", "text": "Je veux aller plus loin que ça.", "diegetic_at": "2032-03-04T21:14:00+01:00", "relative_order": 13},
+          {"message_id": "mathilde_mb3_consent_06", "author_id": "mathilde", "text": "Je te dis ce que j’accepte au fur et à mesure. Tu ne complètes pas le reste tout seul.", "diegetic_at": "2032-03-04T21:14:05+01:00", "relative_order": 14},
+          {"message_id": "mathilde_mb3_consent_07", "author_id": "player", "text": "d’accord. tu décides chaque étape. si tu hésites, si tu changes d’avis ou si tu dis stop, on arrête", "diegetic_at": "2032-03-04T21:14:10+01:00", "relative_order": 15},
+          {"message_id": "mathilde_mb3_consent_08", "author_id": "mathilde", "text": "Oui.", "diegetic_at": "2032-03-04T21:14:15+01:00", "relative_order": 16},
+          {"message_id": "mathilde_mb3_consent_09", "author_id": "mathilde", "text": "Et après je dors ailleurs comme prévu.", "diegetic_at": "2032-03-04T21:14:20+01:00", "relative_order": 17},
+          {"message_id": "mathilde_mb3_consent_10", "author_id": "player", "text": "compris", "diegetic_at": "2032-03-04T21:14:25+01:00", "relative_order": 18},
+          {"message_id": "mathilde_mb3_consent_11", "author_id": "mathilde", "text": "Viens.", "diegetic_at": "2032-03-04T21:14:30+01:00", "relative_order": 19}
+        ]
+      },
+      "participant_ids": ["mathilde"], "local_conditions": [], "projection_target": "MESSAGES",
+      "checkpoint_before": "mathilde_mb3_entered", "checkpoint_after": "mathilde_mb3_messages_presented",
+      "next": {"mode": "DIRECT", "beat_id": "mathilde_mb3_off_phone"}
+    },
+    {
+      "beat_id": "mathilde_mb3_off_phone", "type": "TRANSITION",
+      "content": {"transition_id": "mathilde_mb3_off_phone_transition", "mode": "OFF_PHONE", "from_anchor": "mathilde_thread", "to_anchor": "mathilde_mb3_private_space", "continuation_label": "Poser le téléphone"},
+      "participant_ids": ["mathilde"], "local_conditions": [], "projection_target": "PHYSICAL", "checkpoint_before": null, "checkpoint_after": "mathilde_mb3_off_phone_presented",
+      "next": {"mode": "DIRECT", "beat_id": "mathilde_mb3_physical"}
+    },
+    {
+      "beat_id": "mathilde_mb3_physical", "type": "PHYSICAL_BEAT",
+      "content": {"physical_beat_id": "mathilde_mb3_bounded_intimacy", "content_ref": "mathilde_mb3_bounded_intimacy_presentation", "withdrawal_choice_ids": ["mathilde_mb3_ma1"]},
+      "participant_ids": ["mathilde"], "local_conditions": [], "projection_target": "PHYSICAL", "checkpoint_before": null, "checkpoint_after": "mathilde_mb3_physical_presented",
+      "next": {"mode": "DIRECT", "beat_id": "mathilde_mb3_media_proximity"}
+    },
+    {
+      "beat_id": "mathilde_mb3_media_proximity", "type": "MEDIA_REVEAL",
+      "content": {"media_id": "S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01_PROXIMITY", "reveal_context": {}, "requires_ack": true},
+      "participant_ids": ["mathilde"], "local_conditions": [], "projection_target": "MEDIA", "checkpoint_before": null, "checkpoint_after": "mathilde_mb3_media_proximity_presented",
+      "next": {"mode": "DIRECT", "beat_id": "mathilde_mb3_media_central"}
+    },
+    {
+      "beat_id": "mathilde_mb3_media_central", "type": "MEDIA_REVEAL",
+      "content": {"media_id": "S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_CENTRAL_01", "reveal_context": {}, "requires_ack": true},
+      "participant_ids": ["mathilde"], "local_conditions": [], "projection_target": "MEDIA", "checkpoint_before": null, "checkpoint_after": "mathilde_mb3_media_central_presented",
+      "next": {"mode": "DIRECT", "beat_id": "mathilde_mb3_media_aftercare"}
+    },
+    {
+      "beat_id": "mathilde_mb3_media_aftercare", "type": "MEDIA_REVEAL",
+      "content": {"media_id": "S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_AFTERCARE_01", "reveal_context": {}, "requires_ack": true},
+      "participant_ids": ["mathilde"], "local_conditions": [], "projection_target": "MEDIA", "checkpoint_before": null, "checkpoint_after": "mathilde_mb3_media_aftercare_presented",
+      "next": {"mode": "DIRECT", "beat_id": "mathilde_mb3_aftercare"}
+    },
+    {
+      "beat_id": "mathilde_mb3_aftercare", "type": "AFTERCARE",
+      "content": {"aftercare_id": "mathilde_mb3_aftercare_messages", "content_ref": "mathilde_mb3_aftercare_content", "obligation_id": "mathilde_secret_intimacy_aftercare"},
+      "participant_ids": ["mathilde"], "local_conditions": [], "projection_target": "MESSAGES", "checkpoint_before": null, "checkpoint_after": "mathilde_mb3_aftercare_presented",
+      "next": {"mode": "DIRECT", "beat_id": "mathilde_mb3_aftercare_choice"}
+    },
+    {
+      "beat_id": "mathilde_mb3_aftercare_choice", "type": "CHOICE",
+      "content": {"thread_id": "mathilde_thread", "choices": [
+        {"choice_id": "mathilde_mb3_ma1", "text": "on n’a pas besoin de décider ce soir", "resolution_id": "resolution_ma1", "next_beat_id": "mathilde_mb3_ma1_return"},
+        {"choice_id": "mathilde_mb3_ma2", "text": "ça change déjà quelque chose avec Marie. même si elle ne sait pas", "resolution_id": "resolution_ma2", "next_beat_id": "mathilde_mb3_ma2_return"},
+        {"choice_id": "mathilde_mb3_ma3", "text": "on recommence quand", "resolution_id": "resolution_ma3", "next_beat_id": "mathilde_mb3_failed_return"}
+      ]},
+      "participant_ids": ["mathilde"], "local_conditions": [], "projection_target": "MESSAGES", "checkpoint_before": null, "checkpoint_after": "mathilde_mb3_resolution_ready",
+      "next": {"mode": "BRANCH", "branches": {"mathilde_mb3_ma1": "mathilde_mb3_ma1_return", "mathilde_mb3_ma2": "mathilde_mb3_ma2_return", "mathilde_mb3_ma3": "mathilde_mb3_failed_return"}}
+    },
+    {
+      "beat_id": "mathilde_mb3_ma1_return", "type": "RETURN",
+      "content": {"return_id": "mathilde_mb3_ma1_aftercare_return", "content_ref": "mathilde_mb3_ma1_return_content", "delay": {"mode": "NONE", "value": null}, "eligible_resolution_ids": ["resolution_ma1"]},
+      "participant_ids": ["mathilde"], "local_conditions": [], "projection_target": "MESSAGES", "checkpoint_before": null, "checkpoint_after": "mathilde_mb3_ma1_return_presented",
+      "next": {"mode": "TERMINAL", "beat_id": null}
+    },
+    {
+      "beat_id": "mathilde_mb3_ma2_return", "type": "RETURN",
+      "content": {"return_id": "mathilde_mb3_ma2_aftercare_return", "content_ref": "mathilde_mb3_ma2_return_content", "delay": {"mode": "NONE", "value": null}, "eligible_resolution_ids": ["resolution_ma2"]},
+      "participant_ids": ["mathilde"], "local_conditions": [], "projection_target": "MESSAGES", "checkpoint_before": null, "checkpoint_after": "mathilde_mb3_ma2_return_presented",
+      "next": {"mode": "TERMINAL", "beat_id": null}
+    },
+    {
+      "beat_id": "mathilde_mb3_failed_return", "type": "RETURN",
+      "content": {"return_id": "mathilde_mb3_failed_aftercare_return", "content_ref": "mathilde_mb3_failed_return_content", "delay": {"mode": "DIEGETIC_MINUTES", "value": 674}, "eligible_resolution_ids": ["resolution_ma3"]},
+      "participant_ids": ["mathilde"], "local_conditions": [], "projection_target": "MESSAGES", "checkpoint_before": null, "checkpoint_after": "mathilde_mb3_failed_return_presented",
+      "next": {"mode": "TERMINAL", "beat_id": null}
+    }
+  ],
+  "resolutions": {
+    "resolution_ma1": {
+      "resolution_id": "resolution_ma1", "choice_id": "mathilde_mb3_ma1", "a10_choice_id": "mathilde_mb3_ma1_choice", "a10_resolution_id": "mathilde_mb3_ma1_resolution", "terminal_checkpoint_id": "mathilde_mb3_resolution_ready",
+      "event_refs": [
+        {"event_type": "durable_manifest_event", "event_key": "mathilde_mb3_ma1_aftercare_acknowledged", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "mathilde_mb3_aftercare_paid_ma1", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "mathilde_mb3_ma1_media_proximity", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "mathilde_mb3_ma1_media_central", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "mathilde_mb3_ma1_media_aftercare", "reducer_id": "a6_durable_manifest"}
+      ],
+      "fact_ids": ["mathilde_mb3_ma1_aftercare_acknowledged"], "knowledge_ids": [], "trace_ids": [], "promise_effects": [],
+      "obligation_effects": [{"obligation_id": "mathilde_secret_intimacy_aftercare", "effect": "CREATE_PAID"}], "consequence_ids": [],
+      "media_effects": [
+        {"media_id": "S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01_PROXIMITY", "effect": "GRANT_ACCESS"},
+        {"media_id": "S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_CENTRAL_01", "effect": "GRANT_ACCESS"},
+        {"media_id": "S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_AFTERCARE_01", "effect": "GRANT_ACCESS"}
+      ],
+      "convergence": "POST_RESOLUTION_RETURN", "next_beat_id": "mathilde_mb3_ma1_return"
+    },
+    "resolution_ma2": {
+      "resolution_id": "resolution_ma2", "choice_id": "mathilde_mb3_ma2", "a10_choice_id": "mathilde_mb3_ma2_choice", "a10_resolution_id": "mathilde_mb3_ma2_resolution", "terminal_checkpoint_id": "mathilde_mb3_resolution_ready",
+      "event_refs": [
+        {"event_type": "durable_manifest_event", "event_key": "mathilde_mb3_ma2_consequence_acknowledged", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "mathilde_mb3_aftercare_paid_ma2", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "mathilde_mb3_ma2_media_proximity", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "mathilde_mb3_ma2_media_central", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "mathilde_mb3_ma2_media_aftercare", "reducer_id": "a6_durable_manifest"}
+      ],
+      "fact_ids": ["mathilde_mb3_ma2_consequence_acknowledged"], "knowledge_ids": [], "trace_ids": [], "promise_effects": [],
+      "obligation_effects": [{"obligation_id": "mathilde_secret_intimacy_aftercare", "effect": "CREATE_PAID"}], "consequence_ids": [],
+      "media_effects": [
+        {"media_id": "S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01_PROXIMITY", "effect": "GRANT_ACCESS"},
+        {"media_id": "S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_CENTRAL_01", "effect": "GRANT_ACCESS"},
+        {"media_id": "S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_AFTERCARE_01", "effect": "GRANT_ACCESS"}
+      ],
+      "convergence": "POST_RESOLUTION_RETURN", "next_beat_id": "mathilde_mb3_ma2_return"
+    },
+    "resolution_ma3": {
+      "resolution_id": "resolution_ma3", "choice_id": "mathilde_mb3_ma3", "a10_choice_id": "mathilde_mb3_ma3_choice", "a10_resolution_id": "mathilde_mb3_ma3_resolution", "terminal_checkpoint_id": "mathilde_mb3_resolution_ready",
+      "event_refs": [
+        {"event_type": "durable_manifest_event", "event_key": "mathilde_mb3_ma3_repetition_refused", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "mathilde_mb3_aftercare_failed_ma3", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "mathilde_mb3_ma3_media_proximity", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "mathilde_mb3_ma3_media_central", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "mathilde_mb3_ma3_media_aftercare", "reducer_id": "a6_durable_manifest"}
+      ],
+      "fact_ids": ["mathilde_mb3_ma3_repetition_refused"], "knowledge_ids": [], "trace_ids": [], "promise_effects": [],
+      "obligation_effects": [{"obligation_id": "mathilde_secret_intimacy_aftercare", "effect": "CREATE_FAILED"}], "consequence_ids": [],
+      "media_effects": [
+        {"media_id": "S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01_PROXIMITY", "effect": "GRANT_ACCESS"},
+        {"media_id": "S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_CENTRAL_01", "effect": "GRANT_ACCESS"},
+        {"media_id": "S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_AFTERCARE_01", "effect": "GRANT_ACCESS"}
+      ],
+      "convergence": "POST_RESOLUTION_RETURN", "next_beat_id": "mathilde_mb3_failed_return"
+    }
+  },
+  "media": {
+    "S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01_PROXIMITY": {"media_id": "S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01_PROXIMITY", "visual_level": "V2", "analytic_level": null, "production_status": "SPECIFIED_NOT_PRODUCED", "diegesis": "NON_DIEGETIC", "audience_ids": ["player_only"], "gallery_policy": "ON_ACCESS", "parent_media_id": null, "thumbnail_policy": "SELF", "thumbnail_media_id": null, "removal_policy": "NEVER"},
+    "S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_CENTRAL_01": {"media_id": "S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_CENTRAL_01", "visual_level": "V4", "analytic_level": null, "production_status": "SPECIFIED_NOT_PRODUCED", "diegesis": "NON_DIEGETIC", "audience_ids": ["player_only"], "gallery_policy": "ON_ACCESS", "parent_media_id": "S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01_PROXIMITY", "thumbnail_policy": "SELF", "thumbnail_media_id": null, "removal_policy": "NEVER"},
+    "S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_AFTERCARE_01": {"media_id": "S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_AFTERCARE_01", "visual_level": "V2", "analytic_level": null, "production_status": "SPECIFIED_NOT_PRODUCED", "diegesis": "NON_DIEGETIC", "audience_ids": ["player_only"], "gallery_policy": "ON_ACCESS", "parent_media_id": "S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01_PROXIMITY", "thumbnail_policy": "SELF", "thumbnail_media_id": null, "removal_policy": "NEVER"}
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "schema_id": "reseau_intime.physical_presentation_catalog",
+  "schema_version": 1,
+  "sequence_id": "mathilde_returns_with_chosen_intent_01",
+  "authored_version": "1.0.0",
+  "entries": [
+    {
+      "content_ref": "mathilde_mb3_bounded_intimacy_presentation",
+      "title": "Proximité consentie",
+      "body": "Mathilde initie ou confirme chaque changement de niveau. L’arrêt reste possible à tout moment.",
+      "steps": [
+        "Respecter exactement les limites formulées.",
+        "Demander avant chaque changement de proximité.",
+        "Arrêter immédiatement au moindre doute ou retrait."
+      ],
+      "continue_label": "Reprendre les messages"
+    }
+  ]
+}

@@ -3,6 +3,9 @@ extends RefCounted
 class_name R8CSequenceResolutionEventV1
 
 const DefinitionModele := preload("res://scripts/narrative_scene/SceneDefinition.gd")
+const DurableMediaIdentifier := preload(
+	"res://scripts/shared/DurableMediaIdentifier.gd"
+)
 
 const EVENT_TYPE := "R8C_A1_SEQUENCE_RESOLUTION_V1"
 const FIELDS := ["event_id", "event_type", "provenance", "payload"]
@@ -294,7 +297,7 @@ static func _validate_media_deliveries(entries: Array, seen_event_keys: Dictiona
 			fields = MEDIA_TERMINAL_FIELDS
 		if fields.is_empty() or not _exact(entry, fields):
 			return false
-		if not _register_identifiers(
+		if not _register_media_identifiers(
 			entry["event_key"], entry["media_id"], seen_event_keys, seen_business_ids
 		):
 			return false
@@ -326,6 +329,28 @@ static func _register_identifiers(
 	seen_event_keys[event_key] = true
 	seen_business_ids[business_id] = true
 	return true
+
+
+static func _register_media_identifiers(
+	event_key,
+	media_id,
+	seen_event_keys: Dictionary,
+	seen_business_ids: Dictionary
+) -> bool:
+	if (
+		not _valid_durable_identifier(event_key)
+		or seen_event_keys.has(event_key)
+		or not _valid_media_identifier(media_id)
+		or seen_business_ids.has(media_id)
+	):
+		return false
+	seen_event_keys[event_key] = true
+	seen_business_ids[media_id] = true
+	return true
+
+
+static func _valid_media_identifier(value) -> bool:
+	return DurableMediaIdentifier.validate(value)
 
 
 static func _valid_identifier_array(value, require_non_empty: bool) -> bool:

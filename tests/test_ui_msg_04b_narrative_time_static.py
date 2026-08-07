@@ -52,10 +52,11 @@ class UIMsg04BNarrativeTimeStaticTests(unittest.TestCase):
             self.assertIn(token, season)
 
     def test_parser_is_strict_and_system_clock_is_forbidden(self):
-        utility = self.read("game/scripts/runtime/season_1/NarrativeTime.gd")
+        utility = self.read("game/scripts/shared/NarrativeTime.gd")
         self.assertIn("func parse_narrative_time", utility)
         self.assertIn("func format_narrative_time", utility)
         production = "\n".join(self.read(path) for path in [
+            "game/scripts/shared/NarrativeTime.gd",
             "game/scripts/runtime/season_1/NarrativeTime.gd",
             "game/scripts/runtime/season_1/J01RuntimeProvider.gd",
             "game/scripts/runtime/season_1/J02RuntimeProvider.gd",

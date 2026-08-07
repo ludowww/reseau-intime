@@ -96,7 +96,9 @@ func _resolve(media_id: String, allow_derived: bool) -> Dictionary:
 	if production_status == "DERIVED_OR_REUSED_NOT_SEPARATELY_PRODUCED" and not allow_derived:
 		return _resolution_failure("MEDIA_NOT_AUTONOMOUS")
 	if production_status == "SPECIFIED_NOT_PRODUCED":
-		return _resolution_success(media, {}, null, DISPLAY_NOT_DELIVERED)
+		return _resolution_success(
+			media, _entries_by_id.get(media_id, {}), null, DISPLAY_NOT_DELIVERED
+		)
 	if production_status not in ["PRODUCED", "VALIDATED", "DERIVED_OR_REUSED_NOT_SEPARATELY_PRODUCED"]:
 		return _resolution_failure("INVALID_PRODUCTION_STATUS")
 	if not _entries_by_id.has(media_id):

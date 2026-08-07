@@ -1,0 +1,33 @@
+{
+  "sequence_id": "mathilde_returns_with_chosen_intent_01",
+  "authored_version": "1.0.0",
+  "entries": [
+    {
+      "media_id": "S1_A3_J11_SCN_MATHILDE_PROXIMITY_STATE_01_PROXIMITY",
+      "visual_ref": "",
+      "display_name": "Moment vécu",
+      "context_label": "Proximité consentie",
+      "caption": "Premier temps de la séquence vécue.",
+      "placeholder_label": "Visuel non livré",
+      "gallery_character_ids": ["mathilde"]
+    },
+    {
+      "media_id": "S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_CENTRAL_01",
+      "visual_ref": "",
+      "display_name": "Moment vécu — centre",
+      "context_label": "Intimité consentie",
+      "caption": "Temps central de la séquence vécue.",
+      "placeholder_label": "Visuel non livré",
+      "gallery_character_ids": ["mathilde"]
+    },
+    {
+      "media_id": "S1_A3_J11_SCN_MATHILDE_SECRET_INTIMACY_AFTERCARE_01",
+      "visual_ref": "",
+      "display_name": "Moment vécu — après-coup",
+      "context_label": "Après-coup",
+      "caption": "Dernier temps de la séquence vécue.",
+      "placeholder_label": "Visuel non livré",
+      "gallery_character_ids": ["mathilde"]
+    }
+  ]
+}

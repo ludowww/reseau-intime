@@ -30,7 +30,10 @@ func _run() -> void:
 	_finish()
 
 func _test_real_ui() -> void:
-	var main = MAIN_SCENE.instantiate(); add_child(main); await _frames(4)
+	var main = MAIN_SCENE.instantiate()
+	main.get_node("PortraitShell").content_mode = "runtime_s1"
+	add_child(main)
+	await _frames(4)
 	main.shell.set_reduced_motion_enabled(true)
 	var messages = main.shell.messages_screen
 	var provider = main.shell.runtime_provider
@@ -95,7 +98,10 @@ func _test_real_ui() -> void:
 	main.queue_free(); await _frames(2)
 
 func _test_sandra_secondary_real_button_ui() -> void:
-	var main = MAIN_SCENE.instantiate(); add_child(main); await _frames(4)
+	var main = MAIN_SCENE.instantiate()
+	main.get_node("PortraitShell").content_mode = "runtime_s1"
+	add_child(main)
+	await _frames(4)
 	main.shell.set_reduced_motion_enabled(true)
 	var messages = main.shell.messages_screen; var provider = main.shell.runtime_provider
 	messages.runtime_delivery_time_scale = 0.01
@@ -223,7 +229,7 @@ func _test_invalid_j03_phase() -> void:
 	_expect(not restored.restore_snapshot(snapshot), "unknown restored J03 phase accepted")
 
 func _restore_exact(snapshot: Dictionary, label: String):
-	_expect(int(snapshot.get("version", 0)) == 6 and snapshot.keys() == ["version", "active_day", "state", "provider_snapshots"], label + " v6 shape")
+	_expect(int(snapshot.get("version", 0)) == 21 and snapshot.keys() == ["version", "active_day", "state", "provider_snapshots"], label + " v21 shape")
 	var restored = SEASON_PROVIDER.new(); _expect(restored.initialize(), label + " initialize")
 	_expect(restored.restore_snapshot(snapshot), label + " restore")
 	_expect(restored.state_restore_count == 1, label + " Season1State restore count")

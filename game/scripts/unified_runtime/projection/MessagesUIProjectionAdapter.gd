@@ -84,17 +84,24 @@ var _last_result := _result(false, "NOT_INITIALIZED")
 
 
 static func create(executor, projection_port, presentation_metadata) -> Dictionary:
-	var error_code := _validate_dependencies(executor, projection_port, presentation_metadata)
+	var adapter := new()
+	var error_code := adapter._initialize(executor, projection_port, presentation_metadata)
 	if not error_code.is_empty():
 		return {"ok": false, "error_code": error_code, "adapter": null}
-	var adapter := new()
-	adapter._executor = executor
-	adapter._projection_port = projection_port
-	adapter._metadata = presentation_metadata.duplicate(true)
-	adapter._source = adapter._empty_source()
-	adapter._presented_message_ids_by_thread = adapter._empty_presented_message_ids()
-	adapter._last_result = _result(true)
 	return {"ok": true, "error_code": null, "adapter": adapter}
+
+
+func _initialize(executor, projection_port, presentation_metadata) -> String:
+	var error_code := _validate_dependencies(executor, projection_port, presentation_metadata)
+	if not error_code.is_empty():
+		return error_code
+	_executor = executor
+	_projection_port = projection_port
+	_metadata = presentation_metadata.duplicate(true)
+	_source = _empty_source()
+	_presented_message_ids_by_thread = _empty_presented_message_ids()
+	_last_result = _result(true)
+	return ""
 
 
 func attach_messages_screen(screen) -> void:
@@ -104,7 +111,7 @@ func attach_messages_screen(screen) -> void:
 func on_messages_ui_ready() -> void:
 	if _messages_screen == null or _active.is_empty():
 		return
-	if _active.get("beat_type") == "MESSAGE" and not _notification_dismissed:
+	if _is_message_beat_type(_active.get("beat_type")) and not _notification_dismissed:
 		var notification_message_id := str(_active.get("notification_message_id", ""))
 		if notification_message_id != "":
 			_messages_screen.call(
@@ -134,7 +141,9 @@ func open_current_projection() -> Dictionary:
 	var prepared := _prepare_beat(beat)
 	if not prepared["ok"]:
 		return _publish_result(false, prepared["error_code"])
-	var projection_validation := _validate_beat_projection(beat, prepared["thread"])
+	var projection_validation := _validate_beat_projection(
+		beat, prepared["content"], prepared["thread"]
+	)
 	if not projection_validation["ok"]:
 		return _publish_result(false, projection_validation["error_code"])
 	var opened: Dictionary = _executor.open_current_projection()
@@ -143,7 +152,9 @@ func open_current_projection() -> Dictionary:
 	var payload: Dictionary = opened.get("payload", {})
 	var request: Dictionary = payload.get("request", {})
 	var port_result: Dictionary = payload.get("port_result", {})
-	var applied := _apply_opened_projection(request, port_result, prepared["thread"])
+	var applied := _apply_opened_projection(
+		request, port_result, prepared["thread"], prepared["content"]
+	)
 	if not applied["ok"]:
 		return _publish_result(false, applied["error_code"])
 	_refresh_attached_screen()
@@ -181,7 +192,8 @@ func mark_thread_batch_presented(thread_id: String) -> bool:
 		_notification_dismissed = false
 		_progression_ack_sent = false
 		_progression_command_sent = false
-		call_deferred("_open_next_supported_projection")
+		if _should_automatically_open_next_projection():
+			call_deferred("_open_next_supported_projection")
 	_publish_result(true)
 	return true
 
@@ -222,7 +234,7 @@ func on_notification_dismissed(notification: Dictionary) -> Dictionary:
 func on_thread_read(thread_id: String, subject_id: String) -> Dictionary:
 	if (
 		_active.is_empty()
-		or _active.get("beat_type") != "MESSAGE"
+		or not _is_message_beat_type(_active.get("beat_type"))
 		or bool(_active.get("projection_closed", false))
 		or thread_id != str(_active.get("thread_id", ""))
 		or subject_id not in _active.get("message_ids", [])
@@ -248,7 +260,8 @@ func on_thread_read(thread_id: String, subject_id: String) -> Dictionary:
 	_notification_dismissed = false
 	_progression_ack_sent = false
 	_progression_command_sent = false
-	call_deferred("_open_next_supported_projection")
+	if _should_automatically_open_next_projection():
+		call_deferred("_open_next_supported_projection")
 	return _publish_result(true, null, bool(continued.get("idempotent", false)))
 
 
@@ -427,22 +440,30 @@ func _prepare_beat(beat: Dictionary) -> Dictionary:
 		return {"ok": false, "error_code": "UNRESOLVED_CONTENT_REF"}
 	if beat.get("type") not in SUPPORTED_BEAT_TYPES:
 		return {"ok": false, "error_code": "UNSUPPORTED_BEAT_TYPE"}
+	var content: Dictionary = beat.get("content", {}).duplicate(true)
 	var resolved := _resolve_thread(beat.get("participant_ids", []))
 	if not resolved["ok"]:
 		return resolved
-	var authored_thread_id := str(beat.get("content", {}).get("thread_id", ""))
+	var authored_thread_id := str(content.get("thread_id", ""))
 	if authored_thread_id != str(resolved["thread"].get("thread_id", "")):
 		return {"ok": false, "error_code": "THREAD_ID_MISMATCH"}
-	return {"ok": true, "error_code": null, "thread": resolved["thread"]}
+	return {
+		"ok": true,
+		"error_code": null,
+		"thread": resolved["thread"],
+		"content": content,
+	}
 
 
-func _validate_beat_projection(beat: Dictionary, thread: Dictionary) -> Dictionary:
+func _validate_beat_projection(
+	beat: Dictionary, content: Dictionary, thread: Dictionary
+) -> Dictionary:
 	var thread_id := str(thread.get("thread_id", ""))
 	if beat.get("type") == "CHOICE":
 		if not _metadata["characters"].has(PLAYER_ID) or not _thread_accepts_author(thread_id, PLAYER_ID):
 			return {"ok": false, "error_code": "UNRESOLVED_PLAYER_METADATA"}
 		return {"ok": true, "error_code": null}
-	for authored_message in beat.get("content", {}).get("messages", []):
+	for authored_message in content.get("messages", []):
 		var message_id := str(authored_message.get("message_id", ""))
 		var author_id := str(authored_message.get("author_id", ""))
 		if (
@@ -456,7 +477,7 @@ func _validate_beat_projection(beat: Dictionary, thread: Dictionary) -> Dictiona
 
 
 func _apply_opened_projection(
-	request: Dictionary, port_result: Dictionary, thread: Dictionary
+	request: Dictionary, port_result: Dictionary, thread: Dictionary, resolved_content: Dictionary
 ) -> Dictionary:
 	if request.is_empty() or not bool(port_result.get("accepted", false)):
 		return {"ok": false, "error_code": "INVALID_OPEN_RESULT"}
@@ -484,8 +505,8 @@ func _apply_opened_projection(
 	_notification_dismissed = false
 	_progression_ack_sent = false
 	_progression_command_sent = false
-	if beat_type == "MESSAGE":
-		return _project_messages(payload.get("content", {}), thread_id)
+	if _is_message_beat_type(beat_type):
+		return _project_messages(resolved_content, thread_id)
 	return _project_choices(payload.get("content", {}), thread_id)
 
 
@@ -541,14 +562,9 @@ func _open_next_supported_projection() -> void:
 	if execution.get("execution_status") not in ["ACTIVE", "RESOLVED_RETURN_PENDING"]:
 		return
 	var beat: Dictionary = _executor.current_beat()
-	if beat.get("projection_target") != "MESSAGES":
-		_last_result = _result(false, "UNSUPPORTED_TARGET")
-		return
-	if beat.get("type") in ["AFTERCARE", "RETURN"]:
-		_last_result = _result(false, "UNRESOLVED_CONTENT_REF")
-		return
-	if beat.get("type") not in SUPPORTED_BEAT_TYPES:
-		_last_result = _result(false, "UNSUPPORTED_BEAT_TYPE")
+	var prepared := _prepare_beat(beat)
+	if not prepared.get("ok", false):
+		_last_result = _result(false, prepared.get("error_code", "PROJECTION_PREFLIGHT_REFUSED"))
 		return
 	open_current_projection()
 
@@ -653,7 +669,7 @@ func _empty_presented_message_ids() -> Dictionary:
 func _validate_notification_callback(notification: Dictionary) -> String:
 	if _active.is_empty() or bool(_active.get("projection_closed", false)):
 		return "PROJECTION_NOT_OPEN"
-	if _active.get("beat_type") != "MESSAGE":
+	if not _is_message_beat_type(_active.get("beat_type")):
 		return "FOREIGN_NOTIFICATION"
 	var expected_notification_id := "%s::%s" % [
 		_active.get("thread_id", ""), _active.get("notification_message_id", "")
@@ -669,7 +685,10 @@ func _validate_notification_callback(notification: Dictionary) -> String:
 
 func _receipt_subject_is_local(kind: String, subject_id: String) -> bool:
 	if kind == "READ":
-		return _active.get("beat_type") == "MESSAGE" and subject_id in _active.get("message_ids", [])
+		return (
+			_is_message_beat_type(_active.get("beat_type"))
+			and subject_id in _active.get("message_ids", [])
+		)
 	if _active.get("beat_type") == "CHOICE":
 		return kind == "PRESENTED" and subject_id in _active.get("choice_ids", [])
 	if kind == "PRESENTED":
@@ -1066,10 +1085,11 @@ func _active_matches_execution(
 		or typeof(candidate.get("player_bubble_id")) != TYPE_STRING
 	):
 		return false
-	if beat.get("type") == "MESSAGE":
+	if _is_message_beat_type(beat.get("type")):
 		return _active_message_matches(
 			candidate,
 			beat,
+			prepared["content"],
 			source,
 			presented,
 			port_data,
@@ -1094,6 +1114,7 @@ func _active_matches_execution(
 func _active_message_matches(
 	candidate: Dictionary,
 	beat: Dictionary,
+	content: Dictionary,
 	source: Dictionary,
 	presented: Dictionary,
 	port_data: Dictionary,
@@ -1105,7 +1126,7 @@ func _active_message_matches(
 	var expected_messages: Array = []
 	var expected_ids: Array = []
 	var notification_message_id := ""
-	for authored_message in beat.get("content", {}).get("messages", []):
+	for authored_message in content.get("messages", []):
 		expected_messages.append(_authored_message_dto(authored_message, candidate))
 		expected_ids.append(str(authored_message.get("message_id", "")))
 		if str(authored_message.get("author_id", "")) != PLAYER_ID:
@@ -1238,6 +1259,14 @@ func _has_exact_keys(value: Dictionary, expected_keys: Array) -> bool:
 	actual.sort()
 	expected.sort()
 	return actual == expected
+
+
+func _is_message_beat_type(beat_type) -> bool:
+	return beat_type == "MESSAGE"
+
+
+func _should_automatically_open_next_projection() -> bool:
+	return true
 
 
 static func _validate_dependencies(executor, projection_port, metadata) -> String:
