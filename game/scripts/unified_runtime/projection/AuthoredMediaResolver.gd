@@ -8,6 +8,10 @@ const AuthoredValidator := preload(
 const CATALOG_FIELDS := ["sequence_id", "authored_version", "entries"]
 const ENTRY_FIELDS := [
 	"media_id", "visual_ref", "display_name", "context_label", "caption", "placeholder_label",
+	"gallery_character_ids",
+]
+const ENTRY_STRING_FIELDS := [
+	"media_id", "visual_ref", "display_name", "context_label", "caption", "placeholder_label",
 ]
 const DISPLAY_LOADED := "LOADED"
 const DISPLAY_NOT_DELIVERED := "NOT_DELIVERED"
@@ -132,6 +136,7 @@ func _resolution_success(
 			"context_label": str(entry.get("context_label", "")),
 			"caption": str(entry.get("caption", "")),
 			"placeholder_label": str(entry.get("placeholder_label", NOT_DELIVERED_LABEL)),
+			"gallery_character_ids": entry.get("gallery_character_ids", []).duplicate(),
 		},
 	}
 
@@ -151,12 +156,24 @@ static func _validate_catalog(value) -> String:
 	for entry in value["entries"]:
 		if typeof(entry) != TYPE_DICTIONARY or not _has_exact_fields(entry, ENTRY_FIELDS):
 			return "INVALID_PRESENTATION_CATALOG"
-		for field in ENTRY_FIELDS:
+		for field in ENTRY_STRING_FIELDS:
 			if typeof(entry[field]) != TYPE_STRING:
 				return "INVALID_PRESENTATION_CATALOG"
 		var media_id: String = entry["media_id"]
 		if media_id.is_empty() or seen.has(media_id):
 			return "INVALID_PRESENTATION_CATALOG"
+		var gallery_character_ids = entry["gallery_character_ids"]
+		if typeof(gallery_character_ids) != TYPE_ARRAY or gallery_character_ids.is_empty():
+			return "INVALID_PRESENTATION_CATALOG"
+		var seen_character_ids := {}
+		for character_id in gallery_character_ids:
+			if (
+				typeof(character_id) != TYPE_STRING
+				or character_id.is_empty()
+				or seen_character_ids.has(character_id)
+			):
+				return "INVALID_PRESENTATION_CATALOG"
+			seen_character_ids[character_id] = true
 		seen[media_id] = true
 	return ""
 

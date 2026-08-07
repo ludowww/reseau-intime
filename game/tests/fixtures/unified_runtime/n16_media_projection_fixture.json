@@ -25,6 +25,32 @@
       "thumbnail_policy": "SELF",
       "thumbnail_media_id": null,
       "removal_policy": "NEVER"
+    },
+    "photo_multi_character": {
+      "media_id": "photo_multi_character",
+      "visual_level": "V2",
+      "analytic_level": null,
+      "production_status": "PRODUCED",
+      "diegesis": "DIEGETIC",
+      "audience_ids": ["player_only"],
+      "gallery_policy": "ON_ACCESS",
+      "parent_media_id": null,
+      "thumbnail_policy": "SELF",
+      "thumbnail_media_id": null,
+      "removal_policy": "NEVER"
+    },
+    "photo_audience_separated": {
+      "media_id": "photo_audience_separated",
+      "visual_level": "V2",
+      "analytic_level": null,
+      "production_status": "PRODUCED",
+      "diegesis": "DIEGETIC",
+      "audience_ids": ["player_only"],
+      "gallery_policy": "ON_ACCESS",
+      "parent_media_id": null,
+      "thumbnail_policy": "SELF",
+      "thumbnail_media_id": null,
+      "removal_policy": "NEVER"
     }
   },
   "presentation_catalog": {
@@ -37,7 +63,8 @@
         "display_name": "Média produit synthétique",
         "context_label": "Révélation N16",
         "caption": "Fixture de test uniquement",
-        "placeholder_label": "Placeholder dev N16"
+        "placeholder_label": "Placeholder dev N16",
+        "gallery_character_ids": ["marie"]
       },
       {
         "media_id": "synthetic_n16_validated",
@@ -45,7 +72,26 @@
         "display_name": "Média validé synthétique",
         "context_label": "Galerie N16",
         "caption": "Fixture de test uniquement",
-        "placeholder_label": "Placeholder dev N16"
+        "placeholder_label": "Placeholder dev N16",
+        "gallery_character_ids": ["sandra"]
+      },
+      {
+        "media_id": "photo_multi_character",
+        "visual_ref": "res://tests/fixtures/visual_delivery_test_pattern.svg",
+        "display_name": "Photo multi-personnage",
+        "context_label": "Galerie N16",
+        "caption": "Fixture multi-onglets",
+        "placeholder_label": "Placeholder dev N16",
+        "gallery_character_ids": ["marie", "pauline"]
+      },
+      {
+        "media_id": "photo_audience_separated",
+        "visual_ref": "res://tests/fixtures/visual_delivery_test_pattern.svg",
+        "display_name": "Photo audience séparée",
+        "context_label": "Galerie N16",
+        "caption": "Fixture audience distincte",
+        "placeholder_label": "Placeholder dev N16",
+        "gallery_character_ids": ["sandra"]
       }
     ]
   }

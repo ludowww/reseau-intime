@@ -92,6 +92,12 @@ class R8CN16MediaRevealGalleryProjectionStaticTests(unittest.TestCase):
         self.assertNotIn("DataLoader", source)
         self.assertNotIn("VisualMediaResolver", source)
         self.assertNotIn("livraison_medias", source)
+        self.assertIn('"gallery_character_ids"', source)
+        catalog_validation = self.function(source, "_validate_catalog")
+        self.assertIn("gallery_character_ids.is_empty()", catalog_validation)
+        self.assertIn("seen_character_ids.has(character_id)", catalog_validation)
+        resolution = self.function(source, "_resolution_success")
+        self.assertIn('entry.get("gallery_character_ids", []).duplicate()', resolution)
 
     def test_adapter_preflights_before_open_and_emits_exact_progression_receipt(self):
         source = self.read(ADAPTER)
@@ -130,6 +136,13 @@ class R8CN16MediaRevealGalleryProjectionStaticTests(unittest.TestCase):
             self.assertIn(proof, accessible)
         self.assertNotIn("commit_resolution", source)
         self.assertNotIn("ReducerLivraisonMedia", source)
+        content_source = self.function(source, "content_source")
+        self.assertNotIn('definition["audience_ids"]', content_source)
+        self.assertNotIn('"player_only"', content_source)
+        self.assertIn('full_presentation["gallery_character_ids"]', content_source)
+        self.assertIn("for character_id in gallery_character_ids", content_source)
+        self.assertIn('definition["gallery_policy"] == "NEVER"', content_source)
+        self.assertIn('"AVAILABLE_MEDIA_FORBIDDEN_BY_GALLERY_POLICY"', content_source)
         gallery = self.read(GALLERY_SCREEN)
         mark_viewed = self.function(gallery, "mark_viewed")
         self.assertIn('item["is_new"] = false', mark_viewed)
@@ -152,6 +165,24 @@ class R8CN16MediaRevealGalleryProjectionStaticTests(unittest.TestCase):
             item["production_status"] for item in fixture["media_definitions"].values()
         }
         self.assertEqual({"PRODUCED", "VALIDATED"}, statuses)
+        self.assertEqual(
+            ["marie", "pauline"],
+            next(
+                entry["gallery_character_ids"]
+                for entry in fixture["presentation_catalog"]["entries"]
+                if entry["media_id"] == "photo_multi_character"
+            ),
+        )
+        audience_separated = fixture["media_definitions"]["photo_audience_separated"]
+        self.assertEqual(["player_only"], audience_separated["audience_ids"])
+        self.assertEqual(
+            ["sandra"],
+            next(
+                entry["gallery_character_ids"]
+                for entry in fixture["presentation_catalog"]["entries"]
+                if entry["media_id"] == "photo_audience_separated"
+            ),
+        )
         smoke = self.read(SMOKE)
         for proof in [
             '"media inconnu refuse avant open"',
@@ -162,6 +193,11 @@ class R8CN16MediaRevealGalleryProjectionStaticTests(unittest.TestCase):
             '"reprise WAITING_FOR_PROJECTION_ACK reconstruit viewer"',
             '"reprise WAITING_FOR_PLAYER reconstruit viewer"',
             '"GRANT_ACCESS AVAILABLE rend media visible"',
+            '"meme media visible dans Marie et Pauline"',
+            '"multi-onglets conserve un media_id et un record durable"',
+            '"audience player_only projetee sous Sandra sans onglet audience"',
+            '"AVAILABLE avec gallery_policy NEVER refuse sans affichage"',
+            '"incoherence gallery_policy refusee sans mutation durable"',
             '"clic Galerie sans mutation durable A1-A5"',
             '"routing MEDIA vers MESSAGES et viewer ferme"',
         ]:

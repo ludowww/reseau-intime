@@ -139,6 +139,7 @@ func _test_resolver_and_ports(base: Dictionary, fixture: Dictionary) -> void:
 	var resolver = created["resolver"]
 	var produced: Dictionary = resolver.resolve("synthetic_n16_produced")
 	_expect(produced["ok"] and produced["presentation"]["display_status"] == "LOADED", "production PRODUCED resolue")
+	_expect(produced["presentation"]["gallery_character_ids"] == ["marie"], "presentation conserve gallery_character_ids authored")
 	var validated: Dictionary = resolver.resolve("synthetic_n16_validated")
 	_expect(validated["ok"] and validated["presentation"]["display_status"] == "LOADED", "production VALIDATED resolue")
 	var specified: Dictionary = resolver.resolve("synthetic_n15_media")
@@ -152,6 +153,9 @@ func _test_resolver_and_ports(base: Dictionary, fixture: Dictionary) -> void:
 	var unknown_catalog := catalog.duplicate(true)
 	unknown_catalog["entries"][0]["media_id"] = "unknown_catalog_media"
 	_expect(MediaResolver.create(sequence, unknown_catalog)["error_code"] == "UNKNOWN_CATALOG_MEDIA", "identite catalogue inconnue refusee")
+	var empty_gallery_catalog := catalog.duplicate(true)
+	empty_gallery_catalog["entries"][0]["gallery_character_ids"] = []
+	_expect(MediaResolver.create(sequence, empty_gallery_catalog)["error_code"] == "INVALID_PRESENTATION_CATALOG", "onglets Galerie authored vides refuses")
 
 	var media_port = MediaPort.new(sequence)
 	var composite_result: Dictionary = CompositePort.create(MessagesPhysicalPort.new(sequence), media_port)
@@ -289,7 +293,54 @@ func _test_durable_gallery(base: Dictionary, fixture: Dictionary) -> void:
 	var source_result: Dictionary = projection_result["projection"].content_source()
 	_expect(source_result["ok"], "source galerie resolue")
 	var source: Dictionary = source_result["source"]
-	_expect(source["fixtures"]["player_only"]["items"].size() == 1, "GRANT_ACCESS AVAILABLE rend media visible")
+	_expect(source["fixtures"]["marie"]["items"].size() == 1, "GRANT_ACCESS AVAILABLE rend media visible")
+
+	var multi_record := _record("photo_multi_character", "ACCESSIBLE", "AVAILABLE", "ACTIVE")
+	var multi_result: Dictionary = DurableGallery.create(sequence, {"photo_multi_character": multi_record}, resolver)
+	var multi_source_result: Dictionary = multi_result["projection"].content_source()
+	var multi_source: Dictionary = multi_source_result["source"]
+	_expect(multi_source_result["ok"], "projection multi-personnage resolue")
+	_expect(
+		multi_source["fixtures"]["marie"]["items"].size() == 1
+		and multi_source["fixtures"]["pauline"]["items"].size() == 1,
+		"meme media visible dans Marie et Pauline"
+	)
+	_expect(
+		multi_source["fixtures"]["marie"]["items"][0]["item_id"] == "photo_multi_character"
+		and multi_source["fixtures"]["pauline"]["items"][0]["item_id"] == "photo_multi_character"
+		and multi_result["projection"].durable_registry_snapshot().size() == 1,
+		"multi-onglets conserve un media_id et un record durable"
+	)
+
+	var separated_record := _record("photo_audience_separated", "ACCESSIBLE", "AVAILABLE", "ACTIVE")
+	var separated_result: Dictionary = DurableGallery.create(
+		sequence, {"photo_audience_separated": separated_record}, resolver
+	)
+	var separated_source: Dictionary = separated_result["projection"].content_source()["source"]
+	_expect(
+		separated_source["fixtures"]["sandra"]["items"].size() == 1
+		and not separated_source["fixtures"].has("player_only"),
+		"audience player_only projetee sous Sandra sans onglet audience"
+	)
+
+	var never_sequence := sequence.duplicate(true)
+	never_sequence["media"]["photo_audience_separated"]["gallery_policy"] = "NEVER"
+	var never_resolver = MediaResolver.create(never_sequence, fixture["presentation_catalog"])["resolver"]
+	var never_result: Dictionary = DurableGallery.create(
+		never_sequence, {"photo_audience_separated": separated_record}, never_resolver
+	)
+	var never_snapshot: Dictionary = never_result["projection"].durable_registry_snapshot()
+	var never_source: Dictionary = never_result["projection"].content_source()
+	_expect(
+		not never_source["ok"]
+		and never_source["error_code"] == "AVAILABLE_MEDIA_FORBIDDEN_BY_GALLERY_POLICY"
+		and never_source["source"].is_empty(),
+		"AVAILABLE avec gallery_policy NEVER refuse sans affichage"
+	)
+	_expect(
+		never_result["projection"].durable_registry_snapshot() == never_snapshot,
+		"incoherence gallery_policy refusee sans mutation durable"
+	)
 	for state in [
 		["ACCESSIBLE", "HIDDEN", "ACTIVE"],
 		["REVOKED", "HIDDEN", "ACTIVE"],

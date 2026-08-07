@@ -62,9 +62,15 @@ func content_source() -> Dictionary:
 		var definition: Dictionary = _resolver.media_definition(media_id)
 		if definition.is_empty():
 			return _source_failure("UNKNOWN_AUTHORED_MEDIA")
+		if definition["gallery_policy"] == "NEVER":
+			return _source_failure("AVAILABLE_MEDIA_FORBIDDEN_BY_GALLERY_POLICY")
 		var full: Dictionary = _resolver.resolve(media_id)
 		if not bool(full.get("ok", false)):
 			return _source_failure(str(full.get("error_code", "MEDIA_RESOLUTION_FAILED")))
+		var full_presentation: Dictionary = full["presentation"]
+		var gallery_character_ids: Array = full_presentation["gallery_character_ids"]
+		if gallery_character_ids.is_empty():
+			return _source_failure("MISSING_GALLERY_CHARACTER_IDS")
 		var child_ids: Array = []
 		for candidate_id in accessible_ids:
 			var candidate: Dictionary = _resolver.media_definition(candidate_id)
@@ -73,31 +79,29 @@ func content_source() -> Dictionary:
 		var thumbnail: Dictionary = _resolver.resolve_thumbnail(media_id, child_ids)
 		if not bool(thumbnail.get("ok", false)):
 			return _source_failure(str(thumbnail.get("error_code", "THUMBNAIL_RESOLUTION_FAILED")))
-		var audience_ids: Array = definition["audience_ids"]
-		var character_id := str(audience_ids[0]) if not audience_ids.is_empty() else "player_only"
-		if not fixtures.has(character_id):
-			fixtures[character_id] = {
-				"display_name": _display_name_for(character_id),
-				"accent_color": DEFAULT_ACCENT,
-				"items": [],
-			}
-			character_order.append(character_id)
-		var full_presentation: Dictionary = full["presentation"]
 		var thumbnail_presentation: Dictionary = thumbnail["presentation"]
-		fixtures[character_id]["items"].append({
-			"item_id": media_id,
-			"asset_id": media_id,
-			"character_id": character_id,
-			"state": "UNLOCKED",
-			"is_new": true,
-			"thumbnail_label": full_presentation["display_name"],
-			"thumbnail_ref": thumbnail_presentation["visual_ref"],
-			"full_ref": full_presentation["visual_ref"],
-			"sort_key": index,
-			"placeholder_label": full_presentation["placeholder_label"],
-			"resolved_thumbnail": _viewer_resolution(thumbnail_presentation),
-			"resolved_media": _viewer_resolution(full_presentation),
-		})
+		for character_id in gallery_character_ids:
+			if not fixtures.has(character_id):
+				fixtures[character_id] = {
+					"display_name": _display_name_for(character_id),
+					"accent_color": DEFAULT_ACCENT,
+					"items": [],
+				}
+				character_order.append(character_id)
+			fixtures[character_id]["items"].append({
+				"item_id": media_id,
+				"asset_id": media_id,
+				"character_id": character_id,
+				"state": "UNLOCKED",
+				"is_new": true,
+				"thumbnail_label": full_presentation["display_name"],
+				"thumbnail_ref": thumbnail_presentation["visual_ref"],
+				"full_ref": full_presentation["visual_ref"],
+				"sort_key": index,
+				"placeholder_label": full_presentation["placeholder_label"],
+				"resolved_thumbnail": _viewer_resolution(thumbnail_presentation),
+				"resolved_media": _viewer_resolution(full_presentation),
+			})
 	character_order.sort()
 	return {
 		"ok": true,
