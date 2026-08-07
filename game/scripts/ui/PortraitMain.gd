@@ -2,15 +2,18 @@ extends Control
 
 class_name PortraitMain
 
-const UnifiedCompositionRoot := preload(
-	"res://scripts/unified_runtime/bootstrap/UnifiedPlayerRuntimeCompositionRoot.gd"
+const UnifiedSeasonRunner := preload(
+	"res://scripts/unified_runtime/application/UnifiedSeasonRunner.gd"
 )
+const PRODUCTION_CATALOG_PATH := "res://data/unified_runtime/catalogs/season_1_v1.json"
 
 @export var unified_save_path_override := ""
+@export var unified_catalog_path_override := ""
 
 @onready var shell := get_node_or_null("PortraitShell")
 
 var runtime_session
+var season_runner
 var unified_runtime_result: Dictionary = {}
 
 func _ready() -> void:
@@ -18,8 +21,16 @@ func _ready() -> void:
 	if shell != null:
 		shell.set_anchors_preset(Control.PRESET_FULL_RECT)
 		if shell.content_mode == "unified":
-			unified_runtime_result = UnifiedCompositionRoot.compose(
-				shell, unified_save_path_override
+			var catalog_path := (
+				PRODUCTION_CATALOG_PATH
+				if unified_catalog_path_override.is_empty() else unified_catalog_path_override
+			)
+			unified_runtime_result = UnifiedSeasonRunner.create(
+				catalog_path,
+				shell,
+				unified_save_path_override,
+				"season_1_v1" if unified_catalog_path_override.is_empty() else "",
+				"season_1" if unified_catalog_path_override.is_empty() else "",
 			)
 			if not unified_runtime_result.get("ok", false):
 				push_error(
@@ -27,12 +38,18 @@ func _ready() -> void:
 					% str(unified_runtime_result.get("error_code", "UNKNOWN"))
 				)
 				return
-			runtime_session = unified_runtime_result["session"]
-			if not shell.configure_unified_runtime(runtime_session):
+			season_runner = unified_runtime_result["runner"]
+			season_runner.active_session_changed.connect(_on_active_session_changed)
+			runtime_session = season_runner.active_session
+			if runtime_session != null and not shell.configure_unified_runtime(runtime_session):
 				push_error("Unified player runtime shell configuration refused")
 				runtime_session = null
 				return
-			var begun: Dictionary = runtime_session.begin()
+			if runtime_session == null:
+				shell.clear_unified_runtime(
+					season_runner.presentation_source(), season_runner.gallery_source(), season_runner
+				)
+			var begun: Dictionary = season_runner.begin()
 			if not begun.get("ok", false):
 				push_error(
 					"Unified player runtime start refused: %s"
@@ -41,6 +58,23 @@ func _ready() -> void:
 				shell.clear_unified_runtime()
 				runtime_session = null
 				return
+
+
+func _on_active_session_changed(_previous_session, next_session) -> void:
+	if shell == null:
+		return
+	runtime_session = next_session
+	if next_session == null:
+		shell.clear_unified_runtime(
+			season_runner.presentation_source(), season_runner.gallery_source(), season_runner
+		)
+		return
+	shell.clear_unified_runtime(
+		season_runner.presentation_source(), season_runner.gallery_source(), season_runner
+	)
+	if not shell.configure_unified_runtime(next_session):
+		push_error("Unified player runtime shell handoff refused")
+		runtime_session = null
 
 func set_safe_area_preset(preset: String) -> void:
 	if shell != null:
@@ -61,6 +95,6 @@ func describe_state() -> Dictionary:
 	state["safe_area_mode"] = shell.safe_area_container.safe_area_mode
 	state["safe_area_preset"] = shell.safe_area_container.test_safe_area_preset
 	state["reduced_motion_enabled"] = shell.reduced_motion_enabled
-	state["unified_runtime_active"] = runtime_session != null
-	state["unified_runtime"] = runtime_session.describe_state() if runtime_session != null else {}
+	state["unified_runtime_active"] = season_runner != null
+	state["unified_runtime"] = season_runner.describe_state() if season_runner != null else {}
 	return state

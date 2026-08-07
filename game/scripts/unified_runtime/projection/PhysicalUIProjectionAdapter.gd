@@ -23,6 +23,7 @@ var _resolver
 var _screen
 var _active: Dictionary = {}
 var _last_result := _result(false, "NOT_INITIALIZED")
+var _detached := false
 
 
 static func create(executor, projection_port, resolver, screen) -> Dictionary:
@@ -45,6 +46,24 @@ func physical_screen():
 	return _screen
 
 
+func detach() -> void:
+	if _detached:
+		return
+	_detached = true
+	if _screen != null and is_instance_valid(_screen):
+		if _screen.continue_requested.is_connected(_on_continue_requested):
+			_screen.continue_requested.disconnect(_on_continue_requested)
+		if _screen.withdraw_requested.is_connected(_on_withdraw_requested):
+			_screen.withdraw_requested.disconnect(_on_withdraw_requested)
+		if _screen.presentation_ready.is_connected(_on_presentation_ready):
+			_screen.presentation_ready.disconnect(_on_presentation_ready)
+		_screen.dismiss()
+		_screen.queue_free()
+	_active = {}
+	_executor = null
+	_projection_port = null
+
+
 func execution_state() -> Dictionary:
 	return _executor.execution_state() if _executor != null else {}
 
@@ -62,6 +81,8 @@ func last_result() -> Dictionary:
 
 
 func open_current_projection() -> Dictionary:
+	if _detached:
+		return _publish_result(false, "ADAPTER_DETACHED")
 	if _executor == null:
 		return _publish_result(false, "NOT_INITIALIZED")
 	if not _screen.is_inside_tree() or not _screen.is_node_ready():

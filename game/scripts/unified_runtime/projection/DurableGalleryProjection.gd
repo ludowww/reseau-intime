@@ -17,6 +17,7 @@ const DEFAULT_ACCENT := Color(0.78, 0.38, 0.72)
 var _authored_sequence: Dictionary = {}
 var _livraison_medias: Dictionary = {}
 var _resolver
+var _media_order: Array = []
 
 
 static func create(
@@ -47,6 +48,31 @@ static func create(
 	projection._authored_sequence = authored_sequence.duplicate(true)
 	projection._livraison_medias = livraison_medias.duplicate(true)
 	projection._resolver = resolver
+	for beat in authored_sequence["beats"]:
+		if beat.get("type") == "MEDIA_REVEAL":
+			projection._media_order.append(beat["content"]["media_id"])
+	return {"ok": true, "error_code": null, "projection": projection}
+
+
+static func create_catalog(livraison_medias, resolver) -> Dictionary:
+	if typeof(livraison_medias) != TYPE_DICTIONARY:
+		return _creation_failure("INVALID_DURABLE_MEDIA_REGISTRY")
+	if resolver == null or typeof(resolver) != TYPE_OBJECT:
+		return _creation_failure("INVALID_MEDIA_RESOLVER")
+	for method_name in RESOLVER_METHODS:
+		if not resolver.has_method(method_name):
+			return _creation_failure("INVALID_MEDIA_RESOLVER")
+	var identity: Dictionary = resolver.catalog_identity()
+	if not identity.has("catalog_id") or not identity.has("catalog_fingerprint"):
+		return _creation_failure("RESOLVER_IDENTITY_MISMATCH")
+	var known_ids: Array = resolver.media_ids()
+	for media_id in livraison_medias:
+		if media_id not in known_ids or not _valid_record(media_id, livraison_medias[media_id]):
+			return _creation_failure("INVALID_DURABLE_MEDIA_REGISTRY")
+	var projection := new()
+	projection._livraison_medias = livraison_medias.duplicate(true)
+	projection._resolver = resolver
+	projection._media_order = known_ids.duplicate()
 	return {"ok": true, "error_code": null, "projection": projection}
 
 
@@ -157,11 +183,8 @@ func durable_registry_snapshot() -> Dictionary:
 
 func _ordered_media_ids(accessible_ids: Array) -> Array:
 	var authored_order := {}
-	var index := 0
-	for beat in _authored_sequence["beats"]:
-		if beat.get("type") == "MEDIA_REVEAL":
-			authored_order[beat["content"]["media_id"]] = index
-			index += 1
+	for index in _media_order.size():
+		authored_order[_media_order[index]] = index
 	var result: Array = accessible_ids.duplicate()
 	result.sort_custom(func(left, right):
 		var left_order := int(authored_order.get(left, 1000000))

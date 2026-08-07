@@ -20,6 +20,12 @@ const SaveStore := preload(
 const RuntimeSession := preload(
 	"res://scripts/unified_runtime/application/UnifiedPlayerRuntimeSession.gd"
 )
+const CatalogLoader := preload(
+	"res://scripts/unified_runtime/application/AuthoredSequenceCatalogLoader.gd"
+)
+const PersistentMessages := preload(
+	"res://scripts/unified_runtime/application/PersistentMessagesStateV1.gd"
+)
 const JsonNormalizer := preload(
 	"res://scripts/unified_runtime/application/JsonValueNormalizer.gd"
 )
@@ -59,73 +65,86 @@ const PhysicalScreenScene := preload(
 	"res://scenes/portrait/physical/PhysicalProjectionScreen.tscn"
 )
 
-const SEQUENCE_PATH := "res://data/unified_runtime/sequences/mathilde_returns_with_chosen_intent_01.json"
-const MESSAGES_PATH := "res://data/unified_runtime/presentation/mathilde_returns_with_chosen_intent_01_messages.json"
-const PHYSICAL_PATH := "res://data/unified_runtime/presentation/mathilde_returns_with_chosen_intent_01_physical.json"
-const MEDIA_PATH := "res://data/unified_runtime/presentation/mathilde_returns_with_chosen_intent_01_media.json"
+const PRODUCTION_CATALOG_PATH := "res://data/unified_runtime/catalogs/season_1_v1.json"
 
 
 static func compose(portrait_shell, save_path_override := "") -> Dictionary:
+	var loaded := CatalogLoader.load_catalog(PRODUCTION_CATALOG_PATH, "season_1_v1", "season_1")
+	if not loaded["ok"]:
+		return _failure(str(loaded["error_code"]))
+	var catalog: Dictionary = loaded["catalog"]
+	var store_result := SaveStore.create(save_path_override)
+	if not store_result.get("ok", false):
+		return _failure(str(store_result.get("error_code", "SAVE_STORE_REFUSED")))
+	var graph := _new_catalog_domain_graph(catalog)
+	if graph.is_empty():
+		return _failure("A6_A10_GRAPH_REFUSED")
+	var store = store_result["store"]
+	var runtime_snapshot = null
+	if store.exists():
+		var loaded_save: Dictionary = store.load_snapshot()
+		if not loaded_save.get("ok", false):
+			return _failure(str(loaded_save.get("error_code", "SAVE_LOAD_REFUSED")))
+		runtime_snapshot = loaded_save["snapshot"]
+	var package: Dictionary = catalog["packages"][0]
+	var persistent := PersistentMessages.empty(catalog["messages_metadata"])
+	return compose_package(
+		package, portrait_shell, graph["facade"], store, runtime_snapshot,
+		persistent, catalog["messages_metadata"], catalog["media_resolver"]
+	)
+
+
+static func compose_package(
+	package: Dictionary,
+	portrait_shell,
+	facade,
+	save_store,
+	runtime_snapshot = null,
+	persistent_messages_state: Dictionary = {},
+	catalog_messages_metadata: Dictionary = {},
+	catalog_media_resolver = null,
+) -> Dictionary:
 	if portrait_shell == null or portrait_shell.photo_viewer == null:
 		return _failure("PORTRAIT_SHELL_NOT_READY")
-	var sequence := _load_json(SEQUENCE_PATH)
-	var messages_catalog := _load_json(MESSAGES_PATH)
-	var physical_catalog := _load_json(PHYSICAL_PATH)
-	var media_catalog := _load_json(MEDIA_PATH)
+	if facade == null or save_store == null or typeof(package) != TYPE_DICTIONARY:
+		return _failure("INVALID_PACKAGE_COMPOSITION_DEPENDENCY")
+	var sequence: Dictionary = package.get("sequence", {})
 	if not AuthoredValidator.validate(sequence, true)["valid"]:
 		return _failure("INVALID_AUTHORED_SEQUENCE")
 	var initial_narrative_time := _initial_narrative_time(sequence)
 	if not Moment.validate(initial_narrative_time):
 		return _failure("INVALID_INITIAL_NARRATIVE_TIME")
-	var messages_resolver_result := ReferencedMessagesResolver.create(sequence, messages_catalog, true)
-	var physical_resolver_result := PhysicalResolver.create(sequence, physical_catalog, true)
-	var media_resolver_result := MediaResolver.create(sequence, media_catalog, true)
-	if not messages_resolver_result.get("ok", false):
-		return _failure("REFERENCED_MESSAGES_RESOLVER_REFUSED")
-	if not physical_resolver_result.get("ok", false):
-		return _failure("PHYSICAL_RESOLVER_REFUSED")
-	if not media_resolver_result.get("ok", false):
-		return _failure("MEDIA_RESOLVER_REFUSED")
-	var store_result := SaveStore.create(save_path_override)
-	if not store_result.get("ok", false):
-		return _failure(str(store_result.get("error_code", "SAVE_STORE_REFUSED")))
-	var graph := _new_domain_graph(sequence)
-	if graph.is_empty():
-		return _failure("A6_A10_GRAPH_REFUSED")
+	var messages_resolver = package.get("messages_resolver")
+	var physical_resolver = package.get("physical_resolver")
+	var media_resolver = package.get("media_resolver")
+	if messages_resolver == null or physical_resolver == null or media_resolver == null:
+		return _failure("PACKAGE_RESOLVER_REFUSED")
 	var messages_port = MessagesPort.new(sequence, true)
 	var media_port = MediaPort.new(sequence, true)
 	var composite_result := CompositePort.create(messages_port, media_port)
 	if not composite_result.get("ok", false):
 		return _failure("COMPOSITE_PORT_REFUSED")
 	var projection_port = composite_result["port"]
-	var store = store_result["store"]
-	var restored := false
+	var restored := runtime_snapshot != null
 	var narrative_time := initial_narrative_time
 	var executor
 	var restored_messages_snapshot: Dictionary = {}
-	if store.exists():
-		var loaded_save: Dictionary = store.load_snapshot()
-		if not loaded_save.get("ok", false):
-			return _failure(str(loaded_save.get("error_code", "SAVE_LOAD_REFUSED")))
-		var snapshot: Dictionary = loaded_save["snapshot"]
-		if not RuntimeSnapshotV2.validate(snapshot, sequence)["valid"]:
+	if restored:
+		if typeof(runtime_snapshot) != TYPE_DICTIONARY or not RuntimeSnapshotV2.validate(runtime_snapshot, sequence)["valid"]:
 			return _failure("INVALID_PLAYER_RUNTIME_SAVE")
 		var restored_executor := ExecutorV2.restore(
-			graph["facade"], projection_port, sequence, snapshot
+			facade, projection_port, sequence, runtime_snapshot
 		)
 		if not restored_executor.get("ok", false):
 			return _failure(str(restored_executor.get("error_code", "EXECUTOR_RESTORE_REFUSED")))
 		executor = restored_executor["executor"]
 		restored_messages_snapshot = restored_executor["messages_adapter"]
 		narrative_time = restored_executor["narrative_time"]
-		restored = true
 	else:
-		var activation := _activate_sequence(graph["facade"], sequence)
+		var activation := _activate_sequence(facade, sequence)
 		if not activation.get("ok", false):
 			return _failure(str(activation.get("error_code", "A6_ACTIVATION_REFUSED")))
-		var created_executor := ExecutorV2.create(
-			graph["facade"], projection_port, sequence, activation
-		)
+		var created_executor := ExecutorV2.create(facade, projection_port, sequence, activation)
 		if not created_executor.get("ok", false):
 			return _failure(str(created_executor.get("error_code", "EXECUTOR_CREATE_REFUSED")))
 		executor = created_executor["executor"]
@@ -133,8 +152,8 @@ static func compose(portrait_shell, save_path_override := "") -> Dictionary:
 		executor,
 		projection_port,
 		{
-			"presentation_metadata": messages_resolver_result["resolver"].presentation_metadata(),
-			"referenced_content_resolver": messages_resolver_result["resolver"],
+			"presentation_metadata": messages_resolver.presentation_metadata(),
+			"referenced_content_resolver": messages_resolver,
 		},
 	)
 	if not messages_adapter_result.get("ok", false):
@@ -146,14 +165,14 @@ static func compose(portrait_shell, save_path_override := "") -> Dictionary:
 			return _failure("MESSAGES_ADAPTER_RESTORE_REFUSED")
 	var physical_screen = PhysicalScreenScene.instantiate()
 	var physical_adapter_result := PhysicalAdapter.create(
-		executor, projection_port, physical_resolver_result["resolver"], physical_screen
+		executor, projection_port, physical_resolver, physical_screen
 	)
 	if not physical_adapter_result.get("ok", false):
 		return _failure("PHYSICAL_ADAPTER_REFUSED")
 	var media_adapter_result := MediaAdapter.create(
 		executor,
 		projection_port,
-		media_resolver_result["resolver"],
+		media_resolver,
 		portrait_shell.photo_viewer,
 		portrait_shell.PORTRAIT_THEME,
 	)
@@ -170,18 +189,23 @@ static func compose(portrait_shell, save_path_override := "") -> Dictionary:
 	if not unified_result.get("ok", false):
 		return _failure("UNIFIED_COORDINATOR_REFUSED")
 	var session_result := RuntimeSession.create({
-		"facade": graph["facade"],
+		"facade": facade,
 		"executor": executor,
 		"projection_coordinator": unified_result["coordinator"],
 		"messages_adapter": messages_adapter,
 		"physical_adapter": physical_adapter_result["adapter"],
 		"media_adapter": media_adapter_result["adapter"],
-		"media_resolver": media_resolver_result["resolver"],
-		"save_store": store,
+		"media_resolver": media_resolver,
+		"gallery_media_resolver": (
+			catalog_media_resolver if catalog_media_resolver != null else media_resolver
+		),
+		"save_store": save_store,
 		"authored_sequence": sequence,
 		"resolution_context": _resolution_context(sequence, narrative_time),
 		"narrative_time": narrative_time,
 		"restored": restored,
+		"persistent_messages_state": persistent_messages_state,
+		"catalog_messages_metadata": catalog_messages_metadata,
 	})
 	if not session_result.get("ok", false):
 		return _failure(str(session_result.get("error_code", "SESSION_REFUSED")))
@@ -203,6 +227,16 @@ static func _new_domain_graph(sequence: Dictionary) -> Dictionary:
 	})
 	if not loaded.get("ok", false):
 		return {}
+	return _new_domain_graph_from_library(loaded["bibliotheque"])
+
+
+static func _new_catalog_domain_graph(catalog: Dictionary) -> Dictionary:
+	if catalog.get("library") == null:
+		return {}
+	return _new_domain_graph_from_library(catalog["library"])
+
+
+static func _new_domain_graph_from_library(library) -> Dictionary:
 	var state = NarrativeStateModel.creer_synthetique({
 		"statut_couple": "EN_CLARIFICATION",
 		"contrat_couple": null,
@@ -213,16 +247,26 @@ static func _new_domain_graph(sequence: Dictionary) -> Dictionary:
 		"faits": [],
 		"cadre_provisoire": null,
 	})
-	var facade = FacadeModel.create(loaded["bibliotheque"], state)
+	var facade = FacadeModel.create(library, state)
 	return {"facade": facade} if facade != null else {}
 
 
 static func _activate_sequence(facade, sequence: Dictionary) -> Dictionary:
 	var context := _activation_context(sequence)
 	var candidates: Dictionary = facade.find_candidates(context)
-	if not candidates.get("ok", false) or candidates.get("candidats", []).size() != 1:
-		return {"ok": false, "error_code": "A6_CANDIDATE_NOT_UNIQUE"}
-	var candidate: Dictionary = candidates["candidats"][0]
+	if not candidates.get("ok", false):
+		return {"ok": false, "error_code": "A6_CANDIDATE_QUERY_REFUSED"}
+	var entry: Dictionary = sequence["orchestration"]["a6_entry"]
+	var candidate := {}
+	for candidate_value in candidates.get("candidats", []):
+		if (
+			candidate_value.get("scene_definition_id") == entry["scene_definition_id"]
+			and candidate_value.get("variant_id") == entry["variant_id"]
+		):
+			candidate = candidate_value.duplicate(true)
+			break
+	if candidate.is_empty():
+		return {"ok": false, "error_code": "A6_PACKAGE_NOT_ELIGIBLE"}
 	var temporal: Dictionary = sequence["temporal_projection"]["resolved_window"]
 	var composition: Dictionary = facade.compose_slot({
 		"slot_id": sequence["orchestration"]["a9_slot"]["slot_role"],

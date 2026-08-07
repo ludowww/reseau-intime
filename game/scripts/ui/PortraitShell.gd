@@ -279,6 +279,7 @@ func is_photo_viewer_active() -> bool:
 func configure_unified_runtime(session) -> bool:
 	if content_mode != "unified" or session == null or messages_screen == null or gallery_screen == null:
 		return false
+	_disconnect_unified_runtime_provider()
 	runtime_provider = session
 	messages_screen.activate_runtime_content_source(session.presentation_source(), session)
 	gallery_screen.refresh_content_source(session.gallery_source())
@@ -287,12 +288,24 @@ func configure_unified_runtime(session) -> bool:
 	return true
 
 
-func clear_unified_runtime() -> void:
-	runtime_provider = null
+func clear_unified_runtime(
+	messages_source: Dictionary = {}, gallery_source: Dictionary = {}, presentation_provider = null
+) -> void:
+	_disconnect_unified_runtime_provider()
+	runtime_provider = presentation_provider
 	if messages_screen != null:
-		messages_screen.configure_content_source({}, null)
+		messages_screen.activate_runtime_content_source(messages_source, presentation_provider)
 	if gallery_screen != null:
-		gallery_screen.refresh_content_source({})
+		gallery_screen.refresh_content_source(gallery_source)
+
+
+func _disconnect_unified_runtime_provider() -> void:
+	if (
+		runtime_provider != null
+		and runtime_provider.has_signal("gallery_source_changed")
+		and runtime_provider.gallery_source_changed.is_connected(_on_unified_gallery_source_changed)
+	):
+		runtime_provider.gallery_source_changed.disconnect(_on_unified_gallery_source_changed)
 
 
 func _on_unified_gallery_source_changed(source: Dictionary) -> void:

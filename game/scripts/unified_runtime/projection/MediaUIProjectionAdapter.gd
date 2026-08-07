@@ -21,6 +21,7 @@ var _viewer
 var _portrait_theme
 var _active: Dictionary = {}
 var _last_result := _result(false, "NOT_INITIALIZED")
+var _detached := false
 
 
 static func create(executor, projection_port, resolver, viewer, portrait_theme) -> Dictionary:
@@ -43,6 +44,22 @@ func photo_viewer():
 	return _viewer
 
 
+func detach() -> void:
+	if _detached:
+		return
+	_detached = true
+	if _viewer != null and is_instance_valid(_viewer):
+		if _viewer.media_presented.is_connected(_on_media_presented):
+			_viewer.media_presented.disconnect(_on_media_presented)
+		if _viewer.close_requested.is_connected(_on_close_requested):
+			_viewer.close_requested.disconnect(_on_close_requested)
+		_viewer.reset_viewer()
+	_active = {}
+	_executor = null
+	_projection_port = null
+	_viewer = null
+
+
 func execution_state() -> Dictionary:
 	return _executor.execution_state() if _executor != null else {}
 
@@ -60,6 +77,8 @@ func last_result() -> Dictionary:
 
 
 func open_current_projection() -> Dictionary:
+	if _detached:
+		return _publish_result(false, "ADAPTER_DETACHED")
 	if _executor == null:
 		return _publish_result(false, "NOT_INITIALIZED")
 	if not _viewer.is_inside_tree() or not _viewer.is_node_ready():

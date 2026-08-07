@@ -28,6 +28,7 @@ var _messages_screen
 var _physical_screen
 var _last_result := _result(false, "NOT_INITIALIZED")
 var _route_pending := false
+var _detached := false
 
 
 static func create(messages_adapter, physical_adapter) -> Dictionary:
@@ -46,12 +47,27 @@ static func create(messages_adapter, physical_adapter) -> Dictionary:
 
 
 func attach_messages_screen(screen) -> void:
+	if _detached:
+		return
 	_messages_screen = screen
 	_messages_adapter.attach_messages_screen(screen)
 	if screen.is_node_ready():
 		_mount_physical_screen()
 	elif not screen.ready.is_connected(_mount_physical_screen):
 		screen.ready.connect(_mount_physical_screen, CONNECT_ONE_SHOT)
+
+
+func detach() -> void:
+	if _detached:
+		return
+	_detached = true
+	_route_pending = false
+	_messages_adapter.attach_messages_screen(null)
+	if _physical_adapter.projection_completed.is_connected(_on_physical_projection_completed):
+		_physical_adapter.projection_completed.disconnect(_on_physical_projection_completed)
+	if _physical_adapter.has_method("detach"):
+		_physical_adapter.detach()
+	_messages_screen = null
 
 
 func _mount_physical_screen() -> void:
@@ -158,10 +174,14 @@ func _queue_route() -> void:
 
 func _run_queued_route() -> void:
 	_route_pending = false
+	if _detached:
+		return
 	_route_current_projection()
 
 
 func _route_current_projection() -> Dictionary:
+	if _detached:
+		return _publish_result(false, "COORDINATOR_DETACHED")
 	var execution: Dictionary = _physical_adapter.execution_state()
 	var status := str(execution.get("execution_status", ""))
 	if status in ["RESOLUTION_READY", "COMPLETE"]:

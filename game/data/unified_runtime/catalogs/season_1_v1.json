@@ -1,0 +1,17 @@
+{
+  "schema_id": "reseau_intime.authored_sequence_catalog",
+  "schema_version": 1,
+  "catalog_id": "season_1_v1",
+  "season_id": "season_1",
+  "packages": [
+    {
+      "package_id": "mathilde_returns_with_chosen_intent_01",
+      "sequence_id": "mathilde_returns_with_chosen_intent_01",
+      "authored_version": "1.0.0",
+      "sequence_path": "res://data/unified_runtime/sequences/mathilde_returns_with_chosen_intent_01.json",
+      "messages_path": "res://data/unified_runtime/presentation/mathilde_returns_with_chosen_intent_01_messages.json",
+      "physical_path": "res://data/unified_runtime/presentation/mathilde_returns_with_chosen_intent_01_physical.json",
+      "media_path": "res://data/unified_runtime/presentation/mathilde_returns_with_chosen_intent_01_media.json"
+    }
+  ]
+}

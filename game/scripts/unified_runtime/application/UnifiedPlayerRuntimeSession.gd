@@ -4,6 +4,7 @@ class_name R8CUnifiedPlayerRuntimeSession
 
 signal gallery_source_changed(source: Dictionary)
 signal runtime_failed(error_code: String)
+signal sequence_completed(session)
 
 const ReturnGate := preload(
 	"res://scripts/unified_runtime/application/DeferredReturnGate.gd"
@@ -11,6 +12,9 @@ const ReturnGate := preload(
 const Moment := preload("res://scripts/unified_runtime/application/NarrativeMoment.gd")
 const DurableGallery := preload(
 	"res://scripts/unified_runtime/projection/DurableGalleryProjection.gd"
+)
+const PersistentMessages := preload(
+	"res://scripts/unified_runtime/application/PersistentMessagesStateV1.gd"
 )
 
 var _facade
@@ -20,6 +24,7 @@ var _messages_adapter
 var _physical_adapter
 var _media_adapter
 var _media_resolver
+var _gallery_media_resolver
 var _save_store
 var _authored_sequence: Dictionary = {}
 var _resolution_context: Dictionary = {}
@@ -28,14 +33,19 @@ var _restored := false
 var _initial_save_pending := false
 var _durable_boundary_pending := false
 var _gallery_source: Dictionary = {}
+var _persistent_messages_state: Dictionary = {}
+var _catalog_messages_metadata: Dictionary = {}
+var _completion_emitted := false
+var _detached := false
 var _last_result := _result(false, "NOT_INITIALIZED")
 
 
 static func create(dependencies: Dictionary) -> Dictionary:
 	var required := [
 		"facade", "executor", "projection_coordinator", "messages_adapter",
-		"physical_adapter", "media_adapter", "media_resolver", "save_store",
+		"physical_adapter", "media_adapter", "media_resolver", "gallery_media_resolver", "save_store",
 		"authored_sequence", "resolution_context", "narrative_time", "restored",
+		"persistent_messages_state", "catalog_messages_metadata",
 	]
 	for field in required:
 		if not dependencies.has(field):
@@ -50,11 +60,21 @@ static func create(dependencies: Dictionary) -> Dictionary:
 	session._physical_adapter = dependencies["physical_adapter"]
 	session._media_adapter = dependencies["media_adapter"]
 	session._media_resolver = dependencies["media_resolver"]
+	session._gallery_media_resolver = dependencies["gallery_media_resolver"]
 	session._save_store = dependencies["save_store"]
 	session._authored_sequence = dependencies["authored_sequence"].duplicate(true)
 	session._resolution_context = dependencies["resolution_context"].duplicate(true)
 	session._narrative_time = dependencies["narrative_time"]
 	session._restored = dependencies["restored"]
+	session._persistent_messages_state = dependencies["persistent_messages_state"].duplicate(true)
+	session._catalog_messages_metadata = dependencies["catalog_messages_metadata"].duplicate(true)
+	if (
+		session._catalog_messages_metadata.is_empty()
+		or not PersistentMessages.validate(
+			session._persistent_messages_state, session._catalog_messages_metadata
+		)["valid"]
+	):
+		return {"ok": false, "error_code": "INVALID_PERSISTENT_MESSAGES_STATE", "session": null}
 	session._physical_adapter.projection_completed.connect(session._on_projection_completed)
 	session._media_adapter.projection_completed.connect(session._on_projection_completed)
 	var gallery := session._refresh_gallery(false)
@@ -65,6 +85,8 @@ static func create(dependencies: Dictionary) -> Dictionary:
 
 
 func begin() -> Dictionary:
+	if _detached:
+		return _publish(false, "SESSION_DETACHED")
 	if not _restored:
 		var started: Dictionary = _executor.start()
 		if not started.get("ok", false):
@@ -76,7 +98,10 @@ func begin() -> Dictionary:
 		if not saved["ok"]:
 			return saved
 		_initial_save_pending = false
-	return _route_current()
+	var routed := _route_current()
+	if routed["ok"]:
+		_notify_complete_if_needed()
+	return routed
 
 
 func advance_narrative_time(explicit_moment: String) -> Dictionary:
@@ -96,6 +121,8 @@ func advance_narrative_time(explicit_moment: String) -> Dictionary:
 
 
 func save_now(messages_snapshot_override = null) -> Dictionary:
+	if _detached:
+		return _publish(false, "SESSION_DETACHED")
 	var adapter_state = messages_snapshot_override
 	if adapter_state == null:
 		var adapter_snapshot: Dictionary = _messages_adapter.snapshot()
@@ -108,7 +135,9 @@ func save_now(messages_snapshot_override = null) -> Dictionary:
 	var stored: Dictionary = _save_store.save_snapshot(built["payload"]["snapshot"])
 	if not stored.get("ok", false):
 		return _publish(false, str(stored.get("error_code", "SAVE_REFUSED")))
-	return _publish(true)
+	var result := _publish(true)
+	_notify_complete_if_needed()
+	return result
 
 
 func gallery_source() -> Dictionary:
@@ -142,11 +171,43 @@ func attach_messages_screen(screen) -> void:
 
 
 func presentation_source() -> Dictionary:
-	return _messages_adapter.presentation_source()
+	var merged := PersistentMessages.merge_with_active(
+		_persistent_messages_state,
+		_messages_adapter.presentation_source(),
+		_messages_adapter.presented_message_ids_by_thread(),
+		_catalog_messages_metadata,
+	)
+	return merged["state"]["source"].duplicate(true) if merged["ok"] else {}
 
 
 func presented_message_ids_by_thread() -> Dictionary:
-	return _messages_adapter.presented_message_ids_by_thread()
+	var merged := persistent_messages_state()
+	return (
+		merged["presented_message_ids_by_thread"].duplicate(true)
+		if not merged.is_empty() else {}
+	)
+
+
+func persistent_messages_state() -> Dictionary:
+	var merged := PersistentMessages.merge_with_active(
+		_persistent_messages_state,
+		_messages_adapter.presentation_source(),
+		_messages_adapter.presented_message_ids_by_thread(),
+		_catalog_messages_metadata,
+	)
+	return PersistentMessages.without_active_choices(merged["state"]) if merged["ok"] else {}
+
+
+func detach() -> void:
+	if _detached:
+		return
+	_detached = true
+	if _physical_adapter.projection_completed.is_connected(_on_projection_completed):
+		_physical_adapter.projection_completed.disconnect(_on_projection_completed)
+	if _media_adapter.projection_completed.is_connected(_on_projection_completed):
+		_media_adapter.projection_completed.disconnect(_on_projection_completed)
+	if _projection_coordinator.has_method("detach"):
+		_projection_coordinator.detach()
 
 
 func on_messages_ui_ready() -> void:
@@ -270,7 +331,12 @@ func _gallery_source_from_domain() -> Dictionary:
 	var registry = domain.get("narrative_state", {}).get("livraison_medias")
 	if typeof(registry) != TYPE_DICTIONARY:
 		return _publish(false, "INVALID_DURABLE_MEDIA_REGISTRY")
-	var created := DurableGallery.create(_authored_sequence, registry, _media_resolver, true)
+	var resolver_identity: Dictionary = _gallery_media_resolver.catalog_identity()
+	var created := (
+		DurableGallery.create_catalog(registry, _gallery_media_resolver)
+		if resolver_identity.has("catalog_id")
+		else DurableGallery.create(_authored_sequence, registry, _media_resolver, true)
+	)
 	if not created.get("ok", false):
 		return _publish(false, str(created.get("error_code", "GALLERY_PROJECTION_REFUSED")))
 	var source_result: Dictionary = created["projection"].content_source()
@@ -385,6 +451,17 @@ func _publish(ok: bool, error_code = null, idempotent := false) -> Dictionary:
 	if not ok:
 		runtime_failed.emit(str(error_code))
 	return _last_result.duplicate(true)
+
+
+func _notify_complete_if_needed() -> void:
+	if (
+		_detached
+		or _completion_emitted
+		or execution_state().get("execution_status") != "COMPLETE"
+	):
+		return
+	_completion_emitted = true
+	sequence_completed.emit(self)
 
 
 static func _result(ok: bool, error_code = null, idempotent := false) -> Dictionary:

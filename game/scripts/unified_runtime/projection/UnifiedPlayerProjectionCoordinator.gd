@@ -16,6 +16,7 @@ var _messages_physical_coordinator
 var _media_adapter
 var _last_result := _result(false, "NOT_INITIALIZED")
 var _route_pending := false
+var _detached := false
 
 
 static func create(messages_physical_coordinator, media_adapter) -> Dictionary:
@@ -31,7 +32,22 @@ static func create(messages_physical_coordinator, media_adapter) -> Dictionary:
 
 
 func attach_messages_screen(screen) -> void:
+	if _detached:
+		return
 	_messages_physical_coordinator.attach_messages_screen(screen)
+
+
+func detach() -> void:
+	if _detached:
+		return
+	_detached = true
+	_route_pending = false
+	if _media_adapter.projection_completed.is_connected(_on_media_projection_completed):
+		_media_adapter.projection_completed.disconnect(_on_media_projection_completed)
+	if _messages_physical_coordinator.has_method("detach"):
+		_messages_physical_coordinator.detach()
+	if _media_adapter.has_method("detach"):
+		_media_adapter.detach()
 
 
 func presentation_source() -> Dictionary:
@@ -126,10 +142,14 @@ func _queue_route() -> void:
 
 func _run_queued_route() -> void:
 	_route_pending = false
+	if _detached:
+		return
 	_route_current_projection()
 
 
 func _route_current_projection() -> Dictionary:
+	if _detached:
+		return _publish_result(false, "COORDINATOR_DETACHED")
 	var status := str(_media_adapter.execution_state().get("execution_status", ""))
 	if status in ["RESOLUTION_READY", "COMPLETE"]:
 		return _publish_result(true)

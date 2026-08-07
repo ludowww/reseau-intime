@@ -1,0 +1,10 @@
+{
+  "schema_id": "reseau_intime.authored_sequence_catalog",
+  "schema_version": 1,
+  "catalog_id": "n18_test_beta_alpha",
+  "season_id": "synthetic_n18",
+  "packages": [
+    {"package_id": "test_sequence_beta", "sequence_id": "test_sequence_beta", "authored_version": "1.0.0", "sequence_path": "res://tests/fixtures/unified_runtime/n18_test_sequence_beta.json", "messages_path": "res://tests/fixtures/unified_runtime/n18_test_sequence_beta_messages.json", "physical_path": "res://tests/fixtures/unified_runtime/n18_test_sequence_beta_physical.json", "media_path": "res://tests/fixtures/unified_runtime/n18_test_sequence_beta_media.json"},
+    {"package_id": "test_sequence_alpha", "sequence_id": "test_sequence_alpha", "authored_version": "1.0.0", "sequence_path": "res://tests/fixtures/unified_runtime/n18_test_sequence_alpha.json", "messages_path": "res://tests/fixtures/unified_runtime/n18_test_sequence_alpha_messages.json", "physical_path": "res://tests/fixtures/unified_runtime/n18_test_sequence_alpha_physical.json", "media_path": "res://tests/fixtures/unified_runtime/n18_test_sequence_alpha_media.json"}
+  ]
+}

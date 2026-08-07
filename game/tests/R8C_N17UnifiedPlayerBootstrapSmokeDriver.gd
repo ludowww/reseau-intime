@@ -158,6 +158,12 @@ func _run_paid_path(choice_id: String, expected_status: String, save_path: Strin
 		print("R8C_N17_RETURN_REFUSED: ", choice_id, " ", session.describe_state())
 	_expect(completed_messages, "%s présente sa réponse canonique" % choice_id)
 	_expect(session.execution_state()["execution_status"] == "COMPLETE", "%s termine la séquence" % choice_id)
+	await _frames(2)
+	_expect(
+		portrait_main.season_runner.status() == "IDLE_NO_ELIGIBLE_SEQUENCE"
+		and portrait_main.season_runner.active_session == null,
+		"le catalogue production Mathilde seul termine en idle sans contenu synthétique",
+	)
 	portrait_main.queue_free()
 	await get_tree().process_frame
 	_remove_smoke_save(save_path)
@@ -184,10 +190,13 @@ func _run_failed_deferred_path(save_path: String) -> void:
 	var early_source: Dictionary = session.presentation_source()
 	var early_presented: Dictionary = session.presented_message_ids_by_thread()
 	var early_store = SaveStore.create(save_path)["store"]
-	var early_snapshot: Dictionary = early_store.load_snapshot()
+	var early_loaded: Dictionary = early_store.load_snapshot()
+	var early_snapshot: Dictionary = (
+		_active_runtime_snapshot(early_loaded["snapshot"]) if early_loaded["ok"] else {}
+	)
 	_expect(
-		early_snapshot["ok"]
-		and early_snapshot["snapshot"]["narrative_time"] == "2032-03-04T21:08:05+01:00",
+		early_loaded["ok"]
+		and early_snapshot.get("narrative_time") == "2032-03-04T21:08:05+01:00",
 		"snapshot Messages initial ne contient plus 21:52",
 	)
 	portrait_main.queue_free()
@@ -279,19 +288,23 @@ func _run_failed_deferred_path(save_path: String) -> void:
 		"MA3 persiste l’éligibilité RETURN calculée une seule fois",
 	)
 	var store = SaveStore.create(save_path)["store"]
-	var stored: Dictionary = store.load_snapshot()
+	var stored_envelope: Dictionary = store.load_snapshot()
+	var stored: Dictionary = (
+		_active_runtime_snapshot(stored_envelope["snapshot"])
+		if stored_envelope["ok"] else {}
+	)
 	_expect(
-		stored["ok"] and stored["snapshot"]["messages_adapter"]["active"].is_empty(),
+		stored_envelope["ok"] and stored.get("messages_adapter", {}).get("active", {}).is_empty(),
 		"frontière post-A10 sauvegarde un adapter Messages cohérent",
 	)
-	if stored["ok"]:
-		var tampered: Dictionary = stored["snapshot"].duplicate(true)
+	if stored_envelope["ok"]:
+		var tampered: Dictionary = stored.duplicate(true)
 		tampered["execution"]["scheduled_returns"][0]["resolution_id"] = "mathilde_mb3_ma1_resolution"
 		_expect(
 			not RuntimeSnapshotV2.validate(tampered, _load(SEQUENCE_PATH))["valid"],
 			"snapshot V2 refuse un schedule RETURN lié à une autre résolution",
 		)
-		var tampered_origin: Dictionary = stored["snapshot"].duplicate(true)
+		var tampered_origin: Dictionary = stored.duplicate(true)
 		tampered_origin["execution"]["scheduled_returns"][0]["scheduled_from"] = "2032-03-04T20:52:00+01:00"
 		tampered_origin["execution"]["scheduled_returns"][0]["eligible_at"] = "2032-03-05T08:06:00+01:00"
 		_expect(
@@ -302,7 +315,7 @@ func _run_failed_deferred_path(save_path: String) -> void:
 		for beat in delayed_chain_sequence["beats"]:
 			if beat["beat_id"] == "mathilde_mb3_ma3_immediate_return":
 				beat["content"]["delay"] = {"mode": "DIEGETIC_MINUTES", "value": 5}
-		var delayed_chain_snapshot: Dictionary = stored["snapshot"].duplicate(true)
+		var delayed_chain_snapshot: Dictionary = stored.duplicate(true)
 		delayed_chain_snapshot["narrative_time"] = "2032-03-04T21:57:00+01:00"
 		delayed_chain_snapshot["execution"]["scheduled_returns"][0]["scheduled_from"] = "2032-03-04T21:57:00+01:00"
 		delayed_chain_snapshot["execution"]["scheduled_returns"][0]["eligible_at"] = "2032-03-05T09:11:00+01:00"
@@ -632,6 +645,13 @@ func _wait_for_status(session, expected: String, max_frames := 30) -> bool:
 func _frames(count: int) -> void:
 	for _index in range(count):
 		await get_tree().process_frame
+
+
+func _active_runtime_snapshot(saved_snapshot: Dictionary) -> Dictionary:
+	if saved_snapshot.get("schema_id") == "reseau_intime.unified_season":
+		var active = saved_snapshot.get("active_runtime_snapshot")
+		return active.duplicate(true) if typeof(active) == TYPE_DICTIONARY else {}
+	return saved_snapshot.duplicate(true)
 
 
 func _test_save_recovery() -> void:

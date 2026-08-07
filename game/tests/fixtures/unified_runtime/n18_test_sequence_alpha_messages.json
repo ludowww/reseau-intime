@@ -1,0 +1,16 @@
+{
+  "schema_id": "reseau_intime.referenced_messages_catalog",
+  "schema_version": 1,
+  "sequence_id": "test_sequence_alpha",
+  "authored_version": "1.0.0",
+  "presentation_metadata": {
+    "characters": {
+      "alpha_actor": {"character_id": "alpha_actor", "display_name": "Alpha", "accent_color": "#A060C0", "avatar_ref": "A"},
+      "player": {"character_id": "player", "display_name": "Player", "accent_color": "#8D63E6", "avatar_ref": "P"}
+    },
+    "threads": [{"thread_id": "alpha_thread", "title": "Alpha", "participant_ids": ["alpha_actor", "player"], "last_preview": "", "last_timestamp": "", "unread_count": 0, "has_unread_content": false, "availability_state": "AVAILABLE", "is_group": false, "is_archived": false, "avatar_ref": "A", "accent_color": "#A060C0"}],
+    "narrative_day_short": "Test",
+    "narrative_time": "10:01"
+  },
+  "entries": [{"content_ref": "alpha_return_content", "beat_type": "RETURN", "thread_id": "alpha_thread", "messages": [{"message_id": "alpha_return_01", "author_id": "alpha_actor", "text": "Alpha complete.", "diegetic_at": "2033-01-01T10:02:00+01:00", "relative_order": 0}]}]
+}

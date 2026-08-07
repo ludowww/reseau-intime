@@ -1,0 +1,5 @@
+{
+  "sequence_id": "test_sequence_alpha",
+  "authored_version": "1.0.0",
+  "entries": [{"media_id": "test_alpha_media", "visual_ref": "", "display_name": "Alpha media", "context_label": "Synthetic N18", "caption": "TEST_ONLY alpha media.", "placeholder_label": "Test visual", "gallery_character_ids": ["alpha_actor"]}]
+}
