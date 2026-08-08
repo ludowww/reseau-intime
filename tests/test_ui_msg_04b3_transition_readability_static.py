@@ -89,6 +89,8 @@ class UIMsg04B3TransitionReadabilityStaticTests(unittest.TestCase):
             self.assertNotIn(forbidden, conversation)
 
     def test_04b3_runtime_smoke_and_full_matrix_exist(self):
+        driver = self.read("game/tests/UI_MSG_04B3TransitionReadabilitySmokeDriver.gd")
+        self.assertIn('main.get_node("PortraitShell").content_mode = "runtime_s1"', driver)
         required = [
             "game/tests/UI_MSG_04B3TransitionReadabilitySmokeDriver.gd",
             "game/tests/UI_MSG_04B3TransitionReadabilitySmokeTest.tscn",

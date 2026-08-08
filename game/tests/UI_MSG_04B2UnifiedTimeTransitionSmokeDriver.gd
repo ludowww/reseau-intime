@@ -13,6 +13,7 @@ func _run() -> void:
 	var size := _parse_size(_arg("--runtime-size", "720x1280"))
 	get_window().size = size
 	var main = MAIN_SCENE.instantiate()
+	main.get_node("PortraitShell").content_mode = "runtime_s1"
 	add_child(main)
 	await _frames(5)
 	var shell = main.shell
@@ -102,15 +103,11 @@ func _exercise_overlay_robustness(overlay) -> void:
 	overlay.dismiss()
 
 func _exercise_sandra_focus(messages, provider) -> void:
-	if not provider.j01_provider.unlocked_thread_ids.has("thread_sandra_private"):
-		provider.j01_provider.unlocked_thread_ids.append("thread_sandra_private")
-	messages.refresh_from_runtime()
-	messages._apply_time_passage_result({
-		"accepted": true,
-		"destination": "list",
-		"unlocked_thread_id": "thread_sandra_private",
-		"notification": {"body": "Sandra vous a écrit."},
-	}, {})
+	provider.j01_provider.pending_transition = {"kind": "marie_shared_evening"}
+	var result: Dictionary = provider.confirm_transition()
+	_expect(bool(result.get("accepted", false)), "real J01 transition confirms")
+	result["destination"] = "list"
+	messages._apply_time_passage_result(result, {})
 	await _frames(3)
 	var focus_owner := get_viewport().gui_get_focus_owner()
 	var sandra_card = _thread_card(messages, "thread_sandra_private")

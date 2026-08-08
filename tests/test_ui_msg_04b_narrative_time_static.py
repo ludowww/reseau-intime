@@ -82,6 +82,7 @@ class UIMsg04BNarrativeTimeStaticTests(unittest.TestCase):
     def test_smoke_uses_real_portrait_main_and_speed_button(self):
         driver = self.read("game/tests/UI_MSG_04BNarrativeTimeSmokeDriver.gd")
         self.assertIn('preload("res://scenes/portrait/PortraitMain.tscn")', driver)
+        self.assertIn('main.get_node("PortraitShell").content_mode = "runtime_s1"', driver)
         self.assertIn('emit_signal("pressed")', driver)
         self.assertIn("narrative header starts at Mar. · 18:12", driver)
         runner = self.read("tools/test_ui_msg_04b_narrative_time.sh")

@@ -102,6 +102,10 @@ class UIMsg04B2UnifiedTimeTransitionStaticTests(unittest.TestCase):
 
     def test_smoke_covers_surfaces_speed_reduced_motion_snapshots_and_responsive(self):
         driver = self.read("game/tests/UI_MSG_04B2UnifiedTimeTransitionSmokeDriver.gd")
+        self.assertIn('main.get_node("PortraitShell").content_mode = "runtime_s1"', driver)
+        self.assertIn('provider.j01_provider.pending_transition = {"kind": "marie_shared_evening"}', driver)
+        self.assertIn("provider.confirm_transition()", driver)
+        self.assertNotIn("unlocked_thread_ids", driver)
         for token in [
             'preload("res://scenes/portrait/PortraitMain.tscn")', "clock from list",
             "clock from conversation", "phone remains mounted", "single overlay instance",
