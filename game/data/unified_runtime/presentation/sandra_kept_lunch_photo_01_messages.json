@@ -1,0 +1,85 @@
+{
+  "schema_id": "reseau_intime.referenced_messages_catalog",
+  "schema_version": 1,
+  "sequence_id": "sandra_kept_lunch_photo_01",
+  "authored_version": "1.0.0",
+  "presentation_metadata": {
+    "characters": {
+      "sandra": {"character_id": "sandra", "display_name": "Sandra", "accent_color": "#20C7C9", "avatar_ref": "S"},
+      "player": {"character_id": "player", "display_name": "Player", "accent_color": "#8D63E6", "avatar_ref": "P"}
+    },
+    "threads": [
+      {
+        "thread_id": "sandra_thread",
+        "title": "Sandra",
+        "participant_ids": ["sandra", "player"],
+        "last_preview": "",
+        "last_timestamp": "",
+        "unread_count": 0,
+        "has_unread_content": false,
+        "availability_state": "AVAILABLE",
+        "is_group": false,
+        "is_archived": false,
+        "avatar_ref": "S",
+        "accent_color": "#20C7C9"
+      }
+    ],
+    "narrative_day_short": "Mar.",
+    "narrative_time": "22:57"
+  },
+  "entries": [
+    {
+      "content_ref": "sandra_kept_photo_warm_return_content",
+      "beat_type": "RETURN",
+      "thread_id": "sandra_thread",
+      "messages": [
+        {"message_id": "sandra_warm_return_01", "author_id": "sandra", "text": "C'est gentil.", "diegetic_at": "2032-03-02T23:02:00+01:00", "relative_order": 0},
+        {"message_id": "sandra_warm_return_02", "author_id": "sandra", "text": "Et presque raisonnable. Ne gâchons pas tout de suite.", "diegetic_at": "2032-03-02T23:03:00+01:00", "relative_order": 1},
+        {"message_id": "sandra_warm_return_03", "author_id": "sandra", "text": "Je vais te laisser. Je travaille tôt demain.", "diegetic_at": "2032-03-02T23:06:00+01:00", "relative_order": 2},
+        {"message_id": "sandra_warm_return_04", "author_id": "sandra", "text": "J'ai déjà passé trop de temps à choisir une photo que j'avais soi-disant juste retrouvée.", "diegetic_at": "2032-03-02T23:06:05+01:00", "relative_order": 3},
+        {"message_id": "sandra_warm_return_05", "author_id": "player", "text": "Merci. Je vais pas lui faire dire plus que ça.", "diegetic_at": "2032-03-02T23:06:10+01:00", "relative_order": 4},
+        {"message_id": "sandra_warm_return_06", "author_id": "sandra", "text": "Bien.", "diegetic_at": "2032-03-02T23:08:00+01:00", "relative_order": 5},
+        {"message_id": "sandra_warm_return_07", "author_id": "sandra", "text": "On va dire que c'était sans conséquence.", "diegetic_at": "2032-03-02T23:09:00+01:00", "relative_order": 6},
+        {"message_id": "sandra_warm_return_08", "author_id": "player", "text": "On s'arrête là pour ce soir ? Bonne nuit Sandra.", "diegetic_at": "2032-03-02T23:09:05+01:00", "relative_order": 7},
+        {"message_id": "sandra_warm_return_09", "author_id": "sandra", "text": "Oui. Pour ce soir.", "diegetic_at": "2032-03-02T23:10:00+01:00", "relative_order": 8},
+        {"message_id": "sandra_warm_return_10", "author_id": "sandra", "text": "Bonne nuit, Player 🙂", "diegetic_at": "2032-03-02T23:12:00+01:00", "relative_order": 9}
+      ]
+    },
+    {
+      "content_ref": "sandra_photo_intention_noticed_return_content",
+      "beat_type": "RETURN",
+      "thread_id": "sandra_thread",
+      "messages": [
+        {"message_id": "sandra_precise_return_01", "author_id": "sandra", "text": "Haha.", "diegetic_at": "2032-03-02T23:02:00+01:00", "relative_order": 0},
+        {"message_id": "sandra_precise_return_02", "author_id": "sandra", "text": "Je n'ai pas dit que c'était pour le sourire.", "diegetic_at": "2032-03-02T23:03:00+01:00", "relative_order": 1},
+        {"message_id": "sandra_precise_return_03", "author_id": "sandra", "text": "Mais je n'ai pas choisi au hasard non plus.", "diegetic_at": "2032-03-02T23:03:05+01:00", "relative_order": 2},
+        {"message_id": "sandra_precise_return_04", "author_id": "sandra", "text": "Je vais te laisser. Je travaille tôt demain.", "diegetic_at": "2032-03-02T23:06:00+01:00", "relative_order": 3},
+        {"message_id": "sandra_precise_return_05", "author_id": "sandra", "text": "J'ai déjà passé trop de temps à choisir une photo que j'avais soi-disant juste retrouvée.", "diegetic_at": "2032-03-02T23:06:05+01:00", "relative_order": 4},
+        {"message_id": "sandra_precise_return_06", "author_id": "player", "text": "Merci. Je vais pas lui faire dire plus que ça.", "diegetic_at": "2032-03-02T23:06:10+01:00", "relative_order": 5},
+        {"message_id": "sandra_precise_return_07", "author_id": "sandra", "text": "Bien.", "diegetic_at": "2032-03-02T23:08:00+01:00", "relative_order": 6},
+        {"message_id": "sandra_precise_return_08", "author_id": "sandra", "text": "On va dire que c'était sans conséquence.", "diegetic_at": "2032-03-02T23:09:00+01:00", "relative_order": 7},
+        {"message_id": "sandra_precise_return_09", "author_id": "player", "text": "On s'arrête là pour ce soir ? Bonne nuit Sandra.", "diegetic_at": "2032-03-02T23:09:05+01:00", "relative_order": 8},
+        {"message_id": "sandra_precise_return_10", "author_id": "sandra", "text": "Oui. Pour ce soir.", "diegetic_at": "2032-03-02T23:10:00+01:00", "relative_order": 9},
+        {"message_id": "sandra_precise_return_11", "author_id": "sandra", "text": "Et pour la photo... je n'ai pas choisi celle-là au hasard.", "diegetic_at": "2032-03-02T23:11:00+01:00", "relative_order": 10},
+        {"message_id": "sandra_precise_return_12", "author_id": "sandra", "text": "Bonne nuit, Player 🙂", "diegetic_at": "2032-03-02T23:12:00+01:00", "relative_order": 11}
+      ]
+    },
+    {
+      "content_ref": "sandra_photo_memory_contained_return_content",
+      "beat_type": "RETURN",
+      "thread_id": "sandra_thread",
+      "messages": [
+        {"message_id": "sandra_cautious_return_01", "author_id": "sandra", "text": "Réponse prudente.", "diegetic_at": "2032-03-02T23:02:00+01:00", "relative_order": 0},
+        {"message_id": "sandra_cautious_return_02", "author_id": "sandra", "text": "Ce n'est pas mal. Juste un peu propre.", "diegetic_at": "2032-03-02T23:03:00+01:00", "relative_order": 1},
+        {"message_id": "sandra_cautious_return_03", "author_id": "sandra", "text": "Je vais te laisser. Je travaille tôt demain.", "diegetic_at": "2032-03-02T23:06:00+01:00", "relative_order": 2},
+        {"message_id": "sandra_cautious_return_04", "author_id": "sandra", "text": "J'ai déjà passé trop de temps à choisir une photo que j'avais soi-disant juste retrouvée.", "diegetic_at": "2032-03-02T23:06:05+01:00", "relative_order": 3},
+        {"message_id": "sandra_cautious_return_05", "author_id": "player", "text": "Merci. Je vais pas lui faire dire plus que ça.", "diegetic_at": "2032-03-02T23:06:10+01:00", "relative_order": 4},
+        {"message_id": "sandra_cautious_return_06", "author_id": "sandra", "text": "Bien.", "diegetic_at": "2032-03-02T23:08:00+01:00", "relative_order": 5},
+        {"message_id": "sandra_cautious_return_07", "author_id": "sandra", "text": "On va dire que c'était sans conséquence.", "diegetic_at": "2032-03-02T23:09:00+01:00", "relative_order": 6},
+        {"message_id": "sandra_cautious_return_08", "author_id": "player", "text": "On s'arrête là pour ce soir ? Bonne nuit Sandra.", "diegetic_at": "2032-03-02T23:09:05+01:00", "relative_order": 7},
+        {"message_id": "sandra_cautious_return_09", "author_id": "sandra", "text": "Oui. Pour ce soir.", "diegetic_at": "2032-03-02T23:10:00+01:00", "relative_order": 8},
+        {"message_id": "sandra_cautious_return_10", "author_id": "sandra", "text": "Bonne nuit, Player 🙂", "diegetic_at": "2032-03-02T23:12:00+01:00", "relative_order": 9}
+      ]
+    }
+  ]
+}

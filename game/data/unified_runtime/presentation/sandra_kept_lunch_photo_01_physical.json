@@ -1,0 +1,17 @@
+{
+  "schema_id": "reseau_intime.physical_presentation_catalog",
+  "schema_version": 1,
+  "sequence_id": "sandra_kept_lunch_photo_01",
+  "authored_version": "1.0.0",
+  "entries": [
+    {
+      "content_ref": "sandra_photo_return_to_marie",
+      "title": "23:12",
+      "body": "Player pose le téléphone et revient vers Marie.",
+      "steps": [
+        "La fin de soirée se déroule hors écran."
+      ],
+      "continue_label": "Continuer"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "sequence_id": "sandra_kept_lunch_photo_01",
+  "authored_version": "1.0.0",
+  "entries": [
+    {
+      "media_id": "s1_opening_sandra_lunch_selected_01",
+      "visual_ref": "",
+      "display_name": "La photo gardée",
+      "context_label": "Leur dernier déjeuner",
+      "caption": "Sandra a revu, gardé, recadré puis choisi cette photographie avant de l'envoyer à Player.",
+      "placeholder_label": "Visuel non livré",
+      "gallery_character_ids": ["sandra"]
+    }
+  ]
+}

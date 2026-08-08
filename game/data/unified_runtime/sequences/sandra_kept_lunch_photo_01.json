@@ -1,0 +1,437 @@
+{
+  "schema_id": "reseau_intime.authored_sequence",
+  "schema_version": 1,
+  "sequence_id": "sandra_kept_lunch_photo_01",
+  "authored_version": "1.0.0",
+  "season_id": "season_1",
+  "dramatic_movement_id": "movement_i",
+  "narrative_function": "RELATION",
+  "canonical_status": "CANON_APPROVED",
+  "author_provenance": {
+    "source_document_paths": [
+      "game/data/conversations/chapter_01_sandra_trace.json",
+      "docs/canon/dialogues/J01_J06_SOURCE_CANON_CONSOLIDE.md",
+      "game/data/visual_content/chapter_01_proofs.json"
+    ],
+    "source_sequence_ids": [
+      "S1_A1_J01_DPH_SANDRA_LUNCH_SELECTED_01"
+    ],
+    "approval_ref": "S1-OA02",
+    "authoring_tool_ref": null
+  },
+  "participants": {
+    "present_character_ids": ["sandra", "player"],
+    "concerned_absent_character_ids": ["marie"],
+    "initial_audiences": {"sandra_player_private": ["sandra", "player"]},
+    "player_role": "PARTICIPANT"
+  },
+  "orchestration": {
+    "a6_entry": {
+      "scene_definition_id": "sandra_kept_lunch_photo_01",
+      "variant_id": "sandra_kept_lunch_photo_canonical",
+      "definition": {
+        "scene_id": "sandra_kept_lunch_photo_01",
+        "version_contrat": "1.0.0",
+        "nature": "MODULAIRE",
+        "fonction_principale": "RELATION",
+        "participants_requis": [
+          {"personnage_id": "sandra", "role": "INITIATIVE_PERSONNELLE_PHOTO"}
+        ],
+        "conditions_dures": {
+          "actes_compatibles": ["OPENING_ARC"],
+          "evenements_requis": []
+        },
+        "exclusions_dures": {"evenements_interdits": []},
+        "contrat_temporel": {
+          "date_debut": "2032-03-02",
+          "date_fin": "2032-03-02",
+          "heure_ouverture": "22:57",
+          "heure_fermeture": "23:12",
+          "duree_minutes": 15,
+          "revalidation": "AVANT_PROPOSITION_ET_RESOLUTION"
+        },
+        "politique_unicite": "UNIQUE",
+        "resolutions": {
+          "sandra_kept_photo_warm_resolution": {
+            "personnage_id": "sandra",
+            "portee_micro_signal": "DURABLE",
+            "signal_recu": "GESTE_PERSONNEL_ACCUEILLI",
+            "reception": "RECUE_INTERPRETEE",
+            "interpretation": "Player accueille chaleureusement le fait que Sandra ait conservé et choisi la photographie.",
+            "faits_relationnels": [
+              {"fait_id": "sandra_kept_photo_warmly_received", "nature": "GESTE_PERSONNEL_ACCUEILLI", "recu_par": "sandra"}
+            ],
+            "convergence": "RETOUR_NOYAU_COMMUN",
+            "durable_manifest": {
+              "binding": {"sequence_id": "sandra_kept_lunch_photo_01", "authored_version": "1.0.0", "resolution_id": "resolution_warm"},
+              "facts": [
+                {"event_key": "sandra_warm_posture", "scope": "RELATION", "personnage_id": "sandra", "fact": {"fait_id": "sandra_kept_photo_warmly_received", "nature": "GESTE_PERSONNEL_ACCUEILLI", "recu_par": "sandra"}}
+              ],
+              "knowledge": [
+                {"event_key": "sandra_warm_photo_seen", "effect": "ACQUIRE", "knowledge_id": "fact_player_saw_sandra_lunch_photo", "subject_id": "sandra_kept_lunch_photo_private_trace", "holder_ids": ["sandra", "player"]}
+              ],
+              "traces": [
+                {"event_key": "sandra_warm_private_trace", "effect": "CREATE", "trace_id": "sandra_kept_lunch_photo_private_trace", "creator_id": "sandra", "audience_ids": ["sandra", "player"], "controller_ids": ["sandra"], "accessible_to_ids": ["sandra", "player"]}
+              ],
+              "promises": [],
+              "obligations": [],
+              "media_deliveries": [
+                {"event_key": "sandra_warm_photo_access", "effect": "GRANT_ACCESS", "media_id": "s1_opening_sandra_lunch_selected_01", "diegetic_status": "CREATED", "fictional_audience_ids": ["sandra", "player"], "gallery_status": "AVAILABLE"}
+              ]
+            }
+          },
+          "sandra_photo_intention_noticed_resolution": {
+            "personnage_id": "sandra",
+            "portee_micro_signal": "DURABLE",
+            "signal_recu": "CHOIX_DE_REPRESENTATION_REMARQUE",
+            "reception": "RECUE_INTERPRETEE",
+            "interpretation": "Player remarque précisément l'intention de Sandra dans le choix de l'image.",
+            "faits_relationnels": [
+              {"fait_id": "sandra_photo_choice_intention_noticed", "nature": "CHOIX_DE_REPRESENTATION_REMARQUE", "recu_par": "sandra"}
+            ],
+            "convergence": "RETOUR_NOYAU_COMMUN",
+            "durable_manifest": {
+              "binding": {"sequence_id": "sandra_kept_lunch_photo_01", "authored_version": "1.0.0", "resolution_id": "resolution_precise"},
+              "facts": [
+                {"event_key": "sandra_precise_posture", "scope": "RELATION", "personnage_id": "sandra", "fact": {"fait_id": "sandra_photo_choice_intention_noticed", "nature": "CHOIX_DE_REPRESENTATION_REMARQUE", "recu_par": "sandra"}}
+              ],
+              "knowledge": [
+                {"event_key": "sandra_precise_photo_seen", "effect": "ACQUIRE", "knowledge_id": "fact_player_saw_sandra_lunch_photo", "subject_id": "sandra_kept_lunch_photo_private_trace", "holder_ids": ["sandra", "player"]}
+              ],
+              "traces": [
+                {"event_key": "sandra_precise_private_trace", "effect": "CREATE", "trace_id": "sandra_kept_lunch_photo_private_trace", "creator_id": "sandra", "audience_ids": ["sandra", "player"], "controller_ids": ["sandra"], "accessible_to_ids": ["sandra", "player"]}
+              ],
+              "promises": [],
+              "obligations": [],
+              "media_deliveries": [
+                {"event_key": "sandra_precise_photo_access", "effect": "GRANT_ACCESS", "media_id": "s1_opening_sandra_lunch_selected_01", "diegetic_status": "CREATED", "fictional_audience_ids": ["sandra", "player"], "gallery_status": "AVAILABLE"}
+              ]
+            }
+          },
+          "sandra_photo_memory_contained_resolution": {
+            "personnage_id": "sandra",
+            "portee_micro_signal": "DURABLE",
+            "signal_recu": "SOUVENIR_RECONNU_SANS_ESCALADE",
+            "reception": "RECUE_INTERPRETEE",
+            "interpretation": "Player reconnaît le souvenir avec retenue, sans rejeter Sandra ni faire monter l'ambiguïté.",
+            "faits_relationnels": [
+              {"fait_id": "sandra_photo_memory_acknowledged_without_escalation", "nature": "SOUVENIR_RECONNU_SANS_ESCALADE", "recu_par": "sandra"}
+            ],
+            "convergence": "RETOUR_NOYAU_COMMUN",
+            "durable_manifest": {
+              "binding": {"sequence_id": "sandra_kept_lunch_photo_01", "authored_version": "1.0.0", "resolution_id": "resolution_cautious"},
+              "facts": [
+                {"event_key": "sandra_cautious_posture", "scope": "RELATION", "personnage_id": "sandra", "fact": {"fait_id": "sandra_photo_memory_acknowledged_without_escalation", "nature": "SOUVENIR_RECONNU_SANS_ESCALADE", "recu_par": "sandra"}}
+              ],
+              "knowledge": [
+                {"event_key": "sandra_cautious_photo_seen", "effect": "ACQUIRE", "knowledge_id": "fact_player_saw_sandra_lunch_photo", "subject_id": "sandra_kept_lunch_photo_private_trace", "holder_ids": ["sandra", "player"]}
+              ],
+              "traces": [
+                {"event_key": "sandra_cautious_private_trace", "effect": "CREATE", "trace_id": "sandra_kept_lunch_photo_private_trace", "creator_id": "sandra", "audience_ids": ["sandra", "player"], "controller_ids": ["sandra"], "accessible_to_ids": ["sandra", "player"]}
+              ],
+              "promises": [],
+              "obligations": [],
+              "media_deliveries": [
+                {"event_key": "sandra_cautious_photo_access", "effect": "GRANT_ACCESS", "media_id": "s1_opening_sandra_lunch_selected_01", "diegetic_status": "CREATED", "fictional_audience_ids": ["sandra", "player"], "gallery_status": "AVAILABLE"}
+              ]
+            }
+          }
+        },
+        "choix": [
+          {"choix_id": "sandra_kept_photo_warm_choice", "formulation": "Je suis content que tu l'aies gardée.", "signal_emis": "GESTE_PERSONNEL_ACCUEILLI", "resolution_ids": ["sandra_kept_photo_warm_resolution"]},
+          {"choix_id": "sandra_photo_intention_noticed_choice", "formulation": "Tu as choisi celle où tu souriais.", "signal_emis": "CHOIX_DE_REPRESENTATION_REMARQUE", "resolution_ids": ["sandra_photo_intention_noticed_resolution"]},
+          {"choix_id": "sandra_photo_memory_contained_choice", "formulation": "Ah oui. Je me souviens.", "signal_emis": "SOUVENIR_RECONNU_SANS_ESCALADE", "resolution_ids": ["sandra_photo_memory_contained_resolution"]}
+        ],
+        "politique_non_resolution": {"proposition_expire": "CANCELLED"}
+      }
+    },
+    "a8_window": {"window_id": "sandra_kept_lunch_photo_window", "conflict_policy": "CLOSE_SILENTLY"},
+    "a9_slot": {"slot_role": "sandra_photo_reconnection", "duration_minutes": 15, "relative_order": 2, "not_before_anchor": "marie_shared_evening_anchor", "not_after_anchor": null}
+  },
+  "temporal_projection": {
+    "anchor_id": "sandra_kept_lunch_photo_anchor",
+    "offset_minutes": 285,
+    "relative_order": 2,
+    "delay": {"mode": "NONE", "value": null},
+    "resolved_window": {"opens_at": "2032-03-02T22:57:00+01:00", "closes_at": "2032-03-02T23:12:00+01:00"}
+  },
+  "entry_beat_id": "sandra_photo_reappearance",
+  "beats": [
+    {
+      "beat_id": "sandra_photo_reappearance",
+      "type": "MESSAGE",
+      "content": {
+        "thread_id": "sandra_thread",
+        "messages": [
+          {"message_id": "sandra_photo_reappearance_01", "author_id": "sandra", "text": "Je tombe peut-être mal.", "diegetic_at": "2032-03-02T22:57:00+01:00", "relative_order": 0},
+          {"message_id": "sandra_photo_reappearance_02", "author_id": "sandra", "text": "Mais j'ai retrouvé une photo.", "diegetic_at": "2032-03-02T22:57:05+01:00", "relative_order": 1}
+        ]
+      },
+      "participant_ids": ["sandra"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": "sandra_photo_reconnection_entered",
+      "checkpoint_after": "sandra_photo_reappearance_presented",
+      "next": {"mode": "DIRECT", "beat_id": "sandra_photo_subject_guided_choice"}
+    },
+    {
+      "beat_id": "sandra_photo_subject_guided_choice",
+      "type": "CHOICE",
+      "content": {
+        "thread_id": "sandra_thread",
+        "choices": [
+          {"choice_id": "sandra_photo_subject_guided_reply", "text": "De quoi ?", "resolution_id": "resolution_photo_subject_guided", "next_beat_id": "sandra_last_lunch_context"}
+        ]
+      },
+      "participant_ids": ["sandra"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "sandra_photo_subject_guided_consumed",
+      "next": {"mode": "BRANCH", "branches": {"sandra_photo_subject_guided_reply": "sandra_last_lunch_context"}}
+    },
+    {
+      "beat_id": "sandra_last_lunch_context",
+      "type": "MESSAGE",
+      "content": {
+        "thread_id": "sandra_thread",
+        "messages": [
+          {"message_id": "sandra_last_lunch_context_01", "author_id": "sandra", "text": "De notre dernier déjeuner.", "diegetic_at": "2032-03-02T22:58:00+01:00", "relative_order": 0},
+          {"message_id": "sandra_last_lunch_context_02", "author_id": "sandra", "text": "Deux verres, un coin de table, et moi un peu de travers sur le bord.", "diegetic_at": "2032-03-02T22:58:05+01:00", "relative_order": 1}
+        ]
+      },
+      "participant_ids": ["sandra"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "sandra_last_lunch_context_presented",
+      "next": {"mode": "DIRECT", "beat_id": "sandra_kept_lunch_photo_reveal"}
+    },
+    {
+      "beat_id": "sandra_kept_lunch_photo_reveal",
+      "type": "MEDIA_REVEAL",
+      "content": {"media_id": "s1_opening_sandra_lunch_selected_01", "reveal_context": {}, "requires_ack": true},
+      "participant_ids": ["sandra"],
+      "local_conditions": [],
+      "projection_target": "MEDIA",
+      "checkpoint_before": null,
+      "checkpoint_after": "sandra_kept_lunch_photo_presented",
+      "next": {"mode": "DIRECT", "beat_id": "sandra_photo_kept_guided_choice"}
+    },
+    {
+      "beat_id": "sandra_photo_kept_guided_choice",
+      "type": "CHOICE",
+      "content": {
+        "thread_id": "sandra_thread",
+        "choices": [
+          {"choice_id": "sandra_photo_kept_guided_reply", "text": "Tu l'avais gardée ?", "resolution_id": "resolution_photo_kept_guided", "next_beat_id": "sandra_photo_selection_context"}
+        ]
+      },
+      "participant_ids": ["sandra"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "sandra_photo_kept_guided_consumed",
+      "next": {"mode": "BRANCH", "branches": {"sandra_photo_kept_guided_reply": "sandra_photo_selection_context"}}
+    },
+    {
+      "beat_id": "sandra_photo_selection_context",
+      "type": "MESSAGE",
+      "content": {
+        "thread_id": "sandra_thread",
+        "messages": [
+          {"message_id": "sandra_photo_selection_context_01", "author_id": "sandra", "text": "Oui.", "diegetic_at": "2032-03-02T22:59:00+01:00", "relative_order": 0},
+          {"message_id": "sandra_photo_selection_context_02", "author_id": "sandra", "text": "Je l'avais revue après, puis gardée dans un dossier à part.", "diegetic_at": "2032-03-02T22:59:05+01:00", "relative_order": 1},
+          {"message_id": "sandra_photo_selection_context_03", "author_id": "sandra", "text": "J'ai imprimé quelques photos après mon poste. Celle-là aussi.", "diegetic_at": "2032-03-02T23:00:00+01:00", "relative_order": 2},
+          {"message_id": "sandra_photo_selection_context_04", "author_id": "sandra", "text": "Et j'ai recadré un peu avant de te l'envoyer.", "diegetic_at": "2032-03-02T23:00:05+01:00", "relative_order": 3},
+          {"message_id": "sandra_photo_selection_context_05", "author_id": "sandra", "text": "SentryCore a fait semblant de coopérer. Un ticket fantôme, quand même.", "diegetic_at": "2032-03-02T23:01:00+01:00", "relative_order": 4}
+        ]
+      },
+      "participant_ids": ["sandra"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "sandra_photo_selection_context_presented",
+      "next": {"mode": "DIRECT", "beat_id": "sandra_photo_posture_choice"}
+    },
+    {
+      "beat_id": "sandra_photo_posture_choice",
+      "type": "CHOICE",
+      "content": {
+        "thread_id": "sandra_thread",
+        "choices": [
+          {"choice_id": "sandra_kept_photo_warm", "text": "Je suis content que tu l'aies gardée.", "resolution_id": "resolution_warm", "next_beat_id": "return_warm"},
+          {"choice_id": "sandra_photo_intention_noticed", "text": "Tu as choisi celle où tu souriais.", "resolution_id": "resolution_precise", "next_beat_id": "return_precise"},
+          {"choice_id": "sandra_photo_memory_contained", "text": "Ah oui. Je me souviens.", "resolution_id": "resolution_cautious", "next_beat_id": "return_cautious"}
+        ]
+      },
+      "participant_ids": ["sandra"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "sandra_photo_posture_resolution_ready",
+      "next": {"mode": "BRANCH", "branches": {"sandra_kept_photo_warm": "return_warm", "sandra_photo_intention_noticed": "return_precise", "sandra_photo_memory_contained": "return_cautious"}}
+    },
+    {
+      "beat_id": "return_warm",
+      "type": "RETURN",
+      "content": {"return_id": "sandra_kept_photo_warm_return", "content_ref": "sandra_kept_photo_warm_return_content", "delay": {"mode": "NONE", "value": null}, "eligible_resolution_ids": ["resolution_warm"]},
+      "participant_ids": ["sandra"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "sandra_kept_photo_warm_return_presented",
+      "next": {"mode": "DIRECT", "beat_id": "sandra_photo_return_to_marie"}
+    },
+    {
+      "beat_id": "return_precise",
+      "type": "RETURN",
+      "content": {"return_id": "sandra_photo_intention_noticed_return", "content_ref": "sandra_photo_intention_noticed_return_content", "delay": {"mode": "NONE", "value": null}, "eligible_resolution_ids": ["resolution_precise"]},
+      "participant_ids": ["sandra"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "sandra_photo_intention_noticed_return_presented",
+      "next": {"mode": "DIRECT", "beat_id": "sandra_photo_return_to_marie"}
+    },
+    {
+      "beat_id": "return_cautious",
+      "type": "RETURN",
+      "content": {"return_id": "sandra_photo_memory_contained_return", "content_ref": "sandra_photo_memory_contained_return_content", "delay": {"mode": "NONE", "value": null}, "eligible_resolution_ids": ["resolution_cautious"]},
+      "participant_ids": ["sandra"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "sandra_photo_memory_contained_return_presented",
+      "next": {"mode": "DIRECT", "beat_id": "sandra_photo_return_to_marie"}
+    },
+    {
+      "beat_id": "sandra_photo_return_to_marie",
+      "type": "PHYSICAL_BEAT",
+      "content": {"physical_beat_id": "sandra_photo_return_to_marie", "content_ref": "sandra_photo_return_to_marie", "withdrawal_choice_ids": []},
+      "participant_ids": ["marie", "player"],
+      "local_conditions": [],
+      "projection_target": "PHYSICAL",
+      "checkpoint_before": null,
+      "checkpoint_after": "sandra_photo_return_to_marie_presented",
+      "next": {"mode": "TERMINAL", "beat_id": null}
+    }
+  ],
+  "resolutions": {
+    "resolution_photo_subject_guided": {
+      "resolution_id": "resolution_photo_subject_guided",
+      "choice_id": "sandra_photo_subject_guided_reply",
+      "a10_choice_id": null,
+      "a10_resolution_id": null,
+      "terminal_checkpoint_id": "sandra_photo_subject_guided_consumed",
+      "event_refs": [],
+      "fact_ids": [],
+      "knowledge_ids": [],
+      "trace_ids": [],
+      "promise_effects": [],
+      "obligation_effects": [],
+      "consequence_ids": [],
+      "media_effects": [],
+      "convergence": "COMMON_EXIT",
+      "next_beat_id": "sandra_last_lunch_context"
+    },
+    "resolution_photo_kept_guided": {
+      "resolution_id": "resolution_photo_kept_guided",
+      "choice_id": "sandra_photo_kept_guided_reply",
+      "a10_choice_id": null,
+      "a10_resolution_id": null,
+      "terminal_checkpoint_id": "sandra_photo_kept_guided_consumed",
+      "event_refs": [],
+      "fact_ids": [],
+      "knowledge_ids": [],
+      "trace_ids": [],
+      "promise_effects": [],
+      "obligation_effects": [],
+      "consequence_ids": [],
+      "media_effects": [],
+      "convergence": "COMMON_EXIT",
+      "next_beat_id": "sandra_photo_selection_context"
+    },
+    "resolution_warm": {
+      "resolution_id": "resolution_warm",
+      "choice_id": "sandra_kept_photo_warm",
+      "a10_choice_id": "sandra_kept_photo_warm_choice",
+      "a10_resolution_id": "sandra_kept_photo_warm_resolution",
+      "terminal_checkpoint_id": "sandra_photo_posture_resolution_ready",
+      "event_refs": [
+        {"event_type": "durable_manifest_event", "event_key": "sandra_warm_posture", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "sandra_warm_photo_seen", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "sandra_warm_private_trace", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "sandra_warm_photo_access", "reducer_id": "a6_durable_manifest"}
+      ],
+      "fact_ids": ["sandra_kept_photo_warmly_received"],
+      "knowledge_ids": ["fact_player_saw_sandra_lunch_photo"],
+      "trace_ids": ["sandra_kept_lunch_photo_private_trace"],
+      "promise_effects": [],
+      "obligation_effects": [],
+      "consequence_ids": [],
+      "media_effects": [{"media_id": "s1_opening_sandra_lunch_selected_01", "effect": "GRANT_ACCESS"}],
+      "convergence": "POST_RESOLUTION_RETURN",
+      "next_beat_id": "return_warm"
+    },
+    "resolution_precise": {
+      "resolution_id": "resolution_precise",
+      "choice_id": "sandra_photo_intention_noticed",
+      "a10_choice_id": "sandra_photo_intention_noticed_choice",
+      "a10_resolution_id": "sandra_photo_intention_noticed_resolution",
+      "terminal_checkpoint_id": "sandra_photo_posture_resolution_ready",
+      "event_refs": [
+        {"event_type": "durable_manifest_event", "event_key": "sandra_precise_posture", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "sandra_precise_photo_seen", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "sandra_precise_private_trace", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "sandra_precise_photo_access", "reducer_id": "a6_durable_manifest"}
+      ],
+      "fact_ids": ["sandra_photo_choice_intention_noticed"],
+      "knowledge_ids": ["fact_player_saw_sandra_lunch_photo"],
+      "trace_ids": ["sandra_kept_lunch_photo_private_trace"],
+      "promise_effects": [],
+      "obligation_effects": [],
+      "consequence_ids": [],
+      "media_effects": [{"media_id": "s1_opening_sandra_lunch_selected_01", "effect": "GRANT_ACCESS"}],
+      "convergence": "POST_RESOLUTION_RETURN",
+      "next_beat_id": "return_precise"
+    },
+    "resolution_cautious": {
+      "resolution_id": "resolution_cautious",
+      "choice_id": "sandra_photo_memory_contained",
+      "a10_choice_id": "sandra_photo_memory_contained_choice",
+      "a10_resolution_id": "sandra_photo_memory_contained_resolution",
+      "terminal_checkpoint_id": "sandra_photo_posture_resolution_ready",
+      "event_refs": [
+        {"event_type": "durable_manifest_event", "event_key": "sandra_cautious_posture", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "sandra_cautious_photo_seen", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "sandra_cautious_private_trace", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "sandra_cautious_photo_access", "reducer_id": "a6_durable_manifest"}
+      ],
+      "fact_ids": ["sandra_photo_memory_acknowledged_without_escalation"],
+      "knowledge_ids": ["fact_player_saw_sandra_lunch_photo"],
+      "trace_ids": ["sandra_kept_lunch_photo_private_trace"],
+      "promise_effects": [],
+      "obligation_effects": [],
+      "consequence_ids": [],
+      "media_effects": [{"media_id": "s1_opening_sandra_lunch_selected_01", "effect": "GRANT_ACCESS"}],
+      "convergence": "POST_RESOLUTION_RETURN",
+      "next_beat_id": "return_cautious"
+    }
+  },
+  "media": {
+    "s1_opening_sandra_lunch_selected_01": {
+      "media_id": "s1_opening_sandra_lunch_selected_01",
+      "visual_level": "V0",
+      "analytic_level": "NV1",
+      "production_status": "SPECIFIED_NOT_PRODUCED",
+      "diegesis": "DIEGETIC",
+      "audience_ids": ["sandra_player_private"],
+      "gallery_policy": "ON_ACCESS",
+      "parent_media_id": null,
+      "thumbnail_policy": "SELF",
+      "thumbnail_media_id": null,
+      "removal_policy": "AUTHORED_RESOLUTION_ONLY"
+    }
+  }
+}

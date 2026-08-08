@@ -37,6 +37,17 @@ R8C-A4 ne change pas leur format. Au futur cutover, une version incompatible
 pourra être refusée/réinitialisée sans migration longue, puisqu'aucune donnée de
 production n'est à préserver.
 
+### `PRE_RELEASE_CATALOG_SAVE_POLICY`
+
+Tant que la Saison 1 est en construction, save/reload est garanti uniquement
+dans une même révision du catalogue authored. La compatibilité entre deux
+fingerprints successifs du catalogue n'est pas garantie : un snapshot portant
+un autre fingerprint est refusé fail-closed, sans migration automatique.
+
+Cette politique évite de créer une migration OA01 → OA02 → OA03 pour chaque
+ajout de contenu avant stabilisation. Une politique de compatibilité durable
+sera définie avant toute distribution publique.
+
 ## Gate canonique
 
 Depuis la racine du dépôt :

@@ -309,7 +309,7 @@ func _test_production_branch(branch: Dictionary, deep_restore: bool) -> void:
 	var runner = main.season_runner
 	var session = main.runtime_session
 	_expect(
-		runner.catalog["manifest"]["packages"].size() == 1
+		runner.catalog["manifest"]["packages"].size() == 2
 		and runner.active_sequence_id == SEQUENCE_ID
 		and _visible_threads(main) == ["marie_thread"]
 		and _texts_for_beat(session, "marie_dinner_question") == [
@@ -441,24 +441,34 @@ func _test_production_branch(branch: Dictionary, deep_restore: bool) -> void:
 	await _frames(5)
 	runner = main.season_runner
 	_expect(
-		runner.status() == SeasonRunner.IDLE_NO_ELIGIBLE_SEQUENCE
+		runner.status() == SeasonRunner.OPPORTUNITY_AVAILABLE
 		and runner.active_sequence_id.is_empty()
 		and runner.active_session == null
 		and runner.completed_sequence_ids == [SEQUENCE_ID]
+		and runner.describe_state().get("opportunity", {}).get("sequence_id")
+		== "sandra_kept_lunch_photo_01"
+		and runner.describe_state().get("opportunity", {}).get("thread_id") == "sandra_thread"
+		and runner.describe_state().get("opportunity", {}).get("action_label")
+		== "Continuer avec Sandra"
 		and _gallery_has_one_marie_tile(runner.gallery_source())
 		and _messages_have_unique_ids(runner.presentation_source()),
-		"COMPLETE puis IDLE sans replay ni autre opportunité " + branch["name"],
+		"COMPLETE puis OPPORTUNITY_AVAILABLE Sandra sans auto-lancement " + branch["name"],
 	)
 	await _dispose_main(main)
 	main = await _new_production_main(save_path, false)
 	if main != null:
 		_expect(
-			main.season_runner.status() == SeasonRunner.IDLE_NO_ELIGIBLE_SEQUENCE
+			main.season_runner.status() == SeasonRunner.OPPORTUNITY_AVAILABLE
 			and main.season_runner.completed_sequence_ids == [SEQUENCE_ID]
 			and main.runtime_session == null
+			and main.season_runner.describe_state().get("opportunity", {}).get("sequence_id")
+			== "sandra_kept_lunch_photo_01"
+			and main.season_runner.describe_state().get("opportunity", {}).get("action_label")
+			== "Continuer avec Sandra"
 			and _gallery_has_one_marie_tile(main.season_runner.gallery_source())
 			and _messages_have_unique_ids(main.season_runner.presentation_source()),
-			"reload COMPLETE reste IDLE et conserve transcript/média " + branch["name"],
+			"reload COMPLETE reconstruit l'opportunité Sandra et conserve transcript/média "
+			+ branch["name"],
 		)
 		await _dispose_main(main)
 	_remove_save(save_path)

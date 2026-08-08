@@ -88,7 +88,10 @@ class S1OA01MarieBreadAndTenMinutesStaticTests(unittest.TestCase):
             ("reseau_intime.authored_sequence_catalog", 1, "season_1_v1", "season_1"),
             (production["schema_id"], production["schema_version"], production["catalog_id"], production["season_id"]),
         )
-        self.assertEqual(["marie_bread_and_ten_minutes_01"], [item["sequence_id"] for item in production["packages"]])
+        self.assertEqual(
+            ["marie_bread_and_ten_minutes_01", "sandra_kept_lunch_photo_01"],
+            [item["sequence_id"] for item in production["packages"]],
+        )
         capability = self.load(CAPABILITY)
         self.assertEqual("season_1_v1", capability["catalog_id"])
         self.assertEqual(CAPABILITY_IDS, [item["sequence_id"] for item in capability["packages"]])
@@ -233,7 +236,8 @@ class S1OA01MarieBreadAndTenMinutesStaticTests(unittest.TestCase):
         ]
         serialized = json.dumps(canonical, ensure_ascii=False, separators=(",", ":"), sort_keys=True)
         fingerprint = hashlib.sha256(serialized.encode("utf-8")).hexdigest()
-        self.assertEqual("13933f53a12cd8665a78e6f1714ef47627d7768c4087b18fdf43ea43e931ed57", fingerprint)
+        self.assertEqual("62ac928c595b122919c45395648a4981da3f405cd7d71d322758b5068866dd17", fingerprint)
+        self.assertNotEqual("13933f53a12cd8665a78e6f1714ef47627d7768c4087b18fdf43ea43e931ed57", fingerprint)
         self.assertNotEqual("df4aaf48487c38fe49a883a39f75db1a5cb035aa77c6377e083cea1efacff01e", fingerprint)
 
     def test_capability_smokes_use_explicit_fixture_and_oa01_smoke_locks_the_gate(self):
@@ -269,7 +273,7 @@ class S1OA01MarieBreadAndTenMinutesStaticTests(unittest.TestCase):
             "reload exact sans replay ni duplication",
             "pendant RETURN",
             "pendant PHYSICAL",
-            "COMPLETE puis IDLE",
+            "COMPLETE puis OPPORTUNITY_AVAILABLE Sandra",
             "INVALID_SEASON_SAVE",
             "S1_OA01_NARRATIVE_REVIEW_BEGIN",
             "S1_OA01_NARRATIVE_REVIEW_END",

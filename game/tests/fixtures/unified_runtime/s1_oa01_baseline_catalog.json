@@ -12,15 +12,6 @@
       "messages_path": "res://data/unified_runtime/presentation/marie_bread_and_ten_minutes_01_messages.json",
       "physical_path": "res://data/unified_runtime/presentation/marie_bread_and_ten_minutes_01_physical.json",
       "media_path": "res://data/unified_runtime/presentation/marie_bread_and_ten_minutes_01_media.json"
-    },
-    {
-      "package_id": "sandra_kept_lunch_photo_01",
-      "sequence_id": "sandra_kept_lunch_photo_01",
-      "authored_version": "1.0.0",
-      "sequence_path": "res://data/unified_runtime/sequences/sandra_kept_lunch_photo_01.json",
-      "messages_path": "res://data/unified_runtime/presentation/sandra_kept_lunch_photo_01_messages.json",
-      "physical_path": "res://data/unified_runtime/presentation/sandra_kept_lunch_photo_01_physical.json",
-      "media_path": "res://data/unified_runtime/presentation/sandra_kept_lunch_photo_01_media.json"
     }
   ]
 }
