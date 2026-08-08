@@ -64,7 +64,18 @@ Il reste temporairement l'oracle exécutable. Pour un travail sur cette chaîne,
 lire `docs/runtime/README.md`, puis le code, les données et les tests du SHA
 courant. L'UI portrait canonique est décrite sous `docs/canon/ui/`.
 
-## 5. Matériaux historiques
+## 5. À consulter si besoin — payoffs et montée dramatique
+
+`docs/narrative/SEASON_1_DRAMATIC_SCENE_IDEA_BANK.md` est un
+`NON_CANONICAL / CREATIVE_IDEA_BANK` à consulter uniquement pour les payoffs
+futurs, les scènes modulaires, la montée dramatique et le calibrage d'intensité.
+Il aide à vérifier que les scènes d'ouverture sèment les bonnes préconditions.
+
+Ce réservoir ne promet aucune scène et ne modifie ni canon, ni chronologie, ni
+route. Il ne prévaut jamais sur les blueprints, le canon, les scripts signés, les
+contrats verrouillés ou la baseline exécutable concernée.
+
+## 6. Matériaux historiques
 
 Git et les tags sont l'archive. Un fichier ancien n'est pas conservé sur `main`
 uniquement pour raconter l'évolution du projet. Les rapports V0.xx encore
