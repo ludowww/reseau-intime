@@ -208,6 +208,7 @@ static func _validate_v1_core(value, authored_sequence) -> Dictionary:
 		"execution.selected_resolution_id", errors
 	)
 	V1._validate_selected_resolution(execution, index, consumed_choices, errors)
+	V1._validate_completion_mode(execution, authored_sequence, errors)
 	V1._validate_projection_wait(execution, opened_projection_ids, errors)
 	return _result(errors)
 

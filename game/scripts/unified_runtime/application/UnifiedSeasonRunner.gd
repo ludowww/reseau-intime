@@ -19,7 +19,7 @@ const SessionSaveStore := preload(
 	"res://scripts/unified_runtime/application/UnifiedSeasonSessionSaveStore.gd"
 )
 const SeasonSnapshot := preload(
-	"res://scripts/unified_runtime/application/UnifiedSeasonSnapshotV1.gd"
+	"res://scripts/unified_runtime/application/UnifiedSeasonSnapshotV2.gd"
 )
 const RuntimeSnapshotV2 := preload(
 	"res://scripts/unified_runtime/application/UnifiedRuntimeSnapshotV2.gd"
@@ -43,15 +43,17 @@ const PRODUCTION_SEASON_ID := "season_1"
 
 var catalog: Dictionary = {}
 var completed_sequence_ids: Array = []
+var not_selected_sequence_ids: Array = []
 var active_sequence_id := ""
 var active_session
 
 var _portrait_shell
 var _save_store
 var _persistent_messages_state: Dictionary = {}
-var _opportunity: Dictionary = {}
+var _opportunities: Array = []
 var _status := IDLE_NO_ELIGIBLE_SEQUENCE
 var _last_result := _result(false, "NOT_INITIALIZED")
+var _test_fail_after_opportunity_first_save := false
 
 
 static func create(
@@ -163,15 +165,16 @@ func presentation_source() -> Dictionary:
 		source = active_session.presentation_source()
 	else:
 		source = _persistent_messages_state.get("source", {}).duplicate(true)
-	if _status == OPPORTUNITY_AVAILABLE and not _opportunity.is_empty():
-		for thread in source.get("threads", []):
-			if str(thread.get("thread_id", "")) != str(_opportunity.get("thread_id", "")):
-				continue
-			thread["availability_state"] = OPPORTUNITY_AVAILABLE
-			thread["opportunity_action_label"] = _opportunity["action_label"]
-			thread["last_preview"] = "Nouveau moment disponible"
-			thread["unread_count"] = 0
-			thread["has_unread_content"] = false
+	if _status == OPPORTUNITY_AVAILABLE:
+		for opportunity in _opportunities:
+			for thread in source.get("threads", []):
+				if str(thread.get("thread_id", "")) != str(opportunity.get("thread_id", "")):
+					continue
+				thread["availability_state"] = OPPORTUNITY_AVAILABLE
+				thread["opportunity_action_label"] = opportunity["action_label"]
+				thread["last_preview"] = "Nouveau moment disponible"
+				thread["unread_count"] = 0
+				thread["has_unread_content"] = false
 	return source
 
 
@@ -202,17 +205,19 @@ func describe_state() -> Dictionary:
 		"season_id": catalog.get("season_id"),
 		"status": _status,
 		"completed_sequence_ids": completed_sequence_ids.duplicate(),
+		"not_selected_sequence_ids": not_selected_sequence_ids.duplicate(),
 		"active_sequence_id": active_sequence_id if not active_sequence_id.is_empty() else null,
 		"active_session_count": 1 if active_session != null else 0,
 		"active_session": active_session.describe_state() if active_session != null else {},
 		"opportunity": (
 			{
-				"sequence_id": _opportunity.get("sequence_id"),
-				"thread_id": _opportunity.get("thread_id"),
-				"action_label": _opportunity.get("action_label"),
+				"sequence_id": _opportunities[0].get("sequence_id"),
+				"thread_id": _opportunities[0].get("thread_id"),
+				"action_label": _opportunities[0].get("action_label"),
 			}
-			if not _opportunity.is_empty() else {}
+			if not _opportunities.is_empty() else {}
 		),
+		"opportunities": _sanitized_opportunities(),
 		"last_result": _last_result.duplicate(true),
 	}
 
@@ -221,11 +226,17 @@ func activate_opportunity(thread_id: String) -> Dictionary:
 	if (
 		_status != OPPORTUNITY_AVAILABLE
 		or active_session != null
-		or _opportunity.is_empty()
-		or thread_id != str(_opportunity.get("thread_id", ""))
+		or _opportunities.is_empty()
 	):
 		return _publish(false, "OPPORTUNITY_ACTIVATION_REFUSED")
-	var sequence_id := str(_opportunity.get("sequence_id", ""))
+	var opportunity := {}
+	for candidate in _opportunities:
+		if thread_id == str(candidate.get("thread_id", "")):
+			opportunity = candidate
+			break
+	if opportunity.is_empty():
+		return _publish(false, "OPPORTUNITY_ACTIVATION_REFUSED")
+	var sequence_id := str(opportunity.get("sequence_id", ""))
 	if not catalog.get("package_by_sequence_id", {}).has(sequence_id):
 		return _publish(false, "OPPORTUNITY_PACKAGE_NOT_FOUND")
 	var package: Dictionary = catalog["package_by_sequence_id"][sequence_id]
@@ -233,6 +244,7 @@ func activate_opportunity(thread_id: String) -> Dictionary:
 		str(completed_sequence_ids[-1]) if not completed_sequence_ids.is_empty() else ""
 	)
 	var domain_before: Dictionary = catalog["facade"].save_state().duplicate(true)
+	var not_selected_before: Array = not_selected_sequence_ids.duplicate()
 	var checkpoint_before := _capture_opportunity_checkpoint(
 		checkpoint_sequence_id, domain_before
 	)
@@ -242,25 +254,38 @@ func activate_opportunity(thread_id: String) -> Dictionary:
 		catalog["facade"],
 		{
 			"ok": true,
-			"prepared_plan": _opportunity["prepared_plan"],
-			"option_id": _opportunity["option_id"],
-			"activation_context": _opportunity["activation_context"],
+			"prepared_plan": opportunity["prepared_plan"],
+			"option_id": opportunity["option_id"],
+			"activation_context": opportunity["activation_context"],
 		},
 	)
 	if not activated.get("ok", false):
 		return _rollback_opportunity_activation(
-			domain_before, str(activated.get("error_code", "OPPORTUNITY_REVALIDATION_REFUSED"))
+			domain_before, str(activated.get("error_code", "OPPORTUNITY_REVALIDATION_REFUSED")),
+			{}, not_selected_before
 		)
+	if _opportunities.size() == 2 and sequence_id == "marie_household_report_01":
+		if "nico_saved_seat_01" not in not_selected_sequence_ids:
+			not_selected_sequence_ids.append("nico_saved_seat_01")
 	var composed := _compose_active_package(package, null, activated)
 	if not composed["ok"]:
-		return _rollback_opportunity_activation(domain_before, str(composed["error_code"]))
-	_opportunity = {}
+		return _rollback_opportunity_activation(
+			domain_before, str(composed["error_code"]), {}, not_selected_before
+		)
+	_opportunities = []
 	active_session_changed.emit(null, active_session)
 	season_state_changed.emit(describe_state())
 	var begun: Dictionary = active_session.begin()
 	if not begun["ok"]:
 		return _rollback_opportunity_activation(
-			domain_before, str(begun["error_code"]), checkpoint_before["snapshot"]
+			domain_before, str(begun["error_code"]), checkpoint_before["snapshot"],
+			not_selected_before
+		)
+	if _test_fail_after_opportunity_first_save:
+		_test_fail_after_opportunity_first_save = false
+		return _rollback_opportunity_activation(
+			domain_before, "TEST_POST_FIRST_SAVE_FAILURE", checkpoint_before["snapshot"],
+			not_selected_before
 		)
 	return _publish(true)
 
@@ -290,6 +315,7 @@ func store_active_runtime_snapshot(runtime_snapshot: Dictionary) -> Dictionary:
 		catalog,
 		active_sequence_id,
 		completed_sequence_ids,
+		not_selected_sequence_ids,
 		runtime_snapshot,
 		snapshot_messages_state,
 	)
@@ -301,11 +327,22 @@ func store_active_runtime_snapshot(runtime_snapshot: Dictionary) -> Dictionary:
 
 func _restore_or_migrate(saved: Dictionary) -> Dictionary:
 	var season_snapshot: Dictionary
-	if saved.get("schema_id") == SeasonSnapshot.SCHEMA_ID:
+	if (
+		saved.get("schema_id") == SeasonSnapshot.SCHEMA_ID
+		and saved.get("schema_version") == SeasonSnapshot.SCHEMA_VERSION
+	):
 		var validation := SeasonSnapshot.validate(saved, catalog)
 		if not validation["valid"]:
 			return {"ok": false, "error_code": "INVALID_SEASON_SAVE"}
 		season_snapshot = saved.duplicate(true)
+	elif saved.get("schema_id") == SeasonSnapshot.SCHEMA_ID:
+		var migration := SeasonSnapshot.migrate_n21_v1(saved, catalog)
+		if not migration["ok"]:
+			return {"ok": false, "error_code": migration["error_code"]}
+		season_snapshot = migration["snapshot"]
+		var stored: Dictionary = _save_store.save_snapshot(season_snapshot)
+		if not stored["ok"]:
+			return {"ok": false, "error_code": stored["error_code"]}
 	else:
 		var migration := SeasonSnapshot.migrate_n17_v2(saved, catalog)
 		if not migration["ok"]:
@@ -315,6 +352,7 @@ func _restore_or_migrate(saved: Dictionary) -> Dictionary:
 		if not stored["ok"]:
 			return {"ok": false, "error_code": stored["error_code"]}
 	completed_sequence_ids = season_snapshot["completed_sequence_ids"].duplicate()
+	not_selected_sequence_ids = season_snapshot["not_selected_sequence_ids"].duplicate()
 	active_sequence_id = (
 		str(season_snapshot["active_sequence_id"])
 		if season_snapshot["active_sequence_id"] != null else ""
@@ -334,7 +372,10 @@ func _eligible_packages() -> Array:
 	var eligible: Array = []
 	for package in catalog["packages"]:
 		var sequence: Dictionary = package["sequence"]
-		if sequence["sequence_id"] in completed_sequence_ids:
+		if (
+			sequence["sequence_id"] in completed_sequence_ids
+			or sequence["sequence_id"] in not_selected_sequence_ids
+		):
 			continue
 		var candidates: Dictionary = catalog["facade"].find_candidates(
 			CompositionRoot._activation_context(sequence)
@@ -354,7 +395,7 @@ func _eligible_packages() -> Array:
 func _select_and_compose_next(previous_session) -> Dictionary:
 	if active_session != null:
 		return _publish(false, "SECOND_ACTIVE_SEQUENCE_REFUSED")
-	_opportunity = {}
+	_opportunities = []
 	var eligible := _eligible_packages()
 	if eligible.is_empty():
 		active_sequence_id = ""
@@ -478,40 +519,70 @@ func _transition_restored_complete(
 func _prepare_next_opportunity() -> Dictionary:
 	if active_session != null:
 		return _result(false, "SECOND_ACTIVE_SEQUENCE_REFUSED")
-	_opportunity = {}
+	_opportunities = []
 	var eligible := _eligible_packages()
 	if eligible.is_empty():
 		_status = IDLE_NO_ELIGIBLE_SEQUENCE
 		return _result(true)
-	var package: Dictionary = eligible[0]
-	var prepared := CompositionRoot.prepare_sequence(catalog["facade"], package["sequence"])
+	var opportunity_packages: Array = [eligible[0]]
+	if eligible.size() >= 2 and _packages_form_competing_pair(eligible[0], eligible[1]):
+		opportunity_packages.append(eligible[1])
+	var sequences: Array = []
+	for package in opportunity_packages:
+		sequences.append(package["sequence"])
+	var prepared := CompositionRoot.prepare_sequences(catalog["facade"], sequences)
 	if not prepared["ok"]:
 		_status = IDLE_NO_ELIGIBLE_SEQUENCE
 		return _result(false, str(prepared["error_code"]))
-	var threads: Array = package.get("messages_catalog", {}).get(
-		"presentation_metadata", {}
-	).get("threads", [])
-	if threads.size() != 1:
-		_status = IDLE_NO_ELIGIBLE_SEQUENCE
-		return _result(false, "OPPORTUNITY_THREAD_METADATA_REFUSED")
-	var thread: Dictionary = threads[0]
-	var title := str(thread.get("title", ""))
-	var thread_id := str(thread.get("thread_id", ""))
-	if title.is_empty() or thread_id.is_empty():
-		_status = IDLE_NO_ELIGIBLE_SEQUENCE
-		return _result(false, "OPPORTUNITY_THREAD_METADATA_REFUSED")
-	_opportunity = {
-		"sequence_id": package["sequence"]["sequence_id"],
-		"package_id": package["manifest"]["package_id"],
-		"thread_id": thread_id,
-		"title": title,
-		"action_label": "Continuer avec " + title,
-		"prepared_plan": prepared["prepared_plan"].duplicate(true),
-		"option_id": prepared["option_id"],
-		"activation_context": prepared["activation_context"].duplicate(true),
-	}
+	for index in opportunity_packages.size():
+		var package: Dictionary = opportunity_packages[index]
+		var threads: Array = package.get("messages_catalog", {}).get(
+			"presentation_metadata", {}
+		).get("threads", [])
+		if threads.size() != 1:
+			_status = IDLE_NO_ELIGIBLE_SEQUENCE
+			return _result(false, "OPPORTUNITY_THREAD_METADATA_REFUSED")
+		var thread: Dictionary = threads[0]
+		var title := str(thread.get("title", ""))
+		var thread_id := str(thread.get("thread_id", ""))
+		if title.is_empty() or thread_id.is_empty():
+			_status = IDLE_NO_ELIGIBLE_SEQUENCE
+			return _result(false, "OPPORTUNITY_THREAD_METADATA_REFUSED")
+		_opportunities.append({
+			"sequence_id": package["sequence"]["sequence_id"],
+			"package_id": package["manifest"]["package_id"],
+			"thread_id": thread_id,
+			"title": title,
+			"action_label": "Continuer avec " + title,
+			"prepared_plan": prepared["prepared_plan"].duplicate(true),
+			"option_id": prepared["descriptors"][index]["option_id"],
+			"activation_context": prepared["activation_context"].duplicate(true),
+		})
 	_status = OPPORTUNITY_AVAILABLE
 	return _result(true)
+
+
+func _packages_form_competing_pair(first: Dictionary, second: Dictionary) -> bool:
+	var first_index: int = catalog["packages"].find(first)
+	var second_index: int = catalog["packages"].find(second)
+	return (
+		first_index >= 0
+		and second_index == first_index + 1
+		and CompositionRoot._sequences_share_opportunity_identity(
+			first["sequence"], second["sequence"]
+		)
+	)
+
+
+func _sanitized_opportunities() -> Array:
+	var result: Array = []
+	for opportunity in _opportunities:
+		result.append({
+			"sequence_id": opportunity.get("sequence_id"),
+			"thread_id": opportunity.get("thread_id"),
+			"action_label": opportunity.get("action_label"),
+		})
+	return result
 
 
 func _verify_complete_checkpoint(
@@ -527,6 +598,7 @@ func _verify_complete_checkpoint(
 	if (
 		snapshot.get("active_sequence_id") != completed_id
 		or snapshot.get("completed_sequence_ids") != completed_sequence_ids
+		or snapshot.get("not_selected_sequence_ids") != not_selected_sequence_ids
 		or typeof(runtime) != TYPE_DICTIONARY
 		or runtime.get("sequence_id") != completed_id
 		or runtime.get("execution", {}).get("execution_status") != "COMPLETE"
@@ -555,6 +627,7 @@ func _capture_opportunity_checkpoint(
 		or snapshot.get("active_sequence_id") != sequence_id
 		or runtime.get("sequence_id") != sequence_id
 		or runtime.get("execution", {}).get("execution_status") != "COMPLETE"
+		or snapshot.get("not_selected_sequence_ids") != not_selected_sequence_ids
 		or JsonNormalizer.normalize(runtime.get("domain"))
 		!= JsonNormalizer.normalize(expected_domain)
 		or JsonNormalizer.normalize(snapshot.get("persistent_messages_state"))
@@ -578,7 +651,10 @@ func _checkpoint_is_unchanged(expected_snapshot: Dictionary) -> Dictionary:
 
 
 func _rollback_opportunity_activation(
-	domain_before: Dictionary, error_code: String, checkpoint_before: Dictionary = {}
+	domain_before: Dictionary,
+	error_code: String,
+	checkpoint_before: Dictionary = {},
+	not_selected_before: Array = [],
 ) -> Dictionary:
 	var failed_session = active_session
 	if failed_session != null:
@@ -587,10 +663,11 @@ func _rollback_opportunity_activation(
 		failed_session.detach()
 	active_session = null
 	active_sequence_id = ""
+	not_selected_sequence_ids = not_selected_before.duplicate()
 	var restored = catalog["facade"].restore_state(domain_before.duplicate(true))
 	if typeof(restored) != TYPE_DICTIONARY or not restored.get("ok", false):
 		_status = IDLE_NO_ELIGIBLE_SEQUENCE
-		_opportunity = {}
+		_opportunities = []
 		if failed_session != null:
 			active_session_changed.emit(failed_session, null)
 		season_state_changed.emit(describe_state())
@@ -605,7 +682,7 @@ func _rollback_opportunity_activation(
 			or not _checkpoint_is_unchanged(checkpoint_before)["ok"]
 		):
 			_status = IDLE_NO_ELIGIBLE_SEQUENCE
-			_opportunity = {}
+			_opportunities = []
 			if failed_session != null:
 				active_session_changed.emit(failed_session, null)
 			season_state_changed.emit(describe_state())

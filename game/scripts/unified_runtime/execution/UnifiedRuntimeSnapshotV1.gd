@@ -228,7 +228,26 @@ static func _validate_domain(
 		_add_error(errors, "snapshot.domain.scene_registry", "scene_definition_mismatch")
 	if instance.get("definition_version") != a6_entry["definition"]["version_contrat"]:
 		_add_error(errors, "snapshot.domain.scene_registry", "scene_version_mismatch")
+	var automatic_committed: bool = (
+		execution.get("durable_commit_status") == "AUTOMATIC_COMPLETION_APPLIED"
+	)
 	var committed: bool = execution.get("durable_commit_status") in ["APPLIED", "IDEMPOTENT"]
+	if automatic_committed:
+		var expected_transaction := "r8c-a5:%s:complete-automatic:%s:%s" % [
+			execution.get("instance_id", ""),
+			authored_sequence.get("sequence_id", ""),
+			authored_sequence.get("entry_beat_id", ""),
+		]
+		if not AuthoredValidator.is_automatic_terminal_message_profile(authored_sequence):
+			_add_error(errors, "snapshot.domain.scene_registry", "automatic_sequence_profile_mismatch")
+		if (
+			instance.get("state") != "RESOLVED"
+			or instance.get("operation") != "COMPLETE_AUTOMATIC"
+			or instance.get("choice_id") != ""
+			or instance.get("resolution_id") != ""
+			or instance.get("transaction_id") != expected_transaction
+		):
+			_add_error(errors, "snapshot.domain.scene_registry", "automatic_completion_mismatch")
 	if committed:
 		if instance.get("state") != "RESOLVED":
 			_add_error(errors, "snapshot.domain.scene_registry", "committed_instance_not_resolved")
@@ -239,7 +258,7 @@ static func _validate_domain(
 			or instance.get("resolution_id") != resolution.get("a10_resolution_id")
 		):
 			_add_error(errors, "snapshot.domain.scene_registry", "committed_resolution_mismatch")
-	elif instance.get("state") != "PROPOSED":
+	elif not automatic_committed and instance.get("state") != "PROPOSED":
 		_add_error(errors, "snapshot.domain.scene_registry", "active_instance_not_proposed")
 
 

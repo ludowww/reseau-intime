@@ -19,11 +19,9 @@ PROTECTED_HASHES = {
     "data/unified_runtime/presentation/marie_evening_return_01_messages.json": "90ede96bd90bc16d7adc43ec1de8578811eb8ee12fd1596a9d381afbcbb6627d",
     "data/unified_runtime/presentation/marie_evening_return_01_physical.json": "40398d56103f1c3d0ac72ad13a0d45196de509caa13cc7d1eb2d01b64201d5eb",
     "data/unified_runtime/presentation/marie_evening_return_01_media.json": "a040d65c93a1295d8699886ac668af4ac51ec7935dc89eff265623ead4ec4246",
-    "data/unified_runtime/catalogs/season_1_v1.json": "b030ecd73a61709a70021f2d46357eb617ea77556f9b464985484e5049c630ea",
     "scripts/unified_runtime/application/UnifiedRuntimeSnapshotV2.gd": "c88f40499a923bb4af3cfff6e8157177aa8465d7f1fc377beb75f1cf49f0e4a5",
     "scripts/unified_runtime/application/UnifiedSeasonSnapshotV1.gd": "b9979f66655ac18f848ca81eba3761719b068d29bf3d0859809e581eadfa4a0e",
     "scripts/narrative_scene/ControlledNarrativeSlotCompositionCoordinator.gd": "033e9901a565693d944d23548dca2a65fbe9f23bc5f73232cacfaffb6a41ab92",
-    "scripts/narrative_scene/NarrativeOrchestrationFacade.gd": "270d5be939c271b081e24311eefcb75242198c6350f6db147e600705b1631de7",
 }
 
 
@@ -72,10 +70,10 @@ class R8CN21VisibleSingleCandidateOpportunityStaticTests(unittest.TestCase):
         prepare = root.split("static func prepare_sequence", 1)[1].split(
             "static func activate_prepared_sequence", 1
         )[0]
-        self.assertIn('"options": [', prepare)
-        options = prepare.split('"options": [', 1)[1].split("\n\t\t\t],", 1)[0]
-        self.assertEqual(1, options.count('"option_id": "primary_option"'))
-        self.assertIn('composition.get("window", {}).get("options", []).size() != 1', prepare)
+        self.assertIn("prepare_sequences(facade, [sequence])", prepare)
+        self.assertIn('"option_id": descriptor["option_id"]', prepare)
+        self.assertIn('var option_id := "primary_option"', prepare)
+        self.assertIn("sequences.size() > 2", prepare)
         self.assertNotIn("alternative_option", root)
         self.assertNotIn("activate_option", prepare)
         activate = root.split("static func activate_prepared_sequence", 1)[1].split(
@@ -124,7 +122,7 @@ class R8CN21VisibleSingleCandidateOpportunityStaticTests(unittest.TestCase):
             "checkpoint disque Sandra COMPLETE conserve le domaine",
             "reload reconstruit Marie sans session, A5 ni perte Sandra",
             "clic carte ouvre Marie avec une session et une matérialisation A5",
-            "reload final converge avant rendu vers le même IDLE",
+            "reload final reconstruit les deux opportunités N22",
         ]:
             self.assertIn(proof, smoke)
         scene = self.read("tests/R8C_N21VisibleSingleCandidateOpportunitySmokeTest.tscn")

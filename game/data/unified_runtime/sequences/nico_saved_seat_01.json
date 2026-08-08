@@ -1,0 +1,598 @@
+{
+  "schema_id": "reseau_intime.authored_sequence",
+  "schema_version": 1,
+  "sequence_id": "nico_saved_seat_01",
+  "authored_version": "1.0.0",
+  "season_id": "season_1",
+  "dramatic_movement_id": "movement_i",
+  "narrative_function": "RELATION",
+  "canonical_status": "CANON_APPROVED",
+  "author_provenance": {
+    "source_document_paths": [
+      "game/data/conversations/chapter_04_nico_saved_seat_followup.json",
+      "docs/canon/dialogues/NAR_PROD_02_PAQUET_PRODUCTION_ACTE_I_J01_J04.md"
+    ],
+    "source_sequence_ids": [
+      "chapter_04_nico_saved_seat_followup",
+      "O6_NICO"
+    ],
+    "approval_ref": "R8C-N22",
+    "authoring_tool_ref": null
+  },
+  "participants": {
+    "present_character_ids": [
+      "nico",
+      "player"
+    ],
+    "concerned_absent_character_ids": [
+      "marie",
+      "mathilde"
+    ],
+    "initial_audiences": {
+      "player_only": []
+    },
+    "player_role": "PARTICIPANT"
+  },
+  "orchestration": {
+    "a6_entry": {
+      "scene_definition_id": "nico_saved_seat_01",
+      "variant_id": "nico_saved_seat_canonical",
+      "definition": {
+        "scene_id": "nico_saved_seat_01",
+        "version_contrat": "1.0.0",
+        "nature": "MODULAIRE",
+        "fonction_principale": "RELATION",
+        "participants_requis": [
+          {
+            "personnage_id": "nico",
+            "role": "OUVERTURE_SOCIALE_ORDINAIRE"
+          }
+        ],
+        "conditions_dures": {
+          "actes_compatibles": [
+            "N22_FRIDAY_ATTENTION"
+          ],
+          "evenements_requis": []
+        },
+        "exclusions_dures": {
+          "evenements_interdits": []
+        },
+        "contrat_temporel": {
+          "date_debut": "2032-03-05",
+          "date_fin": "2032-03-05",
+          "heure_ouverture": "18:05",
+          "heure_fermeture": "18:09",
+          "duree_minutes": 4,
+          "revalidation": "AVANT_PROPOSITION_ET_RESOLUTION"
+        },
+        "politique_unicite": "UNIQUE",
+        "resolutions": {
+          "nico_saved_seat_resolution": {
+            "personnage_id": "nico",
+            "portee_micro_signal": "DURABLE",
+            "signal_recu": "AMITIE_ORDINAIRE_ET_INFORMATION_PARTAGEE",
+            "reception": "RECUE_INTERPRETEE",
+            "interpretation": "Nico et Player maintiennent une amitié ordinaire; Nico connaît le séjour temporaire de Mathilde.",
+            "faits_relationnels": [
+              {
+                "fait_id": "nico_r1_established",
+                "nature": "AMITIE_ORDINAIRE_ETABLIE",
+                "recu_par": "nico"
+              },
+              {
+                "fait_id": "nico_knows_mathilde_stay",
+                "nature": "SEJOUR_MATHILDE_CONNU",
+                "recu_par": "nico"
+              }
+            ],
+            "convergence": "RETOUR_NOYAU_COMMUN",
+            "durable_manifest": {
+              "binding": {
+                "sequence_id": "nico_saved_seat_01",
+                "authored_version": "1.0.0",
+                "resolution_id": "resolution_nico_mathilde_guided"
+              },
+              "facts": [
+                {
+                  "event_key": "nico_r1_established",
+                  "scope": "RELATION",
+                  "personnage_id": "nico",
+                  "fact": {
+                    "fait_id": "nico_r1_established",
+                    "nature": "AMITIE_ORDINAIRE_ETABLIE",
+                    "recu_par": "nico"
+                  }
+                },
+                {
+                  "event_key": "nico_knows_mathilde_stay",
+                  "scope": "RELATION",
+                  "personnage_id": "nico",
+                  "fact": {
+                    "fait_id": "nico_knows_mathilde_stay",
+                    "nature": "SEJOUR_MATHILDE_CONNU",
+                    "recu_par": "nico"
+                  }
+                }
+              ],
+              "knowledge": [],
+              "traces": [],
+              "promises": [],
+              "obligations": [],
+              "media_deliveries": []
+            }
+          }
+        },
+        "choix": [
+          {
+            "choix_id": "nico_mathilde_guided_choice",
+            "formulation": "Dix jours environ.",
+            "signal_emis": "AMITIE_ORDINAIRE_ET_INFORMATION_PARTAGEE",
+            "resolution_ids": [
+              "nico_saved_seat_resolution"
+            ]
+          }
+        ],
+        "politique_non_resolution": {
+          "proposition_expire": "CANCELLED"
+        }
+      }
+    },
+    "a8_window": {
+      "window_id": "n22_friday_attention_window",
+      "conflict_policy": "CLOSE_SILENTLY"
+    },
+    "a9_slot": {
+      "slot_role": "n22_friday_attention_slot",
+      "duration_minutes": 4,
+      "relative_order": 3,
+      "not_before_anchor": null,
+      "not_after_anchor": null
+    }
+  },
+  "temporal_projection": {
+    "anchor_id": "n22_friday_attention",
+    "offset_minutes": 0,
+    "relative_order": 3,
+    "delay": {
+      "mode": "NONE",
+      "value": null
+    },
+    "resolved_window": {
+      "opens_at": "2032-03-05T18:05:00+01:00",
+      "closes_at": "2032-03-05T18:09:00+01:00"
+    }
+  },
+  "entry_beat_id": "nico_saved_seat_opening",
+  "beats": [
+    {
+      "beat_id": "nico_saved_seat_opening",
+      "type": "MESSAGE",
+      "content": {
+        "thread_id": "nico_thread",
+        "messages": [
+          {
+            "message_id": "msg_friday_nico_001",
+            "author_id": "nico",
+            "text": "Je bosse ce soir.",
+            "diegetic_at": "2032-03-05T18:05:00+01:00",
+            "relative_order": 0
+          },
+          {
+            "message_id": "msg_friday_nico_002",
+            "author_id": "nico",
+            "text": "La chaise qui ne penche pas est encore libre.",
+            "diegetic_at": "2032-03-05T18:05:00+01:00",
+            "relative_order": 1
+          }
+        ]
+      },
+      "participant_ids": [
+        "nico"
+      ],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "nico_opening_presented",
+      "next": {
+        "mode": "DIRECT",
+        "beat_id": "nico_saved_seat_guided_choice"
+      }
+    },
+    {
+      "beat_id": "nico_saved_seat_guided_choice",
+      "type": "CHOICE",
+      "content": {
+        "thread_id": "nico_thread",
+        "choices": [
+          {
+            "choice_id": "choice_friday_nico_reservation_guided",
+            "text": "Tu fais des réservations maintenant ?",
+            "resolution_id": "resolution_reservation_guided",
+            "next_beat_id": "nico_saved_seat_reservation_reply"
+          }
+        ]
+      },
+      "participant_ids": [
+        "nico"
+      ],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "nico_reservation_guided_consumed",
+      "next": {
+        "mode": "BRANCH",
+        "branches": {
+          "choice_friday_nico_reservation_guided": "nico_saved_seat_reservation_reply"
+        }
+      }
+    },
+    {
+      "beat_id": "nico_saved_seat_reservation_reply",
+      "type": "MESSAGE",
+      "content": {
+        "thread_id": "nico_thread",
+        "messages": [
+          {
+            "message_id": "msg_friday_nico_003",
+            "author_id": "nico",
+            "text": "Seulement pour les gens qui répondent avant la fermeture.",
+            "diegetic_at": "2032-03-05T18:06:00+01:00",
+            "relative_order": 0
+          },
+          {
+            "message_id": "msg_friday_nico_004",
+            "author_id": "nico",
+            "text": "Et je garde le droit de mentir sur l'état de la chaise.",
+            "diegetic_at": "2032-03-05T18:06:00+01:00",
+            "relative_order": 1
+          }
+        ]
+      },
+      "participant_ids": [
+        "nico"
+      ],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "nico_reservation_reply_presented",
+      "next": {
+        "mode": "DIRECT",
+        "beat_id": "nico_saved_seat_posture_choice"
+      }
+    },
+    {
+      "beat_id": "nico_saved_seat_posture_choice",
+      "type": "CHOICE",
+      "content": {
+        "thread_id": "nico_thread",
+        "choices": [
+          {
+            "choice_id": "choice_friday_nico_playful",
+            "text": "Garde-la samedi. Je passerai peut-être.",
+            "resolution_id": "resolution_playful",
+            "next_beat_id": "nico_saved_seat_playful_reply"
+          },
+          {
+            "choice_id": "choice_friday_nico_honest",
+            "text": "Je te dis demain. Ne bloque rien.",
+            "resolution_id": "resolution_honest",
+            "next_beat_id": "nico_saved_seat_honest_reply"
+          },
+          {
+            "choice_id": "choice_friday_nico_home",
+            "text": "Marie a peut-être déjà prévu mon week-end.",
+            "resolution_id": "resolution_home",
+            "next_beat_id": "nico_saved_seat_home_reply"
+          }
+        ]
+      },
+      "participant_ids": [
+        "nico"
+      ],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "nico_posture_consumed",
+      "next": {
+        "mode": "BRANCH",
+        "branches": {
+          "choice_friday_nico_playful": "nico_saved_seat_playful_reply",
+          "choice_friday_nico_honest": "nico_saved_seat_honest_reply",
+          "choice_friday_nico_home": "nico_saved_seat_home_reply"
+        }
+      }
+    },
+    {
+      "beat_id": "nico_saved_seat_playful_reply",
+      "type": "MESSAGE",
+      "content": {
+        "thread_id": "nico_thread",
+        "messages": [
+          {
+            "message_id": "msg_friday_nico_005a",
+            "author_id": "nico",
+            "text": "Le peut-être annule la réservation.",
+            "diegetic_at": "2032-03-05T18:07:00+01:00",
+            "relative_order": 0
+          },
+          {
+            "message_id": "msg_friday_nico_006a",
+            "author_id": "nico",
+            "text": "Tu auras la chaise bancale.",
+            "diegetic_at": "2032-03-05T18:07:00+01:00",
+            "relative_order": 1
+          }
+        ]
+      },
+      "participant_ids": [
+        "nico"
+      ],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "nico_playful_presented",
+      "next": {
+        "mode": "DIRECT",
+        "beat_id": "nico_saved_seat_mathilde_opening"
+      }
+    },
+    {
+      "beat_id": "nico_saved_seat_honest_reply",
+      "type": "MESSAGE",
+      "content": {
+        "thread_id": "nico_thread",
+        "messages": [
+          {
+            "message_id": "msg_friday_nico_005b",
+            "author_id": "nico",
+            "text": "Voilà une phrase d'adulte.",
+            "diegetic_at": "2032-03-05T18:07:00+01:00",
+            "relative_order": 0
+          },
+          {
+            "message_id": "msg_friday_nico_006b",
+            "author_id": "nico",
+            "text": "Je déteste.",
+            "diegetic_at": "2032-03-05T18:07:00+01:00",
+            "relative_order": 1
+          }
+        ]
+      },
+      "participant_ids": [
+        "nico"
+      ],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "nico_honest_presented",
+      "next": {
+        "mode": "DIRECT",
+        "beat_id": "nico_saved_seat_mathilde_opening"
+      }
+    },
+    {
+      "beat_id": "nico_saved_seat_home_reply",
+      "type": "MESSAGE",
+      "content": {
+        "thread_id": "nico_thread",
+        "messages": [
+          {
+            "message_id": "msg_friday_nico_005c",
+            "author_id": "nico",
+            "text": "Ça lui ressemble.",
+            "diegetic_at": "2032-03-05T18:07:00+01:00",
+            "relative_order": 0
+          },
+          {
+            "message_id": "msg_friday_nico_006c",
+            "author_id": "nico",
+            "text": "Réponds-lui avant de me demander une chaise.",
+            "diegetic_at": "2032-03-05T18:08:00+01:00",
+            "relative_order": 1
+          }
+        ]
+      },
+      "participant_ids": [
+        "nico"
+      ],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "nico_home_presented",
+      "next": {
+        "mode": "DIRECT",
+        "beat_id": "nico_saved_seat_mathilde_opening"
+      }
+    },
+    {
+      "beat_id": "nico_saved_seat_mathilde_opening",
+      "type": "MESSAGE",
+      "content": {
+        "thread_id": "nico_thread",
+        "messages": [
+          {
+            "message_id": "msg_friday_nico_mathilde_001",
+            "author_id": "nico",
+            "text": "Marie m'a dit pour Mathilde.",
+            "diegetic_at": "2032-03-05T18:08:00+01:00",
+            "relative_order": 0
+          },
+          {
+            "message_id": "msg_friday_nico_mathilde_002",
+            "author_id": "nico",
+            "text": "Elle reste vraiment chez vous ?",
+            "diegetic_at": "2032-03-05T18:08:00+01:00",
+            "relative_order": 1
+          }
+        ]
+      },
+      "participant_ids": [
+        "nico"
+      ],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "nico_mathilde_opening_presented",
+      "next": {
+        "mode": "DIRECT",
+        "beat_id": "nico_saved_seat_mathilde_choice"
+      }
+    },
+    {
+      "beat_id": "nico_saved_seat_mathilde_choice",
+      "type": "CHOICE",
+      "content": {
+        "thread_id": "nico_thread",
+        "choices": [
+          {
+            "choice_id": "choice_friday_nico_mathilde_guided",
+            "text": "Dix jours environ.",
+            "resolution_id": "resolution_nico_mathilde_guided",
+            "next_beat_id": "nico_saved_seat_return"
+          }
+        ]
+      },
+      "participant_ids": [
+        "nico"
+      ],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "nico_mathilde_resolution_ready",
+      "next": {
+        "mode": "BRANCH",
+        "branches": {
+          "choice_friday_nico_mathilde_guided": "nico_saved_seat_return"
+        }
+      }
+    },
+    {
+      "beat_id": "nico_saved_seat_return",
+      "type": "RETURN",
+      "content": {
+        "return_id": "nico_saved_seat_return",
+        "content_ref": "nico_saved_seat_return_content",
+        "delay": {
+          "mode": "NONE",
+          "value": null
+        },
+        "eligible_resolution_ids": [
+          "resolution_nico_mathilde_guided"
+        ]
+      },
+      "participant_ids": [
+        "nico"
+      ],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": "nico_saved_seat_return_ready",
+      "checkpoint_after": "nico_saved_seat_complete",
+      "next": {
+        "mode": "TERMINAL",
+        "beat_id": null
+      }
+    }
+  ],
+  "resolutions": {
+    "resolution_reservation_guided": {
+      "resolution_id": "resolution_reservation_guided",
+      "choice_id": "choice_friday_nico_reservation_guided",
+      "a10_choice_id": null,
+      "a10_resolution_id": null,
+      "terminal_checkpoint_id": "nico_reservation_guided_consumed",
+      "event_refs": [],
+      "fact_ids": [],
+      "knowledge_ids": [],
+      "trace_ids": [],
+      "promise_effects": [],
+      "obligation_effects": [],
+      "consequence_ids": [],
+      "media_effects": [],
+      "convergence": "COMMON_EXIT",
+      "next_beat_id": "nico_saved_seat_reservation_reply"
+    },
+    "resolution_playful": {
+      "resolution_id": "resolution_playful",
+      "choice_id": "choice_friday_nico_playful",
+      "a10_choice_id": null,
+      "a10_resolution_id": null,
+      "terminal_checkpoint_id": "nico_posture_consumed",
+      "event_refs": [],
+      "fact_ids": [],
+      "knowledge_ids": [],
+      "trace_ids": [],
+      "promise_effects": [],
+      "obligation_effects": [],
+      "consequence_ids": [],
+      "media_effects": [],
+      "convergence": "COMMON_EXIT",
+      "next_beat_id": "nico_saved_seat_playful_reply"
+    },
+    "resolution_honest": {
+      "resolution_id": "resolution_honest",
+      "choice_id": "choice_friday_nico_honest",
+      "a10_choice_id": null,
+      "a10_resolution_id": null,
+      "terminal_checkpoint_id": "nico_posture_consumed",
+      "event_refs": [],
+      "fact_ids": [],
+      "knowledge_ids": [],
+      "trace_ids": [],
+      "promise_effects": [],
+      "obligation_effects": [],
+      "consequence_ids": [],
+      "media_effects": [],
+      "convergence": "COMMON_EXIT",
+      "next_beat_id": "nico_saved_seat_honest_reply"
+    },
+    "resolution_home": {
+      "resolution_id": "resolution_home",
+      "choice_id": "choice_friday_nico_home",
+      "a10_choice_id": null,
+      "a10_resolution_id": null,
+      "terminal_checkpoint_id": "nico_posture_consumed",
+      "event_refs": [],
+      "fact_ids": [],
+      "knowledge_ids": [],
+      "trace_ids": [],
+      "promise_effects": [],
+      "obligation_effects": [],
+      "consequence_ids": [],
+      "media_effects": [],
+      "convergence": "COMMON_EXIT",
+      "next_beat_id": "nico_saved_seat_home_reply"
+    },
+    "resolution_nico_mathilde_guided": {
+      "resolution_id": "resolution_nico_mathilde_guided",
+      "choice_id": "choice_friday_nico_mathilde_guided",
+      "a10_choice_id": "nico_mathilde_guided_choice",
+      "a10_resolution_id": "nico_saved_seat_resolution",
+      "terminal_checkpoint_id": "nico_mathilde_resolution_ready",
+      "event_refs": [
+        {
+          "event_type": "durable_manifest_event",
+          "event_key": "nico_r1_established",
+          "reducer_id": "a6_durable_manifest"
+        },
+        {
+          "event_type": "durable_manifest_event",
+          "event_key": "nico_knows_mathilde_stay",
+          "reducer_id": "a6_durable_manifest"
+        }
+      ],
+      "fact_ids": [
+        "nico_r1_established",
+        "nico_knows_mathilde_stay"
+      ],
+      "knowledge_ids": [],
+      "trace_ids": [],
+      "promise_effects": [],
+      "obligation_effects": [],
+      "consequence_ids": [],
+      "media_effects": [],
+      "convergence": "POST_RESOLUTION_RETURN",
+      "next_beat_id": "nico_saved_seat_return"
+    }
+  },
+  "media": {}
+}

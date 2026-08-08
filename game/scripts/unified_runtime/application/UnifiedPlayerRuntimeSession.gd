@@ -2,6 +2,24 @@ extends RefCounted
 
 class_name R8CUnifiedPlayerRuntimeSession
 
+class MessagesScreenBridge:
+	extends Node
+
+	var session
+	var screen
+
+	func _init(runtime_session, messages_screen) -> void:
+		session = runtime_session
+		screen = messages_screen
+
+	func refresh_from_runtime(_active_source: Dictionary = {}) -> void:
+		if screen != null:
+			screen.refresh_from_runtime(session.presentation_source())
+
+	func present_runtime_notification(thread_id: String, message_id: String) -> void:
+		if screen != null:
+			screen.present_runtime_notification(thread_id, message_id)
+
 signal gallery_source_changed(source: Dictionary)
 signal runtime_failed(error_code: String)
 signal sequence_completed(session)
@@ -34,6 +52,7 @@ var _initial_save_pending := false
 var _durable_boundary_pending := false
 var _gallery_source: Dictionary = {}
 var _persistent_messages_state: Dictionary = {}
+var _messages_screen_bridge
 var _catalog_messages_metadata: Dictionary = {}
 var _completion_emitted := false
 var _detached := false
@@ -167,7 +186,18 @@ func describe_state() -> Dictionary:
 
 
 func attach_messages_screen(screen) -> void:
-	_projection_coordinator.attach_messages_screen(screen)
+	if screen == null:
+		_messages_adapter.attach_messages_screen(null)
+		return
+	if (
+		_messages_screen_bridge != null
+		and is_instance_valid(_messages_screen_bridge)
+		and _messages_screen_bridge.screen == screen
+	):
+		return
+	_messages_screen_bridge = MessagesScreenBridge.new(self, screen)
+	screen.add_child(_messages_screen_bridge)
+	_projection_coordinator.attach_messages_screen(_messages_screen_bridge)
 
 
 func presentation_source() -> Dictionary:
@@ -208,6 +238,9 @@ func detach() -> void:
 		_media_adapter.projection_completed.disconnect(_on_projection_completed)
 	if _projection_coordinator.has_method("detach"):
 		_projection_coordinator.detach()
+	if _messages_screen_bridge != null and is_instance_valid(_messages_screen_bridge):
+		_messages_screen_bridge.queue_free()
+	_messages_screen_bridge = null
 
 
 func on_messages_ui_ready() -> void:

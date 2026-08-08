@@ -36,6 +36,10 @@ static func create(facade, projection_port, authored_sequence, activation_receip
 	var authored_validation := AuthoredValidator.validate(authored_sequence)
 	if not authored_validation["valid"]:
 		return _creation_failure("INVALID_AUTHORED_SEQUENCE")
+	if AuthoredValidator.is_automatic_terminal_message_profile(authored_sequence):
+		var automatic_dependency_error := _validate_automatic_dependencies(facade)
+		if not automatic_dependency_error.is_empty():
+			return _creation_failure(automatic_dependency_error)
 	var activation_error := _validate_activation(facade, authored_sequence, activation_receipt)
 	if not activation_error.is_empty():
 		return _creation_failure(activation_error)
@@ -51,6 +55,10 @@ static func restore(facade, projection_port, authored_sequence, snapshot) -> Dic
 	var error_code := _validate_dependencies(facade, projection_port)
 	if not error_code.is_empty():
 		return _creation_failure(error_code)
+	if AuthoredValidator.is_automatic_terminal_message_profile(authored_sequence):
+		var automatic_dependency_error := _validate_automatic_dependencies(facade)
+		if not automatic_dependency_error.is_empty():
+			return _creation_failure(automatic_dependency_error)
 	var restored := RuntimeSnapshot.restore_into(
 		facade, projection_port, authored_sequence, snapshot
 	)
@@ -229,6 +237,8 @@ func receive_command(command) -> Dictionary:
 			)
 		):
 			return _result(false, "UNKNOWN_CHOICE")
+	if _is_automatic_terminal_command(command):
+		return _complete_automatic_terminal(command)
 	var submitted = _projection_port.submit(command)
 	if not ProjectionContracts.validate_projection_result(submitted)["valid"] or not submitted["accepted"]:
 		return _result(false, "PORT_COMMAND_REFUSED")
@@ -352,6 +362,58 @@ func _complete_execution() -> void:
 	_execution["scheduled_returns"] = []
 
 
+func _is_automatic_terminal_command(command: Dictionary) -> bool:
+	return (
+		command["kind"] == "CONTINUE"
+		and AuthoredValidator.is_automatic_terminal_message_profile(_authored_sequence)
+		and current_beat().get("beat_id") == _authored_sequence.get("entry_beat_id")
+	)
+
+
+func _complete_automatic_terminal(command: Dictionary) -> Dictionary:
+	var beat := current_beat()
+	var messages = beat.get("content", {}).get("messages", [])
+	if typeof(messages) != TYPE_ARRAY or messages.is_empty():
+		return _result(false, "INVALID_AUTOMATIC_COMPLETION")
+	var moment_diegetique := str(messages[messages.size() - 1].get("diegetic_at", ""))
+	var preparation = _facade._prepare_automatic_scene_completion_internal(
+		_execution["instance_id"],
+		_authored_sequence["sequence_id"],
+		beat["beat_id"],
+		moment_diegetique,
+	)
+	if typeof(preparation) != TYPE_DICTIONARY or not preparation.get("ok", false):
+		return _result(false, "AUTOMATIC_COMPLETION_REFUSED")
+	var candidate := _execution.duplicate(true)
+	candidate["execution_status"] = "COMPLETE"
+	candidate["checkpoint_id"] = null
+	candidate["current_beat_id"] = null
+	candidate["pending_player_input"] = null
+	candidate["scheduled_returns"] = []
+	candidate["selected_resolution_id"] = null
+	candidate["consumed_choice_ids"] = []
+	candidate["durable_commit_status"] = "AUTOMATIC_COMPLETION_APPLIED"
+	if not SequenceExecution.validate(candidate, _authored_sequence)["valid"]:
+		return _result(false, "INVALID_AUTOMATIC_EXECUTION")
+	var submitted = _projection_port.submit(command)
+	if not ProjectionContracts.validate_projection_result(submitted)["valid"] or not submitted["accepted"]:
+		return _result(false, "PORT_COMMAND_REFUSED")
+	var presentation_id := ProjectionContracts.presentation_id_for(_projection_request(beat))
+	var closed = _projection_port.close(presentation_id)
+	if not ProjectionContracts.validate_projection_result(closed)["valid"] or not closed["accepted"]:
+		return _result(false, "PORT_CLOSE_REFUSED")
+	var published = _facade._publish_automatic_scene_completion_internal(preparation)
+	if typeof(published) != TYPE_DICTIONARY or not published.get("ok", false):
+		return _result(false, "AUTOMATIC_COMPLETION_PUBLICATION_REFUSED")
+	_execution = candidate
+	return _result(
+		true,
+		null,
+		bool(submitted["idempotent"]),
+		{"port_result": submitted, "automatic_completion": published},
+	)
+
+
 func _reach_checkpoint(checkpoint) -> void:
 	_execution["checkpoint_id"] = checkpoint
 	if checkpoint != null and checkpoint not in _execution["reached_checkpoint_ids"]:
@@ -455,6 +517,16 @@ static func _validate_dependencies(facade, projection_port) -> String:
 	for method_name in ProjectionPort.METHOD_NAMES:
 		if not projection_port.has_method(method_name):
 			return "INVALID_PROJECTION_PORT"
+	return ""
+
+
+static func _validate_automatic_dependencies(facade) -> String:
+	for method_name in [
+		"_prepare_automatic_scene_completion_internal",
+		"_publish_automatic_scene_completion_internal",
+	]:
+		if not facade.has_method(method_name):
+			return "INVALID_AUTOMATIC_COMPLETION_FACADE"
 	return ""
 
 

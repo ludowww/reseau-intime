@@ -14,6 +14,8 @@ const JsonNormalizer := preload(
 const MATHILDE_ID := "mathilde_returns_with_chosen_intent_01"
 const SANDRA_ID := "sandra_sentrycore_button_echo_01"
 const MARIE_ID := "marie_evening_return_01"
+const N21_NEXT_NICO_ID := "nico_saved_seat_01"
+const N21_NEXT_MARIE_ID := "marie_household_report_01"
 const SAVE_PATH := "user://r8c_n21_smoke/production.json"
 
 var failures: Array[String] = []
@@ -175,9 +177,9 @@ func _run() -> void:
 		runner.completed_sequence_ids == [MATHILDE_ID, SANDRA_ID, MARIE_ID]
 		and runner.active_session == null
 		and runner.active_sequence_id.is_empty()
-		and runner.status() == SeasonRunner.IDLE_NO_ELIGIBLE_SEQUENCE
-		and runner.describe_state()["opportunity"].is_empty(),
-		"Marie COMPLETE converge vers IDLE sans opportunité",
+		and runner.status() == SeasonRunner.OPPORTUNITY_AVAILABLE
+		and _opportunity_ids(runner) == [N21_NEXT_NICO_ID, N21_NEXT_MARIE_ID],
+		"Marie COMPLETE converge vers les deux opportunités N22",
 	)
 	_expect(
 		_checkpoint_matches(MARIE_ID, runner.catalog["facade"].save_state()),
@@ -190,8 +192,9 @@ func _run() -> void:
 		_expect(
 			main.season_runner.completed_sequence_ids == [MATHILDE_ID, SANDRA_ID, MARIE_ID]
 			and main.season_runner.active_session == null
-			and main.season_runner.status() == SeasonRunner.IDLE_NO_ELIGIBLE_SEQUENCE,
-			"reload final converge avant rendu vers le même IDLE",
+			and main.season_runner.status() == SeasonRunner.OPPORTUNITY_AVAILABLE
+			and _opportunity_ids(main.season_runner) == [N21_NEXT_NICO_ID, N21_NEXT_MARIE_ID],
+			"reload final reconstruit les deux opportunités N22",
 		)
 		main.queue_free()
 		await get_tree().process_frame
@@ -273,6 +276,13 @@ func _opportunity_is(runner, sequence_id: String, thread_id: String, action_labe
 			"action_label": action_label,
 		}
 	)
+
+
+func _opportunity_ids(runner) -> Array:
+	var ids: Array = []
+	for opportunity in runner.describe_state().get("opportunities", []):
+		ids.append(str(opportunity.get("sequence_id", "")))
+	return ids
 
 
 func _offered_thread(source: Dictionary, thread_id: String, action_label: String) -> bool:

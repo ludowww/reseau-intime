@@ -100,7 +100,10 @@ static func validate(value, allow_chained_returns := false) -> Dictionary:
 	var graph_context := _validate_beats(
 		sequence["beats"], participant_context, errors, bool(allow_chained_returns)
 	)
-	var resolution_context := _validate_resolutions(sequence["resolutions"], errors)
+	var automatic_terminal := is_automatic_terminal_message_profile(sequence)
+	var resolution_context := _validate_resolutions(
+		sequence["resolutions"], errors, automatic_terminal
+	)
 	var media_context := _validate_media(sequence["media"], participant_context, errors)
 	_validate_references(
 		sequence,
@@ -112,6 +115,43 @@ static func validate(value, allow_chained_returns := false) -> Dictionary:
 	)
 	_validate_graph(sequence.get("entry_beat_id"), graph_context, errors)
 	return _result(errors)
+
+
+static func is_automatic_terminal_message_profile(value) -> bool:
+	if typeof(value) != TYPE_DICTIONARY:
+		return false
+	var sequence: Dictionary = value
+	var beats = sequence.get("beats")
+	if typeof(beats) != TYPE_ARRAY or beats.size() != 1:
+		return false
+	var beat = beats[0]
+	if typeof(beat) != TYPE_DICTIONARY:
+		return false
+	var next = beat.get("next")
+	var orchestration = sequence.get("orchestration")
+	var a6_entry = (
+		orchestration.get("a6_entry") if typeof(orchestration) == TYPE_DICTIONARY else null
+	)
+	var definition = (
+		a6_entry.get("definition") if typeof(a6_entry) == TYPE_DICTIONARY else null
+	)
+	var a6_choices = definition.get("choix", []) if typeof(definition) == TYPE_DICTIONARY else null
+	return (
+		beat.get("beat_id") == sequence.get("entry_beat_id")
+		and beat.get("type") == "MESSAGE"
+		and beat.get("projection_target") == "MESSAGES"
+		and beat.get("local_conditions") == []
+		and typeof(next) == TYPE_DICTIONARY
+		and next.get("mode") == "TERMINAL"
+		and next.get("beat_id") == null
+		and typeof(sequence.get("resolutions")) == TYPE_DICTIONARY
+		and sequence["resolutions"].is_empty()
+		and typeof(definition) == TYPE_DICTIONARY
+		and typeof(definition.get("resolutions")) == TYPE_DICTIONARY
+		and definition["resolutions"].is_empty()
+		and typeof(a6_choices) == TYPE_ARRAY
+		and a6_choices.is_empty()
+	)
 
 
 static func _validate_root_scalars(sequence: Dictionary, errors: Array[String]) -> void:
@@ -566,10 +606,14 @@ static func _validate_return_content(value, path: String, context: Dictionary, e
 	context["return_resolution_ids"].append_array(resolution_ids)
 
 
-static func _validate_resolutions(value, errors: Array[String]) -> Dictionary:
+static func _validate_resolutions(
+	value, errors: Array[String], allow_empty: bool = false
+) -> Dictionary:
 	var context := {"resolutions": {}, "media_effect_references": {}}
-	if typeof(value) != TYPE_DICTIONARY or value.is_empty():
+	if typeof(value) != TYPE_DICTIONARY or (value.is_empty() and not allow_empty):
 		_add_error(errors, "root.resolutions", "expected_non_empty_dictionary")
+		return context
+	if value.is_empty():
 		return context
 	var resolution_ids: Array = value.keys()
 	resolution_ids.sort()

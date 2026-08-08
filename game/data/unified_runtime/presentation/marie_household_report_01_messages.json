@@ -1,0 +1,44 @@
+{
+  "schema_id": "reseau_intime.referenced_messages_catalog",
+  "schema_version": 1,
+  "sequence_id": "marie_household_report_01",
+  "authored_version": "1.0.0",
+  "presentation_metadata": {
+    "characters": {
+      "marie": {
+        "character_id": "marie",
+        "display_name": "Marie",
+        "accent_color": "#E05F87",
+        "avatar_ref": "M"
+      },
+      "player": {
+        "character_id": "player",
+        "display_name": "Player",
+        "accent_color": "#8D63E6",
+        "avatar_ref": "P"
+      }
+    },
+    "threads": [
+      {
+        "thread_id": "marie_thread",
+        "title": "Marie",
+        "participant_ids": [
+          "marie",
+          "player"
+        ],
+        "last_preview": "",
+        "last_timestamp": "",
+        "unread_count": 0,
+        "has_unread_content": false,
+        "availability_state": "AVAILABLE",
+        "is_group": false,
+        "is_archived": false,
+        "avatar_ref": "M",
+        "accent_color": "#E05F87"
+      }
+    ],
+    "narrative_day_short": "Ven.",
+    "narrative_time": "18:05"
+  },
+  "entries": []
+}

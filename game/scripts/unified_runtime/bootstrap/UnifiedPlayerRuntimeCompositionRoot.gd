@@ -257,24 +257,67 @@ static func _new_domain_graph_from_library(library) -> Dictionary:
 
 
 static func prepare_sequence(facade, sequence: Dictionary) -> Dictionary:
+	var prepared := prepare_sequences(facade, [sequence])
+	if not prepared.get("ok", false):
+		return prepared
+	var descriptor: Dictionary = prepared["descriptors"][0]
+	return {
+		"ok": true,
+		"error_code": null,
+		"sequence_id": descriptor["sequence_id"],
+		"prepared_plan": prepared["prepared_plan"].duplicate(true),
+		"option_id": descriptor["option_id"],
+		"activation_context": prepared["activation_context"].duplicate(true),
+		"window": prepared["window"].duplicate(true),
+	}
+
+
+static func prepare_sequences(facade, sequences: Array) -> Dictionary:
 	if facade == null or not facade.has_method("find_candidates") or not facade.has_method("compose_slot"):
 		return _preparation_failure("INVALID_PREPARATION_DEPENDENCY")
-	var context := _activation_context(sequence)
-	var candidates: Dictionary = facade.find_candidates(context)
-	if not candidates.get("ok", false):
-		return _preparation_failure("A6_CANDIDATE_QUERY_REFUSED")
-	var entry: Dictionary = sequence["orchestration"]["a6_entry"]
-	var candidate := {}
-	for candidate_value in candidates.get("candidats", []):
-		if (
-			candidate_value.get("scene_definition_id") == entry["scene_definition_id"]
-			and candidate_value.get("variant_id") == entry["variant_id"]
-		):
-			candidate = candidate_value.duplicate(true)
-			break
-	if candidate.is_empty():
-		return _preparation_failure("A6_PACKAGE_NOT_ELIGIBLE")
+	if sequences.is_empty() or sequences.size() > 2:
+		return _preparation_failure("PLAYER_FACING_CARDINALITY_REFUSED")
+	var sequence: Dictionary = sequences[0]
 	var temporal: Dictionary = sequence["temporal_projection"]["resolved_window"]
+	var context := _activation_context(sequence)
+	var options: Array = []
+	var descriptors: Array = []
+	var seen_threads := {}
+	for index in sequences.size():
+		var current: Dictionary = sequences[index]
+		if not _sequences_share_opportunity_identity(sequence, current):
+			return _preparation_failure("INCOMPATIBLE_COMPETING_PACKAGES")
+		var current_context := _activation_context(current)
+		for participant_id in current_context["participants_disponibles"]:
+			context["participants_disponibles"][participant_id] = true
+		var candidates: Dictionary = facade.find_candidates(current_context)
+		if not candidates.get("ok", false):
+			return _preparation_failure("A6_CANDIDATE_QUERY_REFUSED")
+		var entry: Dictionary = current["orchestration"]["a6_entry"]
+		var candidate := {}
+		for candidate_value in candidates.get("candidats", []):
+			if (
+				candidate_value.get("scene_definition_id") == entry["scene_definition_id"]
+				and candidate_value.get("variant_id") == entry["variant_id"]
+			):
+				candidate = candidate_value.duplicate(true)
+				break
+		if candidate.is_empty():
+			return _preparation_failure("A6_PACKAGE_NOT_ELIGIBLE")
+		var thread_id := _sequence_thread_id(current)
+		if thread_id.is_empty() or seen_threads.has(thread_id):
+			return _preparation_failure("AMBIGUOUS_COMPETING_THREAD")
+		seen_threads[thread_id] = true
+		var option_id := "primary_option"
+		if sequences.size() == 2:
+			option_id = "nico_option" if current["sequence_id"] == "nico_saved_seat_01" else "marie_option"
+		options.append({
+			"option_id": option_id,
+			"candidate": candidate.duplicate(true),
+			"instance_id": "unified_player_" + current["sequence_id"],
+			"conflict_policy": current["orchestration"]["a8_window"]["conflict_policy"],
+		})
+		descriptors.append({"sequence_id": current["sequence_id"], "option_id": option_id})
 	var composition: Dictionary = facade.compose_slot({
 		"slot_id": sequence["orchestration"]["a9_slot"]["slot_role"],
 		"narrative_date": str(temporal["opens_at"]).substr(0, 10),
@@ -288,14 +331,7 @@ static func prepare_sequence(facade, sequence: Dictionary) -> Dictionary:
 			"duration_minutes": sequence["orchestration"]["a9_slot"]["duration_minutes"],
 			"not_before": temporal["opens_at"],
 			"not_after": temporal["closes_at"],
-			"options": [
-				{
-					"option_id": "primary_option",
-					"candidate": candidate.duplicate(true),
-					"instance_id": "unified_player_" + sequence["sequence_id"],
-					"conflict_policy": sequence["orchestration"]["a8_window"]["conflict_policy"],
-				},
-			],
+			"options": options,
 		},
 	})
 	if not composition.get("ok", false):
@@ -303,16 +339,15 @@ static func prepare_sequence(facade, sequence: Dictionary) -> Dictionary:
 			"A9_COMPOSITION_REFUSED:%s"
 			% str(composition.get("erreur", composition.get("error_code", "UNKNOWN")))
 		)
-	if composition.get("window", {}).get("options", []).size() != 1:
-		return _preparation_failure("SINGLE_OPTION_WINDOW_REFUSED")
+	if composition.get("window", {}).get("options", []).size() != sequences.size():
+		return _preparation_failure("OPPORTUNITY_WINDOW_CARDINALITY_REFUSED")
 	return {
 		"ok": true,
 		"error_code": null,
-		"sequence_id": sequence["sequence_id"],
 		"prepared_plan": composition["plan"].duplicate(true),
-		"option_id": "primary_option",
 		"activation_context": context.duplicate(true),
 		"window": composition["window"].duplicate(true),
+		"descriptors": descriptors,
 	}
 
 
@@ -321,7 +356,8 @@ static func activate_prepared_sequence(facade, prepared: Dictionary) -> Dictiona
 		facade == null
 		or not facade.has_method("activate_option")
 		or not prepared.get("ok", false)
-		or prepared.get("option_id") != "primary_option"
+		or typeof(prepared.get("option_id")) != TYPE_STRING
+		or str(prepared.get("option_id")).is_empty()
 		or typeof(prepared.get("prepared_plan")) != TYPE_DICTIONARY
 		or typeof(prepared.get("activation_context")) != TYPE_DICTIONARY
 	):
@@ -334,6 +370,27 @@ static func activate_prepared_sequence(facade, prepared: Dictionary) -> Dictiona
 	if not activated.get("ok", false):
 		return {"ok": false, "error_code": "A7_A8_A9_ACTIVATION_REFUSED"}
 	return activated
+
+
+static func _sequences_share_opportunity_identity(first: Dictionary, second: Dictionary) -> bool:
+	return (
+		first["orchestration"]["a8_window"]["window_id"]
+		== second["orchestration"]["a8_window"]["window_id"]
+		and first["orchestration"]["a9_slot"]["slot_role"]
+		== second["orchestration"]["a9_slot"]["slot_role"]
+		and first["orchestration"]["a9_slot"]["duration_minutes"]
+		== second["orchestration"]["a9_slot"]["duration_minutes"]
+		and first["temporal_projection"]["resolved_window"]
+		== second["temporal_projection"]["resolved_window"]
+	)
+
+
+static func _sequence_thread_id(sequence: Dictionary) -> String:
+	for beat in sequence.get("beats", []):
+		var thread_id := str(beat.get("content", {}).get("thread_id", ""))
+		if not thread_id.is_empty():
+			return thread_id
+	return ""
 
 
 static func _activate_sequence(facade, sequence: Dictionary) -> Dictionary:

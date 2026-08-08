@@ -222,6 +222,21 @@ func resolve_scene(
 	}
 
 
+func _prepare_automatic_scene_completion_internal(
+	instance_id: String,
+	sequence_id: String,
+	terminal_beat_id: String,
+	moment_diegetique: String
+) -> Dictionary:
+	return _moteur.preparer_completion_automatique(
+		instance_id, sequence_id, terminal_beat_id, moment_diegetique
+	)
+
+
+func _publish_automatic_scene_completion_internal(preparation: Dictionary) -> Dictionary:
+	return _moteur._publier_completion_automatique_preparee(preparation)
+
+
 func save_state() -> Dictionary:
 	return _moteur.obtenir_snapshot(_etat_narratif)
 

@@ -1,0 +1,146 @@
+{
+  "schema_id": "reseau_intime.authored_sequence",
+  "schema_version": 1,
+  "sequence_id": "marie_household_report_01",
+  "authored_version": "1.0.0",
+  "season_id": "season_1",
+  "dramatic_movement_id": "movement_i",
+  "narrative_function": "RELATION",
+  "canonical_status": "CANON_APPROVED",
+  "author_provenance": {
+    "source_document_paths": [
+      "game/data/conversations/chapter_04_marie_household_report.json",
+      "docs/canon/dialogues/NAR_PROD_02_PAQUET_PRODUCTION_ACTE_I_J01_J04.md"
+    ],
+    "source_sequence_ids": [
+      "chapter_04_marie_household_report",
+      "O8_HOUSEHOLD_MARIE"
+    ],
+    "approval_ref": "R8C-N22",
+    "authoring_tool_ref": null
+  },
+  "participants": {
+    "present_character_ids": [
+      "marie",
+      "player"
+    ],
+    "concerned_absent_character_ids": [
+      "mathilde"
+    ],
+    "initial_audiences": {
+      "player_only": []
+    },
+    "player_role": "PARTICIPANT"
+  },
+  "orchestration": {
+    "a6_entry": {
+      "scene_definition_id": "marie_household_report_01",
+      "variant_id": "marie_household_report_canonical",
+      "definition": {
+        "scene_id": "marie_household_report_01",
+        "version_contrat": "1.0.0",
+        "nature": "MODULAIRE",
+        "fonction_principale": "RELATION",
+        "participants_requis": [
+          {
+            "personnage_id": "marie",
+            "role": "RAPPORT_DU_FOYER"
+          }
+        ],
+        "conditions_dures": {
+          "actes_compatibles": [
+            "N22_FRIDAY_ATTENTION"
+          ],
+          "evenements_requis": []
+        },
+        "exclusions_dures": {
+          "evenements_interdits": []
+        },
+        "contrat_temporel": {
+          "date_debut": "2032-03-05",
+          "date_fin": "2032-03-05",
+          "heure_ouverture": "18:05",
+          "heure_fermeture": "18:09",
+          "duree_minutes": 4,
+          "revalidation": "AVANT_PROPOSITION_ET_RESOLUTION"
+        },
+        "politique_unicite": "UNIQUE",
+        "resolutions": {},
+        "choix": [],
+        "politique_non_resolution": {
+          "proposition_expire": "CANCELLED"
+        }
+      }
+    },
+    "a8_window": {
+      "window_id": "n22_friday_attention_window",
+      "conflict_policy": "DEFER"
+    },
+    "a9_slot": {
+      "slot_role": "n22_friday_attention_slot",
+      "duration_minutes": 4,
+      "relative_order": 3,
+      "not_before_anchor": null,
+      "not_after_anchor": null
+    }
+  },
+  "temporal_projection": {
+    "anchor_id": "n22_friday_attention",
+    "offset_minutes": 0,
+    "relative_order": 3,
+    "delay": {
+      "mode": "NONE",
+      "value": null
+    },
+    "resolved_window": {
+      "opens_at": "2032-03-05T18:05:00+01:00",
+      "closes_at": "2032-03-05T18:09:00+01:00"
+    }
+  },
+  "entry_beat_id": "marie_household_report_messages",
+  "beats": [
+    {
+      "beat_id": "marie_household_report_messages",
+      "type": "MESSAGE",
+      "content": {
+        "thread_id": "marie_thread",
+        "messages": [
+          {
+            "message_id": "msg_friday_marie_household_001",
+            "author_id": "marie",
+            "text": "Rapport du foyer.",
+            "diegetic_at": "2032-03-05T18:05:00+01:00",
+            "relative_order": 0
+          },
+          {
+            "message_id": "msg_friday_marie_household_002",
+            "author_id": "marie",
+            "text": "Mathilde a pris la salle de bain vingt-sept minutes.",
+            "diegetic_at": "2032-03-05T18:05:05+01:00",
+            "relative_order": 1
+          },
+          {
+            "message_id": "msg_friday_marie_household_003",
+            "author_id": "marie",
+            "text": "Nous sommes officiellement trois adultes très organisés.",
+            "diegetic_at": "2032-03-05T18:06:00+01:00",
+            "relative_order": 2
+          }
+        ]
+      },
+      "participant_ids": [
+        "marie"
+      ],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": null,
+      "next": {
+        "mode": "TERMINAL",
+        "beat_id": null
+      }
+    }
+  ],
+  "resolutions": {},
+  "media": {}
+}

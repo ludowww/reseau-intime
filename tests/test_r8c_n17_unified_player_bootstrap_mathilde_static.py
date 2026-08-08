@@ -97,7 +97,7 @@ class R8CN17UnifiedPlayerBootstrapStaticTests(unittest.TestCase):
         root = self.read(BOOTSTRAP)
         for proof in [
             "LibraryModel.charger_depuis_bundle",
-            "facade.find_candidates(context)",
+            "facade.find_candidates(",
             "facade.compose_slot",
             "facade.activate_option",
             '"intention": "PROPOSE"',

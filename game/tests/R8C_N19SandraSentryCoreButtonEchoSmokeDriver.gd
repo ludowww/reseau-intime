@@ -21,7 +21,7 @@ const SeasonRunner := preload(
 	"res://scripts/unified_runtime/application/UnifiedSeasonRunner.gd"
 )
 const SeasonSnapshot := preload(
-	"res://scripts/unified_runtime/application/UnifiedSeasonSnapshotV1.gd"
+	"res://scripts/unified_runtime/application/UnifiedSeasonSnapshotV2.gd"
 )
 const SaveStore := preload(
 	"res://scripts/unified_runtime/application/UnifiedPlayerRuntimeSaveStore.gd"
@@ -179,7 +179,7 @@ func _test_production_mathilde_sandra_flow() -> void:
 	var runner = main.season_runner
 	var session = main.runtime_session
 	_expect(
-		runner.catalog["manifest"]["packages"].size() == 3
+		runner.catalog["manifest"]["packages"].size() == 5
 		and runner.active_sequence_id == MATHILDE_ID
 		and runner.completed_sequence_ids.is_empty()
 		and _message_ids_for_thread(session.presentation_source(), "sandra_thread").is_empty(),
@@ -275,6 +275,7 @@ func _test_production_mathilde_sandra_flow() -> void:
 		runner.catalog,
 		"",
 		[MATHILDE_ID],
+		[],
 		null,
 		runner._persistent_messages_state,
 	)

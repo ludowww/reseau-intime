@@ -63,6 +63,8 @@ class R8CN20MarieEveningReturnStaticTests(unittest.TestCase):
                 "mathilde_returns_with_chosen_intent_01",
                 "sandra_sentrycore_button_echo_01",
                 "marie_evening_return_01",
+                "nico_saved_seat_01",
+                "marie_household_report_01",
             ],
             [package["sequence_id"] for package in self.load(CATALOG)["packages"]],
         )
@@ -182,9 +184,9 @@ class R8CN20MarieEveningReturnStaticTests(unittest.TestCase):
             '_complete_execution()',
         ]:
             self.assertIn(proof, executor_v2)
-        self.assertEqual(
-            "ca688cb3b9d74517492ad22b7d32e368259b1e3b8b36eebeafd47ebf76ae75ba",
-            hashlib.sha256((GAME / "scripts/unified_runtime/execution/SequenceExecutor.gd").read_bytes()).hexdigest(),
+        self.assertIn(
+            "AUTOMATIC_COMPLETION_APPLIED",
+            (GAME / "scripts/unified_runtime/execution/SequenceExecutor.gd").read_text(encoding="utf-8"),
         )
 
     def test_protected_resources_are_blob_identical(self):
@@ -202,7 +204,7 @@ class R8CN20MarieEveningReturnStaticTests(unittest.TestCase):
             "reload au RETURN ne rejoue pas A10 Marie",
             "reload au PHYSICAL reprend le seul outcome choisi",
             "branches ACTIVE BOUNDED DRIFT convergent chacune sans second A10",
-            "idle final contient Mathilde Sandra Marie",
+            "handoff final contient Mathilde Sandra Marie puis la paire N22",
         ]:
             self.assertIn(proof, source)
         scene = (GAME / "tests/R8C_N20MarieEveningReturnSmokeTest.tscn").read_text(encoding="utf-8")

@@ -15,7 +15,7 @@ const SeasonRunner := preload(
 	"res://scripts/unified_runtime/application/UnifiedSeasonRunner.gd"
 )
 const SeasonSnapshot := preload(
-	"res://scripts/unified_runtime/application/UnifiedSeasonSnapshotV1.gd"
+	"res://scripts/unified_runtime/application/UnifiedSeasonSnapshotV2.gd"
 )
 const PersistentMessages := preload(
 	"res://scripts/unified_runtime/application/PersistentMessagesStateV1.gd"
@@ -130,7 +130,7 @@ func _test_catalog_contract_and_fingerprint() -> void:
 	)
 	var catalog: Dictionary = loaded_ab["catalog"]
 	var season_save: Dictionary = SeasonSnapshot.create(
-		catalog, "", [], null, PersistentMessages.empty(catalog["messages_metadata"])
+		catalog, "", [], [], null, PersistentMessages.empty(catalog["messages_metadata"])
 	)["snapshot"]
 	_expect(
 		SeasonSnapshot.validate(season_save, catalog)["valid"],
@@ -217,7 +217,7 @@ func _test_production_catalog_boundary() -> void:
 	_expect(
 		main.season_runner.catalog["catalog_id"] == "season_1_v1"
 		and main.season_runner.catalog["season_id"] == "season_1"
-		and main.season_runner.catalog["manifest"]["packages"].size() == 3
+		and main.season_runner.catalog["manifest"]["packages"].size() == 5
 		and main.season_runner.active_sequence_id == "mathilde_returns_with_chosen_intent_01",
 		"le vrai PortraitMain reste lié au catalogue canonique et démarre Mathilde",
 	)

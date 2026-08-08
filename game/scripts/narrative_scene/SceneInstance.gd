@@ -337,6 +337,19 @@ static func _terminaison_valide(
 			statut == RESOLVED and not choix_id.is_empty() and not resolution_id.is_empty()
 			and transaction_id == "r8c-a1:%s:sequence-resolution:%s" % [instance_id, resolution_id]
 		)
+	if operation == "COMPLETE_AUTOMATIC":
+		var parts: PackedStringArray = transaction_id.split(":", false)
+		return (
+			statut == RESOLVED
+			and choix_id.is_empty()
+			and resolution_id.is_empty()
+			and parts.size() == 5
+			and parts[0] == "r8c-a5"
+			and parts[1] == instance_id
+			and parts[2] == "complete-automatic"
+			and _chaine_non_vide(parts[3])
+			and _chaine_non_vide(parts[4])
+		)
 	if operation == "MANQUEE":
 		return (
 			statut in [MISSED, CANCELLED] and choix_id.is_empty() and resolution_id == "opportunite_manquee"

@@ -31,7 +31,13 @@ const EXECUTION_STATUSES := [
 ]
 const RECEIPT_KINDS := ["PRESENTED", "READ", "DISMISSED", "VIEWED"]
 const PLAYER_INPUT_KINDS := ["CONTINUE", "SELECT_CHOICE", "WITHDRAW"]
-const DURABLE_COMMIT_STATUSES := ["NOT_REQUESTED", "PENDING", "APPLIED", "IDEMPOTENT"]
+const DURABLE_COMMIT_STATUSES := [
+	"NOT_REQUESTED",
+	"PENDING",
+	"APPLIED",
+	"IDEMPOTENT",
+	"AUTOMATIC_COMPLETION_APPLIED",
+]
 const PENDING_PLAYER_INPUT_FIELDS := ["kind", "beat_id", "allowed_choice_ids"]
 const SCHEDULED_RETURN_FIELDS := ["beat_id", "resolution_id", "presentation_id"]
 
@@ -122,6 +128,7 @@ static func validate_against_sequence(value, authored_sequence) -> Dictionary:
 		errors,
 	)
 	_validate_selected_resolution(execution, index, consumed_choices, errors)
+	_validate_completion_mode(execution, authored_sequence, errors)
 	_validate_projection_wait(execution, opened_projection_ids, errors)
 	return _result(errors)
 
@@ -415,7 +422,9 @@ static func _validate_state_combinations(execution: Dictionary, errors: Array[St
 			_add_error(errors, "execution.pending_player_input", "must_be_null_when_complete")
 		if typeof(execution["scheduled_returns"]) == TYPE_ARRAY and not execution["scheduled_returns"].is_empty():
 			_add_error(errors, "execution.scheduled_returns", "must_be_empty_when_complete")
-		if execution["durable_commit_status"] not in ["APPLIED", "IDEMPOTENT"]:
+		if execution["durable_commit_status"] not in [
+			"APPLIED", "IDEMPOTENT", "AUTOMATIC_COMPLETION_APPLIED",
+		]:
 			_add_error(errors, "execution.durable_commit_status", "complete_requires_durable_commit")
 	elif execution["current_beat_id"] == null:
 		_add_error(errors, "execution.current_beat_id", "required_unless_complete")
@@ -428,6 +437,31 @@ static func _validate_state_combinations(execution: Dictionary, errors: Array[St
 			_add_error(errors, "execution.scheduled_returns", "required_when_return_pending")
 		if execution["durable_commit_status"] not in ["APPLIED", "IDEMPOTENT"]:
 			_add_error(errors, "execution.durable_commit_status", "return_pending_requires_durable_commit")
+
+
+static func _validate_completion_mode(
+	execution: Dictionary, authored_sequence: Dictionary, errors: Array[String]
+) -> void:
+	var automatic_profile: bool = AuthoredValidator.is_automatic_terminal_message_profile(authored_sequence)
+	var automatic_commit: bool = (
+		execution["durable_commit_status"] == "AUTOMATIC_COMPLETION_APPLIED"
+	)
+	if automatic_commit:
+		if not automatic_profile:
+			_add_error(errors, "execution.durable_commit_status", "automatic_commit_requires_automatic_sequence")
+		if execution["execution_status"] != "COMPLETE":
+			_add_error(errors, "execution.durable_commit_status", "automatic_commit_requires_complete")
+		if execution["selected_resolution_id"] != null:
+			_add_error(errors, "execution.selected_resolution_id", "automatic_complete_requires_null")
+		if not execution["consumed_choice_ids"].is_empty():
+			_add_error(errors, "execution.consumed_choice_ids", "automatic_complete_requires_empty")
+	elif automatic_profile and execution["execution_status"] == "COMPLETE":
+		_add_error(errors, "execution.durable_commit_status", "automatic_complete_requires_automatic_commit")
+	elif execution["execution_status"] == "COMPLETE":
+		if execution["selected_resolution_id"] == null:
+			_add_error(errors, "execution.selected_resolution_id", "classic_complete_requires_resolution")
+		if execution["durable_commit_status"] not in ["APPLIED", "IDEMPOTENT"]:
+			_add_error(errors, "execution.durable_commit_status", "classic_complete_requires_classic_commit")
 
 
 static func _validate_reference_array(value, allowed: Dictionary, path: String, errors: Array[String]) -> Array:

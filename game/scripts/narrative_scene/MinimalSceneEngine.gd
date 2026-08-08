@@ -126,6 +126,93 @@ func preparer_registre_resolution_sequence(
 	return {"ok": true, "erreur": "", "registre": registre_valide}
 
 
+func preparer_completion_automatique(
+	instance_id: String,
+	sequence_id: String,
+	terminal_beat_id: String,
+	moment_diegetique: String
+) -> Dictionary:
+	if (
+		instance_id.strip_edges().is_empty()
+		or sequence_id.strip_edges().is_empty()
+		or terminal_beat_id.strip_edges().is_empty()
+	):
+		return _echec_completion_automatique("IDENTITE_AUTOMATIQUE_INVALIDE")
+	var transaction_id := "r8c-a5:%s:complete-automatic:%s:%s" % [
+		instance_id, sequence_id, terminal_beat_id,
+	]
+	var instance = _registre.obtenir_instance(instance_id)
+	if instance == null:
+		return _echec_completion_automatique("INSTANCE_ABSENTE")
+	var terminaison := {
+		"operation": "COMPLETE_AUTOMATIC",
+		"transaction_id": transaction_id,
+		"choix_id": "",
+		"resolution_id": "",
+	}
+	if instance.obtenir_statut() == InstanceModele.RESOLVED:
+		if instance.obtenir_terminaison() != terminaison:
+			return _echec_completion_automatique("TERMINAISON_AUTOMATIQUE_DIFFERENTE")
+		return {
+			"ok": true,
+			"erreur": "",
+			"idempotent": true,
+			"transaction_id": transaction_id,
+			"registre": null,
+		}
+	if instance.obtenir_statut() != InstanceModele.PROPOSED:
+		return _echec_completion_automatique("INSTANCE_NON_PROPOSEE")
+	var registre_candidat = RegistreModele.creer_depuis_snapshot(_registre.obtenir_snapshot())
+	if registre_candidat == null:
+		return _echec_completion_automatique("REGISTRE_SCENES_INVALIDE")
+	var instance_candidate = registre_candidat.obtenir_instance(instance_id)
+	if instance_candidate == null:
+		return _echec_completion_automatique("INSTANCE_ABSENTE")
+	var preparation: Dictionary = instance_candidate.preparer_transition(
+		InstanceModele.RESOLVED,
+		"COMPLETION_AUTOMATIQUE_PREPAREE",
+		moment_diegetique,
+		terminaison,
+	)
+	if not preparation["ok"]:
+		return _echec_completion_automatique("TRANSITION_NON_PREPARABLE")
+	instance_candidate.appliquer_transition_preparee(preparation)
+	var registre_valide = RegistreModele.creer_depuis_snapshot(registre_candidat.obtenir_snapshot())
+	if registre_valide == null:
+		return _echec_completion_automatique("REGISTRE_SCENES_CANDIDAT_INVALIDE")
+	return {
+		"ok": true,
+		"erreur": "",
+		"idempotent": false,
+		"transaction_id": transaction_id,
+		"registre": registre_valide,
+	}
+
+
+func _publier_completion_automatique_preparee(preparation: Dictionary) -> Dictionary:
+	if not preparation.get("ok", false):
+		return _echec_completion_automatique("PREPARATION_AUTOMATIQUE_INVALIDE")
+	if preparation.get("idempotent", false):
+		return {
+			"ok": true,
+			"erreur": "",
+			"idempotent": true,
+			"transaction_id": preparation.get("transaction_id", ""),
+			"registre": null,
+		}
+	var registre_candidat = preparation.get("registre")
+	if registre_candidat == null or typeof(registre_candidat) != TYPE_OBJECT:
+		return _echec_completion_automatique("REGISTRE_AUTOMATIQUE_ABSENT")
+	_publier_registre_prepare(registre_candidat)
+	return {
+		"ok": true,
+		"erreur": "",
+		"idempotent": false,
+		"transaction_id": preparation.get("transaction_id", ""),
+		"registre": null,
+	}
+
+
 func _publier_registre_prepare(registre_candidat) -> void:
 	_registre = registre_candidat
 
@@ -1006,6 +1093,16 @@ func _diagnostic_invalide(code: String, erreur: String, contexte: Dictionary) ->
 
 func _resultat_operation(ok: bool, erreur: String, transition: Dictionary, diagnostic: Dictionary) -> Dictionary:
 	return {"ok": ok, "erreur": erreur, "transition": transition, "diagnostic": diagnostic}
+
+
+static func _echec_completion_automatique(erreur: String) -> Dictionary:
+	return {
+		"ok": false,
+		"erreur": erreur,
+		"idempotent": false,
+		"transaction_id": "",
+		"registre": null,
+	}
 
 
 static func _resultat_restauration(ok: bool, erreur: String, moteur, etat_narratif) -> Dictionary:

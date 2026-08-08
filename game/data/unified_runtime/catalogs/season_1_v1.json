@@ -30,6 +30,24 @@
       "messages_path": "res://data/unified_runtime/presentation/marie_evening_return_01_messages.json",
       "physical_path": "res://data/unified_runtime/presentation/marie_evening_return_01_physical.json",
       "media_path": "res://data/unified_runtime/presentation/marie_evening_return_01_media.json"
+    },
+    {
+      "package_id": "nico_saved_seat_01",
+      "sequence_id": "nico_saved_seat_01",
+      "authored_version": "1.0.0",
+      "sequence_path": "res://data/unified_runtime/sequences/nico_saved_seat_01.json",
+      "messages_path": "res://data/unified_runtime/presentation/nico_saved_seat_01_messages.json",
+      "physical_path": "res://data/unified_runtime/presentation/nico_saved_seat_01_physical.json",
+      "media_path": "res://data/unified_runtime/presentation/nico_saved_seat_01_media.json"
+    },
+    {
+      "package_id": "marie_household_report_01",
+      "sequence_id": "marie_household_report_01",
+      "authored_version": "1.0.0",
+      "sequence_path": "res://data/unified_runtime/sequences/marie_household_report_01.json",
+      "messages_path": "res://data/unified_runtime/presentation/marie_household_report_01_messages.json",
+      "physical_path": "res://data/unified_runtime/presentation/marie_household_report_01_physical.json",
+      "media_path": "res://data/unified_runtime/presentation/marie_household_report_01_media.json"
     }
   ]
 }

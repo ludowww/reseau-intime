@@ -35,7 +35,7 @@ const SeasonRunner := preload(
 	"res://scripts/unified_runtime/application/UnifiedSeasonRunner.gd"
 )
 const SeasonSnapshot := preload(
-	"res://scripts/unified_runtime/application/UnifiedSeasonSnapshotV1.gd"
+	"res://scripts/unified_runtime/application/UnifiedSeasonSnapshotV2.gd"
 )
 const SaveStore := preload(
 	"res://scripts/unified_runtime/application/UnifiedPlayerRuntimeSaveStore.gd"
@@ -335,7 +335,7 @@ func _test_production_flow() -> void:
 	var opening_source: Dictionary = session.presentation_source()
 	var gallery_before: Dictionary = session.gallery_source()
 	_expect(
-		runner.catalog["manifest"]["packages"].size() == 3
+			runner.catalog["manifest"]["packages"].size() == 5
 		and runner.completed_sequence_ids == [MATHILDE_ID, SANDRA_ID]
 		and runner.active_sequence_id == MARIE_ID
 		and _texts_for_thread(opening_source, "marie_thread") == [
@@ -352,6 +352,7 @@ func _test_production_flow() -> void:
 		runner.catalog,
 		"",
 		[MATHILDE_ID, SANDRA_ID],
+		[],
 		null,
 		runner._persistent_messages_state,
 	)
@@ -361,7 +362,7 @@ func _test_production_flow() -> void:
 		"Sandra COMPLETE sauvegardée avant détachement",
 	)
 	var old_manifest: Dictionary = runner.catalog["manifest"].duplicate(true)
-	old_manifest["packages"].pop_back()
+	old_manifest["packages"].resize(2)
 	var old_save: Dictionary = boundary["snapshot"].duplicate(true)
 	old_save["catalog_fingerprint"] = CatalogContract.fingerprint(old_manifest)
 	_expect(
@@ -516,9 +517,10 @@ func _test_production_flow() -> void:
 	_expect(
 		runner.completed_sequence_ids == [MATHILDE_ID, SANDRA_ID, MARIE_ID]
 		and runner.active_sequence_id.is_empty()
-		and runner.status() == SeasonRunner.IDLE_NO_ELIGIBLE_SEQUENCE
-		and runner.active_session == null,
-		"idle final contient Mathilde Sandra Marie",
+		and runner.status() == SeasonRunner.OPPORTUNITY_AVAILABLE
+		and runner.active_session == null
+		and runner.describe_state()["opportunities"].size() == 2,
+		"handoff final contient Mathilde Sandra Marie puis la paire N22",
 	)
 	_expect(
 		_texts_for_thread(idle_source, "mathilde_thread").size() > 0

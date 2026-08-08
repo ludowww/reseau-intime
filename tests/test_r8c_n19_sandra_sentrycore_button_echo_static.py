@@ -52,10 +52,12 @@ class R8CN19SandraSentryCoreButtonEchoStaticTests(unittest.TestCase):
         catalog = self.load(CATALOG)
         self.assertEqual(
             [
-				"mathilde_returns_with_chosen_intent_01",
-				"sandra_sentrycore_button_echo_01",
-				"marie_evening_return_01",
-			],
+                "mathilde_returns_with_chosen_intent_01",
+                "sandra_sentrycore_button_echo_01",
+                "marie_evening_return_01",
+                "nico_saved_seat_01",
+                "marie_household_report_01",
+            ],
             [package["sequence_id"] for package in catalog["packages"]],
         )
         self.assertNotIn("tests/fixtures", json.dumps(catalog))
