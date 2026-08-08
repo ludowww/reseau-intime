@@ -1,6 +1,5 @@
 extends Node
 
-const PortraitMainScene := preload("res://scenes/portrait/PortraitMain.tscn")
 const PortraitShellScene := preload("res://scenes/portrait/PortraitShell.tscn")
 const AuthoredValidator := preload(
 	"res://scripts/unified_runtime/contracts/AuthoredSequenceValidator.gd"
@@ -48,11 +47,23 @@ const SEQUENCE_PATH := "res://data/unified_runtime/sequences/marie_evening_retur
 const MESSAGES_PATH := "res://data/unified_runtime/presentation/marie_evening_return_01_messages.json"
 const PHYSICAL_PATH := "res://data/unified_runtime/presentation/marie_evening_return_01_physical.json"
 const MEDIA_PATH := "res://data/unified_runtime/presentation/marie_evening_return_01_media.json"
+const CAPABILITY_CATALOG := (
+	"res://tests/fixtures/unified_runtime/capability_catalog_n17_n22.json"
+)
 const MATHILDE_ID := "mathilde_returns_with_chosen_intent_01"
 const SANDRA_ID := "sandra_sentrycore_button_echo_01"
 const MARIE_ID := "marie_evening_return_01"
 const MARIE_MEDIA := "S1_A1_J03_SCN_MARIE_HOME_FROM_LAVERRIERE_01"
 const SAVE_ROOT := "user://r8c_n20_smoke/"
+
+class TestRuntimeHost:
+	var shell
+	var season_runner
+	var runtime_session
+
+	func queue_free() -> void:
+		if shell != null:
+			shell.queue_free()
 
 class CountingFacade:
 	extends RefCounted
@@ -373,7 +384,7 @@ func _test_production_flow() -> void:
 	refused_shell.content_mode = "unified"
 	add_child(refused_shell)
 	await _frames(3)
-	var refused := SeasonRunner.create(refused_shell, old_n19_path)
+	var refused := SeasonRunner.create_for_test(CAPABILITY_CATALOG, refused_shell, old_n19_path)
 	_expect(
 		not refused["ok"] and refused["error_code"] == "INVALID_SEASON_SAVE",
 		"ancien save N19 refusé par fingerprint",
@@ -384,7 +395,9 @@ func _test_production_flow() -> void:
 	boundary_shell.content_mode = "unified"
 	add_child(boundary_shell)
 	await _frames(3)
-	var boundary_restore := SeasonRunner.create(boundary_shell, boundary_path)
+	var boundary_restore := SeasonRunner.create_for_test(
+		CAPABILITY_CATALOG, boundary_shell, boundary_path
+	)
 	_expect(
 		not boundary_restore["ok"]
 		and boundary_restore["error_code"] == "UNRESTORABLE_INCOMPLETE_HANDOFF_SAVE",
@@ -622,18 +635,44 @@ func _projection_port(sequence: Dictionary) -> Dictionary:
 
 
 func _new_production_main(save_path: String):
-	var main = PortraitMainScene.instantiate()
-	main.unified_save_path_override = save_path
-	add_child(main)
+	var main := TestRuntimeHost.new()
+	main.shell = PortraitShellScene.instantiate()
+	main.shell.content_mode = "unified"
+	add_child(main.shell)
 	await _frames(5)
-	_expect(main.season_runner != null, "PortraitMain compose le catalogue production")
-	if main.season_runner == null or main.runtime_session == null:
-		_expect(false, "catalogue production compose une session active")
+	var created: Dictionary = SeasonRunner.create_for_test(CAPABILITY_CATALOG, main.shell, save_path)
+	_expect(created["ok"], "factory TEST_ONLY N20 compose le catalogue capability")
+	if not created["ok"]:
+		main.queue_free()
+		await get_tree().process_frame
+		return null
+	main.season_runner = created["runner"]
+	main.runtime_session = main.season_runner.active_session
+	main.season_runner.active_session_changed.connect(
+		_on_test_active_session_changed.bind(main)
+	)
+	if main.runtime_session != null:
+		_expect(main.shell.configure_unified_runtime(main.runtime_session), "shell TEST_ONLY N20 configuré")
+	var begun: Dictionary = main.season_runner.begin()
+	_expect(begun["ok"], "runner TEST_ONLY N20 démarre")
+	if main.runtime_session == null:
+		_expect(false, "catalogue capability compose une session active")
 		main.queue_free()
 		await get_tree().process_frame
 		return null
 	main.shell.messages_screen.runtime_delivery_time_scale = 0.001
 	return main
+
+
+func _on_test_active_session_changed(_previous_session, next_session, host: TestRuntimeHost) -> void:
+	host.runtime_session = next_session
+	host.shell.clear_unified_runtime(
+		host.season_runner.presentation_source(),
+		host.season_runner.gallery_source(),
+		host.season_runner,
+	)
+	if next_session != null:
+		_expect(host.shell.configure_unified_runtime(next_session), "handoff TEST_ONLY N20 configuré")
 
 
 func _complete_current_messages(session) -> bool:

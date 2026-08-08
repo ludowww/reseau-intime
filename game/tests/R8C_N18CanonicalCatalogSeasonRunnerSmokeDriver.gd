@@ -35,6 +35,9 @@ const CATALOG_DUPLICATE_SEQUENCE := (
 const CATALOG_DUPLICATE_CHOICE := (
 	"res://tests/fixtures/unified_runtime/n18_catalog_duplicate_choice_id.json"
 )
+const CAPABILITY_CATALOG := (
+	"res://tests/fixtures/unified_runtime/capability_catalog_n17_n22.json"
+)
 const SAVE_ROOT := "user://r8c_n18_smoke/"
 
 class TestRuntimeHost:
@@ -217,9 +220,9 @@ func _test_production_catalog_boundary() -> void:
 	_expect(
 		main.season_runner.catalog["catalog_id"] == "season_1_v1"
 		and main.season_runner.catalog["season_id"] == "season_1"
-		and main.season_runner.catalog["manifest"]["packages"].size() == 5
-		and main.season_runner.active_sequence_id == "mathilde_returns_with_chosen_intent_01",
-		"le vrai PortraitMain reste lié au catalogue canonique et démarre Mathilde",
+		and main.season_runner.catalog["manifest"]["packages"].size() == 1
+		and main.season_runner.active_sequence_id == "marie_bread_and_ten_minutes_01",
+		"le vrai PortraitMain reste lié au catalogue canonique et démarre OA01 Marie",
 	)
 	main.queue_free()
 	await get_tree().process_frame
@@ -374,7 +377,7 @@ func _test_handoff_save_restore_and_idle() -> void:
 func _test_n17_v2_migration() -> void:
 	var save_path := SAVE_ROOT + "n17_mathilde_migration.json"
 	_remove_save(save_path)
-	var main = await _new_production_main(save_path)
+	var main = await _new_test_runtime(CAPABILITY_CATALOG, save_path)
 	if main == null:
 		return
 	var session = main.season_runner.active_session
@@ -410,7 +413,7 @@ func _test_n17_v2_migration() -> void:
 	_expect(store.save_snapshot(n17_v2)["ok"], "la sauvegarde brute N17 V2 est installée")
 	main.queue_free()
 	await get_tree().process_frame
-	main = await _new_production_main(save_path)
+	main = await _new_test_runtime(CAPABILITY_CATALOG, save_path)
 	if main == null:
 		return
 	session = main.season_runner.active_session

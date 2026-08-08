@@ -1,0 +1,101 @@
+{
+  "schema_id": "reseau_intime.referenced_messages_catalog",
+  "schema_version": 1,
+  "sequence_id": "marie_bread_and_ten_minutes_01",
+  "authored_version": "1.0.0",
+  "presentation_metadata": {
+    "characters": {
+      "marie": {"character_id": "marie", "display_name": "Marie", "accent_color": "#E05F87", "avatar_ref": "M"},
+      "player": {"character_id": "player", "display_name": "Player", "accent_color": "#8D63E6", "avatar_ref": "P"}
+    },
+    "threads": [
+      {
+        "thread_id": "marie_thread",
+        "title": "Marie",
+        "participant_ids": ["marie", "player"],
+        "last_preview": "",
+        "last_timestamp": "",
+        "unread_count": 0,
+        "has_unread_content": false,
+        "availability_state": "AVAILABLE",
+        "is_group": false,
+        "is_archived": false,
+        "avatar_ref": "M",
+        "accent_color": "#E05F87"
+      }
+    ],
+    "narrative_day_short": "Mar.",
+    "narrative_time": "18:12"
+  },
+  "entries": [
+    {
+      "content_ref": "marie_shared_evening_present_return_content",
+      "beat_type": "RETURN",
+      "thread_id": "marie_thread",
+      "messages": [
+        {"message_id": "marie_present_return_01", "author_id": "marie", "text": "Voilà 🙂", "diegetic_at": "2032-03-02T18:17:00+01:00", "relative_order": 0},
+        {"message_id": "marie_present_return_02", "author_id": "marie", "text": "C'est beau, un homme qui accepte sa mission.", "diegetic_at": "2032-03-02T18:17:05+01:00", "relative_order": 1},
+        {"message_id": "marie_present_return_03", "author_id": "marie", "text": "Sinon La Verrière a survécu à sa journée.", "diegetic_at": "2032-03-02T18:19:00+01:00", "relative_order": 2},
+        {"message_id": "marie_present_return_04", "author_id": "marie", "text": "Moi aussi, à peu près.", "diegetic_at": "2032-03-02T18:19:05+01:00", "relative_order": 3},
+        {"message_id": "marie_present_return_05", "author_id": "marie", "text": "Petit événement jeudi. Deux logos inversés sur l'affiche.", "diegetic_at": "2032-03-02T18:20:00+01:00", "relative_order": 4},
+        {"message_id": "marie_present_return_06", "author_id": "marie", "text": "Et un traiteur qui répond « normalement oui » à une question où la seule bonne réponse était « oui ».", "diegetic_at": "2032-03-02T18:20:05+01:00", "relative_order": 5},
+        {"message_id": "marie_present_return_07", "author_id": "player", "text": "Dangereux, le « normalement ».", "diegetic_at": "2032-03-02T18:20:10+01:00", "relative_order": 6},
+        {"message_id": "marie_present_return_08", "author_id": "marie", "text": "Très.", "diegetic_at": "2032-03-02T18:21:00+01:00", "relative_order": 7},
+        {"message_id": "marie_present_return_09", "author_id": "marie", "text": "Élodie m'a dit que je souriais comme quelqu'un qui allait écrire un mail poli mais violent.", "diegetic_at": "2032-03-02T18:21:05+01:00", "relative_order": 8},
+        {"message_id": "marie_present_return_10", "author_id": "marie", "text": "Elle me lit trop bien. C'est agaçant, les gens attentifs.", "diegetic_at": "2032-03-02T18:21:10+01:00", "relative_order": 9},
+        {"message_id": "marie_present_return_11", "author_id": "marie", "text": "Mathilde veut passer voir l'installation demain.", "diegetic_at": "2032-03-02T18:22:00+01:00", "relative_order": 10},
+        {"message_id": "marie_present_return_12", "author_id": "marie", "text": "Enfin elle dit « voir l'installation ».", "diegetic_at": "2032-03-02T18:22:05+01:00", "relative_order": 11},
+        {"message_id": "marie_present_return_13", "author_id": "marie", "text": "Je pense surtout qu'elle veut juger l'éclairage.", "diegetic_at": "2032-03-02T18:22:10+01:00", "relative_order": 12},
+        {"message_id": "marie_present_return_14", "author_id": "player", "text": "Ça lui ressemble.", "diegetic_at": "2032-03-02T18:22:15+01:00", "relative_order": 13},
+        {"message_id": "marie_present_return_15", "author_id": "marie", "text": "Oui.", "diegetic_at": "2032-03-02T18:23:00+01:00", "relative_order": 14},
+        {"message_id": "marie_present_return_16", "author_id": "marie", "text": "Elle a une relation très personnelle avec les lumières qui la trahissent.", "diegetic_at": "2032-03-02T18:23:05+01:00", "relative_order": 15}
+      ]
+    },
+    {
+      "content_ref": "marie_shared_evening_playful_return_content",
+      "beat_type": "RETURN",
+      "thread_id": "marie_thread",
+      "messages": [
+        {"message_id": "marie_playful_return_01", "author_id": "marie", "text": "Accepté.", "diegetic_at": "2032-03-02T18:17:00+01:00", "relative_order": 0},
+        {"message_id": "marie_playful_return_02", "author_id": "marie", "text": "Râle en marchant, c'est cardio.", "diegetic_at": "2032-03-02T18:17:05+01:00", "relative_order": 1},
+        {"message_id": "marie_playful_return_03", "author_id": "marie", "text": "Sinon La Verrière a survécu à sa journée.", "diegetic_at": "2032-03-02T18:19:00+01:00", "relative_order": 2},
+        {"message_id": "marie_playful_return_04", "author_id": "marie", "text": "Moi aussi, à peu près.", "diegetic_at": "2032-03-02T18:19:05+01:00", "relative_order": 3},
+        {"message_id": "marie_playful_return_05", "author_id": "marie", "text": "Petit événement jeudi. Deux logos inversés sur l'affiche.", "diegetic_at": "2032-03-02T18:20:00+01:00", "relative_order": 4},
+        {"message_id": "marie_playful_return_06", "author_id": "marie", "text": "Et un traiteur qui répond « normalement oui » à une question où la seule bonne réponse était « oui ».", "diegetic_at": "2032-03-02T18:20:05+01:00", "relative_order": 5},
+        {"message_id": "marie_playful_return_07", "author_id": "player", "text": "Dangereux, le « normalement ».", "diegetic_at": "2032-03-02T18:20:10+01:00", "relative_order": 6},
+        {"message_id": "marie_playful_return_08", "author_id": "marie", "text": "Très.", "diegetic_at": "2032-03-02T18:21:00+01:00", "relative_order": 7},
+        {"message_id": "marie_playful_return_09", "author_id": "marie", "text": "Élodie m'a dit que je souriais comme quelqu'un qui allait écrire un mail poli mais violent.", "diegetic_at": "2032-03-02T18:21:05+01:00", "relative_order": 8},
+        {"message_id": "marie_playful_return_10", "author_id": "marie", "text": "Elle me lit trop bien. C'est agaçant, les gens attentifs.", "diegetic_at": "2032-03-02T18:21:10+01:00", "relative_order": 9},
+        {"message_id": "marie_playful_return_11", "author_id": "marie", "text": "Mathilde veut passer voir l'installation demain.", "diegetic_at": "2032-03-02T18:22:00+01:00", "relative_order": 10},
+        {"message_id": "marie_playful_return_12", "author_id": "marie", "text": "Enfin elle dit « voir l'installation ».", "diegetic_at": "2032-03-02T18:22:05+01:00", "relative_order": 11},
+        {"message_id": "marie_playful_return_13", "author_id": "marie", "text": "Je pense surtout qu'elle veut juger l'éclairage.", "diegetic_at": "2032-03-02T18:22:10+01:00", "relative_order": 12},
+        {"message_id": "marie_playful_return_14", "author_id": "player", "text": "Ça lui ressemble.", "diegetic_at": "2032-03-02T18:22:15+01:00", "relative_order": 13},
+        {"message_id": "marie_playful_return_15", "author_id": "marie", "text": "Oui.", "diegetic_at": "2032-03-02T18:23:00+01:00", "relative_order": 14},
+        {"message_id": "marie_playful_return_16", "author_id": "marie", "text": "Elle a une relation très personnelle avec les lumières qui la trahissent.", "diegetic_at": "2032-03-02T18:23:05+01:00", "relative_order": 15}
+      ]
+    },
+    {
+      "content_ref": "marie_shared_evening_delayed_return_content",
+      "beat_type": "RETURN",
+      "thread_id": "marie_thread",
+      "messages": [
+        {"message_id": "marie_delayed_return_01", "author_id": "marie", "text": "Ton mail peut acheter du pain ?", "diegetic_at": "2032-03-02T18:17:00+01:00", "relative_order": 0},
+        {"message_id": "marie_delayed_return_02", "author_id": "marie", "text": "Alors je préfère toi. Mais en version présente, si possible.", "diegetic_at": "2032-03-02T18:18:00+01:00", "relative_order": 1},
+        {"message_id": "marie_delayed_return_03", "author_id": "marie", "text": "Sinon La Verrière a survécu à sa journée.", "diegetic_at": "2032-03-02T18:19:00+01:00", "relative_order": 2},
+        {"message_id": "marie_delayed_return_04", "author_id": "marie", "text": "Moi aussi, à peu près.", "diegetic_at": "2032-03-02T18:19:05+01:00", "relative_order": 3},
+        {"message_id": "marie_delayed_return_05", "author_id": "marie", "text": "Petit événement jeudi. Deux logos inversés sur l'affiche.", "diegetic_at": "2032-03-02T18:20:00+01:00", "relative_order": 4},
+        {"message_id": "marie_delayed_return_06", "author_id": "marie", "text": "Et un traiteur qui répond « normalement oui » à une question où la seule bonne réponse était « oui ».", "diegetic_at": "2032-03-02T18:20:05+01:00", "relative_order": 5},
+        {"message_id": "marie_delayed_return_07", "author_id": "player", "text": "Dangereux, le « normalement ».", "diegetic_at": "2032-03-02T18:20:10+01:00", "relative_order": 6},
+        {"message_id": "marie_delayed_return_08", "author_id": "marie", "text": "Très.", "diegetic_at": "2032-03-02T18:21:00+01:00", "relative_order": 7},
+        {"message_id": "marie_delayed_return_09", "author_id": "marie", "text": "Élodie m'a dit que je souriais comme quelqu'un qui allait écrire un mail poli mais violent.", "diegetic_at": "2032-03-02T18:21:05+01:00", "relative_order": 8},
+        {"message_id": "marie_delayed_return_10", "author_id": "marie", "text": "Elle me lit trop bien. C'est agaçant, les gens attentifs.", "diegetic_at": "2032-03-02T18:21:10+01:00", "relative_order": 9},
+        {"message_id": "marie_delayed_return_11", "author_id": "marie", "text": "Mathilde veut passer voir l'installation demain.", "diegetic_at": "2032-03-02T18:22:00+01:00", "relative_order": 10},
+        {"message_id": "marie_delayed_return_12", "author_id": "marie", "text": "Enfin elle dit « voir l'installation ».", "diegetic_at": "2032-03-02T18:22:05+01:00", "relative_order": 11},
+        {"message_id": "marie_delayed_return_13", "author_id": "marie", "text": "Je pense surtout qu'elle veut juger l'éclairage.", "diegetic_at": "2032-03-02T18:22:10+01:00", "relative_order": 12},
+        {"message_id": "marie_delayed_return_14", "author_id": "player", "text": "Ça lui ressemble.", "diegetic_at": "2032-03-02T18:22:15+01:00", "relative_order": 13},
+        {"message_id": "marie_delayed_return_15", "author_id": "marie", "text": "Oui.", "diegetic_at": "2032-03-02T18:23:00+01:00", "relative_order": 14},
+        {"message_id": "marie_delayed_return_16", "author_id": "marie", "text": "Elle a une relation très personnelle avec les lumières qui la trahissent.", "diegetic_at": "2032-03-02T18:23:05+01:00", "relative_order": 15}
+      ]
+    }
+  ]
+}

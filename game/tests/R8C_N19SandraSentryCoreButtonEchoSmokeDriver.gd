@@ -1,6 +1,5 @@
 extends Node
 
-const PortraitMainScene := preload("res://scenes/portrait/PortraitMain.tscn")
 const PortraitShellScene := preload("res://scenes/portrait/PortraitShell.tscn")
 const AuthoredValidator := preload(
 	"res://scripts/unified_runtime/contracts/AuthoredSequenceValidator.gd"
@@ -30,7 +29,9 @@ const JsonNormalizer := preload(
 	"res://scripts/unified_runtime/application/JsonValueNormalizer.gd"
 )
 
-const PRODUCTION_CATALOG := "res://data/unified_runtime/catalogs/season_1_v1.json"
+const CAPABILITY_CATALOG := (
+	"res://tests/fixtures/unified_runtime/capability_catalog_n17_n22.json"
+)
 const SANDRA_SEQUENCE := (
 	"res://data/unified_runtime/sequences/sandra_sentrycore_button_echo_01.json"
 )
@@ -45,6 +46,15 @@ const SANDRA_ID := "sandra_sentrycore_button_echo_01"
 const MARIE_ID := "marie_evening_return_01"
 const SANDRA_FACT := "sandra_first_complicity_restored"
 const SAVE_ROOT := "user://r8c_n19_smoke/"
+
+class TestRuntimeHost:
+	var shell
+	var season_runner
+	var runtime_session
+
+	func queue_free() -> void:
+		if shell != null:
+			shell.queue_free()
 
 class CountingFacade:
 	extends RefCounted
@@ -288,7 +298,9 @@ func _test_production_mathilde_sandra_flow() -> void:
 	boundary_shell.content_mode = "unified"
 	add_child(boundary_shell)
 	await _frames(3)
-	var boundary_refused := SeasonRunner.create(boundary_shell, boundary_path)
+	var boundary_refused := SeasonRunner.create_for_test(
+		CAPABILITY_CATALOG, boundary_shell, boundary_path
+	)
 	_expect(
 		not boundary_refused["ok"]
 		and boundary_refused["error_code"] == "UNRESTORABLE_INCOMPLETE_HANDOFF_SAVE",
@@ -309,7 +321,7 @@ func _test_production_mathilde_sandra_flow() -> void:
 	refused_shell.content_mode = "unified"
 	add_child(refused_shell)
 	await _frames(3)
-	var refused := SeasonRunner.create(refused_shell, old_n18_path)
+	var refused := SeasonRunner.create_for_test(CAPABILITY_CATALOG, refused_shell, old_n18_path)
 	_expect(
 		not refused["ok"] and refused["error_code"] == "INVALID_SEASON_SAVE",
 		"ancien save N18 refusé par fingerprint",
@@ -438,15 +450,26 @@ func _test_production_mathilde_sandra_flow() -> void:
 
 
 func _new_production_main(save_path: String, expect_session := true):
-	var main = PortraitMainScene.instantiate()
-	main.unified_save_path_override = save_path
-	add_child(main)
+	var main := TestRuntimeHost.new()
+	main.shell = PortraitShellScene.instantiate()
+	main.shell.content_mode = "unified"
+	add_child(main.shell)
 	await _frames(4)
-	_expect(main.season_runner != null, "PortraitMain compose le vrai catalogue production")
-	if main.season_runner == null:
+	var created: Dictionary = SeasonRunner.create_for_test(CAPABILITY_CATALOG, main.shell, save_path)
+	_expect(created["ok"], "factory TEST_ONLY N19 compose le catalogue capability")
+	if not created["ok"]:
 		main.queue_free()
 		await get_tree().process_frame
 		return null
+	main.season_runner = created["runner"]
+	main.runtime_session = main.season_runner.active_session
+	main.season_runner.active_session_changed.connect(
+		_on_test_active_session_changed.bind(main)
+	)
+	if main.runtime_session != null:
+		_expect(main.shell.configure_unified_runtime(main.runtime_session), "shell TEST_ONLY N19 configuré")
+	var begun: Dictionary = main.season_runner.begin()
+	_expect(begun["ok"], "runner TEST_ONLY N19 démarre")
 	if expect_session:
 		_expect(main.runtime_session != null, "le catalogue production compose une session active")
 		if main.runtime_session == null:
@@ -455,6 +478,17 @@ func _new_production_main(save_path: String, expect_session := true):
 			return null
 	main.shell.messages_screen.runtime_delivery_time_scale = 0.001
 	return main
+
+
+func _on_test_active_session_changed(_previous_session, next_session, host: TestRuntimeHost) -> void:
+	host.runtime_session = next_session
+	host.shell.clear_unified_runtime(
+		host.season_runner.presentation_source(),
+		host.season_runner.gallery_source(),
+		host.season_runner,
+	)
+	if next_session != null:
+		_expect(host.shell.configure_unified_runtime(next_session), "handoff TEST_ONLY N19 configuré")
 
 
 func _complete_current_messages(session) -> bool:

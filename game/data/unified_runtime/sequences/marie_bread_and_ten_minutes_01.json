@@ -1,0 +1,450 @@
+{
+  "schema_id": "reseau_intime.authored_sequence",
+  "schema_version": 1,
+  "sequence_id": "marie_bread_and_ten_minutes_01",
+  "authored_version": "1.0.0",
+  "season_id": "season_1",
+  "dramatic_movement_id": "movement_i",
+  "narrative_function": "RELATION",
+  "canonical_status": "CANON_APPROVED",
+  "author_provenance": {
+    "source_document_paths": [
+      "game/data/conversations/chapter_01_marie_opening.json",
+      "docs/canon/dialogues/J01_J06_SOURCE_CANON_CONSOLIDE.md",
+      "game/data/runtime/season_1/j01_runtime_map.json"
+    ],
+    "source_sequence_ids": [
+      "chapter_01_marie_opening",
+      "S1_A1_J01_SCN_MARIE_SHARED_KITCHEN_01"
+    ],
+    "approval_ref": "S1-OA01",
+    "authoring_tool_ref": null
+  },
+  "participants": {
+    "present_character_ids": ["marie", "player"],
+    "concerned_absent_character_ids": ["mathilde"],
+    "initial_audiences": {"player_only": []},
+    "player_role": "PARTICIPANT"
+  },
+  "orchestration": {
+    "a6_entry": {
+      "scene_definition_id": "marie_bread_and_ten_minutes_01",
+      "variant_id": "marie_bread_and_ten_minutes_canonical",
+      "definition": {
+        "scene_id": "marie_bread_and_ten_minutes_01",
+        "version_contrat": "1.0.0",
+        "nature": "MODULAIRE",
+        "fonction_principale": "RELATION",
+        "participants_requis": [
+          {"personnage_id": "marie", "role": "ANCRAGE_VIE_COMMUNE"}
+        ],
+        "conditions_dures": {
+          "actes_compatibles": ["OPENING_ARC"],
+          "evenements_requis": []
+        },
+        "exclusions_dures": {"evenements_interdits": []},
+        "contrat_temporel": {
+          "date_debut": "2032-03-02",
+          "date_fin": "2032-03-02",
+          "heure_ouverture": "18:12",
+          "heure_fermeture": "20:15",
+          "duree_minutes": 123,
+          "revalidation": "AVANT_PROPOSITION_ET_RESOLUTION"
+        },
+        "politique_unicite": "UNIQUE",
+        "resolutions": {
+          "marie_shared_evening_present_resolution": {
+            "personnage_id": "marie",
+            "portee_micro_signal": "DURABLE",
+            "signal_recu": "PRESENCE_COMMUNE_CHOISIE",
+            "reception": "RECUE_INTERPRETEE",
+            "interpretation": "Player rejoint directement la soirée commune avec le pain et accepte la marche.",
+            "faits_relationnels": [
+              {"fait_id": "marie_player_shared_life_anchor_established", "nature": "VIE_COMMUNE_ETABLIE", "recu_par": "marie"},
+              {"fait_id": "marie_shared_evening_completed", "nature": "SOIREE_COMMUNE_VECUE", "recu_par": "marie"},
+              {"fait_id": "marie_shared_evening_presence_chosen", "nature": "PRESENCE_COMMUNE_CHOISIE", "recu_par": "marie"}
+            ],
+            "convergence": "RETOUR_NOYAU_COMMUN",
+            "durable_manifest": {
+              "binding": {"sequence_id": "marie_bread_and_ten_minutes_01", "authored_version": "1.0.0", "resolution_id": "resolution_present"},
+              "facts": [
+                {"event_key": "marie_present_shared_life_anchor", "scope": "RELATION", "personnage_id": "marie", "fact": {"fait_id": "marie_player_shared_life_anchor_established", "nature": "VIE_COMMUNE_ETABLIE", "recu_par": "marie"}},
+                {"event_key": "marie_present_shared_evening_completed", "scope": "RELATION", "personnage_id": "marie", "fact": {"fait_id": "marie_shared_evening_completed", "nature": "SOIREE_COMMUNE_VECUE", "recu_par": "marie"}},
+                {"event_key": "marie_present_posture", "scope": "RELATION", "personnage_id": "marie", "fact": {"fait_id": "marie_shared_evening_presence_chosen", "nature": "PRESENCE_COMMUNE_CHOISIE", "recu_par": "marie"}}
+              ],
+              "knowledge": [],
+              "traces": [],
+              "promises": [],
+              "obligations": [],
+              "media_deliveries": [
+                {"event_key": "marie_present_shared_kitchen_access", "effect": "GRANT_ACCESS", "media_id": "s1_opening_marie_shared_kitchen_01", "diegetic_status": "NOT_APPLICABLE", "fictional_audience_ids": [], "gallery_status": "AVAILABLE"}
+              ]
+            }
+          },
+          "marie_shared_evening_playful_resolution": {
+            "personnage_id": "marie",
+            "portee_micro_signal": "DURABLE",
+            "signal_recu": "PRESENCE_COMMUNE_JOUEUSE",
+            "reception": "RECUE_INTERPRETEE",
+            "interpretation": "Player rejoint la soirée commune sur un registre joueur et accepte la marche.",
+            "faits_relationnels": [
+              {"fait_id": "marie_player_shared_life_anchor_established", "nature": "VIE_COMMUNE_ETABLIE", "recu_par": "marie"},
+              {"fait_id": "marie_shared_evening_completed", "nature": "SOIREE_COMMUNE_VECUE", "recu_par": "marie"},
+              {"fait_id": "marie_shared_evening_playful_presence", "nature": "PRESENCE_COMMUNE_JOUEUSE", "recu_par": "marie"}
+            ],
+            "convergence": "RETOUR_NOYAU_COMMUN",
+            "durable_manifest": {
+              "binding": {"sequence_id": "marie_bread_and_ten_minutes_01", "authored_version": "1.0.0", "resolution_id": "resolution_playful"},
+              "facts": [
+                {"event_key": "marie_playful_shared_life_anchor", "scope": "RELATION", "personnage_id": "marie", "fact": {"fait_id": "marie_player_shared_life_anchor_established", "nature": "VIE_COMMUNE_ETABLIE", "recu_par": "marie"}},
+                {"event_key": "marie_playful_shared_evening_completed", "scope": "RELATION", "personnage_id": "marie", "fact": {"fait_id": "marie_shared_evening_completed", "nature": "SOIREE_COMMUNE_VECUE", "recu_par": "marie"}},
+                {"event_key": "marie_playful_posture", "scope": "RELATION", "personnage_id": "marie", "fact": {"fait_id": "marie_shared_evening_playful_presence", "nature": "PRESENCE_COMMUNE_JOUEUSE", "recu_par": "marie"}}
+              ],
+              "knowledge": [],
+              "traces": [],
+              "promises": [],
+              "obligations": [],
+              "media_deliveries": [
+                {"event_key": "marie_playful_shared_kitchen_access", "effect": "GRANT_ACCESS", "media_id": "s1_opening_marie_shared_kitchen_01", "diegetic_status": "NOT_APPLICABLE", "fictional_audience_ids": [], "gallery_status": "AVAILABLE"}
+              ]
+            }
+          },
+          "marie_shared_evening_delayed_resolution": {
+            "personnage_id": "marie",
+            "portee_micro_signal": "DURABLE",
+            "signal_recu": "PRESENCE_RETARDEE_MAIS_MAINTENUE",
+            "reception": "RECUE_INTERPRETEE",
+            "interpretation": "Player arrive plus tard mais maintient le pain, le dîner et la marche commune.",
+            "faits_relationnels": [
+              {"fait_id": "marie_player_shared_life_anchor_established", "nature": "VIE_COMMUNE_ETABLIE", "recu_par": "marie"},
+              {"fait_id": "marie_shared_evening_completed", "nature": "SOIREE_COMMUNE_VECUE", "recu_par": "marie"},
+              {"fait_id": "marie_shared_evening_delayed_presence_kept", "nature": "PRESENCE_RETARDEE_MAIS_MAINTENUE", "recu_par": "marie"}
+            ],
+            "convergence": "RETOUR_NOYAU_COMMUN",
+            "durable_manifest": {
+              "binding": {"sequence_id": "marie_bread_and_ten_minutes_01", "authored_version": "1.0.0", "resolution_id": "resolution_delayed"},
+              "facts": [
+                {"event_key": "marie_delayed_shared_life_anchor", "scope": "RELATION", "personnage_id": "marie", "fact": {"fait_id": "marie_player_shared_life_anchor_established", "nature": "VIE_COMMUNE_ETABLIE", "recu_par": "marie"}},
+                {"event_key": "marie_delayed_shared_evening_completed", "scope": "RELATION", "personnage_id": "marie", "fact": {"fait_id": "marie_shared_evening_completed", "nature": "SOIREE_COMMUNE_VECUE", "recu_par": "marie"}},
+                {"event_key": "marie_delayed_posture", "scope": "RELATION", "personnage_id": "marie", "fact": {"fait_id": "marie_shared_evening_delayed_presence_kept", "nature": "PRESENCE_RETARDEE_MAIS_MAINTENUE", "recu_par": "marie"}}
+              ],
+              "knowledge": [],
+              "traces": [],
+              "promises": [],
+              "obligations": [],
+              "media_deliveries": [
+                {"event_key": "marie_delayed_shared_kitchen_access", "effect": "GRANT_ACCESS", "media_id": "s1_opening_marie_shared_kitchen_01", "diegetic_status": "NOT_APPLICABLE", "fictional_audience_ids": [], "gallery_status": "AVAILABLE"}
+              ]
+            }
+          }
+        },
+        "choix": [
+          {"choix_id": "marie_shared_evening_present_choice", "formulation": "Ok. Je prends le pain et on marche. Je participe à la survie du dîner.", "signal_emis": "PRESENCE_COMMUNE_CHOISIE", "resolution_ids": ["marie_shared_evening_present_resolution"]},
+          {"choix_id": "marie_shared_evening_playful_choice", "formulation": "Je viens. Je prends le pain, mais je râle un peu pour la forme.", "signal_emis": "PRESENCE_COMMUNE_JOUEUSE", "resolution_ids": ["marie_shared_evening_playful_resolution"]},
+          {"choix_id": "marie_shared_evening_delayed_choice", "formulation": "Désolé, j'avais un mail. Je prends le pain et je viens marcher.", "signal_emis": "PRESENCE_RETARDEE_MAIS_MAINTENUE", "resolution_ids": ["marie_shared_evening_delayed_resolution"]}
+        ],
+        "politique_non_resolution": {"proposition_expire": "CANCELLED"}
+      }
+    },
+    "a8_window": {"window_id": "marie_bread_and_ten_minutes_window", "conflict_policy": "CLOSE_SILENTLY"},
+    "a9_slot": {"slot_role": "marie_relationship_anchor", "duration_minutes": 123, "relative_order": 1, "not_before_anchor": null, "not_after_anchor": null}
+  },
+  "temporal_projection": {
+    "anchor_id": "marie_shared_evening_anchor",
+    "offset_minutes": 0,
+    "relative_order": 1,
+    "delay": {"mode": "NONE", "value": null},
+    "resolved_window": {"opens_at": "2032-03-02T18:12:00+01:00", "closes_at": "2032-03-02T20:15:00+01:00"}
+  },
+  "entry_beat_id": "marie_dinner_question",
+  "beats": [
+    {
+      "beat_id": "marie_dinner_question",
+      "type": "MESSAGE",
+      "content": {
+        "thread_id": "marie_thread",
+        "messages": [
+          {"message_id": "marie_dinner_question_01", "author_id": "marie", "text": "Question importante.", "diegetic_at": "2032-03-02T18:12:00+01:00", "relative_order": 0},
+          {"message_id": "marie_dinner_question_02", "author_id": "marie", "text": "Deux tomates, un reste de fromage et beaucoup d'optimisme, ça fait un dîner ?", "diegetic_at": "2032-03-02T18:12:05+01:00", "relative_order": 1}
+        ]
+      },
+      "participant_ids": ["marie"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": "marie_shared_life_opening_entered",
+      "checkpoint_after": "marie_dinner_question_presented",
+      "next": {"mode": "DIRECT", "beat_id": "marie_optimism_guided_choice"}
+    },
+    {
+      "beat_id": "marie_optimism_guided_choice",
+      "type": "CHOICE",
+      "content": {
+        "thread_id": "marie_thread",
+        "choices": [
+          {"choice_id": "marie_optimism_guided_reply", "text": "Ça dépend de l'optimisme. Donc oui.", "resolution_id": "resolution_optimism_guided", "next_beat_id": "marie_bread_and_walk_setup"}
+        ]
+      },
+      "participant_ids": ["marie"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "marie_optimism_guided_consumed",
+      "next": {"mode": "BRANCH", "branches": {"marie_optimism_guided_reply": "marie_bread_and_walk_setup"}}
+    },
+    {
+      "beat_id": "marie_bread_and_walk_setup",
+      "type": "MESSAGE",
+      "content": {
+        "thread_id": "marie_thread",
+        "messages": [
+          {"message_id": "marie_optimism_answer_01", "author_id": "marie", "text": "Moyen.", "diegetic_at": "2032-03-02T18:13:00+01:00", "relative_order": 0},
+          {"message_id": "marie_optimism_answer_02", "author_id": "marie", "text": "Mais courageux 😅", "diegetic_at": "2032-03-02T18:13:05+01:00", "relative_order": 1},
+          {"message_id": "marie_optimism_answer_03", "author_id": "marie", "text": "Bonne réponse. Il manque juste le pain.", "diegetic_at": "2032-03-02T18:14:00+01:00", "relative_order": 2},
+          {"message_id": "marie_walk_setup_01", "author_id": "marie", "text": "Évidemment.", "diegetic_at": "2032-03-02T18:14:05+01:00", "relative_order": 3},
+          {"message_id": "marie_walk_setup_02", "author_id": "marie", "text": "Et petite marche après. Dix minutes.", "diegetic_at": "2032-03-02T18:15:00+01:00", "relative_order": 4},
+          {"message_id": "marie_walk_setup_03", "author_id": "marie", "text": "Pas une randonnée de couple en crise.", "diegetic_at": "2032-03-02T18:15:05+01:00", "relative_order": 5}
+        ]
+      },
+      "participant_ids": ["marie"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "marie_walk_setup_presented",
+      "next": {"mode": "DIRECT", "beat_id": "marie_crisis_guided_choice"}
+    },
+    {
+      "beat_id": "marie_crisis_guided_choice",
+      "type": "CHOICE",
+      "content": {
+        "thread_id": "marie_thread",
+        "choices": [
+          {"choice_id": "marie_crisis_guided_reply", "text": "On est en crise ?", "resolution_id": "resolution_crisis_guided", "next_beat_id": "marie_not_in_crisis"}
+        ]
+      },
+      "participant_ids": ["marie"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "marie_crisis_guided_consumed",
+      "next": {"mode": "BRANCH", "branches": {"marie_crisis_guided_reply": "marie_not_in_crisis"}}
+    },
+    {
+      "beat_id": "marie_not_in_crisis",
+      "type": "MESSAGE",
+      "content": {
+        "thread_id": "marie_thread",
+        "messages": [
+          {"message_id": "marie_not_in_crisis_01", "author_id": "marie", "text": "Non. Justement.", "diegetic_at": "2032-03-02T18:16:00+01:00", "relative_order": 0},
+          {"message_id": "marie_not_in_crisis_02", "author_id": "marie", "text": "Je refuse qu'on attende d'être tristes pour sortir marcher.", "diegetic_at": "2032-03-02T18:16:05+01:00", "relative_order": 1}
+        ]
+      },
+      "participant_ids": ["marie"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "marie_not_in_crisis_presented",
+      "next": {"mode": "DIRECT", "beat_id": "marie_shared_evening_posture_choice"}
+    },
+    {
+      "beat_id": "marie_shared_evening_posture_choice",
+      "type": "CHOICE",
+      "content": {
+        "thread_id": "marie_thread",
+        "choices": [
+          {"choice_id": "marie_shared_evening_present", "text": "Ok. Je prends le pain et on marche. Je participe à la survie du dîner.", "resolution_id": "resolution_present", "next_beat_id": "return_present"},
+          {"choice_id": "marie_shared_evening_playful", "text": "Je viens. Je prends le pain, mais je râle un peu pour la forme.", "resolution_id": "resolution_playful", "next_beat_id": "return_playful"},
+          {"choice_id": "marie_shared_evening_delayed", "text": "Désolé, j'avais un mail. Je prends le pain et je viens marcher.", "resolution_id": "resolution_delayed", "next_beat_id": "return_delayed"}
+        ]
+      },
+      "participant_ids": ["marie"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "marie_shared_evening_resolution_ready",
+      "next": {"mode": "BRANCH", "branches": {"marie_shared_evening_present": "return_present", "marie_shared_evening_playful": "return_playful", "marie_shared_evening_delayed": "return_delayed"}}
+    },
+    {
+      "beat_id": "return_present",
+      "type": "RETURN",
+      "content": {"return_id": "marie_shared_evening_present_return", "content_ref": "marie_shared_evening_present_return_content", "delay": {"mode": "NONE", "value": null}, "eligible_resolution_ids": ["resolution_present"]},
+      "participant_ids": ["marie"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "marie_shared_evening_present_return_presented",
+      "next": {"mode": "DIRECT", "beat_id": "marie_shared_evening_present_outcome"}
+    },
+    {
+      "beat_id": "marie_shared_evening_present_outcome",
+      "type": "PHYSICAL_BEAT",
+      "content": {"physical_beat_id": "marie_shared_evening_present_outcome", "content_ref": "marie_shared_evening_present_outcome", "withdrawal_choice_ids": []},
+      "participant_ids": ["marie", "player"],
+      "local_conditions": [],
+      "projection_target": "PHYSICAL",
+      "checkpoint_before": null,
+      "checkpoint_after": "marie_shared_evening_present_outcome_presented",
+      "next": {"mode": "TERMINAL", "beat_id": null}
+    },
+    {
+      "beat_id": "return_playful",
+      "type": "RETURN",
+      "content": {"return_id": "marie_shared_evening_playful_return", "content_ref": "marie_shared_evening_playful_return_content", "delay": {"mode": "NONE", "value": null}, "eligible_resolution_ids": ["resolution_playful"]},
+      "participant_ids": ["marie"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "marie_shared_evening_playful_return_presented",
+      "next": {"mode": "DIRECT", "beat_id": "marie_shared_evening_playful_outcome"}
+    },
+    {
+      "beat_id": "marie_shared_evening_playful_outcome",
+      "type": "PHYSICAL_BEAT",
+      "content": {"physical_beat_id": "marie_shared_evening_playful_outcome", "content_ref": "marie_shared_evening_playful_outcome", "withdrawal_choice_ids": []},
+      "participant_ids": ["marie", "player"],
+      "local_conditions": [],
+      "projection_target": "PHYSICAL",
+      "checkpoint_before": null,
+      "checkpoint_after": "marie_shared_evening_playful_outcome_presented",
+      "next": {"mode": "TERMINAL", "beat_id": null}
+    },
+    {
+      "beat_id": "return_delayed",
+      "type": "RETURN",
+      "content": {"return_id": "marie_shared_evening_delayed_return", "content_ref": "marie_shared_evening_delayed_return_content", "delay": {"mode": "NONE", "value": null}, "eligible_resolution_ids": ["resolution_delayed"]},
+      "participant_ids": ["marie"],
+      "local_conditions": [],
+      "projection_target": "MESSAGES",
+      "checkpoint_before": null,
+      "checkpoint_after": "marie_shared_evening_delayed_return_presented",
+      "next": {"mode": "DIRECT", "beat_id": "marie_shared_evening_delayed_outcome"}
+    },
+    {
+      "beat_id": "marie_shared_evening_delayed_outcome",
+      "type": "PHYSICAL_BEAT",
+      "content": {"physical_beat_id": "marie_shared_evening_delayed_outcome", "content_ref": "marie_shared_evening_delayed_outcome", "withdrawal_choice_ids": []},
+      "participant_ids": ["marie", "player"],
+      "local_conditions": [],
+      "projection_target": "PHYSICAL",
+      "checkpoint_before": null,
+      "checkpoint_after": "marie_shared_evening_delayed_outcome_presented",
+      "next": {"mode": "TERMINAL", "beat_id": null}
+    }
+  ],
+  "resolutions": {
+    "resolution_optimism_guided": {
+      "resolution_id": "resolution_optimism_guided",
+      "choice_id": "marie_optimism_guided_reply",
+      "a10_choice_id": null,
+      "a10_resolution_id": null,
+      "terminal_checkpoint_id": "marie_optimism_guided_consumed",
+      "event_refs": [],
+      "fact_ids": [],
+      "knowledge_ids": [],
+      "trace_ids": [],
+      "promise_effects": [],
+      "obligation_effects": [],
+      "consequence_ids": [],
+      "media_effects": [],
+      "convergence": "COMMON_EXIT",
+      "next_beat_id": "marie_bread_and_walk_setup"
+    },
+    "resolution_crisis_guided": {
+      "resolution_id": "resolution_crisis_guided",
+      "choice_id": "marie_crisis_guided_reply",
+      "a10_choice_id": null,
+      "a10_resolution_id": null,
+      "terminal_checkpoint_id": "marie_crisis_guided_consumed",
+      "event_refs": [],
+      "fact_ids": [],
+      "knowledge_ids": [],
+      "trace_ids": [],
+      "promise_effects": [],
+      "obligation_effects": [],
+      "consequence_ids": [],
+      "media_effects": [],
+      "convergence": "COMMON_EXIT",
+      "next_beat_id": "marie_not_in_crisis"
+    },
+    "resolution_present": {
+      "resolution_id": "resolution_present",
+      "choice_id": "marie_shared_evening_present",
+      "a10_choice_id": "marie_shared_evening_present_choice",
+      "a10_resolution_id": "marie_shared_evening_present_resolution",
+      "terminal_checkpoint_id": "marie_shared_evening_resolution_ready",
+      "event_refs": [
+        {"event_type": "durable_manifest_event", "event_key": "marie_present_shared_life_anchor", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "marie_present_shared_evening_completed", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "marie_present_posture", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "marie_present_shared_kitchen_access", "reducer_id": "a6_durable_manifest"}
+      ],
+      "fact_ids": ["marie_player_shared_life_anchor_established", "marie_shared_evening_completed", "marie_shared_evening_presence_chosen"],
+      "knowledge_ids": [],
+      "trace_ids": [],
+      "promise_effects": [],
+      "obligation_effects": [],
+      "consequence_ids": [],
+      "media_effects": [{"media_id": "s1_opening_marie_shared_kitchen_01", "effect": "GRANT_ACCESS"}],
+      "convergence": "POST_RESOLUTION_RETURN",
+      "next_beat_id": "return_present"
+    },
+    "resolution_playful": {
+      "resolution_id": "resolution_playful",
+      "choice_id": "marie_shared_evening_playful",
+      "a10_choice_id": "marie_shared_evening_playful_choice",
+      "a10_resolution_id": "marie_shared_evening_playful_resolution",
+      "terminal_checkpoint_id": "marie_shared_evening_resolution_ready",
+      "event_refs": [
+        {"event_type": "durable_manifest_event", "event_key": "marie_playful_shared_life_anchor", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "marie_playful_shared_evening_completed", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "marie_playful_posture", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "marie_playful_shared_kitchen_access", "reducer_id": "a6_durable_manifest"}
+      ],
+      "fact_ids": ["marie_player_shared_life_anchor_established", "marie_shared_evening_completed", "marie_shared_evening_playful_presence"],
+      "knowledge_ids": [],
+      "trace_ids": [],
+      "promise_effects": [],
+      "obligation_effects": [],
+      "consequence_ids": [],
+      "media_effects": [{"media_id": "s1_opening_marie_shared_kitchen_01", "effect": "GRANT_ACCESS"}],
+      "convergence": "POST_RESOLUTION_RETURN",
+      "next_beat_id": "return_playful"
+    },
+    "resolution_delayed": {
+      "resolution_id": "resolution_delayed",
+      "choice_id": "marie_shared_evening_delayed",
+      "a10_choice_id": "marie_shared_evening_delayed_choice",
+      "a10_resolution_id": "marie_shared_evening_delayed_resolution",
+      "terminal_checkpoint_id": "marie_shared_evening_resolution_ready",
+      "event_refs": [
+        {"event_type": "durable_manifest_event", "event_key": "marie_delayed_shared_life_anchor", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "marie_delayed_shared_evening_completed", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "marie_delayed_posture", "reducer_id": "a6_durable_manifest"},
+        {"event_type": "durable_manifest_event", "event_key": "marie_delayed_shared_kitchen_access", "reducer_id": "a6_durable_manifest"}
+      ],
+      "fact_ids": ["marie_player_shared_life_anchor_established", "marie_shared_evening_completed", "marie_shared_evening_delayed_presence_kept"],
+      "knowledge_ids": [],
+      "trace_ids": [],
+      "promise_effects": [],
+      "obligation_effects": [],
+      "consequence_ids": [],
+      "media_effects": [{"media_id": "s1_opening_marie_shared_kitchen_01", "effect": "GRANT_ACCESS"}],
+      "convergence": "POST_RESOLUTION_RETURN",
+      "next_beat_id": "return_delayed"
+    }
+  },
+  "media": {
+    "s1_opening_marie_shared_kitchen_01": {
+      "media_id": "s1_opening_marie_shared_kitchen_01",
+      "visual_level": "V0",
+      "analytic_level": null,
+      "production_status": "SPECIFIED_NOT_PRODUCED",
+      "diegesis": "NON_DIEGETIC",
+      "audience_ids": ["player_only"],
+      "gallery_policy": "ON_ACCESS",
+      "parent_media_id": null,
+      "thumbnail_policy": "SELF",
+      "thumbnail_media_id": null,
+      "removal_policy": "NEVER"
+    }
+  }
+}

@@ -39,13 +39,28 @@ const DurableMediaIdentifier := preload("res://scripts/shared/DurableMediaIdenti
 const JsonNormalizer := preload(
 	"res://scripts/unified_runtime/application/JsonValueNormalizer.gd"
 )
-const PortraitMainScene := preload("res://scenes/portrait/PortraitMain.tscn")
+const PortraitShellScene := preload("res://scenes/portrait/PortraitShell.tscn")
+const SeasonRunner := preload(
+	"res://scripts/unified_runtime/application/UnifiedSeasonRunner.gd"
+)
 
 const SEQUENCE_PATH := "res://data/unified_runtime/sequences/mathilde_returns_with_chosen_intent_01.json"
 const MESSAGES_PATH := "res://data/unified_runtime/presentation/mathilde_returns_with_chosen_intent_01_messages.json"
 const PHYSICAL_PATH := "res://data/unified_runtime/presentation/mathilde_returns_with_chosen_intent_01_physical.json"
 const MEDIA_PATH := "res://data/unified_runtime/presentation/mathilde_returns_with_chosen_intent_01_media.json"
+const CAPABILITY_CATALOG := (
+	"res://tests/fixtures/unified_runtime/capability_catalog_n17_n22.json"
+)
 const SAVE_ROOT := "user://r8c_n17_smoke/"
+
+class TestRuntimeHost:
+	var shell
+	var season_runner
+	var runtime_session
+
+	func queue_free() -> void:
+		if shell != null:
+			shell.queue_free()
 
 class CountingFacade:
 	extends RefCounted
@@ -357,10 +372,31 @@ func _run_failed_deferred_path(save_path: String) -> void:
 
 
 func _new_portrait_main(save_path: String):
-	var portrait_main = PortraitMainScene.instantiate()
-	portrait_main.unified_save_path_override = save_path
-	add_child(portrait_main)
+	var portrait_main := TestRuntimeHost.new()
+	portrait_main.shell = PortraitShellScene.instantiate()
+	portrait_main.shell.content_mode = "unified"
+	add_child(portrait_main.shell)
 	await _frames(3)
+	var created: Dictionary = SeasonRunner.create_for_test(
+		CAPABILITY_CATALOG, portrait_main.shell, save_path
+	)
+	_expect(created["ok"], "factory TEST_ONLY N17 compose le catalogue capability")
+	if not created["ok"]:
+		portrait_main.queue_free()
+		await get_tree().process_frame
+		return null
+	portrait_main.season_runner = created["runner"]
+	portrait_main.runtime_session = portrait_main.season_runner.active_session
+	portrait_main.season_runner.active_session_changed.connect(
+		_on_test_active_session_changed.bind(portrait_main)
+	)
+	if portrait_main.runtime_session != null:
+		_expect(
+			portrait_main.shell.configure_unified_runtime(portrait_main.runtime_session),
+			"shell TEST_ONLY N17 accepte la session capability",
+		)
+	var begun: Dictionary = portrait_main.season_runner.begin()
+	_expect(begun["ok"], "runner TEST_ONLY N17 démarre")
 	_expect(portrait_main.runtime_session != null, "PortraitMain compose la session unifiée réelle")
 	if portrait_main.runtime_session == null:
 		portrait_main.queue_free()
@@ -368,6 +404,20 @@ func _new_portrait_main(save_path: String):
 		return null
 	portrait_main.shell.messages_screen.runtime_delivery_time_scale = 0.001
 	return portrait_main
+
+
+func _on_test_active_session_changed(_previous_session, next_session, host: TestRuntimeHost) -> void:
+	host.runtime_session = next_session
+	host.shell.clear_unified_runtime(
+		host.season_runner.presentation_source(),
+		host.season_runner.gallery_source(),
+		host.season_runner,
+	)
+	if next_session != null:
+		_expect(
+			host.shell.configure_unified_runtime(next_session),
+			"handoff TEST_ONLY N17 configure la nouvelle session",
+		)
 
 
 func _drive_to_aftercare_choice(portrait_main, complete_opening := true) -> bool:

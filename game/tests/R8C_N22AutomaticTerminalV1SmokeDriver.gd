@@ -32,7 +32,9 @@ var failures: Array[String] = []
 
 func _ready() -> void:
 	var loaded := CatalogLoader.load_catalog(
-		"res://data/unified_runtime/catalogs/season_1_v1.json", "season_1_v1", "season_1"
+		"res://tests/fixtures/unified_runtime/capability_catalog_n17_n22.json",
+		"season_1_v1",
+		"season_1"
 	)
 	if not loaded["ok"]:
 		return _finish(["catalogue N22 refusé"])

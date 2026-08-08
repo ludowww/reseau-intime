@@ -1,6 +1,6 @@
 extends Node
 
-const PortraitMainScene := preload("res://scenes/portrait/PortraitMain.tscn")
+const PortraitShellScene := preload("res://scenes/portrait/PortraitShell.tscn")
 const SaveStore := preload(
 	"res://scripts/unified_runtime/application/UnifiedPlayerRuntimeSaveStore.gd"
 )
@@ -16,7 +16,33 @@ const SANDRA_ID := "sandra_sentrycore_button_echo_01"
 const MARIE_ID := "marie_evening_return_01"
 const N21_NEXT_NICO_ID := "nico_saved_seat_01"
 const N21_NEXT_MARIE_ID := "marie_household_report_01"
+const CAPABILITY_CATALOG := (
+	"res://tests/fixtures/unified_runtime/capability_catalog_n17_n22.json"
+)
 const SAVE_PATH := "user://r8c_n21_smoke/production.json"
+
+class TestRuntimeHost:
+	var shell
+	var season_runner
+	var runtime_session
+
+	func queue_free() -> void:
+		if season_runner != null:
+			for connection in season_runner.active_session_changed.get_connections():
+				var callback: Callable = connection["callable"]
+				if season_runner.active_session_changed.is_connected(callback):
+					season_runner.active_session_changed.disconnect(callback)
+		if runtime_session != null:
+			runtime_session.detach()
+			if runtime_session._save_store != null and runtime_session._save_store.has_method("release"):
+				runtime_session._save_store.release()
+		if season_runner != null:
+			season_runner.active_session = null
+		runtime_session = null
+		season_runner = null
+		if shell != null:
+			shell.queue_free()
+		shell = null
 
 var failures: Array[String] = []
 var controls := 0
@@ -243,15 +269,32 @@ func _complete_marie(main) -> bool:
 
 
 func _new_main(expect_active: bool):
-	var main = PortraitMainScene.instantiate()
-	main.unified_save_path_override = SAVE_PATH
-	add_child(main)
+	var main := TestRuntimeHost.new()
+	main.shell = PortraitShellScene.instantiate()
+	main.shell.content_mode = "unified"
+	add_child(main.shell)
 	await _frames(6)
-	_expect(main.season_runner != null, "PortraitMain compose le catalogue production N21")
-	if main.season_runner == null:
+	var created: Dictionary = SeasonRunner.create_for_test(CAPABILITY_CATALOG, main.shell, SAVE_PATH)
+	_expect(created["ok"], "factory TEST_ONLY N21 compose le catalogue capability")
+	if not created["ok"]:
 		main.queue_free()
 		await get_tree().process_frame
 		return null
+	main.season_runner = created["runner"]
+	main.runtime_session = main.season_runner.active_session
+	main.season_runner.active_session_changed.connect(
+		_on_test_active_session_changed.bind(main)
+	)
+	if main.runtime_session != null:
+		_expect(main.shell.configure_unified_runtime(main.runtime_session), "shell TEST_ONLY N21 configuré")
+	var begun: Dictionary = main.season_runner.begin()
+	_expect(begun["ok"], "runner TEST_ONLY N21 démarre")
+	if main.runtime_session == null:
+		main.shell.clear_unified_runtime(
+			main.season_runner.presentation_source(),
+			main.season_runner.gallery_source(),
+			main.season_runner,
+		)
 	if expect_active:
 		_expect(main.runtime_session != null, "une session active est attendue")
 		if main.runtime_session == null:
@@ -262,6 +305,17 @@ func _new_main(expect_active: bool):
 		_expect(main.runtime_session == null, "aucune session active pendant offre ou idle")
 	main.shell.messages_screen.runtime_delivery_time_scale = 0.001
 	return main
+
+
+func _on_test_active_session_changed(_previous_session, next_session, host: TestRuntimeHost) -> void:
+	host.runtime_session = next_session
+	host.shell.clear_unified_runtime(
+		host.season_runner.presentation_source(),
+		host.season_runner.gallery_source(),
+		host.season_runner,
+	)
+	if next_session != null:
+		_expect(host.shell.configure_unified_runtime(next_session), "handoff TEST_ONLY N21 configuré")
 
 
 func _opportunity_is(runner, sequence_id: String, thread_id: String, action_label: String) -> bool:

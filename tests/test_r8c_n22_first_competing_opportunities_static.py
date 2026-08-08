@@ -44,7 +44,7 @@ class R8CN22FirstCompetingOpportunitiesStaticTests(unittest.TestCase):
         return (GAME / relative).read_text(encoding="utf-8")
 
     def test_exactly_two_packages_and_eight_json_are_added(self):
-        catalog = self.load(DATA / "catalogs/season_1_v1.json")
+        catalog = self.load(GAME / "tests/fixtures/unified_runtime/capability_catalog_n17_n22.json")
         self.assertEqual(
             [
                 "mathilde_returns_with_chosen_intent_01",

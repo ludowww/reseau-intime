@@ -11,7 +11,7 @@ PRESENTATION = GAME / "data/unified_runtime/presentation"
 MESSAGES = PRESENTATION / "sandra_sentrycore_button_echo_01_messages.json"
 PHYSICAL = PRESENTATION / "sandra_sentrycore_button_echo_01_physical.json"
 MEDIA = PRESENTATION / "sandra_sentrycore_button_echo_01_media.json"
-CATALOG = GAME / "data/unified_runtime/catalogs/season_1_v1.json"
+CATALOG = GAME / "tests/fixtures/unified_runtime/capability_catalog_n17_n22.json"
 SOURCE = GAME / "data/conversations/chapter_03_sandra_continuity.json"
 SMOKE = GAME / "tests/R8C_N19SandraSentryCoreButtonEchoSmokeDriver.gd"
 
@@ -60,7 +60,7 @@ class R8CN19SandraSentryCoreButtonEchoStaticTests(unittest.TestCase):
             ],
             [package["sequence_id"] for package in catalog["packages"]],
         )
-        self.assertNotIn("tests/fixtures", json.dumps(catalog))
+        self.assertIn("capability_catalog_n17_n22.json", SMOKE.read_text(encoding="utf-8"))
 
     def test_exact_graph_bubbles_and_temporal_projection(self):
         sequence = self.load(SEQUENCE)

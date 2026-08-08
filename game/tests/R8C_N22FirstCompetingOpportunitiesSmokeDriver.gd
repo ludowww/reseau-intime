@@ -13,7 +13,7 @@ const N22SeasonSnapshot := preload(
 )
 func _run() -> void:
 	var catalog_probe := N22CatalogLoader.load_catalog(
-		"res://data/unified_runtime/catalogs/season_1_v1.json", "season_1_v1", "season_1"
+		CAPABILITY_CATALOG, "season_1_v1", "season_1"
 	)
 	if not catalog_probe["ok"]:
 		for error in catalog_probe.get("errors", []):
@@ -62,9 +62,12 @@ func _run() -> void:
 		"rollback pair pré-save restaure domaine, exclusion et deux CTA",
 	)
 	runner._test_fail_after_opportunity_first_save = true
-	runner.active_session_changed.disconnect(main._on_active_session_changed)
+	var active_session_connections: Array = runner.active_session_changed.get_connections()
+	for connection in active_session_connections:
+		runner.active_session_changed.disconnect(connection["callable"])
 	var refused_after_save: Dictionary = runner.activate_opportunity("marie_thread")
-	runner.active_session_changed.connect(main._on_active_session_changed)
+	for connection in active_session_connections:
+		runner.active_session_changed.connect(connection["callable"])
 	main.shell.clear_unified_runtime(
 		runner.presentation_source(), runner.gallery_source(), runner
 	)
@@ -201,7 +204,7 @@ func _run() -> void:
 		"branche Nico-first puis Marie converge vers IDLE",
 	)
 	main.queue_free()
-	await get_tree().process_frame
+	await _frames(5)
 	_finish()
 
 

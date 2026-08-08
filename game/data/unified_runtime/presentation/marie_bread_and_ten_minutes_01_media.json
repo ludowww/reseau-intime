@@ -1,0 +1,15 @@
+{
+  "sequence_id": "marie_bread_and_ten_minutes_01",
+  "authored_version": "1.0.0",
+  "entries": [
+    {
+      "media_id": "s1_opening_marie_shared_kitchen_01",
+      "visual_ref": "",
+      "display_name": "Cuisine partagée",
+      "context_label": "Pain et dix minutes dehors",
+      "caption": "Une cuisine chaude mais vécue : du pain, deux tomates et Marie en mouvement dans un quotidien crédible, sans tristesse prémonitoire ni sexualisation forcée.",
+      "placeholder_label": "Visuel non livré",
+      "gallery_character_ids": ["marie"]
+    }
+  ]
+}

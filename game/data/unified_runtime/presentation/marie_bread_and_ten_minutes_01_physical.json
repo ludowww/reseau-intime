@@ -1,0 +1,41 @@
+{
+  "schema_id": "reseau_intime.physical_presentation_catalog",
+  "schema_version": 1,
+  "sequence_id": "marie_bread_and_ten_minutes_01",
+  "authored_version": "1.0.0",
+  "entries": [
+    {
+      "content_ref": "marie_shared_evening_present_outcome",
+      "title": "19:15",
+      "body": "Player rentre avec le pain.",
+      "steps": [
+        "Ils dînent ensemble dans leur cuisine.",
+        "Ils sortent marcher dix minutes.",
+        "Le téléphone reste dans la poche."
+      ],
+      "continue_label": "Continuer"
+    },
+    {
+      "content_ref": "marie_shared_evening_playful_outcome",
+      "title": "19:15",
+      "body": "Player rentre avec le pain, en râlant juste assez pour tenir parole.",
+      "steps": [
+        "Ils dînent ensemble dans leur cuisine.",
+        "Ils sortent marcher dix minutes.",
+        "Le téléphone reste dans la poche."
+      ],
+      "continue_label": "Continuer"
+    },
+    {
+      "content_ref": "marie_shared_evening_delayed_outcome",
+      "title": "19:35",
+      "body": "Player arrive plus tard avec le pain.",
+      "steps": [
+        "Le retard existe sans devenir une dispute.",
+        "Ils dînent ensemble, puis sortent marcher dix minutes.",
+        "Le téléphone reste dans la poche."
+      ],
+      "continue_label": "Continuer"
+    }
+  ]
+}
